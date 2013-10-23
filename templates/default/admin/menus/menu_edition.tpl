@@ -7,8 +7,8 @@
     		# END elements #
     	</ul>
         <fieldset class="fieldset_submit" style="padding:0;margin-bottom:4px;margin-top:15px;">
-            <input type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" value="{L_ADD_SUB_ELEMENT}" onclick="addSubElement('menu_element_{ID}');" class="submit">
-            <input type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" value="{L_ADD_SUB_MENU}" onclick="addSubMenu('menu_element_{ID}');" class="submit">
+            <button type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
+            <button type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
         </fieldset>
     </div>
 # ENDIF #
@@ -41,8 +41,8 @@
     		# END elements #
 		</ul>
 		<fieldset class="fieldset_submit" style="padding:0;margin-bottom:4px;margin-top:15px;">
-			<input type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" value="{L_ADD_SUB_ELEMENT}" onclick="addSubElement('menu_element_{ID}');" class="submit">
-            <input type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" value="{L_ADD_SUB_MENU}" onclick="addSubMenu('menu_element_{ID}');" class="submit">
+			<button type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
+            <button type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
 		</fieldset>
 	</li>
 # ENDIF #

@@ -237,11 +237,8 @@ table tfoot nav.pagination a span.current_page {
 ------------------------------------ */
 /* Normal */
 
-button{
+button {
 	height:auto;
-}
-
-.btn{
 	cursor: pointer;
 	vertical-align: middle;
 	padding: 4px 12px;
@@ -255,7 +252,6 @@ button{
 	background: -o-linear-gradient(top, #FFFFFF 0%,#EEEEEE 100%);
 	background: -ms-linear-gradient(top, #FFFFFF 0%,#EEEEEE 100%);
 	background: linear-gradient(to bottom, #FFFFFF 0%,#EEEEEE 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#EEEEEE',GradientType=0 );
 	border: 1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
 	-webkit-border-radius: 4px;
@@ -266,7 +262,7 @@ button{
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
 	
-.btn:hover{
+button:hover{
 	background-color: #FFFFFF;
 	background: -moz-linear-gradient(top, #FFFFFF 0%, #F5F5F5 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#F5F5F5));
@@ -274,7 +270,6 @@ button{
 	background: -o-linear-gradient(top, #FFFFFF 0%,#F5F5F5 100%);
 	background: -ms-linear-gradient(top, #FFFFFF 0%,#F5F5F5 100%);
 	background: linear-gradient(to bottom, #FFFFFF 0%,#F5F5F5 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='FFFFFF', endColorstr='F5F5F5',GradientType=0 );
 	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
 	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
@@ -283,7 +278,8 @@ button{
 	-o-transition: all 0.1s linear;
 	transition: all 0.1s linear;
 }
-.btn:active{ 
+
+button:active{ 
 	background-color: #EEEEEE;
 	border: 1px solid #CCCCCC;
 	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
@@ -291,16 +287,14 @@ button{
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
 
-.btn, .btn:focus, .btn:hover, .btn:active{ outline: none; }
+button, button:focus, button:hover, button:active{ outline: none; }
 
-button.submit{
-	
-}
-.textarea-element button.look{
+fieldset:not(.fieldset_submit) button {
 	font-size:11px;
 	padding: 2px 6px;
 }
-button.reset{
+
+button[type=reset]{
 	font-weight:bold;
 }
 
@@ -432,11 +426,9 @@ input, optgroup, select, .xmlhttprequest_preview {
 	background-color:#FFFFFF;	
 	color:#2E3B5F;
 	padding:0px 2px;
-	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
 }
 
 textarea {
-	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
     display:block;
     width:94%;
     margin:5px auto;

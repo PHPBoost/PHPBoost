@@ -83,7 +83,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
     private function get_preview_button_code()
     {
         global $LANG;
-        return '<input type="button" value="' . $LANG['preview'] . '" onclick="XMLHttpRequest_preview(\'' . $this->get_html_id() . '\');" class="submit">';
+        return '<button type="button" onclick="XMLHttpRequest_preview(\'' . $this->get_html_id() . '\');">' . $LANG['preview'] . '</button>';
     }
 
     /**
