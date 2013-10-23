@@ -697,7 +697,7 @@
 				<fieldset class="fieldset_submit">
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset">
+					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>	
 			</form>
 	</div>

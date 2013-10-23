@@ -182,7 +182,7 @@
 						&nbsp;&nbsp;
 						<input value="{L_PREVIEW}" type="button" name="valid" class="submit" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;">
 						&nbsp;&nbsp;
-						<input type="reset" value="{L_RESET}" class="reset">
+						<button type="reset" value="true">{L_RESET}</button>
 					</fieldset>
 				</form>
 			</div>

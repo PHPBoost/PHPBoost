@@ -94,6 +94,6 @@
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="update" value="true">
 		&nbsp;&nbsp; 
-		<input type="reset" value="{L_RESET}" class="reset">
+		<button type="reset" value="true">{L_RESET}</button>
 	</fieldset>
 </form>

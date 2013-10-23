@@ -210,7 +210,7 @@
 					&nbsp;&nbsp;
 					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;"" class="submit">
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset">
+					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>
 			# END edition_interface #

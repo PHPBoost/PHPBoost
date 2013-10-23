@@ -154,7 +154,7 @@
 					&nbsp;&nbsp; 
 					<button type="submit" name="previs" value="true">{L_PREVIEW}</button>
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset">				
+					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>	
 			</form>
 		</div>

@@ -277,7 +277,7 @@
 					-->
 					</script>				
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset">				
+					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>	
 			</div>				
 		</form>
@@ -339,7 +339,7 @@
 							-->
 							</script>						
 							&nbsp;&nbsp; 
-							<input type="reset" value="{L_RESET}" class="reset">
+							<button type="reset" value="true">{L_RESET}</button>
 						</fieldset>	
 					</div>	
 				</div>
@@ -419,7 +419,7 @@
 								-->
 								</script>
 								&nbsp;&nbsp; 
-								<input type="reset" value="{L_RESET}" class="reset">
+								<button type="reset" value="true">{L_RESET}</button>
 						</fieldset>	
 					</div>
 				</div>

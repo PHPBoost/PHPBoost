@@ -79,7 +79,7 @@
                 <legend>{L_UPDATE}</legend>
                     <button type="submit" name="valid" value="true">{L_UPDATE}</button>
                     &nbsp;&nbsp; 
-                    <input type="reset" value="{L_RESET}" class="reset">
+                    <button type="reset" value="true">{L_RESET}</button>
                 </fieldset>
             </form>
             <form action="admin_search.php?clear=1&amp;token={TOKEN}" name="form" method="post" class="fieldset_content">
@@ -114,7 +114,7 @@
                 <legend>{L_UPDATE}</legend>
                     <button type="submit" name="valid" value="true">{L_UPDATE}</button>
                     &nbsp;&nbsp; 
-                    <input type="reset" value="{L_RESET}" class="reset">
+                    <button type="reset" value="true">{L_RESET}</button>
                 </fieldset>
             </form>
             # ENDIF #

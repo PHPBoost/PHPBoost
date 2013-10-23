@@ -18,7 +18,7 @@
 	<fieldset class="fieldset_submit">
 		<legend>{EL_SUBMIT}</legend>
 		<button type="submit" name="valid" value="true">{EL_SUBMIT}</button>
-		<input type="reset" value="{EL_RESET}" class="reset">
+		<button type="reset" value="true">{EL_RESET}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 	</fieldset>
 </form>

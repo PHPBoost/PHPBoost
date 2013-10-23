@@ -93,7 +93,7 @@
 									<p style="text-align:center;margin:0;margin-top:8px;">
 										<button type="submit" name="writingpad" value="true">{L_UPDATE}</button>
 											&nbsp;&nbsp; 
-										<input type="reset" value="{L_RESET}" class="reset">
+										<button type="reset" value="true">{L_RESET}</button>
 									</p>
 								</div>
 							</td>
