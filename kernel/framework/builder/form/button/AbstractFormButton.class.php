@@ -37,7 +37,7 @@ abstract class AbstractFormButton implements FormButton
     private $onclick_action = '';
     private $css_class;
 
-    public function __construct($type, $label, $name, $onclick_action = '', $css_class = 'submit')
+    public function __construct($type, $label, $name, $onclick_action = '', $css_class = '')
     {
         $this->type = $type;
         $this->label = $label;
