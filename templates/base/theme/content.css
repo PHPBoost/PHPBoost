@@ -499,15 +499,15 @@ option {
 
 legend {
 	display:block;
-	padding:10px 10px;
+	padding:10px 10px 2px 0px;
+	margin:0px 0px 10px -6px;
 	width: 100%;
-	margin-bottom:20px;
 	text-transform:none;
 	color:#333333;
 	font-size:1.5em;
 	font-weight:bold;
 	vertical-align:middle;
-	text-transform:uppercase;
+	text-transform:capitalize;
 	border-bottom:1px solid #DDDDDD;
 }
 
