@@ -51,7 +51,7 @@
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPLOAD}</legend>
-					<input type="submit" value="{L_UPLOAD}" class="submit">				
+					<button type="submit" name="" value="true">{L_UPLOAD}</button>				
 				</fieldset>
 			</form>
 							
@@ -74,7 +74,7 @@
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>
-					<input type="submit" name="add" value="{L_ADD}" class="submit">
+					<button type="submit" name="add" value="true">{L_ADD}</button>
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>	

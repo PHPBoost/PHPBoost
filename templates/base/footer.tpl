@@ -17,7 +17,7 @@
 		{MENUS_FOOTER_CONTENT}
 		# ENDIF #
 		<span>
-			{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
+			{L_POWERED_BY} <a style="font-size:10px" href="http://phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
 		</span>	
 		# IF C_DISPLAY_BENCH #
 		<span>

@@ -78,7 +78,7 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPLOAD_IMG}</legend>
 					<input type="hidden" name="max_file_size" value="2000000">
-					<input type="submit" value="{L_UPLOAD_IMG}" class="submit">
+					<button type="submit" name="" value="true">{L_UPLOAD_IMG}</button>
 				</fieldset>	
 			</form>
 			
@@ -170,7 +170,7 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="nbr_pics" value="{NBR_PICS}">
-					<input type="submit" name="valid" value="{L_SUBMIT}" class="submit">
+					<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 				</fieldset>			
 			</form>
 		</div>	

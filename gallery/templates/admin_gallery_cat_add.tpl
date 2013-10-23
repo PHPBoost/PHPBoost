@@ -82,7 +82,7 @@
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>
-					<input type="submit" name="add" value="{L_ADD}" class="submit">
+					<button type="submit" name="add" value="true">{L_ADD}</button>
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset">	
 				</fieldset>	

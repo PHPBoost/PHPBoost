@@ -90,7 +90,7 @@
 	
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
-		<input type="submit" name="update_themes_configuration" value="{L_UPDATE}" class="submit">
+		<button type="submit" name="update_themes_configuration" value="true">{L_UPDATE}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="update" value="true">
 		&nbsp;&nbsp; 

@@ -464,7 +464,7 @@ function createSortableMenu()
 		</script>
 		
 		<div id="valid_position_menus">
-			<input type="submit" name="valid" value="{L_VALID_POSTIONS}" class="submit">
+			<button type="submit" name="valid" value="true">{L_VALID_POSTIONS}</button>
 			<input type="hidden" name="theme" value="{NAME_THEME}">
 			<input type="hidden" name="token" value="{TOKEN}">
 		</div>

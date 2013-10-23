@@ -76,7 +76,7 @@ function CheckForm() {
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="action" value="{ACTION}">
 			# IF C_EDIT #<input type="hidden" name="id" value="{IDMENU}"># ENDIF #
-			<input type="submit" name="valid" value="{L_ACTION}" class="submit">
+			<button type="submit" name="valid" value="true">{L_ACTION}</button>
 			<input type="hidden" name="token" value="{TOKEN}">
 		</fieldset>	
 	</form>

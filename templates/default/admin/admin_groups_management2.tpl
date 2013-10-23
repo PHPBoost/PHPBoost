@@ -168,7 +168,7 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{GROUP_ID}" class="update">
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
+					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset">
 					<input type="hidden" name="token" value="{TOKEN}">
@@ -196,7 +196,7 @@
 				</fieldset>	
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>
-					<input type="submit" name="add_mbr" value="{L_ADD}" class="submit">
+					<button type="submit" name="add_mbr" value="true">{L_ADD}</button>
 					<input type="hidden" value="{TOKEN}" name="token">
 				</fieldset>
 			</form>
@@ -262,7 +262,7 @@
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPLOAD}</legend>
-					<input type="submit" value="{L_UPLOAD}" class="submit">
+					<button type="submit" name="" value="true">{L_UPLOAD}</button>
 					<input type="hidden" value="{TOKEN}" name="token">
 				</fieldset>
 			</form>
@@ -312,7 +312,7 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>
 					<input type="hidden" name="add" value="1">
-					<input type="submit" name="valid" value="{L_ADD}" class="submit">
+					<button type="submit" name="valid" value="true">{L_ADD}</button>
 					<input type="hidden" value="{TOKEN}" name="token">
 				</fieldset>
 			</form>

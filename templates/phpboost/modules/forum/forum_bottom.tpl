@@ -41,7 +41,7 @@
 						<p style="margin-bottom:8px;" class="smaller"><label>{L_PSEUDO} <input size="15" type="text" class="text" name="login" maxlength="25"></label>
 						<label>{L_PASSWORD}	<input size="15" type="password" name="password" class="text" maxlength="30"></label>
 						&nbsp;| <label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked"></label>
-						&nbsp;| <input type="submit" name="connect" value="{L_CONNECT}" class="submit"></p>
+						&nbsp;| <button type="submit" name="connect" value="true">{L_CONNECT}</button></p>
 					</form>
 					# ENDIF #	
 				# ENDIF #	
@@ -60,7 +60,7 @@
                                 {SELECT_CAT}
                             </select>
                             <noscript>
-                                <div><input type="submit" name="valid_change_cat" value="Go" class="submit"></div>
+                                <div><button type="submit" name="valid_change_cat" value="true">Go</button></div>
                             </noscript>
                         </div>
 					</form>

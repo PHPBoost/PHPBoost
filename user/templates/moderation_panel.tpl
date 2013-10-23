@@ -178,7 +178,7 @@
 								<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 									{SELECT}
 								</select>
-								<input type="submit" name="valid_user" value="{L_CHANGE_INFO}" class="submit">					
+								<button type="submit" name="valid_user" value="true">{L_CHANGE_INFO}</button>					
 							</td>
 						</tr>
 					</table>
@@ -224,7 +224,7 @@
 						</tr>
 						<tr>
 							<td class="row2" colspan="2" style="text-align:center;">
-								<input type="submit" name="valid_user" value="{L_BAN}" class="submit">					
+								<button type="submit" name="valid_user" value="true">{L_BAN}</button>					
 							</td>
 						</tr>
 					</table>

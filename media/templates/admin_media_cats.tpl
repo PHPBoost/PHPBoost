@@ -39,7 +39,7 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}">
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit">
+					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
 				</fieldset>
 			</form>
 			# END removing_interface #
@@ -206,7 +206,7 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}">
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit">
+					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
 					&nbsp;&nbsp;
 					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;"" class="submit">
 					&nbsp;&nbsp;

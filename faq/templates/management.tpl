@@ -128,7 +128,7 @@
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
-						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit">
+						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 						&nbsp;&nbsp; 
 						<input type="reset" value="{L_RESET}" class="reset">
 						<input type="hidden" id="id_faq" name="id_faq" value="{category.ID_FAQ}">
@@ -235,7 +235,7 @@
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
-						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit">
+						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 						&nbsp;&nbsp;
 						<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button">
 						&nbsp;&nbsp;
@@ -272,7 +272,7 @@
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_MOVE}</legend>
-						<input type="submit" name="submit" value="{L_MOVE}" class="submit">
+						<button type="submit" name="submit" value="true">{L_MOVE}</button>
 						<input type="hidden" name="id_question" value="{move_question.ID_QUESTION}">
 						<input type="hidden" name="move_question" value="true">
 					</fieldset>					

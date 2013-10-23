@@ -16,7 +16,7 @@
 					<input type="checkbox" name="sub_cats" value="1"{SUB_CATS}>
 				</div>
 				<div style="margin-top:20px;text-align:center;">
-					<input type="submit" name="filter" value="{L_SUBMIT}" class="submit">
+					<button type="submit" name="filter" value="true">{L_SUBMIT}</button>
 					&nbsp;&nbsp;
 					<input type="reset" value="{L_RESET}" class="reset">
 				</div>
@@ -132,7 +132,7 @@
 			</fieldset>
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" name="submit" value="{L_SUBMIT}" class="submit">
+				<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
 				&nbsp;&nbsp;
 				<input type="reset" value="{L_RESET}" class="reset">
 			</fieldset>

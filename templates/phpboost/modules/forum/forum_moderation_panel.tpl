@@ -81,7 +81,7 @@
 						<tr>
 							<td class="row3" colspan="4" style="text-align:center;">
 								# IF C_FORUM_ADMIN #
-								<span style="float:left"><input type="submit" name="valid" value="{L_DELETE}" class="submit"></span> 
+								<span style="float:left"><button type="submit" name="valid" value="true">{L_DELETE}</button></span> 
 								# ENDIF #
 								# IF C_DISPLAY_LINK_MORE_ACTION #
 								<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
@@ -152,7 +152,7 @@
 						# ENDIF #				
 						<tr>
 							<td class="row2" colspan="6">
-								&nbsp;<input type="submit" value="{L_DELETE}" class="submit">
+								&nbsp;<button type="submit" name="" value="true">{L_DELETE}</button>
 							</td>
 						</tr>
 					</table>
@@ -228,7 +228,7 @@
 				<form action="{U_CHANGE_STATUS}" method="post">
 					<fieldset class="fieldset_submit" style="padding-top:25px;">
 						<legend></legend>
-						<input type="submit" name="valid" value="{L_CHANGE_STATUS}" class="submit">
+						<button type="submit" name="valid" value="true">{L_CHANGE_STATUS}</button>
 					</fieldset>		
 				</form>
 				# ENDIF #
@@ -402,7 +402,7 @@
 								<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 									{SELECT}
 								</select></label>	
-								<input type="submit" name="valid_user" value="{L_CHANGE_INFO}" class="submit">				
+								<button type="submit" name="valid_user" value="true">{L_CHANGE_INFO}</button>				
 							</td>
 						</tr>
 					</table>

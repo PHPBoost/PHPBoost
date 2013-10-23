@@ -357,7 +357,7 @@
 									<input type="file" name="upload_file" size="30" class="file">					
 									<input type="hidden" name="max_file_size" value="2000000">
 									<br />
-									<input type="submit" name="valid_up" value="{L_UPLOAD}" class="submit">							
+									<button type="submit" name="valid_up" value="true">{L_UPLOAD}</button>							
 							</span>	
 							<span style="float:right;text-align:right">
 								{L_FOLDERS}: <strong><span id="total_folder">{TOTAL_FOLDERS}</span></strong><br />

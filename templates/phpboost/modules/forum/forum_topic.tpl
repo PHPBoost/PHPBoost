@@ -341,7 +341,7 @@
 					<label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 					<fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
 						<legend>{L_SUBMIT}</legend>
-						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit">
+						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 						&nbsp;&nbsp;
 						<script type="text/javascript">
 						<!--				

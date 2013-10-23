@@ -78,7 +78,7 @@
 						<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
 							<input type="hidden" name="p_update" value="{P_UPDATE}">
-							<input type="submit" name="edit_msg" value="{L_SUBMIT}" class="submit">
+							<button type="submit" name="edit_msg" value="true">{L_SUBMIT}</button>
 							&nbsp;&nbsp; 									
 							<input value="{L_PREVIEW}" type="submit" name="prw" id="previs_msg" class="submit">
 							<script type="text/javascript">

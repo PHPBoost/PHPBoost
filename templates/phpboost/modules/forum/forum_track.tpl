@@ -99,7 +99,7 @@
 				</div>
 			</div>
 			<div style="text-align:center;margin-top:10px;">
-				<input type="submit" name="valid" value="{L_SUBMIT}" class="submit">
+				<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 			</div>
 		</form>
 		

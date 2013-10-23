@@ -28,7 +28,7 @@
 						<br />
 						<p class="auto_connect">{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto" class="submit"> </p>
 						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
-						<input type="submit" name="connect" value="{L_CONNECT}" class="submit">
+						<button type="submit" name="connect" value="true">{L_CONNECT}</button>
 					</form>
 				</ul>
 			</li>
