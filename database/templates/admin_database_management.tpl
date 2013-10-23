@@ -142,9 +142,9 @@
 								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="optimize" class="valign_middle" /></td>
 							</tr>
 							<tr>
-								<td><input type="submit" name="optimize" value="{L_OPTIMIZE}" class="submit"></td>
-								<td>&nbsp;&nbsp;<input type="submit" name="repair" value="{L_REPAIR}" class="submit"></td>
-								<td>&nbsp;&nbsp;<input type="submit" name="backup" value="{L_BACKUP}" class="submit"></td>
+								<td><button type="submit" name="optimize" value="true">{L_OPTIMIZE}</button></td>
+								<td>&nbsp;&nbsp;<button type="submit" name="repair" value="true">{L_REPAIR}</button></td>
+								<td>&nbsp;&nbsp;<button type="submit" name="backup" value="true">{L_BACKUP}</button></td>
 							</tr>
 						</table>
 					</div>
@@ -248,7 +248,7 @@
 							<label><input type="radio" name="backup_type" value="struct"> {L_BACKUP_STRUCT}</label>
 							<label><input type="radio" name="backup_type" value="data"/> {L_BACKUP_DATA}</label>
 							<br /><br />
-							<input type="submit" value="{L_BACKUP}" class="submit">
+							<button type="submit" name="" value="true">{L_BACKUP}</button>
 						</td>
 					</tr>
 				</table>

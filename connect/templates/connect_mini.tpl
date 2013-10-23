@@ -31,7 +31,7 @@
 					<p>
 						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
 						<input type="hidden" name="token" value="{TOKEN}">
-						<input type="submit" name="connect" value="{L_CONNECT}" class="submit">
+						<button type="submit" name="connect" value="true">{L_CONNECT}</button>
 					</p>
 					<p class="connect_register">
 						# IF C_USER_REGISTER # 
@@ -107,11 +107,11 @@
 			<input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
 			<input checked="checked" type="checkbox" name="auto">
 			<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
-			<input type="submit" name="connect" value="{L_CONNECT}" class="submit"></p>
+			<button type="submit" name="connect" value="true">{L_CONNECT}</button></p>
 		</form>
 		# IF C_USER_REGISTER #
 		<form action="{U_REGISTER}" method="post" class="connect_align">
-			<p class="connect_inline"><input type="submit" name="register" value="{L_REGISTER}" class="submit"></p>
+			<p class="connect_inline"><button type="submit" name="register" value="true">{L_REGISTER}</button></p>
 		</form>
 		# ENDIF #
 	</div>

@@ -102,7 +102,7 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" value="{L_SUBMIT}" class="submit">
+				<button type="submit" name="" value="true">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END rename #
@@ -124,7 +124,7 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" value="{L_SUBMIT}" class="submit">
+				<button type="submit" name="" value="true">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END new #

@@ -225,7 +225,7 @@ function deleteElement(element_id)
 			<input type="hidden" name="id" value="{MENU_ID}">
 			<input type="hidden" name="token" value="{TOKEN}">
 			<input type="hidden" name="menu_tree" id="menu_tree" value="">
-			<input type="submit" name="valid" value="{L_ACTION}" class="submit">					
+			<button type="submit" name="valid" value="true">{L_ACTION}</button>					
 		</fieldset>
 	</form>
 </div>

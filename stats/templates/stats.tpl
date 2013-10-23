@@ -246,7 +246,7 @@
 							</select>
 							# ENDIF #
 							<input type="hidden" name="{TYPE}" value="1">
-							<input type="submit" name="date" value="{L_SUBMIT}" class="submit">
+							<button type="submit" name="date" value="true">{L_SUBMIT}</button>
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="stats{U_NEXT_LINK}#stats">&raquo;</a>				
 						</div>

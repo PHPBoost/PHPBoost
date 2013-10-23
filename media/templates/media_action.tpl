@@ -116,7 +116,7 @@
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="idedit" value="{IDEDIT}">
 					<input type="hidden" name="contrib" value="{C_CONTRIBUTION}">
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit">
+					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
 					&nbsp;&nbsp;
                     <script type="text/javascript">
                     <!--

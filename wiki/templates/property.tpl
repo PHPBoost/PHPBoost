@@ -5,7 +5,7 @@
 				<p style="text-align:center">
 					{L_EXPLAIN_DEFAULT}
 					<br />
-					<input type="submit" name="default" value="{L_DEFAULT}" class="reset">
+					<button type="submit" name="default" value="true">{L_DEFAULT}</button>
 				</p>
 				<br />
 				<hr />
@@ -53,7 +53,7 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
+				<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 				&nbsp;&nbsp; 
 				<input type="reset" value="{L_RESET}" class="reset">
 				<input type="hidden" name="id_auth" value="{auth.ID}">

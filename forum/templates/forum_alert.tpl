@@ -49,7 +49,7 @@
 								<br />
 								<input type="hidden" name="id" value="{alert_form.ID_ALERT}">
 								<p style="text-align:center;">
-									<input type="submit" name="edit_msg" value="{L_SUBMIT}" class="submit">
+									<button type="submit" name="edit_msg" value="true">{L_SUBMIT}</button>
 									&nbsp;&nbsp; 
 									<script type="text/javascript">
 									<!--				

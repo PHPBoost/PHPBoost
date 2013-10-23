@@ -84,7 +84,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="6">
-									<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<input type="submit" name="valid" value="{L_DELETE}" class="submit"></div>
+									<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<button type="submit" name="valid" value="true">{L_DELETE}</button></div>
 									<div style="float:right;">{convers.PAGINATION}&nbsp;</div>
 								</th>
 							</tr>
@@ -267,7 +267,7 @@
 				<textarea class="post" rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 				<fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
 				<legend>{L_SUBMIT}</legend>
-					<input type="submit" name="pm" value="{L_SUBMIT}" class="submit">
+					<button type="submit" name="pm" value="true">{L_SUBMIT}</button>
 					&nbsp;&nbsp; 									
 					<input value="{L_PREVIEW}" type="submit" name="prw" id="prw_pm" class="submit">
 					<script type="text/javascript">
@@ -409,7 +409,7 @@
 						
 						<fieldset class="fieldset_submit">
 							<legend>{L_SUBMIT}</legend>
-							<input type="submit" name="convers" value="{L_SUBMIT}" class="submit">
+							<button type="submit" name="convers" value="true">{L_SUBMIT}</button>
 								&nbsp;&nbsp; 
 								<input value="{L_PREVIEW}" type="submit" name="prw_convers" id="prw_convers_pm" class="submit">
 								<script type="text/javascript">

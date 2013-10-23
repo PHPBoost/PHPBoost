@@ -72,7 +72,7 @@ $site_path = $general_config->get_site_path();
 			</dd>	
 		</dl>
 		<div>
-			<input type="submit" name="submit" value="Submit" class="submit">
+			<button type="submit" name="submit" value="true">Submit</button>
 		</div>
 	</fieldset>
 </form>

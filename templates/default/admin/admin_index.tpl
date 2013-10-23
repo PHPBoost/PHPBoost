@@ -91,7 +91,7 @@
 								<div class="block_contents">
 									<textarea id="writing_pad_content" name="writing_pad_content" cols="15" rows="10" style="height:243px">{WRITING_PAD_CONTENT}</textarea> 
 									<p style="text-align:center;margin:0;margin-top:8px;">
-										<input type="submit" name="writingpad" value="{L_UPDATE}" class="submit">
+										<button type="submit" name="writingpad" value="true">{L_UPDATE}</button>
 											&nbsp;&nbsp; 
 										<input type="reset" value="{L_RESET}" class="reset">
 									</p>

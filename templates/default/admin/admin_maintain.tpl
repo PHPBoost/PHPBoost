@@ -72,7 +72,7 @@
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
+					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 					<script type="text/javascript">
 					<!--				
 					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');

@@ -88,7 +88,7 @@
 						</tr>	
 						# END topics #
 					</table>
-					<div style="margin-top:10px;text-align:center"><input type="submit" name="valid" value="{L_SUBMIT}" class="submit"></div>
+					<div style="margin-top:10px;text-align:center"><button type="submit" name="valid" value="true">{L_SUBMIT}</button></div>
 				</div>
 			</div>
 		</form>

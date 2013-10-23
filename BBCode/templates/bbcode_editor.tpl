@@ -278,7 +278,7 @@ function XMLHttpRequest_preview(field)
 
 			<i class="bbcode-icon-separate"></i>
 
-			<a href="http://www.phpboost.com/wiki/bbcode" title="{L_BB_HELP}"><i class="bbcode-icon-help"></i></a>
+			<a href="http://phpboost.com/wiki/bbcode" title="{L_BB_HELP}"><i class="bbcode-icon-help"></i></a>
 		</div>
 	</div>
 	

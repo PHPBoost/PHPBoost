@@ -70,7 +70,7 @@
 								</fieldset>			
 								<fieldset class="fieldset_submit" style="margin-bottom:0px;">
 									<legend>{L_SEARCH}</legend>
-									<input type="submit" name="valid_search" value="{L_SEARCH}" class="submit">			
+									<button type="submit" name="valid_search" value="true">{L_SEARCH}</button>			
 								</fieldset>
 							</div>	
 						</div>

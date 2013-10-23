@@ -131,9 +131,9 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{IDWEB}">
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
+					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 					&nbsp;&nbsp; 
-					<input type="submit" name="previs" value="{L_PREVIEW}" class="submit">
+					<button type="submit" name="previs" value="true">{L_PREVIEW}</button>
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>	
