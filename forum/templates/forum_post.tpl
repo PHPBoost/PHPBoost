@@ -222,7 +222,7 @@
 							-->
 							</script>
 							&nbsp;&nbsp;
-							<input type="reset" value="{L_RESET}" class="reset">
+							<button type="reset" value="true">{L_RESET}</button>
 						
 							# IF C_DISPLAY_MSG #
 							<br /><br /><br />

@@ -350,7 +350,7 @@
 						</script>
 						<noscript><div><input value="{L_PREVIEW}" type="submit" name="prw" class="submit"></div></noscript>
 						&nbsp;&nbsp;
-						<input type="reset" value="{L_RESET}" class="reset">
+						<button type="reset" value="true">{L_RESET}</button>
 					</fieldset>
 				</div>
 			</form>

@@ -18,7 +18,7 @@
 				<div style="margin-top:20px;text-align:center;">
 					<button type="submit" name="filter" value="true">{L_SUBMIT}</button>
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset">
+					<button type="reset" value="true">{L_RESET}</button>
 				</div>
 			</fieldset>
 		</form>
@@ -134,7 +134,7 @@
 				<legend>{L_SUBMIT}</legend>
 				<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
 				&nbsp;&nbsp;
-				<input type="reset" value="{L_RESET}" class="reset">
+				<button type="reset" value="true">{L_RESET}</button>
 			</fieldset>
 		</form>
 		# IF C_ADMIN #

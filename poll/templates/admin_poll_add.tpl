@@ -194,7 +194,7 @@
 					<legend>{L_SUBMIT}</legend>
 					<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset">				
+					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>					
 			</form>
 		</div>

@@ -142,7 +142,7 @@
 					&nbsp;&nbsp;
 					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit">
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset">				
+					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>
 			</form>
 		</div>

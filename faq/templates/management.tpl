@@ -130,7 +130,7 @@
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 						&nbsp;&nbsp; 
-						<input type="reset" value="{L_RESET}" class="reset">
+						<button type="reset" value="true">{L_RESET}</button>
 						<input type="hidden" id="id_faq" name="id_faq" value="{category.ID_FAQ}">
 					</fieldset>
 				</form>
@@ -239,7 +239,7 @@
 						&nbsp;&nbsp;
 						<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button">
 						&nbsp;&nbsp;
-						<input type="reset" value="{L_RESET}" class="reset">
+						<button type="reset" value="true">{L_RESET}</button>
 						<input type="hidden" name="id_question" value="{edit_question.ID_QUESTION}">
 						<input type="hidden" name="id_cat" value="{edit_question.ID_CAT}">
 						<input type="hidden" name="after" value="{edit_question.ID_AFTER}">

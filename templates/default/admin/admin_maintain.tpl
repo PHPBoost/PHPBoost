@@ -79,7 +79,7 @@
 					-->
 					</script>
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset">	
+					<button type="reset" value="true">{L_RESET}</button>	
 					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>	
 			</form>	

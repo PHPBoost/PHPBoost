@@ -53,7 +53,7 @@ function check_msg(){
             <input type="hidden" name="action" value="{ACTION}">
             <input type="hidden" name="id" value="{IDMENU}">
             <button type="submit" name="valid" value="true">{L_ACTION}</button>
-            <input type="reset" value="{L_RESET}" class="reset">
+            <button type="reset" value="true">{L_RESET}</button>
 			<input type="hidden" name="token" value="{TOKEN}">			
         </fieldset> 
     </form>
