@@ -124,6 +124,7 @@ $lang['bugs.labels.fields.reproductible'] = 'Reproductible';
 $lang['bugs.labels.fields.reproduction_method'] = 'Méthode de reproduction';
 $lang['bugs.labels.fields.severity'] = 'Niveau';
 $lang['bugs.labels.fields.priority'] = 'Priorité';
+$lang['bugs.labels.fields.progress'] = 'Avancement';
 $lang['bugs.labels.fields.detected_in'] = 'Détecté dans la version';
 $lang['bugs.labels.fields.fixed_in'] = 'Corrigé dans la version';
 $lang['bugs.labels.fields.assigned_to_id'] = 'Assigné à';
