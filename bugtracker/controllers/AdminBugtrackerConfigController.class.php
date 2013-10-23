@@ -331,11 +331,13 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		foreach ($severities as $key => $severity)
 		{
+			$color_field = new FormFieldColorPicker('s_color' . $key, '', $severity['color']);
+			
 			$severities_table->assign_block_vars('severities', array(
 				'C_IS_DEFAULT'	=> $this->config->get_default_severity() == $key,
 				'ID'			=> $key,
 				'NAME'			=> stripslashes($severity['name']),
-				'COLOR'			=> $severity['color']
+				'COLOR'			=> $color_field->display()
 			));
 		}
 		
@@ -504,7 +506,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			foreach ($severities as $key => $severity)
 			{
 				$new_severity_name = $request->get_value('severity' . $key, '');
-				$new_severity_color = $request->get_value('s_color' . $key, '');
+				$new_severity_color = $request->get_value('_s_color' . $key, '');
 				$severities[$key]['name'] = (!empty($new_severity_name) && $new_severity_name != $severity['name']) ? $new_severity_name : $severity['name'];
 				$severities[$key]['color'] = ($new_severity_color != $severity['color']) ? $new_severity_color : $severity['color'];
 			}
