@@ -167,7 +167,18 @@ class ArticlesFormController extends ModuleController
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 		$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->lang['articles.form.category'], ($id_category === null ? $this->get_article()->get_id_category() : $id_category), $search_category_children_options));
 		
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('description', $this->lang['articles.form.description'], $this->get_article()->get_description()));
+		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.form.description_enabled'], $this->get_article()->get_description_enabled(), 
+			array('description' => StringVars::replace_vars($this->lang['articles.form.description_enabled.description'], array('number' => (ArticlesConfig::DISPLAY_TYPE == ArticlesConfig::DISPLAY_MOSAIC) ? Articles::NBR_CHARACTER_TO_CUT_MOSAIC : Articles::NBR_CHARACTER_TO_CUT_LIST)), 'events' => array('click' => '
+			if (HTMLForms.getField("enable_description").getValue()) {
+				HTMLForms.getField("description").enable();
+			} else { 
+				HTMLForms.getField("description").disable();
+			}'))
+		));
+		
+		$fieldset->add_field(new FormFieldRichTextEditor('description', StringVars::replace_vars($this->lang['articles.form.description'],array('number' =>(ArticlesConfig::DISPLAY_TYPE == ArticlesConfig::DISPLAY_MOSAIC) ? Articles::NBR_CHARACTER_TO_CUT_MOSAIC : Articles::NBR_CHARACTER_TO_CUT_LIST)), $this->get_article()->get_description(),
+			array('rows' => 3, 'hidden' => !$this->get_article()->get_description_enabled())
+		));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['articles.form.contents'], $this->get_article()->get_contents(),
 			array('rows' => 15, 'required' => true)

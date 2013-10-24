@@ -118,13 +118,13 @@
 				   
 					    
 					<meta itemprop="url" content="{articles.U_ARTICLE}">
-					<meta itemprop="description" content="{articles.DESCRIPTION}">
+					<meta itemprop="description" content="{articles.CLEAN_DESCRIPTION}">
 					<meta itemprop="datePublished" content="{articles.DATE_ISO8601}">
 					<meta itemprop="discussionUrl" content="{articles.U_COMMENTS}">
 					# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{articles.PICTURE}"># ENDIF #
 					<meta itemprop="interactionCount" content="{articles.NUMBER_COMMENTS} UserComments">
 						
-					<div itemprop="description" class="description">{articles.SHORT_DESCRIPTION}</div>
+					<div itemprop="description" class="description">{articles.DESCRIPTION}</div>
 					<a itemprop="url" href="{articles.U_ARTICLE}" class="button_read_more">${i18n('articles.read_more')}</a>
 					# IF articles.C_KEYWORDS #
 					<div itemprop="url" class="article_tags">
@@ -179,13 +179,13 @@
 						</span>
 				   </aside>
 					<meta itemprop="url" content="{articles.U_ARTICLE}">
-					<meta itemprop="description" content="{articles.DESCRIPTION}">
+					<meta itemprop="description" content="{articles.CLEAN_DESCRIPTION}">
 					<meta itemprop="datePublished" content="{articles.DATE_ISO8601}">
 					<meta itemprop="discussionUrl" content="{articles.U_COMMENTS}">
 					# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{articles.PICTURE}"># ENDIF #
 					<meta itemprop="interactionCount" content="{articles.L_COMMENTS} UserComments">
 					
-					<div itemprop="description" class="description">{articles.SHORT_DESCRIPTION}</div>
+					<div itemprop="description" class="description">{articles.DESCRIPTION}</div>
 					<a itemprop="url" style="margin-left:10px;" href="{articles.U_ARTICLE}" class="button_read_more">${i18n('articles.read_more')}</a>
 					# IF articles.C_KEYWORDS #
 					<div itemprop="keywords" class="article_tags">

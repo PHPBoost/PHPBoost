@@ -126,25 +126,28 @@ class Articles
 		return $this->description;
 	}
 	
-	public function get_short_description()
-	{		
-		$description = FormatingHelper::second_parse($this->description);
-		
-		if (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC)
-		{
-			$short_description = strlen($description > self::NBR_CHARACTER_TO_CUT_MOSAIC - 4) ? TextHelper::substr_html($description, 0, self::NBR_CHARACTER_TO_CUT_MOSAIC) . '...' : $description;
-		}
-		else
-		{
-			$short_description = strlen($description > self::NBR_CHARACTER_TO_CUT_LIST - 4) ? TextHelper::substr_html($description, 0, self::NBR_CHARACTER_TO_CUT_LIST) . '...' : $description;
-		}
-		
-		return $short_description;
+	public function get_description_enabled()
+	{
+		return !empty($this->description);
 	}
 	
 	public function get_clean_description()
 	{
-		return TextHelper::substr_html($this->description, 0);
+		if ($this->get_description_enabled())
+		{
+			return TextHelper::substr_html(@strip_tags($this->description), 0);
+		}
+		else
+		{
+			if (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC)
+			{
+			    return TextHelper::substr_html(@strip_tags($this->contents), 0, self::NBR_CHARACTER_TO_CUT_MOSAIC) . '...';
+			}
+			else
+			{
+			    return TextHelper::substr_html(@strip_tags($this->contents), 0, self::NBR_CHARACTER_TO_CUT_LIST) . '...';
+			}
+		}
 	}
 	
 	public function set_contents($contents)
@@ -156,7 +159,26 @@ class Articles
 	{
 		return $this->contents;
 	}
-
+	
+	public function get_real_description()
+	{			
+	    if ($this->get_description_enabled())
+	    {
+		    return FormatingHelper::second_parse($this->description);
+	    }
+	    else
+	    {
+		    if (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC)
+		    {
+			return FormatingHelper::second_parse(TextHelper::substr_html($this->contents, 0, self::NBR_CHARACTER_TO_CUT_MOSAIC)) . '...';
+		    }
+		    else
+		    {
+			return FormatingHelper::second_parse(TextHelper::substr_html($this->contents, 0, self::NBR_CHARACTER_TO_CUT_LIST)) . '...';
+		    }
+	    }
+	}
+	
 	public function set_picture(Url $picture)
 	{
 		$this->picture_url = $picture;
@@ -439,8 +461,8 @@ class Articles
 			'NUMBER_VIEW' => $this->get_number_view(),
 			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
 			'PSEUDO' => $user->get_pseudo(),
-			'DESCRIPTION' => FormatingHelper::second_parse($this->get_description()),
-			'SHORT_DESCRIPTION' => $this->get_short_description(),
+			'DESCRIPTION' => $this->get_real_description(),
+			'CLEAN_DESCRIPTION' => $this->get_clean_description(),
 			'PICTURE' => $this->get_picture()->rel(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
