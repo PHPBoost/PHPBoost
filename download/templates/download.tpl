@@ -12,7 +12,7 @@
 						# ENDIF #
 						# IF IS_ADMIN #
 						<li>
-							<a href="{U_MANAGE_FILES}" title="{L_MANAGE_FILES}">{L_MANAGE_FILES}</a>
+							<a href="{U_CONFIG}" title="{L_CONFIG}">{L_CONFIG}</a>
 						<li>
 						# ENDIF #
 					</ul>
