@@ -28,11 +28,11 @@
 # ELSE #
 <div id="newsletter">
 	<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
-		<div class="newsletter_form">
+		<div class="newsletter_form input-element-button">
 			<span class="newsletter_title">{L_NEWSLETTER}</span> 
 			<input type="text" name="mail_newsletter" maxlength="50" class="newsletter_text" value="{USER_MAIL}">
-			<button type="submit" class="newsletter_submit" ><i class="icon-envelope-alt"></i></button>
 			<input type="hidden" name="subscribe" value="subscribe">
+			<button type="submit" class="newsletter_submit" ><i class="icon-envelope-alt"></i></button>
 		</div>
 	</form>
 </div>
