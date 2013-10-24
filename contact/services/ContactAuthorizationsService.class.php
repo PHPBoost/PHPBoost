@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       AdminContactExtendedFieldDeleteController.class.php
+ *                               ContactAuthorizationsService.class.php
  *                            -------------------
- *   begin                : March 1, 2013
+ *   begin                : August 6, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -25,30 +25,24 @@
  *
  ###################################################*/
 
-class AdminContactExtendedFieldDeleteController extends AdminController
+class ContactAuthorizationsService
 {
-	public function execute(HTTPRequestCustom $request)
+	const READ_AUTHORIZATIONS = 1;
+	
+	public static function check_authorizations()
 	{
-		AppContext::get_session()->csrf_post_protect();
-		
-		$id = $request->get_int('id', null);
-		
-		if ($id !== null)
-		{
-			$extended_field = new ExtendedField();
-			$extended_field->set_id($id);
-			$exist_field = ContactExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field);
-			if ($exist_field)
-			{
-				ContactExtendedFieldsService::delete_by_id($id);
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
+		$instance = new self();
+		return $instance;
+	}
+	
+	public function read()
+	{
+		return $this->get_authorizations(self::READ_AUTHORIZATIONS);
+	}
+	
+	private function get_authorizations($bit)
+	{
+		return AppContext::get_current_user()->check_auth(ContactConfig::load()->get_authorizations(), $bit);
 	}
 }
-
 ?>

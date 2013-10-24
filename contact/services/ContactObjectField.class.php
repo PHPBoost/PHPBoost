@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             ContactSetup.class.php
+ *                               ContactObjectField.class.php
  *                            -------------------
- *   begin                : March 1, 2013
+ *   begin                : September 24, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -25,16 +25,23 @@
  *
  ###################################################*/
 
-class ContactSetup extends DefaultModuleSetup
+ /**
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ * @desc This class represents the contact object field
+ * @package {@package}
+ */
+class ContactObjectField extends ContactField
 {
-	public function uninstall()
+	private $recipients;
+	
+	public function set_recipients($value)
 	{
-		$this->delete_configuration();
+		$this->recipients = $recipients;
 	}
 	
-	private function delete_configuration()
+	public function get_recipients()
 	{
-		ConfigManager::delete('contact', 'config');
+		return $this->recipients;
 	}
 }
 ?>

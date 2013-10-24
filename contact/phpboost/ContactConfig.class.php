@@ -36,19 +36,13 @@ class ContactConfig extends AbstractConfigData
 	const INFORMATIONS_ENABLED = 'informations_enabled';
 	const INFORMATIONS = 'informations';
 	const INFORMATIONS_POSITION = 'informations_position';
-	const SUBJECT_FIELD_MANDATORY = 'subject_field_mandatory';
-	const SUBJECT_FIELD_TYPE = 'subject_field_type';
-	const SUBJECT_FIELD_POSSIBLE_VALUES = 'subject_field_possible_values';
-	const SUBJECT_FIELD_DEFAULT_VALUE = 'subject_field_default_value';
-	const DISPLAY_SUBJECT_FIELD = 'display_subject_field';
+	const FIELDS = 'fields';
+	const AUTHORIZATIONS = 'authorizations';
 	
 	const LEFT = 'left';
 	const TOP = 'top';
 	const RIGHT = 'right';
 	const BOTTOM = 'bottom';
-	
-	const TEXT_TYPE = 'text';
-	const SELECT_TYPE = 'select';
 	
 	public function get_title()
 	{
@@ -70,7 +64,7 @@ class ContactConfig extends AbstractConfigData
 		$this->set_property(self::INFORMATIONS_ENABLED, false);
 	}
 	
-	public function is_informations_enabled()
+	public function are_informations_enabled()
 	{
 		return $this->get_property(self::INFORMATIONS_ENABLED);
 	}
@@ -95,94 +89,110 @@ class ContactConfig extends AbstractConfigData
 		$this->set_property(self::INFORMATIONS_POSITION, $value);
 	}
 	
-	public function is_informations_left()
+	public function are_informations_left()
 	{
-		return $this->get_property(self::INFORMATIONS_POSITION) == self::LEFT ? true : false;
+		return $this->get_property(self::INFORMATIONS_POSITION) == self::LEFT;
 	}
 	
-	public function is_informations_top()
+	public function are_informations_top()
 	{
-		return $this->get_property(self::INFORMATIONS_POSITION) == self::TOP ? true : false;
+		return $this->get_property(self::INFORMATIONS_POSITION) == self::TOP;
 	}
 	
-	public function is_informations_right()
+	public function are_informations_right()
 	{
-		return $this->get_property(self::INFORMATIONS_POSITION) == self::RIGHT ? true : false;
+		return $this->get_property(self::INFORMATIONS_POSITION) == self::RIGHT;
 	}
 	
-	public function is_informations_bottom()
+	public function are_informations_bottom()
 	{
-		return $this->get_property(self::INFORMATIONS_POSITION) == self::BOTTOM ? true : false;
+		return $this->get_property(self::INFORMATIONS_POSITION) == self::BOTTOM;
 	}
 	
-	public function subject_field_mandatory()
+	public function get_fields()
 	{
-		$this->set_property(self::SUBJECT_FIELD_MANDATORY, true);
+		return $this->get_property(self::FIELDS);
 	}
 	
-	public function not_subject_field_mandatory()
+	public function set_fields(Array $array)
 	{
-		$this->set_property(self::SUBJECT_FIELD_MANDATORY, false);
+		$this->set_property(self::FIELDS, $array);
 	}
 	
-	public function is_subject_field_mandatory()
+	public function get_field_id_by_name($name)
 	{
-		return $this->get_property(self::SUBJECT_FIELD_MANDATORY);
+		$id = null;
+		foreach (self::get_fields() as $key => $field)
+		{
+			if ($field->get_field_name() == $name)
+				$id = $key;
+		}
+		return $id;
 	}
 	
-	public function display_subject_field()
+	/**
+	 * @method Get authorizations
+	 */
+	public function get_authorizations()
 	{
-		$this->set_property(self::DISPLAY_SUBJECT_FIELD, true);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 	
-	public function not_display_subject_field()
+	 /**
+	 * @method Set authorizations
+	 * @params string[] $array Array of authorizations
+	 */
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::DISPLAY_SUBJECT_FIELD, false);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
-	public function is_subject_field_displayed()
+	private function init_fields_array()
 	{
-		return $this->get_property(self::DISPLAY_SUBJECT_FIELD);
-	}
-	
-	public function is_subject_field_text()
-	{
-		return $this->get_property(self::SUBJECT_FIELD_TYPE) == self::TEXT_TYPE ? true : false;
-	}
-	
-	public function is_subject_field_select()
-	{
-		return $this->get_property(self::SUBJECT_FIELD_TYPE) == self::SELECT_TYPE ? true : false;
-	}
-	
-	public function get_subject_field_type()
-	{
-		return $this->get_property(self::SUBJECT_FIELD_TYPE);
-	}
-	
-	public function set_subject_field_type($value) 
-	{
-		$this->set_property(self::SUBJECT_FIELD_TYPE, $value);
-	}
-	
-	public function get_subject_field_possible_values()
-	{
-		return $this->get_property(self::SUBJECT_FIELD_POSSIBLE_VALUES);
-	}
-	
-	public function set_subject_field_possible_values($values) 
-	{
-		$this->set_property(self::SUBJECT_FIELD_POSSIBLE_VALUES, $values);
-	}
-	
-	public function get_subject_field_default_value()
-	{
-		return $this->get_property(self::SUBJECT_FIELD_DEFAULT_VALUE);
-	}
-	
-	public function set_subject_field_default_value($value) 
-	{
-		$this->set_property(self::SUBJECT_FIELD_DEFAULT_VALUE, $value);
+		$fields = array();
+		
+		$lang = LangLoader::get('config', 'contact');
+		
+		$field = new ContactField();
+		$field->set_name(TextHelper::htmlspecialchars($lang['mail_address']));
+		$field->set_field_name('f_sender_mail');
+		$field->set_description(TextHelper::htmlspecialchars($lang['mail_address_explain']));
+		$field->set_field_type('ContactShortTextField');
+		$field->set_regex(4);
+		$field->readonly();
+		$field->not_deletable();
+		
+		$fields[1] = $field;
+		
+		$field = new ContactField();
+		$field->set_name(TextHelper::htmlspecialchars($lang['contact_subject']));
+		$field->set_field_name('f_subject');
+		$field->set_description(TextHelper::htmlspecialchars($lang['contact_subject_explain']));
+		$field->set_field_type('ContactShortTextField');
+		$field->not_deletable();
+		
+		$fields[2] = $field;
+		
+		$field = new ContactField();
+		$field->set_name(TextHelper::htmlspecialchars($lang['contact_recipients']));
+		$field->set_field_name('f_recipients');
+		$field->set_field_type('ContactSimpleSelectField');
+		$field->set_possible_values(array('admins' => array('is_default' => true, 'title' => $lang['contact_recipients_admins'], 'email' => implode(';', MailServiceConfig::load()->get_administrators_mails()))));
+		$field->not_deletable();
+		$field->not_displayed();
+		
+		$fields[3] = $field;
+		
+		$field = new ContactField();
+		$field->set_name(TextHelper::htmlspecialchars($lang['message']));
+		$field->set_field_name('f_message');
+		$field->set_field_type('ContactHalfLongTextField');
+		$field->readonly();
+		$field->not_deletable();
+		
+		$fields[4] = $field;
+		
+		return $fields;
 	}
 	
 	/**
@@ -191,15 +201,12 @@ class ContactConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::TITLE => LangLoader::get_message('contact_title', 'contact_common', 'contact'),
+			self::TITLE => LangLoader::get_message('contact_fieldset_title', 'config', 'contact'),
 			self::INFORMATIONS_ENABLED => false,
 			self::INFORMATIONS => '',
 			self::INFORMATIONS_POSITION => self::TOP,
-			self::DISPLAY_SUBJECT_FIELD => true,
-			self::SUBJECT_FIELD_MANDATORY => true,
-			self::SUBJECT_FIELD_TYPE => self::TEXT_TYPE,
-			self::SUBJECT_FIELD_POSSIBLE_VALUES => '',
-			self::SUBJECT_FIELD_DEFAULT_VALUE => ''
+			self::FIELDS => self::init_fields_array(),
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
 		);
 	}
 	
@@ -211,7 +218,7 @@ class ContactConfig extends AbstractConfigData
 	{
 		return ConfigManager::load(__CLASS__, 'contact', 'config');
 	}
-
+	
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */

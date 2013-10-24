@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             ContactSetup.class.php
+ *                               ContactFieldType.class.php
  *                            -------------------
- *   begin                : March 1, 2013
+ *   begin                : July 31, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -25,16 +25,42 @@
  *
  ###################################################*/
 
-class ContactSetup extends DefaultModuleSetup
+ /**
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ * @package {@package}
+ */
+interface ContactFieldType
 {
-	public function uninstall()
-	{
-		$this->delete_configuration();
-	}
+	/**
+	 * @desc This function displayed field for form
+	 * @param instance of ContactField $field.
+	 */
+	public function display_field(ContactField $field);
+
+	/**
+	 * @desc This function returned value form fields
+	 * @param instance of HTMLForm $form and instance of ContactField $field.
+	 */
+	public function return_value(HTMLForm $form, ContactField $field);
 	
-	private function delete_configuration()
-	{
-		ConfigManager::delete('contact', 'config');
-	}
+	/**
+	 * @desc Return instanciat constraint depending integer type regex.
+	 * @return integer
+	 */
+	public function constraint($value);
+	
+	public function set_disable_fields_configuration(array $names);
+	
+	/**
+	 * @return Array
+	 */
+	public function get_disable_fields_configuration();
+	
+	public function set_name($name);
+	
+	/**
+	 * @return String
+	 */
+	public function get_name();
 }
 ?>

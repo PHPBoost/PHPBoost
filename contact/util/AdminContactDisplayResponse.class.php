@@ -31,12 +31,11 @@ class AdminContactDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 		
-		$lang = LangLoader::get('contact_common', 'contact');
+		$lang = LangLoader::get('common', 'contact');
 		$picture = '/contact/contact.png';
-		$this->set_title($lang['title_contact']);
-		$this->add_link($lang['contact_config'], ContactUrlBuilder::configuration(), $picture);
-		$this->add_link($lang['contact_config.fields.manage'], ContactUrlBuilder::manage_fields(), $picture);
-		$this->add_link($lang['contact_config.fields.add'], ContactUrlBuilder::add_field(), $picture);
+		$this->set_title($lang['module_title']);
+		$this->add_link($lang['admin.fields.manage'], ContactUrlBuilder::manage_fields(), $picture);
+		$this->add_link($lang['admin.config'], ContactUrlBuilder::configuration(), $picture);
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

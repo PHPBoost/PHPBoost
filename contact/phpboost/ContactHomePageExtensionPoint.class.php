@@ -29,17 +29,12 @@ class ContactHomePageExtensionPoint implements HomePageExtensionPoint
 {
 	public function get_home_page()
 	{
-		return new DefaultHomePage($this->get_title(), $this->get_view());
+		return new DefaultHomePage($this->get_title(), ContactController::get_view());
 	}
 	
 	private function get_title()
 	{
-		return LangLoader::get_message('title_contact', 'contact_common', 'contact');
-	}
-	
-	private function get_view()
-	{
-		return ContactModuleHomePage::get_view();
+		return LangLoader::get_message('module_title', 'common', 'contact');
 	}
 }
 ?>
