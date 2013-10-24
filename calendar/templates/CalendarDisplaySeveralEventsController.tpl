@@ -16,7 +16,7 @@
 				# ENDIF #
 				# IF IS_ADMIN #
 				<li>
-					<a href="${relative_url(CalendarUrlBuilder::manage_events())}" title="${i18n('calendar.config.manage_events')}">${i18n('calendar.config.manage_events')}</a>
+					<a href="${relative_url(CalendarUrlBuilder::configuration())}" title="${i18n('calendar.titles.admin.config')}">${i18n('calendar.titles.admin.config')}</a>
 				<li>
 				# ENDIF #
 			</ul>
