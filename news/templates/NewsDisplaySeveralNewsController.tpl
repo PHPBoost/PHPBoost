@@ -14,8 +14,8 @@
 				# ENDIF #
 				# IF IS_ADMIN #
 				<li>
-					<a href="${relative_url(NewsUrlBuilder::manage_news())}" title="${i18n('news.manage')}">${i18n('news.manage')}</a>
-				<li>
+					<a href="${relative_url(NewsUrlBuilder::config())}" title="${i18n('admin.config')}">${i18n('admin.config')}</a>
+				</li>
 				# ENDIF #
 			</ul>
 		</li>
