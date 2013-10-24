@@ -591,6 +591,28 @@ input[type=checkbox] {
 	border: 1px solid #CCCCCC;
 }
 
+.input-element-button{
+	display: inline-block;
+	font-size: 0;
+	white-space: nowrap;
+	vertical-align: middle;	
+}
+
+.input-element-button input {
+	-webkit-border-radius: 4px 0 0 4px;
+	-moz-border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;
+}
+
+.input-element-button button{
+	font-size:11px;
+	margin-left:-1px;
+	-webkit-border-radius: 0 4px 4px 0;
+	-moz-border-radius:  0 4px 4px 0;
+	border-radius: 0 4px 4px 0;
+	padding: 4px 8px;
+}
+
 /* Messages postés par les membres (messages privés, etc...) 
 --------------------------------------*/
 /* Classe du lien du pseudo des messages */
