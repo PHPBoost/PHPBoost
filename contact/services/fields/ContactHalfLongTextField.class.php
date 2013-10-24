@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             ContactSetup.class.php
+ *                               ContactHalfLongTextField.class.php
  *                            -------------------
- *   begin                : March 1, 2013
+ *   begin                : July 31, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -24,17 +24,24 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-class ContactSetup extends DefaultModuleSetup
+ 
+class ContactHalfLongTextField extends AbstractContactField
 {
-	public function uninstall()
+	public function __construct()
 	{
-		$this->delete_configuration();
+		parent::__construct();
+		$this->set_disable_fields_configuration(array('possible_values'));
+		$this->set_name(LangLoader::get_message('field.type.half-text', 'common', 'contact'));
 	}
 	
-	private function delete_configuration()
+	public function display_field(ContactField $field)
 	{
-		ConfigManager::delete('contact', 'config');
+		$fieldset = $field->get_fieldset();
+		
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor($field->get_field_name(), $field->get_name(), '', array(
+			'class' => 'text', 'required' => (bool)$field->is_required(), 'rows' => 10, 'cols' => 47, 'description' => $field->get_description()),
+			array($this->constraint($field->get_regex()))
+		));
 	}
 }
 ?>

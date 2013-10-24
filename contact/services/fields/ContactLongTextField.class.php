@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             ContactSetup.class.php
+ *                               ContactLongTextField.class.php
  *                            -------------------
- *   begin                : March 1, 2013
+ *   begin                : July 31, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -24,17 +24,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-class ContactSetup extends DefaultModuleSetup
+ 
+class ContactLongTextField extends AbstractContactField
 {
-	public function uninstall()
+	public function __construct()
 	{
-		$this->delete_configuration();
+		parent::__construct();
+		$this->set_disable_fields_configuration(array('possible_values'));
+		$this->set_name(LangLoader::get_message('field.type.long-text', 'common', 'contact'));
 	}
 	
-	private function delete_configuration()
+	public function display_field(ContactField $field)
 	{
-		ConfigManager::delete('contact', 'config');
+		$fieldset = $field->get_fieldset();
+		
+		$fieldset->add_field(new FormFieldRichTextEditor($field->get_field_name(), $field->get_name(), $field->get_default_values(), array(
+			'class' => 'text', 'required' => (bool)$field->is_required(), 'rows' => 5, 'cols' => 47, 'description' => $field->get_description()),
+			array($this->constraint($field->get_regex()))
+		));
+	}
+	
+	public function return_value(HTMLForm $form, ContactField $field)
+	{
+		$field_name = $field->get_field_name();
+		return $form->get_value($field_name);
 	}
 }
 ?>

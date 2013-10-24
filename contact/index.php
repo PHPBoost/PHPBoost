@@ -30,20 +30,19 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	//Config
-	new UrlControllerMapper('AdminContactConfigController', '`^/admin(?:/config)?/?$`'),
+	//Fields
+	new UrlControllerMapper('AdminContactFieldsListController', '`^/admin/fields(?:/list)?/?$`'),
+	new UrlControllerMapper('AdminContactFieldFormController', '`^/admin/fields/add/?$`'),
+	new UrlControllerMapper('AdminContactFieldFormController', '`^/admin/fields/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('ContactAjaxDeleteFieldController', '`^/admin/fields/delete/?$`'),
+	new UrlControllerMapper('ContactAjaxCheckFieldNameController', '`^/admin/fields/check_name/?$`'),
 	
-	//Extended-fields
-	new UrlControllerMapper('AdminContactExtendedFieldsListController', '`^/admin/fields(?:/list)?/?$`'),
-	new UrlControllerMapper('AdminContactExtendedFieldAddController', '`^/admin/fields/add/?$`'),
-	new UrlControllerMapper('AdminContactExtendedFieldEditController', '`^/admin/fields/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('AdminContactExtendedFieldDeleteController', '`^/admin/fields/delete?/?$`'),
-	new UrlControllerMapper('AdminContactExtendedFieldRepositionController', '`^/admin/fields/position/([0-9]+)/([a-z]+)/?$`', array('id', 'type')),
+	//Config
+	new UrlControllerMapper('AdminContactConfigController', '`^/admin(?:/config)?/?([a-z]+)?/?$`', array('message')),
 	
 	//Contact form
 	new UrlControllerMapper('ContactController', '`^/?$`')
 );
 
 DispatchManager::dispatch($url_controller_mappers);
-
 ?>

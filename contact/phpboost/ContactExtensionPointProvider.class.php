@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              contactExtensionPointProvider.class.php
+ *                              ContactExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -32,19 +32,16 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('contact');
 	}
 	
-	public function home_page()
-	{
-		return new ContactHomePageExtensionPoint();
-	}
-	
-	 /**
-	 * @method Get css files
-	 */
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_running_module_displayed_file('contact.css');
 		return $module_css_files;
+	}
+	
+	public function home_page()
+	{
+		return new ContactHomePageExtensionPoint();
 	}
 	
 	public function url_mappings()

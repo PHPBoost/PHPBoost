@@ -37,6 +37,11 @@ class ContactUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config');
 	}
 	
+	public static function check_field_name()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/fields/check_name/');
+	}
+	
 	public static function add_field()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/fields/add/');

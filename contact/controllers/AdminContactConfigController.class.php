@@ -36,91 +36,47 @@ class AdminContactConfigController extends AdminController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-
+	
+	private $config;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form();
-
+		
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
-
+		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			if (!$this->form->get_value('title'))
-				$tpl->put('MSG', MessageHelper::display($this->lang['contact.message.error_empty_title'], E_USER_ERROR, 5));
-			else if (!$this->validate_select_default_value())
-				$tpl->put('MSG', MessageHelper::display($this->lang['contact.message.error_default_value'], E_USER_ERROR, 5));
-			else
-			{
-				$this->save();
-				$tpl->put('MSG', MessageHelper::display($this->lang['contact.message.success_saving_config'], E_USER_SUCCESS, 5));
-			}
+			$this->save();
+			$tpl->put('MSG', MessageHelper::display($this->lang['message.success_saving_config'], E_USER_SUCCESS, 5));
 		}
-
+		
 		$tpl->put('FORM', $this->form->display());
-
-		return new AdminContactDisplayResponse($tpl, $this->lang['contact_config']);
+		
+		return new AdminContactDisplayResponse($tpl, $this->lang['admin.config.page_title']);
 	}
-
+	
 	private function init()
 	{
-		$this->lang = LangLoader::get('contact_common', 'contact');
+		$this->lang = LangLoader::get('common', 'contact');
+		$this->config = ContactConfig::load();
 	}
-
+	
 	private function build_form()
 	{
-		$form = new HTMLForm('contact_admin');
-		$config = ContactConfig::load();
-
-		$fieldset = new FormFieldsetHTML('configuration', $this->lang['contact_config']);
+		$form = new HTMLForm(__CLASS__);
+		
+		$fieldset = new FormFieldsetHTML('configuration', $this->lang['admin.config']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['contact_config.title'], $config->get_title(), array(
-			'class' => 'text', 'required' => true)
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['admin.config.title'], $this->config->get_title(), array(
+			'class' => 'text', 'size' => 40, 'required' => true)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('display_subject_field', $this->lang['contact_config.display_subject_field'], $config->is_subject_field_displayed(),
-			array('events' => array('click' => '
-				if (HTMLForms.getField("display_subject_field").getValue()) {
-					HTMLForms.getField("subject_field_mandatory").enable();
-					HTMLForms.getField("subject_field_type").enable();
-				} else {
-					HTMLForms.getField("subject_field_mandatory").disable();
-					HTMLForms.getField("subject_field_type").disable();
-				}'))
-		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('subject_field_mandatory', $this->lang['contact_config.subject_field_mandatory'], $config->is_subject_field_mandatory(),
-			array ('hidden' => !$config->is_subject_field_displayed())
-		));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('subject_field_type', $this->lang['contact_config.subject_field_type'], $config->get_subject_field_type(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['contact_config.text'], ContactConfig::TEXT_TYPE),
-				new FormFieldSelectChoiceOption($this->lang['contact_config.select'], ContactConfig::SELECT_TYPE),
-			),
-			array('hidden' => !$config->is_subject_field_displayed(), 'events' => array('change' => '
-				if (HTMLForms.getField("subject_field_type").getValue() == "' . ContactConfig::TEXT_TYPE . '") { 
-					HTMLForms.getField("subject_field_possible_values").disable();
-				} else { 
-					HTMLForms.getField("subject_field_possible_values").enable();
-				}'))
-		));
-		
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('subject_field_possible_values', $this->lang['contact_config.possible_values'], $config->get_subject_field_possible_values(), array(
-			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => LangLoader::get_message('field.possible-values-explain', 'admin-extended-fields-common'), 'required' => $config->is_subject_field_select(), 'hidden' => !$config->is_subject_field_select())
-		));
-		
-		$fieldset->add_field(new FormFieldTextEditor('subject_field_default_value', $this->lang['contact_config.default_value'], $config->get_subject_field_default_value(), array(
-			'class' => 'text')
-		));
-		
-		$fieldset = new FormFieldsetHTML('informations_bloc', $this->lang['contact_config.informations_bloc']);
-		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldCheckbox('enable_informations', $this->lang['contact_config.display_informations_bloc'], $config->is_informations_enabled(),
-			array('description' => $this->lang['contact_config.informations.explain'], 'events' => array('click' => '
+		$fieldset->add_field(new FormFieldCheckbox('enable_informations', $this->lang['admin.config.display_informations_bloc'], $this->config->are_informations_enabled(),
+			array('description' => $this->lang['admin.config.informations.explain'], 'events' => array('click' => '
 				if (HTMLForms.getField("enable_informations").getValue()) {
 					HTMLForms.getField("informations_position").enable();
 					HTMLForms.getField("informations").enable();
@@ -130,20 +86,30 @@ class AdminContactConfigController extends AdminController
 				}'))
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('informations_position', $this->lang['contact_config.informations_position'], $config->get_informations_position(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('informations_position', $this->lang['admin.config.informations_position'], $this->config->get_informations_position(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['left'], ContactConfig::LEFT),
-				new FormFieldSelectChoiceOption($this->lang['top'], ContactConfig::TOP),
-				new FormFieldSelectChoiceOption($this->lang['right'], ContactConfig::RIGHT),
-				new FormFieldSelectChoiceOption($this->lang['bottom'], ContactConfig::BOTTOM),
+				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_left'], ContactConfig::LEFT),
+				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_top'], ContactConfig::TOP),
+				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_right'], ContactConfig::RIGHT),
+				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_bottom'], ContactConfig::BOTTOM),
 			),
-			array('hidden' => !$config->is_informations_enabled())
+			array('hidden' => !$this->config->are_informations_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('informations', $this->lang['contact_config.informations_content'], 
-			FormatingHelper::unparse($config->get_informations()), 
-			array('class' => 'text', 'rows' => 8, 'cols' => 47, 'hidden' => !$config->is_informations_enabled())
+		$fieldset->add_field(new FormFieldRichTextEditor('informations', $this->lang['admin.config.informations_content'], 
+			FormatingHelper::unparse($this->config->get_informations()), 
+			array('class' => 'text', 'rows' => 8, 'cols' => 47, 'hidden' => !$this->config->are_informations_enabled())
 		));
+		
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['admin.authorizations']);
+		$form->add_fieldset($fieldset_authorizations);
+		
+		$auth_settings = new AuthorizationsSettings(array(
+			new ActionAuthorization($this->lang['admin.authorizations.read'], ContactAuthorizationsService::READ_AUTHORIZATIONS),
+		));
+		
+		$auth_settings->build_from_auth_array($this->config->get_authorizations());
+		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -154,49 +120,20 @@ class AdminContactConfigController extends AdminController
 	
 	private function save()
 	{
-		$config = ContactConfig::load();
-		
-		$config->set_title($this->form->get_value('title'));
+		$this->config->set_title($this->form->get_value('title'));
 		
 		if ($this->form->get_value('enable_informations'))
 		{
-			$config->enable_informations();
-			$config->set_informations($this->form->get_value('informations'));
-			$config->set_informations_position($this->form->get_value('informations_position')->get_raw_value());
+			$this->config->enable_informations();
+			$this->config->set_informations($this->form->get_value('informations'));
+			$this->config->set_informations_position($this->form->get_value('informations_position')->get_raw_value());
 		}
 		else
-			$config->disable_informations();
+			$this->config->disable_informations();
 		
-		if ($this->form->get_value('display_subject_field'))
-		{
-			$config->display_subject_field();
-			$config->set_subject_field_type($this->form->get_value('subject_field_type')->get_raw_value());
-			
-			if ($this->form->get_value('subject_field_type')->get_raw_value() == ContactConfig::SELECT_TYPE)
-				$config->set_subject_field_possible_values($this->form->get_value('subject_field_possible_values'));
-			
-			if ($this->form->get_value('subject_field_mandatory'))
-				$config->subject_field_mandatory();
-			else
-				$config->not_subject_field_mandatory();
-		}
-		else
-			$config->not_display_subject_field();
-		
-		$config->set_subject_field_default_value($this->form->get_value('subject_field_default_value'));
+		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
 		ContactConfig::save();
-	}
-	
-	private function validate_select_default_value()
-	{
-		if ($this->form->get_value('display_subject_field') && $this->form->get_value('subject_field_type')->get_raw_value() == ContactConfig::SELECT_TYPE && $this->form->get_value('subject_field_default_value'))
-		{
-			$possible_values = explode('|', $this->form->get_value('subject_field_possible_values'));
-			if (!in_array($this->form->get_value('subject_field_default_value'), $possible_values))
-				return false;
-		}
-		return true;
 	}
 }
 ?>

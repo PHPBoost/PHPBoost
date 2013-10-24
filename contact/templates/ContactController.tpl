@@ -1,8 +1,8 @@
 <section>
 	<header>
-		<h1>{@title_contact}</h1>
+		<h1>{@module_title}</h1>
 	</header>
-	<div class="content">
+	<div class="module_contents">
 		# INCLUDE MSG #
 		
 		# IF C_INFORMATIONS_TOP #
