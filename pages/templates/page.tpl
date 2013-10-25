@@ -18,11 +18,11 @@
 							<a href="{U_REDIRECTIONS}">{L_REDIRECTIONS}</a>
 							<a href="{U_CREATE}">{L_CREATE}</a>
 							<a href="{U_EXPLORER}">{L_EXPLORER}</a>
-							# IF C_PRINT #
-							<a href="{U_PRINT}">{L_PRINT}</a>
-							# ENDIF #
 							&bull;
-						# ENDIF #	
+						# ENDIF #
+						# IF C_PRINT #
+						<a href="{U_PRINT}">{L_PRINT}</a>
+						# ENDIF #
 						&nbsp;
 						<br />
 					</div>
@@ -46,9 +46,9 @@
 										<li><a href="{U_REDIRECTIONS}" title="{L_REDIRECTIONS}"><img src="{PATH_TO_ROOT}/pages/templates/images/redirect.png"/>{L_REDIRECTIONS}</a></li>
 										<li><a href="{U_CREATE}" title="{L_CREATE}"><img src="{PATH_TO_ROOT}/pages/templates/images/create_page.png"/>{L_CREATE}</a></li>
 										<li><a href="{U_EXPLORER}" title="{L_EXPLORER}"><img src="{PATH_TO_ROOT}/pages/templates/images/explorer.png"/>{L_EXPLORER}</a></li>
-										# IF C_PRINT #
+									# ENDIF #
+									# IF C_PRINT #
 										<li><a href="{U_PRINT}" title="{U_PRINT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/print_mini.png"/>{L_PRINT}</a></li>
-										# ENDIF #
 									# ENDIF #
 								</ul>
 							</li>
