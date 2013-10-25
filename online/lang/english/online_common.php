@@ -44,7 +44,7 @@ $lang['online_users'] = 'online users';
 $lang['online.no_user_online'] = 'No user online';
 
 //Admin
-$lang['admin.online-config'] = 'Online configuration';
+$lang['admin.online-config'] = 'Configuration';
 $lang['admin.nbr-displayed'] = 'Number of online members displayed in the menu';
 $lang['admin.nbr-members-per-page'] = 'Number of members per page';
 $lang['admin.display-order'] = 'Display order';
