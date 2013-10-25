@@ -1,4 +1,3 @@
-<h1>{@archives.list}</h1>
 <table>
 	# IF C_ARCHIVES #
 	<thead>

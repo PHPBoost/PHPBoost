@@ -1,4 +1,3 @@
-<h1>{@newsletter.list_newsletters}</h1>
 <table>
 	<thead>
 		<tr> 

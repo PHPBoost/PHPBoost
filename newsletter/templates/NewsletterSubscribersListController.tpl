@@ -1,4 +1,3 @@
-<h1>{@subscribers.list}</h1>
 <table>
 	# IF C_SUBSCRIBERS #
 	<thead>

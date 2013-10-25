@@ -1,4 +1,3 @@
-{@newsletter.streams}
 <table>
 	<thead>
 		<tr>
