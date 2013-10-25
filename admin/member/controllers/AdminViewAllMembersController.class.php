@@ -87,12 +87,10 @@ class AdminViewAllMembersController extends AdminController
 				$field_bdd = 'timestamp';
 		}
 		
-		$nbr_member = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER);
-		$nb_pages = ceil($nbr_member / $this->nbr_members_per_page);
-		$pagination = new Pagination($nb_pages, $page);
-		$pagination->set_url_sprintf_pattern(AdminMembersUrlBuilder::management($field . '/' . $sort . '/%d')->rel());
+		$pagination = $this->get_pagination($page, $field, $sort);
+		
 		$this->view->put_all(array(
-			'C_PAGINATION' => $nb_pages > 1,
+			'C_PAGINATION' => $pagination->has_several_pages(),
 			'SORT_LOGIN_TOP' => AdminMembersUrlBuilder::management('login/top/'. $page)->rel(),
 			'SORT_LOGIN_BOTTOM' => AdminMembersUrlBuilder::management('login/bottom/'. $page)->rel(),
 			'SORT_LEVEL_TOP' => AdminMembersUrlBuilder::management('level/top/'. $page)->rel(),
@@ -114,21 +112,18 @@ class AdminViewAllMembersController extends AdminController
 			'L_REGISTERED' => $admin_lang['registered'],
 			'L_UPDATE' => $this->lang['update'],
 			'L_DELETE' => $this->lang['delete'],
-			'PAGINATION' => $pagination->export()->render(),
+			'PAGINATION' => $pagination->display(),
 			'FORM' => $this->build_form()->display()
 		));
-		
-		$limit_page = $page > 0 ? $page : 1;
-		$limit_page = (($limit_page - 1) * $this->nbr_members_per_page);
 		
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, login, user_mail, timestamp, last_connect, level, user_groups, user_aprob
 		FROM " . DB_TABLE_MEMBER . "
 		ORDER BY ". $field_bdd ." ". $mode ."
-		LIMIT ". $this->nbr_members_per_page ." OFFSET :start_limit",
-			array(
-				'start_limit' => $limit_page
-			), SelectQueryResult::FETCH_ASSOC
-		);
+		LIMIT :number_items_per_page OFFSET :display_from", array(
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
+		));
+		
 		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
@@ -155,6 +150,22 @@ class AdminViewAllMembersController extends AdminController
 		$this->lang = LangLoader::get('main');
 		$this->view = new FileTemplate('admin/member/AdminViewAllMembersController.tpl');
 		$this->view->add_lang($this->lang);
+	}
+	
+	private function get_pagination($page, $field, $sort)
+	{
+		$number_members = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER);
+		
+		$pagination = new ModulePagination($page, $number_members, $this->nbr_members_per_page);
+		$pagination->set_url(AdminMembersUrlBuilder::management($field . '/' . $sort . '/%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		return $pagination;
 	}
 }
 ?>

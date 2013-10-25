@@ -41,13 +41,15 @@
 				</th>
 			</tr>
 		</thead>
+		# IF C_PAGINATION #
 		<tfoot>
 			<tr>
 				<th colspan="6">
-					<span class="inline">{L_PAGE} : </span>{PAGINATION}
+					# INCLUDE PAGINATION #
 				</th>
 			</tr>
 		</tfoot>
+		# ENDIF #
 		<tbody>
 			# START member_list #
 			<tr> 
