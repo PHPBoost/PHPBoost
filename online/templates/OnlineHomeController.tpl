@@ -1,3 +1,17 @@
+# IF IS_ADMIN #
+	<menu class="dynamic_menu right">
+		<ul>
+			<li><a><i class="icon-cog"></i></a>
+				<ul>
+					<li>
+						<a href="${relative_url(OnlineUrlBuilder::configuration())}" title="${i18n('admin.online-config')}">${i18n('admin.online-config')}</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</menu>
+# ENDIF #
+
 <section>
 	<header>
 		<h1>{@online}</h1>
