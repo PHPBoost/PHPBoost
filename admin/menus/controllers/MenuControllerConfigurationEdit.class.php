@@ -56,8 +56,7 @@ class MenuControllerConfigurationEdit extends AdminController
 			UserErrorController::FATAL
 			);
 
-			$error_controller->set_correction_link(
-			    'Menu configuration list', MenuUrlBuilder::menu_configuration_list()->absolute());
+			$error_controller->set_correction_link('Menu configuration list', MenuUrlBuilder::menu_configuration_list()->rel());
 			$error_controller->set_response_classname('AdminMenusDisplayResponse');
 
 			return $error_controller->execute($request);
@@ -80,12 +79,10 @@ class MenuControllerConfigurationEdit extends AdminController
 
 			
 		$this->view->put_all(array(
-            'NAME' => $menu_config->get_name(),
-            'MATCH_REGEX' => $menu_config->get_match_regex(),
-			'U_CONFIGURE' =>
-		MenuUrlBuilder::menu_configuration_configure($menu_config->get_id())->absolute(),
-			'U_LIST' =>
-		MenuUrlBuilder::menu_configuration_list()->absolute()
+			'NAME' => $menu_config->get_name(),
+			'MATCH_REGEX' => $menu_config->get_match_regex(),
+			'U_CONFIGURE' => MenuUrlBuilder::menu_configuration_configure($menu_config->get_id())->rel(),
+			'U_LIST' => MenuUrlBuilder::menu_configuration_list()->rel()
 		));
 	}
 

@@ -47,7 +47,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 					'ID' => $row['id'],
 					'NAME' => $row['name'],
 					'L_REQUIRED' => $row['required'] ? $this->lang['field.yes'] : $this->lang['field.no'],
-					'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->absolute(),
+					'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->rel(),
 					'DISPLAY' => $row['display'],
 					'FREEZE' => $row['freeze']
 				));

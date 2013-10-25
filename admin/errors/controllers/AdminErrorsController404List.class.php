@@ -48,10 +48,10 @@ class AdminErrorsController404List extends AdminController
                 'REQUESTED_URL' => $error->get_requested_url(),
                 'FROM_URL' => $error->get_from_url(),
                 'TIMES' => $error->get_times(),
-                'U_DELETE' => AdminErrorsUrlBuilder::delete_404_error($error->get_id())->absolute(),
+                'U_DELETE' => AdminErrorsUrlBuilder::delete_404_error($error->get_id())->rel(),
 			));
 		}
-		$this->view->put_all(array('U_CLEAR_404_ERRORS' => AdminErrorsUrlBuilder::clear_404_errors()->absolute()));
+		$this->view->put_all(array('U_CLEAR_404_ERRORS' => AdminErrorsUrlBuilder::clear_404_errors()->rel()));
 
 		return $this->response;
 	}

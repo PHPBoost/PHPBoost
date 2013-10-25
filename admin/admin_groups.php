@@ -252,7 +252,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 					'LOGIN' => $row['login'],
 					'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 					'GROUP_COLOR' => $group_color,
-					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute()
+					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
 				));
 				$number_member++;
 			}
@@ -360,7 +360,7 @@ else //Liste des groupes.
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$template->assign_block_vars('group', array(
-			'U_USER_GROUP' => UserUrlBuilder::group($row['id'])->absolute(),
+			'U_USER_GROUP' => UserUrlBuilder::group($row['id'])->rel(),
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="" />' : ''

@@ -60,7 +60,7 @@ while ($row = $result->fetch())
 	if (!empty($row['user_id'])) 
 	{
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
-		$com_pseudo = '<a href="'.  UserUrlBuilder::profile($row['user_id'])->absolute() .'" title="' . $row['login'] . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 13) . '</a>';
+		$com_pseudo = '<a href="'.  UserUrlBuilder::profile($row['user_id'])->rel() .'" title="' . $row['login'] . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 13) . '</a>';
 	}
 	else
 		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
@@ -137,7 +137,7 @@ while ($row = $Sql->fetch_assoc($result))
 	else
 	{
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
-		$login = !empty($row['login']) ? '<a class="' . $class . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : $LANG['guest'];
+		$login = !empty($row['login']) ? '<a class="' . $class . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['login'] . '</a>' : $LANG['guest'];
 	}
 	
 	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
