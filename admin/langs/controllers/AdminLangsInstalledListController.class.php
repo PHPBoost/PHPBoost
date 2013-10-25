@@ -59,7 +59,7 @@ class AdminLangsInstalledListController extends AdminController
 				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
 				'COMPATIBILITY' => $configuration->get_compatibility(),
 				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, $authorizations, array(2 => true), $lang->get_id()),
-				'DELETE_LINK' => AdminLangsUrlBuilder::uninstall($lang->get_id())->absolute()
+				'DELETE_LINK' => AdminLangsUrlBuilder::uninstall($lang->get_id())->rel()
 			));
 		}
 		

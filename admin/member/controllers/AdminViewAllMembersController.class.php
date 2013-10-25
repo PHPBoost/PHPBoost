@@ -90,19 +90,19 @@ class AdminViewAllMembersController extends AdminController
 		$nbr_member = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER);
 		$nb_pages = ceil($nbr_member / $this->nbr_members_per_page);
 		$pagination = new Pagination($nb_pages, $page);
-		$pagination->set_url_sprintf_pattern(AdminMembersUrlBuilder::management($field . '/' . $sort . '/%d')->absolute());
+		$pagination->set_url_sprintf_pattern(AdminMembersUrlBuilder::management($field . '/' . $sort . '/%d')->rel());
 		$this->view->put_all(array(
 			'C_PAGINATION' => $nb_pages > 1,
-			'SORT_LOGIN_TOP' => AdminMembersUrlBuilder::management('login/top/'. $page)->absolute(),
-			'SORT_LOGIN_BOTTOM' => AdminMembersUrlBuilder::management('login/bottom/'. $page)->absolute(),
-			'SORT_LEVEL_TOP' => AdminMembersUrlBuilder::management('level/top/'. $page)->absolute(),
-			'SORT_LEVEL_BOTTOM' => AdminMembersUrlBuilder::management('level/bottom/'. $page)->absolute(),
-			'SORT_REGISTERED_TOP' => AdminMembersUrlBuilder::management('registered/top/'. $page)->absolute(),
-			'SORT_REGISTERED_BOTTOM' => AdminMembersUrlBuilder::management('registered/bottom/'. $page)->absolute(),
-			'SORT_LAST_CONNECT_TOP' => AdminMembersUrlBuilder::management('connect/top/'. $page)->absolute(),
-			'SORT_LAST_CONNECT_BOTTOM' => AdminMembersUrlBuilder::management('connect/bottom'. $page)->absolute(),
-			'SORT_APPROBATION_TOP' => AdminMembersUrlBuilder::management('approbation/top/'. $page)->absolute(),
-			'SORT_APPROBATION_BOTTOM' => AdminMembersUrlBuilder::management('approbation/bottom/'. $page)->absolute(),
+			'SORT_LOGIN_TOP' => AdminMembersUrlBuilder::management('login/top/'. $page)->rel(),
+			'SORT_LOGIN_BOTTOM' => AdminMembersUrlBuilder::management('login/bottom/'. $page)->rel(),
+			'SORT_LEVEL_TOP' => AdminMembersUrlBuilder::management('level/top/'. $page)->rel(),
+			'SORT_LEVEL_BOTTOM' => AdminMembersUrlBuilder::management('level/bottom/'. $page)->rel(),
+			'SORT_REGISTERED_TOP' => AdminMembersUrlBuilder::management('registered/top/'. $page)->rel(),
+			'SORT_REGISTERED_BOTTOM' => AdminMembersUrlBuilder::management('registered/bottom/'. $page)->rel(),
+			'SORT_LAST_CONNECT_TOP' => AdminMembersUrlBuilder::management('connect/top/'. $page)->rel(),
+			'SORT_LAST_CONNECT_BOTTOM' => AdminMembersUrlBuilder::management('connect/bottom'. $page)->rel(),
+			'SORT_APPROBATION_TOP' => AdminMembersUrlBuilder::management('approbation/top/'. $page)->rel(),
+			'SORT_APPROBATION_BOTTOM' => AdminMembersUrlBuilder::management('approbation/bottom/'. $page)->rel(),
 			'L_CONFIRM_DEL_USER' => $admin_lang['confirm_del_member'],
 			'L_CONFIRM_DEL_ADMIN' => $admin_lang['confirm_del_admin'],
 			'L_USERS_MANAGEMENT' => $admin_lang['members_management'],
@@ -135,8 +135,8 @@ class AdminViewAllMembersController extends AdminController
 			
 			$this->view->assign_block_vars('member_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
-				'DELETE_LINK' => AdminMembersUrlBuilder::delete($row['user_id'])->absolute(),
-				'EDIT_LINK' => AdminMembersUrlBuilder::edit($row['user_id'])->absolute(),
+				'DELETE_LINK' => AdminMembersUrlBuilder::delete($row['user_id'])->rel(),
+				'EDIT_LINK' => AdminMembersUrlBuilder::edit($row['user_id'])->rel(),
 				'LOGIN' => $row['login'],
 				'LEVEL' => UserService::get_level_lang($row['level']),
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
@@ -145,7 +145,7 @@ class AdminViewAllMembersController extends AdminController
 				'MAIL' => $row['user_mail'],
 				'LAST_CONNECT' => !empty($row['last_connect']) ? gmdate_format('date_format_short', $row['last_connect']) : $this->lang['never'],
 				'REGISTERED' => gmdate_format('date_format_short', $row['timestamp']),
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute()
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
 			));
 		}
 	}
