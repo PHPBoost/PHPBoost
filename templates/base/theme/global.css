@@ -700,6 +700,7 @@ ul.menu_vertical a,ul.menu_vertical span {
 
 ul.menu_vertical {
     text-align:left;
+    margin:0 !important;
 }
 
 ul.menu_vertical li {
