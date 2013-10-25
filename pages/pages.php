@@ -123,44 +123,27 @@ if (!empty($encoded_title) && $num_rows == 1)
 	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_PAGE)))
 		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_auth'));
 	
-	//Génération des liens de la page
-	$links = array();
-	$is_page_admin = false;
-	if (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE)))
-	{
-		$links[$LANG['pages_edit']] = array(url('post.php?id=' . $page_infos['id']), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/edit.png');
-		$links[$LANG['pages_rename']] = array(url('action.php?rename=' . $page_infos['id']), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/rename.png');
-		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(url('action.php?del_cat=' . $page_infos['id']), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/delete.png') : array(url('post.php?del=' . $page_infos['id'] . '&amp;token=' . $Session->get_token()), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
-		$links[$LANG['pages_redirections']] = array(url('action.php?id=' . $page_infos['id']), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/redirect.png');
-		$links[$LANG['pages_create']] = array(url('post.php'), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/create_page.png');
-		$links[$LANG['pages_explorer']] = array(url('explorer.php'), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/explorer.png');
-		$is_page_admin = true;
-	}
-	if ($User->check_auth($config_authorizations, READ_PAGE) && ($page_infos['display_print_link'] || $is_page_admin))
-	{
-		$links[$LANG['printable_version']] = array(url('print.php?title=' . $encoded_title), '../templates/' . get_utheme() . '/images/print_mini.png');
-	}
-		
-	$nbr_values = count($links);
-	$i = 1;
-	foreach ($links as $key => $value)
-	{
-		$Template->assign_block_vars('link', array(
-			'U_LINK' => $value[0],
-			'L_LINK' => $key
-		));
-		if ($i < $nbr_values && !empty($key))
-			$Template->assign_block_vars('link.separation', array());
-			
-		$Template->assign_block_vars('links_list', array(
-			'BULL' => $i > 1 ? '&bull;' : '',
-			'DM_A_CLASS' => $value[1],
-			'U_ACTION' => $value[0],
-			'L_ACTION' => $key,
-			'ONCLICK' => array_key_exists(2, $value) ? $value[2] : '',
-		));
-		$i++;
-	}
+	$auth = ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE));
+	$Template->put_all(array(
+		'C_TOOLS_AUTH' => $auth,
+		'C_PRINT' => $User->check_auth($config_authorizations, READ_PAGE) && ($page_infos['display_print_link'] || $auth),
+	
+		'L_EDIT' => $LANG['pages_edit'],
+		'L_RENAME' => $LANG['pages_rename'],
+		'L_DELETE' => $LANG['pages_delete'],
+		'L_REDIRECTIONS' => $LANG['pages_redirections'],
+		'L_CREATE' => $LANG['pages_create'],
+		'L_EXPLORER' => $LANG['pages_explorer'],
+		'L_PRINT' => $LANG['printable_version'],
+	
+		'U_EDIT' => url('post.php?id=' . $page_infos['id']),
+		'U_RENAME' => url('action.php?rename=' . $page_infos['id']),
+		'U_DELETE' => $page_infos['is_cat'] == 1 ? url('action.php?del_cat=' . $page_infos['id']) : url('post.php?del=' . $page_infos['id'] . '&amp;token=' . $Session->get_token()),
+		'U_REDIRECTIONS' => url('action.php?id=' . $page_infos['id']),
+		'U_CREATE' => url('post.php'),
+		'U_EXPLORER' => url('explorer.php'),
+		'U_PRINT' => url('print.php?title=' . $encoded_title)
+	));
 	
 	//Redirections
 	if (!empty($redirect_title))

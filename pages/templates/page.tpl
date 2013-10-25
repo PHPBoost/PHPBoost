@@ -11,12 +11,18 @@
 				<noscript>
 					<div class="row2" style="text-align:right;">
 						&nbsp;
-						# START link #
-							<a href="{link.U_LINK}">{link.L_LINK}</a>
-							# START separation #
-								&bull;
-							# END separation #
-						# END link #
+						# IF C_TOOLS_AUTH #
+							<a href="{U_EDIT}">{L_EDIT}</a>
+							<a href="{U_RENAME}">{L_RENAME}</a>
+							<a href="{U_DELETE}">{L_DELETE}</a>
+							<a href="{U_REDIRECTIONS}">{L_REDIRECTIONS}</a>
+							<a href="{U_CREATE}">{L_CREATE}</a>
+							<a href="{U_EXPLORER}">{L_EXPLORER}</a>
+							# IF C_PRINT #
+							<a href="{U_PRINT}">{L_PRINT}</a>
+							# ENDIF #
+							&bull;
+						# ENDIF #	
 						&nbsp;
 						<br />
 					</div>
@@ -33,9 +39,17 @@
 							<li>
 								<a><i class="icon-cog"></i> {L_PAGE_OUTILS}</a>
 								<ul>
-								# START links_list #
-									<li><a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}"><img src="{links_list.DM_A_CLASS}"/> {links_list.L_ACTION}</a></li>
-								# END links_list #
+									# IF C_TOOLS_AUTH #
+										<li><a href="{U_EDIT}" title="{L_EDIT}" class="pbt-icon-edit">&nbsp;&nbsp;&nbsp;{L_EDIT}</a></li>
+										<li><a href="{U_RENAME}" title="{L_RENAME}"><img src="{PATH_TO_ROOT}/pages/templates/images/rename.png"/>{L_RENAME}</a></li>
+										<li><a href="{U_DELETE}" title="{L_DELETE}" class="pbt-icon-delete">&nbsp;&nbsp;&nbsp;{L_DELETE}</a></li>
+										<li><a href="{U_REDIRECTIONS}" title="{L_REDIRECTIONS}"><img src="{PATH_TO_ROOT}/pages/templates/images/redirect.png"/>{L_REDIRECTIONS}</a></li>
+										<li><a href="{U_CREATE}" title="{L_CREATE}"><img src="{PATH_TO_ROOT}/pages/templates/images/create_page.png"/>{L_CREATE}</a></li>
+										<li><a href="{U_EXPLORER}" title="{L_EXPLORER}"><img src="{PATH_TO_ROOT}/pages/templates/images/explorer.png"/>{L_EXPLORER}</a></li>
+										# IF C_PRINT #
+										<li><a href="{U_PRINT}" title="{U_PRINT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/print_mini.png"/>{L_PRINT}</a></li>
+										# ENDIF #
+									# ENDIF #
 								</ul>
 							</li>
 						</ul>
