@@ -56,9 +56,6 @@
 [b]Calendrier:[/b]
 + Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
 
-[b]Contact:[/b]
-- Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
-
 #################################################################################
 
 
