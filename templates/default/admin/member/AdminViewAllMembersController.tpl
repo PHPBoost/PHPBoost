@@ -40,7 +40,7 @@
 			<tfoot>
 				<tr>
 					<th colspan="7">
-						{PAGINATION}
+						# INCLUDE PAGINATION #
 					</th>
 				</tr>
 			</tfoot>
