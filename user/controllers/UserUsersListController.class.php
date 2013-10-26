@@ -87,8 +87,7 @@ class UserUsersListController extends AbstractController
 			'SORT_MSG_BOTTOM' => UserUrlBuilder::users('messages', 'bottom', $page)->rel(),
 			'SORT_LAST_CONNECT_TOP' => UserUrlBuilder::users('lastconnect', 'top', $page)->rel(),
 			'SORT_LAST_CONNECT_BOTTOM' => UserUrlBuilder::users('lastconnect', 'bottom', $page)->rel(),
-			'PAGINATION' => $pagination->display(),
-			'L_PAGE' => LangLoader::get_message('page', 'main')
+			'PAGINATION' => $pagination->display()
 		));
 
 		$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_MEMBER, array('*'), 'WHERE user_aprob = 1
