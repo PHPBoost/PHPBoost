@@ -172,10 +172,8 @@
 					<div style="float:left;">&nbsp;&nbsp;<a href="{pm.msg.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{pm.msg.ID}" /></a> {pm.msg.DATE}</div>
 					<div style="float:right;">
 						{pm.msg.U_QUOTE}
-						&nbsp; 						
 						# IF pm.msg.C_MODERATION_TOOLS #
-						<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="pbt-icon-edit">/a>
-						&nbsp;&nbsp;
+						<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="pbt-icon-edit">
 						<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 						&nbsp;&nbsp;
 						# ENDIF #
@@ -268,14 +266,8 @@
 				<fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
 				<legend>{L_SUBMIT}</legend>
 					<button type="submit" name="pm" value="true">{L_SUBMIT}</button>
-					&nbsp;&nbsp; 									
-					<input value="{L_PREVIEW}" type="submit" name="prw" id="prw_pm" class="submit">
-					<script type="text/javascript">
-					<!--				
-					document.getElementById('prw_pm').style.display = 'none';
-					document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
-					-->
-					</script>				
+					&nbsp;&nbsp;
+					<button type="submit" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>			
 					&nbsp;&nbsp;
 					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>	
@@ -331,13 +323,7 @@
 							<legend>{L_SUBMIT}</legend>
 							<input type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit">
 							&nbsp;&nbsp; 
-							<input value="{L_PREVIEW}" type="submit" name="prw" id="prw_pm" class="submit">							
-							<script type="text/javascript">
-							<!--				
-							document.getElementById('prw_pm').style.display = 'none';
-							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
-							-->
-							</script>						
+							<button type="submit" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>											
 							&nbsp;&nbsp; 
 							<button type="reset" value="true">{L_RESET}</button>
 						</fieldset>	
@@ -411,13 +397,7 @@
 							<legend>{L_SUBMIT}</legend>
 							<button type="submit" name="convers" value="true">{L_SUBMIT}</button>
 								&nbsp;&nbsp; 
-								<input value="{L_PREVIEW}" type="submit" name="prw_convers" id="prw_convers_pm" class="submit">
-								<script type="text/javascript">
-								<!--				
-								document.getElementById('prw_convers_pm').style.display = 'none';
-								document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
-								-->
-								</script>
+								<button type="submit" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 								&nbsp;&nbsp; 
 								<button type="reset" value="true">{L_RESET}</button>
 						</fieldset>	
