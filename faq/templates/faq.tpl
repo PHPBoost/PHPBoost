@@ -16,6 +16,25 @@
 -->
 </script>
 
+# START management #
+	<menu class="dynamic_menu right">
+		<ul>
+			<li><a><i class="icon-cog"></i></a>
+				<ul>
+					<li>
+						<a href="{U_MANAGEMENT}" title="{L_CAT_MANAGEMENT}">{L_CAT_MANAGEMENT}</a>
+					</li>
+					# IF IS_ADMIN #
+					<li>
+						<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
+					</li>
+					# ENDIF #
+				</ul>
+			</li>
+		</ul>
+	</menu>
+# END management #
+
 <section>			
 	<header>
 		<h1>
@@ -54,16 +73,6 @@
 			# END row #
 			<hr style="margin-bottom:25px;" />
 		# ENDIF #		
-		
-		# START management #
-			<div style="text-align:center; margin:10px;">
-				<a href="{U_MANAGEMENT}">
-					<img src="{PICTURES_DATA_PATH}/images/category_management.png" alt="{L_CATEGORY_MANAGEMENT}" title="{L_CAT_MANAGEMENT}" />
-				</a>
-				<br />
-				<a href="{U_MANAGEMENT}">{L_CAT_MANAGEMENT}</a>
-			</div>
-		# END management #
 		
 		# START questions #
 			# START questions.faq #
