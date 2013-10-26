@@ -377,7 +377,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 
 	//Affichage du nombre de message.
 	if ($row['user_msg'] >= 1)
-		$user_msg = '<a href="'. UserUrlBuilder::messages($row['user_id'])->absolute() . '" class="small">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
+		$user_msg = '<a href="'. UserUrlBuilder::messages($row['user_id'])->rel() . '" class="small">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
 	else		
 		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
 	
@@ -413,16 +413,16 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'C_FORUM_USER_EDITOR' => ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '1'), //Ajout du marqueur d'édition si activé.
 		'C_FORUM_USER_EDITOR_LOGIN' => !empty($row['login_edit']) ? true : false,
 		'C_FORUM_MODERATOR' => $moderator,
-		'U_FORUM_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
+		'U_FORUM_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 		'U_FORUM_MSG_EDIT' => url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get),
-		'U_FORUM_USER_EDITOR_PROFILE' => UserUrlBuilder::profile($row['user_id_edit'])->absolute(),
+		'U_FORUM_USER_EDITOR_PROFILE' => UserUrlBuilder::profile($row['user_id_edit'])->rel(),
 		'U_FORUM_MSG_DEL' => url('.php?del=1&amp;idm=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 		'U_FORUM_WARNING' => url('.php?action=warning&amp;id=' . $row['user_id']),
 		'U_FORUM_PUNISHEMENT' => url('.php?action=punish&amp;id=' . $row['user_id']),
 		'U_FORUM_MSG_CUT' => url('.php?idm=' . $row['id']),
 		'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_VARS_QUOTE' => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
-		'USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '" class="small-button">MP</a>' : '',
+		'USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->rel() . '" class="small-button">MP</a>' : '',
 	));
 	
 	//Marqueur de suivis du sujet.

@@ -201,11 +201,11 @@ $other_tools[$LANG['wiki_explorer_short']] = array(PATH_TO_ROOT . url('/wiki/exp
 //Flux RSS du wiki
 if ($page_type == 'index')
 {
-	$other_tools[$LANG['wiki_rss']] = array(SyndicationUrlBuilder::rss('wiki')->absolute(), 'rss');
+	$other_tools[$LANG['wiki_rss']] = array(SyndicationUrlBuilder::rss('wiki')->rel(), 'rss');
 }
 if ($page_type == 'cat')
 {
-	$other_tools[$LANG['wiki_rss']] = array(SyndicationUrlBuilder::rss('wiki', $article_infos['id_cat'])->absolute(), 'rss');
+	$other_tools[$LANG['wiki_rss']] = array(SyndicationUrlBuilder::rss('wiki', $article_infos['id_cat'])->rel(), 'rss');
 }
 //On parse
 if ($page_type == 'index' || $page_type == 'article' || $page_type = 'cat')

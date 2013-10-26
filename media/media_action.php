@@ -400,7 +400,7 @@ elseif (!empty($_POST['submit']))
 
 			ContributionService::save_contribution($media_contribution);
 
-			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
+			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success());
 		}
 		else
 		{
