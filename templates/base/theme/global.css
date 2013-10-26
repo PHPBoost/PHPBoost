@@ -142,6 +142,7 @@ a.member {
 .pbt-icon-minus:before { content: "\f068"; font-size: 18px; }
 .pbt-icon-check:before{	content: "\f00c"; color:#57A957; }
 .pbt-icon-error:before{ content: "\f00d"; color:#C43C35; }
+.pbt-icon-calendar:before{ content: "\f073"; }
 .pbt-icon-mail:before{ content: "\f0e0"; }
 .pbt-icon-skype:before{ content: "\f17e"; }
 .pbt-icon-gmail:before{ content: "\f0d5"; }

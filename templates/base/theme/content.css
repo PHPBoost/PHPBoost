@@ -326,13 +326,12 @@ button[type=reset]{
 
 fieldset {
 	margin:20px 0;
-	padding:6px;
 	border:none;
 	background:none;
 	position:relative;
 }
 
-fieldset.fieldset_submit {
+fieldset.fieldset_submit { /* A supprimer ou remplacer par un div */
 	margin-top:-10px;
 	padding-bottom:15px;
 	width:99%;
@@ -341,150 +340,23 @@ fieldset.fieldset_submit {
 	border:none;
 }
 
-fieldset.fieldset_submit legend {
+fieldset.fieldset_submit legend { /* A supprimer ou remplacer par un div */
     display:none;
 }
 
-fieldset dl {
-    height:1%;
-    overflow:hidden;
-    margin-bottom:16px;
-    font-size:11px;
-}
-
-fieldset dl.overflow_visible {
-    overflow:visible;
-}
-
-html>body fieldset dl {
-    height:auto;
-    min-height:20px;
-}
-
-fieldset dt {
-    width:45%;
-    text-align:left;
-    padding-top:3px;
-}
-
-fieldset dd {
-    margin:0 0 0 45%;
-    padding:0 0 0 5px;
-    border:none;
-    vertical-align:top;
-    font-size:11px;
-}
-
-dt {
-    float:left;
-    width:auto;
-}
-
-dt span {
-    padding:0 5px 0 0;
-}
-
-label {
-    cursor:pointer;
-}
-
-fieldset label {
-    font-size:11px;
-    text-align:left;
-    font-weight:bold;
-    color:#334455;
-}
-
-dd label {
-    white-space:nowrap;
-    margin:0 10px 0 0;
-    font-weight:normal;
-    color:#476A7F;
-}
-
-dt span {
-    font-size:10px;
-    color:#0E2A48;
-}
-
-fieldset dl dd label:hover {
-    color:#183A4F;
-}
-
-input, optgroup, select, .xmlhttprequest_preview {
+optgroup, select{
 	font-size:11px;
 	border-left:1px solid #99b1cb;
 	border-top:1px solid #99b1cb;
 	border-right:1px solid #CCCCCC;
 	border-bottom:1px solid #CCCCCC;
-	background-color:#FFFFFF;	
-	color:#2E3B5F;
-	padding:0px 2px;
-}
-
-textarea {
-    display:block;
-    width:94%;
-    margin:5px auto;
-}
-
-.textarea-element span{
-	display:block;	
-}
-
-.textarea-element button{
-	margin:2px auto;
-	display:block;	
-}
-
-fieldset textarea.post {
-	width:90%;
-	display:inline;		
-}
-
-.textarea-element-small{
-	width:49%;	
-}
-
-input:hover, textarea:hover {
-	border:1px solid #336397;
-	background-color:#FFFFFF; 
-}
-
-input:focus, textarea:focus {
-	border:1px solid #0B6ABF;
-	background-color:#f5fbff;
-}
-
-fieldset textarea.post {
-	width:90%;
-	display:inline;		
-}
-
-input.text {
-	padding:1px 2px 1px 2px;	
-	border-radius:3px;
-}
-
-input[type=checkbox] { 
-	border:none;
-	background:none;
-}
-
-input.file {
-	border:1px solid #515C68;	
-	border-top:1px solid #8498ae;	
-	color:#2E3B5F;	
-	padding:1px;
-	font-weight:bold;
-	font-size:10px;
-}
-
-optgroup, select {
 	cursor:pointer;
 	vertical-align:middle;
 	width:auto;		
 	border-radius:3px;
+	background-color:#FFFFFF;	
+	color:#2E3B5F;
+	padding:0px 2px;
 }
 
 optgroup {
@@ -497,10 +369,40 @@ option {
     padding:0px 3px;
 }
 
+/* Prévisualition */
+.xmlhttprequest_preview {
+	font-size:11px;
+	border-left:1px solid #99b1cb;
+	border-top:1px solid #99b1cb;
+	border-right:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+	background-color:#FFFFFF;	
+	color:#2E3B5F;
+	padding:0px 2px;
+}
+
+.field-textarea button{
+	margin:2px auto;
+	display:block;	
+}
+
+
+
+/* Les inputs */
+
+input.file {
+	border:1px solid #515C68;	
+	border-top:1px solid #8498ae;	
+	color:#2E3B5F;	
+	padding:1px;
+	font-weight:bold;
+	font-size:10px;
+}
+
 legend {
 	display:block;
 	padding:10px 10px 2px 0px;
-	margin:0px 0px 10px -6px;
+	margin:0px 0px 10px 0px;
 	width: 100%;
 	text-transform:none;
 	color:#333333;
@@ -508,6 +410,11 @@ legend {
 	font-weight:bold;
 	vertical-align:middle;
 	border-bottom:1px solid #DDDDDD;
+}
+
+input[type=checkbox] { 
+	border:none;
+	background:none;
 }
 
 input[type=text], input[type=password], textarea{
@@ -539,21 +446,18 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus {
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
-input[type=checkbox] { 
-	border:none;
-	background:none;
+input[type=text].field-smaller, input[type=password].field-smaller{ width:29px; }
+input[type=text].field-small, input[type=password].field-small{	width:77px; }
+input[type=text], input[type=password]{	width:141px; }
+input[type=text].field-large, input[type=password].field-large{ width:200px; }
+input[type=text].field-xlarge, input[type=password].field-xlarge{ width:300px; }
+
+.field, .field-textarea{
+	margin: 0px 15px 10px 15px;
 }
 
-.input-element, .textarea-element{
-	margin-bottom:10px;
-}
-
-.input-element label, .textarea-element label{
+label{
 	display:inline-block;
-	vertical-align:middle;
-}
-
-.input-element label{
 	width: 30%;
 	text-align: left;
 	margin-right: 10px;
@@ -561,12 +465,31 @@ input[type=checkbox] {
 	vertical-align: top;
 }
 
-.input-element label span{
+span.field-description, span.field-error{
+	font-size:10px;
+}
+
+span.field-description{
 	display: block;
 	line-height: 12px;
 }
 
-.input-element.input-error input{
+span.field-error{
+	color:#C43C35;
+	display: block;
+	margin: 0 0 0 30%;
+	padding-left: 15px;
+	font-style:italic;
+}
+
+input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disabled]:focus{
+	cursor: not-allowed;
+	background:#F1F1F1;
+	color:#AAAAAA;
+	border: 1px solid #CCCCCC;
+}
+
+.constraint-check-error input{
 	border-color: rgba(196, 60, 43, 0.3);
 	outline: 0;
 	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.1);
@@ -574,7 +497,7 @@ input[type=checkbox] {
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
 	color:#C43C35;
 }
-.input-element.input-error input:hover, .input-element.input-error input:focus{
+.constraint-check-error input:hover, .field.input-error input:focus{
 	border-color: rgba(196, 60, 43, 0.5);
 	outline: 0;
 	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.3);
@@ -582,34 +505,25 @@ input[type=checkbox] {
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
 	color:#C43C35;
 }
-.input-element.input-error span{
-	display: block;
-	margin: 0 0 0 30%;
-	padding-left: 15px;
-	font-style:italic;
-}
 
-.input-element.input-disabled  input{
-	cursor: not-allowed;
-	background:#F1F1F1;
-	color:#AAAAAA;
-	border: 1px solid #CCCCCC;
-}
+.constraint-check-right i:before{	content: "\f00c"; color:#57A957; }
+.constraint-check-error i:before{ content: "\f00d"; color:#C43C35; }
 
-.input-element-button{
+/* A reprendre */
+.field-button{
 	display: inline-block;
 	font-size: 0;
 	white-space: nowrap;
 	vertical-align: middle;	
 }
 
-.input-element-button input {
+.field-button input {
 	-webkit-border-radius: 4px 0 0 4px;
 	-moz-border-radius: 4px 0 0 4px;
 	border-radius: 4px 0 0 4px;
 }
 
-.input-element-button button{
+.field-button button{
 	font-size:11px;
 	margin-left:-1px;
 	-webkit-border-radius: 0 4px 4px 0;
@@ -617,6 +531,22 @@ input[type=checkbox] {
 	border-radius: 0 4px 4px 0;
 	padding: 4px 8px;
 }
+
+/* Textarea */
+textarea {
+    display:block;
+    width:94%;
+    margin:5px auto;
+}
+
+.field-textarea i{	
+	display:inline-block;
+}
+
+.field-textarea-small{
+	width:49%;	
+}
+
 
 /* Messages postés par les membres (messages privés, etc...) 
 --------------------------------------*/
