@@ -1,5 +1,5 @@
 		# IF C_CATEGORIES #
-			<menu class="dynamic_menu right">
+		<menu class="dynamic_menu right">
 			<ul>
 				<li><a><i class="icon-cog"></i></a>
 					<ul>
