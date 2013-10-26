@@ -45,7 +45,7 @@ class ModulePagination
 	
 	public function set_url(Url $url)
 	{
-		$this->pagination->set_url_sprintf_pattern($url->absolute());
+		$this->pagination->set_url_sprintf_pattern($url->rel());
 	}
 	
 	public function display()

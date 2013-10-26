@@ -61,9 +61,9 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 				'LEVEL' => $row['level'],
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $user_group_color,
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
-				'U_DELETE' => AdminMembersUrlBuilder::delete($row['user_id'])->absolute(),
-				'U_EDIT' => AdminMembersUrlBuilder::edit($row['user_id'])->absolute()
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_DELETE' => AdminMembersUrlBuilder::delete($row['user_id'])->rel(),
+				'U_EDIT' => AdminMembersUrlBuilder::edit($row['user_id'])->rel()
 			));
 			
 			$nb_results++;

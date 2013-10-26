@@ -41,7 +41,7 @@ $lang['profile.edit.password.error'] = 'Le mot de passe que vous avez entré n\'e
 
 //Contribution
 $lang['contribution.confirmed'] = 'Votre contribution a bien été enregistrée.';
-$lang['contribution.confirmed.messages'] = '<p>Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->absolute() . '">panneau de contribution</a> 
+$lang['contribution.confirmed.messages'] = '<p>Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">panneau de contribution</a> 
 et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>';
 
 

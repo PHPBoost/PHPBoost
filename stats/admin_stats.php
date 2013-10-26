@@ -104,7 +104,7 @@ else
 			'LAST_USER' => $stats_cache->get_stats_properties('last_member_login'),
 			'LAST_USER_LEVEL_CLASS' => UserService::get_level_class($stats_cache->get_stats_properties('last_member_level')),
 			'LAST_USER_GROUP_COLOR' => $last_user_group_color,
-			'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->absolute(),
+			'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->rel(),
 			'USERS' => $stats_cache->get_stats_properties('nbr_members'),
 			'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
 			'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
@@ -191,7 +191,7 @@ else
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $user_group_color,
 				'USER_POST' => $row['user_msg'],
-				'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
+				'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 			));
 
 			$i++;

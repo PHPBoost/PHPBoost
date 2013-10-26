@@ -149,8 +149,8 @@ class CommentsService
 				'C_REFRESH_ALL' => $refresh_all,
 				'C_MODERATE' => $authorizations->is_authorized_moderation(),
 				'C_IS_LOCKED' => CommentsManager::comment_topic_locked($module_id, $id_in_module, $topic_identifier),
-				'U_LOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), true)->absolute(),
-				'U_UNLOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), false)->absolute(),
+				'U_LOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), true)->rel(),
+				'U_UNLOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), false)->rel(),
 			));
 		}
 
@@ -255,9 +255,9 @@ class CommentsService
 					'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),
 					'C_VISITOR' => empty($row['login']),
 					'C_GROUP_COLOR' => !empty($group_color),
-					'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->absolute(),
-					'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->absolute(),
-					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
+					'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->rel(),
+					'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->rel(),
+					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 					'U_AVATAR' => $user_avatar,
 					'ID_COMMENT' => $id,
 					'DATE' => $timestamp->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),

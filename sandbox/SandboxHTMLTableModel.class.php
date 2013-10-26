@@ -154,7 +154,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$user_msg->center();
 		$last_connect = new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']));
 		$pm_url = new Url('/user/pm.php?pm=' . $row['user_id']);
-		$pm = new HTMLTableRowCell('<a href="' . $pm_url->absolute() . '" class="small-button">MP</a>');
+		$pm = new HTMLTableRowCell('<a href="' . $pm_url->rel() . '" class="small-button">MP</a>');
 		$pm->center();
 		$pm->add_css_style('width:50px');
 			
