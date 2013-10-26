@@ -33,9 +33,7 @@
 		# IF C_PAGINATION #
 		<tfoot>
 			<tr>
-				<th colspan="3">
-					<span>${LangLoader::get_message('page', 'main')} : </span># INCLUDE PAGINATION #
-				</th>
+				<th colspan="3"># INCLUDE PAGINATION #</th>
 			</tr>
 		</tfoot>
 		# ENDIF #
