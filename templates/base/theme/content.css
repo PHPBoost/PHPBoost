@@ -345,18 +345,23 @@ fieldset.fieldset_submit legend { /* A supprimer ou remplacer par un div */
 }
 
 optgroup, select{
-	font-size:11px;
-	border-left:1px solid #99b1cb;
-	border-top:1px solid #99b1cb;
-	border-right:1px solid #CCCCCC;
-	border-bottom:1px solid #CCCCCC;
 	cursor:pointer;
-	vertical-align:middle;
-	width:auto;		
-	border-radius:3px;
+	vertical-align:middle;	
 	background-color:#FFFFFF;	
-	color:#2E3B5F;
-	padding:0px 2px;
+}
+
+select{
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	display: inline-block;
+	padding: 4px 6px;
+	vertical-align: middle;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+select:focus, select:hover{
+	outline: 0;	
 }
 
 optgroup {
@@ -459,12 +464,14 @@ input[type=text].field-xlarge, input[type=password].field-xlarge{ width:300px; }
 	display:inline-block;
 }
 
+/* Label pour les checkbox et ratio */
 .field-value label {
 	margin: 0 10px 0 0;
 	display:block;
 }
 
-label[for]{
+/* Label pour les inputs [for] et pour les élements sans associations*/
+label[for], .field > label{
 	display:inline-block;
 	width: 30%;
 	text-align: left;
