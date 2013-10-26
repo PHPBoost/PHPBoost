@@ -84,7 +84,7 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_MANAGE' => $LANG['web_management'],
 			'U_WEB_ADD' => url('.php?web=true'),
 			'U_ADD_LINK' => url(PATH_TO_ROOT . '/web/admin_web_add.php'),
-			'U_MANAGE' => url(PATH_TO_ROOT . '/web/admin_web.php'),
+			'U_MANAGE' => url(PATH_TO_ROOT . '/web/admin_web_config.php'),
 			'L_WEB' => $LANG['title_web']
 		));
 		

@@ -12,7 +12,7 @@
 						# ENDIF #
 						# IF IS_ADMIN #
 						<li>
-							<a href="{U_CONFIG}" title="{L_CONFIG}">{L_CONFIG}</a>
+							<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
 						<li>
 						# ENDIF #
 					</ul>

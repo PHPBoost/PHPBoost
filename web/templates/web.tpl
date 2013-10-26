@@ -11,7 +11,7 @@
 					<a href="{U_ADD_LINK}" title="{L_ADD_LINK}">{L_ADD_LINK}</a>
 				</li>
 				<li>
-					<a href="{U_MANAGE}" title="{L_MANAGE}">{L_MANAGE}</a>
+					<a href="{U_MANAGE}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
 				</li>
 			</ul>
 		</li>

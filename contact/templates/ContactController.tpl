@@ -7,7 +7,7 @@
 						<a href="${relative_url(ContactUrlBuilder::manage_fields())}" title="${i18n('admin.fields.manage')}">${i18n('admin.fields.manage')}</a>
 					</li>
 					<li>
-						<a href="${relative_url(ContactUrlBuilder::configuration())}" title="${i18n('admin.config')}">${i18n('admin.config')}</a>
+						<a href="${relative_url(ContactUrlBuilder::configuration())}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
 					</li>
 				</ul>
 			</li>

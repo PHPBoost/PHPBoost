@@ -14,7 +14,7 @@
 				# ENDIF #
 				# IF IS_ADMIN #
 				<li>
-					<a href="${relative_url(NewsUrlBuilder::config())}" title="${i18n('admin.config')}">${i18n('admin.config')}</a>
+					<a href="${relative_url(NewsUrlBuilder::config())}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
 				</li>
 				# ENDIF #
 			</ul>
