@@ -41,7 +41,7 @@ $lang['profile.edit.password.error'] = 'The new password is not correct';
 
 //Contribution
 $lang['contribution.confirmed'] = 'Your contribution has been saved.';
-$lang['contribution.confirmed.messages'] = '<p>You can follow it into the <a href="' . UserUrlBuilder::contribution_panel()->absolute() . '">contribution panel</a> 
+$lang['contribution.confirmed.messages'] = '<p>You can follow it into the <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">contribution panel</a> 
 and possibly discuss with the validators if their choice is not straightforward.</p><p>Thank you for participating in the life of the site!</p>';
 
 

@@ -70,7 +70,7 @@ class Forum
 			if ($User->get_attribute('user_id') > 0)
 			{
 				$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
-				$pseudo_pm = '<a href="'. UserUrlBuilder::profile($User->get_attribute('user_id'))->absolute() .'">' . $pseudo . '</a>';
+				$pseudo_pm = '<a href="'. UserUrlBuilder::profile($User->get_attribute('user_id'))->rel() .'">' . $pseudo . '</a>';
 			}
 			else
 			{

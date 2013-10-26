@@ -50,7 +50,7 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
         {
             if (!empty($_GET['member']))
             {
-                echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a><br />';
+                echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . $row['login'] . '</a><br />';
             }
             elseif (!empty($_GET['insert_member']))
             {
@@ -62,7 +62,7 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
             }
             elseif (!empty($_GET['admin_member']))
             {
-                echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . addslashes($row['login']) . '</a><br />';
+                echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . addslashes($row['login']) . '</a><br />';
             }
             if (!empty($_GET['warning_member']))
             {

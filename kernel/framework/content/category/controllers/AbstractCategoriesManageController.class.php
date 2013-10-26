@@ -72,8 +72,8 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 				$category_view = new FileTemplate('default/framework/content/categories/category.tpl');
 				$category_view->put_all(array(
 					'C_DESCRIPTION' => $description_exists,
-					'U_EDIT' => $this->get_edit_category_url($id)->absolute(),
-					'U_DELETE' => $this->get_delete_category_url($id)->absolute(),
+					'U_EDIT' => $this->get_edit_category_url($id)->rel(),
+					'U_DELETE' => $this->get_delete_category_url($id)->rel(),
 					'L_EDIT' => LangLoader::get_message('update', 'main'),
 					'L_DELETE' => LangLoader::get_message('delete', 'main'),
 					'ID' => $id,

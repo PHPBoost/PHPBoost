@@ -87,7 +87,7 @@ if ($add)
 			{
 				$group_color = User::get_group_color($User->get_groups(), $User->get_level(), true);
 				$style = $group_color ? 'style="font-size:10px;color:'.$group_color.'"' : 'style="font-size:10px;"';
-				$shout_pseudo = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><i class="icon-remove"></i></a> <a class="' . UserService::get_level_class($User->get_level()) . '" '.$style.' href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->absolute() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . ' </a>';
+				$shout_pseudo = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><i class="icon-remove"></i></a> <a class="' . UserService::get_level_class($User->get_level()) . '" '.$style.' href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->rel() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . ' </a>';
 			}
 			else
 				$shout_pseudo = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . '<span class="smaller" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . ' </span>';
@@ -125,7 +125,7 @@ elseif ($refresh)
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 			$style = $group_color ? 'style="font-size:10px;color:'.$group_color.'"' : 'style="font-size:10px;"';
-			$row['login'] = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . $del . ' <a class="' . UserService::get_level_class($row['level']) . '" '.$style.' href="'. UserUrlBuilder::profile($row['user_id'])->absolute()  . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . ' </a>';
+			$row['login'] = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . $del . ' <a class="' . UserService::get_level_class($row['level']) . '" '.$style.' href="'. UserUrlBuilder::profile($row['user_id'])->rel()  . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . ' </a>';
 		}
 		else
 			$row['login'] = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . $del . ' <span class="smaller" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . ' </span>';
