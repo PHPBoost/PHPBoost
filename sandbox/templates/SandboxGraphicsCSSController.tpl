@@ -79,14 +79,12 @@
 				<span class="smaller">La valeur saisie doit être un mail valide</span>
 			</div>
 			<div class="input-element">
-				<label for="IDinput" title="Le complément du label">Un Input désactivé</label>
-				<span class="smaller">Description</span>
+				<label for="IDinput" title="Le complément du label">Un Input avec description<span class="smaller">Description vachement plus longue</span></label>
 				<input type="text" class="normal-size" disabled="disabled" maxlength="25" name="Input" id="IDinput" value="test" >
 			</div>
 			
 			<div class="input-element">
-				<label for="IDinput" title="Le complément du label">Date</label>
-				<span class="smaller">Description</span>
+				<label for="IDinput" title="Le complément du label">Date<span class="smaller">Description</span></label>
 				<input type="text" size="10" name="Input" id="IDinput" value="25/10/2013" >
 				<img class="valign_middle" id="imgcalendar_2_date" src="{PATH_TO_ROOT}/templates/base/images/calendar.png" alt=""> à
 				<input type="text" size="2" name="Input" id="IDinput" value="07" > h

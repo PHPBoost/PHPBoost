@@ -551,13 +551,19 @@ input[type=checkbox] {
 .input-element label, .textarea-element label{
 	display:inline-block;
 	vertical-align:middle;
-	white-space: nowrap;
 }
 
 .input-element label{
-	width:30%;
-	text-align:right;
-	margin-right:10px;
+	width: 30%;
+	text-align: left;
+	margin-right: 10px;
+	padding-top: 3px;
+	vertical-align: top;
+}
+
+.input-element label span{
+	display: block;
+	line-height: 12px;
 }
 
 .input-element.input-error input{
