@@ -1,0 +1,903 @@
+/* --------------------------------------
+		content.css
+Contient les formulaires, les modules (et modules minis), messages.
+--------------------------------------*/
+
+/* Conteneurs, éléments de module, ... */
+section, article {
+	width: 96%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+section header, article header { margin-bottom: 20px; }
+
+/* Titre d'une page ou d'un element d'un module */
+section header h1, article header h1 {
+    border-bottom: 1px solid #336397;
+}
+
+section header h1, article header h1, section header h1 a, article header h1 a {
+	font-size: 16px;
+    font-weight: bold;
+}
+
+/* Icones avec les actions (edition, suppression, etc) */
+span.actions { float: right; }
+span.actions a { font-size: 12px; }
+
+.more {
+	font-size: 11px;
+	font-style: italic;
+}
+
+/* Contenu */
+.content {
+	margin: 0 15px;
+    text-align: justify;
+	word-wrap: break-word;
+	overflow: auto;
+}
+
+section footer, article footer { margin-bottom: 15px; }
+section footer nav.pagination {	text-align: center; }
+
+/* Block */
+.block, .small_block, .medium_block, .large_block {
+	border: 1px solid #CCCCCC;
+	border-top: 2px solid #366393;
+	border-bottom: 1px solid #99B1CB;
+	background: #F2F8FF;
+	padding: 10px;
+}
+
+.block h1, .small_block h1, .medium_block h1, .large_block h1{ border: none; }
+.block { width: auto; }
+.block header {	margin-bottom: 10px; }
+.block footer {	margin: 0; }
+
+/* Affiche 3 blocs côte à côte */
+.small_block {
+	float: left;
+	width: 32.33%;
+	margin: 0.5%;
+}
+
+.medium_block {
+	float: left;
+	width: 49%;
+	margin: 0.5%;
+}
+
+.large_block {
+	float: left;
+	width: 65.67%;
+	margin: 0.5%;
+}
+
+/* Tableaux
+-------------------------------------- */
+
+table {
+	width:100%;
+	border-spacing:0;
+	padding:0px;
+	border:1px solid #d1d2d4;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	margin:8px 0;
+}
+
+/* Entête */
+table caption {
+	text-align:left;
+	margin: 5px 0 5px 20px;
+	border-bottom:1px solid #d1d2d5;
+	color:#757679;
+	font-size:13px;
+}
+
+table thead th{
+	color:#e5e6e6;
+	background-color:#4d4c50;
+	font-size:12px;
+	font-weight:normal;
+	padding:8px;
+	text-align:center;
+}
+
+table thead th:first-child {
+	-moz-border-radius-topleft: 3px;
+	-webkit-border-top-left-radius: 3px;
+	border-top-left-radius: 3px;
+}
+
+table thead th:last-child {
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-right-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+table thead th a {
+	color:#e5e6e6;
+}
+
+table thead th a:hover {
+	color:#fff;
+}
+
+table .pbt-icon-table-sort-up:before { content: "\f062"; }
+table .pbt-icon-table-sort-down:before { content: "\f063"; }
+
+/* Contenu */
+table td {
+	background-color:#f5f5f5;
+	border-top:1px solid #d1d2d4;
+	border-left:1px solid #d1d2d4;
+	padding:8px;
+	color:#676a74;
+	text-align:center;
+}
+
+table tr:nth-child(even) td {
+	background-color:#fff;
+}
+
+table td:first-child , table td.no-separator{
+	border-left: none;
+}
+
+table tbody td.align_left {
+	text-align:left;
+}
+
+.row1 {
+    background:#E0E9EF;
+	padding:8px 6px;
+	border-top:1px solid #CCCCCC;
+}
+
+.row2 {
+	padding:8px 6px;
+}
+
+.row3 {
+	background:#F2F7FB;
+    border-color:#C4CED6;
+    padding:8px 6px;
+	border-top:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+	-moz-border-radius:0px 0px 5px 5px;
+	-khtml-border-bottom-right-radius:5px;
+	-khtml-border-bottom-left-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
+    border-radius:5px;
+}
+
+.row_disabled { background:#E1E1E1 !important; }
+
+/* Pied */
+table tfoot {
+	border-top:1px solid #d1d2d4;
+}
+
+table tfoot th {
+    color:#aaa;
+    background-color:#f0f0f0;
+	border-top:1px solid #d1d2d4;
+	padding:8px;
+}
+
+table tfoot th a{
+    color:#676a74;
+}
+
+table tfoot th:only-child{
+	text-align:right;
+}
+
+table tfoot th:first-child {
+    -moz-border-radius-bottomleft: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+table tfoot th:last-child {
+    -moz-border-radius-bottomright: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+/* Mini tableaux */
+table.mini th, table.mini td {
+	padding:3px 1px;
+	font-size:11px;
+}
+
+table.mini th a, table.mini td a {
+	font-size:11px;
+}
+
+/* Pagination footer tableaux */
+table tfoot nav.pagination a{
+	color:#8b8d90;
+	text-decoration:none;
+	padding:3px 3px;
+	
+}
+
+table tfoot nav.pagination a span.current_page {
+	color:#ced0d0;
+	text-decoration:none;
+}
+
+/* Boutons
+------------------------------------ */
+/* Normal */
+
+button {
+	height:auto;
+	cursor:pointer;
+	vertical-align: middle;
+	padding:4px 12px;
+	color:#333333;
+	text-align:center;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+	background-image: -moz-linear-gradient(top,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.10) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.10)));
+	background-image: -webkit-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
+	background-image: -o-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
+	background-image: -ms-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
+	background-image: linear-gradient(to bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
+	background-color:#F9F9F9;
+	border:1px solid #CCCCCC;
+	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+}
+	
+button:hover{
+	background-color:#FDFDFD;
+	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	-o-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+}
+
+button:active{ 
+	background-color:#F1F1F1;
+	border:1px solid #DDDDDD;
+	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+}
+
+button, button:focus, button:hover, button:active{ outline: none; }
+
+fieldset:not(.fieldset_submit) button {
+	font-size:11px;
+	padding: 2px 6px;
+}
+
+button[type=reset]{
+	font-weight:bold;
+}
+
+/* Small */
+.small-button {
+	display: inline;
+	padding: 1px 6px;
+	font-size: 75%;
+	font-weight: bold;
+	text-align: center;
+	border-radius: 2px;
+	background: #2F5B8A;
+	color: #ffffff;
+}
+
+.small-button:hover {
+	background: #3D6997;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.small-button [class^="pbt-icon-"]:before{
+	font-size:13px;
+	vertical-align: -1px;
+}
+
+/* Formulaires 
+--------------------------------------*/
+
+.fieldset_mini {
+    width:540px;
+    margin:auto;
+    margin-top:20px;
+}
+
+fieldset {
+	margin:20px 0;
+	padding:6px;
+	border:none;
+	background:none;
+	position:relative;
+}
+
+fieldset.fieldset_submit {
+	margin-top:-10px;
+	padding-bottom:15px;
+	width:99%;
+	text-align:center;
+	background:none;
+	border:none;
+}
+
+fieldset.fieldset_submit legend {
+    display:none;
+}
+
+fieldset dl {
+    height:1%;
+    overflow:hidden;
+    margin-bottom:16px;
+    font-size:11px;
+}
+
+fieldset dl.overflow_visible {
+    overflow:visible;
+}
+
+html>body fieldset dl {
+    height:auto;
+    min-height:20px;
+}
+
+fieldset dt {
+    width:45%;
+    text-align:left;
+    padding-top:3px;
+}
+
+fieldset dd {
+    margin:0 0 0 45%;
+    padding:0 0 0 5px;
+    border:none;
+    vertical-align:top;
+    font-size:11px;
+}
+
+dt {
+    float:left;
+    width:auto;
+}
+
+dt span {
+    padding:0 5px 0 0;
+}
+
+label {
+    cursor:pointer;
+}
+
+fieldset label {
+    font-size:11px;
+    text-align:left;
+    font-weight:bold;
+    color:#334455;
+}
+
+dd label {
+    white-space:nowrap;
+    margin:0 10px 0 0;
+    font-weight:normal;
+    color:#476A7F;
+}
+
+dt span {
+    font-size:10px;
+    color:#0E2A48;
+}
+
+fieldset dl dd label:hover {
+    color:#183A4F;
+}
+
+input, optgroup, select, .xmlhttprequest_preview {
+	font-size:11px;
+	border-left:1px solid #99b1cb;
+	border-top:1px solid #99b1cb;
+	border-right:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+	background-color:#FFFFFF;	
+	color:#2E3B5F;
+	padding:0px 2px;
+}
+
+textarea {
+    display:block;
+    width:94%;
+    margin:5px auto;
+}
+
+.textarea-element span{
+	display:block;	
+}
+
+.textarea-element button{
+	margin:2px auto;
+	display:block;	
+}
+
+fieldset textarea.post {
+	width:90%;
+	display:inline;		
+}
+
+.textarea-element-small{
+	width:49%;	
+}
+
+input:hover, textarea:hover {
+	border:1px solid #336397;
+	background-color:#FFFFFF; 
+}
+
+input:focus, textarea:focus {
+	border:1px solid #0B6ABF;
+	background-color:#f5fbff;
+}
+
+fieldset textarea.post {
+	width:90%;
+	display:inline;		
+}
+
+input.text {
+	padding:1px 2px 1px 2px;	
+	border-radius:3px;
+}
+
+input[type=checkbox] { 
+	border:none;
+	background:none;
+}
+
+input.file {
+	border:1px solid #515C68;	
+	border-top:1px solid #8498ae;	
+	color:#2E3B5F;	
+	padding:1px;
+	font-weight:bold;
+	font-size:10px;
+}
+
+optgroup, select {
+	cursor:pointer;
+	vertical-align:middle;
+	width:auto;		
+	border-radius:3px;
+}
+
+optgroup {
+    font-weight:bold;
+    border:none;
+    border-bottom:1px solid #5B5A5A;
+}
+
+option {
+    padding:0px 3px;
+}
+
+legend {
+	display:block;
+	padding:10px 10px 2px 0px;
+	margin:0px 0px 10px -6px;
+	width: 100%;
+	text-transform:none;
+	color:#333333;
+	font-size:1.5em;
+	font-weight:bold;
+	vertical-align:middle;
+	border-bottom:1px solid #DDDDDD;
+}
+
+input[type=text], input[type=password], textarea{
+	display: inline-block;
+	vertical-align: middle;
+	padding: 4px 6px;
+	color: #555555;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
+}
+input[type=text]:hover,input[type=password]:hover, textarea:hover {
+	color: #333333;
+	border:1px solid #BBBBBB;
+	background-color:#FFFFFF; 
+}
+
+input[type=text]:focus,input[type=password]:focus, textarea:focus {
+	color: #222222;
+	border-color: #BBBBBB;
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+input[type=checkbox] { 
+	border:none;
+	background:none;
+}
+
+.input-element, .textarea-element{
+	margin-bottom:10px;
+}
+
+.input-element label, .textarea-element label{
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.input-element label{
+	width: 30%;
+	text-align: left;
+	margin-right: 10px;
+	padding-top: 3px;
+	vertical-align: top;
+}
+
+.input-element label span{
+	display: block;
+	line-height: 12px;
+}
+
+.input-element.input-error input{
+	border-color: rgba(196, 60, 43, 0.3);
+	outline: 0;
+	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.1);
+	-moz-box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
+	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
+	color:#C43C35;
+}
+.input-element.input-error input:hover, .input-element.input-error input:focus{
+	border-color: rgba(196, 60, 43, 0.5);
+	outline: 0;
+	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.3);
+	-moz-box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
+	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
+	color:#C43C35;
+}
+.input-element.input-error span{
+	display: block;
+	margin: 0 0 0 30%;
+	padding-left: 15px;
+	font-style:italic;
+}
+
+.input-element.input-disabled  input{
+	cursor: not-allowed;
+	background:#F1F1F1;
+	color:#AAAAAA;
+	border: 1px solid #CCCCCC;
+}
+
+.input-element-button{
+	display: inline-block;
+	font-size: 0;
+	white-space: nowrap;
+	vertical-align: middle;	
+}
+
+.input-element-button input {
+	-webkit-border-radius: 4px 0 0 4px;
+	-moz-border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;
+}
+
+.input-element-button button{
+	font-size:11px;
+	margin-left:-1px;
+	-webkit-border-radius: 0 4px 4px 0;
+	-moz-border-radius:  0 4px 4px 0;
+	border-radius: 0 4px 4px 0;
+	padding: 4px 8px;
+}
+
+/* Messages postés par les membres (messages privés, etc...) 
+--------------------------------------*/
+/* Classe du lien du pseudo des messages */
+a.msg_link_pseudo {
+	font-size:11px;
+    color:#e8eaeb;
+    font-weight:bold;
+}
+
+a.msg_link_pseudo:hover { color:#f2fbff; }
+
+/* Conteneur des messages */
+.msg_position { 
+    width:98%;
+    margin:5px auto;
+    background:#f0f3ff;
+    border: 1px solid #D1D4DF;
+}
+
+/* Case contenant l'ensemble du message */
+.msg_container, .msg_container2 {
+    background: #FCFCFD;
+    overflow:hidden !important;
+    height:auto !important;
+    clear:both;
+}
+
+/*  Case contenant l'ensemble du message => Couleur alternative */
+.msg_container2 { background: #FCFCFD; }
+
+/* Barre superieur des messages */
+.msg_top_l{
+	margin-right:0px !important;
+	height:34px;
+	width:29px;
+	background:#ECEFFA;
+	float:left;
+}
+
+.msg_top_r{
+	margin-left:0px !important;
+	height:34px;
+	width:21px;
+	background:#ECEFFA;
+	float:right;
+}
+
+.msg_top {
+	height:25px;
+	background:#ECEFFA;
+	padding:9px 0px 0px 6px;
+	margin:0px 15px 0px 20px;
+}
+
+.msg_top a { color:#3F5164; }
+
+/* Pseudo du membre */
+.msg_pseudo_mbr {
+    width:127px;
+    background:#366393;
+    padding:2px 4px;
+    float:left;
+    margin-right:0px !important;
+    margin-left:-127px !important;
+    margin-top:-4px;
+}
+
+/* Case au dessus du message, indique la date et les boutons d'administration */
+.msg_top_row {
+    height:16px;
+    background:#366393;
+    font-size:11px;
+    color:#e8eaeb;
+    border-top:1px solid #325889;
+    border-bottom:1px solid #325889;
+    padding:4px 0px 0px 127px;
+    overflow:hidden !important;
+    height:auto !important;
+}
+
+.msg_top_row a {
+	color:#e8eaeb;
+}
+
+.msg_info_mbr { /* Case des informations du membre */
+    background:#f0f3ff;
+    width:136px;
+    padding:4px;
+    float:left;
+    font-size:10px;
+    border-right:1px dotted #C4CED6;
+}
+
+.msg_info_mbr img {	max-width: 120px; }
+
+/* Case contenant l'ensemble du message, infos membre + contenu */
+.msg_contents_container { background:#f0f3ff; }
+
+/* Case du message */
+.msg_contents, .msg_contents2 { 
+    margin-left:135px;
+    background: #FCFCFD;
+    padding:0px 5px;
+    border-left:1px dotted #C4CED6;
+}
+
+/* Case du message => Couleur alternative */
+.msg_contents2 { background: #FCFCFD; }
+
+/* Case du contents du message, évite que les images trop grandes soient déformées */
+.msg_contents_overflow {
+    width:99%;
+    height:auto;
+    min-height:80px;
+    overflow:auto;
+    padding:10px 0px;
+    word-wrap:break-word;
+}
+
+/* Signature du membre */
+.msg_sign, .msg_sign2 { 
+   	background: #FCFCFD;
+    padding:4px;
+    font-size:11px;
+    margin-left:135px;
+    border-left:1px dotted #C4CED6;
+}
+
+/* Signature du membre => Couleur alternative */
+.msg_sign2 { background: #FCFCFD; }
+
+/* Signature du membre, fixe la hauteur maximale */
+.msg_sign_overflow { 
+    height:auto !important;
+    width:99%;
+    max-height:80px;
+    max-width:99%;
+    overflow:hidden;
+}
+
+.msg_bottom {
+    height:23px;
+    padding:6px 6px 0px 6px;
+    border:none;
+    background:none;
+}
+
+/* Modules minis
+--------------------------------------*/
+/* Placement des mini modules */
+.module_mini_container {
+    width:190px;
+    margin:0px 0px 10px 0px;
+    border:1px #bebebe solid;
+    border-bottom:2px #99b1cb solid;
+    background:#ffffff;
+    border-spacing:1px;
+    padding:5px;
+	clear:both;
+}
+
+.module_mini_top {
+    height:24px;
+    font-weight:bold;
+    text-align:center;
+    border-bottom:2px #336397 solid;
+}
+
+.module_mini_contents {
+    border-top:none;
+    border-bottom:none;
+    text-align:center;
+    padding:5px 4px 0px 4px;
+}
+
+/* Bordure inférieure des modules minis */
+.module_mini_bottom { 
+    height:15px;
+}
+
+/* Commentaires
+--------------------------------------*/
+/* Notoriété */
+/*div#message-rating {
+	width:48px;
+	height:22px;
+	margin-top: 10px;
+}
+
+div#message-rating div {
+	width:50%;
+	color:#FFF;
+	cursor: pointer;
+	text-align:center;
+	font-weight:900;
+	font-size: 16px;
+}
+
+.positive_vote_button {
+	background:#CCC;
+	border-top-left-radius:2px;
+	border-bottom-left-radius:2px;
+	float:left;
+}
+
+.negative_vote_button {
+	background:#e0e0e0;
+	border-top-right-radius:2px;
+	border-bottom-right-radius:2px;
+	float:right;
+}
+
+div#message-rating .positive {
+	background:#ab0119;
+}
+
+div#message-rating .negative {
+	background:#39ab01;
+}
+*/
+
+/* Commentaires */
+.message { width:98%; margin-bottom:20px; overflow:auto;}
+.message-date {	margin-left: 10px; }
+.message-user_infos { text-align:center; width:150px; float:left; }
+.message-content { margin-left:180px; }
+.view-topic { margin-top: 10px; }
+
+.message-message {
+	position: relative;
+	padding: 15px;
+	margin-top: 5px;
+	border: 1px solid #D6DEE7;
+	color: #333;
+	background:#ECEFFA;
+	min-height: 80px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.message-message:before {
+	content: "";
+	top: 15px;
+	bottom: auto;
+	left: -25px;
+	position: absolute;
+	border-width: 15px 25px 15px 0;
+	border-color: transparent #D6DEE7;	
+	border-style: solid;
+	display: block;
+	width: 0;
+}
+
+.message-message:after {
+	content: "";
+	top: 16px;
+	bottom: auto;
+	left: -24px;
+	position: absolute;
+	border-width: 14px 24px 14px 0;
+	border-color: transparent #ECEFFA;	
+	border-style: solid;
+	display: block;
+	width: 0;
+}
+
+.message-avatar { width:80px; }
+.message-containt { overflow:auto; }
+.message-pseudo a {}
+.message-user_infos img{ padding:10px 0px; }
+
+.message-moderate {
+	background:#ECEFFA;
+	border: 1px solid #D6DEE7;
+	border-radius:4px;
+	padding-top:4px;
+	width: 98%;
+	text-align:center;
+	vertical-align:middle;
+}
+
+.message-moderate a { vertical-align:top; }
