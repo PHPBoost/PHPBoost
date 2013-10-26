@@ -1,14 +1,11 @@
-<div id="${escape(ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF #>
+<div id="${escape(ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF # class="field-textarea">
 	<label for="${escape(ID)}">
 		# IF C_REQUIRED # * # ENDIF #
 		{LABEL}
+		# IF C_DESCRIPTION #<span class="field-description">{DESCRIPTION}</span># ENDIF #
 	</label>
 	<span id="onblurContainerResponse${escape(ID)}"></span>
 	<span style="font-weight:bold;display:none" id="onblurMesssageResponse${escape(ID)}"></span>
-	# IF C_DESCRIPTION #
-	<br />
-	<span class="smaller">{DESCRIPTION}</span>
-	# ENDIF #
 	# IF C_EDITOR_ENABLED #
 		{EDITOR}
 	# ENDIF #
