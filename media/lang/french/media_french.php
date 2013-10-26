@@ -113,6 +113,7 @@ $MEDIA_LANG = array(
 'media_infos' => 'Information sur le fichier multimédia',
 'media_added_by' => 'Par',
 'view_n_times' => 'Vu %d fois',
+'category_manage' => 'Gérer la catégorie',
 
 // media_action.php
 'action_success' => 'L\'action demandée a été réalisée avec succès !',

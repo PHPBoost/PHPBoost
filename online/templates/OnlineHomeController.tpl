@@ -4,7 +4,7 @@
 			<li><a><i class="icon-cog"></i></a>
 				<ul>
 					<li>
-						<a href="${relative_url(OnlineUrlBuilder::configuration())}" title="${i18n('admin.online-config')}">${i18n('admin.online-config')}</a>
+						<a href="${relative_url(OnlineUrlBuilder::configuration())}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
 					</li>
 				</ul>
 			</li>

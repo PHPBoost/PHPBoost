@@ -16,8 +16,13 @@
 						</li>
 						# END IF #
 						# IF C_ADMIN #
+							# IF C_CAT #
+							<li>
+								<a href="{U_ADMIN_CAT}" title="{L_ADMIN_CAT}">{L_ADMIN_CAT}</a>
+							</li>
+							# ENDIF #
 						<li>
-							<a href="{U_ADMIN_CAT}" title="{L_CONFIG}">{L_CONFIG}</a>
+							<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
 						</li>
 						# END IF #
 					</ul>
