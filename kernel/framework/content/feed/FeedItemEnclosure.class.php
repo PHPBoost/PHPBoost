@@ -74,7 +74,7 @@ class FeedItemEnclosure
         {
             $url = new Url($url);
         }
-        $this->url = $url->absolute();
+        $this->url = $url->rel();
 	}
 	
 	public function get_url()

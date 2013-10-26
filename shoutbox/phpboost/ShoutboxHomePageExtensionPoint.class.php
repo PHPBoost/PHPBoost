@@ -135,7 +135,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 				'C_GROUP_COLOR' => !empty($group_color),
 				'U_DIT' => PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?edit=1&amp;id=' . $row['id']),
 				'U_DELETE' => PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_AVATAR' => $user_avatar,
 				'ID' => $row['id'],
 				'DATE' => gmdate_format('date_format', $row['timestamp']),

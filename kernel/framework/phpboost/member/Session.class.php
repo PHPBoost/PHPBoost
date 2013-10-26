@@ -101,21 +101,21 @@ class Session
 				}
 				else //plus d'essais
 				{
-					AppContext::get_response()->redirect(UserUrlBuilder::connect('flood')->absolute());	
+					AppContext::get_response()->redirect(UserUrlBuilder::connect('flood'));
 				}
 			}
 			elseif ($info_connect['user_aprob'] == '0')
 			{
-				AppContext::get_response()->redirect(UserUrlBuilder::connect('not_enabled')->absolute());	
+				AppContext::get_response()->redirect(UserUrlBuilder::connect('not_enabled'));
 			}
 			elseif ($info_connect['user_warning'] == '100')
 			{
-				AppContext::get_response()->redirect(UserUrlBuilder::connect('banned')->absolute());	
+				AppContext::get_response()->redirect(UserUrlBuilder::connect('banned'));
 			}
 			else
 			{
 				$delay_ban = ceil((0 - $delay_ban)/60);
-				AppContext::get_response()->redirect(UserUrlBuilder::connect('banned', $delay_ban)->absolute());	
+				AppContext::get_response()->redirect(UserUrlBuilder::connect('banned', $delay_ban));
 			}
 
 			if (!empty($error_report)) //Erreur
@@ -123,7 +123,7 @@ class Session
 				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
 				$info_connect['test_connect']++;
 				$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
-				AppContext::get_response()->redirect(UserUrlBuilder::connect('flood/'. $info_connect['test_connect'])->absolute());	
+				AppContext::get_response()->redirect(UserUrlBuilder::connect('flood/'. $info_connect['test_connect']));
 			}
 			elseif ($info_connect['test_connect'] > 0) //Succès redonne tous les essais.
 			{
@@ -132,7 +132,7 @@ class Session
 		}
 		else
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::connect('unexisting')->absolute());
+			AppContext::get_response()->redirect(UserUrlBuilder::connect('unexisting'));
 		}
 		
 		if (!empty($url_to_redirect))
@@ -592,14 +592,14 @@ class Session
 
 					AppContext::get_response()->set_cookie(new HTTPCookie($sessions_config->get_cookie_name() . '_autoconnect', '', time() - 31536000)); //Destruction cookie.
 					
-					AppContext::get_response()->redirect(UserUrlBuilder::connect('flood', 5 - ($test_connect + 1))->absolute());	
+					AppContext::get_response()->redirect(UserUrlBuilder::connect('flood', 5 - ($test_connect + 1)));
 				}
 				elseif (is_numeric($error_report))
 				{
 					AppContext::get_response()->set_cookie(new HTTPCookie($sessions_config->get_cookie_name() . '_autoconnect', '', time() - 31536000)); //Destruction cookie.
 
 					$error_report = ceil($error_report/60);
-					AppContext::get_response()->redirect(UserUrlBuilder::connect('banned', $error_report)->absolute());
+					AppContext::get_response()->redirect(UserUrlBuilder::connect('banned', $error_report));
 				}
 				else //Succès on recharge la page.
 				{

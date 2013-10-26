@@ -118,7 +118,7 @@ class DispatchManager
 
 	private static function redirect404()
 	{
-		AppContext::get_response()->redirect(UserUrlBuilder::error_404()->absolute());
+		AppContext::get_response()->redirect(UserUrlBuilder::error_404());
 	}
 
 	private static function show_error($exception)
