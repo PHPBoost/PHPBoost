@@ -114,6 +114,7 @@ $MEDIA_LANG = array(
 'media_infos' => 'Information on the multimedia file',
 'media_added_by' => 'By',
 'view_n_times' => 'Seen %d time(s)',
+'category_manage' => 'Manage the category',
 
 // media_action.php
 'action_success' => 'The operation you asked for was successfully executed!',
