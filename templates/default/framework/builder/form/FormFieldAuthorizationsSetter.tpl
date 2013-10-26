@@ -1,18 +1,10 @@
-<div id="${escape(ID)}" # IF C_HIDDEN # style="display:none;" # ENDIF #>
+<div id="${escape(ID)}" # IF C_HIDDEN # style="display:none;" # ENDIF # class="field">
 # START actions #
-<dl id="${escape(ID)}_field_{actions.BIT}">
-	<dt>
-		<label>
-			{actions.LABEL}
-		</label>
-		# IF actions.DESCRIPTION #
-		<br />
-		<span class="smaller">{actions.DESCRIPTION}</span>
-		# ENDIF #
-	</dt>
-	<dd>
-	{actions.AUTH_FORM}
-	</dd>
-</dl>
+	<label>
+		{actions.LABEL} # IF actions.DESCRIPTION #<span class="field-description">{actions.DESCRIPTION}</span># ENDIF #
+	</label>
+	<div class="field-value">
+		{actions.AUTH_FORM}
+	</div>
 # END actions #
 </div>

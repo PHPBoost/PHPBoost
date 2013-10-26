@@ -1,29 +1,23 @@
-<dl id="${escape(ID)}_field"# IF C_HIDDEN # style="display:none;" # ENDIF # # IF C_HAS_FIELD_CLASS # class="{FIELD_CLASS}" # ENDIF #>
+<div id="${escape(ID)}_field"# IF C_HIDDEN # style="display:none;" # ENDIF # class="field # IF C_HAS_FIELD_CLASS #{FIELD_CLASS}# ENDIF #" >
 	# IF C_HAS_LABEL #
-	<dt>
 		<label for="${escape(ID)}">
 			# IF C_REQUIRED # * # ENDIF #
 			{LABEL}
+			# IF C_DESCRIPTION #
+			<span class="field-description">{DESCRIPTION}</span>
+			# ENDIF #
 		</label>
-		# IF C_DESCRIPTION #
-		<br />
-		<span class="smaller">{DESCRIPTION}</span>
+	# ENDIF #
+	
+	<div class="field-value">
+		# START fieldelements #
+			{fieldelements.ELEMENT}
+		# END fieldelements #
+		# IF C_HAS_CONSTRAINTS #
+			&nbsp;
+			<span style="display:none" id="onblurContainerResponse${escape(ID)}"></span>
+			<div style="font-weight:bold;display:none" id="onblurMesssageResponse${escape(ID)}"></div>
 		# ENDIF #
-	</dt>
-	<dd>
-	# ENDIF #
-	
-	# START fieldelements #
-		{fieldelements.ELEMENT}
-	# END fieldelements #
-	# IF C_HAS_CONSTRAINTS #
-		&nbsp;
-		<span style="display:none" id="onblurContainerResponse${escape(ID)}"></span>
-		<div style="font-weight:bold;display:none" id="onblurMesssageResponse${escape(ID)}"></div>
-	# ENDIF #
-	
-	# IF C_HAS_LABEL #
-	</dd>
-	# ENDIF #
-</dl>
+	</div>
+</div>
 # INCLUDE ADD_FIELD_JS #

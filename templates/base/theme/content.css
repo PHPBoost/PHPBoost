@@ -448,7 +448,6 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus {
 
 input[type=text].field-smaller, input[type=password].field-smaller{ width:29px; }
 input[type=text].field-small, input[type=password].field-small{	width:77px; }
-input[type=text], input[type=password]{	width:141px; }
 input[type=text].field-large, input[type=password].field-large{ width:200px; }
 input[type=text].field-xlarge, input[type=password].field-xlarge{ width:300px; }
 
@@ -456,7 +455,16 @@ input[type=text].field-xlarge, input[type=password].field-xlarge{ width:300px; }
 	margin: 0px 15px 10px 15px;
 }
 
-label{
+.field-value {
+	display:inline-block;
+}
+
+.field-value label {
+	margin: 0 10px 0 0;
+	display:block;
+}
+
+label[for]{
 	display:inline-block;
 	width: 30%;
 	text-align: left;
