@@ -57,79 +57,90 @@
 	
 			<fieldset>
 				<legend>Le titre du Fieldset </legend>
-				le contenu
+				
+				<div class="field">
+					<label for="IDinput" title="Le complément du label">Un input très petit (pour l'heure)</label>
+					<input type="text" class="field-smaller" maxlength="25" name="Input" id="IDinput" value="test" >
+				</div>
+				<div class="field">
+					<label for="IDinput" title="Le complément du label">Un input petit (pour la date)</label>
+					<input type="text" class="field-small" maxlength="25" name="Input" id="IDinput" value="test" >
+				</div>
+				<div class="field">
+					<label for="IDinput" title="Le complément du label">Un input de taille normal</label>
+					<input type="text" class="" maxlength="25" name="Input" id="IDinput" value="test" >
+				</div>
+				<div class="field">
+					<label for="IDinput" title="Le complément du label">Un input grand</label>
+					<input type="text" class="field-large" maxlength="25" name="Input" id="IDinput" value="test" >
+				</div>
+				<div class="field">
+					<label for="IDinput" title="Le complément du label">Un input très grand</label>
+					<input type="text" class="field-xlarge" maxlength="25" name="Input" id="IDinput" value="test" >
+				</div>
+				<div class="field constraint-check-right">
+					<label for="IDinput" title="Le complément du label">Un Input qui est correcte</label>
+					<input type="text" class="field-other" maxlength="25" name="Input" id="IDinput" value="test" >
+					<i class="pbt-icon-field-constraint-check"></i>
+				</div>
+				<div class="field constraint-check-error">
+					<label for="IDinput" title="Le complément du label">Un Input qui est en erreur</label>
+					<input type="text"  class=""  maxlength="25" name="Input" id="IDinput" value="test" >
+					<i class="pbt-icon-field-constraint-check"></i>
+					<span class="field-error">La valeur saisie doit être un mail valide</span>
+				</div>
+				<div class="field">
+					<label for="IDinput" title="Le complément du label">Un Input avec une description<span class="field-description">Description vachement plus longue</span></label>
+					<input type="text" class="field-large" maxlength="25" name="Input" id="IDinput" value="test" >
+				</div>
+				<div class="field">
+					<label for="IDinput" title="Le complément du label">Un Input désactivé</label>
+					<input type="text" class="field-large" disabled="disabled" maxlength="25" name="Input" id="IDinput" value="test" >
+				</div>
+				<div class="field">
+					<label for="IDinput" title="Le complément du label">Date<span class="field-description">Description</span></label>
+					<input type="text" class="field-small" name="Input" id="IDinput" value="25/10/2013" >
+					<i class="pbt-icon-calendar"></i> à
+					<input type="text" class="field-smaller" name="Input" id="IDinput" value="07" > h
+					<input type="text" class="field-smaller" name="Input" id="IDinput" value="52" >
+				</div>
 			</fieldset>
 		</div>
-		
-		<h5>Les Inputs</h5><br />
-		<div class="content">
-			<div class="input-element">
-				<label for="IDinput" title="Le complément du label">Le label de l'input</label>
-				<input type="text" class="normal-size" maxlength="25" name="Input" id="IDinput" value="test" >
-			</div>
-			<div class="input-element input-ok">
-				<label for="IDinput" title="Le complément du label">Un Input qui est correcte</label>
-				<input type="text" class="normal-size" maxlength="25" name="Input" id="IDinput" value="test" >
-				<i class="pbt-icon-check"></i>
-			</div>
-			<div class="input-element input-error">
-				<label for="IDinput" title="Le complément du label">Un Input qui est en erreur</label>
-				<input type="text"  class="normal-size "  maxlength="25" name="Input" id="IDinput" value="test" >
-				<i class="pbt-icon-error"></i>
-				<span class="smaller">La valeur saisie doit être un mail valide</span>
-			</div>
-			<div class="input-element">
-				<label for="IDinput" title="Le complément du label">Un Input avec description<span class="smaller">Description vachement plus longue</span></label>
-				<input type="text" class="normal-size" disabled="disabled" maxlength="25" name="Input" id="IDinput" value="test" >
-			</div>
 			
-			<div class="input-element">
-				<label for="IDinput" title="Le complément du label">Date<span class="smaller">Description</span></label>
-				<input type="text" size="10" name="Input" id="IDinput" value="25/10/2013" >
-				<img class="valign_middle" id="imgcalendar_2_date" src="{PATH_TO_ROOT}/templates/base/images/calendar.png" alt=""> à
-				<input type="text" size="2" name="Input" id="IDinput" value="07" > h
-				<input type="text" size="2" name="Input" id="IDinput" value="52" >
-			</div>
-		</div>
-		
-		<h5>Les textareas</h5><br />
-		<div class="content">
-			<div class="textarea-element">
-				<label for="textarea" title="Le complément du label">Ceci est un textarea</label>
-				<i class="pbt-icon-check"></i>
-				<span class="smaller">Description</span>
-				<textarea onblur="" class="" cols="47" rows="6" name="textarea" id="textarea">Voici un textarea</textarea>
-				<button type="button">Prévisualiser</button>
-			</div>
-			
-			<div class="textarea-element textarea-element-small">
-				<label for="textarea" title="Le complément du label">Ceci est un textarea à coté du label</label>
-				<i class="pbt-icon-check"></i>
-				<span class="smaller">Description</span>
-				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
-				<button type="button">Prévisualiser</button>
-			</div>	
-		
-			<div class="textarea-element textarea-element-small center">
-				<label for="textarea" title="Le complément du label">Ceci est un textarea à coté du label</label>
-				<i class="pbt-icon-error"></i>
-				<span class="smaller">Description</span>
-				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
-				<button type="button">Prévisualiser</button>
-			</div>
-		</div>
-		
-		<h5>Les boutons</h5><br />
 		<div class="content">
 			<button type="submit">Envoyer</button>
 			<button type="button">Prévisualiser</button>
 			<button type="reset">Annuler</button>
-		</div>
-	
+		</div>	
+		
 		<div class="content">
 			<button type="submit" class="small">Envoyer (en petit)</button>
 			<button type="button" class="big">Prévisualiser (en gros)</button>
 			<button type="reset" class="biggest">Annuler (bien visible)</button>
+		</div>
+				
+		<h5>Les textareas</h5><br />
+		<div class="content">
+			<div class="field-textarea">
+				<label for="textarea" title="Le complément du label">Ceci est un textarea<span class="field-description">Description</span></label>
+				<div><i class="pbt-icon-check"></i></div>
+				<textarea onblur="" class="" cols="47" rows="6" name="textarea" id="textarea">Voici un textarea</textarea>
+				<button type="button">Prévisualiser</button>
+			</div>
+			
+			<div class="field-textarea field-textarea-small">
+				<label for="textarea" title="Le complément du label">Ceci est un textarea à coté du label<span class="field-description">Description</span></label>
+				<i class="pbt-icon-check"></i>
+				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
+				<button type="button">Prévisualiser</button>
+			</div>	
+		
+			<div class="field-textarea field-textarea-small center">
+				<label for="textarea" title="Le complément du label">Ceci est un textarea à coté du label</label>
+				<div><i class="pbt-icon-error"></i></div>
+				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
+				<button type="button">Prévisualiser</button>
+			</div>
 		</div>
 	
 		<h5>Petits boutons</h5><br />
