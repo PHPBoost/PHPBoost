@@ -4,10 +4,10 @@
 			<li><a><i class="icon-cog"></i></a>
 				<ul>
 					<li>
-						<a href="${relative_url(ContactUrlBuilder::manage_fields())}" title="${i18n('admin.fields.manage')}">${i18n('admin.fields.manage')}</a>
+						<a href="${relative_url(ContactUrlBuilder::manage_fields())}" title="{@admin.fields.manage}">{@admin.fields.manage}</a>
 					</li>
 					<li>
-						<a href="${relative_url(ContactUrlBuilder::configuration())}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
+						<a href="${relative_url(ContactUrlBuilder::configuration())}" title="{@admin.config}">{@admin.config}</a>
 					</li>
 				</ul>
 			</li>

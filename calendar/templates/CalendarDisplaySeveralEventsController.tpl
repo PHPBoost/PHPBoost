@@ -16,7 +16,7 @@
 				# ENDIF #
 				# IF IS_ADMIN #
 				<li>
-					<a href="${relative_url(CalendarUrlBuilder::configuration())}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
+					<a href="${relative_url(CalendarUrlBuilder::configuration())}" title="{@calendar.titles.admin.config}">{@calendar.titles.admin.config}</a>
 				<li>
 				# ENDIF #
 			</ul>
