@@ -83,19 +83,19 @@ class NewsletterArchivesController extends ModuleController
 		$nbr_pages =  ceil($nbr_archives / $this->nbr_archives_per_page);
 		$pagination = new Pagination($nbr_pages, $current_page);
 		
-		$pagination->set_url_sprintf_pattern(NewsletterUrlBuilder::archives($this->id_stream .'/'. $field .'/'. $sort .'/%d')->absolute());
+		$pagination->set_url_sprintf_pattern(NewsletterUrlBuilder::archives($this->id_stream .'/'. $field .'/'. $sort .'/%d')->rel());
 		$this->view->put_all(array(
 			'C_ARCHIVES' => (float)$nbr_archives,
 			'C_SPECIFIC_STREAM' => !empty($this->id_stream),
 			'NUMBER_COLUMN' => empty($this->id_stream) && !empty($nbr_archives) ? 4 : 3,
-			'SORT_STREAM_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/top/'. $current_page)->absolute(),
-			'SORT_STREAM_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/bottom/'. $current_page)->absolute(),
-			'SORT_SUBJECT_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/subject/top/'. $current_page)->absolute(),
-			'SORT_SUBJECT_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/subject/bottom/'. $current_page)->absolute(),
-			'SORT_DATE_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/date/top/'. $current_page)->absolute(),
-			'SORT_DATE_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/date/bottom/'. $current_page)->absolute(),
-			'SORT_SUBSCRIBERS_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/subscribers/top/'. $current_page)->absolute(),
-			'SORT_SUBSCRIBERS_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/subscribers/bottom/'. $current_page)->absolute(),
+			'SORT_STREAM_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/top/'. $current_page)->rel(),
+			'SORT_STREAM_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/bottom/'. $current_page)->rel(),
+			'SORT_SUBJECT_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/subject/top/'. $current_page)->rel(),
+			'SORT_SUBJECT_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/subject/bottom/'. $current_page)->rel(),
+			'SORT_DATE_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/date/top/'. $current_page)->rel(),
+			'SORT_DATE_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/date/bottom/'. $current_page)->rel(),
+			'SORT_SUBSCRIBERS_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/subscribers/top/'. $current_page)->rel(),
+			'SORT_SUBSCRIBERS_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/subscribers/bottom/'. $current_page)->rel(),
 			'PAGINATION' => $pagination->export()->render()
 		));
 
@@ -116,8 +116,8 @@ class NewsletterArchivesController extends ModuleController
 			$stream_cache = NewsletterStreamsCache::load()->get_stream($row['stream_id']);
 			$this->view->assign_block_vars('archives_list', array(
 				'STREAM_NAME' => $stream_cache['name'],
-				'VIEW_STREAM' => NewsletterUrlBuilder::archives($stream_cache['id'])->absolute(),
-				'VIEW_ARCHIVE' => NewsletterUrlBuilder::archive($row['id'])->absolute(),
+				'VIEW_STREAM' => NewsletterUrlBuilder::archives($stream_cache['id'])->rel(),
+				'VIEW_ARCHIVE' => NewsletterUrlBuilder::archive($row['id'])->rel(),
 				'SUBJECT' => $row['subject'],
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'NBR_SUBSCRIBERS' => $row['nbr_subscribers'],
@@ -139,13 +139,13 @@ class NewsletterArchivesController extends ModuleController
 		$body_view->put('TEMPLATE', $view);
 		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
-		$breadcrumb->add($this->lang['archives.list'], NewsletterUrlBuilder::archives()->absolute());
+		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['archives.list'], NewsletterUrlBuilder::archives()->rel());
 		
 		if ($this->id_stream > 0)
 		{
 			$stream_cache = NewsletterStreamsCache::load()->get_stream($this->id_stream);
-			$breadcrumb->add($stream_cache['name'], NewsletterUrlBuilder::archives($this->id_stream)->absolute());
+			$breadcrumb->add($stream_cache['name'], NewsletterUrlBuilder::archives($this->id_stream)->rel());
 		}
 		
 		$response->get_graphical_environment()->set_page_title($this->lang['archives.list']);

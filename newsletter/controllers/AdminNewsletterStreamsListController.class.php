@@ -71,14 +71,14 @@ class AdminNewsletterStreamsListController extends AdminModuleController
 		$nbr_pages =  ceil($nbr_cats / $this->nbr_categories_per_page);
 		$pagination = new Pagination($nbr_pages, $current_page);
 		
-		$pagination->set_url_sprintf_pattern(NewsletterUrlBuilder::streams($field .'/'. $sort .'/%d')->absolute());
+		$pagination->set_url_sprintf_pattern(NewsletterUrlBuilder::streams($field .'/'. $sort .'/%d')->rel());
 		$this->view->put_all(array(
 			'C_STREAMS_EXIST' => (float)$nbr_cats,
-			'C_ADD_STREAM' => NewsletterUrlBuilder::add_stream()->absolute(),
-			'SORT_NAME_TOP' => NewsletterUrlBuilder::streams('name/top/'. $current_page)->absolute(),
-			'SORT_NAME_BOTTOM' => NewsletterUrlBuilder::streams('name/bottom/'. $current_page)->absolute(),
-			'SORT_STATUS_TOP' => NewsletterUrlBuilder::streams('status/top/'. $current_page)->absolute(),
-			'SORT_STATUS_BOTTOM' => NewsletterUrlBuilder::streams('status/bottom/'. $current_page)->absolute(),
+			'C_ADD_STREAM' => NewsletterUrlBuilder::add_stream()->rel(),
+			'SORT_NAME_TOP' => NewsletterUrlBuilder::streams('name/top/'. $current_page)->rel(),
+			'SORT_NAME_BOTTOM' => NewsletterUrlBuilder::streams('name/bottom/'. $current_page)->rel(),
+			'SORT_STATUS_TOP' => NewsletterUrlBuilder::streams('status/top/'. $current_page)->rel(),
+			'SORT_STATUS_BOTTOM' => NewsletterUrlBuilder::streams('status/bottom/'. $current_page)->rel(),
 			'PAGINATION' => $pagination->export()->render()
 		));
 
@@ -96,8 +96,8 @@ class AdminNewsletterStreamsListController extends AdminModuleController
 		while ($row = $result->fetch())
 		{
 			$this->view->assign_block_vars('streams_list', array(
-				'EDIT_LINK' => NewsletterUrlBuilder::edit_stream($row['id'])->absolute(),
-				'DELETE_LINK' => NewsletterUrlBuilder::delete_stream($row['id'])->absolute(),
+				'EDIT_LINK' => NewsletterUrlBuilder::edit_stream($row['id'])->rel(),
+				'DELETE_LINK' => NewsletterUrlBuilder::delete_stream($row['id'])->rel(),
 				'NAME' => $row['name'],
 				'DESCRIPTION' => $row['description'],
 				'STATUS' => !$row['visible'] ? $this->lang['streams.visible-no'] : $this->lang['streams.visible-yes']
