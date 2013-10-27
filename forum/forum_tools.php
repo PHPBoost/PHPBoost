@@ -90,6 +90,7 @@ $Template->put_all(array(
 	'U_MSG_NOT_READ' => '<a class="small" href="../forum/unread.php' . $sid  . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . ($User->get_attribute('user_id') !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
 	'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
+	'L_CONFIG' => $LANG['forum_config'],
 	'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
 	'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
 	'L_SEARCH' => $LANG['search'],
