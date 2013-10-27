@@ -31,6 +31,7 @@ class UserCommentsController extends AbstractController
 	private $user;
 	private $tpl;
 	private $lang;
+	private $number_comments_per_page = 15;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -72,11 +73,11 @@ class UserCommentsController extends AbstractController
 		$page = $request->get_getint('page', 1);
 		
 		$id_module = $this->module === null ? null : $this->module->get_id();
-		$user_id = $this->user === null ? null : $this->user->get_id();
-		$pagination = new UserCommentsListPagination($page, $id_module, $user_id);
+		$pagination = $this->get_pagination($page);
 		
 		$this->tpl->put_all(array(
-			'PAGINATION' => '&nbsp;<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->display()->render()
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'PAGINATION' => $pagination->display()
 		));
 		
 		$result = PersistenceContext::get_querier()->select('
@@ -90,9 +91,9 @@ class UserCommentsController extends AbstractController
 			LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = comments.user_id
 			'. $this->build_where_request() .'
 			ORDER BY comments.timestamp DESC
-			LIMIT :number_comments_per_page OFFSET :display_from'
+			LIMIT :number_items_per_page OFFSET :display_from'
 		, array(
-			'number_comments_per_page' => $pagination->get_number_comments_per_page(),
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		));
 		
@@ -156,6 +157,28 @@ class UserCommentsController extends AbstractController
 			'ID_IN_MODULE' => $row['id_in_module']
 		));
 		return $comments_tpl;
+	}
+	
+	private function get_pagination($page)
+	{
+		$id_module = $this->module === null ? null : $this->module->get_id();
+		$user_id = $this->user !== null ? $this->user->get_id() : null;
+		
+		$row = PersistenceContext::get_querier()->select('SELECT COUNT(*) AS nbr_comments
+			FROM ' . DB_TABLE_COMMENTS . ' comments
+			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' topic ON comments.id_topic = topic.id_topic 
+			'. $this->build_where_request())->fetch();
+		
+		$pagination = new ModulePagination($page, $row['nbr_comments'], $this->number_comments_per_page);
+		$pagination->set_url(UserUrlBuilder::comments($id_module, $user_id, '%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		return $pagination;
 	}
 	
 	private function build_where_request()
