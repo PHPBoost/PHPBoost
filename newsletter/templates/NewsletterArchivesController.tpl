@@ -29,7 +29,7 @@
 	<tfoot>
 		<tr>
 			<th colspan="{NUMBER_COLUMN}">
-				{@newsletter.page} : {PAGINATION}
+				{PAGINATION}
 			</th>
 		</tr>
 	</tfoot>

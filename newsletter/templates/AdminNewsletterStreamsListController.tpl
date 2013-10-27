@@ -24,7 +24,7 @@
 				<a href="{C_ADD_STREAM}">{@streams.add}</a>
 			</th>
 			<th colspan="2">
-				<span style="float:right;">{@newsletter.page} : {PAGINATION}</span>
+				<span style="float:right;">{PAGINATION}</span>
 			</th>
 		</tr>
 	</tfoot>
