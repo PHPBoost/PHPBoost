@@ -38,7 +38,7 @@ class UserMessagesController extends AbstractController
 		$user_id = $request->get_getint('user_id', 0);
 		if (empty($user_id))
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::users()->absolute());
+			AppContext::get_response()->redirect(UserUrlBuilder::users());
 		}
 		else if (!UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $user_id)))
 		{
@@ -82,8 +82,8 @@ class UserMessagesController extends AbstractController
 		$title = $this->lang['messages'];
 		$response = new UserDisplayResponse();
 		$response->set_page_title($title);
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->absolute());
-		$response->add_breadcrumb($title, UserUrlBuilder::messages($user_id)->absolute());
+		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
+		$response->add_breadcrumb($title, UserUrlBuilder::messages($user_id)->rel());
 		return $response->display($view);
 	}
 }

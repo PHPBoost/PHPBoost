@@ -69,12 +69,12 @@ class UserHomeProfileController extends AbstractController
 			'PM' => $this->user->get_attribute('user_pm'),
 			'IMG_PM' => ($this->user->get_attribute('user_pm') > 0) ? 'new_pm.gif' : 'pm.png',
 			'MSG_MBR' => FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message()),
-			'U_USER_ID' => UserUrlBuilder::profile($user_id)->absolute(),
-			'U_USER_PM' => UserUrlBuilder::personnal_message($user_id)->absolute(),
-			'U_CONTRIBUTION_PANEL' => UserUrlBuilder::contribution_panel()->absolute(),
-			'U_MODERATION_PANEL' => UserUrlBuilder::moderation_panel()->absolute(),
-			'U_UPLOAD' => UserUrlBuilder::upload_files_panel()->absolute(),
-			'U_EDIT_PROFILE' => UserUrlBuilder::edit_profile()->absolute(),
+			'U_USER_ID' => UserUrlBuilder::profile($user_id)->rel(),
+			'U_USER_PM' => UserUrlBuilder::personnal_message($user_id)->rel(),
+			'U_CONTRIBUTION_PANEL' => UserUrlBuilder::contribution_panel()->rel(),
+			'U_MODERATION_PANEL' => UserUrlBuilder::moderation_panel()->rel(),
+			'U_UPLOAD' => UserUrlBuilder::upload_files_panel()->rel(),
+			'U_EDIT_PROFILE' => UserUrlBuilder::edit_profile()->rel(),
 			'L_PROFIL' => $this->lang['profile'],
 			'L_WELCOME' => $this->main_lang['welcome'],
 			'L_PROFIL_EDIT' => $this->lang['profile.edit'],
@@ -89,8 +89,8 @@ class UserHomeProfileController extends AbstractController
 	{
 		$response = new UserDisplayResponse();
 		$response->set_page_title($this->lang['profile']);
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->absolute());
-		$response->add_breadcrumb($this->lang['profile'], UserUrlBuilder::profile($user_id)->absolute());
+		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
+		$response->add_breadcrumb($this->lang['profile'], UserUrlBuilder::profile($user_id)->rel());
 		return $response->display($view);
 	}
 }

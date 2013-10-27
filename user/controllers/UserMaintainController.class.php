@@ -93,7 +93,7 @@ class UserMaintainController extends AbstractController
 		$this->tpl->put_all(array(
 			'L_MAINTAIN' => FormatingHelper::second_parse($this->maintain_config->get_message()),
 			'L_CONNECT' => $this->lang['connect'],
-			'U_CONNECT' => UserUrlBuilder::connect()->absolute(),
+			'U_CONNECT' => UserUrlBuilder::connect()->rel(),
 			'L_MAINTAIN_DELAY' => $this->main_lang['maintain_delay'],
 			'L_LOADING' => $this->main_lang['loading'],
 			'L_DAYS' => $date_lang['days'],
@@ -209,21 +209,21 @@ class UserMaintainController extends AbstractController
 				}
 				else //plus d'essais
 				{
-					AppContext::get_response()->redirect(UserUrlBuilder::maintain('flood')->absolute());	
+					AppContext::get_response()->redirect(UserUrlBuilder::maintain('flood'));
 				}
 			}
 			elseif ($info_connect['user_aprob'] == '0')
 			{
-				AppContext::get_response()->redirect(UserUrlBuilder::maintain('not_enabled')->absolute());	
+				AppContext::get_response()->redirect(UserUrlBuilder::maintain('not_enabled'));
 			}
 			elseif ($info_connect['user_warning'] == '100')
 			{
-				AppContext::get_response()->redirect(UserUrlBuilder::maintain('banned')->absolute());	
+				AppContext::get_response()->redirect(UserUrlBuilder::maintain('banned'));
 			}
 			else
 			{
 				$delay_ban = ceil((0 - $delay_ban)/60);
-				AppContext::get_response()->redirect(UserUrlBuilder::maintain('banned', $delay_ban)->absolute());	
+				AppContext::get_response()->redirect(UserUrlBuilder::maintain('banned', $delay_ban));
 			}
 
 			if (!empty($error_report)) //Erreur
@@ -231,7 +231,7 @@ class UserMaintainController extends AbstractController
 				$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
 				$info_connect['test_connect']++;
 				$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
-				AppContext::get_response()->redirect(UserUrlBuilder::maintain('flood/' . $info_connect['test_connect'])->absolute());	
+				AppContext::get_response()->redirect(UserUrlBuilder::maintain('flood/' . $info_connect['test_connect']));
 			}
 			elseif ($info_connect['test_connect'] > 0) //Succès redonne tous les essais.
 			{
@@ -240,7 +240,7 @@ class UserMaintainController extends AbstractController
 		}
 		else
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::maintain('unexisting')->absolute());
+			AppContext::get_response()->redirect(UserUrlBuilder::maintain('unexisting'));
 		}
 		
 		if (!empty($url_to_redirect))

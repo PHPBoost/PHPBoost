@@ -42,7 +42,7 @@ class UserCommentsListPagination
 		$this->id_module = $id_module;
 		$this->user_id = $user_id;
 		$this->pagination = new Pagination($this->get_number_pages(), $this->current_page);
-		$this->pagination->set_url_sprintf_pattern(UserUrlBuilder::comments($this->id_module, $this->user_id, '%d')->absolute());
+		$this->pagination->set_url_sprintf_pattern(UserUrlBuilder::comments($this->id_module, $this->user_id, '%d')->rel());
 	}
 	
 	public function display()

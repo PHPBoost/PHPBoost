@@ -100,8 +100,8 @@ class UserChangeLostPasswordController extends AbstractController
 	{
 		$response = new UserDisplayResponse();
 		$response->set_page_title($this->lang['change-password']);
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->absolute());
-		$response->add_breadcrumb($this->lang['change-password'], UserUrlBuilder::change_password($key)->absolute());
+		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
+		$response->add_breadcrumb($this->lang['change-password'], UserUrlBuilder::change_password($key)->rel());
 		return $response->display($view);
 	}
 	

@@ -29,7 +29,7 @@ class UserUserExtensionPoint implements UserExtensionPoint
 {
 	public function get_messages_list_url($user_id)
 	{
-		return UserUrlBuilder::comments('', $user_id)->absolute();
+		return UserUrlBuilder::comments('', $user_id)->rel();
 	}
 
 	public function get_messages_list_link_name()

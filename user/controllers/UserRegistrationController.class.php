@@ -216,8 +216,8 @@ class UserRegistrationController extends AbstractController
 		$title = $this->lang['registration'];
 		$response = new UserDisplayResponse();
 		$response->set_page_title($title);
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->absolute());
-		$response->add_breadcrumb($title, UserUrlBuilder::registration()->absolute());
+		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
+		$response->add_breadcrumb($title, UserUrlBuilder::registration()->rel());
 		return $response->display($view);
 	}
 	

@@ -50,7 +50,7 @@ if ($contribution_id > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->absolute());
+	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->rel());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 	
@@ -68,7 +68,7 @@ elseif ($id_update > 0)
 	   DispatchManager::redirect($error_controller);
     }
 	
-	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->absolute());
+	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->rel());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 	$Bread_crumb->add($LANG['contribution_edition'], url('contribution_panel.php?edit=' . $id_update));
@@ -112,11 +112,11 @@ elseif ($id_to_update > 0)
 		//Enregistrement en base de données
 		ContributionService::save_contribution($contribution);
 		
-		AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel($contribution->get_id())->absolute());
+		AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel($contribution->get_id()));
 	}
 	//Erreur
 	else
-		AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel()->absolute());
+		AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel());
 }
 //Suppression d'une contribution
 elseif ($id_to_delete > 0)
@@ -135,11 +135,11 @@ elseif ($id_to_delete > 0)
 	
 	ContributionService::delete_contribution($contribution);
 	
-	AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel()->absolute());
+	AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel());
 }
 else
 {
-	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->absolute());
+	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->rel());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	define('TITLE', $LANG['contribution_panel']);
 }
@@ -181,7 +181,7 @@ if ($contribution_id > 0)
 		'COMMENTS' => CommentsService::display($comments_topic)->render(),
 		'CREATION_DATE' => $contribution_creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 		'MODULE' => $contribution->get_module_name(),
-		'U_CONTRIBUTOR_PROFILE' => UserUrlBuilder::profile($contribution->get_poster_id())->absolute(),
+		'U_CONTRIBUTOR_PROFILE' => UserUrlBuilder::profile($contribution->get_poster_id())->rel(),
 		'FIXING_URL' => url(PATH_TO_ROOT . $contribution->get_fixing_url())
 	));
 	
@@ -201,7 +201,7 @@ if ($contribution_id > 0)
 			'FIXER_LEVEL_CLASS' => UserService::get_level_class($fixer['level']),
 			'FIXER_GROUP_COLOR' => $fixer_group_color,
 			'FIXING_DATE' => $contribution_fixing_date->format(Date::FORMAT_DAY_MONTH_YEAR),
-			'U_FIXER_PROFILE' => UserUrlBuilder::profile($contribution->get_fixer_id())->absolute()
+			'U_FIXER_PROFILE' => UserUrlBuilder::profile($contribution->get_fixer_id())->rel()
 		));
 	}
 	
@@ -302,8 +302,8 @@ else
 					'FIXER_LEVEL_CLASS' => UserService::get_level_class($this_contribution->get_fixer_level()),
 					'FIXER_GROUP_COLOR' => $fixer_group_color,
 					'ACTIONS' => '',
-					'U_FIXER_PROFILE' => UserUrlBuilder::profile($this_contribution->get_fixer_id())->absolute(),
-					'U_POSTER_PROFILE' => UserUrlBuilder::profile($this_contribution->get_poster_id())->absolute(),
+					'U_FIXER_PROFILE' => UserUrlBuilder::profile($this_contribution->get_fixer_id())->rel(),
+					'U_POSTER_PROFILE' => UserUrlBuilder::profile($this_contribution->get_poster_id())->rel(),
 					'U_CONSULT' => PATH_TO_ROOT . '/user/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
 					'C_FIXED' => $this_contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
 					'C_PROCESSING' => $this_contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED
