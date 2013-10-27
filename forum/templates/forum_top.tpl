@@ -80,6 +80,24 @@
 		-->
 		</script>
 		
+		# IF C_MODERATION_PANEL #
+			<menu class="dynamic_menu right">
+				<ul>
+					<li><a><i class="icon-cog"></i></a>
+						<ul>
+							<li>
+								<a href="{PATH_TO_ROOT}/forum/moderation_forum.php" title="{L_MODERATION_PANEL}">{L_MODERATION_PANEL}</a> 
+							</li>
+							# IF IS_ADMIN #
+							<li>
+								<a href="{PATH_TO_ROOT}/forum/admin_forum_config.php" title="{L_CONFIG}">{L_CONFIG}</a>
+							</li>
+							# ENDIF #
+						</ul>
+					</li>
+				</ul>
+			</menu>
+		# ENDIF #
 		<div class="module_position" style="margin-bottom:15px;background:none;border:none">
 			<div class="forum_title_l"></div>
 			<div class="forum_title_r"></div>
@@ -95,11 +113,6 @@
 								# IF C_USER_CONNECTED #
 									<a class="small" href="?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
 								# ENDIF # 						
-							# ENDIF #
-							
-							# IF C_MODERATION_PANEL #
-								# IF C_FORUM_CONNEXION # <span style="color:#000000;">&bull;</span> # ENDIF #
-								<a class="small" href="{PATH_TO_ROOT}/forum/moderation_forum.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> {L_MODERATION_PANEL}</a>
 							# ENDIF #
 						</div>
 					</div>
