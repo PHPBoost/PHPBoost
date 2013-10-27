@@ -67,7 +67,7 @@ $lang['auth.subscribe'] = 'Authorizations to register for newsletters';
 $lang['auth.create-newsletter'] = 'Add newsletter authorizations';
 
 //Categories
-$lang['streams.name'] = 'Bame';
+$lang['streams.name'] = 'Name';
 $lang['streams.description'] = 'Description';
 $lang['streams.picture'] = 'Image representation';
 $lang['streams.visible'] = 'View';
