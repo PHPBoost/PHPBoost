@@ -27,22 +27,22 @@
 
 require_once('../kernel/begin.php');
 
-$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->absolute());
-$Bread_crumb->add($LANG['moderation_panel'], UserUrlBuilder::moderation_panel()->absolute());
+$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::home()->rel());
+$Bread_crumb->add($LANG['moderation_panel'], UserUrlBuilder::moderation_panel()->rel());
 
 $action = retrieve(GET, 'action', 'warning', TSTRING_UNCHANGE);
 $id_get = retrieve(GET, 'id', 0);
 switch ($action)
 {
 	case 'ban':
-		$Bread_crumb->add($LANG['bans'], UserUrlBuilder::moderation_panel('ban')->absolute());
+		$Bread_crumb->add($LANG['bans'], UserUrlBuilder::moderation_panel('ban')->rel());
 		break;
 	case 'punish':
-		$Bread_crumb->add($LANG['punishment'], UserUrlBuilder::moderation_panel('punish')->absolute());
+		$Bread_crumb->add($LANG['punishment'], UserUrlBuilder::moderation_panel('punish')->rel());
 		break;
 	case 'warning':
 	default:
-		$Bread_crumb->add($LANG['warning'], UserUrlBuilder::moderation_panel('warning')->absolute());
+		$Bread_crumb->add($LANG['warning'], UserUrlBuilder::moderation_panel('warning')->rel());
 }
 
 define('TITLE', $LANG['moderation_panel']);
@@ -67,9 +67,9 @@ $moderation_panel_template->put_all(array(
 	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 	'L_USERS_WARNING' => $LANG['warning_management'],
 	'L_USERS_BAN' => $LANG['ban_management'],
-	'U_WARNING' => UserUrlBuilder::moderation_panel('warning')->absolute(),
-	'U_PUNISH' => UserUrlBuilder::moderation_panel('punish')->absolute(),
-	'U_BAN' => UserUrlBuilder::moderation_panel('ban')->absolute()
+	'U_WARNING' => UserUrlBuilder::moderation_panel('warning')->rel(),
+	'U_PUNISH' => UserUrlBuilder::moderation_panel('punish')->rel(),
+	'U_BAN' => UserUrlBuilder::moderation_panel('ban')->rel()
 ));
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
@@ -104,7 +104,7 @@ if ($action == 'punish')
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
 		'U_XMLHTTPREQUEST' => 'punish_user',
-		'U_ACTION' => UserUrlBuilder::moderation_panel('punish')->absolute()
+		'U_ACTION' => UserUrlBuilder::moderation_panel('punish')->rel()
 	));
 	
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -114,9 +114,9 @@ if ($action == 'punish')
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
-				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish', $user_id)->absolute());
+				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish', $user_id));
 			else
-				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish')->absolute());
+				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish'));
 		}	
 				
 		$moderation_panel_template->put_all(array(
@@ -145,9 +145,9 @@ if ($action == 'punish')
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
-				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('punish', $row['user_id'])->absolute() .'"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
-				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->absolute(),
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('punish', $row['user_id'])->rel() .'"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
+				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			));
 			
 			$i++;
@@ -226,8 +226,8 @@ if ($action == 'punish')
 			'document.getElementById(\'action_info\').innerHTML = replace_value;}',
 			'REGEX'=> '/[0-9]+ [a-zA-Z]+/',
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
-			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('ban', $id_get)->absolute() . '&amp;token=' . $Session->get_token(),
-			'U_PROFILE' => UserUrlBuilder::profile($id_get)->absolute(),
+			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('ban', $id_get)->rel() . '&amp;token=' . $Session->get_token(),
+			'U_PROFILE' => UserUrlBuilder::profile($id_get)->rel(),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
 			'L_PM' => $LANG['user_contact_pm'],
@@ -262,7 +262,7 @@ else if ($action == 'warning')
 			}
 		}
 		
-		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning')->absolute());
+		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning'));
 	}
 	
 	$moderation_panel_template->put_all(array(
@@ -270,8 +270,8 @@ else if ($action == 'warning')
 		'L_ACTION_INFO' => $LANG['warning_management'],
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['warning_management'],
-		'U_XMLHTTPREQUEST' => 'warning_user',		
-		'U_ACTION' => UserUrlBuilder::moderation_panel('warning')->absolute() . '&amp;' . $Session->get_token()
+		'U_XMLHTTPREQUEST' => 'warning_user',
+		'U_ACTION' => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . $Session->get_token()
 	));
 	
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -281,10 +281,10 @@ else if ($action == 'warning')
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
-				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning', $user_id)->absolute());
+				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning', $user_id));
 			else
-				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning')->absolute());
-		}		
+				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning'));
+		}
 		
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_LIST' => true,
@@ -312,9 +312,9 @@ else if ($action == 'warning')
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => $row['user_warning'] . '%',
-				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('warning', $row['user_id'])->absolute() .'"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
-				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->absolute()
+				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('warning', $row['user_id'])->rel() .'"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel()
 			));
 			
 			$i++;
@@ -356,9 +356,9 @@ else if ($action == 'warning')
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
 			'REGEX'=> '/ [0-9]+%/',
-			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('warning', $id_get)->absolute() . '&amp;token=' . $Session->get_token(),
-			'U_PM' => UserUrlBuilder::personnal_message($id_get)->absolute(),
-			'U_PROFILE' => UserUrlBuilder::profile($id_get)->absolute(),
+			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('warning', $id_get)->rel() . '&amp;token=' . $Session->get_token(),
+			'U_PM' => UserUrlBuilder::personnal_message($id_get)->rel(),
+			'U_PROFILE' => UserUrlBuilder::profile($id_get)->rel(),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_warning_explain'],
 			'L_PM' => $LANG['user_contact_pm'],
@@ -380,10 +380,10 @@ else
 
 		if ($user_ban == 0 && $info_mbr['user_warning'] == 100)
 		{
-			MemberSanctionManager::remove_write_permissions($id_get, 90, MemberSanctionManager::NO_SEND_CONFIRMATION);			
+			MemberSanctionManager::remove_write_permissions($id_get, 90, MemberSanctionManager::NO_SEND_CONFIRMATION);
 		}
 	
-		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban')->absolute());
+		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 	}
 	
 	$moderation_panel_template->put_all(array(
@@ -392,7 +392,7 @@ else
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['ban_management'],
 		'U_XMLHTTPREQUEST' => 'ban_user',
-		'U_ACTION' => UserUrlBuilder::moderation_panel('ban')->absolute() . '&amp;token=' . $Session->get_token()
+		'U_ACTION' => UserUrlBuilder::moderation_panel('ban')->rel() . '&amp;token=' . $Session->get_token()
 	));
 	
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -402,9 +402,9 @@ else
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
-				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban', $user_id)->absolute());
+				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban', $user_id));
 			else
-				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban')->absolute());
+				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 		}	
 		
 		$moderation_panel_template->put_all(array(
@@ -433,9 +433,9 @@ else
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
-				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->absolute()  .'"><img src="../templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
-				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->absolute(),
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel()  .'"><img src="../templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
+				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			));
 			
 			$i++;
@@ -461,9 +461,9 @@ else
 			'USER_LEVEL_CLASS' => UserService::get_level_class($member['level']),
 			'USER_GROUP_COLOR' => $group_color,
 			'KERNEL_EDITOR' => $editor->display(),
-			'U_PM' => UserUrlBuilder::personnal_message($id_get)->absolute(),
-			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('ban', $id_get)->absolute() . '&amp;token=' . $Session->get_token(),
-			'U_PROFILE' => UserUrlBuilder::profile($id_get)->absolute(),
+			'U_PM' => UserUrlBuilder::personnal_message($id_get)->rel(),
+			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('ban', $id_get)->rel() . '&amp;token=' . $Session->get_token(),
+			'U_PROFILE' => UserUrlBuilder::profile($id_get)->rel(),
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_BAN' => $LANG['ban_user'],

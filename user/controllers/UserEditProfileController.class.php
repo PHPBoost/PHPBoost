@@ -207,8 +207,8 @@ class UserEditProfileController extends AbstractController
 	{
 		$response = new UserDisplayResponse();
 		$response->set_page_title($this->lang['profile.edit']);
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->absolute());
-		$response->add_breadcrumb($this->lang['profile.edit'], UserUrlBuilder::edit_profile($this->user->get_id())->absolute());
+		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
+		$response->add_breadcrumb($this->lang['profile.edit'], UserUrlBuilder::edit_profile($this->user->get_id())->rel());
 		return $response->display($this->tpl);
 	}
 	

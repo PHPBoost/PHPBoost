@@ -70,8 +70,8 @@ if (!empty($popup)) //Popup.
 }
 else //Affichage de l'interface de gestion.
 {
-	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::profile($User->get_attribute('user_id'))->absolute());
-	$Bread_crumb->add($LANG['files_management'], UserUrlBuilder::upload_files_panel()->absolute());
+	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::profile($User->get_attribute('user_id'))->rel());
+	$Bread_crumb->add($LANG['files_management'], UserUrlBuilder::upload_files_panel()->rel());
 	require_once('../kernel/header.php');
 	$field = '';
 	$header = '';

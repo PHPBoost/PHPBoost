@@ -39,7 +39,7 @@ class UserExploreGroupsController extends AbstractController
 		
 		if ($group_id !== 0 && !$this->groups_cache->group_exists($group_id))
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::home()->absolute());
+			AppContext::get_response()->redirect(UserUrlBuilder::home());
 		}
 
 		$this->build_view($group_id);
@@ -82,7 +82,7 @@ class UserExploreGroupsController extends AbstractController
 				{
 					$group_color = User::get_group_color($user['user_groups'], $user['level']);
 					$this->view->assign_block_vars('members_list', array(
-						'U_PROFILE' => UserUrlBuilder::profile($user_id)->absolute(),
+						'U_PROFILE' => UserUrlBuilder::profile($user_id)->rel(),
 						'PSEUDO' => $user['login'],
 						'LEVEL' => ($user['user_warning'] < '100' || (time() - $user['user_ban']) < 0) ? UserService::get_level_lang($user['level']) : $this->lang['banned'],
 						'U_AVATAR' => empty($user['user_avatar']) && $this->user_account_config->is_default_avatar_enabled() ? 
@@ -120,7 +120,7 @@ class UserExploreGroupsController extends AbstractController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('groups_select', $this->lang['groups.select'] . ' : ', $group_id_selected, $this->build_select_groups(), 
-			array('events' => array('change' => 'document.location = "'. UserUrlBuilder::groups()->absolute() .'" + HTMLForms.getField("groups_select").getValue();')
+			array('events' => array('change' => 'document.location = "'. UserUrlBuilder::groups()->rel() .'" + HTMLForms.getField("groups_select").getValue();')
 		)));
 
 		return $form;
@@ -167,8 +167,8 @@ class UserExploreGroupsController extends AbstractController
 	{
 		$response = new UserDisplayResponse();
 		$response->set_page_title($this->lang['groups']);
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->absolute());
-		$response->add_breadcrumb($this->lang['groups'], UserUrlBuilder::groups()->absolute());
+		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
+		$response->add_breadcrumb($this->lang['groups'], UserUrlBuilder::groups()->rel());
 		return $response->display($this->view);
 	}
 }

@@ -64,8 +64,8 @@ class UserLoginController extends AbstractController
 	{
 		$this->view->put_all(array(
 			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
-			'U_REGISTER' => UserUrlBuilder::registration()->absolute(),
-			'U_FORGET_PASSWORD' => UserUrlBuilder::forget_password()->absolute(),
+			'U_REGISTER' => UserUrlBuilder::registration()->rel(),
+			'U_FORGET_PASSWORD' => UserUrlBuilder::forget_password()->rel(),
 			'L_FORGET_PASSWORD' => $this->lang['forget-password'],
 			'LOGIN_FORM' => $this->form->display(),
 		));

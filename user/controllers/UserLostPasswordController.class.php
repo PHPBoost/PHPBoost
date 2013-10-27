@@ -83,8 +83,8 @@ class UserLostPasswordController extends AbstractController
 	{
 		$response = new UserDisplayResponse();
 		$response->set_page_title($this->lang['forget-password']);
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->absolute());
-		$response->add_breadcrumb($this->lang['forget-password'], UserUrlBuilder::forget_password()->absolute());
+		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
+		$response->add_breadcrumb($this->lang['forget-password'], UserUrlBuilder::forget_password()->rel());
 		return $response->display($view);
 	}
 	
@@ -99,7 +99,7 @@ class UserLostPasswordController extends AbstractController
 		$parameters = array(
 				'pseudo' => $user->get_pseudo(),
 				'host' => $general_config->get_site_url(),
-				'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->absolute(),
+				'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->rel(),
 				'signature' => MailServiceConfig::load()->get_mail_signature()
 		);
 		$subject = $general_config->get_site_name() . ' : ' . $this->lang['forget-password'];

@@ -70,7 +70,7 @@ class UserViewProfileController extends AbstractController
 				
 		if ($this->user->check_level(User::ADMIN_LEVEL))
 		{
-			$link_edit = '<a href="'. AdminMembersUrlBuilder::edit($user_id)->absolute() .'" title="'.$this->lang['profile.edit'].'" class="pbt-icon-edit"></a>';
+			$link_edit = '<a href="'. AdminMembersUrlBuilder::edit($user_id)->rel() .'" title="'.$this->lang['profile.edit'].'" class="pbt-icon-edit"></a>';
 			$fieldset->add_field(new FormFieldFree('profile_edit', $this->lang['profile.edit'], $link_edit));
 		}
 
@@ -80,7 +80,7 @@ class UserViewProfileController extends AbstractController
 
 		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($this->user_informations['user_groups'])));
 		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration_date'], gmdate_format('date_format_short', $this->user_informations['timestamp'])));
-		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->absolute() . '">'. $this->lang['messages'] .'</a>'));
+		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->rel() . '">'. $this->lang['messages'] .'</a>'));
 		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], gmdate_format('date_format_short', $this->user_informations['last_connect'])));
 		
 		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), AUTH_READ_MEMBERS) && $this->user_informations['user_show_mail'])
@@ -91,7 +91,7 @@ class UserViewProfileController extends AbstractController
 		
 		if (!$this->same_user_view_profile($user_id))
 		{
-			$link_mp = '<a href="'. UserUrlBuilder::personnal_message($user_id)->absolute() .'" class="small-button">MP</a>';
+			$link_mp = '<a href="'. UserUrlBuilder::personnal_message($user_id)->rel() .'" class="small-button">MP</a>';
 			$fieldset->add_field(new FormFieldFree('private_message', $this->lang['private_message'], $link_mp));
 		}
 		
@@ -135,7 +135,7 @@ class UserViewProfileController extends AbstractController
 				{
 					$group = $groups_cache->get_group($group_id);
 					$group_image = !empty($group['img']) ? '<img src="'. TPL_PATH_TO_ROOT .'/images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />' : $group['name'];
-					$user_groups_html .= '<li><a href="' . UserUrlBuilder::group($group_id)->absolute() . '">' . $group_image . '</a></li>';
+					$user_groups_html .= '<li><a href="' . UserUrlBuilder::group($group_id)->rel() . '">' . $group_image . '</a></li>';
 				}
 			}
 		}
@@ -146,8 +146,8 @@ class UserViewProfileController extends AbstractController
 	{
 		$response = new UserDisplayResponse();
 		$response->set_page_title(StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_informations['login'])));
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->absolute());
-		$response->add_breadcrumb(StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_informations['login'])), UserUrlBuilder::profile($user_id)->absolute());
+		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
+		$response->add_breadcrumb(StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_informations['login'])), UserUrlBuilder::profile($user_id)->rel());
 		return $response->display($view);
 	}
 }

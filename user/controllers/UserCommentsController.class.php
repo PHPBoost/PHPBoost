@@ -121,9 +121,9 @@ class UserCommentsController extends AbstractController
 				'C_GROUP_COLOR' => !empty($group_color),
 				
 				'U_TOPIC' => Url::to_rel($path),
-				'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->absolute(),
-				'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->absolute(),
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
+				'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->rel(),
+				'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->rel(),
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_AVATAR' => $user_avatar,
 				
 				'ID_COMMENT' => $id,
@@ -188,7 +188,7 @@ class UserCommentsController extends AbstractController
 		$fieldset = new FormFieldsetHTML('ModuleChoice', $this->lang['module.choice']);
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('module', $this->lang['module.choice'] . ' : ', $selected, $this->build_select(), 
-		array('events' => array('change' => 'document.location = "'. UserUrlBuilder::comments('', $user_id)->absolute() .'" + HTMLForms.getField("module").getValue();'))));
+		array('events' => array('change' => 'document.location = "'. UserUrlBuilder::comments('', $user_id)->rel() .'" + HTMLForms.getField("module").getValue();'))));
 		return $form;
 	}
 	
@@ -214,14 +214,14 @@ class UserCommentsController extends AbstractController
 		
 		if ($this->user !== null)
 		{
-			$response->add_breadcrumb($this->user->get_pseudo(), UserUrlBuilder::profile($this->user->get_id())->absolute());
-			$response->add_breadcrumb(LangLoader::get_message('messages', 'user-common'), UserUrlBuilder::messages($this->user->get_id())->absolute());
-			$response->add_breadcrumb($this->lang['comments'], UserUrlBuilder::comments('', $this->user->get_id())->absolute());
+			$response->add_breadcrumb($this->user->get_pseudo(), UserUrlBuilder::profile($this->user->get_id())->rel());
+			$response->add_breadcrumb(LangLoader::get_message('messages', 'user-common'), UserUrlBuilder::messages($this->user->get_id())->rel());
+			$response->add_breadcrumb($this->lang['comments'], UserUrlBuilder::comments('', $this->user->get_id())->rel());
 		}
 		else
 		{
-			$response->add_breadcrumb(LangLoader::get_message('users', 'user-common'), UserUrlBuilder::users()->absolute());
-			$response->add_breadcrumb($this->lang['comments'], UserUrlBuilder::comments()->absolute());
+			$response->add_breadcrumb(LangLoader::get_message('users', 'user-common'), UserUrlBuilder::users()->rel());
+			$response->add_breadcrumb($this->lang['comments'], UserUrlBuilder::comments()->rel());
 		}
 		return $response->display($this->tpl);
 	}
