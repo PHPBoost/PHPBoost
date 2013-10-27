@@ -21,7 +21,7 @@
 		<tfoot>
 			<tr>
 				<th colspan="5">
-					{@newsletter.page} : {PAGINATION}
+					{PAGINATION}
 				</th>
 			</tr>
 		</tfoot>

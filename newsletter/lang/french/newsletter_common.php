@@ -123,7 +123,6 @@ $lang['newsletter.types.html_explain'] = '<span style="color:red;"><strong>Utili
 $lang['newsletter.types.next'] = 'Suivant';
 
 //Other
-$lang['newsletter.page'] = 'Page';
 $lang['newsletter.no_newsletters'] = 'Aucune newsletter disponible';
 $lang['unsubscribe_newsletter'] = 'Se désabonner de cette newsletter';
 $lang['newsletter.view_archives'] = 'Voir les archives';

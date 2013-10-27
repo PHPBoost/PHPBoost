@@ -67,7 +67,7 @@ $lang['auth.subscribe'] = 'Authorizations to register for newsletters';
 $lang['auth.create-newsletter'] = 'Add newsletter authorizations';
 
 //Categories
-$lang['streams.name'] = 'Bame';
+$lang['streams.name'] = 'Name';
 $lang['streams.description'] = 'Description';
 $lang['streams.picture'] = 'Image representation';
 $lang['streams.visible'] = 'View';
@@ -123,7 +123,6 @@ $lang['newsletter.types.html_explain'] = '<span style="color:red;"><strong>Utili
 $lang['newsletter.types.next'] = 'Next';
 
 //Other
-$lang['newsletter.page'] = 'Page';
 $lang['newsletter.no_newsletters'] = 'No newsletter Available';
 $lang['unsubscribe_newsletter'] = 'Unsubscribe to this newsletter';
 $lang['newsletter.view_archives'] = 'View Archives';
