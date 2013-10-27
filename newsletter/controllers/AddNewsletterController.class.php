@@ -135,9 +135,9 @@ class AddNewsletterController extends ModuleController
 		$body_view->put('TEMPLATE', $view);
 		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
-		$breadcrumb->add($this->lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter()->absolute());
-		$breadcrumb->add($this->lang['newsletter.types.' . $type], NewsletterUrlBuilder::add_newsletter($type)->absolute());
+		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter()->rel());
+		$breadcrumb->add($this->lang['newsletter.types.' . $type], NewsletterUrlBuilder::add_newsletter($type)->rel());
 		$response->get_graphical_environment()->set_page_title($this->lang['newsletter-add']);
 		return $response;
 	}

@@ -39,8 +39,8 @@ class NewsletterHomeController extends ModuleController
 		$lang = LangLoader::get('newsletter_common', 'newsletter');
 		$response = new SiteDisplayResponse($view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
-		$breadcrumb->add($lang['newsletter.list_newsletters'], NewsletterUrlBuilder::home()->absolute());
+		$breadcrumb->add($lang['newsletter'], NewsletterUrlBuilder::home()->rel());
+		$breadcrumb->add($lang['newsletter.list_newsletters'], NewsletterUrlBuilder::home()->rel());
 		$response->get_graphical_environment()->set_page_title($lang['newsletter.list_newsletters']);
 		return $response;
 	}

@@ -51,11 +51,11 @@ class NewsletterModuleHomePage implements ModuleHomePage
 		$nbr_pages =  ceil($nbr_streams / $this->nbr_streams_per_page);
 		$pagination = new Pagination($nbr_pages, $current_page);
 		
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '')->absolute());
+		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '')->rel());
 		$this->view->put_all(array(
 			'C_STREAMS' => (float)$nbr_streams,
-			'LINK_SUBSCRIBE' => NewsletterUrlBuilder::subscribe()->absolute(),
-			'LINK_UNSUBSCRIBE' => NewsletterUrlBuilder::unsubscribe()->absolute(),
+			'LINK_SUBSCRIBE' => NewsletterUrlBuilder::subscribe()->rel(),
+			'LINK_UNSUBSCRIBE' => NewsletterUrlBuilder::unsubscribe()->rel(),
 			'PAGINATION' => $pagination->export()->render()
 		));
 
@@ -80,8 +80,8 @@ class NewsletterModuleHomePage implements ModuleHomePage
 					'PICTURE' => TPL_PATH_TO_ROOT . $row['picture'],
 					'NAME' => $row['name'],
 					'DESCRIPTION' => $row['description'],
-					'VIEW_ARCHIVES' => $read_archives_auth ? '<a href="' . NewsletterUrlBuilder::archives($row['id'])->absolute() . '">'. $this->lang['newsletter.view_archives'] .'</a>' : $this->lang['newsletter.not_level'],
-					'VIEW_SUBSCRIBERS' => $read_subscribers_auth ? '<a href="' . NewsletterUrlBuilder::subscribers($row['id'])->absolute() . '">'. $this->lang['newsletter.view_subscribers'] .'</a>' : $this->lang['newsletter.not_level'],
+					'VIEW_ARCHIVES' => $read_archives_auth ? '<a href="' . NewsletterUrlBuilder::archives($row['id'])->rel() . '">'. $this->lang['newsletter.view_archives'] .'</a>' : $this->lang['newsletter.not_level'],
+					'VIEW_SUBSCRIBERS' => $read_subscribers_auth ? '<a href="' . NewsletterUrlBuilder::subscribers($row['id'])->rel() . '">'. $this->lang['newsletter.view_subscribers'] .'</a>' : $this->lang['newsletter.not_level'],
 				));
 			}
 		}
@@ -91,7 +91,7 @@ class NewsletterModuleHomePage implements ModuleHomePage
 		$body_view->put('TEMPLATE', $this->view);
 		$body_view->put_all(array(
 			'C_CREATE_AUTH' => NewsletterAuthorizationsService::default_authorizations()->create_newsletters(),
-			'LINK_CREATE' => NewsletterUrlBuilder::add_newsletter()->absolute()
+			'LINK_CREATE' => NewsletterUrlBuilder::add_newsletter()->rel()
 		));
 		return $body_view;
 	}

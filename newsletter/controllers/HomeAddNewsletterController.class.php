@@ -40,7 +40,7 @@ class HomeAddNewsletterController extends ModuleController
 		
 		if ($type !== '' && ($type == 'html' || $type == 'bbcode' || $type == 'text'))
 		{
-			AppContext::get_response()->redirect(NewsletterUrlBuilder::add_newsletter($type)->absolute());
+			AppContext::get_response()->redirect(NewsletterUrlBuilder::add_newsletter($type));
 		}
 		
 		$this->init();
@@ -63,8 +63,8 @@ class HomeAddNewsletterController extends ModuleController
 		$body_view->put('TEMPLATE', $view);
 		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
-		$breadcrumb->add($this->lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter()->absolute());
+		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter()->rel());
 		$response->get_graphical_environment()->set_page_title($this->lang['newsletter-add']);
 		return $response;
 	}	
