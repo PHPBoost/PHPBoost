@@ -54,7 +54,7 @@ class NewsletterUrlBuilder
 	 */
     public static function streams($param = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/streams' . $param);
+		return DispatchManager::get_url(self::$dispatcher, '/admin/streams/' . $param);
 	}
 	
 	/**
