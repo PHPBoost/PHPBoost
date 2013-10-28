@@ -239,8 +239,8 @@
 					# IF msg.C_FORUM_MSG_DEL #
 					&nbsp;
 						# IF msg.C_FORUM_MSG_DEL_MSG #
-					<a href="action{msg.U_FORUM_MSG_DEL}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimgnojs{msg.ID}" /></a>
-					<img style="cursor:pointer;display:none" onclick="del_msg('{msg.ID}');" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimg{msg.ID}" /> 
+					<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" id="dimgnojs{msg.ID}" class="pbt-icon-delete"></a>
+					<a style="cursor:pointer;display:none" onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" title="{L_DELETE}" class="pbt-icon-delete"></a> 
 					<script type="text/javascript">
 					<!--
 						document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
@@ -248,7 +248,7 @@
 					-->
 					</script>
 						# ELSE #
-					<a href="action{msg.U_FORUM_MSG_DEL}" title="" onclick="javascript:return Confirm_del_topic();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a> 
+					<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" onclick="javascript:return Confirm_del_topic();" class="pbt-icon-delete"></a> 
 						# ENDIF #
 					# ENDIF #
 					
