@@ -115,10 +115,4 @@
 	{@bugs.labels.fields.author_id} # IF AUTHOR #<a href="{U_AUTHOR_PROFILE}" class="small_link {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #, ${LangLoader::get_message('on', 'main')} # IF C_IS_DATE_FORM_SHORT #{SUBMIT_DATE_SHORT}# ELSE #{SUBMIT_DATE}# ENDIF #
 </div>
 
-<div class="spacer">&nbsp;</div>
-
-<div class="center">
-	<strong><a href="javascript:history.back(1);">${LangLoader::get_message('back', 'main')}</a></strong>
-</div>
-
 # INCLUDE COMMENTS #

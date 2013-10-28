@@ -213,7 +213,8 @@ class BugtrackerHistoryListController extends ModuleController
 		
 		$response = new BugtrackerDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.history'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::history($this->bug->get_id()));
+		$response->add_breadcrumb_link($this->lang['bugs.titles.detail'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::detail($this->bug->get_id()));
+		$response->add_breadcrumb_link($this->lang['bugs.titles.history'], BugtrackerUrlBuilder::history($this->bug->get_id()));
 		$response->set_page_title($this->lang['bugs.titles.history'] . ' #' . $this->bug->get_id());
 		
 		return $response->display($body_view);

@@ -60,9 +60,3 @@
 		# ENDIF #
 	</tbody>
 </table>
-
-<div class="spacer">&nbsp;</div>
-
-<div class="center">
-	<strong><a href="javascript:history.back(1);">${LangLoader::get_message('back', 'main')}</a></strong>
-</div>
