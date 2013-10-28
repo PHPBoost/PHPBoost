@@ -1,4 +1,4 @@
-<div id="${escape(ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF # class="field-textarea">
+<div id="${escape(ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element-textarea">
 	<label for="${escape(ID)}">
 		# IF C_REQUIRED # * # ENDIF #
 		{LABEL}

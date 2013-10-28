@@ -344,35 +344,9 @@ fieldset.fieldset_submit legend { /* A supprimer ou remplacer par un div */
     display:none;
 }
 
-optgroup, select{
-	cursor:pointer;
-	vertical-align:middle;	
-	background-color:#FFFFFF;	
-}
-
-select{
-	background-color: #FFFFFF;
-	border: 1px solid #CCCCCC;
-	display: inline-block;
-	padding: 4px 6px;
-	vertical-align: middle;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-}
-select:focus, select:hover{
-	outline: 0;	
-}
-
-optgroup {
-    font-weight:bold;
-    border:none;
-    border-bottom:1px solid #5B5A5A;
-}
-
-option {
-    padding:0px 3px;
-}
+optgroup, select { cursor:pointer; }
+optgroup { font-weight:bold; border:none; border-bottom:1px solid #5B5A5A; }
+option { padding:0px 3px; }
 
 /* Prévisualition */
 .xmlhttprequest_preview {
@@ -386,33 +360,20 @@ option {
 	padding:0px 2px;
 }
 
-.field-textarea button{
+.form-element-textarea button{
 	margin:2px auto;
 	display:block;	
 }
 
-
-
 /* Les inputs */
-
-input.file {
-	border:1px solid #515C68;	
-	border-top:1px solid #8498ae;	
-	color:#2E3B5F;	
-	padding:1px;
-	font-weight:bold;
-	font-size:10px;
-}
 
 legend {
 	display:block;
-	padding:10px 10px 2px 0px;
-	margin:0px 0px 10px 0px;
+	margin:0px 0px 15px 0px;
 	width: 100%;
 	text-transform:none;
-	color:#333333;
-	font-size:1.5em;
-	font-weight:bold;
+	color:#474747;
+	font-size:18px;
 	vertical-align:middle;
 	border-bottom:1px solid #DDDDDD;
 }
@@ -422,8 +383,7 @@ input[type=checkbox] {
 	background:none;
 }
 
-input[type=text], input[type=password], textarea{
-	display: inline-block;
+input[type=text], input[type=password], textarea, input[type=file], select {
 	vertical-align: middle;
 	padding: 4px 6px;
 	color: #555555;
@@ -436,13 +396,14 @@ input[type=text], input[type=password], textarea{
 	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 }
-input[type=text]:hover,input[type=password]:hover, textarea:hover {
+
+input[type=text]:hover, input[type=password]:hover, textarea:hover, input[type=file]:hover, select:hover {
 	color: #333333;
 	border:1px solid #BBBBBB;
 	background-color:#FFFFFF; 
 }
 
-input[type=text]:focus,input[type=password]:focus, textarea:focus {
+input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=file]:focus, select:focus {
 	color: #222222;
 	border-color: #BBBBBB;
 	outline: 0;
@@ -451,29 +412,32 @@ input[type=text]:focus,input[type=password]:focus, textarea:focus {
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
-input[type=text].field-smaller, input[type=password].field-smaller{ width:29px; }
-input[type=text].field-small, input[type=password].field-small{	width:77px; }
-input[type=text].field-large, input[type=password].field-large{ width:200px; }
-input[type=text].field-xlarge, input[type=password].field-xlarge{ width:300px; }
+input.field-smaller{ width:29px; }
+input.field-small{	width:77px; }
+input.field-large{ width:200px; }
+input.field-xlarge{ width:300px; }
 
-.field, .field-textarea{
+/* Element du formulaire (englobe le label et l'input d'un champ) */
+.form-element, .form-element-textarea {
 	margin: 0px 15px 10px 15px;
 }
 
-.field-value {
+.fieldset-description { margin: 0px 15px 10px 15px;}
+
+.form-field {
 	display:inline-block;
 }
 
-/* Label pour les checkbox et ratio */
-.field-value label {
+/* Label pour les checkbox et radio */
+.form-field label {
 	margin: 0 10px 0 0;
-	display:block;
+	display: block;
 }
 
 /* Label pour les inputs [for] et pour les élements sans associations*/
-label[for], .field > label{
+.form-element > label{
 	display:inline-block;
-	width: 30%;
+	width: 40%;
 	text-align: left;
 	margin-right: 10px;
 	padding-top: 3px;
@@ -521,7 +485,7 @@ input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disable
 	color:#C43C35;
 }
 
-.constraint-check-right i:before{	content: "\f00c"; color:#57A957; }
+.constraint-check-right i:before{ content: "\f00c"; color:#57A957; }
 .constraint-check-error i:before{ content: "\f00d"; color:#C43C35; }
 
 /* A reprendre */
@@ -554,11 +518,11 @@ textarea {
     margin:5px auto;
 }
 
-.field-textarea i{	
+.form-element-textarea i{	
 	display:inline-block;
 }
 
-.field-textarea-small{
+.form-element-textarea-small{
 	width:49%;	
 }
 
