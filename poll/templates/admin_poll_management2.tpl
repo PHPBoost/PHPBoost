@@ -66,29 +66,29 @@
 				<fieldset>
 					<legend>{L_POLL_MANAGEMENT}</legend>
 					<p>{L_REQUIRE}</p>
-					<dl>
-						<dt><label for="question">* {L_QUESTION}</label></dt>
-						<dd><label><input type="text" size="45" maxlength="100" id="question" name="question" value="{QUESTIONS}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="type">* {L_ANSWER_TYPE}</label></dt>
-						<dd>
+					<div class="form-element">
+						<label for="question">* {L_QUESTION}</label>
+						<div class="form-field"><label><input type="text" size="45" maxlength="100" id="question" name="question" value="{QUESTIONS}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="type">* {L_ANSWER_TYPE}</label>
+						<div class="form-field">
 							<label><input type="radio" name="type" id="type" {TYPE_UNIQUE} value="1"> {L_SINGLE}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" name="type" {TYPE_MULTIPLE} value="0"> {L_MULTIPLE}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="archive">* {L_ARCHIVED}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="archive">* {L_ARCHIVED}</label>
+						<div class="form-field">
 							<label><input type="radio" name="archive" {ARCHIVES_ENABLED} value="1"> {L_YES}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" name="archive" {ARCHIVES_DISABLED} id="archive" value="0"> {L_NO}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label>* {L_ANSWERS}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label>* {L_ANSWERS}</label>
+						<div class="form-field">
 							<table style="border:none;border-spacing:0">
 								<tr>
 									<th style="text-align:center;">
@@ -124,15 +124,15 @@
 									</td>
 								</tr>
 							</table>
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>		
 
 				<fieldset>
 					<legend>{L_DATE}</legend>
-					<dl class="overflow_visible">
-						<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
-						<dd>
+					<div class="form-element" class="overflow_visible">
+						<label for="release_date">* {L_RELEASE_DATE}</label>
+						<div class="form-field">
 							<div onclick="document.getElementById('start_end_date').checked = true;">
 								<label><input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING}></label>
 								<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}" class="text"> 
@@ -154,11 +154,11 @@
 							<label><input type="radio" value="1" name="visible" {VISIBLE_ENABLED} id="release_date"> {L_IMMEDIATE}</label>
 							<br />
 							<label><input type="radio" value="0" name="visible" {VISIBLE_UNAPROB}> {L_UNAPROB}</label>
-						</dd>
-					</dl>
-					<dl class="overflow_visible">
-						<dt><label for="current_date">* {L_POLL_DATE}</label></dt>
-						<dd><label>
+						</div>
+					</div>
+					<div class="form-element" class="overflow_visible">
+						<label for="current_date">* {L_POLL_DATE}</label>
+						<div class="form-field"><label>
 							<input type="text" size="8" maxlength="8" id="current_date" name="current_date" value="{CURRENT_DATE}" class="text"> 
 							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar3">
 								<div id="current" class="calendar_block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">							
@@ -168,8 +168,8 @@
 							
 							{L_AT}
 							<input type="text" size="2" maxlength="2" name="hour" value="{HOUR}" class="text" /> H <input type="text" size="2" maxlength="2" name="min" value="{MIN}" class="text">
-						</label></dd>
-					</dl>
+						</label></div>
+					</div>
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">

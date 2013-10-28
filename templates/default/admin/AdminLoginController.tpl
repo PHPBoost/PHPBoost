@@ -42,24 +42,24 @@
 		<form action="{PATH_TO_ROOT}/admin/admin_index.php?token={TOKEN}" method="post" onsubmit="return check_connect();" class="fieldset_content" style="width:550px;margin:auto;margin-top:10%">
 			<fieldset>
 				<legend>{@admin}</legend>
-				<dl>
-					<dt><label for="login">{@pseudo}</label></dt>
-					<dd><label><input size="15" type="text" class="text" id="login" name="login" maxlength="25"></label></dd>
-				</dl>
-				<dl>
-					<dt><label for="password">{@password}</label></dt>
-					<dd><label><input size="15" type="password" id="password" name="password" class="text" maxlength="30"></label></dd>
-				</dl>
+				<div class="form-element">
+					<label for="login">{@pseudo}</label>
+					<div class="form-field"><label><input size="15" type="text" class="text" id="login" name="login" maxlength="25"></label></div>
+				</div>
+				<div class="form-element">
+					<label for="password">{@password}</label>
+					<div class="form-field"><label><input size="15" type="password" id="password" name="password" class="text" maxlength="30"></label></div>
+				</div>
 				# IF C_UNLOCK #
-				<dl>
-					<dt><label for="unlock">{@unlock_admin_panel}</label></dt>
-					<dd><label><input size="15" type="password" name="unlock" id="unlock" class="text" maxlength="30"></label></dd>
-				</dl>
+				<div class="form-element">
+					<label for="unlock">{@unlock_admin_panel}</label>
+					<div class="form-field"><label><input size="15" type="password" name="unlock" id="unlock" class="text" maxlength="30"></label></div>
+				</div>
 				# ENDIF #
-				<dl>
-					<dt><label for="auto">{@autoconnect}</label></dt>
-					<dd><label><input type="checkbox" checked="checked" name="auto" id="auto"></label></dd>
-				</dl>
+				<div class="form-element">
+					<label for="auto">{@autoconnect}</label>
+					<div class="form-field"><label><input type="checkbox" checked="checked" name="auto" id="auto"></label></div>
+				</div>
 			</fieldset>
 			<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
 			<fieldset class="fieldset_submit">

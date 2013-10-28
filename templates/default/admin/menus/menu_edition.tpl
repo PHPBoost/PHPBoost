@@ -29,10 +29,10 @@
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">
 			<legend>{L_PROPERTIES}</legend>
-			<dl>
-				<dt>{L_AUTHORIZATIONS}</dt>
-				<dd>{AUTH_FORM}</dd>
-			</dl>
+			<div class="form-element">
+				{L_AUTHORIZATIONS}
+				<div class="form-field">{AUTH_FORM}</div>
+			</div>
 		</fieldset>
         <hr style="background-color:#999999;margin-top:5px;" />
 		<ul class="menu_link_list" id="menu_element_{ID}_list">
@@ -63,10 +63,10 @@
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">
 			<legend>{L_PROPERTIES}</legend>
-			<dl>
-				<dt>{L_AUTHORIZATIONS}</dt>
-				<dd>{AUTH_FORM}</dd>
-			</dl>
+			<div class="form-element">
+				{L_AUTHORIZATIONS}
+				<div class="form-field">{AUTH_FORM}</div>
+			</div>
 		</fieldset>
     </li>
 # ENDIF #

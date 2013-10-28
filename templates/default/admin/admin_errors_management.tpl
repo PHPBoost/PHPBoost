@@ -25,10 +25,10 @@
 			<form action="admin_errors.php" method="post" class="fieldset_content" onsubmit="javascript:return Confirm_del()">
 				<fieldset>
 					<legend>{L_ERASE}</legend>
-					<dl>
-						<dt><label>{L_ERASE_RAPPORT}</label><br /><span>{L_ERASE_RAPPORT_EXPLAIN}!</span></dt>
-						<dd><label><button type="submit" name="erase" value="true">{L_ERASE}</button> </label></dd>
-					</dl>
+					<div class="form-element">
+						<label>{L_ERASE_RAPPORT}</label><br /><span>{L_ERASE_RAPPORT_EXPLAIN}!</span>
+						<div class="form-field"><label><button type="submit" name="erase" value="true">{L_ERASE}</button> </label></div>
+					</div>
 				</fieldset>
 				<input type="hidden" name="token" value="{TOKEN}">
 			</form>

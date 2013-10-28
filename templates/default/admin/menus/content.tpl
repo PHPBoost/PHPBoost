@@ -19,24 +19,25 @@ function CheckForm() {
 	<form action="content.php" method="post" onsubmit="return CheckForm();" class="fieldset_content">
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
-            <dl>
-                <dt><label for="name">* {L_NAME}</label></dt>
-                <dd><input type="text" size="18" name="name" id="name" class="text" value="{NAME}"></dd>
-            </dl>
-            <dl>
-                <dt><label for="name">* {L_DISPLAY_TITLE}</label></dt>
-                <dd><input type="checkbox" name="display_title[]" value="display_title" {DISPLAY_TITLE_CHECKED}></dd>
-            </dl>
-			<dl>
-				<dt><label for="location">* {L_LOCATION}</label></dt>
-				<dd><select name="location" id="location">{LOCATIONS}</select></dd>
-			</dl>
-			{KERNEL_EDITOR}
-			<textarea rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea>
-			<br />
-			<dl>
-				<dt><label for="activ">{L_STATUS}</label></dt>
-				<dd>
+            <div class="form-element">
+                <label for="name">* {L_NAME}</label>
+                <div class="form-field"><input type="text" size="18" name="name" id="name" class="text" value="{NAME}"></div>
+            </div>
+            <div class="form-element">
+                <label for="name">* {L_DISPLAY_TITLE}</label>
+                <div class="form-field"><input type="checkbox" name="display_title[]" value="display_title" {DISPLAY_TITLE_CHECKED}></div>
+            </div>
+			<div class="form-element">
+				<label for="location">* {L_LOCATION}</label>
+				<div class="form-field"><select name="location" id="location">{LOCATIONS}</select></div>
+			</div>
+			<div class="form-element-textarea">
+				{KERNEL_EDITOR}
+				<textarea rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea>
+			</div>
+			<div class="form-element">
+				<label for="activ">{L_STATUS}</label>
+				<div class="form-field">
 					<select name="activ" id="activ">
 					   # IF C_ENABLED #
 							<option value="1" selected="selected">{L_ENABLED}</option>
@@ -46,12 +47,12 @@ function CheckForm() {
                             <option value="0" selected="selected">{L_DISABLED}</option>
 						# ENDIF #					
 					</select>
-				</dd>
-			</dl>
-			<dl>
-				<dt>{L_AUTHS}</dt>
-				<dd>{AUTH_MENUS}</dd>
-			</dl>
+				</div>
+			</div>
+			<div class="form-element">
+				{L_AUTHS}
+				<div class="form-field">{AUTH_MENUS}</div>
+			</div>
 		</fieldset>		
 
 		# INCLUDE filters #

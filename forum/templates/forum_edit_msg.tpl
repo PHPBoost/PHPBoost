@@ -70,9 +70,11 @@
 						<fieldset>
 							<legend>{L_EDIT_MESSAGE}</legend>
 							<p>{L_REQUIRE}</p>
-							<label for="contents">* {L_MESSAGE}</label>
-							{KERNEL_EDITOR}
-							<label><textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
+							<div class="form-element-textarea">
+								<label for="contents">* {L_MESSAGE}</label>
+								{KERNEL_EDITOR}
+								<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+							</div>
 						</fieldset>
 						
 						<fieldset class="fieldset_submit">

@@ -125,44 +125,44 @@
 			<form action="admin_web_cat.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_CAT}</legend>
-					<dl>
-						<dt><label for="cat">* {L_NAME}</label></dt>
-						<dd><label><input type="text" size="25" maxlength="60" name="cat" id="cat" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="cat">{L_DESC}</label></dt>
-						<dd><label><textarea class="post" rows="3" cols="20" name="contents" id="contents"></textarea></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="icon">{L_ICON}</label></dt>
-						<dd>
+					<div class="form-element">
+						<label for="cat">* {L_NAME}</label>
+						<div class="form-field"><label><input type="text" size="25" maxlength="60" name="cat" id="cat" class="text"></label></div>
+					</div>
+					<div class="form-element-textarea">
+						<label for="cat">{L_DESC}</label>
+						<textarea class="post" rows="3" cols="20" name="contents" id="contents"></textarea>
+					</div>
+					<div class="form-element">
+						<label for="icon">{L_ICON}</label>
+						<div class="form-field">
 							<label><select name="icon" id="icon" onchange="change_icon('', this.options[this.selectedIndex].value)" onclick="change_icon('', this.options[this.selectedIndex].value)">
 								{IMG_LIST}
 							</select></label>
 							<span id="icon_img">{IMG_ICON}</span>
 							<br />
 							<label><span class="smaller">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" id="icon_path" value="" onblur="if( this.value != '' )change_icon('', this.value)"></label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="contents">{L_RANK}</label></dt>
-						<dd><label>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="contents">{L_RANK}</label>
+						<div class="form-field"><label>
 							<select name="secure">
 								<option value="-1" selected="selected">{L_GUEST}</option>
 								<option value="0">{L_USER}</option>
 								<option value="1">{L_MODO}</option>
 								<option value="2">{L_ADMIN}</option>
 							</select>
-						</label></dd>
-					</dl>
-					<dl>
-						<dt><label for="contents">{L_ACTIVATION}</label></dt>
-						<dd>
+						</label></div>
+					</div>
+					<div class="form-element">
+						<label for="contents">{L_ACTIVATION}</label>
+						<div class="form-field">
 							<label><input type="radio" name="aprob" checked="checked" value="1"> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" name="aprob" value="0"> {L_UNACTIV}</label>
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>	
 				
 				<fieldset class="fieldset_submit">

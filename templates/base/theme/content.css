@@ -344,7 +344,7 @@ fieldset.fieldset_submit legend { /* A supprimer ou remplacer par un div */
     display:none;
 }
 
-optgroup, select { cursor:pointer; }
+optgroup, select, label { cursor:pointer; }
 optgroup { font-weight:bold; border:none; border-bottom:1px solid #5B5A5A; }
 option { padding:0px 3px; }
 

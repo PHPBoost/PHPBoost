@@ -35,29 +35,29 @@
 		# ENDIF #
 	</legend>
 	# IF C_PROGRESS #
-	<dl>
-		<dt>{@bugs.labels.fields.progress}</dt>
-		<dd>
+	<div class="form-element">
+		{@bugs.labels.fields.progress}
+		<div class="form-field">
 			<h6>{PROGRESS}%</h6> 
 			<div class="progressbar-container" style="width:35%">
 				<div class="progressbar" style="width:{PROGRESS}%"></div>
 			</div>
-			</dd>
-		</dl>
+			</div>
+		</div>
 	# ENDIF #
-	<dl>
-		<dt>{@bugs.labels.fields.status}</dt>
-		<dd>{STATUS}</dd>
-	</dl>
-	<dl>
-		<dt>{@bugs.labels.fields.assigned_to_id}</dt>
-		<dd># IF USER_ASSIGNED #<a href="{LINK_USER_ASSIGNED_PROFILE}" class="small_link {USER_ASSIGNED_LEVEL_CLASS}" # IF C_USER_ASSIGNED_GROUP_COLOR # style="color:{USER_ASSIGNED_GROUP_COLOR}" # ENDIF #>{USER_ASSIGNED}</a># ELSE #{@bugs.notice.no_one}# ENDIF #</dd>
-	</dl>
+	<div class="form-element">
+		{@bugs.labels.fields.status}
+		<div class="form-field">{STATUS}</div>
+	</div>
+	<div class="form-element">
+		{@bugs.labels.fields.assigned_to_id}
+		<div class="form-field"># IF USER_ASSIGNED #<a href="{LINK_USER_ASSIGNED_PROFILE}" class="small_link {USER_ASSIGNED_LEVEL_CLASS}" # IF C_USER_ASSIGNED_GROUP_COLOR # style="color:{USER_ASSIGNED_GROUP_COLOR}" # ENDIF #>{USER_ASSIGNED}</a># ELSE #{@bugs.notice.no_one}# ENDIF #</div>
+	</div>
 	# IF C_FIXED_IN #
-	<dl>
-		<dt>{@bugs.labels.fields.fixed_in}</dt>
-		<dd>{FIXED_IN}</dd>
-	</dl>
+	<div class="form-element">
+		{@bugs.labels.fields.fixed_in}
+		<div class="form-field">{FIXED_IN}</div>
+	</div>
 	# ENDIF #
 </fieldset>
 
@@ -69,39 +69,39 @@
 <fieldset>
 	<legend>{@bugs.titles.bugs_infos}</legend>
 	# IF NOT C_EMPTY_TYPES #
-	<dl>
-		<dt>{@bugs.labels.fields.type}</dt>
-		<dd>{TYPE}</dd>
-	</dl>
+	<div class="form-element">
+		{@bugs.labels.fields.type}
+		<div class="form-field">{TYPE}</div>
+	</div>
 	# ENDIF #
 	# IF NOT C_EMPTY_CATEGORIES #
-	<dl>
-		<dt>{@bugs.labels.fields.category}</dt>
-		<dd>{CATEGORY}</dd>
-	</dl>
+	<div class="form-element">
+		{@bugs.labels.fields.category}
+		<div class="form-field">{CATEGORY}</div>
+	</div>
 	# ENDIF #
 	# IF NOT C_EMPTY_SEVERITIES #
-	<dl>
-		<dt>{@bugs.labels.fields.severity}</dt>
-		<dd>{SEVERITY}</dd>
-	</dl>
+	<div class="form-element">
+		{@bugs.labels.fields.severity}
+		<div class="form-field">{SEVERITY}</div>
+	</div>
 	# ENDIF #
 	# IF NOT C_EMPTY_PRIORITIES #
-	<dl>
-		<dt>{@bugs.labels.fields.priority}</dt>
-		<dd>{PRIORITY}</dd>
-	</dl>
+	<div class="form-element">
+		{@bugs.labels.fields.priority}
+		<div class="form-field">{PRIORITY}</div>
+	</div>
 	# ENDIF #
 	# IF NOT C_EMPTY_VERSIONS #
-	<dl>
-		<dt>{@bugs.labels.fields.detected_in}</dt>
-		<dd>{DETECTED_IN}</dd>
-	</dl>
+	<div class="form-element">
+		{@bugs.labels.fields.detected_in}
+		<div class="form-field">{DETECTED_IN}</div>
+	</div>
 	# ENDIF #
-	<dl>
-		<dt>{@bugs.labels.fields.reproductible}</dt>
-		<dd># IF C_REPRODUCTIBLE #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #</dd>
-	</dl>
+	<div class="form-element">
+		{@bugs.labels.fields.reproductible}
+		<div class="form-field"># IF C_REPRODUCTIBLE #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #</div>
+	</div>
 </fieldset>
 
 # IF C_REPRODUCTION_METHOD #

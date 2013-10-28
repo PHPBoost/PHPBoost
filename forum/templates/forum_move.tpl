@@ -28,14 +28,14 @@
 				<form method="post" action="move{U_MOVE}" onsubmit="javascript:return check_form_move();" class="fieldset_content">
 					<fieldset>
 						<legend>{L_MOVE_SUBJECT} :: {TITLE}</legend>
-						<dl>
-							<dt><label for="to">{L_CAT}</label></dt>
-							<dd><label>
+						<div class="form-element">
+							<label for="to">{L_CAT}</label>
+							<div class="form-field"><label>
 							   <select id="to" name="to">
 									{CATEGORIES}
 								</select>
-							</label></dd>
-						</dl>
+							</label></div>
+						</div>
 					</fieldset>	
 					
 					<fieldset class="fieldset_submit">

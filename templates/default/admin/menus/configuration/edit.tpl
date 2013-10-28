@@ -1,18 +1,18 @@
 <form action="{U_VALID}" method="post">
 	<fieldset>
 		<legend>{EL_MENU_CONFIGURATION_EDITION}</legend>
-		<dl>
-			<dt><label for="menu_config_name">* {EL_MENU_CONFIGURATION_EDITION_NAME}</label></dt>
-			<dd><label>
+		<div class="form-element">
+			<label for="menu_config_name">* {EL_MENU_CONFIGURATION_EDITION_NAME}</label>
+			<div class="form-field"><label>
 				<input type="text" id="menu_config_name"	name="menu_config_name" value="${escape(NAME)}" class="text">
-			</label></dd>
-		</dl>
-		<dl>
-			<dt><label for="menu_config_match_regex">* {EL_MENU_CONFIGURATION_EDITION_MATCH_REGEX}</label></dt>
-			<dd><label>
+			</label></div>
+		</div>
+		<div class="form-element">
+			<label for="menu_config_match_regex">* {EL_MENU_CONFIGURATION_EDITION_MATCH_REGEX}</label>
+			<div class="form-field"><label>
 				<input type="text" id="menu_config_match_regex" name="menu_config_match_regex" value="${escape(MATCH_REGEX)}" class="text">
-			</label></dd>
-		</dl>
+			</label></div>
+		</div>
 	</fieldset>
 
 	<fieldset class="fieldset_submit">

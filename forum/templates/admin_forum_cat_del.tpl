@@ -46,14 +46,14 @@
 						<br />	
 					</div>
 					<br />	
-					<dl>
-						<dt><label for="t_to">{topics.L_MOVE_TOPICS}</label></dt>
-						<dd><label>
+					<div class="form-element">
+						<label for="t_to">{topics.L_MOVE_TOPICS}</label>
+						<div class="form-field"><label>
 							<select id="t_to" name="t_to">
 								{topics.FORUMS}
 							</select>
-						</label></dd>
-					</dl>
+						</label></div>
+					</div>
 				</fieldset>			
 				# END topics #
 				
@@ -66,23 +66,23 @@
 						<br />	
 					</div>
 					<br />	
-					<dl>
-						<dt><label for="f_to">{subforums.L_MOVE_FORUMS}</label></dt>
-						<dd><label>
+					<div class="form-element">
+						<label for="f_to">{subforums.L_MOVE_FORUMS}</label>
+						<div class="form-field"><label>
 							<select id="f_to" name="f_to">
 								{subforums.FORUMS}
 							</select>
-						</label></dd>
-					</dl>
+						</label></div>
+					</div>
 				</fieldset>			
 				# END subforums #
 				
 				<fieldset>
 					<legend>{L_DEL_ALL}</legend>
-					<dl>
-						<dt><label for="del_conf">{L_DEL_FORUM_CONTENTS}</label></dt>
-						<dd><label><input type="checkbox" name="del_conf" id="del_conf"></label></dd>
-					</dl>
+					<div class="form-element">
+						<label for="del_conf">{L_DEL_FORUM_CONTENTS}</label>
+						<div class="form-field"><label><input type="checkbox" name="del_conf" id="del_conf"></label></div>
+					</div>
 				</fieldset>	
 				
 				<fieldset class="fieldset_submit">

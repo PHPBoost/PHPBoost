@@ -95,52 +95,52 @@
 				<fieldset>
 					<legend>{L_EDIT_CAT}</legend>
 					<p>{L_REQUIRE}</p>
-					<dl>
-						<dt><label for="name">* {L_NAME}</label></dt>
-						<dd><label><input type="text" maxlength="100" size="35" id="name" name="name" value="{NAME}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="category">* {L_PARENT_CATEGORY}</label></dt>
-						<dd><label>
+					<div class="form-element">
+						<label for="name">* {L_NAME}</label>
+						<div class="form-field"><label><input type="text" maxlength="100" size="35" id="name" name="name" value="{NAME}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="category">* {L_PARENT_CATEGORY}</label>
+						<div class="form-field"><label>
 							<select name="category" id="category">
 								{CATEGORIES}
 							</select>
-						</label></dd>
-					</dl>
-					<dl id="forum_url">
-						<dt><label for="desc">* {L_URL}</label><br /><span>{L_URL_EXPLAIN}</span></dt>
-						<dd><label><input type="text" maxlength="150" size="55" name="url" id="url" value="{URL}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="desc">{L_DESC}</label></dt>
-						<dd><label><input type="text" maxlength="150" size="55" name="desc" id="desc" value="{DESC}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="aprob">{L_APROB}</label></dt>
-						<dd>
+						</label></div>
+					</div>
+					<div class="form-element" id="forum_url">
+						<label for="desc">* {L_URL}</label><br /><span>{L_URL_EXPLAIN}</span>
+						<div class="form-field"><label><input type="text" maxlength="150" size="55" name="url" id="url" value="{URL}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="desc">{L_DESC}</label>
+						<div class="form-field"><label><input type="text" maxlength="150" size="55" name="desc" id="desc" value="{DESC}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="aprob">{L_APROB}</label>
+						<div class="form-field">
 							<label><input type="radio" name="aprob" id="aprob" {CHECKED_APROB} value="1"> {L_YES}</label>
 							<label><input type="radio" name="aprob" {UNCHECKED_APROB} value="0"> {L_NO}</label>
-						</dd>
-					</dl>
-					<dl id="forum_status">
-						<dt><label for="status">{L_STATUS}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element" id="forum_status">
+						<label for="status">{L_STATUS}</label>
+						<div class="form-field">
 							<label><input type="radio" name="status" id="status" {CHECKED_STATUS} value="1"> {L_UNLOCK}</label>
 							<label><input type="radio" name="status" {UNCHECKED_STATUS} value="0"> {L_LOCK}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label>{L_AUTH_READ}</label></dt>
-						<dd>{AUTH_READ}</dd>
-					</dl>
-					<dl id="write_auth">
-						<dt><label>{L_AUTH_WRITE}</label></dt>
-						<dd>{AUTH_WRITE}</dd>
-					</dl>
-					<dl id="edit_auth">
-						<dt><label>{L_AUTH_EDIT}</label></dt>
-						<dd>{AUTH_EDIT}</dd>
-					</dl>
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_AUTH_READ}</label>
+						<div class="form-field">{AUTH_READ}</div>
+					</div>
+					<div class="form-element" id="write_auth">
+						<label>{L_AUTH_WRITE}</label>
+						<div class="form-field">{AUTH_WRITE}</div>
+					</div>
+					<div class="form-element" id="edit_auth">
+						<label>{L_AUTH_EDIT}</label>
+						<div class="form-field">{AUTH_EDIT}</div>
+					</div>
 				</fieldset>
 								
 				<fieldset class="fieldset_submit">

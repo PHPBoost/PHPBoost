@@ -21,13 +21,13 @@
 				<form action="search.php?token={TOKEN}#search_forum" method="post" onsubmit="return check_form();" class="fieldset_content">
 					<fieldset>
 						<legend>{L_SEARCH_FORUM}</legend>
-						<dl>
-							<dt><label for="search_forum_form">{L_KEYWORDS}</label></dt>
-							<dd><label><input type="text" size="35" id="search_forum_form" name="search" value="{SEARCH}"  class="text"></label></dd>
-						</dl>
-						<dl>
-							<dt><label for="time">{L_DATE}</label></dt>
-							<dd><label>	
+						<div class="form-element">
+							<label for="search_forum_form">{L_KEYWORDS}</label>
+							<div class="form-field"><label><input type="text" size="35" id="search_forum_form" name="search" value="{SEARCH}"  class="text"></label></div>
+						</div>
+						<div class="form-element">
+							<label for="time">{L_DATE}</label>
+							<div class="form-field"><label>	
 								<select id="time" name="time">
 									<option value="30000" selected="selected">{L_ALL}</option>
 									<option value="1">1 {L_DAY}</option>
@@ -37,34 +37,34 @@
 									<option value="180">6 {L_MONTH}</option>
 									<option value="360">1 {L_YEAR}</option>
 								</select>
-							</label></dd>
-						</dl>
-						<dl>
-							<dt><label for="idcat">{L_CATEGORY}</label></dt>
-							<dd><label>
+							</label></div>
+						</div>
+						<div class="form-element">
+							<label for="idcat">{L_CATEGORY}</label>
+							<div class="form-field"><label>
 								<select name="idcat" id="idcat">
 									# START cat #
 										{cat.CAT}
 									# END cat #
 								</select>
-							</label></dd>
-						</dl>
-						<dl>
-							<dt><label for="where">{L_OPTIONS}</label></dt>
-							<dd>
+							</label></div>
+						</div>
+						<div class="form-element">
+							<label for="where">{L_OPTIONS}</label>
+							<div class="form-field">
 								<label><input type="radio" name="where" id="where" value="contents" {CONTENTS_CHECKED}> {L_CONTENTS}</label>
 								<br />
 								<label><input type="radio" name="where" value="title" {TITLE_CHECKED}> {L_TITLE}</label>
 								<br />
 								<label><input type="radio" name="where" value="all" {ALL_CHECKED}> {L_TITLE}/{L_CONTENTS}</label>
-							</dd>
-						</dl>
-						<dl>
-							<dt><label for="colorate_result">{L_COLORATE_RESULT}</label></dt>
-							<dd>
+							</div>
+						</div>
+						<div class="form-element">
+							<label for="colorate_result">{L_COLORATE_RESULT}</label>
+							<div class="form-field">
 								<label><input type="checkbox" name="colorate_result" id="colorate_result" value="1" {COLORATE_RESULT}></label>
-							</dd>
-						</dl>
+							</div>
+						</div>
 					</fieldset>			
 					<fieldset class="fieldset_submit">
 						<legend>{L_SEARCH}</legend>

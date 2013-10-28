@@ -36,60 +36,60 @@
 			<form action="admin_faq.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_MANAGEMENT}</legend>
-					<dl>
-						<dt>
+					<div class="form-element">
+						
 							<label for="faq_name">{L_FAQ_NAME}</label>
 							<br />
 							<span class="smaller">{L_FAQ_NAME_EXPLAIN}</span>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							<input type="text" size="65" maxlength="100" id="faq_name" name="faq_name" value="{FAQ_NAME}" class="text">
-						</dd>	
-					</dl>
-					<dl>
-						<dt>
+						</div>	
+					</div>
+					<div class="form-element">
+						
 							<label for="num_cols">{L_NBR_COLS}</label>
 							<br />
 							<span class="smaller">{L_NBR_COLS_EXPLAIN}</span>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							<input type="text" size="3" maxlength="3" id="num_cols" name="num_cols" value="{NUM_COLS}" class="text">
-						</dd>	
-					</dl>
-					<dl>
-						<dt>
+						</div>	
+					</div>
+					<div class="form-element">
+						
 							<label for="display_mode">{L_DISPLAY_MODE}</label>
 							<br />
 							<span class="smaller">{L_DISPLAY_MODE_EXPLAIN}</span>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							<select name="display_mode" id="display_mode">
 								<option value="block"{SELECTED_BLOCK}>{L_BLOCKS}</option>
 								<option value="inline"{SELECTED_INLINE}>{L_INLINE}</option>
 							</select>
-						</dd>	
-					</dl>
+						</div>	
+					</div>
 				</fieldset>
 				
 				<fieldset>
 					<legend>{L_AUTH}</legend>
 					<p>{L_AUTH_EXPLAIN}</p>
-					<dl>
-						<dt>
+					<div class="form-element">
+						
 							<label for="auth_read">{L_AUTH_READ}</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{AUTH_READ}
-						</dd>	
-					</dl>
-					<dl>
-						<dt>
+						</div>	
+					</div>
+					<div class="form-element">
+						
 							<label for="auth_read">{L_AUTH_WRITE}</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{AUTH_WRITE}
-						</dd>	
-					</dl>
+						</div>	
+					</div>
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>

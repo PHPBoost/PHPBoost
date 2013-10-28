@@ -69,13 +69,13 @@
 			<form action="admin_ranks_add.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset_content">				
 				<fieldset>
 				<legend>{L_UPLOAD_RANKS}</legend>						
-					<dl>
-						<dt><label for="upload_ranks">{L_UPLOAD_RANKS}</label><br />{L_UPLOAD_FORMAT}</dt>
-						<dd><label>
+					<div class="form-element">
+						<label for="upload_ranks">{L_UPLOAD_RANKS}</label><br />{L_UPLOAD_FORMAT}
+						<div class="form-field"><label>
 							<input type="hidden" name="max_file_size" value="2000000">
 							<input type="file" id="upload_ranks" name="upload_ranks" size="30" class="file">
-						</label></dd>
-					</dl>
+						</label></div>
+					</div>
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPLOAD}</legend>
@@ -86,23 +86,23 @@
 			<form action="admin_ranks_add.php?token={TOKEN}" method="post" onsubmit="return check_form_rank_add();" class="fieldset_content">	
 				<fieldset>
 					<legend>{L_ADD_RANKS}</legend>
-					<dl>
-						<dt><label for="name">* {L_RANK_NAME}</label></dt>
-						<dd><label><input type="text" maxlength="30" size="20" id="name" name="name" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="msg">* {L_NBR_MSG}</label></dt>
-						<dd><label><input type="text" maxlength="6" size="6" id="msg" name="msg" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="icon">{L_IMG_ASSOC}</label></dt>
-						<dd><label>
+					<div class="form-element">
+						<label for="name">* {L_RANK_NAME}</label>
+						<div class="form-field"><label><input type="text" maxlength="30" size="20" id="name" name="name" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="msg">* {L_NBR_MSG}</label>
+						<div class="form-field"><label><input type="text" maxlength="6" size="6" id="msg" name="msg" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="icon">{L_IMG_ASSOC}</label>
+						<div class="form-field"><label>
 							<select name="icon" id="icon" onchange="img_change('img_icon', '{PATH_TO_ROOT}/forum/templates/images/ranks/' + this.options[selectedIndex].value)">
 								{RANK_OPTIONS}
 							</select>
 							<img src="{PATH_TO_ROOT}/forum/templates/images/ranks/rank_0.png" id="img_icon" alt="" style="display:none;" />
-						</label></dd>
-					</dl>
+						</label></div>
+					</div>
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">

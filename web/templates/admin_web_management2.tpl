@@ -89,28 +89,28 @@
 				<fieldset>
 					<legend>{L_EDIT_LINK}</legend>
 					<p>{L_REQUIRE}</p>
-					<dl>
-						<dt><label for="name">* {L_TITLE}</label></dt>
-						<dd><label><input type="text" size="55" maxlength="50" name="name" id="name" value="{NAME}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="idcat">* {L_CATEGORY}</label></dt>
-						<dd><label>
+					<div class="form-element">
+						<label for="name">* {L_TITLE}</label>
+						<div class="form-field"><label><input type="text" size="55" maxlength="50" name="name" id="name" value="{NAME}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="idcat">* {L_CATEGORY}</label>
+						<div class="form-field"><label>
 							<select id="idcat" name="idcat">				
 							# START select #				
 								{select.CAT}				
 							# END select #				
 							</select>
-						</label></dd>
-					</dl>
-					<dl>
-						<dt><label for="url">* {L_URL_LINK}</label></dt>
-						<dd><label><input type="text" size="65" id="url" name="url" id="url" value="{URL}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="compt">{L_VIEWS}</label></dt>
-						<dd><label><input type="text" size="10" maxlength="10" name="compt" id="compt" value="{COMPT}" class="text"></label></dd>
-					</dl>
+						</label></div>
+					</div>
+					<div class="form-element">
+						<label for="url">* {L_URL_LINK}</label>
+						<div class="form-field"><label><input type="text" size="65" id="url" name="url" id="url" value="{URL}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="compt">{L_VIEWS}</label>
+						<div class="form-field"><label><input type="text" size="10" maxlength="10" name="compt" id="compt" value="{COMPT}" class="text"></label></div>
+					</div>
 					<br />
 					<label for="contents">{L_DESC}</label>
 					<label>
@@ -118,14 +118,14 @@
 						<textarea rows="20" cols="90" id="contents" name="contents">{CONTENTS}</textarea> 
 						<br />
 					</label>
-					<dl>
-						<dt><label for="aprob">* {L_APROB}</label></dt>
-						<dd>
+					<div class="form-element">
+						<label for="aprob">* {L_APROB}</label>
+						<div class="form-field">
 							<label><input type="radio" {APROB_ENABLED} name="aprob" id="aprob" value="1"> {L_YES}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" {APROB_DISABLED}  name="aprob" value="0"> {L_NO}</label>
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>		
 				
 				<fieldset class="fieldset_submit">

@@ -6,34 +6,34 @@
 <fieldset>
     <legend>{@php.version}</legend>
     <p>${set(@H|php.version.check.explanation, ['min_php_version': MIN_PHP_VERSION])}</p>
-    <dl>
-        <dt><label>${set(@php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label></dt>
-        <dd>
+    <div class="form-element">
+        <label>${set(@php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
+        <div class="form-field">
         # IF PHP_VERSION_OK #
             <img src="templates/images/success.png" alt="{L_YES}" />
         # ELSE #
             <img src="templates/images/stop.png" alt="{L_NO}" />
         # ENDIF #
-        </dd>
-    </dl>
+        </div>
+    </div>
 </fieldset>
 
 <fieldset>
     <legend>{@php.extensions}</legend>
     <p>{@php.extensions.check}</p>
-    <dl>
-        <dt><label>{@php.extensions.check.gdLibrary}</label><br /><span>{@php.extensions.check.gdLibrary.explanation}</span></dt>
-        <dd>
+    <div class="form-element">
+        <label>{@php.extensions.check.gdLibrary}</label><br /><span>{@php.extensions.check.gdLibrary.explanation}</span>
+        <div class="form-field">
         # IF HAS_GD_LIBRARY #
             <img src="templates/images/success.png" alt="{@yes}" />
         # ELSE #
             <img src="templates/images/stop.png" alt="{@no}" />
         # ENDIF #
-        </dd>
-    </dl>
-    <dl>
-        <dt><label>{@server.urlRewriting}</label><br /><span>{@server.urlRewriting.explanation}</span></dt>
-        <dd>
+        </div>
+    </div>
+    <div class="form-element">
+        <label>{@server.urlRewriting}</label><br /><span>{@server.urlRewriting.explanation}</span>
+        <div class="form-field">
         # IF URL_REWRITING_KNOWN #
             # IF URL_REWRITING_AVAILABLE #
             <img src="templates/images/success.png" alt="{@yes}" />
@@ -43,8 +43,8 @@
         # ELSE #
         <img src="templates/images/question.png" alt="{@unknown}" />
         # ENDIF #
-        </dd>
-    </dl>
+        </div>
+    </div>
 </fieldset>
 
 <fieldset>
@@ -52,9 +52,9 @@
     <p>{@H|folders.chmod.check}</p>
     <div id="chmod">
         # START folder #
-        <dl>
-            <dt><label>{folder.NAME}</label></dt>
-            <dd>
+        <div class="form-element">
+            <label>{folder.NAME}</label>
+            <div class="form-field">
                 # IF folder.EXISTS #
                     <div class="success_block">{@folder.exists}</div>
                 # ELSE #
@@ -65,8 +65,8 @@
                 # ELSE #
                     <div class="failure_block">{@folder.isNotWritable}</div>
                 # ENDIF #
-            </dd>
-        </dl>
+            </div>
+        </div>
         # END chmod #
     </div>
 </fieldset>

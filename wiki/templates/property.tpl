@@ -13,42 +13,42 @@
 				<p style="text-align:center">
 					{EXPLAIN_WIKI_GROUPS}
 				</p>
-				<dl>
-					<dt><label>{L_RESTORE_ARCHIVE}</label></dt>
-					<dd><label>{SELECT_RESTORE_ARCHIVE}</label></dd>					
-				</dl>
-				<dl>
-					<dt><label>{L_DELETE_ARCHIVE}</label></dt>
-					<dd><label>{SELECT_DELETE_ARCHIVE}</label></dd>					
-				</dl>
-				<dl>
-					<dt><label>{L_EDIT}</label></dt>
-					<dd><label>{SELECT_EDIT}</label></dd>					
-				</dl>
-				<dl>
-					<dt><label>{L_DELETE}</label></dt>
-					<dd><label>{SELECT_DELETE}</label></dd>					
-				</dl>
-				<dl>
-					<dt><label>{L_RENAME}</label></dt>
-					<dd><label>{SELECT_RENAME}</label></dd>					
-				</dl>
-				<dl>
-					<dt><label>{L_REDIRECT}</label></dt>
-					<dd><label>{SELECT_REDIRECT}</label></dd>					
-				</dl>
-				<dl>
-					<dt><label>{L_MOVE}</label></dt>
-					<dd><label>{SELECT_MOVE}</label></dd>					
-				</dl>
-				<dl>
-					<dt><label>{L_STATUS}</label></dt>
-					<dd><label>{SELECT_STATUS}</label></dd>					
-				</dl>
-				<dl>
-					<dt><label>{L_COM}</label></dt>
-					<dd><label>{SELECT_COM}</label></dd>					
-				</dl>
+				<div class="form-element">
+					<label>{L_RESTORE_ARCHIVE}</label>
+					<div class="form-field"><label>{SELECT_RESTORE_ARCHIVE}</label></div>					
+				</div>
+				<div class="form-element">
+					<label>{L_DELETE_ARCHIVE}</label>
+					<div class="form-field"><label>{SELECT_DELETE_ARCHIVE}</label></div>					
+				</div>
+				<div class="form-element">
+					<label>{L_EDIT}</label>
+					<div class="form-field"><label>{SELECT_EDIT}</label></div>					
+				</div>
+				<div class="form-element">
+					<label>{L_DELETE}</label>
+					<div class="form-field"><label>{SELECT_DELETE}</label></div>					
+				</div>
+				<div class="form-element">
+					<label>{L_RENAME}</label>
+					<div class="form-field"><label>{SELECT_RENAME}</label></div>					
+				</div>
+				<div class="form-element">
+					<label>{L_REDIRECT}</label>
+					<div class="form-field"><label>{SELECT_REDIRECT}</label></div>					
+				</div>
+				<div class="form-element">
+					<label>{L_MOVE}</label>
+					<div class="form-field"><label>{SELECT_MOVE}</label></div>					
+				</div>
+				<div class="form-element">
+					<label>{L_STATUS}</label>
+					<div class="form-field"><label>{SELECT_STATUS}</label></div>					
+				</div>
+				<div class="form-element">
+					<label>{L_COM}</label>
+					<div class="form-field"><label>{SELECT_COM}</label></div>					
+				</div>
 			</fieldset>
 			
 			<fieldset class="fieldset_submit">
@@ -115,9 +115,9 @@
 				<p style="text-align:center" class="text_strong">{L_CURRENT_STATUS}</p>
 				<div id="current_status" class="row3">{status.CURRENT_STATUS}</div>
 				<br />
-				<dl>
-					<dt><label>{L_STATUS}</label></dt>
-					<dd>
+				<div class="form-element">
+					<label>{L_STATUS}</label>
+					<div class="form-field">
 						<label><input type="radio" name="status" id="radio_defined" value="radio_defined" {status.DEFINED} onclick="javascript: change_type(0);" {status.SELECTED_DEFINED}>&nbsp;{L_DEFINED_STATUS}</label>
 						<select id="id_status" name="id_status" {status.SELECTED_SELECT} class="nav" onchange="javascript:show_status();">
 						# START status.list #
@@ -127,11 +127,12 @@
 						<br /><br />
 						<label><input type="radio" name="status" id="radio_undefined" value="radio_undefined" {status.UNDEFINED} onclick="javascript: change_type(-1);" {status.SELECTED_UNDEFINED}>&nbsp;{L_UNDEFINED_STATUS}</label> 
 						
-					</dd>					
-				</dl>
-				<br />
-				{KERNEL_EDITOR}
-				<label><textarea rows="15" cols="66" id="contents" name="contents" {status.SELECTED_TEXTAREA}>{status.UNDEFINED_STATUS}</textarea></label>
+					</div>					
+				</div>
+				<div class="form-element-textarea">
+					{KERNEL_EDITOR}
+					<textarea rows="15" cols="66" id="contents" name="contents" {status.SELECTED_TEXTAREA}>{status.UNDEFINED_STATUS}</textarea>
+				</div>
 			</fieldset>
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
@@ -159,21 +160,21 @@
 		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
 			<fieldset>
 				<legend>{move.L_TITLE}</legend>	
-				<dl>
-					<dt><label>{L_CURRENT_CAT}</label></dt>
-					<dd>
+				<div class="form-element">
+					<label>{L_CURRENT_CAT}</label>
+					<div class="form-field">
 						<input type="hidden" name="new_cat" id="id_cat" value="{move.ID_CAT}">
 						<div id="selected_cat">{move.CURRENT_CAT}</div>
-					</dd>					
-				</dl>
-				<dl>
-					<dt><label>{L_SELECT_CAT}</label></dt>
-					<dd>
+					</div>					
+				</div>
+				<div class="form-element">
+					<label>{L_SELECT_CAT}</label>
+					<div class="form-field">
 						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{move.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						{move.CATS}
-					</dd>					
-				</dl>
+					</div>					
+				</div>
 			</fieldset>
 			
 			<fieldset class="fieldset_submit">
@@ -206,14 +207,14 @@
 					{rename.L_RENAMING_ARTICLE}
 				</p>
 				<br />
-				<dl>
-					<dt><label for="new_title">{L_NEW_TITLE}</label></dt>
-					<dd><input type="text" name="new_title" id="new_title" class="text" size="70" maxlength="250" value="{rename.FORMER_NAME}"></dd>					
-				</dl>
-				<dl>
-					<dt><label for="create_redirection_while_renaming">{rename.L_CREATE_REDIRECTION}</label></dt>
-					<dd><label><input type="checkbox" name="create_redirection_while_renaming" id="create_redirection_while_renaming" checked="checked"></label></dd>					
-				</dl>
+				<div class="form-element">
+					<label for="new_title">{L_NEW_TITLE}</label>
+					<div class="form-field"><input type="text" name="new_title" id="new_title" class="text" size="70" maxlength="250" value="{rename.FORMER_NAME}"></div>					
+				</div>
+				<div class="form-element">
+					<label for="create_redirection_while_renaming">{rename.L_CREATE_REDIRECTION}</label>
+					<div class="form-field"><label><input type="checkbox" name="create_redirection_while_renaming" id="create_redirection_while_renaming" checked="checked"></label></div>					
+				</div>
 			</fieldset>
 			
 			<fieldset class="fieldset_submit">
@@ -286,10 +287,10 @@
 		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
 			<fieldset>
 				<legend>{create.L_TITLE}</legend>				
-				<dl>
-					<dt><label for="redirection_title">{L_REDIRECTION_NAME}</label></dt>
-					<dd><label><input type="text" name="redirection_title" id="redirection_title" class="text" size="70" maxlength="250" value=""></label></dd>					
-				</dl>
+				<div class="form-element">
+					<label for="redirection_title">{L_REDIRECTION_NAME}</label>
+					<div class="form-field"><label><input type="text" name="redirection_title" id="redirection_title" class="text" size="70" maxlength="250" value=""></label></div>					
+				</div>
 			</fieldset>
 			
 			<fieldset class="fieldset_submit">
@@ -314,28 +315,28 @@
 		<form action="action.php?token={TOKEN}" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset_content">					
 			<fieldset>
 				<legend>{remove.L_TITLE}</legend>				
-				<dl>
-					<dt><label for="action">{L_EXPLAIN_REMOVE_CAT}</label></dt>
-					<dd>
+				<div class="form-element">
+					<label for="action">{L_EXPLAIN_REMOVE_CAT}</label>
+					<div class="form-field">
 						<label><input id="action" name="action" value="remove_all" type="radio"><strong>&nbsp;{remove.L_REMOVE_ALL_CONTENTS}</strong></label>
 						<label><input name="action" value="move_all" type="radio" checked="checked"><strong>&nbsp;{remove.L_MOVE_ALL_CONTENTS}</strong></label>
-					</dd>					
-				</dl>
-				<dl>
-					<dt><label>{L_FUTURE_CAT}</label></dt>
-					<dd>
+					</div>					
+				</div>
+				<div class="form-element">
+					<label>{L_FUTURE_CAT}</label>
+					<div class="form-field">
 						<input type="hidden" name="report_cat" value="{remove.ID_CAT}" id="id_cat">
 						<div id="selected_cat">{remove.CURRENT_CAT}</div>
-					</dd>					
-				</dl>
-				<dl>
-					<dt><label>{L_SELECT_CAT}</label></dt>
-					<dd>
+					</div>					
+				</div>
+				<div class="form-element">
+					<label>{L_SELECT_CAT}</label>
+					<div class="form-field">
 						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						{remove.CATS}
-					</dd>					
-				</dl>
+					</div>					
+				</div>
 			</fieldset>
 			
 			<fieldset class="fieldset_submit">

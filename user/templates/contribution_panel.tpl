@@ -193,44 +193,44 @@
 			
 			<fieldset>
 				<legend>{L_CONTRIBUTION}</legend>
-				<dl>
-					<dt>
+				<div class="form-element">
+					
 						{L_ENTITLED}
-					</dt>
-					<dd>
+					
+					<div class="form-field">
 						{ENTITLED}
-					</dd>
-				</dl>
-				<dl>
-					<dt>{L_DESCRIPTION}</dt>
-					<dd>{DESCRIPTION}</dd>
-				</dl>
-				<dl>
-					<dt>{L_STATUS}</dt>
-					<dd>{STATUS}</dd>
-				</dl>
-				<dl>
-					<dt>{L_CONTRIBUTOR}</dt>
-					<dd><a href="{U_CONTRIBUTOR_PROFILE}" class="{CONTRIBUTOR_LEVEL_CLASS}" # IF C_CONTRIBUTOR_GROUP_COLOR # style="color:{CONTRIBUTOR_GROUP_COLOR}" # ENDIF #>{CONTRIBUTOR}</a></dd>
-				</dl>
-				<dl>
-					<dt>{L_CREATION_DATE}</dt>
-					<dd>{CREATION_DATE}</dd>
-				</dl>
+					</div>
+				</div>
+				<div class="form-element">
+					{L_DESCRIPTION}
+					<div class="form-field">{DESCRIPTION}</div>
+				</div>
+				<div class="form-element">
+					{L_STATUS}
+					<div class="form-field">{STATUS}</div>
+				</div>
+				<div class="form-element">
+					{L_CONTRIBUTOR}
+					<div class="form-field"><a href="{U_CONTRIBUTOR_PROFILE}" class="{CONTRIBUTOR_LEVEL_CLASS}" # IF C_CONTRIBUTOR_GROUP_COLOR # style="color:{CONTRIBUTOR_GROUP_COLOR}" # ENDIF #>{CONTRIBUTOR}</a></div>
+				</div>
+				<div class="form-element">
+					{L_CREATION_DATE}
+					<div class="form-field">{CREATION_DATE}</div>
+				</div>
 				# IF C_CONTRIBUTION_FIXED #
-				<dl>
-					<dt>{L_FIXER}</dt>
-					<dd><a href="{U_FIXER_PROFILE}" class="{FIXER_LEVEL_CLASS}" # IF C_FIXER_GROUP_COLOR # style="color:{FIXER_GROUP_COLOR}" # ENDIF #>{FIXER}</a></dd>
-				</dl>
-				<dl>
-					<dt>{L_FIXING_DATE}</dt>
-					<dd>{FIXING_DATE}</dd>
-				</dl>
+				<div class="form-element">
+					{L_FIXER}
+					<div class="form-field"><a href="{U_FIXER_PROFILE}" class="{FIXER_LEVEL_CLASS}" # IF C_FIXER_GROUP_COLOR # style="color:{FIXER_GROUP_COLOR}" # ENDIF #>{FIXER}</a></div>
+				</div>
+				<div class="form-element">
+					{L_FIXING_DATE}
+					<div class="form-field">{FIXING_DATE}</div>
+				</div>
 				# ENDIF #
-				<dl>
-					<dt>{L_MODULE}</dt>
-					<dd>{MODULE}</dd>
-				</dl>
+				<div class="form-element">
+					{L_MODULE}
+					<div class="form-field">{MODULE}</div>
+				</div>
 			</fieldset>
 			
 			{COMMENTS}
@@ -248,27 +248,28 @@
 			<form action="{U_TARGET}" method="post">
 				<fieldset>
 					<legend>{L_CONTRIBUTION}</legend>
-					<dl>
-						<dt>
+					<div class="form-element">
+						
 							<label for="entitled">{L_ENTITLED}</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							<input type="text" name="entitled" id="entitled" value="{ENTITLED}" size="40">
-						</dd>
-					</dl>
-					<label for="contents">{L_DESCRIPTION}</label>
-					{EDITOR}
-					<textarea rows="15" cols="66" id="contents" name="contents">{DESCRIPTION}</textarea>
-					<br />
-					<dl>
-						<dt><label for="status">{L_STATUS}</label></dt>
-						<dd><select name="status" id="status">
+						</div>
+					</div>
+					<div class="form-element-textarea">
+						<label for="contents">{L_DESCRIPTION}</label>
+						{EDITOR}
+						<textarea rows="15" cols="66" id="contents" name="contents">{DESCRIPTION}</textarea>
+					</div>
+					<div class="form-element">
+						<label for="status">{L_STATUS}</label>
+						<div class="form-field"><select name="status" id="status">
 								<option value="0"{EVENT_STATUS_UNREAD_SELECTED}>{L_CONTRIBUTION_STATUS_UNREAD}</option>
 								<option value="1"{EVENT_STATUS_BEING_PROCESSED_SELECTED}>{L_CONTRIBUTION_STATUS_BEING_PROCESSED}</option>
 								<option value="2"{EVENT_STATUS_PROCESSED_SELECTED}>{L_CONTRIBUTION_STATUS_PROCESSED}</option>
 							</select>
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<input type="hidden" name="idedit" value="{CONTRIBUTION_ID}">

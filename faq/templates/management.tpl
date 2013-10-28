@@ -62,14 +62,14 @@
 					<fieldset>
 						<legend>{L_CAT_PROPERTIES}</legend>
 						# START category.not_root_name #
-						<dl>
-							<dt>
+						<div class="form-element">
+							
 								<label for="cat_title">{L_CAT_NAME}</label>
-							</dt>
-							<dd>
+							
+							<div class="form-field">
 								<input type="text" name="cat_name" id="cat_name" value="{category.not_root_name.CAT_TITLE}">
-							</dd>
-						</dl>
+							</div>
+						</div>
 						# END category.not_root_name #
 						<label for="contents">{L_DESCRIPTION}</label>
 						{KERNEL_EDITOR}
@@ -79,50 +79,50 @@
 							<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button">
 						</div>
 						<br />
-						<dl>
-							<dt>
+						<div class="form-element">
+							
 								<label for="display_mode">{L_DISPLAY_MODE}</label>
 								<br />
 								<span class="smaller">{L_DISPLAY_EXPLAIN}</span>
-							</dt>
-							<dd>
+							
+							<div class="form-field">
 								<select name="display_mode" id="display_mode">
 									<option value="0" {AUTO_SELECTED}>{L_DISPLAY_AUTO}</option>
 									<option value="1" {INLINE_SELECTED}>{L_DISPLAY_INLINE}</option>
 									<option value="2" {BLOCK_SELECTED}>{L_DISPLAY_BLOCK}</option>
 								</select>
-							</dd>					
-						</dl>
+							</div>					
+						</div>
 						# START category.not_root_auth #
-						<dl>
-							<dt><label for="global_auth">{L_GLOBAL_AUTH}</label>
+						<div class="form-element">
+							<label for="global_auth">{L_GLOBAL_AUTH}</label>
 							<br />
-							<span class="smaller">{L_GLOBAL_AUTH_EXPLAIN}</span></dt>
-							<dd>
+							<span class="smaller">{L_GLOBAL_AUTH_EXPLAIN}</span>
+							<div class="form-field">
 								<input type="checkbox" name="global_auth" id="global_auth" onclick="javascript: change_status_global_auth();" {GLOBAL_CHECKED}>
-							</dd>					
-						</dl>
+							</div>					
+						</div>
 						<div id="hide_global_auth" style="display:{DISPLAY_GLOBAL};">
-							<dl>
-								<dt>
+							<div class="form-element">
+								
 									<label>
 										{L_READ_AUTH}
 									</label>
-								</dt>
-								<dd>
+								
+								<div class="form-field">
 									{category.READ_AUTH}
-								</dd>					
-							</dl>
-							<dl>
-								<dt>
+								</div>					
+							</div>
+							<div class="form-element">
+								
 									<label>
 										{L_WRITE_AUTH}
 									</label>
-								</dt>
-								<dd>
+								
+								<div class="form-field">
 									{category.WRITE_AUTH}
-								</dd>					
-							</dl>
+								</div>					
+							</div>
 						</div>
 						# END category.not_root_auth #
 					</fieldset>
@@ -220,14 +220,14 @@
 				<form action="{edit_question.TARGET}" method="post" onsubmit="return check_form_faq()">
 					<fieldset>
 						<legend>{L_QUESTION}</legend>
-						<dl>
-							<dt>
+						<div class="form-element">
+							
 								<label for="entitled">{L_ENTITLED}</label>
-							</dt>
-							<dd>
+							
+							<div class="form-field">
 								<input type="text" value="{edit_question.ENTITLED}" maxlength="255" size="50" id="entitled" name="entitled">
-							</dd>
-						</dl>
+							</div>
+						</div>
 						<label for="contents">{L_ANSWER}</label>
 						{KERNEL_EDITOR}
 						<textarea id="contents" rows="15" cols="66" name="answer">{edit_question.ANSWER}</textarea>
@@ -261,14 +261,14 @@
 				<form action="{U_FORM_TARGET}" method="post">
 					<fieldset>
 						<legend>{L_TARGET}</legend>
-						<dl>
-							<dt>
+						<div class="form-element">
+							
 								<label for="target">{L_TARGET}</label>
-							</dt>
-							<dd>
+							
+							<div class="form-field">
 								{move_question.CATEGORIES_TREE}
-							</dd>
-						</dl>
+							</div>
+						</div>
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_MOVE}</legend>

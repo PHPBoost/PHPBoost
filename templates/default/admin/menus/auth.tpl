@@ -18,17 +18,17 @@ function check_msg(){
     <form action="auth.php" method="post" class="fieldset_content">
         <fieldset> 
             <legend>{L_ACTION_MENUS}</legend>
-            <dl>
-                <dt><label>{L_NAME}</label></dt>
-                <dd><label>{NAME}</label></dd>
-            </dl>
-			<dl>
-				<dt><label for="location">* {L_LOCATION}</label></dt>
-				<dd><select name="location" id="location">{LOCATIONS}</select></dd>
-			</dl>
-            <dl>
-                <dt><label for="activ">{L_STATUS}</label></dt>
-                <dd><label>
+            <div class="form-element">
+                <label>{L_NAME}</label>
+                <div class="form-field"><label>{NAME}</label></div>
+            </div>
+			<div class="form-element">
+				<label for="location">* {L_LOCATION}</label>
+				<div class="form-field"><select name="location" id="location">{LOCATIONS}</select></div>
+			</div>
+            <div class="form-element">
+                <label for="activ">{L_STATUS}</label>
+                <div class="form-field"><label>
                     <select name="activ" id="activ">
                        # IF C_ENABLED #
                             <option value="1" selected="selected">{L_ENABLED}</option>
@@ -38,12 +38,12 @@ function check_msg(){
                             <option value="0" selected="selected">{L_DISABLED}</option>
                         # ENDIF #                   
                     </select>
-                </label></dd>
-            </dl>
-            <dl>
-                <dt><label for="auth">{L_AUTHS}</label></dt>
-                <dd><label>{AUTH_MENUS}</label></dd>
-            </dl>
+                </label></div>
+            </div>
+            <div class="form-element">
+                <label for="auth">{L_AUTHS}</label>
+                <div class="form-field"><label>{AUTH_MENUS}</label></div>
+            </div>
         </fieldset>   
         
         # INCLUDE filters #  

@@ -25,23 +25,25 @@
 			<form action="admin_download_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_DOWNLOAD_CONFIG}</legend>
-					<dl>
-						<dt><label for="max_files_number_per_page">* {L_MAX_FILES_NUMBER_PER_PAGE}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="max_files_number_per_page" name="max_files_number_per_page" value="{MAX_FILES_NUMBER_PER_PAGE}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="columns_number">* {L_COLUMNS_NUMBER}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="notation_scale">* {L_NOTATION_SCALE}</label></dt>
-						<dd><label><input type="text" size="2" maxlength="2" id="notation_scale" name="note_max" value="{NOTATION_SCALE}" class="text"></label></dd>
-					</dl>
+					<div class="form-element">
+						<label for="max_files_number_per_page">* {L_MAX_FILES_NUMBER_PER_PAGE}</label>
+						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="max_files_number_per_page" name="max_files_number_per_page" value="{MAX_FILES_NUMBER_PER_PAGE}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="columns_number">* {L_COLUMNS_NUMBER}</label>
+						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="notation_scale">* {L_NOTATION_SCALE}</label>
+						<div class="form-field"><label><input type="text" size="2" maxlength="2" id="notation_scale" name="note_max" value="{NOTATION_SCALE}" class="text"></label></div>
+					</div>
 					<label for="contents">
 						{L_ROOT_DESCRIPTION}
 					</label>
-					{KERNEL_EDITOR}
-					<textarea id="contents" rows="15" cols="40" name="root_contents">{DESCRIPTION}</textarea>
+					<div class="form-element-textarea">
+						{KERNEL_EDITOR}
+						<textarea id="contents" rows="15" cols="40" name="root_contents">{DESCRIPTION}</textarea>
+					</div>
 				</fieldset>
 
 				<fieldset>
@@ -49,36 +51,36 @@
 						{L_GLOBAL_AUTH}
 					</legend>
 					{L_GLOBAL_AUTH_EXPLAIN}
-					<dl>
-						<dt>
+					<div class="form-element">
+						
 							<label>
 								{L_READ_AUTH}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{READ_AUTH}
-						</dd>					
-					</dl>
-					<dl>
-						<dt>
+						</div>					
+					</div>
+					<div class="form-element">
+						
 							<label>
 								{L_WRITE_AUTH}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{WRITE_AUTH}
-						</dd>					
-					</dl>
-					<dl>
-						<dt>
+						</div>					
+					</div>
+					<div class="form-element">
+						
 							<label>
 								{L_CONTRIBUTION_AUTH}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{CONTRIBUTION_AUTH}
-						</dd>					
-					</dl>
+						</div>					
+					</div>
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_DELETE}</legend>

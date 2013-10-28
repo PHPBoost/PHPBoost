@@ -125,45 +125,45 @@
 			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_GROUPS_MANAGEMENT}</legend>
-					<dl>
-						<dt><label for="name">* {L_NAME}</label></dt>
-						<dd><label><input type="text" size="25" id="name" name="name" value="{NAME}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="auth_flood">{L_AUTH_FLOOD}</label></dt>
-						<dd><label><input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1"> {L_YES}
+					<div class="form-element">
+						<label for="name">* {L_NAME}</label>
+						<div class="form-field"><label><input type="text" size="25" id="name" name="name" value="{NAME}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="auth_flood">{L_AUTH_FLOOD}</label>
+						<div class="form-field"><label><input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1"> {L_YES}
 						</label>&nbsp;&nbsp; 
-						<label><input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" value="0" class="text"> {L_NO}</label></dd>
-					</dl>
-					<dl>
-						<dt><label for="pm_group_limit">{L_PM_GROUP_LIMIT}</label><br /><span>{L_PM_GROUP_LIMIT_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="{PM_GROUP_LIMIT}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}" class="text"> {L_MB}</label></dd>
-					</dl>
-					<dl class="overflow_visible">
-						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
-						<dd>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text">
+						<label><input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" value="0" class="text"> {L_NO}</label></div>
+					</div>
+					<div class="form-element">
+						<label for="pm_group_limit">{L_PM_GROUP_LIMIT}</label><br /><span>{L_PM_GROUP_LIMIT_EXPLAIN}</span>
+						<div class="form-field"><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="{PM_GROUP_LIMIT}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span>
+						<div class="form-field"><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}" class="text"> {L_MB}</label></div>
+					</div>
+					<div class="form-element" class="overflow_visible">
+						<label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span>
+						<div class="form-field">#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text">
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign_middle" /></a>	
 							<div class="color_picker" style="display:none;" id="bb_block1">
 								<div id="color_group_list" class="bbcode_block" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
 							</div>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span>
+						<div class="form-field">
 							<label>
 								<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 									{IMG_GROUPS}
 								</select>
 								<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="" class="valign_middle" style="display:none" />
 							</label>
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>						
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
@@ -180,9 +180,9 @@
 			<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_MBR_GROUP}</legend>
-					<dl>
-						<dt><label for="login">* {L_PSEUDO}</label></dt>
-						<dd>
+					<div class="form-element">
+						<label for="login">* {L_PSEUDO}</label>
+						<div class="form-field">
 							<input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr" class="text"> 
 							<span id="loading_groups"></span>
 							<script type="text/javascript">
@@ -191,8 +191,8 @@
 							-->
 							</script>
 							<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>	
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>
@@ -252,13 +252,13 @@
 			<form action="admin_groups.php?add=1" method="post" enctype="multipart/form-data" class="fieldset_content">				
 				<fieldset>
 				<legend>{L_UPLOAD_GROUPS}</legend>						
-					<dl>
-						<dt><label for="upload_groups">{L_UPLOAD_GROUPS}</label><br />{L_UPLOAD_FORMAT}</dt>
-						<dd><label>
+					<div class="form-element">
+						<label for="upload_groups">{L_UPLOAD_GROUPS}</label><br />{L_UPLOAD_FORMAT}
+						<div class="form-field"><label>
 							<input type="hidden" name="max_file_size" value="2000000">
 							<input type="file" id="upload_groups" name="upload_groups" size="30" class="file">
-						</label></dd>
-					</dl>
+						</label></div>
+					</div>
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPLOAD}</legend>
@@ -271,43 +271,43 @@
 			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_GROUPS}</legend>
-					<dl>
-						<dt><label for="name">* {L_NAME}</label></dt>
-						<dd><label><input type="text" maxlength="25" size="25" id="name" name="name" value="" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="auth_flood">{L_AUTH_FLOOD}</label></dt>
-						<dd><label><input type="radio" name="auth_flood" id="auth_flood" checked="checked" value="1"> {L_YES}</label>
+					<div class="form-element">
+						<label for="name">* {L_NAME}</label>
+						<div class="form-field"><label><input type="text" maxlength="25" size="25" id="name" name="name" value="" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="auth_flood">{L_AUTH_FLOOD}</label>
+						<div class="form-field"><label><input type="radio" name="auth_flood" id="auth_flood" checked="checked" value="1"> {L_YES}</label>
 						&nbsp;&nbsp; 
-						<label><input type="radio" name="auth_flood" value="0"> {L_NO}</label></dd>
-					</dl>
-					<dl>
-						<dt><label for="pm_group_limit">{L_PM_GROUP_LIMIT}</label><br /><span>{L_PM_GROUP_LIMIT_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="75" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="5" class="text"> {L_MB}</label></dd>
-					</dl>
-					<dl class="overflow_visible">
-						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
-						<dd>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text">
+						<label><input type="radio" name="auth_flood" value="0"> {L_NO}</label></div>
+					</div>
+					<div class="form-element">
+						<label for="pm_group_limit">{L_PM_GROUP_LIMIT}</label><br /><span>{L_PM_GROUP_LIMIT_EXPLAIN}</span>
+						<div class="form-field"><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="75" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span>
+						<div class="form-field"><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="5" class="text"> {L_MB}</label></div>
+					</div>
+					<div class="form-element" class="overflow_visible">
+						<label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span>
+						<div class="form-field">#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text">
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign_middle" /></a>	
 							<div class="color_picker" style="display:none;" id="bb_block1">
 								<div id="color_group_list" class="bbcode_block" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
 							</div>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
-						<dd><label>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span>
+						<div class="form-field"><label>
 							<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 								{IMG_GROUPS}
 							</select>				
 							<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="" class="valign_middle" style="display:none" />
-						</label></dd>
-					</dl>				
+						</label></div>
+					</div>				
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>

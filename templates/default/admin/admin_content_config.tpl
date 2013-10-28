@@ -28,19 +28,19 @@
 			<form action="admin_content_config.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_LANGUAGE_CONFIG}</legend>
-					<dl> 
-						<dt><label for="formatting_language">{L_DEFAULT_LANGUAGE}</label></dt>
-						<dd>
+					<div class="form-element"> 
+						<label for="formatting_language">{L_DEFAULT_LANGUAGE}</label>
+						<div class="form-field">
 							<select name="formatting_language" id="formatting_language">
 								# START formatting_language #
 									<option value="{formatting_language.ID}" # IF formatting_language.C_SELECTED # selected="selected" # ENDIF # >{formatting_language.NAME}</option>
 								# END formatting_language #
 							</select>
-						</dd>
-					</dl>
-					<dl> 
-						<dt><label for="forbidden_tags">{L_FORBIDDEN_TAGS}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element"> 
+						<label for="forbidden_tags">{L_FORBIDDEN_TAGS}</label>
+						<div class="form-field">
 								<select id="forbidden_tags" name="forbidden_tags[]" size="10" multiple="multiple">
 								# START tag #
 									# IF tag.C_ENABLED #
@@ -54,37 +54,37 @@
 								<span class="smaller">({L_EXPLAIN_SELECT_MULTIPLE})</span>
 								<br />
 								<a class="small" href="javascript:check_select_multiple('tag', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple('tag', false);">{L_SELECT_NONE}</a>
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>
 				
 				<fieldset>
 					<legend>{L_HTML_LANGUAGE}</legend>
-					<dl> 
-						<dt><label for="groups_auth1">{L_AUTH_USE_HTML}</label></dt>
-						<dd>
+					<div class="form-element"> 
+						<label for="groups_auth1">{L_AUTH_USE_HTML}</label>
+						<div class="form-field">
 							{SELECT_AUTH_USE_HTML}
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>
 				
 				<fieldset>  
 					<legend>{L_POST_MANAGEMENT}</legend> 
-					<dl>
-						<dt><label for="pm_max">{L_PM_MAX}</label><br /><span>{L_PM_MAX_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="2" name="pm_max" id="pm_max" value="{PM_MAX}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="anti_flood">{L_ANTI_FLOOD}</label><br /><span>{L_ANTI_FLOOD_EXPLAIN}</span></dt>
-						<dd>
+					<div class="form-element">
+						<label for="pm_max">{L_PM_MAX}</label><br /><span>{L_PM_MAX_EXPLAIN}</span>
+						<div class="form-field"><label><input type="text" size="2" name="pm_max" id="pm_max" value="{PM_MAX}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="anti_flood">{L_ANTI_FLOOD}</label><br /><span>{L_ANTI_FLOOD_EXPLAIN}</span>
+						<div class="form-field">
 							<label><input type="radio" {FLOOD_ENABLED} name="anti_flood" id="anti_flood" value="1"> {L_ACTIV}&nbsp;&nbsp;</label>
 							<label><input type="radio" {FLOOD_DISABLED} name="anti_flood" value="0"> {L_UNACTIVE}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="delay_flood">{L_INT_FLOOD}</label><br /><span>{L_INT_FLOOD_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" maxlength="9" name="delay_flood" id="delay_flood" value="{DELAY_FLOOD}" class="text"> {L_SECONDS}</label></dd>
-					</dl>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="delay_flood">{L_INT_FLOOD}</label><br /><span>{L_INT_FLOOD_EXPLAIN}</span>
+						<div class="form-field"><label><input type="text" size="3" maxlength="9" name="delay_flood" id="delay_flood" value="{DELAY_FLOOD}" class="text"> {L_SECONDS}</label></div>
+					</div>
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">

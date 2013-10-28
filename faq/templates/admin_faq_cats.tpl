@@ -103,41 +103,43 @@
 				<fieldset>
 					<legend>{L_CATEGORY}</legend>
 					<p>{L_REQUIRED_FIELDS}</p>
-					<dl>
-						<dt>
+					<div class="form-element">
+						
 							<label for="name">
 								* {L_NAME}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							<input type="text" size="65" maxlength="100" id="name" name="name" value="{edition_interface.NAME}" class="text">
-						</dd>
-					</dl>
-					<dl>
-						<dt>
+						</div>
+					</div>
+					<div class="form-element">
+						
 							<label for="id_parent">
 								* {L_LOCATION}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{edition_interface.CATEGORIES_TREE}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
+						</div>
+					</div>
+					<div class="form-element">
+						
 							<label for="image">
 								{L_IMAGE}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}" class="text">
-						</dd>
-					</dl>
-					<label for="description">
-						{L_DESCRIPTION}
-					</label>
-					{KERNEL_EDITOR}
-					<textarea id="contents" rows="15" cols="40" name="description">{edition_interface.DESCRIPTION}</textarea>
+						</div>
+					</div>
+					<div class="form-element-textarea">
+						<label for="description">
+							{L_DESCRIPTION}
+						</label>
+						{KERNEL_EDITOR}
+						<textarea id="contents" rows="15" cols="40" name="description">{edition_interface.DESCRIPTION}</textarea>
+					</div>
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">

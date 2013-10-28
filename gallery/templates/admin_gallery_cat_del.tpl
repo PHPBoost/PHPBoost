@@ -39,14 +39,14 @@
 						<br />	
 					</div>
 					<br />	
-					<dl>
-						<dt><label for="t_to">{pics.L_MOVE_PICS}</label></dt>
-						<dd><label>
+					<div class="form-element">
+						<label for="t_to">{pics.L_MOVE_PICS}</label>
+						<div class="form-field"><label>
 							<select id="t_to" name="t_to">
 								{pics.GALLERIES}
 							</select>
-						</label></dd>
-					</dl>
+						</label></div>
+					</div>
 				</fieldset>			
 				# END pics #
 				
@@ -58,23 +58,23 @@
 						<br />	
 					</div>
 					<br />	
-					<dl>
-						<dt><label for="f_to">{subgalleries.L_MOVE_GALLERIES}</label></dt>
-						<dd><label>
+					<div class="form-element">
+						<label for="f_to">{subgalleries.L_MOVE_GALLERIES}</label>
+						<div class="form-field"><label>
 							<select id="f_to" name="f_to">
 								{subgalleries.GALLERIES}
 							</select>
-						</label></dd>
-					</dl>
+						</label></div>
+					</div>
 				</fieldset>			
 				# END subgalleries #
 				
 				<fieldset>
 					<legend>{L_DEL_ALL}</legend>
-					<dl>
-						<dt><label for="del_conf">{L_DEL_GALLERY_CONTENTS}</label></dt>
-						<dd><label><input type="checkbox" name="del_conf" id="del_conf"></label></dd>
-					</dl>
+					<div class="form-element">
+						<label for="del_conf">{L_DEL_GALLERY_CONTENTS}</label>
+						<div class="form-field"><label><input type="checkbox" name="del_conf" id="del_conf"></label></div>
+					</div>
 				</fieldset>	
 				
 				<fieldset class="fieldset_submit">

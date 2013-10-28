@@ -37,101 +37,103 @@
 				<fieldset>
 					<legend>{L_CATEGORY}</legend>
 					<p>{L_REQUIRED_FIELDS}</p>
-					<dl>
-						<dt>
+					<div class="form-element">
+						
 							<label for="name">
 								* {L_NAME}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							<input type="text" size="65" maxlength="100" id="name" name="name" value="{NAME}" class="text">
-						</dd>
-					</dl>
-					<dl>
-						<dt>
+						</div>
+					</div>
+					<div class="form-element">
+						
 							<label for="id_parent">
 								{L_LOCATION}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{CATEGORIES_TREE}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
+						</div>
+					</div>
+					<div class="form-element">
+						
 							<label for="alt_image">
 								{L_IMAGE}
 								<br />
 								<span class="smaller">{L_EXPLAIN_IMAGE}</span>
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							<select name="image" onchange="change_icon(this.options[this.selectedIndex].value)" onclick="change_icon(this.options[this.selectedIndex].value)">
 								{IMG_LIST}
 							</select>
 							<span id="icon_img">{IMG_ICON}</span>
 							<input type="text" class="text" style="margin-left:50px;" name="alt_image" value="{IMG_PATH}" onblur="if( this.value != '' )change_icon(this.value)">
-						</dd>
-					</dl>
-					<dl>
-						<dt>
+						</div>
+					</div>
+					<div class="form-element">
+						
 							<label for="visible_cat">
 								{L_VISIBLE}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							<input type="checkbox" name="visible_cat" id="visible_cat" {VISIBLE_CHECKED}>
-						</dd>
-					</dl>
-					<label for="contents">
-						{L_DESCRIPTION}
-					</label>
-					{KERNEL_EDITOR}
-					<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
+						</div>
+					</div>
+					<div class="form-element-textarea">
+						<label for="contents">
+							{L_DESCRIPTION}
+						</label>
+						{KERNEL_EDITOR}
+						<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
+					</div>
 				</fieldset>
 				<fieldset>
 					<legend>
 						{L_SPECIAL_AUTH}
 					</legend>
-					<dl>
-						<dt><label for="special_auth">{L_SPECIAL_AUTH}</label>
+					<div class="form-element">
+						<label for="special_auth">{L_SPECIAL_AUTH}</label>
 						<br />
-						<span class="smaller">{L_SPECIAL_AUTH_EXPLAIN}</span></dt>
-						<dd>
+						<span class="smaller">{L_SPECIAL_AUTH_EXPLAIN}</span>
+						<div class="form-field">
 							<input type="checkbox" name="special_auth" id="special_auth" onclick="javascript: change_status_global_auth();" {SPECIAL_CHECKED}>
-						</dd>					
-					</dl>
+						</div>					
+					</div>
 					<div id="hide_special_auth" style="display:{DISPLAY_SPECIAL_AUTH};">
-						<dl>
-							<dt>
+						<div class="form-element">
+							
 								<label>
 									{L_READ_AUTH}
 								</label>
-							</dt>
-							<dd>
+							
+							<div class="form-field">
 								{READ_AUTH}
-							</dd>					
-						</dl>
-						<dl>
-							<dt>
+							</div>					
+						</div>
+						<div class="form-element">
+							
 								<label>
 									{L_WRITE_AUTH}
 								</label>
-							</dt>
-							<dd>
+							
+							<div class="form-field">
 								{WRITE_AUTH}
-							</dd>					
-						</dl>
-						<dl>
-							<dt>
+							</div>					
+						</div>
+						<div class="form-element">
+							
 								<label>
 									{L_CONTRIBUTION_AUTH}
 								</label>
-							</dt>
-							<dd>
+							
+							<div class="form-field">
 								{CONTRIBUTION_AUTH}
-							</dd>					
-						</dl>
+							</div>					
+						</div>
 					</div>
 				</fieldset>
 				

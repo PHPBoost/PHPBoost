@@ -76,85 +76,75 @@
 				<fieldset>
 					<legend>{L_PAGE_TITLE}</legend>
 					<p>{L_REQUIRE}</p>
-					<dl>
-						<dt><label for="title">* {L_TITLE}</label></dt>
-						<dd><input type="text" size="50" maxlength="100" id="title" name="title" value="{TITLE}" class="text"></dd>
-					</dl>
-					<dl>
-						<dt><label for="idcat">* {L_CATEGORY}</label></dt>
-						<dd><label>
-							{CATEGORIES_TREE}
-						</label></dd>
-					</dl>
-					<dl>
-						<dt><label for="url">* {L_URL}</label></dt>
-						<dd>
+					<div class="form-element">
+						<label for="title">* {L_TITLE}</label>
+						<div class="form-field"><input type="text" size="50" maxlength="100" id="title" name="title" value="{TITLE}" class="text"></div>
+					</div>
+					<div class="form-element">
+						<label for="idcat">* {L_CATEGORY}</label>
+						<div class="form-field">{CATEGORIES_TREE}</div>
+					</div>
+					<div class="form-element">
+						<label for="url">* {L_URL}</label>
+						<div class="form-field">
 							<input type="text" size="50" id="url" name="url" value="{URL}" class="text">
 							<a title="{L_FILE_ADD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=url&amp;parse=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="size">{L_SIZE}</label></dt>
-						<dd><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE_FORM}" class="text"> {L_UNIT_SIZE}</dd>
-					</dl>
-					<dl>
-						<dt><label for="count">{L_NUMBER_OF_HITS}</label></dt>
-						<dd><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text"></dd>
-					</dl>
-					<dl>					
-						<dt>
-							<label for="download_method">{L_DOWNLOAD_METHOD}</label>
-							<br /><span>{L_DOWNLOAD_METHOD_EXPLAIN}</span>
-						</dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="size">{L_SIZE}</label>
+						<div class="form-field"><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE_FORM}" class="text"> {L_UNIT_SIZE}</div>
+					</div>
+					<div class="form-element">
+						<label for="count">{L_NUMBER_OF_HITS}</label>
+						<div class="form-field"><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text"></div>
+					</div>
+					<div class="form-element">					
+						<label for="download_method">{L_DOWNLOAD_METHOD}<span class="field-description">{L_DOWNLOAD_METHOD_EXPLAIN}</span></label>
+						<div class="form-field">
 							<select name="download_method" id="download_method">
 								<option value="force_download" {FORCE_DOWNLOAD_SELECTED}>{L_FORCE_DOWNLOAD}</option>
 								<option value="redirect" {REDIRECTION_SELECTED}>{L_REDIRECTION}</option>
 							</select>
-						</dd>
-					</dl>
-					<br />
-					<label for="contents">* {L_CONTENTS}</label>
-					{KERNEL_EDITOR}
-					<textarea rows="20" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>					
-					<br />
-					<label for="short_contents">{L_SHORT_CONTENTS}</label>
-					{KERNEL_EDITOR_SHORT}
-					<textarea rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_DESCRIPTION}</textarea>
-					<br />
-					<dl>
-						<dt>
-							<label for="image">
-								{L_FILE_IMAGE}
-							</label>
-						</dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element-textarea">
+						<label for="contents">* {L_CONTENTS}</label>
+						{KERNEL_EDITOR}
+						<textarea rows="20" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>					
+					</div>
+					<div class="form-element-textarea">
+						<label for="short_contents">{L_SHORT_CONTENTS}</label>
+						{KERNEL_EDITOR_SHORT}
+						<textarea rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_DESCRIPTION}</textarea>
+					</div>
+					<div class="form-element">
+						<label for="image">{L_FILE_IMAGE}</label>
+						<div class="form-field">
 							<input type="text" size="50" name="image" id="image" class="text" value="{FILE_IMAGE}">
-						</dd>
-					</dl>
-					<dl class="overflow_visible">
-						<dt><label for="calendar_1">* {L_DOWNLOAD_DATE}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element overflow_visible">
+						<label for="calendar_1">* {L_DOWNLOAD_DATE}</label>
+						<div class="form-field">
 							{DATE_CALENDAR_CREATION}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
-							<label>{L_IGNORE_RELEASE_DATE}</label>
-						</dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_IGNORE_RELEASE_DATE}</label>
+						<div class="form-field">
 							<input type="checkbox" id="ignore_release_date" name="ignore_release_date" onclick="show_hide_release_date();" {IGNORE_RELEASE_DATE_CHECKED}>
-						</dd>
-					</dl>
-					<dl id="release_date_form" style="display:{STYLE_FIELD_RELEASE_DATE};" class="overflow_visible">
-						<dt><label for="calendar_2">* {L_RELEASE_DATE}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element overflow_visible" id="release_date_form" style="display:{STYLE_FIELD_RELEASE_DATE};">
+						<label for="calendar_2">* {L_RELEASE_DATE}</label>
+						<div class="form-field">
 							{DATE_CALENDAR_RELEASE}
-						</dd>
-					</dl>
-					<dl class="overflow_visible">
-						<dt><label>* {L_FILE_VISIBILITY}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element overflow_visible">
+						<label>* {L_FILE_VISIBILITY}</label>
+						<div class="form-field">
 							<input type="radio" value="2" name="visibility" {VISIBLE_WAITING}> 
 						{L_FROM_DATE}&nbsp;
 						{BEGINING_CALENDAR}
@@ -168,15 +158,15 @@
 						<label>
 							<input type="radio" value="0" name="visibility" {VISIBLE_HIDDEN}> {L_HIDDEN}
 						</label>
-						</dd>
-					</dl>
+						</div>
+					</div>
 					# IF NOT C_CONTRIBUTION #
-					<dl>
-						<dt><label>{L_APPROVED}</label></dt>
-						<dd>
+					<div class="form-element">
+						<label>{L_APPROVED}</label>
+						<div class="form-field">
 							<input type="checkbox" name="approved" id="approved" {APPROVED}>
-						</dd>
-					</dl>
+						</div>
+					</div>
 					# ENDIF #
 				</fieldset>
 				# IF C_CONTRIBUTION #
