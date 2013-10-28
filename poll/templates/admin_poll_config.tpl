@@ -50,52 +50,52 @@
 			<form action="admin_poll_config.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_POLL_CONFIG_MINI}</legend>
-					<dl>
-						<dt><label for="displayed_in_mini_module_list">{L_DISPLAYED_IN_MINI_MODULE_LIST}</label><br /><span>{L_DISPLAYED_IN_MINI_MODULE_LIST_EXPLAIN}</span></dt>
-						<dd><label>
+					<div class="form-element">
+						<label for="displayed_in_mini_module_list">{L_DISPLAYED_IN_MINI_MODULE_LIST}</label><br /><span>{L_DISPLAYED_IN_MINI_MODULE_LIST_EXPLAIN}</span>
+						<div class="form-field"><label>
 							<select id="displayed_in_mini_module_list" name="displayed_in_mini_module_list[]" size="5" multiple="multiple">
 								{POLL_LIST}				
 							</select>
 							<br />
 							<a class="small" href="javascript:check_select_multiple('displayed_in_mini_module_list', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple('displayed_in_mini_module_list', false);">{L_SELECT_NONE}</a>
-						</label></dd>
-					</dl>
+						</label></div>
+					</div>
 				</fieldset>	
 				<fieldset>
 					<legend>{L_POLL_CONFIG_ADVANCED}</legend>
-					<dl>
-						<dt><label for="cookie_name">* {L_COOKIE_NAME}</label></dt>
-						<dd><label><input type="text" maxlength="25" size="25" name="cookie_name" id="cookie_name" value="{COOKIE_NAME}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="cookie_lenght">* {L_COOKIE_LENGHT}</label></dt>
-						<dd><label><input type="text" maxlength="11" size="6" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}" class="text"></label> {L_DAYS}</dd>
-					</dl>
+					<div class="form-element">
+						<label for="cookie_name">* {L_COOKIE_NAME}</label>
+						<div class="form-field"><label><input type="text" maxlength="25" size="25" name="cookie_name" id="cookie_name" value="{COOKIE_NAME}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="cookie_lenght">* {L_COOKIE_LENGHT}</label>
+						<div class="form-field"><label><input type="text" maxlength="11" size="6" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}" class="text"></label> {L_DAYS}</div>
+					</div>
 				</fieldset>
 				<fieldset>
 					<legend>
 						{L_AUTHORIZATIONS}
 					</legend>
-					<dl>
-						<dt>
+					<div class="form-element">
+						
 							<label>
 								{L_READ_AUTHORIZATION}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{READ_AUTHORIZATION}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
+						</div>
+					</div>
+					<div class="form-element">
+						
 							<label>
 								{L_WRITE_AUTHORIZATION}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{WRITE_AUTHORIZATION}
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>

@@ -63,40 +63,40 @@
 			<form action="media_action.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_PAGE_TITLE}</legend>
-					<dl>
-						<dt><label for="name">* {L_TITLE}</label></dt>
-						<dd><input type="text" size="50" maxlength="100" id="name" name="name" value="{NAME}" class="text"></dd>
-					</dl>
-					<dl>
-						<dt><label for="idcat">{L_CATEGORY}</label></dt>
-						<dd><label>
+					<div class="form-element">
+						<label for="name">* {L_TITLE}</label>
+						<div class="form-field"><input type="text" size="50" maxlength="100" id="name" name="name" value="{NAME}" class="text"></div>
+					</div>
+					<div class="form-element">
+						<label for="idcat">{L_CATEGORY}</label>
+						<div class="form-field"><label>
 							{CATEGORIES_TREE}
-						</label></dd>
-					</dl>
-					<dl id="width_dl">
-						<dt><label for="width">{L_WIDTH}</label></dt>
-						<dd><input type="text" size="10" maxlength="4" id="width" name="width" value="{WIDTH}" class="text"></dd>
-					</dl>
-					<dl id="height_dl">
-						<dt><label for="height">{L_HEIGHT}</label></dt>
-						<dd><input type="text" size="10" maxlength="4" id="height" name="height" value="{HEIGHT}" class="text"></dd>
-					</dl>
-					<dl>
-						<dt><label for="u_media">* {L_U_MEDIA}</label></dt>
-						<dd><input type="text" size="50" maxlength="500" id="u_media" name="u_media" value="{U_MEDIA}" class="text"></dd>
-					</dl>
-					<br />
-					<label for="contents" id="preview_content">{L_CONTENTS}</label>
-					{KERNEL_EDITOR}
-					<textarea rows="10" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>
-					<br />
+						</label></div>
+					</div>
+					<div class="form-element" id="width_dl">
+						<label for="width">{L_WIDTH}</label>
+						<div class="form-field"><input type="text" size="10" maxlength="4" id="width" name="width" value="{WIDTH}" class="text"></div>
+					</div>
+					<div class="form-element" id="height_dl">
+						<label for="height">{L_HEIGHT}</label>
+						<div class="form-field"><input type="text" size="10" maxlength="4" id="height" name="height" value="{HEIGHT}" class="text"></div>
+					</div>
+					<div class="form-element">
+						<label for="u_media">* {L_U_MEDIA}</label>
+						<div class="form-field"><input type="text" size="50" maxlength="500" id="u_media" name="u_media" value="{U_MEDIA}" class="text"></div>
+					</div>
+					<div class="form-element-textarea">
+						<label for="contents" id="preview_content">{L_CONTENTS}</label>
+						{KERNEL_EDITOR}
+						<textarea rows="10" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>
+					</div>
 					# IF C_APROB #
-					<dl>
-						<dt><label>{L_APPROVED}</label></dt>
-						<dd>
+					<div class="form-element">
+						<label>{L_APPROVED}</label>
+						<div class="form-field">
 							<input type="checkbox" name="approved" id="approved"{APPROVED}>
-						</dd>
-					</dl>
+						</div>
+					</div>
 					# ENDIF #
 				</fieldset>
 				# IF C_CONTRIBUTION #
@@ -105,10 +105,11 @@
 					<div class="notice">
 						{L_NOTICE_CONTRIBUTION}
 					</div>
-					<p><label>{L_CONTRIBUTION_COUNTERPART}</label></p>
-					<p class="smaller">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p>
-					{CONTRIBUTION_COUNTERPART_EDITOR}
-					<textarea rows="20" cols="40" id="counterpart" name="counterpart">{CONTRIBUTION_COUNTERPART}</textarea>
+					<div class="form-element-textarea">
+						<label>{L_CONTRIBUTION_COUNTERPART} <p class="field-description">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p></label>
+						{CONTRIBUTION_COUNTERPART_EDITOR}
+						<textarea rows="20" cols="40" id="counterpart" name="counterpart">{CONTRIBUTION_COUNTERPART}</textarea>
+					</div>
 				</fieldset>
 				# ENDIF #
 

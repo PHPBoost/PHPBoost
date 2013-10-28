@@ -151,21 +151,21 @@ function deleteElement(element_id)
 	<form action="links.php?action=save" method="post" class="fieldset_content" onsubmit="build_menu_elements_tree();">
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
-			<dl>
-				<dt><label for="menu_element_{ID}_name">* {L_NAME}</label></dt>
-				<dd><input type="text" name="menu_element_{ID}_name" id="menu_element_{ID}_name" value="{MENU_NAME}"></dd>
-			</dl>
-			<dl>
-				<dt><label for="menu_element_{ID}_url">{L_URL}</label></dt>
-				<dd><input type="text" name="menu_element_{ID}_url" id="menu_element_{ID}_url" value="{MENU_URL}"></dd>
-			</dl>
-			<dl>
-				<dt><label for="menu_element_{ID}_image">{L_IMAGE}</label></dt>
-				<dd><input type="text" name="menu_element_{ID}_image" id="menu_element_{ID}_image" value="{MENU_IMG}"></dd>
-			</dl>
-			<dl>
-				<dt><label for="menu_element_{ID}_type">* {L_TYPE}</label></dt>
-				<dd>
+			<div class="form-element">
+				<label for="menu_element_{ID}_name">* {L_NAME}</label>
+				<div class="form-field"><input type="text" name="menu_element_{ID}_name" id="menu_element_{ID}_name" value="{MENU_NAME}"></div>
+			</div>
+			<div class="form-element">
+				<label for="menu_element_{ID}_url">{L_URL}</label>
+				<div class="form-field"><input type="text" name="menu_element_{ID}_url" id="menu_element_{ID}_url" value="{MENU_URL}"></div>
+			</div>
+			<div class="form-element">
+				<label for="menu_element_{ID}_image">{L_IMAGE}</label>
+				<div class="form-field"><input type="text" name="menu_element_{ID}_image" id="menu_element_{ID}_image" value="{MENU_IMG}"></div>
+			</div>
+			<div class="form-element">
+				<label for="menu_element_{ID}_type">* {L_TYPE}</label>
+				<div class="form-field">
 					<label>
 						<select name="menu_element_{ID}_type" id="menu_element_{ID}_type">
 							# START type #
@@ -173,11 +173,11 @@ function deleteElement(element_id)
 							# END type #
 						</select>
 					</label>
-				</dd>
-			</dl>
-			<dl>
-				<dt><label for="menu_element_{ID}_location">* {L_LOCATION}</label></dt>
-				<dd><label>
+				</div>
+			</div>
+			<div class="form-element">
+				<label for="menu_element_{ID}_location">* {L_LOCATION}</label>
+				<div class="form-field"><label>
                     <select name="menu_element_{ID}_location" id="menu_element_{ID}_location">
                         # START location #
                             <option value="{location.VALUE}" # IF location.C_SELECTED # selected="selected"# ENDIF #>
@@ -185,11 +185,11 @@ function deleteElement(element_id)
                             </option>
                         # END location #
                     </select>
-                </label></dd>
-			</dl>
-			<dl>
-				<dt><label for="menu_element_{ID}_enabled">{L_STATUS}</label></dt>
-				<dd><label>
+                </label></div>
+			</div>
+			<div class="form-element">
+				<label for="menu_element_{ID}_enabled">{L_STATUS}</label>
+				<div class="form-field"><label>
 					<select name="menu_element_{ID}_enabled" id="menu_element_{ID}_enabled">
 					   # IF C_ENABLED #
 							<option value="1" selected="selected">{L_ENABLED}</option>
@@ -199,12 +199,12 @@ function deleteElement(element_id)
                             <option value="0" selected="selected">{L_DISABLED}</option>
 						# ENDIF #					
 					</select>
-				</label></dd>
-			</dl>
-			<dl>
-				<dt><label>{L_AUTHS}</label></dt>
-				<dd>{AUTH_MENUS}</dd>
-			</dl>
+				</label></div>
+			</div>
+			<div class="form-element">
+				<label>{L_AUTHS}</label>
+				<div class="form-field">{AUTH_MENUS}</div>
+			</div>
 		</fieldset>
 		
 		# INCLUDE filters #

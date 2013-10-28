@@ -19,17 +19,17 @@ function CheckForm() {
 	<form action="feed.php" method="post" class="fieldset_content" onsubmit="return CheckForm();">
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
-			<dl>
-				<dt><label for="name">* {L_NAME}</label></dt>
-				<dd><label><input type="text" size="18" name="name" id="name" class="text" value="{NAME}"></label></dd>
-			</dl>
-			<dl>
-				<dt><label for="location">* {L_LOCATION}</label></dt>
-				<dd><label><select name="location" id="location">{LOCATIONS}</select></label></dd>
-			</dl>
-			<dl>
-				<dt><label for="feed_url">* {L_FEED}</label></dt>
-				<dd><select name="feed_url" id="feed_url">
+			<div class="form-element">
+				<label for="name">* {L_NAME}</label>
+				<div class="form-field"><label><input type="text" size="18" name="name" id="name" class="text" value="{NAME}"></label></div>
+			</div>
+			<div class="form-element">
+				<label for="location">* {L_LOCATION}</label>
+				<div class="form-field"><label><select name="location" id="location">{LOCATIONS}</select></label></div>
+			</div>
+			<div class="form-element">
+				<label for="feed_url">* {L_FEED}</label>
+				<div class="form-field"><select name="feed_url" id="feed_url">
 					<option
 						value="null"
 						# IF C_NEW # selected="selected"# ENDIF #
@@ -48,11 +48,11 @@ function CheckForm() {
 						</optgroup>
 						<option value="null" style="text-align:center;">-----------------------------</option>
 					# END modules #
-				</select></dd>
-			</dl>
-			<dl>
-				<dt><label for="activ">{L_STATUS}</label></dt>
-				<dd><label>
+				</select></div>
+			</div>
+			<div class="form-element">
+				<label for="activ">{L_STATUS}</label>
+				<div class="form-field"><label>
 					<select name="activ" id="activ">
 					   # IF C_ENABLED #
 							<option value="1" selected="selected">{L_ENABLED}</option>
@@ -62,12 +62,12 @@ function CheckForm() {
                             <option value="0" selected="selected">{L_DISABLED}</option>
 						# ENDIF #					
 					</select>
-				</label></dd>
-			</dl>
-			<dl>
-				<dt><label>{L_AUTHS}</label></dt>
-				<dd>{AUTH_MENUS}</dd>
-			</dl>
+				</label></div>
+			</div>
+			<div class="form-element">
+				<label>{L_AUTHS}</label>
+				<div class="form-field">{AUTH_MENUS}</div>
+			</div>
 		</fieldset>		
 	
 		# INCLUDE filters #

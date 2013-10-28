@@ -307,16 +307,16 @@
 							<legend>{L_EDIT}</legend>
 							<p>{L_REQUIRE}</p>
 							# START edit_pm.title #
-							<dl>
-								<dt><label for="title">* {L_TITLE}</label></dt>
-								<dd><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{edit_pm.title.TITLE}" class="text"></label></dd>
-							</dl>
+							<div class="form-element">
+								<label for="title">* {L_TITLE}</label>
+								<div class="form-field"><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{edit_pm.title.TITLE}" class="text"></label></div>
+							</div>
 							# END edit_pm.title #
-							<br />
-							<label for="contents">* {L_MESSAGE}</label>
-							{KERNEL_EDITOR}
-							<textarea rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
-							<br />
+							<div class="form-element-textarea">
+								<label for="contents">* {L_MESSAGE}</label>
+								{KERNEL_EDITOR}
+								<textarea rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+							</div>
 						</fieldset>
 						
 						<fieldset class="fieldset_submit">
@@ -368,9 +368,9 @@
 							<legend>{L_POST_NEW_CONVERS}</legend>
 							<p>{L_REQUIRE}</p>
 							# START post_convers.user_id_dest #
-							<dl>
-								<dt><label for="login">* {L_RECIPIENT}</label></dt>
-								<dd>
+							<div class="form-element">
+								<label for="login">* {L_RECIPIENT}</label>
+								<div class="form-field">
 									<label>
 										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text">
 										<span id="search_img"></span> <input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit">								
@@ -379,18 +379,18 @@
 									# START post_convers.user_id_dest.search #
 										{post_convers.user_id_dest.search.RESULT}
 									# END post_convers.user_id_dest.search #
-								</dd>
-							</dl>		
+								</div>
+							</div>		
 							# END post_convers.user_id_dest #
-							<dl>
-								<dt><label for="title">* {L_TITLE}</label></dt>
-								<dd><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{post_convers.TITLE}" class="text"></label></dd>
-							</dl>
-							<br />
-							<label for="contents">* {L_MESSAGE}</label>
-							{KERNEL_EDITOR}
-							<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
-							<br />
+							<div class="form-element">
+								<label for="title">* {L_TITLE}</label>
+								<div class="form-field"><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{post_convers.TITLE}" class="text"></label></div>
+							</div>
+							<div class="form-element-textarea">
+								<label for="contents">* {L_MESSAGE}</label>
+								{KERNEL_EDITOR}
+								<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+							</div>
 						</fieldset>
 						
 						<fieldset class="fieldset_submit">

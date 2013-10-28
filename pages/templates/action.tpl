@@ -91,17 +91,17 @@
 	<fieldset>
 		<legend>{L_TITLE}</legend>
 		<p>{L_EXPLAIN_RENAME}</p>
-		<dl>
-			<dt><label for="new_title">{L_NEW_TITLE}</label></dt>
-			<dd>
+		<div class="form-element">
+			<label for="new_title">{L_NEW_TITLE}</label>
+			<div class="form-field">
 				<label><input type="text" id="new_title" name="new_title" value="{FORMER_TITLE}" class="text" size="70" maxlength="250"></label>
 				<input type="hidden" name="id_rename" value="{ID_RENAME}">
-			</dd>					
-		</dl>
-		<dl>
-			<dt><label for="create_redirection">{L_CREATE_REDIRECTION}</label></dt>
-			<dd><label><input type="checkbox" name="create_redirection" id="create_redirection"></label></dd>					
-		</dl>
+			</div>					
+		</div>
+		<div class="form-element">
+			<label for="create_redirection">{L_CREATE_REDIRECTION}</label>
+			<div class="form-field"><label><input type="checkbox" name="create_redirection" id="create_redirection"></label></div>					
+		</div>
 	</fieldset>
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
@@ -116,13 +116,13 @@
 <form action="{TARGET}" method="post" class="fieldset_content">					
 	<fieldset>
 		<legend>{L_TITLE}</legend>
-		<dl>
-			<dt><label for="redirection_name">{L_REDIRECTION_NAME}</label></dt>
-			<dd>
+		<div class="form-element">
+			<label for="redirection_name">{L_REDIRECTION_NAME}</label>
+			<div class="form-field">
 				<label><input type="text" name="redirection_name" id="redirection_name" class="text" size="70" maxlength="250"></label>
 				<input type="hidden" name="id_new" value="{ID_NEW}">
-			</dd>					
-		</dl>
+			</div>					
+		</div>
 	</fieldset>	
 	
 	<fieldset class="fieldset_submit">
@@ -146,22 +146,22 @@
 <form action="action.php?token={TOKEN}" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset_content">					
 	<fieldset>
 		<legend>{L_TITLE}</legend>
-		<dl>
-			<dt><label for="action">{L_TITLE}</label></dt>
-			<dd>
+		<div class="form-element">
+			<label for="action">{L_TITLE}</label>
+			<div class="form-field">
 				<label><input id="action" name="action" value="remove_all" type="radio"> {L_REMOVE_ALL_CONTENTS}</label>
 				<label><input name="action" value="move_all" type="radio" checked="checked"> {L_MOVE_ALL_CONTENTS}</label>
-			</dd>					
-		</dl>
-		<dl>
-			<dt><label>{L_FUTURE_CAT}</label></dt>
-			<dd>
+			</div>					
+		</div>
+		<div class="form-element">
+			<label>{L_FUTURE_CAT}</label>
+			<div class="form-field">
 				<input type="hidden" name="report_cat" value="{remove.ID_CAT}" id="id_cat">
 				<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{remove.CAT_0}">{L_ROOT}</span></a></span>
 				<br />
 				{remove.CATS}
-			</dd>					
-		</dl>
+			</div>					
+		</div>
 	</fieldset>	
 	
 	<fieldset class="fieldset_submit">

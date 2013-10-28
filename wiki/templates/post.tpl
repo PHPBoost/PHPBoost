@@ -47,20 +47,20 @@
 				<p>{L_REQUIRE}</p>
 				<legend>{TITLE}</legend>
 				# START create #
-				<dl>
-					<dt><label for="title">* {L_TITLE_FIELD}</label></dt>
-					<dd><label><input type="text" class="text" id="title" name="title" size="70" maxlength="250" value="{ARTICLE_TITLE}"></label></dd>					
-				</dl>
-				<dl>
-					<dt><label for="selected_cat">{L_CURRENT_CAT}</label></dt>
-					<dd>
+				<div class="form-element">
+					<label for="title">* {L_TITLE_FIELD}</label>
+					<div class="form-field"><label><input type="text" class="text" id="title" name="title" size="70" maxlength="250" value="{ARTICLE_TITLE}"></label></div>					
+				</div>
+				<div class="form-element">
+					<label for="selected_cat">{L_CURRENT_CAT}</label>
+					<div class="form-field">
 						<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
 						<div id="selected_cat">{CURRENT_CAT}</div>
-					</dd>					
-				</dl>		
-				<dl>
-					<dt><label>{L_CAT}</label></dt>
-					<dd>
+					</div>					
+				</div>		
+				<div class="form-element">
+					<label>{L_CAT}</label>
+					<div class="form-field">
 						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">
@@ -69,23 +69,23 @@
 						# END create.list #
 						{CAT_LIST}
 						</ul>
-					</dd>					
-				</dl>
+					</div>					
+				</div>
 				# END create #	
-				<br />
-				<label for="contents">* {L_CONTENTS}</label>
-				# INCLUDE post_js_tools #
-				{KERNEL_EDITOR}
-				<label><textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
-				<br />
+				<div class="form-element-textarea">
+					<label for="contents">* {L_CONTENTS}</label>
+					# INCLUDE post_js_tools #
+					{KERNEL_EDITOR}
+					<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+				</div>
 			</fieldset>	
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="is_cat" value="{IS_CAT}">
 				<input type="hidden" name="id_edit" value="{ID_EDIT}">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<input type="submit" class="submit" value="{L_SUBMIT}">
-				<input type="submit" value="{L_PREVIEW}" class="submit" name="preview">
-				<input value="{L_RESET}" class="reset" type="reset">
+				<button type="submit">{L_SUBMIT}</button>
+				<button type="submit" name="preview">{L_PREVIEW}</button>
+				<button type="reset">{L_RESET}</button>
 			</fieldset>
 		</form>

@@ -1,10 +1,10 @@
 <form action="{U_CLEAR_404_ERRORS}" method="post" class="fieldset_content" onsubmit="javascript:return confirmClear();">
     <fieldset>
         <legend>{@clear_404_list}</legend>
-        <dl>
-            <dt><label>{@clear_404_list}</label><br /><span>{@clear_404_list_explain}</span></dt>
-            <dd><label><input type="submit" name="clear" value="{@clear_404_list}" class="reset"> </label></dd>
-        </dl>
+        <div class="form-element">
+            <label>{@clear_404_list}</label><br /><span>{@clear_404_list_explain}</span>
+            <div class="form-field"><label><input type="submit" name="clear" value="{@clear_404_list}" class="reset"> </label></div>
+        </div>
     </fieldset>
 	<input type="hidden" name="token" value="{TOKEN}">
 </form>            

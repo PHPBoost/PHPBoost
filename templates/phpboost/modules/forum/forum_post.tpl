@@ -128,23 +128,23 @@
 							<legend>{L_ACTION}</legend>
 							<p>{L_REQUIRE}</p>
 							# IF C_FORUM_CUT_CAT #
-							<dl>
-								<dt><label for="to">* {L_CAT}</label></dt>
-								<dd><label>
+							<div class="form-element">
+								<label for="to">* {L_CAT}</label>
+								<div class="form-field"><label>
 									<select id="to" name="to">
 										{CATEGORIES}
 									</select>
-								</label></dd>
-							</dl>
+								</label></div>
+							</div>
 							# ENDIF #
-							<dl>
-								<dt><label for="title">* {L_TITLE}</label></dt>
-								<dd><label><input type="text" size="51" maxlength="100" id="title" name="title" value="{TITLE}" class="text"></label></dd>
-							</dl>
-							<dl>
-								<dt><label for="desc">{L_DESC}</label></dt>
-								<dd><label><input type="text" size="51" maxlength="75" id="desc" name="desc" value="{DESC}" class="text"></label></dd>
-							</dl>
+							<div class="form-element">
+								<label for="title">* {L_TITLE}</label>
+								<div class="form-field"><label><input type="text" size="51" maxlength="100" id="title" name="title" value="{TITLE}" class="text"></label></div>
+							</div>
+							<div class="form-element">
+								<label for="desc">{L_DESC}</label>
+								<div class="form-field"><label><input type="text" size="51" maxlength="75" id="desc" name="desc" value="{DESC}" class="text"></label></div>
+							</div>
 							
 							<label for="contents">* {L_MESSAGE}</label>
 							{KERNEL_EDITOR}
@@ -153,14 +153,14 @@
 							<br /><br />
 							
 							# IF C_FORUM_POST_TYPE #
-							<dl>
-								<dt><label for="type">{L_TYPE}</label></dt>
-								<dd>
+							<div class="form-element">
+								<label for="type">{L_TYPE}</label>
+								<div class="form-field">
 									<label><input type="radio" name="type" id="type" value="0" {CHECKED_NORMAL}> {L_DEFAULT}</label>
 									<label><input type="radio" name="type" value="1" {CHECKED_POSTIT}> {L_POST_IT}</label>
 									<label><input type="radio" name="type" value="2" {CHECKED_ANNONCE}> {L_ANOUNCE}</label>
-								</dd>
-							</dl>
+								</div>
+							</div>
 							# ENDIF #
 						</fieldset>
 
@@ -168,26 +168,26 @@
 							<legend>{L_POLL}</legend>
 							<p id="hidepoll_link" style="text-align:center"><a href="javascript:hide_poll('hidepoll')">{L_OPEN_MENU_POLL}</a></p>
 							<div id="hidepoll">
-								<dl>
-									<dt><label for="question">* {L_QUESTION}</label></dt>
-									<dd><label><input type="text" size="40" name="question" id="question" value="{POLL_QUESTION}" class="text"></label></dd>
-								</dl>
-								<dl>
-									<dt><label for="poll_type">{L_POLL_TYPE}</label></dt>
-									<dd>
+								<div class="form-element">
+									<label for="question">* {L_QUESTION}</label>
+									<div class="form-field"><label><input type="text" size="40" name="question" id="question" value="{POLL_QUESTION}" class="text"></label></div>
+								</div>
+								<div class="form-element">
+									<label for="poll_type">{L_POLL_TYPE}</label>
+									<div class="form-field">
 										<label><input type="radio" name="poll_type" id="poll_type" value="0" {SELECTED_SIMPLE}> {L_SINGLE}</label>
 										<label><input type="radio" name="poll_type" value="1" {SELECTED_MULTIPLE}> {L_MULTIPLE}</label>	
-									</dd>
-								</dl>
+									</div>
+								</div>
 								# IF C_DELETE_POLL #
-								<dl>
-									<dt><label for="del_poll">{L_DELETE_POLL}</label></dt>
-									<dd><label><input type="checkbox" name="del_poll" id="del_poll" value="true"></label></dd>
-								</dl>
+								<div class="form-element">
+									<label for="del_poll">{L_DELETE_POLL}</label>
+									<div class="form-field"><label><input type="checkbox" name="del_poll" id="del_poll" value="true"></label></div>
+								</div>
 								# ENDIF #
-								<dl>
-									<dt><label>{L_ANSWERS}</label></dt>
-									<dd>
+								<div class="form-element">
+									<label>{L_ANSWERS}</label>
+									<div class="form-field">
 										# START answers_poll #
 										<label><input type="text" size="25" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" class="text" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label><br>
 										# END answers_poll #
@@ -198,8 +198,8 @@
 											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" alt="+" /></a>
 											# ENDIF #
 										</p>
-									</dd>
-								</dl>
+									</div>
+								</div>
 							</div>
 							<script type='text/javascript'>
 							<!--

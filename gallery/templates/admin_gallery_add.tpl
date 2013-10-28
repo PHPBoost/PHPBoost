@@ -57,22 +57,22 @@
 
 					<br /><br />
 					
-					<dl>
-						<dt><label for="category">{L_CATEGORY}</label></dt>
-						<dd>
+					<div class="form-element">
+						<label for="category">{L_CATEGORY}</label>
+						<div class="form-field">
 							<select name="idcat_post" id="category">
 								{CATEGORIES}
 							</select>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="name">{L_NAME}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="50" name="name" id="name" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="gallery">{L_UPLOAD_IMG}</label></dt>
-						<dd><label><input type="file" name="gallery" id="gallery" size="30" class="file"></label></dd>
-					</dl>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="name">{L_NAME}</label>
+						<div class="form-field"><label><input type="text" size="40" maxlength="50" name="name" id="name" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="gallery">{L_UPLOAD_IMG}</label>
+						<div class="form-field"><label><input type="file" name="gallery" id="gallery" size="30" class="file"></label></div>
+					</div>
 				</fieldset>	
 				
 				<fieldset class="fieldset_submit">

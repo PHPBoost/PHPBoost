@@ -76,97 +76,97 @@
 			<form action="admin_forum_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_FORUM_CONFIG}</legend>
-					<dl>
-						<dt><label for="forum_name">* {L_FORUM_NAME}</label></dt>
-						<dd><label><input type="text" maxlength="255" size="40" id="forum_name" name="forum_name" value="{FORUM_NAME}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="pagination_topic">* {L_NBR_TOPIC_P}</label><br /><span>{L_NBR_TOPIC_P_EXPLAIN}</span></dt>
-						<dd><label><input type="text" maxlength="3" size="3" id="pagination_topic" name="pagination_topic" value="{PAGINATION_TOPIC}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="pagination_msg">* {L_NBR_MSG_P}</label><br /><span>{L_NBR_MSG_P_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="pagination_msg" name="pagination_msg" value="{PAGINATION_MSG}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="view_time">* {L_TIME_NEW_MSG}</label><br /><span>{L_TIME_NEW_MSG_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="4" maxlength="6" id="view_time" name="view_time" value="{VIEW_TIME}" class="text"> {L_DAYS}</label></dd>
-					</dl>
-					<dl>
-						<dt><label for="topic_track">* {L_TOPIC_TRACK_MAX}</label><br /><span>{L_TOPIC_TRACK_MAX_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="4" maxlength="6" id="topic_track" name="topic_track" value="{TOPIC_TRACK_MAX}" class="text"></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="edit_mark">{L_EDIT_MARK}</label></dt>
-						<dd>
+					<div class="form-element">
+						<label for="forum_name">* {L_FORUM_NAME}</label>
+						<div class="form-field"><label><input type="text" maxlength="255" size="40" id="forum_name" name="forum_name" value="{FORUM_NAME}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="pagination_topic">* {L_NBR_TOPIC_P}</label><br /><span>{L_NBR_TOPIC_P_EXPLAIN}</span>
+						<div class="form-field"><label><input type="text" maxlength="3" size="3" id="pagination_topic" name="pagination_topic" value="{PAGINATION_TOPIC}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="pagination_msg">* {L_NBR_MSG_P}</label><br /><span>{L_NBR_MSG_P_EXPLAIN}</span>
+						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="pagination_msg" name="pagination_msg" value="{PAGINATION_MSG}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="view_time">* {L_TIME_NEW_MSG}</label><br /><span>{L_TIME_NEW_MSG_EXPLAIN}</span>
+						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="view_time" name="view_time" value="{VIEW_TIME}" class="text"> {L_DAYS}</label></div>
+					</div>
+					<div class="form-element">
+						<label for="topic_track">* {L_TOPIC_TRACK_MAX}</label><br /><span>{L_TOPIC_TRACK_MAX_EXPLAIN}</span>
+						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="topic_track" name="topic_track" value="{TOPIC_TRACK_MAX}" class="text"></label></div>
+					</div>
+					<div class="form-element">
+						<label for="edit_mark">{L_EDIT_MARK}</label>
+						<div class="form-field">
 							<label><input type="radio" {EDIT_MARK_ENABLED} name="edit_mark" id="edit_mark" value="1"> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" {EDIT_MARK_DISABLED} name="edit_mark" value="0"> {L_UNACTIVE}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="display_connexion">{L_DISPLAY_CONNEXION}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="display_connexion">{L_DISPLAY_CONNEXION}</label>
+						<div class="form-field">
 							<label><input type="radio" {DISPLAY_CONNEXION_ENABLED} name="display_connexion" id="display_connexion" value="1"> {L_YES}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" {DISPLAY_CONNEXION_DISABLED} name="display_connexion" value="0"> {L_NO}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="no_left_column">{L_NO_LEFT_COLUMN}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="no_left_column">{L_NO_LEFT_COLUMN}</label>
+						<div class="form-field">
 							<label><input type="radio" {NO_LEFT_COLUMN_ENABLED} name="no_left_column" id="no_left_column" value="1"> {L_YES}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" {NO_LEFT_COLUMN_DISABLED} name="no_left_column" value="0"> {L_NO}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="no_right_column">{L_NO_RIGHT_COLUMN}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="no_right_column">{L_NO_RIGHT_COLUMN}</label>
+						<div class="form-field">
 							<label><input type="radio" {NO_RIGHT_COLUMN_ENABLED} name="no_right_column" id="no_right_column" value="1"> {L_YES}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" {NO_RIGHT_COLUMN_DISABLED} name="no_right_column" value="0"> {L_NO}</label>
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>
 										
 				<fieldset>
 					<legend>{L_ACTIV_DISPLAY_MSG}</legend>
-					<dl>
-						<dt><label for="activ_display_msg">{L_ACTIV_DISPLAY_MSG}</label></dt>
-						<dd>
+					<div class="form-element">
+						<label for="activ_display_msg">{L_ACTIV_DISPLAY_MSG}</label>
+						<div class="form-field">
 							<label><input type="radio" {DISPLAY_MSG_ENABLED} name="activ_display_msg" id="activ_display_msg" value="1"> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" {DISPLAY_MSG_DISABLED} name="activ_display_msg" value="0"> {L_UNACTIVE}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="display_msg">{L_DISPLAY_MSG}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="display_msg">{L_DISPLAY_MSG}</label>
+						<div class="form-field">
 							<label><input type="text" size="25" name="display_msg" id="display_msg" value="{DISPLAY_MSG}" class="text"></label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="explain_display_msg">{L_EXPLAIN_DISPLAY_MSG}</label><br /><span>{L_EXPLAIN_DISPLAY_MSG_EXPLAIN}</span></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="explain_display_msg">{L_EXPLAIN_DISPLAY_MSG}</label><br /><span>{L_EXPLAIN_DISPLAY_MSG_EXPLAIN}</span>
+						<div class="form-field">
 							<label><input type="text" size="40" name="explain_display_msg" id="explain_display_msg" value="{EXPLAIN_DISPLAY_MSG}" class="text"></label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="explain_display_msg_bis">{L_EXPLAIN_DISPLAY_MSG_BIS}</label><br /><span>{L_EXPLAIN_DISPLAY_MSG_BIS_EXPLAIN}</span></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="explain_display_msg_bis">{L_EXPLAIN_DISPLAY_MSG_BIS}</label><br /><span>{L_EXPLAIN_DISPLAY_MSG_BIS_EXPLAIN}</span>
+						<div class="form-field">
 							<label><input type="text" size="40" name="explain_display_msg_bis" id="explain_display_msg_bis" value="{EXPLAIN_DISPLAY_MSG_BIS}" class="text"></label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="icon_activ_display_msg">{L_ICON_DISPLAY_MSG}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="icon_activ_display_msg">{L_ICON_DISPLAY_MSG}</label>
+						<div class="form-field">
 							<label><input type="radio" {ICON_DISPLAY_MSG_ENABLED} name="icon_activ_display_msg" id="icon_activ_display_msg" value="1"> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" {ICON_DISPLAY_MSG_DISABLED} name="icon_activ_display_msg" value="0"> {L_UNACTIVE}</label>
 							&nbsp; <img src="{PICTURES_DATA_PATH}/images/msg_display.png" name="icon" alt="" style="vertical-align:middle" /> / <img src="{PICTURES_DATA_PATH}/images/msg_display2.png" name="icon" alt="" style="vertical-align:middle" />
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>
 					
 				<fieldset class="fieldset_submit">

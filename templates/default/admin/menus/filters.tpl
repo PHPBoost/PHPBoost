@@ -31,9 +31,9 @@
 				{@links_menus_filters_explain}
 			</p>
 			<br />
-			<dl>
-				<dt><label>{@filters}</label></dt>
-				<dd>
+			<div class="form-element">
+				<label>{@filters}</label>
+				<div class="form-field">
 					# START filters #
 					<p id="filter{filters.ID}">
 						{PATH_TO_ROOT} / 
@@ -51,7 +51,7 @@
 					<p style="text-align:center;margin-top:10px;">
 						<a href="javascript:add_filter({NBR_FILTER})" title="{@add_filter}"><i class="pbt-icon-plus"></i></a>
 					</p>
-				</dd>
-			</dl>
+				</div>
+			</div>
 	    </fieldset>
 	    

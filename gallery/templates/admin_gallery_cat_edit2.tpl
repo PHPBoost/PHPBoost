@@ -50,18 +50,18 @@
 					<legend>{L_EDIT_CAT}</legend>
 					<p>{L_REQUIRE}</p>
 					<p><strong>{L_ROOT}</strong></p>
-					<dl>
-						<dt><label>{L_AUTH_READ}</label></dt>
-						<dd>{AUTH_READ}</dd>
-					</dl>
-					<dl>
-						<dt><label>{L_AUTH_WRITE}</label></dt>
-						<dd>{AUTH_WRITE}</dd>
-					</dl>
-					<dl>
-						<dt><label>{L_AUTH_EDIT}</label></dt>
-						<dd>{AUTH_EDIT}</dd>
-					</dl>
+					<div class="form-element">
+						<label>{L_AUTH_READ}</label>
+						<div class="form-field">{AUTH_READ}</div>
+					</div>
+					<div class="form-element">
+						<label>{L_AUTH_WRITE}</label>
+						<div class="form-field">{AUTH_WRITE}</div>
+					</div>
+					<div class="form-element">
+						<label>{L_AUTH_EDIT}</label>
+						<div class="form-field">{AUTH_EDIT}</div>
+					</div>
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">

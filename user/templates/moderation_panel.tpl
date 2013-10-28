@@ -64,9 +64,9 @@
 				<form action="{U_ACTION}" method="post" class="fieldset_content">
 					<fieldset>
 						<legend>{L_SEARCH_USER}</legend>
-						<dl>
-							<dt><label for="login">{L_SEARCH_USER}</label><br /><span>{L_JOKER}</span></dt>
-							<dd>
+						<div class="form-element">
+							<label for="login">{L_SEARCH_USER}</label><br /><span>{L_JOKER}</span>
+							<div class="form-field">
 								<input type="text" size="20" maxlength="25" id="login" value="" name="login" class="text">						
 								<input type="submit" name="search_member" id="search_member" value="{L_SEARCH}" class="submit">
 								<script type="text/javascript">
@@ -76,8 +76,8 @@
 								-->
 								</script>
 								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
-							</dd>
-						</dl>
+							</div>
+						</div>
 					</fieldset>
 				</form>
 				
@@ -165,7 +165,7 @@
 							</td>
 							<td class="row2">
 								{KERNEL_EDITOR}
-								<label><textarea name="action_contents" id="action_contents" class="post" rows="12">{ALTERNATIVE_PM}</textarea></label>
+								<textarea name="action_contents" id="action_contents" class="post" rows="12">{ALTERNATIVE_PM}</textarea>
 							</td>
 						</tr>
 						<tr>

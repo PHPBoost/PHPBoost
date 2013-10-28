@@ -65,142 +65,143 @@
 				<fieldset>
 					<legend>{L_CATEGORY}</legend>
 					<p>{L_REQUIRED_FIELDS}</p>
-					<dl>
-						<dt>
+					<div class="form-element">
+						
 							<label for="name">
 								* {L_CAT_NAME}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							<input type="text" size="65" maxlength="100" id="name" name="name" value="{edition_interface.NAME}" class="text">
-						</dd>
-					</dl>
-					<dl>
-						<dt>
+						</div>
+					</div>
+					<div class="form-element">
+						
 							<label for="id_parent">
 								* {L_CAT_LOCATION}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{edition_interface.CATEGORIES_TREE}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
+						</div>
+					</div>
+					<div class="form-element">
+						
 							<label for="image">
 								{L_CAT_IMAGE}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}" class="text">
-						</dd>
-					</dl>
-					<label for="description" id="preview_description">
-						* {L_CAT_DESCRIPTION}
-					</label>
-					{KERNEL_EDITOR}
-					<textarea id="contents" rows="15" cols="40" name="description">{edition_interface.DESCRIPTION}</textarea>
-					<br />
-					<dl>
-						<dt><label for="activ_com">{L_MIME_TYPE}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element-textarea">
+						<label for="description" id="preview_description">
+							* {L_CAT_DESCRIPTION}
+						</label>
+						{KERNEL_EDITOR}
+						<textarea id="contents" rows="15" cols="40" name="description">{edition_interface.DESCRIPTION}</textarea>
+					</div>
+					<div class="form-element">
+						<label for="activ_com">{L_MIME_TYPE}</label>
+						<div class="form-field">
 							<label><input type="radio" name="mime_type" value="0"{edition_interface.TYPE_BOTH}> {L_TYPE_BOTH}</label>
 							&nbsp;&nbsp;
 							<label><input type="radio" name="mime_type" value="1"{edition_interface.TYPE_MUSIC}> {L_TYPE_MUSIC}</label>
 							&nbsp;&nbsp;
 							<label><input type="radio" name="mime_type" value="2"{edition_interface.TYPE_VIDEO}> {L_TYPE_VIDEO}</label>
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>
 				<fieldset>
 					<legend>{L_DISPLAY}</legend>
-					<dl>
-						<dt><label for="activ_com">{L_DISPLAY_COM}</label></dt>
-						<dd>
+					<div class="form-element">
+						<label for="activ_com">{L_DISPLAY_COM}</label>
+						<div class="form-field">
 							<label><input type="checkbox" name="activ[]" value="1" {edition_interface.COM_LIST}> {L_IN_LIST}</label>
 							&nbsp;&nbsp;
 							<label><input type="checkbox" name="activ[]" value="2" {edition_interface.COM_MEDIA}> {L_IN_MEDIA}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="activ_note">{L_DISPLAY_NOTE}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="activ_note">{L_DISPLAY_NOTE}</label>
+						<div class="form-field">
 							<label><input type="checkbox" name="activ[]" value="4" {edition_interface.NOTE_LIST}> {L_IN_LIST}</label>
 							&nbsp;&nbsp;
 							<label><input type="checkbox" name="activ[]" value="8" {edition_interface.NOTE_MEDIA}> {L_IN_MEDIA}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="activ_user">{L_DISPLAY_USER}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="activ_user">{L_DISPLAY_USER}</label>
+						<div class="form-field">
 							<label><input type="checkbox" name="activ[]" value="16" {edition_interface.USER_LIST}> {L_IN_LIST}</label>
 							&nbsp;&nbsp;
 							<label><input type="checkbox" name="activ[]" value="32" {edition_interface.USER_MEDIA}> {L_IN_MEDIA}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="activ_counter">{L_DISPLAY_COUNTER}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="activ_counter">{L_DISPLAY_COUNTER}</label>
+						<div class="form-field">
 							<label><input type="checkbox" name="activ[]" value="64" {edition_interface.COUNTER_LIST}> {L_IN_LIST}</label>
 							&nbsp;&nbsp;
 							<label><input type="checkbox" name="activ[]" value="128" {edition_interface.COUNTER_MEDIA}> {L_IN_MEDIA}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="activ_date">{L_DISPLAY_DATE}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="activ_date">{L_DISPLAY_DATE}</label>
+						<div class="form-field">
 							<label><input type="checkbox" name="activ[]" value="256" {edition_interface.DATE_LIST}> {L_IN_LIST}</label>
 							&nbsp;&nbsp;
 							<label><input type="checkbox" name="activ[]" value="512" {edition_interface.DATE_MEDIA}> {L_IN_MEDIA}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="activ_desc">{L_DISPLAY_DESC}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="activ_desc">{L_DISPLAY_DESC}</label>
+						<div class="form-field">
 							<label><input type="checkbox" name="activ[]" value="1024" {edition_interface.DESC_LIST}> {L_IN_LIST}</label>
 							&nbsp;&nbsp;
 							<label><input type="checkbox" name="activ[]" value="2048" {edition_interface.DESC_MEDIA}> {L_IN_MEDIA}</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="activ_nbr">{L_DISPLAY_NBR}</label></dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="activ_nbr">{L_DISPLAY_NBR}</label>
+						<div class="form-field">
 							<label><input type="checkbox" name="activ[]" value="4096" {edition_interface.NBR}></label>
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>
 				<fieldset>
 					<legend>{L_SPECIAL_AUTH}</legend>
-					<dl>
-						<dt>
+					<div class="form-element">
+						
 							<label>
 								{L_READ_AUTH}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{edition_interface.READ_AUTH}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
+						</div>
+					</div>
+					<div class="form-element">
+						
 							<label>
 								{L_CONTRIBUTE_AUTH}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{edition_interface.CONTRIBUTE_AUTH}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
+						</div>
+					</div>
+					<div class="form-element">
+						
 							<label>
 								{L_WRITE_AUTH}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{edition_interface.WRITE_AUTH}
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>
 
 				<fieldset class="fieldset_submit">

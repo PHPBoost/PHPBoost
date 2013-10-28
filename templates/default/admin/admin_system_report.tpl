@@ -20,27 +20,27 @@
 					<legend>
 						{L_SERVER}
 					</legend>
-					<dl>
-						<dt>{L_PHP_VERSION}</dt>
-						<dd>{PHP_VERSION}</dd>
-					</dl>
-					<dl>
-						<dt>{L_DBMS_VERSION}</dt>
-						<dd>{DBMS_VERSION}</dd>
-					</dl>
-					<dl>
-						<dt>{L_GD_LIBRARY}</dt>
-						<dd>
+					<div class="form-element">
+						{L_PHP_VERSION}
+						<div class="form-field">{PHP_VERSION}</div>
+					</div>
+					<div class="form-element">
+						{L_DBMS_VERSION}
+						<div class="form-field">{DBMS_VERSION}</div>
+					</div>
+					<div class="form-element">
+						{L_GD_LIBRARY}
+						<div class="form-field">
 							# IF C_SERVER_GD_LIBRARY #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
 							# ELSE #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_NO}" />
 							# ENDIF #
-						</dd>
-					</dl>
-					<dl>
-						<dt>{L_URL_REWRITING}</dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						{L_URL_REWRITING}
+						<div class="form-field">
 							# IF C_URL_REWRITING_KNOWN #
 								# IF C_SERVER_URL_REWRITING #
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
@@ -50,105 +50,105 @@
 							# ELSE #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/question.png" alt="{L_UNKNOWN}" />
 							# ENDIF #
-						</dd>
-					</dl>
-					<dl>
-						<dt>{L_REGISTER_GLOBALS_OPTION}</dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						{L_REGISTER_GLOBALS_OPTION}
+						<div class="form-field">
 							# IF C_REGISTER_GLOBALS #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
 							# ELSE #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_NO}" />
 							# ENDIF #
-						</dd>
-					</dl>
-					<dl>
-						<dt>{L_SERVER_URL}</dt>
-						<dd>{SERV_SERV_URL}</dd>
-					</dl>
-					<dl>
-						<dt>{L_SITE_PATH}</dt>
-						<dd>{SERV_SITE_PATH}</dd>
-					</dl>
+						</div>
+					</div>
+					<div class="form-element">
+						{L_SERVER_URL}
+						<div class="form-field">{SERV_SERV_URL}</div>
+					</div>
+					<div class="form-element">
+						{L_SITE_PATH}
+						<div class="form-field">{SERV_SITE_PATH}</div>
+					</div>
 				</fieldset>
 				<fieldset>
 					<legend>
 						{L_PHPBOOST_CONFIG}
 					</legend>
-					<dl>
-						<dt>{L_KERNEL_VERSION}</dt>
-						<dd>{KERNEL_VERSION}</dd>
-					</dl>
-					<dl>
-						<dt>{L_SERVER_URL}</dt>
-						<dd>{KERNEL_SERV_URL}</dd>
-					</dl>
-					<dl>
-						<dt>{L_SITE_PATH}</dt>
-						<dd>{KERNEL_SITE_PATH}</dd>
-					</dl>
-					<dl>
-						<dt>{L_DEFAULT_THEME}</dt>
-						<dd>{KERNEL_DEFAULT_THEME}</dd>
-					</dl>
-					<dl>
-						<dt>{L_DEFAULT_LANG}</dt>
-						<dd>{KERNEL_DEFAULT_LANGUAGE}</dd>
-					</dl>
-					<dl>
-						<dt>{L_DEFAULT_EDITOR}</dt>
-						<dd>{KERNEL_DEFAULT_EDITOR}</dd>
-					</dl>
-					<dl>
-						<dt>{L_START_PAGE}</dt>
-						<dd>{KERNEL_START_PAGE}</dd>
-					</dl>
-					<dl>
-						<dt>{L_URL_REWRITING}</dt>
-						<dd>
+					<div class="form-element">
+						{L_KERNEL_VERSION}
+						<div class="form-field">{KERNEL_VERSION}</div>
+					</div>
+					<div class="form-element">
+						{L_SERVER_URL}
+						<div class="form-field">{KERNEL_SERV_URL}</div>
+					</div>
+					<div class="form-element">
+						{L_SITE_PATH}
+						<div class="form-field">{KERNEL_SITE_PATH}</div>
+					</div>
+					<div class="form-element">
+						{L_DEFAULT_THEME}
+						<div class="form-field">{KERNEL_DEFAULT_THEME}</div>
+					</div>
+					<div class="form-element">
+						{L_DEFAULT_LANG}
+						<div class="form-field">{KERNEL_DEFAULT_LANGUAGE}</div>
+					</div>
+					<div class="form-element">
+						{L_DEFAULT_EDITOR}
+						<div class="form-field">{KERNEL_DEFAULT_EDITOR}</div>
+					</div>
+					<div class="form-element">
+						{L_START_PAGE}
+						<div class="form-field">{KERNEL_START_PAGE}</div>
+					</div>
+					<div class="form-element">
+						{L_URL_REWRITING}
+						<div class="form-field">
 							# IF C_KERNEL_URL_REWRITING #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
 							# ELSE #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_NO}" />
 							# ENDIF #
-						</dd>
-					</dl>
-					<dl>
-						<dt>{L_OUTPUT_GZ}</dt>
-						<dd>
+						</div>
+					</div>
+					<div class="form-element">
+						{L_OUTPUT_GZ}
+						<div class="form-field">
 							# IF C_KERNEL_OUTPUT_GZ #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
 							# ELSE #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_NO}" />
 							# ENDIF #
-						</dd>
-					</dl>
-					<dl>
-						<dt>{L_COOKIE_NAME}</dt>
-						<dd>{COOKIE_NAME}</dd>
-					</dl>
-					<dl>
-						<dt>{L_SESSION_LENGTH}</dt>
-						<dd>{SESSION_LENGTH}</dd>
-					</dl>
-					<dl>
-						<dt>{L_SESSION_GUEST_LENGTH}</dt>
-						<dd>{SESSION_LENGTH_GUEST}</dd>
-					</dl>
+						</div>
+					</div>
+					<div class="form-element">
+						{L_COOKIE_NAME}
+						<div class="form-field">{COOKIE_NAME}</div>
+					</div>
+					<div class="form-element">
+						{L_SESSION_LENGTH}
+						<div class="form-field">{SESSION_LENGTH}</div>
+					</div>
+					<div class="form-element">
+						{L_SESSION_GUEST_LENGTH}
+						<div class="form-field">{SESSION_LENGTH_GUEST}</div>
+					</div>
 				</fieldset>
 				<fieldset>
 					<legend>{L_DIRECTORIES_AUTH}</legend>
 					# START directories #
-					<dl>
-						<dt>{directories.NAME}</dt>
-						<dd>
+					<div class="form-element">
+						{directories.NAME}
+						<div class="form-field">
 							# IF directories.C_AUTH_DIR #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
 							# ELSE #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_NO}" />
 							# ENDIF #
-						</dd>
-					</dl>
+						</div>
+					</div>
 					# END directories #
 				</fieldset>
 				<fieldset>

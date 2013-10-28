@@ -48,18 +48,18 @@
 				<fieldset>
 					<legend>{L_FORUM_GROUPS}</legend>
 					<p>{EXPLAIN_FORUM_GROUPS}</p>
-					<dl>
-						<dt><label>{L_FLOOD}</label></dt>
-						<dd>{FLOOD_AUTH}</dd>
-					</dl>
-					<dl>
-						<dt><label>{L_EDIT_MARK}</label></dt>
-						<dd>{EDIT_MARK_AUTH}</dd>
-					</dl>
-					<dl>
-						<dt><label>{L_TRACK_TOPIC}</label></dt>
-						<dd>{TRACK_TOPIC_AUTH}</dd>
-					</dl>
+					<div class="form-element">
+						<label>{L_FLOOD}</label>
+						<div class="form-field">{FLOOD_AUTH}</div>
+					</div>
+					<div class="form-element">
+						<label>{L_EDIT_MARK}</label>
+						<div class="form-field">{EDIT_MARK_AUTH}</div>
+					</div>
+					<div class="form-element">
+						<label>{L_TRACK_TOPIC}</label>
+						<div class="form-field">{TRACK_TOPIC_AUTH}</div>
+					</div>
 				</fieldset>
 								
 				<fieldset class="fieldset_submit">

@@ -47,32 +47,32 @@
             <form action="admin_search.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
                 <fieldset>
                     <legend>{L_SEARCH_CONFIG}</legend>
-                    <dl>
-                        <dt><label for="nb_results_p">* {L_NB_RESULTS_P}</label></dt>
-                        <dd><label><input type="text" maxlength="2" size="4" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}" class="text"></label></dd>
-                    </dl>
-                    <dl>
-                        <dt><label for="authorized_modules[]">* {L_AUTHORIZED_MODULES}</label><br /><span>{L_AUTHORIZED_MODULES_EXPLAIN}</span></dt>
-                        <dd><label>
+                    <div class="form-element">
+                        <label for="nb_results_p">* {L_NB_RESULTS_P}</label>
+                        <div class="form-field"><label><input type="text" maxlength="2" size="4" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}" class="text"></label></div>
+                    </div>
+                    <div class="form-element">
+                        <label for="authorized_modules[]">* {L_AUTHORIZED_MODULES}</label><br /><span>{L_AUTHORIZED_MODULES_EXPLAIN}</span>
+                        <div class="form-field"><label>
                             <select id="authorized_modules[]" name="authorized_modules[]" size="5" multiple="multiple" class="list_modules">
                                 # START authorized_modules #
                                 <option value="{authorized_modules.MODULE}" id="{authorized_modules.MODULE}"{authorized_modules.SELECTED}>{authorized_modules.L_MODULE_NAME}</option>
                                 # END authorized_modules #
                             </select>
-                        </label></dd>
-                    </dl>
+                        </label></div>
+                    </div>
                 </fieldset>
                 
                 <fieldset>
                     <legend>{L_SEARCH_CACHE}</legend>
-                    <dl>
-                        <dt><label for="cache_time">* {L_CACHE_TIME}</label><br /><span>{L_CACHE_TIME_EXPLAIN}</span></dt>
-                        <dd><label><input type="text" maxlength="4" size="4" id="cache_time" name="cache_time" value="{CACHE_TIME}" class="text"></label></dd>
-                    </dl>
-                    <dl>
-                        <dt><label for="max_use">* {L_MAX_USE}</label><br /><span>{L_MAX_USE_EXPLAIN}</span></dt>
-                        <dd><label><input type="text" maxlength="3" size="4" id="max_use" name="max_use" value="{MAX_USE}" class="text"></label></dd>
-                    </dl>
+                    <div class="form-element">
+                        <label for="cache_time">* {L_CACHE_TIME}</label><br /><span>{L_CACHE_TIME_EXPLAIN}</span>
+                        <div class="form-field"><label><input type="text" maxlength="4" size="4" id="cache_time" name="cache_time" value="{CACHE_TIME}" class="text"></label></div>
+                    </div>
+                    <div class="form-element">
+                        <label for="max_use">* {L_MAX_USE}</label><br /><span>{L_MAX_USE_EXPLAIN}</span>
+                        <div class="form-field"><label><input type="text" maxlength="3" size="4" id="max_use" name="max_use" value="{MAX_USE}" class="text"></label></div>
+                    </div>
                 </fieldset>
                 
                 <fieldset class="fieldset_submit">
