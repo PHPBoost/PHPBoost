@@ -36,7 +36,7 @@
 	</legend>
 	# IF C_PROGRESS #
 	<div class="form-element">
-		{@bugs.labels.fields.progress}
+		<label>{@bugs.labels.fields.progress}</label>
 		<div class="form-field">
 			<h6>{PROGRESS}%</h6> 
 			<div class="progressbar-container" style="width:35%">
@@ -46,16 +46,16 @@
 		</div>
 	# ENDIF #
 	<div class="form-element">
-		{@bugs.labels.fields.status}
+		<label>{@bugs.labels.fields.status}</label>
 		<div class="form-field">{STATUS}</div>
 	</div>
 	<div class="form-element">
-		{@bugs.labels.fields.assigned_to_id}
+		<label>{@bugs.labels.fields.assigned_to_id}</label>
 		<div class="form-field"># IF USER_ASSIGNED #<a href="{LINK_USER_ASSIGNED_PROFILE}" class="small_link {USER_ASSIGNED_LEVEL_CLASS}" # IF C_USER_ASSIGNED_GROUP_COLOR # style="color:{USER_ASSIGNED_GROUP_COLOR}" # ENDIF #>{USER_ASSIGNED}</a># ELSE #{@bugs.notice.no_one}# ENDIF #</div>
 	</div>
 	# IF C_FIXED_IN #
 	<div class="form-element">
-		{@bugs.labels.fields.fixed_in}
+		<label>{@bugs.labels.fields.fixed_in}</label>
 		<div class="form-field">{FIXED_IN}</div>
 	</div>
 	# ENDIF #
@@ -70,36 +70,36 @@
 	<legend>{@bugs.titles.bugs_infos}</legend>
 	# IF NOT C_EMPTY_TYPES #
 	<div class="form-element">
-		{@bugs.labels.fields.type}
+		<label>{@bugs.labels.fields.type}</label>
 		<div class="form-field">{TYPE}</div>
 	</div>
 	# ENDIF #
 	# IF NOT C_EMPTY_CATEGORIES #
 	<div class="form-element">
-		{@bugs.labels.fields.category}
+		<label>{@bugs.labels.fields.category}</label>
 		<div class="form-field">{CATEGORY}</div>
 	</div>
 	# ENDIF #
 	# IF NOT C_EMPTY_SEVERITIES #
 	<div class="form-element">
-		{@bugs.labels.fields.severity}
+		<label>{@bugs.labels.fields.severity}</label>
 		<div class="form-field">{SEVERITY}</div>
 	</div>
 	# ENDIF #
 	# IF NOT C_EMPTY_PRIORITIES #
 	<div class="form-element">
-		{@bugs.labels.fields.priority}
+		<label>{@bugs.labels.fields.priority}</label>
 		<div class="form-field">{PRIORITY}</div>
 	</div>
 	# ENDIF #
 	# IF NOT C_EMPTY_VERSIONS #
 	<div class="form-element">
-		{@bugs.labels.fields.detected_in}
+		<label>{@bugs.labels.fields.detected_in}</label>
 		<div class="form-field">{DETECTED_IN}</div>
 	</div>
 	# ENDIF #
 	<div class="form-element">
-		{@bugs.labels.fields.reproductible}
+		<label>{@bugs.labels.fields.reproductible}</label>
 		<div class="form-field"># IF C_REPRODUCTIBLE #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #</div>
 	</div>
 </fieldset>
