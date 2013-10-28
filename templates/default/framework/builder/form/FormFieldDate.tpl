@@ -1,10 +1,10 @@
-<div id="${escape(ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF # class="field">
+<div id="${escape(ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element">
 	<label for="${escape(ID)}">
 		# IF C_REQUIRED # * # ENDIF #
 		{LABEL}
 		# IF DESCRIPTION #<span class="field-description">{DESCRIPTION}</span> # ENDIF #
 	</label>
-	<div class="field-value">
+	<div class="form-field">
 		{CALENDAR}
 		# IF C_HOUR #
 		{L_AT}

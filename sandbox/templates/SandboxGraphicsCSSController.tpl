@@ -58,46 +58,46 @@
 			<fieldset>
 				<legend>Le titre du Fieldset </legend>
 				
-				<div class="field">
+				<div class="form-element">
 					<label for="IDinput" title="Le complément du label">Un input très petit (pour l'heure)</label>
 					<input type="text" class="field-smaller" maxlength="25" name="Input" id="IDinput" value="test" >
 				</div>
-				<div class="field">
+				<div class="form-element">
 					<label for="IDinput" title="Le complément du label">Un input petit (pour la date)</label>
 					<input type="text" class="field-small" maxlength="25" name="Input" id="IDinput" value="test" >
 				</div>
-				<div class="field">
+				<div class="form-element">
 					<label for="IDinput" title="Le complément du label">Un input de taille normal</label>
 					<input type="text" class="" maxlength="25" name="Input" id="IDinput" value="test" >
 				</div>
-				<div class="field">
+				<div class="form-element">
 					<label for="IDinput" title="Le complément du label">Un input grand</label>
 					<input type="text" class="field-large" maxlength="25" name="Input" id="IDinput" value="test" >
 				</div>
-				<div class="field">
+				<div class="form-element">
 					<label for="IDinput" title="Le complément du label">Un input très grand</label>
 					<input type="text" class="field-xlarge" maxlength="25" name="Input" id="IDinput" value="test" >
 				</div>
-				<div class="field constraint-check-right">
+				<div class="form-element constraint-check-right">
 					<label for="IDinput" title="Le complément du label">Un Input qui est correcte</label>
 					<input type="text" class="field-other" maxlength="25" name="Input" id="IDinput" value="test" >
 					<i class="pbt-icon-field-constraint-check"></i>
 				</div>
-				<div class="field constraint-check-error">
+				<div class="form-element constraint-check-error">
 					<label for="IDinput" title="Le complément du label">Un Input qui est en erreur</label>
 					<input type="text"  class=""  maxlength="25" name="Input" id="IDinput" value="test" >
 					<i class="pbt-icon-field-constraint-check"></i>
 					<span class="field-error">La valeur saisie doit être un mail valide</span>
 				</div>
-				<div class="field">
+				<div class="form-element">
 					<label for="IDinput" title="Le complément du label">Un Input avec une description<span class="field-description">Description vachement plus longue</span></label>
 					<input type="text" class="field-large" maxlength="25" name="Input" id="IDinput" value="test" >
 				</div>
-				<div class="field">
+				<div class="form-element">
 					<label for="IDinput" title="Le complément du label">Un Input désactivé</label>
 					<input type="text" class="field-large" disabled="disabled" maxlength="25" name="Input" id="IDinput" value="test" >
 				</div>
-				<div class="field">
+				<div class="form-element">
 					<label for="IDinput" title="Le complément du label">Date<span class="field-description">Description</span></label>
 					<input type="text" class="field-small" name="Input" id="IDinput" value="25/10/2013" >
 					<i class="pbt-icon-calendar"></i> à
@@ -121,21 +121,21 @@
 				
 		<h5>Les textareas</h5><br />
 		<div class="content">
-			<div class="field-textarea">
+			<div class="form-element-textarea">
 				<label for="textarea" title="Le complément du label">Ceci est un textarea<span class="field-description">Description</span></label>
 				<div><i class="pbt-icon-check"></i></div>
 				<textarea onblur="" class="" cols="47" rows="6" name="textarea" id="textarea">Voici un textarea</textarea>
 				<button type="button">Prévisualiser</button>
 			</div>
 			
-			<div class="field-textarea field-textarea-small">
+			<div class="form-element-textarea field-textarea-small">
 				<label for="textarea" title="Le complément du label">Ceci est un textarea à coté du label<span class="field-description">Description</span></label>
 				<i class="pbt-icon-check"></i>
 				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
 				<button type="button">Prévisualiser</button>
 			</div>	
 		
-			<div class="field-textarea field-textarea-small center">
+			<div class="form-element-textarea field-textarea-small center">
 				<label for="textarea" title="Le complément du label">Ceci est un textarea à coté du label</label>
 				<div><i class="pbt-icon-error"></i></div>
 				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
