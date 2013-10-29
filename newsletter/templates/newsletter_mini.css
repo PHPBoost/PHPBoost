@@ -24,3 +24,7 @@ div#newsletter {
 	margin:0;
 	margin-top:10px;
 }
+
+.input-element-button input, .input-element-button button {
+	font-size:12px;
+}
