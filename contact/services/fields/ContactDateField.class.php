@@ -38,7 +38,7 @@ class ContactDateField extends AbstractContactField
 	{
 		$fieldset = $field->get_fieldset();
 		
-		$value = $field->get_value() ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $field->get_value()) : null;
+		$value = $field->get_default_value() ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $field->get_default_value()) : null;
 		$fieldset->add_field(new FormFieldDate($field->get_field_name(), $field->get_name(), $value, 
 			array('description' => $field->get_description(), 'required' =>(bool)$field->is_required())
 		));

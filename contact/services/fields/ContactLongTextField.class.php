@@ -38,7 +38,7 @@ class ContactLongTextField extends AbstractContactField
 	{
 		$fieldset = $field->get_fieldset();
 		
-		$fieldset->add_field(new FormFieldRichTextEditor($field->get_field_name(), $field->get_name(), $field->get_default_values(), array(
+		$fieldset->add_field(new FormFieldRichTextEditor($field->get_field_name(), $field->get_name(), $field->get_default_value(), array(
 			'class' => 'text', 'required' => (bool)$field->is_required(), 'rows' => 5, 'cols' => 47, 'description' => $field->get_description()),
 			array($this->constraint($field->get_regex()))
 		));
