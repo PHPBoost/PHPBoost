@@ -90,26 +90,26 @@ class CalendarFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['calendar.labels.end_date'], $this->get_event()->get_end_date(), array('required' => true)));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('repeat_type', $this->lang['calendar.labels.repeat_type'], $this->get_event()->get_repeat_type(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.never'], CalendarEvent::NEVER),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.daily'], CalendarEvent::DAILY),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.weekly'], CalendarEvent::WEEKLY),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.monthly'], CalendarEvent::MONTHLY),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.yearly'], CalendarEvent::YEARLY),
-			),
-			array('events' => array('change' => '
-			if (HTMLForms.getField("repeat_type").getValue() != "' . CalendarEvent::NEVER . '") {
-				HTMLForms.getField("repeat_number").enable();
-			} else {
-				HTMLForms.getField("repeat_number").disable();
-			}'))
-		));
+		// $fieldset->add_field(new FormFieldSimpleSelectChoice('repeat_type', $this->lang['calendar.labels.repeat_type'], $this->get_event()->get_repeat_type(),
+			// array(
+				// new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.never'], CalendarEvent::NEVER),
+				// new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.daily'], CalendarEvent::DAILY),
+				// new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.weekly'], CalendarEvent::WEEKLY),
+				// new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.monthly'], CalendarEvent::MONTHLY),
+				// new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.yearly'], CalendarEvent::YEARLY),
+			// ),
+			// array('events' => array('change' => '
+			// if (HTMLForms.getField("repeat_type").getValue() != "' . CalendarEvent::NEVER . '") {
+				// HTMLForms.getField("repeat_number").enable();
+			// } else {
+				// HTMLForms.getField("repeat_number").disable();
+			// }'))
+		// ));
 		
-		$fieldset->add_field(new FormFieldTextEditor('repeat_number', $this->lang['calendar.labels.repeat_number'], $this->get_event()->get_repeat_number(), array(
-			'class' => 'text', 'maxlength' => 3, 'size' => 3, 'required' => false, 'hidden' => !$this->get_event()->is_repeatable()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
-		));
+		// $fieldset->add_field(new FormFieldTextEditor('repeat_number', $this->lang['calendar.labels.repeat_number'], $this->get_event()->get_repeat_number(), array(
+			// 'class' => 'text', 'maxlength' => 3, 'size' => 3, 'required' => false, 'hidden' => !$this->get_event()->is_repeatable()),
+			// array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		// ));
 		
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('location', $this->lang['calendar.labels.location'], $this->get_event()->get_location()));
 		
@@ -249,8 +249,8 @@ class CalendarFormController extends ModuleController
 		else
 			$event->unauthorize_registration();
 		
-		$event->set_repeat_type($this->form->get_value('repeat_type')->get_raw_value());
-		$event->set_repeat_number($this->form->get_value('repeat_number'));
+		// $event->set_repeat_type($this->form->get_value('repeat_type')->get_raw_value());
+		// $event->set_repeat_number($this->form->get_value('repeat_number'));
 		
 		if ($event->get_id() === null)
 		{

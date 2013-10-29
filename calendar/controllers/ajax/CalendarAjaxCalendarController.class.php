@@ -113,16 +113,15 @@ class CalendarAjaxCalendarController extends AbstractController
 			$first_day = 7;
 			
 		//Calendar generation
-		$day = $today = 1;
+		$day = 1;
 		$last_day = ($month_days + $first_day);
 		for ($i = 1; $i <= 56; $i++)
 		{
-			$calendar_day = ' ';
-			$birthday_day =  $color =  false;
+			$birthday_day = $color = false;
 			
 			if ( (($i % 8) == 1) && $i < $last_day)
 			{
-				$calendar_day = (date('W', mktime(0, 0, 0, $month, $day, $year)) * 1);
+				$content = date('W', mktime(0, 0, 0, $month, $day, $year));
 				$class = 'calendar_week';
 				$last_day++;
 			}
@@ -146,7 +145,7 @@ class CalendarAjaxCalendarController extends AbstractController
 							$class = 'calendar_other';
 					}
 					
-					$today = $day;
+					$content = $day;
 					$day++;
 				}
 				else
@@ -161,17 +160,15 @@ class CalendarAjaxCalendarController extends AbstractController
 				$i = 56;
 			
 			$this->view->assign_block_vars('day', array(
-				'C_MONTH_DAY' => ($i >= $first_day + 1) && $i < $last_day,
+				'C_MONTH_DAY' => $i == 1 || (($i >= $first_day + 1) && $i < $last_day),
 				'C_COLOR' => $color || $birthday_day,
-				'DAY' => $today,
-				'TITLE' => !empty($array_events[$today]) ? $array_events[$today]['title'] : '',
+				'DAY' => $content,
+				'TITLE' => !empty($array_events[$day]) ? $array_events[$day]['title'] : '',
 				'COLOR' => !empty($color) ? $color : $config->get_birthday_color(),
 				'CLASS' => $class,
-				'CHANGE_LINE' => (($i % 8) == 0 && $i != 56) ? true : false,
-				'U_DAY_EVENTS' => CalendarUrlBuilder::home($year . '/' . $month . '/' . $today . (!empty($array_events[$today]) ? '/' . $categories[$array_events[$today]['id_category']]->get_id() . '-' . $categories[$array_events[$today]['id_category']]->get_rewrited_name() : '') . '#events')->rel()
+				'CHANGE_LINE' => (($i % 8) == 0 && $i != 56),
+				'U_DAY_EVENTS' => CalendarUrlBuilder::home($year . '/' . $month . '/' . $day . (!empty($array_events[$day]) ? '/' . $categories[$array_events[$day]['id_category']]->get_id() . '-' . $categories[$array_events[$day]['id_category']]->get_rewrited_name() : '') . '#events')->rel()
 			));
-			
-			
 		}
 	}
 	

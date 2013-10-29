@@ -83,7 +83,7 @@ $lang['calendar.labels.unsuscribe'] = 'Unsuscribe';
 $lang['calendar.explain.date'] = '<span class="smaller">(mm/dd/yy)</span>';
 
 //Administration
-$lang['calendar.config.manage_events'] = 'Events management';
+$lang['calendar.config.events_manage'] = 'Events management';
 $lang['calendar.config.category.color'] = 'Color';
 $lang['calendar.config.category.manage'] = 'Manage categories';
 $lang['calendar.config.category.add'] = 'Add category';
