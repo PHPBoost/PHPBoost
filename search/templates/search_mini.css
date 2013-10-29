@@ -1,5 +1,10 @@
 .input-element-button input {
 	width:120px;
+	font-size:12px;
+}
+
+.input-element-button button {
+	font-size:12px;
 }
 
 #mini_search_form{
