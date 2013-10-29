@@ -42,6 +42,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		$this->create_tables();
+		$this->insert_data();
 	}
 	
 	public function upgrade($installed_version)
@@ -159,6 +160,71 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'indexes' => array('user_id' => array('type' => 'key', 'fields' => 'user_id'))
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$bugtracker_users_filters_table, $fields, $options);
+	}
+	
+	private function insert_data()
+	{
+		$lang = LangLoader::get('install', 'bugtracker');
+		
+		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
+			'id' => 1,
+			'title' => $lang['bug.1.title'],
+			'contents' => $lang['bug.1.contents'],
+			'author_id' => 1,
+			'submit_date' => time(),
+			'fix_date' => 0,
+			'status' => Bug::NEW_BUG,
+			'severity' => 1,
+			'priority' => 3,
+			'type' => 1,
+			'category' => 1,
+			'reproductible' => 1,
+			'reproduction_method' => '',
+			'detected_in' => 0,
+			'fixed_in' => 0,
+			'progress' => 10,
+			'assigned_to_id' => 0
+		));
+		
+		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
+			'id' => 2,
+			'title' => $lang['bug.2.title'],
+			'contents' => $lang['bug.2.contents'],
+			'author_id' => 1,
+			'submit_date' => time() - 1000,
+			'fix_date' => time(),
+			'status' => Bug::FIXED,
+			'severity' => 2,
+			'priority' => 4,
+			'type' => 1,
+			'category' => 2,
+			'reproductible' => 1,
+			'reproduction_method' => '',
+			'detected_in' => 0,
+			'fixed_in' => 0,
+			'progress' => 100,
+			'assigned_to_id' => 0
+		));
+		
+		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
+			'id' => 3,
+			'title' => $lang['bug.3.title'],
+			'contents' => $lang['bug.3.contents'],
+			'author_id' => 1,
+			'submit_date' => time(),
+			'fix_date' => 0,
+			'status' => Bug::REOPEN,
+			'severity' => 3,
+			'priority' => 5,
+			'type' => 1,
+			'category' => 3,
+			'reproductible' => 1,
+			'reproduction_method' => '',
+			'detected_in' => 0,
+			'fixed_in' => 0,
+			'progress' => 30,
+			'assigned_to_id' => 0
+		));
 	}
 }
 ?>
