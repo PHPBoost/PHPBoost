@@ -210,6 +210,14 @@ table tfoot th:last-child {
 	border-bottom-right-radius: 3px;
 }
 
+table tfoot th * {
+	vertical-align:middle;
+}
+
+table tfoot th select {
+	padding:2px 5px;
+}
+
 /* Mini tableaux */
 table.mini th, table.mini td {
 	padding:3px 1px;
