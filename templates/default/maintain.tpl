@@ -4,12 +4,7 @@
 			<div style="position:relative;width:400px;margin:auto;margin-top:30px;" class="warning">
 				{L_MAINTAIN_DELAY}
 				<br /><br />
-				<script type="text/javascript">
-					document.write('<div id="release">{L_LOADING}...</div>');
-				</script>
-				<noscript>
-					<strong>{DELAY}</strong>
-				</noscript>
+				<div id="release">{L_LOADING}...</div>
 			</div>
 		</div>
 	# ENDIF #

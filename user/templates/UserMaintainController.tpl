@@ -67,14 +67,7 @@
 						<div class="delay">
 							{L_MAINTAIN_DELAY}
 							<br /><br />	
-							<script type="text/javascript">
-							<!--
-								document.write('<div id="release">{L_LOADING}...</div>');
-							-->
-							</script>
-							<noscript>				
-								<p style="display:inline;font-weight:bold;">{DELAY}</p>
-							</noscript>
+							<div id="release">{L_LOADING}...</div>
 						</div>
 						
 						<script type="text/javascript">

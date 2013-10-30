@@ -342,14 +342,7 @@
 					<fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
-						&nbsp;&nbsp;
-						<script type="text/javascript">
-						<!--				
-						document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
-						-->
-						</script>
-						<noscript><div><input value="{L_PREVIEW}" type="submit" name="prw" class="submit"></div></noscript>
-						&nbsp;&nbsp;
+						<button type="submit" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 						<button type="reset" value="true">{L_RESET}</button>
 					</fieldset>
 				</div>

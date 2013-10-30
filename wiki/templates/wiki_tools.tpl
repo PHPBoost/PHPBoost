@@ -1,18 +1,3 @@
-		<noscript>
-			<div class="row2" style="text-align:right;">
-				&nbsp;
-				<a href="{U_COM}">{L_COM}</a>&bull;
-				# START tool #
-					<a href="{tool.U_TOOL}">{tool.L_TOOL}</a>
-					# START tool.separation #
-						&bull;
-					# END tool.separation #
-				# END tool #
-				&nbsp;
-				<br />
-			</div>
-		</noscript>
-
 		<div style="margin-bottom:10px;">
 			<menu class="dynamic_menu right group">
 				<ul>
