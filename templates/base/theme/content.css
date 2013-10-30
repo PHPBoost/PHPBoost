@@ -75,6 +75,74 @@ section footer nav.pagination {	text-align: center; }
 	margin: 0.5%;
 }
 
+/* Exploreur des catégories
+-------------------------------------- */
+.explorer .cats, .explorer .files{
+	display:inline-block;
+	width:65%;
+	margin:5px 0.33%;
+	vertical-align:top;
+}
+
+.explorer .cats {
+	width:32.6%;
+}
+
+.explorer h1 {
+	color:#666;
+	font-size:13px;
+	margin:5px 0;
+}
+
+.explorer .contents {
+	border:1px solid #DDD;
+	padding:5px 0;
+}
+
+.explorer .contents ul{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+
+.explorer .contents ul a.plus_minus{
+	float:left;
+	display:inline-block;
+	padding-right:0;
+}
+
+.explorer .contents ul a{
+	padding:3px 5px;
+	display:block;
+	text-decoration:none;
+	color:#555;
+	font-weight:300;
+}
+
+.explorer .contents ul img{
+	padding-right:8px;
+}
+
+.explorer .contents ul a.plus_minus img:first-child{
+	padding-right:3px;
+}
+
+.explorer .contents ul a:hover{
+	background-color:#EEE;
+}
+
+.explorer .contents ul .sub a, .explorer .contents ul .sub ul .sub {
+	padding-left:20px;
+}
+
+.explorer .contents ul .sub a.plus_minus{
+	padding-left:4px;
+}
+
+.explorer .selected {
+	background-color:#DDD;
+}
+
 /* Tableaux
 -------------------------------------- */
 
