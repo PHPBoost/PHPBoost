@@ -97,6 +97,9 @@ section footer nav.pagination {	text-align: center; }
 .explorer .contents {
 	border:1px solid #DDD;
 	padding:5px 0;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 .explorer .contents ul{
@@ -141,6 +144,16 @@ section footer nav.pagination {	text-align: center; }
 
 .explorer .selected {
 	background-color:#DDD;
+}
+
+.options {
+	margin:5px;
+	padding:6px 12px;
+	background:#EEE;
+	border:1px solid #DDD;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 /* Tableaux
