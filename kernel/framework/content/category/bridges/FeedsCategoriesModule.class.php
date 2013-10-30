@@ -49,7 +49,7 @@ class FeedsCategoriesModule
 	    return $list;
 	}
 	
-	public function build_feeds_sub_list($module_id, $categories, $tree, $parent_id)
+	public function build_feeds_sub_list($module_id, $categories, FeedsCat $tree, $parent_id)
 	{
 		$id_categories = array_keys($categories);
 		$num_cats =	count($id_categories);
@@ -60,7 +60,7 @@ class FeedsCategoriesModule
 			$category =& $categories[$id];
 			if ($id != 0 && $category->get_id_parent() == $parent_id)
 			{
-			    $sub_tree = new FeedsCat($module_id, $id, $category['name']);
+			    $sub_tree = new FeedsCat($module_id, $id, $category->get_name());
 			    $this->build_feeds_sub_list($module_id, $categories, $sub_tree, $id);
 			    $tree->add_child($sub_tree);
 			}
