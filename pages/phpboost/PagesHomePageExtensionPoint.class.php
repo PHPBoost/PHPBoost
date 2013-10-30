@@ -98,7 +98,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 					//Vérification de l'autorisation d'éditer la page
 					if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 					{
-						$root .= '<li><img src="' . $tpl->get_pictures_data_path() . '/images/closed_cat.png" alt=""/>&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></li>';
+						$root .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><img src="' . $tpl->get_pictures_data_path() . '/images/closed_cat.png" alt="" />' . $value['name'] . '</a></li>';
 					}
 				}
 			}
@@ -116,7 +116,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			//Vérification de l'autorisation d'éditer la page
 			if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 			{
-				$root .= '<li style="padding-left:17px;"><img src="' . $tpl->get_pictures_data_path() . '/images/page.png" alt=""/>&nbsp;<a href="' . PagesUrlBuilder::get_link_item($row['encoded_title']) . '">' . $row['title'] . '</a></li>';
+				$root .= '<li><a href="' . PagesUrlBuilder::get_link_item($row['encoded_title']) . '"><img src="' . $tpl->get_pictures_data_path() . '/images/page.png" alt="" />' . $row['title'] . '</a></li>';
 			}
 		}
 		$this->sql_querier->query_close($result);
@@ -128,7 +128,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_CATS' => $LANG['pages_cats_tree'],
 			'L_EXPLORER' => $LANG['pages_explorer'],
 			'SELECTED_CAT' => 0,
-			'CAT_0' => 'pages_selected_cat',
+			'CAT_0' => 'selected',
 			'CAT_LIST' => ''
 		));
 
@@ -144,14 +144,13 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			if ($sub_cats_number > 0)
 			{	
 				$tpl->assign_block_vars('list', array(
-					'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $tpl->get_pictures_data_path() . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"/></a> 
-					<a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $tpl->get_pictures_data_path() . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt=""/></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li class="sub"><a class="plus_minus" href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $tpl->get_pictures_data_path() . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"/><img src="' . $tpl->get_pictures_data_path() . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt=""/></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></li>'
 				));
 			}
 			else
 			{
 				$tpl->assign_block_vars('list', array(
-					'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $tpl->get_pictures_data_path() . '/images/closed_cat.png" alt=""  />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');"><img src="' . $tpl->get_pictures_data_path() . '/images/closed_cat.png" alt="" />' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 		}

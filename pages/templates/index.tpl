@@ -42,30 +42,30 @@
 			</div>
 		</section>
 		<div class="spacer"> </div>
-		<section class="small_block">
-			<header>
-				<h1>{L_CATS}</h1>
-			</header>
-			<div class="contents">
-				<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;"><li><a href="javascript:open_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a>
-				<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">
-					# START list #
-						{list.DIRECTORY}
-					# END list #
-					{CAT_LIST}
-				</ul>
-				</li></ul>
+		<div class="explorer">
+			<div class="cats">
+					<h1>{L_CATS}</h1>
+				<div class="contents">
+					<ul>
+						<li><a id="class_0" class="{CAT_0}" href="javascript:open_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" />{L_ROOT}</a>
+							<ul>
+								# START list #
+									{list.DIRECTORY}
+								# END list #
+								{CAT_LIST}
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</div>
-		</section>
-		<section class="large_block">
-			<header>
-				<h1>{L_EXPLORER}</h1>
-			</header>
-			<div class="contents" id="cat_contents">
-				<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">
-					{ROOT_CONTENTS}
-				</ul>
+			<div class="files">
+					<h1>{L_EXPLORER}</h1>
+				<div class="contents" id="cat_contents">
+					<ul>
+						{ROOT_CONTENTS}
+					</ul>
+				</div>
 			</div>
-		</section>
+		</div>
 	</div>
 </section>

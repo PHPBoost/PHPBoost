@@ -22,7 +22,7 @@ $pages_data_path = $Template->get_pictures_data_path();
 //Listage des répertoires dont le répertoire parent est connu
 if ($id_cat != 0)
 {	
-	echo '<ul style="margin:0;padding:0;list-style-type:none;padding-left:30px;">';
+	echo '<ul>';
 	//On sélectionne les répetoires dont l'id parent est connu
 	$result = $Sql->query_while("SELECT c.id, p.title, p.encoded_title, p.auth
 	FROM " . PREFIX . "pages_cats c
@@ -41,9 +41,9 @@ if ($id_cat != 0)
 			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 			//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 			if ($sub_cats_number > 0)
-				echo '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $pages_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" style="vertical-align:middle" /></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $pages_data_path . '/images/closed_cat.png" alt="" id="img_' . $row['id'] . '" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
+				echo '<li class="sub"><a class="plus_minus" href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $pages_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" /><img src="' . $pages_data_path . '/images/closed_cat.png" alt="" id="img_' . $row['id'] . '" /></a><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>';
 			else //Sinon on n'affiche pas le "+"
-				echo '<li style="padding-left:17px;"><img src="' . $pages_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a></span></li>';
+				echo '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');"><img src="' . $pages_data_path . '/images/closed_cat.png" alt="" />' . $row['title'] . '</a></li>';
 		}
 	}
 	$Sql->query_close($result);
@@ -75,7 +75,7 @@ elseif ($select_cat && empty($open_cat) && $root == 0)
 elseif (!empty($open_cat) || $root == 1)
 {
 	$open_cat = $root == 1 ? 0 : $open_cat;
-	$return = '<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">';
+	$return = '<ul>';
 	//Liste des catégories dans cette catégorie
 	foreach ($_PAGES_CATS as $key => $value)
 	{
@@ -86,7 +86,7 @@ elseif (!empty($open_cat) || $root == 1)
 			//Vérification de l'autorisation d'éditer la page
 			if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 			{
-				$return .= '<li><img src="' . $pages_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></li>';
+				$return .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><img src="' . $pages_data_path . '/images/closed_cat.png" alt="" />' . $value['name'] . '</a></li>';
 			}
 		}
 	}
@@ -101,7 +101,7 @@ elseif (!empty($open_cat) || $root == 1)
 		//Vérification de l'autorisation d'éditer la page
 		if (($special_auth && $User->check_auth(unserialize($row['auth']), READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 		{
-			$return .= '<li style="padding-left:17px;"><img src="' . $pages_data_path . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . PATH_TO_ROOT . url('/pages/pages.php?title=' . $row['encoded_title'], '/pages/' . $row['encoded_title']) . '">' . $row['title'] . '</a></li>';
+			$return .= '<li><a href="' . PATH_TO_ROOT . url('/pages/pages.php?title=' . $row['encoded_title'], '/pages/' . $row['encoded_title']) . '"><img src="' . $pages_data_path . '/images/page.png" alt="" />' . $row['title'] . '</a></li>';
 		}
 	}
 	$Sql->query_close($result);
