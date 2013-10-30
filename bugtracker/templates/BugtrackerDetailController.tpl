@@ -37,9 +37,9 @@
 	# IF C_PROGRESS #
 	<div class="form-element">
 		<label>{@bugs.labels.fields.progress}</label>
-		<div class="form-field">
-			<h6>{PROGRESS}%</h6> 
-			<div class="progressbar-container" style="width:35%">
+		<div class="form-field" style="width: 25%;">
+			{PROGRESS}%
+			<div class="progressbar-container">
 				<div class="progressbar" style="width:{PROGRESS}%"></div>
 			</div>
 			</div>
