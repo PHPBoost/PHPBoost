@@ -85,7 +85,7 @@
 				<input type="hidden" name="id_edit" value="{ID_EDIT}">
 				<input type="hidden" name="token" value="{TOKEN}">
 				<button type="submit">{L_SUBMIT}</button>
-				<button type="submit" name="preview">{L_PREVIEW}</button>
+				<button type="submit" name="preview" value="preview">{L_PREVIEW}</button>
 				<button type="reset">{L_RESET}</button>
 			</fieldset>
 		</form>
