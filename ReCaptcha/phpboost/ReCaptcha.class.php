@@ -62,7 +62,9 @@ class ReCaptcha extends Captcha
 	
 	public function display()
 	{
-		return recaptcha_get_html(self::PUBLIC_KEY, $this->get_error());
+		$tpl = new FileTemplate('ReCaptcha/ReCaptcha.tpl');
+		$tpl->put('PUBLIC_KEY', self::PUBLIC_KEY);
+		return $tpl->render();
 	}
 	
 	public function get_error()
