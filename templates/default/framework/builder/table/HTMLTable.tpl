@@ -35,7 +35,9 @@
 	    <tr>
 	      	<th colspan="{NUMBER_OF_COLUMNS}">
 	      		<div style="float:left;">
-	      			{NUMBER_OF_ELEMENTS}
+					<span>
+						{NUMBER_OF_ELEMENTS}
+					</span>
       			</div>
       			# IF C_NB_ROWS_OPTIONS #
 	      		<div style="float:right;padding:0 10px;">
