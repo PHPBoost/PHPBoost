@@ -159,7 +159,7 @@
 			<ul>
 				<li>Flux RSS : <a href="#" class="pbt-icon-syndication"></a></li>
 				<li>Editer : <a href="#" class="pbt-icon-edit"></a></li>
-				<li>Supprimer : <a href="#" class="pbt-icon-delete" data-confirmation="delete-element"></a></li>
+				<li>Supprimer : <a href="#" class="pbt-icon-delete"></a></li>
 				<li>Supprimer (contrôle automatique JS avec confirmation de suppression) : <a href="#" class="pbt-icon-delete" data-confirmation="delete-element"></a></li>
 				<li>Supprimer (contrôe automatique JS avec confirmation personnalisée) : <a href="#" class="pbt-icon-delete" data-confirmation="Message personnalisÃ©"></a></li>
 			</ul>

@@ -161,7 +161,7 @@ class NewsDisplayNewsController extends ModuleController
 				array(
 					'timestamp_now' => $now->get_timestamp(),
 					'timestamp_news' => $timestamp_news,
-				'authorized_categories' => array($news->get_id_cat())
+					'authorized_categories' => array($news->get_id_cat())
 			));
 			
 			$this->tpl->put_all(array(

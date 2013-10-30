@@ -74,117 +74,74 @@ else
 	$general_auth = true;
 	$article_auth = array();
 }
+	
+$Template->put_all(array(
+	'C_INDEX_PAGE' => $page_type == 'index',
 
-//Si on regarde un article
-if ($page_type == 'article' || $page_type == 'cat')
-{
-	$tools = array();
-	//Consultation de l'historique
-	$tools[$LANG['wiki_history']] = array(url('history.php?id=' . $id_article), 'history');
-	//Edition
-	if ((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT)))
-	{
-		$tools[$LANG['update']] = array(url('post.php?id=' . $id_article), 'edit');
-	}
-	//Suppression
-	if ((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE)))
-	{
-		if ($page_type == 'article')
-		{
-			$tools[$LANG['delete']] = array(url('action.php?del_article=' . $id_article . '&amp;token=' . $Session->get_token()), 'delete');
-			//Message de confirmation de suppression (directe sinon)
-			$confirm[$LANG['delete']] = 'return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_remove_article']) . '\');';
-		}
-		else
-		{
-			$tools[$LANG['delete']] = array(url('property.php?del=' . $id_article), 'delete');
-		}
-	}
-	//Renommer
-	if ((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME)))
-	{
-		$tools[$LANG['wiki_rename']] = array(url('property.php?rename=' . $article_infos['id']), 'rename');
-	}
-	//Redirections
-	if ((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth  || $User->check_auth($article_auth , WIKI_REDIRECT)))
-	{
-		$tools[$LANG['wiki_redirections']] = array(url('property.php?redirect=' . $article_infos['id']), 'redirect');
-	}
-	//Déplacement
-	if ((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE)))
-	{
-		$tools[$LANG['wiki_move']] = array(url('property.php?move=' . $article_infos['id']), 'move');
-	}
-	if ($page_type == 'cat')
-	{
-		if ((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE)) && ($general_auth || $User->check_auth($article_auth , WIKI_CREATE_ARTICLE)))//Création d'un article
-		{
-			$tools[$LANG['wiki_add_article']] = array(url('post.php' . ($id_cat > 0 ? '?id_parent=' . $id_cat : '')), 'add_article');
-		}
-		if ((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_CREATE_CAT)) && ($general_auth || $User->check_auth($article_auth , WIKI_CREATE_CAT)))//Création d'une catégorie
-		{
-			$tools[$page_type == 'cat' ? $LANG['wiki_add_cat'] : $LANG['wiki_create_cat']] = array(url('post.php?type=cat&amp;id_parent=' . $id_cat), 'create_cat');
-		}
-	}
-	//Statut de l'article
-	if ((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS)))
-	{
-		$tools[$LANG['wiki_article_status']] = array(url('property.php?status=' . $article_infos['id']), 'article_status');
-	}
-	//Niveau de restricton
-	if ($User->check_auth($config->get_authorizations(), WIKI_RESTRICTION))
-	{
-		$tools[$LANG['wiki_restriction_level']] = array(url('property.php?auth=' . $article_infos['id']), 'restriction_level');
-	}
+	'L_EDIT_INDEX' => $LANG['wiki_update_index'],
+	'U_EDIT_INDEX' => url('admin_wiki.php#index'),
 
-	$tools[$LANG['printable_version']] = array(url('print.php?id=' . $article_infos['id']), 'print');
-}
-//Accueil du wiki
-elseif ($page_type == 'index')
-{
-	$tools = array();
-	$tools[$LANG['wiki_history']] = array(url('history.php'), 'history');
-	if ($User->check_level(User::ADMIN_LEVEL))
-	{
-		$tools[$LANG['wiki_update_index']] = array(url('admin_wiki.php#index'), 'edit_index');
-	}
-}
+	'L_HISTORY' => $LANG['wiki_history'],
+	'U_HISTORY' => !empty($id_article) ? url('history.php?id=' . $id_article) : url('history.php'),
 
-$other_tools = array();
-//Création d'un article
-if ($User->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE))
-{
-	$other_tools[ $LANG['wiki_create_article']] = array(PATH_TO_ROOT . url('/wiki/post.php'), 'create_article');
-}
-//Création d'une catégorie
-if ($User->check_auth($config->get_authorizations(), WIKI_CREATE_CAT))
-{
-	$other_tools[$LANG['wiki_create_cat']] = array(PATH_TO_ROOT . url('/wiki/post.php?type=cat'), 'create_cat');
-}
-//Page au hasard
-{
-	$other_tools[$LANG['wiki_random_page']] = array(PATH_TO_ROOT . url('/wiki/property.php?random=1'), 'random_page');
-}
-//Recherche
-$other_tools[$LANG['wiki_search']] = array(PATH_TO_ROOT . url('/wiki/search.php'), 'search');
-//Sujets suivis (membres seulement)
-if ($User->check_level(User::MEMBER_LEVEL))
-{
-	$other_tools[$LANG['wiki_followed_articles']] = array(PATH_TO_ROOT . url('/wiki/favorites.php'), 'followed-articles');
-	//Suivre ce sujet (articles)
-	if ($page_type == 'article' || $page_type == 'cat')
-	{
-		if ($article_infos['id_favorite'] > 0)
-		{
-			$other_tools[$LANG['wiki_unwatch_this_topic']] = array(PATH_TO_ROOT . url('/wiki/favorites.php?del=' . $id_article . '&amp;token=' . $Session->get_token()), 'follow-article');
-			$confirm_others[$LANG['wiki_unwatch_this_topic']] = 'return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '\');';
-		}
-		else
-		{
-			$other_tools[$LANG['wiki_watch']] = array(PATH_TO_ROOT . url('/wiki/favorites.php?add=' . $id_article), 'follow-article');
-		}
-	}
-}
+	'C_EDIT' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT)),
+	'L_EDIT' => $LANG['update'],
+	'U_EDIT' => url('post.php?id=' . $id_article),
+
+	'C_DELETE' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE)),
+	'L_DELETE' => $LANG['delete'],
+	'U_DELETE' => $page_type == 'article' ? url('action.php?del_article=' . $id_article . '&amp;token=' . $Session->get_token()) : url('property.php?del=' . $id_article),
+
+	'C_RENAME' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME)),
+	'L_RENAME' => $LANG['wiki_rename'],
+	'U_RENAME' => url('property.php?rename=' . $article_infos['id']),
+
+	'C_REDIRECT' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth  || $User->check_auth($article_auth , WIKI_REDIRECT)),
+	'L_REDIRECT' => $LANG['wiki_redirections'],
+	'U_REDIRECT' => url('property.php?redirect=' . $article_infos['id']),
+
+	'C_MOVE' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE)),
+	'L_MOVE' => $LANG['wiki_move'],
+	'U_MOVE' => url('property.php?move=' . $article_infos['id']),
+
+	'C_ADD_ARTICLE' => $User->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE),
+	'L_ADD_ARTICLE' => $LANG['wiki_create_article'],
+	'U_ADD_ARTICLE' => url('post.php' . ($id_cat > 0 ? '?id_parent=' . $id_cat : '')),
+
+	'C_ADD_CAT' => $User->check_auth($config->get_authorizations(), WIKI_CREATE_CAT),
+	'L_ADD_CAT' => $LANG['wiki_create_cat'],
+	'U_ADD_CAT' => url('post.php?type=cat' . ($id_cat > 0 ? '&amp;id_parent=' . $id_cat : '')),
+
+	'C_STATUS' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS)),
+	'L_STATUS' => $LANG['wiki_article_status'],
+	'U_STATUS' => url('property.php?status=' . $article_infos['id']),
+
+	'C_RESTRICTION' => $User->check_auth($config->get_authorizations(), WIKI_RESTRICTION),
+	'L_RESTRICTION' => $LANG['wiki_restriction_level'],
+	'U_RESTRICTION' => url('property.php?auth=' . $article_infos['id']),
+	
+	'L_PRINT' => $LANG['printable_version'],
+	'U_PRINT' => url('print.php?id=' . $article_infos['id']),
+
+	'L_RANDOM' => $LANG['wiki_random_page'],
+	'U_RANDOM' => url('/wiki/property.php?random=1'),
+
+	'L_SEARCH' => $LANG['wiki_search'],
+	'U_SEARCH' => url('/wiki/search.php'),
+
+	'L_FOLLOWED' => $LANG['wiki_followed_articles'],
+	'U_FOLLOWED' => url('/wiki/favorites.php'),
+
+	'L_WATCH' => $article_infos['id_favorite'] > 0 ? $LANG['wiki_unwatch_this_topic'] : $LANG['wiki_watch'],
+	'U_WATCH' => $article_infos['id_favorite'] > 0 ? url('/wiki/favorites.php?del=' . $id_article . '&amp;token=' . $Session->get_token()) : url('/wiki/favorites.php?add=' . $id_article),
+
+	'L_EXPLORE' => $LANG['wiki_explorer_short'],
+	'U_EXPLORE' => url('/wiki/explorer.php'),
+
+	'L_RSS' => $LANG['wiki_rss'],
+	'U_RSS' => $page_type == 'index' ? SyndicationUrlBuilder::rss('wiki')->rel() : SyndicationUrlBuilder::rss('wiki', $article_infos['id_cat'])->rel(),
+));
+
 //Discussion
 if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_COM)) && ($general_auth || $User->check_auth($article_auth , WIKI_COM)))
 {
@@ -194,58 +151,4 @@ if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $User
 		'L_COM' => $LANG['wiki_article_com_article'] . ($article_infos['number_comments'] > 0 ? ' (' . $article_infos['number_comments'] . ')' : '')
 	));
 }
-
-//Explorateur du wiki
-$other_tools[$LANG['wiki_explorer_short']] = array(PATH_TO_ROOT . url('/wiki/explorer.php'), 'explorer');
-
-//Flux RSS du wiki
-if ($page_type == 'index')
-{
-	$other_tools[$LANG['wiki_rss']] = array(SyndicationUrlBuilder::rss('wiki')->rel(), 'rss');
-}
-if ($page_type == 'cat')
-{
-	$other_tools[$LANG['wiki_rss']] = array(SyndicationUrlBuilder::rss('wiki', $article_infos['id_cat'])->rel(), 'rss');
-}
-//On parse
-if ($page_type == 'index' || $page_type == 'article' || $page_type = 'cat')
-{
-	$i = 1;
-	foreach ($tools as $key => $value)
-	{
-		$Template->assign_block_vars('tool', array(
-			'U_TOOL' => '../wiki/'.$value[0],
-			'L_TOOL' => $key
-		));
-		$Template->assign_block_vars('contribution_tools', array(
-			'DM_A_CLASS' => $action_pictures[$value[1]],
-			'U_ACTION' => '../wiki/'.$value[0],
-			'L_ACTION' => $key,
-			'ONCLICK' => (array_key_exists($key, $confirm)) ? $confirm[$key] : ''
-			));
-			$i++;
-	}
-}
-$nbr_values = count($other_tools);
-$i = 1;
-foreach ($other_tools as $key => $value)
-{
-	$Template->assign_block_vars('tool', array(
-		'U_TOOL' => $value[0],
-		'L_TOOL' => $key
-	));
-	if ($i < $nbr_values && !empty($key))
-	{
-		$Template->assign_block_vars('tool.separation', array());
-	}
-
-	$Template->assign_block_vars('other_tools', array(
-		'DM_A_CLASS' => $action_pictures[$value[1]],
-		'U_ACTION' => $value[0],
-		'L_ACTION' => $key,
-		'ONCLICK' => (array_key_exists($key, $confirm_others)) ? $confirm_others[$key] : ''
-	));
-	$i++;
-}
-
 ?>
