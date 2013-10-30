@@ -101,18 +101,6 @@
 										<label><input type="text" size="40" name="a2" value="{ANSWER2}" class="text" /></label><br>
 										<label><input type="text" size="40" name="a3" value="{ANSWER3}" class="text" /></label><br>
 										<label><input type="text" size="40" name="a4" value="{ANSWER4}" class="text" /></label><br>
-										<noscript>
-											<label><input type="text" size="40" name="a5" value="{ANSWER5}" class="text" /></label><br>
-											<label><input type="text" size="40" name="a6" value="{ANSWER6}" class="text" /></label><br>
-											<label><input type="text" size="40" name="a7" value="{ANSWER7}" class="text" /></label><br>
-											<label><input type="text" size="40" name="a8" value="{ANSWER8}" class="text" /></label><br>
-											<label><input type="text" size="40" name="a9" value="{ANSWER9}" class="text" /></label><br>
-											<label><input type="text" size="40" name="a10" value="{ANSWER10}" class="text" /></label><br>
-											<label><input type="text" size="40" name="a11" value="{ANSWER11}" class="text" /></label><br>
-											<label><input type="text" size="40" name="a12" value="{ANSWER12}" class="text" /></label><br>
-											<label><input type="text" size="40" name="a13" value="{ANSWER13}" class="text" /></label><br>
-											<label><input type="text" size="40" name="a14" value="{ANSWER14}" class="text"></label>
-										</noscript>
 										<span id="a5"></span>
 									</td>
 									<td class="row2" style="text-align:center;">								
@@ -121,18 +109,6 @@
 										<label><input type="text" size="3" name="v2" value="{VOTES2}" class="text" /> {PERCENT2}</label><br>
 										<label><input type="text" size="3" name="v3" value="{VOTES3}" class="text" /> {PERCENT3}</label><br>
 										<label><input type="text" size="3" name="v4" value="{VOTES4}" class="text" /> {PERCENT4}</label><br>
-										<noscript>
-											<label><input type="text" size="3" name="v5" value="{VOTES5}" class="text" /> {PERCENT5}</label><br>
-											<label><input type="text" size="3" name="v6" value="{VOTES6}" class="text" /> {PERCENT6}</label><br>
-											<label><input type="text" size="3" name="v7" value="{VOTES7}" class="text" /> {PERCENT7}</label><br>
-											<label><input type="text" size="3" name="v8" value="{VOTES8}" class="text" /> {PERCENT8}</label><br>
-											<label><input type="text" size="3" name="v9" value="{VOTES9}" class="text" /> {PERCENT9}</label><br>
-											<label><input type="text" size="3" name="v10" value="{VOTES10}" class="text" /> {PERCENT10}</label><br>
-											<label><input type="text" size="3" name="v11" value="{VOTES11}" class="text" /> {PERCENT11}</label><br>
-											<label><input type="text" size="3" name="v12" value="{VOTES12}" class="text" /> {PERCENT12}</label><br>
-											<label><input type="text" size="3" name="v13" value="{VOTES13}" class="text" /> {PERCENT13}</label><br>
-											<label><input type="text" size="3" name="v14" value="{VOTES14}" class="text"> {PERCENT14}</label>
-										</noscript>
 										<span id="v5"></span>					
 									</td>
 								</tr>

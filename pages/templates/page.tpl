@@ -8,25 +8,6 @@
 					{redirect.REDIRECTED_FROM} {redirect.DELETE_REDIRECTION}
 					</div>
 				# END redirect #
-				<noscript>
-					<div class="row2" style="text-align:right;">
-						&nbsp;
-						# IF C_TOOLS_AUTH #
-							<a href="{U_EDIT}">{L_EDIT}</a>
-							<a href="{U_RENAME}">{L_RENAME}</a>
-							<a href="{U_DELETE}">{L_DELETE}</a>
-							<a href="{U_REDIRECTIONS}">{L_REDIRECTIONS}</a>
-							<a href="{U_CREATE}">{L_CREATE}</a>
-							<a href="{U_EXPLORER}">{L_EXPLORER}</a>
-							&bull;
-						# ENDIF #
-						# IF C_PRINT #
-						<a href="{U_PRINT}">{L_PRINT}</a>
-						# ENDIF #
-						&nbsp;
-						<br />
-					</div>
-				</noscript>
 
 				<div style="margin-bottom:10px;">
 					<menu class="dynamic_menu right group">

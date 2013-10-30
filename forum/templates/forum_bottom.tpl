@@ -47,9 +47,6 @@
                             <select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 4) == '----') document.location = 'forum{U_ONCHANGE}'; else document.location = '{U_ONCHANGE_CAT}';" class="forum_online_select">
                                 {SELECT_CAT}
                             </select>
-                            <noscript>
-                                <div><button type="submit" name="valid_change_cat" value="true">Go</button></div>
-                            </noscript>
                         </div>
 					</form>
 					# ENDIF #
