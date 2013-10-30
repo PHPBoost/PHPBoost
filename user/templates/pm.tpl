@@ -267,7 +267,7 @@
 				<legend>{L_SUBMIT}</legend>
 					<button type="submit" name="pm" value="true">{L_SUBMIT}</button>
 					&nbsp;&nbsp;
-					<button type="submit" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>			
+					<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>			
 					&nbsp;&nbsp;
 					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>	
@@ -323,7 +323,7 @@
 							<legend>{L_SUBMIT}</legend>
 							<input type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit">
 							&nbsp;&nbsp; 
-							<button type="submit" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>											
+							<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>											
 							&nbsp;&nbsp; 
 							<button type="reset" value="true">{L_RESET}</button>
 						</fieldset>	
@@ -397,7 +397,7 @@
 							<legend>{L_SUBMIT}</legend>
 							<button type="submit" name="convers" value="true">{L_SUBMIT}</button>
 								&nbsp;&nbsp; 
-								<button type="submit" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+								<button type="button" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 								&nbsp;&nbsp; 
 								<button type="reset" value="true">{L_RESET}</button>
 						</fieldset>	

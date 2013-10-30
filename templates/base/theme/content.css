@@ -134,11 +134,6 @@ section footer nav.pagination {	text-align: center; }
 	background-color:#EEE;
 }
 
-.span > ul:hover {
-	display:block;
-	background-color:#EEE;
-}
-
 .explorer .contents ul .sub a, .explorer .contents ul .sub ul .sub {
 	padding-left:20px;
 }
