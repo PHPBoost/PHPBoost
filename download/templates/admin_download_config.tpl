@@ -37,10 +37,10 @@
 						<label for="notation_scale">* {L_NOTATION_SCALE}</label>
 						<div class="form-field"><label><input type="text" size="2" maxlength="2" id="notation_scale" name="note_max" value="{NOTATION_SCALE}" class="text"></label></div>
 					</div>
-					<label for="contents">
-						{L_ROOT_DESCRIPTION}
-					</label>
 					<div class="form-element-textarea">
+						<label for="contents">
+							{L_ROOT_DESCRIPTION}
+						</label>
 						{KERNEL_EDITOR}
 						<textarea id="contents" rows="15" cols="40" name="root_contents">{DESCRIPTION}</textarea>
 					</div>

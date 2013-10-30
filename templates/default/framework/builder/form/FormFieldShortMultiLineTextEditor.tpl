@@ -1,4 +1,4 @@
-<div id="${escape(ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF # class="field-textarea">
+<div id="${escape(ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element">
 	<label for="${escape(ID)}">
 		# IF C_REQUIRED # * # ENDIF #
 		{LABEL}
@@ -9,7 +9,7 @@
 		<div style="font-weight:bold;display:none" id="onblurMesssageResponse${escape(ID)}"></div>
 		# ENDIF #
 	</label>
-	<div class="field-value">
+	<div class="form-field">
 		# START fieldelements #
 			{fieldelements.ELEMENT}
 		# END fieldelements #
