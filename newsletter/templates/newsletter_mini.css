@@ -25,6 +25,18 @@ div#newsletter {
 	margin-top:10px;
 }
 
-.input-element-button input, .input-element-button button {
+.input-element-button input {
+	width:120px;
 	font-size:12px;
+	-webkit-border-radius: 4px 0px 0px 4px;
+	-moz-border-radius: 4px 0px 0px 4px;
+	border-radius: 4px 0px 0px 4px;
+}
+
+.input-element-button button {
+	font-size:12px;
+	-webkit-border-radius: 0px 4px 4px 0px;
+	-moz-border-radius: 0px 4px 4px 0px;
+	border-radius: 0px 4px 4px 0px;
+	margin-left:-1px;
 }
