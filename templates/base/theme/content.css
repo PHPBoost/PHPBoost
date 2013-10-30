@@ -130,7 +130,12 @@ section footer nav.pagination {	text-align: center; }
 	padding-right:3px;
 }
 
-.explorer .contents ul a:hover{
+.explorer .contents ul a:hover, .explorer .contents ul a:hover+a{
+	background-color:#EEE;
+}
+
+.span > ul:hover {
+	display:block;
 	background-color:#EEE;
 }
 
