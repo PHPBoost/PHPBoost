@@ -48,7 +48,7 @@ $root = '';
 foreach ($_WIKI_CATS as $key => $value)
 {
 	if ($value['id_parent'] == 0)
-		$root .= '<tr><td class="row2"><img src="' . $module_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
+		$root .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><img src="' . $module_data_path . '/images/closed_cat.png" alt="" />' . $value['name'] . '</a></li>';
 }
 $result = $Sql->query_while("SELECT title, id, encoded_title
 	FROM " . PREFIX . "wiki_articles a
@@ -57,7 +57,7 @@ $result = $Sql->query_while("SELECT title, id, encoded_title
 	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
-	$root .= '<tr><td class="row2"><img src="' . $module_data_path . '/images/article.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
+	$root .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><img src="' . $module_data_path . '/images/article.png" alt="" />' . $row['title'] . '</a></li>';
 }
 $Sql->query_close($result);
 
@@ -82,21 +82,20 @@ while ($row = $Sql->fetch_assoc($result))
 	if ($sub_cats_number > 0)
 	{	
 		$template->assign_block_vars('list', array(
-			'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
-			<a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $module_data_path . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+			'DIRECTORY' => '<li class="sub"><a class="plus_minus" href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" /><img src="' . $module_data_path . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" /></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 		));
 	}
 	else
 	{
 		$template->assign_block_vars('list', array(
-			'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $module_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+			'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');"><img src="' . $module_data_path . '/images/closed_cat.png" alt="" />' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 		));
 	}
 }
 $Sql->query_close($result);
 $template->put_all(array(
 	'SELECTED_CAT' => 0,
-	'CAT_0' => 'wiki_selected_cat',
+	'CAT_0' => 'selected',
 	'CAT_LIST' => '',
 	'CURRENT_CAT' => $LANG['wiki_no_selected_cat']
 ));

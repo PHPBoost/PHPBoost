@@ -60,15 +60,18 @@
 				</div>		
 				<div class="form-element">
 					<label>{L_CAT}</label>
-					<div class="form-field">
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
-						<br />
-						<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">
-						# START create.list #
-							{create.list.DIRECTORY}
-						# END create.list #
-						{CAT_LIST}
-						</ul>
+					<div class="explorer inline">
+						<div class="cats">
+							<div class="contents">
+								<ul>
+									<li><a class="{CAT_0}" id="class_0" href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" />{L_DO_NOT_SELECT_ANY_CAT}</a></li>
+									# START create.list #
+										{create.list.DIRECTORY}
+									# END create.list #
+									{CAT_LIST}
+								</ul>
+							</div>
+						</div>
 					</div>					
 				</div>
 				# END create #	
