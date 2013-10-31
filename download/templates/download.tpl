@@ -161,12 +161,12 @@
 							<img src="{U_IMG}" alt="{IMAGE_ALT}" itemprop="image"/>
 							<br /><br />
 						# ENDIF #
-						<a href="{U_DOWNLOAD_FILE}" class="small-button large">
+						<a href="{U_DOWNLOAD_FILE}" class="basic-button">
 							{L_DOWNLOAD_FILE}
 						</a>
 						<br/>
 						# IF IS_USER_CONNECTED #
-						<a href="{U_DEADLINK}" class="small-button large alt">
+						<a href="{U_DEADLINK}" class="smaller">
 							{L_DEADLINK}
 						</a>
 						# ENDIF #
