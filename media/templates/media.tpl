@@ -70,7 +70,7 @@
 					# ENDIF #
 	
 					# IF C_FILES #
-						<div class="options float_right" id="form">
+						<div class="options" id="form">
 							<script type="text/javascript">
 							<!--
 							function change_order()

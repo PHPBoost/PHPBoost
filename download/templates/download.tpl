@@ -61,7 +61,7 @@
 				
 				# IF C_FILES #
 					
-					<div class="options float_right" id="form">
+					<div class="options" id="form">
 						<script type="text/javascript">
 						<!--
 						function change_order()
@@ -155,79 +155,35 @@
 				
 			</header>
 			<div class="content">
-				<table>
-					<tr>
-						<td style="text-align:center;padding-right:20px;vertical-align:top;">
-							# IF C_IMG #
-								<img src="{U_IMG}" alt="{IMAGE_ALT}" itemprop="image"/>
-								<br /><br />
-							# ENDIF #
-							<a href="{U_DOWNLOAD_FILE}">
-								<img src="{PICTURES_DATA_PATH}/images/download_file.png" alt="" />
-							</a>
-							<p><a href="{U_DOWNLOAD_FILE}">{L_DOWNLOAD_FILE}</a></p>
-							# IF IS_USER_CONNECTED #
-							<a href="{U_DEADLINK}">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/notice.png" alt="" />
-							</a>
-							<p><a href="{U_DEADLINK}">{L_DEADLINK}</a></p>
-							# ENDIF #
-						</td>
-						<td>
-							<span itemprop="text">
-								{CONTENTS}
-							</span>
-						</td>
-					</tr>
-				</table>
+				<div class="options infos">
+					<div class="center">
+						# IF C_IMG #
+							<img src="{U_IMG}" alt="{IMAGE_ALT}" itemprop="image"/>
+							<br /><br />
+						# ENDIF #
+						<a href="{U_DOWNLOAD_FILE}" class="small-button large">
+							{L_DOWNLOAD_FILE}
+						</a>
+						<br/>
+						# IF IS_USER_CONNECTED #
+						<a href="{U_DEADLINK}" class="small-button large alt">
+							{L_DEADLINK}
+						</a>
+						# ENDIF #
+					</div>
+					<h6>{L_FILE_INFOS}</h6>
+					<span class="text_strong">{L_SIZE} : </span><span>{SIZE}</span><br/>
+					<span class="text_strong">{L_INSERTION_DATE} : </span><span itemprop="dateCreated">{CREATION_DATE}</span><br/>
+					<span class="text_strong">{L_RELEASE_DATE} : </span><span itemprop="dateModified">{RELEASE_DATE}</span><br/>
+					<span class="text_strong">{L_DOWNLOADED} : </span><span>{HITS}</span><br/>
+					<div class="center"><span class="text_strong">{KERNEL_NOTATION}</span>
+					<span id="nbrnote{ID_FILE}">({NUM_NOTES})</span></div>
+					
+				</div>
+				<span itemprop="text">
+					{CONTENTS}
+				</span>
 				<br />
-				<table style="width:430px;margin-right:0;" class="module_table text_small">
-					<tr>
-						<th colspan="2">
-							{L_FILE_INFOS}
-						</th>
-					</tr>
-					<tr>
-						<td class="row1" style="padding:3px">
-							{L_SIZE}
-						</td>
-						<td class="row2" style="padding:3px">
-							{SIZE}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1" style="padding:3px">
-							{L_INSERTION_DATE}
-						</td>
-						<td class="row2" style="padding:3px" itemprop="dateCreated">
-							{CREATION_DATE}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1" style="padding:3px">
-							{L_RELEASE_DATE}
-						</td>
-						<td class="row2" style="padding:3px" itemprop="dateModified">
-							{RELEASE_DATE}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1" style="padding:3px">
-							{L_DOWNLOADED}
-						</td>
-						<td class="row2" style="padding:3px">
-							{HITS}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1" style="padding:3px">
-							{L_NOTE} <em><span id="nbrnote{ID_FILE}">({NUM_NOTES})</span></em>
-						</td>
-						<td class="row2" style="padding:1px">
-							{KERNEL_NOTATION}
-						</td>
-					</tr>
-				</table>
 				{COMMENTS}
 			</div>
 			<footer></footer>

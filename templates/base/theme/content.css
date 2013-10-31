@@ -156,6 +156,12 @@ section footer nav.pagination {	text-align: center; }
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
+	float:right;
+}
+
+.options h6{
+	margin:10px 3px;
+	font-size:14px;
 }
 
 /* Tableaux
@@ -385,7 +391,7 @@ button[type=reset]{
 
 /* Small */
 .small-button {
-	display: inline;
+	display: inline-block;
 	padding: 1px 6px;
 	font-size: 75%;
 	font-weight: bold;
@@ -404,6 +410,20 @@ button[type=reset]{
 .small-button [class^="pbt-icon-"]:before{
 	font-size:13px;
 	vertical-align: -1px;
+}
+
+.small-button.large {
+	padding: 2px 6px;
+	font-size: 95%;
+	margin:1px;
+}
+
+.small-button.alt {
+	background: #AAA;
+}
+
+.small-button.alt:hover {
+	background: #BBB;
 }
 
 /* Formulaires 
