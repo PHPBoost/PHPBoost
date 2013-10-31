@@ -86,6 +86,7 @@ section footer nav.pagination {	text-align: center; }
 
 .explorer .cats {
 	width:32.6%;
+	min-width:220px;
 }
 
 .explorer h1 {
