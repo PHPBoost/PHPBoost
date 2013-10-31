@@ -78,14 +78,17 @@
 				</div>
 				<div class="form-element">
 					<label>{L_CAT}</label>
-					<div class="form-field">
-						<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
-						<br />
-						<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">
-						{CAT_LIST}
-						</ul>
-					</div>					
+					<div class="explorer inline">
+						<div class="cats">
+							<div class="contents">
+								<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
+								<ul>
+									<a id="class_0" class="{CAT_0}" href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" />{L_ROOT}</a>
+									{CAT_LIST}
+								</ul>
+							</div>
+						</div>
+					</div>				
 				</div>
 			</fieldset>
 			

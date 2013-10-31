@@ -237,7 +237,7 @@ if ($id_edit > 0)
 		'COMMENTS_ACTIVATED_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') : ($page_infos['activ_com'] == 1 ? 'checked="checked"' : ''),
 		'DISPLAY_PRINT_LINK_CHECKED' => !empty($error) ? ($display_print_link == 1 ? 'checked="checked"' : '') : ($page_infos['display_print_link'] == 1 ? 'checked="checked"' : ''),
 		'OWN_AUTH_CHECKED' => !empty($page_infos['auth']) ? 'checked="checked"' : '',
-		'CAT_0' => $id_cat_display == 0 ? 'pages_selected_cat' : '',
+		'CAT_0' => $id_cat_display == 0 ? 'selected' : '',
 		'ID_CAT' => $id_cat_display,
 		'SELECTED_CAT' => $id_cat_display,
 		'CHECK_IS_CAT' => 'disabled="disabled"' . ($page_infos['is_cat'] == 1 ? ' checked="checked"' : '')
@@ -278,7 +278,7 @@ else
 		'COMMENTS_ACTIVATED_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') :($pages_config->get_comments_activated() == true ? 'checked="checked"' : ''),
 		'DISPLAY_PRINT_LINK_CHECKED' => !empty($error) ? ($display_print_link == 1 ? 'checked="checked"' : '') : 'checked="checked"',
 		'OWN_AUTH_CHECKED' => '',
-		'CAT_0' => 'pages_selected_cat',
+		'CAT_0' => 'selected',
 		'ID_CAT' => '0',
 		'SELECTED_CAT' => '0'
 	));
