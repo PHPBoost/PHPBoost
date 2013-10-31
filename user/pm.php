@@ -705,16 +705,16 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'USER_SEX' => ($is_admin) ? '' : $user_sex,
 			'USER_MSG' => ($is_admin) ? '' : $user_msg,
 			'USER_LOCAL' => ($is_admin) ? '' : $user_local,
-			'USER_MAIL' => ($is_admin) ? '' : ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '" class="small-button">Mail</a>' : '',
-			'USER_MSN' => ($is_admin) ? '' : (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '" class="small-button">MSN</a>' : '',
-			'USER_YAHOO' => ($is_admin) ? '' : (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '" class="small-button">Yahoo</a>' : '',
+			'USER_MAIL' => ($is_admin) ? '' : ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '" class="basic-button smaller">Mail</a>' : '',
+			'USER_MSN' => ($is_admin) ? '' : (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '" class="basic-button smaller">MSN</a>' : '',
+			'USER_YAHOO' => ($is_admin) ? '' : (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '" class="basic-button smaller">Yahoo</a>' : '',
 			'USER_SIGN' => ($is_admin) ? '' : (!empty($row['user_sign'])) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
-			'USER_WEB' => ($is_admin) ? '' : (!empty($row['user_website'])) ? '<a href="' . $row['user_website'] . '" class="small-button">Web</a>' : '',
+			'USER_WEB' => ($is_admin) ? '' : (!empty($row['user_website'])) ? '<a href="' . $row['user_website'] . '" class="basic-button smaller">Web</a>' : '',
 			'WARNING' => ($is_admin) ? '' : $row['user_warning'] . '%',
 			'U_USER_PROFILE' => ($is_admin) ? '' : UserUrlBuilder::profile($row['user_id'])->rel(),
 			'U_ANCHOR' => 'pm' . url('.php?id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '') . '.php') . '#m' . $row['id'],
 			'U_QUOTE' => ($is_admin) ? '' : ('<a href="pm' . url('.php?quote=' . $row['id'] . '&amp;id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '-0') . '-' . $row['id'] . '.php') . '#quote" title="' . $LANG['quote'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/quote.png" alt="" /></a>'),
-			'U_USER_PM' => ($is_admin) ? '' : '<a href="../user/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="small-button">MP</a>',
+			'U_USER_PM' => ($is_admin) ? '' : '<a href="../user/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="basic-button smaller">MP</a>',
 		));
 		
 		//Marqueur de suivis du sujet.

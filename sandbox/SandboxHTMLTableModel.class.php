@@ -146,7 +146,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 	private function build_table_row(array $row)
 	{
 		$login = new HTMLTableRowCell($row['login']);
-		$user_mail = new HTMLTableRowCell(($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '" class="small-button">Mail</a>' : '&nbsp;');
+		$user_mail = new HTMLTableRowCell(($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '" class="basic-button smaller">Mail</a>' : '&nbsp;');
 		$user_mail->add_css_style('width:50px');
 		$user_mail->center();
 		$timestamp = new HTMLTableRowCell(gmdate_format('date_format_long', $row['timestamp']));
@@ -154,7 +154,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$user_msg->center();
 		$last_connect = new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']));
 		$pm_url = new Url('/user/pm.php?pm=' . $row['user_id']);
-		$pm = new HTMLTableRowCell('<a href="' . $pm_url->rel() . '" class="small-button">MP</a>');
+		$pm = new HTMLTableRowCell('<a href="' . $pm_url->rel() . '" class="basic-button smaller">MP</a>');
 		$pm->center();
 		$pm->add_css_style('width:50px');
 			

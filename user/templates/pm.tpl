@@ -244,7 +244,7 @@
 					<tr>	
 						<td class="row2">
 							{show_pm.CONTENTS}<br /><br /><br />
-							<hr / class="small-button">MP
+							<hr / class="basic-button smaller">MP
 						</td>
 					</tr>	
 				</table>
@@ -296,7 +296,7 @@
 							<td class="row2">														
 								{edit_pm.show_pm.CONTENTS}
 								<br /><br /><br />
-								<hr / class="small-button">MP
+								<hr / class="basic-button smaller">MP
 							</td>
 						</tr>	
 					</table>
@@ -357,7 +357,7 @@
 							<td class="row2">														
 								{post_convers.show_convers.CONTENTS}
 								<br /><br /><br />
-								<hr / class="small-button">MP
+								<hr / class="basic-button smaller">MP
 							</td>
 						</tr>	
 					</table>

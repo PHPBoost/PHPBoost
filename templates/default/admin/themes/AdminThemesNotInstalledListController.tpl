@@ -58,7 +58,7 @@
 								{themes_not_installed.AUTHOR_NAME}
 							</a>
 							# IF themes_not_installed.C_WEBSITE # 
-							<a href="{themes_not_installed.AUTHOR_WEBSITE}" class="small-button">Web</a>
+							<a href="{themes_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a>
 							# ENDIF #
 							<br />
 							<span class="text_strong">{@themes.description}:</span> {themes_not_installed.DESCRIPTION}<br />

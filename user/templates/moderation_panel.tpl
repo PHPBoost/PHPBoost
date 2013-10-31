@@ -103,7 +103,7 @@
 								{member_list.U_ACTION_USER}
 							</td>
 							<td>
-								<a href="{member_list.U_PM}" class="small-button">MP</a>
+								<a href="{member_list.U_PM}" class="basic-button smaller">MP</a>
 							</td>
 						</tr>
 						# END member_list #
@@ -156,7 +156,7 @@
 								{L_PM}
 							</td>
 							<td class="row2">
-								<a href="{U_PM}" class="small-button">MP</a>
+								<a href="{U_PM}" class="basic-button smaller">MP</a>
 							</td>
 						</tr>
 						<tr>
@@ -207,7 +207,7 @@
 								{L_PM}
 							</td>
 							<td class="row2">
-								<a href="{U_PM}" class="small-button">MP</a>
+								<a href="{U_PM}" class="basic-button smaller">MP</a>
 							</td>
 						</tr>
 						<tr>
