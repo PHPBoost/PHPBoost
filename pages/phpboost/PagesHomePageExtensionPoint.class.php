@@ -144,7 +144,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			if ($sub_cats_number > 0)
 			{	
 				$tpl->assign_block_vars('list', array(
-					'DIRECTORY' => '<li class="sub"><a class="plus_minus" href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $tpl->get_pictures_data_path() . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"/><img src="' . $tpl->get_pictures_data_path() . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt=""/></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></li>'
+					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $tpl->get_pictures_data_path() . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"/><img src="' . $tpl->get_pictures_data_path() . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt=""/></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></li>'
 				));
 			}
 			else

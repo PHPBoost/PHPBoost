@@ -110,7 +110,7 @@ section footer nav.pagination {	text-align: center; }
 	padding:0;
 }
 
-.explorer .contents ul a.plus_minus{
+.explorer .contents ul a.parent{
 	float:left;
 	display:inline-block;
 	padding-right:0;
@@ -128,7 +128,7 @@ section footer nav.pagination {	text-align: center; }
 	padding-right:6px;
 }
 
-.explorer .contents ul a.plus_minus img:first-child{
+.explorer .contents ul a.parent img:first-child{
 	padding-right:3px;
 }
 
@@ -140,7 +140,7 @@ section footer nav.pagination {	text-align: center; }
 	padding-left:20px;
 }
 
-.explorer .contents ul .sub a.plus_minus{
+.explorer .contents ul .sub a.parent{
 	padding-left:4px;
 }
 
