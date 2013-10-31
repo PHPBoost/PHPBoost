@@ -265,21 +265,20 @@ else
 			if ($sub_cats_number > 0)
 			{	
 				$Template->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
-					<a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $module_data_path . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li class="sub"><a class="plus_minus" href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" /><img src="' . $module_data_path . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" /></a><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 			else
 			{
 				$Template->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $module_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');"><img src="' . $module_data_path . '/images/closed_cat.png" alt="" />' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 		}
 		$Sql->query_close($result);
 		$Template->put_all(array(
 			'SELECTED_CAT' => 0,
-			'CAT_0' => 'wiki_selected_cat',
+			'CAT_0' => 'selected',
 			'CAT_LIST' => '',
 			'CURRENT_CAT' => $LANG['wiki_no_selected_cat']
 		));

@@ -41,7 +41,7 @@ $module_data_path = $Template->get_pictures_data_path();
 //Listage des répertoires dont le répertoire parent est connu
 if ($id_cat != 0)
 {
-	echo '<ul style="margin:0;padding:0;list-style-type:none;padding-left:30px;">';
+	echo '<ul>';
 	//On sélectionne les répetoires dont l'id parent est connu
 	$result = $Sql->query_while("SELECT c.id, a.title, a.encoded_title
 	FROM " . PREFIX . "wiki_cats c
@@ -55,9 +55,9 @@ if ($id_cat != 0)
 		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 		//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 		if ($sub_cats_number > 0)
-			echo '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" style="vertical-align:middle" /></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_pictures_data_path() . '/images/closed_cat.png" alt="" id="img_' . $row['id'] . '" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
+			echo '<li class="sub"><a class="plus_minus" href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" /><img src="' . $Template->get_pictures_data_path() . '/images/closed_cat.png" alt="" id="img_' . $row['id'] . '" /></a><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>';
 		else //Sinon on n'affiche pas le "+"
-			echo '<li style="padding-left:17px;"><img src="' . $module_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a></span></li>';
+			echo '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');"><img src="' . $module_data_path . '/images/closed_cat.png" alt="" />' . $row['title'] . '</a></li>';
 	}
 	$Sql->query_close($result);
 	echo '</ul>';
@@ -88,13 +88,13 @@ elseif ($select_cat && empty($open_cat) && $root == 0)
 elseif (!empty($open_cat) || $root == 1)
 {
 	$open_cat = $root == 1 ? 0 : $open_cat;
-	$return = '<table style="width:100%;">';
+	$return = '<ul>';
 	//Liste des catégories dans cette catégorie
 	$Cache->load('wiki');
 	foreach ($_WIKI_CATS as $key => $value)
 	{
 		if ($value['id_parent'] == $open_cat)
-			$return .= '<tr><td class="row2"><img src="' . $module_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
+			$return .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><img src="' . $module_data_path . '/images/closed_cat.png" alt="" />' . $value['name'] . '</a></li>';
 	}
 	$result = $Sql->query_while("SELECT title, id, encoded_title
 	FROM " . PREFIX . "wiki_articles a
@@ -103,10 +103,10 @@ elseif (!empty($open_cat) || $root == 1)
 	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$return .= '<tr><td class="row2"><img src="' . $module_data_path . '/images/article.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
+		$return .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><img src="' . $module_data_path . '/images/article.png" alt="" />' . $row['title'] . '</a></li>';
 	}
 	$Sql->query_close($result);
-	$return .= '</table>';
+	$return .= '</ul>';
 	echo $return;
 }
 

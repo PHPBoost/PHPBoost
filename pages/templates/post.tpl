@@ -83,7 +83,7 @@
 							<div class="contents">
 								<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
 								<ul>
-									<a id="class_0" class="{CAT_0}" href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" />{L_ROOT}</a>
+									<li><a id="class_0" class="{CAT_0}" href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" />{L_ROOT}</a></li>
 									{CAT_LIST}
 								</ul>
 							</div>
