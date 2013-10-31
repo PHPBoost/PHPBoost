@@ -279,7 +279,7 @@ if ($del_cat > 0)
 		'CATS' => $cat_list,
 		'CURRENT_CAT' => $current_cat,
 		'SELECTED_CAT' => $page_infos['id_cat'],
-		'CAT_0' => ($page_infos['id_cat'] == 0 ? 'pages_selected_cat' : ''),
+		'CAT_0' => ($page_infos['id_cat'] == 0 ? 'selected' : ''),
 		'ID_CAT' => $page_infos['id_cat']
 	));
 	

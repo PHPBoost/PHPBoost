@@ -79,14 +79,14 @@ section footer nav.pagination {	text-align: center; }
 -------------------------------------- */
 .explorer .cats, .explorer .files{
 	display:inline-block;
-	width:65%;
+	width:62%;
 	margin:5px 0.33%;
 	vertical-align:top;
 }
 
 .explorer .cats {
-	width:32.6%;
-	min-width:220px;
+	width:35.6%;
+	min-width:200px;
 }
 
 .explorer h1 {
@@ -101,6 +101,7 @@ section footer nav.pagination {	text-align: center; }
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
+	min-height:120px;
 }
 
 .explorer .contents ul{
