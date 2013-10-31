@@ -55,7 +55,7 @@ if ($id_cat != 0)
 		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 		//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 		if ($sub_cats_number > 0)
-			echo '<li class="sub"><a class="plus_minus" href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" /><img src="' . $Template->get_pictures_data_path() . '/images/closed_cat.png" alt="" id="img_' . $row['id'] . '" /></a><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>';
+			echo '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" /><img src="' . $Template->get_pictures_data_path() . '/images/closed_cat.png" alt="" id="img_' . $row['id'] . '" /></a><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>';
 		else //Sinon on n'affiche pas le "+"
 			echo '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');"><img src="' . $module_data_path . '/images/closed_cat.png" alt="" />' . $row['title'] . '</a></li>';
 	}
