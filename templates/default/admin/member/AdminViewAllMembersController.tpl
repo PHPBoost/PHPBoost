@@ -59,7 +59,7 @@
 						{member_list.LEVEL}
 					</td>
 					<td>
-						<a href="mailto:{member_list.MAIL}" class="small-button">Mail</a>
+						<a href="mailto:{member_list.MAIL}" class="basic-button smaller">Mail</a>
 					</td>
 					<td>
 						{member_list.REGISTERED}

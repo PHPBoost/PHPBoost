@@ -145,13 +145,13 @@
 	
 		<h5>Petits boutons</h5><br />
 		<div class="content">
-			<a href="#" class="small-button" title="BOuton Classique">Bouton</a> 
-			<a href="#" class="small-button" title="Envoyer un MP">MP</a>
-			<a href="#" class="small-button" title="Mail"><i class="pbt-icon-mail"></i></a>
-			<a href="#" class="small-button" title="Contact Skype"><i class="pbt-icon-skype"></i></a>
-			<a href="#" class="small-button" title="Contact Gmail"><i class="pbt-icon-gmail"></i></a>
-			<a href="#" class="small-button" title="Contact Facebook"><i class="pbt-icon-fb"></i></a>
-			<a href="#" class="small-button" title="Contact Twitter"><i class="pbt-icon-twitter"></i></a>
+			<a href="#" class="basic-button smaller" title="BOuton Classique">Bouton</a> 
+			<a href="#" class="basic-button smaller" title="Envoyer un MP">MP</a>
+			<a href="#" class="basic-button smaller" title="Mail"><i class="pbt-icon-mail"></i></a>
+			<a href="#" class="basic-button smaller" title="Contact Skype"><i class="pbt-icon-skype"></i></a>
+			<a href="#" class="basic-button smaller" title="Contact Gmail"><i class="pbt-icon-gmail"></i></a>
+			<a href="#" class="basic-button smaller" title="Contact Facebook"><i class="pbt-icon-fb"></i></a>
+			<a href="#" class="basic-button smaller" title="Contact Twitter"><i class="pbt-icon-twitter"></i></a>
 		</div>
 	
 		<h5>Icônes des principales actions</h5><br />

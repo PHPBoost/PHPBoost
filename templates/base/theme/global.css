@@ -134,9 +134,8 @@ a.member {
 [class^="pbt-icon-"]:before {
 	font-family: FontAwesome;
 	font-size: 15px;
-	vertical-align: text-bottom;
 	font-weight:300;
-	vertical-align:-2px;
+	vertical-align: -1px;
 	text-decoration:none;
 	font-style: normal;
 }
@@ -145,7 +144,7 @@ a.member {
 
 .pbt-icon-syndication:before { color:#f57900; content: "\f09e"; }
 .pbt-icon-edit:before { content: "\f044"; }
-.pbt-icon-delete:before { content: "\f014"; vertical-align:-1px; }
+.pbt-icon-delete:before { content: "\f014"; vertical-align:0; }
 .pbt-icon-plus:before { content: "\f067"; font-size: 18px; }
 .pbt-icon-minus:before { content: "\f068"; font-size: 18px; }
 .pbt-icon-check:before{	content: "\f00c"; color:#57A957; }

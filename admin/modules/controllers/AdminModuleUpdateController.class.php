@@ -95,7 +95,7 @@ class AdminModuleUpdateController extends AdminController
 					'ICON' => $module->get_id(),
 					'VERSION' => $configuration->get_version(),
 					'AUTHOR' => !empty($author_email) ? '<a href="mailto:' . $author_email . '">' . $author . '</a>' : $author,
-					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '" class="small-button">Web</a>' : '',
+					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '" class="basic-button smaller">Web</a>' : '',
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
