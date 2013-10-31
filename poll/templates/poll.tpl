@@ -58,9 +58,15 @@
 							# ENDIF #														
 							
 							# START result #
-							<div class="row1 text_small">
-								<p>{result.ANSWERS}</p>
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll_left.png" height="10px" width="" alt="{result.PERCENT}%" title="{result.PERCENT}%" /><img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll.png" height="10px" width="{result.WIDTH}" alt="{result.PERCENT}%" title="{result.PERCENT}%" /><img src="../templates/{THEME}/images/poll_right.png" height="10px" width="" alt="{result.PERCENT}%" title="{result.PERCENT}%" /> {result.PERCENT}% [{result.NBRVOTE} {L_VOTE}]
+							<div>
+								<span class="progressbar-infos">
+									{result.NBRVOTE} {L_VOTE}
+								</span>
+								<h6>{result.ANSWERS}</h6>
+								<div class="progressbar-container" title="{result.PERCENT}%">
+									<div class="progressbar" style="width:{result.PERCENT}%"></div>
+								</div>
+								<br/>
 							</div>
 							# END result #	
 							<div class="row2">
@@ -100,10 +106,16 @@
 					</header>
 					<div class="contents">
 						# START list.result #
-						<div class="row1 text_small">
-							<p>{list.result.ANSWERS}</p>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll_left.png" height="10px" width="" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /><img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll.png" height="10px" width="{list.result.WIDTH}" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /><img src="../templates/{THEME}/images/poll_right.png" height="10px" width="" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /> {list.result.PERCENT}% [{list.result.NBRVOTE} {list.result.L_VOTE}]
-						</div>
+							<div>
+								<span class="progressbar-infos">
+									{list.result.NBRVOTE} {list.L_VOTE}
+								</span>
+								<h6>{list.result.ANSWERS}</h6>
+								<div class="progressbar-container" title="{list.result.PERCENT}%">
+									<div class="progressbar" style="width:{list.result.PERCENT}%"></div>
+								</div>
+								<br/>
+							</div>
 						# END list.result #	
 						<div class="row2">
 							<span class="smaller" style="float:left;">{list.VOTE} {list.L_VOTE}</span>
