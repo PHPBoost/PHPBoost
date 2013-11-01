@@ -48,8 +48,8 @@ var ArticlesFormFieldSelectSources = new ArticlesFormFieldSelectSources();
 	<div style="float:left;width:84%;display:inline;padding-bottom:5px;color:#334455;font-weight:bold;"><span style="width:50%;margin:0 75px 0 40px;">${i18n('articles.form.source_name')}</span><span style="width:50%;">${i18n('articles.form.source_url')}</span></div>
 	<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" size="30" class="text">
 	<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" size="30" class="text"/>
-	<a href="javascript:ArticlesFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+	<a href="javascript:ArticlesFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="icon-delete" data-confirmation="delete-element"></a>
 	<br id="br_${escape(ID)}_{fieldelements.ID}">
 # END fieldelements #
 </div>
-<a href="javascript:ArticlesFormFieldSelectSources.add_field();" class="pbt-icon-plus" id="add_${escape(ID)}"></a>
+<a href="javascript:ArticlesFormFieldSelectSources.add_field();" class="icon-plus" id="add_${escape(ID)}"></a>

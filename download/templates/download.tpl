@@ -23,10 +23,10 @@
 		<section>		
 			<header>
 				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="pbt-icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{TITLE}
 					# IF C_ADMIN #
-					<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
+					<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 					# END IF #
 				</h1>
 			</header>
@@ -47,7 +47,7 @@
 								<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
 								
 								# IF C_ADMIN #
-								<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
+								<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 								# ENDIF #
 								<div class="smaller">
 									{row.list_cats.NUM_FILES}
@@ -91,8 +91,8 @@
 								<h1>
 									<a href="{file.U_DOWNLOAD_LINK}" itemprop="name">{file.NAME}</a>
 									# IF C_ADMIN #
-										<a href="{file.U_ADMIN_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
-										<a href="{file.U_ADMIN_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+										<a href="{file.U_ADMIN_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+										<a href="{file.U_ADMIN_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 									# ENDIF #
 								</h1>
 							</header>
@@ -147,8 +147,8 @@
 					<span class="actions">
 						{U_COM}
 						# IF C_EDIT_AUTH #
-							<a href="{U_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
-							<a href="{U_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+							<a href="{U_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+							<a href="{U_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</span>
 				</h1>

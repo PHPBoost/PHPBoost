@@ -52,8 +52,8 @@
 				# IF events.C_APPROVED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #
 			</td>
 			<td> 
-				<a href="{events.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
-				<a href="{events.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+				<a href="{events.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+				<a href="{events.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 			</td>
 		</tr>
 		# END events #

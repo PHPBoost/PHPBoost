@@ -34,14 +34,14 @@ function change_registration() {
 <article itemscope="itemscope" itemtype="http://schema.org/Event">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="pbt-icon-syndication"></a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="icon-syndication"></a>
 			<span id="name" itemprop="name">{TITLE}</span>
 			<span class="actions">
 				# IF C_EDIT #
-					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
+					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 				# ENDIF #
 				# IF C_DELETE #
-					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 				# ENDIF #
 			</span>
 		</h1>

@@ -8,10 +8,10 @@
 		
 		<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="{L_EDIT}" class="valign_middle" />
 		# IF C_EDIT #
-			<a href="{U_EDIT}" title="{L_EDIT}" class="pbt-icon-edit"></a>
+			<a href="{U_EDIT}" title="{L_EDIT}" class="icon-edit"></a>
 		# ENDIF #
 		# IF C_DEL #
-			<a href="{U_DELETE}" title="{L_DEL}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+			<a href="{U_DELETE}" title="{L_DEL}" class="icon-delete" data-confirmation="delete-element"></a>
 		# ENDIF #
 		
 		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}# ELSE #{L_ACTIVATE}# ENDIF #">

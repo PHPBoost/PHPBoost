@@ -15,7 +15,7 @@
 			<td class="row2">{menu_configuration.E_MATCH_REGEX}</td>
 			<td class="row2" style="text-align: center;"><a
 				href="{menu_configuration.U_EDIT}"
-				title="{L_MENU_CONFIGURATION_EDIT}" class="pbt-icon-edit"></a></td>
+				title="{L_MENU_CONFIGURATION_EDIT}" class="icon-edit"></a></td>
 		</tr>
 		# END menu_configuration #
 	</tbody>

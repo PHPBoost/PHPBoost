@@ -12,7 +12,7 @@
 				<div class="module_top_l"></div>
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="pbt-icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
 				</div>
 				<div class="module_contents forum_contents">
@@ -77,7 +77,7 @@
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="pbt-icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
+				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
 				# IF C_POST_NEW_SUBJECT #
 					&raquo; <a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/post.png" alt="{L_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" /></a>
 				# ENDIF #
@@ -165,7 +165,7 @@
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="pbt-icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
+				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
 				# IF C_POST_NEW_SUBJECT #
 					&raquo; <a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/post.png" alt="{L_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" /></a>
 				# ENDIF #

@@ -115,7 +115,7 @@ if (!empty($table) && $action == 'data')
 			if ($j == 0 && !empty($primary_key)) //Clée primaire détectée.
 			{
 				$Template->assign_block_vars('line.field', array(
-					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . $Session->get_token() . '" title="' . $LANG['update'] . '" class="pbt-icon-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="pbt-icon-delete" data-confirmation="delete-element"></a>',
+					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . $Session->get_token() . '" title="' . $LANG['update'] . '" class="icon-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="icon-delete" data-confirmation="delete-element"></a>',
 					'CLASS' => 'row1',
 					'STYLE' => ''
 				));
@@ -124,7 +124,7 @@ if (!empty($table) && $action == 'data')
 			if ($j == 0)
 			{
 				$Template->assign_block_vars('line.field', array(
-					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . $Session->get_token() . '" title="' . $LANG['update'] . '" class="pbt-icon-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="pbt-icon-delete" data-confirmation="delete-element"></a>',
+					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . $Session->get_token() . '" title="' . $LANG['update'] . '" class="icon-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="icon-delete" data-confirmation="delete-element"></a>',
 					'CLASS' => 'row1',
 					'STYLE' => ''
 				));

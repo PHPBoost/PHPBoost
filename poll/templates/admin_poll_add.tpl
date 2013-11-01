@@ -28,7 +28,7 @@
 			if( document.getElementById('v'+i) )
 				document.getElementById('v'+i).innerHTML = '<label><input type="text" size="3" name="v'+i+'" value="" class="text" /></label><br><span id="v'+i2+'"></span>';		
 			if( document.getElementById('s'+i) )
-				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><i class="pbt-icon-plus"></i></a></span>' : '';
+				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><i class="icon-plus"></i></a></span>' : '';
 		}
 		-->
 		</script>
@@ -114,7 +114,7 @@
 								</tr>
 								<tr>
 									<td style="text-align:center;" colspan="2">
-										<span id="s5"><a href="javascript:add_field(5, 20)"><i class="pbt-icon-plus"></i></a></span>						
+										<span id="s5"><a href="javascript:add_field(5, 20)"><i class="icon-plus"></i></a></span>						
 									</td>
 								</tr>
 							</table>

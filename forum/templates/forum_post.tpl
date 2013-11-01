@@ -193,7 +193,7 @@
 										
 										<p style="text-align:center;width:165px;" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
-											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><i class="pbt-icon-plus"></i></a>
+											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><i class="icon-plus"></i></a>
 											# ENDIF #
 										</p>
 									</div>

@@ -55,10 +55,10 @@
 							{list.APROBATION}
 						</td>
 						<td> 
-							<a href="{list.U_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
+							<a href="{list.U_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 						</td>
 						<td>
-							<a href="{list.U_DEL_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+							<a href="{list.U_DEL_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>
 					# END list #

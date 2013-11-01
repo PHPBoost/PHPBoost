@@ -95,9 +95,9 @@ Event.observe(window, 'load', function() {
 					<div style="float:right;">
 						{L_REQUIRED} : <span style="margin-right:30px;" class="text_strong" >{list_extended_fields.L_REQUIRED}</span> 
 						<img id="loading_{list_extended_fields.ID}" alt="" class="valign_middle" />
-						<a href="{list_extended_fields.EDIT_LINK}" title="{L_UPDATE}" class="pbt-icon-edit"></a>
+						<a href="{list_extended_fields.EDIT_LINK}" title="{L_UPDATE}" class="icon-edit"></a>
 						# IF NOT list_extended_fields.FREEZE #
-						<a href="#" title="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="pbt-icon-delete"></a>
+						<a href="#" title="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="icon-delete"></a>
 						# ENDIF #
 						<a href="#">
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_PROCESSED_OR_NOT}" title="{L_PROCESSED_OR_NOT}" id="change_display_{list_extended_fields.ID}" class="valign_middle" />

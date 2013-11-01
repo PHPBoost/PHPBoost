@@ -257,7 +257,7 @@
 										&nbsp;&nbsp;<img src="{PICTURES_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> &nbsp;<a href="gallery.php" class="gallery_link_cat">{L_ROOT}</a>
 									</span>
 									<span style="float:right;">
-										<a href="admin_gallery_cat.php?root=1" class="pbt-icon-edit"></a>&nbsp;&nbsp;
+										<a href="admin_gallery_cat.php?root=1" class="icon-edit"></a>&nbsp;&nbsp;
 									</span>&nbsp;
 								</div>	
 							</div>
@@ -273,7 +273,7 @@
 											<span id="l{list.ID}"></span> 
 											<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 											<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-											<a href="admin_gallery_cat.php?id={list.ID}" title="{L_EDIT_CAT}" class="pbt-icon-edit"><a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" class="pbt-icon-delete" data-confirmation="delete-element"></a>&nbsp;&nbsp;
+											<a href="admin_gallery_cat.php?id={list.ID}" title="{L_EDIT_CAT}" class="icon-edit"><a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>&nbsp;&nbsp;
 										</span>&nbsp;
 									</div>	
 								</div>

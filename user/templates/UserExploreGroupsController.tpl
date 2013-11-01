@@ -11,7 +11,7 @@
 
 	{GROUP_NAME}
 	# IF C_ADMIN #
-		<a href="{U_ADMIN_GROUPS}" class="pbt-icon-edit"></a>
+		<a href="{U_ADMIN_GROUPS}" class="icon-edit"></a>
 	# ENDIF #
 	<table>
 		<thead>

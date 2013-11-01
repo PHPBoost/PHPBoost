@@ -63,10 +63,10 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 		<option value="{fieldelements.recipients_list.ID}" # IF fieldelements.recipients_list.C_RECIPIENT_SELECTED #selected="selected"# ENDIF #>{fieldelements.recipients_list.NAME}</option>
 		# END fieldelements.recipients_list #
 	</select>
-	<a href="javascript:ContactFormFieldObjectPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete"></a>
+	<a href="javascript:ContactFormFieldObjectPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete"></a>
 	<div id="spacer_${escape(ID)}_{fieldelements.ID}" class="height_spacer"></div>
 # END fieldelements #
 </div>
 <div class="height_spacer"></div>
-<a href="javascript:ContactFormFieldObjectPossibleValues.add_field();" class="pbt-icon-plus" id="add_${escape(ID)}"></a>
+<a href="javascript:ContactFormFieldObjectPossibleValues.add_field();" class="icon-plus" id="add_${escape(ID)}"></a>
 

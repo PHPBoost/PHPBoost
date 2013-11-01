@@ -58,7 +58,7 @@
 						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" title="{L_EDIT}" class="pbt-icon-edit"></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" title="{L_EDIT}" class="icon-edit"></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -264,7 +264,7 @@
 									<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.IMG}</a>
 									
 									<br />
-									<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> <a href="admin_gallery_cat.php?id={cat.list.IDCAT}" title="{L_EDIT}" class="pbt-icon-edit"></a> 
+									<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> <a href="admin_gallery_cat.php?id={cat.list.IDCAT}" title="{L_EDIT}" class="icon-edit"></a> 
 									<br />
 									{cat.list.LOCK} <span class="smaller">{cat.list.L_NBR_PICS}</span> 
 								</td>	
@@ -343,9 +343,9 @@
 										</tr>
 										<tr>										
 											<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
-												&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="pbt-icon-edit"></a>
+												&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="icon-edit"></a>
 												
-												<a href="gallery{pics.pics_max.U_DEL}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a> 
+												<a href="gallery{pics.pics_max.U_DEL}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a> 
 									
 												<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.pics_max.ID}">
 													<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
@@ -414,7 +414,7 @@
 											<td style="text-align:center;">
 												{pics.list.RENAME_FILE}
 												
-												<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+												<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
 									
 												<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
 													<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">

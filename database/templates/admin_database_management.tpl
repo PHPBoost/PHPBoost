@@ -199,7 +199,7 @@
 							<a onclick="javascript:return Confirm_truncate_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/trash_mini.png"/> {L_TRUNCATE}</a>
 						</li>
 						<li>
-							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp" class="pbt-icon-delete" data-confirmation="delete-element">{L_DELETE}</a>
+							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp" class="icon-delete" data-confirmation="delete-element">{L_DELETE}</a>
 						</li>
 					</ul>
 				</menu>
@@ -381,7 +381,7 @@
 							{file.FILE_DATE}
 						</td>
 						<td class="row2" style="text-align:center;width:120px;">
-							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>
 					# END file #

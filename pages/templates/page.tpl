@@ -21,9 +21,9 @@
 								<a><i class="icon-cog"></i> {L_PAGE_OUTILS}</a>
 								<ul>
 									# IF C_TOOLS_AUTH #
-										<li><a href="{U_EDIT}" title="{L_EDIT}" class="pbt-icon-edit">&nbsp;&nbsp;&nbsp;{L_EDIT}</a></li>
+										<li><a href="{U_EDIT}" title="{L_EDIT}" class="icon-edit">&nbsp;&nbsp;&nbsp;{L_EDIT}</a></li>
 										<li><a href="{U_RENAME}" title="{L_RENAME}"><img src="{PATH_TO_ROOT}/pages/templates/images/rename.png"/>{L_RENAME}</a></li>
-										<li><a href="{U_DELETE}" title="{L_DELETE}" class="pbt-icon-delete">&nbsp;&nbsp;&nbsp;{L_DELETE}</a></li>
+										<li><a href="{U_DELETE}" title="{L_DELETE}" class="icon-delete">&nbsp;&nbsp;&nbsp;{L_DELETE}</a></li>
 										<li><a href="{U_REDIRECTIONS}" title="{L_REDIRECTIONS}"><img src="{PATH_TO_ROOT}/pages/templates/images/redirect.png"/>{L_REDIRECTIONS}</a></li>
 										<li><a href="{U_CREATE}" title="{L_CREATE}"><img src="{PATH_TO_ROOT}/pages/templates/images/create_page.png"/>{L_CREATE}</a></li>
 										<li><a href="{U_EXPLORER}" title="{L_EXPLORER}"><img src="{PATH_TO_ROOT}/pages/templates/images/explorer.png"/>{L_EXPLORER}</a></li>

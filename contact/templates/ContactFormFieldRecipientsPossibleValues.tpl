@@ -55,9 +55,9 @@ var ContactFormFieldRecipientsPossibleValues = new ContactFormFieldRecipientsPos
 	<input type="checkbox" name="field_is_default_${escape(ID)}_{fieldelements.ID}" id="field_is_default_${escape(ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per_default" />
 	<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" size="20" class="text" />
 	<input type="text" name="field_email_${escape(ID)}_{fieldelements.ID}" id="field_email_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.EMAIL}" size="30" class="text" />
-	# IF fieldelements.C_DELETABLE #<a href="javascript:ContactFormFieldRecipientsPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete"></a># ENDIF #
+	# IF fieldelements.C_DELETABLE #<a href="javascript:ContactFormFieldRecipientsPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete"></a># ENDIF #
 	<div id="spacer_${escape(ID)}_{fieldelements.ID}" class="height_spacer"></div>
 # END fieldelements #
 </div>
 <div class="height_spacer"></div>
-<a href="javascript:ContactFormFieldRecipientsPossibleValues.add_field();" class="pbt-icon-plus" id="add_${escape(ID)}"></a>
+<a href="javascript:ContactFormFieldRecipientsPossibleValues.add_field();" class="icon-plus" id="add_${escape(ID)}"></a>

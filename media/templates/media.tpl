@@ -35,7 +35,7 @@
 			<section>
 				<header>
 					<h1>
-						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" class="pbt-icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 						{TITLE}
 					</h1>
 				</header>
@@ -55,7 +55,7 @@
 									<br />
 									<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
 									# IF C_ADMIN #
-									<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
+									<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 									# ENDIF #
 									# IF row.list_cats.NUM_MEDIA #
 									<div class="smaller">
@@ -104,8 +104,8 @@
 											<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
 												<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
 											</a>
-											<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
-											<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+											<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+											<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 										</span>
 										# ENDIF #
 									</h1>
@@ -177,8 +177,8 @@
 							<a href="{U_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
 								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
 							</a>
-							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
-							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</span>
 				</h1>

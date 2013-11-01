@@ -173,8 +173,8 @@
 					<div style="float:right;">
 						{pm.msg.U_QUOTE}
 						# IF pm.msg.C_MODERATION_TOOLS #
-						<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="pbt-icon-edit">
-						<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+						<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="icon-edit">
+						<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
 						&nbsp;&nbsp;
 						# ENDIF #
 					</div>
