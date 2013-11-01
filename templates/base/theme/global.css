@@ -131,26 +131,35 @@ a.member {
 
 /* Icônes spécifique PHPBoost
 ------------------------------------ */
+[class^="icon-"]{
+	display: inline-block;
+}
+	
 [class^="icon-"]:before {
 	font-family: FontAwesome;
 	font-size: 15px;
 	font-style: normal;
 	font-weight: normal;
 	text-decoration:none;
-	vertical-align: -2px;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-
 [class^="icon-"]:hover { text-decoration:none;}
+
+.icon-big:before{
+	font-size: 2em;
+}
 
 .icon-arrow-right:before { content: "\f061"; }
 .icon-arrow-left:before { content: "\f060"; }
+.icon-arrow-up:before { content: "\f062"; }
+.icon-arrow-down:before { content: "\f063"; }
 .icon-book:before { content: "\f02d"; }
 .icon-calendar:before { content: "\f073"; }
-.icon-caret-left:before { content: "\f0d9"; }
-.icon-caret-right:before { content: "\f0da"; }
+.icon-caret-down:before { content: "\f0d7"; vertical-align: -4px; }
+.icon-caret-left:before { content: "\f0d9"; vertical-align: -4px; }
+.icon-caret-right:before { content: "\f0da"; vertical-align: -4px; }
 .icon-check:before{	content: "\f00c"; color:#57A957; }
 .icon-cog:before { content: "\f013"; }
 .icon-comment:before { content: "\f075"; }
@@ -161,14 +170,16 @@ a.member {
 .icon-envelope-alt:before { content: "\f003"; }
 .icon-error:before{ content: "\f00d"; color:#C43C35; }
 .icon-eye-open:before { content: "\f06e"; }
+.icon-forward:before { content: "\f064"; }
 .icon-fb:before{ content: "\f09a"; }
 .icon-filter:before { content: "\f0b0"; }
+.icon-flag:before { content: "\f024"; }
 .icon-folder-close:before { content: "\f07b"; }
 .icon-gmail:before{ content: "\f0d5"; }
 .icon-mail:before{ content: "\f0e0"; }
-.icon-minus:before { content: "\f068"; font-size: 18px; }
+.icon-minus:before { content: "\f068"; }
 .icon-pencil:before { content: "\f040"; }
-.icon-plus:before { content: "\f067"; font-size: 18px; }
+.icon-plus:before { content: "\f067"; }
 .icon-print:before { content: "\f02f"; }
 .icon-remove:before { content: "\f00d"; }
 .icon-reorder:before { content: "\f0c9"; }
@@ -445,11 +456,6 @@ a.wikipedia_link{ border-bottom:1px dotted; }
 	font-weight:300;
 }
 
-.dynamic_menu > ul > li > a > i {
-	font-size:125%;
-	vertical-align:-1px;
-}
-
 /* Menus groupés */
 .dynamic_menu.group > ul {
 	font-size:0
@@ -651,6 +657,9 @@ menu.dynamic_menu > ul > li.current {
 
 menu.dynamic_menu > ul > li > a{
 	padding:4px 12px;
+}
+menu.dynamic_menu > ul > li > a > i{
+	font-size: 1em;
 }
 
 menu.dynamic_menu li li:hover > ul {
