@@ -47,8 +47,8 @@ var NewsFormFieldSelectSources = new NewsFormFieldSelectSources();
 # START fieldelements #
 		<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" size="30" class="text"/>
 		<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" size="30" class="text"/>
-		<a href="javascript:NewsFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+		<a href="javascript:NewsFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="icon-delete" data-confirmation="delete-element"></a>
 		<br id="br_${escape(ID)}_{fieldelements.ID}">
 # END fieldelements #
 </div>
-<a href="javascript:NewsFormFieldSelectSources.add_field();" class="pbt-icon-plus" id="add_${escape(ID)}"></a> 
+<a href="javascript:NewsFormFieldSelectSources.add_field();" class="icon-plus" id="add_${escape(ID)}"></a> 

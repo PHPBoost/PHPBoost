@@ -229,7 +229,7 @@
 							<a href="{member.U_PROFILE}" class="{member.LEVEL_CLASS}" # IF member.C_GROUP_COLOR # style="color:{member.GROUP_COLOR}" # ENDIF #>{member.LOGIN}</a>
 						</td>
 						<td>
-							<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+							<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>
 					# END member #

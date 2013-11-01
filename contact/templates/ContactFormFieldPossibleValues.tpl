@@ -49,9 +49,9 @@ var ContactFormFieldPossibleValues = new ContactFormFieldPossibleValues();
 # START fieldelements #
 	<input type="checkbox" name="field_is_default_${escape(ID)}_{fieldelements.ID}" id="field_is_default_${escape(ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per_default" />
 	<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" size="25" class="text" />
-	<a href="javascript:ContactFormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete"></a>
+	<a href="javascript:ContactFormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete"></a>
 	<div id="spacer_${escape(ID)}_{fieldelements.ID}" class="height_spacer"></div>
 # END fieldelements #
 </div>
 <div class="height_spacer"></div>
-<a href="javascript:ContactFormFieldPossibleValues.add_field();" class="pbt-icon-plus" id="add_${escape(ID)}"></a>
+<a href="javascript:ContactFormFieldPossibleValues.add_field();" class="icon-plus" id="add_${escape(ID)}"></a>

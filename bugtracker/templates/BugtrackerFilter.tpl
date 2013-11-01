@@ -79,7 +79,7 @@
 		# START filters #
 		<tr>
 			<td colspan="{FILTERS_NUMBER}">
-				<a href="{filters.LINK_FILTER_DELETE}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="{@bugs.actions.confirm.del_filter}"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				<a href="{filters.LINK_FILTER_DELETE}" title="{L_DELETE}" class="icon-delete" data-confirmation="{@bugs.actions.confirm.del_filter}"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>
 		# END filters #

@@ -25,8 +25,8 @@ function Confirm_del_comment() {
 				<span class="actions">
 					<a itemprop="url" href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
 					# IF comments.C_MODERATOR #
-						<a href="{comments.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
-						<a href="{comments.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+						<a href="{comments.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+						<a href="{comments.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 					# ENDIF #
 				</span>
 				<span itemprop="datePublished" content="{comments.DATE_ISO8601}">{comments.DATE}</span>

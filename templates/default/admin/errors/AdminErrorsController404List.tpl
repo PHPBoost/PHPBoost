@@ -25,7 +25,7 @@
             <td class="row2"><a href="{errors.FROM_URL}" title="{@404_error_from_url}">{errors.FROM_URL}</a></td>
             <td class="row2" style="text-align: center;">{errors.TIMES}</td>
             <td class="row2" style="text-align: center;">
-                <a href="{errors.U_DELETE}" title="{@404_error_delete}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+                <a href="{errors.U_DELETE}" title="{@404_error_delete}" class="icon-delete" data-confirmation="delete-element"></a>
             </td>
 		</tr>
 		# END errors #

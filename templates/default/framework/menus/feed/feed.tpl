@@ -2,7 +2,7 @@
 <div class="module_mini_container">
 	<div class="module_mini_top">
 		<h5 class="sub_title">
-			<a href="{U_LINK}" class="pbt-icon-syndication"></a>
+			<a href="{U_LINK}" class="icon-syndication"></a>
 			# IF C_NAME #{NAME}# ELSE #{TITLE}# ENDIF #
 		</h5>
 	</div>
@@ -20,7 +20,7 @@
 <div class="block_container">
 	<div class="block_contents">
 		<h5 class="sub_title">
-			<a href="{U_LINK}" class="pbt-icon-syndication"></a>
+			<a href="{U_LINK}" class="icon-syndication"></a>
 			# IF C_NAME #{NAME}# ELSE #{TITLE}# ENDIF #
 		</h5>
 		<ul class="list" style="margin-top:8px;">

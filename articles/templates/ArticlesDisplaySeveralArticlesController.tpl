@@ -32,14 +32,14 @@
 <section>	
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('articles'))}" class="pbt-icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('articles'))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			${i18n('articles')}
 		</h1>
 		# IF C_ARTICLES_CAT #
 		<div class="cat">
 		    <div class="cat_tool">
 			    # IF C_MODERATE # 
-			    <a href="${relative_url(ArticlesUrlBuilder::manage_categories())}" title="${i18n('admin.categories.manage')}" class="pbt-icon-edit"></a>
+			    <a href="${relative_url(ArticlesUrlBuilder::manage_categories())}" title="${i18n('admin.categories.manage')}" class="icon-edit"></a>
 			    # ENDIF #
 		    </div>
 		    <div style="margin-bottom:36px;">
@@ -77,10 +77,10 @@
 				    <header>
 					<div class="article_tools">
 						# IF articles.C_EDIT #
-						<a href="{articles.U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="pbt-icon-edit"></a>
+						<a href="{articles.U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="icon-edit"></a>
 						# ENDIF #
 						# IF articles.C_DELETE #
-						<a href="{articles.U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+						<a href="{articles.U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="icon-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</div>				
 					<div>
@@ -143,10 +143,10 @@
 				    <header>
 					<div class="article_tools">
 						# IF articles.C_EDIT #
-						<a style="text-decoration:none;" href="{articles.U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="pbt-icon-edit"></a>
+						<a style="text-decoration:none;" href="{articles.U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="icon-edit"></a>
 						# ENDIF #
 						# IF articles.C_DELETE #
-						<a href="{articles.U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+						<a href="{articles.U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="icon-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</div>
 					<div>

@@ -131,30 +131,63 @@ a.member {
 
 /* Icônes spécifique PHPBoost
 ------------------------------------ */
-[class^="pbt-icon-"]:before {
+[class^="icon-"]:before {
 	font-family: FontAwesome;
 	font-size: 15px;
-	font-weight:300;
-	vertical-align: -1px;
-	text-decoration:none;
 	font-style: normal;
+	font-weight: normal;
+	text-decoration:none;
+	vertical-align: -2px;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
-[class^="pbt-icon-"]:hover { text-decoration:none;}
+[class^="icon-"]:hover { text-decoration:none;}
 
-.pbt-icon-syndication:before { color:#f57900; content: "\f09e"; }
-.pbt-icon-edit:before { content: "\f044"; }
-.pbt-icon-delete:before { content: "\f014"; vertical-align:0; }
-.pbt-icon-plus:before { content: "\f067"; font-size: 18px; }
-.pbt-icon-minus:before { content: "\f068"; font-size: 18px; }
-.pbt-icon-check:before{	content: "\f00c"; color:#57A957; }
-.pbt-icon-error:before{ content: "\f00d"; color:#C43C35; }
-.pbt-icon-calendar:before{ content: "\f073"; }
-.pbt-icon-mail:before{ content: "\f0e0"; }
-.pbt-icon-skype:before{ content: "\f17e"; }
-.pbt-icon-gmail:before{ content: "\f0d5"; }
-.pbt-icon-fb:before{ content: "\f09a"; }
-.pbt-icon-twitter:before{ content: "\f099"; }
+.icon-arrow-right:before { content: "\f061"; }
+.icon-arrow-left:before { content: "\f060"; }
+.icon-book:before { content: "\f02d"; }
+.icon-calendar:before { content: "\f073"; }
+.icon-caret-left:before { content: "\f0d9"; }
+.icon-caret-right:before { content: "\f0da"; }
+.icon-check:before{	content: "\f00c"; color:#57A957; }
+.icon-cog:before { content: "\f013"; }
+.icon-comment:before { content: "\f075"; }
+.icon-comments:before { content: "\f086"; }
+.icon-delete:before { content: "\f014"; vertical-align:0; }
+.icon-edit:before { content: "\f044"; }
+.icon-edit-sign:before { content: "\f14b"; }
+.icon-envelope-alt:before { content: "\f003"; }
+.icon-error:before{ content: "\f00d"; color:#C43C35; }
+.icon-eye-open:before { content: "\f06e"; }
+.icon-fb:before{ content: "\f09a"; }
+.icon-filter:before { content: "\f0b0"; }
+.icon-folder-close:before { content: "\f07b"; }
+.icon-gmail:before{ content: "\f0d5"; }
+.icon-mail:before{ content: "\f0e0"; }
+.icon-minus:before { content: "\f068"; font-size: 18px; }
+.icon-pencil:before { content: "\f040"; }
+.icon-plus:before { content: "\f067"; font-size: 18px; }
+.icon-print:before { content: "\f02f"; }
+.icon-remove:before { content: "\f00d"; }
+.icon-reorder:before { content: "\f0c9"; }
+.icon-search:before { content: "\f002"; }
+.icon-skype:before{ content: "\f17e"; }
+.icon-sort:before { content: "\f0dc"; }
+.icon-sort-by-alphabet:before { content: "\f15d"; }
+.icon-sort-by-attributes:before { content: "\f160"; }
+.icon-sort-by-attributes-alt:before { content: "\f161"; }
+.icon-star-half-empty:before { content: "\f123"; }
+.icon-syndication:before { color:#f57900; content: "\f09e"; }
+.icon-tag:before { content: "\f02b"; }
+.icon-tags:before { content: "\f02c"; }
+.icon-time:before { content: "\f017"; }
+.icon-trash:before { content: "\f014"; }
+.icon-twitter:before{ content: "\f099"; }
+.icon-user:before { content: "\f007"; }
+
+
 
 /* Mise en forme
 -------------------------------------------*/

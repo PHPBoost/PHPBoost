@@ -40,8 +40,8 @@
 					<div class="message-date">
 						# IF messages.C_MODERATOR #
 						<span class="actions">
-							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
-							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 						</span>
 						# ENDIF #
 						<a href="{messages.U_ANCHOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="{messages.ID}" /></a> {L_ON} {messages.DATE}

@@ -1,8 +1,8 @@
 <li id="cat_{ID}" class="cat_element">
 	<div class="cat_title"> 
 		<div class="cat_action_admin">
-			<a href="{U_EDIT}" title="{L_EDIT}" class="pbt-icon-edit"></a>
-			<a href="{U_DELETE}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+			<a href="{U_EDIT}" title="{L_EDIT}" class="icon-edit"></a>
+			<a href="{U_DELETE}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
 		</div>
 		<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="Drag&Drop" class="valign_middle drag" >
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="Url" class="valign_middle"> 

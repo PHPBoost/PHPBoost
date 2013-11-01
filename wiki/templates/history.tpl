@@ -43,14 +43,14 @@
 			<thead>
 				<tr>
 					<th>
-						<a href="{index.TOP_TITLE}" class="pbt-icon-table-sort-up"></a>
+						<a href="{index.TOP_TITLE}" class="icon-table-sort-up"></a>
 						{index.L_TITLE}
-						<a href="{index.BOTTOM_TITLE}" class="pbt-icon-table-sort-down"></a>
+						<a href="{index.BOTTOM_TITLE}" class="icon-table-sort-down"></a>
 					</th>
 					<th>
-						<a href="{index.TOP_DATE}" class="pbt-icon-table-sort-up"></a>
+						<a href="{index.TOP_DATE}" class="icon-table-sort-up"></a>
 						{index.L_DATE}
-						<a href="{index.BOTTOM_DATE}" class="pbt-icon-table-sort-down"></a>
+						<a href="{index.BOTTOM_DATE}" class="icon-table-sort-down"></a>
 					</th>
 					<th>
 						{index.L_AUTHOR}

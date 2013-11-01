@@ -81,12 +81,12 @@
 				<div class="form-element constraint-check-right">
 					<label for="IDinput" title="Le complément du label">Un Input qui est correcte</label>
 					<input type="text" class="field-other" maxlength="25" name="Input" id="IDinput" value="test" >
-					<i class="pbt-icon-field-constraint-check"></i>
+					<i class="icon-field-constraint-check"></i>
 				</div>
 				<div class="form-element constraint-check-error">
 					<label for="IDinput" title="Le complément du label">Un Input qui est en erreur</label>
 					<input type="text"  class=""  maxlength="25" name="Input" id="IDinput" value="test" >
-					<i class="pbt-icon-field-constraint-check"></i>
+					<i class="icon-field-constraint-check"></i>
 					<span class="field-error">La valeur saisie doit être un mail valide</span>
 				</div>
 				<div class="form-element">
@@ -100,7 +100,7 @@
 				<div class="form-element">
 					<label for="IDinput" title="Le complément du label">Date<span class="field-description">Description</span></label>
 					<input type="text" class="field-small" name="Input" id="IDinput" value="25/10/2013" >
-					<i class="pbt-icon-calendar"></i> à
+					<i class="icon-calendar"></i> à
 					<input type="text" class="field-smaller" name="Input" id="IDinput" value="07" > h
 					<input type="text" class="field-smaller" name="Input" id="IDinput" value="52" >
 				</div>
@@ -123,21 +123,21 @@
 		<div class="content">
 			<div class="form-element-textarea">
 				<label for="textarea" title="Le complément du label">Ceci est un textarea<span class="field-description">Description</span></label>
-				<div><i class="pbt-icon-check"></i></div>
+				<div><i class="icon-check"></i></div>
 				<textarea onblur="" class="" cols="47" rows="6" name="textarea" id="textarea">Voici un textarea</textarea>
 				<button type="button">Prévisualiser</button>
 			</div>
 			
 			<div class="form-element-textarea field-textarea-small">
 				<label for="textarea" title="Le complément du label">Ceci est un textarea à coté du label<span class="field-description">Description</span></label>
-				<i class="pbt-icon-check"></i>
+				<i class="icon-check"></i>
 				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
 				<button type="button">Prévisualiser</button>
 			</div>	
 		
 			<div class="form-element-textarea field-textarea-small center">
 				<label for="textarea" title="Le complément du label">Ceci est un textarea à coté du label</label>
-				<div><i class="pbt-icon-error"></i></div>
+				<div><i class="icon-error"></i></div>
 				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
 				<button type="button">Prévisualiser</button>
 			</div>
@@ -147,21 +147,21 @@
 		<div class="content">
 			<a href="#" class="basic-button smaller" title="BOuton Classique">Bouton</a> 
 			<a href="#" class="basic-button smaller" title="Envoyer un MP">MP</a>
-			<a href="#" class="basic-button smaller" title="Mail"><i class="pbt-icon-mail"></i></a>
-			<a href="#" class="basic-button smaller" title="Contact Skype"><i class="pbt-icon-skype"></i></a>
-			<a href="#" class="basic-button smaller" title="Contact Gmail"><i class="pbt-icon-gmail"></i></a>
-			<a href="#" class="basic-button smaller" title="Contact Facebook"><i class="pbt-icon-fb"></i></a>
-			<a href="#" class="basic-button smaller" title="Contact Twitter"><i class="pbt-icon-twitter"></i></a>
+			<a href="#" class="basic-button smaller" title="Mail"><i class="icon-mail"></i></a>
+			<a href="#" class="basic-button smaller" title="Contact Skype"><i class="icon-skype"></i></a>
+			<a href="#" class="basic-button smaller" title="Contact Gmail"><i class="icon-gmail"></i></a>
+			<a href="#" class="basic-button smaller" title="Contact Facebook"><i class="icon-fb"></i></a>
+			<a href="#" class="basic-button smaller" title="Contact Twitter"><i class="icon-twitter"></i></a>
 		</div>
 	
 		<h5>Icônes des principales actions</h5><br />
 		<div class="content">
 			<ul>
-				<li>Flux RSS : <a href="#" class="pbt-icon-syndication"></a></li>
-				<li>Editer : <a href="#" class="pbt-icon-edit"></a></li>
-				<li>Supprimer : <a href="#" class="pbt-icon-delete"></a></li>
-				<li>Supprimer (contrôle automatique JS avec confirmation de suppression) : <a href="#" class="pbt-icon-delete" data-confirmation="delete-element"></a></li>
-				<li>Supprimer (contrôe automatique JS avec confirmation personnalisée) : <a href="#" class="pbt-icon-delete" data-confirmation="Message personnalisÃ©"></a></li>
+				<li>Flux RSS : <a href="#" class="icon-syndication"></a></li>
+				<li>Editer : <a href="#" class="icon-edit"></a></li>
+				<li>Supprimer : <a href="#" class="icon-delete"></a></li>
+				<li>Supprimer (contrôle automatique JS avec confirmation de suppression) : <a href="#" class="icon-delete" data-confirmation="delete-element"></a></li>
+				<li>Supprimer (contrôe automatique JS avec confirmation personnalisée) : <a href="#" class="icon-delete" data-confirmation="Message personnalisÃ©"></a></li>
 			</ul>
 		</div>
 		
@@ -404,9 +404,9 @@
 			<thead>
 				<tr> 
 					<th>
-						<a href="#" class="pbt-icon-table-sort-up"></a>
+						<a href="#" class="icon-table-sort-up"></a>
 						Nom
-						<a href="#" class="pbt-icon-table-sort-down"></a>
+						<a href="#" class="icon-table-sort-down"></a>
 					</th>
 					<th>
 						Description
@@ -480,8 +480,8 @@
 				<div class="message-date">
 					<span class="actions">
 						<a itemprop="url" href="#com2">#2</a>
-							<a href="#comments_message" class="pbt-icon-edit"></a> 
-							<a href="#comments_message" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+							<a href="#comments_message" class="icon-edit"></a> 
+							<a href="#comments_message" class="icon-delete" data-confirmation="delete-element"></a>
 					</span>
 					<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">05/09/2013 à 15h37</span>
 				</div>

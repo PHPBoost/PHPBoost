@@ -20,11 +20,11 @@
 			# IF header_column.C_CSS_STYLE # style="{header_column.CSS_STYLE}"# ENDIF #>
 				
 				# IF header_column.C_SORTABLE #
-				<a href="{header_column.U_SORT_DESC}" title="{EL_DESCENDING}" class="pbt-icon-table-sort-up"></a>
+				<a href="{header_column.U_SORT_DESC}" title="{EL_DESCENDING}" class="icon-table-sort-up"></a>
 				# ENDIF #
 				{header_column.NAME}
 				# IF header_column.C_SORTABLE #
-				<a href="{header_column.U_SORT_ASC}" title="{EL_ASCENDING}" class="pbt-icon-table-sort-down"></a>
+				<a href="{header_column.U_SORT_ASC}" title="{EL_ASCENDING}" class="icon-table-sort-down"></a>
 				# ENDIF #
 			</th>
 			# END header_column #
