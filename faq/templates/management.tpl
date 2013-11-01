@@ -73,17 +73,16 @@
 						# END category.not_root_name #
 						<label for="contents">{L_DESCRIPTION}</label>
 						{KERNEL_EDITOR}
-						<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
-						<br />
-						<div style="text-align:center;">
-							<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button">
+						<div class="form-element-textarea">
+							<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
+							<button type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" >{L_PREVIEW}</button>
 						</div>
 						<br />
 						<div class="form-element">
 							
-								<label for="display_mode">{L_DISPLAY_MODE}</label>
-								<br />
-								<span class="smaller">{L_DISPLAY_EXPLAIN}</span>
+							<label for="display_mode">{L_DISPLAY_MODE}</label>
+							<br />
+							<span class="smaller">{L_DISPLAY_EXPLAIN}</span>
 							
 							<div class="form-field">
 								<select name="display_mode" id="display_mode">
@@ -129,7 +128,6 @@
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
-						&nbsp;&nbsp; 
 						<button type="reset" value="true">{L_RESET}</button>
 						<input type="hidden" id="id_faq" name="id_faq" value="{category.ID_FAQ}">
 					</fieldset>
@@ -143,28 +141,22 @@
 						</script>
 					# ENDIF #
 					<p style="text-align:center;">
-						<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION_BEFORE}" /></a>
+						<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}" class="icon-plus button"> {L_INSERT_QUESTION_BEFORE}</a>
 					</p>
 					<br />
 					# START category.questions #
 						<div class="row1" id="q{category.questions.ID}">
 							<span style="float:left;">
-								<img src="{PICTURES_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
+								<i class="icon-caret-right icon-big"></i>
 								{category.questions.QUESTION}
 							</span>
 							<span class="row2" style="float:right;">
-								<a href="{category.questions.U_MOVE}" title="{L_MOVE}">
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" />
-								</a>
+								<a href="{category.questions.U_MOVE}" title="{L_MOVE}" class="icon-forward"></a>
 								# START category.questions.up #
-									<a href="{category.questions.U_UP}" title="{L_UP}">
-										<img src="{PICTURES_DATA_PATH}/images/up.png" alt="{L_UP}" />
-									</a>
+									<a href="{category.questions.U_UP}" title="{L_UP}" class="icon-arrow-up"></a>
 								# END category.questions.up #
 								# START category.questions.down #
-									<a href="{category.questions.U_DOWN}" title="{L_DOWN}">
-										<img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" />
-									</a>
+									<a href="{category.questions.U_DOWN}" title="{L_DOWN}" class="icon-arrow-down"></a>
 								# END category.questions.down #
 								<a href="{category.questions.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 								<a href="{category.questions.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
@@ -177,7 +169,8 @@
 						</div>	
 						<br />
 						<div style="text-align:center;">
-							<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION}" /></a>
+							<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}" class="icon-plus button"> {L_INSERT_QUESTION}</a>
+							</a>
 						</div>
 						<br />
 					# END category.questions #
@@ -230,15 +223,15 @@
 						</div>
 						<label for="contents">{L_ANSWER}</label>
 						{KERNEL_EDITOR}
-						<textarea id="contents" rows="15" cols="66" name="answer">{edit_question.ANSWER}</textarea>
-						<br />
+						<div class="form-element-textarea">
+							<textarea id="contents" rows="15" cols="66" name="answer">{edit_question.ANSWER}</textarea>
+							<button type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" >{L_PREVIEW}</button>
+						</div>
 					</fieldset>
+					<br />
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
-						&nbsp;&nbsp;
-						<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button">
-						&nbsp;&nbsp;
 						<button type="reset" value="true">{L_RESET}</button>
 						<input type="hidden" name="id_question" value="{edit_question.ID_QUESTION}">
 						<input type="hidden" name="id_cat" value="{edit_question.ID_CAT}">

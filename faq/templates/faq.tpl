@@ -5,12 +5,12 @@
 		if( document.getElementById("a" + id_question).style.display == "none" )
 		{
 			Effect.Appear("a" + id_question);
-			document.getElementById("faq_i" + id_question).src = "{PICTURES_DATA_PATH}/images/opened_line.png";
+			document.getElementById("faq_i" + id_question).className="icon-caret-down icon-big"
 		}
 		else
 		{
 			Effect.Fade("a" + id_question);
-			document.getElementById("faq_i" + id_question).src = "{PICTURES_DATA_PATH}/images/line.png";
+			document.getElementById("faq_i" + id_question).className="icon-caret-right icon-big"
 		}
 	}
 -->
@@ -22,11 +22,12 @@
 			<li><a><i class="icon-cog"></i></a>
 				<ul>
 					<li>
-						<a href="{U_MANAGEMENT}" title="{L_CAT_MANAGEMENT}">{L_CAT_MANAGEMENT}</a>
+						<a href="{U_MANAGEMENT}" title="{L_CAT_MANAGEMENT}"><i class="icon-reorder"></i>{L_CAT_MANAGEMENT}</a>
+						
 					</li>
 					# IF IS_ADMIN #
 					<li>
-						<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
+						<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}"><i class="icon-reorder"></i>${LangLoader::get_message('configuration', 'admin')}</a>
 					</li>
 					# ENDIF #
 				</ul>
@@ -60,7 +61,6 @@
 							<br />
 						# ENDIF #
 						<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
-						
 						# IF C_ADMIN #
 						<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 						# ENDIF #
@@ -79,7 +79,9 @@
 				<div style="margin-top:15px;" id="q{questions.faq.ID_QUESTION}">
 					<div class="row1">
 						<span style="float:left;">
-							<a href="javascript:show_answer({questions.faq.ID_QUESTION});"><img src="{PICTURES_DATA_PATH}/images/line.png" alt="arrow" id="faq_i{questions.faq.ID_QUESTION}" class="image_left" style="vertical-align:middle;" /></a>
+							<a href="javascript:show_answer({questions.faq.ID_QUESTION});">
+								<i id="faq_i{questions.faq.ID_QUESTION}" class="icon-caret-right icon-big"></i>
+							</a>
 							<a id="faq_l{questions.faq.ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
 							<script type="text/javascript">
 							<!--
@@ -88,15 +90,15 @@
 							-->
 							</script>
 						</span>
-						<span class="row2" style="float:right;">
-							<a href="{questions.faq.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{PICTURES_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" /></a>
+						<span style="float:right;">
+							<a href="{questions.faq.U_QUESTION}" title="{L_QUESTION_URL}" class="icon-flag"></a>
 							# IF C_ADMIN_TOOLS #
-								<a href="{questions.faq.U_MOVE}" title="{L_MOVE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
+								<a href="{questions.faq.U_MOVE}" title="{L_MOVE}" class="icon-forward"></a>
 								# START questions.faq.up #
-									<a href="{questions.faq.U_UP}" title="{L_UP}"><img src="{PICTURES_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
+									<a href="{questions.faq.U_UP}" title="{L_UP}" class="icon-arrow-up"></a>
 								# END questions.faq.up #
 								# START questions.faq.down #
-									<a href="{questions.faq.U_DOWN}" title="{L_DOWN}"><img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
+									<a href="{questions.faq.U_DOWN}" title="{L_DOWN}" class="icon-arrow-down"></a>
 								# END questions.faq.down #
 								<a href="{questions.faq.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 								<a href="{questions.faq.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
@@ -142,10 +144,10 @@
 						# IF C_ADMIN_TOOLS #
 							<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
 							# START questions_block.contents.up #
-								<a href="{questions_block.contents.U_UP}" title="{L_UP}"><img src="{PICTURES_DATA_PATH}/images/up.png" alt="{L_UP}" /></a>
+							<a href="{questions_block.contents.U_UP}" title="{L_UP}" class="icon-arrow-up"></a>
 							# END questions_block.contents.up #
 							# START questions_block.contents.down #
-								<a href="{questions_block.contents.U_DOWN}" title="{L_DOWN}"><img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
+								<a href="{questions_block.contents.U_DOWN}" title="{L_DOWN}" class="icon-arrow-down"></a>
 							# END questions_block.contents.down #
 							<a href="{questions_block.contents.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 							<a href="{questions_block.contents.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
