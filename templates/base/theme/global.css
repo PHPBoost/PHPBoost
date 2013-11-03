@@ -137,7 +137,7 @@ a.member {
 	
 [class^="icon-"]:before {
 	font-family: FontAwesome;
-	font-size: 15px;
+	font-size: 14px;
 	font-style: normal;
 	font-weight: normal;
 	text-decoration:none;
@@ -170,6 +170,7 @@ a.member {
 .icon-envelope-alt:before { content: "\f003"; }
 .icon-error:before{ content: "\f00d"; color:#C43C35; }
 .icon-eye-open:before { content: "\f06e"; }
+.icon-eye-slash:before { content: "\f070"; }
 .icon-forward:before { content: "\f064"; }
 .icon-fb:before{ content: "\f09a"; }
 .icon-filter:before { content: "\f0b0"; }

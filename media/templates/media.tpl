@@ -101,9 +101,7 @@
 										<a href="{file.U_MEDIA_LINK}">{file.NAME}</a>
 										# IF C_MODO #
 										<span class="actions">
-											<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
-												<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
-											</a>
+											<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="icon-eye-slash" title="{L_UNAPROBED}"></a>
 											<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 											<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 										</span>
@@ -161,6 +159,28 @@
 		# ENDIF #
 
 		# IF C_DISPLAY_MEDIA #
+		# IF C_MODO #
+			<menu class="dynamic_menu right">
+				<ul>
+					<li><a><i class="icon-cog"></i></a>
+						<ul>
+							<li>
+								<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}">${LangLoader::get_message('edit', 'main')}</a>
+							</li>
+							<li>
+								<a href="{U_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">{L_UNAPROBED}</a>
+							</li>
+							<li>
+								<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="delete-element">${LangLoader::get_message('delete', 'main')}</a>
+							</li>
+							<li>
+								<a href="moderation_media.php" title="{L_MODO_PANEL}">{L_MODO_PANEL}</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</menu>
+		# ENDIF #
 		<article>
 			<header>
 				<h1>
@@ -169,16 +189,6 @@
 						# IF A_COM #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
 							{U_COM}
-						# ENDIF #
-						# IF C_MODO #
-							<a href="moderation_media.php" class="img_link" title="{L_MODO_PANEL}">
-								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
-							</a>
-							<a href="{U_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
-								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
-							</a>
-							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</span>
 				</h1>

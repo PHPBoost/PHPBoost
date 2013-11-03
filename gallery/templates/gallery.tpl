@@ -84,19 +84,25 @@
 					var img_aprob, title_aprob;
 					if( xhr_object.responseText == 0 )
 					{
-						img_aprob = 'unvisible.png';
+						img_aprob = 'icon-eye-slash';
 						title_aprob = '{L_UNAPROB}';
 					}
 					else
 					{
-						img_aprob = 'visible.png';
+						img_aprob = 'icon-eye-open';
 						title_aprob = '{L_APROB}';
 					}
 					
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )
 					{
-						document.getElementById('img_aprob' + id_file).src = '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/' + img_aprob;
+						if(document.getElementById('img_aprob' + id_file).hasClassName('icon-eye-open')){
+							document.getElementById('img_aprob' + id_file).removeClassName('icon-eye-open');
+							document.getElementById('img_aprob' + id_file).addClassName('icon-eye-slash');
+						} else {
+							document.getElementById('img_aprob' + id_file).removeClassName('icon-eye-slash');
+							document.getElementById('img_aprob' + id_file).addClassName('icon-eye-open');
+						}
 						document.getElementById('img_aprob' + id_file).title = '' + title_aprob;
 						document.getElementById('img_aprob' + id_file).alt = '' + title_aprob;
 					}
@@ -379,7 +385,7 @@
 										<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
 										
 										
-										<a href="javascript:pics_aprob({ID});"><img id="img_aprob{ID}" src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_APROB}" alt="{L_APROB_IMG}" title="{L_APROB_IMG}" class="valign_middle" /></a>
+										<a id="img_aprob{ID}" href="javascript:pics_aprob({ID});" class="{IMG_APROB}" title="{L_APROB_IMG}"></a>
 										&nbsp;<span id="img{ID}"></span>
 									</td>
 								</tr>
@@ -436,8 +442,9 @@
 											</div>
 										</div>
 										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
-											
-										<a href="javascript:pics_aprob({pics_list.ID});" title="{pics_list.L_APROB_IMG}"><img id="img_aprob{pics_list.ID}" src="{PATH_TO_ROOT}/templates/{THEME}/images/{pics_list.IMG_APROB}" alt="{pics_list.L_APROB_IMG}" title="{pics_list.L_APROB_IMG}" class="valign_middle" /></a>
+										
+										<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" class="{pics_list.IMG_APROB}" title="{pics_list.L_APROB_IMG}"></a>
+										&nbsp;<span id="img{ID}"></span>
 										# ENDIF #											
 										<span id="img{pics_list.ID}"></span>										
 									</div>
