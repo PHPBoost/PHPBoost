@@ -144,6 +144,7 @@ a.member {
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	vertical-align:middle;
 }
 [class^="icon-"]:hover { text-decoration:none;}
 
@@ -171,11 +172,13 @@ a.member {
 .icon-error:before{ content: "\f00d"; color:#C43C35; }
 .icon-eye-open:before { content: "\f06e"; }
 .icon-eye-slash:before { content: "\f070"; }
-.icon-forward:before { content: "\f064"; }
 .icon-fb:before{ content: "\f09a"; }
+.icon-file:before { content: "\f15c"; }
 .icon-filter:before { content: "\f0b0"; }
 .icon-flag:before { content: "\f024"; }
 .icon-folder-close:before { content: "\f07b"; }
+.icon-folder-open:before { content: "\f07c"; }
+.icon-forward:before { content: "\f064"; }
 .icon-gmail:before{ content: "\f0d5"; }
 .icon-mail:before{ content: "\f0e0"; }
 .icon-minus:before { content: "\f068"; }

@@ -28,7 +28,8 @@ function show_cat_contents(id_cat, display_select_link)
 				if( xhr_object.readyState == 4 ) 
 				{
 					document.getElementById("cat_" + id_cat).innerHTML = xhr_object.responseText;
-					document.getElementById("img_" + id_cat).src = path + '/images/opened_cat.png';
+					document.getElementById("img_" + id_cat).removeClassName('icon-folder-close');
+					document.getElementById("img_" + id_cat).addClassName('icon-folder-open');
 					if( document.getElementById("img2_" + id_cat) )
 						document.getElementById("img2_" + id_cat).src = path + '/images/minus.png';
 					
@@ -42,7 +43,8 @@ function show_cat_contents(id_cat, display_select_link)
 		else if( cat_status[id_cat] == 0 )
 		{
 			document.getElementById("cat_" + id_cat).style.display = 'block';
-			document.getElementById("img_" + id_cat).src = path + '/images/opened_cat.png';
+			document.getElementById("img_" + id_cat).removeClassName('icon-folder-close');
+			document.getElementById("img_" + id_cat).addClassName('icon-folder-open');
 			if( document.getElementById("img2_" + id_cat) )
 				document.getElementById("img2_" + id_cat).src = path + '/images/minus.png';
 			cat_status[id_cat] = 1;
@@ -50,7 +52,8 @@ function show_cat_contents(id_cat, display_select_link)
 		else
 		{
 			document.getElementById("cat_" + id_cat).style.display = 'none';
-			document.getElementById("img_" + id_cat).src = path + '/images/closed_cat.png';
+			document.getElementById("img_" + id_cat).removeClassName('icon-folder-open');
+			document.getElementById("img_" + id_cat).addClassName('icon-folder-close');
 			if( document.getElementById("img2_" + id_cat) )
 				document.getElementById("img2_" + id_cat).src = path + '/images/plus.png';
 			cat_status[id_cat] = 0;
