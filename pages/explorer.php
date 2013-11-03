@@ -51,7 +51,7 @@ foreach ($_PAGES_CATS as $key => $value)
 		//Vérification de l'autorisation d'éditer la page
 		if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 		{
-			$root .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><img src="' . $module_data_path . '/images/closed_cat.png" alt="" />' . $value['name'] . '</a></li>';
+			$root .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><span class="icon-folder-close"></span>' . $value['name'] . '</a></li>';
 		}
 	}
 }
@@ -68,7 +68,7 @@ while ($row = $Sql->fetch_assoc($result))
 	//Vérification de l'autorisation d'éditer la page
 	if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 	{
-		$root .= '<li><a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><img src="' . $module_data_path . '/images/page.png" alt="" />' . $row['title'] . '</a></li>';
+		$root .= '<li><a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><span class="icon-file"></span>' . $row['title'] . '</a></li>';
 	}
 }
 $Sql->query_close($result);
@@ -94,13 +94,13 @@ while ($row = $Sql->fetch_assoc($result))
 	if ($sub_cats_number > 0)
 	{	
 		$Template->assign_block_vars('list', array(
-			'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" /><img src="' . $module_data_path . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" /></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
+			'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" /><span class="icon-folder-close" id ="img_' . $row['id'] . '"></span></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 		));
 	}
 	else
 	{
 		$Template->assign_block_vars('list', array(
-			'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');"><img src="' . $module_data_path . '/images/closed_cat.png" alt="" />' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
+			'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');"><span class="icon-folder-close"></span>' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 		));
 	}
 }

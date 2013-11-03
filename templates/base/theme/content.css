@@ -124,12 +124,13 @@ section footer nav.pagination {	text-align: center; }
 	font-weight:300;
 }
 
-.explorer .contents ul img{
-	padding-right:6px;
+.explorer .contents ul [class^="icon-"]{
+	width:20px;
+	text-align:center;
 }
 
 .explorer .contents ul a.parent img:first-child{
-	padding-right:3px;
+	padding-right:1px;
 }
 
 .explorer .contents ul a:hover, .explorer .contents ul a:hover+a{
@@ -137,7 +138,7 @@ section footer nav.pagination {	text-align: center; }
 }
 
 .explorer .contents ul .sub a, .explorer .contents ul .sub ul .sub {
-	padding-left:20px;
+	padding-left:18px;
 }
 
 .explorer .contents ul .sub a.parent{
