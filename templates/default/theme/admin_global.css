@@ -146,6 +146,8 @@ a.member {
 .icon-syndication:before { color:#f57900; content: "\f09e"; }
 .icon-edit:before { content: "\f044"; }
 .icon-delete:before { content: "\f014"; vertical-align:-1px; }
+.icon-eye-open:before { content: "\f06e"; }
+.icon-eye-slash:before { content: "\f070"; }
 .icon-plus:before { content: "\f067"; font-size: 18px;}
 .icon-minus:before { content: "\f068"; font-size: 18px;}
 
