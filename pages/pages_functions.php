@@ -90,7 +90,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 				$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $key . "'", __LINE__, __FILE__);
 				//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 				if ($sub_cats_number > 0)
-					$line .= '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $key . '" /><span class="icon-folder-close" id="img_' . $key . '"></span></a><a class="' . ($key == $id ? 'selected' : '') . '" id="class_' . $key . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a><span id="cat_' . $key . '"></span></li>';
+					$line .= '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><span class="icon-expand" id="img2_' . $key . '"></span><span class="icon-folder-close" id="img_' . $key . '"></span></a><a class="' . ($key == $id ? 'selected' : '') . '" id="class_' . $key . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a><span id="cat_' . $key . '"></span></li>';
 				else //Sinon on n'affiche pas le "+"
 					$line .= '<li class="sub"><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');"><span class="icon-folder-close"></span>' . $value['name'] . '</a></li>';
 			}

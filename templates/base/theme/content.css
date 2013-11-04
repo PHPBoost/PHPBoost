@@ -127,10 +127,11 @@ section footer nav.pagination {	text-align: center; }
 .explorer .contents ul [class^="icon-"]{
 	width:20px;
 	text-align:center;
+	vertical-align:middle;
 }
 
-.explorer .contents ul a.parent img:first-child{
-	padding-right:1px;
+.explorer .contents ul a.parent [class^="icon-"]:first-child{
+	width:14px;
 }
 
 .explorer .contents ul a:hover, .explorer .contents ul a:hover+a{

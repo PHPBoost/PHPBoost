@@ -144,7 +144,6 @@ a.member {
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	vertical-align:middle;
 }
 [class^="icon-"]:hover { text-decoration:none;}
 
@@ -163,6 +162,7 @@ a.member {
 .icon-caret-right:before { content: "\f0da"; vertical-align: -4px; }
 .icon-check:before{	content: "\f00c"; color:#57A957; }
 .icon-cog:before { content: "\f013"; }
+.icon-collapse:before { content: "\f117"; }
 .icon-comment:before { content: "\f075"; }
 .icon-comments:before { content: "\f086"; }
 .icon-delete:before { content: "\f014"; vertical-align:0; }
@@ -170,6 +170,7 @@ a.member {
 .icon-edit-sign:before { content: "\f14b"; }
 .icon-envelope-alt:before { content: "\f003"; }
 .icon-error:before{ content: "\f00d"; color:#C43C35; }
+.icon-expand:before { content: "\f116"; }
 .icon-eye-open:before { content: "\f06e"; }
 .icon-eye-slash:before { content: "\f070"; }
 .icon-fb:before{ content: "\f09a"; }
