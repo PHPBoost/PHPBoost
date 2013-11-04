@@ -28,13 +28,9 @@
 						if( xhr_object.readyState == 4 ) 
 						{
 							document.getElementById("cat_" + id_cat).innerHTML = xhr_object.responseText;
-							document.getElementById("img_" + id_cat).removeClassName('icon-folder-close');
-							document.getElementById("img_" + id_cat).addClassName('icon-folder-open');
+							document.getElementById("img_" + id_cat).className = 'icon-folder-open';
 							if( document.getElementById("img2_" + id_cat) )
-							{
-								document.getElementById("img2_" + id_cat).removeClassName('icon-expand');
-								document.getElementById("img2_" + id_cat).addClassName('icon-collapse');
-							}
+								document.getElementById("img2_" + id_cat).className = 'icon-collapse';
 							cat_status[id_cat] = 1;
 						}
 					}
@@ -45,25 +41,17 @@
 				else if( cat_status[id_cat] == 0 )
 				{
 					document.getElementById("cat_" + id_cat).style.display = 'block';
-					document.getElementById("img_" + id_cat).removeClassName('icon-folder-close');
-					document.getElementById("img_" + id_cat).addClassName('icon-folder-open');
+					document.getElementById("img_" + id_cat).className = 'icon-folder-open';
 					if( document.getElementById("img2_" + id_cat) )
-					{
-						document.getElementById("img2_" + id_cat).removeClassName('icon-expand');
-						document.getElementById("img2_" + id_cat).addClassName('icon-collapse');
-					}
+						document.getElementById("img2_" + id_cat).className = 'icon-collapse';
 					cat_status[id_cat] = 1;
 				}
 				else
 				{
 					document.getElementById("cat_" + id_cat).style.display = 'none';
-					document.getElementById("img_" + id_cat).removeClassName('icon-folder-open');
-					document.getElementById("img_" + id_cat).addClassName('icon-folder-close');
+					document.getElementById("img_" + id_cat).className = 'icon-folder-close';
 					if( document.getElementById("img2_" + id_cat) )
-					{
-						document.getElementById("img2_" + id_cat).removeClassName('icon-collapse');
-						document.getElementById("img2_" + id_cat).addClassName('icon-expand');
-					}
+						document.getElementById("img2_" + id_cat).className = 'icon-expand';
 					cat_status[id_cat] = 0;
 				}
 			}
