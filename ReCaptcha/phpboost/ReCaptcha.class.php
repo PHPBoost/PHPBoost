@@ -31,6 +31,7 @@ class ReCaptcha extends Captcha
 	const PRIVATE_KEY = '6LdrD9YSAAAAAJloXTYNKbaMgBaLPvfMoWncKWkc';
 
 	private $recaptcha_response;
+	private $lang;
 	
 	public function __construct()
 	{
@@ -63,6 +64,8 @@ class ReCaptcha extends Captcha
 	public function display()
 	{
 		$tpl = new FileTemplate('ReCaptcha/ReCaptcha.tpl');
+		$this->lang = LangLoader::get('common', 'ReCaptcha');
+		$tpl->add_lang($this->lang);
 		$tpl->put('PUBLIC_KEY', self::PUBLIC_KEY);
 		return $tpl->render();
 	}
