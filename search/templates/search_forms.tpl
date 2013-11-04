@@ -11,20 +11,19 @@
                 show_div(FORM + module);
 
                 
-                document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).className = 'small_link SpecializedFormLink SFL_no_current';
+                document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).className = '';
 
                 LastSpecializedFormUsed = module;
                 document.getElementById('search_in').value = module;
                 
-                document.getElementById(SPECIALIZED_FORM_LINK + module).className = 'small_link SpecializedFormLink SFL_current';
+                document.getElementById(SPECIALIZED_FORM_LINK + module).className = 'SFL_current';
             }
             
             function check_search_form_post()
             // V�rifie la validité du formulaire
             {
                 var textSearched = document.getElementById("TxTsearched").value;
-                
-                if ( textSearched.length > 3 )
+                if ( textSearched.length > 3 && textSearched != '{L_SEARCH}...')
                 {
                     textSearched = escape_xmlhttprequest(textSearched);
                     return true;
@@ -47,14 +46,12 @@
                 <form action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
                     <div class="search_field"><input type="text" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="text" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';"></div>
                     <div class="spacer">&nbsp;</div>
-                    <div style="text-align:center;">
-                        <p id="forms_selection">
-                            <a id="specialize_form_link_all" href="javascript:ChangeForm('all');" class="small">{L_SEARCH_ALL}</a>
-                            # START forms #
-                                <a id="specialize_form_link_{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link SpecializedFormLink SFL_no_current">{forms.L_MODULE_NAME}</a>
-                            # END forms #
-                        </p>
-                    </div>
+					<div id="forms_selection" class="options">
+						<a id="specialize_form_link_all" href="javascript:ChangeForm('all');" class="SFL_current">{L_SEARCH_ALL}</a>
+						# START forms #
+							<a id="specialize_form_link_{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');">{forms.L_MODULE_NAME}</a>
+						# END forms #
+					</div>
                     <div id="form_all" class="SpecializedForm">
                         <fieldset class="searchFieldset">
                             <div class="form-element">
@@ -76,12 +73,11 @@
                         </fieldset>
                     </div>
                     # END forms #
-                    <div class="spacer">&nbsp;</div>
                     <fieldset class="fieldset_submit">
                         <legend>{L_SEARCH}</legend>
                         <input type="hidden" id="search_in" name="search_in" value="all">
                         <input type="hidden" id="query_mode" name="query_mode" value="0">
-                        <input type="submit" id="search_submit" name="search_submit" value="{L_SEARCH}" class="submit">
+                        <button type="submit" id="search_submit" name="search_submit" value="{L_SEARCH}" class="submit">{L_SEARCH}</button>
                         <input type="hidden" name="token" value="{TOKEN}">
                     </fieldset>
                 </form>
