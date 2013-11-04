@@ -80,7 +80,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 		{
 			if (in_array($key, $cats)) //Si cette catégorie contient notre catégorie, on l'explore
 			{
-				$line .= '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $module_data_path . '/images/minus.png" alt="" id="img2_' . $key . '" /><span class="icon-folder-open" id="img_' . $key . '"></span></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a><span id="cat_' . $key . '">
+				$line .= '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><span class="icon-collapse" id="img2_' . $key . '"></span><span class="icon-folder-open" id="img_' . $key . '"></span></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a><span id="cat_' . $key . '">
 				<ul>'
 				. show_cat_contents($key, $cats, $id, $display_select_link) . '</ul></span></li>';
 			}
