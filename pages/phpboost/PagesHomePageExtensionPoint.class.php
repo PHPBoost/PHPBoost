@@ -144,7 +144,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			if ($sub_cats_number > 0)
 			{	
 				$tpl->assign_block_vars('list', array(
-					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $tpl->get_pictures_data_path() . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"/><span class="icon-folder-close" id ="img_' . $row['id'] . '"></span></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></li>'
+					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><span class="icon-expand" id="img2_' . $row['id'] . '"></span><span class="icon-folder-close" id ="img_' . $row['id'] . '"></span></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></li>'
 				));
 			}
 			else

@@ -31,8 +31,10 @@ function show_cat_contents(id_cat, display_select_link)
 					document.getElementById("img_" + id_cat).removeClassName('icon-folder-close');
 					document.getElementById("img_" + id_cat).addClassName('icon-folder-open');
 					if( document.getElementById("img2_" + id_cat) )
-						document.getElementById("img2_" + id_cat).src = path + '/images/minus.png';
-					
+					{
+						document.getElementById("img2_" + id_cat).removeClassName('icon-expand');
+						document.getElementById("img2_" + id_cat).addClassName('icon-collapse');
+					}
 					cat_status[id_cat] = 1;
 				}
 			}
@@ -46,7 +48,10 @@ function show_cat_contents(id_cat, display_select_link)
 			document.getElementById("img_" + id_cat).removeClassName('icon-folder-close');
 			document.getElementById("img_" + id_cat).addClassName('icon-folder-open');
 			if( document.getElementById("img2_" + id_cat) )
-				document.getElementById("img2_" + id_cat).src = path + '/images/minus.png';
+			{
+				document.getElementById("img2_" + id_cat).removeClassName('icon-expand');
+				document.getElementById("img2_" + id_cat).addClassName('icon-collapse');
+			}
 			cat_status[id_cat] = 1;
 		}
 		else
@@ -55,7 +60,10 @@ function show_cat_contents(id_cat, display_select_link)
 			document.getElementById("img_" + id_cat).removeClassName('icon-folder-open');
 			document.getElementById("img_" + id_cat).addClassName('icon-folder-close');
 			if( document.getElementById("img2_" + id_cat) )
-				document.getElementById("img2_" + id_cat).src = path + '/images/plus.png';
+			{
+				document.getElementById("img2_" + id_cat).removeClassName('icon-collapse');
+				document.getElementById("img2_" + id_cat).addClassName('icon-expand');
+			}
 			cat_status[id_cat] = 0;
 		}
 	}
