@@ -177,7 +177,8 @@
 					<span class="text_strong">{L_RELEASE_DATE} : </span><span itemprop="dateModified">{RELEASE_DATE}</span><br/>
 					<span class="text_strong">{L_DOWNLOADED} : </span><span>{HITS}</span><br/>
 					<div class="center"><span class="text_strong">{KERNEL_NOTATION}</span>
-					<span id="nbrnote{ID_FILE}">({NUM_NOTES})</span></div>
+					
+					</div>
 					
 				</div>
 				<span itemprop="text">
