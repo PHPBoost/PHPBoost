@@ -83,7 +83,8 @@ table tr td.calendar_weekend{
 }
 
 table tr td.calendar_week{
-	border-right:1px solid #DDD;
+	border-right:2px solid #DDD;
+	width:8%;
 }
 
 .admin_form {
