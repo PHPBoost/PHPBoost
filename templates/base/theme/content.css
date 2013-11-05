@@ -22,6 +22,26 @@ section header h1, article header h1, section header h1 a, article header h1 a {
     font-weight: bold;
 }
 
+section header h2, article header h2 {
+    border-bottom: 1px solid #336397;
+	margin-left:16px;
+}
+
+section header h2, article header h2, section header h2 a, article header h2 a {
+	font-size: 16px;
+    font-weight: bold;
+}
+
+section header h3, article header h3 {
+    border-bottom: 1px solid #336397;
+	margin-left:32px;
+}
+
+section header h3, article header h3, section header h3 a, article header h3 a {
+	font-size: 15px;
+    font-weight: bold;
+}
+
 /* Icones avec les actions (edition, suppression, etc) */
 span.actions { float: right; }
 span.actions a { font-size: 12px; }
