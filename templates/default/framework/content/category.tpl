@@ -16,7 +16,7 @@
 					<span id="l{categories.ID}"></span>
 					# IF categories.C_NOT_FIRST_CAT #
 						<a href="{categories.ACTION_GO_UP}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" />
+							<i class="icon-arrow-up"></i>
 						</a>
 						# IF C_AJAX_MODE #
 							<script type="text/javascript">
@@ -28,7 +28,7 @@
 					# ENDIF #
 					# IF categories.C_NOT_LAST_CAT #
 						<a href="{categories.ACTION_GO_DOWN}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" />
+							<i class="icon-arrow-down"></i>
 						</a>
 						# IF C_AJAX_MODE #
 							<script type="text/javascript">

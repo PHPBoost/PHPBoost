@@ -4,7 +4,7 @@
 			<a href="{U_EDIT}" title="{L_EDIT}" class="icon-edit"></a>
 			<a href="{U_DELETE}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
 		</div>
-		<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="Drag&Drop" class="valign_middle drag" >
+		<i class="icon-arrows" ></i>
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="Url" class="valign_middle"> 
 		{NAME}
 		# IF C_DESCRIPTION #<span class="cat_desc"> | {DESCRIPTION}</span># ENDIF #
