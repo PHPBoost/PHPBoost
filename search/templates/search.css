@@ -12,12 +12,6 @@ div.search_mini input {
     margin:2px;
 }
 
-
-
-fieldset.searchFieldset {
-    background-color: #fcfcfc;
-}
-
 table.SearchForm {
     /*background-color: #bfd9ef;*/
     background-color: #fcfcfc;
@@ -92,16 +86,11 @@ fieldset.fieldset_submit {
 }
 
 div.search_field {
-	width:50%;
-	margin:auto;
+	text-align:center;
 }
 
 input#TxTsearched {
-	background:#FFFFFF url(../search_mini.png) no-repeat;
-	background-position:2px 1px;
-	padding-left:22px;
-	height:18px;
-	width:100%;
+	width:200px;
 }
 #forms_selection a{
 	outline:none;
