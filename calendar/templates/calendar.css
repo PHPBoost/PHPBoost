@@ -94,3 +94,7 @@ table tr td.calendar_week{
 
 .column_title { width:28%; }
 .text_left { text-align:left; }
+
+.change_month_link {
+	cursor:pointer;
+}
