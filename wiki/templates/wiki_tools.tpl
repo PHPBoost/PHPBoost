@@ -48,7 +48,7 @@
 								# ENDIF #
 								# IF C_MOVE #
 								<li><a href="{U_MOVE}" title="{L_MOVE}">
-									<img src="{PICTURES_DATA_PATH}/images/move.png"/>
+									<i class="icon-forward"></i>
 									{L_MOVE}
 								</a></li>
 								# ENDIF #
