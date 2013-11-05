@@ -115,6 +115,8 @@ class ContactController extends ModuleController
 		$fields = $this->config->get_fields();
 		$recipients_field_id = $this->config->get_field_id_by_name('f_recipients');
 		$recipients = $fields[$recipients_field_id]->get_possible_values();
+		$recipients['admins']['email'] = implode(';', MailServiceConfig::load()->get_administrators_mails());
+		
 		$subject_field_id = $this->config->get_field_id_by_name('f_subject');
 		$subjects = $fields[$subject_field_id]->get_possible_values();
 		
@@ -154,7 +156,22 @@ class ContactController extends ModuleController
 		
 		if ($fields[$recipients_field_id]->is_displayed())
 		{
-			$recipients_mails = explode(';', $recipients[$this->form->get_value('f_recipients')->get_raw_value()]['email']);
+			if (in_array($fields[$recipients_field_id]->get_field_type(), array('ContactSimpleSelectField', 'ContactSimpleChoiceField')))
+				$recipients_mails = explode(';', $recipients[$this->form->get_value('f_recipients')->get_raw_value()]['email']);
+			else
+			{
+				$selected_recipients = $this->form->get_value('f_recipients');
+				$recipients_mails = array();
+				foreach ($selected_recipients as $recipient)
+				{
+					$mails = explode(';', $recipients[$recipient->get_id()]['email']);
+					foreach ($mails as $m)
+					{
+						$recipients_mails[] = $m;
+					}
+				}
+			}
+			
 			foreach ($recipients_mails as $mail_address)
 			{
 				$mail->add_recipient($mail_address);
