@@ -47,7 +47,7 @@ table tr td.calendar_weekend{
 }
 
 table tr td.calendar_week{
-	border-right:1px solid #DDD;
+	border-right:1px solid #AAA;
 }
 
 .change_month_link {
