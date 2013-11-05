@@ -49,3 +49,7 @@ table tr td.calendar_weekend{
 table tr td.calendar_week{
 	border-right:1px solid #DDD;
 }
+
+.change_month_link {
+	cursor:pointer;
+}
