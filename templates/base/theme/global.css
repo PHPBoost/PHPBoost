@@ -131,11 +131,8 @@ a.member {
 
 /* Icônes spécifique PHPBoost
 ------------------------------------ */
-[class^="icon-"]{
-	display: inline-block;
-}
-	
 [class^="icon-"]:before {
+	display: inline-block;
 	font-family: FontAwesome;
 	font-size: 14px;
 	font-style: normal;
@@ -147,14 +144,16 @@ a.member {
 }
 [class^="icon-"]:hover { text-decoration:none;}
 
-.icon-big:before{
-	font-size: 2em;
-}
+.icon-big:before{ font-size: 2em; }
+.icon-bigger:before{ font-size: 3em; }
+
+.icon-block:before{ display:block; }
 
 .icon-arrow-right:before { content: "\f061"; }
 .icon-arrow-left:before { content: "\f060"; }
 .icon-arrow-up:before { content: "\f062"; }
 .icon-arrow-down:before { content: "\f063"; }
+.icon-arrows:before { content: "\f047"; }
 .icon-book:before { content: "\f02d"; }
 .icon-calendar:before { content: "\f073"; }
 .icon-caret-down:before { content: "\f0d7"; vertical-align: -4px; }
@@ -188,6 +187,7 @@ a.member {
 .icon-pencil:before { content: "\f040"; }
 .icon-plus:before { content: "\f067"; }
 .icon-print:before { content: "\f02f"; }
+.icon-refresh:before { content: "\f021"; }
 .icon-remove:before { content: "\f00d"; }
 .icon-reorder:before { content: "\f0c9"; }
 .icon-search:before { content: "\f002"; }

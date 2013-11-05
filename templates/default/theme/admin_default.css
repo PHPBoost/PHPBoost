@@ -40,7 +40,6 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	background-image: -moz-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
 	background-image: -webkit-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
 	background-image: -ms-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
-	height: 28px;
 	padding: 10px 5px 5px 10px;
 	font-size:1em;
 	font-weight:bold;
