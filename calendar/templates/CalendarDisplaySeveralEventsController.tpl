@@ -40,17 +40,17 @@
 	
 	<div class="spacer">&nbsp;</div>
 	
-	<div id="events" class="event_container">
-		<div class="event_top_title">
-			<strong>{L_EVENTS}</strong>
-		</div>
+	<section id="events" class="event_container">
+		<header>
+			<h2>{L_EVENTS}</h2>
+		</header>
 		<div class="event_date">{DATE}</div>
 		
 		# IF C_EVENT #
 			# START event #
 			<article itemscope="itemscope" itemtype="http://schema.org/Event">
 				<header>
-					<h1>
+					<h3>
 						<a href="{event.U_SYNDICATION}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 						<a href="{event.U_LINK}"><span id="name" itemprop="name">{event.TITLE}</span></a>
 						
@@ -63,7 +63,7 @@
 								<a href="{event.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 							# ENDIF #
 						</span>
-					</h1>
+					</h3>
 					
 					<meta itemprop="url" content="{event.U_LINK}">
 					<div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
@@ -97,6 +97,6 @@
 		# ELSE #
 			<p class="center">{@calendar.notice.no_current_action}</p>
 		# ENDIF #
-	</div>
+	</section>
 	<footer></footer>
 </section>

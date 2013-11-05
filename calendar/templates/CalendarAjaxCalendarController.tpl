@@ -18,13 +18,13 @@
 		</div>
 		# ENDIF #
 		<div class="calendar_container">
-			<div class="calendar_top_l">
-				<a class="change_month_link" onclick="ChangeMonth(${escapejs(U_PREVIOUS_MONTH)});" title="{PREVIOUS_MONTH_TITLE}">&laquo;</a>
-			</div>
-			<div class="calendar_top_r">
-				<a class="change_month_link" onclick="ChangeMonth(${escapejs(U_NEXT_MONTH)});" title="{NEXT_MONTH_TITLE}">&raquo;</a>
-			</div>
-			<div class="calendar_top">
+			<div class="calendar_top options">
+				<div class="calendar_top_l">
+					<a class="change_month_link" onclick="ChangeMonth(${escapejs(U_PREVIOUS_MONTH)});" title="{PREVIOUS_MONTH_TITLE}">&laquo;</a>
+				</div>
+				<div class="calendar_top_r">
+					<a class="change_month_link" onclick="ChangeMonth(${escapejs(U_NEXT_MONTH)});" title="{NEXT_MONTH_TITLE}">&raquo;</a>
+				</div>
 				{DATE} 
 			</div>
 			
@@ -45,7 +45,7 @@
 					<tbody>
 						<tr>
 							# START day #
-							<td class="c_row {day.CLASS}"# IF day.C_COLOR # style="background-color:{day.COLOR}"# ENDIF #>
+							<td class="{day.CLASS}"# IF day.C_COLOR # style="background-color:{day.COLOR}"# ENDIF #>
 								# IF day.C_MONTH_DAY #<a title="{day.TITLE}" href="{day.U_DAY_EVENTS}">{day.DAY}</a># ENDIF #
 							</td>
 							# IF day.CHANGE_LINE #
