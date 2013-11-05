@@ -142,7 +142,7 @@
 					<span class="row2" style="float:right;">
 						<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{PICTURES_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" /></a>
 						# IF C_ADMIN_TOOLS #
-							<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" /></a>
+							<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}" class="icon-forward"></a>
 							# START questions_block.contents.up #
 							<a href="{questions_block.contents.U_UP}" title="{L_UP}" class="icon-arrow-up"></a>
 							# END questions_block.contents.up #

@@ -382,7 +382,7 @@
 												<br /><br />
 											</div>
 										</div>
-										<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
+										<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="bbcode_hover" title="{L_MOVETO}" class="icon-forward"></a>
 										
 										
 										<a id="img_aprob{ID}" href="javascript:pics_aprob({ID});" class="{IMG_APROB}" title="{L_APROB_IMG}"></a>
@@ -431,7 +431,7 @@
 										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="icon-edit"></a></span>
 										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>									
 										<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
-											<div style="position:absolute;z-index:100;margin-top:90px;">
+											<div style="position:absolute;z-index:100;margin-top:75px;">
 												<div class="bbcode_block" style="width:170px;overflow:auto;">
 													<div style="margin-bottom:4px;" class="smaller"><strong>{L_MOVETO}</strong>:</div>
 													<select class="valign_middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
@@ -441,7 +441,7 @@
 												</div>
 											</div>
 										</div>
-										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
+										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="icon-forward" title="{L_MOVETO}"></a>
 										
 										<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" class="{pics_list.IMG_APROB}" title="{pics_list.L_APROB_IMG}"></a>
 										&nbsp;<span id="img{ID}"></span>
