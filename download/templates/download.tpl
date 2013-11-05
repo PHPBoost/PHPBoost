@@ -162,12 +162,11 @@
 							<br /><br />
 						# ENDIF #
 						<a href="{U_DOWNLOAD_FILE}" class="basic-button">
-							{L_DOWNLOAD_FILE}
+							<i class="icon-download"></i> {L_DOWNLOAD_FILE}
 						</a>
-						<br/>
 						# IF IS_USER_CONNECTED #
-						<a href="{U_DEADLINK}" class="smaller">
-							{L_DEADLINK}
+						<a href="{U_DEADLINK}" class="basic-button alt" title="{L_DEADLINK}">
+							<i class="icon-link-broken"></i>
 						</a>
 						# ENDIF #
 					</div>
@@ -176,8 +175,8 @@
 					<span class="text_strong">{L_INSERTION_DATE} : </span><span itemprop="dateCreated">{CREATION_DATE}</span><br/>
 					<span class="text_strong">{L_RELEASE_DATE} : </span><span itemprop="dateModified">{RELEASE_DATE}</span><br/>
 					<span class="text_strong">{L_DOWNLOADED} : </span><span>{HITS}</span><br/>
-					<div class="center"><span class="text_strong">{KERNEL_NOTATION}</span>
-					
+					<div class="center">
+						<span class="text_strong">{KERNEL_NOTATION}</span>
 					</div>
 					
 				</div>

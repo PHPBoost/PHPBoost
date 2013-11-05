@@ -126,11 +126,19 @@ section footer nav.pagination {	text-align: center; }
 
 .explorer .contents ul [class^="icon-"]{
 	width:20px;
+}
+
+.explorer .contents ul a.parent [class^="icon-"]:first-child{
+	width:14px;
+}
+
+.explorer .contents ul [class^="icon-"]:before{
+	width:20px;
 	text-align:center;
 	vertical-align:middle;
 }
 
-.explorer .contents ul a.parent [class^="icon-"]:first-child{
+.explorer .contents ul a.parent [class^="icon-"]:first-child:before{
 	width:14px;
 }
 
@@ -415,6 +423,10 @@ button[type=reset]{
 
 .basic-button.alt:hover {
 	background: #BBB;
+}
+
+.basic-button [class^="icon-"]{
+	vertical-align:middle;
 }
 
 /* Formulaires 

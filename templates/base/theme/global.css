@@ -166,6 +166,7 @@ a.member {
 .icon-comment:before { content: "\f075"; }
 .icon-comments:before { content: "\f086"; }
 .icon-delete:before { content: "\f014"; vertical-align:0; }
+.icon-download:before { content: "\f019"; }
 .icon-edit:before { content: "\f044"; }
 .icon-edit-sign:before { content: "\f14b"; }
 .icon-envelope-alt:before { content: "\f003"; }
@@ -181,6 +182,7 @@ a.member {
 .icon-folder-open:before { content: "\f07c"; }
 .icon-forward:before { content: "\f064"; }
 .icon-gmail:before{ content: "\f0d5"; }
+.icon-link-broken:before{ content: "\f127"; }
 .icon-mail:before{ content: "\f0e0"; }
 .icon-minus:before { content: "\f068"; }
 .icon-pencil:before { content: "\f040"; }
