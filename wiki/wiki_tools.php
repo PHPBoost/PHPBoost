@@ -124,19 +124,19 @@ $Template->put_all(array(
 	'U_PRINT' => url('print.php?id=' . $article_infos['id']),
 
 	'L_RANDOM' => $LANG['wiki_random_page'],
-	'U_RANDOM' => url('/wiki/property.php?random=1'),
+	'U_RANDOM' => url('property.php?random=1'),
 
 	'L_SEARCH' => $LANG['wiki_search'],
-	'U_SEARCH' => url('/wiki/search.php'),
+	'U_SEARCH' => url('search.php'),
 
 	'L_FOLLOWED' => $LANG['wiki_followed_articles'],
-	'U_FOLLOWED' => url('/wiki/favorites.php'),
+	'U_FOLLOWED' => url('favorites.php'),
 
 	'L_WATCH' => $article_infos['id_favorite'] > 0 ? $LANG['wiki_unwatch_this_topic'] : $LANG['wiki_watch'],
-	'U_WATCH' => $article_infos['id_favorite'] > 0 ? url('/wiki/favorites.php?del=' . $id_article . '&amp;token=' . $Session->get_token()) : url('/wiki/favorites.php?add=' . $id_article),
+	'U_WATCH' => $article_infos['id_favorite'] > 0 ? url('favorites.php?del=' . $id_article . '&amp;token=' . $Session->get_token()) : url('favorites.php?add=' . $id_article),
 
 	'L_EXPLORE' => $LANG['wiki_explorer_short'],
-	'U_EXPLORE' => url('/wiki/explorer.php'),
+	'U_EXPLORE' => url('explorer.php'),
 
 	'L_RSS' => $LANG['wiki_rss'],
 	'U_RSS' => $page_type == 'index' ? SyndicationUrlBuilder::rss('wiki')->rel() : SyndicationUrlBuilder::rss('wiki', $article_infos['id_cat'])->rel(),
