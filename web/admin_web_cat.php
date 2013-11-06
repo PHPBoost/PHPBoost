@@ -164,7 +164,6 @@ else
 		$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 		
 	$Template->put_all(array(
-		'THEME' => get_utheme(),
 		'IMG_LIST' => $image_list,
 		'L_DEL_ENTRY' => $LANG['del_entry'],		
 		'L_WEB_ADD' => $LANG['web_add'],

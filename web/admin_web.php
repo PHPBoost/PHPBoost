@@ -142,8 +142,6 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	));
 
 	$Template->put_all(array(
-		'THEME' => get_utheme(),
-		'LANG' => get_ulang(),
 		'IDWEB' => $id_post,
 		'TITLE' => $title,
 		'KERNEL_EDITOR' => $editor->display(),		
@@ -243,8 +241,6 @@ else
 
 	$Template->put_all(array(	
 		'PAGINATION' => $Pagination->display('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
-		'THEME' => get_utheme(),
-		'LANG' => get_ulang(),
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],

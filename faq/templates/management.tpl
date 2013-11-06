@@ -1,5 +1,5 @@
 		# START category #
-		<section>			
+		<section>
 			<header>
 				<h1>{TITLE}</h1>
 			</header>

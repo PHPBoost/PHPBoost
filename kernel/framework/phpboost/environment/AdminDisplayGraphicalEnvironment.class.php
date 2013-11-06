@@ -362,7 +362,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
 
 		$tpl->put_all(array(
-			'THEME' => get_utheme(),
 			'C_DISPLAY_AUTHOR_THEME' => GraphicalEnvironmentConfig::load()->get_display_theme_author(),
 			'L_POWERED_BY' => self::$lang_admin['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],

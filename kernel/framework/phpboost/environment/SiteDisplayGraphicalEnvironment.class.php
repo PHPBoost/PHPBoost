@@ -268,7 +268,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$footer_content = $footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__FOOTER] : '';
 		
 		$template->put_all(array(
-			'THEME' => get_utheme(),
 			'C_MENUS_BOTTOM_CENTRAL_CONTENT' => $bottom_top_central_is_activated,
 			'MENUS_BOTTOMCENTRAL_CONTENT' => $bottom_top_central_content,
 			'C_MENUS_TOP_FOOTER_CONTENT' => $top_footer_is_activated,

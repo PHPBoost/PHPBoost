@@ -51,7 +51,6 @@ class StatsModuleMiniMenu extends ModuleMiniMenu
 			$group_color = User::get_group_color($stats_cache->get_stats_properties('last_member_groups'), $stats_cache->get_stats_properties('last_member_level'));
 			
 			$tpl->put_all(array(
-				'SID' => SID,
 				'L_STATS' => $LANG['stats'],
 				'L_MORE_STAT' => $LANG['more_stats'],
 				'L_USER_REGISTERED' => sprintf($l_member_registered, $stats_cache->get_stats_properties('nbr_members')),

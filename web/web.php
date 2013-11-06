@@ -56,8 +56,8 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		-->
 		</script>";
 		
-		$edit = '&nbsp;&nbsp;<a href="../web/admin_web' . url('.php?id=' . $web['id']) . '" title="' . $LANG['edit'] . '" class="icon-edit"></a>';
-		$del = '&nbsp;&nbsp;<a href="../web/admin_web.php?delete=1&amp;id=' . $web['id'] . '&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="icon-delete" data-confirmation="delete-element"></a>';
+		$edit = '<a href="../web/admin_web' . url('.php?id=' . $web['id']) . '" title="' . $LANG['edit'] . '" class="icon-edit"></a>';
+		$del = '<a href="../web/admin_web.php?delete=1&amp;id=' . $web['id'] . '&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="icon-delete" data-confirmation="delete-element"></a>';
 	}
 	else
 	{
@@ -83,8 +83,6 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'CAT' => $CAT_WEB[$idcat]['name'],
 		'DATE' => gmdate_format('date_format_short', $web['timestamp']),
 		'COMPT' => $web['compt'],
-		'THEME' => get_utheme(),
-		'LANG' => get_ulang(),
 		'COM' => '<a href="'. PATH_TO_ROOT .'/web/web' . url('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('web', $idweb) . '</a>',
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'MODULE_DATA_PATH' => $module_data_path,

@@ -290,7 +290,6 @@ elseif (!empty($id))
 		$type = 1;
 
 	$Template->put_all(array(
-		'THEME' => get_utheme(),
 		'ID' => $id,
 		'TYPE' => $type,
 		'CATEGORIES' => $forums,
@@ -348,7 +347,6 @@ else
 	));
 
 	$Template->put_all(array(
-		'THEME' => get_utheme(),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],

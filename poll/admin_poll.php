@@ -248,7 +248,6 @@ else
 	
 	$Template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_poll.php?p=%d', $nbr_poll, 'p', 20, 3),
-		'LANG' => get_ulang(),
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
 		'L_POLL_ADD' => $LANG['poll_add'],
 		'L_POLL_CONFIG' => $LANG['poll_config'],

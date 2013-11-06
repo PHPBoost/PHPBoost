@@ -282,7 +282,6 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			'MODO' => $total_modo,
 			'MEMBER' => $total_member,
 			'GUEST' => $total_visit,
-			'SID' => SID,
 			'SELECT_CAT' => !empty($id_get) ? forum_list_cat($id_get, 0) : '', //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 			'C_TOTAL_POST' => true,
 			'U_ONCHANGE' => url(PATH_TO_ROOT ."/forum/index.php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),

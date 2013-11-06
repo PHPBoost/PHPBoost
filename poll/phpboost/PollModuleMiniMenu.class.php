@@ -67,7 +67,6 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 				if (in_array($poll_mini['id'], $array_cookie))
 				{
 					$tpl->put_all(array(
-						'THEME' => get_utheme(),
 						'L_MINI_POLL' => $LANG['mini_poll'],
 						'L_VOTE' => ($poll_mini['total'] > 1) ? $LANG['poll_vote_s'] : $LANG['poll_vote']
 					));

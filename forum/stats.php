@@ -55,7 +55,6 @@ $nbr_msg_today = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE
 
 $Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-	'SID' => SID,
 	'NBR_TOPICS' => $sum['total_topics'],
 	'NBR_MSG' => $sum['total_msg'],
 	'NBR_TOPICS_DAY' => $nbr_topics_day,

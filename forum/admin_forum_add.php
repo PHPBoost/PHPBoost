@@ -158,7 +158,6 @@ else
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	
 	$Template->put_all(array(
-		'THEME' => get_utheme(),
 		'CATEGORIES' => $forums,
 		'AUTH_READ' => Authorizations::generate_select(READ_CAT_FORUM, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_FORUM, array(), array(0 => true, 1 => true, 2 => true)),

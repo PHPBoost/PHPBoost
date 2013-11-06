@@ -154,7 +154,6 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			}
 		
 			$tpl->put_all(array(
-				'SID' => SID,
 				'ARRAY_PICS' => $array_pics_mini,
 				'HEIGHT_DIV' => $config->get_mini_max_height(),
 				'SUM_HEIGHT' => $sum_height + 10,

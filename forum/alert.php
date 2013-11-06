@@ -138,7 +138,6 @@ list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total
 
 $Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['alert_topic'],
-	'SID' => SID,
 	'DESC' => $topic['subtitle'],
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,

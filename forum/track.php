@@ -188,9 +188,7 @@ elseif ($User->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non l
 	$Template->put_all(array(
 		'NBR_TOPICS' => $nbr_topics,
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-		'SID' => SID,
 		'PAGINATION' => $Pagination->display('track' . url('.php?p=%d'), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
-		'LANG' => get_ulang(),
 		'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1&amp;favorite=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 		'U_CHANGE_CAT'=> 'track.php' . SID . '&amp;token=' . $Session->get_token(),
 		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),

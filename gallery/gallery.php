@@ -252,9 +252,6 @@ elseif ($g_add)
 	}
 
 	$Template->put_all(array(
-		'SID' => SID,
-		'THEME' => get_utheme(),
-		'LANG' => get_ulang(),
 		'CAT_ID' => $g_idcat,
 		'GALLERY' => !empty($g_idcat) ? $CAT_GALLERY[$g_idcat]['name'] : $LANG['gallery'],
 		'CATEGORIES' => $auth_cats,

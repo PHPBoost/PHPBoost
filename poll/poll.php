@@ -306,9 +306,7 @@ elseif ($archives) //Archives.
 	$Pagination = new DeprecatedPagination();
 	
 	$Template->put_all(array(
-		'C_POLL_ARCHIVES' => true,
-		'SID' => SID,
-		'THEME' => get_utheme(),		
+		'C_POLL_ARCHIVES' => true,	
 		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 		'PAGINATION' => $Pagination->display('poll' . url('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
 		'L_ARCHIVE' => $LANG['archives'],

@@ -54,7 +54,6 @@ else
 	));
 	
 	$Template->put_all(array(
-		'THEME' => get_utheme(),
 		'SELECT_CREATE_ARTICLE' => Authorizations::generate_select(WIKI_CREATE_ARTICLE, $config->get_authorizations()),
 		'SELECT_CREATE_CAT' => Authorizations::generate_select(WIKI_CREATE_CAT, $config->get_authorizations()),
 		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $config->get_authorizations()),

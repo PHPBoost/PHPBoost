@@ -62,8 +62,6 @@ class UserHomeProfileController extends AbstractController
 			'C_USER_AUTH_FILES' => $is_authorized_files_panel,
 			'C_USER_INDEX' => true,
 			'C_IS_MODERATOR' => $this->user->get_attribute('level') >= User::MODERATOR_LEVEL,
-			'SID' => SID,
-			'LANG' => get_ulang(),
 			'COLSPAN' => $is_authorized_files_panel ? 3 : 2,
 			'USER_NAME' => $this->user->get_attribute('login'),
 			'PM' => $this->user->get_attribute('user_pm'),

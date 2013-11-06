@@ -57,9 +57,6 @@ if (!$User->check_level(User::MODERATOR_LEVEL)) //Si il n'est pas modérateur
 $moderation_panel_template = new FileTemplate('user/moderation_panel.tpl');	
 
 $moderation_panel_template->put_all(array(
-	'SID' => SID,
-	'LANG' => get_ulang(),
-	'THEME' => get_utheme(),
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 	'L_PUNISHMENT' => $LANG['punishment'],
 	'L_WARNING' => $LANG['warning'],

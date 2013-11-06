@@ -714,7 +714,6 @@ elseif (!empty($id)) //Edition des catégories.
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));	
 
 	$Template->put_all(array(
-		'THEME' => get_utheme(),
 		'ID' => $id,
 		'CATEGORIES' => $galeries,
 		'NAME' => $gallery_info['name'],
@@ -775,7 +774,6 @@ elseif (!empty($root)) //Edition de la racine.
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));	
 	
 	$Template->put_all(array(
-		'THEME' => get_utheme(),
 		'AUTH_READ' => Authorizations::generate_select(GalleryAuthorizationsService::READ_AUTHORIZATIONS, $config->get_authorizations()),
 		'AUTH_WRITE' => Authorizations::generate_select(GalleryAuthorizationsService::WRITE_AUTHORIZATIONS, $config->get_authorizations()),
 		'AUTH_EDIT' => Authorizations::generate_select(GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS, $config->get_authorizations()),
@@ -815,7 +813,6 @@ else
 		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], E_USER_NOTICE));
 		
 	$Template->put_all(array(
-		'THEME' => get_utheme(),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 

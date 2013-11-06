@@ -235,7 +235,6 @@ if (!empty($id_get))
 	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $id_get . "'", __LINE__, __FILE__);
 	$Template->put_all(array(
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-		'SID' => SID,
 		'PAGINATION' => $Pagination->display('forum' . url('.php?id=' . $id_get . '&amp;p=%d', '-' . $id_get . '-%d.php'), $nbr_topic, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 		'IDCAT' => $id_get,
 		//'C_MASS_MODO_CHECK' => $check_group_edit_auth ? true : false,

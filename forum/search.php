@@ -51,8 +51,6 @@ $Template->set_filenames(array(
 $date_lang = LangLoader::get('date-common');
 $Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-	'LANG' => get_ulang(),
-	'SID' => SID,
 	'SEARCH' => stripslashes($search),
 	'SELECT_CAT' => forum_list_cat(0, 0), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'CONTENTS_CHECKED' => ($where == 'contents') ? 'checked="checked"' : '',

@@ -115,11 +115,8 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		$submit = !empty($post_update) ? $LANG['update'] : $LANG['submit'];
 
 		$Template->put_all(array(
-			'THEME' => get_utheme(),
-			'LANG' => get_ulang(),
 			'P_UPDATE' => $post_update,
 			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-			'SID' => SID,
 			'KERNEL_EDITOR' => $editor->display(),
 			'DESC' => $topic['subtitle'],
 			'CONTENTS' => $contents,
@@ -273,10 +270,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			$poll_type = retrieve(POST, 'poll_type', 0);
 
 			$Template->put_all(array(
-				'THEME' => get_utheme(),
-				'LANG' => get_ulang(),
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-				'SID' => SID,
 				'TITLE' => $title,
 				'DESC' => $subtitle,
 				'CONTENTS' => $contents,
@@ -353,7 +347,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			$Template->put_all(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-				'SID' => SID,
 				'TITLE' => '',
 				'DESC' => '',
 				'SELECTED_SIMPLE' => 'checked="ckecked"',
@@ -585,10 +578,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$poll_type = retrieve(POST, 'poll_type', 0);
 
 				$Template->put_all(array(
-					'THEME' => get_utheme(),
-					'LANG' => get_ulang(),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-					'SID' => SID,
 					'TITLE' => $title,
 					'DESC' => $subtitle,
 					'CONTENTS' => $contents,
@@ -711,7 +701,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 				$Template->put_all(array(
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-					'SID' => SID,
 					'TITLE' => $topic['title'],
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => FormatingHelper::unparse($contents),
@@ -818,7 +807,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$Template->put_all(array(
 					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-					'SID' => SID,
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => FormatingHelper::unparse($contents),
 					'KERNEL_EDITOR' => $editor->display(),
@@ -881,7 +869,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			$Template->put_all(array(
 				'P_UPDATE' => '',
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-				'SID' => SID,
 				'DESC' => $topic['subtitle'],
 				'KERNEL_EDITOR' => $editor->display(),
 				'U_ACTION' => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
@@ -956,7 +943,6 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			$Template->put_all(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-				'SID' => SID,
 				'TITLE' => '',
 				'SELECTED_SIMPLE' => 'checked="checked"',
 				'IDTOPIC' => 0,
