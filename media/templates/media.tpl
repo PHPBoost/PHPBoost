@@ -1,34 +1,34 @@
 		# IF C_CATEGORIES #
-		<menu class="dynamic_menu right">
-			<ul>
-				<li><a><i class="icon-cog"></i></a>
-					<ul>
-						# IF C_ADD_FILE #
-						<li>
-							<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">{L_ADD_FILE}</a>
-						</li>
-						# ENDIF #
-						# IF C_MODO #
-						<li>
-							<a href="{PATH_TO_ROOT}/media/moderation_media.php" title="{L_MODO_PANEL}">
-								{L_MODO_PANEL}
-							</a>
-						</li>
-						# END IF #
-						# IF C_ADMIN #
-							# IF C_CAT #
+			<menu class="dynamic_menu right">
+				<ul>
+					<li><a><i class="icon-cog"></i></a>
+						<ul>
+							# IF C_ADD_FILE #
 							<li>
-								<a href="{U_ADMIN_CAT}" title="{L_ADMIN_CAT}">{L_ADMIN_CAT}</a>
+								<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">{L_ADD_FILE}</a>
 							</li>
 							# ENDIF #
-						<li>
-							<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
-						</li>
-						# END IF #
-					</ul>
-				</li>
-			</ul>
-		</menu>
+							# IF C_MODO #
+							<li>
+								<a href="{PATH_TO_ROOT}/media/moderation_media.php" title="{L_MODO_PANEL}">
+									{L_MODO_PANEL}
+								</a>
+							</li>
+							# END IF #
+							# IF C_ADMIN #
+								# IF C_CAT #
+								<li>
+									<a href="{U_ADMIN_CAT}" title="{L_ADMIN_CAT}">{L_ADMIN_CAT}</a>
+								</li>
+								# ENDIF #
+							<li>
+								<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
+							</li>
+							# END IF #
+						</ul>
+					</li>
+				</ul>
+			</menu>
 			
 			<div class="spacer"></div>
 			
@@ -159,28 +159,6 @@
 		# ENDIF #
 
 		# IF C_DISPLAY_MEDIA #
-		# IF C_MODO #
-			<menu class="dynamic_menu right">
-				<ul>
-					<li><a><i class="icon-cog"></i></a>
-						<ul>
-							<li>
-								<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}">${LangLoader::get_message('edit', 'main')}</a>
-							</li>
-							<li>
-								<a href="{U_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">{L_UNAPROBED}</a>
-							</li>
-							<li>
-								<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="delete-element">${LangLoader::get_message('delete', 'main')}</a>
-							</li>
-							<li>
-								<a href="moderation_media.php" title="{L_MODO_PANEL}">{L_MODO_PANEL}</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</menu>
-		# ENDIF #
 		<article>
 			<header>
 				<h1>
@@ -189,6 +167,11 @@
 						# IF A_COM #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
 							{U_COM}
+						# ENDIF #
+						# IF C_MODO #
+							<a href="{U_UNVISIBLE_MEDIA}" class="icon-eye-slash" title="{L_UNAPROBED}"></a>
+							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</span>
 				</h1>

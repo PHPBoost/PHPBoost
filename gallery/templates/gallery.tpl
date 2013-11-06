@@ -233,6 +233,42 @@
 		-->
 		</script> 
 
+		<menu class="dynamic_menu right">
+			<ul>
+				<li><a><i class="icon-reorder"></i></a>
+					<ul>
+						<li class="extend"><a><i class="icon-eye-open"></i> {L_DISPLAY}</a>
+							<ul>
+								<li><a href="{U_BEST_VIEWS}"><i class="icon-eye-open"></i> {L_BEST_VIEWS}</a></li>
+								<li><a href="{U_BEST_NOTES}"><i class="icon-star-half-empty"></i> {L_BEST_NOTES}</a></li>
+							</ul>
+						</li>
+						<li class="extend"><a><i class="icon-sort"></i> {L_ORDER_BY}</a>
+							<ul>
+								<li><a href="{U_ORDER_BY_NAME}"><i class="icon-tag"></i> {L_NAME}</a></li>
+								<li><a href="{U_ORDER_BY_DATE}"><i class="icon-time"></i> {L_DATE}</a></li>
+								<li><a href="{U_ORDER_BY_VIEWS}"><i class="icon-eye-open"></i> {L_VIEWS}</a></li>
+								<li><a href="{U_ORDER_BY_NOTES}"><i class="icon-star-half-empty"></i> {L_NOTES}</a></li>
+								<li><a href="{U_ORDER_BY_COM}"><i class="icon-comment"></i> {L_COM}</a></li>
+							</ul>
+						</li>
+						<li class="extend"><a><i class="icon-sort-by-alphabet"></i> {L_DIRECTION}</a>
+							<ul>
+								<li><a href="{U_ASC}"><i class="icon-sort-by-attributes"></i> {L_ASC}</a></li>
+								<li><a href="{U_DESC}"><i class="icon-sort-by-attributes-alt"></i> {L_DESC}</a></li>	
+							</ul>
+						</li>
+						# IF U_ADD_PICS #
+							<li class="separator"></li>
+							<li><a href="{U_ADD_PICS}"><i class="icon-plus"></i> {L_ADD_PICS}</a></li>
+						# ENDIF #
+						# IF U_EDIT #<li><a href="{U_EDIT}"><i class="icon-pencil"></i> {L_CAT_EDIT}</a></li># ENDIF #
+						# IF U_EDIT_CAT #<li><a href="{U_EDIT_CAT}"><i class="icon-reorder"></i> {L_EDIT_CAT}</a></li># ENDIF #
+					</ul>
+				</li>
+			</ul>
+		</menu>
+					
 		# INCLUDE message_helper #
 		<div class="spacer"></div>
 		
@@ -247,45 +283,7 @@
 					</span>
 				</h1>
 			</header>
-			<div class="content">
-				<div style="margin-bottom:50px;">
-					<menu class="dynamic_menu right">
-						<ul>
-							<li><a><i class="icon-reorder"></i></a>
-								<ul>
-									<li class="extend"><a><i class="icon-eye-open"></i> {L_DISPLAY}</a>
-										<ul>
-											<li><a href="{U_BEST_VIEWS}"><i class="icon-eye-open"></i> {L_BEST_VIEWS}</a></li>
-											<li><a href="{U_BEST_NOTES}"><i class="icon-star-half-empty"></i> {L_BEST_NOTES}</a></li>
-										</ul>
-									</li>
-									<li class="extend"><a><i class="icon-sort"></i> {L_ORDER_BY}</a>
-										<ul>
-											<li><a href="{U_ORDER_BY_NAME}"><i class="icon-tag"></i> {L_NAME}</a></li>
-											<li><a href="{U_ORDER_BY_DATE}"><i class="icon-time"></i> {L_DATE}</a></li>
-											<li><a href="{U_ORDER_BY_VIEWS}"><i class="icon-eye-open"></i> {L_VIEWS}</a></li>
-											<li><a href="{U_ORDER_BY_NOTES}"><i class="icon-star-half-empty"></i> {L_NOTES}</a></li>
-											<li><a href="{U_ORDER_BY_COM}"><i class="icon-comment"></i> {L_COM}</a></li>
-										</ul>
-									</li>
-									<li class="extend"><a><i class="icon-sort-by-alphabet"></i> {L_DIRECTION}</a>
-										<ul>
-											<li><a href="{U_ASC}"><i class="icon-sort-by-attributes"></i> {L_ASC}</a></li>
-											<li><a href="{U_DESC}"><i class="icon-sort-by-attributes-alt"></i> {L_DESC}</a></li>	
-										</ul>
-									</li>
-									# IF U_ADD_PICS #
-										<li class="separator"></li>
-										<li><a href="{U_ADD_PICS}"><i class="icon-plus"></i> {L_ADD_PICS}</a></li>
-									# ENDIF #
-									# IF U_EDIT #<li><a href="{U_EDIT}"><i class="icon-pencil"></i> {L_CAT_EDIT}</a></li># ENDIF #
-									# IF U_EDIT_CAT #<li><a href="{U_EDIT_CAT}"><i class="icon-reorder"></i> {L_EDIT_CAT}</a></li># ENDIF #
-								</ul>
-							</li>
-						</ul>
-					</menu>
-				</div>
-				
+			<div class="content">				
 				# IF C_GALLERY_CATS #
 				<section class="block">
 					<header><h1>{L_CATEGORIES}</h1></header>

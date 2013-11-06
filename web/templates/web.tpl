@@ -141,7 +141,7 @@
 		<h1>
 			{NAME}
 			<span class="actions">
-				{COM} {EDIT}{DEL}
+				{COM} {EDIT} {DEL}
 			</span>
 		</h1>
 	</header>
