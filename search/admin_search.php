@@ -80,7 +80,6 @@ else
 	$config = SearchConfig::load();
 	
     $tpl->assign_vars(array(
-        'THEME' => get_utheme(),
         'L_SEARCH_MANAGEMENT' => $LANG['search_management'],
         'L_SEARCH_CONFIG' => $LANG['search_config'],
         'L_SEARCH_CONFIG_WEIGHTING' => $LANG['search_config_weighting'],

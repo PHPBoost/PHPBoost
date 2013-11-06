@@ -70,7 +70,6 @@ else //Sinon on rempli le formulaire
 	$template = new FileTemplate('forum/admin_ranks.tpl');
 
 	$template->put_all(array(
-		'THEME' => get_utheme(),
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
 		'L_CONFIRM_DEL_RANK' => $LANG['confirm_del_rank'],

@@ -70,9 +70,6 @@ $Template->set_filenames(array(
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 $Template->put_all(array(
-	'SID' => SID,
-	'LANG' => get_ulang(),
-	'THEME' => get_utheme(),
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
@@ -631,7 +628,6 @@ else //Panneau de modération
 	}
 
 	$Template->put_all(array(
-		'SID' => SID,
 		'L_DEL_HISTORY' => $LANG['alert_history'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],

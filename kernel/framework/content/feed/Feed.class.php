@@ -313,8 +313,6 @@ class Feed
 		$feed_absolut_url = $general_config->get_site_url() . $general_config->get_site_path() . '/' . trim($feed_url, '/');
 
 		$feed_menu->put_all(array(
-	        'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-	        'THEME' => get_utheme(),
 	        'U_FEED' => $feed_absolut_url,
 	        'SEPARATOR' => strpos($feed_absolut_url, '?') !== false ? '&amp;' : '?',
 	        'L_RSS' => $LANG['rss'],

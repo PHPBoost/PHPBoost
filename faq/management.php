@@ -277,12 +277,10 @@ else
 }
 
 $Template->put_all(array(
-	'THEME' => get_utheme(),
 	'L_SUBMIT' => $edit_question > 0 ? $LANG['update'] : $LANG['submit'],
 	'L_PREVIEW' => $LANG['preview'],
 	'L_RESET' => $LANG['reset'],
-	'LANG' => get_ulang(),
-	'THEME' => get_utheme()
+	'TITLE' => TITLE
 ));
 
 

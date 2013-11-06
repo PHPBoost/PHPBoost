@@ -108,7 +108,6 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    		));
 	
 			$tpl->put_all(array(
-	    		'SID' => SID,
 	    		'SHOUT_REFRESH_DELAY' => $config_shoutbox->get_refresh_delay(),
 	    		'L_ALERT_TEXT' => $LANG['require_text'],
 	    		'L_ALERT_UNAUTH_POST' => $LANG['e_unauthorized'],

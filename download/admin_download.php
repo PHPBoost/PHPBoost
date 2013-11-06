@@ -43,8 +43,6 @@ $nbr_dl = $Sql->count_table(PREFIX . 'download', __LINE__, __FILE__);
 $Pagination = new DeprecatedPagination();
 
 $Template->put_all(array(
-	'THEME' => get_utheme(),
-	'LANG' => get_ulang(),
 	'PAGINATION' => $Pagination->display('admin_download.php?p=%d', $nbr_dl, 'p', 25, 3),
 	'L_DEL_ENTRY' => $LANG['del_entry'],
 	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],

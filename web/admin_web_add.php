@@ -87,8 +87,6 @@ elseif (!empty($_POST['previs']))
 	));
 
 	$Template->put_all(array(
-		'THEME' => get_utheme(),
-		'LANG' => get_ulang(),
 		'NAME' => $title,
 		'CONTENTS' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
 		'URL' => $url,

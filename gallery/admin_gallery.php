@@ -116,8 +116,6 @@ else
 	$column_width_pics = floor(100/$nbr_column_pics);
 
 	$Template->put_all(array(
-		'THEME' => get_utheme(),
-		'LANG' => get_ulang(),
 		'PAGINATION' => $Pagination->display('admin_gallery.php?p=%d', $total_cat, 'p', $config->get_pics_number_per_page(), 3),
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
 		'COLUMN_WIDTH_PICS' => $column_width_pics,

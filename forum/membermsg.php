@@ -60,9 +60,6 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	WHERE msg.user_id = '" . $view_msg . "'", __LINE__, __FILE__);
 
 	$Template->put_all(array(
-		'SID' => SID,
-		'THEME' => get_utheme(),
-		'LANG' => get_ulang(),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['show_member_msg'],
 		'PAGINATION' => $Pagination->display('membermsg' . url('.php?id=' . $view_msg . '&amp;p=%d'), $nbr_msg, 'p', 10, 3),
 		'L_BACK' => $LANG['back'],

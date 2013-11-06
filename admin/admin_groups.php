@@ -192,8 +192,6 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			'IMG' => $group['img'],
 			'GROUP_ID' => $idgroup,
 			'PAGINATION' => $Pagination->display('admin_groups.php?id=' . $idgroup . '&amp;p=%d', $nbr_member_group, 'p', 25, 3),
-			'THEME' => get_utheme(),
-			'LANG' => get_ulang(),
 			'IMG_GROUPS' => $img_groups,
 			'C_EDIT_GROUP' => true,
 			'AUTH_FLOOD_ENABLED' => $array_group['auth_flood'] == 1 ? 'checked="checked"' : '',
@@ -295,8 +293,6 @@ elseif ($add) //Interface d'ajout du groupe.
 	}
 		
 	$template->put_all(array(
-		'THEME' => get_utheme(),
-		'LANG' => get_ulang(),
 		'IMG_GROUPS' => $img_groups,
 		'C_ADD_GROUP' => true,
 		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
@@ -340,8 +336,6 @@ else //Liste des groupes.
 	$Pagination = new DeprecatedPagination();
 	$template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_groups.php?p=%d', $nbr_group, 'p', 25, 3),
-		'THEME' => get_utheme(),
-		'LANG' => get_ulang(),
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_CONFIRM_DEL_GROUP' => $LANG['confirm_del_group'],
 		'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],

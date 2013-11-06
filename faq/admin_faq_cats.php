@@ -217,7 +217,6 @@ else
 	
 	$Template->put_all(array(
 		'L_RECOUNT_QUESTIONS' => $FAQ_LANG['recount_questions_number'],
-		'THEME' => get_utheme()
 	));
 }
 

@@ -314,8 +314,6 @@ else
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
 		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
-		'THEME' => get_utheme(),
-		'LANG' => get_ulang(),
 		'URL' => $url,
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],

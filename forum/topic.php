@@ -156,13 +156,10 @@ foreach ($Bread_crumb->get_links() as $key => $array)
 }
 
 $Template->put_all(array(
-	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-	'SID' => SID,		
+	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],		
 	'MODULE_DATA_PATH' => $module_data_path,
 	'DESC' => !empty($topic['subtitle']) ? $topic['subtitle'] : '',
 	'PAGINATION' => $Pagination->display('topic' . url('.php?id=' . $id_get . '&amp;pt=%d', '-' . $id_get . '-%d' . $rewrited_title . '.php'), $topic['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 3),
-	'THEME' => get_utheme(),
-	'LANG' => get_ulang(),
 	'USER_ID' => $topic['user_id'],
 	'ID' => $topic['idcat'],
 	'IDTOPIC' => $id_get,

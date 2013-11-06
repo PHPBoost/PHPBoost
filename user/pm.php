@@ -118,8 +118,6 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	$tpl = new FileTemplate('user/pm.tpl');
 
 	$tpl->put_all(array(
-		'LANG' => get_ulang(),
-		'THEME' => get_utheme(),
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE_RECIPIENT' => $LANG['require_recipient'],
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
@@ -184,8 +182,6 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 	$tpl = new FileTemplate('user/pm.tpl');
 	
 	$tpl->put_all(array(
-		'LANG' => get_ulang(),
-		'THEME' => get_utheme(),
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -228,7 +224,6 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 	$tpl = new FileTemplate('user/pm.tpl');
 
 	$tpl->put_all(array(
-		'LANG' => get_ulang(),
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
@@ -468,8 +463,6 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				$tpl = new FileTemplate('user/pm.tpl');
 				
 				$tpl->put_all(array(
-					'LANG' => get_ulang(),
-					'THEME' => get_utheme(),
 					'KERNEL_EDITOR' => $editor->display(),
 					'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 					'L_REQUIRE' => $LANG['require'],
@@ -565,7 +558,6 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	));
 
 	$tpl->put_all(array(
-		'THEME' => get_utheme(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
@@ -814,7 +806,6 @@ else //Liste des conversation, dans la boite du membre.
 	}
 	
 	$tpl->put_all(array(
-		'THEME' => get_utheme(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
