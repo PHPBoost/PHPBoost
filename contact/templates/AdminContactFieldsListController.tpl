@@ -161,7 +161,7 @@ Event.observe(window, 'load', function() {
 			# START fields_list #
 				<li class="field" id="list_{fields_list.ID}">
 					<div class="field_infos"> 
-						<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="drag" class="drag_picture" />
+						<i class="icon-arrows" ></i>
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="url" class="url_picture" />
 						<span class="text_strong">{fields_list.NAME}</span>
 						<div class="field_option_icon"># IF NOT fields_list.C_READONLY #<img id="loading_{fields_list.ID}" alt="" class="valign_middle" /><a><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="valign_middle" width="16px" /></a># ELSE #<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="valign_middle not_displayable" width="16px" /># ENDIF #</div>
@@ -169,8 +169,8 @@ Event.observe(window, 'load', function() {
 							<div class="field_option_icon"># IF fields_list.C_DELETE #<a class="icon-delete" data-confirmation="delete-element" title="{@admin.fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #</div>
 							<div class="field_option_icon"><a href="{fields_list.U_EDIT}" title="{@admin.fields.action.edit_field}" class="icon-edit"></a></div>
 							# IF C_MORE_THAN_ONE_FIELD #
-							<div class="field_option_icon"><a><img src="{PATH_TO_ROOT}/templates/default/images/move_bot.png" alt="{@admin.fields.move_field_down}" title="{@admin.fields.move_field_down}" id="move_down_{fields_list.ID}" class="valign_middle" width="16px" /></a>&nbsp;</div>
-							<div class="field_option_icon"><a><img src="{PATH_TO_ROOT}/templates/default/images/move_top.png" alt="{@admin.fields.move_field_up}" title="{@admin.fields.move_field_up}" id="move_up_{fields_list.ID}" class="valign_middle" width="16px" /></a></div>
+							<div class="field_option_icon"><a title="{@admin.fields.move_field_down}" id="move_down_{fields_list.ID}"><i class="icon-arrow-down"></i></a>&nbsp;</div>
+							<div class="field_option_icon"><a title="{@admin.fields.move_field_up}" id="move_up_{fields_list.ID}"><i class="icon-arrow-up"></i></a></div>
 							# ENDIF #
 						</div>
 						<div class="float_right">
