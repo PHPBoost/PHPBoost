@@ -1,82 +1,86 @@
+<section>
+	<header>
+		<h1>{L_REDIRECTIONS}</h1>
+	</header>
+	<div class="content">
 		# START redirections #
-		<table class="module_table">
-			<tr>
-				<th colspan="3">
-					{L_REDIRECTIONS}
-				</th>
-			</tr>
-			<tr>
-				<td class="row1" style="text-align:center;">	
-					{L_REDIRECTION_TITLE}
-				</td>
-				<td class="row1" style="text-align:center;">		
-					{L_REDIRECTION_TARGET}
-				</td>
-				<td class="row1" style="text-align:center;">		
-					{L_ACTIONS}
-				</td>
-			</tr>
-			# START redirections.list #
-			<tr>
-				<td class="row2">	
-					{redirections.list.REDIRECTION_TITLE}
-				</td>
-				<td class="row2">		
-					{redirections.list.REDIRECTION_TARGET}
-				</td>
-				<td class="row2" style="text-align:center;">		
-					{redirections.list.ACTIONS}
-				</td>
-			</tr>
-			# END redirections.list #
-			# START redirections.no_redirection #
-			<tr>
-				<td class="row2" colspan="3" style="text-align:center;">	
-					{redirections.no_redirection.MESSAGE}
-				</td>
-			</tr>
-			# END redirections.no_redirection #
+		<table>
+			<thead>
+				<tr>
+					<th>
+						{L_REDIRECTION_TITLE}
+					</th>
+					<th>
+						{L_REDIRECTION_TARGET}
+					</th>
+					<th>
+						{L_ACTIONS}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				# START redirections.list #
+				<tr>
+					<td>	
+						{redirections.list.REDIRECTION_TITLE}
+					</td>
+					<td>		
+						{redirections.list.REDIRECTION_TARGET}
+					</td>
+					<td>		
+						{redirections.list.ACTIONS}
+					</td>
+				</tr>
+				# END redirections.list #
+				# START redirections.no_redirection #
+				<tr>
+					<td colspan="3">	
+						{redirections.no_redirection.MESSAGE}
+					</td>
+				</tr>
+				# END redirections.no_redirection #
+			</tbody>
 		</table>
 		# END redirections #
 
-		
 		# START redirection #
-		<table class="module_table">
-			<tr>
-				<th colspan="2">
-					{L_REDIRECTIONS}
-				</th>
-			</tr>
-			<tr>
-				<td class="row1" style="text-align:center;">	
-					{L_REDIRECTION_TITLE}
-				</td>
-				<td class="row1" style="text-align:center;">		
-					{L_ACTIONS}
-				</td>
-			</tr>
-			# START redirection.list #
-			<tr>
-				<td class="row2">	
-					{redirection.list.REDIRECTION_TITLE}
-				</td>
-				<td class="row2" style="text-align:center;">		
-					{redirection.list.ACTIONS}
-				</td>
-			</tr>
-			# END redirection.list #
-			# START redirection.no_redirection #
-			<tr>
-				<td class="row2" colspan="2" style="text-align:center;">	
-					{redirection.no_redirection.MESSAGE}
-				</td>
-			</tr>
-			# END redirection.no_redirection #
-			<tr>
-				<td class="row2" style="text-align:center; padding:5px;" colspan="2">
-					<a href="{U_CREATE_REDIRECTION}">{L_CREATE_REDIRECTION}</a>
-				</td>
-			</tr>
+		<table>
+			<thead>
+				<tr>
+					<th>
+						{L_REDIRECTION_TITLE}
+					</th>
+					<th>
+						{L_ACTIONS}
+					</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th colspan="2">
+						<a href="{U_CREATE_REDIRECTION}">{L_CREATE_REDIRECTION}</a>
+					</th>
+				</tr>
+			</tfoot>
+			<tbody>
+				# START redirection.list #
+				<tr>
+					<td>	
+						{redirection.list.REDIRECTION_TITLE}
+					</td>
+					<td>		
+						{redirection.list.ACTIONS}
+					</td>
+				</tr>
+				# END redirection.list #
+				# START redirection.no_redirection #
+				<tr>
+					<td colspan="2">	
+						{redirection.no_redirection.MESSAGE}
+					</td>
+				</tr>
+				# END redirection.no_redirection #
+			</tbody>
 		</table>
 		# END redirection #
 
@@ -116,15 +120,18 @@
 				<div class="form-element">
 					<label for="redirection_name">{L_REDIRECTION_NAME}</label>
 					<div class="form-field">
-						<label><input type="text" name="redirection_name" id="redirection_name" class="text" size="70" maxlength="250"></label>
-						<input type="hidden" name="id_new" value="{ID_NEW}">
+						<input type="text" name="redirection_name" id="redirection_name" class="text" size="60" maxlength="250">
 					</div>					
 				</div>
+				<input type="hidden" name="id_new" value="{ID_NEW}">
 			</fieldset>	
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<button type="submit" name="" value="true">{L_SUBMIT}</button>
+				<button type="submit" value="true">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END new #
+	</div>
+	<footer></footer>
+</section>
