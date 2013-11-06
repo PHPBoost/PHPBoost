@@ -185,7 +185,8 @@ elseif ($id_new > 0)
 		'TARGET' => url('redirections.php?token=' . $Session->get_token()),
 		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], $page_infos['title']),
 		'L_REDIRECTION_NAME' => $LANG['pages_new_title'],
-		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection']
+		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
+		'L_SUBMIT' => $LANG['submit'],
 	));
 	$Template->assign_block_vars('new', array());
 	//Erreur : la page existe déjà

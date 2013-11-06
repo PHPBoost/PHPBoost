@@ -94,14 +94,14 @@
 		<div class="form-element">
 			<label for="new_title">{L_NEW_TITLE}</label>
 			<div class="form-field">
-				<label><input type="text" id="new_title" name="new_title" value="{FORMER_TITLE}" class="text" size="70" maxlength="250"></label>
-				<input type="hidden" name="id_rename" value="{ID_RENAME}">
+				<input type="text" id="new_title" name="new_title" value="{FORMER_TITLE}" class="text" size="60" maxlength="250">
 			</div>					
 		</div>
 		<div class="form-element">
 			<label for="create_redirection">{L_CREATE_REDIRECTION}</label>
 			<div class="form-field"><label><input type="checkbox" name="create_redirection" id="create_redirection"></label></div>					
 		</div>
+		<input type="hidden" name="id_rename" value="{ID_RENAME}">
 	</fieldset>
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
@@ -119,10 +119,10 @@
 		<div class="form-element">
 			<label for="redirection_name">{L_REDIRECTION_NAME}</label>
 			<div class="form-field">
-				<label><input type="text" name="redirection_name" id="redirection_name" class="text" size="70" maxlength="250"></label>
-				<input type="hidden" name="id_new" value="{ID_NEW}">
+				<input type="text" name="redirection_name" id="redirection_name" class="text" size="60" maxlength="250">
 			</div>					
 		</div>
+		<input type="hidden" name="id_new" value="{ID_NEW}">
 	</fieldset>	
 	
 	<fieldset class="fieldset_submit">
