@@ -196,11 +196,13 @@
 			
 			<h6>75%</h6> 
 			<div class="progressbar-container" style="width:35%">
+				<span class="progressbar-infos">Informations utiles</span>
 				<div class="progressbar" style="width:75%"></div>
 			</div><br />
 			
 			<h6>100%</h6> 
 			<div class="progressbar-container" style="width:35%">
+				<span class="progressbar-infos">3 votes</span>
 				<div class="progressbar" style="width:100%"></div>
 			</div><br />
 			
@@ -277,6 +279,59 @@
 			</menu>
 		</div>
 		</div>
+		
+		<h5>Explorateur</h5>
+		<div class="content">
+			<div class="explorer">
+				<div class="cats">
+						<h1>Explorateur</h1>
+					<div class="contents">
+						<ul>
+							<li><a id="class_0" href="#"><span class="icon-folder-close"></span>Racine</a>
+								<ul>
+									<li class="sub"><a id="class_1" href="#"><span class="icon-folder-close"></span>Catégorie 1</a><span id="cat_1"></span></li>
+									<li class="sub"><a class="parent" href="javascript:show_cat_contents(2, 0);"><span class="icon-collapse" id="img2_2"></span><span class="icon-folder-open" id ="img_2"></span></a><a class="selected" id="class_2" href="#">Catégorie 2</a>
+									<span id="cat_2">
+										<ul>
+											<li class="sub"><a href="#"><span class="icon-folder-close"></span>Catégorie 3</a></li>
+											<li class="sub"><a href="#"><span class="icon-folder-close"></span>Catégorie 4</a></li>
+										</ul>
+									</span></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="files">
+						<h1>Arborescence</h1>
+					<div class="contents" id="cat_contents">
+						<ul>
+							<li><a href="#"><span class="icon-folder-close"></span>Catégorie 3</a></li>
+							<li><a href="javascript:open_cat(2); show_cat_contents(0, 0);"><span class="icon-folder-close"></span>Catégorie 4</a></li>
+							<li><a href="wiki.php?title=hgfhgf"><span class="icon-file"></span>Fichier 1</a></li>
+							<li><a href="wiki.php?title=qvsgfqgq"><span class="icon-file"></span>Fichier 2</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br/></br>
+		<h5>Options</h5>
+		<div class="options">
+			<h6>Trier selon</h6>
+			<select>
+				<option>Alphabétique</option>
+				<option>Taille</option>
+				<option>Date</option>
+				<option>Popularité</option>
+				<option>Note</option>
+			</select>
+			<select>
+				<option>Croissant</option>
+				<option>Décroissant</option>
+			</select>
+		</div>
+
 	</div>
 	<footer></footer>
 </section>
@@ -529,7 +584,25 @@
 		<h1>Titre de la page</h1>
 	</header>
 	<div class="content">
-		Huic Arabia est conserta, ex alio latere Nabataeis contigua; opima varietate conmerciorum castrisque oppleta validis et castellis, quae ad repellendos gentium vicinarum excursus sollicitudo pervigil veterum per oportunos saltus erexit et cautos. haec quoque civitates habet inter oppida quaedam ingentes Bostram et Gerasam atque Philadelphiam murorum firmitate cautissimas. hanc provinciae inposito nomine rectoreque adtributo obtemperare legibus nostris Traianus conpulit imperator incolarum tumore saepe contunso cum glorioso marte Mediam urgeret et Parthos.
+		Huic Arabia est conserta, ex alio latere Nabataeis contigua; opima varietate conmerciorum castrisque oppleta validis et castellis, quae ad repellendos gentium vicinarum excursus sollicitudo pervigil veterum per oportunos saltus erexit et cautos. haec quoque civitates habet inter oppida quaedam ingentes Bostram et Gerasam atque Philadelphiam murorum firmitate cautissimas. hanc provinciae inposito nomine rectoreque adtributo obtemperare legibus nostris Traianus conpulit imperator incolarum tumore saepe contunso cum glorioso marte Mediam urgeret et Parthos.<br/>
+		<section>
+			<header>
+				<h2>Sous-Titre</h2>
+			</header>
+			<div class="content">
+				Huic Arabia est conserta, ex alio latere Nabataeis contigua; opima varietate conmerciorum castrisque oppleta validis et castellis, quae ad repellendos gentium vicinarum excursus sollicitudo pervigil veterum per oportunos saltus erexit et cautos. haec quoque civitates habet inter oppida quaedam ingentes Bostram et Gerasam atque Philadelphiam murorum firmitate cautissimas. hanc provinciae inposito nomine rectoreque adtributo obtemperare legibus nostris Traianus conpulit imperator incolarum tumore saepe contunso cum glorioso marte Mediam urgeret et Parthos.<br/>
+				<section>
+					<header>
+						<h3>Sous-Sous-Titre</h3>
+					</header>
+					<div class="content">
+						Huic Arabia est conserta, ex alio latere Nabataeis contigua; opima varietate conmerciorum castrisque oppleta validis et castellis, quae ad repellendos gentium vicinarum excursus sollicitudo pervigil veterum per oportunos saltus erexit et cautos. haec quoque civitates habet inter oppida quaedam ingentes Bostram et Gerasam atque Philadelphiam murorum firmitate cautissimas. hanc provinciae inposito nomine rectoreque adtributo obtemperare legibus nostris Traianus conpulit imperator incolarum tumore saepe contunso cum glorioso marte Mediam urgeret et Parthos.
+					</div>
+					<footer></footer>
+				</section>
+			</div>
+			<footer></footer>
+		</section>
 	</div>
 	<footer></footer>
 </section>

@@ -59,11 +59,11 @@
 							
 							# START result #
 							<div>
-								<span class="progressbar-infos">
-									{result.NBRVOTE} {L_VOTE}
-								</span>
 								<h6>{result.ANSWERS}</h6>
 								<div class="progressbar-container" title="{result.PERCENT}%">
+									<span class="progressbar-infos">
+										{result.NBRVOTE} {L_VOTE}
+									</span>
 									<div class="progressbar" style="width:{result.PERCENT}%"></div>
 								</div>
 								<br/>
@@ -107,11 +107,11 @@
 					<div class="contents">
 						# START list.result #
 							<div>
-								<span class="progressbar-infos">
-									{list.result.NBRVOTE} {list.L_VOTE}
-								</span>
 								<h6>{list.result.ANSWERS}</h6>
 								<div class="progressbar-container" title="{list.result.PERCENT}%">
+									<span class="progressbar-infos">
+										{list.result.NBRVOTE} {list.L_VOTE}
+									</span>
 									<div class="progressbar" style="width:{list.result.PERCENT}%"></div>
 								</div>
 								<br/>
