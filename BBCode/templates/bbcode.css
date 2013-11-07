@@ -7,10 +7,32 @@
 }
 
 .bbcode-container {
-	background-color: #336397;
+	background-color: #EEE;
 	border: 1px solid #BEBEBE;
 	padding: 5px 5px 0 5px;
 	width:500px;
+}
+
+.bbcode-container + .bbcode-upload + .bbcode-container {
+	border-top:none;
+}
+
+.bbcode .bbcode-container{
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius:3px;
+}
+
+.bbcode.expand .bbcode-container:first-child{
+	-webkit-border-radius:3px 3px 0 0;
+	-moz-border-radius:3px 3px 0 0;
+	border-radius:3px 3px 0 0;
+}
+
+.bbcode.expand .bbcode-container:last-child{
+	-webkit-border-radius:0 0 3px 3px;
+	-moz-border-radius:0 0 3px 3px;
+	border-radius:0 0 3px 3px;
 }
 
 .bbcode-upload {

@@ -57,7 +57,7 @@ function XMLHttpRequest_preview(field)
 		<script type="text/javascript" src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
 	# ENDIF #
 
-	<div class="bbcode">
+	<div class="bbcode expand">
 		<div class="bbcode-container">
 			<i class="bbcode-icon-separate"></i>
 	
