@@ -149,6 +149,7 @@ section footer nav.pagination {	text-align: center; }
 
 .explorer .contents ul a.parent [class^="icon-"]:first-child:before{
 	width:14px;
+	font-size:11px;
 }
 
 .explorer .contents ul a:hover, .explorer .contents ul a:hover+a{
