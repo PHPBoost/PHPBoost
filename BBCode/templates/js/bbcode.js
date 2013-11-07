@@ -200,21 +200,28 @@ function getCookie(name)
 function set_bbcode_preference(divID)
 {
 	if( getCookie('hide_bbcode') == 0 )
+	{
 		document.getElementById(divID).style.display = 'none';
+		var parent = document.getElementById(divID).up('.bbcode');
+		parent.className = 'bbcode';
+	}
 }
 
 //Masquage du div.
 function show_bbcode_div(divID, hide)
 {
 	var div = document.getElementById(divID);
+	var parent = document.getElementById(divID).up('.bbcode');
 	if( div.style.display == 'none' )
 	{	
 		Effect.Appear(divID);
+		parent.className = 'bbcode expand';
 		sendCookie('hide_bbcode', 1); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
 	}
 	else
 	{	
 		Effect.Fade(divID);
+		parent.className = 'bbcode';
 		sendCookie('hide_bbcode', 0); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
 	}
 }

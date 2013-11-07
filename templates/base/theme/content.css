@@ -236,8 +236,8 @@ table thead th a:hover {
 	color:#fff;
 }
 
-table .pbt-icon-table-sort-up:before { content: "\f062"; }
-table .pbt-icon-table-sort-down:before { content: "\f063"; }
+table .icon-table-sort-up:before { content: "\f062"; }
+table .icon-table-sort-down:before { content: "\f063"; }
 
 /* Contenu */
 table td {
