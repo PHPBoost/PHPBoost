@@ -61,11 +61,13 @@ function bb_hide(div2)
 	{
 		div3.style.visibility = 'hidden';
 		div2.style.height = '10px';
+		div2.style.overflow = 'hidden';
 	}
 	else
 	{	
 		div3.style.visibility = 'visible';
 		div2.style.height = 'auto';
+		div2.style.overflow = 'auto';
 	}
 	
 	return true;

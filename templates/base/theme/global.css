@@ -90,7 +90,7 @@
 .progressbar-infos {
 	float:right;
 	font-size:10px;
-	margin-top:8px;
+	margin-top:-15px;
 }
 
 /* Lien du site
@@ -386,13 +386,14 @@ ul,ol{
 	padding:8px;
 	margin:0px 25px;
 }
-.hide{
+.hide {
 	cursor:pointer;
 	height:10px;
-	overflow:auto;
+	overflow:hidden;
 }
 .hide2{
 	visibility:hidden;
+	overflow:auto;
 }
 .indent{
 	margin-left:30px;
