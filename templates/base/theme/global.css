@@ -198,6 +198,8 @@ a.member {
 .icon-sort-by-attributes-alt:before { content: "\f161"; }
 .icon-star-half-empty:before { content: "\f123"; }
 .icon-syndication:before { color:#f57900; content: "\f09e"; }
+.icon-table-sort-up:before { content: "\f062"; }
+.icon-table-sort-down:before { content: "\f063"; }
 .icon-tag:before { content: "\f02b"; }
 .icon-tags:before { content: "\f02c"; }
 .icon-time:before { content: "\f017"; }
@@ -685,8 +687,13 @@ menu.dynamic_menu li ul li a i, menu.dynamic_menu li ul li span i{
 	vertical-align:-2px;
 	width:16px;
 	display:inline-block;
-	text-align:center;
 	margin-right:4px;
+	text-align:center;
+}
+
+menu.dynamic_menu li ul li a i:before, menu.dynamic_menu li ul li span i:before{
+	display:block;
+	width:16px;
 }
 
 menu.dynamic_menu ul li.extend > a:after, menu.dynamic_menu ul li.extend > span:after{
