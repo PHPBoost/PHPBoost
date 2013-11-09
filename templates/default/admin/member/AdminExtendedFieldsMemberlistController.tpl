@@ -88,7 +88,7 @@ Event.observe(window, 'load', function() {
 			# START list_extended_fields #
 				<div class="menu_link_element" id="list_{list_extended_fields.ID}">
 					<div style="float:left;">
-						<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="drag" class="valign_middle" style="padding-left:5px;padding-right:5px;cursor:move" />
+						<i class="icon-arrows"></i>
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="url" class="valign_middle" style="cursor:move;margin-right:10px;" />
 						{L_NAME} : <span class="text_strong" >{list_extended_fields.NAME}</span>
 					</div>

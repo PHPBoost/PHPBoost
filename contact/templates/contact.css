@@ -7,13 +7,6 @@
 	width: 60%;
 }
 
-img.drag_picture{
-	padding-left:5px;
-	padding-right:5px;
-	cursor:move;
-	vertical-align:middle;
-}
-
 img.url_picture{
 	cursor:move;
 	margin-right:10px;
@@ -77,12 +70,16 @@ img.url_picture{
 .field_infos:hover > img.drag{ opacity:1; }
 
 .field label { color:#1F507F; }
-.field:hover img { cursor:pointer; }
+.field [class^="icon-"]:not(.icon-arrows):hover { cursor:pointer; }
 .field:hover label { cursor:pointer; }
 
 .field_option_icon {
 	width:20px;
 	float:right;
+}
+
+.field_option_icon img{
+	cursor:pointer;
 }
 
 .field_required{
