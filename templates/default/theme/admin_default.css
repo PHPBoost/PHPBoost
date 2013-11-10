@@ -10,23 +10,24 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
     padding:5px;
 }
 
-.cat_element > .cat_list { margin-left:30px; }
+.sortable_block .sortable_element > .sortable_block { margin-left:30px; }
 
-.cat_list {
+.sortable_block {
     list-style-type:none;
     list-style-position:outside;
     margin:0px;
 	padding:0px;
 }
 
-.cat_element {
+.sortable_block .sortable_element {
 	background:#FFFFFF;
 	border:1px solid #D6DEE7;
 	padding:0;
 	position: relative;
 	margin:5px;
 }
-.cat_element:hover {
+
+.sortable_block .sortable_element:hover {
 	border:1px solid #d0d8e1;
 	cursor:move;
 	-moz-box-shadow: 0px 0px 5px #EAEAEA;
@@ -34,7 +35,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	box-shadow: 0px 0px 5px #EAEAEA;
 }
 
-.cat_title{
+.sortable_block .sortable_title{
 	background-image: linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
 	background-image: -o-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
 	background-image: -moz-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
@@ -44,7 +45,8 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	font-size:1em;
 	font-weight:bold;
 }
-.cat_title:hover{ 
+
+.sortable_block .sortable_title:hover{ 
 	background-image: linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
 	background-image: -o-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
 	background-image: -moz-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
@@ -52,29 +54,29 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	background-image: -ms-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
 }
 
-.cat_title span.cat_desc {
+.sortable_block .sortable_title span.cat_desc {
 	font-size:0.8em;
 	font-weight:normal;
 	font-style:italic;	
 }
 
-.cat_title img{ cursor:move; }
+.sortable_block .sortable_title img{ cursor:move; }
 
-.cat_action_admin{
+.sortable_block .sortable_actions{
 	float:right;
 	padding:0px 10px;
 }
-.cat_action_admin img{ opacity:0.01; }
-.cat_action_admin img:hover{ opacity:1!important; }
 
-.cat_title:hover > .cat_action_admin img{ opacity:0.5; }
+.sortable_block .sortable_options{
+	width:15px;
+	display:inline-block;
+	padding:0 2px;
+	text-align:left;
+}
 
-.cat_title > img.drag{ opacity:0.5; }
-.cat_title:hover > img.drag{ opacity:1; }
-
-.cat_element label { color:#1F507F; }
-.cat_element:hover img { cursor:pointer; }
-.cat_element:hover label { cursor:pointer; }
+.sortable_block .sortable_element label { color:#1F507F; }
+.sortable_block .sortable_element [class^="icon-"]:not(.icon-arrows):hover, .sortable_block .sortable_actions img { cursor:pointer; }
+.sortable_block .sortable_element:hover label { cursor:pointer; }
 
 /* Gestion des Menus */
 .menu_link_list {

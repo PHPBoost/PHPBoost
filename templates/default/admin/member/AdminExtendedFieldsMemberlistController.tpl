@@ -7,8 +7,8 @@ var ExtendedFields = Class.create({
 	},
 	create_sortable : function() {
 		Sortable.create(this.id, {
-			tag:'div',
-			only:'menu_link_element'
+			tag:'li',
+			only:'sortable_element'
 		});
 	},
 	destroy_sortable : function() {
@@ -84,27 +84,33 @@ Event.observe(window, 'load', function() {
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="ExtendedFields.serialize_sortable();">
 	<fieldset id="management_extended_fields">
 	<legend>{L_MANAGEMENT_EXTENDED_FIELDS}</legend>
-		<div id="lists">
+		<ul id="lists" class="sortable_block">
 			# START list_extended_fields #
-				<div class="menu_link_element" id="list_{list_extended_fields.ID}">
-					<div style="float:left;">
-						<i class="icon-arrows"></i>
+				<li id="list_{list_extended_fields.ID}" class="sortable_element">
+					<div class="sortable_title">
+						<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="url" class="valign_middle" style="cursor:move;margin-right:10px;" />
 						{L_NAME} : <span class="text_strong" >{list_extended_fields.NAME}</span>
-					</div>
-					<div style="float:right;">
-						{L_REQUIRED} : <span style="margin-right:30px;" class="text_strong" >{list_extended_fields.L_REQUIRED}</span> 
-						<img id="loading_{list_extended_fields.ID}" alt="" class="valign_middle" />
-						<a href="{list_extended_fields.EDIT_LINK}" title="{L_UPDATE}" class="icon-edit"></a>
-						# IF NOT list_extended_fields.FREEZE #
-						<a href="#" title="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="icon-delete"></a>
-						# ENDIF #
-						<a href="#">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_PROCESSED_OR_NOT}" title="{L_PROCESSED_OR_NOT}" id="change_display_{list_extended_fields.ID}" class="valign_middle" />
-						</a>
+						<div class="sortable_actions">
+							{L_REQUIRED} : <span class="text_strong" >{list_extended_fields.L_REQUIRED}</span> 
+							<div class="sortable_options">
+								<img id="loading_{list_extended_fields.ID}" alt="" class="valign_middle" />
+							</div>
+							<div class="sortable_options">
+								<a href="{list_extended_fields.EDIT_LINK}" title="{L_UPDATE}" class="icon-edit"></a>
+							</div>
+							<div class="sortable_options">
+								# IF NOT list_extended_fields.FREEZE #
+								<a title="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="icon-delete"></a>
+								# ENDIF #
+							</div>
+							<a href="#">
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_PROCESSED_OR_NOT}" title="{L_PROCESSED_OR_NOT}" id="change_display_{list_extended_fields.ID}" class="valign_middle" />
+							</a>
+						</div>
 					</div>
 					<div class="spacer"></div>
-				</div>
+				</li>
 				<script type="text/javascript">
 				<!--
 				Event.observe(window, 'load', function() {
@@ -123,7 +129,7 @@ Event.observe(window, 'load', function() {
 				-->
 				</script>
 			# END list_extended_fields #
-		</div>
+		</ul>
 	</fieldset>
 	<fieldset class="fieldset_submit">
 		<button type="submit" name="submit" value="true">{L_VALID}</button>
