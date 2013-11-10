@@ -161,7 +161,7 @@ Event.observe(window, 'load', function() {
 			# START fields_list #
 				<li class="field" id="list_{fields_list.ID}">
 					<div class="field_infos"> 
-						<i class="icon-arrows" ></i>
+						<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows" ></i>
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="url" class="url_picture" />
 						<span class="text_strong">{fields_list.NAME}</span>
 						<div class="field_option_icon"># IF NOT fields_list.C_READONLY #<img id="loading_{fields_list.ID}" alt="" class="valign_middle" /><a><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="valign_middle" width="16px" /></a># ELSE #<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="valign_middle not_displayable" width="16px" /># ENDIF #</div>
