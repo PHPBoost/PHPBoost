@@ -308,6 +308,7 @@ $LANG['feed'] = 'feed';
 $LANG['availables_feeds'] = 'Available feeds';
 $LANG['valid_position_menus'] = 'Menus position valid';
 $LANG['theme_management'] = 'Theme management';
+$LANG['move'] = 'Move';
 $LANG['move_up'] = 'Up';
 $LANG['move_down'] = 'Down';
 

@@ -6,7 +6,7 @@
 		<span id="m{IDMENU}"></span>
 		<h5 class="menus_block_title">{NAME}</h5>
 		
-		<i class="icon-arrows"></i>
+		<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows"></i>
 		# IF C_EDIT #
 			<a href="{U_EDIT}" title="{L_EDIT}" class="icon-edit"></a>
 		# ENDIF #
