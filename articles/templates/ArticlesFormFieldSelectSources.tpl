@@ -15,7 +15,7 @@ var ArticlesFormFieldSelectSources = Class.create({
 			$('input_fields_' + this.id_input).insert('&nbsp;');
 			$('input_fields_' + this.id_input).insert(input);
 			
-			var delete_input = new Element('a', {href : 'javascript:ArticlesFormFieldSelectSources.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'class' : 'pbt-icon-delete'});
+			var delete_input = new Element('a', {href : 'javascript:ArticlesFormFieldSelectSources.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'class' : 'icon-delete'});
 			$('input_fields_' + this.id_input).insert('&nbsp;');
 			$('input_fields_' + this.id_input).insert(delete_input);
 			

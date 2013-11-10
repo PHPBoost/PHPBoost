@@ -44,7 +44,7 @@
             <div class="content">
                 <div class="spacer">&nbsp;</div>
                 <form action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
-                    <div class="search_field"><input type="text" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="field-xlarge" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';"></div>
+                    <div class="search_field"><input type="text" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="field-xlarge" placeholder="{L_SEARCH}..."></div>
                     <div class="spacer">&nbsp;</div>
 					<div id="forms_selection" class="options">
 						<a id="specialize_form_link_all" href="javascript:ChangeForm('all');" class="SFL_current">{L_SEARCH_ALL}</a>
