@@ -8,7 +8,7 @@ var ContactFields = Class.create({
 	create_sortable : function() {
 		Sortable.create(this.id, {
 			tag:'li',
-			only:'field'
+			only:'sortable_element'
 		});
 	},
 	destroy_sortable : function() {
@@ -157,24 +157,30 @@ Event.observe(window, 'load', function() {
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="ContactFields.serialize_sortable();">
 	<fieldset id="contact_fields_management">
 	<legend>{@admin.fields.manage}</legend>
-		<ul id="fields_list" class="fields_list">
+		<ul id="fields_list" class="sortable_block">
 			# START fields_list #
-				<li class="field" id="list_{fields_list.ID}">
-					<div class="field_infos"> 
-						<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows" ></i>
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="url" class="url_picture" />
+				<li class="sortable_element" id="list_{fields_list.ID}">
+					<div class="sortable_title">
+						<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows"></i>
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="url" />
 						<span class="text_strong">{fields_list.NAME}</span>
-						<div class="field_option_icon"># IF NOT fields_list.C_READONLY #<img id="loading_{fields_list.ID}" alt="" class="valign_middle" /><a><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="valign_middle" width="16px" /></a># ELSE #<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="valign_middle not_displayable" width="16px" /># ENDIF #</div>
-						<div class="field_options">
-							<div class="field_option_icon"># IF fields_list.C_DELETE #<a class="icon-delete" data-confirmation="delete-element" title="{@admin.fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #</div>
-							<div class="field_option_icon"><a href="{fields_list.U_EDIT}" title="{@admin.fields.action.edit_field}" class="icon-edit"></a></div>
+						<div class="sortable_actions">
+							{@admin.field.required} : <span class="text_strong"># IF fields_list.C_REQUIRED #{@admin.field.yes}# ELSE #{@admin.field.no}# ENDIF #</span>
+							<div class="sortable_options">
+								# IF fields_list.C_DELETE #<a class="icon-delete" data-confirmation="delete-element" title="{@admin.fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
+							</div>
+							<div class="sortable_options">
+								<a href="{fields_list.U_EDIT}" title="{@admin.fields.action.edit_field}" class="icon-edit"></a>
+							</div>
 							# IF C_MORE_THAN_ONE_FIELD #
-							<div class="field_option_icon"><a title="{@admin.fields.move_field_down}" id="move_down_{fields_list.ID}"><i class="icon-arrow-down"></i></a>&nbsp;</div>
-							<div class="field_option_icon"><a title="{@admin.fields.move_field_up}" id="move_up_{fields_list.ID}"><i class="icon-arrow-up"></i></a></div>
+							<div class="sortable_options">
+								<a title="{@admin.fields.move_field_down}" id="move_down_{fields_list.ID}"><i class="icon-arrow-down"></i></a>
+							</div>
+							<div class="sortable_options">
+								<a title="{@admin.fields.move_field_up}" id="move_up_{fields_list.ID}"><i class="icon-arrow-up"></i></a>
+							</div>
 							# ENDIF #
-						</div>
-						<div class="float_right">
-							{@admin.field.required} : # IF fields_list.C_REQUIRED #<span class="field_required">{@admin.field.yes}</span># ELSE #<span class="text_strong">{@admin.field.no}</span># ENDIF #
+							# IF NOT fields_list.C_READONLY #<img id="loading_{fields_list.ID}" alt="" class="valign_middle" /><a><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="valign_middle" width="16px" /></a># ELSE #<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="valign_middle not_displayable" width="16px" /># ENDIF #
 						</div>
 					</div>
 					<div class="spacer"></div>
@@ -214,7 +220,7 @@ Event.observe(window, 'load', function() {
 				</script>
 			# END fields_list #
 		</ul>
-		<div id="no_field" class="no_field"# IF C_FIELDS # style="display:none;"# ENDIF #>{@admin.fields.no_field}</div>
+		<div id="no_field" class="center"# IF C_FIELDS # style="display:none;"# ENDIF #>{@admin.fields.no_field}</div>
 	</fieldset>
 	<fieldset class="fieldset_submit">
 		# IF C_MORE_THAN_ONE_FIELD #
