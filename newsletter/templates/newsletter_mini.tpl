@@ -32,7 +32,7 @@
 			<span class="newsletter_title">{L_NEWSLETTER}</span> 
 			<input type="text" name="mail_newsletter" maxlength="50" class="newsletter_text" value="{USER_MAIL}">
 			<input type="hidden" name="subscribe" value="subscribe">
-			<button type="submit" class="newsletter_submit" ><i class="icon-envelope-alt"></i></button>
+			<button type="submit" class="newsletter_submit" ><i class="icon-envelope-o"></i></button>
 		</div>
 	</form>
 </div>

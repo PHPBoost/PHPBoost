@@ -5,12 +5,12 @@
 		if( document.getElementById("a" + id_question).style.display == "none" )
 		{
 			Effect.Appear("a" + id_question);
-			document.getElementById("faq_i" + id_question).className="icon-caret-down icon-big"
+			document.getElementById("faq_i" + id_question).className="icon-caret-down icon-2x"
 		}
 		else
 		{
 			Effect.Fade("a" + id_question);
-			document.getElementById("faq_i" + id_question).className="icon-caret-right icon-big"
+			document.getElementById("faq_i" + id_question).className="icon-caret-right icon-2x"
 		}
 	}
 -->
@@ -22,12 +22,12 @@
 			<li><a><i class="icon-cog"></i></a>
 				<ul>
 					<li>
-						<a href="{U_MANAGEMENT}" title="{L_CAT_MANAGEMENT}"><i class="icon-reorder"></i>{L_CAT_MANAGEMENT}</a>
+						<a href="{U_MANAGEMENT}" title="{L_CAT_MANAGEMENT}"><i class="icon-bars"></i>{L_CAT_MANAGEMENT}</a>
 						
 					</li>
 					# IF IS_ADMIN #
 					<li>
-						<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}"><i class="icon-reorder"></i>${LangLoader::get_message('configuration', 'admin')}</a>
+						<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}"><i class="icon-bars"></i>${LangLoader::get_message('configuration', 'admin')}</a>
 					</li>
 					# ENDIF #
 				</ul>
@@ -80,7 +80,7 @@
 					<div class="row1">
 						<span style="float:left;">
 							<a href="javascript:show_answer({questions.faq.ID_QUESTION});">
-								<i id="faq_i{questions.faq.ID_QUESTION}" class="icon-caret-right icon-big"></i>
+								<i id="faq_i{questions.faq.ID_QUESTION}" class="icon-caret-right icon-2x"></i>
 							</a>
 							<a id="faq_l{questions.faq.ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
 							<script type="text/javascript">
@@ -93,7 +93,7 @@
 						<span style="float:right;">
 							<a href="{questions.faq.U_QUESTION}" title="{L_QUESTION_URL}" class="icon-flag"></a>
 							# IF C_ADMIN_TOOLS #
-								<a href="{questions.faq.U_MOVE}" title="{L_MOVE}" class="icon-forward"></a>
+								<a href="{questions.faq.U_MOVE}" title="{L_MOVE}" class="icon-move"></a>
 								# START questions.faq.up #
 									<a href="{questions.faq.U_UP}" title="{L_UP}" class="icon-arrow-up"></a>
 								# END questions.faq.up #
@@ -113,11 +113,12 @@
 					# IF questions.faq.C_HIDE_ANSWER #
 					<script type="text/javascript">
 						document.getElementById("a{questions.faq.ID_QUESTION}").style.display = "none";
+						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="icon-caret-right icon-2x";
 					</script>
 					# ENDIF #
 					# IF questions.faq.C_SHOW_ANSWER #
 					<script type="text/javascript">
-						document.getElementById("faq_i{questions.faq.ID_QUESTION}").src = "{PICTURES_DATA_PATH}/images/opened_line.png";
+						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="icon-caret-down icon-2x";
 					</script>
 					# ENDIF #		
 				</div>
@@ -136,13 +137,13 @@
 			# START questions_block.contents #
 				<div class="row1" id="q{questions_block.contents.ID}">
 					<span style="float:left;">
-						<img src="{PICTURES_DATA_PATH}/images/line.png" alt="arrow" class="image_left" style="vertical-align:middle;" />
+						<i class="icon-caret-right icon-2x"></i>
 						{questions_block.contents.QUESTION}
 					</span>
 					<span class="row2" style="float:right;">
-						<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}"><img src="{PICTURES_DATA_PATH}/images/flag.png" alt="{L_QUESTION_URL}" /></a>
+						<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}" class="icon-flag"></a>
 						# IF C_ADMIN_TOOLS #
-							<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}" class="icon-forward"></a>
+							<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}" class="icon-move"></a>
 							# START questions_block.contents.up #
 							<a href="{questions_block.contents.U_UP}" title="{L_UP}" class="icon-arrow-up"></a>
 							# END questions_block.contents.up #

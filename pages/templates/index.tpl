@@ -33,7 +33,7 @@
 				<h1>{L_CATS}</h1>
 				<div class="contents">
 					<ul>
-						<li><a id="class_0" class="{CAT_0}" href="javascript:open_cat(0);"><span class="icon-folder-close"></span>{L_ROOT}</a>
+						<li><a id="class_0" class="{CAT_0}" href="javascript:open_cat(0);"><span class="icon-folder"></span>{L_ROOT}</a>
 							<ul>
 								# START list #
 									{list.DIRECTORY}

@@ -9,7 +9,7 @@
 					<h1>.{icons.CLASS}</h1>
 				</header>
 				<div class="contents">
-					<span class="{icons.CLASS}"></span>&nbsp;&nbsp;&nbsp;<span class="{icons.CLASS} icon-big"></span>&nbsp;&nbsp;&nbsp;<span class="{icons.CLASS} icon-bigger"></span>
+					<i class="{icons.CLASS}"></i> <i class="{icons.CLASS} icon-2x"></i> <i class="{icons.CLASS} icon-3x"></i>					
 				</div>
 			</article>
 		# END icons #

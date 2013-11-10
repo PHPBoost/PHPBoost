@@ -30,7 +30,7 @@
 							document.getElementById("cat_" + id_cat).innerHTML = xhr_object.responseText;
 							document.getElementById("img_" + id_cat).className = 'icon-folder-open';
 							if( document.getElementById("img2_" + id_cat) )
-								document.getElementById("img2_" + id_cat).className = 'icon-collapse';
+								document.getElementById("img2_" + id_cat).className = 'icon-minus-square-o';
 							cat_status[id_cat] = 1;
 						}
 					}
@@ -43,7 +43,7 @@
 					document.getElementById("cat_" + id_cat).style.display = 'block';
 					document.getElementById("img_" + id_cat).className = 'icon-folder-open';
 					if( document.getElementById("img2_" + id_cat) )
-						document.getElementById("img2_" + id_cat).className = 'icon-collapse';
+						document.getElementById("img2_" + id_cat).className = 'icon-minus-square-o';
 					cat_status[id_cat] = 1;
 				}
 				else

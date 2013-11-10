@@ -166,7 +166,7 @@
 						</a>
 						# IF IS_USER_CONNECTED #
 						<a href="{U_DEADLINK}" class="basic-button alt" title="{L_DEADLINK}">
-							<i class="icon-link-broken"></i>
+							<i class="icon-unlink"></i>
 						</a>
 						# ENDIF #
 					</div>

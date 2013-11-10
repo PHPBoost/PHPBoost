@@ -10,7 +10,7 @@
 				# ENDIF #
 				# IF C_DELETE #
 				<li>
-					<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}"><i style="color:#e80909;" class="icon-trash"></i></a>
+					<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}"><i style="color:#e80909;" class="icon-delete"></i></a>
 				</li>
 				# ENDIF #
 				<li>
@@ -33,11 +33,11 @@
 			<i class="icon-user" title="${i18n('articles.sort_field.author')}"></i><a itemprop="author" href="{U_AUTHOR}" class="small {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a>|
 			# ENDIF #
 			&nbsp;<i class="icon-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{DATE_ISO8601}" itemprop="datePublished">{DATE}</time>&nbsp;|
-			&nbsp;<i class="icon-eye-open" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{NUMBER_VIEW}
+			&nbsp;<i class="icon-eye" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{NUMBER_VIEW}
 			# IF C_COMMENTS_ENABLED #
 				&nbsp;|&nbsp;<i class="icon-comment"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 			# ENDIF #
-			&nbsp;|&nbsp;<i class="icon-folder-close" title="${i18n('articles.category')}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{L_CAT_NAME}</a>
+			&nbsp;|&nbsp;<i class="icon-folder" title="${i18n('articles.category')}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{L_CAT_NAME}</a>
 			# IF C_KEYWORDS #
 			&nbsp;|&nbsp;<i title="${i18n('articles.tags')}" class="icon-tags"></i> 
 				# START keywords #

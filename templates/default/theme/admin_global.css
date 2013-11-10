@@ -131,73 +131,17 @@ a.member {
 
 /* Icônes spécifique PHPBoost
 ------------------------------------ */
-[class^="icon-"]:before {
-	display: inline-block;
-	font-family: FontAwesome;
-	font-size: 14px;
-	font-style: normal;
-	font-weight: normal;
-	text-decoration:none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-[class^="icon-"]:hover { text-decoration:none;}
+[class^="icon-"]:before { font-size:1.1em; }
+[class^="icon-"]:hover { text-decoration:none; }
 
-.icon-big:before{ font-size: 2em; }
-.icon-bigger:before{ font-size: 3em; }
+span [class^="icon-"]:before{ vertical-align:middle; }
+
+.icon-syndication:before { color:#f57900; }
+
+table .icon-table-sort-up:before { content: "\f062"; }
+table .icon-table-sort-down:before { content: "\f063"; }
 
 .icon-block:before{ display:block; }
-
-.icon-arrow-right:before { content: "\f061"; }
-.icon-arrow-left:before { content: "\f060"; }
-.icon-arrow-up:before { content: "\f062"; }
-.icon-arrow-down:before { content: "\f063"; }
-.icon-arrows:before { content: "\f047"; }
-.icon-book:before { content: "\f02d"; }
-.icon-calendar:before { content: "\f073"; }
-.icon-caret-down:before { content: "\f0d7"; vertical-align: -4px; }
-.icon-caret-left:before { content: "\f0d9"; vertical-align: -4px; }
-.icon-caret-right:before { content: "\f0da"; vertical-align: -4px; }
-.icon-check:before{	content: "\f00c"; color:#57A957; }
-.icon-cog:before { content: "\f013"; }
-.icon-comment:before { content: "\f075"; }
-.icon-comments:before { content: "\f086"; }
-.icon-delete:before { content: "\f014"; vertical-align:0; }
-.icon-edit:before { content: "\f044"; }
-.icon-edit-sign:before { content: "\f14b"; }
-.icon-envelope-alt:before { content: "\f003"; }
-.icon-error:before{ content: "\f00d"; color:#C43C35; }
-.icon-eye-open:before { content: "\f06e"; }
-.icon-eye-slash:before { content: "\f070"; }
-.icon-forward:before { content: "\f064"; }
-.icon-fb:before{ content: "\f09a"; }
-.icon-filter:before { content: "\f0b0"; }
-.icon-flag:before { content: "\f024"; }
-.icon-folder-close:before { content: "\f07b"; }
-.icon-gmail:before{ content: "\f0d5"; }
-.icon-mail:before{ content: "\f0e0"; }
-.icon-minus:before { content: "\f068"; }
-.icon-pencil:before { content: "\f040"; }
-.icon-plus:before { content: "\f067"; }
-.icon-print:before { content: "\f02f"; }
-.icon-refresh:before { content: "\f021"; }
-.icon-remove:before { content: "\f00d"; }
-.icon-reorder:before { content: "\f0c9"; }
-.icon-search:before { content: "\f002"; }
-.icon-skype:before{ content: "\f17e"; }
-.icon-sort:before { content: "\f0dc"; }
-.icon-sort-by-alphabet:before { content: "\f15d"; }
-.icon-sort-by-attributes:before { content: "\f160"; }
-.icon-sort-by-attributes-alt:before { content: "\f161"; }
-.icon-star-half-empty:before { content: "\f123"; }
-.icon-syndication:before { color:#f57900; content: "\f09e"; }
-.icon-tag:before { content: "\f02b"; }
-.icon-tags:before { content: "\f02c"; }
-.icon-time:before { content: "\f017"; }
-.icon-trash:before { content: "\f014"; }
-.icon-twitter:before{ content: "\f099"; }
-.icon-user:before { content: "\f007"; }
 
 /* Menu caché */
 .bbcode_block{

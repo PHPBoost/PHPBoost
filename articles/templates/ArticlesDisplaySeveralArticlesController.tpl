@@ -14,7 +14,7 @@
 				# ENDIF #
 				# IF C_PENDING_ARTICLES #
 				<li>
-					<a href="${relative_url(ArticlesUrlBuilder::display_pending_articles())}" title="${i18n('articles.pending_articles')}"><i class="icon-time"></i></a>
+					<a href="${relative_url(ArticlesUrlBuilder::display_pending_articles())}" title="${i18n('articles.pending_articles')}"><i class="icon-clock-o"></i></a>
 				</li>
 				# ENDIF #
 				# IF C_PUBLISHED_ARTICLES #
@@ -99,7 +99,7 @@
 							# ENDIF #
 							<br />
 							<i class="icon-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
-							<i class="icon-eye-open" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
+							<i class="icon-eye" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
 							<br />
 							# IF C_COMMENTS_ENABLED #
 							<i class="icon-comment"></i><a itemprop="discussionUrl" class="small" href="{articles.U_COMMENTS}">&nbsp;{articles.L_COMMENTS}</a>
@@ -172,7 +172,7 @@
 							<i class="icon-user" title="${i18n('articles.sort_field.author')}"></i><a itemprop="author" href="{articles.U_AUTHOR}" class="small {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>&nbsp;{articles.PSEUDO}&nbsp;</a>|
 							# ENDIF #
 							<i class="icon-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
-							<i class="icon-eye-open" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
+							<i class="icon-eye" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
 							# IF C_COMMENTS_ENABLED #
 							&nbsp;|&nbsp;<i class="icon-comment"></i><a itemprop="discussionUrl" class="small" href="{articles.U_COMMENTS}">&nbsp;{articles.L_COMMENTS}</a>
 							# ENDIF #
