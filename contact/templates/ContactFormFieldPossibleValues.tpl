@@ -16,7 +16,7 @@ var ContactFormFieldPossibleValues = Class.create({
 			$('input_fields_' + this.id_input).insert(input);
 			$('input_fields_' + this.id_input).insert(' ');
 			
-			var delete_input = new Element('a', {href : 'javascript:ContactFormFieldPossibleValues.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'main')}", 'class' : 'pbt-icon-delete'});
+			var delete_input = new Element('a', {href : 'javascript:ContactFormFieldPossibleValues.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'main')}", 'class' : 'icon-delete'});
 			$('input_fields_' + this.id_input).insert(delete_input);
 			
 			var div = new Element('div', {'id' : 'spacer_' + id, 'class' : 'height_spacer'});

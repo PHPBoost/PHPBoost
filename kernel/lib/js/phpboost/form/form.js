@@ -246,6 +246,7 @@ var FormField = Class.create({
 			var element = $(this.getHTMLId());
 			return element.disabled != "disabled" && element.disabled != false;
 		} else {
+			console.log(this.getHTMLId());
 			var display = $(this.getHTMLId()).style;
 			if (display != null) {
 				return display == "none";
