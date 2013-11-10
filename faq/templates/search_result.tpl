@@ -1,6 +1,6 @@
 <div class="row1">
     <span style="float: left;">
-        <img src="{PATH_TO_ROOT}/faq/templates/images/line.png" alt="arrow" class="image_left" style="vertical-align: middle;">
+        <i class="icon-caret-right icon-2x"></i>
         <a href="{U_QUESTION}">{QUESTION}</a>
     </span>
     <div style="clear: both;"></div>

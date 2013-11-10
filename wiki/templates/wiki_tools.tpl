@@ -48,7 +48,7 @@
 								# ENDIF #
 								# IF C_MOVE #
 								<li><a href="{U_MOVE}" title="{L_MOVE}">
-									<i class="icon-forward"></i>
+									<i class="icon-move"></i>
 									{L_MOVE}
 								</a></li>
 								# ENDIF #

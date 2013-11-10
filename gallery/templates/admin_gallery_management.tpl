@@ -87,19 +87,19 @@
 					}
 					else
 					{
-						img_aprob = 'icon-eye-open';
+						img_aprob = 'icon-eye';
 						title_aprob = '{L_APROB}';
 					}
 					
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )
 					{
-						if(document.getElementById('img_aprob' + id_file).hasClassName('icon-eye-open')){
-							document.getElementById('img_aprob' + id_file).removeClassName('icon-eye-open');
+						if(document.getElementById('img_aprob' + id_file).hasClassName('icon-eye')){
+							document.getElementById('img_aprob' + id_file).removeClassName('icon-eye');
 							document.getElementById('img_aprob' + id_file).addClassName('icon-eye-slash');
 						} else {
 							document.getElementById('img_aprob' + id_file).removeClassName('icon-eye-slash');
-							document.getElementById('img_aprob' + id_file).addClassName('icon-eye-open');
+							document.getElementById('img_aprob' + id_file).addClassName('icon-eye');
 						}
 						document.getElementById('img_aprob' + id_file).title = '' + title_aprob;
 						document.getElementById('img_aprob' + id_file).alt = '' + title_aprob;

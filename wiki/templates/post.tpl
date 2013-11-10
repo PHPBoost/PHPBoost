@@ -64,7 +64,7 @@
 						<div class="cats">
 							<div class="contents">
 								<ul>
-									<li><a class="{CAT_0}" id="class_0" href="javascript:select_cat(0);"><span class="icon-folder-close"></span>{L_DO_NOT_SELECT_ANY_CAT}</a></li>
+									<li><a class="{CAT_0}" id="class_0" href="javascript:select_cat(0);"><span class="icon-folder"></span>{L_DO_NOT_SELECT_ANY_CAT}</a></li>
 									# START create.list #
 										{create.list.DIRECTORY}
 									# END create.list #

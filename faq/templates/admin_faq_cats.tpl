@@ -28,7 +28,6 @@
 				</li>
 			</ul>
 		</div>
-
 		<div id="admin_contents">
 			# INCLUDE message_helper #
 			
@@ -49,11 +48,7 @@
 				</table>
 				
 				<div style="text-align:center; margin:30px 20px;" class="row1">
-					<a href="admin_faq_cats.php?recount=1">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/refresh.png" alt="{L_RECOUNT_QUESTIONS}" />
-					</a>
-					<br />
-					<a href="admin_faq_cats.php?recount=1">{L_RECOUNT_QUESTIONS}</a>
+					<a href="admin_faq_cats.php?recount=1" class="icon-refresh icon-3x icon-block">{L_RECOUNT_QUESTIONS}</a>
 				</div>
 			# END categories_management #
 			

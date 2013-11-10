@@ -147,11 +147,11 @@
 					# START category.questions #
 						<div class="row1" id="q{category.questions.ID}">
 							<span style="float:left;">
-								<i class="icon-caret-right icon-big"></i>
+								<i class="icon-caret-right icon-2x"></i>
 								{category.questions.QUESTION}
 							</span>
 							<span class="row2" style="float:right;">
-								<a href="{category.questions.U_MOVE}" title="{L_MOVE}" class="icon-forward"></a>
+								<a href="{category.questions.U_MOVE}" title="{L_MOVE}" class="icon-move"></a>
 								# START category.questions.up #
 									<a href="{category.questions.U_UP}" title="{L_UP}" class="icon-arrow-up"></a>
 								# END category.questions.up #

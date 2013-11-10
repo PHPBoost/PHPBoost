@@ -147,10 +147,10 @@
 		<div class="content">
 			<a href="#" class="basic-button smaller" title="BOuton Classique">Bouton</a> 
 			<a href="#" class="basic-button smaller" title="Envoyer un MP">MP</a>
-			<a href="#" class="basic-button smaller" title="Mail"><i class="icon-mail"></i></a>
+			<a href="#" class="basic-button smaller" title="Mail"><i class="icon-envelope"></i></a>
 			<a href="#" class="basic-button smaller" title="Contact Skype"><i class="icon-skype"></i></a>
-			<a href="#" class="basic-button smaller" title="Contact Gmail"><i class="icon-gmail"></i></a>
-			<a href="#" class="basic-button smaller" title="Contact Facebook"><i class="icon-fb"></i></a>
+			<a href="#" class="basic-button smaller" title="Contact Gmail"><i class="icon-google-plus"></i></a>
+			<a href="#" class="basic-button smaller" title="Contact Facebook"><i class="icon-facebook"></i></a>
 			<a href="#" class="basic-button smaller" title="Contact Twitter"><i class="icon-twitter"></i></a>
 		</div>
 	
@@ -210,19 +210,19 @@
 		<div class="content" style="height:200px;">
 			<menu class="dynamic_menu">
 				<ul>
-					<li><a><i class="icon-reorder"></i></a>
+					<li><a><i class="icon-bars"></i></a>
 						<ul>
-							<li class="extend"><a><i class="icon-eye-open"></i> Afficher</a>
+							<li class="extend"><a><i class="icon-eye"></i> Afficher</a>
 								<ul>
-									<li><a href="#"><i class="icon-eye-open"></i> Les plus vues</a></li>
+									<li><a href="#"><i class="icon-eye"></i> Les plus vues</a></li>
 									<li><a href="#"><i class="icon-star-half-empty"></i> Les mieux notées</a></li>
 								</ul>
 							</li>
 							<li class="extend"><a><i class="icon-sort"></i> Ordonner par</a>
 								<ul>
 									<li><a href="#"><i class="icon-tag"></i> Nom</a></li>
-									<li><a href="#"><i class="icon-time"></i> Date</a></li>
-									<li><a href="#"><i class="icon-eye-open"></i> Vues</a></li>
+									<li><a href="#"><i class="icon-clock-o"></i> Date</a></li>
+									<li><a href="#"><i class="icon-eye"></i> Vues</a></li>
 								</ul>
 							</li>
 							<li class="separator"></li>
@@ -235,19 +235,19 @@
 			<br />
 			<menu class="dynamic_menu right">
 				<ul>
-					<li><a><i class="icon-reorder"></i></a>
+					<li><a><i class="icon-bars"></i></a>
 						<ul>
-							<li class="extend"><a><i class="icon-eye-open"></i> Afficher</a>
+							<li class="extend"><a><i class="icon-eye"></i> Afficher</a>
 								<ul>
-									<li><a href="#"><i class="icon-eye-open"></i> Les plus vues</a></li>
+									<li><a href="#"><i class="icon-eye"></i> Les plus vues</a></li>
 									<li><a href="#"><i class="icon-star-half-empty"></i> Les mieux notées</a></li>
 								</ul>
 							</li>
 							<li class="extend"><a><i class="icon-sort"></i> Ordonner par</a>
 								<ul>
 									<li><a href="#"><i class="icon-tag"></i> Nom</a></li>
-									<li><a href="#"><i class="icon-time"></i> Date</a></li>
-									<li><a href="#"><i class="icon-eye-open"></i> Vues</a></li>
+									<li><a href="#"><i class="icon-clock-o"></i> Date</a></li>
+									<li><a href="#"><i class="icon-eye"></i> Vues</a></li>
 								</ul>
 							</li>
 							<li class="separator"></li>
@@ -287,14 +287,14 @@
 						<h1>Explorateur</h1>
 					<div class="contents">
 						<ul>
-							<li><a id="class_0" href="#"><span class="icon-folder-close"></span>Racine</a>
+							<li><a id="class_0" href="#"><span class="icon-folder"></span>Racine</a>
 								<ul>
-									<li class="sub"><a id="class_1" href="#"><span class="icon-folder-close"></span>Catégorie 1</a><span id="cat_1"></span></li>
-									<li class="sub"><a class="parent" href="javascript:show_cat_contents(2, 0);"><span class="icon-collapse" id="img2_2"></span><span class="icon-folder-open" id ="img_2"></span></a><a class="selected" id="class_2" href="#">Catégorie 2</a>
+									<li class="sub"><a id="class_1" href="#"><span class="icon-folder"></span>Catégorie 1</a><span id="cat_1"></span></li>
+									<li class="sub"><a class="parent" href="javascript:show_cat_contents(2, 0);"><span class="icon-minus-square-o" id="img2_2"></span><span class="icon-folder-open" id ="img_2"></span></a><a class="selected" id="class_2" href="#">Catégorie 2</a>
 									<span id="cat_2">
 										<ul>
-											<li class="sub"><a href="#"><span class="icon-folder-close"></span>Catégorie 3</a></li>
-											<li class="sub"><a href="#"><span class="icon-folder-close"></span>Catégorie 4</a></li>
+											<li class="sub"><a href="#"><span class="icon-folder"></span>Catégorie 3</a></li>
+											<li class="sub"><a href="#"><span class="icon-folder"></span>Catégorie 4</a></li>
 										</ul>
 									</span></li>
 								</ul>
@@ -306,8 +306,8 @@
 						<h1>Arborescence</h1>
 					<div class="contents" id="cat_contents">
 						<ul>
-							<li><a href="#"><span class="icon-folder-close"></span>Catégorie 3</a></li>
-							<li><a href="javascript:open_cat(2); show_cat_contents(0, 0);"><span class="icon-folder-close"></span>Catégorie 4</a></li>
+							<li><a href="#"><span class="icon-folder"></span>Catégorie 3</a></li>
+							<li><a href="javascript:open_cat(2); show_cat_contents(0, 0);"><span class="icon-folder"></span>Catégorie 4</a></li>
 							<li><a href="wiki.php?title=hgfhgf"><span class="icon-file"></span>Fichier 1</a></li>
 							<li><a href="wiki.php?title=qvsgfqgq"><span class="icon-file"></span>Fichier 2</a></li>
 						</ul>
