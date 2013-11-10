@@ -306,6 +306,7 @@ $LANG['feed'] = 'flux';
 $LANG['availables_feeds'] = 'Flux disponibles';
 $LANG['valid_position_menus'] = 'Valider la position des menus';
 $LANG['themes_management'] = 'Gérer le thème';
+$LANG['move'] = 'Déplacer';
 $LANG['move_up'] = 'Monter';
 $LANG['move_down'] = 'Descendre';
 
