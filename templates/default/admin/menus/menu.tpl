@@ -6,7 +6,7 @@
 		<span id="m{IDMENU}"></span>
 		<h5 class="menus_block_title">{NAME}</h5>
 		
-		<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="{L_EDIT}" class="valign_middle" />
+		<i class="icon-arrows"></i>
 		# IF C_EDIT #
 			<a href="{U_EDIT}" title="{L_EDIT}" class="icon-edit"></a>
 		# ENDIF #
