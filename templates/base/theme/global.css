@@ -131,18 +131,14 @@ a.member {
 
 /* Icônes spécifique PHPBoost
 ------------------------------------ */
-
-[class^="icon-"]:before { font-size:1.1em; }
+[class^="icon-"] { vertical-align:middle; }
 [class^="icon-"]:hover { text-decoration:none; }
-
-span [class^="icon-"]:before{ vertical-align:middle; }
+[class^="icon-"]:before { font-size:1.1em; }
 
 .icon-syndication:before { color:#f57900; }
 
 table .icon-table-sort-up:before { content: "\f062"; }
 table .icon-table-sort-down:before { content: "\f063"; }
-
-.icon-block:before{ display:block; }
 
 
 /* Mise en forme
