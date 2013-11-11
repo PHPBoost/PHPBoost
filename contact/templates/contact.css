@@ -1,0 +1,26 @@
+.informations_side{
+	width: 38%;
+	margin: 69px 0;
+}
+
+.form_side{
+	width: 60%;
+}
+
+.not_displayable, .field_infos:hover > .field_options img{ opacity:0.5; }
+
+.height_spacer {
+	margin-bottom: 3px;
+}
+
+.per_default {
+	margin: 0 45px 0 25px;
+}
+
+.is_default_title {
+	margin-right: 30px;
+}
+
+.name_title {
+	margin-right: 92px;
+}
