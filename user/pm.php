@@ -651,9 +651,9 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 		//Avatar
 		if (empty($row['user_avatar']))
-			$user_avatar = UserAccountsConfig::load()->is_default_avatar_enabled() ? '<img src="../templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name() . '" alt="" />' : '';
+			$user_avatar = UserAccountsConfig::load()->is_default_avatar_enabled() ? '../templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name() : '';
 		else
-			$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt=""	/>';
+			$user_avatar = Url::to_rel($row['user_avatar']);
 			
 		//Affichage du sexe et du statut (connecté/déconnecté).
 		$user_sex = '';
@@ -686,22 +686,10 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'ID' => $row['id'],
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
-			'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 			'USER_PSEUDO' => ($is_admin) ? $LANG['admin'] : (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']),
 			'USER_RANK' => ($is_admin) ? '' : (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
-			'USER_IMG_ASSOC' => ($is_admin) ? '' : $user_assoc_img,
 			'USER_AVATAR' => ($is_admin) ? '' : $user_avatar,
-			'USER_GROUP' => ($is_admin) ? '' : $user_groups,
-			'USER_DATE' => ($is_admin) ? '' : $LANG['registered_on'] . ': ' . gmdate_format('date_format_short', $row['registered']),
-			'USER_SEX' => ($is_admin) ? '' : $user_sex,
-			'USER_MSG' => ($is_admin) ? '' : $user_msg,
-			'USER_LOCAL' => ($is_admin) ? '' : $user_local,
-			'USER_MAIL' => ($is_admin) ? '' : ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '" class="basic-button smaller">Mail</a>' : '',
-			'USER_MSN' => ($is_admin) ? '' : (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '" class="basic-button smaller">MSN</a>' : '',
-			'USER_YAHOO' => ($is_admin) ? '' : (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '" class="basic-button smaller">Yahoo</a>' : '',
-			'USER_SIGN' => ($is_admin) ? '' : (!empty($row['user_sign'])) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
-			'USER_WEB' => ($is_admin) ? '' : (!empty($row['user_website'])) ? '<a href="' . $row['user_website'] . '" class="basic-button smaller">Web</a>' : '',
 			'WARNING' => ($is_admin) ? '' : $row['user_warning'] . '%',
 			'U_USER_PROFILE' => ($is_admin) ? '' : UserUrlBuilder::profile($row['user_id'])->rel(),
 			'U_ANCHOR' => 'pm' . url('.php?id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '') . '.php') . '#m' . $row['id'],
@@ -780,11 +768,13 @@ else //Liste des conversation, dans la boite du membre.
 		'NBR_PM' => $pagination_pm,
 		'PM_POURCENT' => '<strong>' . $nbr_pm . '</strong> / <strong>' . $pm_max . '</strong>',
 		'PAGINATION' => $Pagination->display('pm' . url('.php?p=%d', '-0-0-%d.php'), $nbr_pm, 'p', $pagination_pm, 3),
-		'U_MARK_AS_READ' => '<a href="pm.php?read=1" class="small">' . $LANG['mark_pm_as_read'] . '</a>',
+		'U_MARK_AS_READ' => 'pm.php?read=1',
+		'L_MARK_AS_READ' => $LANG['mark_pm_as_read'],
 		'U_USER_ACTION_PM' => url('.php?del_convers=1&amp;p=' . $page . '&amp;token=' . $Session->get_token()),
 		'U_USER_VIEW' => '<a href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->rel() . '">' . $LANG['member_area'] . '</a>',
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
-		'U_POST_NEW_CONVERS' => '<a href="pm' . url('.php?post=1', '') . '" title="' . $LANG['post_new_convers'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/post.png" alt="' . $LANG['post_new_convers'] . '" title="' . $LANG['post_new_convers'] . '" class="valign_middle" /></a>'
+		'U_POST_NEW_CONVERS' => 'pm' . url('.php?post=1', ''),
+		'L_POST_NEW_CONVERS' => $LANG['post_new_convers']
 	));
 	
 	//Aucun message privé.
