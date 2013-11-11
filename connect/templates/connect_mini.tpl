@@ -103,20 +103,21 @@
 	</script>
 	<div class="connect_align">
 		<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="connect_align">
-			<p class="connect_inline"><input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25">
+			<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25">
 			<input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
 			<input checked="checked" type="checkbox" name="auto">
 			<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
-			<button type="submit" name="connect" value="true">{L_CONNECT}</button></p>
+			<button type="submit" name="connect" value="true">{L_CONNECT}</button>
 		</form>
 		# IF C_USER_REGISTER #
 		<form action="{U_REGISTER}" method="post" class="connect_align">
-			<p class="connect_inline"><button type="submit" name="register" value="true">{L_REGISTER}</button></p>
+			<button type="submit" name="register" value="true">{L_REGISTER}</button>
 		</form>
 		# ENDIF #
 	</div>
 	# ELSE #
 	<div class="connect_align">
+		<i class="icon-refresh icon-spin"></i>
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{U_HOME_PROFILE}" class="small">{L_PRIVATE_PROFIL}</a>&nbsp;
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small">{L_NBR_PM}</a>&nbsp;
 		# IF C_ADMIN_AUTH #
