@@ -117,7 +117,6 @@
 	</div>
 	# ELSE #
 	<div class="connect_align">
-		<i class="icon-refresh icon-spin"></i>
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{U_HOME_PROFILE}" class="small">{L_PRIVATE_PROFIL}</a>&nbsp;
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small">{L_NBR_PM}</a>&nbsp;
 		# IF C_ADMIN_AUTH #
