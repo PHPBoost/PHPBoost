@@ -19,15 +19,15 @@
 # START management #
 	<menu class="dynamic_menu right">
 		<ul>
-			<li><a><i class="icon-cog"></i></a>
+			<li><a class="icon-cog"></a>
 				<ul>
 					<li>
-						<a href="{U_MANAGEMENT}" title="{L_CAT_MANAGEMENT}"><i class="icon-bars"></i>{L_CAT_MANAGEMENT}</a>
+						<a href="{U_MANAGEMENT}" title="{L_CAT_MANAGEMENT}"><i class="icon-bars"></i> {L_CAT_MANAGEMENT}</a>
 						
 					</li>
 					# IF IS_ADMIN #
 					<li>
-						<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}"><i class="icon-bars"></i>${LangLoader::get_message('configuration', 'admin')}</a>
+						<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}"><i class="icon-bars"></i> ${LangLoader::get_message('configuration', 'admin')}</a>
 					</li>
 					# ENDIF #
 				</ul>
@@ -79,7 +79,7 @@
 				<div style="margin-top:15px;" id="q{questions.faq.ID_QUESTION}">
 					<div class="row1">
 						<span style="float:left;">
-							<a href="javascript:show_answer({questions.faq.ID_QUESTION});">
+							<a href="javascript:show_answer({questions.faq.ID_QUESTION});" >
 								<i id="faq_i{questions.faq.ID_QUESTION}" class="icon-caret-right icon-2x"></i>
 							</a>
 							<a id="faq_l{questions.faq.ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
