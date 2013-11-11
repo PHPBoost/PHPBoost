@@ -684,6 +684,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$tpl->assign_block_vars('pm.msg', array(
 			'C_MODERATION_TOOLS' => (($User->get_attribute('user_id') === $row['user_id'] && $row['id'] === $convers['last_msg_id']) && ($row['view_status'] === '0')), //Dernier mp éditable. et si le destinataire ne la pas encore lu
 			'ID' => $row['id'],
+			'msg_ID' => $row['id'],
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
