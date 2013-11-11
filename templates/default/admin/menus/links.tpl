@@ -58,7 +58,13 @@ function addSubElement(menu_element_id) {
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_image'}, {JL_IMAGE}),
             ' ',
-            Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image'}),
+            Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}),
+			
+			Builder.node('div', {className: 'sortable_options preview'}, [
+			
+			Builder.node('img', { id: 'menu_element_' + id + '_image_preview'}),
+			
+			]),
         
 			Builder.node('div', {className: 'sortable_actions'}, [
 				Builder.node('i', {class: 'icon-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
@@ -103,7 +109,13 @@ function addSubMenu(menu_element_id) {
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_image'}, {JL_IMAGE}),
             ' ',
-            Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image'}),
+            Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}),
+			
+			Builder.node('div', {className: 'sortable_options preview'}, [
+			
+			Builder.node('img', { id: 'menu_element_' + id + '_image_preview'}),
+			
+			]),
 		
 			Builder.node('div', {className: 'sortable_actions'}, [
 				Builder.node('i', {class: 'icon-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
@@ -124,9 +136,9 @@ function addSubMenu(menu_element_id) {
         Builder.node('hr'),
         Builder.node('ul', {id: 'menu_element_' + id + '_list', className: 'sortable_block'}),
         Builder.node('fieldset', {className: 'fieldset_submit'}, [
-            Builder.node('button', {type: 'button', id: 'menu_element_' + id + '_add_sub_element', name: 'menu_element_' + id + '_add_sub_element', value: {JL_ADD_SUB_ELEMENT}, onclick: 'addSubElement(\'menu_element_' + id + '\');', className: 'submit'},[{JL_ADD_SUB_ELEMENT}]),
+            Builder.node('button', {type: 'button', id: 'menu_element_' + id + '_add_sub_element', name: 'menu_element_' + id + '_add_sub_element', value: {JL_ADD_SUB_ELEMENT}, onclick: 'addSubElement(\'menu_element_' + id + '\');'},[{JL_ADD_SUB_ELEMENT}]),
             ' ',
-            Builder.node('button', {type: 'button', id: 'menu_element_' + id + '_add_sub_menu', name: 'menu_element_' + id + '_add_sub_menu', value: {JL_ADD_SUB_MENU}, onclick: 'addSubMenu(\'menu_element_' + id + '\');', className: 'submit'},[{JL_ADD_SUB_MENU}]),
+            Builder.node('button', {type: 'button', id: 'menu_element_' + id + '_add_sub_menu', name: 'menu_element_' + id + '_add_sub_menu', value: {JL_ADD_SUB_MENU}, onclick: 'addSubMenu(\'menu_element_' + id + '\');'},[{JL_ADD_SUB_MENU}]),
     ])
 	]);
 
@@ -147,6 +159,13 @@ function deleteElement(element_id)
     }
 }
 
+function image_preview(input,image)
+{
+		var url = input.value;
+		var reg = /^https?:\/\//i;
+		if (reg.test(url)) image.src=input.value;
+		else image.src='{PATH_TO_ROOT}'+input.value;
+}
 -->
 </script>
 <div id="admin_contents">
