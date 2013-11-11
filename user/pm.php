@@ -583,7 +583,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;
 	$j = 0;
-	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, ext_field.user_location, ext_field.user_website, ext_field.user_sex, ext_field.user_msn, ext_field.user_yahoo, ext_field.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, msg.contents
+	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, msg.contents
 	FROM " . DB_TABLE_PM_MSG . " msg
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
@@ -601,51 +601,6 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		if( !$is_guest_in_convers )
 			$is_guest_in_convers = empty($row['login']);
 		
-		//Rang de l'utilisateur.
-		$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
-		$user_group = $user_rank;
-		$user_rank_icon = '';
-		if ($row['level'] === '2') //Rang spécial (admins).
-		{
-			$user_rank = $ranks_cache[-2]['name'];
-			$user_group = $user_rank;
-			$user_rank_icon = $ranks_cache[-2]['icon'];
-		}
-		elseif ($row['level'] === '1') //Rang spécial (modos).
-		{
-			$user_rank = $ranks_cache[-1]['name'];
-			$user_group = $user_rank;
-			$user_rank_icon = $ranks_cache[-1]['icon'];
-		}
-		else
-		{
-			foreach ($ranks_cache as $msg => $ranks_info)
-			{
-				if ($msg >= 0 && $msg <= $row['user_msg'])
-				{
-					$user_rank = $ranks_info['name'];
-					$user_rank_icon = $ranks_info['icon'];
-				}
-			}
-		}
-		
-		//Image associée au rang.
-		$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
-		
-		//Affichage des groupes du membre.
-		if (!empty($row['user_groups']))
-		{
-			$user_groups = '';
-			$array_user_groups = explode('|', $row['user_groups']);
-			foreach (GroupsService::get_groups() as $idgroup => $array_group_info)
-			{
-				if (is_numeric(array_search($idgroup, $array_user_groups)))
-					$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
-			}
-		}
-		else
-			$user_groups = $LANG['group'] . ': ' . $user_group;
-			
 		//Membre en ligne?
 		$user_online = !empty($row['connect']) ? 'online' : 'offline';
 		
@@ -655,47 +610,28 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		else
 			$user_avatar = Url::to_rel($row['user_avatar']);
 			
-		//Affichage du sexe et du statut (connecté/déconnecté).
-		$user_sex = '';
-		if ($row['user_sex'] == 1)
-			$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';
-		elseif ($row['user_sex'] == 2)
-			$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
-		
-		//Nombre de message.
-		//Affichage du nombre de message.
-		if ($row['user_msg'] >= 1)
-			$user_msg = '<a href="' . UserUrlBuilder::messages($row['user_id'])->rel() . '" class="small">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
-		else
-			$user_msg = '<a href="' . UserUrlBuilder::messages($row['user_id'])->rel() . '" class="small">' . $LANG['message'] . '</a>: 0';
-		
-		//Localisation.
-		if (!empty($row['user_location']))
-		{
-			$user_local = $LANG['place'] . ': ' . $row['user_location'];
-			$user_local = strlen($row['user_location']) > 15 ? TextHelper::substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';
-		}
-		else $user_local = '';
-
 		//Reprise du dernier message de la page précédente.
 		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text_strong">' . $LANG['quote_last_msg'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
 		$i++;
 		
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		
 		$tpl->assign_block_vars('pm.msg', array(
 			'C_MODERATION_TOOLS' => (($User->get_attribute('user_id') === $row['user_id'] && $row['id'] === $convers['last_msg_id']) && ($row['view_status'] === '0')), //Dernier mp éditable. et si le destinataire ne la pas encore lu
+			'C_VISITOR' => $is_admin,
+			'C_GROUP_COLOR' => !empty($group_color),
+			
 			'ID' => $row['id'],
-			'msg_ID' => $row['id'],
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
-			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
-			'USER_PSEUDO' => ($is_admin) ? $LANG['admin'] : (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']),
-			'USER_RANK' => ($is_admin) ? '' : (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
-			'USER_AVATAR' => ($is_admin) ? '' : $user_avatar,
-			'WARNING' => ($is_admin) ? '' : $row['user_warning'] . '%',
-			'U_USER_PROFILE' => ($is_admin) ? '' : UserUrlBuilder::profile($row['user_id'])->rel(),
-			'U_ANCHOR' => 'pm' . url('.php?id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '') . '.php') . '#m' . $row['id'],
-			'U_QUOTE' => ($is_admin) ? '' : ('<a href="pm' . url('.php?quote=' . $row['id'] . '&amp;id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '-0') . '-' . $row['id'] . '.php') . '#quote" title="' . $LANG['quote'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/quote.png" alt="" /></a>'),
-			'U_USER_PM' => ($is_admin) ? '' : '<a href="../user/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="basic-button smaller">MP</a>',
+			'USER_AVATAR' => $user_avatar,
+			'PSEUDO' => $is_admin ? $LANG['admin'] : (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']),
+			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+			'GROUP_COLOR' => $group_color,
+		
+			'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+			
+			'L_LEVEL' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $LANG['banned']),
 		));
 		
 		//Marqueur de suivis du sujet.

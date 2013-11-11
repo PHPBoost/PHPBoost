@@ -171,15 +171,21 @@
 				<article id="m{pm.msg.ID}" class="message">
 					<div class="message-user_infos">
 						<div class="message-pseudo">
-							<a href="{pm.msg.U_USER_PROFILE}" class="admin">{pm.msg.USER_PSEUDO}</a>
+							# IF pm.msg.C_VISITOR #
+								<span>{pm.msg.PSEUDO}</span>
+							# ELSE #
+								<a href="{pm.msg.U_PROFILE}" class="{pm.msg.LEVEL_CLASS}" # IF pm.msg.C_GROUP_COLOR # style="color:{pm.msg.GROUP_COLOR}" # ENDIF #>
+									{pm.msg.PSEUDO}
+								</a>
+							# ENDIF #
 						</div>
-						<div class="message-level">{pm.msg.USER_RANK}</div>
+						<div class="message-level">{pm.msg.L_LEVEL}</div>
 						<img src="{pm.msg.USER_AVATAR}" title="{pm.msg.USER_PSEUDO}" class="message-avatar">
 					</div>
 					<div class="message-content">
 						<div class="message-date">
 							<span class="actions">
-								<a href="#com1">\#{pm.msg.ID}</a>
+								<a href="#m{pm.msg.ID}">\#{pm.msg.ID}</a>
 								# IF pm.msg.C_MODERATION_TOOLS #
 								<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="icon-edit"></a>
 								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
@@ -222,7 +228,7 @@
 					</tr>	
 				</table>
 			</div>
-			<footer>&bull; {show_pm.U_USER_VIEW} &raquo; {show_pm.U_PM_BOX} &raquo; {show_pm.U_TITLE_CONVERS}</footer>
+			<footer></footer>
 		</section>
 		# END show_pm #
 
@@ -293,7 +299,7 @@
 						</div>	
 					</div>	
 				</div>
-				<footer>&bull; {edit_pm.U_USER_VIEW} &raquo; {edit_pm.U_PM_BOX}</footer>
+				<footer></footer>
 			</section>
 		</form>
 		# END edit_pm #
