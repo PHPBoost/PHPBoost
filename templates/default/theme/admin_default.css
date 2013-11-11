@@ -17,6 +17,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
     list-style-position:outside;
     margin:0;
 	padding:0;
+	min-height:24px;
 }
 
 .sortable_block .sortable_element {
@@ -24,7 +25,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	border:1px solid #D6DEE7;
 	padding:0;
 	position: relative;
-	margin:8px;
+	margin:10px 6px;
 }
 
 .sortable_block .sortable_element:hover {
@@ -72,6 +73,11 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	display:inline-block;
 	padding:0 2px;
 	text-align:left;
+}
+
+.sortable_block .sortable_options.preview{
+	width:16px;
+	padding:0;
 }
 
 .sortable_block .sortable_element hr {
