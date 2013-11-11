@@ -161,10 +161,10 @@ function deleteElement(element_id)
 
 function image_preview(input,image)
 {
-		var url = input.value;
-		var reg = /^https?:\/\//i;
-		if (reg.test(url)) image.src=input.value;
-		else image.src='{PATH_TO_ROOT}'+input.value;
+	var url = input.value;
+	var reg = /^https?:\/\//i;
+	if (reg.test(url)) image.src = url;
+	else image.src = '{PATH_TO_ROOT}' + url;
 }
 -->
 </script>
