@@ -1,12 +1,12 @@
 # IF C_FIRST_MENU #
     <div id="menu_element_{ID}">
         <input type="hidden" id="menu_uid" name="menu_uid" value="{ID}">
-    	<ul id="menu_element_{ID}_list" class="menu_link_list">
+    	<ul id="menu_element_{ID}_list" class="sortable_block">
     		# START elements #
     			{elements.DISPLAY}
     		# END elements #
     	</ul>
-        <fieldset class="fieldset_submit" style="padding:0;margin-bottom:4px;margin-top:15px;">
+        <fieldset class="fieldset_submit">
             <button type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
             <button type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
         </fieldset>
@@ -14,17 +14,17 @@
 # ENDIF #
 
 # IF C_NEXT_MENU #
-	<li class="menu_link_element" id="menu_element_{ID}">
-		<div style="float:left;">
-			<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="" class="valign_middle" style="padding-left:5px;padding-right:5px;cursor:move" />
+	<li class="sortable_element" id="menu_element_{ID}">
+		<div class="sortable_title">
+			<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png" alt="plus" class="valign_middle" style="cursor:move" />
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image">
-		</div>
-		<div style="float:right;">
-			<i class="icon-plus" title="More..." id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
-            <i class="icon-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
+			<div class="sortable_actions">
+				<i class="icon-plus" title="More..." id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
+				<i class="icon-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
+			</div>
 		</div>
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">
@@ -34,13 +34,13 @@
 				<div class="form-field">{AUTH_FORM}</div>
 			</div>
 		</fieldset>
-        <hr style="background-color:#999999;margin-top:5px;" />
-		<ul class="menu_link_list" id="menu_element_{ID}_list">
+        <hr/>
+		<ul class="sortable_block" id="menu_element_{ID}_list">
     		# START elements #
     			{elements.DISPLAY}
     		# END elements #
 		</ul>
-		<fieldset class="fieldset_submit" style="padding:0;margin-bottom:4px;margin-top:15px;">
+		<fieldset class="fieldset_submit">
 			<button type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
             <button type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
 		</fieldset>
@@ -48,17 +48,17 @@
 # ENDIF #
 
 # IF C_LINK #
-    <li class="menu_link_element" id="menu_element_{ID}">
-   		<div style="float:left;">
-			<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="" class="valign_middle" style="padding-left:5px;padding-right:5px;cursor:move" />
+    <li class="sortable_element" id="menu_element_{ID}">
+   		<div class="sortable_title">
+			<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
    			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="plus" class="valign_middle" style="cursor:move" />
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image">
-		</div>
-		<div style="float:right;">
-			<i class="icon-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
-            <i class="icon-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
+			<div class="sortable_actions">
+				<i class="icon-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
+				<i class="icon-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
+			</div>
 		</div>
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">

@@ -15,8 +15,8 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 .sortable_block {
     list-style-type:none;
     list-style-position:outside;
-    margin:0px;
-	padding:0px;
+    margin:0;
+	padding:0;
 }
 
 .sortable_block .sortable_element {
@@ -24,7 +24,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	border:1px solid #D6DEE7;
 	padding:0;
 	position: relative;
-	margin:5px;
+	margin:8px;
 }
 
 .sortable_block .sortable_element:hover {
@@ -74,7 +74,16 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	text-align:left;
 }
 
-.sortable_block .sortable_element label { color:#1F507F; }
+.sortable_block .sortable_element hr {
+	background-color:#999999;
+	margin-top:5px;
+}
+
+.sortable_block .sortable_element label {
+	color:#1F507F;
+	margin-left:14px;
+}
+
 .sortable_block .sortable_element [class^="icon-"]:not(.icon-arrows):hover, .sortable_block .sortable_actions img { cursor:pointer; }
 .sortable_block .sortable_element:hover label { cursor:pointer; }
 
