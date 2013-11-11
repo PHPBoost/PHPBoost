@@ -48,7 +48,7 @@
 				</table>
 				
 				<div style="text-align:center; margin:30px 20px;" class="row1">
-					<a href="admin_faq_cats.php?recount=1" class="icon-refresh icon-3x icon-block">{L_RECOUNT_QUESTIONS}</a>
+					<a href="admin_faq_cats.php?recount=1" ><i class="icon-refresh icon-2x icon-block"></i> {L_RECOUNT_QUESTIONS}</a>
 				</div>
 			# END categories_management #
 			
