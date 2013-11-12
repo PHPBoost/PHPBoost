@@ -54,7 +54,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 			if (!empty($options))
 			{
 				$tpl->assign_block_vars('fieldelements', array(
-					'C_DELETABLE' => $i > 1,
+					'C_DELETABLE' => $i > 0,
 					'ID' => $i,
 					'NAME' => stripslashes($options['title']),
 					'IS_DEFAULT' => (int) $options['is_default'],
