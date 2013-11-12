@@ -162,7 +162,7 @@ Event.observe(window, 'load', function() {
 				<li class="sortable_element" id="list_{fields_list.ID}">
 					<div class="sortable_title">
 						<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows"></i>
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="url" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="" />
 						<span class="text_strong">{fields_list.NAME}</span>
 						<div class="sortable_actions">
 							{@admin.field.required} : <span class="text_strong"># IF fields_list.C_REQUIRED #{@admin.field.yes}# ELSE #{@admin.field.no}# ENDIF #</span>
@@ -180,7 +180,7 @@ Event.observe(window, 'load', function() {
 							<div class="sortable_options">
 								# IF fields_list.C_DELETE #<a class="icon-delete" data-confirmation="delete-element" title="{@admin.fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
 							</div>
-							# IF NOT fields_list.C_READONLY #<img id="loading_{fields_list.ID}" alt="" class="valign_middle" /><a><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="valign_middle" width="16px" /></a># ELSE #<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="valign_middle not_displayable" width="16px" /># ENDIF #
+							# IF NOT fields_list.C_READONLY #<img id="loading_{fields_list.ID}" alt="" class="valign_middle" /><a><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" width="16px" /></a># ELSE #<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="not_displayable" width="16px" /># ENDIF #
 						</div>
 					</div>
 					<div class="spacer"></div>
