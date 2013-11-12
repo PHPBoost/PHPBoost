@@ -101,16 +101,14 @@
 /* Lien du site
 --------------------------------------*/
 a {
-	color:#2F5B8A;
+	color:#4372aa;
     text-decoration:none;
-    font-size:12px;
-    font-weight:bold;
+    font-weight: bold;
 }
 
 a:hover {
-    color:#718396;
+    color:#2d4d73;
     text-decoration:underline;
-    font-weight:bold;
 }
 
 /* A supprimer ou remplacer par "a img" ? */
