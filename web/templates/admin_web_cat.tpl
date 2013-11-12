@@ -77,7 +77,7 @@
 									<input type="text" maxlength="60" size="20" name="{cat.IDCAT}cat" value="{cat.CAT}">
 								</td>							
 								<td class="row2"> 
-									<textarea class="post" rows="3" cols="40" name="{cat.IDCAT}contents">{cat.CONTENTS}</textarea> 
+									<textarea rows="3" cols="40" name="{cat.IDCAT}contents">{cat.CONTENTS}</textarea> 
 								</td>
 								<td class="row2"> 
 									<select name="{cat.IDCAT}icon" onchange="change_icon('{cat.IDCAT}', this.options[this.selectedIndex].value)" onclick="change_icon('{cat.IDCAT}', this.options[this.selectedIndex].value)">
@@ -131,7 +131,7 @@
 					</div>
 					<div class="form-element-textarea">
 						<label for="cat">{L_DESC}</label>
-						<textarea class="post" rows="3" cols="20" name="contents" id="contents"></textarea>
+						<textarea rows="3" cols="20" name="contents" id="contents"></textarea>
 					</div>
 					<div class="form-element">
 						<label for="icon">{L_ICON}</label>

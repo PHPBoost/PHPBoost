@@ -351,7 +351,7 @@
 						* {L_EXECUTED_QUERY}
 					</div>
 					<div class="block_contents2">
-						<textarea class="post" rows="12" id="query" name="query">{QUERY}</textarea>
+						<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 					</div>
 					<fieldset class="fieldset_submit" style="margin:0">
 						<legend>{L_EXECUTE}</legend>
@@ -420,7 +420,7 @@
 						</td>
 						<td class="row2">
 							# IF fields.C_FIELD_FORM_EXTEND #
-							<textarea class="post" rows="6" cols="37" name="{fields.FIELD_NAME}">{fields.FIELD_VALUE}</textarea>
+							<textarea rows="6" cols="37" name="{fields.FIELD_NAME}">{fields.FIELD_VALUE}</textarea>
 							# ELSE #
 							<input type="text" size="30" name="{fields.FIELD_NAME}" value="{fields.FIELD_VALUE}">
 							# ENDIF #

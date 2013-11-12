@@ -239,7 +239,7 @@
 		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">						
 			<legend>{L_RESPOND}</legend>				
 			{KERNEL_EDITOR}		
-			<textarea class="post" rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
+			<textarea rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 			<div class="center">
 				<button type="submit" name="pm" value="true">{L_SUBMIT}</button>
 				<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>			
