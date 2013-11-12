@@ -74,21 +74,21 @@ class ForumSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
-		$this->delete_member_extended_last_view_forum();
+		$this->delete_member_extended_field();
 	}
 
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(
-		self::$forum_alerts_table,
-		self::$forum_cats_table,
-		self::$forum_history_table,
-		self::$forum_message_table,
-		self::$forum_poll_table,
-		self::$forum_topics_table,
-		self::$forum_track_table,
-		self::$forum_view_table,
-		self::$forum_ranks_table
+			self::$forum_alerts_table,
+			self::$forum_cats_table,
+			self::$forum_history_table,
+			self::$forum_message_table,
+			self::$forum_poll_table,
+			self::$forum_topics_table,
+			self::$forum_track_table,
+			self::$forum_view_table,
+			self::$forum_ranks_table
 		));
 	}
 
@@ -283,9 +283,10 @@ class ForumSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_ranks_table, $fields, $options);
 	}
 
-	private function delete_member_extended_last_view_forum()
+	private function delete_member_extended_field()
 	{
 		PersistenceContext::get_dbms_utils()->drop_column(DB_TABLE_MEMBER_EXTENDED_FIELDS, self::$member_extended_field_last_view_forum_column);
+		PersistenceContext::get_dbms_utils()->drop_column(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_sign');
 	}
 
 	private function insert_data()
@@ -304,6 +305,18 @@ class ForumSetup extends DefaultModuleSetup
 		$extended_field->set_name(self::$member_extended_field_last_view_forum_column);
 		$extended_field->set_field_name(self::$member_extended_field_last_view_forum_column);
 		$extended_field->set_field_type('MemberHiddenExtendedField');
+		$extended_field->set_is_freeze(true);
+		ExtendedFieldsService::add($extended_field);
+		
+		//Sign
+		$lang = LangLoader::get('admin-extended-fields-common');
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['field-install.signing']);
+		$extended_field->set_field_name('user_sign');
+		$extended_field->set_description($lang['field-install.signing-explain']);
+		$extended_field->set_field_type('MemberLongTextExtendedField');
+		$extended_field->set_is_required(false);
+		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 	}
