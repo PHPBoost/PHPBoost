@@ -132,7 +132,7 @@
 					# ENDIF #
 					<br />
 					<label for="shout_contents"><span class="smaller">{L_MESSAGE}</span></label>
-					<textarea class="post" id="shout_contents" name="shout_contents" rows="4" cols="16"></textarea>					
+					<textarea id="shout_contents" name="shout_contents" rows="4" cols="16"></textarea>					
 					
 					<p class="shout_spacing">
 						<input type="submit" name="shoutbox" id="shoutbox_submit" value="{L_SUBMIT}" class="submit">
@@ -168,7 +168,7 @@
 							<input size="16" maxlength="25" type="hidden" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 						# ENDIF #
 						<br />
-						<textarea class="post" id="shout_contents" name="shout_contents" rows="2" cols="16"></textarea>					
+						<textarea id="shout_contents" name="shout_contents" rows="2" cols="16"></textarea>					
 						<p class="shout_spacing">
 							<input type="submit" name="shoutbox" id="shoutbox_submit" value="{L_SUBMIT}" class="submit">
 							<script type="text/javascript">

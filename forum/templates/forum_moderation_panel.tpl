@@ -389,7 +389,7 @@
 							<td class="row2" colspan="2">
 								<div class="question">{L_ALTERNATIVE_PM}</div>
 								{KERNEL_EDITOR}
-								<textarea name="action_contents" id="action_contents" class="post" rows="12" cols="15">{ALTERNATIVE_PM}</textarea>
+								<textarea name="action_contents" id="action_contents" rows="12" cols="15">{ALTERNATIVE_PM}</textarea>
 							</td>
 						</tr>
 						<tr>

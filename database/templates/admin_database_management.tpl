@@ -303,7 +303,7 @@
 						* {L_EXECUTED_QUERY}
 					</div>
 					<div class="block_contents2">
-						<textarea class="post" rows="12" id="query" name="query">{QUERY}</textarea>
+						<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 					</div>
 					<fieldset class="fieldset_submit" style="margin:0">
 						<legend>{L_EXECUTE}</legend>

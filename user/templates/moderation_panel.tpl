@@ -165,7 +165,7 @@
 							</td>
 							<td class="row2">
 								{KERNEL_EDITOR}
-								<textarea name="action_contents" id="action_contents" class="post" rows="12">{ALTERNATIVE_PM}</textarea>
+								<textarea name="action_contents" id="action_contents" rows="12">{ALTERNATIVE_PM}</textarea>
 							</td>
 						</tr>
 						<tr>

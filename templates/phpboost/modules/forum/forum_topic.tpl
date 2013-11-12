@@ -338,7 +338,7 @@
 				<div>
 					<div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
 					{KERNEL_EDITOR}
-					<label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
+					<label><textarea rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 					<fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
