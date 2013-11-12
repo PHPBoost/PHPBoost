@@ -282,18 +282,6 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 		
-		//Website
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.website']);
-		$extended_field->set_field_name('user_website');
-		$extended_field->set_description($lang['field-install.website-explain']);
-		$extended_field->set_field_type('MemberShortTextExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		$extended_field->set_regex(5);
-		ExtendedFieldsService::add($extended_field);
-		
 		//Job
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.job']);
@@ -304,64 +292,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
-		//Entertainement
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.entertainement']);
-		$extended_field->set_field_name('user_entertainement');
-		$extended_field->set_description($lang['field-install.entertainement-explain']);
-		$extended_field->set_field_type('MemberShortTextExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-		
-		//Sign
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.signing']);
-		$extended_field->set_field_name('user_sign');
-		$extended_field->set_description($lang['field-install.signing-explain']);
-		$extended_field->set_field_type('MemberLongTextExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-		
-		//Biography
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.biography']);
-		$extended_field->set_field_name('user_biography');
-		$extended_field->set_description($lang['field-install.biography-explain']);
-		$extended_field->set_field_type('MemberLongTextExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-		
-		//MSN
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.msn']);
-		$extended_field->set_field_name('user_msn');
-		$extended_field->set_description($lang['field-install.msn-explain']);
-		$extended_field->set_field_type('MemberShortTextExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		$extended_field->set_regex(4);
-		ExtendedFieldsService::add($extended_field);
-		
-		//Yahoo
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.yahoo']);
-		$extended_field->set_field_name('user_yahoo');
-		$extended_field->set_description($lang['field-install.yahoo-explain']);
-		$extended_field->set_field_type('MemberShortTextExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		$extended_field->set_regex(4);
-		ExtendedFieldsService::add($extended_field);
-		
+			
 		//Avatar
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.avatar']);
