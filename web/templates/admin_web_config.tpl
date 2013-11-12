@@ -55,19 +55,19 @@
 					<legend>{L_WEB_CONFIG}</legend>
 					<div class="form-element">
 						<label for="nbr_web_max">* {L_NBR_WEB_MAX}</label>
-						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="nbr_web_max" name="nbr_web_max" value="{NBR_WEB_MAX}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="nbr_web_max" name="nbr_web_max" value="{NBR_WEB_MAX}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="nbr_cat_max">* {L_NBR_CAT_MAX}</label>
-						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="nbr_cat_max" name="nbr_cat_max" value="{NBR_CAT_MAX}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="nbr_cat_max" name="nbr_cat_max" value="{NBR_CAT_MAX}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="nbr_column">* {L_NBR_COLUMN_MAX}</label>
-						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="nbr_column" name="nbr_column" value="{NBR_COLUMN}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="nbr_column" name="nbr_column" value="{NBR_COLUMN}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="note_max">* {L_NOTE_MAX}</label>
-						<div class="form-field"><label><input type="text" size="2" maxlength="2" id="note_max" name="note_max" value="{NOTE_MAX}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="2" maxlength="2" id="note_max" name="note_max" value="{NOTE_MAX}"></label></div>
 					</div>
 				</fieldset>			
 				<fieldset class="fieldset_submit">

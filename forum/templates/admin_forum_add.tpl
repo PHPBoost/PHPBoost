@@ -86,7 +86,7 @@
 					</div>
 					<div class="form-element">
 						<label for="name">* {L_NAME}</label>
-						<div class="form-field"><label><input type="text" maxlength="100" size="35" id="name" name="name" class="text"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="100" size="35" id="name" name="name"></label></div>
 					</div>
 					<div class="form-element" id="forum_category">
 						<label for="category">* {L_PARENT_CATEGORY}</label>
@@ -98,11 +98,11 @@
 					</div>
 					<div class="form-element" id="forum_url">
 						<label for="desc">* {L_URL}</label><br /><span>{L_URL_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" maxlength="150" size="55" name="url" id="url" value="http://www.phpboost.com" class="text"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="150" size="55" name="url" id="url" value="http://www.phpboost.com"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="desc">{L_DESC}</label>
-						<div class="form-field"><label><input type="text" maxlength="150" size="55" name="desc" id="desc" class="text"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="150" size="55" name="desc" id="desc"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="aprob">{L_APROB}</label>

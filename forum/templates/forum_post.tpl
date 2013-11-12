@@ -48,7 +48,7 @@
 					if( document.getElementById('add_poll_field_link') )
 						document.getElementById('add_poll_field_link').innerHTML = '';
 				}
-				document.getElementById('add_poll_field' + this.max_field_p).innerHTML += '<label><input type="text" size="25" name="a' + this.max_field_p + '" value="" class="text" /></label><br><span id="add_poll_field' + (this.max_field_p + 1) + '"></span>';
+				document.getElementById('add_poll_field' + this.max_field_p).innerHTML += '<label><input type="text" size="25" name="a' + this.max_field_p + '" value="" /></label><br><span id="add_poll_field' + (this.max_field_p + 1) + '"></span>';
 			}
 		}
 		function XMLHttpRequest_change_statut()
@@ -139,11 +139,11 @@
 							# ENDIF #
 							<div class="form-element">
 								<label for="title">* {L_TITLE}</label>
-								<div class="form-field"><label><input type="text" size="51" maxlength="100" id="title" name="title" value="{TITLE}" class="text"></label></div>
+								<div class="form-field"><label><input type="text" size="51" maxlength="100" id="title" name="title" value="{TITLE}"></label></div>
 							</div>
 							<div class="form-element">
 								<label for="desc">{L_DESC}</label>
-								<div class="form-field"><label><input type="text" size="51" maxlength="75" id="desc" name="desc" value="{DESC}" class="text"></label></div>
+								<div class="form-field"><label><input type="text" size="51" maxlength="75" id="desc" name="desc" value="{DESC}"></label></div>
 							</div>
 							<div class="form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
@@ -168,7 +168,7 @@
 							<div id="hidepoll">
 								<div class="form-element">
 									<label for="question">* {L_QUESTION}</label>
-									<div class="form-field"><label><input type="text" size="40" name="question" id="question" value="{POLL_QUESTION}" class="text"></label></div>
+									<div class="form-field"><label><input type="text" size="40" name="question" id="question" value="{POLL_QUESTION}"></label></div>
 								</div>
 								<div class="form-element">
 									<label for="poll_type">{L_POLL_TYPE}</label>
@@ -187,7 +187,7 @@
 									<label>{L_ANSWERS}</label>
 									<div class="form-field">
 										# START answers_poll #
-										<label><input type="text" size="25" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" class="text" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label><br>
+										<label><input type="text" size="25" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label><br>
 										# END answers_poll #
 										<span id="add_poll_field{NBR_POLL_FIELD}"></span>	
 										

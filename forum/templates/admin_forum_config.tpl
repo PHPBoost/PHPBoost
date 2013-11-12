@@ -78,23 +78,23 @@
 					<legend>{L_FORUM_CONFIG}</legend>
 					<div class="form-element">
 						<label for="forum_name">* {L_FORUM_NAME}</label>
-						<div class="form-field"><label><input type="text" maxlength="255" size="40" id="forum_name" name="forum_name" value="{FORUM_NAME}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="255" size="40" id="forum_name" name="forum_name" value="{FORUM_NAME}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="pagination_topic">* {L_NBR_TOPIC_P}</label><br /><span>{L_NBR_TOPIC_P_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" maxlength="3" size="3" id="pagination_topic" name="pagination_topic" value="{PAGINATION_TOPIC}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="3" size="3" id="pagination_topic" name="pagination_topic" value="{PAGINATION_TOPIC}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="pagination_msg">* {L_NBR_MSG_P}</label><br /><span>{L_NBR_MSG_P_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="pagination_msg" name="pagination_msg" value="{PAGINATION_MSG}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="pagination_msg" name="pagination_msg" value="{PAGINATION_MSG}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="view_time">* {L_TIME_NEW_MSG}</label><br /><span>{L_TIME_NEW_MSG_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="view_time" name="view_time" value="{VIEW_TIME}" class="text"> {L_DAYS}</label></div>
+						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="view_time" name="view_time" value="{VIEW_TIME}"> {L_DAYS}</label></div>
 					</div>
 					<div class="form-element">
 						<label for="topic_track">* {L_TOPIC_TRACK_MAX}</label><br /><span>{L_TOPIC_TRACK_MAX_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="topic_track" name="topic_track" value="{TOPIC_TRACK_MAX}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="topic_track" name="topic_track" value="{TOPIC_TRACK_MAX}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="edit_mark">{L_EDIT_MARK}</label>
@@ -143,19 +143,19 @@
 					<div class="form-element">
 						<label for="display_msg">{L_DISPLAY_MSG}</label>
 						<div class="form-field">
-							<label><input type="text" size="25" name="display_msg" id="display_msg" value="{DISPLAY_MSG}" class="text"></label>
+							<label><input type="text" size="25" name="display_msg" id="display_msg" value="{DISPLAY_MSG}"></label>
 						</div>
 					</div>
 					<div class="form-element">
 						<label for="explain_display_msg">{L_EXPLAIN_DISPLAY_MSG}</label><br /><span>{L_EXPLAIN_DISPLAY_MSG_EXPLAIN}</span>
 						<div class="form-field">
-							<label><input type="text" size="40" name="explain_display_msg" id="explain_display_msg" value="{EXPLAIN_DISPLAY_MSG}" class="text"></label>
+							<label><input type="text" size="40" name="explain_display_msg" id="explain_display_msg" value="{EXPLAIN_DISPLAY_MSG}"></label>
 						</div>
 					</div>
 					<div class="form-element">
 						<label for="explain_display_msg_bis">{L_EXPLAIN_DISPLAY_MSG_BIS}</label><br /><span>{L_EXPLAIN_DISPLAY_MSG_BIS_EXPLAIN}</span>
 						<div class="form-field">
-							<label><input type="text" size="40" name="explain_display_msg_bis" id="explain_display_msg_bis" value="{EXPLAIN_DISPLAY_MSG_BIS}" class="text"></label>
+							<label><input type="text" size="40" name="explain_display_msg_bis" id="explain_display_msg_bis" value="{EXPLAIN_DISPLAY_MSG_BIS}"></label>
 						</div>
 					</div>
 					<div class="form-element">

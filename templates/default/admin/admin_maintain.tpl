@@ -39,7 +39,7 @@
 								<input type="radio" name="maintain_check" id="maintain_check2" value="2"{MAINTAIN_CHECK_UNTIL}>
 								{L_UNTIL}&nbsp;
 								
-								<input type="text" size="8" maxlength="8" id="end" name="end" value="{DATE_UNTIL}" class="text">
+								<input type="text" size="8" maxlength="8" id="end" name="end" value="{DATE_UNTIL}">
 								<div style="position:absolute;z-index:100;display:none;" id="calendar2">
 									<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
 								</div>

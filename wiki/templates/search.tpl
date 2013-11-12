@@ -13,7 +13,7 @@
 				<tr>
 					<td class="row2" style="text-align:center;">
 						{L_KEY_WORDS} &nbsp;
-						<input type="text" name="search" class="text" value="{KEY_WORDS}" maxlength="255" size="40">
+						<input type="text" name="search" value="{KEY_WORDS}" maxlength="255" size="40">
 					</td>
 				</tr>
 				<tr>

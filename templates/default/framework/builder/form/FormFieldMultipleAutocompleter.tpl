@@ -50,7 +50,7 @@ var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 <div id="input_fields_${escape(ID)}">
 # START fieldelements #
 	<div id="${escape(ID)}_{fieldelements.ID}">
-		<input type="text" name="field_${escape(ID)}_{fieldelements.ID}" id="field_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" size="{SIZE}" class="text"/>
+		<input type="text" name="field_${escape(ID)}_{fieldelements.ID}" id="field_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" size="{SIZE}"/>
 		<div id="field_${escape(ID)}_{fieldelements.ID}_completer" class="form_autocompleter"></div>
 		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="icon-delete" data-confirmation="delete-element"></a>
 		<script type="text/javascript">

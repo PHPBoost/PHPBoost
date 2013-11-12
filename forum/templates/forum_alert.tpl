@@ -40,7 +40,7 @@
 						<tr>
 							<td class="row2">
 								<p style="text-align:center;">
-									<label>{L_ALERT_TITLE} <input type="text" name="title" id="title" class="text" size="50"></label>
+									<label>{L_ALERT_TITLE} <input type="text" name="title" id="title" size="50"></label>
 								</p>
 								<br />
 								<p style="text-align:center;"><label for="contents">{L_ALERT_CONTENTS}</label></p>

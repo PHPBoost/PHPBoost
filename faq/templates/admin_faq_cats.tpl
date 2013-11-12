@@ -105,7 +105,7 @@
 							</label>
 						
 						<div class="form-field">
-							<input type="text" size="65" maxlength="100" id="name" name="name" value="{edition_interface.NAME}" class="text">
+							<input type="text" size="65" maxlength="100" id="name" name="name" value="{edition_interface.NAME}">
 						</div>
 					</div>
 					<div class="form-element">
@@ -125,7 +125,7 @@
 							</label>
 						
 						<div class="form-field">
-							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}" class="text">
+							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}">
 						</div>
 					</div>
 					<div class="form-element-textarea">

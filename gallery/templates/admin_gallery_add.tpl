@@ -67,7 +67,7 @@
 					</div>
 					<div class="form-element">
 						<label for="name">{L_NAME}</label>
-						<div class="form-field"><label><input type="text" size="40" maxlength="50" name="name" id="name" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="40" maxlength="50" name="name" id="name"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="gallery">{L_UPLOAD_IMG}</label>

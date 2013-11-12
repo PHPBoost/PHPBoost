@@ -49,7 +49,7 @@
                     <legend>{L_SEARCH_CONFIG}</legend>
                     <div class="form-element">
                         <label for="nb_results_p">* {L_NB_RESULTS_P}</label>
-                        <div class="form-field"><label><input type="text" maxlength="2" size="4" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}" class="text"></label></div>
+                        <div class="form-field"><label><input type="text" maxlength="2" size="4" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}"></label></div>
                     </div>
                     <div class="form-element">
                         <label for="authorized_modules[]">* {L_AUTHORIZED_MODULES}</label><br /><span>{L_AUTHORIZED_MODULES_EXPLAIN}</span>
@@ -67,11 +67,11 @@
                     <legend>{L_SEARCH_CACHE}</legend>
                     <div class="form-element">
                         <label for="cache_time">* {L_CACHE_TIME}</label><br /><span>{L_CACHE_TIME_EXPLAIN}</span>
-                        <div class="form-field"><label><input type="text" maxlength="4" size="4" id="cache_time" name="cache_time" value="{CACHE_TIME}" class="text"></label></div>
+                        <div class="form-field"><label><input type="text" maxlength="4" size="4" id="cache_time" name="cache_time" value="{CACHE_TIME}"></label></div>
                     </div>
                     <div class="form-element">
                         <label for="max_use">* {L_MAX_USE}</label><br /><span>{L_MAX_USE_EXPLAIN}</span>
-                        <div class="form-field"><label><input type="text" maxlength="3" size="4" id="max_use" name="max_use" value="{MAX_USE}" class="text"></label></div>
+                        <div class="form-field"><label><input type="text" maxlength="3" size="4" id="max_use" name="max_use" value="{MAX_USE}"></label></div>
                     </div>
                 </fieldset>
                 
@@ -103,7 +103,7 @@
                                 # START weights #
                                 <tr>
                                     <td class="row2"><label for="{weights.MODULE}">{weights.L_MODULE_NAME}</label></td>
-                                    <td class="row2" style="text-align:center;"><input type="text" id="{weights.MODULE}" name="{weights.MODULE}" value="{weights.WEIGHT}" size="2" maxlength="3" class="text"></td>
+                                    <td class="row2" style="text-align:center;"><input type="text" id="{weights.MODULE}" name="{weights.MODULE}" value="{weights.WEIGHT}" size="2" maxlength="3"></td>
                                 </tr>
                                 # END weights #
                             </tbody>

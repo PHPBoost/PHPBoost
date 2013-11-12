@@ -20,11 +20,11 @@
 					<p>
 						<label>{L_PSEUDO}
 						<br />
-						<input type="text" class="text" id="login" name="login" maxlength="25"></label>
+						<input type="text" id="login" name="login" maxlength="25"></label>
 						<br />
 						<label>{L_PASSWORD}
 						<br />
-						<input type="password" id="password" name="password" class="text" maxlength="30"></label>
+						<input type="password" id="password" name="password" maxlength="30"></label>
 						<br />
 						<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto"></label>
 					</p>

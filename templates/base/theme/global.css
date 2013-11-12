@@ -116,21 +116,10 @@ a:hover {
 	text-decoration:none;
 }
 
-/* Lien des utilisateurs => ne pas changer le nom de ces classes! */
-a.admin {
-    color:#FFA34F;
-    font-weight:bold;
-}
-
-a.modo {
-    color:#006699;
-    font-weight:bold;
-}
-
-a.member {
-    color:#000000;
-    font-weight:bold;
-}
+/* Lien des utilisateurs */
+a.admin { color:#FFA34F; }
+a.modo { color:#006699; }
+a.member { color:#000000; }
 
 /* Icônes spécifique PHPBoost
 ------------------------------------ */

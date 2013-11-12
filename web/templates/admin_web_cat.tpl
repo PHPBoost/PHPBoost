@@ -74,7 +74,7 @@
 							<tr>	
 								<td class="row2"> 
 									<span id="w{cat.IDCAT}"></span>
-									<input type="text" maxlength="60" size="20" name="{cat.IDCAT}cat" value="{cat.CAT}" class="text">
+									<input type="text" maxlength="60" size="20" name="{cat.IDCAT}cat" value="{cat.CAT}">
 								</td>							
 								<td class="row2"> 
 									<textarea class="post" rows="3" cols="40" name="{cat.IDCAT}contents">{cat.CONTENTS}</textarea> 
@@ -85,7 +85,7 @@
 									</select>
 									<span id="{cat.IDCAT}icon_img">{cat.IMG_ICON}</span>
 									<br />
-									<span class="smaller">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="{cat.IDCAT}icon_path" value="{cat.IMG_PATH}" onblur="if( this.value != '' )change_icon('{cat.IDCAT}', this.value)">
+									<span class="smaller">{L_OR_DIRECT_PATH}</span> <input type="text" name="{cat.IDCAT}icon_path" value="{cat.IMG_PATH}" onblur="if( this.value != '' )change_icon('{cat.IDCAT}', this.value)">
 								</td>	
 								<td class="row2"> 
 									<select name="{cat.IDCAT}secure">
@@ -127,7 +127,7 @@
 					<legend>{L_ADD_CAT}</legend>
 					<div class="form-element">
 						<label for="cat">* {L_NAME}</label>
-						<div class="form-field"><label><input type="text" size="25" maxlength="60" name="cat" id="cat" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="25" maxlength="60" name="cat" id="cat"></label></div>
 					</div>
 					<div class="form-element-textarea">
 						<label for="cat">{L_DESC}</label>
@@ -141,7 +141,7 @@
 							</select></label>
 							<span id="icon_img">{IMG_ICON}</span>
 							<br />
-							<label><span class="smaller">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" id="icon_path" value="" onblur="if( this.value != '' )change_icon('', this.value)"></label>
+							<label><span class="smaller">{L_OR_DIRECT_PATH}</span> <input type="text" name="icon_path" id="icon_path" value="" onblur="if( this.value != '' )change_icon('', this.value)"></label>
 						</div>
 					</div>
 					<div class="form-element">

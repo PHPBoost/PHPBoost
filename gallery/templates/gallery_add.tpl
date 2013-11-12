@@ -42,7 +42,7 @@
 							{CATEGORIES}
 						</select></label>
 						<br /><br />
-						<label>{L_NAME}: <input type="text" size="40" maxlength="50" name="name" class="text"></label>
+						<label>{L_NAME}: <input type="text" size="40" maxlength="50" name="name"></label>
 						<br /><br />
 						  					
 						* <input type="file" name="gallery" size="30" class="file" /><br /><br>

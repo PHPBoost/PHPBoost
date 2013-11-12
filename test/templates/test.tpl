@@ -8,7 +8,7 @@
 <div class="form-element">
 	<label for="params">Command</label>
 	<div class="form-field"><input type="text" name="params" id="params" value="{PARAMS}"
-		class="text" style="width: 75%;" /></div>
+		style="width: 75%;" /></div>
 	<label for="is_html">HTML output</label>
 	<div class="form-field"><input type="checkbox" name="is_html" id="is_html"></div>
 </div>

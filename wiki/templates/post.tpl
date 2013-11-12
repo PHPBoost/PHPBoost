@@ -49,7 +49,7 @@
 				# START create #
 				<div class="form-element">
 					<label for="title">* {L_TITLE_FIELD}</label>
-					<div class="form-field"><label><input type="text" class="text" id="title" name="title" size="70" maxlength="250" value="{ARTICLE_TITLE}"></label></div>					
+					<div class="form-field"><label><input type="text" id="title" name="title" size="70" maxlength="250" value="{ARTICLE_TITLE}"></label></div>					
 				</div>
 				<div class="form-element">
 					<label for="selected_cat">{L_CURRENT_CAT}</label>

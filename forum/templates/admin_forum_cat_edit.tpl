@@ -97,7 +97,7 @@
 					<p>{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="name">* {L_NAME}</label>
-						<div class="form-field"><label><input type="text" maxlength="100" size="35" id="name" name="name" value="{NAME}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="100" size="35" id="name" name="name" value="{NAME}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="category">* {L_PARENT_CATEGORY}</label>
@@ -109,11 +109,11 @@
 					</div>
 					<div class="form-element" id="forum_url">
 						<label for="desc">* {L_URL}</label><br /><span>{L_URL_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" maxlength="150" size="55" name="url" id="url" value="{URL}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="150" size="55" name="url" id="url" value="{URL}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="desc">{L_DESC}</label>
-						<div class="form-field"><label><input type="text" maxlength="150" size="55" name="desc" id="desc" value="{DESC}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="150" size="55" name="desc" id="desc" value="{DESC}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="aprob">{L_APROB}</label>

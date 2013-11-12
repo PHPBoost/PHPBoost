@@ -91,7 +91,7 @@
 					<p>{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="name">* {L_TITLE}</label>
-						<div class="form-field"><label><input type="text" size="55" maxlength="50" name="name" id="name" value="{NAME}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="55" maxlength="50" name="name" id="name" value="{NAME}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="idcat">* {L_CATEGORY}</label>
@@ -105,11 +105,11 @@
 					</div>
 					<div class="form-element">
 						<label for="url">* {L_URL_LINK}</label>
-						<div class="form-field"><label><input type="text" size="65" id="url" name="url" id="url" value="{URL}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="65" id="url" name="url" id="url" value="{URL}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="compt">{L_VIEWS}</label>
-						<div class="form-field"><label><input type="text" size="10" maxlength="10" name="compt" id="compt" value="{COMPT}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="10" maxlength="10" name="compt" id="compt" value="{COMPT}"></label></div>
 					</div>
 					<br />
 					<label for="contents">{L_DESC}</label>
