@@ -29,6 +29,14 @@
  #                     English                      #
  ####################################################
 
+$lang['date_format'] = 'dd/mm/yyyy';
+$lang['date_format_day_month'] = 'm/d';
+$lang['date_format_day_month_year'] = 'd/m/Y';
+$lang['date_format_day_month_year_hour_minute'] = 'm/d/Y \a\t H\hi';
+$lang['date_format_day_month_year_long'] = 'j F Y';
+$lang['date_format_day_month_year_text'] = 'l j F Y';
+$lang['date_format_day_month_year_hour_minute_text'] = 'l j F Y \a\t H\hi';
+
 $lang['date'] = 'Date';
 $lang['today'] = 'Today';
 

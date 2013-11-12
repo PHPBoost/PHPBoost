@@ -32,12 +32,6 @@
 
 // Dates
 $LANG['xml_lang'] = 'fr';
-$LANG['date_format_day_month'] = 'd/m';
-$LANG['date_format_day_month_year'] = 'd/m/Y';
-$LANG['date_format_day_month_year_hour_minute'] = 'd/m/Y \à H\hi';
-$LANG['date_format_day_month_year_long'] = 'j F Y';
-$LANG['date_format_day_month_year_text'] = 'l j F Y';
-$LANG['date_format_day_month_year_hour_minute_text'] = 'l j F Y \à H\hi';
 $LANG['from_date'] = 'du';
 $LANG['to_date'] = 'au';
 $LANG['now'] = 'Maintenant';

@@ -260,15 +260,15 @@ class Date
 		switch ($format)
 		{
 			case self::FORMAT_DAY_MONTH:
-				return date(LangLoader::get_message('date_format_day_month', 'main'), $timestamp);
+				return date(LangLoader::get_message('date_format_day_month', 'date-common'), $timestamp);
 				break;
 				
 			case self::FORMAT_DAY_MONTH_YEAR:
-				return date(LangLoader::get_message('date_format_day_month_year', 'main'), $timestamp);
+				return date(LangLoader::get_message('date_format_day_month_year', 'date-common'), $timestamp);
 				break;
 				
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
-				return date(LangLoader::get_message('date_format_day_month_year_hour_minute', 'main'), $timestamp);
+				return date(LangLoader::get_message('date_format_day_month_year_hour_minute', 'date-common'), $timestamp);
 				break;
 
 			case self::FORMAT_TIMESTAMP:
@@ -284,15 +284,15 @@ class Date
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR_LONG:
-				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_long', 'main'), $timestamp));
+				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_long', 'date-common'), $timestamp));
 				break;
 				
 			case self::FORMAT_DAY_MONTH_YEAR_TEXT:
-				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_text', 'main'), $timestamp));
+				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_text', 'date-common'), $timestamp));
 				break;
 				
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT:
-				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_hour_minute_text', 'main'), $timestamp));
+				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_hour_minute_text', 'date-common'), $timestamp));
 				break;
 				
 			case self::FORMAT_RELATIVE:

@@ -112,7 +112,7 @@ if ($calendar_type == 'date')
     	
     //Prise en compte et converstion des formats de dates.
     $format = '';
-    $array_date = explode('/', $LANG['date_format_day_month_year']);
+    $array_date = explode('/', LangLoader::get_message('date_format_day_month_year', 'date-common'));
     for ($i = 0; $i < 3; $i++)
     {
         switch ($array_date[$i])
