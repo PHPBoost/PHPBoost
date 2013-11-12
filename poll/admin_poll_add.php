@@ -47,8 +47,8 @@ if (!empty($_POST['valid']))
 	//On verifie les conditions!
 	if (!empty($question))
 	{
-		$start_timestamp = strtotimestamp($start, $LANG['date_format_day_month_year']);
-		$end_timestamp = strtotimestamp($end, $LANG['date_format_day_month_year']);
+		$start_timestamp = strtotimestamp($start, LangLoader::get_message('date_format_day_month_year', 'date-common'));
+		$end_timestamp = strtotimestamp($end, LangLoader::get_message('date_format_day_month_year', 'date-common'));
 		
 		$visible = 1;		
 		if ($get_visible == 2)
@@ -77,7 +77,7 @@ if (!empty($_POST['valid']))
 			$end_timestamp = 0;
 		}
 
-		$timestamp = strtotimestamp($current_date, $LANG['date_format_day_month_year']);
+		$timestamp = strtotimestamp($current_date, LangLoader::get_message('date_format_day_month_year', 'date-common'));
 		if ($timestamp > 0)
 			$timestamp += ($hour * 3600) + ($min * 60);
 		else //Ajout des heures et minutes

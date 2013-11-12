@@ -249,16 +249,16 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 		switch ($format)
 		{
 			case 'date_format':
-				$format = $LANG['date_format_day_month_year_hour_minute'];
+				$format = LangLoader::get_message('date_format_day_month_year_hour_minute', 'date-common');
 				break;
 			case 'date_format_tiny':
-				$format = $LANG['date_format_day_month'];
+				$format = LangLoader::get_message('date_format_day_month', 'date-common');
 				break;
 			case 'date_format_short':
-				$format = $LANG['date_format_day_month_year'];
+				$format = LangLoader::get_message('date_format_day_month_year', 'date-common');
 				break;
 			case 'date_format_long':
-				$format = $LANG['date_format_day_month_year_hour_minute'];
+				$format = LangLoader::get_message('date_format_day_month_year_hour_minute', 'date-common');
 				break;
 		}
 	}
