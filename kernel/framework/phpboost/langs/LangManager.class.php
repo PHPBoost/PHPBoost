@@ -92,9 +92,11 @@ class LangManager
 			{
 				self::$error = LangLoader::get_message('langs.not_compatible', 'admin-langs-common');
 			}
-			
-			LangsConfig::load()->add_lang($lang);
-			LangsConfig::save();
+			else
+			{
+				LangsConfig::load()->add_lang($lang);
+				LangsConfig::save();
+			}
 		}
 		else
 		{

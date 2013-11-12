@@ -101,9 +101,11 @@ class ThemeManager
 			{
 				self::$error = LangLoader::get_message('themes.not_compatible', 'admin-themes-common');
 			}
-			
-			ThemesConfig::load()->add_theme($theme);
-			ThemesConfig::save();
+			else
+			{
+				ThemesConfig::load()->add_theme($theme);
+				ThemesConfig::save();
+			}
 		}
 		else
 		{

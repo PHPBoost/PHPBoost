@@ -43,9 +43,10 @@ class ModulesManager
 	const NOT_INSTALLED_MODULE = 5;
 	const MODULE_FILES_COULD_NOT_BE_DROPPED = 6;
 	const PHP_VERSION_CONFLICT = 7;
-	const MODULE_NOT_UPGRADABLE = 8;
-	const UPGRADE_FAILED = 9;
-	const MODULE_UPDATED = 10;
+	const PHPBOOST_VERSION_CONFLICT = 8;
+	const MODULE_NOT_UPGRADABLE = 9;
+	const UPGRADE_FAILED = 10;
+	const MODULE_UPDATED = 11;
 	
 	/**
 	 * @return Module[string] the Modules map (name => module) of the installed modules (activated or not)
@@ -193,6 +194,12 @@ class ModulesManager
 		if (version_compare($phpversion, $configuration->get_php_version(), 'lt'))
 		{
 			return self::PHP_VERSION_CONFLICT;
+		}
+		
+		$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
+		if (version_compare($phpboost_version, $configuration->get_compatibility(), '>'))
+		{
+			return self::PHPBOOST_VERSION_CONFLICT;
 		}
 
 		self::execute_module_installation($module_identifier);

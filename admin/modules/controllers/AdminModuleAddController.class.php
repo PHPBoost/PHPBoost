@@ -159,6 +159,9 @@ class AdminModuleAddController extends AdminController
 			case ModulesManager::PHP_VERSION_CONFLICT:
 				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_php_version_conflict', 'errors'), MessageHelper::WARNING, 10));
 				break;
+			case ModulesManager::PHPBOOST_VERSION_CONFLICT:
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_phpboost_version_conflict', 'errors'), MessageHelper::WARNING, 10));
+				break;
 			case ModulesManager::MODULE_INSTALLED:
 			default: 
 				$this->view->put('MSG', MessageHelper::display($this->lang['modules.install_success'], MessageHelper::SUCCESS, 10));

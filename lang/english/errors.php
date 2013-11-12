@@ -54,6 +54,7 @@ $LANG['e_flood'] = 'You can\'t post yet, retry in a few moments';
 $LANG['e_l_flood'] = 'You can\'t post more than %d link(s) in your message';
 $LANG['e_link_pseudo'] = 'Your login can\'t contain weblinks';
 $LANG['e_php_version_conflict'] = 'Inadequate PHP version';
+$LANG['e_phpboost_version_conflict'] = 'Inadequate PHPBoost version';
 
 //Cache
 $LANG['e_cache_modules'] = 'Cache -> Cache module generation has failed!';
