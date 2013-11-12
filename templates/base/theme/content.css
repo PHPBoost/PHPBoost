@@ -358,8 +358,6 @@ table tfoot nav.pagination a span.current_page {
 
 button, .button {
 	height:auto;
-	cursor:pointer;
-	vertical-align: middle;
 	padding:4px 12px;
 	color:#333333;
 	text-align:center;
@@ -459,7 +457,6 @@ fieldset {
 	margin:20px 0;
 	border:none;
 	background:none;
-	position:relative;
 }
 
 fieldset.fieldset_submit { /* A supprimer ou remplacer par un div */
@@ -475,7 +472,6 @@ fieldset.fieldset_submit legend { /* A supprimer ou remplacer par un div */
     display:none;
 }
 
-optgroup, select, label { cursor:pointer; }
 optgroup { font-weight:bold; border:none; border-bottom:1px solid #5B5A5A; }
 option { padding:0px 3px; }
 
@@ -496,8 +492,6 @@ option { padding:0px 3px; }
 	display:block;	
 }
 
-/* Les inputs */
-
 legend {
 	display:block;
 	margin:0px 0px 15px 0px;
@@ -505,7 +499,6 @@ legend {
 	text-transform:none;
 	color:#474747;
 	font-size:18px;
-	vertical-align:middle;
 	border-bottom:1px solid #DDDDDD;
 }
 
@@ -515,7 +508,6 @@ input[type=checkbox] {
 }
 
 input[type=text], input[type=password], textarea, input[type=file], select {
-	vertical-align: middle;
 	padding: 4px 6px;
 	color: #555555;
 	background-color: #FFFFFF;
@@ -624,7 +616,6 @@ input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disable
 	display: inline-block;
 	font-size: 0;
 	white-space: nowrap;
-	vertical-align: middle;	
 }
 
 .field-button input {
@@ -644,9 +635,11 @@ input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disable
 
 /* Textarea */
 textarea {
+	overflow: auto;
     display:block;
     width:94%;
     margin:5px auto;
+    resize: vertical;
 }
 
 .form-element-textarea i{	
