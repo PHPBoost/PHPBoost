@@ -33,7 +33,7 @@
 				# INCLUDE severities.COLOR #
 			</td>
 			<td>
-				<input type="text" maxlength="100" size="40" name="severity{severities.ID}" value="{severities.NAME}" class="text">
+				<input type="text" maxlength="100" size="40" name="severity{severities.ID}" value="{severities.NAME}">
 			</td>
 		</tr>
 		# END severities #

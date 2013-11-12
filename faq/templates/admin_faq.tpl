@@ -43,7 +43,7 @@
 							<span class="smaller">{L_FAQ_NAME_EXPLAIN}</span>
 						
 						<div class="form-field">
-							<input type="text" size="65" maxlength="100" id="faq_name" name="faq_name" value="{FAQ_NAME}" class="text">
+							<input type="text" size="65" maxlength="100" id="faq_name" name="faq_name" value="{FAQ_NAME}">
 						</div>	
 					</div>
 					<div class="form-element">
@@ -53,7 +53,7 @@
 							<span class="smaller">{L_NBR_COLS_EXPLAIN}</span>
 						
 						<div class="form-field">
-							<input type="text" size="3" maxlength="3" id="num_cols" name="num_cols" value="{NUM_COLS}" class="text">
+							<input type="text" size="3" maxlength="3" id="num_cols" name="num_cols" value="{NUM_COLS}">
 						</div>	
 					</div>
 					<div class="form-element">

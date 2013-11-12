@@ -28,9 +28,9 @@
 			var i2 = i + 1;
 
 			if( document.getElementById('a'+i) )
-				document.getElementById('a'+i).innerHTML = '<input type="text" size="40" name="a'+i+'" value="" class="text" /><br><span id="a'+i2+'"></span>';
+				document.getElementById('a'+i).innerHTML = '<input type="text" size="40" name="a'+i+'" value="" /><br><span id="a'+i2+'"></span>';
 			if( document.getElementById('v'+i) )
-				document.getElementById('v'+i).innerHTML = '<input type="text" size="3" name="v'+i+'" value="" class="text" /><br><span id="v'+i2+'"></span>';		
+				document.getElementById('v'+i).innerHTML = '<input type="text" size="3" name="v'+i+'" value="" /><br><span id="v'+i2+'"></span>';		
 			if( document.getElementById('s'+i) )
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><i class="icon-plus"></i></a></span>' : '';
 		}
@@ -68,7 +68,7 @@
 					<p>{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="question">* {L_QUESTION}</label>
-						<div class="form-field"><label><input type="text" size="45" maxlength="100" id="question" name="question" value="{QUESTIONS}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="45" maxlength="100" id="question" name="question" value="{QUESTIONS}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="type">* {L_ANSWER_TYPE}</label>
@@ -101,13 +101,13 @@
 								<tr>
 									<td class="row2" style="text-align:center;">
 										# START answers #			
-										<label><input type="text" size="40" name="a{answers.ID}" value="{answers.ANSWER}" class="text" /></label><br>			
+										<label><input type="text" size="40" name="a{answers.ID}" value="{answers.ANSWER}" /></label><br>			
 										# END answers #
 										<span id="a{MAX_ID}"></span>
 									</td>
 									<td class="row2" style="text-align:center;">
 										# START votes #			
-										<label><input type="text" size="3" name="v{votes.ID}" value="{votes.VOTES}" class="text" /> {votes.PERCENT}</label><br>			
+										<label><input type="text" size="3" name="v{votes.ID}" value="{votes.VOTES}" /> {votes.PERCENT}</label><br>			
 										# END votes #	
 										<span id="v{MAX_ID}"></span>	
 									</td>	
@@ -135,7 +135,7 @@
 						<div class="form-field">
 							<div onclick="document.getElementById('start_end_date').checked = true;">
 								<label><input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING}></label>
-								<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}" class="text"> 
+								<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}"> 
 								<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
 									<div id="start_date" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 									</div>
@@ -144,7 +144,7 @@
 								
 								{L_UNTIL}&nbsp;
 								
-								<input type="text" size="8" maxlength="8" id="end" name="end" value="{END}" class="text"> 
+								<input type="text" size="8" maxlength="8" id="end" name="end" value="{END}"> 
 								<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
 									<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
 									</div>
@@ -159,7 +159,7 @@
 					<div class="form-element" class="overflow_visible">
 						<label for="current_date">* {L_POLL_DATE}</label>
 						<div class="form-field"><label>
-							<input type="text" size="8" maxlength="8" id="current_date" name="current_date" value="{CURRENT_DATE}" class="text"> 
+							<input type="text" size="8" maxlength="8" id="current_date" name="current_date" value="{CURRENT_DATE}"> 
 							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar3">
 								<div id="current" class="calendar_block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">							
 								</div>
@@ -167,7 +167,7 @@
 							<a onclick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcurrent" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 							
 							{L_AT}
-							<input type="text" size="2" maxlength="2" name="hour" value="{HOUR}" class="text" /> H <input type="text" size="2" maxlength="2" name="min" value="{MIN}" class="text">
+							<input type="text" size="2" maxlength="2" name="hour" value="{HOUR}" /> H <input type="text" size="2" maxlength="2" name="min" value="{MIN}">
 						</label></div>
 					</div>
 				</fieldset>

@@ -60,7 +60,7 @@
 				<legend>{L_ADD_SMILEY}</legend>
 					<div class="form-element">
 						<label for="code_smiley">* {L_SMILEY_CODE}</label>
-						<div class="form-field"><label><input type="text" size="40" maxlength="100" id="code_smiley" name="code_smiley" value="{CODE_SMILEY}" class="text"> </label></div>
+						<div class="form-field"><label><input type="text" size="40" maxlength="100" id="code_smiley" name="code_smiley" value="{CODE_SMILEY}"> </label></div>
 					</div>
 					<div class="form-element">
 						<label for="code_smiley">* {L_SMILEY_AVAILABLE}</label>

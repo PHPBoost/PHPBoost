@@ -27,7 +27,7 @@
 				<input type="radio" name="default_priority" value="{priorities.ID}"# IF priorities.C_IS_DEFAULT # checked="checked"# ENDIF #>
 			</td>
 			<td>
-				<input type="text" maxlength="100" size="40" name="priority{priorities.ID}" value="{priorities.NAME}" class="text">
+				<input type="text" maxlength="100" size="40" name="priority{priorities.ID}" value="{priorities.NAME}">
 			</td>
 		</tr>
 		# END priorities #

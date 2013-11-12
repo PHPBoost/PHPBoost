@@ -72,7 +72,7 @@
 					<legend>{L_POST_MANAGEMENT}</legend> 
 					<div class="form-element">
 						<label for="pm_max">{L_PM_MAX}</label><br /><span>{L_PM_MAX_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="2" name="pm_max" id="pm_max" value="{PM_MAX}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="2" name="pm_max" id="pm_max" value="{PM_MAX}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="anti_flood">{L_ANTI_FLOOD}</label><br /><span>{L_ANTI_FLOOD_EXPLAIN}</span>
@@ -83,7 +83,7 @@
 					</div>
 					<div class="form-element">
 						<label for="delay_flood">{L_INT_FLOOD}</label><br /><span>{L_INT_FLOOD_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="3" maxlength="9" name="delay_flood" id="delay_flood" value="{DELAY_FLOOD}" class="text"> {L_SECONDS}</label></div>
+						<div class="form-field"><label><input type="text" size="3" maxlength="9" name="delay_flood" id="delay_flood" value="{DELAY_FLOOD}"> {L_SECONDS}</label></div>
 					</div>
 				</fieldset>
 				

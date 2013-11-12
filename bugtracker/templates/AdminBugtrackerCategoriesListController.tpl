@@ -30,7 +30,7 @@
 				<input type="radio" name="default_category" value="{categories.ID}"# IF categories.C_IS_DEFAULT # checked="checked"# ENDIF #>
 			</td>
 			<td>
-				<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}" class="text">
+				<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}">
 			</td>
 			<td>
 				<a href="{categories.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="{@bugs.actions.confirm.del_category}"></a>

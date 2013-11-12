@@ -67,7 +67,7 @@
 						<div class="form-element">
 							<label for="login">{L_SEARCH_USER}</label><br /><span>{L_JOKER}</span>
 							<div class="form-field">
-								<input type="text" size="20" maxlength="25" id="login" value="" name="login" class="text">						
+								<input type="text" size="20" maxlength="25" id="login" value="" name="login">						
 								<input type="submit" name="search_member" id="search_member" value="{L_SEARCH}" class="submit">
 								<script type="text/javascript">
 								<!--	

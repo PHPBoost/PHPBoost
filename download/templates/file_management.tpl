@@ -78,7 +78,7 @@
 					<p>{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="title">* {L_TITLE}</label>
-						<div class="form-field"><input type="text" size="50" maxlength="100" id="title" name="title" value="{TITLE}" class="text"></div>
+						<div class="form-field"><input type="text" size="50" maxlength="100" id="title" name="title" value="{TITLE}"></div>
 					</div>
 					<div class="form-element">
 						<label for="idcat">* {L_CATEGORY}</label>
@@ -87,17 +87,17 @@
 					<div class="form-element">
 						<label for="url">* {L_URL}</label>
 						<div class="form-field">
-							<input type="text" size="50" id="url" name="url" value="{URL}" class="text">
+							<input type="text" size="50" id="url" name="url" value="{URL}">
 							<a title="{L_FILE_ADD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=url&amp;parse=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
 						</div>
 					</div>
 					<div class="form-element">
 						<label for="size">{L_SIZE}</label>
-						<div class="form-field"><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE_FORM}" class="text"> {L_UNIT_SIZE}</div>
+						<div class="form-field"><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE_FORM}"> {L_UNIT_SIZE}</div>
 					</div>
 					<div class="form-element">
 						<label for="count">{L_NUMBER_OF_HITS}</label>
-						<div class="form-field"><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text"></div>
+						<div class="form-field"><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}"></div>
 					</div>
 					<div class="form-element">					
 						<label for="download_method">{L_DOWNLOAD_METHOD}<span class="field-description">{L_DOWNLOAD_METHOD_EXPLAIN}</span></label>
@@ -121,7 +121,7 @@
 					<div class="form-element">
 						<label for="image">{L_FILE_IMAGE}</label>
 						<div class="form-field">
-							<input type="text" size="50" name="image" id="image" class="text" value="{FILE_IMAGE}">
+							<input type="text" size="50" name="image" id="image" value="{FILE_IMAGE}">
 						</div>
 					</div>
 					<div class="form-element overflow_visible">

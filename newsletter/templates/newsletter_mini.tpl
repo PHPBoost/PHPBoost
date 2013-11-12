@@ -6,7 +6,7 @@
 		</div>
 		<div class="module_mini_contents">
 			<p>
-				<input type="text" name="mail_newsletter" maxlength="50" class="text" value="{USER_MAIL}">
+				<input type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}">
 			</p>
 			<p>
 				<label><input type="radio" name="subscribe" value="subscribe" checked="checked"> {SUBSCRIBE}</label>

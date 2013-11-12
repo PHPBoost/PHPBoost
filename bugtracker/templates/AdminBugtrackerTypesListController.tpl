@@ -30,7 +30,7 @@
 				<input type="radio" name="default_type" value="{types.ID}"# IF types.C_IS_DEFAULT # checked="checked"# ENDIF #>
 			</td>
 			<td>
-				<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}" class="text">
+				<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}">
 			</td>
 			<td>
 				<a href="{types.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="{@bugs.actions.confirm.del_type}"></a>

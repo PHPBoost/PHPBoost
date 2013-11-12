@@ -50,10 +50,10 @@ function display_default_version_radio(version_id)
 				<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}"# IF versions.C_IS_DEFAULT # checked="checked"# ENDIF ## IF NOT versions.C_DETECTED_IN # style="display:none"# ENDIF #>
 			</td>
 			<td>
-				<input type="text" maxlength="100" size="40" name="version{versions.ID}" value="{versions.NAME}" class="text">
+				<input type="text" maxlength="100" size="40" name="version{versions.ID}" value="{versions.NAME}">
 			</td>
 			<td>
-				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="# IF C_RELEASE_DATE #{versions.RELEASE_DATE}# ELSE #00/00/0000# ENDIF #" class="text" onclick="if(this.value == '00/00/0000') this.value = '';" onblur="if(this.value == '') this.value = '00/00/0000';">
+				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="# IF C_RELEASE_DATE #{versions.RELEASE_DATE}# ELSE #00/00/0000# ENDIF #" onclick="if(this.value == '00/00/0000') this.value = '';" onblur="if(this.value == '') this.value = '00/00/0000';">
 			</td> 
 			<td>
 				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF #>

@@ -282,7 +282,7 @@
 							# START edit_pm.title #
 							<div class="form-element">
 								<label for="title">* {L_TITLE}</label>
-								<div class="form-field"><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{edit_pm.title.TITLE}" class="text"></label></div>
+								<div class="form-field"><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{edit_pm.title.TITLE}"></label></div>
 							</div>
 							# END edit_pm.title #
 							<div class="form-element-textarea">
@@ -343,7 +343,7 @@
 								<label for="login">* {L_RECIPIENT}</label>
 								<div class="form-field">
 									<label>
-										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text">
+										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}">
 										<span id="search_img"></span>
 										<button type="button" value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');"  class="submit">{L_SEARCH}</button>							
 									</label>
@@ -356,7 +356,7 @@
 							# END post_convers.user_id_dest #
 							<div class="form-element">
 								<label for="title">* {L_TITLE}</label>
-								<div class="form-field"><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{post_convers.TITLE}" class="text"></label></div>
+								<div class="form-field"><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{post_convers.TITLE}"></label></div>
 							</div>
 							<div class="form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>

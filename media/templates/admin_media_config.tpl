@@ -53,7 +53,7 @@
 								<span class="smaller">{L_MODULE_NAME_EXPLAIN}</span>
 							
 							<div class="form-field">
-								<input type="text" size="65" maxlength="100" id="media_name" name="media_name" value="{MODULE_NAME}" class="text">
+								<input type="text" size="65" maxlength="100" id="media_name" name="media_name" value="{MODULE_NAME}">
 							</div>
 						</div>
 						<div class="form-element-textarea">
@@ -77,23 +77,23 @@
 						<legend>{L_CONFIG_DISPLAY}</legend>
 						<div class="form-element">
 							<label for="num_cols">{L_NBR_COLS}</label>
-							<div class="form-field"><input type="text" size="4" maxlength="1" id="num_cols" name="num_cols" value="{NBR_COLS}" class="text"></div>
+							<div class="form-field"><input type="text" size="4" maxlength="1" id="num_cols" name="num_cols" value="{NBR_COLS}"></div>
 						</div>
 						<div class="form-element">
 							<label for="pagin">{L_PAGINATION}</label>
-							<div class="form-field"><input type="text" size="4" maxlength="3" id="pagin" name="pagin" value="{PAGINATION}" class="text"></div>
+							<div class="form-field"><input type="text" size="4" maxlength="3" id="pagin" name="pagin" value="{PAGINATION}"></div>
 						</div>
 						<div class="form-element">
 							<label for="note">{L_NOTE}</label>
-							<div class="form-field"><input type="text" size="4" maxlength="3" id="note" name="note" value="{NOTE}" class="text"></div>
+							<div class="form-field"><input type="text" size="4" maxlength="3" id="note" name="note" value="{NOTE}"></div>
 						</div>
 						<div class="form-element">
 							<label for="width">{L_WIDTH_MAX}</label>
-							<div class="form-field"><input type="text" size="4" maxlength="4" id="width" name="width" value="{WIDTH_MAX}" class="text"></div>
+							<div class="form-field"><input type="text" size="4" maxlength="4" id="width" name="width" value="{WIDTH_MAX}"></div>
 						</div>
 						<div class="form-element">
 							<label for="height">{L_HEIGHT_MAX}</label>
-							<div class="form-field"><input type="text" size="4" maxlength="4" id="height" name="height" value="{HEIGHT_MAX}" class="text"></div>
+							<div class="form-field"><input type="text" size="4" maxlength="4" id="height" name="height" value="{HEIGHT_MAX}"></div>
 						</div>
 						<div class="form-element">
 							<label for="activ_com">{L_DISPLAY_COM}</label>

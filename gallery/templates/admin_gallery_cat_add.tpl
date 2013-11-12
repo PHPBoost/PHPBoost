@@ -46,11 +46,11 @@
 					</div>
 					<div class="form-element">
 						<label for="name">* {L_NAME}</label>
-						<div class="form-field"><label><input type="text" maxlength="100" size="35" id="name" name="name" class="text"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="100" size="35" id="name" name="name"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="desc">{L_DESC}</label>
-						<div class="form-field"><label><input type="text" maxlength="150" size="35" name="desc" id="desc" class="text"></label></div>
+						<div class="form-field"><label><input type="text" maxlength="150" size="35" name="desc" id="desc"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="aprob">{L_APROB}</label>

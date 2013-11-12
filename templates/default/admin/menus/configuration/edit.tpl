@@ -4,13 +4,13 @@
 		<div class="form-element">
 			<label for="menu_config_name">* {EL_MENU_CONFIGURATION_EDITION_NAME}</label>
 			<div class="form-field"><label>
-				<input type="text" id="menu_config_name"	name="menu_config_name" value="${escape(NAME)}" class="text">
+				<input type="text" id="menu_config_name"	name="menu_config_name" value="${escape(NAME)}">
 			</label></div>
 		</div>
 		<div class="form-element">
 			<label for="menu_config_match_regex">* {EL_MENU_CONFIGURATION_EDITION_MATCH_REGEX}</label>
 			<div class="form-field"><label>
-				<input type="text" id="menu_config_match_regex" name="menu_config_match_regex" value="${escape(MATCH_REGEX)}" class="text">
+				<input type="text" id="menu_config_match_regex" name="menu_config_match_regex" value="${escape(MATCH_REGEX)}">
 			</label></div>
 		</div>
 	</fieldset>

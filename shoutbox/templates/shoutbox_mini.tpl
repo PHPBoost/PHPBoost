@@ -125,10 +125,10 @@
 					</div>
 					# IF C_VISIBLE_SHOUT #
 					<label for="shout_pseudo"><span class="smaller">{L_PSEUDO}</span></label>
-					<input size="16" maxlength="25" type="text" class="text" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
+					<input size="16" maxlength="25" type="text" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 					# ENDIF #					
 					# IF C_HIDDEN_SHOUT #
-					<input size="16" maxlength="25" type="hidden" class="text" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
+					<input size="16" maxlength="25" type="hidden" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 					# ENDIF #
 					<br />
 					<label for="shout_contents"><span class="smaller">{L_MESSAGE}</span></label>
@@ -162,10 +162,10 @@
 						</div>
 						# IF C_VISIBLE_SHOUT #
 							<label for="shout_pseudo"><span class="smaller">{L_PSEUDO}</span></label>
-							<input size="16" maxlength="25" type="text" class="text" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
+							<input size="16" maxlength="25" type="text" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 						# ENDIF #					
 						# IF C_HIDDEN_SHOUT #
-							<input size="16" maxlength="25" type="hidden" class="text" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
+							<input size="16" maxlength="25" type="hidden" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 						# ENDIF #
 						<br />
 						<textarea class="post" id="shout_contents" name="shout_contents" rows="2" cols="16"></textarea>					

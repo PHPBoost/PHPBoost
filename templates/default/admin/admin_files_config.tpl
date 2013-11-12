@@ -45,7 +45,7 @@
 					</div>
 					<div class="form-element"> 
 						<label for="size_limit">* {L_SIZE_LIMIT}</label>
-						<div class="form-field"><label><input type="text" size="3" id="size_limit" name="size_limit" value="{SIZE_LIMIT}" class="text"> {L_MB}</label></div>
+						<div class="form-field"><label><input type="text" size="3" id="size_limit" name="size_limit" value="{SIZE_LIMIT}"> {L_MB}</label></div>
 					</div>
 					<div class="form-element"> 
 						<label for="bandwidth_protect">{L_BANDWIDTH_PROTECT}</label><br /><span>{L_BANDWIDTH_PROTECT_EXPLAIN}</span>
@@ -67,7 +67,7 @@
 					</div>
 					<div class="form-element"> 
 						<label for="auth_extensions_sup">{L_EXTEND_EXTENSIONS}</label><br /><span>{L_EXTEND_EXTENSIONS_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="35" id="auth_extensions_sup" name="auth_extensions_sup" value="{AUTH_EXTENSIONS_SUP}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="35" id="auth_extensions_sup" name="auth_extensions_sup" value="{AUTH_EXTENSIONS_SUP}"></label></div>
 					</div>
 				</fieldset>
 				

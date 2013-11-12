@@ -44,16 +44,16 @@
 				<legend>{@admin}</legend>
 				<div class="form-element">
 					<label for="login">{@pseudo}</label>
-					<div class="form-field"><label><input size="15" type="text" class="text" id="login" name="login" maxlength="25"></label></div>
+					<div class="form-field"><label><input size="15" type="text" id="login" name="login" maxlength="25"></label></div>
 				</div>
 				<div class="form-element">
 					<label for="password">{@password}</label>
-					<div class="form-field"><label><input size="15" type="password" id="password" name="password" class="text" maxlength="30"></label></div>
+					<div class="form-field"><label><input size="15" type="password" id="password" name="password" maxlength="30"></label></div>
 				</div>
 				# IF C_UNLOCK #
 				<div class="form-element">
 					<label for="unlock">{@unlock_admin_panel}</label>
-					<div class="form-field"><label><input size="15" type="password" name="unlock" id="unlock" class="text" maxlength="30"></label></div>
+					<div class="form-field"><label><input size="15" type="password" name="unlock" id="unlock" maxlength="30"></label></div>
 				</div>
 				# ENDIF #
 				<div class="form-element">

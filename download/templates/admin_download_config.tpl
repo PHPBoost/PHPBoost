@@ -27,15 +27,15 @@
 					<legend>{L_DOWNLOAD_CONFIG}</legend>
 					<div class="form-element">
 						<label for="max_files_number_per_page">* {L_MAX_FILES_NUMBER_PER_PAGE}</label>
-						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="max_files_number_per_page" name="max_files_number_per_page" value="{MAX_FILES_NUMBER_PER_PAGE}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="max_files_number_per_page" name="max_files_number_per_page" value="{MAX_FILES_NUMBER_PER_PAGE}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="columns_number">* {L_COLUMNS_NUMBER}</label>
-						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="notation_scale">* {L_NOTATION_SCALE}</label>
-						<div class="form-field"><label><input type="text" size="2" maxlength="2" id="notation_scale" name="note_max" value="{NOTATION_SCALE}" class="text"></label></div>
+						<div class="form-field"><label><input type="text" size="2" maxlength="2" id="notation_scale" name="note_max" value="{NOTATION_SCALE}"></label></div>
 					</div>
 					<div class="form-element-textarea">
 						<label for="contents">

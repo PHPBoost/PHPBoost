@@ -21,7 +21,7 @@ function CheckForm() {
 			<legend>{L_ACTION_MENUS}</legend>
             <div class="form-element">
                 <label for="name">* {L_NAME}</label>
-                <div class="form-field"><input type="text" size="18" name="name" id="name" class="text" value="{NAME}"></div>
+                <div class="form-field"><input type="text" size="18" name="name" id="name" value="{NAME}"></div>
             </div>
             <div class="form-element">
                 <label for="name">* {L_DISPLAY_TITLE}</label>

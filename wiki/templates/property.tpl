@@ -209,7 +209,7 @@
 				<br />
 				<div class="form-element">
 					<label for="new_title">{L_NEW_TITLE}</label>
-					<div class="form-field"><input type="text" name="new_title" id="new_title" class="text" size="70" maxlength="250" value="{rename.FORMER_NAME}"></div>					
+					<div class="form-field"><input type="text" name="new_title" id="new_title" size="70" maxlength="250" value="{rename.FORMER_NAME}"></div>					
 				</div>
 				<div class="form-element">
 					<label for="create_redirection_while_renaming">{rename.L_CREATE_REDIRECTION}</label>
@@ -289,7 +289,7 @@
 				<legend>{create.L_TITLE}</legend>				
 				<div class="form-element">
 					<label for="redirection_title">{L_REDIRECTION_NAME}</label>
-					<div class="form-field"><label><input type="text" name="redirection_title" id="redirection_title" class="text" size="70" maxlength="250" value=""></label></div>					
+					<div class="form-field"><label><input type="text" name="redirection_title" id="redirection_title" size="70" maxlength="250" value=""></label></div>					
 				</div>
 			</fieldset>
 			
