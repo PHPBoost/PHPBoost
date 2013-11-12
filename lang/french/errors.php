@@ -53,6 +53,7 @@ $LANG['e_flood'] = 'Vous ne pouvez pas encore poster, réessayez dans quelques in
 $LANG['e_l_flood'] = 'Nombre maximum de lien(s) internet autorisé(s) dans votre message : %d';
 $LANG['e_link_pseudo'] = 'Vous ne pouvez pas mettre de lien dans votre pseudo';
 $LANG['e_php_version_conflict'] = 'Version PHP inadaptée';
+$LANG['e_phpboost_version_conflict'] = 'Version de PHPBoost inadaptée';
 
 //Cache
 $LANG['e_cache_modules'] = 'Cache -> La génération du fichier de cache des modules a échouée !';
