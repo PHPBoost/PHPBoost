@@ -63,7 +63,7 @@
                                 <option value="unlock">{L_UNLOCK}</option>
                                 <option value="del">{L_DELETE}</option>
                             </select>
-                            <input type="submit" value="{L_GO}" name="valid" class="submit">
+                            <input type="submit" value="{L_GO}" name="valid">
                         </div>
 					</form>
 					# ENDIF #

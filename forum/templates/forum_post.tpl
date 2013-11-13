@@ -211,15 +211,7 @@
 						<legend>{L_SUBMIT}</legend>
 							<input type="hidden" name="idm" value="{IDM}">
 							<button type="submit" name="post_topic" value="true">{L_SUBMIT}</button>
-							&nbsp;&nbsp;
-							<input value="{L_PREVIEW}" type="submit" name="prw_t" id="previs_topic" class="submit">
-							<script type="text/javascript">
-							<!--
-							document.getElementById('previs_topic').style.display = 'none';
-							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
-							-->
-							</script>
-							&nbsp;&nbsp;
+							<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
 							<button type="reset" value="true">{L_RESET}</button>
 						
 							# IF C_DISPLAY_MSG #

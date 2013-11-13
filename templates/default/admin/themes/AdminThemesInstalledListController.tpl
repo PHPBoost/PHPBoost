@@ -77,7 +77,7 @@
 							<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.no}</label>
 							<br /><br />
 							<a href="{themes_installed.DELETE_LINK}">
-								<input name="delete-{themes_installed.ID}" value="{L_DELETE}" class="submit" style="width:70px;text-align:center;"/>
+								<input name="delete-{themes_installed.ID}" value="{L_DELETE}" style="width:70px;text-align:center;"/>
 							</a>
 						# ELSE #
 							{@themes.yes}

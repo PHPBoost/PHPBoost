@@ -72,12 +72,10 @@ img.left, img.right { margin:6px; }
 .smiley { vertical-align:middle; }
 
 /* Fieldsets */
-fieldset.horizontal_fieldset { float:left; margin:0 5px; }
+div.horizontal_fieldset [class^="form-element"] label { display: inline; }
+div.horizontal_fieldset [class^="form-element"] label, div.vertical_fieldset [class^="form-element"] label { width: auto; vertical-align: middle; font-weight:bold; }
+div.horizontal_fieldset [class^="form-element"], div.vertical_fieldset [class^="form-element"] { margin: 0px 5px 0px 5px; }
 div.horizontal_fieldset, div.vertical_fieldset { margin:20px 0; }
-div.vertical_fieldset dl { margin:5px 0px 5px 0px; }
-div.horizontal_fieldset dl, div.horizontal_fieldset dl dd { float:left; margin:0px 5px 0px 5px; }
-div.vertical_fieldset dl dt { margin:0px 5px 0px 5px; }
-div.horizontal_fieldset dl dt label, div.vertical_fieldset dl dt label { font-weight:bold; }
 
 /* Imite l'affichage fieldset / legend */
 .fieldset_content {

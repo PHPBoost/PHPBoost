@@ -208,7 +208,7 @@
 					# IF C_POLL_QUESTION #
 					<fieldset class="fieldset_submit">
 						<legend>{L_VOTE}</legend>
-						<input class="submit" name="valid_forum_poll" type="submit" value="{L_VOTE}" /><br>
+						<input name="valid_forum_poll" type="submit" value="{L_VOTE}" /><br>
 						<a class="small" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
 					</fieldset>
 					# ENDIF #

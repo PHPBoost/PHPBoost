@@ -20,7 +20,7 @@
 						<br /><br />	
 						# END question.checkbox #
 					</p>
-					<input class="submit" name="valid_poll" type="submit" value="{L_VOTE}" /><br>
+					<input name="valid_poll" type="submit" value="{L_VOTE}" /><br>
 					<a class="small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_POLL_RESULT}</a>
 				</div>	
 				<div class="module_mini_bottom">

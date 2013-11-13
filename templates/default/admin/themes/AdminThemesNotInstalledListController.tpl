@@ -78,7 +78,7 @@
 						<label><input type="radio" name="activated-{themes_not_installed.ID}" value="1" checked="checked"> {@themes.yes}</label>
 						<label><input type="radio" name="activated-{themes_not_installed.ID}" value="0"> {@themes.no}</label>
 						<br /><br />
-						<input type="submit" name="add-{themes_not_installed.ID}" value="{L_ADD}" class="submit"/>
+						<input type="submit" name="add-{themes_not_installed.ID}" value="{L_ADD}"/>
 					</td>
 				</tr>						
 			# END themes_not_installed #

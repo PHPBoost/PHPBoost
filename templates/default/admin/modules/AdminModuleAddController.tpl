@@ -42,7 +42,7 @@
 				<input type="radio" name="activated-{available.ID}" value="0"> {@modules.no}
 				<br /><br />
 				<input type="hidden" name="token" value="{TOKEN}">
-				<input type="submit" name="add-{available.ID}" value="{@modules.install_module}" class="submit">
+				<input type="submit" name="add-{available.ID}" value="{@modules.install_module}">
 			</td>
 		</tr>						
 		# END available #

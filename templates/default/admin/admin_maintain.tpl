@@ -74,7 +74,7 @@
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 					<script type="text/javascript">
 					<!--				
-					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
+					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button">');
 					-->
 					</script>
 					&nbsp;&nbsp;

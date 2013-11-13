@@ -68,13 +68,7 @@
 							<label for="login">{L_SEARCH_USER}</label><br /><span>{L_JOKER}</span>
 							<div class="form-field">
 								<input type="text" size="20" maxlength="25" id="login" value="" name="login">						
-								<input type="submit" name="search_member" id="search_member" value="{L_SEARCH}" class="submit">
-								<script type="text/javascript">
-								<!--	
-									document.getElementById("search_member").style.display = "none";
-									document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search(this.form);" type="button" class="submit">');
-								-->
-								</script>
+								<button onclick="XMLHttpRequest_search(this.form);" type="button">{L_SEARCH}</button>
 								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
 							</div>
 						</div>

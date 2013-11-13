@@ -187,7 +187,7 @@
 							<span id="loading_groups"></span>
 							<script type="text/javascript">
 							<!--								
-								document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search();" type="button" class="submit">');
+								document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search();" type="button">');
 							-->
 							</script>
 							<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>

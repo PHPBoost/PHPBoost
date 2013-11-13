@@ -118,13 +118,7 @@
 					<input type="hidden" name="idedit" value="{IDEDIT}">
 					<input type="hidden" name="contrib" value="{C_CONTRIBUTION}">
 					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
-					&nbsp;&nbsp;
-                    <script type="text/javascript">
-                    <!--
-                    document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();new Effect.ScrollTo(\'preview_content\',{duration:1.2});return false;" type="button" class="submit">');
-                    -->
-                    </script>
-					&nbsp;&nbsp;
+					<button type="button" onclick="XMLHttpRequest_preview();new Effect.ScrollTo(\'preview_content\',{duration:1.2});return false;">{L_PREVIEW}</button>
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>

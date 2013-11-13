@@ -355,7 +355,7 @@
 					</div>
 					<fieldset class="fieldset_submit" style="margin:0">
 						<legend>{L_EXECUTE}</legend>
-						<input type="submit" class="submit" value="{L_EXECUTE}">
+						<input type="submit" value="{L_EXECUTE}">
 					</fieldset>
 				</div>
 			</form>
@@ -430,7 +430,7 @@
 				</table>
 				<fieldset class="fieldset_submit" style="margin:0">
 					<legend>{L_EXECUTE}</legend>
-					<input type="submit" class="submit" name="submit" value="{L_EXECUTE}">
+					<input type="submit" name="submit" value="{L_EXECUTE}">
 				</fieldset>
 			</form>	
 			# ENDIF #
