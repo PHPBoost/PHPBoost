@@ -302,11 +302,11 @@
 								<span id="search_img"></span>
 							</span>
 							<span style="float:left;margin-left:5px;">
-								<input type="submit" id="search_member" name="search_member" value="{L_SEARCH}" class="submit">
+								<input type="submit" id="search_member" name="search_member" value="{L_SEARCH}">
 								<script type="text/javascript">
 								<!--								
 									document.getElementById('search_member').style.display = 'none';
-									document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search();" type="button" class="submit">');
+									document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search();" type="button">');
 								-->
 								</script>									
 								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>

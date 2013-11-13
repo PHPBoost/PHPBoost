@@ -208,7 +208,7 @@
 					# IF C_POLL_QUESTION #
 					<fieldset class="fieldset_submit">
 						<legend>{L_VOTE}</legend>
-						<input class="submit" name="valid_forum_poll" type="submit" value="{L_VOTE}" /><br>
+						<input name="valid_forum_poll" type="submit" value="{L_VOTE}" /><br>
 						<a class="small" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
 					</fieldset>
 					# ENDIF #
@@ -345,10 +345,10 @@
 						&nbsp;&nbsp;
 						<script type="text/javascript">
 						<!--				
-						document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
+						document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button">');
 						-->
 						</script>
-						<noscript><div><input value="{L_PREVIEW}" type="submit" name="prw" class="submit"></div></noscript>
+						<noscript><div><input value="{L_PREVIEW}" type="submit" name="prw"></div></noscript>
 						&nbsp;&nbsp;
 						<button type="reset" value="true">{L_RESET}</button>
 					</fieldset>

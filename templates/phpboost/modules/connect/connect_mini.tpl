@@ -26,7 +26,7 @@
 						<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25">
 						<br /><input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
 						<br />
-						<p class="auto_connect">{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto" class="submit"> </p>
+						<p class="auto_connect">{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto"> </p>
 						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
 						<button type="submit" name="connect" value="true">{L_CONNECT}</button>
 					</form>

@@ -75,7 +75,7 @@
 						{KERNEL_EDITOR}
 						<div class="form-element-textarea">
 							<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
-							<button type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" >{L_PREVIEW}</button>
+							<button type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" >{L_PREVIEW}</button>
 						</div>
 						<br />
 						<div class="form-element">
@@ -136,9 +136,7 @@
 				<fieldset>
 					<legend>{L_QUESTIONS_LIST}</legend>
 					# IF C_DISPLAY_ANSWERS #
-						<script type="text/javascript">
-							document.write('<div style="text-align:center;"><a href="javascript:show_hide_questions();" id="l_change_answers_status">{L_DISPLAY_ANSWERS}</a></div><br />');
-						</script>
+						<div style="text-align:center;"><a href="javascript:show_hide_questions();" id="l_change_answers_status">{L_DISPLAY_ANSWERS}</a></div><br />
 					# ENDIF #
 					<p style="text-align:center;">
 						<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}" class="icon-plus button"> {L_INSERT_QUESTION_BEFORE}</a>

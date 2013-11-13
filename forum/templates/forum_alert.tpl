@@ -50,13 +50,7 @@
 								<input type="hidden" name="id" value="{alert_form.ID_ALERT}">
 								<p style="text-align:center;">
 									<button type="submit" name="edit_msg" value="true">{L_SUBMIT}</button>
-									&nbsp;&nbsp; 
-									<script type="text/javascript">
-									<!--				
-									document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
-									-->
-									</script>	
-									&nbsp;&nbsp; 	
+									<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
 									<button type="reset" value="true">{L_RESET}</button>								
 								</p>
 							</td>

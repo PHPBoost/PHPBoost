@@ -214,11 +214,11 @@
 							<input type="hidden" name="idm" value="{IDM}">
 							<button type="submit" name="post_topic" value="true">{L_SUBMIT}</button>
 							&nbsp;&nbsp;
-							<input value="{L_PREVIEW}" type="submit" name="prw_t" id="previs_topic" class="submit">
+							<input value="{L_PREVIEW}" type="submit" name="prw_t" id="previs_topic">
 							<script type="text/javascript">
 							<!--
 							document.getElementById('previs_topic').style.display = 'none';
-							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
+							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button">');
 							-->
 							</script>
 							&nbsp;&nbsp;

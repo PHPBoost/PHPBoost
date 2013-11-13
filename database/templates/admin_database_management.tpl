@@ -40,7 +40,7 @@
 						<input type="file" class="file" name="file_sql">
 						<input type="hidden" name="max_file_size" value="10485760">
 						<br /><br />
-						<input type="submit" class="submit" value="{L_RESTORE_NOW}">
+						<input type="submit" value="{L_RESTORE_NOW}">
 					</div>
 					<div class="spacer"></div>
 				</div>
@@ -307,7 +307,7 @@
 					</div>
 					<fieldset class="fieldset_submit" style="margin:0">
 						<legend>{L_EXECUTE}</legend>
-						<input type="submit" class="submit" value="{L_EXECUTE}">		
+						<input type="submit" value="{L_EXECUTE}">		
 					</fieldset>
 				</div>
 				</form>

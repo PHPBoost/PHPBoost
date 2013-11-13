@@ -61,7 +61,7 @@
 						<label><input type="radio" name="activated-{langs_not_installed.ID}" value="1" checked="checked"> {@langs.yes}</label>
 						<label><input type="radio" name="activated-{langs_not_installed.ID}" value="0"> {@langs.no}</label>
 						<br /><br />
-						<input type="submit" name="add-{langs_not_installed.ID}" value="{L_ADD}" class="submit"/>
+						<input type="submit" name="add-{langs_not_installed.ID}" value="{L_ADD}"/>
 					</td>
 				</tr>
 			# END themes_not_installed #

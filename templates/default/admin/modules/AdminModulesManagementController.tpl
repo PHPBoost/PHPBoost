@@ -101,7 +101,7 @@
 						</td>
 						<td>
 							<a href="{modules_not_activated.U_DELETE_LINK}">	
-								<input name="delete-{modules_not_activated.ID}" value="{@modules.delete}" class="submit" style="width:70px;text-align:center;"/>
+								<input name="delete-{modules_not_activated.ID}" value="{@modules.delete}" style="width:70px;text-align:center;"/>
 							</a>
 						</td>
 					</tr>
@@ -176,7 +176,7 @@
 						</td>
 						<td>
 							<a href="{modules_activated.U_DELETE_LINK}">	
-								<input name="delete-{modules_activated.ID}" value="{@modules.delete}" class="submit" style="width:70px;text-align:center;"/>
+								<input name="delete-{modules_activated.ID}" value="{@modules.delete}" style="width:70px;text-align:center;"/>
 							</a>
 						</td>
 					</tr>
@@ -202,7 +202,7 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" name="update_modules_configuration" value="{@modules.update}" class="submit">
+				<input type="submit" name="update_modules_configuration" value="{@modules.update}">
 				<input type="hidden" name="token" value="{TOKEN}">
 				<input type="hidden" name="update" value="true">
 				&nbsp;&nbsp; 

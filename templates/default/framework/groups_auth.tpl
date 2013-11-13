@@ -33,7 +33,7 @@
 	<strong>{L_ADD_USER}</strong>
 	<br />
 	<input type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}">
-	<input onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" value="{L_GO}" class="submit">
+	<button onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" class="small">{L_GO}</button>
 	<br />
 	<span id="search_img{IDSELECT}"></span> 
 	<div id="xmlhttprequest_result_search{IDSELECT}" style="display:none;width:125px;height:67px;margin-top:2px;" class="xmlhttprequest_result_search"></div>

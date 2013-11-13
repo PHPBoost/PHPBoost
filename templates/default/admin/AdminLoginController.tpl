@@ -63,7 +63,7 @@
 			</fieldset>
 			<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
 			<fieldset class="fieldset_submit">
-				<input type="submit" name="connect" value="{@connect}" class="submit">		
+				<input type="submit" name="connect" value="{@connect}">		
 			</fieldset>	
 		</form>
 	</body>
