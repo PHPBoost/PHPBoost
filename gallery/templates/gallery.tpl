@@ -62,7 +62,7 @@
 						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" class="icon-edit"></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" class="basic-button"><i class="icon-edit"></i></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -254,8 +254,8 @@
 						</li>
 						<li class="extend"><a><i class="icon-sort-alpha-asc"></i> {L_DIRECTION}</a>
 							<ul>
-								<li><a href="{U_ASC}"><i class="icon-sort-by-attributes"></i> {L_ASC}</a></li>
-								<li><a href="{U_DESC}"><i class="icon-sort-by-attributes-alt"></i> {L_DESC}</a></li>	
+								<li><a href="{U_ASC}"><i class="icon-sort-amount-asc"></i> {L_ASC}</a></li>
+								<li><a href="{U_DESC}"><i class="icon-sort-amount-desc"></i> {L_DESC}</a></li>	
 							</ul>
 						</li>
 						# IF U_ADD_PICS #
@@ -321,74 +321,51 @@
 						<p style="text-align:center" id="pics_max">{PAGINATION_PICS}</p>				
 						
 						# IF C_GALLERY_PICS_MAX #
+							<div class="options">
+								<h6>{L_INFORMATIONS}</h6>
+								# IF C_TITLE_ENABLED #
+									<span class="text_strong">{L_NAME} : </span><span>{NAME}</span><br/> 
+								# ENDIF #
+								# IF C_AUTHOR_DISPLAYED #
+									<span class="text_strong">{L_POSTOR} : </span><span>{POSTOR}</span><br/>
+								# ENDIF #
+								# IF C_VIEWS_COUNTER_ENABLED #
+									<span class="text_strong">{L_VIEWS} : </span><span>{VIEWS}</span><br/>
+								# ENDIF #
+								<span class="text_strong">{L_ADD_ON} : </span><span>{DATE}</span><br/>
+								<span class="text_strong">{L_DIMENSION} : </span><span>{DIMENSION}</span><br/>
+								<span class="text_strong">{L_SIZE} : </span><span>{SIZE} {L_KB}</span><br/>
+								# IF C_COMMENTS_ENABLED #
+									{COM}<br/>
+								# ENDIF #
+								<div class="center">
+									# IF C_NOTATION_ENABLED #
+										<span class="text_strong">{KERNEL_NOTATION}</span><br/>
+									# ENDIF #
+									# IF C_GALLERY_PICS_MODO #
+									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button"><i class="icon-edit"></i></a></span>
+									
+									<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
+										<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
+											<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
+											<select class="valign_middle" name="{ID}cat" onchange="document.location = 'gallery{U_MOVE}">
+												{CAT}
+											</select>
+										</div>
+									</div>
+									<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="basic-button" title="{L_MOVETO}"><i class="icon-move"></i></a>
+
+									<a href="javascript:pics_aprob({ID});" class="basic-button" title="{L_APROB_IMG}"><i id="img_aprob{ID}" class="{IMG_APROB}"></i></a>
+									<span id="img{ID}"></span>
+									<a href="{U_DEL}" title="{L_DELETE}" class="basic-button alt" data-confirmation="delete-element"><i class="icon-delete"></i></a>
+								</div>
+								# ENDIF #
+							</div>
 							<p style="text-align:center;padding:15px 0px;overflow:auto;">{IMG_MAX}</p>
 							<div style="margin:auto;width:400px;height:32px;padding:0;" class="row2">
 								<span style="float:left">&nbsp;&nbsp;&nbsp;{U_PREVIOUS}</span>
 								<span style="float:right">{U_NEXT}&nbsp;&nbsp;&nbsp;</span>
-							</div>
-							<br />
-							<table class="module_table" style="width:100%">
-								<tr>
-									<th colspan="2">
-										{L_INFORMATIONS}
-									</th>
-								</tr>
-								<tr>
-									# IF C_TITLE_ENABLED #<td class="row2 text_small" style="width:50%;border:none;padding:4px;">
-										<strong>{L_NAME}:</strong> {NAME}
-									</td># ENDIF #
-									# IF C_AUTHOR_DISPLAYED #<td class="row2 text_small" style="border:none;padding:4px;">
-										<strong>{L_POSTOR}:</strong> {POSTOR}
-									</td># ENDIF #
-								</tr>
-								<tr>										
-									# IF C_VIEWS_COUNTER_ENABLED #<td class="row2 text_small" style="border:none;padding:4px;">
-										<strong>{L_VIEWS}:</strong> {VIEWS}
-									</td># ENDIF #
-									<td class="row2 text_small" style="border:none;padding:4px;">
-										<strong>{L_ADD_ON}:</strong> {DATE}
-									</td>
-								</tr>
-								<tr>										
-									<td class="row2 text_small" style="border:none;padding:4px;">
-										<strong>{L_DIMENSION}:</strong> {DIMENSION}
-									</td>
-									<td class="row2 text_small" style="border:none;padding:4px;">
-										<strong>{L_SIZE}:</strong> {SIZE} {L_KB}
-									</td>
-								</tr>
-								<tr>										
-									# IF C_NOTATION_ENABLED #<td class="row2 text_small" style="border:none;padding:4px;">
-										{KERNEL_NOTATION}
-									</td># ENDIF #
-									# IF C_COMMENTS_ENABLED # #<td class="row2 text_small" style="border:none;padding:4px;vertical-align:top">
-										<strong>{L_COM}:</strong> {COM}
-									</td># ENDIF #
-								</tr>
-								
-								# IF C_GALLERY_PICS_MODO #
-								<tr>										
-									<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
-										&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="icon-edit"></a></span>									
-										<a href="{U_DEL}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a> 						
-										<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
-											<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
-												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-												<select class="valign_middle" name="{ID}cat" onchange="document.location = 'gallery{U_MOVE}">
-													{CAT}
-												</select>
-												<br /><br />
-											</div>
-										</div>
-										<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="bbcode_hover" title="{L_MOVETO}" class="icon-move"></a>
-										
-										
-										<a id="img_aprob{ID}" href="javascript:pics_aprob({ID});" class="{IMG_APROB}" title="{L_APROB_IMG}"></a>
-										&nbsp;<span id="img{ID}"></span>
-									</td>
-								</tr>
-								# ENDIF #						
-							</table>					
+							</div>				
 							<br /><br />					
 							<table class="module_table" style="width:100%;">
 								<tr>
