@@ -79,11 +79,16 @@ class AdminNewsConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_news_per_page', $this->lang['admin.config.number_news_per_page'], $this->config->get_number_news_per_page(), 
-			array('size' => 6), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array('size' => 6), array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('number_columns_display_news', $this->lang['admin.config.number_columns_display_news'], $this->config->get_number_columns_display_news(), 
-			array('size' => 6), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('number_columns_display_news', $this->lang['admin.config.number_columns_display_news'], $this->config->get_number_columns_display_news(),
+			array(
+				new FormFieldSelectChoiceOption('1', '1'),
+				new FormFieldSelectChoiceOption('2', '2'),
+				new FormFieldSelectChoiceOption('3', '3'),
+				new FormFieldSelectChoiceOption('4', '4'),
+			)
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('display_condensed', $this->lang['admin.config.display_condensed'], $this->config->get_display_condensed_enabled(), array(
@@ -97,7 +102,7 @@ class AdminNewsConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(), 
 			array('hidden' => !$this->config->get_display_condensed_enabled(), 'size' => 6), 
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
+			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 		
 		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['admin.config.comments_enabled'], $this->config->get_comments_enabled()));
