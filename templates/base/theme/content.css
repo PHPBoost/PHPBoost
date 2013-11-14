@@ -86,7 +86,7 @@ section footer nav.pagination {	text-align: center; }
 
 /* Exploreur des catégories
 -------------------------------------- */
-.explorer .cats, .explorer .files{
+.explorer .cats, .explorer .files {
 	display:inline-block;
 	width:62%;
 	margin:5px 0.33%;
@@ -113,19 +113,19 @@ section footer nav.pagination {	text-align: center; }
 	min-height:120px;
 }
 
-.explorer .contents ul{
+.explorer .contents ul {
 	list-style-type:none;
 	margin:0;
 	padding:0;
 }
 
-.explorer .contents ul a.parent{
+.explorer .contents ul a.parent {
 	float:left;
 	display:inline-block;
 	padding-right:0;
 }
 
-.explorer .contents ul a{
+.explorer .contents ul a {
 	padding:3px 5px;
 	display:block;
 	text-decoration:none;
@@ -133,26 +133,26 @@ section footer nav.pagination {	text-align: center; }
 	font-weight:300;
 }
 
-.explorer .contents ul [class^="icon-"]{
+.explorer .contents ul [class^="icon-"] {
 	width:20px;
 }
 
-.explorer .contents ul a.parent [class^="icon-"]:first-child{
+.explorer .contents ul a.parent [class^="icon-"]:first-child {
 	width:14px;
 }
 
-.explorer .contents ul [class^="icon-"]:before{
+.explorer .contents ul [class^="icon-"]:before {
 	width:20px;
 	text-align:center;
 	vertical-align:middle;
 }
 
-.explorer .contents ul a.parent [class^="icon-"]:first-child:before{
+.explorer .contents ul a.parent [class^="icon-"]:first-child:before {
 	width:14px;
 	font-size:11px;
 }
 
-.explorer .contents ul a:hover, .explorer .contents ul a:hover+a{
+.explorer .contents ul a:hover, .explorer .contents ul a:hover+a {
 	background-color:#EEE;
 }
 
@@ -160,7 +160,7 @@ section footer nav.pagination {	text-align: center; }
 	padding-left:18px;
 }
 
-.explorer .contents ul .sub a.parent{
+.explorer .contents ul .sub a.parent {
 	padding-left:4px;
 }
 
@@ -179,7 +179,7 @@ section footer nav.pagination {	text-align: center; }
 	float:right;
 }
 
-.options h6{
+.options h6 {
 	margin:10px 3px;
 	font-size:14px;
 }
@@ -301,11 +301,11 @@ table tfoot th {
 	padding:8px;
 }
 
-table tfoot th a{
+table tfoot th a {
     color:#676a74;
 }
 
-table tfoot th:only-child{
+table tfoot th:only-child {
 	text-align:right;
 }
 
@@ -490,11 +490,6 @@ legend {
 	border-bottom:1px solid #DDDDDD;
 }
 
-input[type=checkbox] { 
-	border:none;
-	background:none;
-}
-
 input[type=text], input[type=password], textarea, input[type=file], select {
 	padding: 4px 6px;
 	color: #555555;
@@ -523,10 +518,10 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=f
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
-input.field-smaller{ width:29px; }
-input.field-small{	width:77px; }
-input.field-large{ width:200px; }
-input.field-xlarge{ width:300px; }
+input.field-smaller { width:29px; }
+input.field-small {	width:77px; }
+input.field-large { width:200px; }
+input.field-xlarge { width:300px; }
 
 /* Element du formulaire (englobe le label et l'input d'un champ) */
 .form-element, .form-element-textarea {
@@ -546,7 +541,7 @@ input.field-xlarge{ width:300px; }
 }
 
 /* Label pour les inputs [for] et pour les élements sans associations*/
-.form-element > label{
+.form-element > label {
 	display:inline-block;
 	width: 40%;
 	text-align: left;
@@ -555,16 +550,16 @@ input.field-xlarge{ width:300px; }
 	vertical-align: top;
 }
 
-span.field-description, span.field-error{
+span.field-description, span.field-error {
 	font-size:10px;
 }
 
-span.field-description{
+span.field-description {
 	display: block;
 	line-height: 12px;
 }
 
-span.field-error{
+span.field-error {
 	color:#C43C35;
 	display: block;
 	margin: 0 0 0 30%;
@@ -572,7 +567,7 @@ span.field-error{
 	font-style:italic;
 }
 
-input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disabled]:focus{
+input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disabled]:focus {
 	cursor: not-allowed;
 	background:#F1F1F1;
 	color:#AAAAAA;
@@ -588,12 +583,12 @@ textarea {
     resize: vertical;
 }
 
-.form-element-textarea-small{
+.form-element-textarea-small {
 	width:49%;	
 }
 
 /* Verification des contraintes */
-.constraint-check-error input{
+.constraint-check-error input {
 	border-color: rgba(196, 60, 43, 0.3);
 	outline: 0;
 	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.1);
@@ -601,7 +596,7 @@ textarea {
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
 	color:#C43C35;
 }
-.constraint-check-error input:hover, .field.input-error input:focus{
+.constraint-check-error input:hover, .field.input-error input:focus {
 	border-color: rgba(196, 60, 43, 0.5);
 	outline: 0;
 	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.3);
@@ -610,11 +605,11 @@ textarea {
 	color:#C43C35;
 }
 
-.constraint-check-right i:before{ content: "\f00c"; color:#57A957; }
-.constraint-check-error i:before{ content: "\f00d"; color:#C43C35; }
+.constraint-check-right i:before { content: "\f00c"; color:#57A957; }
+.constraint-check-error i:before { content: "\f00d"; color:#C43C35; }
 
 /* A reprendre */
-.field-button{
+.field-button {
 	display: inline-block;
 	font-size: 0;
 	white-space: nowrap;
@@ -626,7 +621,7 @@ textarea {
 	border-radius: 4px 0 0 4px;
 }
 
-.field-button button{
+.field-button button {
 	font-size:11px;
 	margin-left:-1px;
 	-webkit-border-radius: 0 4px 4px 0;
@@ -668,52 +663,10 @@ textarea {
     height:15px;
 }
 
-/* Commentaires
+/* Messages postés par les membres (messages privés & commentaires) 
 --------------------------------------*/
 
 #comments_list { clear:both; }
-
-/* Notoriété */
-/*div#message-rating {
-	width:48px;
-	height:22px;
-	margin-top: 10px;
-}
-
-div#message-rating div {
-	width:50%;
-	color:#FFF;
-	cursor: pointer;
-	text-align:center;
-	font-weight:900;
-	font-size: 16px;
-}
-
-.positive_vote_button {
-	background:#CCC;
-	border-top-left-radius:2px;
-	border-bottom-left-radius:2px;
-	float:left;
-}
-
-.negative_vote_button {
-	background:#e0e0e0;
-	border-top-right-radius:2px;
-	border-bottom-right-radius:2px;
-	float:right;
-}
-
-div#message-rating .positive {
-	background:#ab0119;
-}
-
-div#message-rating .negative {
-	background:#39ab01;
-}
-*/
-
-/* Messages postés par les membres (messages privés & commentaires) 
---------------------------------------*/
 
 .message { 
 	width:98%; 

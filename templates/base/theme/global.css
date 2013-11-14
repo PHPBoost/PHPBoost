@@ -179,7 +179,7 @@ h6.sub_title2 { /* Sous titre dans les menu */
 }
 
 /* Titre 1 */
-h3.title1{
+h3.title1 {
 	border-bottom:1px solid #366393;
 	font-size:20px;
 	font-weight:bold;
@@ -187,7 +187,7 @@ h3.title1{
 }
 
 /* Titre 2 */
-h3.title2{
+h3.title2 {
 	font-size:18px;
 	border-bottom:1px solid #366393;
 	font-weight:bold;
@@ -196,21 +196,21 @@ h3.title2{
 }
 
 /* Sous titre 1 */
-h4.stitle1, h4.stitle2{
+h4.stitle1, h4.stitle2 {
 	margin-bottom:5px;
 	display:inline-block;
 	border-bottom:1px solid #366393;
 }
 
 /* Sous titre 1 */
-h4.stitle1{
+h4.stitle1 {
 	margin-left:32px;
 	font-size:16px;
 	padding:2px 8px;
 }
 
 /* Sous titre 2 */
-h4.stitle2{
+h4.stitle2 {
 	margin-left:50px;
 	font-size:15px;
 }
@@ -219,13 +219,13 @@ h4.stitle2{
 --------------------------------------------------------------------  */
 
 /* Liste */
-ul,ol{
+ul,ol {
 	margin-left:20px;
 	margin-bottom:10px;
 }
 
 /* Menu caché */
-.bbcode_block{
+.bbcode_block {
 	position:absolute;
 	text-align:center;
 	padding:6px 4px;
@@ -241,7 +241,7 @@ ul,ol{
 	border:1px solid #AAA;
 }
 
-.bbcode_block a{
+.bbcode_block a {
 	cursor:pointer;
 	text-decoration:none;
 }
@@ -256,7 +256,7 @@ ul,ol{
 	left:80px;
 }
 
-.color_picker .bbcode_block table{
+.color_picker .bbcode_block table {
 	border-collapse:collapse;
 	margin:auto;
 	border:none;
@@ -267,20 +267,20 @@ ul,ol{
 	border:1px solid #F3F3F3;
 }
 
-.color_picker td a{
+.color_picker td a {
 	display:block;
 	width:14px;
 	height:14px;
 }
 
 /* Tableaux */
-.bb_table{
+.bb_table {
 	border:1px solid #2C5169;
 	border-spacing:0px;
 	border-collapse:collapse;
 	margin:2px;
 }
-.bb_table_col{
+.bb_table_col {
 	border:1px solid #2C5169;
 	padding:6px;
 }
@@ -310,24 +310,24 @@ ul,ol{
 	height:10px;
 	overflow:hidden;
 }
-.hide2{
+.hide2 {
 	visibility:hidden;
 	overflow:auto;
 }
-.indent{
+.indent {
 	margin-left:30px;
 }
-.bb_acronym{
+.bb_acronym {
 	cursor:help;
 }
 
-.bb_block{
+.bb_block {
 	margin:5px 20px;
 	padding:5px;
 	border:1px solid #C4CED6;
 }
 
-.bb_fieldset{
+.bb_fieldset {
 	margin:10px;
 }
 
@@ -335,7 +335,7 @@ ul,ol{
 .code ol{ margin-left:3em; }
 
 /*Lien vers Wikipédia*/
-a.wikipedia_link:before{
+a.wikipedia_link:before {
    content:url('wikipedia_icon.png');
    vertical-align:middle;
    padding-right:2px;
@@ -479,7 +479,7 @@ a.wikipedia_link{ border-bottom:1px dotted; }
 	padding-right:18px;
 }
 
-.dynamic_menu ul li.extend > a:after, .dynamic_menu ul li.extend > span:after{
+.dynamic_menu ul li.extend > a:after, .dynamic_menu ul li.extend > span:after {
 	position:absolute;
 	display: block;
 	right:7px;
@@ -530,7 +530,7 @@ nav.dynamic_menu li ul {
     min-width:160px;
 }
 
-nav.dynamic_menu li ul li a, nav.dynamic_menu li ul li span{
+nav.dynamic_menu li ul li a, nav.dynamic_menu li ul li span {
 	color:#0578CC;
 }
 
@@ -582,24 +582,24 @@ menu.dynamic_menu > ul > li.current {
 	border-top-color:#B3B3B3;
 }
 
-menu.dynamic_menu > ul > li > a{
+menu.dynamic_menu > ul > li > a {
 	padding:4px 12px;
 }
-menu.dynamic_menu > ul > li > a > i{
-	font-size: 1.1em;
+menu.dynamic_menu > ul > li > a > i {
+	font-size: 1em;
 }
 
 menu.dynamic_menu li li:hover > ul {
     top:-7px;
 }
 
-menu.dynamic_menu li ul li a, menu.dynamic_menu li ul li span{
+menu.dynamic_menu li ul li a, menu.dynamic_menu li ul li span {
 	color:#666666;
 	font-size:11px;
 	padding:3px 12px;
 }
 
-menu.dynamic_menu li ul li a i, menu.dynamic_menu li ul li span i{
+menu.dynamic_menu li ul li a i, menu.dynamic_menu li ul li span i {
 	font-size:14px;
 	vertical-align:-2px;
 	width:16px;
@@ -608,12 +608,12 @@ menu.dynamic_menu li ul li a i, menu.dynamic_menu li ul li span i{
 	text-align:center;
 }
 
-menu.dynamic_menu li ul li a i:before, menu.dynamic_menu li ul li span i:before{
+menu.dynamic_menu li ul li a i:before, menu.dynamic_menu li ul li span i:before {
 	display:block;
 	width:16px;
 }
 
-menu.dynamic_menu ul li.extend > a:after, menu.dynamic_menu ul li.extend > span:after{
+menu.dynamic_menu ul li.extend > a:after, menu.dynamic_menu ul li.extend > span:after {
 	margin-top:-6px;
 }
 
@@ -693,7 +693,7 @@ ul.menu_vertical img {
     margin-right:5px;
 }
 
-ul.menu_vertical li a,ul.menu_vertical li span{
+ul.menu_vertical li a,ul.menu_vertical li span {
     margin-top:3px;
     margin-left:10px;
     list-style:none;
