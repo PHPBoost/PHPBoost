@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           CssFilesExtensionPointService.class.php
+ *		                         ModuleTreeLinksExtensionPoint.class.php
  *                            -------------------
- *   begin                : October 06, 2011
- *   copyright            : (C) 2011 Kevin MASSY
+ *   begin                : November 15, 2013
+ *   copyright            : (C) 2013 Kevin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -25,33 +25,21 @@
  *
  ###################################################*/
 
-class CssFilesExtensionPointService
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
+interface ModuleTreeLinksExtensionPoint extends ExtensionPoint
 {
-	public static function get_css_files_always_displayed()
-	{
-		$css_files = array();
-		$extension_points = self::get_extension_points();
-		foreach ($extension_points as $module_name => $provider)
-		{
-			$css_files[$module_name] = $provider->get_css_files_always_displayed();
-		}
-		return $css_files;
-	}
-	
-	public static function get_css_files_running_module_displayed()
-	{
-		$css_files = array();
-		$extension_points = self::get_extension_points();
-		foreach ($extension_points as $module_name => $provider)
-		{
-			$css_files[$module_name] = $provider->get_css_files_running_module_displayed();
-		}
-		return $css_files;
-	}
+	const EXTENSION_POINT = 'tree_links';
 
-	public static function get_extension_points()
-	{
-		return AppContext::get_extension_provider_service()->get_extension_point(CssFilesExtensionPoint::EXTENSION_POINT);
-	}
+	/**
+	 * @return array containing the tree links different as possible actions in the module (addition, configuration, etc).
+	 */
+	function get_actions_tree_links();
+	
+	/**
+	 * @return array containing the tree module links (home, displaying the contents of a category, display an item, etc.) except actions.
+	 */
+	function get_tree_links();
 }
 ?>

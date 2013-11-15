@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           CssFilesExtensionPointService.class.php
+ *		                         ModuleTreeLinksService.class.php
  *                            -------------------
- *   begin                : October 06, 2011
- *   copyright            : (C) 2011 Kevin MASSY
+ *   begin                : November 15, 2013
+ *   copyright            : (C) 2013 Kevin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -25,33 +25,38 @@
  *
  ###################################################*/
 
-class CssFilesExtensionPointService
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
+class ModuleTreeLinksService
 {
-	public static function get_css_files_always_displayed()
+	public static function display_actions_links_menu()
 	{
-		$css_files = array();
-		$extension_points = self::get_extension_points();
-		foreach ($extension_points as $module_name => $provider)
-		{
-			$css_files[$module_name] = $provider->get_css_files_always_displayed();
-		}
-		return $css_files;
+		return self::display(self::get_links()->get_actions_tree_links(), new FileTemplate('framework/module/module_actions_links_menu.tpl'));
 	}
 	
-	public static function get_css_files_running_module_displayed()
+	public static function display($links, View $view)
 	{
-		$css_files = array();
-		$extension_points = self::get_extension_points();
-		foreach ($extension_points as $module_name => $provider)
+		foreach ($links as $element)
 		{
-			$css_files[$module_name] = $provider->get_css_files_running_module_displayed();
+			$view->assign_block_vars('element', array(), array(
+				'ELEMENT' => $element->export()
+			));
 		}
-		return $css_files;
+		
+		return $view;
 	}
-
-	public static function get_extension_points()
+	
+	public static function get_links()
 	{
-		return AppContext::get_extension_provider_service()->get_extension_point(CssFilesExtensionPoint::EXTENSION_POINT);
+		try {
+			return AppContext::get_extension_provider_service()->get_provider(Environment::get_running_module_name())->get_extension_point(ModuleTreeLinksExtensionPoint::EXTENSION_POINT);
+		} catch (UnexistingExtensionPointProviderException $e) {
+			return array();
+		}
+		catch (ExtensionPointNotFoundException $e) {
+			return array();
+		}
 	}
 }
 ?>

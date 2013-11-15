@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           CssFilesExtensionPointService.class.php
+ *		                         ModuleTreeLinks.class.php
  *                            -------------------
- *   begin                : October 06, 2011
- *   copyright            : (C) 2011 Kevin MASSY
+ *   begin                : November 15, 2013
+ *   copyright            : (C) 2013 Kevin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -25,33 +25,32 @@
  *
  ###################################################*/
 
-class CssFilesExtensionPointService
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
+class ModuleTreeLinks implements ModuleTreeLinksExtensionPoint
 {
-	public static function get_css_files_always_displayed()
+	private $actions_tree_links = array();
+	private $tree_links = array();
+	
+	public function add_actions_tree_links(ModuleLink $actions_links)
 	{
-		$css_files = array();
-		$extension_points = self::get_extension_points();
-		foreach ($extension_points as $module_name => $provider)
-		{
-			$css_files[$module_name] = $provider->get_css_files_always_displayed();
-		}
-		return $css_files;
+		$this->actions_tree_links[] = $actions_links;
 	}
 	
-	public static function get_css_files_running_module_displayed()
+	public function add_tree_links(ModuleLink $links)
 	{
-		$css_files = array();
-		$extension_points = self::get_extension_points();
-		foreach ($extension_points as $module_name => $provider)
-		{
-			$css_files[$module_name] = $provider->get_css_files_running_module_displayed();
-		}
-		return $css_files;
+		$this->tree_links[] = $links;
 	}
-
-	public static function get_extension_points()
+	
+	public function get_actions_tree_links()
 	{
-		return AppContext::get_extension_provider_service()->get_extension_point(CssFilesExtensionPoint::EXTENSION_POINT);
+		return $this->actions_tree_links;
+	}
+	
+	public function get_tree_links()
+	{
+		return $this->tree_links;
 	}
 }
 ?>

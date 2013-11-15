@@ -101,7 +101,8 @@ class NewsDisplayCategoryController extends ModuleController
 			'C_PAGINATION' => $pagination->has_several_pages(),
 		
 			'PAGINATION' => $pagination->display(),
-			
+			'MENU' => ModuleTreeLinksService::display_actions_links_menu(),
+		
 			'L_NEWS_TITLE' => $this->lang['news'],
 		));
 		

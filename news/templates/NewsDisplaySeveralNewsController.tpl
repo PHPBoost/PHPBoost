@@ -1,3 +1,6 @@
+# INCLUDE MENU #
+
+<!-- 
 <menu class="dynamic_menu right">
 	<ul>
 		<li><a><i class="icon-cog"></i></a>
@@ -21,7 +24,7 @@
 		</li>
 	</ul>
 </menu>
-
+  -->
 <section>
 	<header>
 		<h1>

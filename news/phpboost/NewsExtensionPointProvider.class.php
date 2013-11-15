@@ -71,5 +71,10 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new CommentsTopics(array(new NewsCommentsTopic()));
 	}
+	
+	public function tree_links()
+	{
+		return NewsTreeLinks::get_tree_links();
+	}
 }
 ?>
