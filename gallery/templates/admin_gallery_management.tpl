@@ -248,7 +248,7 @@
 					<td class="row2">				
 						<p class="row3">
 							<span style="float:left">
-								<a href="admin_gallery.php">{L_GALLERY_MANAGEMENT}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
+								<a href="admin_gallery.php">{L_GALLERY_MANAGEMENT}</a> &raquo; {U_GALLERY_CAT_LINKS}
 							</span>
 							<span style="float:right">
 								{PAGINATION}
@@ -460,7 +460,7 @@
 
 						<p class="row3">
 							<span style="float:left">
-								<a href="admin_gallery.php">{L_GALLERY_MANAGEMENT}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
+								<a href="admin_gallery.php">{L_GALLERY_MANAGEMENT}</a> &raquo; {U_GALLERY_CAT_LINKS}
 							</span>
 							<span style="float:right">
 								{PAGINATION}
