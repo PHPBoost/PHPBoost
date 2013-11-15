@@ -69,11 +69,13 @@ class AdminOnlineConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset_config);
 		
 		$fieldset_config->add_field(new FormFieldTextEditor('number_member_displayed', $this->lang['admin.nbr-displayed'], $online_config->get_number_member_displayed(), array(
-			'class' => 'text', 'size' => 3, 'maxlength' => 3, 'required' => true)
+			'class' => 'text', 'size' => 3, 'maxlength' => 3, 'required' => true),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
 		$fieldset_config->add_field(new FormFieldTextEditor('number_members_per_page', $this->lang['admin.nbr-members-per-page'], $online_config->get_number_members_per_page(), array(
-			'class' => 'text', 'size' => 3, 'maxlength' => 3, 'required' => true)
+			'class' => 'text', 'size' => 3, 'maxlength' => 2, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
 		$fieldset_config->add_field(new FormFieldSimpleSelectChoice('display_order', $this->lang['admin.display-order'], $online_config->get_display_order(), array(
