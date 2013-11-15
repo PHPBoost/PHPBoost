@@ -1,0 +1,44 @@
+ 
+div.connect_align {
+	text-align:right;
+	padding:6px 8px 0px 0px;
+}
+
+div.connect_align a {
+	color:#FFF;
+}
+ 
+.connect_align form {
+	text-align:right;
+	display:inline-block;
+}
+
+.connect_align form input[type=checkbox]{
+	vertical-align:middle;	
+}
+ 
+.connect_inline {
+	display:inline-block;
+}
+ 
+.connect_content {
+	text-align:left;
+}
+ 
+.connect_content ul{
+	margin:0;
+	padding:0;
+	padding-left:4px;
+	list-style-type:none;
+	line-height:18px;
+}
+ 
+.connect_register {
+	margin:0;
+	margin-top:5px;
+}
+ 
+.connect_vertical input#login, .connect_vertical input#password {
+	width:120px;
+}
+
