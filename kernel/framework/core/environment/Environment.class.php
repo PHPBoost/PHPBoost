@@ -477,13 +477,23 @@ class Environment
 		$path = trim($path, '/');
 		if (strpos($path, '/'))
 		{
-         $module_name = explode('/', $path);
-         self::$running_module_name = $module_name[0];
+        	$module_name = explode('/', $path);
+        	self::$running_module_name = $module_name[0];
 		}
 		else
 		{
-			self::$running_module_name = '';
+			$general_config = GeneralConfig::load();
+			$other_home_page = $general_config->get_other_home_page();
+			$module_home_page = $general_config->get_module_home_page();
+			
+			if (empty($other_home_page) && !empty($module_home_page))
+			{
+				self::$running_module_name = $general_config->get_module_home_page();
+			}
+			else
+				self::$running_module_name = '';
 		}
+		Debug::dump(self::$running_module_name);
 	}
 
 	/**
