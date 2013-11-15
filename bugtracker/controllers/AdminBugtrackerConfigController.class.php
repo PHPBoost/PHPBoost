@@ -115,8 +115,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->lang['bugs.config.items_per_page'], (int)$this->config->get_items_per_page(), array(
-			'class' => 'text', 'maxlength' => 3, 'size' => 3, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			'class' => 'text', 'maxlength' => 2, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
 		$fieldset->add_field(new FormFieldColorPicker('fixed_bug_color', $this->lang['bugs.config.fixed_bug_color_label'], $this->config->get_fixed_bug_color()));
