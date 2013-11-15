@@ -50,7 +50,6 @@ class NewsTreeLinks
 		}
 		else
 		{
-			$tree->add_sub_link(new ModuleLink($lang['news.manage'], NewsUrlBuilder::manage_news(), AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)));
 			$tree->add_sub_link(new ModuleLink($lang['news.add'], NewsUrlBuilder::add_news(), NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution()));
 		}
 
