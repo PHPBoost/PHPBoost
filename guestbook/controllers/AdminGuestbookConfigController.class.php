@@ -99,8 +99,8 @@ class AdminGuestbookConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->lang['admin.config.items_per_page'], (int)$this->config->get_items_per_page(), array(
-			'class' => 'text', 'maxlength' => 3, 'size' => 3, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			'class' => 'text', 'maxlength' => 2, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['admin.config.forbidden-tags'], $this->config->get_forbidden_tags(),
