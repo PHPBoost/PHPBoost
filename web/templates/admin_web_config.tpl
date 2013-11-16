@@ -69,7 +69,22 @@
 						<label for="note_max">* {L_NOTE_MAX}</label>
 						<div class="form-field"><label><input type="text" size="2" maxlength="2" id="note_max" name="note_max" value="{NOTE_MAX}"></label></div>
 					</div>
-				</fieldset>			
+				</fieldset>
+				<fieldset>
+					<legend>
+						{L_AUTHORIZATIONS}
+					</legend>
+					<dl>
+						<dt>
+							<label>
+								{L_READ_AUTHORIZATION}
+							</label>
+						</dt>
+						<dd>
+							{READ_AUTHORIZATION}
+						</dd>
+					</dl>
+				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>

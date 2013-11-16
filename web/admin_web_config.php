@@ -43,7 +43,8 @@ if (!empty($_POST['valid']))
 	$web_config->set_max_nbr_category(retrieve(POST, 'nbr_cat_max', 10));
 	$web_config->set_number_columns(retrieve(POST, 'nbr_column', 2));
 	$web_config->set_note_max(retrieve(POST, 'note_max', 5));
-
+	$web_config->set_authorizations(Authorizations::build_auth_array_from_form(WebAuthorizationsService::READ_AUTHORIZATIONS));
+	
 	WebConfig::save();
 		
 	###### Régénération du cache des news #######
@@ -63,7 +64,8 @@ else
 		'NBR_CAT_MAX' => $web_config->get_max_nbr_category(),
 		'NBR_COLUMN' => $web_config->get_number_columns(),
 		'NOTE_MAX' => $web_config->get_note_max(),
-		'L_REQUIRE' => $LANG['require'],		
+		'READ_AUTHORIZATION' => Authorizations::generate_select(WebAuthorizationsService::READ_AUTHORIZATIONS, $web_config->get_authorizations()),
+		'L_REQUIRE' => $LANG['require'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_CAT' => $LANG['cat_management'],
@@ -75,6 +77,8 @@ else
 		'L_SUBMIT' => $LANG['submit'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
+		'L_AUTHORIZATIONS' => $LANG['admin.authorizations'],
+		'L_READ_AUTHORIZATION' => $LANG['admin.authorizations.read']
 	));
 		
 	$Template->pparse('admin_web_config'); // traitement du modele	

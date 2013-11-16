@@ -50,6 +50,8 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
+		$this->check_authorizations();
+		
 		global $Cache, $Bread_crumb, $idwebcat, $Session, $User, $WEB_CAT, $LANG, $WEB_LANG;
 		
 		require_once(PATH_TO_ROOT . '/web/web_begin.php'); 
@@ -110,6 +112,15 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		$this->sql_querier->query_close($result);
 		return $tpl;
+	}
+	
+	private function check_authorizations()
+	{
+		if (!WebAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>
