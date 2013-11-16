@@ -79,16 +79,16 @@
 					<legend>
 						{L_AUTHORIZATIONS}
 					</legend>
-					<dl>
-						<dt>
+					<div class="form-element">
+						
 							<label>
 								{L_READ_AUTHORIZATION}
 							</label>
-						</dt>
-						<dd>
+						
+						<div class="form-field">
 							{READ_AUTHORIZATION}
-						</dd>
-					</dl>
+						</div>
+					</div>
 				</fieldset>
 				
                 <fieldset class="fieldset_submit">
