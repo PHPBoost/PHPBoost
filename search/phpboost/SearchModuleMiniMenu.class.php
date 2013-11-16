@@ -39,25 +39,29 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 
 	public function display($tpl = false)
     {
-    	global $LANG;
-  		load_module_lang('search');
-    	
-	    $search = retrieve(REQUEST, 'q', '');
-	
-	    $tpl = new FileTemplate('search/search_mini.tpl');
-	
-	    MenuService::assign_positions_conditions($tpl, $this->get_block());
-	    $tpl->put_all(Array(
-	        'SEARCH' => $LANG['title_search'],
-	        'TEXT_SEARCHED' => !empty($search) ? stripslashes(retrieve(REQUEST, 'q', '')) : '',
-	        'WARNING_LENGTH_STRING_SEARCH' => addslashes($LANG['warning_length_string_searched']),
-	    	'L_SEARCH' => $LANG['search'],
-	        'U_FORM_VALID' => url(TPL_PATH_TO_ROOT . '/search/search.php#results'),
-	        'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-	        'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php'),
-	    ));
-	
-	    return $tpl->render();
+    	if (SearchAuthorizationsService::check_authorizations()->read())
+		{
+			global $LANG;
+			load_module_lang('search');
+			
+			$search = retrieve(REQUEST, 'q', '');
+		
+			$tpl = new FileTemplate('search/search_mini.tpl');
+		
+			MenuService::assign_positions_conditions($tpl, $this->get_block());
+			$tpl->put_all(Array(
+				'SEARCH' => $LANG['title_search'],
+				'TEXT_SEARCHED' => !empty($search) ? stripslashes(retrieve(REQUEST, 'q', '')) : '',
+				'WARNING_LENGTH_STRING_SEARCH' => addslashes($LANG['warning_length_string_searched']),
+				'L_SEARCH' => $LANG['search'],
+				'U_FORM_VALID' => url(TPL_PATH_TO_ROOT . '/search/search.php#results'),
+				'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
+				'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php'),
+			));
+		
+			return $tpl->render();
+		}
+		return '';
     }
 }
 ?>
