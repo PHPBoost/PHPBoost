@@ -19,7 +19,7 @@
 			for(i = 0; i < {NBR_TAGS}; i++)
 			{	
 				if( document.getElementById(id + i) )
-					document.getElementById(id + i).selected = status;			
+					document.getElementById(id + i).selected = status;
 			}
 		}	
 		-->
@@ -43,38 +43,13 @@
 				<fieldset>
 					<legend>{L_SHOUTBOX_CONFIG}</legend>
 					<div class="form-element">
-						
-							<label for="shoutbox_auth">{L_AUTH_READ}</label>
-						
-						<div class="form-field">
-							{AUTH_READ}
-						</div>
-					</div>
-					<div class="form-element">
-						
-							<label for="shoutbox_auth">{L_AUTH_WRITE}</label>
-						
-						<div class="form-field">
-							{AUTH_WRITE}
-						</div>
-					</div>
-					<div class="form-element">
-						
-							<label for="shoutbox_auth">{L_AUTH_MODERATION}</label>
-						
-						<div class="form-field">
-							{AUTH_MODERATION}
-						</div>
-					</div>
-					<hr><br>
-					<div class="form-element">
 						<label for="shoutbox_refresh_delay">* {L_SHOUTBOX_REFRESH_DELAY}</label><br /><span>{L_SHOUTBOX_REFRESH_DELAY_EXPLAIN}</span>
 						<div class="form-field"><label><input type="text" size="3" id="shoutbox_refresh_delay" name="shoutbox_refresh_delay" value="{SHOUTBOX_REFRESH_DELAY}"> {L_MINUTES}</label></div>
 					</div>
 					<div class="form-element">
 						<label for="shoutbox_max_msg">* {L_SHOUTBOX_MAX_MSG}</label><br /><span>{L_SHOUTBOX_MAX_MSG_EXPLAIN}</span>
 						<div class="form-field"><label><input type="text" size="3" id="shoutbox_max_msg" name="shoutbox_max_msg" value="{SHOUTBOX_MAX_MSG}"></label></div>
-					</div>					
+					</div>
 					<div class="form-element">
 						<label>* {L_FORBIDDEN_TAGS}</label>
 						<div class="form-field"><label>
@@ -83,7 +58,7 @@
 							<select name="shoutbox_forbidden_tags[]" size="10" multiple="multiple">
 								# START forbidden_tags #
 									{forbidden_tags.TAGS}
-								# END forbidden_tags #						
+								# END forbidden_tags #
 							</select>
 							<br />
 							<a class="small" href="javascript:check_select_multiple('tag', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple('tag', false);">{L_SELECT_NONE}</a>
@@ -95,11 +70,38 @@
 					</div>
 				</fieldset>	
 				
+				<fieldset>
+					<legend>
+						{L_AUTHORIZATIONS}
+					</legend>
+					<div class="form-element">
+						<label for="shoutbox_auth">{L_AUTH_READ}</label>
+						
+						<div class="form-field">
+							{AUTH_READ}
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="shoutbox_auth">{L_AUTH_WRITE}</label>
+						
+						<div class="form-field">
+							{AUTH_WRITE}
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="shoutbox_auth">{L_AUTH_MODERATION}</label>
+						
+						<div class="form-field">
+							{AUTH_MODERATION}
+						</div>
+					</div>
+				</fieldset>
+				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 					&nbsp;
-					<button type="reset" value="true">{L_RESET}</button>			
+					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>
 		</div>

@@ -72,6 +72,7 @@ else
 		'L_SHOUTBOX_CONFIG' => $LANG['shoutbox_config'],
 		'L_SHOUTBOX_MAX_MSG' => $LANG['shoutbox_max_msg'],
 		'L_SHOUTBOX_MAX_MSG_EXPLAIN' => $LANG['shoutbox_max_msg_explain'],
+		'L_AUTHORIZATIONS' => $LANG['admin.authorizations'],
 		'L_AUTH_READ' => $LANG['auth_read'],
 		'L_AUTH_WRITE' => $LANG['auth_write'],
 		'L_AUTH_MODERATION' => $LANG['auth_moderation'],
