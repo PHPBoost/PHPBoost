@@ -71,4 +71,6 @@ $LANG['unauthorized_modules'] = 'Forbidden modules';
 $LANG['unauthorized_modules_explain'] = 'Select modules in which you want to forbid research';
 $LANG['update'] = 'Update';
 $LANG['reset'] = 'Reset';
+$LANG['admin.authorizations'] = 'Permissions';
+$LANG['admin.authorizations.read'] = 'Permission to display the links list';
 ?>

@@ -49,6 +49,7 @@ if (!empty($_POST['valid']))
 		$config->set_cache_lifetime(retrieve(POST, 'cache_time', 15));
 		$config->set_cache_max_uses(retrieve(POST, 'max_use', 200));
 		$config->set_unauthorized_providers(retrieve(POST, 'authorized_modules', array()));
+		$config->set_authorizations(Authorizations::build_auth_array_from_form(SearchAuthorizationsService::READ_AUTHORIZATIONS));
 		SearchConfig::save();
 
         AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
@@ -117,9 +118,12 @@ else
             'L_AUTHORIZED_MODULES' => $LANG['unauthorized_modules'],
             'L_AUTHORIZED_MODULES_EXPLAIN' => $LANG['unauthorized_modules_explain'],
             'L_SEARCH_CACHE' => $LANG['search_cache'],
+			'L_AUTHORIZATIONS' => $LANG['admin.authorizations'],
+			'L_READ_AUTHORIZATION' => $LANG['admin.authorizations.read'],
             'CACHE_TIME' => $config->get_cache_lifetime(),
             'MAX_USE' => $config->get_cache_max_uses(),
-            'NB_RESULTS_P' => $config->get_nb_results_per_page()
+            'NB_RESULTS_P' => $config->get_nb_results_per_page(),
+			'READ_AUTHORIZATION' => Authorizations::generate_select(SearchAuthorizationsService::READ_AUTHORIZATIONS, $config->get_authorizations())
         ));
     }
     else

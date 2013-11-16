@@ -36,6 +36,8 @@ class SearchConfig extends AbstractConfigData
 	const cache_lifetime = 'cache_lifetime';
 	const cache_max_uses = 'cache_max_uses';
 	const unauthorized_providers = 'unauthorized_providers';
+	
+	const AUTHORIZATIONS = 'authorizations';
 
 	/**
 	 * Returns the search providers weighting
@@ -126,6 +128,24 @@ class SearchConfig extends AbstractConfigData
 	{
 		$this->set_property(self::unauthorized_providers, $unauthorized_providers);
 	}
+	
+	/**
+	 * Returns the authorizations of the module
+	 * @return string[] The authorizations
+	 */
+	public function get_authorizations()
+	{
+		return $this->get_property(self::AUTHORIZATIONS);
+	}
+
+	/**
+	 * Sets the authorizations of the module
+	 * @param string[] $array The authorizations
+	 */
+	public function set_authorizations(Array $array)
+	{
+		$this->set_property(self::AUTHORIZATIONS, $array);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -137,7 +157,8 @@ class SearchConfig extends AbstractConfigData
 			self::nb_results_per_page => 15,
 			self::cache_lifetime => 30,
 			self::cache_max_uses => 200,
-			self::unauthorized_providers => array()
+			self::unauthorized_providers => array(),
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
 		);
 	}
 

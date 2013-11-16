@@ -70,5 +70,7 @@ $LANG['unauthorized_modules'] = 'Modules interdits';
 $LANG['unauthorized_modules_explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas autoriser la recherche';
 $LANG['update'] = 'Modifier';
 $LANG['reset'] = 'Défaut';
+$LANG['admin.authorizations'] = 'Autorisations';
+$LANG['admin.authorizations.read'] = 'Autorisation d\'afficher la recherche';
 
 ?>

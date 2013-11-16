@@ -75,6 +75,22 @@
                     </div>
                 </fieldset>
                 
+				<fieldset>
+					<legend>
+						{L_AUTHORIZATIONS}
+					</legend>
+					<dl>
+						<dt>
+							<label>
+								{L_READ_AUTHORIZATION}
+							</label>
+						</dt>
+						<dd>
+							{READ_AUTHORIZATION}
+						</dd>
+					</dl>
+				</fieldset>
+				
                 <fieldset class="fieldset_submit">
                 <legend>{L_UPDATE}</legend>
                     <button type="submit" name="valid" value="true">{L_UPDATE}</button>
