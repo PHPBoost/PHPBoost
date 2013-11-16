@@ -37,6 +37,8 @@ $LANG['web_config'] = 'Configuration des liens';
 $LANG['edit_link'] = 'Edition du lien';
 $LANG['nbr_web_max'] = 'Nombre maximum de liens web affichés';
 $LANG['icon_cat'] = 'Icône de la catégorie';
+$LANG['admin.authorizations'] = 'Autorisations';
+$LANG['admin.authorizations.read'] = 'Autorisation d\'afficher la liste des liens';
 
 //Erreurs
 $LANG['e_unexist_link_web'] = 'Le lien que vous avez demandé n\'existe pas';

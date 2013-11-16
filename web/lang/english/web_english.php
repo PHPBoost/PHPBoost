@@ -38,6 +38,8 @@ $LANG['web_config'] = 'Weblink configuration';
 $LANG['edit_link'] = 'Weblink edition';
 $LANG['nbr_web_max'] = 'Maximum weblinks displayed';
 $LANG['icon_cat'] = 'Category icon';
+$LANG['admin.authorizations'] = 'Permissions';
+$LANG['admin.authorizations.read'] = 'Permission to display the links list';
 
 //Errors
 $LANG['e_unexist_link_web'] = 'This link doesn\'t exist';

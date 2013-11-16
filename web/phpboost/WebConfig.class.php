@@ -31,54 +31,72 @@
  *
  */
 class WebConfig extends AbstractConfigData
-{	
+{
+	const NBR_WEB_MAX = 'nbr_web_max';
+	const NBR_CAT_MAX = 'nbr_cat_max';
+	const NBR_COLUMN = 'nbr_column';
+	const NOTE_MAX = 'note_max';
+	
+	const AUTHORIZATIONS = 'authorizations';
+	
 	public function get_max_nbr_weblinks()
 	{
-		return $this->get_property('nbr_web_max');
+		return $this->get_property(self::NBR_WEB_MAX);
 	}
 	
 	public function set_max_nbr_weblinks($weblinks) 
 	{
-		$this->set_property('nbr_web_max', $weblinks);
+		$this->set_property(self::NBR_WEB_MAX, $weblinks);
 	}
 	
 	public function get_max_nbr_category()
 	{
-		return $this->get_property('nbr_cat_max');
+		return $this->get_property(self::NBR_CAT_MAX);
 	}
 	
 	public function set_max_nbr_category($cat) 
 	{
-		$this->set_property('nbr_cat_max', $cat);
+		$this->set_property(self::NBR_CAT_MAX, $cat);
 	}
 	
 	public function get_number_columns()
 	{
-		return $this->get_property('nbr_column');
+		return $this->get_property(self::NBR_COLUMN);
 	}
 	
 	public function set_number_columns($nbr_cols) 
 	{
-		$this->set_property('nbr_column', $nbr_cols);
+		$this->set_property(self::NBR_COLUMN, $nbr_cols);
 	}
 	
 	public function get_note_max()
 	{
-		return $this->get_property('note_max');
+		return $this->get_property(self::NOTE_MAX);
 	}
 	
 	public function set_note_max($note) 
 	{
-		$this->set_property('note_max', $note);
+		$this->set_property(self::NOTE_MAX, $note);
+	}
+	
+	public function get_authorizations()
+	{
+		return $this->get_property(self::AUTHORIZATIONS);
+	}
+	
+	public function set_authorizations(Array $array)
+	{
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
-			'nbr_web_max' => 10,
-			'nbr_cat_max' => 10,
-			'nbr_column' => 2,
-			'note_max' => 5
+			self::NBR_WEB_MAX => 10,
+			self::NBR_CAT_MAX => 10,
+			self::NBR_COLUMN => 2,
+			self::NOTE_MAX => 5,
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
 		);
 	}
 	
