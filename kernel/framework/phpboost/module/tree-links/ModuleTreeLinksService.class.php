@@ -32,30 +32,35 @@ class ModuleTreeLinksService
 {
 	public static function display_actions_links_menu()
 	{
-		return self::display(self::get_links()->get_actions_tree_links(), new FileTemplate('framework/module/module_actions_links_menu.tpl'));
+		return self::display(self::get_tree_links(), new FileTemplate('framework/module/module_actions_links_menu.tpl'));
 	}
 	
-	public static function display($links, View $view)
+	public static function display(ModuleTreeLinks $tree_links, View $view)
 	{
-		foreach ($links as $element)
+		foreach ($tree_links->get_links() as $element)
 		{
-			$view->assign_block_vars('element', array(), array(
-				'ELEMENT' => $element->export()
-			));
+			if ($element->is_visible())
+			{
+				$view->assign_block_vars('element', array(), array(
+					'ELEMENT' => $element->export()
+				));
+			}
 		}
+		
+		$view->put('C_DISPLAY', $tree_links->has_links());
 		
 		return $view;
 	}
 	
-	public static function get_links()
+	public static function get_tree_links()
 	{
 		try {
-			return AppContext::get_extension_provider_service()->get_provider(Environment::get_running_module_name())->get_extension_point(ModuleTreeLinksExtensionPoint::EXTENSION_POINT);
+			return AppContext::get_extension_provider_service()->get_provider(Environment::get_running_module_name())->get_extension_point(ModuleTreeLinksExtensionPoint::EXTENSION_POINT)->get_actions_tree_links();
 		} catch (UnexistingExtensionPointProviderException $e) {
-			return array();
+			return new ModuleTreeLinks();
 		}
 		catch (ExtensionPointNotFoundException $e) {
-			return array();
+			return new ModuleTreeLinks();
 		}
 	}
 }

@@ -28,35 +28,38 @@
 /**
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class NewsTreeLinks
+class NewsTreeLinks implements ModuleTreeLinksExtensionPoint
 {
-	public static function get_tree_links()
+	public function get_actions_tree_links()
 	{
 		$lang = LangLoader::get('common', 'news');
 		$tree = new ModuleTreeLinks();
-
-		// Actions links
-		$manage_categories_link = new ModuleLink($lang['admin.categories.manage'], NewsUrlBuilder::manage_categories(), AppContext::get_current_user()->check_level(User::ADMIN_LEVEL));
-		$manage_categories_link->add_sub_link(new ModuleLink($lang['admin.categories.manage'], NewsUrlBuilder::manage_categories(), AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)));
-		$manage_categories_link->add_sub_link(new ModuleLink($lang['admin.categories.add'], NewsUrlBuilder::add_category(), AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)));
-		$tree->add_actions_tree_links($manage_categories_link);
 		
-		if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		$manage_categories_link = new AdminModuleLink($lang['admin.categories.manage'], NewsUrlBuilder::manage_categories());
+		$manage_categories_link->add_sub_link(new AdminModuleLink($lang['admin.categories.manage'], NewsUrlBuilder::manage_categories()));
+		$manage_categories_link->add_sub_link(new AdminModuleLink($lang['admin.categories.add'], NewsUrlBuilder::add_category()));
+		$tree->add_link($manage_categories_link);
+	
+		$manage_news_link = new AdminModuleLink($lang['news.manage'], NewsUrlBuilder::manage_news());
+		$manage_news_link->add_sub_link(new AdminModuleLink($lang['news.manage'], NewsUrlBuilder::manage_news()));
+		$manage_news_link->add_sub_link(new AdminModuleLink($lang['news.add'], NewsUrlBuilder::add_news()));
+		$tree->add_link($manage_news_link);
+		
+		$tree->add_link(new AdminModuleLink($lang['admin.config'], NewsUrlBuilder::config()));
+	
+		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$manage_news_link = new ModuleLink($lang['news.manage'], NewsUrlBuilder::manage_news(), AppContext::get_current_user()->check_level(User::ADMIN_LEVEL));
-			$manage_news_link->add_sub_link(new ModuleLink($lang['news.manage'], NewsUrlBuilder::manage_news(), AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)));
-			$manage_news_link->add_sub_link(new ModuleLink($lang['news.add'], NewsUrlBuilder::add_news(), NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution()));
-			$tree->add_actions_tree_links($manage_news_link);
-		}
-		else
-		{
-			$tree->add_actions_tree_links(new ModuleLink($lang['news.add'], NewsUrlBuilder::add_news(), NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution()));
+			$tree->add_link(new ModuleLink($lang['news.add'], NewsUrlBuilder::add_news(), NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution()));	
 		}
 
-		$tree->add_actions_tree_links(new ModuleLink($lang['news.pending'], NewsUrlBuilder::display_pending_news(), NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation()));
-		$tree->add_actions_tree_links(new ModuleLink($lang['admin.config'], NewsUrlBuilder::config(), AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)));
-		
+		$tree->add_link(new ModuleLink($lang['news.pending'], NewsUrlBuilder::display_pending_news(), NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation()));
+	
 		return $tree;
+	}
+	
+	public function get_tree_links()
+	{
+		return new ModuleTreeLinks();
 	}
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                         ModuleTreeLinks.class.php
+ *		                         AdminModuleLink.class.php
  *                            -------------------
  *   begin                : November 15, 2013
  *   copyright            : (C) 2013 Kevin MASSY
@@ -28,23 +28,13 @@
 /**
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class ModuleTreeLinks
+class AdminModuleLink extends ModuleLink
 {
-	private $links = array();
-	
-	public function add_link(ModuleLink $link)
+	public function __construct($name, $url)
 	{
-		$this->links[] = $link;
-	}
-	
-	public function get_links()
-	{
-		return $this->links;
-	}
-	
-	public function has_links()
-	{
-		return !empty($this->links);
+		$this->name = $name;
+		$this->visibility = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
+		$this->set_url($url);
 	}
 }
 ?>

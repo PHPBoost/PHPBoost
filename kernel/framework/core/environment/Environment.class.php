@@ -493,7 +493,6 @@ class Environment
 			else
 				self::$running_module_name = '';
 		}
-		Debug::dump(self::$running_module_name);
 	}
 
 	/**

@@ -87,7 +87,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'L_XML_LANGUAGE' => self::$main_lang['xml_lang'],
 			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
-			'JAVASCRIPT' => new FileTemplate('javascript_header.tpl')
+			'JAVASCRIPT' => new FileTemplate('javascript_header.tpl'),
+			'ACTIONS_MENU' => ModuleTreeLinksService::display_actions_links_menu()
 		));
 
 		$this->display_counter($template);

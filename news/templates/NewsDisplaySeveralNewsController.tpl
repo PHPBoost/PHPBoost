@@ -1,30 +1,3 @@
-# INCLUDE MENU #
-
-<!-- 
-<menu class="dynamic_menu right">
-	<ul>
-		<li><a><i class="icon-cog"></i></a>
-			<ul>
-				# IF C_ADD #
-				<li>
-					<a href="${relative_url(NewsUrlBuilder::add_news())}" title="${i18n('news.add')}">${i18n('news.add')}</a>
-				</li>
-				# ENDIF #
-				# IF C_PENDING_NEWS #
-				<li>
-					<a href="${relative_url(NewsUrlBuilder::display_pending_news())}" title="${i18n('news.pending')}">${i18n('news.pending')}</a>
-				</li>
-				# ENDIF #
-				# IF IS_ADMIN #
-				<li>
-					<a href="${relative_url(NewsUrlBuilder::config())}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
-				</li>
-				# ENDIF #
-			</ul>
-		</li>
-	</ul>
-</menu>
-  -->
 <section>
 	<header>
 		<h1>
