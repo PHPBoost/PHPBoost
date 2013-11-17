@@ -1,4 +1,4 @@
-# IF C_DIPLAY #
+# IF C_DISPLAY #
 <menu class="dynamic_menu right">
 	<ul>
 		<li><a><i class="icon-cog"></i></a>
