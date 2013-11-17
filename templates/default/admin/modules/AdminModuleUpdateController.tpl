@@ -34,7 +34,7 @@
 					</td>
 					<td>
 						<input type="hidden" name="token" value="{TOKEN}">
-						<input type="submit" name="upgrade-{modules_upgradable.ID}" value="{@modules.upgrade_module}">
+						<button type="submit" name="upgrade-{modules_upgradable.ID}" value="true">{@modules.upgrade_module}</button>
 						<input type="hidden" name="module_id" value="{modules_upgradable.ID}">
 					</td>
 				</tr>	

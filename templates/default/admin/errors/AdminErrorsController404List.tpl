@@ -3,7 +3,7 @@
         <legend>{@clear_404_list}</legend>
         <div class="form-element">
             <label>{@clear_404_list}</label><br /><span>{@clear_404_list_explain}</span>
-            <div class="form-field"><label><input type="submit" name="clear" value="{@clear_404_list}" class="reset"> </label></div>
+            <div class="form-field"><label><button type="submit" name="clear" value="true">{@clear_404_list}</button> </label></div>
         </div>
     </fieldset>
 	<input type="hidden" name="token" value="{TOKEN}">
