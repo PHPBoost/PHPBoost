@@ -75,8 +75,7 @@ class AdminModulesManagementController extends AdminController
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
-					'C_MODULE_ACTIVE' => $module->is_activated(),
-					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->rel()
+					'C_MODULE_ACTIVE' => $module->is_activated()
 				));	
 			}
 			else 
@@ -91,8 +90,7 @@ class AdminModulesManagementController extends AdminController
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
-					'C_MODULE_ACTIVE' => $module->is_activated(),
-					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->rel()
+					'C_MODULE_ACTIVE' => $module->is_activated()
 				));
 			}
 		}
@@ -105,12 +103,21 @@ class AdminModulesManagementController extends AdminController
 	
 	private function save(HTTPRequestCustom $request)
 	{
+		$installed_modules = ModulesManager::get_installed_modules_map();
+		
+		foreach ($installed_modules as $module)
+		{
+			if ($request->get_string('delete-' . $module->get_id(), ''))
+			{
+				AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($module->get_id()));
+			}
+		}
+		
 		if ($request->get_bool('update', false))
 		{
 			$errors = array();
-			foreach (ModulesManager::get_installed_modules_map() as $module)
+			foreach ($installed_modules as $module)
 			{
-				$request = AppContext::get_request();
 				$module_id = $module->get_id();
 				$activated = $request->get_bool('activated-' . $module_id, false);
 				$error = ModulesManager::update_module($module_id, $activated);

@@ -57,14 +57,12 @@
 							<label><input type="radio" name="activated-{langs_installed.ID}" value="1" # IF langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@langs.yes}</label>
 							<label><input type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@langs.no}</label>
 							<br /><br />
-							<a href="{langs_installed.DELETE_LINK}">
-								<input name="delete-{langs_installed.ID}" value="{L_DELETE}" style="width:70px;text-align:center;"/>
-							</a>
+							<button type="submit" name="delete-{langs_installed.ID}" value="true">{L_DELETE}</button>
 						# ELSE #
 							{@langs.yes}
 						# ENDIF #
 					</td>
-				</tr>						
+				</tr>
 			# END langs_installed #
 		</tbody>
 	</table>

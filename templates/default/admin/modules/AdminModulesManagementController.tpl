@@ -80,8 +80,8 @@
 				# ENDIF #
 
 				# START modules_not_activated #
-					<tr> 	
-						<td>					
+					<tr>
+						<td>
 							<span id="m{modules_not_activated.ID}"></span>
 							<img src="{PATH_TO_ROOT}/{modules_not_activated.ICON}/{modules_not_activated.ICON}.png" alt="" /><br />
 							<span class="text_strong">{modules_not_activated.NAME}</span> <em>({modules_not_activated.VERSION})</em>
@@ -95,14 +95,12 @@
 							</div>
 							<div id="picture_desc{modules_not_activated.ID}" style="text-align: center;" "><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
 						</td>
-						<td>								
+						<td>
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="0" # IF NOT modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
 						</td>
 						<td>
-							<a href="{modules_not_activated.U_DELETE_LINK}">	
-								<input name="delete-{modules_not_activated.ID}" value="{@modules.delete}" style="width:70px;text-align:center;"/>
-							</a>
+							<button type="submit" name="delete-{modules_not_activated.ID}" value="true">{@modules.delete}</button>
 						</td>
 					</tr>
 					<script type="text/javascript">
@@ -120,7 +118,7 @@
 							});
 						});
 					-->
-					</script>							
+					</script>
 				# END modules_not_activated #
 				</tbody>
 			</table>
@@ -155,8 +153,8 @@
 				# ENDIF #
 
 				# START modules_activated #
-					<tr> 	
-						<td>					
+					<tr>
+						<td>
 							<span id="m{modules_activated.ID}"></span>
 							<img class="valign_middle" src="{PATH_TO_ROOT}/{modules_activated.ICON}/{modules_activated.ICON}.png" alt="" /><br />
 							<span class="text_strong">{modules_activated.NAME}</span> <em>({modules_activated.VERSION})</em>
@@ -170,14 +168,12 @@
 							</div>
 							<div id="picture_desc{modules_activated.ID}" style="text-align: center;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
 						</td>
-						<td>								
+						<td>
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
 						</td>
 						<td>
-							<a href="{modules_activated.U_DELETE_LINK}">	
-								<input name="delete-{modules_activated.ID}" value="{@modules.delete}" style="width:70px;text-align:center;"/>
-							</a>
+							<button type="submit" name="delete-{modules_activated.ID}" value="true">{@modules.delete}</button>
 						</td>
 					</tr>
 					<script type="text/javascript">
@@ -195,7 +191,7 @@
 							});
 						});
 					-->
-					</script>							
+					</script>
 				# END modules_activated #
 				</tbody>
 			</table>
@@ -208,4 +204,4 @@
 				&nbsp;&nbsp; 
 				<button type="reset" value="true">{@modules.reset}</button>
 			</fieldset>
-		</form>			
+		</form>

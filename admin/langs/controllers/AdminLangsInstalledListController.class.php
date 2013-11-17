@@ -58,8 +58,7 @@ class AdminLangsInstalledListController extends AdminController
 				'AUTHOR_WEBSITE' => $configuration->get_author_link(),
 				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
 				'COMPATIBILITY' => $configuration->get_compatibility(),
-				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, $authorizations, array(2 => true), $lang->get_id()),
-				'DELETE_LINK' => AdminLangsUrlBuilder::uninstall($lang->get_id())->rel()
+				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, $authorizations, array(2 => true), $lang->get_id())
 			));
 		}
 		
@@ -72,14 +71,22 @@ class AdminLangsInstalledListController extends AdminController
 	
 	public function save(HTTPRequestCustom $request)
 	{
+		$installed_langs = LangManager::get_installed_langs_map();
+		
+		foreach($installed_langs as $lang)
+		{
+			if ($request->get_string('delete-' . $lang->get_id(), ''))
+			{
+				AppContext::get_response()->redirect(AdminLangsUrlBuilder::uninstall($lang->get_id()));
+			}
+		}
+		
 		if ($request->get_bool('update', false))
 		{
-			$installed_langs = LangManager::get_installed_langs_map();
 			foreach ($installed_langs as $lang)
 			{
 				if ($lang->get_id() !== LangManager::get_default_lang())
 				{
-					$request = AppContext::get_request();
 					$id = $lang->get_id();
 					$activated = $request->get_bool('activated-' . $id, false);
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $id);
