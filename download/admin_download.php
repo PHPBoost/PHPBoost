@@ -55,8 +55,7 @@ $Template->put_all(array(
 	'L_APROB' => $LANG['aprob'],
 	'L_UPDATE' => $LANG['update'],
 	'L_DELETE' => $LANG['delete'],
-	'L_DATE' => LangLoader::get_message('date', 'date-common'),
-	'L_CONFIRM_DELETE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file'])
+	'L_DATE' => LangLoader::get_message('date', 'date-common')
 ));
 
 $result = $Sql->query_while("SELECT id, idcat, title, timestamp, approved, start, end, size
