@@ -13,9 +13,6 @@
 					return true;
 				}
 
-				function Confirm() {
-				return confirm("{L_DEL_ENTRY}");
-				}
 				function change_icon(img_path)
 				{
 					if( document.getElementById('icon_img') )
