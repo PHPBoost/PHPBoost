@@ -40,7 +40,7 @@
 						<input type="file" class="file" name="file_sql">
 						<input type="hidden" name="max_file_size" value="10485760">
 						<br /><br />
-						<input type="submit" value="{L_RESTORE_NOW}">
+						<button type="submit" name="" value="true">{L_RESTORE_NOW}</button>
 					</div>
 					<div class="spacer"></div>
 				</div>
