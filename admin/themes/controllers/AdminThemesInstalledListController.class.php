@@ -67,8 +67,7 @@ class AdminThemesInstalledListController extends AdminController
 				'HTML_VERSION' => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->lang['themes.bot_informed'],
 				'CSS_VERSION' => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['themes.bot_informed'],
 				'MAIN_COLOR' => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
-				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
-				'DELETE_LINK' => AdminThemeUrlBuilder::delete_theme($theme->get_id())->rel()
+				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width()
 			));
 			
 			if (count($pictures) > 0)
@@ -92,14 +91,22 @@ class AdminThemesInstalledListController extends AdminController
 	
 	public function save(HTTPRequestCustom $request)
 	{
+		$installed_themes = ThemeManager::get_installed_themes_map();
+		
+		foreach ($installed_themes as $theme)
+		{
+			if ($request->get_string('delete-' . $theme->get_id(), ''))
+			{
+				AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($theme->get_id()));
+			}
+		}
+		
 		if ($request->get_bool('update', false))
 		{
-			$installed_themes = ThemeManager::get_installed_themes_map();
 			foreach ($installed_themes as $theme)
 			{
 				if ($theme->get_id() !== ThemeManager::get_default_theme())
 				{
-					$request = AppContext::get_request();
 					$id_theme = $theme->get_id();
 					$activated = $request->get_bool('activated-' . $id_theme, false);
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
