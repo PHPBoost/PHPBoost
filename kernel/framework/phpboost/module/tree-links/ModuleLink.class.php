@@ -88,7 +88,7 @@ class ModuleLink
 	
 	public function is_visible()
 	{
-		return $this->visibility;
+		return (bool)$this->visibility;
 	}
 	
 	public function is_active()
@@ -109,9 +109,12 @@ class ModuleLink
 		
 		foreach ($this->get_sub_link() as $element)
 		{
-			$tpl->assign_block_vars('element', array(), array(
-				'ELEMENT' => $element->export()
-			));
+			if ($element->is_visible())
+			{
+				$tpl->assign_block_vars('element', array(), array(
+					'ELEMENT' => $element->export()
+				));
+			}
 		}
 		
 		return $tpl;

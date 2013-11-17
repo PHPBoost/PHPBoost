@@ -74,7 +74,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	
 	public function tree_links()
 	{
-		return NewsTreeLinks::get_tree_links();
+		return new NewsTreeLinks();
 	}
 }
 ?>
