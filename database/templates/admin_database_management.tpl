@@ -307,7 +307,7 @@
 					</div>
 					<fieldset class="fieldset_submit" style="margin:0">
 						<legend>{L_EXECUTE}</legend>
-						<input type="submit" value="{L_EXECUTE}">		
+						<button type="submit" name="submit" value="true">{L_EXECUTE}</button>
 					</fieldset>
 				</div>
 				</form>
