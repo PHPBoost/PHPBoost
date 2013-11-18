@@ -30,10 +30,10 @@
 					$(this.id).hide();
 				},
 				change_picture_more : function () {
-					$(this.id_click).update('<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" />');
+					$(this.id_click).className = 'icon-plus';
 				},
 				change_picture_less : function () {
-					$(this.id_click).update('<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/admin/minus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" />');
+					$(this.id_click).className = 'icon-minus';
 				},
 				get_already_click : function () {
 					return this.already_click;
@@ -88,12 +88,12 @@
 						</td>
 						<td>
 							<div id="desc_explain{modules_not_activated.ID}" style="display: none;">
-								<span class="text_strong">{@modules.name} :</span> {modules_not_activated.AUTHOR} {modules_not_activated.AUTHOR_WEBSITE}<br />
+								<span class="text_strong">{@modules.name} :</span> # IF modules_not_activated.C_AUTHOR #<a href="mailto:{modules_not_activated.AUTHOR_EMAIL}">{modules_not_activated.AUTHOR}</a># ELSE #{modules_not_activated.AUTHOR}# ENDIF # # IF modules_not_activated.C_AUTHOR_WEBSITE #<a href="{modules_not_activated.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 								<span class="text_strong">{@modules.description} :</span> {modules_not_activated.DESCRIPTION}<br />
 								<span class="text_strong">{@modules.compatibility} :</span> PHPBoost {modules_not_activated.COMPATIBILITY}<br />
 								<span class="text_strong">{@modules.php_version} :</span> {modules_not_activated.PHP_VERSION}
 							</div>
-							<div id="picture_desc{modules_not_activated.ID}" style="text-align: center;" "><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
+							<div style="text-align: center;cursor: pointer;"><i class="icon-plus" id="picture_desc{modules_not_activated.ID}"></i></div>
 						</td>
 						<td>
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
@@ -161,12 +161,12 @@
 						</td>
 						<td>
 							<div id="desc_explain{modules_activated.ID}" style="display: none;">
-								<span class="text_strong">{@modules.name} :</span> {modules_activated.AUTHOR} {modules_activated.AUTHOR_WEBSITE}<br />
+								<span class="text_strong">{@modules.name} :</span> # IF modules_activated.C_AUTHOR #<a href="mailto:{modules_activated.AUTHOR_EMAIL}">{modules_activated.AUTHOR}</a># ELSE #{modules_activated.AUTHOR}# ENDIF # # IF modules_activated.C_AUTHOR_WEBSITE #<a href="{modules_activated.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 								<span class="text_strong">{@modules.description} :</span> {modules_activated.DESCRIPTION}<br />
 								<span class="text_strong">{@modules.compatibility} :</span> PHPBoost {modules_activated.COMPATIBILITY}<br />
 								<span class="text_strong">{@modules.php_version} :</span> {modules_activated.PHP_VERSION}
 							</div>
-							<div id="picture_desc{modules_activated.ID}" style="text-align: center;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
+							<div style="text-align: center;cursor: pointer;"><i class="icon-plus" id="picture_desc{modules_activated.ID}"></i></div>
 						</td>
 						<td>
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
