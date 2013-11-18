@@ -1,6 +1,7 @@
 		<div id="message_helper">
-			<div class="{MESSAGE_CSS_CLASS}" style="width:500px;margin:auto;padding:10px;text-indent:35px;line-height:22px;">
-				{MESSAGE_CONTENT}
+			<div class="{MESSAGE_CSS_CLASS}">
+				<i class="icon-{MESSAGE_CSS_CLASS}"></i>
+				<div>{MESSAGE_CONTENT}</div>
 			</div>	
 		</div>
 		# IF C_TIMEOUT #
