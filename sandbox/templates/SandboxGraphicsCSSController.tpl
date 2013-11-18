@@ -452,10 +452,10 @@
 	</header>
 	<br />
 	<div class="content">
-		<h3 class="title1">Titre 1</h3><br />
-		<h3 class="title2">Titre 2</h3><br />
-		<h4 class="stitle1">Titre 3</h4><br />
-		<h4 class="stitle2">Titre 4</h4><br />
+		<h3 class="title1">Titre 1</h3>
+		<h3 class="title2">Titre 2</h3>
+		<h4 class="stitle1">Titre 3</h4>
+		<h4 class="stitle2">Titre 4</h4>
 	</div>
 	<footer></footer>
 </section>
