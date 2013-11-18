@@ -72,13 +72,10 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
-					<script type="text/javascript">
-					<!--				
-					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button">');
-					-->
-					</script>
-					&nbsp;&nbsp;
-					<button type="reset" value="true">{L_RESET}</button>	
+					&nbsp;
+					<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
+					&nbsp;
+					<button type="reset" value="true">{L_RESET}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>	
 			</form>	
