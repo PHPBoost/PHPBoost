@@ -32,7 +32,7 @@ class AdminModulesManagementController extends AdminController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();		
+		$this->init();
 		$this->build_view();
 		$this->save($request);
 		
@@ -40,7 +40,7 @@ class AdminModulesManagementController extends AdminController
 	}
 	
 	private function init()
-	{	
+	{
 		$this->load_lang();
 		$this->view = new FileTemplate('admin/modules/AdminModulesManagementController.tpl');
 		$this->view->add_lang($this->lang);
@@ -66,27 +66,33 @@ class AdminModulesManagementController extends AdminController
 			if (!in_array($module, $modules_activated))
 			{
 				$this->view->assign_block_vars('modules_not_activated', array(
+					'C_AUTHOR' => !empty($author),
+					'C_AUTHOR_WEBSITE' => !empty($author_website),
 					'ID' => $module->get_id(),
 					'NAME' => ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
 					'VERSION' => $configuration->get_version(),
-					'AUTHOR' => !empty($author) ? '<a href="mailto:' . $author_email. '">' . $author . '</a>' : $author,
-					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '" class="basic-button smaller">Web</a>' : '',
+					'AUTHOR' => $author,
+					'AUTHOR_EMAIL' => $author_email,
+					'AUTHOR_WEBSITE' => $author_website,
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'C_MODULE_ACTIVE' => $module->is_activated()
-				));	
+				));
 			}
 			else 
 			{
 				$this->view->assign_block_vars('modules_activated', array(
+					'C_AUTHOR' => !empty($author),
+					'C_AUTHOR_WEBSITE' => !empty($author_website),
 					'ID' => $module->get_id(),
 					'NAME' => ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
 					'VERSION' => $module->get_installed_version(),
-					'AUTHOR' => !empty($author) ? '<a href="mailto:' . $author_email. '">' . $author . '</a>' : $author,
-					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '" class="basic-button smaller">Web</a>' : '',
+					'AUTHOR' => $author,
+					'AUTHOR_EMAIL' => $author_email,
+					'AUTHOR_WEBSITE' => $author_website,
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
@@ -96,8 +102,8 @@ class AdminModulesManagementController extends AdminController
 		}
 		
 		$this->view->put_all(array(
-			'C_MODULES_ACTIVATED' => count($modules_activated) > 0 ? true : false,
-			'C_MODULES_NOT_ACTIVATED' => (count($modules_installed) - count($modules_activated)) > 0 ? true : false
+			'C_MODULES_ACTIVATED' => count($modules_activated) > 0,
+			'C_MODULES_NOT_ACTIVATED' => (count($modules_installed) - count($modules_activated)) > 0
 		));
 	}
 	
@@ -139,7 +145,7 @@ class AdminModulesManagementController extends AdminController
 					));
 				}
 			}
-		}	
+		}
 	}
 }
 ?>
