@@ -234,8 +234,7 @@ readers do not read off random characters that represent icons */
 .icon-check:before {
 	content: "\f00c";
 }
-.icon-times:before,
-.icon-remove:before {
+.icon-times:before {
 	content: "\f00d";
 }
 .icon-search-plus:before {
@@ -254,8 +253,7 @@ readers do not read off random characters that represent icons */
 .icon-cog:before {
 	content: "\f013";
 }
-.icon-trash-o:before, 
-.icon-delete:before {
+.icon-trash-o:before {
 	content: "\f014";
 }
 .icon-home:before {
@@ -652,8 +650,7 @@ readers do not read off random characters that represent icons */
 .icon-credit-card:before {
 	content: "\f09d";
 }
-.icon-rss:before,
-.icon-syndication:before {
+.icon-rss:before {
 	content: "\f09e";
 }
 .icon-hdd-o:before {
@@ -1346,4 +1343,19 @@ readers do not read off random characters that represent icons */
 }
 .icon-plus-square-o:before {
 	content: "\f196";
+}
+
+
+
+/* Complément PHPBoost */
+.icon-remove:before { /* copie times */
+	content: "\f00d";
+}
+
+.icon-syndication:before { /* copie RSS */
+	content: "\f09e";
+}
+
+.icon-delete:before { /* copie Trash */
+	content: "\f014";
 }
