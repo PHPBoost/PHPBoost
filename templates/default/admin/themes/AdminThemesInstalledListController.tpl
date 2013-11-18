@@ -76,9 +76,7 @@
 							<label><input type="radio" name="activated-{themes_installed.ID}" value="1" # IF themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.yes}</label>
 							<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.no}</label>
 							<br /><br />
-							<a href="{themes_installed.DELETE_LINK}">
-								<button type="submit" name="delete-{themes_installed.ID}" value="true">{L_DELETE}</button>
-							</a>
+							<button type="submit" name="delete-{themes_installed.ID}" value="true">{L_DELETE}</button>
 						# ELSE #
 							{@themes.yes}
 						# ENDIF #
