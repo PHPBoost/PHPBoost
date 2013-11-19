@@ -155,9 +155,9 @@
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/lock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/lock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
 						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/unlock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
 						# ENDIF #
 					
 					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}" class="icon-move"></a>
@@ -231,7 +231,7 @@
 						# ENDIF #
 					</div>
 					<span style="float:left;">&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> {msg.FORUM_MSG_DATE}</span>
-					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" /></a>
+					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" /></a>
 					# IF msg.C_FORUM_MSG_EDIT # 
 					&nbsp;&nbsp;<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="icon-edit"></a>
 					# ENDIF #
@@ -318,9 +318,9 @@
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/lock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/lock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
 						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/unlock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
 						# ENDIF #
 						
 					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}" class="icon-move"></a>
