@@ -77,16 +77,17 @@
 											
 											<strong>&nbsp;{web.L_DATE}:</strong> {web.DATE}<br />
 											
-											<strong>&nbsp;{web.L_VIEWS}:</strong> {COMPT} <br />
+											<strong>&nbsp;{web.L_VIEWS}:</strong> {COMPT} {L_TIMES}<br />
 											<strong>&nbsp;{web.L_NOTE}:</strong> 0 <br />
-											<strong>&nbsp;{web.L_COM}</strong>
+											<strong>&nbsp;{web.L_COM}</strong> 0
 											<br /><br />
 										</p>
-										<p style="text-align: center;">					
-											<a href="{web.URL}"><img src="{PICTURES_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" title="" /></a>
+										<p class="center">
+											<button type="button" name="{web.NAME}" class="visit" value="true">
+												{L_VISIT}<img src="{PATH_TO_ROOT}/web/templates/images/web.png" class="valign_middle button_img"/>
+											</button>
 										</p>
-								
-										<br /><br /><br />
+										<br />
 										<span id="web">&nbsp;</span>
 									</td>
 								</tr>
