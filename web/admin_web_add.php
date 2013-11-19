@@ -59,7 +59,8 @@ elseif (!empty($_POST['previs']))
 	));
 
 	$title = stripslashes(retrieve(POST, 'name', ''));
-	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$contents = retrieve(POST, 'contents', '');
+	$previewed_contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 	$url = retrieve(POST, 'url', '', TSTRING_UNCHANGE);
 	$idcat = retrieve(POST, 'idcat', 0);
 	$compt = retrieve(POST, 'compt', 0);
@@ -70,31 +71,20 @@ elseif (!empty($_POST['previs']))
 
 	$cat = $Sql->query("SELECT name FROM " . PREFIX . "web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	
-	$Template->assign_block_vars('web', array(
+	$Template->put_all(array(
+		'C_PREVIEW' => true,
 		'NAME' => $title,
-		'PREVIEWED_CONTENTS' => FormatingHelper::second_parse(stripslashes($contents)),
+		'KERNEL_EDITOR' => $editor->display(),
+		'CONTENTS' => $contents,
+		'PREVIEWED_CONTENTS' => FormatingHelper::second_parse(stripslashes($previewed_contents)),
 		'URL' => $url,
 		'IDCAT' => $idcat,
 		'CAT' => $cat,
-		'COMPT' => $compt,
 		'DATE' => gmdate_format('date_format_short'),
-		'L_DESC' => $LANG['description'],
-		'L_DATE' => LangLoader::get_message('date', 'date-common'),
-		'L_COM' => $LANG['com'],
-		'L_VIEWS' => $LANG['views'],
-		'L_NOTE' => $LANG['note'],
-		'L_CAT' => $LANG['categorie'],
-	));
-
-	$Template->put_all(array(
-		'NAME' => $title,
-		'CONTENTS' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
-		'URL' => $url,
-		'IDCAT' => $idcat,
 		'COMPT' => $compt,
 		'CHECK_ENABLED' => $aprob_enable,
 		'CHECK_DISABLED' => $aprob_disable,
-		'KERNEL_EDITOR' => $editor->display(),
+		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_NOTE' => $LANG['note'],
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
@@ -109,13 +99,15 @@ elseif (!empty($_POST['previs']))
 		'L_URL_LINK' => $LANG['url'],
 		'L_VIEWS' => $LANG['views'],
 		'L_DESC' => $LANG['description'],
+		'L_TIMES' => $LANG['n_time'],
+		'L_VISIT' =>$LANG['visit_link'],
 		'L_APROB' => $LANG['aprob'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset']
-	));	
+	));
 	
 	//Catégories.
 	$i = 0;
