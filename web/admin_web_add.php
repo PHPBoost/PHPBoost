@@ -111,6 +111,8 @@ elseif (!empty($_POST['previs']))
 		'L_URL_LINK' => $LANG['url'],
 		'L_VIEWS' => $LANG['views'],
 		'L_DESC' => $LANG['description'],
+		'L_TIMES' => $LANG['n_time'],
+		'L_VISIT' =>$LANG['visit_link'],
 		'L_APROB' => $LANG['aprob'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],

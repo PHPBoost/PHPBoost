@@ -69,11 +69,14 @@
 											<a href="{PATH_TO_ROOT}/web/web.php?cat={web.IDCAT}" title="{web.CAT}">{web.CAT}</a><br />
 											
 											<strong>{web.L_DATE}:</strong> {web.DATE}<br />									
-											<strong>{web.L_VIEWS}:</strong> {COMPT}
+											<strong>{web.L_VIEWS}:</strong> {COMPT} {L_TIMES}
 									</p>
-									<p style="text-align: center;">					
-										<a href="{web.URL}"><img src="{PICTURES_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" title="" /></a>
+									<p class="center">
+										<button type="button" name="{web.NAME}" class="visit" value="true">
+											{L_VISIT}<img src="{PATH_TO_ROOT}/web/templates/images/web.png" class="valign_middle button_img"/>
+										</button>
 									</p>
+									<br />
 								</div>
 								<div class="module_bottom_l"></div>		
 								<div class="module_bottom_r"></div>
