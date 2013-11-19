@@ -392,14 +392,13 @@ else
 		$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
 		$template->assign_block_vars('folder', array(
+			'C_MEMBER_FOLDER' => $show_member,
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
 			'IMG_FOLDER' => $show_member ? 'member_max.png' : 'folder_max.png',
 			'RENAME_FOLDER' => !$show_member ? '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="icon-edit"></a></span>' : '',
 			'DEL_TYPE' => $show_member ? 'eptf' : 'delf',
 			'C_TYPEFOLDER' => !$show_member,
-			'DEL_TYPE_IMG' => $show_member ? '<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/upload/trash_mini.png" alt="" class="valign_middle" />' : '<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" />',
-			'ALERT_DEL' => $show_member ? 'member' : 'folder',
 			'MOVE' => !$show_member ? '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="bbcode_hover" title="' . $LANG['moveto'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/upload/move.png" alt="" style="vertical-align:middle;" /></a>' : '',
 			'U_ONCHANGE_FOLDER' => "'admin_files" . url(".php?movef=" . $row['id'] . "&amp;to=' + this.options[this.selectedIndex].value + '") . "'",
 			'L_TYPE_DEL_FOLDER' => $LANG['del_folder'],

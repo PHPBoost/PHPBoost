@@ -44,10 +44,11 @@ if (!empty($popup)) //Popup.
 <meta http-equiv="Content-Style-Type" content="text/css" />
 
 <title>' . $LANG['files_management'] . '</title>
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/default.css"  type="text/css" media="screen, print, handheld" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/kernel/lib/css/font-awesome/css/font-awesome.css" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/design.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/global.css" type="text/css" media="screen, print, handheld" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/content.css" type="text/css" media="screen, print, handheld" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/generic.css" type="text/css" media="screen, print, handheld" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
 <script type="text/javascript">
 <!--
@@ -428,7 +429,6 @@ else
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
 			'RENAME_FOLDER' => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="icon-edit"></a></span>',
-			'DEL_TYPE_IMG' => '<img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" />',
 			'MOVE' => '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="icon-move" title="' . $LANG['moveto'] . '"></a>',
 			'U_MOVE' => url('.php?movefd=' . $row['id'] . '&amp;f=' . $folder . $popup),
 			'L_TYPE_DEL_FOLDER' => $LANG['del_folder']

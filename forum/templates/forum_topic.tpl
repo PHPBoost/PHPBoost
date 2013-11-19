@@ -17,9 +17,6 @@
 		}
 		function XMLHttpRequest_del(idmsg)
 		{
-			if( document.getElementById('dimg' + idmsg) )
-				document.getElementById('dimg' + idmsg).src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
-			
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&del=1&idm=' + idmsg + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
@@ -27,11 +24,6 @@
 				{	
 					if( document.getElementById('d' + idmsg) )
 						document.getElementById('d' + idmsg).style.display = 'none';
-				}
-				else if( xhr_object.readyState == 4 && xhr_object.responseText == '-1' )
-				{	
-					if( document.getElementById('dimg' + idmsg) )
-						document.getElementById('dimg' + idmsg).src = '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png';
 				}
 			}
 			xmlhttprequest_sender(xhr_object, null);
