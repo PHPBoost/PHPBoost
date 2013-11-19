@@ -114,7 +114,8 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	$row = $Sql->query_array(PREFIX . 'web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$title = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$contents = retrieve(POST, 'contents', '');
+	$previewed_contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 	$url = retrieve(POST, 'url', '', TSTRING_UNCHANGE);
 	$idcat = retrieve(POST, 'idcat', 0);
 	$compt = retrieve(POST, 'compt', 0);
@@ -124,35 +125,24 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
 
 	$cat = $Sql->query("SELECT name FROM " . PREFIX . "web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-	
-	$Template->assign_block_vars('web', array(
-		'NAME' => $title,
-		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
-		'URL' => $url,
-		'IDCAT' => $idcat,
-		'CAT' => $cat,
-		'COMPT' => $compt,
-		'DATE' => gmdate_format('date_format_short'),
-		'L_DESC' => $LANG['description'],
-		'L_DATE' => LangLoader::get_message('date', 'date-common'),
-		'L_COM' => $LANG['com'],
-		'L_VIEWS' => $LANG['views'],
-		'L_NOTE' => $LANG['note'],
-		'L_CATEGORY' => $LANG['categorie'],
-	));
 
 	$Template->put_all(array(
+		'C_PREVIEW' => true,
 		'IDWEB' => $id_post,
 		'TITLE' => $title,
-		'KERNEL_EDITOR' => $editor->display(),		
+		'KERNEL_EDITOR' => $editor->display(),
 		'NAME' => $title,
 		'CONTENTS' => $contents,
+		'PREVIEWED_CONTENTS' => FormatingHelper::second_parse(stripslashes($previewed_contents)),
 		'URL' => $url,
 		'IDWEB' => $row['id'],
 		'IDCAT' => $idcat,
+		'CAT' => $cat,
+		'DATE' => gmdate_format('date_format_short'),
 		'COMPT' => $compt,
 		'APROB_ENABLED' => $aprob_enable,
 		'APROB_DISABLED' => $aprob_disable,
+		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_NOTE' => $LANG['note'],
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
@@ -167,15 +157,17 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'L_URL_LINK' => $LANG['url'],
 		'L_VIEWS' => $LANG['views'],
 		'L_DESC' => $LANG['description'],
+		'L_TIMES' => $LANG['n_time'],
+		'L_VISIT' =>$LANG['visit_link'],
 		'L_APROB' => $LANG['aprob'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_UPDATE' => $LANG['update'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset']
-	));	
+	));
 	
-	//Catégories.	
+	//Catégories.
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
 	FROM " . PREFIX . "web_cat", __LINE__, __FILE__);

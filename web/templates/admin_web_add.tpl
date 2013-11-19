@@ -46,64 +46,43 @@
 			</ul>
 		</div> 
 		
-		<div id="admin_contents">		
-			# START web #
-			<table class="module_table">
-					<tr> 
-						<th colspan="2">
-							{L_PREVIEW}
-						</th>
-					</tr>
-					<tr> 
-						<td class="row1">
-							<br />
-							<table width="96%" border="0" style="border-collapse: collapse; margin: auto;" class="table_news" cellspacing="0" cellpadding="3">
-								<tr>
-									<th style="text-align: center;">
-										<span class="text_subtitle">{web.NAME}</span>
-									</th>
-								</tr>
-								<tr>					
-									<td>						
-										<p>
-											<br /><br />
-											
-											<strong>&nbsp;{web.L_DESC}:</strong> {web.PREVIEWED_CONTENTS}
-											
-											<br /><br />
-											
-											<strong>&nbsp;{web.L_CAT}:</strong> 
-											<a href="{PATH_TO_ROOT}/web/web.php?cat={web.IDCAT}" title="{web.CAT}">{web.CAT}</a><br />
-											
-											<strong>&nbsp;{web.L_DATE}:</strong> {web.DATE}<br />
-											
-											<strong>&nbsp;{web.L_VIEWS}:</strong> {COMPT} <br />
-											<strong>&nbsp;{web.L_NOTE}:</strong> 0 <br />
-											<strong>&nbsp;{web.L_COM}</strong>
-											<br /><br />
-										</p>
-										<p style="text-align: center;">					
-											<a href="{web.URL}"><img src="{PICTURES_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" title="" /></a>
-										</p>
-								
-										<br /><br /><br />
-										<span id="web">&nbsp;</span>
-									</td>
-								</tr>
-								<tr>
-									<td class="news_bottom">
-										&nbsp;
-									</td>	
-								</tr>
-							</table>
-							<br />
-						</td>
-					</tr>
-			</table>	
-
-			<br /><br /><br />
-			# END web #
-
+		<div id="admin_contents">
+			# IF C_PREVIEW #
+			<fieldset>
+				<legend>
+					{L_PREVIEW}
+				</legend>
+				<article>
+					<header>
+						<h1>
+							{NAME}
+						</h1>
+					</header>
+					<div class="content">
+						<p>
+							<strong>{L_DESC}:</strong> {PREVIEWED_CONTENTS}
+							<br /><br />
+							<strong>{L_CATEGORY}:</strong> 
+							
+							<a href="" title="{CAT}">{CAT}</a><br />
+							
+							<strong>{L_DATE}:</strong> {DATE}<br />
+							<strong>{L_VIEWS}:</strong> {COMPT} {L_TIMES}
+							
+							<span class="spacer">&nbsp;</span>
+						</p>
+						<p class="center">
+							<button type="button" name="{NAME}" class="visit" value="true">
+								{L_VISIT}<img src="{PATH_TO_ROOT}/web/templates/images/web.png" class="valign_middle button_img"/>
+							</button>
+						</p>
+						<br />
+					</div>
+					<footer></footer>
+				</article>
+			</fieldset>
+			# ENDIF #
+			
 			# INCLUDE message_helper #
 			
 			<form action="admin_web_add.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content">
