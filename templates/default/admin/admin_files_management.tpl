@@ -1,8 +1,5 @@
 		<script type="text/javascript">
 		<!--
-		function Confirm_member() {
-			return confirm("{L_CONFIRM_EMPTY_FOLDER}");
-		}
 		function popup_upload(path, width, height, scrollbars)
 		{
 			if( height == '0' )
@@ -106,7 +103,7 @@
 					{
 						if( xhr_object.responseText > 0 )
 						{
-							document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="admin_files.php?f=' + xhr_object.responseText + '"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="admin_files.php?f=' + xhr_object.responseText + '">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="icon-edit"></a></span></a></span> <a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" class="icon-delete" data-confirmation="delete-element"></a> <a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
+							document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="admin_files.php?f=' + xhr_object.responseText + '"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="admin_files.php?f=' + xhr_object.responseText + '">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="icon-edit"></a></span></a></span> <a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" class="icon-delete" data-confirmation="delete-element"></a> <a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" title="{L_MOVETO}" class="icon-move"></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
 							var total_folder = document.getElementById('total_folder').innerHTML;
 							total_folder++;						
 							document.getElementById('total_folder').innerHTML = total_folder;
@@ -303,9 +300,9 @@
 									<td style="padding-top:8px;">						
 										<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span>
 										<div style="padding-top:5px;">
-											{folder.RENAME_FOLDER}	<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" onclick="javascript:return Confirm_{folder.ALERT_DEL}();" title="{folder.L_TYPE_DEL_FOLDER}">{folder.DEL_TYPE_IMG}</a>
+											{folder.RENAME_FOLDER}	<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" title="{folder.L_TYPE_DEL_FOLDER}" class="icon-delete" data-confirmation="# IF folder.C_MEMBER_FOLDER #{L_CONFIRM_EMPTY_FOLDER}# ELSE #delete-element# ENDIF #"></a>
 											
-											# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a># ENDIF #
+											# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" title="{L_MOVETO}" class="icon-move"></a># ENDIF #
 											<span id="img{folder.ID}"></span>
 										</div>
 									</td>
@@ -331,7 +328,7 @@
 										{files.RENAME_FILE}
 										<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a> 
 										
-										<a href="admin_files{files.U_MOVE}" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>						
+										<a href="admin_files{files.U_MOVE}" title="{L_MOVETO}" class="icon-move"></a>						
 										
 										{files.INSERT}
 										<span id="imgf{files.ID}"></span>

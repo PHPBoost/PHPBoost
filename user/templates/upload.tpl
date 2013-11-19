@@ -329,8 +329,8 @@
 								<td style="padding-top:8px;">						
 									<span id="f{folder.ID}"><a href="upload.php?f={folder.ID}{POPUP}" class="com">{folder.NAME}</a></span>
 									<div style="padding-top:5px;">
-										{folder.RENAME_FOLDER}	<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" onclick="javascript:return Confirm_folder();" title="{folder.L_TYPE_DEL_FOLDER}">{folder.DEL_TYPE_IMG}</a>
-										
+										{folder.RENAME_FOLDER}	<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{folder.L_TYPE_DEL_FOLDER}" class="icon-delete" data-confirmation="delete-element"></a>
+									
 										<a href="upload{folder.U_MOVE}" title="{L_MOVETO}" class="icon-move"></a>
 										
 										<span id="img{folder.ID}"></span>
