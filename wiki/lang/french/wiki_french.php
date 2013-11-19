@@ -204,7 +204,7 @@ $LANG['wiki_confirm_unwatch_this_topic'] = 'Etes-vous certain de vouloir supprim
 
 //Administration
 $LANG['wiki_groups_config'] = 'Configuration des groupes';
-$LANG['explain_wiki_groups'] = 'Vous pouvez paramétrer ici tout ce qui concerne les autorisations. Vous pouvez attribuer des autorisations à un niveau mais aussi des autorisations spéciales à un groupe';
+$LANG['explain_wiki_groups'] = 'Vous pouvez paramétrer ici tout ce qui concerne les autorisations. Vous pouvez attribuer des autorisations à un niveau mais aussi des autorisations spéciales à un groupe.';
 $LANG['wiki_auth_create_article'] = 'Créer un article';
 $LANG['wiki_auth_create_cat'] = 'Créer une catégorie';
 $LANG['wiki_auth_restore_archive'] = 'Restaurer une archive';
