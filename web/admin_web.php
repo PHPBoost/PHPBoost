@@ -151,6 +151,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_CAT' => $LANG['cat_management'],
 		'L_WEB_CONFIG' => $LANG['web_config'],
+		'L_EDIT_LINK' => $LANG['edit_link'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_CATEGORY' => $LANG['categorie'],
 		'L_TITLE' => $LANG['title'],

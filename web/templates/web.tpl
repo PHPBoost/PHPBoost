@@ -160,7 +160,7 @@
 		</p>
 		<p class="center">					
 			<button type="button" name="{NAME}" class="visit" onclick="document.location = 'count.php?id={IDWEB}';" value="true">
-				{L_VISIT}<img src="{PATH_TO_ROOT}/web/templates/images/web.png" class="valign_middle button_img"/>
+				{L_VISIT}<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" class="valign_middle button_img"/>
 			</button>
 		</p>
 		{KERNEL_NOTATION}
