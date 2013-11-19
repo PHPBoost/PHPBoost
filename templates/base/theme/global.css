@@ -585,7 +585,7 @@ menu.dynamic_menu > ul > li > a {
 	padding:4px 12px;
 }
 menu.dynamic_menu > ul > li > a > i {
-	font-size: 1em;
+	font-size: 1.1em;
 }
 
 menu.dynamic_menu li li:hover > ul {

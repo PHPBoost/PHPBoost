@@ -532,6 +532,12 @@ input.field-xlarge { width:300px; }
 
 .form-field {
 	display:inline-block;
+	width:59%;
+}
+
+.module_mini_container .form-field {
+	display:block;
+	width:100%;
 }
 
 /* Label pour les checkbox et radio */
@@ -545,7 +551,7 @@ input.field-xlarge { width:300px; }
 	display:inline-block;
 	width: 40%;
 	text-align: left;
-	margin-right: 10px;
+	padding-right: 10px;
 	padding-top: 3px;
 	vertical-align: top;
 }
