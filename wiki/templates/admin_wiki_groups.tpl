@@ -24,122 +24,103 @@
 
 		<div id="admin_contents">
 			<form action="admin_wiki_groups.php?token={TOKEN}" method="post">
-				<table class="module_table">
-					<tr>			
-						<th colspan="2">
-							{L_WIKI_GROUPS}
-						</th>
-					</tr>	
-					<tr>			
-						<td colspan="2" class="row3">
-							{EXPLAIN_WIKI_GROUPS}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1" style="width:200px;">
-							{L_CREATE_ARTICLE}
-						</td>
-						<td class="row2">
+				<fieldset>
+					<legend>
+						{L_WIKI_GROUPS}
+					</legend>
+					{EXPLAIN_WIKI_GROUPS}
+					
+					<div class="form-element">
+						<label>{L_CREATE_ARTICLE}</label>
+						
+						<div class="form-field">
 							{SELECT_CREATE_ARTICLE}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1" style="width:250px;">
-							{L_CREATE_CAT}
-						</td>
-						<td class="row2">
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_CREATE_CAT}</label>
+						
+						<div class="form-field">
 							{SELECT_CREATE_CAT}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1" style="width:250px;">
-							{L_RESTORE_ARCHIVE}
-						</td>
-						<td class="row2">
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_RESTORE_ARCHIVE}</label>
+						
+						<div class="form-field">
 							{SELECT_RESTORE_ARCHIVE}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1" style="width:250px;">
-							{L_DELETE_ARCHIVE}
-						</td>
-						<td class="row2">
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_DELETE_ARCHIVE}</label>
+						
+						<div class="form-field">
 							{SELECT_DELETE_ARCHIVE}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_EDIT}
-						</td>
-						<td class="row2">
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_EDIT}</label>
+						
+						<div class="form-field">
 							{SELECT_EDIT}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_DELETE}
-						</td>
-						<td class="row2">
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_DELETE}</label>
+						
+						<div class="form-field">
 							{SELECT_DELETE}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_RENAME}
-						</td>
-						<td class="row2">
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_RENAME}</label>
+						
+						<div class="form-field">
 							{SELECT_RENAME}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_REDIRECT}
-						</td>
-						<td class="row2">
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_REDIRECT}</label>
+						
+						<div class="form-field">
 							{SELECT_REDIRECT}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_MOVE}
-						</td>
-						<td class="row2">
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_MOVE}</label>
+						
+						<div class="form-field">
 							{SELECT_MOVE}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_STATUS}
-						</td>
-						<td class="row2">
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_STATUS}</label>
+						
+						<div class="form-field">
 							{SELECT_STATUS}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_COM}
-						</td>
-						<td class="row2">
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_COM}</label>
+						
+						<div class="form-field">
 							{SELECT_COM}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_RESTRICTION}
-						</td>
-						<td class="row2">
+						</div>
+					</div>
+					<div class="form-element">
+						<label>{L_RESTRICTION}</label>
+						
+						<div class="form-field">
 							{SELECT_RESTRICTION}
-						</td>
-					</tr>
-				</table>
-				
-				<br /><br />
+						</div>
+					</div>
+				</fieldset>
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 					&nbsp;&nbsp; 
-					<button type="reset" value="true">{L_RESET}</button>				
-				</fieldset>	
+					<button type="reset" value="true">{L_RESET}</button>
+				</fieldset>
 			</form>
 		</div>
