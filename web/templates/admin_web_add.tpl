@@ -79,7 +79,7 @@
 											
 											<strong>&nbsp;{web.L_VIEWS}:</strong> {COMPT} {L_TIMES}<br />
 											<strong>&nbsp;{web.L_NOTE}:</strong> 0 <br />
-											<strong>&nbsp;{web.L_COM}</strong> 0
+											<strong>&nbsp;{web.L_COM}:</strong> 0
 											<br /><br />
 										</p>
 										<p class="center">
