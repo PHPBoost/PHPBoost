@@ -123,7 +123,6 @@ else
 		'CAT_ID' => $idcat,
 		'GALLERY' => !empty($idcat) ? $CAT_GALLERY[$idcat]['name'] : $LANG['gallery'],
 		'HEIGHT_MAX' => ($config->get_mini_max_height() - 15),
-		'ADD_PICS' => '<a href="admin_gallery_add.php?cat=' . $idcat . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>',
 		'ARRAY_JS' => '',
 		'NBR_PICS' => 0,
 		'MAX_START' => 0,

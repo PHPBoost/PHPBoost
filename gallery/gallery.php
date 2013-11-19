@@ -258,7 +258,6 @@ elseif ($g_add)
 		'WIDTH_MAX' => $config->get_max_width(),
 		'HEIGHT_MAX' => $config->get_max_height(),
 		'WEIGHT_MAX' => $config->get_max_weight(),
-		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'IMG_FORMAT' => 'JPG, PNG, GIF',
 		'L_IMG_FORMAT' => $LANG['img_format'],
 		'L_WIDTH_MAX' => $LANG['width_max'],
