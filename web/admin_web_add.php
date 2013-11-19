@@ -59,7 +59,7 @@ elseif (!empty($_POST['previs']))
 	));
 
 	$title = stripslashes(retrieve(POST, 'name', ''));
-	$contents = retrieve(POST, 'contents', '');
+	$contents = stripslashes(retrieve(POST, 'contents', TSTRING_UNCHANGE));
 	$previewed_contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 	$url = retrieve(POST, 'url', '', TSTRING_UNCHANGE);
 	$idcat = retrieve(POST, 'idcat', 0);
