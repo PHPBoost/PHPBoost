@@ -145,7 +145,6 @@ else
 		'L_EDIT' => $LANG['edit'],
 		'L_MOVETO' => $LANG['moveto'],
 		'L_DELETE' => $LANG['delete'],
-		'L_APROB_IMG' => ($CAT_GALLERY[$idcat]['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
 		'L_SUBMIT' => $LANG['submit'],
 		'U_GALLERY_CAT_LINKS' => $cat_links
 	));
@@ -305,7 +304,8 @@ else
 					'L_DIMENSION' => $LANG['dimension'],
 					'L_SIZE' => $LANG['size'],
 					'L_EDIT' => $LANG['edit'],
-					'L_APROB_IMG' => ($info_pics['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
+					'L_APROB' => $LANG['aprob'],
+					'L_UNAPROB' => $LANG['unaprob'],
 					'L_THUMBNAILS' => $LANG['thumbnails']
 				));
 
@@ -316,6 +316,7 @@ else
 
 				//Affichage de l'image et de ses informations.
 				$Template->assign_block_vars('pics.pics_max', array(
+					'C_APPROVED' => $info_pics['aprob'],
 					'ID' => $info_pics['id'],
 					'IMG' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $idcat . '" alt="" / >',
 					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
@@ -328,7 +329,6 @@ else
 					'CAT' => $cat_list,
 					'RENAME' => addslashes($info_pics['name']),
 					'RENAME_CUT' => addslashes($info_pics['name']),
-					'IMG_APROB' => ($info_pics['aprob'] == 1) ? 'unvisible.png' : 'visible.png',
 					'U_DEL' => 'php?del=' . $info_pics['id'] . '&amp;cat=' . $idcat . '&amp;token=' . $Session->get_token(),
 					'U_MOVE' => '.php?id=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value',
 					'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_previous . '#pics_max"><img src="../templates/' . get_utheme() . '/images/left.png" alt="" class="valign_middle" /></a> <a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_previous . '#pics_max">' . $LANG['previous'] . '</a>' : '',
@@ -393,6 +393,7 @@ else
 					$cat_list .= ($key_cat == $row['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 
 				$Template->assign_block_vars('pics.list', array(
+					'C_APPROVED' => $row['aprob'],
 					'ID' => $row['id'],
 					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $name . '" />',
 					'PATH' => $row['path'],
@@ -403,7 +404,6 @@ else
 					'TR_START' => $tr_start,
 					'TR_END' => $tr_end,
 					'CAT' => $cat_list,
-					'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
 					'U_DISPLAY' => $display_link,
 					'U_POSTOR' => $LANG['by'] . ' <a class="com" href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '">' . $row['login'] . '</a>',
 				));

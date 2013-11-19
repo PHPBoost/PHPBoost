@@ -39,9 +39,7 @@
 						# ENDIF #
 					# ENDIF #
 					# IF categories.C_VISIBLE #
-						<a href="{categories.ACTION_HIDE}" title="{L_MANAGEMENT_HIDE_CAT}" id="visibility_{categories.ID}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{L_MANAGEMENT_HIDE_CAT}" class="valign_middle" />
-						</a>&nbsp;
+						<a href="{categories.ACTION_HIDE}" title="{L_MANAGEMENT_HIDE_CAT}" id="visibility_{categories.ID}" class="icon-eye"></a>&nbsp;
 						# IF C_AJAX_MODE #
 							<script type="text/javascript">
 								<!--
@@ -50,9 +48,7 @@
 							</script>
 						# ENDIF #
 					# ELSE #
-						<a href="{categories.ACTION_SHOW}" title="{L_MANAGEMENT_SHOW_CAT}" id="visibility_{categories.ID}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="{L_MANAGEMENT_SHOW_CAT}" class="valign_middle" />
-						</a>&nbsp;
+						<a href="{categories.ACTION_SHOW}" title="{L_MANAGEMENT_SHOW_CAT}" id="visibility_{categories.ID}" class="icon-eye-slash"></a>&nbsp;
 						# IF C_AJAX_MODE #
 							<script type="text/javascript">
 								<!--
