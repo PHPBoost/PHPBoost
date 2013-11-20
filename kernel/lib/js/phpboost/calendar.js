@@ -77,13 +77,6 @@ function insert_date(field, date)
 function xmlhttprequest_calendar(field, vars)
 {
 	filename = PATH_TO_ROOT + '/kernel/framework/ajax/mini_calendar_xmlhttprequest.php' + vars;
-	default_image = PATH_TO_ROOT + '/templates/' + THEME + '/images/calendar.png';
-	
-	if ($('img' + field))
-	{
-		default_image = $('img' + field).src;
-		$('img' + field).src = PATH_TO_ROOT + '/templates/' + THEME + '/images/loading_mini.gif';
-	}
 	
 	new Ajax.Request(filename,
 			{
@@ -93,7 +86,6 @@ function xmlhttprequest_calendar(field, vars)
 			{
 				$(field).innerHTML = response.responseText;
 				show_div(field, true);
-				$('img' + field).src = default_image;
 			}
 		}
 	);
