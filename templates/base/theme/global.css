@@ -418,7 +418,6 @@ a.wikipedia_link{ border-bottom:1px dotted; }
 /* Niveau 2 */
 .dynamic_menu li ul {
     position:absolute;
-	background-color:#FFFFFF;
 	top:-99999em;
 	opacity:0;
 	margin:0 !important;

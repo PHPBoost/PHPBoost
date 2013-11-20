@@ -8,7 +8,7 @@ var ContactFields = Class.create({
 	create_sortable : function() {
 		Sortable.create(this.id, {
 			tag:'li',
-			only:'sortable_element'
+			only:'sortable-element'
 		});
 	},
 	destroy_sortable : function() {
@@ -157,27 +157,27 @@ Event.observe(window, 'load', function() {
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="ContactFields.serialize_sortable();">
 	<fieldset id="contact_fields_management">
 	<legend>{@admin.fields.manage}</legend>
-		<ul id="fields_list" class="sortable_block">
+		<ul id="fields_list" class="sortable-block">
 			# START fields_list #
-				<li class="sortable_element" id="list_{fields_list.ID}">
-					<div class="sortable_title">
+				<li class="sortable-element" id="list_{fields_list.ID}">
+					<div class="sortable-title">
 						<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows"></i>
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="" />
 						<span class="text_strong">{fields_list.NAME}</span>
-						<div class="sortable_actions">
+						<div class="sortable-actions">
 							{@admin.field.required} : <span class="text_strong"># IF fields_list.C_REQUIRED #{@admin.field.yes}# ELSE #{@admin.field.no}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
-							<div class="sortable_options">
+							<div class="sortable-options">
 								<a title="{@admin.fields.move_field_up}" id="move_up_{fields_list.ID}"><i class="icon-arrow-up"></i></a>
 							</div>
-							<div class="sortable_options">
+							<div class="sortable-options">
 								<a title="{@admin.fields.move_field_down}" id="move_down_{fields_list.ID}"><i class="icon-arrow-down"></i></a>
 							</div>
 							# ENDIF #
-							<div class="sortable_options">
+							<div class="sortable-options">
 								<a href="{fields_list.U_EDIT}" title="{@admin.fields.action.edit_field}" class="icon-edit"></a>
 							</div>
-							<div class="sortable_options">
+							<div class="sortable-options">
 								# IF fields_list.C_DELETE #<a class="icon-delete" data-confirmation="delete-element" title="{@admin.fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
 							</div>
 							# IF NOT fields_list.C_READONLY #<img id="loading_{fields_list.ID}" alt="" class="valign_middle" /><a><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" width="16px" /></a># ELSE #<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="not_displayable" width="16px" /># ENDIF #
