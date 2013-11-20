@@ -43,7 +43,7 @@ ${resources('install/install')}
 								&nbsp;&nbsp;&nbsp;<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign_middle" />
 							</p>
 							<p id="button_change_lang">
-								<input type="submit" value="{@change}">
+								<button type="submit" value="true">{@change}</button>
 							</p>
 							<script type="text/javascript">
 							<!--

@@ -29,6 +29,6 @@ function serialize_sortable()
 	<fieldset class="fieldset_submit">
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="tree" id="tree" value="">
-		<input type="submit" name="valid" value="${LangLoader::get_message('submit', 'main')}">					
+		<button type="submit" name="valid" value="true">${LangLoader::get_message('submit', 'main')}</button>					
 	</fieldset>
 </form>

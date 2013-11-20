@@ -137,9 +137,9 @@
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_change_status" value="{status.ID_ARTICLE}">
-				<input type="submit" value="{L_SUBMIT}">
-				<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();hide_div('xmlhttprequest_result')" type="button">
-				<input value="{L_RESET}" class="reset" type="reset">
+				<button type="submit" value="true">{L_SUBMIT}</button>
+				<button onclick="XMLHttpRequest_preview();hide_div('xmlhttprequest_result')" type="button">{L_PREVIEW}</button>
+				<button type="reset">{L_RESET}</button>
 			</fieldset>
 		</form>
 		# END status #
@@ -180,7 +180,7 @@
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_move" value="{move.ID_ARTICLE}">
-				<input type="submit" value="{L_SUBMIT}">
+				<button type="submit" value="true">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END move #
@@ -220,7 +220,7 @@
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_rename" value="{rename.ID_ARTICLE}">
-				<input type="submit" value="{L_SUBMIT}">
+				<button type="submit" value="true">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END rename #
@@ -296,7 +296,7 @@
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="create_redirection" value="{create.ID_ARTICLE}">
-				<input type="submit" value="{L_SUBMIT}">
+				<button type="submit" value="true">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END create #
@@ -342,7 +342,7 @@
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_remove" value="{remove.ID_ARTICLE}">
-				<input type="submit" value="{L_SUBMIT}">
+				<button type="submit" value="true">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END remove #
