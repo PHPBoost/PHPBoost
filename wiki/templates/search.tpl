@@ -27,7 +27,7 @@
 							{L_CONTENTS}
 						</label>
 						<br /><br />
-						<input type="submit" value="{L_SEARCH}">
+						<button type="submit" value="true">{L_SEARCH}</button>
 					</td>
 				</tr>
 			</table>

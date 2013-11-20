@@ -99,7 +99,7 @@
 				</table>
 				<br />
 				<input type="hidden" name="new_cat" id="id_cat" value="{SELECTED_CAT}">
-				<p style="text-align:center;"><input type="submit" value="{L_SUBMIT}" name="valid"></p>
+				<p style="text-align:center;"><button type="submit" value="true" name="valid">{L_SUBMIT}</button></p>
 				</form>
 			</td>
 		</tr>		

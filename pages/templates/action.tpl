@@ -167,7 +167,7 @@
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
 		<input type="hidden" name="del_cat" value="{remove.ID_ARTICLE}">
-		<input type="submit" value="{L_SUBMIT}">
+		<button type="submit" value="true">{L_SUBMIT}</button>
 	</fieldset>
 </form>
 # END remove #
