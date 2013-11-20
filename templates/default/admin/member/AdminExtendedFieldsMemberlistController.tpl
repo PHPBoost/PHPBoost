@@ -102,6 +102,8 @@ Event.observe(window, 'load', function() {
 							<div class="sortable_options">
 								# IF NOT list_extended_fields.FREEZE #
 								<a title="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="icon-delete"></a>
+								# ELSE #
+								&nbsp;
 								# ENDIF #
 							</div>
 							<a href="#">
