@@ -8,7 +8,7 @@ var ExtendedFields = Class.create({
 	create_sortable : function() {
 		Sortable.create(this.id, {
 			tag:'li',
-			only:'sortable_element'
+			only:'sortable-element'
 		});
 	},
 	destroy_sortable : function() {
@@ -84,22 +84,22 @@ Event.observe(window, 'load', function() {
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="ExtendedFields.serialize_sortable();">
 	<fieldset id="management_extended_fields">
 	<legend>{L_MANAGEMENT_EXTENDED_FIELDS}</legend>
-		<ul id="lists" class="sortable_block">
+		<ul id="lists" class="sortable-block">
 			# START list_extended_fields #
-				<li id="list_{list_extended_fields.ID}" class="sortable_element">
-					<div class="sortable_title">
+				<li id="list_{list_extended_fields.ID}" class="sortable-element">
+					<div class="sortable-title">
 						<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="url" class="valign_middle" style="cursor:move;margin-right:10px;" />
 						{L_NAME} : <span class="text_strong" >{list_extended_fields.NAME}</span>
-						<div class="sortable_actions">
+						<div class="sortable-actions">
 							{L_REQUIRED} : <span class="text_strong" >{list_extended_fields.L_REQUIRED}</span> 
-							<div class="sortable_options">
+							<div class="sortable-options">
 								<img id="loading_{list_extended_fields.ID}" alt="" class="valign_middle" />
 							</div>
-							<div class="sortable_options">
+							<div class="sortable-options">
 								<a href="{list_extended_fields.EDIT_LINK}" title="{L_UPDATE}" class="icon-edit"></a>
 							</div>
-							<div class="sortable_options">
+							<div class="sortable-options">
 								# IF NOT list_extended_fields.FREEZE #
 								<a title="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="icon-delete"></a>
 								# ELSE #

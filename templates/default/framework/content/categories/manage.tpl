@@ -16,7 +16,7 @@ function serialize_sortable()
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
 	<fieldset>
 		<legend>{@categories}</legend>
-			<ul id="categories" class="sortable_block">
+			<ul id="categories" class="sortable-block">
 				# IF C_NOT_CATEGORIES #
 					<div class="center">{@message.not_categories}</div>
 				# ELSE #

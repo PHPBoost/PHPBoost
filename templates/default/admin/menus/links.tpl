@@ -42,8 +42,8 @@ function getAuthForm(id) {
 
 function addSubElement(menu_element_id) {
     var id = idMax++;
-    var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'sortable_element', style: 'display:none;' }, [
-        Builder.node('div', {className: 'sortable_title'}, [
+    var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'sortable-element', style: 'display:none;' }, [
+        Builder.node('div', {className: 'sortable-title'}, [
 			Builder.node('i', {className: 'icon-arrows', title: "${LangLoader::get_message('move', 'admin')}"}),
             ' ',
             Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/url.png', alt: 'plus'}),
@@ -60,13 +60,13 @@ function addSubElement(menu_element_id) {
             ' ',
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}),
 			
-			Builder.node('div', {className: 'sortable_options preview'}, [
+			Builder.node('div', {className: 'sortable-options preview'}, [
 			
 			Builder.node('img', { id: 'menu_element_' + id + '_image_preview'}),
 			
 			]),
         
-			Builder.node('div', {className: 'sortable_actions'}, [
+			Builder.node('div', {className: 'sortable-actions'}, [
 				Builder.node('i', {class: 'icon-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
 				' ',
 				Builder.node('i', {class: 'icon-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
@@ -93,8 +93,8 @@ function addSubElement(menu_element_id) {
 
 function addSubMenu(menu_element_id) {
     var id = idMax++;
-    var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'sortable_element', style: 'display:none;' }, [
-        Builder.node('div', {className: 'sortable_title'}, [
+    var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'sortable-element', style: 'display:none;' }, [
+        Builder.node('div', {className: 'sortable-title'}, [
 			Builder.node('i', {className: 'icon-arrows', title: "${LangLoader::get_message('move', 'admin')}"}),
             ' ',
             Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png', alt: 'folder'}),
@@ -111,13 +111,13 @@ function addSubMenu(menu_element_id) {
             ' ',
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}),
 			
-			Builder.node('div', {className: 'sortable_options preview'}, [
+			Builder.node('div', {className: 'sortable-options preview'}, [
 			
 			Builder.node('img', { id: 'menu_element_' + id + '_image_preview'}),
 			
 			]),
 		
-			Builder.node('div', {className: 'sortable_actions'}, [
+			Builder.node('div', {className: 'sortable-actions'}, [
 				Builder.node('i', {class: 'icon-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
 				' ',
 				Builder.node('i', {class: 'icon-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
@@ -134,7 +134,7 @@ function addSubMenu(menu_element_id) {
             ]),
         ]),
         Builder.node('hr'),
-        Builder.node('ul', {id: 'menu_element_' + id + '_list', className: 'sortable_block'}),
+        Builder.node('ul', {id: 'menu_element_' + id + '_list', className: 'sortable-block'}),
         Builder.node('fieldset', {className: 'fieldset_submit'}, [
             Builder.node('button', {type: 'button', id: 'menu_element_' + id + '_add_sub_element', name: 'menu_element_' + id + '_add_sub_element', value: {JL_ADD_SUB_ELEMENT}, onclick: 'addSubElement(\'menu_element_' + id + '\');'},[{JL_ADD_SUB_ELEMENT}]),
             ' ',

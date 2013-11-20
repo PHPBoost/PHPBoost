@@ -10,9 +10,9 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
     padding:5px;
 }
 
-.sortable_block .sortable_element > .sortable_block { margin-left:30px; }
+.sortable-block .sortable-element > .sortable-block { margin-left:30px; }
 
-.sortable_block {
+.sortable-block {
     list-style-type:none;
     list-style-position:outside;
     margin:0;
@@ -20,7 +20,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	min-height:24px;
 }
 
-.sortable_block .sortable_element {
+.sortable-block .sortable-element {
 	background:#FFFFFF;
 	border:1px solid #D6DEE7;
 	padding:0;
@@ -28,7 +28,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	margin:10px 6px;
 }
 
-.sortable_block .sortable_element:hover {
+.sortable-block .sortable-element:hover {
 	border:1px solid #d0d8e1;
 	cursor:move;
 	-moz-box-shadow: 0px 0px 5px #EAEAEA;
@@ -36,7 +36,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	box-shadow: 0px 0px 5px #EAEAEA;
 }
 
-.sortable_block .sortable_title{
+.sortable-block .sortable-title{
 	background-image: linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
 	background-image: -o-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
 	background-image: -moz-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
@@ -47,7 +47,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	font-weight:bold;
 }
 
-.sortable_block .sortable_title:hover{ 
+.sortable-block .sortable-title:hover{ 
 	background-image: linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
 	background-image: -o-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
 	background-image: -moz-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
@@ -55,43 +55,43 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	background-image: -ms-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
 }
 
-.sortable_block .sortable_title span.cat_desc {
+.sortable-block .sortable-title span.cat_desc {
 	font-size:0.8em;
 	font-weight:normal;
 	font-style:italic;	
 }
 
-.sortable_block .sortable_title img{ cursor:move; }
+.sortable-block .sortable-title img{ cursor:move; }
 
-.sortable_block .sortable_actions{
+.sortable-block .sortable-actions{
 	float:right;
 	padding:0px 10px;
 }
 
-.sortable_block .sortable_options{
+.sortable-block .sortable-options{
 	width:15px;
 	display:inline-block;
 	padding:0 2px;
 	text-align:left;
 }
 
-.sortable_block .sortable_options.preview{
+.sortable-block .sortable-options.preview{
 	width:16px;
 	padding:0;
 }
 
-.sortable_block .sortable_element hr {
+.sortable-block .sortable-element hr {
 	background-color:#999999;
 	margin-top:5px;
 }
 
-.sortable_block .sortable_element label {
+.sortable-block .sortable-element label {
 	color:#1F507F;
 	margin-left:14px;
 }
 
-.sortable_block .sortable_element [class^="icon-"]:not(.icon-arrows):hover, .sortable_block .sortable_actions img { cursor:pointer; }
-.sortable_block .sortable_element:hover label { cursor:pointer; }
+.sortable-block .sortable-element [class^="icon-"]:not(.icon-arrows):hover, .sortable-block .sortable-actions img { cursor:pointer; }
+.sortable-block .sortable-element:hover label { cursor:pointer; }
 
 /* Gestion des Menus */
 .menu_link_list {

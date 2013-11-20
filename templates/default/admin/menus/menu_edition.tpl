@@ -1,7 +1,7 @@
 # IF C_FIRST_MENU #
     <div id="menu_element_{ID}">
         <input type="hidden" id="menu_uid" name="menu_uid" value="{ID}">
-    	<ul id="menu_element_{ID}_list" class="sortable_block">
+    	<ul id="menu_element_{ID}_list" class="sortable-block">
     		# START elements #
     			{elements.DISPLAY}
     		# END elements #
@@ -14,17 +14,17 @@
 # ENDIF #
 
 # IF C_NEXT_MENU #
-	<li class="sortable_element" id="menu_element_{ID}">
-		<div class="sortable_title">
+	<li class="sortable-element" id="menu_element_{ID}">
+		<div class="sortable-title">
 			<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png" alt="plus" class="valign_middle" style="cursor:move" />
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
-			<div class="sortable_options preview">
+			<div class="sortable-options preview">
 				<img src="{PATH_TO_ROOT}/{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
-			<div class="sortable_actions">
+			<div class="sortable-actions">
 				<i class="icon-plus" title="More..." id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
 				<i class="icon-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
 			</div>
@@ -38,7 +38,7 @@
 			</div>
 		</fieldset>
         <hr/>
-		<ul class="sortable_block" id="menu_element_{ID}_list">
+		<ul class="sortable-block" id="menu_element_{ID}_list">
     		# START elements #
     			{elements.DISPLAY}
     		# END elements #
@@ -51,17 +51,17 @@
 # ENDIF #
 
 # IF C_LINK #
-    <li class="sortable_element" id="menu_element_{ID}">
-   		<div class="sortable_title">
+    <li class="sortable-element" id="menu_element_{ID}">
+   		<div class="sortable-title">
 			<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
    			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="plus" class="valign_middle" style="cursor:move" />
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
-			<div class="sortable_options preview">
+			<div class="sortable-options preview">
 				<img src="{PATH_TO_ROOT}/{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
-			<div class="sortable_actions">
+			<div class="sortable-actions">
 				<i class="icon-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
 				<i class="icon-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
 			</div>
