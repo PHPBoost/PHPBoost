@@ -98,6 +98,9 @@ class Environment
 		self::compute_running_module_name();
 		self::csrf_protect_post_requests();
 		self::enable_errors_and_exceptions_management();
+		
+		//Do not touch
+		MenuService::init_menus_map();
 	}
 
 	public static function init_http_services()
