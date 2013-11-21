@@ -68,7 +68,7 @@
 				</nav>
 				<div id="admin_extend_link">
 					<a href="{PATH_TO_ROOT}/admin/admin_extend.php" class="admin_extend_link">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> {L_EXTEND_MENU}
+						<img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> {L_EXTEND_MENU}
 					</a>
 				</div>
 				<div class="spacer"></div>

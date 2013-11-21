@@ -2,27 +2,27 @@
 			<ul>
 				<li class="title_menu">{L_QUICK_LINKS}</li>
 				<li>
-					<a href="admin_alerts.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/administrator_alert.png" alt="" /></a>
+					<a href="admin_alerts.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/administrator_alert.png" alt="" /></a>
 					<br />
 					<a href="admin_alerts.php" class="quick_link">{L_ADMINISTRATOR_ALERTS}</a>
 				</li>
 				<li>
-					<a href="${relative_url(AdminMembersUrlBuilder::management())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="${relative_url(AdminMembersUrlBuilder::management())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="${relative_url(AdminMembersUrlBuilder::management())}" class="quick_link">{L_USERS_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="menus/menus.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" alt="" /></a>
+					<a href="menus/menus.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/menus.png" alt="" /></a>
 					<br />
 					<a href="menus/menus.php" class="quick_link">{L_MENUS_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules.png" alt="" /></a>
 					<br />
 					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" class="quick_link">{L_MODULES_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="updates/updates.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="" /></a>
+					<a href="updates/updates.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="" /></a>
 					<br />
 					<a href="updates/updates.php" class="quick_link">{L_WEBSITE_UPDATES}</a>
 				</li>

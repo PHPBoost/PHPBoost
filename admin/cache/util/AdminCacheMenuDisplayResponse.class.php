@@ -35,16 +35,16 @@ class AdminCacheMenuDisplayResponse extends AdminMenuDisplayResponse
         $this->set_title($lang['cache']);
         
         $this->add_link($lang['cache'], AdminCacheUrlBuilder::clear_cache(), 
-        '/templates/' . get_utheme() . '/images/admin/cache.png');
+        '/templates/default/images/admin/cache.png');
         
         $this->add_link($lang['syndication_cache'], AdminCacheUrlBuilder::clear_syndication_cache(), 
-        '/templates/' . get_utheme() . '/images/admin/rss.png');
+        '/templates/default/images/admin/rss.png');
 
         $this->add_link($lang['css_cache'], AdminCacheUrlBuilder::clear_css_cache(), 
-        '/templates/' . get_utheme() . '/images/admin/themes.png');
+        '/templates/default/images/admin/themes.png');
         
         $this->add_link($lang['cache_configuration'], AdminCacheUrlBuilder::configuration(), 
-        '/templates/' . get_utheme() . '/images/admin/configuration.png');
+        '/templates/default/images/admin/configuration.png');
         
         $env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

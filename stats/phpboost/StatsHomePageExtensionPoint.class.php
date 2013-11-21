@@ -989,7 +989,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 					'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-					'TREND' => '<img src="../templates/' . get_utheme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
+					'TREND' => '<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
 				));
 			}
 			$this->sql_querier->query_close($result);
@@ -1046,7 +1046,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 					'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-					'TREND' => '<img src="../templates/' . get_utheme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
+					'TREND' => '<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
 				));
 			}
 			$this->sql_querier->query_close($result);

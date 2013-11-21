@@ -32,7 +32,7 @@ class AdminExtendedFieldsDisplayResponse extends AdminMenuDisplayResponse
         parent::__construct($view);
 
 		$lang = LangLoader::get('admin-extended-fields-common');
-		$picture = '/templates/' . get_utheme() . '/images/admin/extendfield.png';
+		$picture = '/templates/default/images/admin/extendfield.png';
 		$this->set_title($lang['extended-field']);
 		$this->add_link($lang['extended-fields-management'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/list'), $picture);
 		$this->add_link($lang['extended-field-add'], DispatchManager::get_url('/admin/member/index.php', '/extended-fields/add'), $picture);

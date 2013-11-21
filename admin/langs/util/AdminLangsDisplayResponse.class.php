@@ -32,7 +32,7 @@ class AdminLangsDisplayResponse extends AdminMenuDisplayResponse
         parent::__construct($view);
 
 		$lang = LangLoader::get('admin-langs-common');
-		$picture = '/templates/' . get_utheme() . '/images/admin/languages.png';
+		$picture = '/templates/default/images/admin/languages.png';
 		$this->set_title($lang['langs.management']);
 		$this->add_link($lang['langs.installed'], AdminLangsUrlBuilder::list_installed_langs(), $picture);
 		$this->add_link($lang['langs.install'], AdminLangsUrlBuilder::install(), $picture);
