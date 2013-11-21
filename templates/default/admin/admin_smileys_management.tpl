@@ -10,12 +10,12 @@
 			<ul>
 				<li class="title_menu">{L_ADD_SMILEY}</li>
 				<li>
-					<a href="admin_smileys.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys.png" alt="" /></a>
+					<a href="admin_smileys.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/smileys.png" alt="" /></a>
 					<br />
 					<a href="admin_smileys.php" class="quick_link">{L_SMILEY_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_smileys_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys.png" alt="" /></a>
+					<a href="admin_smileys_add.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/smileys.png" alt="" /></a>
 					<br />
 					<a href="admin_smileys_add.php" class="quick_link">{L_ADD_SMILEY}</a>
 				</li>

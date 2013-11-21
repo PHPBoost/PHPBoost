@@ -2,12 +2,12 @@
 			<ul>
 				<li class="title_menu">{L_ERRORS}</li>
                 <li>
-                    <a href="admin_errors.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/errors.png" alt="" /></a>
+                    <a href="admin_errors.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/errors.png" alt="" /></a>
                     <br />
                     <a href="admin_errors.php" class="quick_link">{@logged_errors}</a>
                 </li>
                 <li>
-                    <a href="errors/?url=/404/list/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/errors.png" alt="" /></a>
+                    <a href="errors/?url=/404/list/"><img src="{PATH_TO_ROOT}/templates/default/images/admin/errors.png" alt="" /></a>
                     <br />
                     <a href="errors/?url=/404/list/" class="quick_link">{@404_errors}</a>
                 </li>

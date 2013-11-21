@@ -102,7 +102,7 @@
                 <fieldset>
                     <legend>{L_CLEAR_OUT_CACHE}</legend>
                     <p style="text-align:center;">
-                        <a href="admin_search.php?clear=1"><img src="../templates/{THEME}/images/admin/refresh.png" alt="" /></a>
+                        <a href="admin_search.php?clear=1"><img src="../templates/default/images/admin/refresh.png" alt="" /></a>
                         <br />
                         <a href="admin_search.php?clear=1">{L_CLEAR_OUT_CACHE}</a>
                     </p>

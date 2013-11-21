@@ -32,7 +32,7 @@ class AdminThemesDisplayResponse extends AdminMenuDisplayResponse
         parent::__construct($view);
 
 		$lang = LangLoader::get('admin-themes-common');
-		$picture = '/templates/' . get_utheme() . '/images/admin/themes.png';
+		$picture = '/templates/default/images/admin/themes.png';
 		$this->set_title($lang['themes.management']);
 		$this->add_link($lang['themes.installed'], AdminThemeUrlBuilder::list_installed_theme(), $picture);
 		$this->add_link($lang['themes.add'], AdminThemeUrlBuilder::add_theme(), $picture);

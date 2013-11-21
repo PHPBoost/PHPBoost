@@ -108,12 +108,12 @@
 			<ul>
 				<li class="title_menu">{L_GROUPS_MANAGEMENT}</li>
 				<li>
-					<a href="admin_groups.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/groups.png" alt="" /></a>
+					<a href="admin_groups.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/groups.png" alt="" /></a>
 					<br />
 					<a href="admin_groups.php" class="quick_link">{L_GROUPS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_groups.php?add=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/groups.png" alt="" /></a>
+					<a href="admin_groups.php?add=1"><img src="{PATH_TO_ROOT}/templates/default/images/admin/groups.png" alt="" /></a>
 					<br />
 					<a href="admin_groups.php?add=1" class="quick_link">{L_ADD_GROUPS}</a>
 				</li>

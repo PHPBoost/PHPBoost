@@ -83,7 +83,7 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 					' . gmdate_format('date_format_short', $row['last_update']) . '
 				</td>
 				<td style="width:105px;">
-					<img src="../templates/' . get_utheme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)
+					<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)
 				</td>
 			</tr>
 		</table>';
@@ -136,7 +136,7 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
 					' . gmdate_format('date_format_short', $row['last_update']) . '
 				</td>
 				<td style="width:105px;">
-					<img src="../templates/' . get_utheme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)
+					<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)
 				</td>
 			</tr>
 		</table>';

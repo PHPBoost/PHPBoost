@@ -33,7 +33,7 @@ class AdminCustomizationDisplayResponse extends AdminMenuDisplayResponse
 
 		$lang = LangLoader::get('common', 'customization');
 		
-		$picture = '/templates/' . get_utheme() . '/images/admin/configuration.png';
+		$picture = '/templates/default/images/admin/configuration.png';
 		$this->set_title($lang['customization']);
 		$this->add_link($lang['customization.interface'], AdminCustomizeUrlBuilder::customize_interface(), $picture);
 		$this->add_link($lang['customization.favicon'], AdminCustomizeUrlBuilder::customize_favicon(), $picture);

@@ -33,16 +33,16 @@
 							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure"><img src="./database_mini.png"/> {L_TABLE_STRUCTURE}</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png"/> {L_TABLE_DISPLAY}</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes_mini.png"/> {L_TABLE_DISPLAY}</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/tools_mini.png"/> SQL</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query"><img src="{PATH_TO_ROOT}/templates/default/images/admin/tools_mini.png"/> SQL</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png"/> {L_INSERT}</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png"/> {L_INSERT}</a>
 						</li>
 						<li>
-							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache_mini.png"/> {L_BACKUP}</a>
+							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png"/> {L_BACKUP}</a>
 						</li>
 						<li>
 							<a onclick="javascript:return Confirm_truncate_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/trash_mini.png"/> {L_TRUNCATE}</a>

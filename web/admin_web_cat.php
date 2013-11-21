@@ -215,9 +215,9 @@ else
 		
 		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
 		$top_link = ($min_cat != $row['class']) ? '<a href="admin_web_cat.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" title="">
-		<img src="../templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
+		<img src="../templates/default/images/admin/up.png" alt="" title="" /></a>' : '';
 		$bottom_link = ($max_cat != $row['class']) ? '<a href="admin_web_cat.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" title="">
-		<img src="../templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
+		<img src="../templates/default/images/admin/down.png" alt="" title="" /></a>' : '';
 		
 		$img_direct_path = (strpos($row['icon'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';

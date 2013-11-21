@@ -32,7 +32,7 @@ class AdminMembersDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 
 		$lang = LangLoader::get('admin-members-common');
-		$picture = '/templates/' . get_utheme() . '/images/admin/members.png';
+		$picture = '/templates/default/images/admin/members.png';
 		$this->set_title($lang['members.members-management']);
 		$this->add_link($lang['members.members-management'], AdminMembersUrlBuilder::management(), $picture);
 		$this->add_link($lang['members.add-member'], AdminMembersUrlBuilder::add(), $picture);

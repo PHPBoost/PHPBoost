@@ -138,8 +138,8 @@
 						<table style="margin:auto;">
 							<tr>
 								<td><img src="./database.png" alt="optimize" /></td>
-								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="repair" /></td>
-								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="optimize" class="valign_middle" /></td>
+								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="repair" /></td>
+								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="optimize" class="valign_middle" /></td>
 							</tr>
 							<tr>
 								<td><button type="submit" name="optimize" value="true">{L_OPTIMIZE}</button></td>
@@ -184,16 +184,16 @@
 							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure"><img src="./database_mini.png"/> {L_TABLE_STRUCTURE}</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png"/> {L_TABLE_DISPLAY}</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes_mini.png"/> {L_TABLE_DISPLAY}</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/tools_mini.png"/> SQL</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query"><img src="{PATH_TO_ROOT}/templates/default/images/admin/tools_mini.png"/> SQL</a>
 						</li>
 						<li>
-							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png"/> {L_INSERT}</a>
+							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png"/> {L_INSERT}</a>
 						</li>
 						<li>
-							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache_mini.png"/> {L_BACKUP}</a>
+							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png"/> {L_BACKUP}</a>
 						</li>
 						<li>
 							<a onclick="javascript:return Confirm_truncate_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/trash_mini.png"/> {L_TRUNCATE}</a>
@@ -243,7 +243,7 @@
 						<td class="row1" style="text-align:center;">
 							{L_EXPLAIN_BACKUP}
 							<br /><br />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="backup" /><br />
+							<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="backup" /><br />
 							<label><input type="radio" name="backup_type" checked="checked" value="all"/> {L_BACKUP_ALL}</label>
 							<label><input type="radio" name="backup_type" value="struct"> {L_BACKUP_STRUCT}</label>
 							<label><input type="radio" name="backup_type" value="data"/> {L_BACKUP_DATA}</label>

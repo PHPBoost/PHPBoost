@@ -33,7 +33,7 @@ class AdminModulesDisplayResponse extends AdminMenuDisplayResponse
 		
 		$lang = LangLoader::get('admin-modules-common');
 		$this->set_title($lang['modules.module_management']);
-		$icon = '/templates/' . get_utheme() . '/images/admin/modules.png';
+		$icon = '/templates/default/images/admin/modules.png';
 		$this->add_link($lang['modules.module_management'], AdminModulesUrlBuilder::list_installed_modules(), $icon);
 		$this->add_link($lang['modules.add_module'], AdminModulesUrlBuilder::add_module(), $icon);
 		$this->add_link($lang['modules.update_module'], AdminModulesUrlBuilder::update_module(), $icon);

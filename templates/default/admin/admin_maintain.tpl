@@ -9,7 +9,7 @@
 			<ul>
 				<li class="title_menu">{L_MAINTAIN}</li>
 				<li>
-					<a href="admin_maintain.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/maintain.png" alt="" /></a>
+					<a href="admin_maintain.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/maintain.png" alt="" /></a>
 					<br />
 					<a href="admin_maintain.php" class="quick_link">{L_MAINTAIN}</a>
 				</li>
