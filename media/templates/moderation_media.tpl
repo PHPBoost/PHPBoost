@@ -140,7 +140,7 @@
 		# IF C_ADMIN #
 		<div style="text-align:center; margin:20px 20px;" class="row1">
 			<a href="moderation_media.php?recount=1">
-				<img src="{PATH_TO_ROOT}/templates/default/images/admin/refresh.png" alt="{L_RECOUNT_MEDIA}" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh.png" alt="{L_RECOUNT_MEDIA}" />
 			</a>
 			<br />
 			<a href="moderation_media.php?recount=1">{L_RECOUNT_MEDIA}</a>

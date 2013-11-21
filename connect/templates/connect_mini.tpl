@@ -52,11 +52,11 @@
 			</div>
 			<div class="module_mini_contents connect_content">
 				<ul>
-					<li><img src="{PATH_TO_ROOT}/templates/default/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::home_profile())}" class="small">{L_PRIVATE_PROFIL}</a></li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/members_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::home_profile())}" class="small">{L_PRIVATE_PROFIL}</a></li>
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small">{L_NBR_PM}</a>&nbsp;</li>
  
 					# IF C_ADMIN_AUTH # 
-					<li><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small">{L_ADMIN_PANEL}
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small">{L_ADMIN_PANEL}
 						# IF C_UNREAD_ALERT #
 							({NUMBER_UNREAD_ALERTS})
 						# ENDIF #
@@ -64,7 +64,7 @@
 					# ENDIF #
  
 					# IF C_MODERATOR_AUTH # 
-					<li><img src="{PATH_TO_ROOT}/templates/default/images/admin/modo_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small">{L_MODO_PANEL}</a></li> 
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/modo_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small">{L_MODO_PANEL}</a></li> 
 					# ENDIF #
  
 					# IF C_UNREAD_CONTRIBUTION #
@@ -77,7 +77,7 @@
 						<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini.png" alt="" class="valign_middle" /> <a href="{U_CONTRIBUTION}" class="small">{L_CONTRIBUTION_PANEL}</a></li> 
 					# ENDIF #
  
-					<li><img src="{PATH_TO_ROOT}/templates/default/images/admin/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small">{L_DISCONNECT}</a></li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small">{L_DISCONNECT}</a></li>
 				</ul>
 			</div>
 			<div class="module_mini_bottom">
@@ -117,13 +117,13 @@
 	</div>
 	# ELSE #
 	<div class="connect_align">
-		<img src="{PATH_TO_ROOT}/templates/default/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{U_HOME_PROFILE}" class="small">{L_PRIVATE_PROFIL}</a>&nbsp;
+		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/members_mini.png" alt="" class="valign_middle" /> <a href="{U_HOME_PROFILE}" class="small">{L_PRIVATE_PROFIL}</a>&nbsp;
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small">{L_NBR_PM}</a>&nbsp;
 		# IF C_ADMIN_AUTH #
-		<img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{U_ADMINISTRATION}" class="small">{L_ADMIN_PANEL} # IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS}) # ENDIF # </a>&nbsp; 
+		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks_mini.png" alt="" class="valign_middle" /> <a href="{U_ADMINISTRATION}" class="small">{L_ADMIN_PANEL} # IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS}) # ENDIF # </a>&nbsp; 
 		# ENDIF #
 		# IF C_MODERATOR_AUTH # 
-		<img src="{PATH_TO_ROOT}/templates/default/images/admin/modo_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small">{L_MODO_PANEL}</a>&nbsp;
+		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/modo_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small">{L_MODO_PANEL}</a>&nbsp;
 		# ENDIF #
 		# IF C_UNREAD_CONTRIBUTION #
 			# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
@@ -134,7 +134,7 @@
 		# ELSE #
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini.png" alt="" class="valign_middle" /> <a href="{U_CONTRIBUTION}" class="small">{L_CONTRIBUTION_PANEL}</a>&nbsp;
 		# ENDIF #
-		<img src="{PATH_TO_ROOT}/templates/default/images/admin/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small">{L_DISCONNECT}</a>
+		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small">{L_DISCONNECT}</a>
 	</div>
 	# ENDIF #
 # ENDIF #
