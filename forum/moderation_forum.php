@@ -548,7 +548,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				'INFO' => $row['user_warning'] . '%',
-				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=warning&amp;id=' . $row['user_id'] . '&amp;token=' . $Session->get_token()) . '"><img src="../templates/default/images/admin/important.png" alt="" /></a>',
+				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=warning&amp;id=' . $row['user_id'] . '&amp;token=' . $Session->get_token()) . '"><img src="../templates/' . get_utheme() . '/images/important_mini.png" alt="" /></a>',
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel()
 			));
