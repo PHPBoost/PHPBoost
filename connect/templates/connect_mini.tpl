@@ -53,7 +53,7 @@
 			<div class="module_mini_contents connect_content">
 				<ul>
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/members_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::home_profile())}" class="small">{L_PRIVATE_PROFIL}</a></li>
-					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small">{L_NBR_PM}</a>&nbsp;</li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/# IF C_IMG_PM #new_pm.gif# ELSE #pm_mini.png# ENDIF #" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small">{L_NBR_PM}</a>&nbsp;</li>
  
 					# IF C_ADMIN_AUTH # 
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small">{L_ADMIN_PANEL}
@@ -118,7 +118,7 @@
 	# ELSE #
 	<div class="connect_align">
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/members_mini.png" alt="" class="valign_middle" /> <a href="{U_HOME_PROFILE}" class="small">{L_PRIVATE_PROFIL}</a>&nbsp;
-		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small">{L_NBR_PM}</a>&nbsp;
+		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/# IF C_IMG_PM #new_pm.gif# ELSE #pm_mini.png# ENDIF #" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small">{L_NBR_PM}</a>&nbsp;
 		# IF C_ADMIN_AUTH #
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks_mini.png" alt="" class="valign_middle" /> <a href="{U_ADMINISTRATION}" class="small">{L_ADMIN_PANEL} # IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS}) # ENDIF # </a>&nbsp; 
 		# ENDIF #
