@@ -209,10 +209,10 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 }
 
 .menus_block_container:hover > div.menus_block_move_top { 
-	background:url('../images/move_top.png');
+	background:url('../images/admin/move_top.png');
 }
 .menus_block_container:hover > div.menus_block_move_bot { 
-	background:url('../images/move_bot.png');
+	background:url('../images/admin/move_bot.png');
 }
 
 .menu_spacer {
