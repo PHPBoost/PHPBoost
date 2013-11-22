@@ -207,6 +207,8 @@ elseif (!empty($del)) //Suppression de la cat�gorie/sous-cat�gorie.
 					'L_ADD_CAT' => $LANG['cat_add'],
 					'L_FORUM_CONFIG' => $LANG['forum_config'],
 					'L_FORUM_GROUPS' => $LANG['forum_groups_config'],
+					'L_FORUM_RANKS_MANAGEMENT' => $LANG['rank_management'],
+					'L_FORUM_ADD_RANKS' => $LANG['rank_add'],
 					'L_CAT_TARGET' => $LANG['cat_target'],
 					'L_DEL_ALL' => $LANG['del_all'],
 					'L_DEL_FORUM_CONTENTS' => sprintf($LANG['del_forum_contents'], $forum_name),
