@@ -36,10 +36,5 @@ interface ModuleTreeLinksExtensionPoint extends ExtensionPoint
 	 * @return ModuleTreeLinks class containing the tree links different as possible actions in the module (addition, configuration, etc).
 	 */
 	function get_actions_tree_links();
-	
-	/**
-	 * @return ModuleTreeLinks class containing the tree module links (home, displaying the contents of a category, display an item, etc.) except actions.
-	 */
-	function get_tree_links();
 }
 ?>

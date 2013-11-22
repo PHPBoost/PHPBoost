@@ -32,7 +32,7 @@ class ModuleTreeLinksService
 {
 	public static function display_actions_links_menu()
 	{
-		return self::display(self::get_tree_links(), new FileTemplate('framework/module/module_actions_links_menu.tpl'));
+		return self::display(self::get_actions_tree_links(), new FileTemplate('framework/module/module_actions_links_menu.tpl'));
 	}
 	
 	public static function display(ModuleTreeLinks $tree_links, View $view)
@@ -52,7 +52,7 @@ class ModuleTreeLinksService
 		return $view;
 	}
 	
-	public static function get_tree_links()
+	public static function get_actions_tree_links()
 	{
 		try {
 			return AppContext::get_extension_provider_service()->get_provider(Environment::get_running_module_name())->get_extension_point(ModuleTreeLinksExtensionPoint::EXTENSION_POINT)->get_actions_tree_links();
