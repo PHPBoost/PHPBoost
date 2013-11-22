@@ -56,10 +56,5 @@ class NewsTreeLinks implements ModuleTreeLinksExtensionPoint
 	
 		return $tree;
 	}
-	
-	public function get_tree_links()
-	{
-		return new ModuleTreeLinks();
-	}
 }
 ?>
