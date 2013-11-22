@@ -86,7 +86,7 @@
 								<td class="row1" style="text-align:center;width:100px;">
 									<strong>{L_MOVE_TO}</strong>
 									<br />
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" alt="" />
+									<img src="{PATH_TO_ROOT}/templates/default/images/admin/right.png" alt="" />
 								</td>
 								<td class="row1">
 									<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js">
