@@ -1,16 +1,16 @@
 <script type="text/javascript">
 <!--
 var FormFieldMultipleAutocompleter = Class.create({
-	integer : ${escapejs(NBR_FIELDS)},
+	integer : {NBR_FIELDS},
 	id_input : ${escapejs(ID)},
-	max_input : ${escapejs(MAX_INPUT)},
+	max_input : {MAX_INPUT},
 	add_field : function () {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
-			var input = new Element('div', {'id' : id});
+			var input = new Element('div', {'id' : id, 'class' : 'form_autocompleter_container'});
 			$('input_fields_' + this.id_input).insert(input);
 
-			var div = new Element('input', {'type' : 'text', 'id' : 'field_' + id, 'name' : 'field_' + id, 'class' : 'text', 'size' : ${escapejs(SIZE)}, 'autocomplete' : 'off'});
+			var div = new Element('input', {'type' : 'text', 'id' : 'field_' + id, 'name' : 'field_' + id, 'class' : 'text', 'size' : ${escapejs(SIZE)}});
 			$(id).insert(div);
 
 			var div = new Element('div', {'id' : 'field_' + id + '_completer', 'class' : 'form_autocompleter'});
@@ -50,7 +50,7 @@ var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 <div id="input_fields_${escape(ID)}">
 # START fieldelements #
 	<div id="${escape(ID)}_{fieldelements.ID}" class="form_autocompleter_container">
-		<input type="text" name="field_${escape(ID)}_{fieldelements.ID}" id="field_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" size="{SIZE}" onkeyup="javascript:FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(ID)}_{fieldelements.ID}');"/>
+		<input type="text" name="field_${escape(ID)}_{fieldelements.ID}" id="field_${escape(ID)}_{fieldelements.ID}" onfocus="javascript:FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(ID)}_{fieldelements.ID}');" value="{fieldelements.VALUE}" size="{SIZE}"/>
 		<div id="field_${escape(ID)}_{fieldelements.ID}_completer" class="form_autocompleter"></div>
 		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="icon-delete" data-confirmation="delete-element"></a>
 	</div>
