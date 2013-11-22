@@ -13,7 +13,7 @@
 		<span id="errorh"></span>
 		<div class="error_warning"
 			style="width: 500px; margin: auto; padding: 15px;"><img
-			src="../templates/base/images/important.png" alt=""
+			src="../templates/{THEME}/images/important.png" alt=""
 			style="float: left; padding-right: 6px;" /> <strong>${escape(TITLE)}
 		# IF CODE #(#${escape(CODE)})# END IF #</strong><br />
 		<br />
