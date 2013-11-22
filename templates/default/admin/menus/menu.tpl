@@ -14,13 +14,7 @@
 			<a href="{U_DELETE}" title="{L_DEL}" class="icon-delete" data-confirmation="delete-element"></a>
 		# ENDIF #
 		
-		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}# ELSE #{L_ACTIVATE}# ENDIF #">
-		# IF C_MENU_ACTIVATED #
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/processed_mini.png" alt="{L_UNACTIVATE}" class="valign_middle" />
-		# ELSE #
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_ACTIVATE}" class="valign_middle" />
-		# ENDIF #
-		</a>
+		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}"# ELSE #{L_ACTIVATE}# ENDIF #"><i class="# IF C_MENU_ACTIVATED #icon-eye# ELSE #icon-eye-slash# ENDIF #"></i></a>
 	</div>
 	
 	{CONTENTS}
