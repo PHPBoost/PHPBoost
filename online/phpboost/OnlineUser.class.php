@@ -73,9 +73,14 @@ class OnlineUser extends User
 		
 		if (empty($this->avatar))
 		{
-			return $user_accounts_config->is_default_avatar_enabled() == '1' ? PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() : '';
+			return $user_accounts_config->is_default_avatar_enabled() ? PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() : '';
 		}
 		return Url::to_rel($this->avatar);
+	}
+	
+	public function has_avatar()
+	{
+		return !empty($this->avatar);
 	}
 }
 ?>

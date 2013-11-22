@@ -31,7 +31,7 @@
 			# START members_list #
 			<tr>
 				<td>
-					<img class="valign_middle" src="{members_list.U_AVATAR}" alt="{members_list.PSEUDO}"/>
+					# IF members_list.C_AVATAR #<img class="valign_middle" src="{members_list.U_AVATAR}" alt=""/># ENDIF #
 				</td>
 				<td>
 					<a href="{members_list.U_PROFILE}" class="{members_list.LEVEL_CLASS}" # IF members_list.C_GROUP_COLOR # style="color:{members_list.GROUP_COLOR}" # ENDIF #>

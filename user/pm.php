@@ -600,11 +600,8 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$user_online = !empty($row['connect']) ? 'online' : 'offline';
 		
 		//Avatar
-		if (empty($row['user_avatar']))
-			$user_avatar = UserAccountsConfig::load()->is_default_avatar_enabled() ? '../templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name() : '';
-		else
-			$user_avatar = Url::to_rel($row['user_avatar']);
-			
+		$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
+		
 		//Reprise du dernier message de la page précédente.
 		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text_strong">' . $LANG['quote_last_msg'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
 		$i++;
@@ -614,6 +611,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$tpl->assign_block_vars('pm.msg', array(
 			'C_MODERATION_TOOLS' => (($User->get_attribute('user_id') === $row['user_id'] && $row['id'] === $convers['last_msg_id']) && ($row['view_status'] === '0')), //Dernier mp éditable. et si le destinataire ne la pas encore lu
 			'C_VISITOR' => $is_admin,
+			'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 			'C_GROUP_COLOR' => !empty($group_color),
 			
 			'ID' => $row['id'],

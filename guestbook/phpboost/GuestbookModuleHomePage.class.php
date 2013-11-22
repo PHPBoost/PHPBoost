@@ -42,6 +42,7 @@ class GuestbookModuleHomePage implements ModuleHomePage
 		
 		$this->check_authorizations();
 		
+		$user_accounts_config = UserAccountsConfig::load();
 		$messages_number = GuestbookService::count();
 		$pagination = $this->get_pagination($messages_number);
 		$main_lang = LangLoader::get('main');
@@ -64,8 +65,10 @@ class GuestbookModuleHomePage implements ModuleHomePage
 		while ($row = $result->fetch())
 		{
 			$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
-			$user_accounts_config = UserAccountsConfig::load();
 			$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
+			
+			//Avatar
+			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 			
 			$this->view->assign_block_vars('messages', array(
 				'C_MODERATOR' => GuestbookAuthorizationsService::check_authorizations()->moderation() || GuestbookAuthorizationsService::check_authorizations()->write() && $row['user_id'] == AppContext::get_current_user()->get_id() && !$is_guest,
@@ -80,7 +83,7 @@ class GuestbookModuleHomePage implements ModuleHomePage
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $user_group_color,
 				'U_ANCHOR' => GuestbookUrlBuilder::home($page, $row['id'])->rel(),
-				'U_AVATAR' => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name(),
+				'U_AVATAR' => $user_avatar,
 				'U_EDIT' => GuestbookUrlBuilder::edit($row['id'], $page)->rel(),
 				'U_DELETE' => GuestbookUrlBuilder::delete($row['id'], $page)->rel(),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),

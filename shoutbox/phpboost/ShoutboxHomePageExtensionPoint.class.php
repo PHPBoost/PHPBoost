@@ -121,11 +121,8 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 
 			$user_accounts_config = UserAccountsConfig::load();
 			
-			//Avatar			
-			if (empty($row['user_avatar'])) 
-				$user_avatar = $user_accounts_config->is_default_avatar_enabled() == '1' ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '';
-			else
-				$user_avatar = Url::to_rel($row['user_avatar']);
+			//Avatar
+			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 			
@@ -133,10 +130,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 				'C_MODERATOR' => ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1),
 				'C_VISITOR' => $row['user_id'] === -1,
 				'C_GROUP_COLOR' => !empty($group_color),
-				'U_EDIT' => PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?edit=1&amp;id=' . $row['id']),
-				'U_DELETE' => PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_AVATAR' => $user_avatar,
+				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 				'ID' => $row['id'],
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'MESSAGE' => FormatingHelper::second_parse($row['contents']),
@@ -145,6 +139,10 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				'L_LEVEL' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $LANG['banned']),
+				'U_EDIT' => PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?edit=1&amp;id=' . $row['id']),
+				'U_DELETE' => PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_AVATAR' => $user_avatar
 			));
 		}
 		$this->sql_querier->query_close($result);

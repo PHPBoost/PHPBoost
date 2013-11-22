@@ -106,10 +106,8 @@ class UserCommentsController extends AbstractController
 			$id = $row['id_comment'];
 			$path = $row['path'];
 			
-			if (empty($row['user_avatar']))
-				$user_avatar = $user_accounts_config->is_default_avatar_enabled() == '1' ? Url::to_rel(PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '';
-			else
-				$user_avatar = Url::to_rel($row['user_avatar']);
+			//Avatar
+			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 			
 			$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_SITE, $row['comment_timestamp']);
 
@@ -120,6 +118,7 @@ class UserCommentsController extends AbstractController
 				'C_VISITOR' => empty($row['login']),
 				'C_VIEW_TOPIC' => true,
 				'C_GROUP_COLOR' => !empty($group_color),
+				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 				
 				'U_TOPIC' => Url::to_rel($path),
 				'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->rel(),
