@@ -95,18 +95,13 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
 	    		'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
 	    		'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
-	    		'C_IMG_PM' => $user->get_attribute('user_pm') > 0,
+	    		'C_HAS_PM' => $user->get_attribute('user_pm') > 0,
 				'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
 	    		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
 				'NUMBER_PM' => $user->get_attribute('user_pm'),
 	    		'PSEUDO' => $user->get_pseudo(),
 	    		'NUMBER_TOTAL_ALERT' => $total_alert,
-	    		'U_CONTRIBUTION' => UserUrlBuilder::contribution_panel()->rel(),
-	    		'U_ADMINISTRATION' => UserUrlBuilder::administration()->rel(),
-	    		'U_HOME_PROFILE' => UserUrlBuilder::home_profile()->rel(),
 	    		'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_attribute('user_id'))->rel(),
-	    		'U_USER_ID' => UserUrlBuilder::home_profile()->rel(),
-	    		'U_DISCONNECT' => UserUrlBuilder::disconnect()->rel(),
 	    		'U_AVATAR_IMG' => TPL_PATH_TO_ROOT . $user_avatar,
 	    		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_attribute('user_pm') . ' ' . (($user->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
 	    		'L_PROFIL' => $LANG['profile'],
@@ -115,8 +110,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'L_MODO_PANEL' => $LANG['modo_panel'],
 	    		'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
 	    		'L_DISCONNECT' => $LANG['disconnect'],
-	    		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
-	    		'U_ALERT' => !empty($total_alert)
+	    		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
 	    	));
 	    }
 	    else
@@ -131,8 +125,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'L_AUTOCONNECT' => $LANG['autoconnect'],
 	    		'L_FORGOT_PASS' => LangLoader::get_message('forget-password', 'user-common'),
 	    		'L_REGISTER' => $LANG['register'],
-	    		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) . '&amp;' : '',
-	    		'U_REGISTER' => UserUrlBuilder::registration()->rel()
+	    		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) . '&amp;' : ''
 	    	));
 	    }
 	
