@@ -89,7 +89,7 @@ Event.observe(window, 'load', function() {
 				<li id="list_{list_extended_fields.ID}" class="sortable-element">
 					<div class="sortable-title">
 						<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="url" class="valign_middle" style="cursor:move;margin-right:10px;" />
+						<img src="{PATH_TO_ROOT}/templates/default/images/admin/url.png" alt="url" class="valign_middle" style="cursor:move;margin-right:10px;" />
 						{L_NAME} : <span class="text_strong" >{list_extended_fields.NAME}</span>
 						<div class="sortable-actions">
 							{L_REQUIRED} : <span class="text_strong" >{list_extended_fields.L_REQUIRED}</span> 
