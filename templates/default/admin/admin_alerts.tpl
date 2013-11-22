@@ -33,13 +33,13 @@
 				{
 					if( status == 0 )
 					{
-						document.getElementById("status_" + id).innerHTML = "<img src=\"{PATH_TO_ROOT}/templates/{THEME}/images/processed_mini.png\" alt=\"\" />";
+						document.getElementById("status_" + id).innerHTML = "<i class=\"icon-eye\"></i>";
 						document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '2');";
 						document.getElementById("status_" + id).title = "{L_UNFIX}";
 					}
 					else
 					{
-						document.getElementById("status_" + id).innerHTML = "<img src=\"{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png\" alt=\"\" />";
+						document.getElementById("status_" + id).innerHTML = "<i class=\"icon-eye-slash\"></i>";
 						document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '0');";
 						document.getElementById("status_" + id).title = "{L_FIX}";
 					}
@@ -150,13 +150,9 @@
 						</td>
 						<td>
 							{alerts.ACTIONS}
-							# IF alerts.C_PROCESSED #
-							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="{L_UNFIX}" id="status_{alerts.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/processed_mini.png" alt="{L_UNFIX}" /></a>
-							# ELSE #
-							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="{L_FIX}" id="status_{alerts.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_FIX}" /></a>
-							# ENDIF #
+							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="# IF alerts.C_PROCESSED #icon-eye# ELSE #icon-eye-slash# ENDIF #"></i></a>
 							<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
-						</td>			
+						</td>
 					</tr>
 					# END alerts #
 				</tbody>
