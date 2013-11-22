@@ -70,7 +70,6 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 		}
 		
 		$tpl->put_all(array(
-			'IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 			'C_RESULTS' => $nb_results,
 			'L_EDIT' => $lang['edit'],
 			'L_DELETE' => $lang['delete'],
