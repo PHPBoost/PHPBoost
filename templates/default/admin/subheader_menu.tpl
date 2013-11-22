@@ -181,10 +181,10 @@
 				</ul>
 			</li>								
 			<li class="extend">
-				<a href="${relative_url(UserUrlBuilder::comments())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png"/> {L_COMMENTS}</a>
+				<a href="${relative_url(UserUrlBuilder::comments())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/com_mini.png"/> {L_COMMENTS}</a>
 				<ul>
-					<li><a href="${relative_url(UserUrlBuilder::comments())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png"/> {L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/content/?url=/comments/config/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png"/> {L_CONFIGURATION}</a></li>
+					<li><a href="${relative_url(UserUrlBuilder::comments())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/com_mini.png"/> {L_MANAGEMENT}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/content/?url=/comments/config/"><img src="{PATH_TO_ROOT}/templates/default/images/admin/com_mini.png"/> {L_CONFIGURATION}</a></li>
 				</ul>
 			</li>
 			<li class="extend">
