@@ -132,13 +132,13 @@ var ContactField = Class.create({
 	},
 	change_display_picture : function() {
 		if (this.is_not_displayed == false) {
-			$('change_display_' + this.id).src = "{PATH_TO_ROOT}/templates/{THEME}/images/processed_mini.png";
+			$('change_display_' + this.id).className = "icon-eye";
 			$('change_display_' + this.id).title = "{@admin.field.display}";
 			$('change_display_' + this.id).alt = "{@admin.field.display}";
 			this.is_not_displayed = true;
 		}
 		else {
-			$('change_display_' + this.id).src = "{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png";
+			$('change_display_' + this.id).className = "icon-eye-slash";
 			$('change_display_' + this.id).title = "{@admin.field.not_display}";
 			$('change_display_' + this.id).alt = "{@admin.field.not_display}";
 			this.is_not_displayed = false;
@@ -180,7 +180,7 @@ Event.observe(window, 'load', function() {
 							<div class="sortable-options">
 								# IF fields_list.C_DELETE #<a class="icon-delete" data-confirmation="delete-element" title="{@admin.fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
 							</div>
-							# IF NOT fields_list.C_READONLY #<img id="loading_{fields_list.ID}" alt="" class="valign_middle" /><a><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" width="16px" /></a># ELSE #<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{fields_list.ID}" class="not_displayable" width="16px" /># ENDIF #
+							# IF NOT fields_list.C_READONLY #<img id="loading_{fields_list.ID}" alt="" class="valign_middle" /><a><i id="change_display_{fields_list.ID}" class="icon-eye"></i></a># ELSE #<span class="not_displayable"><i id="change_display_{fields_list.ID}" class="icon-eye"></i></span># ENDIF #
 						</div>
 					</div>
 					<div class="spacer"></div>

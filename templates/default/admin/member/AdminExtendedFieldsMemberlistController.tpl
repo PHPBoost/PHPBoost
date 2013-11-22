@@ -63,11 +63,11 @@ var ExtendedField = Class.create({
 	},
 	change_display_picture : function() {
 		if (this.is_not_displayed == false) {
-			$('change_display_' + this.id).src = "{PATH_TO_ROOT}/templates/{THEME}/images/processed_mini.png";
+			$('change_display_' + this.id).className = "icon-eye";
 			this.is_not_displayed = true;
 		}
 		else {
-			$('change_display_' + this.id).src = "{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png";
+			$('change_display_' + this.id).className = "icon-eye-slash";
 			this.is_not_displayed = false;
 		}
 	},
@@ -106,9 +106,7 @@ Event.observe(window, 'load', function() {
 								&nbsp;
 								# ENDIF #
 							</div>
-							<a href="#">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_PROCESSED_OR_NOT}" title="{L_PROCESSED_OR_NOT}" id="change_display_{list_extended_fields.ID}" class="valign_middle" />
-							</a>
+							<a title="{L_PROCESSED_OR_NOT}" ><i id="change_display_{list_extended_fields.ID}" class="icon-eye-slash"></i></a>
 						</div>
 					</div>
 					<div class="spacer"></div>
@@ -118,7 +116,7 @@ Event.observe(window, 'load', function() {
 				Event.observe(window, 'load', function() {
 					var extended_field = new ExtendedField({list_extended_fields.ID}, '{list_extended_fields.DISPLAY}', ExtendedFields);
 					
-					# IF NOT list_extended_fields.FREEZE #				
+					# IF NOT list_extended_fields.FREEZE #
 					$('delete_{list_extended_fields.ID}').observe('click',function(){
 						extended_field.delete_fields();
 					});
