@@ -180,7 +180,7 @@
 							# ENDIF #
 						</div>
 						<div class="message-level">{pm.msg.L_LEVEL}</div>
-						<img src="{pm.msg.USER_AVATAR}" title="{pm.msg.USER_PSEUDO}" class="message-avatar">
+						# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" title="{pm.msg.USER_PSEUDO}" class="message-avatar"># ENDIF #
 					</div>
 					<div class="message-content">
 						<div class="message-date">

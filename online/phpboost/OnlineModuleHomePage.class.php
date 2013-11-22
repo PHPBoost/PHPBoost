@@ -70,16 +70,17 @@ class OnlineModuleHomePage implements ModuleHomePage
 			if ($user->get_level() != User::VISITOR_LEVEL) 
 			{
 				$this->view->assign_block_vars('users', array(
-					'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
-					'U_LOCATION' => $user->get_location_script(),
-					'U_AVATAR' => $user->get_avatar(),
+					'C_AVATAR' => $user->has_avatar(),
+					'C_GROUP_COLOR' => !empty($group_color),
 					'PSEUDO' => $user->get_pseudo(),
 					'LEVEL' => UserService::get_level_lang($user->get_level()),
 					'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-					'C_GROUP_COLOR' => !empty($group_color),
 					'GROUP_COLOR' => $group_color,
 					'TITLE_LOCATION' => $user->get_location_title(),
-					'LAST_UPDATE' => $user->get_last_update()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)
+					'LAST_UPDATE' => $user->get_last_update()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+					'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
+					'U_LOCATION' => $user->get_location_script(),
+					'U_AVATAR' => $user->get_avatar()
 				));
 			}
 		}

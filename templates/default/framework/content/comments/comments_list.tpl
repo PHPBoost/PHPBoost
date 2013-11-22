@@ -18,7 +18,7 @@ function Confirm_del_comment() {
 				# ENDIF #
 			</div>
 			<div class="message-level">{comments.L_LEVEL}</div>
-			<img src="{comments.U_AVATAR}" class="message-avatar" />
+			# IF comments.C_AVATAR #<img src="{comments.U_AVATAR}" class="message-avatar" /># ENDIF #
 		</div>
 		<div class="message-content">
 			<div class="message-date">
