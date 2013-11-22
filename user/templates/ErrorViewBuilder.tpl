@@ -4,7 +4,7 @@
 		<strong>${escape(TITLE)} # IF CODE #(#${escape(CODE)})# END IF #</strong>
 	</div>
 	<div>
-		<img src="{PATH_TO_ROOT}/templates/base/images/{LEVEL}.png" alt="${escape(TITLE)}"
+		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LEVEL}.png" alt="${escape(TITLE)}"
 		style="float: left; padding-right: 6px;" />
 		{MESSAGE}
 	</div>
