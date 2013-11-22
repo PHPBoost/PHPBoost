@@ -119,7 +119,7 @@ var ContactField = Class.create({
 		}
 	},
 	change_display : function() {
-		$('loading_' + this.id).update('<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />');
+		$('loading_' + this.id).update('<img src="{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif" alt="" class="valign_middle" />');
 		display = this.is_not_displayed;
 		
 		new Ajax.Request('{REWRITED_SCRIPT}', {

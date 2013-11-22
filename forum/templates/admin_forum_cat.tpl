@@ -11,7 +11,7 @@
 			
 		function XMLHttpRequest_get_parent(divid, direction)
 		{
-			document.getElementById('l' + divid).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+			document.getElementById('l' + divid).innerHTML = '<img src="{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif" alt="" class="valign_middle" />';
 			
 			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&g_' + direction + '=' + divid + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 

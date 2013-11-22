@@ -13,7 +13,7 @@
 		<!--
 		function change_alert_status(id, status)
 		{
-			document.getElementById("status_" + id).innerHTML = "<img src=\"{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif\" alt=\"\" />";
+			document.getElementById("status_" + id).innerHTML = "<img src=\"{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif\" alt=\"\" />";
 			
 			var xhr_object = null;
 			var data = null;
@@ -55,7 +55,7 @@
 			if( !confirm("{L_CONFIRM_DELETE_ALERT}") )
 				return;
 			
-			document.getElementById("status_" + id).innerHTML = "<img src=\"{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif\" alt=\"\" />";
+			document.getElementById("status_" + id).innerHTML = "<img src=\"{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif\" alt=\"\" />";
 			
 			var xhr_object = null;
 			var data = null;

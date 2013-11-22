@@ -14,7 +14,7 @@ function ajax_move_cat(id, direction)
 	direction = (direction == 'up' ? 'up' : 'down');
 	var xhr_object = xmlhttprequest_init('{CONFIG_XMLHTTPREQUEST_FILE}?token={TOKEN}&id_' + direction + '=' + id);
 	
-	document.getElementById('l' + id).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+	document.getElementById('l' + id).innerHTML = '<img src="{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif" alt="" class="valign_middle" />';
 	
 	xhr_object.onreadystatechange = function() 
 	{
@@ -36,7 +36,7 @@ function ajax_change_cat_visibility(id, status)
 	status = (status == 'show' ? 'show' : 'hide');
 	var xhr_object = xmlhttprequest_init('{CONFIG_XMLHTTPREQUEST_FILE}?token={TOKEN}&' + status + '=' + id);
 	
-	document.getElementById('l' + id).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+	document.getElementById('l' + id).innerHTML = '<img src="{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif" alt="" class="valign_middle" />';
 	
 	xhr_object.onreadystatechange = function() 
 	{
