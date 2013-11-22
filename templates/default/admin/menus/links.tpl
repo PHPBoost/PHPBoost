@@ -14,12 +14,12 @@ function toggleProperties(id) {
     if (document.getElementById("menu_element_" + id + "_properties").style.display == "none")
     {   //Si les propriétés sont repliées, on les affiche
         Effect.Appear("menu_element_" + id + "_properties");
-        document.getElementById("menu_element_" + id + "_more_image").src = "{PATH_TO_ROOT}/templates/{THEME}/images/minus.png";
+        document.getElementById("menu_element_" + id + "_more_image").className = "icon-minus";
     }
     else
     {   //Sinon, on les cache
         Effect.Fade("menu_element_" + id + "_properties");
-        document.getElementById("menu_element_" + id + "_more_image").src = "{PATH_TO_ROOT}/templates/{THEME}/images/plus.png";
+        document.getElementById("menu_element_" + id + "_more_image").className = "icon-plus";
     }
 }
 
