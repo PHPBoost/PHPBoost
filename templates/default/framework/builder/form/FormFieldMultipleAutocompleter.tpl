@@ -10,7 +10,7 @@ var FormFieldMultipleAutocompleter = Class.create({
 			var input = new Element('div', {'id' : id, 'class' : 'form_autocompleter_container'});
 			$('input_fields_' + this.id_input).insert(input);
 
-			var div = new Element('input', {'type' : 'text', 'id' : 'field_' + id, 'name' : 'field_' + id, 'class' : 'text', 'size' : ${escapejs(SIZE)}});
+			var div = new Element('input', {'type' : 'text', 'id' : 'field_' + id, 'name' : 'field_' + id, 'class' : 'text', 'size' : ${escapejs(SIZE)}, 'autocomplete' : 'off'});
 			$(id).insert(div);
 
 			var div = new Element('div', {'id' : 'field_' + id + '_completer', 'class' : 'form_autocompleter'});
@@ -50,7 +50,7 @@ var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 <div id="input_fields_${escape(ID)}">
 # START fieldelements #
 	<div id="${escape(ID)}_{fieldelements.ID}" class="form_autocompleter_container">
-		<input type="text" name="field_${escape(ID)}_{fieldelements.ID}" id="field_${escape(ID)}_{fieldelements.ID}" onfocus="javascript:FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(ID)}_{fieldelements.ID}');" value="{fieldelements.VALUE}" size="{SIZE}"/>
+		<input type="text" name="field_${escape(ID)}_{fieldelements.ID}" id="field_${escape(ID)}_{fieldelements.ID}" onfocus="javascript:FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(ID)}_{fieldelements.ID}');" value="{fieldelements.VALUE}" size="{SIZE}" autocomplete="off"/>
 		<div id="field_${escape(ID)}_{fieldelements.ID}_completer" class="form_autocompleter"></div>
 		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="icon-delete" data-confirmation="delete-element"></a>
 	</div>
