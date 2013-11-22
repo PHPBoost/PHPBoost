@@ -259,8 +259,8 @@
 										</span>
 										<span style="float:right;">
 											<span id="l{list.ID}"></span> 
-											<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-											<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+											<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');"><i class="icon-arrow-up"></i></a>
+											<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');"><i class="icon-arrow-down"></i></a>
 											<a href="admin_forum.php?id={list.ID}" class="icon-edit"></a> <a href="admin_forum.php?del={list.ID}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>&nbsp;&nbsp;
 										</span>&nbsp;
 									</div>	
