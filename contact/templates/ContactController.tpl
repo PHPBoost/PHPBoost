@@ -1,20 +1,3 @@
-# IF IS_ADMIN #
-	<menu class="dynamic_menu right">
-		<ul>
-			<li><a><i class="icon-cog"></i></a>
-				<ul>
-					<li>
-						<a href="${relative_url(ContactUrlBuilder::manage_fields())}" title="{@admin.fields.manage}">{@admin.fields.manage}</a>
-					</li>
-					<li>
-						<a href="${relative_url(ContactUrlBuilder::configuration())}" title="{@admin.config}">{@admin.config}</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</menu>
-# ENDIF #
-
 <section>
 	<header>
 		<h1>{@module_title}</h1>
