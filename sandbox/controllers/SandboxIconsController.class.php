@@ -52,7 +52,7 @@ class SandboxIconsController extends ModuleController
 			'icon-edit',
 			'icon-edit-sign',
 			'icon-envelope-o',
-			'icon-expand',
+			'icon-plus-square-o',
 			'icon-eye',
 			'icon-eye-slash',
 			'icon-facebook',
