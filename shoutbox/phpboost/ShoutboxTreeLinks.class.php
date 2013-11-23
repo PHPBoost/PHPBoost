@@ -34,7 +34,7 @@ class ShoutboxTreeLinks implements ModuleTreeLinksExtensionPoint
 	{
 		$tree = new ModuleTreeLinks();
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), Url(PATH_TO_ROOT . '/shoutbox/admin_shoutbox.php')));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), PATH_TO_ROOT . Url('/shoutbox/admin_shoutbox.php')));
 		
 		return $tree;
 	}
