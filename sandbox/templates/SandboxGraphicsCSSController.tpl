@@ -184,14 +184,14 @@
 						<h1>Explorateur</h1>
 					<div class="contents">
 						<ul>
-							<li><a id="class_0" href="#"><span class="icon-folder"></span>Racine</a>
+							<li><a id="class_0" href="#"><i class="icon-folder"></i>Racine</a>
 								<ul>
-									<li class="sub"><a id="class_1" href="#"><span class="icon-folder"></span>Catégorie 1</a><span id="cat_1"></span></li>
+									<li class="sub"><a id="class_1" href="#"><i class="icon-folder"></i>Catégorie 1</a><span id="cat_1"></span></li>
 									<li class="sub"><a class="parent" href="javascript:show_cat_contents(2, 0);"><span class="icon-minus-square-o" id="img2_2"></span><span class="icon-folder-open" id ="img_2"></span></a><a class="selected" id="class_2" href="#">Catégorie 2</a>
 									<span id="cat_2">
 										<ul>
-											<li class="sub"><a href="#"><span class="icon-folder"></span>Catégorie 3</a></li>
-											<li class="sub"><a href="#"><span class="icon-folder"></span>Catégorie 4</a></li>
+											<li class="sub"><a href="#"><i class="icon-folder"></i>Catégorie 3</a></li>
+											<li class="sub"><a href="#"><i class="icon-folder"></i>Catégorie 4</a></li>
 										</ul>
 									</span></li>
 								</ul>
@@ -203,10 +203,10 @@
 						<h1>Arborescence</h1>
 					<div class="contents" id="cat_contents">
 						<ul>
-							<li><a href="#"><span class="icon-folder"></span>Catégorie 3</a></li>
-							<li><a href="javascript:open_cat(2); show_cat_contents(0, 0);"><span class="icon-folder"></span>Catégorie 4</a></li>
-							<li><a href="wiki.php?title=hgfhgf"><span class="icon-file"></span>Fichier 1</a></li>
-							<li><a href="wiki.php?title=qvsgfqgq"><span class="icon-file"></span>Fichier 2</a></li>
+							<li><a href="#"><i class="icon-folder"></i>Catégorie 3</a></li>
+							<li><a href="javascript:open_cat(2); show_cat_contents(0, 0);"><i class="icon-folder"></i>Catégorie 4</a></li>
+							<li><a href="wiki.php?title=hgfhgf"><i class="icon-file"></i>Fichier 1</a></li>
+							<li><a href="wiki.php?title=qvsgfqgq"><i class="icon-file"></i>Fichier 2</a></li>
 						</ul>
 					</div>
 				</div>

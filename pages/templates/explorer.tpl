@@ -16,7 +16,7 @@
 					<h1>{TITLE}</h1>
 				<div class="contents">
 					<ul>
-						<li><a id="class_0" class="{CAT_0}" href="javascript:open_cat(0);"><span class="icon-folder"></span>{L_ROOT}</a>
+						<li><a id="class_0" class="{CAT_0}" href="javascript:open_cat(0);"><i class="icon-folder"></i>{L_ROOT}</a>
 							<ul>
 								# START list #
 									{list.DIRECTORY}

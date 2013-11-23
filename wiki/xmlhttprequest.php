@@ -55,9 +55,9 @@ if ($id_cat != 0)
 		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 		//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 		if ($sub_cats_number > 0)
-			echo '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><span class="icon-plus-square-o" id="img2_' . $row['id'] . '"></span><span class="icon-folder" id ="img_' . $row['id'] . '"></span></a><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>';
+			echo '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="icon-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="icon-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>';
 		else //Sinon on n'affiche pas le "+"
-			echo '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');"><span class="icon-folder"></span>' . $row['title'] . '</a></li>';
+			echo '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');"><i class="icon-folder"></span>' . $row['title'] . '</a></li>';
 	}
 	$Sql->query_close($result);
 	echo '</ul>';
@@ -94,7 +94,7 @@ elseif (!empty($open_cat) || $root == 1)
 	foreach ($_WIKI_CATS as $key => $value)
 	{
 		if ($value['id_parent'] == $open_cat)
-			$return .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><span class="icon-folder"></span>' . $value['name'] . '</a></li>';
+			$return .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><i class="icon-folder"></i>' . $value['name'] . '</a></li>';
 	}
 	$result = $Sql->query_while("SELECT title, id, encoded_title
 	FROM " . PREFIX . "wiki_articles a
@@ -103,7 +103,7 @@ elseif (!empty($open_cat) || $root == 1)
 	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$return .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><span class="icon-file"></span>' . $row['title'] . '</a></li>';
+		$return .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><i class="icon-file"></i>' . $row['title'] . '</a></li>';
 	}
 	$Sql->query_close($result);
 	$return .= '</ul>';
