@@ -124,21 +124,35 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function display_menus(Template $template)
 	{
-		$menus = MenuService::get_menus_map_cached();
+		global $MENUS, $Cache;
+
+		if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
+		{
+			//En cas d'échec, on régénère le cache
+			$Cache->Generate_file('menus');
+
+			//On inclut une nouvelle fois
+			if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
+			{
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+                    $LANG['e_cache_modules'], UserErrorController::FATAL);
+                DispatchManager::redirect($controller);
+			}
+		}
 
 		$columns_disabled = $this->get_columns_disabled();
 		
-		$enable_header_is_activated = !$columns_disabled->header_is_disabled() && !empty($menus[Menu::BLOCK_POSITION__HEADER]);
-		$enable_sub_header_is_activated = !$columns_disabled->sub_header_is_disabled() && !empty($menus[Menu::BLOCK_POSITION__SUB_HEADER]);
-		$enable_left_column_is_activated = !$columns_disabled->left_columns_is_disabled() && !empty($menus[Menu::BLOCK_POSITION__LEFT]);
-		$enable_right_column_is_activated = !$columns_disabled->right_columns_is_disabled() && !empty($menus[Menu::BLOCK_POSITION__RIGHT]);
-		$enable_top_central_is_activated = !$columns_disabled->top_central_is_disabled() && !empty($menus[Menu::BLOCK_POSITION__TOP_CENTRAL]);
+		$enable_header_is_activated = !$columns_disabled->header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__HEADER]);
+		$enable_sub_header_is_activated = !$columns_disabled->sub_header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]);
+		$enable_left_column_is_activated = !$columns_disabled->left_columns_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__LEFT]);
+		$enable_right_column_is_activated = !$columns_disabled->right_columns_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__RIGHT]);
+		$enable_top_central_is_activated = !$columns_disabled->top_central_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]);
 		
-		$header_content = $enable_header_is_activated ? $menus[Menu::BLOCK_POSITION__HEADER] : '';
-		$sub_header_content = $enable_sub_header_is_activated ? $menus[Menu::BLOCK_POSITION__SUB_HEADER] : '';
-		$left_content = $enable_left_column_is_activated ? $menus[Menu::BLOCK_POSITION__LEFT] : '';
-		$right_content = $enable_right_column_is_activated ? $menus[Menu::BLOCK_POSITION__RIGHT] : '';
-		$top_central_content = $enable_top_central_is_activated ? $menus[Menu::BLOCK_POSITION__TOP_CENTRAL] : '';
+		$header_content = $enable_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__HEADER] : '';
+		$sub_header_content = $enable_sub_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__SUB_HEADER] : '';
+		$left_content = $enable_left_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__LEFT] : '';
+		$right_content = $enable_right_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__RIGHT] : '';
+		$top_central_content = $enable_top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL] : '';
 		
 		$template->put_all(array(
 			'C_MENUS_HEADER_CONTENT' => $enable_header_is_activated,
@@ -239,21 +253,20 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 * {@inheritdoc}
 	 */
 	function display_footer()
-	{		
+	{
+		global $MENUS;
 		$template = new FileTemplate('footer.tpl');
-		
-		$menus = MenuService::get_menus_map_cached();
 
 		$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
 		$columns_disabled = $this->get_columns_disabled();
 		
-		$bottom_top_central_is_activated = !$columns_disabled->bottom_central_is_disabled() && !empty($menus[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]);
-		$top_footer_is_activated = !$columns_disabled->top_footer_is_disabled() && !empty($menus[Menu::BLOCK_POSITION__TOP_FOOTER]);
-		$footer_is_activated = !$columns_disabled->footer_is_disabled() && !empty($menus[Menu::BLOCK_POSITION__FOOTER]);
+		$bottom_top_central_is_activated = !$columns_disabled->bottom_central_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]);
+		$top_footer_is_activated = !$columns_disabled->top_footer_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__TOP_FOOTER]);
+		$footer_is_activated = !$columns_disabled->footer_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__FOOTER]);
 	
-		$bottom_top_central_content = $bottom_top_central_is_activated ? $menus[Menu::BLOCK_POSITION__BOTTOM_CENTRAL] : '';
-		$top_footer_content = $top_footer_is_activated ? $menus[Menu::BLOCK_POSITION__TOP_FOOTER] : '';
-		$footer_content = $footer_is_activated ? $menus[Menu::BLOCK_POSITION__FOOTER] : '';
+		$bottom_top_central_content = $bottom_top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL] : '';
+		$top_footer_content = $top_footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_FOOTER] : '';
+		$footer_content = $footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__FOOTER] : '';
 		
 		$template->put_all(array(
 			'C_MENUS_BOTTOM_CENTRAL_CONTENT' => $bottom_top_central_is_activated,

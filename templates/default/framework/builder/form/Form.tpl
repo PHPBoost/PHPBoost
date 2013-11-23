@@ -14,8 +14,10 @@
 
 <script type="text/javascript">
 <!--
+Event.observe(window, 'load', function() {
 	var form = new HTMLForm("${escape(HTML_ID)}");
 	HTMLForms.add(form);
+});
 -->
 </script>
 
