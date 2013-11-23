@@ -114,6 +114,12 @@ nav.pagination .current_page {
 /* Debug */
 .pbt-debug { background: orange !important; outline: 3px solid orangered !important; }
 
+#error-handler {
+	width:auto;
+	max-width:750px;
+	margin:15px auto;
+}
+
 /* Patch Tables */
 table.invisible {
 	-moz-border-radius: 0;
