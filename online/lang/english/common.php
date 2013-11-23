@@ -2,10 +2,9 @@
 /*##################################################
  *                             common.php
  *                            -------------------
- *   begin                :  November 23 2006
- *   last modified		: July 31, 2009 - Forensic
- *   copyright            : (C) 2006 CrowkaiT
- *   email                : crowkait@phpboost.com
+ *   begin                : November 23, 2013
+ *   copyright            : (C) 2013 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -30,8 +29,6 @@
  ####################################################
  #						English						#
  ####################################################
-
-$lang = array();
 
 //En ligne
 $lang['online.home'] = 'Home';
