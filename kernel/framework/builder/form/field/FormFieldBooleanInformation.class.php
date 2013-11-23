@@ -49,12 +49,7 @@ class FormFieldBooleanInformation extends FormFieldFree
 	
 	protected function get_html_value()
 	{
-		$image_name = 'stop.png'; 
-		if ($this->get_value())
-		{
-			$image_name = 'success.png';
-		}
-		return '<img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $image_name . '" alt="" />';
+		return '<i class="' . ($this->get_value() ? 'icon-success' : 'icon-error') . '"></i>';
 	}
 }
 ?>

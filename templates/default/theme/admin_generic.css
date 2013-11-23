@@ -25,15 +25,87 @@ p { margin-bottom:0.7em; line-height:normal; font-size:1em; }
 
 /* Erreurs
 --------------------------------------*/
-#error_handler { margin:auto; }
-.question{ color:#FFFFFF; background:#98c0ea url(../images/question.png) no-repeat; border:1px solid #7796b8; }
-.notice{ color:#334455; background:#dadfe5 url(../images/notice.png) no-repeat; border:1px solid #aaaeb3; }
-.warning{ color:#FFFFFF; background:#e5ad54 url(../images/important.png) no-repeat; border:1px solid #b38742; }
-.error{ color:#FFFFFF; background:#C43C35 url(../images/stop.png) no-repeat; border:1px solid #802722; }
-.success{ color:#FFFFFF; background:#57A957 url(../images/success.png) no-repeat; border:1px solid #418041; }
-.question, .notice, .warning, .error, .success{ display:block; height:35px; padding:10px; text-indent:35px; margin:4px 25px; background-position:4px 4px; border-radius:6px; }
-html>body .question, html>body .notice, html>body .warning, html>body .error, html>body .success{ height:auto; min-height:25px; }
-.error_handler_position { margin-top:5px; margin-bottom:15px; }
+#message_helper > div{
+	width:500px;
+	margin:auto;
+	padding:10px;
+	line-height:20px;	
+}
+
+#message_helper > div > div{
+	padding-left:40px;	
+}
+
+#message_helper > div > i{
+	display:block;
+	float:left;	
+	width:32px;
+	text-align:center;
+}
+
+.question{
+    color:#3b88ae;
+    background:#daeef8;
+    border:1px solid #bde9f2;
+}
+.icon-question:before{ content: "\f128"; }
+
+.notice{
+    color:#888;
+    background:#f0f0f0;
+    border:1px solid #e2e2e2;
+}
+.icon-notice:before{ content: "\f12a"; }
+
+.warning{
+    color:#c19954;
+    background:#fdf9e4;
+    border:1px solid #fbeccd;
+}
+.icon-warning:before{ content: "\f071"; }
+
+.error{
+    color:#ba4b49;
+    background:#f3dfdf;
+    border:1px solid #eccdd2;
+}
+.icon-error:before{ content: "\f00d"; }
+
+.success{
+    color:#478948;
+    background:#e0f1d9;
+  	border:1px solid #d7eac7;
+}
+.icon-success:before{ content: "\f00c"; }
+
+.icon-question:before, 
+.icon-notice:before, 
+.icon-warning:before, 
+.icon-error:before, 
+.icon-success:before{
+	font-size:2em;
+}
+
+.question, .notice, .warning, .error, .success{
+    display:block;
+    height:35px;
+    padding:4px 5px 10px 40px;
+    margin:4px 25px;  
+    background-position:4px center;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+    border-radius:3px;
+}
+
+html>body .question, html>body .notice, html>body .warning, html>body .error, html>body .success{
+    height:auto;
+    min-height:25px;
+}
+
+#message_helper {
+	margin-top:5px;
+	margin-bottom:15px;
+}
 
 /* phpinfo */
 h1,h2 { font-family:sans-serif; }
