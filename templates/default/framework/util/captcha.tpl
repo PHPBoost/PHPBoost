@@ -14,5 +14,5 @@
 		<img src="{PATH_TO_ROOT}/kernel/framework/ajax/captcha.php?instance={CAPTCHA_INSTANCE}&amp;width={CAPTCHA_WIDTH}&amp;height={CAPTCHA_HEIGHT}&amp;difficulty={CAPTCHA_DIFFICULTY}&amp;font={CAPTCHA_FONT}" id="verif_code_img{CAPTCHA_INSTANCE}" alt="" style="padding:2px;" />
 		<br />
 		<input size="30" type="text" name="verif_code{CAPTCHA_INSTANCE}" id="verif_code{CAPTCHA_INSTANCE}">
-		<a href="javascript:refresh_img_{CAPTCHA_INSTANCE}()"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh.png" alt="" class="valign_middle" /></a>
+		<a href="javascript:refresh_img_{CAPTCHA_INSTANCE}()"><i class="icon-refresh icon-2x icon-block"></i></a>
 		

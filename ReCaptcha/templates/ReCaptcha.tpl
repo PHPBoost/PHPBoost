@@ -16,7 +16,7 @@
 
 	<input type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
 
-	<a href="javascript:Recaptcha.reload()"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh.png" alt="" class="valign_middle" /></a>
+	<a href="javascript:Recaptcha.reload()"><i class="icon-refresh icon-2x icon-block"></i></a>
   	<div class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')">{@audio_captcha}</a></div>
   	<div class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')">{@image_captcha}</a></div>
 

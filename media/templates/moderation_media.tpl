@@ -139,8 +139,8 @@
 		</form>
 		# IF C_ADMIN #
 		<div style="text-align:center; margin:20px 20px;" class="row1">
-			<a href="moderation_media.php?recount=1">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh.png" alt="{L_RECOUNT_MEDIA}" />
+			<a href="moderation_media.php?recount=1" title="{L_RECOUNT_MEDIA}">
+				<i class="icon-refresh icon-2x icon-block"></i>
 			</a>
 			<br />
 			<a href="moderation_media.php?recount=1">{L_RECOUNT_MEDIA}</a>
