@@ -20,8 +20,8 @@
 			</table>
 			
 			<div style="text-align:center; margin:30px 20px;" class="row1">
-				<a href="{U_RECOUNT_SUBFILES}">
-					<img src="{PATH_TO_ROOT}/templates/default/images/admin/refresh.png" alt="{L_RECOUNT_QUESTIONS}" />
+				<a href="{U_RECOUNT_SUBFILES}" title="{L_RECOUNT_SUBFILES}">
+					<i class="icon-refresh icon-2x icon-block"></i>
 				</a>
 				<br />
 				<a href="{U_RECOUNT_SUBFILES}">{L_RECOUNT_SUBFILES}</a>
