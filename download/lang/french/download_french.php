@@ -35,6 +35,7 @@ $DOWNLOAD_LANG = array();
 
 //Gestion des fichiers
 $DOWNLOAD_LANG['files_management'] = 'Gestion des fichiers';
+$DOWNLOAD_LANG['files.manage'] = 'Gérer les fichiers';
 $DOWNLOAD_LANG['file_management'] = 'Modification du fichier';
 $DOWNLOAD_LANG['file_addition'] = 'Ajout d\'un fichier';
 $DOWNLOAD_LANG['add_file'] = 'Ajouter un fichier';
@@ -100,6 +101,7 @@ $DOWNLOAD_LANG['unknown_date'] = 'inconnue';
 $DOWNLOAD_LANG['read_feed'] = 'Téléchager';
 
 //Catégories
+$DOWNLOAD_LANG['admin.categories.manage'] = 'Gérer les catégories';
 $DOWNLOAD_LANG['add_category'] = 'Ajouter une catégorie';
 $DOWNLOAD_LANG['removing_category'] = 'Suppression d\'une catégorie';
 $DOWNLOAD_LANG['explain_removing_category'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (fichiers et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de la catégorie. <strong>Attention, cette action est irréversible !</strong>';

@@ -36,6 +36,7 @@ $DOWNLOAD_LANG = array();
 
 //Gestion des fichiers
 $DOWNLOAD_LANG['files_management'] = 'File management';
+$DOWNLOAD_LANG['files.manage'] = 'Manage files';
 $DOWNLOAD_LANG['file_management'] = 'File editing';
 $DOWNLOAD_LANG['file_addition'] = 'Add a file';
 $DOWNLOAD_LANG['add_file'] = 'Add this file';
@@ -101,6 +102,7 @@ $DOWNLOAD_LANG['unknown_date'] = 'Unknown';
 $DOWNLOAD_LANG['read_feed'] = 'Download';
 
 //Catégories
+$DOWNLOAD_LANG['admin.categories.manage'] = 'Manage categories';
 $DOWNLOAD_LANG['add_category'] = 'Add a category';
 $DOWNLOAD_LANG['removing_category'] = 'Removing category';
 $DOWNLOAD_LANG['explain_removing_category'] = 'You will delete the category. You have two choices : you can move its contents (files and sub-categories) in another category or delete the whole category. <strong>Be careful, this action is irreversible !</strong>';

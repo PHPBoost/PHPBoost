@@ -1,26 +1,5 @@
 		# IF C_DOWNLOAD_CAT #
-		<menu class="dynamic_menu right">
-			<ul>
-				<li><a><i class="icon-cog"></i></a>
-					<ul>
-						# IF C_ADD_FILE #
-						<li>
-							<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
-								{L_ADD_FILE}
-							</a>
-						</li>
-						# ENDIF #
-						# IF IS_ADMIN #
-						<li>
-							<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
-						</li>
-						# ENDIF #
-					</ul>
-				</li>
-			</ul>
-		</menu>
-		
-		<section>		
+		<section>
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>

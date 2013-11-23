@@ -31,19 +31,12 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
 
-    function __construct()
-    {
-		$this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('download');
-    }
-    
-	public function css_files()
+	function __construct()
 	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('download.css');
-		return $module_css_files;
+		$this->sql_querier = PersistenceContext::get_sql();
+		parent::__construct('download');
 	}
-	
+
 	function get_cache()
 	{
 		global $LANG, $Cache;
@@ -80,28 +73,6 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		}
 
 		return $code;
-	}
-
-	public function feeds()
-	{
-		return new DownloadFeedProvider();
-	}
-	
-	public function comments()
-	{
-		return new CommentsTopics(array(
-			new DownloadCommentsTopic()
-		));
-	}
-	
-	public function home_page()
-	{
-		return new DownloadHomePageExtensionPoint();
-	}
-
-	public function search()
-	{
-		return new DownloadSearchable();
 	}
 
     ## Private ##
@@ -163,10 +134,42 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		$this->sql_querier->query_close($result);
 		return $data;
 	}
+    
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('download.css');
+		return $module_css_files;
+	}
+	
+	public function comments()
+	{
+		return new CommentsTopics(array(new DownloadCommentsTopic()));
+	}
+
+	public function feeds()
+	{
+		return new DownloadFeedProvider();
+	}
+	
+	public function home_page()
+	{
+		return new DownloadHomePageExtensionPoint();
+	}
+
+	public function search()
+	{
+		return new DownloadSearchable();
+	}
 	
 	public function sitemap()
 	{
 		return new DownloadSitemapExtensionPoint();
+	}
+	
+	public function tree_links()
+	{
+		return new DownloadTreeLinks();
 	}
 }
 ?>
