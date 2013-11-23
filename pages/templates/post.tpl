@@ -36,13 +36,7 @@
 
 		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/pages.js"></script>
 	
-		# IF C_ERROR_HANDLER #
-			<div class="{ERRORH_CLASS}">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-				<br />
-			</div>
-			<br />
-		# ENDIF #
+		# INCLUDE message_helper #
 		
 		# START previewing #
 		<article>					
