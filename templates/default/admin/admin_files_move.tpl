@@ -23,7 +23,7 @@
 				</tr>							
 				<tr> 
 					<td class="row2">
-						<a href="admin_files.php?root=1{POPUP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/home.png" class="valign_middle" alt="" /></a>
+						<a href="admin_files.php?root=1{POPUP}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/home.png" class="valign_middle" alt="" /></a>
 						<a href="admin_files.php?root=1{POPUP}">{L_ROOT}</a>
 					</td>
 				</tr>							
@@ -33,7 +33,7 @@
 							{L_URL}
 						</div>
 						<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_mini.png" class="valign_middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
+							<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_mini.png" class="valign_middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
 						</div>
 					</td>
 				</tr>			
@@ -53,7 +53,7 @@
 									<table style="border:0;width:210px;">
 										<tr>
 											<td style="width:34px;vertical-align:top;">
-												<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" />
+												<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_max.png" alt="" />
 											</td>
 											<td style="padding-top:8px;">						
 												{folder.NAME}										
@@ -70,7 +70,7 @@
 												# IF file.C_DISPLAY_REAL_IMG #
 												<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="" style="width:100px;height:auto;" />
 												# ELSE #
-												<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/{file.FILE_ICON}" alt="" />
+												<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/{file.FILE_ICON}" alt="" />
 												# ENDIF #
 											</td>
 											<td style="padding-top:8px;">						
@@ -97,7 +97,7 @@
 										var selected_cat = {SELECTED_CAT};
 									-->
 									</script>
-									<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/cat_root.png" alt="" /> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
+									<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/cat_root.png" alt="" /> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
 									<br />
 									{FOLDERS}
 								</td>
