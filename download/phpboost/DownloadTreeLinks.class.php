@@ -32,9 +32,8 @@ class DownloadTreeLinks implements ModuleTreeLinksExtensionPoint
 {
 	public function get_actions_tree_links()
 	{
-		global $DOWNLOAD_LANG, $Cache, $DOWNLOAD_CACHE;
+		global $DOWNLOAD_LANG;
 		load_module_lang('download'); //Chargement de la langue du module.
-		$Cache->load('download');
 		
 		$tree = new ModuleTreeLinks();
 		
