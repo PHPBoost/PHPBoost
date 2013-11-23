@@ -49,9 +49,9 @@ function show_cat_contents(id_cat, display_select_link)
 		else
 		{
 			document.getElementById("cat_" + id_cat).style.display = 'none';
-			document.getElementById("img_" + id_cat).className = 'icon-folder-close';
+			document.getElementById("img_" + id_cat).className = 'icon-folder';
 			if( document.getElementById("img2_" + id_cat) )
-				document.getElementById("img2_" + id_cat).className = 'icon-expand';
+				document.getElementById("img2_" + id_cat).className = 'icon-plus-square-o';
 			cat_status[id_cat] = 0;
 		}
 	}
