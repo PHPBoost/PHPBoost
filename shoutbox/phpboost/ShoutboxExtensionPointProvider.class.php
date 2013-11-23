@@ -32,16 +32,6 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('shoutbox');
 	}
 	
-	public function home_page()
-	{
-		return new ShoutboxHomePageExtensionPoint();
-	}
-	
-	public function scheduled_jobs()
-	{
-		return new ShoutboxScheduledJobs();
-	}
-	
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
@@ -50,11 +40,24 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 		return $module_css_files;
 	}
 	
+	public function home_page()
+	{
+		return new ShoutboxHomePageExtensionPoint();
+	}
+	
 	public function menus()
 	{
-		return new ModuleMenus(array(
-			new ShoutboxModuleMiniMenu()
-		));
+		return new ModuleMenus(array(new ShoutboxModuleMiniMenu()));
+	}
+	
+	public function scheduled_jobs()
+	{
+		return new ShoutboxScheduledJobs();
+	}
+	
+	public function tree_links()
+	{
+		return new ShoutboxTreeLinks();
 	}
 }
 ?>
