@@ -181,7 +181,9 @@
 				<fieldset>
 					<legend>{L_UPDATE_DATA_CACHED}</legend>
 					<p style="text-align:center;">
-						<a href="admin_forum_config.php?upd=1"><img src="{PATH_TO_ROOT}/templates/default/images/admin/refresh.png" alt="" /></a>
+						<a href="admin_forum_config.php?upd=1" title="{L_UPDATE_DATA_CACHED}">
+							<i class="icon-refresh icon-2x icon-block"></i>
+						</a>
 						<br />
 						<a href="admin_forum_config.php?upd=1">{L_UPDATE_DATA_CACHED}</a>
 					</p>
