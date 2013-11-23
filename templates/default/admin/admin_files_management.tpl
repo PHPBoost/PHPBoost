@@ -23,13 +23,13 @@
 				
 			if( !hide_folder )
 			{
-				document.getElementById('new_folder').innerHTML += '<div style="width:210px;height:90px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></td></tr></table></div>';
+				document.getElementById('new_folder').innerHTML += '<div style="width:210px;height:90px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></td></tr></table></div>';
 				document.getElementById('folder_name').focus();
 			}
 			else
 			{	
 				document.getElementById('new_folder' + (divid - 1)).style.display = 'block';
-				document.getElementById('new_folder' + (divid - 1)).innerHTML = '<div style="width:210px;height:90px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></td></tr></table></div>';
+				document.getElementById('new_folder' + (divid - 1)).innerHTML = '<div style="width:210px;height:90px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></td></tr></table></div>';
 				document.getElementById('folder_name').focus();
 				this.divid--;	
 				hide_folder = false;
@@ -103,7 +103,7 @@
 					{
 						if( xhr_object.responseText > 0 )
 						{
-							document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="admin_files.php?f=' + xhr_object.responseText + '"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="admin_files.php?f=' + xhr_object.responseText + '">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="icon-edit"></a></span></a></span> <a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" class="icon-delete" data-confirmation="delete-element"></a> <a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" title="{L_MOVETO}" class="icon-move"></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
+							document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="admin_files.php?f=' + xhr_object.responseText + '"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="admin_files.php?f=' + xhr_object.responseText + '">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="icon-edit"></a></span></a></span> <a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" class="icon-delete" data-confirmation="delete-element"></a> <a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" title="{L_MOVETO}" class="icon-move"></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
 							var total_folder = document.getElementById('total_folder').innerHTML;
 							total_folder++;						
 							document.getElementById('total_folder').innerHTML = total_folder;
@@ -253,19 +253,19 @@
 				<tr> 
 					<td class="row2">
 						<span style="float:left;">
-							<a href="admin_files.php?root=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/home.png" class="valign_middle" alt="" /></a>
+							<a href="admin_files.php?root=1"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/home.png" class="valign_middle" alt="" /></a>
 							<a href="admin_files.php?root=1">{L_ROOT}</a>
 							<br />					
-							<a href="admin_files.php?fup={FOLDER_ID}{FOLDERM_ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_up.png" class="valign_middle" alt="" /></a>
+							<a href="admin_files.php?fup={FOLDER_ID}{FOLDERM_ID}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_up.png" class="valign_middle" alt="" /></a>
 							<a href="admin_files.php?fup={FOLDER_ID}{FOLDERM_ID}">{L_FOLDER_UP}</a>
 						</span>
 						<span style="float:right;">
 							<span id="new_folder_link">
-								<a href="javascript:display_new_folder();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_new.png" class="valign_middle" alt="" /></a>
+								<a href="javascript:display_new_folder();"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_new.png" class="valign_middle" alt="" /></a>
 								<a href="javascript:display_new_folder();">{L_FOLDER_NEW}</a>
 							</span>
 							<br />
-							<a href="#new_file"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" class="valign_middle" alt="" /></a>
+							<a href="#new_file"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/files_add.png" class="valign_middle" alt="" /></a>
 							<a href="#new_file">{L_ADD_FILES}</a>		
 							<br />
 						</span>
@@ -277,7 +277,7 @@
 							{L_URL}
 						</div>
 						<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_mini.png" class="valign_middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
+								<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_mini.png" class="valign_middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
 						</div>
 					</td>
 				</tr>	
@@ -295,7 +295,7 @@
 							<table style="border:0;">
 								<tr>
 									<td style="width:34px;vertical-align:top;">
-										<a href="admin_files.php{folder.U_FOLDER}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/{folder.IMG_FOLDER}" alt="" /></a>
+										<a href="admin_files.php{folder.U_FOLDER}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/{folder.IMG_FOLDER}" alt="" /></a>
 									</td>
 									<td style="padding-top:8px;">						
 										<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span>
@@ -318,7 +318,7 @@
 							<table style="border:0;">
 								<tr>
 									<td style="width:34px;vertical-align:top;">
-										<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/{files.IMG}" alt="" />
+										<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/{files.IMG}" alt="" />
 									</td>
 									<td style="padding-top:8px;">	
 										<a class="com" href="{files.URL}"{files.LIGHTBOX}><span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />

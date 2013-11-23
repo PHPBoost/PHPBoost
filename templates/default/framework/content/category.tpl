@@ -3,7 +3,7 @@
 		<div style="margin-left:{categories.MARGIN_LEFT}px;">
 			<div class="row3 management_cat_admin">
 				<span style="float:left;">
-					&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png" alt="" style="vertical-align:middle" />
+					&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder.png" alt="" style="vertical-align:middle" />
 					&nbsp;
 					
 					# IF categories.C_DISPLAY_URL #
