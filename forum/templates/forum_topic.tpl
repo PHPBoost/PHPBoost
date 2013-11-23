@@ -187,7 +187,12 @@
 								<table width="95%">
 									<tr>
 										<td>
-											<img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll_left.png" height="8px" width="" alt="{poll_result.PERCENT}%" title="{poll_result.PERCENT}%" /><img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll.png" height="8px" width="{poll_result.WIDTH}" alt="{poll_result.PERCENT}%" title="{poll_result.PERCENT}%" /><img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll_right.png" height="8px" width="" alt="{poll_result.PERCENT}%" title="{poll_result.PERCENT}%" /> {poll_result.PERCENT}% [{poll_result.NBRVOTE} {L_VOTE}]
+											<div class="progressbar-container" title="{poll_result.PERCENT}%">
+												<span class="progressbar-infos">
+													{poll_result.PERCENT}% [{poll_result.NBRVOTE} {L_VOTE}]
+												</span>
+												<div class="progressbar" style="width:{poll_result.PERCENT}%"></div>
+											</div>
 										</td>
 									</tr>
 								</table>

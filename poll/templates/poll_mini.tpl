@@ -26,32 +26,31 @@
 				<div class="module_mini_bottom">
 				</div>
 			</div>		
-		</form>	
-		# END question #	
+		</form>
+		# END question #
 
 		# START result #
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_MINI_POLL}</h5>
 			</div>
-			<div class="module_mini_contents" style="text-align:center">			
+			<div class="module_mini_contents" style="text-align:center">
 				<span style="font-size:10px;">{result.QUESTION}</span>
 				
 				<hr style="width:90%;" />
 				<br />
-				# START result.answers #					
+				# START result.answers #
 				<p style="padding-left:6px;text-align:left;">
-					<span class="smaller">{result.answers.ANSWERS}</span>
+					<span class="smaller">{result.answers.ANSWERS} : {result.answers.PERCENT}%</span>
 					<br />
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll_left.png" height="8px" width="" alt="{result.answers.WIDTH}%" title="{result.answers.WIDTH}%" /><img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll.png" height="8px" width="{result.answers.WIDTH}" alt="{result.answers.WIDTH}%" title="{result.answers.WIDTH}%" /><img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll_right.png" height="8px" width="" alt="{result.answers.WIDTH}%" title="{result.answers.WIDTH}%" />
-					<span class="smaller">
-						{result.answers.PERCENT}%
-					</span>
-				</p>			
+					<div class="progressbar-container" title="{result.answers.WIDTH}%">
+						<div class="progressbar" style="width:{result.answers.WIDTH}%"></div>
+					</div>
+				</p>
 				# END result.answers #
 				
 				<span class="smaller">{result.VOTES} {L_VOTE}</span>
-			</div>		
+			</div>
 			<div class="module_mini_bottom">
 			</div>
 		</div>
