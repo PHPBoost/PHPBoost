@@ -69,9 +69,6 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 			));
 		}
 
-		if ($auth_write)
-			$tpl->assign_block_vars('management', array());
-
 		//let's check if there are some subcategories
 		$num_subcats = 0;
 		foreach ($FAQ_CATS as $id => $value)
@@ -201,7 +198,6 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 		$tpl->put_all(array(
 			'TITLE' => $faq_config->get_faq_name() . ($id_faq > 0 ? ' - ' . FaqUrlBuilder::get_title($id_faq) : ''),
 			'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
-			'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
 			'L_UP' => $FAQ_LANG['up'],
 			'L_DOWN' => $FAQ_LANG['down'],
 			'L_MOVE' => $FAQ_LANG['move'],
@@ -209,7 +205,6 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 			'U_MANAGEMENT' => PATH_TO_ROOT . url('/faq/management.php?faq=' . $id_faq),
 			'U_ADMIN_CAT' => $id_faq > 0 ? url(PATH_TO_ROOT . '/faq/admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq_cats.php'),
-			'U_CONFIG' => PATH_TO_ROOT . url('/faq/admin_faq.php'),
 			'ID_FAQ' => $id_faq,
 		));
 
