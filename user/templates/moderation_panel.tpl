@@ -4,29 +4,33 @@
 			</header>
 			<div class="content" style="padding-bottom:75px;">	
 			# IF C_MODO_PANEL_USER #
-				<table class="module_table">
-					<tr>
-						<th colspan="3">
+				<table>
+					<thead>
+						<tr>
+							<th colspan="3">
 							{L_INFO_MANAGEMENT}
-						</th>
-					</tr>
-					<tr>							
-						<td style="text-align:center;width:34%" class="row2">
-							<a href="{U_WARNING}" title="{L_USERS_WARNING}"><i class="icon-warning"></i></a>
-							<br />
-							<a href="{U_WARNING}" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
-						</td>
-						<td style="text-align:center;width:33%" class="row2">
-							<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}"><i class="icon-error"></i></a>
-							<br />
-							<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
-						</td>
-						<td style="text-align:center;width:33%" class="row2">
-							<a href="{U_BAN}" title="{L_USERS_BAN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/forbidden.png" alt="{L_USERS_BAN}" /></a>
-							<br />
-							<a href="{U_BAN}" title="{L_USERS_BAN}">{L_USERS_BAN}</a>
-						</td>
-					</tr>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="no-separator">
+								<a href="{U_WARNING}" title="{L_USERS_WARNING}"><i class="icon-warning"></i></a>
+								<br />
+								<a href="{U_WARNING}" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
+							</td>
+							<td class="no-separator">
+								<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}"><i class="icon-error"></i></a>
+								<br />
+								<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
+							</td>
+							<td class="no-separator">
+								<a href="{U_BAN}" title="{L_USERS_BAN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/forbidden.png" alt="{L_USERS_BAN}" /></a>
+								<br />
+								<a href="{U_BAN}" title="{L_USERS_BAN}">{L_USERS_BAN}</a>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 				
 				# IF C_MODO_PANEL_USER_LIST #
