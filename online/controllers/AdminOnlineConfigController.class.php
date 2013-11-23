@@ -57,7 +57,7 @@ class AdminOnlineConfigController extends AdminModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('online_common', 'online');
+		$this->lang = LangLoader::get('common', 'online');
 	}
 
 	private function build_form()

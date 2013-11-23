@@ -96,7 +96,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('online_common', 'online');
+		$this->lang = LangLoader::get('common', 'online');
 		$this->view = new FileTemplate('online/OnlineHomeController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->config = OnlineConfig::load();
