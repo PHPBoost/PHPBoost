@@ -44,6 +44,11 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
 		return new ContactHomePageExtensionPoint();
 	}
 	
+	public function tree_links()
+	{
+		return new ContactTreeLinks();
+	}
+	
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/contact/index.php')));
