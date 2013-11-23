@@ -68,11 +68,13 @@ $FAQ_LANG['question_creation'] = 'Création d\'une question';
 $FAQ_LANG['question'] = 'Question';
 $FAQ_LANG['entitled'] = 'Intitulé';
 $FAQ_LANG['answer'] = 'Réponse';
+$FAQ_LANG['questions.manage'] = 'Gérer les questions';
 
 //Management
 $FAQ_LANG['faq_management'] = 'Gestion de la FAQ';
 $FAQ_LANG['faq_configuration'] = 'Configuration de la FAQ';
 $FAQ_LANG['faq_questions_list'] = 'Liste des questions';
+$FAQ_LANG['admin.categories.manage'] = 'Gérer les catégories';
 $FAQ_LANG['cats_management'] = 'Gestion des catégories';
 $FAQ_LANG['add_cat'] = 'Ajouter une catégorie';
 $FAQ_LANG['add_question'] = 'Ajouter une question';

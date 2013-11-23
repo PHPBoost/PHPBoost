@@ -30,13 +30,13 @@ define('FAQ_MAX_SEARCH_RESULTS', 100);
 class FaqExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
-
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('faq');
-    }
-
+	
+	public function __construct()
+	{
+		$this->sql_querier = PersistenceContext::get_sql();
+		parent::__construct('faq');
+	}
+	
 	//Récupération du cache.
 	public function get_cache()
 	{
@@ -77,20 +77,15 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 
 		return $string;
 	}
-
-	public function home_page()
-	{
-		return new FaqHomePageExtensionPoint();
-	}
-	
-    public function sitemap()
-    {
-    	return new FaqSitemapExtensionPoint();
-    }
 	
 	public function feeds()
 	{
 		return new FaqFeedProvider();
+	}
+
+	public function home_page()
+	{
+		return new FaqHomePageExtensionPoint();
 	}
 	
 	public function menus()
@@ -103,6 +98,16 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	public function search()
 	{
 		return new FaqSearchable();
+	}
+	
+	public function sitemap()
+	{
+		return new FaqSitemapExtensionPoint();
+	}
+	
+	public function tree_links()
+	{
+		return new FaqTreeLinks();
 	}
 }
 ?>

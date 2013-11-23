@@ -16,34 +16,14 @@
 -->
 </script>
 
-# START management #
-	<menu class="dynamic_menu right">
-		<ul>
-			<li><a class="icon-cog"></a>
-				<ul>
-					<li>
-						<a href="{U_MANAGEMENT}" title="{L_CAT_MANAGEMENT}"><i class="icon-bars"></i> {L_CAT_MANAGEMENT}</a>
-						
-					</li>
-					# IF IS_ADMIN #
-					<li>
-						<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}"><i class="icon-bars"></i> ${LangLoader::get_message('configuration', 'admin')}</a>
-					</li>
-					# ENDIF #
-				</ul>
-			</li>
-		</ul>
-	</menu>
-# END management #
-
-<section>			
+<section>
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_FAQ))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			{TITLE}
 			# IF C_ADMIN #
 			<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-			# END IF #
+			# ENDIF #
 		</h1>
 	</header>
 	<div class="content">
