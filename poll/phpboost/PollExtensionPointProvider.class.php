@@ -28,14 +28,14 @@
 class PollExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
-
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('poll');
-    }
-
-    //Récupération du cache.
+	
+	public function __construct()
+	{
+		$this->sql_querier = PersistenceContext::get_sql();
+		parent::__construct('poll');
+	}
+	
+	//Récupération du cache.
 	function get_cache()
 	{
 		$poll_config = PollConfig::load();
@@ -78,9 +78,12 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 	
 	public function menus()
 	{
-		return new ModuleMenus(array(
-			new PollModuleMiniMenu()
-		));
+		return new ModuleMenus(array(new PollModuleMiniMenu()));
+	}
+	
+	public function tree_links()
+	{
+		return new PollTreeLinks();
 	}
 }
 ?>

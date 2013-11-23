@@ -34,6 +34,7 @@
 $LANG['confirm_del_poll'] = 'Supprimer ce sondage ?';
 $LANG['poll_add'] = 'Ajouter un sondage';
 $LANG['poll_management'] = 'Gestion des sondages';
+$LANG['poll.manage'] = 'Gérer les sondages';
 $LANG['poll_config'] = 'Configuration des sondages';
 $LANG['poll_config_mini'] = 'Configuration des mini-sondages';
 $LANG['poll_config_advanced'] = 'Configurations avancées';
