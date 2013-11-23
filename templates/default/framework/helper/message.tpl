@@ -1,14 +1,11 @@
-		<div id="message_helper">
-			<div class="{MESSAGE_CSS_CLASS}">
-				<i class="icon-{MESSAGE_CSS_CLASS}"></i>
-				<div>{MESSAGE_CONTENT}</div>
-			</div>	
-		</div>
+		<div id="message-helper" class="message-helper-{MESSAGE_CSS_CLASS}">
+			<div>{MESSAGE_CONTENT}</div>
+		</div>	
 		# IF C_TIMEOUT #
 		<script type="text/javascript">
 		<!--
 			//Javascript timeout to hide this message
-			setTimeout('Effect.Fade("message_helper");', {TIMEOUT});
+			setTimeout('Effect.Fade(message-helper);', {TIMEOUT});
 		-->
 		</script>
 		# ENDIF #
