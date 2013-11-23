@@ -32,9 +32,6 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('online');
 	}
 	
-	 /**
-	 * @method Get css files
-	 */
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
@@ -47,14 +44,19 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
 		return new OnlineHomePageExtensionPoint();
 	}
 	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/online/index.php')));
-	}
-	
 	public function menus()
 	{
 		return new ModuleMenus(array(new OnlineModuleMiniMenu()));
+	}
+	
+	public function tree_links()
+	{
+		return new OnlineTreeLinks();
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/online/index.php')));
 	}
 }
 ?>
