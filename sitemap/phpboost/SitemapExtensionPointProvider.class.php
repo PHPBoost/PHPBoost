@@ -32,6 +32,18 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('sitemap');
 	}
 	
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('sitemap.css');
+		return $module_css_files;
+	}
+	
+	public function commands()
+	{
+		return new CLICommandsList(array('generate-sitemap' => 'CLIGenerateSitemapCommand'));
+	}
+	
 	public function home_page()
 	{
 		return new SitemapHomePageExtensionPoint();
@@ -41,22 +53,15 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new SitemapScheduledJobs();
 	}
-
-	public function commands()
+	
+	public function tree_links()
 	{
-		return new CLICommandsList(array('generate-sitemap' => 'CLIGenerateSitemapCommand'));
+		return new SitemapTreeLinks();
 	}
 	
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/sitemap/index.php')));
-	}
-	
-	public function css_files()
-	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('sitemap.css');
-		return $module_css_files;
 	}
 }
 ?>
