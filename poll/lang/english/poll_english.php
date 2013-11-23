@@ -35,6 +35,7 @@
 $LANG['confirm_del_poll'] = 'Delete this poll ?';
 $LANG['poll_add'] = 'Add a poll';
 $LANG['poll_management'] = 'Poll management';
+$LANG['poll.manage'] = 'Manage polls';
 $LANG['poll_config'] = 'Poll configuration';
 $LANG['poll_config_mini'] = 'Mini-poll configuration';
 $LANG['poll_config_advanced'] = 'Advanced configurations';
