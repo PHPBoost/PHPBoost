@@ -2,11 +2,6 @@
 			<ul>
 				<li class="title_menu">{L_DOWNLOAD_MANAGEMENT}</li>
 				<li>
-					<a href="{U_DOWNLOAD_CONFIG}"><img src="download.png" alt="" /></a>
-					<br />
-					<a href="{U_DOWNLOAD_CONFIG}" class="quick_link">{L_DOWNLOAD_CONFIG}</a>
-				</li>
-				<li>
 					<a href="{U_DOWNLOAD_CATS_MANAGEMENT}"><img src="download.png" alt="" /></a>
 					<br />
 					<a href="{U_DOWNLOAD_CATS_MANAGEMENT}" class="quick_link">{L_CATS_MANAGEMENT}</a>
@@ -25,6 +20,11 @@
 					<a href="{U_ADD_FILE}"><img src="download.png" alt="" /></a>
 					<br />
 					<a href="{U_ADD_FILE}" class="quick_link">{L_ADD_FILE}</a>
+				</li>
+				<li>
+					<a href="{U_DOWNLOAD_CONFIG}"><img src="download.png" alt="" /></a>
+					<br />
+					<a href="{U_DOWNLOAD_CONFIG}" class="quick_link">{L_DOWNLOAD_CONFIG}</a>
 				</li>
 			</ul>
 		</div>
