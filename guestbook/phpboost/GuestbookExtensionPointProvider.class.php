@@ -32,6 +32,13 @@ class GuestbookExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('guestbook');
 	}
 	
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('guestbook.css');
+		return $module_css_files;
+	}
+	
 	public function home_page()
 	{
 		return new GuestbookHomePageExtensionPoint();
@@ -42,11 +49,9 @@ class GuestbookExtensionPointProvider extends ExtensionPointProvider
 		return new ModuleMenus(array(new GuestbookModuleMiniMenu()));
 	}
 	
-	public function css_files()
+	public function tree_links()
 	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_always_displayed_file('guestbook.css');
-		return $module_css_files;
+		return new GuestbookTreeLinks();
 	}
 	
 	public function url_mappings()
