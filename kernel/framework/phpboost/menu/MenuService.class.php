@@ -41,7 +41,6 @@ class MenuService
 	 * @var DBQuerier
 	 */
 	private static $querier;
-	private static $menus_map;
 
 	/**
 	 * @var string[] the columns needed to instanciate a menu
@@ -673,32 +672,6 @@ class MenuService
 			default:
 				return Menu::BLOCK_POSITION__NOT_ENABLED;
 		}
-	}
-	
-	public static function init_menus_map()
-	{
-		global $Cache;
-			
-		if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
-		{
-			//En cas d'échec, on régénère le cache
-			$Cache->Generate_file('menus');
-
-			//On inclut une nouvelle fois
-			if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
-			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
-                    $LANG['e_cache_modules'], UserErrorController::FATAL);
-                DispatchManager::redirect($controller);
-			}
-		}
-		
-		self::$menus_map = $MENUS;
-	}
-	
-	public static function get_menus_map_cached()
-	{
-		return self::$menus_map;
 	}
 
 	/**

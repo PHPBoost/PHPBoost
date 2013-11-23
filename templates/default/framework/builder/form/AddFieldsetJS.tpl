@@ -1,5 +1,6 @@
 <script type="text/javascript">
 <!--
+Event.observe(window, 'load', function() {
 	var form = HTMLForms.get("${escape(FORM_ID)}");
 	var fieldset = new FormFieldset("${escape(ID)}");
 
@@ -8,5 +9,6 @@
 	# ENDIF #
 	
 	form.addFieldset(fieldset);
+});
 -->	
 </script>
