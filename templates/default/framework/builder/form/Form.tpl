@@ -1,10 +1,13 @@
 # IF C_VALIDATION_ERROR #
-<div class="notice">
-<span class="text_strong" >{TITLE_VALIDATION_ERROR_MESSAGE} : </span> <br /><br />
-# START validation_error_messages #
-	- {validation_error_messages.ERROR_MESSAGE}<br />
-# END validation_error_messages #
+<div id="message-helper" class="message-helper-error">
+	<div>
+		<span class="text_strong" >{TITLE_VALIDATION_ERROR_MESSAGE} : </span> <br /><br />
+		# START validation_error_messages #
+			- {validation_error_messages.ERROR_MESSAGE}<br />
+		# END validation_error_messages #
+	</div>
 </div>
+
 # ENDIF #
 
 # IF C_JS_NOT_ALREADY_INCLUDED # 
