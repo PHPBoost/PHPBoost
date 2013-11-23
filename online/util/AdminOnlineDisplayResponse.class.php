@@ -31,7 +31,7 @@ class AdminOnlineDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$lang = LangLoader::get('online_common', 'online');
+		$lang = LangLoader::get('common', 'online');
 		$picture = '/online/online.png';
 		$this->set_title($lang['online']);
 		$this->add_link($lang['admin.online-config'], OnlineUrlBuilder::configuration(), $picture);

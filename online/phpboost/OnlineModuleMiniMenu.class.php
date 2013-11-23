@@ -45,7 +45,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			$tpl = new FileTemplate('online/OnlineModuleMiniMenu.tpl');
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
 			
-			$lang = LangLoader::get('online_common', 'online');
+			$lang = LangLoader::get('common', 'online');
 			$tpl->add_lang($lang);
 			
 			$online_config = OnlineConfig::load();

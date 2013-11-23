@@ -34,7 +34,7 @@ class OnlineHomePageExtensionPoint implements HomePageExtensionPoint
 
 	private function get_title()
 	{
-		return LangLoader::get_message('online', 'online_common', 'online');
+		return LangLoader::get_message('online', 'common', 'online');
 	}
 	
 	private function get_view()
