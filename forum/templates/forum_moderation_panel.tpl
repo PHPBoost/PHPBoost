@@ -7,14 +7,20 @@
 			<div class="module_contents">
 				<table class="module_table">
 					<tr>							
-						<td style="text-align:center;" class="row2">
-							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/notice.png" alt="{L_USERS_WARNING}" /><br />{L_USERS_WARNING}</a>
+						<td style="text-align:center;width:34%" class="row2">
+							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><i class="icon-warning"></i></a>
+							<br />
+							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
 						</td>
-						<td style="text-align:center;" class="row2">
-							<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_USERS_PUNISHMENT}" /><br />{L_USERS_PUNISHMENT}</a>
+						<td style="text-align:center;width:33%" class="row2">
+							<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><i class="icon-error"></i></a>
+							<br />
+							<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
 						</td>
-						<td style="text-align:center;" class="row2">
-							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/important.png" alt="{L_ALERT_MANAGEMENT}" /><br />{L_ALERT_MANAGEMENT}</a>
+						<td style="text-align:center;width:33%" class="row2">
+							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><i class="icon-notice"></i></a>
+							<br />
+							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}">{L_ALERT_MANAGEMENT}</a>
 						</td>
 					</tr>
 				</table>				
