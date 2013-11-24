@@ -32,9 +32,9 @@
 						{L_GD_LIBRARY}
 						<div class="form-field">
 							# IF C_SERVER_GD_LIBRARY #
-							<i class="icon-success" title="{L_YES}"></i>
+							<i class="icon-success icon-2x" title="{L_YES}"></i>
 							# ELSE #
-							<i class="icon-error" title="{L_NO}"></i>
+							<i class="icon-error icon-2x" title="{L_NO}"></i>
 							# ENDIF #
 						</div>
 					</div>
@@ -43,12 +43,12 @@
 						<div class="form-field">
 							# IF C_URL_REWRITING_KNOWN #
 								# IF C_SERVER_URL_REWRITING #
-								<i class="icon-success" title="{L_YES}"></i>
+								<i class="icon-success icon-2x" title="{L_YES}"></i>
 								# ELSE #
-								<i class="icon-error" title="{L_NO}"></i>
+								<i class="icon-error icon-2x" title="{L_NO}"></i>
 								# ENDIF #
 							# ELSE #
-							<i class="icon-question" title="{L_UNKNOWN}"></i>
+							<i class="icon-question icon-2x" title="{L_UNKNOWN}"></i>
 							# ENDIF #
 						</div>
 					</div>
@@ -56,9 +56,9 @@
 						{L_REGISTER_GLOBALS_OPTION}
 						<div class="form-field">
 							# IF C_REGISTER_GLOBALS #
-							<i class="icon-success" title="{L_YES}"></i>
+							<i class="icon-success icon-2x" title="{L_YES}"></i>
 							# ELSE #
-							<i class="icon-error" title="{L_NO}"></i>
+							<i class="icon-error icon-2x" title="{L_NO}"></i>
 							# ENDIF #
 						</div>
 					</div>
@@ -107,9 +107,9 @@
 						{L_URL_REWRITING}
 						<div class="form-field">
 							# IF C_KERNEL_URL_REWRITING #
-							<i class="icon-success" title="{L_YES}"></i>
+							<i class="icon-success icon-2x" title="{L_YES}"></i>
 							# ELSE #
-							<i class="icon-error" title="{L_NO}"></i>
+							<i class="icon-error icon-2x" title="{L_NO}"></i>
 							# ENDIF #
 						</div>
 					</div>
@@ -117,9 +117,9 @@
 						{L_OUTPUT_GZ}
 						<div class="form-field">
 							# IF C_KERNEL_OUTPUT_GZ #
-							<i class="icon-success" title="{L_YES}"></i>
+							<i class="icon-success icon-2x" title="{L_YES}"></i>
 							# ELSE #
-							<i class="icon-error" title="{L_NO}"></i>
+							<i class="icon-error icon-2x" title="{L_NO}"></i>
 							# ENDIF #
 						</div>
 					</div>
@@ -143,9 +143,9 @@
 						{directories.NAME}
 						<div class="form-field">
 							# IF directories.C_AUTH_DIR #
-							<i class="icon-success" title="{L_YES}"></i>
+							<i class="icon-success icon-2x" title="{L_YES}"></i>
 							# ELSE #
-							<i class="icon-error" title="{L_NO}"></i>
+							<i class="icon-error icon-2x" title="{L_NO}"></i>
 							# ENDIF #
 						</div>
 					</div>
