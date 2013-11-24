@@ -1,7 +1,7 @@
 <li id="cat_{ID}" class="sortable-element">
 	<div class="sortable-title"> 
 		<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows"></i>
-		<img src="{PATH_TO_ROOT}/templates/default/images/admin/url.png" alt="Url" class="valign_middle"> 
+		<i class="icon-globe"></i>
 		{NAME}
 		# IF C_DESCRIPTION #<span class="cat_desc"> | {DESCRIPTION}</span># ENDIF #
 		<div class="sortable-actions">

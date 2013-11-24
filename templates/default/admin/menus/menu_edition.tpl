@@ -54,7 +54,7 @@
     <li class="sortable-element" id="menu_element_{ID}">
    		<div class="sortable-title">
 			<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
-   			<img src="{PATH_TO_ROOT}/templates/default/images/admin/url.png" alt="plus" class="valign_middle" style="cursor:move" />
+   			<i class="icon-globe"></i>
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
