@@ -129,8 +129,8 @@ a.member { color:#000000; }
 [class^="icon-"]:before { font-size:1.167em; }
 
 .icon-syndication:before { color:#f57900; }
-.icon-forbidden:before { color:#ba4b49; }
-.icon-ban:before { color:#ba4b49; }
+.icon-forbidden:before { color:#BA4B49; }
+.icon-ban:before { color:#BA4B49; }
 .icon-unban:before { color:#478948; }
 .icon-male:before { color:#8DC3E9; }
 .icon-female:before { color:#F49CC4; }
@@ -779,24 +779,24 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 [class*="-notice"]:before { content: "\f12a"; }
 
 [class^="message-helper-warning"] {
-    background-color:#fdf9e4;
-    border-color:#fbeccd;
+    background-color:#FDF9E4;
+    border-color:#FBECCD;
 }
 [class*="-warning"],
-[class*="-warning"]:before { color:#c19954; }
+[class*="-warning"]:before { color:#C19954; }
 [class*="-warning"]:before { content: "\f071"; }
 
 [class^="message-helper-error"]{
-    background-color:#f3dfdf;
-    border-color:#eccdd2;
+    background-color:#F3DFDF;
+    border-color:#ECCDD2;
 }
 [class*="-error"],
-[class*="-error"]:before { color:#ba4b49; }
+[class*="-error"]:before { color:#BA4B49; }
 [class*="-error"]:before { content: "\f00d"; }
 
 [class^="message-helper-success"]{
-    background-color:#e0f1d9;
-  	border-color:#d7eac7;
+    background-color:#E0F1D9;
+  	border-color:#D7EAC7;
 }
 [class*="-success"],
 [class*="-success"]:before { color:#478948; }
