@@ -296,7 +296,7 @@
 					&nbsp;
 					# IF msg.C_FORUM_MODERATOR # 
 					{msg.USER_WARNING}%
-					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}"><img src="{PICTURES_DATA_PATH}/images/important_mini.png" alt="{L_WARNING_MANAGEMENT}" class="valign_middle" /></a>
+					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}" class="icon-warning"></a>
 					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}" class="icon-lock"></a>
 					# ENDIF #
 				</span>&nbsp;
