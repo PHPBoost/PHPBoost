@@ -24,6 +24,16 @@
 			<ul>
 				<li class="title_menu">{L_WEB_MANAGEMENT}</li>
 				<li>
+					<a href="admin_web_cat.php"><img src="web.png" alt="" /></a>
+					<br />
+					<a href="admin_web_cat.php" class="quick_link">{L_WEB_CAT}</a>
+				</li>
+				<li>
+					<a href="admin_web_cat.php#add_cat"><img src="web.png" alt="" /></a>
+					<br />
+					<a href="admin_web_cat.php#add_cat" class="quick_link">{L_ADD_CAT}</a>
+				</li>
+				<li>
 					<a href="admin_web.php"><img src="web.png" alt="" /></a>
 					<br />
 					<a href="admin_web.php" class="quick_link">{L_WEB_MANAGEMENT}</a>
@@ -32,11 +42,6 @@
 					<a href="admin_web_add.php"><img src="web.png" alt="" /></a>
 					<br />
 					<a href="admin_web_add.php" class="quick_link">{L_WEB_ADD}</a>
-				</li>
-				<li>
-					<a href="admin_web_cat.php"><img src="web.png" alt="" /></a>
-					<br />
-					<a href="admin_web_cat.php" class="quick_link">{L_WEB_CAT}</a>
 				</li>
 				<li>
 					<a href="admin_web_config.php"><img src="web.png" alt="" /></a>

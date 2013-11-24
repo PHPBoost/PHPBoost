@@ -70,6 +70,7 @@ else
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_CAT' => $LANG['cat_management'],
 		'L_WEB_CONFIG' => $LANG['web_config'],
+		'L_ADD_CAT' => $LANG['cat_add'],
 		'L_NBR_WEB_MAX' => $LANG['nbr_web_max'],
 		'L_NBR_CAT_MAX' => $LANG['nbr_cat_max'],
 		'L_NBR_COLUMN_MAX' => $LANG['nbr_column_max'],

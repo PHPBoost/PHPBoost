@@ -34,10 +34,12 @@
 //Admin
 $LANG['web_add'] = 'Add a weblink';
 $LANG['web_management'] = 'Weblink management';
+$LANG['links.manage'] = 'Manage weblinks';
 $LANG['web_config'] = 'Weblink configuration';
 $LANG['edit_link'] = 'Weblink edition';
 $LANG['nbr_web_max'] = 'Maximum weblinks displayed';
 $LANG['icon_cat'] = 'Category icon';
+$LANG['admin.categories.manage'] = 'Manage categories';
 $LANG['admin.authorizations'] = 'Permissions';
 $LANG['admin.authorizations.read'] = 'Permission to display the links list';
 
