@@ -676,145 +676,245 @@ class KernelSetup
 	{
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 1,
-			'code_smiley' => ':|',
-			'url_smiley' => 'waw.gif'
+			'code_smiley' => ':o',
+			'url_smiley' => 'wow.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 2,
-			'code_smiley' => ':siffle',
-			'url_smiley' => 'siffle.gif'
+			'code_smiley' => ':whistle',
+			'url_smiley' => 'whistle.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 3,
 			'code_smiley' => ':)',
-			'url_smiley' => 'sourire.gif'
+			'url_smiley' => 'smile.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 4,
 			'code_smiley' => ':lol',
-			'url_smiley' => 'rire.gif'
+			'url_smiley' => 'laugh.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 5,
 			'code_smiley' => ':p',
-			'url_smiley' => 'tirelangue.gif'
+			'url_smiley' => 'tongue.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 6,
 			'code_smiley' => ':(',
-			'url_smiley' => 'malheureux.gif'
+			'url_smiley' => 'sad.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 7,
 			'code_smiley' => ';)',
-			'url_smiley' => 'clindoeil.gif'
+			'url_smiley' => 'wink.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 8,
-			'code_smiley' => ':heink',
-			'url_smiley' => 'heink.gif'
+			'code_smiley' => ':?',
+			'url_smiley' => 'what.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 9,
 			'code_smiley' => ':D',
-			'url_smiley' => 'heureux.gif'
+			'url_smiley' => 'grin.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 10,
-			'code_smiley' => ':d',
-			'url_smiley' => 'content.gif'
+			'code_smiley' => '^^',
+			'url_smiley' => 'happy.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 11,
-			'code_smiley' => ':s',
-			'url_smiley' => 'incertain.gif'
+			'code_smiley' => ':|',
+			'url_smiley' => 'straight.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 12,
-			'code_smiley' => ':gne',
-			'url_smiley' => 'pinch.gif'
+			'code_smiley' => 'x|',
+			'url_smiley' => 'gne.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 13,
 			'code_smiley' => ':top',
-			'url_smiley' => 'top.gif'
+			'url_smiley' => 'top.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 14,
-			'code_smiley' => ':clap',
-			'url_smiley' => 'clap.gif'
+			'code_smiley' => ':party',
+			'url_smiley' => 'party.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 15,
-			'code_smiley' => ':hehe',
-			'url_smiley' => 'hehe.gif'
+			'code_smiley' => '3:)',
+			'url_smiley' => 'devil.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 16,
 			'code_smiley' => ':@',
-			'url_smiley' => 'angry.gif'
+			'url_smiley' => 'angry.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 17,
 			'code_smiley' => ':\'(',
-			'url_smiley' => 'snif.gif'
+			'url_smiley' => 'cry.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 18,
-			'code_smiley' => ':nex',
-			'url_smiley' => 'nex.gif'
+			'code_smiley' => ':crazy',
+			'url_smiley' => 'crazy.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 19,
 			'code_smiley' => '8-)',
-			'url_smiley' => 'star.gif'
+			'url_smiley' => 'cool.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 20,
 			'code_smiley' => '|-)',
-			'url_smiley' => 'nuit.gif'
+			'url_smiley' => 'night.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 21,
-			'code_smiley' => ':berk',
-			'url_smiley' => 'berk.gif'
+			'code_smiley' => ':vomit',
+			'url_smiley' => 'vomit.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 22,
-			'code_smiley' => ':gre',
-			'url_smiley' => 'colere.gif'
+			'code_smiley' => '>:)',
+			'url_smiley' => 'unhappy.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 23,
 			'code_smiley' => ':love',
-			'url_smiley' => 'love.gif'
+			'url_smiley' => 'love.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 24,
 			'code_smiley' => ':hum',
-			'url_smiley' => 'doute.gif'
+			'url_smiley' => 'confused.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 25,
-			'code_smiley' => ':mat',
-			'url_smiley' => 'mat.gif'
+			'code_smiley' => ':drool',
+			'url_smiley' => 'drooling.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 26,
-			'code_smiley' => ':miam',
-			'url_smiley' => 'miam.gif'
+			'code_smiley' => ':cold',
+			'url_smiley' => 'cold.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 27,
-			'code_smiley' => ':+1',
-			'url_smiley' => 'plus1.gif'
+			'code_smiley' => ':hot',
+			'url_smiley' => 'hot.png'
 		));
 		self::$db_querier->insert(self::$smileys_table, array(
 			'idsmiley' => 28,
-			'code_smiley' => ':lu',
-			'url_smiley' => 'lu.gif'
+			'code_smiley' => ':hi',
+			'url_smiley' => 'hello.png'
 		));
 
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 29,
+			'code_smiley' => ':bal',
+			'url_smiley' => 'balloon.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 30,
+			'code_smiley' => ':bomb',
+			'url_smiley' => 'bomb.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 31,
+			'code_smiley' => ':/L',
+			'url_smiley' => 'brokenheart.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 32,
+			'code_smiley' => ':cake',
+			'url_smiley' => 'cake.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 33,
+			'code_smiley' => ':dead',
+			'url_smiley' => 'dead.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 34,
+			'code_smiley' => ':drink',
+			'url_smiley' => 'drink.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 35,
+			'code_smiley' => ':flower',
+			'url_smiley' => 'flower.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 36,
+			'code_smiley' => ':ghost',
+			'url_smiley' => 'ghost.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 37,
+			'code_smiley' => ':gift',
+			'url_smiley' => 'gift.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 38,
+			'code_smiley' => ':girly',
+			'url_smiley' => 'girly.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 39,
+			'code_smiley' => ':L',
+			'url_smiley' => 'heart.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 40,
+			'code_smiley' => ':hug',
+			'url_smiley' => 'hug.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 41,
+			'code_smiley' => ':idea',
+			'url_smiley' => 'idea.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 42,
+			'code_smiley' => ':kiss',
+			'url_smiley' => 'kiss.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 43,
+			'code_smiley' => ':mail',
+			'url_smiley' => 'mail.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 44,
+			'code_smiley' => ':x',
+			'url_smiley' => 'mute.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 46,
+			'code_smiley' => ':nerd',
+			'url_smiley' => 'nerd.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 47,
+			'code_smiley' => ':sick',
+			'url_smiley' => 'sick.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 48,
+			'code_smiley' => ':boring',
+			'url_smiley' => 'boring.png'
+		));
+		self::$db_querier->insert(self::$smileys_table, array(
+			'idsmiley' => 49,
+			'code_smiley' => ':zombie',
+			'url_smiley' => 'zombie.png'
+		));
 	}
 
 	private function insert_member_data()
