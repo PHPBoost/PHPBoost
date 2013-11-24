@@ -730,8 +730,7 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 
 /* Erreurs
 --------------------------------------*/
-[class^="message-helper-"] {
-	display:block;
+div[class^="message-helper-"] {
     height:auto;
 	width:500px;
 	padding:10px;
@@ -744,7 +743,7 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 	-webkit-border-radius:3px;
 }
 
-[class^="message-helper-"]:before {
+div[class^="message-helper-"]:before {
 	font-family: FontAwesome;
 	font-size: 2em;
 	width: 25px;
@@ -758,7 +757,7 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-[class^="message-helper-"] > div{
+[class^="message-helper-"] div {
 	padding:0px 5px 0px 35px;
 }
 
@@ -766,38 +765,29 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
     background-color:#DAEEF8;
     border-color:#BDE9F2;
 }
-[class*="-question"],
-[class*="-question"]:before { color:#3B88AE; }
-[class*="-question"]:before { content: "\f128"; }
 
-[class^="message-helper-notice"] {
+[class*="-question"], [class*="-question"]:before { color:#3B88AE; content: "\f128"; }
+
+div.message-helper-notice {
     background-color:#F0F0F0;
     border-color:#E2E2E2;
 }
-[class*="-notice"],
-[class*="-notice"]:before { color:#888888; }
-[class*="-notice"]:before { content: "\f12a"; }
+[class*="-notice"], [class*="-notice"]:before { color:#888888; content: "\f12a"; }
 
-[class^="message-helper-warning"] {
+div.message-helper-warning {
     background-color:#FDF9E4;
     border-color:#FBECCD;
 }
-[class*="-warning"],
-[class*="-warning"]:before { color:#C19954; }
-[class*="-warning"]:before { content: "\f071"; }
+[class*="-warning"], [class*="-warning"]:before { color:#C19954; content: "\f071"; }
 
-[class^="message-helper-error"]{
+div.message-helper-error {
     background-color:#F3DFDF;
     border-color:#ECCDD2;
 }
-[class*="-error"],
-[class*="-error"]:before { color:#BA4B49; }
-[class*="-error"]:before { content: "\f00d"; }
+[class*="-error"], [class*="-error"]:before { color:#BA4B49; content: "\f00d"; }
 
-[class^="message-helper-success"]{
+div.message-helper-success {
     background-color:#E0F1D9;
   	border-color:#D7EAC7;
 }
-[class*="-success"],
-[class*="-success"]:before { color:#478948; }
-[class*="-success"]:before { content: "\f00c"; }
+[class*="-success"], [class*="-success"]:before { color:#478948; content: "\f00c"; }
