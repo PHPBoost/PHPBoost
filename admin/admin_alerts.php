@@ -47,7 +47,7 @@ $order = $order == 'desc' ? 'desc' : 'asc';
 $alerts_list = AdministratorAlertService::get_all_alerts($criteria, $order, ($pagination->get_var_page('p') - 1) * NUM_ALERTS_PER_PAGE, NUM_ALERTS_PER_PAGE);
 foreach ($alerts_list as $alert)
 {
-	$img_type = '';
+	$img_class = '';
 	
 	switch ($alert->get_priority())
 	{
@@ -61,11 +61,11 @@ foreach ($alerts_list as $alert)
 			$color = 'F5D5C6';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
-			$img_type = 'important_mini.png';
+			$img_class = 'icon-warning';
 			$color = 'FFD5D1';
 			break;
 		case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
-			$img_type = 'errors_mini.png';
+			$img_class = 'icon-warning';
 			$color = 'F3A29B';
 			break;
 		default:
@@ -80,7 +80,7 @@ foreach ($alerts_list as $alert)
 		'NAME' => $alert->get_entitled(),
 		'PRIORITY' => $alert->get_priority_name(),
 		'STYLE' => 'background:#' . $color . ';',
-		'IMG' => !empty($img_type) ? '<img src="'. PATH_TO_ROOT .'/templates/default/images/admin/' . $img_type . '" alt="" class="valign_middle" />' : '',
+		'IMG' => !empty($img_class) ? '<i class="' . $img_class . '"></i>' : '',
 		'DATE' => $creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'ID' => $alert->get_id(),
 		'STATUS' => $alert->get_status()
