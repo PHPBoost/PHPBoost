@@ -1351,11 +1351,12 @@ readers do not read off random characters that represent icons */
 .icon-remove:before { /* copie times */
 	content: "\f00d";
 }
-
 .icon-syndication:before { /* copie RSS */
 	content: "\f09e";
 }
-
 .icon-delete:before { /* copie Trash */
 	content: "\f014";
+}
+.icon-forbidden:before { /* copie minus-circle */
+	content: "\f056";
 }

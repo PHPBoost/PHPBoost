@@ -129,12 +129,9 @@ a.member { color:#000000; }
 [class^="icon-"]:before { font-size:1.167em; }
 
 .icon-syndication:before { color:#f57900; }
+.icon-forbidden:before { color:#ba4b49; }
 
-.icon-success:before,
-.icon-error:before,
-.icon-notice:before,
-.icon-warning:before,
-.icon-question:before { font-size:2.9em; }
+
 
 table .icon-table-sort-up:before { content: "\f062"; }
 table .icon-table-sort-down:before { content: "\f063"; }

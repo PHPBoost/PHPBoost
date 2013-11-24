@@ -270,11 +270,7 @@ var FormField = Class.create({
 		}
 		if ($('onblurContainerResponse' + this.getHTMLId())
 				&& $('onblurMesssageResponse' + this.getHTMLId())) {
-			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<img src="'
-					+ PATH_TO_ROOT
-					+ '/templates/'
-					+ THEME
-					+ '/images/forbidden_mini.png" alt="" class="valign_middle" />';
+			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<i class="icon-forbidden"></i>';
 			$('onblurMesssageResponse' + this.getHTMLId()).innerHTML = message;
 
 			Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
