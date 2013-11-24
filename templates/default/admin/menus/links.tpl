@@ -46,7 +46,7 @@ function addSubElement(menu_element_id) {
         Builder.node('div', {className: 'sortable-title'}, [
 			Builder.node('i', {className: 'icon-arrows', title: "${LangLoader::get_message('move', 'admin')}"}),
             ' ',
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/default/images/admin/url.png', alt: 'plus'}),
+            Builder.node('i', {className: 'icon-globe'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
