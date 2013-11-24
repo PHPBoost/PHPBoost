@@ -2,11 +2,6 @@
 			<ul>
 				<li class="title_menu">{L_MANAGEMENT_MEDIA}</li>
 				<li>
-					<a href="admin_media_config.php"><img src="media.png" alt="{L_CONFIGURATION}" /></a>
-					<br />
-					<a href="admin_media_config.php" class="quick_link">{L_CONFIGURATION}</a>
-				</li>
-				<li>
 					<a href="admin_media_cats.php"><img src="media.png" alt="{L_MANAGEMENT_CAT}" /></a>
 					<br />
 					<a href="admin_media_cats.php" class="quick_link">{L_MANAGEMENT_CAT}</a>
@@ -25,6 +20,11 @@
 					<a href="media_action.php"><img src="media.png" alt="{L_ADD_MEDIA}" /></a>
 					<br />
 					<a href="media_action.php" class="quick_link">{L_ADD_MEDIA}</a>
+				</li>
+				<li>
+					<a href="admin_media_config.php"><img src="media.png" alt="{L_CONFIGURATION}" /></a>
+					<br />
+					<a href="admin_media_config.php" class="quick_link">{L_CONFIGURATION}</a>
 				</li>
 			</ul>
 		</div>

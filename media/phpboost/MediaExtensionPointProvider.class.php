@@ -32,12 +32,12 @@ define('MEDIA_MAX_SEARCH_RESULTS', 100);
 
 class MediaExtensionPointProvider extends ExtensionPointProvider
 {
-    ## Public Methods ##
-    function __construct() //Constructeur de la classe ForumInterface
-    {
+	## Public Methods ##
+	function __construct() //Constructeur de la classe ForumInterface
+	{
 		$this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('media');
-    }
+		parent::__construct('media');
+	}
 
 	//Récupération du cache.
 	function get_cache()
@@ -79,9 +79,9 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		return $string;
 	}
 	
-	public function home_page()
+	public function comments()
 	{
-		return new MediaHomePageExtensionPoint();
+		return new CommentsTopics(array(new MediaCommentsTopic()));
 	}
 	
 	public function feeds()
@@ -89,11 +89,9 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		return new MediaFeedProvider();
 	}
 	
-	public function comments()
+	public function home_page()
 	{
-		return new CommentsTopics(array(
-			new MediaCommentsTopic()
-		));
+		return new MediaHomePageExtensionPoint();
 	}
 	
 	public function search()
@@ -104,6 +102,11 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 	public function sitemap()
 	{
 		return new MediaSitemapExtensionPoint();
+	}
+	
+	public function tree_links()
+	{
+		return new MediaTreeLinks();
 	}
 }
 ?>

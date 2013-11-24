@@ -47,6 +47,7 @@ $MEDIA_LANG = array(
 'auth_read' => 'Read permissions',
 'auth_contrib' => 'Contribute permissions',
 'auth_write' => 'Write permissions',
+'admin.categories.manage' => 'Manage categories',
 'category' => 'Category',
 'cat_description' => 'Category description',
 'cat_image' => 'Category icon',
@@ -97,6 +98,7 @@ $MEDIA_LANG = array(
 'add_media' => 'Add a multimedia file',
 'configuration' => 'Configuration',
 'list_media' => 'List of multimedia files',
+'medias.manage' => 'Manage multimedia files',
 'management_cat' => 'Category management',
 'management_media' => 'Multimedia management',
 
