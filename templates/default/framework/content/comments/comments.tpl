@@ -37,9 +37,9 @@ Event.observe(window, 'load', function() {
 	# IF C_MODERATE #
 		<div class="message-moderate">
 			# IF C_IS_LOCKED #
-			<a href="{U_UNLOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/unlock.png"> {@unlock}</a>
+			<a href="{U_UNLOCK}"><i class="icon-ban"></i> {@unlock}</a>
 			# ELSE #
-			<a href="{U_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/lock.png"> {@lock}</a>
+			<a href="{U_LOCK}"><i class="icon-unban"></i> {@lock}</a>
 			# ENDIF #
 		</div>
 	# ENDIF #

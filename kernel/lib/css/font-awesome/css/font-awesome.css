@@ -1360,3 +1360,6 @@ readers do not read off random characters that represent icons */
 .icon-forbidden:before { /* copie minus-circle */
 	content: "\f056";
 }
+.icon-unban:before { /* copie ban */
+	content: "\f05e";
+}
