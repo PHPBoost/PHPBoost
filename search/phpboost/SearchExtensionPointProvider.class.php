@@ -32,11 +32,6 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('search');
 	}
 
-	public function scheduled_jobs()
-	{
-		return new SearchScheduledJobs();
-	}
-
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
@@ -47,9 +42,17 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 	
 	public function menus()
 	{
-		return new ModuleMenus(array(
-			new SearchModuleMiniMenu()
-		));
+		return new ModuleMenus(array(new SearchModuleMiniMenu()));
+	}
+
+	public function scheduled_jobs()
+	{
+		return new SearchScheduledJobs();
+	}
+	
+	public function tree_links()
+	{
+		return new SearchTreeLinks();
 	}
 }
 ?>

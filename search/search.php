@@ -25,15 +25,15 @@
 *
 ###################################################*/
 
+//------------------------------------------------------------------- Language
+require_once('../kernel/begin.php');
+load_module_lang('search');
+
 if (!SearchAuthorizationsService::check_authorizations()->read())
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
-
-//------------------------------------------------------------------- Language
-require_once('../kernel/begin.php');
-load_module_lang('search');
 
 $Template->set_filenames(array(
     'search_forms' => 'search/search_forms.tpl',

@@ -59,6 +59,7 @@ $LANG['search_config'] = 'Configuration';
 $LANG['search_config_weighting'] = 'Pondération des résultats';
 $LANG['search_config_weighting_explain'] = 'La pondération des résultats vous permet de donner plus d\'importance à certains modules qu\'à d\'autres dans les résultats de la recherche.';
 $LANG['search_weights'] = 'Pondérations';
+$LANG['weights.manage'] = 'Gérer la pondération des résultats';
 $LANG['search_cache'] = 'Cache des résultats des recherches';
 $LANG['cache_time'] = 'Durée de vie du cache';
 $LANG['cache_time_explain'] = 'Durée exprimée en minutes, au dela, les résultats seront recalculés';
