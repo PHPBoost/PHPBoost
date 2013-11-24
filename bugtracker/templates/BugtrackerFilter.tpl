@@ -71,7 +71,7 @@
 			# ENDIF #
 			# IF C_DISPLAY_SAVE_BUTTON #
 			<td class="no-separator">
-				<a href="{LINK_FILTER_SAVE}" title="{@bugs.labels.save_filters}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/files_mini.png" alt="" /></a>
+				<a href="{LINK_FILTER_SAVE}" title="{@bugs.labels.save_filters}" class="icon-save"></a>
 			</td>
 			# ENDIF #
 		</tr>
