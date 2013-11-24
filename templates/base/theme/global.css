@@ -121,6 +121,7 @@ a.admin { color:#FFA34F; }
 a.modo { color:#006699; }
 a.member { color:#000000; }
 
+
 /* Icônes spécifique PHPBoost
 ------------------------------------ */
 [class^="icon-"] { vertical-align:middle; }
@@ -128,6 +129,12 @@ a.member { color:#000000; }
 [class^="icon-"]:before { font-size:1.167em; }
 
 .icon-syndication:before { color:#f57900; }
+
+.icon-success:before,
+.icon-error:before,
+.icon-notice:before,
+.icon-warning:before,
+.icon-question:before { font-size:2.9em; }
 
 table .icon-table-sort-up:before { content: "\f062"; }
 table .icon-table-sort-down:before { content: "\f063"; }
@@ -756,7 +763,7 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 	padding:0px 5px 0px 35px;
 }
 
-[class*="-question"] {
+[class^="message-helper-question"] {
     background-color:#DAEEF8;
     border-color:#BDE9F2;
 }
@@ -764,7 +771,7 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 [class*="-question"]:before { color:#3B88AE; }
 [class*="-question"]:before { content: "\f128"; }
 
-[class*="notice"] {
+[class^="message-helper-notice"] {
     background-color:#F0F0F0;
     border-color:#E2E2E2;
 }
@@ -772,7 +779,7 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 [class*="-notice"]:before { color:#888888; }
 [class*="-notice"]:before { content: "\f12a"; }
 
-[class*="-warning"] {
+[class^="message-helper-warning"] {
     background-color:#fdf9e4;
     border-color:#fbeccd;
 }
@@ -780,7 +787,7 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 [class*="-warning"]:before { color:#c19954; }
 [class*="-warning"]:before { content: "\f071"; }
 
-[class*="-error"]{
+[class^="message-helper-error"]{
     background-color:#f3dfdf;
     border-color:#eccdd2;
 }
@@ -788,7 +795,7 @@ ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
 [class*="-error"]:before { color:#ba4b49; }
 [class*="-error"]:before { content: "\f00d"; }
 
-[class*="-success"]{
+[class^="message-helper-success"]{
     background-color:#e0f1d9;
   	border-color:#d7eac7;
 }
