@@ -8,17 +8,17 @@
 				<table class="module_table">
 					<tr>							
 						<td style="text-align:center;width:34%" class="row2">
-							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><i class="icon-warning"></i></a>
+							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><i class="icon-warning icon-2x"></i></a>
 							<br />
 							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
 						</td>
 						<td style="text-align:center;width:33%" class="row2">
-							<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><i class="icon-error"></i></a>
+							<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><i class="icon-error icon-2x"></i></a>
 							<br />
 							<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
 						</td>
 						<td style="text-align:center;width:33%" class="row2">
-							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><i class="icon-notice"></i></a>
+							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><i class="icon-notice icon-2x"></i></a>
 							<br />
 							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}">{L_ALERT_MANAGEMENT}</a>
 						</td>

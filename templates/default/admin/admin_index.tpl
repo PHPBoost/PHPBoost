@@ -40,11 +40,11 @@
 					<tr> 
 						<td class="row2">
 							# IF C_UNREAD_ALERTS #
-								<div class="warning">
+								<div class="message_helper-warning">
 									{L_UNREAD_ALERT}
 								</div>
 							# ELSE #
-								<div class="success">
+								<div class="message-helper-success">
 									{L_NO_UNREAD_ALERT}
 								</div>
 							# ENDIF #

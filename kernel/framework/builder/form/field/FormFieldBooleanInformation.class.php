@@ -49,7 +49,7 @@ class FormFieldBooleanInformation extends FormFieldFree
 	
 	protected function get_html_value()
 	{
-		return '<i class="' . ($this->get_value() ? 'icon-success' : 'icon-error') . '"></i>';
+		return '<i class="' . ($this->get_value() ? 'icon-success' : 'icon-error') . ' icon-2x"></i>';
 	}
 }
 ?>
