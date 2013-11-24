@@ -88,10 +88,10 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 		switch ($value) 
 		{
 			case 1:
-				return '<img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/man.png" />';
+				return '<i class="icon-male"></i>';
 				break;
 			case 2:
-				return '<img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/woman.png" />';
+				return '<i class="icon-female"></i>';
 				break;		
 			default:
 				return '';

@@ -361,9 +361,9 @@ while ( $row = $Sql->fetch_assoc($result) )
 		
 	//Affichage du sexe et du statut (connecté/déconnecté).	
 	if ($row['user_sex'] == 1)	
-		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
+		$user_sex = $LANG['sex'] . ': <i class="icon-male"></i><br />';	
 	elseif ($row['user_sex'] == 2) 
-		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
+		$user_sex = $LANG['sex'] . ': <i class="icon-female"></i><br />';
 	else $user_sex = '';
 			
 	//Localisation.
