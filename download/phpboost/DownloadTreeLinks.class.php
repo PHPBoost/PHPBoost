@@ -34,6 +34,7 @@ class DownloadTreeLinks implements ModuleTreeLinksExtensionPoint
 	{
 		global $DOWNLOAD_LANG;
 		load_module_lang('download'); //Chargement de la langue du module.
+		require_once(PATH_TO_ROOT . '/download/media_auth.php');
 		
 		$tree = new ModuleTreeLinks();
 		
