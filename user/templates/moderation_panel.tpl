@@ -15,17 +15,17 @@
 					<tbody>
 						<tr>
 							<td class="no-separator">
-								<a href="{U_WARNING}" title="{L_USERS_WARNING}"><i class="icon-warning"></i></a>
+								<a href="{U_WARNING}" title="{L_USERS_WARNING}" class="icon-warning icon-2x"></a>
 								<br />
 								<a href="{U_WARNING}" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
 							</td>
 							<td class="no-separator">
-								<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}"><i class="icon-error"></i></a>
+								<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}" class="icon-error icon-2x"></a>
 								<br />
 								<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
 							</td>
 							<td class="no-separator">
-								<a href="{U_BAN}" title="{L_USERS_BAN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/forbidden.png" alt="{L_USERS_BAN}" /></a>
+								<a href="{U_BAN}" title="{L_USERS_BAN}" class="icon-forbidden icon-2x"></a>
 								<br />
 								<a href="{U_BAN}" title="{L_USERS_BAN}">{L_USERS_BAN}</a>
 							</td>
