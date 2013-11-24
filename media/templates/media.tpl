@@ -1,37 +1,4 @@
 		# IF C_CATEGORIES #
-			<menu class="dynamic_menu right">
-				<ul>
-					<li><a><i class="icon-cog"></i></a>
-						<ul>
-							# IF C_ADD_FILE #
-							<li>
-								<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">{L_ADD_FILE}</a>
-							</li>
-							# ENDIF #
-							# IF C_MODO #
-							<li>
-								<a href="{PATH_TO_ROOT}/media/moderation_media.php" title="{L_MODO_PANEL}">
-									{L_MODO_PANEL}
-								</a>
-							</li>
-							# END IF #
-							# IF C_ADMIN #
-								# IF C_CAT #
-								<li>
-									<a href="{U_ADMIN_CAT}" title="{L_ADMIN_CAT}">{L_ADMIN_CAT}</a>
-								</li>
-								# ENDIF #
-							<li>
-								<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
-							</li>
-							# END IF #
-						</ul>
-					</li>
-				</ul>
-			</menu>
-			
-			<div class="spacer"></div>
-			
 			<section>
 				<header>
 					<h1>
