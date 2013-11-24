@@ -182,7 +182,7 @@ else
 				'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="" />',
 				'TR_START' => $tr_start,
 				'TR_END' => $tr_end,
-				'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/default/images/admin/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
+				'LOCK' => ($row['status'] == 0) ? '<i class="icon-lock"></>' : '',
 				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info_admin'], $row['nbr_pics'], $row['nbr_pics_unaprob'])
 			));
 		}

@@ -300,7 +300,7 @@
 					# IF msg.C_FORUM_MODERATOR # 
 					{msg.USER_WARNING}%
 					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/important.png" alt="{L_WARNING_MANAGEMENT}" class="valign_middle" /></a>
-					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/readonly.png" alt="{L_PUNISHEMENT_MANAGEMENT}" class="valign_middle" /></a>
+					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}" class="icon-lock"></a>
 					# ENDIF #
 				</span>&nbsp;
 			</div>	

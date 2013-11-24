@@ -143,7 +143,7 @@ if ($action == 'punish')
 				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('punish', $row['user_id'])->rel() .'"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
+				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('punish', $row['user_id'])->rel() .'" class="icon-lock"></a>',
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			));
 			
