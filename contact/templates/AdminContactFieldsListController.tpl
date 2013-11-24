@@ -162,7 +162,7 @@ Event.observe(window, 'load', function() {
 				<li class="sortable-element" id="list_{fields_list.ID}">
 					<div class="sortable-title">
 						<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows"></i>
-						<img src="{PATH_TO_ROOT}/templates/default/images/admin/url.png" alt="" />
+						<i class="icon-globe"></i>
 						<span class="text_strong">{fields_list.NAME}</span>
 						<div class="sortable-actions">
 							{@admin.field.required} : <span class="text_strong"># IF fields_list.C_REQUIRED #{@admin.field.yes}# ELSE #{@admin.field.no}# ENDIF #</span>
