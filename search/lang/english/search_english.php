@@ -60,6 +60,7 @@ $LANG['search_config'] = 'Configuration';
 $LANG['search_config_weighting'] = 'Results weighting';
 $LANG['search_config_weighting_explain'] = 'Results weighting allow you to give some modules results more importance than other';
 $LANG['search_weights'] = 'Weights';
+$LANG['weights.manage'] = 'Manage results weights';
 $LANG['search_cache'] = 'Search results cache';
 $LANG['cache_time'] = 'Search results cache length';
 $LANG['cache_time_explain'] = 'in minutes, after, results will be calculated again';
