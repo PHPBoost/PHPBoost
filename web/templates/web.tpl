@@ -2,24 +2,7 @@
 
 # IF C_WEB_CAT #
 
-# IF IS_ADMIN #
-<menu class="dynamic_menu right">
-	<ul>
-		<li><a><i class="icon-cog"></i></a>
-			<ul>
-				<li>
-					<a href="{U_ADD_LINK}" title="{L_ADD_LINK}">{L_ADD_LINK}</a>
-				</li>
-				<li>
-					<a href="{U_CONFIG}" title="${LangLoader::get_message('configuration', 'admin')}">${LangLoader::get_message('configuration', 'admin')}</a>
-				</li>
-			</ul>
-		</li>
-	</ul>
-</menu>
-# ENDIF #
-
-<section>					
+<section>
 	<header>
 		<h1>
 			{L_WEB} - {L_CATEGORIES}
