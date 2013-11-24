@@ -130,8 +130,8 @@ a.member { color:#000000; }
 
 .icon-syndication:before { color:#f57900; }
 .icon-forbidden:before { color:#ba4b49; }
-
-
+.icon-ban:before { color:#ba4b49; }
+.icon-unban:before { color:#478948; }
 
 table .icon-table-sort-up:before { content: "\f062"; }
 table .icon-table-sort-down:before { content: "\f063"; }
