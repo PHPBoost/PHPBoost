@@ -112,7 +112,7 @@
 					</script>
 					&bull;
 					# ENDIF #
-					<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" class="small"><img class="valign_middle" src="{PICTURES_DATA_PATH}/images/important_mini.png" alt="" /></a> <a href="alert{U_ALERT}#go_bottom" class="small">{L_ALERT}</a>
+					<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" class="icon-warning"></a> <a href="alert{U_ALERT}#go_bottom" class="small">{L_ALERT}</a>
 					<span id="forum_track">
 						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" class="small">{L_TRACK_DEFAULT}</a>
 					</span>

@@ -309,7 +309,7 @@ else if ($action == 'warning')
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => $row['user_warning'] . '%',
-				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('warning', $row['user_id'])->rel() .'"><img src="../templates/' . get_utheme() . '/images/important_mini.png" alt="" /></a>',
+				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('warning', $row['user_id'])->rel() .'" class="icon-warning"></a>',
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel()
 			));
