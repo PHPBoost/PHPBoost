@@ -859,7 +859,7 @@ else
 			'NAME' => $row['name'],
 			'DESC' => $row['contents'],
 			'INDENT' => ($row['level'] + 1) * 75, //Indentation des sous catégories.
-			'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/default/images/admin/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
+			'LOCK' => ($row['status'] == 0) ? '<i class="icon-lock"></i>' : '',
 			'U_GALLERY_VARS' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php')
 		));
 		
