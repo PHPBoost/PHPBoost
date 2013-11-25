@@ -45,7 +45,7 @@
 								</div>
 							# ELSE #
 								<div class="message-helper-success">
-									{L_NO_UNREAD_ALERT}
+									<div>{L_NO_UNREAD_ALERT}</div>
 								</div>
 							# ENDIF #
 							<div style="text-align:center;">
