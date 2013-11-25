@@ -21,7 +21,7 @@
 			
 			<div style="text-align:center; margin:30px 20px;" class="row1">
 				<a href="{U_RECOUNT_SUBFILES}" title="{L_RECOUNT_SUBFILES}">
-					<i class="icon-refresh icon-2x icon-block"></i>
+					<i class="icon-refresh icon-2x"></i>
 				</a>
 				<br />
 				<a href="{U_RECOUNT_SUBFILES}">{L_RECOUNT_SUBFILES}</a>
