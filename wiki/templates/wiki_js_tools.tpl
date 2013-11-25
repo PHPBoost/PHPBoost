@@ -27,7 +27,7 @@
 					&nbsp;
 					<img src="{PICTURES_DATA_PATH}/images/bbcode/separate.png" alt="" class="valign_middle" />
 					&nbsp;
-					<a href="http://www.phpboost.com/wiki/" title="{L_HELP_WIKI_TAGS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/help.png" alt="" class="valign_middle" /></a>
+					<a href="http://www.phpboost.com/wiki/" title="{L_HELP_WIKI_TAGS}"><img src="{PICTURES_DATA_PATH}/images/bbcode/help.png" alt="" class="valign_middle" /></a>
 		<noscript><div>{L_NO_JS}</div></noscript>
 				</td>
 			</tr>
