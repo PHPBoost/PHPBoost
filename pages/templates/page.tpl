@@ -29,7 +29,7 @@
 										<li><a href="{U_EXPLORER}" title="{L_EXPLORER}"><img src="{PATH_TO_ROOT}/pages/templates/images/explorer.png"/>{L_EXPLORER}</a></li>
 									# ENDIF #
 									# IF C_PRINT #
-										<li><a href="{U_PRINT}" title="{U_PRINT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/print_mini.png"/>{L_PRINT}</a></li>
+										<li><a href="{U_PRINT}" title="{U_PRINT}"><img src="{PICTURES_DATA_PATH}/images/print_mini.png"/>{L_PRINT}</a></li>
 									# ENDIF #
 								</ul>
 							</li>
