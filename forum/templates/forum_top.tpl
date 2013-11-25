@@ -119,8 +119,8 @@
 					<div style="float:right;text-align:right">
 						<form action="{PATH_TO_ROOT}/forum/search.php?token={TOKEN}" method="post">
                             <div>
-                                <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." style="background:#FFFFFF url({PATH_TO_ROOT}/templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';"></label>
-                                <button type="submit" name="valid_search">{L_SEARCH}</button><br>
+                                <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." placeholder="{L_SEARCH}..."></label>
+                                <button type="submit" name="valid_search"><i class="icon-search"></i></button><br/>
                                 <a href="{PATH_TO_ROOT}/forum/search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small">{L_ADVANCED_SEARCH}</a>
                                 
                                 <input type="hidden" name="time" value="30000">
