@@ -39,6 +39,7 @@ $lang['newsletter.config'] = 'Configuration';
 $lang['newsletter.archives'] = 'Archives';
 $lang['newsletter.subscribers'] = 'Liste des inscrits';
 $lang['newsletter.streams'] = 'Gestion des flux';
+$lang['newsletter.streams.manage'] = 'Gérer les flux';
 
 //Other title
 $lang['subscribe.newsletter'] = 'S\'abonner aux newsletters';

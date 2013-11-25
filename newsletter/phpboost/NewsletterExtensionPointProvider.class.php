@@ -27,26 +27,9 @@
 
 class NewsletterExtensionPointProvider extends ExtensionPointProvider
 {
-    function __construct()
-    {
-        parent::__construct('newsletter');
-    }
-	
-	public function home_page()
+	function __construct()
 	{
-		return new NewsletterHomePageExtensionPoint();
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(
-			new DispatcherUrlMapping('/newsletter/index.php')
-		));
-	}
-	
-	public function extended_field()
-	{
-		return new ExtendedFields(array(new RegisterNewsletterExtendedField()));
+		parent::__construct('newsletter');
 	}
 	
 	public function css_files()
@@ -56,16 +39,34 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
 		return $module_css_files;
 	}
 	
+	public function extended_field()
+	{
+		return new ExtendedFields(array(new RegisterNewsletterExtendedField()));
+	}
+	
+	public function home_page()
+	{
+		return new NewsletterHomePageExtensionPoint();
+	}
+	
+	public function menus()
+	{
+		return new ModuleMenus(array(new NewsletterModuleMiniMenu()));
+	}
+	
 	public function sitemap()
 	{
 		return new NewsletterSitemapExtensionPoint();
 	}
 	
-	public function menus()
+	public function tree_links()
 	{
-		return new ModuleMenus(array(
-			new NewsletterModuleMiniMenu()
-		));
+		return new NewsletterTreeLinks();
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/newsletter/index.php')));
 	}
 }
 ?>
