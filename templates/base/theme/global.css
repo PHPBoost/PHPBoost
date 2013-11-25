@@ -759,37 +759,66 @@ div[class^="message-helper-"]:before {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-[class^="message-helper-"] div {
+div[class^="message-helper-"] > div{
 	padding:0px 5px 0px 35px;
 }
 
-[class^="message-helper-question"] {
+div.message-helper-question {
     background-color:#DAEEF8;
     border-color:#BDE9F2;
 }
 
-[class*="-question"], [class*="-question"]:before { color:#3B88AE; content: "\f128"; }
+.icon-question:before,
+div.message-helper-question,
+div.message-helper-question:before { color:#3B88AE; }
+
+.icon-question:before,
+div.message-helper-question:before { content: "\f128"; }
 
 div.message-helper-notice {
     background-color:#F0F0F0;
     border-color:#E2E2E2;
 }
-[class*="-notice"], [class*="-notice"]:before { color:#888888; content: "\f12a"; }
+
+.icon-notice:before,
+div.message-helper-notice,
+div.message-helper-notice:before { color:#888888; }
+
+.icon-notice:before,
+div.message-helper-notice:before { content: "\f12a"; }
 
 div.message-helper-warning {
     background-color:#FDF9E4;
     border-color:#FBECCD;
 }
-[class*="-warning"], [class*="-warning"]:before { color:#C19954; content: "\f071"; }
+
+.icon-warning:before,
+div.message-helper-warning,
+div.message-helper-warning:before { color:#C19954; }
+
+.icon-warning:before,
+div.message-helper-warning:before { content: "\f071"; }
 
 div.message-helper-error {
     background-color:#F3DFDF;
     border-color:#ECCDD2;
 }
-[class*="-error"], [class*="-error"]:before { color:#BA4B49; content: "\f00d"; }
+
+.icon-error:before,
+div.message-helper-error,
+div.message-helper-error:before { color:#BA4B49; }
+
+.icon-error:before,
+div.message-helper-error:before { content: "\f00d"; }
 
 div.message-helper-success {
     background-color:#E0F1D9;
   	border-color:#D7EAC7;
 }
-[class*="-success"], [class*="-success"]:before { color:#478948; content: "\f00c"; }
+
+.icon-success:before,
+div.message-helper-success,
+div.message-helper-success:before { color:#478948; }
+
+.icon-success:before,
+div.message-helper-success:before { content: "\f00c"; }
