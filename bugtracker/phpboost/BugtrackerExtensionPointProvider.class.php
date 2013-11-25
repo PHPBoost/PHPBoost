@@ -67,6 +67,14 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	}
 	
 	 /**
+	 * @method Get tree links
+	 */
+	public function tree_links()
+	{
+		return new BugtrackerTreeLinks();
+	}
+	
+	 /**
 	 * @method Get url mappings
 	 */
 	public function url_mappings()

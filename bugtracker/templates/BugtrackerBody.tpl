@@ -42,17 +42,6 @@
 				<li class="current">
 					<a href="{LINK_BUG_ADD}"><i class="icon-plus"></i> {@bugs.titles.add}</a>
 				</li>
-				# ELSE #
-					# IF C_ADD #
-					<li>
-						<a href="{LINK_BUG_ADD}"><i class="icon-plus"></i> {@bugs.titles.add}</a>
-					</li>
-					# ENDIF #
-				# ENDIF #
-				# IF IS_ADMIN #
-				<li>
-					<a href="${relative_url(BugtrackerUrlBuilder::configuration())}">{@bugs.titles.admin.config}</a>
-				</li>
 				# ENDIF #
 			</ul>
 		</menu>
