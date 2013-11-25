@@ -57,7 +57,7 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 				}
 			}
 		}
-		$clause_unauth_cats = (count($unauth_cats_sql) > 0) ? " AND gc.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
+		$clause_unauth_cats = (count($unauth_cats_sql) > 0) ? " AND a.idcat NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
 		return "SELECT
 				" . $args['id_search'] . " AS id_search,
@@ -68,7 +68,7 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 				FROM " . PREFIX . "articles a
 				LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
 				WHERE
-					a.visible = 1 AND ((ac.visible = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
+					a.visible = 1 AND ac.visible = 1 " . $clause_unauth_cats . "
 					AND (FT_SEARCH(a.title, '" . $args['search'] . "') OR FT_SEARCH(a.contents, '" . $args['search'] . "'))
 				ORDER BY relevance DESC " . $this->sql_querier->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
 	}
