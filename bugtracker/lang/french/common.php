@@ -97,6 +97,7 @@ $lang['bugs.titles.priorities'] = 'Priorités';
 $lang['bugs.titles.severities'] = 'Niveaux';
 $lang['bugs.titles.admin.config'] = 'Configuration';
 $lang['bugs.titles.admin.authorizations'] = 'Autorisations';
+$lang['bugs.titles.admin.authorizations.manage'] = 'Gérer les autorisations';
 $lang['bugs.titles.admin.module_config'] = 'Configuration du module bugtracker';
 $lang['bugs.titles.admin.module_authorizations'] = 'Configuration des autorisations du module bugtracker';
 $lang['bugs.titles.choose_version'] = 'Version à afficher';

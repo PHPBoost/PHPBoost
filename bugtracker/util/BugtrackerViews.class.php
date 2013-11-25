@@ -49,7 +49,6 @@ class BugtrackerViews
 		$body_view->add_lang($lang);
 		$body_view->put_all(array(
 			'TEMPLATE'				=> $view,
-			'C_ADD' 				=> BugtrackerAuthorizationsService::check_authorizations()->write(),
 			'C_ROADMAP_ACTIVATED' 	=> $config->is_roadmap_enabled() && !empty($nbr_versions),
 			'C_STATS_ACTIVATED' 	=> $config->are_stats_enabled(),
 			'C_DETAIL_PAGE'			=> $current_page == 'detail',
