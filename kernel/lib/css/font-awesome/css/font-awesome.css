@@ -1347,7 +1347,7 @@ readers do not read off random characters that represent icons */
 
 
 
-/* Complément PHPBoost */
+/* ComplÃ©ment PHPBoost */
 .icon-remove:before { /* copie times */
 	content: "\f00d";
 }
@@ -1362,4 +1362,8 @@ readers do not read off random characters that represent icons */
 }
 .icon-unban:before { /* copie ban */
 	content: "\f05e";
+}
+.icon-online:before,
+.icon-offline:before { /* copie user */
+	content: "\f007";
 }
