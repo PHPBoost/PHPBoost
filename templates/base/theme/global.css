@@ -1,11 +1,11 @@
 /* --------------------------------------
 		global.css
- Contient les classes globales au site, peuvent être utilisées partout.
+ Contient les classes globales au site, peuvent Ãªtre utilisÃ©es partout.
 --------------------------------------*/ 
 
-/* Classes générales
+/* Classes gÃ©nÃ©rales
 --------------------------------------*/
-/* Case résultat recherche membre AJAX */
+/* Case rÃ©sultat recherche membre AJAX */
 .xmlhttprequest_result_search {
     overflow:auto;
     min-height:40px;
@@ -69,7 +69,7 @@
 	padding:2px 4px;
 }
 
-/* Déplacement des fichiers */
+/* DÃ©placement des fichiers */
 .upload_selected_cat {
     background:#f5fbff;
     border:1px solid #2C5169;
@@ -122,7 +122,7 @@ a.modo { color:#006699; }
 a.member { color:#000000; }
 
 
-/* Icônes spécifique PHPBoost
+/* IcÃ´nes spÃ©cifique PHPBoost
 ------------------------------------ */
 [class^="icon-"] { vertical-align:middle; }
 [class^="icon-"]:hover { text-decoration:none; }
@@ -134,6 +134,8 @@ a.member { color:#000000; }
 .icon-unban:before { color:#478948; }
 .icon-male:before { color:#8DC3E9; }
 .icon-female:before { color:#F49CC4; }
+.icon-online:before { color:#478948; }
+.icon-offline:before { color:#BA4B49; }
 
 table .icon-table-sort-up:before { content: "\f062"; }
 table .icon-table-sort-down:before { content: "\f063"; }
@@ -220,7 +222,7 @@ h4.stitle2 {
 	margin:0px 0px 10px 60px;
 }
 
-/* Mise en forme du contenu (généré par éditeurs de texte
+/* Mise en forme du contenu (gÃ©nÃ©rÃ© par Ã©diteurs de texte
 --------------------------------------------------------------------  */
 
 /* Liste */
@@ -229,7 +231,7 @@ ul,ol {
 	margin-bottom:10px;
 }
 
-/* Menu caché */
+/* Menu cachÃ© */
 .bbcode_block {
 	position:absolute;
 	text-align:center;
@@ -336,10 +338,10 @@ ul,ol {
 	margin:10px;
 }
 
-/* Code avec numérotation des listes */
+/* Code avec numÃ©rotation des listes */
 .code ol{ margin-left:3em; }
 
-/*Lien vers Wikipédia*/
+/*Lien vers WikipÃ©dia*/
 a.wikipedia_link:before {
    content:url('wikipedia_icon.png');
    vertical-align:middle;
@@ -388,7 +390,7 @@ a.wikipedia_link{ border-bottom:1px dotted; }
 	font-weight:300;
 }
 
-/* Menus groupés */
+/* Menus groupÃ©s */
 .dynamic_menu.group > ul {
 	font-size:0
 }
@@ -632,7 +634,7 @@ menu.dynamic_menu ul li.extend > a:after, menu.dynamic_menu ul li.extend > span:
 	left:auto;
 }
 
-/* Séparateur */
+/* SÃ©parateur */
 .dynamic_menu ul li.separator {
     background:#E8EDF3;
 	height:1px;
