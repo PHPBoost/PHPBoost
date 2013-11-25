@@ -524,8 +524,8 @@ else
 		$img_msg_display = $topic['display_msg'] ? 'not_processed_mini.png' : 'processed_mini.png';
 		$Template->put_all(array(
 			'C_DISPLAY_MSG' => true,
-			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="../templates/' . get_utheme() . '/images/' . $img_msg_display . '" alt="" class="valign_middle"  />' : '',
-			'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="../templates/' . get_utheme() . '/images/' . $img_msg_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
+			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $Template->get_pictures_data_path() . '/images/' . $img_msg_display . '" alt="" class="valign_middle"  />' : '',
+			'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $Template->get_pictures_data_path() . '/images/' . $img_msg_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
 			'L_DISPLAY_MSG' => $CONFIG_FORUM['display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],

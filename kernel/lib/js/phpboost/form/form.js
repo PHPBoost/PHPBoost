@@ -288,11 +288,7 @@ var FormField = Class.create({
 			return;
 		}
 		if ($('onblurContainerResponse' + this.getHTMLId())) {
-			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<img src="'
-					+ PATH_TO_ROOT
-					+ '/templates/'
-					+ THEME
-					+ '/images/processed_mini.png" alt="" class="valign_middle" />';
+			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<i class="icon-success"></i>';
 			Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
 			{
 				duration : 0.2
