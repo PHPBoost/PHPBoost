@@ -32,10 +32,10 @@ class MediaTreeLinks implements ModuleTreeLinksExtensionPoint
 {
 	public function get_actions_tree_links()
 	{
-		global $MEDIA_LANG;
+		global $MEDIA_LANG, $Cache;
 		load_module_lang('media'); //Chargement de la langue du module.
+		$Cache->load('media');
 		require_once(PATH_TO_ROOT . '/media/media_constant.php');
-		$authorizations = MediaConfig::load()->get_authorizations();
 		
 		$tree = new ModuleTreeLinks();
 		
@@ -53,7 +53,7 @@ class MediaTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$tree->add_link(new ModuleLink($MEDIA_LANG['add_media'], PATH_TO_ROOT . Url('/media/media_action.php'), AppContext::get_current_user()->check_auth($authorizations, MEDIA_AUTH_WRITE) || AppContext::get_current_user()->check_auth($authorizations, MEDIA_AUTH_CONTRIBUTION)));
+			$tree->add_link(new ModuleLink($MEDIA_LANG['add_media'], PATH_TO_ROOT . Url('/media/media_action.php'), AppContext::get_current_user()->check_auth($MEDIA_CATS[0]['auth'], MEDIA_AUTH_WRITE) || AppContext::get_current_user()->check_auth($MEDIA_CATS[0]['auth'], MEDIA_AUTH_CONTRIBUTION)));
 		}
 		
 		return $tree;

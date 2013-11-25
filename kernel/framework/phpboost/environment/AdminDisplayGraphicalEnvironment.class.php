@@ -282,69 +282,16 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			{
 				$menu_pos = $menus_numbers[$menu_pos_name];
 			}
-
-			//Le module possède une administration
+			
 			if ($menu_pos > 0)
 			{
 				$array_pos[$menu_pos-1]++;
 				$idmenu = $array_pos[$menu_pos - 1];
 				$subheader_tpl->put('C_ADMIN_LINKS_' . $menu_pos, true);
-
-				$admin_links = $configuration->get_admin_links();
-				if (!empty($admin_links))
-				{
-					$links = '';
-					$i = 0;
-					$j = 0;
-					foreach ($admin_links as $key => $value)
-					{
-						if (is_array($value))
-						{
-							$links .= '<li class="extend"><a href="#"><img src="' . TPL_PATH_TO_ROOT . '/' . $module_id .
-									'/' . $module_id . '_mini.png"/>' . $key .
-									'</a><ul>' . "\n";
-							foreach ($value as $key2 => $value2)
-							{
-								$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $module_id .
-									'/' . $value2 . '"><img src="' . TPL_PATH_TO_ROOT . '/' . $module_id .
-									'/' . $module_id . '_mini.png"/>' . $key2 . '</a></li>' . "\n";
-							}
-							$links .= '</ul></li>' . "\n";
-							$i++;
-						}
-						else
-						{
-							$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $module_id . '/' .
-							$value . '"><img src="' . TPL_PATH_TO_ROOT . '/' . $module_id .
-									'/' . $module_id . '_mini.png"/>' . $key .
-									'</a></li>' . "\n";
-						}
-						$j++;
-					}
-
-					$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
-							'C_ADMIN_LINKS_EXTEND' => ($j > 0 ? true : false),
-							'IDMENU' => $idmenu,
-							'NAME' => $configuration->get_name(),
-							'LINKS' => $links,
-							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $configuration->get_admin_main_page(),
-							'IMG' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_mini.png'
-							));
-				}
-				else
-				{
-					$admin_main_page = $configuration->get_admin_main_page();
-					if (!empty($admin_main_page))
-					{
-						$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
-							'C_ADMIN_LINKS_EXTEND' => false,
-							'IDMENU' => $menu_pos,
-							'NAME' => $configuration->get_name(),
-							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $configuration->get_admin_main_page(),
-							'IMG' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_mini.png'
-						));
-					}
-				}
+				
+				$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
+					'MODULE_MENU' => ModuleTreeLinksService::display_admin_actions_menu($module)
+				));
 			}
 		}
 

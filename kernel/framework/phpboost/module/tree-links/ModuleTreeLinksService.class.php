@@ -30,37 +30,79 @@
  */
 class ModuleTreeLinksService
 {
-	public static function display_actions_links_menu()
+	public static function display_actions_menu()
 	{
-		return self::display(self::get_actions_tree_links(), new FileTemplate('framework/module/module_actions_links_menu.tpl'));
+		$tree_links = self::get_tree_links(Environment::get_running_module_name());
+		if ($tree_links !== null)
+		{
+			$actions_tree_links = $tree_links->get_actions_tree_links();
+			
+			$tpl = new FileTemplate('framework/module/module_actions_links_menu.tpl');
+			$tpl->put('C_DISPLAY', $actions_tree_links->has_links());
+			
+			return self::display($actions_tree_links, $tpl);
+			
+		}
+	}
+	
+	public static function display_admin_actions_menu(Module $module)
+	{
+		$id_module = $module->get_id();
+		$configuration = $module->get_configuration();
+		$admin_main_page = $configuration->get_admin_main_page();
+
+		$tpl = new FileTemplate('framework/module/admin_module_actions_links_menu.tpl');
+		$tpl->put_all(array(
+			'U_LINK' => TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $configuration->get_admin_main_page(), 
+			'NAME' => $configuration->get_name(),
+			'IMG' => TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $id_module . '_mini.png',
+			'C_HAS_SUB_LINK' => false,
+			'C_DISPLAY' => !empty($admin_main_page)
+		));
+		
+		$tree_links = self::get_tree_links($id_module);
+		if ($tree_links !== null)
+		{
+			$actions_tree_links = $tree_links->get_actions_tree_links();
+			
+			$tpl->put_all(array(
+				'C_HAS_SUB_LINK' => $actions_tree_links->has_links(),
+				'C_DISPLAY' => $actions_tree_links->has_links() || !empty($admin_main_page)
+			));
+			
+			return self::display($actions_tree_links, $tpl);
+		}
+
+		return $tpl;
 	}
 	
 	public static function display(ModuleTreeLinks $tree_links, View $view)
 	{
-		foreach ($tree_links->get_links() as $element)
+		$has_links = $tree_links->has_links();
+		if ($has_links)
 		{
-			if ($element->is_visible())
+			foreach ($tree_links->get_links() as $element)
 			{
-				$view->assign_block_vars('element', array(), array(
-					'ELEMENT' => $element->export()
-				));
+				if ($element->is_visible())
+				{
+					$view->assign_block_vars('element', array(), array(
+						'ELEMENT' => $element->export()
+					));
+				}
 			}
 		}
-		
-		$view->put('C_DISPLAY', $tree_links->has_links());
-		
+				
 		return $view;
 	}
 	
-	public static function get_actions_tree_links()
+	public static function get_tree_links($module_name)
 	{
 		try {
-			return AppContext::get_extension_provider_service()->get_provider(Environment::get_running_module_name())->get_extension_point(ModuleTreeLinksExtensionPoint::EXTENSION_POINT)->get_actions_tree_links();
+			return AppContext::get_extension_provider_service()->get_provider($module_name)->get_extension_point(ModuleTreeLinksExtensionPoint::EXTENSION_POINT);
 		} catch (UnexistingExtensionPointProviderException $e) {
-			return new ModuleTreeLinks();
-		}
-		catch (ExtensionPointNotFoundException $e) {
-			return new ModuleTreeLinks();
+			return null;
+		} catch (ExtensionPointNotFoundException $e) {
+			return null;
 		}
 	}
 }

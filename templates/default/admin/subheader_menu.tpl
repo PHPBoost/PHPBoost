@@ -7,18 +7,9 @@
 			<li class="separator"></li>
 			<li><a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/home_mini.png"/> {L_DISCONNECT}</a></li>
 			# IF C_ADMIN_LINKS_1 #
-				<li class="separator"></li>
+			<li class="separator"></li>
 				# START admin_links_1 #
-					# IF admin_links_1.C_ADMIN_LINKS_EXTEND #
-						<li class="extend">
-							<a href="{admin_links_1.U_ADMIN_MODULE}"><img src="{admin_links_1.IMG}"/> {admin_links_1.NAME}</a>
-							<ul>
-								{admin_links_1.LINKS}
-							</ul>
-						</li>
-					# ELSE #
-						<li><a href="{admin_links_1.U_ADMIN_MODULE}"><img src="{admin_links_1.IMG}"/> {admin_links_1.NAME}</a></li>
-					# ENDIF #
+					# INCLUDE admin_links_1.MODULE_MENU #
 				# END admin_links_1 #
 			# ENDIF #
 		</ul>
@@ -61,16 +52,7 @@
 			# IF C_ADMIN_LINKS_2 #
 			<li class="separator"></li>
 				# START admin_links_2 #
-					# IF admin_links_2.C_ADMIN_LINKS_EXTEND #
-			<li class="extend">
-				<a href="{admin_links_2.U_ADMIN_MODULE}"><img src="{admin_links_2.IMG}"/> {admin_links_2.NAME}</a>
-				<ul>
-					{admin_links_2.LINKS}
-				</ul>
-			</li>
-					# ELSE #
-			<li><a href="{admin_links_2.U_ADMIN_MODULE}"><img src="{admin_links_2.IMG}"/> {admin_links_2.NAME}</a></li>
-					# ENDIF #
+					# INCLUDE admin_links_2.MODULE_MENU #
 				# END admin_links_2 #
 			# ENDIF #
 		</ul>
@@ -103,16 +85,7 @@
 			# IF C_ADMIN_LINKS_3 #
 			<li class="separator"></li>
 				# START admin_links_3 #
-					# IF admin_links_3.C_ADMIN_LINKS_EXTEND #
-			<li class="extend">
-				<a href="{admin_links_3.U_ADMIN_MODULE}"><img src="{admin_links_3.IMG}"/> {admin_links_3.NAME}</a>
-				<ul>
-					{admin_links_3.LINKS}
-				</ul>
-			</li>
-					# ELSE #
-			<li><a href="{admin_links_3.U_ADMIN_MODULE}"><img src="{admin_links_3.IMG}"/> {admin_links_3.NAME}</a></li>
-					# ENDIF #
+					# INCLUDE admin_links_3.MODULE_MENU #
 				# END admin_links_3 #
 			# ENDIF #
 		</ul>
@@ -146,16 +119,7 @@
 			# IF C_ADMIN_LINKS_4 #
 			<li class="separator"></li>
 				# START admin_links_4 #
-					# IF admin_links_4.C_ADMIN_LINKS_EXTEND #
-			<li class="extend">
-				<a href="{admin_links_4.U_ADMIN_MODULE}"><img src="{admin_links_4.IMG}"/> {admin_links_4.NAME}</a>
-				<ul>
-					{admin_links_4.LINKS}
-				</ul>
-			</li>
-					# ELSE #
-			<li><a href="{admin_links_4.U_ADMIN_MODULE}"><img src="{admin_links_4.IMG}"/> {admin_links_4.NAME}</a></li>
-					# ENDIF #
+					# INCLUDE admin_links_4.MODULE_MENU #
 				# END admin_links_4 #
 			# ENDIF #
 		</ul>
@@ -197,16 +161,7 @@
 			# IF C_ADMIN_LINKS_5 #
 			<li class="separator"></li>
 				# START admin_links_5 #
-					# IF admin_links_5.C_ADMIN_LINKS_EXTEND #
-			<li class="extend">
-				<a href="{admin_links_5.U_ADMIN_MODULE}"><img src="{admin_links_5.IMG}"/> {admin_links_5.NAME}</a>
-				<ul>
-					{admin_links_5.LINKS}
-				</ul>
-			</li>
-					# ELSE #
-			<li><a href="{admin_links_5.U_ADMIN_MODULE}"><img src="{admin_links_5.IMG}"/> {admin_links_5.NAME}</a></li>
-					# ENDIF #
+					# INCLUDE admin_links_5.MODULE_MENU #
 				# END admin_links_5 #
 			# ENDIF #
 		</ul>
@@ -225,16 +180,7 @@
 			# IF C_ADMIN_LINKS_6 #
 			<li class="separator"></li>
 				# START admin_links_6 #
-					# IF admin_links_6.C_ADMIN_LINKS_EXTEND #
-			<li class="extend">
-				<a href="{admin_links_6.U_ADMIN_MODULE}"><img src="{admin_links_6.IMG}"/> {admin_links_6.NAME}</a>
-				<ul>
-					{admin_links_6.LINKS}
-				</ul>
-			</li>
-					# ELSE #
-			<li><a href="{admin_links_6.U_ADMIN_MODULE}"><img src="{admin_links_6.IMG}"/> {admin_links_6.NAME}</a></li>
-					# ENDIF #
+					# INCLUDE admin_links_6.MODULE_MENU #
 				# END admin_links_6 #
 			# ENDIF #
 		</ul>
