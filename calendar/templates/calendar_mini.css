@@ -1,0 +1,55 @@
+.calendar_top{
+	text-align:center;
+	font-weight:bold;
+	padding:4px;
+	position:relative;
+	float:none;
+	margin:0;
+}
+
+.calendar_top_l {
+	position:absolute;
+	padding-left:7px;
+	top:1px;
+	padding-top:3px;
+}
+
+.calendar_top_r {
+	position:absolute;
+	right:1px;
+	padding-right:7px;
+	top:1px;
+	padding-top:3px;
+}
+
+.text_month{
+	font-weight:bold;
+}
+
+table tr td.calendar_today {
+	background:#DBEEDD;
+}
+
+table tr td.calendar_event {
+	background:#DBE5EE;
+}
+
+table td.calendar_other {
+	background:#F1F1F1;
+}
+
+table tr td.calendar_none {
+	background:#FFFFFF;
+}
+
+table tr td.calendar_weekend{
+	background:#ffe3b6;
+}
+
+table tr td.calendar_week{
+	border-right:1px solid #AAA;
+}
+
+.change_month_link {
+	cursor:pointer;
+}
