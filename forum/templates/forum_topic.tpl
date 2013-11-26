@@ -221,8 +221,7 @@
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
 						# IF msg.C_FORUM_USER_LOGIN # 
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{msg.FORUM_ONLINE_STATUT_USER}.png" alt="" class="valign_middle" />
-							<a class="msg_link_pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
+							<i class="# IF msg.C_USER_ONLINE #icon-online# ELSE #icon-offline# ENDIF #"></i> <a class="msg_link_pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
 						# ELSE # 
 							<em>{L_GUEST}</em>
 						# ENDIF #
