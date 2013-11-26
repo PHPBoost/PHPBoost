@@ -53,6 +53,7 @@ $lang['customization.favicon.current.change'] = 'Changer votre favicon';
 $lang['customization.favicon.current.erased'] = '<span style="color:#B22222;font-weight:bold;">Le favicon que vous avez enregistré est visiblement supprimé du serveur, veuillez le remplacer par un autre</span>';
 $lang['customization.favicon.error'] = 'Le favicon n\'a pas pu être changé';
 
+$lang['css-files'] = 'Fichiers CSS';
 $lang['customization.editor.css-files'] = 'Editeur de fichiers CSS';
 $lang['customization.editor.css-files.select'] = 'Sélectionnez le fichier que vous souhaitez éditer';
 $lang['customization.editor.css-files.content'] = 'Contenu du fichier';

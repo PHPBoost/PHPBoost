@@ -27,10 +27,15 @@
 
 class CustomizationExtensionPointProvider extends ExtensionPointProvider
 {
-    public function __construct()
-    {
-        parent::__construct('customization');
-    }
+	public function __construct()
+	{
+		parent::__construct('customization');
+	}
+	
+	public function tree_links()
+	{
+		return new CustomizationTreeLinks();
+	}
 	
 	public function url_mappings()
 	{
