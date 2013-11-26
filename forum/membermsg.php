@@ -79,9 +79,6 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		//Membre en ligne?
-		$user_online = !empty($row['connect']) ? 'online' : 'offline';
-	
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 		$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['name']) : '';
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
@@ -97,7 +94,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'ID' => $row['id'],
-			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
+			'USER_ONLINE' => '<i class="' . (!empty($row['connect']) ? 'icon-online' : 'icon-offline') . '"></i>',
 			'USER_PSEUDO' => !empty($row['login']) ? wordwrap(TextHelper::html_entity_decode($row['login']), 13, '<br />', 1) : $LANG['guest'],
 			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 			'GROUP_COLOR' => $group_color,

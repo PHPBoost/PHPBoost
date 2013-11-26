@@ -596,9 +596,6 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		if( !$is_guest_in_convers )
 			$is_guest_in_convers = empty($row['login']);
 		
-		//Membre en ligne?
-		$user_online = !empty($row['connect']) ? 'online' : 'offline';
-		
 		//Avatar
 		$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 		

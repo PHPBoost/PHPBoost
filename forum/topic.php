@@ -402,13 +402,14 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'USER_WEB' => (!empty($row['user_website'])) ? '<a href="' . $row['user_website'] . '" class="basic-button smaller">Web</a>' : '',
 		'USER_WARNING' => $row['user_warning'],
 		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
-		'C_FORUM_USER_LOGIN' => !empty($row['login']) ? true : false,
+		'C_USER_ONLINE' => !empty($row['connect']),
+		'C_FORUM_USER_LOGIN' => !empty($row['login']),
 		'C_FORUM_MSG_EDIT' => $edit,
 		'C_FORUM_MSG_DEL' => $del,
-		'C_FORUM_MSG_DEL_MSG' => (!$first_message) ? true : false,
+		'C_FORUM_MSG_DEL_MSG' => (!$first_message),
 		'C_FORUM_MSG_CUT' => $cut,
 		'C_FORUM_USER_EDITOR' => ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '1'), //Ajout du marqueur d'édition si activé.
-		'C_FORUM_USER_EDITOR_LOGIN' => !empty($row['login_edit']) ? true : false,
+		'C_FORUM_USER_EDITOR_LOGIN' => !empty($row['login_edit']),
 		'C_FORUM_MODERATOR' => $moderator,
 		'U_FORUM_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 		'U_FORUM_MSG_EDIT' => url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get),
