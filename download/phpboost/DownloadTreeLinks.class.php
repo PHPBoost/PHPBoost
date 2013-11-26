@@ -38,21 +38,21 @@ class DownloadTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink($DOWNLOAD_LANG['admin.categories.manage'], PATH_TO_ROOT . Url('/download/admin_download_cat.php'));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($DOWNLOAD_LANG['admin.categories.manage'], PATH_TO_ROOT . Url('/download/admin_download_cat.php')));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($DOWNLOAD_LANG['add_category'], PATH_TO_ROOT . Url('/download/admin_download_cat.php?new=1')));
+		$manage_categories_link = new AdminModuleLink($DOWNLOAD_LANG['admin.categories.manage'], new Url('/download/admin_download_cat.php'));
+		$manage_categories_link->add_sub_link(new AdminModuleLink($DOWNLOAD_LANG['admin.categories.manage'], new Url('/download/admin_download_cat.php')));
+		$manage_categories_link->add_sub_link(new AdminModuleLink($DOWNLOAD_LANG['add_category'], new Url('/download/admin_download_cat.php?new=1')));
 		$tree->add_link($manage_categories_link);
 		
-		$manage_download_link = new AdminModuleLink($DOWNLOAD_LANG['files.manage'], PATH_TO_ROOT . Url('/download/admin_download.php'));
-		$manage_download_link->add_sub_link(new AdminModuleLink($DOWNLOAD_LANG['files.manage'], PATH_TO_ROOT . Url('/download/admin_download.php')));
-		$manage_download_link->add_sub_link(new AdminModuleLink($DOWNLOAD_LANG['add_file'], PATH_TO_ROOT . Url('/download/management.php?new=1')));
+		$manage_download_link = new AdminModuleLink($DOWNLOAD_LANG['files.manage'], new Url('/download/admin_download.php'));
+		$manage_download_link->add_sub_link(new AdminModuleLink($DOWNLOAD_LANG['files.manage'], new Url('/download/admin_download.php')));
+		$manage_download_link->add_sub_link(new AdminModuleLink($DOWNLOAD_LANG['add_file'], new Url('/download/management.php?new=1')));
 		$tree->add_link($manage_download_link);
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), PATH_TO_ROOT . Url('/download/admin_download_config.php')));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/download/admin_download_config.php')));
 		
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$tree->add_link(new ModuleLink($DOWNLOAD_LANG['add_file'], PATH_TO_ROOT . Url('/download/management.php?new=1'), AppContext::get_current_user()->check_auth(DownloadConfig::load()->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT)));
+			$tree->add_link(new ModuleLink($DOWNLOAD_LANG['add_file'], new Url('/download/management.php?new=1'), AppContext::get_current_user()->check_auth(DownloadConfig::load()->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT)));
 		}
 		
 		return $tree;

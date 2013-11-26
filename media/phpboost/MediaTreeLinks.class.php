@@ -39,21 +39,21 @@ class MediaTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink($MEDIA_LANG['admin.categories.manage'], PATH_TO_ROOT . Url('/media/admin_media_cats.php'));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($MEDIA_LANG['admin.categories.manage'], PATH_TO_ROOT . Url('/media/admin_media_cats.php')));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($MEDIA_LANG['add_cat'], PATH_TO_ROOT . Url('/media/admin_media_cats.php?new=1')));
+		$manage_categories_link = new AdminModuleLink($MEDIA_LANG['admin.categories.manage'], new Url('/media/admin_media_cats.php'));
+		$manage_categories_link->add_sub_link(new AdminModuleLink($MEDIA_LANG['admin.categories.manage'], new Url('/media/admin_media_cats.php')));
+		$manage_categories_link->add_sub_link(new AdminModuleLink($MEDIA_LANG['add_cat'], new Url('/media/admin_media_cats.php?new=1')));
 		$tree->add_link($manage_categories_link);
 		
-		$manage_media_link = new AdminModuleLink($MEDIA_LANG['medias.manage'], PATH_TO_ROOT . Url('/media/moderation_media.php'));
-		$manage_media_link->add_sub_link(new AdminModuleLink($MEDIA_LANG['medias.manage'], PATH_TO_ROOT . Url('/media/moderation_media.php')));
-		$manage_media_link->add_sub_link(new AdminModuleLink($MEDIA_LANG['add_media'], PATH_TO_ROOT . Url('/media/media_action.php')));
+		$manage_media_link = new AdminModuleLink($MEDIA_LANG['medias.manage'], new Url('/media/moderation_media.php'));
+		$manage_media_link->add_sub_link(new AdminModuleLink($MEDIA_LANG['medias.manage'], new Url('/media/moderation_media.php')));
+		$manage_media_link->add_sub_link(new AdminModuleLink($MEDIA_LANG['add_media'], new Url('/media/media_action.php')));
 		$tree->add_link($manage_media_link);
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), PATH_TO_ROOT . Url('/media/admin_media_config.php')));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/media/admin_media_config.php')));
 		
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$tree->add_link(new ModuleLink($MEDIA_LANG['add_media'], PATH_TO_ROOT . Url('/media/media_action.php'), AppContext::get_current_user()->check_auth($MEDIA_CATS[0]['auth'], MEDIA_AUTH_WRITE) || AppContext::get_current_user()->check_auth($MEDIA_CATS[0]['auth'], MEDIA_AUTH_CONTRIBUTION)));
+			$tree->add_link(new ModuleLink($MEDIA_LANG['add_media'], new Url('/media/media_action.php'), AppContext::get_current_user()->check_auth($MEDIA_CATS[0]['auth'], MEDIA_AUTH_WRITE) || AppContext::get_current_user()->check_auth($MEDIA_CATS[0]['auth'], MEDIA_AUTH_CONTRIBUTION)));
 		}
 		
 		return $tree;

@@ -37,21 +37,21 @@ class FaqTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink($FAQ_LANG['admin.categories.manage'], PATH_TO_ROOT . Url('/faq/admin_faq_cats.php'));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($FAQ_LANG['admin.categories.manage'], PATH_TO_ROOT . Url('/faq/admin_faq_cats.php')));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($FAQ_LANG['add_cat'], PATH_TO_ROOT . Url('/faq/admin_faq_cats.php?new=1')));
+		$manage_categories_link = new AdminModuleLink($FAQ_LANG['admin.categories.manage'], new Url('/faq/admin_faq_cats.php'));
+		$manage_categories_link->add_sub_link(new AdminModuleLink($FAQ_LANG['admin.categories.manage'], new Url('/faq/admin_faq_cats.php')));
+		$manage_categories_link->add_sub_link(new AdminModuleLink($FAQ_LANG['add_cat'], new Url('/faq/admin_faq_cats.php?new=1')));
 		$tree->add_link($manage_categories_link);
 		
-		$manage_faq_link = new AdminModuleLink($FAQ_LANG['questions.manage'], PATH_TO_ROOT . Url('/faq/admin_faq.php?p=1'));
-		$manage_faq_link->add_sub_link(new AdminModuleLink($FAQ_LANG['questions.manage'], PATH_TO_ROOT . Url('/faq/admin_faq.php?p=1')));
-		$manage_faq_link->add_sub_link(new AdminModuleLink($FAQ_LANG['add_question'], PATH_TO_ROOT . Url('/faq/management.php?new=1')));
+		$manage_faq_link = new AdminModuleLink($FAQ_LANG['questions.manage'], new Url('/faq/admin_faq.php?p=1'));
+		$manage_faq_link->add_sub_link(new AdminModuleLink($FAQ_LANG['questions.manage'], new Url('/faq/admin_faq.php?p=1')));
+		$manage_faq_link->add_sub_link(new AdminModuleLink($FAQ_LANG['add_question'], new Url('/faq/management.php?new=1')));
 		$tree->add_link($manage_faq_link);
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), PATH_TO_ROOT . Url('/faq/admin_faq.php')));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/faq/admin_faq.php')));
 		
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$tree->add_link(new ModuleLink($FAQ_LANG['add_question'], PATH_TO_ROOT . Url('/faq/management.php?new=1'), FaqAuthorizationsService::check_authorizations()->write()));
+			$tree->add_link(new ModuleLink($FAQ_LANG['add_question'], new Url('/faq/management.php?new=1'), FaqAuthorizationsService::check_authorizations()->write()));
 		}
 		
 		return $tree;

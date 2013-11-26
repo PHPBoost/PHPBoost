@@ -37,17 +37,17 @@ class WebTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink($LANG['admin.categories.manage'], PATH_TO_ROOT . Url('/web/admin_web_cat.php'));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($LANG['admin.categories.manage'], PATH_TO_ROOT . Url('/web/admin_web_cat.php')));
-		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('cat_add', 'admin'), PATH_TO_ROOT . Url('/web/admin_web_cat.php#add_cat')));
+		$manage_categories_link = new AdminModuleLink($LANG['admin.categories.manage'], new Url('/web/admin_web_cat.php'));
+		$manage_categories_link->add_sub_link(new AdminModuleLink($LANG['admin.categories.manage'], new Url('/web/admin_web_cat.php')));
+		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('cat_add', 'admin'), new Url('/web/admin_web_cat.php#add_cat')));
 		$tree->add_link($manage_categories_link);
 		
-		$manage_web_link = new AdminModuleLink($LANG['links.manage'], PATH_TO_ROOT . Url('/web/admin_web.php'));
-		$manage_web_link->add_sub_link(new AdminModuleLink($LANG['links.manage'], PATH_TO_ROOT . Url('/web/admin_web.php')));
-		$manage_web_link->add_sub_link(new AdminModuleLink($LANG['web_add'], PATH_TO_ROOT . Url('/web/admin_web_add.php')));
+		$manage_web_link = new AdminModuleLink($LANG['links.manage'], new Url('/web/admin_web.php'));
+		$manage_web_link->add_sub_link(new AdminModuleLink($LANG['links.manage'], new Url('/web/admin_web.php')));
+		$manage_web_link->add_sub_link(new AdminModuleLink($LANG['web_add'], new Url('/web/admin_web_add.php')));
 		$tree->add_link($manage_web_link);
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), PATH_TO_ROOT . Url('/web/admin_web_config.php')));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/web/admin_web_config.php')));
 		
 		return $tree;
 	}

@@ -37,8 +37,8 @@ class DatabaseTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree = new ModuleTreeLinks();
 		
-		$tree->add_link(new AdminModuleLink($LANG['database_management'], PATH_TO_ROOT . Url('/database/admin_database.php')));
-		$tree->add_link(new AdminModuleLink($LANG['db_sql_queries'], PATH_TO_ROOT . Url('/database/admin_database.php?query=1')));
+		$tree->add_link(new AdminModuleLink($LANG['database_management'], new Url('/database/admin_database.php')));
+		$tree->add_link(new AdminModuleLink($LANG['db_sql_queries'], new Url('/database/admin_database.php?query=1')));
 		
 		return $tree;
 	}
