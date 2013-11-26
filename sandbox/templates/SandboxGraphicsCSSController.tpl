@@ -169,9 +169,6 @@
 					<li>
 						<a href="#">Statistiques</a>
 					</li>
-					<li>
-						<a href="#"><i class="icon-plus"></i> Nouveau bug</a>
-					</li>
 				</ul>
 			</menu>
 		</div>
