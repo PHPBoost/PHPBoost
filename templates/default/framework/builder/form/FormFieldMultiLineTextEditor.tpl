@@ -5,7 +5,7 @@
 		# IF C_DESCRIPTION #<span class="field-description">{DESCRIPTION}</span># ENDIF #
 	</label>
 	<span id="onblurContainerResponse${escape(ID)}"></span>
-	<span style="font-weight:bold;display:none" id="onblurMesssageResponse${escape(ID)}"></span>
+	<span style="font-weight:bold;display:none" id="onblurMessageResponse${escape(ID)}"></span>
 	# IF C_EDITOR_ENABLED #
 		{EDITOR}
 	# ENDIF #

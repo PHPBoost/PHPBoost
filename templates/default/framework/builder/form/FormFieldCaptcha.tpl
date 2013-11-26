@@ -4,7 +4,7 @@
 		<div class="form-field">
 			{CAPTCHA}
 			<span id="onblurContainerResponse{ID}"></span>
-			<span style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></span>
+			<span style="font-weight:bold;display:none" id="onblurMessageResponse{ID}"></span>
 		</div>
 	</div>
 	# INCLUDE ADD_FIELD_JS #

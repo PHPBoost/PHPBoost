@@ -556,21 +556,10 @@ input.field-xlarge { width:300px; }
 	vertical-align: top;
 }
 
-span.field-description, span.field-error {
+.field-description {
 	font-size:10px;
-}
-
-span.field-description {
 	display: block;
 	line-height: 12px;
-}
-
-span.field-error {
-	color:#C43C35;
-	display: block;
-	margin: 0 0 0 30%;
-	padding-left: 15px;
-	font-style:italic;
 }
 
 input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disabled]:focus {

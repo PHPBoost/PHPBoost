@@ -12,7 +12,7 @@
 		<input type="text" size="2" id="${escape(ID)}_minutes" name="${escape(ID)}_minutes" value="{MINUTES}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #/>
 		# ENDIF #
 		<span id="onblurContainerResponse{ID}"></span>
-		<span style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></span>
+		<span style="font-weight:bold;display:none" id="onblurMessageResponse{ID}"></span>
 	</div>
 </div>
 

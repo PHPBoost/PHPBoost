@@ -244,16 +244,20 @@ var FormField = Class.create({
 	isDisabled : function() {
 		if (this.HTMLFieldExists()) {
 			var element = $(this.getHTMLId());
-			return element.disabled != "disabled" && element.disabled != false;
-		} else {
-			console.log(this.getHTMLId());
-			var display = $(this.getHTMLId()).style;
-			if (display != null) {
-				return display == "none";
-			} else {
-				return false;
+			var disabled = element.disabled != "disabled" && element.disabled != false;
+			
+			if (disabled == false) {
+				var display = element.style;
+				if (display != null) {
+					return display == "none";
+				} else {
+					return false;
+				}
 			}
+		
+			return disabled;
 		}
+		return false;
 	},
 	getValue : function() {
 		return $F(this.getHTMLId());
@@ -269,15 +273,15 @@ var FormField = Class.create({
 			return;
 		}
 		if ($('onblurContainerResponse' + this.getHTMLId())
-				&& $('onblurMesssageResponse' + this.getHTMLId())) {
+				&& $('onblurMessageResponse' + this.getHTMLId())) {
 			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<i class="icon-forbidden"></i>';
-			$('onblurMesssageResponse' + this.getHTMLId()).innerHTML = message;
+			$('onblurMessageResponse' + this.getHTMLId()).innerHTML = message;
 
 			Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
 			{
 				duration : 0.5
 			});
-			Effect.Appear('onblurMesssageResponse' + this.getHTMLId(),
+			Effect.Appear('onblurMessageResponse' + this.getHTMLId(),
 			{
 				duration : 0.5
 			});
@@ -294,7 +298,7 @@ var FormField = Class.create({
 				duration : 0.2
 			});
 
-			Effect.Fade('onblurMesssageResponse' + this.getHTMLId(), {
+			Effect.Fade('onblurMessageResponse' + this.getHTMLId(), {
 				duration : 0.2
 			});
 		}
@@ -308,7 +312,7 @@ var FormField = Class.create({
 				duration : 0.2
 			});
 
-			Effect.Fade('onblurMesssageResponse' + this.getHTMLId(), {
+			Effect.Fade('onblurMessageResponse' + this.getHTMLId(), {
 				duration : 0.2
 			});
 		}
