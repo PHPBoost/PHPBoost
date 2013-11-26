@@ -738,7 +738,7 @@ div.message-helper-warning,
 div.message-helper-error,
 div.message-helper-success {
     height:auto;
-    width:500px;
+    max-width:500px;
     padding:10px;
     margin:5px auto 15px auto;
     line-height:20px;
