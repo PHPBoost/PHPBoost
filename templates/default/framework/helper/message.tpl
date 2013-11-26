@@ -1,5 +1,5 @@
 		<div id="message-helper" class="message-helper-{MESSAGE_CSS_CLASS}">
-			<div>{MESSAGE_CONTENT}</div>
+			<div class="message-helper-content">{MESSAGE_CONTENT}</div>
 		</div>	
 		# IF C_TIMEOUT #
 		<script type="text/javascript">
