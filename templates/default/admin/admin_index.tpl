@@ -41,11 +41,11 @@
 						<td class="row2">
 							# IF C_UNREAD_ALERTS #
 								<div class="message_helper-warning">
-									{L_UNREAD_ALERT}
+									<div class="message-helper-content">{L_UNREAD_ALERT}</div>
 								</div>
 							# ELSE #
 								<div class="message-helper-success">
-									<div>{L_NO_UNREAD_ALERT}</div>
+									<div class="message-helper-content">{L_NO_UNREAD_ALERT}</div>
 								</div>
 							# ENDIF #
 							<div style="text-align:center;">
