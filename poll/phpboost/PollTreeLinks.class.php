@@ -37,12 +37,12 @@ class PollTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree = new ModuleTreeLinks();
 		
-		$manage_poll_link = new AdminModuleLink($LANG['poll.manage'], PATH_TO_ROOT . Url('/poll/admin_poll.php'));
-		$manage_poll_link->add_sub_link(new AdminModuleLink($LANG['poll.manage'], PATH_TO_ROOT . Url('/poll/admin_poll.php')));
-		$manage_poll_link->add_sub_link(new AdminModuleLink($LANG['poll_add'], PATH_TO_ROOT . Url('/poll/admin_poll_add.php')));
+		$manage_poll_link = new AdminModuleLink($LANG['poll.manage'], new Url('/poll/admin_poll.php'));
+		$manage_poll_link->add_sub_link(new AdminModuleLink($LANG['poll.manage'], new Url('/poll/admin_poll.php')));
+		$manage_poll_link->add_sub_link(new AdminModuleLink($LANG['poll_add'], new Url('/poll/admin_poll_add.php')));
 		$tree->add_link($manage_poll_link);
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), PATH_TO_ROOT . Url('/poll/admin_poll_config.php')));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/poll/admin_poll_config.php')));
 		
 		return $tree;
 	}

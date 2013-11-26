@@ -37,8 +37,8 @@ class SearchTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree = new ModuleTreeLinks();
 		
-		$tree->add_link(new AdminModuleLink($LANG['search_config'], PATH_TO_ROOT . Url('/search/admin_search.php')));
-		$tree->add_link(new AdminModuleLink($LANG['weights.manage'], PATH_TO_ROOT . Url('/search/admin_search.php?weighting=true')));
+		$tree->add_link(new AdminModuleLink($LANG['search_config'], new Url('/search/admin_search.php')));
+		$tree->add_link(new AdminModuleLink($LANG['weights.manage'], new Url('/search/admin_search.php?weighting=true')));
 		
 		return $tree;
 	}
