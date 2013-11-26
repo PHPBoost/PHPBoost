@@ -16,7 +16,7 @@
 		# IF C_HAS_CONSTRAINTS #
 			&nbsp;
 			<span style="display:none" id="onblurContainerResponse${escape(ID)}"></span>
-			<div style="font-weight:bold;display:none" id="onblurMesssageResponse${escape(ID)}"></div>
+			<div style="font-weight:bold;display:none" id="onblurMessageResponse${escape(ID)}"></div>
 		# ENDIF #
 	</div>
 </div>
