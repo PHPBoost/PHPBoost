@@ -34,6 +34,7 @@
 $LANG['database'] = 'Database';
 $LANG['creation_date'] = 'Creation date';
 $LANG['database_management'] = 'Database management';
+$LANG['db_sql_queries'] = 'SQL queries';
 $LANG['db_explain_actions'] = 'This panel allows you to manage your database. You can see the list of tables used by PHPBoost, their properties and tools which allows you to do basic operations on the tables. You can save your database or some tables by checking them in the list below.
 <br /><br />
 <div class="question">The optimization of the database allows to reorganize the structure of the tables in order to facilitate the operations to the SQL Server. This operation is done automatically once a day. You can optimize tables manually through this database management panel.
