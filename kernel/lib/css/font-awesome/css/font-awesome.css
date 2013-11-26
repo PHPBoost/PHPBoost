@@ -12,7 +12,7 @@
 	font-style: normal;
 }
 
-[class^="icon-"]{
+[class*="icon-"]{
 	display: inline-block;
 	font-family: FontAwesome;
 	font-style: normal;
@@ -21,7 +21,7 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-[class^="icon-"]:before{
+[class*="icon-"]:before{
 	font-style: normal;
 	font-weight: normal;
 }

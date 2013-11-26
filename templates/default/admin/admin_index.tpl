@@ -40,11 +40,13 @@
 					<tr> 
 						<td class="row2">
 							# IF C_UNREAD_ALERTS #
-								<div class="message-helper-warning" style="width:auto;">
+								<div class="message-helper warning" style="width:auto;">
+									<i class="icon-warning"></i>
 									<div class="message-helper-content">{L_UNREAD_ALERT}</div>
 								</div>
 							# ELSE #
-								<div class="message-helper-success" style="width:auto;">
+								<div class="message-helper success" style="width:auto;">
+									<i class="icon-success"></i>
 									<div class="message-helper-content">{L_NO_UNREAD_ALERT}</div>
 								</div>
 							# ENDIF #
