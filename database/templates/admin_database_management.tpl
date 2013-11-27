@@ -196,7 +196,7 @@
 							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png"/> {L_BACKUP}</a>
 						</li>
 						<li>
-							<a onclick="javascript:return Confirm_truncate_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/trash_mini.png"/> {L_TRUNCATE}</a>
+							<a onclick="javascript:return Confirm_truncate_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/trash_mini.png"/> {L_TRUNCATE}</a>
 						</li>
 						<li>
 							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp" class="icon-delete" data-confirmation="delete-element"> {L_DELETE}</a>
