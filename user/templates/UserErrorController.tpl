@@ -4,8 +4,9 @@
 <section>
 	<header><h1>${escape(TITLE)}</h1></header>
 	<div class="content">
-		<div class="{ERROR_TYPE}" style="width:500px;margin:auto;">
-			{MESSAGE}
+		<div class="message-helper {ERROR_TYPE}">
+      <i class="icon-{ERROR_TYPE}"></i>
+			<div class="message-helper-content">{MESSAGE}</div>
 		</div>
 	    # IF HAS_LINK #
 		<div style="padding:30px;text-align:center;">
