@@ -134,8 +134,8 @@ a.member { color:#000000; }
 .icon-unban:before { color:#478948; }
 .icon-male:before { color:#8DC3E9; }
 .icon-female:before { color:#F49CC4; }
-.icon-online:before { color:#478948; }
-.icon-offline:before { color:#BA4B49; }
+.icon-online:before { color:#52D132; }
+.icon-offline:before { color:#E05759; }
 
 table .icon-table-sort-up:before { content: "\f062"; }
 table .icon-table-sort-down:before { content: "\f063"; }
