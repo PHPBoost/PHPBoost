@@ -308,7 +308,7 @@ class Uploads
 			case 'gif':
 			case 'bmp':
 			case 'svg':
-			$img = $type . '.png';
+			$img = 'picture.png';
 			$filetype = sprintf(LangLoader::get_message('image_type', 'main'), strtoupper($type));
 			break;
 			//Archives
