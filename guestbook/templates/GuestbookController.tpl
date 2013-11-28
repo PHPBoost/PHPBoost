@@ -18,7 +18,7 @@
 				<div class="message-user_infos">
 					<div class="message-pseudo">
 						# IF messages.C_VISITOR #
-							<span class="text_italic"># IF messages.USER_PSEUDO #{messages.USER_PSEUDO}# ELSE #{L_GUEST}# ENDIF #</span>
+							<span class="text_italic"># IF messages.USER_PSEUDO #{messages.USER_PSEUDO}# ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
 						# ELSE #
 							<a href="{messages.U_PROFILE}" class="{messages.USER_LEVEL_CLASS}" # IF messages.C_USER_GROUP_COLOR # style="color:{messages.USER_GROUP_COLOR}" # ENDIF #>
 								{messages.USER_PSEUDO}
@@ -31,7 +31,7 @@
 							# IF messages.user_groups.C_GROUP_PICTURE #
 							<img src="{PATH_TO_ROOT}/images/group/{messages.user_groups.GROUP_PICTURE}" alt="{messages.user_groups.GROUP_NAME}" title="{messages.user_groups.GROUP_NAME}"/>
 							# ELSE #
-							{L_GROUP}: {messages.user_groups.GROUP_NAME}
+							${LangLoader::get_message('group', 'main')}: {messages.user_groups.GROUP_NAME}
 							# ENDIF #
 						# END user_groups #
 					# ENDIF #
@@ -44,7 +44,7 @@
 							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 						</span>
 						# ENDIF #
-						<a href="{messages.U_ANCHOR}"><i class="icon-anchor"></i></a> {L_ON} {messages.DATE}
+						<a href="{messages.U_ANCHOR}"><i class="icon-anchor"></i></a> ${LangLoader::get_message('on', 'main')} {messages.DATE}
 					</div>
 					<div class="message-message">
 						<div class="message-containt">{messages.CONTENTS}</div>

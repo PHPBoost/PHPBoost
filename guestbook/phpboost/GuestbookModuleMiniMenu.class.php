@@ -37,7 +37,6 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 		if (!Url::is_current_url('/guestbook/') && GuestbookAuthorizationsService::check_authorizations()->read())
 		{
 			$lang = LangLoader::get('common', 'guestbook');
-			$main_lang = LangLoader::get('main');
 			$tpl = new FileTemplate('guestbook/GuestbookModuleMiniMenu.tpl');
 			$tpl->add_lang($lang);
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
@@ -60,8 +59,6 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 					'USER_PSEUDO' => $random_message['login'],
 					'USER_LEVEL_CLASS' => UserService::get_level_class($random_message['level']),
 					'USER_GROUP_COLOR' => $user_group_color,
-					'L_GUEST' => $main_lang['guest'],
-					'L_BY' => $main_lang['by'],
 					'U_MESSAGE' => GuestbookUrlBuilder::home($random_message['page'], $random_message['id'])->rel(),
 					'U_PROFILE' => UserUrlBuilder::profile($random_message['user_id'])->rel(),
 				));
