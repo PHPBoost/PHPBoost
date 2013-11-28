@@ -1,17 +1,12 @@
 <style>
 <!--
-.static-notation span.star, .notation span.star { color: #999; font-size: 14px; padding-right: 5px;}
-
-.notation span.star-hover {
-	color: #e3cf7a;
-}
-
+.static-notation .star, .notation .star { color: #e3cf7a; font-size: 14px; padding-right: 5px; text-decoration: none; }
 -->
 </style>
 
 # IF C_STATIC_DISPLAY #
 	# IF C_NOTES #
-	<div itemscope="itemscope" itemtype="http://schema.org/AggregateRating" style="display:inline;" class="static-notation">
+	<div itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating" style="display:inline;" class="static-notation">
 		# START star #
 			<span class="star # IF star.STAR_EMPTY #icon-star-o# ENDIF ## IF star.STAR_HALF #icon-star-half-o# ENDIF ## IF star.STAR_FULL #icon-star# ENDIF #"></span>
 		# END star #
@@ -55,8 +50,9 @@
 <div itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
 	<span style="display:none" class="notation" id="note_pictures{ID_IN_MODULE}">
 	# START star #
-		<span class="star # IF star.STAR_EMPTY #icon-star-o# ENDIF ## IF star.STAR_HALF #icon-star-half-o# ENDIF ## IF star.STAR_FULL #icon-star# ENDIF #" id="star_{ID_IN_MODULE}_{star.I}" href="javascript:Note{ID_IN_MODULE}.send_request({star.I})" onmouseover="javascript:Note{ID_IN_MODULE}.change_picture_status({star.I});"></span>
+		<a class="star # IF star.STAR_EMPTY #icon-star-o# ENDIF ## IF star.STAR_HALF #icon-star-half-o# ENDIF ## IF star.STAR_FULL #icon-star# ENDIF #" id="star_{ID_IN_MODULE}_{star.I}" href="javascript:Note{ID_IN_MODULE}.send_request({star.I})" onmouseover="javascript:Note{ID_IN_MODULE}.change_picture_status({star.I});"></a>
 	# END star #
+		<span id="noteloading{ID_IN_MODULE}"></span>
 	</span>
 		
 	<form action="" method="post" class="smaller">
