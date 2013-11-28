@@ -67,22 +67,11 @@ class NotationService
 		
 			for ($i = 1; $i <= $notation_scale; $i++)
 			{
-				$star_img = 'stars.png';
-				if ($average_notes < $i)
-				{
-					$decimal = $i - $average_notes;
-					if ($decimal >= 1)
-						$star_img = 'stars0.png';
-					elseif ($decimal >= 0.75)
-						$star_img = 'stars1.png';
-					elseif ($decimal >= 0.50)
-						$star_img = 'stars2.png';
-					else
-						$star_img = 'stars3.png';
-				}
-				
-				$template->assign_block_vars('notation', array(
-					'PICTURE' => $star_img
+				$decimal = $i - $average_notes;
+				$template->assign_block_vars('star', array(
+					'STAR_EMPTY' => $decimal >= 1,
+					'STAR_HALF' => $decimal <= 0.50 && $decimal > 0,
+					'STAR_FULL' => $average_notes >= $i
 				));
 			}
 			return $template->render();
@@ -113,30 +102,15 @@ class NotationService
 			$template = new FileTemplate('framework/content/notation/notation.tpl');
 			
 			$average_notes = $notation->get_average_notes();
-			
+						
 			for ($i = 1; $i <= $notation->get_notation_scale(); $i++)
 			{
-				$star_img = 'stars.png';
-				if ($average_notes < $i)
-				{
-					$decimal = $i - $average_notes;
-					if ($decimal >= 1)
-						$star_img = 'stars0.png';
-					elseif ($decimal >= 0.75)
-						$star_img = 'stars1.png';
-					elseif ($decimal >= 0.50)
-						$star_img = 'stars2.png';
-					else
-						$star_img = 'stars3.png';
-				}
-				
-				$template->assign_block_vars('notation', array(
+				$decimal = $i - $average_notes;
+				$template->assign_block_vars('star', array(
 					'I' => $i,
-					'PICTURE' => $star_img
-				));
-				
-				$template->assign_block_vars('notation_no_js', array(
-					'I' => $i
+					'STAR_EMPTY' => $decimal >= 1,
+					'STAR_HALF' => $decimal <= 0.50 && $decimal > 0,
+					'STAR_FULL' => $average_notes >= $i
 				));
 			}
 
@@ -147,7 +121,6 @@ class NotationService
 				'CURRENT_URL' => REWRITED_SCRIPT,
 				'ID_IN_MODULE' => $notation->get_id_in_module(),
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
-				'NUMBER_PIXEL' => $notation->get_notation_scale() * 16,
 				'NUMBER_NOTES' => $count_notes,
 				'AVERAGE_NOTES' => $average_notes,
 				'ALREADY_NOTE' => $notation->user_already_noted(),

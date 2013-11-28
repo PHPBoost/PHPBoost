@@ -112,34 +112,28 @@
 		}
 	},
 	change_picture_status : function (note) {
-		var picture_star;
+		var star_class;
 		var decimal;
 		for(var i = 1; i <= this.notation_scale; i++)
 		{
-			var name_picture_id = 'n' + this.id + '_stars' + i;
-			picture_star = 'stars.png';
-			if(note < i)
-			{			
-				decimal = i - note;
-				if(decimal >= 1)
-					picture_star = 'stars0.png';
-				else if(decimal >= 0.75)
-					picture_star = 'stars1.png';
-				else if(decimal >= 0.50)
-					picture_star = 'stars2.png';
-				else
-					picture_star = 'stars3.png';
-			}
+			var id_star = 'star_' + this.id + '_' + i;
 			
-			if($(name_picture_id)) {
-				$(name_picture_id).src = PATH_TO_ROOT + '/templates/' + THEME + '/images/' + picture_star;
+			decimal = i - note;
+			if(decimal >= 1)
+				star_class = 'star star-hover icon-star-o';
+			else if(decimal <= 0.50 && decimal > 0)
+				star_class = 'star star-hover icon-star-half-o';
+			else if(note >= i)
+				star_class = 'star star-hover icon-star';
+			
+			if($(id_star)) {
+				$(id_star).className = star_class;
 			}
 		}
 	},
 	change_nbr_note : function () {
 		var nbr_note = this.number_votes + 1;
 		if (nbr_note > 1) {
-			console.log(nbr_note);
 			$('note_value' + this.id).innerHTML = nbr_note + ' ' + this.get_lang('notes');
 		}
 		else {
