@@ -463,7 +463,7 @@ class BBCodeParser extends ContentFormattingParser
 		if ($level <= 2)
 		return '<h3 class="title' . $level . '">' . $matches[2] . '</h3>';
 		else
-		return '<br /><h4 class="stitle' . ($level - 2) . '">' . $matches[2] . '</h4><br />';
+		return '<h4 class="stitle' . ($level - 2) . '">' . $matches[2] . '</h4>';
 	}
 
 
