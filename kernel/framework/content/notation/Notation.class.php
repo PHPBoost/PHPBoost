@@ -107,7 +107,7 @@ class Notation
 	
 	public function set_average_notes($average_notes)
 	{
-		$this->average_notes = (int)$average_notes;
+		$this->average_notes = (float)$average_notes;
 	}
 	
 	public function get_average_notes()

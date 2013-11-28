@@ -1,9 +1,20 @@
+<style>
+<!--
+.static-notation span.star, .notation span.star { color: #999; font-size: 14px; padding-right: 5px;}
+
+.notation span.star-hover {
+	color: #e3cf7a;
+}
+
+-->
+</style>
+
 # IF C_STATIC_DISPLAY #
 	# IF C_NOTES #
-	<div itemscope="itemscope" itemtype="http://schema.org/AggregateRating" style="display:inline;">
-		# START notation #
-		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{notation.PICTURE}" alt="" class="valign_middle" />
-		# END notation #
+	<div itemscope="itemscope" itemtype="http://schema.org/AggregateRating" style="display:inline;" class="static-notation">
+		# START star #
+			<span class="star # IF star.STAR_EMPTY #icon-star-o# ENDIF ## IF star.STAR_HALF #icon-star-half-o# ENDIF ## IF star.STAR_FULL #icon-star# ENDIF #"></span>
+		# END star #
 		<meta itemprop="reviewCount" content="{NUMBER_NOTES}">
 		<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
 		<meta itemprop="bestRating" content="{NOTATION_SCALE}">
@@ -42,14 +53,12 @@
 </script>
 	
 <div itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
-	<div style="width:{NUMBER_PIXEL}px;margin:auto;display:none" id="note_pictures{ID_IN_MODULE}" >
-		# START notation #
-			<a href="javascript:Note{ID_IN_MODULE}.send_request({notation.I})" onmouseover="javascript:Note{ID_IN_MODULE}.change_picture_status({notation.I});" class="img_link">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{notation.PICTURE}" alt="" class="valign_middle" id="n{ID_IN_MODULE}_stars{notation.I}" />
-			</a>
-		# END notation #
-		<span id="noteloading{ID_IN_MODULE}"></span>
-	</div>
+	<span style="display:none" class="notation" id="note_pictures{ID_IN_MODULE}">
+	# START star #
+		<span class="star # IF star.STAR_EMPTY #icon-star-o# ENDIF ## IF star.STAR_HALF #icon-star-half-o# ENDIF ## IF star.STAR_FULL #icon-star# ENDIF #" id="star_{ID_IN_MODULE}_{star.I}" href="javascript:Note{ID_IN_MODULE}.send_request({star.I})" onmouseover="javascript:Note{ID_IN_MODULE}.change_picture_status({star.I});"></span>
+	# END star #
+	</span>
+		
 	<form action="" method="post" class="smaller">
 		<span id="note_value{ID_IN_MODULE}">
 			# IF C_NOTES #
@@ -65,9 +74,9 @@
 		</span>
 		<select id="note_select{ID_IN_MODULE}" name="note">
 			<option value="-1">{L_NOTE}</option>
-			# START notation_no_js #
-			<option value="{notation_no_js.I}">{notation_no_js.I}</option>
-			# END notation_no_js #
+			# START star #
+			<option value="{star.I}">{star.I}</option>
+			# END star #
 		</select>
 		<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
 		<meta itemprop="bestRating" content="{NOTATION_SCALE}">
