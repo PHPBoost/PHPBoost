@@ -72,8 +72,10 @@
 								<h1>
 									<a href="{file.U_DOWNLOAD_LINK}" itemprop="name">{file.NAME}</a>
 									# IF C_ADMIN #
+									<span class="actions">
 										<a href="{file.U_ADMIN_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 										<a href="{file.U_ADMIN_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+									</span>
 									# ENDIF #
 								</h1>
 							</header>
