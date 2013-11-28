@@ -21,7 +21,7 @@
 						{list.USER_ONLINE} <a class="forum_link_pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">{list.USER_PSEUDO}</a>
 					</div>
 					<span style="float:left;">
-						&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> {list.DATE}
+						&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title=""><i class="icon-anchor"></i></a> {list.DATE}
 					</span>
 					<span style="float:right;">
 						{list.U_FORUM_CAT} &raquo; {list.U_TITLE_T}

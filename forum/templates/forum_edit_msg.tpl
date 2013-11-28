@@ -36,7 +36,7 @@
 						<div class="msg_container">
 							<div class="msg_pseudo_mbr"></div>
 							<div class="msg_top_row">
-								<div style="float:left;">&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /> {DATE}</div>
+								<div style="float:left;">&nbsp;&nbsp;<i class="icon-anchor"></i> {DATE}</div>
 								<div style="float:right;"><img src="{PICTURES_DATA_PATH}/images/quote.png" alt="" title="" />&nbsp;&nbsp;</div>
 							</div>
 							<div class="msg_contents_container">
