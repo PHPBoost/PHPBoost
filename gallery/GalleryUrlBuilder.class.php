@@ -32,14 +32,14 @@ class GalleryUrlBuilder
 	
 	public static function get_link_item($idcat, $id, $com = null, $sort = null)
 	{
-		return Url::to_rel(self::PREFIX.url(
+		return Url::to_absolute(self::PREFIX.url(
 			'.php?cat='.$idcat.'&id='.$id.(isset($com)?'&com='.$com:'').(isset($sort)?'&sort='.$sort:'') ,
 			'-'.$idcat.'-'.$id.'.php'.(isset($com)?'?com='.$com:'').(isset($sort)?'&sort='.$sort:'')));
 	}
 	
 	public static function get_link_item_add($idcat, $id)
 	{
-		return Url::to_rel(self::PREFIX.url(
+		return Url::to_absolute(self::PREFIX.url(
 			'.php?add=1&cat='.$idcat.'&id='.$id,
 			'-'.$idcat.'-'.$id.'.php?add=1',
 			'&'));
@@ -50,7 +50,7 @@ class GalleryUrlBuilder
 		if (!empty($name))
 			$name = '+' . Url::encode_rewrite($name);
 			
-		return Url::to_rel(self::PREFIX.url(
+		return Url::to_absolute(self::PREFIX.url(
 			'.php?cat='.$id,
 			'-'.$id.$name.'.php'));
 	}
@@ -61,7 +61,7 @@ class GalleryUrlBuilder
 			$error = '&error='. $error;
 		if (!empty($token))
 			$token = '&token='. $token;			
-		return Url::to_rel(self::PREFIX.url(
+		return Url::to_absolute(self::PREFIX.url(
 			'.php?add=1&cat='. $id . $error . $token,
 			'-'. $id .'.php?add=1'. $error . $token,
 			'&'));
