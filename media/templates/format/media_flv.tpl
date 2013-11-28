@@ -2,6 +2,8 @@
 <br />
 <script type="text/javascript">
 <!--
+Event.observe(window, 'load', function() {
 	insertMoviePlayer('movie_1764');
+});
 -->
 </script>

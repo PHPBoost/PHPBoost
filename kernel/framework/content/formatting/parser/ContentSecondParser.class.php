@@ -266,7 +266,7 @@ class ContentSecondParser extends AbstractParser
 		$id = 'movie_' . AppContext::get_uid();
 		return '<a href="' . $matches[1] . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
 			'<script type="text/javascript"><!--' . "\n" .
-			'insertMoviePlayer(\'' . $id . '\');' .
+			'Event.observe(window, \'load\', function() { insertMoviePlayer(\'' . $id . '\'); });' .
 			"\n" . '--></script>';
 	}
 

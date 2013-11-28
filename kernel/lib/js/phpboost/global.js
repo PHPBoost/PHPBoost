@@ -498,6 +498,18 @@ function functionExists(function_name)
     }
 }
 
+//Includes synchronously a js file
+function include(file)
+{
+	if (window.document.getElementsByTagName)
+	{
+		script = window.document.createElement("script");
+		script.type = "text/javascript";
+		script.src = file;
+		document.documentElement.firstChild.appendChild(script);
+	}
+}
+
 //Affiche le lecteur vidéo avec la bonne URL, largeur et hauteur
 playerflowPlayerRequired = false;
 function insertMoviePlayer(id)
