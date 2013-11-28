@@ -22,7 +22,9 @@
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_FAQ))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			{TITLE}
 			# IF C_ADMIN #
-			<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+			<span class="actions">
+				<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+			</span>
 			# ENDIF #
 		</h1>
 	</header>
