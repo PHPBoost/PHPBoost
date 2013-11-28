@@ -226,7 +226,7 @@
 							<em>{L_GUEST}</em>
 						# ENDIF #
 					</div>
-					<span style="float:left;">&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> {msg.FORUM_MSG_DATE}</span>
+					<span style="float:left;">&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><i class="icon-anchor"></i></a> {msg.FORUM_MSG_DATE}</span>
 					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><img src="{PICTURES_DATA_PATH}/images/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" /></a>
 					# IF msg.C_FORUM_MSG_EDIT # 
 					&nbsp;&nbsp;<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="icon-edit"></a>
