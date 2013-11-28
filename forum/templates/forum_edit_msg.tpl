@@ -37,7 +37,7 @@
 							<div class="msg_pseudo_mbr"></div>
 							<div class="msg_top_row">
 								<div style="float:left;">&nbsp;&nbsp;<i class="icon-anchor"></i> {DATE}</div>
-								<div style="float:right;"><img src="{PICTURES_DATA_PATH}/images/quote.png" alt="" title="" />&nbsp;&nbsp;</div>
+								<div style="float:right;"><i class="icon-quote-right"></i>&nbsp;&nbsp;</div>
 							</div>
 							<div class="msg_contents_container">
 								<div class="msg_info_mbr">
