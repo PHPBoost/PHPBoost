@@ -45,7 +45,6 @@ class GuestbookModuleHomePage implements ModuleHomePage
 		$user_accounts_config = UserAccountsConfig::load();
 		$messages_number = GuestbookService::count();
 		$pagination = $this->get_pagination($messages_number);
-		$main_lang = LangLoader::get('main');
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$is_guest = !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
 		
@@ -114,9 +113,6 @@ class GuestbookModuleHomePage implements ModuleHomePage
 			'C_ADD' => GuestbookAuthorizationsService::check_authorizations()->write(),
 			'C_PAGINATION' => $messages_number > GuestbookConfig::load()->get_items_per_page(),
 			'PAGINATION' => $pagination->display(),
-			'L_ON' => $main_lang['on'],
-			'L_GUEST' => $main_lang['guest'],
-			'L_GROUP' => $main_lang['group'],
 			'FORM' => GuestbookFormController::get_view(),
 			'U_ADD' => GuestbookUrlBuilder::add($page)->rel(),
 		));
