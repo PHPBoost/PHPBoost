@@ -48,7 +48,7 @@ function XMLHttpRequest_preview(field)
 </script>
 <div style="position:relative;display:none;" id="loading_preview{FIELD}">
 	<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;">
-		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" />
+		<i class="icon-spinner icon-2x icon-spin"></i>
 	</div>
 </div>
 <div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview{FIELD}"></div>

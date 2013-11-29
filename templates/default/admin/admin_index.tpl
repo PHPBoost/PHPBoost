@@ -67,7 +67,7 @@
 							<div style="height:140px;width:358px;overflow:auto;margin:auto;">
 								# START comments_list #	
 								<div style="margin-bottom:10px;">
-									<a href="{comments_list.U_LINK}"><i class="icon-anchor"></i></a> <span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span>
+									<a href="{comments_list.U_LINK}"><i class="icon-hand-o-right"></i></a> <span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span>
 									<p class="smaller">{comments_list.CONTENT}</p>
 								</div>	
 								# END comments_list #

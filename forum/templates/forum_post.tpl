@@ -55,7 +55,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_change_img') )
-				document.getElementById('forum_change_img').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif';
+				document.getElementById('forum_change_img').innerHTML = '<i class="icon-spinner icon-2x icon-spin"></i>';
 			
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&msg_d=' + idtopic);
 			xhr_object.onreadystatechange = function()
@@ -63,7 +63,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{
 					if( document.getElementById('forum_change_img') )
-						document.getElementById('forum_change_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/msg_display2.png' : '{PICTURES_DATA_PATH}/images/msg_display.png';
+						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<img src="{PICTURES_DATA_PATH}/images/msg_display2.png" alt="" class="valign_middle" />' : '<img src="{PICTURES_DATA_PATH}/images/msg_display.png" alt="" class="valign_middle" />';
 					if( document.getElementById('forum_change_msg') )
 						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
 				}
@@ -93,7 +93,7 @@
 						<div class="msg_container">
 							<div class="msg_pseudo_mbr"></div>
 							<div class="msg_top_row">
-								<div style="float:left;">&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /> {DATE}</div>
+								<div style="float:left;">&nbsp;&nbsp;<i class="icon-anchor"></i> {DATE}</div>
 								<div style="float:right;"><i class="icon-quote-right"></i>&nbsp;&nbsp;</div>
 							</div>
 							<div class="msg_contents_container">
@@ -222,7 +222,7 @@
 							<script type="text/javascript">
 							<!--
 							document.getElementById('forum_change_statut').style.display = 'none';
-							document.write('<a href="javascript:XMLHttpRequest_change_statut()">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
+							document.write('<a href="javascript:XMLHttpRequest_change_statut()" id="forum_change_img">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
 							-->
 							</script>
 							# ENDIF #
