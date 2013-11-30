@@ -28,36 +28,15 @@
 class CalendarEvent
 {
 	private $id;
-	private $id_cat;
-	private $title;
-	private $rewrited_title;
-	private $contents;
 	
-	private $location;
+	private $content;
 	
 	private $start_date;
 	private $end_date;
 	
-	private $approved;
+	private $parent_id;
 	
-	private $creation_date;
-	private $author_user;
-	
-	private $registration_authorized;
-	private $max_registred_members;
-	private $register_authorizations;
-	
-	private $repeat_number;
-	private $repeat_type;
-	
-	const DISPLAY_REGISTERED_USERS_AUTHORIZATION = 1;
-	const REGISTER_AUTHORIZATION = 2;
-	
-	const NEVER = 'never';
-	const DAILY = 'daily';
-	const WEEKLY = 'weekly';
-	const MONTHLY = 'monthly';
-	const YEARLY = 'yearly';
+	private $participants = array();
 	
 	public function set_id($id)
 	{
@@ -69,54 +48,14 @@ class CalendarEvent
 		return $this->id;
 	}
 	
-	public function set_id_cat($id_cat)
+	public function set_content(CalendarEventContent $content)
 	{
-		$this->id_cat = $id_cat;
+		$this->content = $content;
 	}
 	
-	public function get_id_cat()
+	public function get_content()
 	{
-		return $this->id_cat;
-	}
-	
-	public function set_title($title)
-	{
-		$this->title = $title;
-	}
-	
-	public function get_title()
-	{
-		return $this->title;
-	}
-	
-	public function set_rewrited_title($title)
-	{
-		$this->rewrited_title = Url::encode_rewrite($title);
-	}
-	
-	public function get_rewrited_title()
-	{
-		return $this->rewrited_title;
-	}
-	
-	public function set_contents($contents)
-	{
-		$this->contents = $contents;
-	}
-	
-	public function get_contents()
-	{
-		return $this->contents;
-	}
-	
-	public function set_location($location)
-	{
-		$this->location = $location;
-	}
-	
-	public function get_location()
-	{
-		return $this->location;
+		return $this->content;
 	}
 	
 	public function set_start_date(Date $start_date)
@@ -139,114 +78,34 @@ class CalendarEvent
 		return $this->end_date;
 	}
 	
-	public function approve()
+	public function set_parent_id($id)
 	{
-		$this->approved = true;
+		$this->parent_id = $id;
 	}
 	
-	public function unapprove()
+	public function get_parent_id()
 	{
-		$this->approved = false;
+		return $this->parent_id;
 	}
 	
-	public function is_approved()
+	public function set_participants(Array $participants)
 	{
-		return $this->approved;
+		$this->participants = $participants;
 	}
 	
-	public function set_creation_date(Date $creation_date)
+	public function get_participants()
 	{
-		$this->creation_date = $creation_date;
+		return $this->participants;
 	}
 	
-	public function get_creation_date()
+	public function belongs_to_a_serie()
 	{
-		return $this->creation_date;
+		return $this->parent_id || $this->content->is_repeatable();
 	}
 	
-	public function set_author_user(User $author)
+	public function get_registered_members_number()
 	{
-		$this->author_user = $author;
-	}
-	
-	public function get_author_user()
-	{
-		return $this->author_user;
-	}
-	
-	public function authorize_registration()
-	{
-		$this->registration_authorized = true;
-	}
-	
-	public function unauthorize_registration()
-	{
-		$this->registration_authorized = false;
-	}
-	
-	public function is_registration_authorized()
-	{
-		return $this->registration_authorized;
-	}
-	
-	public function set_max_registred_members($max_registred_members)
-	{
-		$this->max_registred_members = $max_registred_members;
-	}
-	
-	public function get_max_registred_members()
-	{
-		return $this->max_registred_members;
-	}
-	
-	public function get_registred_members_number()
-	{
-		return CalendarService::count_registered_members($this->id);
-	}
-	
-	public function set_register_authorizations(array $authorizations)
-	{
-		$this->register_authorizations = $authorizations;
-	}
-	
-	public function get_register_authorizations()
-	{
-		return $this->register_authorizations;
-	}
-	
-	public function is_authorized_to_display_registered_users()
-	{
-		return $this->registration_authorized && AppContext::get_current_user()->check_auth($this->register_authorizations, self::DISPLAY_REGISTERED_USERS_AUTHORIZATION);
-	}
-	
-	public function is_authorized_to_register()
-	{
-		return $this->registration_authorized && AppContext::get_current_user()->check_auth($this->register_authorizations, self::REGISTER_AUTHORIZATION);
-	}
-	
-	public function set_repeat_number($number)
-	{
-		$this->repeat_number = $number;
-	}
-	
-	public function get_repeat_number()
-	{
-		return $this->repeat_number;
-	}
-	
-	public function set_repeat_type($type)
-	{
-		$this->repeat_type = $type;
-	}
-	
-	public function get_repeat_type()
-	{
-		return $this->repeat_type;
-	}
-	
-	public function is_repeatable()
-	{
-		return $this->repeat_type != self::NEVER;
+		return count($this->participants);
 	}
 	
 	public function is_authorized_to_add()
@@ -256,119 +115,84 @@ class CalendarEvent
 	
 	public function is_authorized_to_edit()
 	{
-		return CalendarAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((CalendarAuthorizationsService::check_authorizations($this->id_cat)->write() || (CalendarAuthorizationsService::check_authorizations($this->id_cat)->contribution() && !$this->is_approved())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+		return CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution() && $this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
 	}
 	
 	public function is_authorized_to_delete()
 	{
-		return CalendarAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((CalendarAuthorizationsService::check_authorizations($this->id_cat)->write() || (CalendarAuthorizationsService::check_authorizations($this->id_cat)->contribution() && !$this->is_approved())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+		return CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution() && $this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
 	}
 	
 	public function get_properties()
 	{
 		return array(
-			'id' => $this->get_id(),
-			'id_category' => $this->get_id_cat(),
-			'title' => $this->get_title(),
-			'contents' => $this->get_contents(),
-			'location' => $this->get_location(),
+			'id_event' => $this->get_id(),
+			'content_id' => $this->content->get_id(),
 			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : '',
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : '',
-			'approved' => (int)$this->is_approved(),
-			'creation_date' => $this->get_creation_date()->get_timestamp(),
-			'author_id' => $this->get_author_user()->get_id(),
-			'registration_authorized' => (int)$this->is_registration_authorized(),
-			'max_registred_members' => $this->get_max_registred_members(),
-			'register_authorizations' => serialize($this->get_register_authorizations()),
-			'repeat_number' => $this->get_repeat_number(),
-			'repeat_type' => $this->get_repeat_type()
+			'parent_id' => $this->get_parent_id()
 		);
 	}
 	
 	public function set_properties(array $properties)
 	{
-		$this->set_id($properties['id']);
-		$this->set_id_cat($properties['id_category']);
-		$this->set_title($properties['title']);
-		$this->set_rewrited_title($properties['title']);
-		$this->set_contents($properties['contents']);
-		$this->set_location($properties['location']);
+		$content = new CalendarEventContent();
+		$content->set_properties($properties);
+		
+		$this->id = $properties['id_event'];
+		$this->content = $content;
 		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['start_date']) : null;
 		$this->end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['end_date']) : null;
-		
-		if ($properties['approved'])
-			$this->approve();
-		else
-			$this->unapprove();
-		
-		if ($properties['registration_authorized'])
-			$this->authorize_registration();
-		else
-			$this->unauthorize_registration();
-		
-		$this->set_max_registred_members($properties['max_registred_members']);
-		$this->set_register_authorizations(unserialize($properties['register_authorizations']));
-		$this->set_repeat_number($properties['repeat_number']);
-		$this->set_repeat_type($properties['repeat_type']);
-		$this->creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']);
-		
-		$user = new User();
-		$user->set_properties($properties);
-		$this->set_author_user($user);
+		$this->parent_id = $properties['parent_id'];
 	}
 	
-	public function init_default_properties($year, $month, $day, $id_cat)
+	public function init_default_properties($year, $month, $day)
 	{
 		$date = mktime(date('H'), date('i'), date('s'), $month, $day, $year);
 		
-		$this->id_cat = $id_cat;
-		$this->author_user = AppContext::get_current_user();
-		$this->creation_date = new Date();
-		
 		$this->start_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $this->round_to_five_minutes($date));
 		$this->end_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $this->round_to_five_minutes($date + 3600));
-		
-		$this->registration_authorized = false;
-		$this->max_registred_members = 0;
-		$this->register_authorizations = array('r0' => 3, 'r1' => 3);
-		
-		$this->repeat_number = 1;
-		$this->repeat_type = self::NEVER;
-		
-		if (CalendarAuthorizationsService::check_authorizations()->write())
-			$this->approve();
-		else
-			$this->unapprove();
+		$this->parent_id = 0;
+		$this->participants = array();
 	}
 	
 	public function get_array_tpl_vars()
 	{
-		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($this->id_cat);
-		$user = $this->get_author_user();
-		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($this->content->get_category_id());
+		$author = $this->content->get_author_user();
+		$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
 		
 		return array(
+			'C_APPROVED' => $this->content->is_approved(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_LOCATION' => $this->get_location(),
-			'C_APPROVED' => (int)$this->approved,
-			'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
+			'C_LOCATION' => $this->content->get_location(),
+			'C_BELONGS_TO_A_SERIE' => $this->belongs_to_a_serie(),
+			'C_PARTICIPATION_ENABLED' => $this->content->is_registration_authorized(),
+			'C_DISPLAY_PARTICIPANTS' => $this->content->is_authorized_to_display_registered_users(),
+			'C_PARTICIPANTS' => !empty($this->participants),
+			'C_PARTICIPATE' => $this->content->is_registration_authorized() && $this->content->is_authorized_to_register() && time() < $this->start_date->get_timestamp() && (!$this->content->get_max_registered_members() || ($this->content->get_max_registered_members() > 0 && $this->get_registered_members_number() < $this->content->get_max_registered_members())),
+			'C_IS_PARTICIPANT' => in_array(AppContext::get_current_user()->get_id(), array_keys($this->participants)),
+			'C_AUTHOR_GROUP_COLOR' => !empty($author_group_color),
 			
 			//Event
 			'ID' => $this->id,
-			'TITLE' => $this->title,
-			'SHORT_TITLE' => strlen($this->title) > 45 ? TextHelper::substr_html($this->title, 0, 45) . '...' : $this->title,
-			'CONTENTS' => FormatingHelper::second_parse($this->contents),
+			'CONTENT_ID' => $this->content->get_id(),
+			'TITLE' => $this->content->get_title(),
+			'SHORT_TITLE' => strlen($this->content->get_title()) > 45 ? TextHelper::substr_html($this->content->get_title(), 0, 45) . '...' : $this->content->get_title(),
+			'CONTENTS' => FormatingHelper::second_parse($this->content->get_contents()),
+			'LOCATION' => $this->content->get_location(),
 			'START_DATE' => $this->start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'START_DATE_ISO8601' => $this->start_date->format(Date::FORMAT_ISO8601),
 			'END_DATE' => $this->end_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'END_DATE_ISO8601' => $this->end_date->format(Date::FORMAT_ISO8601),
-			'LOCATION' => $this->location,
-			'AUTHOR' => $user->get_pseudo(),
-			'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-			'AUTHOR_GROUP_COLOR' => $user_group_color,
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('calendar', $this->id),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('calendar', $this->id),
+			'REPEAT_TYPE' => LangLoader::get_message('calendar.labels.repeat.' . $this->content->get_repeat_type(), 'common', 'calendar'),
+			'REPEAT_NUMBER' => $this->content->get_repeat_number(),
+			'AUTHOR' => $author->get_pseudo(),
+			'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($author->get_level()),
+			'AUTHOR_GROUP_COLOR' => $author_group_color,
 			
 			//Category
 			'CATEGORY_ID' => $category->get_id(),
@@ -377,13 +201,15 @@ class CalendarEvent
 			'CATEGORY_IMAGE' => $category->get_image(),
 			'CATEGORY_COLOR' => $category->get_id() != Category::ROOT_CATEGORY ? $category->get_color() : '',
 			
-			'U_SYNDICATION' => SyndicationUrlBuilder::rss('calendar', $this->id_cat)->rel(),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
-			'U_LINK' => CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel(),
-			'U_CATEGORY' => CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => CalendarUrlBuilder::edit_event($this->id)->rel(),
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
+			'U_LINK' => CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel(),
+			'U_EDIT' => CalendarUrlBuilder::edit_event(!$this->parent_id ? $this->id : $this->parent_id)->rel(),
 			'U_DELETE' => CalendarUrlBuilder::delete_event($this->id)->rel(),
-			'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
+			'U_SUSCRIBE' => CalendarUrlBuilder::suscribe_event($this->id)->rel(),
+			'U_UNSUSCRIBE' => CalendarUrlBuilder::unsuscribe_event($this->id)->rel(),
+			'U_CATEGORY' => CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
+			'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel()
 		);
 	}
 	

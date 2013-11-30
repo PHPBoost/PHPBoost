@@ -30,30 +30,69 @@
  */
 class CalendarDeleteController extends ModuleController
 {
+	/**
+	 * @var HTMLForm
+	 */
+	private $form;
+	/**
+	 * @var FormButtonSubmit
+	 */
+	private $submit_button;
+	
+	private $lang;
+	
+	private $event;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
 		
-		$event = $this->get_event($request);
+		$this->init($request);
+		
+		$this->get_event($request);
 		
 		$this->check_authorizations();
 		
-		//Delete event
-		CalendarService::delete('WHERE id=:id', array('id' => $this->event->get_id()));
-		CalendarService::delete_participants($this->event->get_id());
-		PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'calendar', 'id' => $this->event->get_id()));
+		$tpl = new StringTemplate('# INCLUDE FORM #');
+		$tpl->add_lang($this->lang);
 		
-		//Delete event comments
-		CommentsService::delete_comments_topic_module('calendar', $this->event->get_id());
+		if ($this->event->belongs_to_a_serie())
+			$this->build_form();
 		
-		Feed::clear_cache('calendar');
+		if (($this->event->belongs_to_a_serie() && $this->submit_button->has_been_submited() && $this->form->validate()) || !$this->event->belongs_to_a_serie())
+		{
+			$this->delete_event($this->event->belongs_to_a_serie() ? $this->form->get_value('delete_serie')->get_raw_value() : false);
+			$this->redirect($request);
+		}
 		
-		CalendarCurrentMonthEventsCache::invalidate();
+		$tpl->put('FORM', $this->form->display());
 		
-		if ($request->get_getvalue('return', '') == 'admin')
-			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_events($request->get_getvalue('field', ''), $request->get_getvalue('sort', ''), $request->get_getint('page', 1)));
-		else
-			AppContext::get_response()->redirect(CalendarUrlBuilder::home($this->event->get_start_date()->get_year() . '/'. $this->event->get_start_date()->get_month()));
+		return $this->generate_response($tpl);
+	}
+	
+	private function init(HTTPRequestCustom $request)
+	{
+		$this->lang = LangLoader::get('common', 'calendar');
+	}
+	
+	private function build_form()
+	{
+		$form = new HTMLForm(__CLASS__);
+		
+		$fieldset = new FormFieldsetHTML('delete_serie', $this->lang['calendar.titles.delete_event']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldRadioChoice('delete_serie', LangLoader::get_message('delete', 'main'), 0,
+			array(
+				new FormFieldRadioChoiceOption($this->lang['calendar.titles.delete_occurrence'], 0),
+				new FormFieldRadioChoiceOption($this->lang['calendar.titles.delete_all_events_of_the_serie'], 1)
+			)
+		));
+		
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$form->add_button($this->submit_button);
+		
+		$this->form = $form;
 	}
 	
 	private function get_event(HTTPRequestCustom $request)
@@ -63,12 +102,54 @@ class CalendarDeleteController extends ModuleController
 		if (!empty($id))
 		{
 			try {
-				$this->event = CalendarService::get_event('WHERE id=:id', array('id' => $id));
+				$this->event = CalendarService::get_event('WHERE id_event = :id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
 			}
 		}
+	}
+	
+	private function delete_event($delete_all_serie_events = false)
+	{
+		$events_list = CalendarService::get_serie_events($this->event->get_content()->get_id());
+		
+		if ($delete_all_serie_events)
+		{
+			foreach ($events_list as $event)
+			{
+				//Delete event comments
+				CommentsService::delete_comments_topic_module('calendar', $event->get_id());
+				
+				//Delete participants
+				CalendarService::delete_all_participants($event->get_id());
+			}
+			
+			CalendarService::delete_all_serie_events($this->event->get_content()->get_id());
+			PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module = :module AND id_in_module = :id', array('module' => 'calendar', 'id' => !$this->event->get_parent_id() ? $this->event->get_id() : $this->event->get_parent_id()));
+		}
+		else
+		{
+			if (!$this->event->belongs_to_a_serie() || count($events_list) == 1)
+			{
+				CalendarService::delete_event_content('WHERE id = :id', array('id' => $this->event->get_parent_id()));
+			}
+			
+			//Delete event
+			CalendarService::delete_event('WHERE id_event = :id', array('id' => $this->event->get_id()));
+			
+			if (!$this->event->get_parent_id())
+				PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'calendar', 'id' => $this->event->get_id()));
+			
+			//Delete event comments
+			CommentsService::delete_comments_topic_module('calendar', $this->event->get_id());
+			
+			//Delete participants
+			CalendarService::delete_all_participants($this->event->get_id());
+		}
+		
+		Feed::clear_cache('calendar');
+		CalendarCurrentMonthEventsCache::invalidate();
 	}
 	
 	private function check_authorizations()
@@ -80,9 +161,38 @@ class CalendarDeleteController extends ModuleController
 		}
 		if (AppContext::get_current_user()->is_readonly())
 		{
-			$controller = PHPBoostErrors::user_in_read_only();
-			DispatchManager::redirect($controller);
+			$error_controller = PHPBoostErrors::user_in_read_only();
+			DispatchManager::redirect($error_controller);
 		}
+	}
+	
+	private function redirect(HTTPRequestCustom $request)
+	{
+		if ($request->get_getvalue('return', '') == 'admin')
+			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_events($request->get_getvalue('field', ''), $request->get_getvalue('sort', ''), $request->get_getint('page', 1)));
+		else
+			AppContext::get_response()->redirect(CalendarUrlBuilder::home($this->event->get_start_date()->get_year() . '/'. $this->event->get_start_date()->get_month()));
+	}
+	
+	private function generate_response(View $tpl)
+	{
+		$response = new CalendarDisplayResponse();
+		$response->add_breadcrumb_link($this->lang['module_title'], CalendarUrlBuilder::home());
+		
+		$event_content = $this->event->get_content();
+		$categories = array_reverse(CalendarService::get_categories_manager()->get_parents($event_content->get_category_id(), true));
+		foreach ($categories as $id => $category)
+		{
+			if ($id != Category::ROOT_CATEGORY)
+				$response->add_breadcrumb_link($category->get_name(), CalendarUrlBuilder::display_category($id, $category->get_rewrited_name()));
+		}
+		$category = $categories[$event_content->get_category_id()];
+		$response->add_breadcrumb_link($event_content->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_content->get_id(), $event_content->get_rewrited_title()));
+		
+		$response->add_breadcrumb_link($this->lang['calendar.titles.event_removal'], CalendarUrlBuilder::delete_event($this->event->get_id()));
+		$response->set_page_title($this->lang['calendar.titles.event_removal']);
+		
+		return $response->display($tpl);
 	}
 }
 ?>

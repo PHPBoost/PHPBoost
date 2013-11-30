@@ -34,9 +34,7 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
 	
 	public function comments()
 	{
-		return new CommentsTopics(array(
-			new CalendarCommentsTopic()
-		));
+		return new CommentsTopics(array(new CalendarCommentsTopic()));
 	}
 	
 	public function css_files()
@@ -75,6 +73,11 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
 	public function sitemap()
 	{
 		return new CalendarSitemapExtensionPoint();
+	}
+	
+	public function tree_links()
+	{
+		return new CalendarTreeLinks();
 	}
 	
 	public function url_mappings()

@@ -34,7 +34,10 @@ $lang['module_title'] = 'Calendar';
 
 //Messages divers
 $lang['calendar.notice.no_current_action'] = 'No events scheduled for this date';
+$lang['calendar.notice.no_pending_event'] = 'No pending event';
 $lang['calendar.notice.no_event'] = 'No event';
+$lang['calendar.notice.suscribe.event_date_expired'] = 'The event is finished, you can not suscribe.';
+$lang['calendar.notice.unsuscribe.event_date_expired'] = 'The event is finished, you can not unsuscribe.';
 
 //Titles
 $lang['calendar.titles.admin.config'] = 'Configuration';
@@ -42,11 +45,14 @@ $lang['calendar.titles.admin.authorizations'] = 'Authorizations';
 $lang['calendar.titles.add_event'] = 'Add event';
 $lang['calendar.titles.edit_event'] = 'Edit event';
 $lang['calendar.titles.delete_event'] = 'Delete event';
+$lang['calendar.titles.delete_occurrence'] = 'Occurrence';
+$lang['calendar.titles.delete_all_events_of_the_serie'] = 'All events of the serie';
 $lang['calendar.titles.event_edition'] = 'Event edition';
 $lang['calendar.titles.event_removal'] = 'Event removal';
 $lang['calendar.titles.events'] = 'Events';
 $lang['calendar.titles.event'] = 'Event';
 $lang['calendar.pending'] = 'Pending events';
+$lang['calendar.manage'] = 'Manage events';
 
 //Labels
 $lang['calendar.labels.title'] = 'Title';
@@ -55,10 +61,12 @@ $lang['calendar.labels.location'] = 'Location';
 $lang['calendar.labels.created_by'] = 'Created by';
 $lang['calendar.labels.category'] = 'Category';
 $lang['calendar.labels.registration_authorized'] = 'Active members registration for the event';
-$lang['calendar.labels.max_registred_members'] = 'Maximum participant number';
-$lang['calendar.labels.max_registred_members.explain'] = 'Set to 0 for no limit';
+$lang['calendar.labels.max_registered_members'] = 'Maximum participant number';
+$lang['calendar.labels.max_registered_members.explain'] = 'Set to 0 for no limit';
+$lang['calendar.titles.repetion'] = 'Repetition';
 $lang['calendar.labels.repeat_type'] = 'Repeat';
 $lang['calendar.labels.repeat_number'] = 'Repeat number';
+$lang['calendar.labels.repeat_times'] = 'times';
 $lang['calendar.labels.repeat.never'] = 'Never';
 $lang['calendar.labels.repeat.daily'] = 'Daily';
 $lang['calendar.labels.repeat.weekly'] = 'Weekly';
@@ -76,6 +84,7 @@ $lang['calendar.labels.contribution.description.explain'] = 'Tell us why you wan
 $lang['calendar.labels.contribution.entitled'] = '[Calendar] :title';
 $lang['calendar.labels.birthday_title'] = 'Birthday of';
 $lang['calendar.labels.participants'] = 'Participants';
+$lang['calendar.labels.no_one'] = 'No one';
 $lang['calendar.labels.suscribe'] = 'Suscribe';
 $lang['calendar.labels.unsuscribe'] = 'Unsuscribe';
 
@@ -83,9 +92,10 @@ $lang['calendar.labels.unsuscribe'] = 'Unsuscribe';
 $lang['calendar.explain.date'] = '<span class="smaller">(mm/dd/yy)</span>';
 
 //Administration
-$lang['calendar.config.events_manage'] = 'Events management';
+$lang['calendar.config.events.management'] = 'Events management';
 $lang['calendar.config.category.color'] = 'Color';
 $lang['calendar.config.category.manage'] = 'Manage categories';
+$lang['calendar.config.category.management'] = 'Categories management';
 $lang['calendar.config.category.add'] = 'Add category';
 $lang['calendar.config.category.edit'] = 'Edit category';
 $lang['calendar.config.category.delete'] = 'Delete category';
@@ -101,15 +111,6 @@ $lang['calendar.config.authorizations.moderation'] = 'Moderation permissions';
 
 $lang['calendar.authorizations.display_registered_users'] = 'Display registered users permissions';
 $lang['calendar.authorizations.register'] = 'Register permissions';
-
-//Sort fields title and mode
-$lang['calendar.sort_filter.title'] = 'Filter by :';
-$lang['calendar.sort_mode.asc'] = 'Ascendant';
-$lang['calandar.sort_mode.desc'] = 'Descendant';
-$lang['calendar.config.sort_field.category'] = 'Categories';
-$lang['calendar.config.sort_field.title'] = 'Title';
-$lang['calendar.config.sort_field.author'] = 'Author';
-$lang['calendar.config.sort_field.start_date'] = 'Start date';
 
 //SEO
 $lang['calendar.seo.description.root'] = 'All events of :site.';

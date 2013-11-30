@@ -1,36 +1,3 @@
-# IF C_PARTICIPATE #
-<script type="text/javascript">
-<!--
-function change_registration() {
-	var action = '';
-	
-	if (document.getElementById("subscription_type").value == 0)
-		action = 'subscribe';
-	else
-		action = 'unsubscribe';
-		
-	new Ajax.Request('${relative_url(CalendarUrlBuilder::ajax_change_participation())}', {
-		method:'post',
-		asynchronous: false,
-		parameters: {'event_id' : {ID}, 'user_id' : {USER_ID}, 'token' : '{TOKEN}', 'action': action},
-		onSuccess: function(transport) {
-			if (transport.responseText == 1)
-			{
-				$('subscription').value = "{@calendar.labels.unsuscribe}";
-				$('subscription_type').value = 1;
-			}
-			else if (transport.responseText == 0)
-			{
-				$('subscription').value = "{@calendar.labels.suscribe}";
-				$('subscription_type').value = 0;
-			}
-		}
-	});
-}
--->
-</script>
-# ENDIF #
-
 <article itemscope="itemscope" itemtype="http://schema.org/Event">
 	<header>
 		<h1>
@@ -41,7 +8,7 @@ function change_registration() {
 					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 				# ENDIF #
 				# IF C_DELETE #
-					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
 				# ENDIF #
 			</span>
 		</h1>
@@ -55,26 +22,36 @@ function change_registration() {
 	</header>
 	<div class="content">
 		<span itemprop="text">{CONTENTS}</span>
-		<div class="spacer">&nbsp;</div>
 		# IF C_LOCATION #
+		<div class="spacer">&nbsp;</div>
 		<div itemprop="location" itemscope itemtype="http://schema.org/Place">
 			<span class="text_strong">{@calendar.labels.location}</span> :
 			<span itemprop="name">{LOCATION}</span>
 		</div>
 		# ENDIF #
-		# IF C_PARTICIPANTS #
+		# IF C_PARTICIPATION_ENABLED #
 		<div class="spacer">&nbsp;</div>
+		# IF C_DISPLAY_PARTICIPANTS #
 		<div>
 			<span class="text_strong">{@calendar.labels.participants}</span> :
-			<span>{PARTICIPANTS}</span>
+			<span>
+				# IF C_PARTICIPANTS #
+					# START participant #
+						<a href="{participant.U_PROFILE}" class="small_link {participant.LEVEL_CLASS}" # IF participant.C_GROUP_COLOR # style="color:{participant.GROUP_COLOR}" # ENDIF #>{participant.LOGIN}</a>
+					# END participant #
+				# ELSE #
+					{@calendar.labels.no_one}
+				# ENDIF #
+			</span>
 		</div>
+		# ENDIF #
+		# IF C_PARTICIPATE ## IF C_IS_PARTICIPANT #<a href="{U_UNSUSCRIBE}" class="basic-button">{@calendar.labels.unsuscribe}</a># ELSE #<a href="{U_SUSCRIBE}" class="basic-button">{@calendar.labels.suscribe}</a># ENDIF ## ENDIF #
 		# ENDIF #
 		
 		<div class="spacer">&nbsp;</div>
 		<div class="event_display_author" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			{@calendar.labels.created_by} : # IF AUTHOR #<a itemprop="author" href="{U_AUTHOR_PROFILE}" class="small_link {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #
 		</div>
-		# IF C_PARTICIPATE #<a style="cursor:pointer;padding-left:25px;" onclick="change_registration()" id="subscription"># IF IS_PARTICIPANT #{@calendar.labels.unsuscribe}# ELSE #{@calendar.labels.suscribe}# ENDIF #</a><span id="subscription_type" style="display:none;"># IF IS_PARTICIPANT #1# ELSE #0# ENDIF #</span># ENDIF #
 		<div class="event_display_dates">
 			{@calendar.labels.start_date} : <span class="float_right"><time datetime="{START_DATE_ISO8601}" itemprop="startDate">{START_DATE}</time></span>
 			<div class="spacer"></div>
@@ -84,9 +61,7 @@ function change_registration() {
 		<div class="spacer">&nbsp;</div>
 		<hr style="width:70%;margin:0px auto 40px auto;">
 		
-		# IF C_COMMENTS_ENABLED #
-			# INCLUDE COMMENTS #
-		# ENDIF #
+		# INCLUDE COMMENTS #
 	</div>
 	<footer></footer>
 </article>

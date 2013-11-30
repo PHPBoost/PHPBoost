@@ -37,8 +37,8 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('CalendarDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	//Admin
-	new UrlControllerMapper('AdminManageCalendarEventsController', '`^/admin/manage(?:/([a-z_-]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
-	new UrlControllerMapper('AdminCalendarConfigController', '`^/admin(?:/config)?/?([a-z]+)?/?$`', array('message')),
+	new UrlControllerMapper('AdminCalendarManageEventsController', '`^/admin/manage(?:/([a-z_-]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+	new UrlControllerMapper('AdminCalendarConfigController', '`^/admin(?:/config)?/?$`'),
 	
 	//Display events
 	new UrlControllerMapper('CalendarDisplayCategoryController', '`^/category/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name')),
@@ -48,7 +48,8 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('CalendarFormController', '`^/add/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('year', 'month', 'day', 'id_category')),
 	new UrlControllerMapper('CalendarFormController', '`^/edit/([0-9]+)?/?$`', array('id')),
 	new UrlControllerMapper('CalendarDeleteController', '`^/delete/([0-9]+)?/?(?:/([a-z]+))?/?(?:/([a-z_-]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('id', 'return', 'field', 'sort', 'page')),
-	new UrlControllerMapper('CalendarAjaxSubscribeUnsubscribeController', '`^/ajax_change_participation/?$`'),
+	new UrlControllerMapper('CalendarSuscribeController', '`^/suscribe/([0-9]+)?/?([a-z]+)?/?$`', array('event_id')),
+	new UrlControllerMapper('CalendarUnsuscribeController', '`^/unsuscribe/([0-9]+)?/?([a-z]+)?/?$`', array('event_id')),
 	
 	new UrlControllerMapper('CalendarDisplayPendingEventsController', '`^/pending/?$`'),
 	

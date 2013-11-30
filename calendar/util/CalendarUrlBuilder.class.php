@@ -44,14 +44,6 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function configuration_success()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/config/success');
-	}
-	
-	/**
-	 * @return Url
-	 */
 	public static function manage_events($sort_field = null, $sort_mode = null, $page = null)
 	{
 		$page = $page !== null ? $page . '/': '';
@@ -151,17 +143,25 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function ajax_month_calendar($param = '')
+	public static function suscribe_event($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/ajax_month_calendar/' . $param);
+		return DispatchManager::get_url(self::$dispatcher, '/suscribe/' . $id);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function ajax_change_participation($param = '')
+	public static function unsuscribe_event($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/ajax_change_participation/' . $param);
+		return DispatchManager::get_url(self::$dispatcher, '/unsuscribe/' . $id);
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function ajax_month_calendar($param = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/ajax_month_calendar/' . $param);
 	}
 	
 	/**

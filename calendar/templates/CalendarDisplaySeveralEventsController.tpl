@@ -1,29 +1,5 @@
 # INCLUDE MSG #
 
-<menu class="dynamic_menu right">
-	<ul>
-		<li><a><i class="icon-cog"></i></a>
-			<ul>
-				# IF C_ADD #
-				<li>
-					<a href="${relative_url(CalendarUrlBuilder::add_event())}" title="{@calendar.titles.add_event}">{@calendar.titles.add_event}</a>
-				</li>
-				# ENDIF #
-				# IF C_PENDING_EVENTS #
-				<li>
-					<a href="${relative_url(CalendarUrlBuilder::display_pending_events())}" title="{@calendar.pending}">{@calendar.pending}</a>
-				</li>
-				# ENDIF #
-				# IF IS_ADMIN #
-				<li>
-					<a href="${relative_url(CalendarUrlBuilder::configuration())}" title="{@calendar.titles.admin.config}">{@calendar.titles.admin.config}</a>
-				<li>
-				# ENDIF #
-			</ul>
-		</li>
-	</ul>
-</menu>
-
 <section>
 	<header>
 		<h1>
@@ -31,7 +7,8 @@
 			{@module_title}
 		</h1>
 	</header>
-		
+	
+	# IF NOT C_PENDING_PAGE #
 	<div class="content">
 		<div id="calendar">
 			# INCLUDE CALENDAR #
@@ -39,31 +16,31 @@
 	</div>
 	
 	<div class="spacer">&nbsp;</div>
+	# ENDIF #
 	
 	<section id="events" class="event_container">
 		<header>
-			<h2>{L_EVENTS}</h2>
+			<h2># IF C_PENDING_PAGE #{@calendar.pending}# ELSE #{@calendar.titles.events}# ENDIF #</h2>
 		</header>
-		<div class="event_date">{DATE}</div>
+		# IF NOT C_PENDING_PAGE #<div class="event_date">{DATE}</div># ENDIF #
 		
-		# IF C_EVENT #
+		# IF C_EVENTS #
 			# START event #
 			<article itemscope="itemscope" itemtype="http://schema.org/Event">
 				<header>
-					<h3>
+					<h2>
 						<a href="{event.U_SYNDICATION}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 						<a href="{event.U_LINK}"><span id="name" itemprop="name">{event.TITLE}</span></a>
-						
 						<span class="actions">
-							# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> {event.L_COMMENTS}</a># ENDIF #
+							# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><i class="icon-comments-o"></i> {event.L_COMMENTS}</a># ENDIF #
 							# IF event.C_EDIT #
 								<a href="{event.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 							# ENDIF #
 							# IF event.C_DELETE #
-								<a href="{event.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+								<a href="{event.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete"# IF NOT event.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
 							# ENDIF #
 						</span>
-					</h3>
+					</h2>
 					
 					<meta itemprop="url" content="{event.U_LINK}">
 					<div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
@@ -74,14 +51,35 @@
 				</header>
 				<div class="content">
 					<span itemprop="text">{event.CONTENTS}</span>
-					<div class="spacer">&nbsp;</div>
 					# IF event.C_LOCATION #
-					<div itemprop="location" itemscope itemtype="http://schema.org/Place">
-						<span class="text_strong">{@calendar.labels.location}</span> :
-						<span itemprop="name">{event.LOCATION}</span>
+					<div class="spacer">&nbsp;</div>
+					<div itemscope="itemscope" itemtype="http://schema.org/Place">
+						<p itemprop="location">
+							<span class="text_strong">{@calendar.labels.location}</span> : 
+							<span itemprop="name">{event.LOCATION}</span>
+						</p>
 					</div>
 					# ENDIF #
+					# IF event.C_PARTICIPATION_ENABLED #
+					<div class="spacer">&nbsp;</div>
+					# IF event.C_DISPLAY_PARTICIPANTS #
+					<div>
+						<span class="text_strong">{@calendar.labels.participants}</span> :
+						<span>
+							# IF event.C_PARTICIPANTS #
+								# START event.participant #
+									<a href="{event.participant.U_PROFILE}" class="small_link {event.participant.LEVEL_CLASS}" # IF event.participant.C_GROUP_COLOR # style="color:{event.participant.GROUP_COLOR}" # ENDIF #>{event.participant.LOGIN}</a>
+								# END event.participant #
+							# ELSE #
+								{@calendar.labels.no_one}
+							# ENDIF #
+						</span>
+					</div>
+					# ENDIF #
+					# IF event.C_PARTICIPATE ## IF event.C_IS_PARTICIPANT #<a href="{event.U_UNSUSCRIBE}" class="basic-button">{@calendar.labels.unsuscribe}</a># ELSE #<a href="{event.U_SUSCRIBE}" class="basic-button">{@calendar.labels.suscribe}</a># ENDIF ## ENDIF #
+					# ENDIF #
 					
+					<div class="spacer">&nbsp;</div>
 					<div class="event_display_author" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 						{@calendar.labels.created_by} : # IF event.AUTHOR #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="small_link {event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 					</div>
@@ -95,8 +93,10 @@
 			</article>
 			# END event #
 		# ELSE #
-			<p class="center">{@calendar.notice.no_current_action}</p>
+			<div class="center">
+				# IF C_PENDING_PAGE #{@calendar.notice.no_pending_event}# ELSE #{@calendar.notice.no_current_action}# ENDIF #
+			</div>
 		# ENDIF #
 	</section>
-	<footer></footer>
+	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
 </section>
