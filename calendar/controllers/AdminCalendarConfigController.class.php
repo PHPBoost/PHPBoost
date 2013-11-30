@@ -55,11 +55,9 @@ class AdminCalendarConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			AppContext::get_response()->redirect(CalendarUrlBuilder::configuration_success());
+			$tpl->put('MSG', MessageHelper::display($this->lang['calendar.success.config'], E_USER_SUCCESS, 5));
 		}
 		
-		if ($request->get_string('message', '') == 'success')
-			$tpl->put('MSG', MessageHelper::display($this->lang['calendar.success.config'], E_USER_SUCCESS, 5));
 		
 		//Display the form on the template
 		$tpl->put('FORM', $this->form->display());
@@ -83,9 +81,9 @@ class AdminCalendarConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('items_number_per_page', $this->lang['calendar.config.items_number_per_page'], $this->config->get_items_number_per_page(), 
-			array('size' => 6, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
-		)));
+			array('size' => 3, 'maxlength' => 2, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(1, 50))
+		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['calendar.config.comments_enabled'], $this->config->are_comments_enabled()));
 		

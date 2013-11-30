@@ -38,7 +38,7 @@ class CalendarCommentsTopic extends CommentsTopic
 	public function get_authorizations()
 	{
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(CalendarAuthorizationsService::check_authorizations($this->get_event()->get_id_cat())->read());
+		$authorizations->set_authorized_access_module(CalendarAuthorizationsService::check_authorizations($this->get_event()->get_content()->get_category_id())->read());
 		return $authorizations;
 	}
 	

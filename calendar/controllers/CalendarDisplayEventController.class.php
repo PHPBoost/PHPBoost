@@ -61,14 +61,14 @@ class CalendarDisplayEventController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->event = CalendarService::get_event('WHERE id=:id', array('id' => $id));
+					$this->event = CalendarService::get_event('WHERE id_event = :id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
-				$this->event = new Event();
+				$this->event = new CalendarEvent();
 		}
 		return $this->event;
 	}
@@ -76,34 +76,20 @@ class CalendarDisplayEventController extends ModuleController
 	private function build_view()
 	{
 		$event = $this->get_event();
-		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_id_cat());
-		$config = CalendarConfig::load();
+		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
 		
-		$participants = CalendarService::get_event_participants($event->get_id());
+		$this->tpl->put_all($event->get_array_tpl_vars());
 		
-		$p = array();
-		foreach ($participants as $participant)
+		foreach ($event->get_participants() as $participant)
 		{
-			$participant_group_color = User::get_group_color($participant->get_groups(), $participant->get_level(), true);
-			$p[] = '<a href="' . UserUrlBuilder::profile($participant->get_id())->rel() . '" class="small_link ' . UserService::get_level_class($participant->get_level()) . '" ' . ($participant_group_color ? ' style="color:' . $participant_group_color . '"' : '') . '>' . $participant->get_pseudo() . '</a>';
+			$this->tpl->assign_block_vars('participant', $participant->get_array_tpl_vars());
 		}
 		
-		$user_id = AppContext::get_current_user()->get_id();
-		
-		$this->tpl->put_all(array_merge($event->get_array_tpl_vars(), array(
-			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
-			'C_PARTICIPANTS' => !empty($participants),
-			'C_PARTICIPATE' => $event->is_registration_authorized() && $event->is_authorized_to_register() && $event->get_start_date()->get_timestamp() < time() && ($event->get_registred_members_number() == 0 || in_array($user_id, array_keys($participants)) || $event->get_registred_members_number() < $event->get_max_registred_members()),
-			'IS_PARTICIPANT' => in_array($user_id, array_keys($participants)),
-			'PARTICIPANTS' => implode(', ', $p),
-			'USER_ID' => $user_id
-		)));
-		
-		if ($config->are_comments_enabled() && is_numeric($event->get_id()))
+		if (CalendarConfig::load()->are_comments_enabled() && is_numeric($event->get_id()))
 		{
 			$comments_topic = new CalendarCommentsTopic($event);
 			$comments_topic->set_id_in_module($event->get_id());
-			$comments_topic->set_url(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $this->event->get_rewrited_title()));
+			$comments_topic->set_url(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 			
 			$this->tpl->put('COMMENTS', $comments_topic->display());
 		}
@@ -112,7 +98,7 @@ class CalendarDisplayEventController extends ModuleController
 	private function check_authorizations()
 	{
 		$event = $this->get_event();
-		if (!CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->read() || (!CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() && !$event->is_approved()))
+		if (!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->read() || (!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->moderation() && !$event->get_content()->is_approved()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -124,17 +110,17 @@ class CalendarDisplayEventController extends ModuleController
 		$event = $this->get_event();
 		
 		$response = new CalendarDisplayResponse();
-		$response->set_page_title($event->get_title());
+		$response->set_page_title($event->get_content()->get_title());
 		$response->add_breadcrumb_link($this->lang['module_title'], CalendarUrlBuilder::home());
 		
-		$categories = array_reverse(CalendarService::get_categories_manager()->get_parents($event->get_id_cat(), true));
+		$categories = array_reverse(CalendarService::get_categories_manager()->get_parents($event->get_content()->get_category_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($id != Category::ROOT_CATEGORY)
 				$response->add_breadcrumb_link($category->get_name(), CalendarUrlBuilder::display_category($id, $category->get_rewrited_name()));
 		}
-		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_id_cat());
-		$response->add_breadcrumb_link($event->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $this->event->get_rewrited_title()));
+		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
+		$response->add_breadcrumb_link($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $this->event->get_content()->get_rewrited_title()));
 		
 		return $response->display($this->tpl);
 	}

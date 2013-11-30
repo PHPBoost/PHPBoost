@@ -41,32 +41,23 @@ class CalendarService
 	}
 	
 	 /**
-	 * @desc Count the events list.
-	 * @param string $condition (optional) Restriction to apply to the list
-	 */
-	public static function count($condition = '')
-	{
-		return self::$db_querier->count(CalendarSetup::$calendar_table, $condition);
-	}
-	
-	 /**
-	 * @desc Count the the number of registered members for an event.
-	 * @param string $event_id id of the event
-	 */
-	public static function count_registered_members($event_id)
-	{
-		return self::$db_querier->count(CalendarSetup::$calendar_users_relation_table, 'WHERE event_id=:event_id', array(
-			'event_id' => $event_id
-		));
-	}
-	
-	 /**
 	 * @desc Create a new event.
 	 * @param string[] $event new CalendarEvent
 	 */
-	public static function add(CalendarEvent $event)
+	public static function add_event(CalendarEvent $event)
 	{
-		$result = self::$db_querier->insert(CalendarSetup::$calendar_table, $event->get_properties());
+		$result = self::$db_querier->insert(CalendarSetup::$calendar_events_table, $event->get_properties());
+		
+		return $result->get_last_inserted_id();
+	}
+	
+	 /**
+	 * @desc Create a new event content.
+	 * @param string[] $event_content new CalendarEventContent
+	 */
+	public static function add_event_content(CalendarEventContent $event_content)
+	{
+		$result = self::$db_querier->insert(CalendarSetup::$calendar_events_content_table, $event_content->get_properties());
 		
 		return $result->get_last_inserted_id();
 	}
@@ -88,10 +79,23 @@ class CalendarService
 	 * @desc Update an event.
 	 * @param string[] $event CalendarEvent to update
 	 */
-	public static function update(CalendarEvent $event)
+	public static function update_event(CalendarEvent $event)
 	{
-		self::$db_querier->update(CalendarSetup::$calendar_table, $event->get_properties(), 'WHERE id=:id', array(
+		self::$db_querier->update(CalendarSetup::$calendar_events_table, $event->get_properties(), 'WHERE id_event = :id', array(
 			'id' => $event->get_id()
+		));
+		
+		return $event->get_id();
+	}
+	
+	 /**
+	 * @desc Update the content of an event.
+	 * @param string[] $event_content CalendarEventContent to update
+	 */
+	public static function update_event_content(CalendarEventContent $event_content)
+	{
+		self::$db_querier->update(CalendarSetup::$calendar_events_content_table, $event_content->get_properties(), 'WHERE id = :id', array(
+			'id' => $event_content->get_id()
 		));
 	}
 	
@@ -100,18 +104,43 @@ class CalendarService
 	 * @param string $condition Restriction to apply to the list of events
 	 * @param string[] $parameters Parameters of the condition
 	 */
-	public static function delete($condition, array $parameters)
+	public static function delete_event($condition, array $parameters)
 	{
-		self::$db_querier->delete(CalendarSetup::$calendar_table, $condition, $parameters);
+		self::$db_querier->delete(CalendarSetup::$calendar_events_table, $condition, $parameters);
+	}
+	
+	 /**
+	 * @desc Delete the content of an event.
+	 * @param string $condition Restriction to apply to the list of events content
+	 * @param string[] $parameters Parameters of the condition
+	 */
+	public static function delete_event_content($condition, array $parameters)
+	{
+		self::$db_querier->delete(CalendarSetup::$calendar_events_content_table, $condition, $parameters);
+	}
+	
+	 /**
+	 * @desc Delete a serie of events.
+	 * @param int $content_id id of the content of the event
+	 */
+	public static function delete_all_serie_events($content_id)
+	{
+		self::delete_event('WHERE content_id = :id', array(
+			'id' => $content_id
+		));
+		
+		self::delete_event_content('WHERE id = :id', array(
+			'id' => $content_id
+		));
 	}
 	
 	 /**
 	 * @desc Delete the participants of an event.
 	 * @param int $event_id id of the event
 	 */
-	public static function delete_participants($event_id)
+	public static function delete_all_participants($event_id)
 	{
-		self::$db_querier->delete(CalendarSetup::$calendar_users_relation_table, 'WHERE event_id=:id', array(
+		self::$db_querier->delete(CalendarSetup::$calendar_users_relation_table, 'WHERE event_id = :id', array(
 			'id' => $event_id
 		));
 	}
@@ -123,7 +152,7 @@ class CalendarService
 	 */
 	public static function delete_participant($event_id, $user_id)
 	{
-		self::$db_querier->delete(CalendarSetup::$calendar_users_relation_table, 'WHERE event_id=:event_id AND user_id=:user_id', array(
+		self::$db_querier->delete(CalendarSetup::$calendar_users_relation_table, 'WHERE event_id = :event_id AND user_id = :user_id', array(
 			'event_id' => $event_id,
 			'user_id' => $user_id
 		));
@@ -137,12 +166,15 @@ class CalendarService
 	public static function get_event($condition, array $parameters)
 	{
 		$row = self::$db_querier->select_single_row_query('SELECT *
-		FROM ' . CalendarSetup::$calendar_table . ' calendar
-		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = calendar.author_id
+		FROM ' . CalendarSetup::$calendar_events_table . ' event
+		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = event_content.author_id
 		' . $condition, $parameters);
 		
 		$event = new CalendarEvent();
 		$event->set_properties($row);
+		$event->set_participants(self::get_event_participants($event->get_id()));
+		
 		return $event;
 	}
 	
@@ -154,7 +186,7 @@ class CalendarService
 	{
 		$participants = array();
 		
-		$result = self::$db_querier->select('SELECT *
+		$result = self::$db_querier->select('SELECT event_id, member.user_id, login, level, user_groups
 		FROM ' . CalendarSetup::$calendar_users_relation_table . ' participants
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = participants.user_id
 		WHERE event_id = :id', array(
@@ -163,12 +195,38 @@ class CalendarService
 		
 		while($row = $result->fetch())
 		{
-			$user = new User();
-			$user->set_properties($row);
-			$participants[$user->get_id()] = $user;
+			$participant = new CalendarEventParticipant();
+			$participant->set_properties($row);
+			$participants[$participant->get_user_id()] = $participant;
 		}
 		
 		return $participants;
+	}
+	
+	 /**
+	 * @desc Return the events of a serie.
+	 * @param int $content_id id of the content of the event
+	 */
+	public static function get_serie_events($content_id)
+	{
+		$events = array();
+		
+		$result = self::$db_querier->select('SELECT *
+		FROM ' . CalendarSetup::$calendar_events_table . ' event
+		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = event_content.author_id
+		WHERE content_id = :id', array(
+			'id' => $content_id
+		));
+		
+		while($row = $result->fetch())
+		{
+			$event = new CalendarEvent();
+			$event->set_properties($row);
+			$events[$event->get_id()] = $event;
+		}
+		
+		return $events;
 	}
 	
 	 /**
@@ -180,13 +238,14 @@ class CalendarService
 	public static function get_all_current_month_events($month, $year, $month_days, $id_category = Category::ROOT_CATEGORY)
 	{
 		return self::$db_querier->select((CalendarConfig::load()->is_members_birthday_enabled() ? "
-		(SELECT user_born AS start_date, user_born AS end_date, login AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarEvent::YEARLY . "' AS repeat_type, 130 AS repeat_number
+		(SELECT user_born AS start_date, user_born AS end_date, login AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarEventContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
 		FROM " . DB_TABLE_MEMBER . " member
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " member_extended_fields ON member_extended_fields.user_id = member.user_id
 		WHERE MONTH(FROM_UNIXTIME(user_born)) = :month)
 		UNION
 		" : "") . "(SELECT start_date, end_date, title, 'EVENT' AS type, id_category, repeat_type, repeat_number
-		FROM " . CalendarSetup::$calendar_table. "
+		FROM " . CalendarSetup::$calendar_events_table . " event
+		LEFT JOIN " . CalendarSetup::$calendar_events_content_table . " event_content ON event_content.id = event.content_id
 		WHERE start_date BETWEEN :first_month_day AND :last_month_day)
 		ORDER BY start_date", array(
 			'month' => $month,
@@ -223,7 +282,7 @@ class CalendarService
 		if (self::$categories_manager === null)
 		{
 			$categories_items_parameters = new CategoriesItemsParameters();
-			$categories_items_parameters->set_table_name_contains_items(CalendarSetup::$calendar_table);
+			$categories_items_parameters->set_table_name_contains_items(CalendarSetup::$calendar_events_content_table);
 			self::$categories_manager = new CategoriesManager(CalendarCategoriesCache::load(), $categories_items_parameters);
 		}
 		return self::$categories_manager;

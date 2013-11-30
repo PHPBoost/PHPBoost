@@ -47,6 +47,7 @@
 							# START day #
 							<td class="{day.CLASS}"# IF day.C_COLOR # style="background-color:{day.COLOR}"# ENDIF #>
 								# IF day.C_MONTH_DAY #<a title="{day.TITLE}" href="{day.U_DAY_EVENTS}">{day.DAY}</a># ENDIF #
+								# IF day.C_WEEK_LABEL #{day.DAY}# ENDIF #
 							</td>
 							# IF day.CHANGE_LINE #
 						</tr>

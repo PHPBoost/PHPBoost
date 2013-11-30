@@ -66,11 +66,12 @@ class CalendarFeedProvider implements FeedProvider
 		}
 		
 		$result = $querier->select('SELECT *
-		FROM ' . CalendarSetup::$calendar_table . ' calendar
-		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id=calendar.author_id
-		LEFT JOIN '. CalendarSetup::$calendar_cats_table .' cat ON cat.id = calendar.id_category
-		WHERE approved = 1 AND calendar.id_category IN :cats_ids
-		ORDER BY calendar.start_date DESC', array(
+		FROM ' . CalendarSetup::$calendar_events_table . ' event
+		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = event_content.author_id
+		LEFT JOIN '. CalendarSetup::$calendar_cats_table .' cat ON cat.id = event_content.id_category
+		WHERE approved = 1 AND id_category IN :cats_ids
+		ORDER BY start_date DESC', array(
 			'cats_ids' => $ids_categories
 		));
 		
@@ -79,16 +80,16 @@ class CalendarFeedProvider implements FeedProvider
 			$event = new CalendarEvent();
 			$event->set_properties($row);
 			
-			$category = $categories[$event->get_id_cat()];
+			$category = $categories[$event->get_content()->get_category_id()];
 			
-			$link = CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name() ? $category->get_rewrited_name() : 'root', $event->get_id(), $event->get_title())->rel();
+			$link = CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name() ? $category->get_rewrited_name() : 'root', $event->get_id(), $event->get_content()->get_rewrited_title())->rel();
 			
 			$item = new FeedItem();
-			$item->set_title($event->get_title());
+			$item->set_title($event->get_content()->get_title());
 			$item->set_link($link);
 			$item->set_guid($link);
-			$item->set_desc(FormatingHelper::second_parse($event->get_contents()) . ($event->get_location() ? '<br />' . $lang['calendar.labels.location'] . ' : ' . $event->get_location() . '<br />' : '') . '<br />' . $lang['calendar.labels.start_date'] . ' : ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />' . $lang['calendar.labels.end_date'] . ' : ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE));
-			$item->set_date($event->get_creation_date());
+			$item->set_desc(FormatingHelper::second_parse($event->get_content()->get_contents()) . ($event->get_content()->get_location() ? '<br />' . $lang['calendar.labels.location'] . ' : ' . $event->get_content()->get_location() . '<br />' : '') . '<br />' . $lang['calendar.labels.start_date'] . ' : ' . $event->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />' . $lang['calendar.labels.end_date'] . ' : ' . $event->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE));
+			$item->set_date($event->get_content()->get_creation_date());
 			$item->set_image_url($category->get_image());
 			$item->set_auth(CalendarService::get_categories_manager()->get_heritated_authorizations($category->get_id(), Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 			$data->add_item($item);
