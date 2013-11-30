@@ -76,27 +76,12 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 
 		return $forum_config . "\n" . $forum_cats;
 	}
-
-	public function scheduled_jobs()
-	{
-		return new ForumScheduledJobs();
-	}
-
-	public function user()
-	{
-		return new ForumUserExtensionPoint();
-	}
 	
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_running_module_displayed_file('forum.css');
 		return $module_css_files;
-	}
-
-	public function search()
-	{
-		return new ForumSearchable();
 	}
 
 	public function feeds()
@@ -107,6 +92,26 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	public function home_page()
 	{
 		return new ForumHomePageExtensionPoint();
+	}
+
+	public function scheduled_jobs()
+	{
+		return new ForumScheduledJobs();
+	}
+
+	public function search()
+	{
+		return new ForumSearchable();
+	}
+	
+	public function tree_links()
+	{
+		return new ForumTreeLinks();
+	}
+
+	public function user()
+	{
+		return new ForumUserExtensionPoint();
 	}
 }
 ?>
