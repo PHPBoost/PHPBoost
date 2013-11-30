@@ -80,24 +80,6 @@
 		-->
 		</script>
 		
-		# IF C_MODERATION_PANEL #
-			<menu class="dynamic_menu right">
-				<ul>
-					<li><a><i class="icon-cog"></i></a>
-						<ul>
-							<li>
-								<a href="{PATH_TO_ROOT}/forum/moderation_forum.php" title="{L_MODERATION_PANEL}">{L_MODERATION_PANEL}</a> 
-							</li>
-							# IF IS_ADMIN #
-							<li>
-								<a href="{PATH_TO_ROOT}/forum/admin_forum_config.php" title="{L_CONFIG}">{L_CONFIG}</a>
-							</li>
-							# ENDIF #
-						</ul>
-					</li>
-				</ul>
-			</menu>
-		# ENDIF #
 		<div class="module_position" style="margin-bottom:15px;background:none;border:none">
 			<div class="forum_title_l"></div>
 			<div class="forum_title_r"></div>

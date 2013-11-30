@@ -32,6 +32,7 @@
  ####################################################
 
 //Admin
+$LANG['admin.categories.manage'] = 'Manage categories';
 $LANG['parent_category'] = 'Parent category';
 $LANG['subcat'] = 'Subcategory';
 $LANG['url_explain'] = 'Transform the forum into weblink (http://...)';
@@ -275,6 +276,7 @@ $LANG['action'] = 'Action';
 
 //Ranks
 $LANG['rank_management'] = 'Ranks management';
+$LANG['ranks_manage'] = 'Manage ranks';
 $LANG['rank_add'] = 'Add a rank';
 $LANG['upload_rank'] = 'Upload icon rank';
 $LANG['upload_rank_format'] = 'JPG, GIF, PNG, BMP authorized';

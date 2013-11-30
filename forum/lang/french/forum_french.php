@@ -31,6 +31,7 @@
  ####################################################
 
 //Admin
+$LANG['admin.categories.manage'] = 'Gérer les catégories';
 $LANG['parent_category'] = 'Catégorie parente';
 $LANG['subcat'] = 'Sous-catégorie';
 $LANG['url_explain'] = 'Transforme le forum en lien internet (http://...)';
@@ -274,6 +275,7 @@ $LANG['action'] = 'Action';
 
 //Ranks
 $LANG['rank_management'] = 'Gestion des rangs';
+$LANG['ranks_manage'] = 'Gérer les rangs';
 $LANG['upload_rank'] = 'Uploader une image de rang';
 $LANG['upload_rank_format'] = 'JPG, GIF, PNG, BMP autorisés';
 $LANG['rank_add'] = 'Ajouter un rang';
