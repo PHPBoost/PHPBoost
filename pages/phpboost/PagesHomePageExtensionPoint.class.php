@@ -68,23 +68,8 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			'NUM_PAGES' => sprintf($LANG['pages_num_pages'], $num_pages),
 			'NUM_COMS' => sprintf($LANG['pages_num_coms'], $num_coms, ($num_pages > 0 ? $num_coms / $num_pages : 0)),
 			'L_EXPLAIN_PAGES' => $LANG['pages_explain'],
-			'L_TOOLS' => $LANG['pages_tools'],
 			'L_STATS' => $LANG['pages_stats']
 		));
-		
-		$tools = array(
-			$LANG['pages_create'] => PATH_TO_ROOT . url('/pages/post.php'),
-			$LANG['pages_redirections'] => PATH_TO_ROOT . url('/pages/action.php'),
-			$LANG['pages_explorer'] => PATH_TO_ROOT . url('/pages/explorer.php'),
-		);
-		if ($User->check_level(User::ADMIN_LEVEL))
-			$tools[$LANG['pages_config']] = PATH_TO_ROOT . url('/pages/admin_pages.php');
-		
-		foreach ($tools as $tool => $url)
-			$tpl->assign_block_vars('tools', array(
-				'L_TOOL' => $tool,
-				'U_TOOL' => $url
-			));
 		
 		//Liste des dossiers de la racine
 		$root = '';

@@ -29,11 +29,11 @@ define('PAGES_MAX_SEARCH_RESULTS', 100);
 
 class PagesExtensionPointProvider extends ExtensionPointProvider
 {
-    public function __construct() //Constructeur de la classe
-    {
+	public function __construct() //Constructeur de la classe
+	{
 		$this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('pages');
-    }
+		parent::__construct('pages');
+	}
 	
 	//Récupération du cache.
 	public function get_cache()
@@ -62,20 +62,10 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 		
 		return $code;
 	}
-    
-	public function home_page()
-	{
-		return new PagesHomePageExtensionPoint();
-	}
 	
-	public function sitemap()
+	public function comments()
 	{
-		return new PagesSitemapExtensionPoint();
-	}
-	
-	public function feeds()
-	{
-		return new PagesFeedProvider();
+		return new CommentsTopics(array(new PagesCommentsTopic()));
 	}
 	
 	public function css_files()
@@ -85,16 +75,29 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 		return $module_css_files;
 	}
 	
+	public function feeds()
+	{
+		return new PagesFeedProvider();
+	}
+    
+	public function home_page()
+	{
+		return new PagesHomePageExtensionPoint();
+	}
+	
 	public function search()
 	{
 		return new PagesSearchable();
 	}
 	
-	public function comments()
+	public function sitemap()
 	{
-		return new CommentsTopics(array(
-			new PagesCommentsTopic()
-		));
+		return new PagesSitemapExtensionPoint();
+	}
+	
+	public function tree_links()
+	{
+		return new PagesTreeLinks();
 	}
 }
 ?>

@@ -34,12 +34,12 @@
 		-->
 		</script>
 
-		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/pages.js"></script>
+		<script type="text/javascript" src="{PICTURES_DATA_PATH}/js/pages.js"></script>
 	
 		# INCLUDE message_helper #
 		
 		# START previewing #
-		<article>					
+		<article>
 			<header>
 				<h1>{L_PREVIEWING} {previewing.TITLE}</h1>
 			</header>
@@ -48,7 +48,7 @@
 		</article>
 		# END previewing #
 			
-		<form action="{TARGET}" method="post"  onsubmit="return check_form_post();" class="fieldset_content">					
+		<form action="{TARGET}" method="post"  onsubmit="return check_form_post();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_TITLE_POST}</legend>
 				# START create #

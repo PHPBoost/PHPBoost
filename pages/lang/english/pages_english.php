@@ -47,6 +47,9 @@ $LANG['select_all'] = 'Select all';
 $LANG['select_none'] = 'Unselect all';
 $LANG['ranks'] = 'Ranks';
 $LANG['groups'] = 'Groups';
+$LANG['pages_config'] = 'Configuration';
+$LANG['pages_management'] = 'Pages management';
+$LANG['pages_manage'] = 'Manage pages';
 
 //Création / édition d'une page
 $LANG['pages_edition'] = 'Editing a page';
@@ -96,6 +99,7 @@ $LANG['pages_tools'] = 'Tools';
 //Redirections et renommer
 $LANG['pages_rename'] = 'Rename';
 $LANG['pages_redirection_management'] = 'Redirection management';
+$LANG['pages_redirection_manage'] = 'Manage redirection';
 $LANG['pages_rename_page'] = 'Rename the page <em>%s</em>';
 $LANG['pages_new_title'] = 'New title of this page';
 $LANG['pages_create_redirection'] = 'Create a redirection from the previous title to the current title?';
@@ -130,10 +134,6 @@ $LANG['page_alert_contents'] = 'You have to enter a contents for your page';
 $LANG['pages_already_exists'] = 'The title you have chosen already exists. You must choose another one, because titles must be uniques.';
 $LANG['pages_cat_contains_cat'] = 'The category you have selected to put this category is contained by herself or one of its own, which is not possible. Please select another category.';
 $LANG['pages_notice_previewing'] = 'You are previewing the contents you have entered. No edition has been done into the database. You must submit your page if you want it to take effect.';
-
-//Admin
-$LANG['pages_config'] = 'Configuration';
-$LANG['pages_management'] = 'Pages management';
 
 $LANG['pages_rss_desc'] = 'News pages';
 

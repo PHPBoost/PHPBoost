@@ -4,19 +4,7 @@
 	var selected_cat = {SELECTED_CAT};
 -->
 </script>
-<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/pages.js"></script>
-
-<menu class="dynamic_menu right">
-	<ul>
-		<li><a><i class="icon-cog"></i></a>
-			<ul>
-				# START tools #
-					<li><a href="{tools.U_TOOL}">{tools.L_TOOL}</a></li>
-				# END tools #
-			</ul>
-		</li>
-	</ul>
-</menu>
+<script type="text/javascript" src="{PICTURES_DATA_PATH}/js/pages.js"></script>
 
 <section>
 	<header>
