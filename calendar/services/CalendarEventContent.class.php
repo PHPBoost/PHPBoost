@@ -86,9 +86,9 @@ class CalendarEventContent
 		return $this->title;
 	}
 	
-	public function set_rewrited_title($title)
+	public function set_rewrited_title($rewrited_title)
 	{
-		$this->rewrited_title = Url::encode_rewrite($title);
+		$this->rewrited_title = $rewrited_title;
 	}
 	
 	public function get_rewrited_title()
