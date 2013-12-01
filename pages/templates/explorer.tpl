@@ -4,7 +4,7 @@
 	var selected_cat = {SELECTED_CAT};
 -->
 </script>
-<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/pages.js"></script>
+<script type="text/javascript" src="{PICTURES_DATA_PATH}/jspages.js"></script>
 
 <section>
 	<header>

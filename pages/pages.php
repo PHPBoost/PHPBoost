@@ -131,17 +131,11 @@ if (!empty($encoded_title) && $num_rows == 1)
 		'L_EDIT' => $LANG['pages_edit'],
 		'L_RENAME' => $LANG['pages_rename'],
 		'L_DELETE' => $LANG['pages_delete'],
-		'L_REDIRECTIONS' => $LANG['pages_redirections'],
-		'L_CREATE' => $LANG['pages_create'],
-		'L_EXPLORER' => $LANG['pages_explorer'],
 		'L_PRINT' => $LANG['printable_version'],
 	
 		'U_EDIT' => url('post.php?id=' . $page_infos['id']),
 		'U_RENAME' => url('action.php?rename=' . $page_infos['id']),
 		'U_DELETE' => $page_infos['is_cat'] == 1 ? url('action.php?del_cat=' . $page_infos['id']) : url('post.php?del=' . $page_infos['id'] . '&amp;token=' . $Session->get_token()),
-		'U_REDIRECTIONS' => url('action.php?id=' . $page_infos['id']),
-		'U_CREATE' => url('post.php'),
-		'U_EXPLORER' => url('explorer.php'),
 		'U_PRINT' => url('print.php?title=' . $encoded_title)
 	));
 	
@@ -151,7 +145,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 		$Template->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
 			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) ||
-				(!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_pictures_data_path() . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>' : ''
+				(!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="icon-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>' : ''
 		));
 	}
 	

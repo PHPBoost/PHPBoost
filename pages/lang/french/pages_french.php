@@ -46,6 +46,9 @@ $LANG['select_all'] = 'Tout sélectionner';
 $LANG['select_none'] = 'Tout désélectionner';
 $LANG['ranks'] = 'Rangs';
 $LANG['groups'] = 'Groupes';
+$LANG['pages_config'] = 'Configuration des pages';
+$LANG['pages_management'] = 'Gestion des pages';
+$LANG['pages_manage'] = 'Gérer les pages';
 
 //Création / édition d'une page
 $LANG['pages_edition'] = 'Modification d\'une page';
@@ -95,6 +98,7 @@ $LANG['pages_tools'] = 'Outils';
 //Redirections et renommer
 $LANG['pages_rename'] = 'Renommer';
 $LANG['pages_redirection_management'] = 'Gestion des redirections';
+$LANG['pages_redirection_manage'] = 'Gérer les redirections';
 $LANG['pages_rename_page'] = 'Renommer la page <em>%s</em>';
 $LANG['pages_new_title'] = 'Nouveau titre de la page';
 $LANG['pages_create_redirection'] = 'Créer une redirection depuis l\'ancien titre vers le nouveau';
@@ -129,10 +133,6 @@ $LANG['page_alert_contents'] = 'Vous devez entrer le contenu de votre page';
 $LANG['pages_already_exists'] = 'Le titre que vous avez choisi pour la page existe déjà. Vous devez en choisir un autre, chaque page étant repérée uniquement par son titre, celui-ci doit être unique.';
 $LANG['pages_cat_contains_cat'] = 'La catégorie que vous avez sélectionnée pour placer cette catégorie est contenue par cette même catégorie, ce qui n\'est pas possible. Merci de choisir une autre catégorie';
 $LANG['pages_notice_previewing'] = 'Vous êtes en train de prévisualiser ce que vous avez entré. Aucune modification n\'a été apportée dans la base de données, vous devez valider votre page afin que les modifications soient prises en compte';
-
-//Admin
-$LANG['pages_config'] = 'Configuration des pages';
-$LANG['pages_management'] = 'Gestion des pages';
 
 $LANG['pages_rss_desc'] = 'Pages actualités';
 

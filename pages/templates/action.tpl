@@ -18,20 +18,20 @@
 		<tbody>
 			# START redirections.list #
 			<tr>
-				<td>	
+				<td>
 					{redirections.list.REDIRECTION_TITLE}
 				</td>
-				<td>		
+				<td>
 					{redirections.list.REDIRECTION_TARGET}
 				</td>
-				<td>		
+				<td>
 					{redirections.list.ACTIONS}
 				</td>
 			</tr>
 			# END redirections.list #
 			# START redirections.no_redirection #
 			<tr>
-				<td colspan="3">	
+				<td colspan="3">
 					{redirections.no_redirection.MESSAGE}
 				</td>
 			</tr>
@@ -65,17 +65,17 @@
 		<tbody>
 			# START redirection.list #
 			<tr>
-				<td>	
+				<td>
 					{redirection.list.REDIRECTION_TITLE}
 				</td>
-				<td>		
+				<td>
 					{redirection.list.ACTIONS}
 				</td>
 			</tr>
 			# END redirection.list #
 			# START redirection.no_redirection #
 			<tr>
-				<td colspan="2">	
+				<td colspan="2">
 					{redirection.no_redirection.MESSAGE}
 				</td>
 			</tr>
@@ -87,7 +87,7 @@
 
 # START rename #
 # INCLUDE message_helper #
-<form action="{TARGET}" method="post" class="fieldset_content">				
+<form action="{TARGET}" method="post" class="fieldset_content">
 	<fieldset>
 		<legend>{L_TITLE}</legend>
 		<p>{L_EXPLAIN_RENAME}</p>
@@ -95,11 +95,11 @@
 			<label for="new_title">{L_NEW_TITLE}</label>
 			<div class="form-field">
 				<input type="text" id="new_title" name="new_title" value="{FORMER_TITLE}" size="60" maxlength="250">
-			</div>					
+			</div>
 		</div>
 		<div class="form-element">
 			<label for="create_redirection">{L_CREATE_REDIRECTION}</label>
-			<div class="form-field"><label><input type="checkbox" name="create_redirection" id="create_redirection"></label></div>					
+			<div class="form-field"><label><input type="checkbox" name="create_redirection" id="create_redirection"></label></div>
 		</div>
 		<input type="hidden" name="id_rename" value="{ID_RENAME}">
 	</fieldset>
@@ -113,17 +113,17 @@
 
 # START new #
 # INCLUDE message_helper #
-<form action="{TARGET}" method="post" class="fieldset_content">					
+<form action="{TARGET}" method="post" class="fieldset_content">
 	<fieldset>
 		<legend>{L_TITLE}</legend>
 		<div class="form-element">
 			<label for="redirection_name">{L_REDIRECTION_NAME}</label>
 			<div class="form-field">
 				<input type="text" name="redirection_name" id="redirection_name" size="60" maxlength="250">
-			</div>					
+			</div>
 		</div>
 		<input type="hidden" name="id_new" value="{ID_NEW}">
-	</fieldset>	
+	</fieldset>
 	
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
@@ -140,10 +140,10 @@
 	var selected_cat = {remove.SELECTED_CAT};
 -->
 </script>
-<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/pages.js"></script>
+<script type="text/javascript" src="{PICTURES_DATA_PATH}/js/pages.js"></script>
 
 # INCLUDE message_helper #
-<form action="action.php?token={TOKEN}" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset_content">					
+<form action="action.php?token={TOKEN}" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset_content">
 	<fieldset>
 		<legend>{L_TITLE}</legend>
 		<div class="form-element">
@@ -151,7 +151,7 @@
 			<div class="form-field">
 				<label><input id="action" name="action" value="remove_all" type="radio"> {L_REMOVE_ALL_CONTENTS}</label>
 				<label><input name="action" value="move_all" type="radio" checked="checked"> {L_MOVE_ALL_CONTENTS}</label>
-			</div>					
+			</div>
 		</div>
 		<div class="form-element">
 			<label>{L_FUTURE_CAT}</label>
@@ -160,9 +160,9 @@
 				<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{remove.CAT_0}">{L_ROOT}</span></a></span>
 				<br />
 				{remove.CATS}
-			</div>					
+			</div>
 		</div>
-	</fieldset>	
+	</fieldset>
 	
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
