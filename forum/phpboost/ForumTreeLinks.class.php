@@ -49,11 +49,7 @@ class ForumTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/forum/admin_forum_config.php')));
 		$tree->add_link(new AdminModuleLink($LANG['groups'], new Url('/forum/admin_forum_groups.php')));
-		
-		if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
-		{
-			$tree->add_link(new ModuleLink($LANG['moderation_panel'], new Url('/forum/moderation_forum.php')));
-		}
+		$tree->add_link(new AdminModuleLink($LANG['moderation_panel'], new Url('/forum/moderation_forum.php')));
 		
 		return $tree;
 	}
