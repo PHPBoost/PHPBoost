@@ -236,6 +236,7 @@ class CalendarFormController extends ModuleController
 		$event_content = $event->get_content();
 		
 		$event_content->set_title($this->form->get_value('title'));
+		$event_content->set_rewrited_title(Url::encode_rewrite($event_content->get_title()));
 		$event_content->set_category_id($this->form->get_value('category_id')->get_raw_value());
 		$event_content->set_contents($this->form->get_value('contents'));
 		$event_content->set_location($this->form->get_value('location'));

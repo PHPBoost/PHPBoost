@@ -45,19 +45,19 @@ class CalendarSearchable extends AbstractSearchableExtensionPoint
 
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 
-		echo "SELECT " . $args['id_search'] . " AS id_search,
+		return "SELECT " . $args['id_search'] . " AS id_search,
 		id_event AS id_content,
 		title,
 		cat.rewrited_name,
 		( 2 * FT_SEARCH_RELEVANCE(title, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(event.contents, '" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
-		. $this->sql_querier->concat("'" . PATH_TO_ROOT . "/calendar/index.php?url=/event/'", "id_event") . " AS link
+		. $this->sql_querier->concat("'" . PATH_TO_ROOT . "/calendar/index.php?url=/'", "id_category", "-", "cat.rewrited_name", "/", "id_event", "-", "event_content.rewrited_title") . " AS link
 		FROM " . CalendarSetup::$calendar_events_table . " event
 		LEFT JOIN " . CalendarSetup::$calendar_events_content_table . " event_content ON event_content.id = event.content_id
 		LEFT JOIN ". CalendarSetup::$calendar_cats_table ." cat ON id_category = cat.id
 		WHERE ( FT_SEARCH(title, '" . $args['search'] . "') OR FT_SEARCH(event.contents, '" . $args['search'] . "') )
 		AND event_content.approved = 1
 		" . $where . "
-		ORDER BY relevance DESC " . $this->sql_querier->limit(0, 100);die();
+		ORDER BY relevance DESC " . $this->sql_querier->limit(0, 100);
 	}
 }
 ?>

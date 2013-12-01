@@ -91,6 +91,7 @@ class CalendarSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'title' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
+			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'location' => array('type' => 'string', 'length' => 255, 'notnull' => 0),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
