@@ -109,10 +109,10 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				break;
 		}
 		
-		$current_page = ($request->get_getint('page', 1) > 0) ? $request->get_getint('page', 1) : 1;
+		$current_page = $request->get_getint('page', 1) > 0 ? $request->get_getint('page', 1) : 1;
 		$nbr_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
 
-		$limit_page = (($current_page - 1) * $nbr_articles_per_page);
+		$limit_page = ($current_page - 1) * $nbr_articles_per_page;
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, notes.number_notes, notes.average_notes, note.note 
 		FROM '. ArticlesSetup::$articles_table .' articles
@@ -192,6 +192,11 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		foreach ($keywords as $keyword)
 		{	
+			/* TODO
+			 * 
+			 * Supprimer le code HTML
+			 * 
+			 */
 			$keywords_list .= '<a class="small" href="' . ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel() . '">' . $keyword->get_name() . '</a>';
 			if ($nbr_keywords - 1 > 0)
 			{

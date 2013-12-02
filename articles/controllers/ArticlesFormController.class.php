@@ -453,17 +453,17 @@ class ArticlesFormController extends ModuleController
 		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
 
 		if ($this->is_contributor_member() && !$article->is_published())
-                {
-                        AppContext::get_response()->redirect(UserUrlBuilder::contribution_success());
-                }
-                elseif ($article->is_published())
-                {
-                        AppContext::get_response()->redirect(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
-                }
-                else
-                {
-                        AppContext::get_response()->redirect(ArticlesUrlBuilder::display_pending_articles());
-                }
+		{
+			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success());
+		}
+		elseif ($article->is_published())
+		{
+			AppContext::get_response()->redirect(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
+		}
+		else
+		{
+			AppContext::get_response()->redirect(ArticlesUrlBuilder::display_pending_articles());
+		}
 	}				
 
 	private function build_response(View $tpl)

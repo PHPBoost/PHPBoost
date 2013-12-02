@@ -203,6 +203,11 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		
 		foreach ($keywords as $keyword)
 		{	
+			/* TODO
+			 * 
+			 * Supprimer le code HTML
+			 * 
+			 */
 			$keywords_list .= '<a class="small" href="' . ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel() . '">' . $keyword->get_name() . '</a>';
 			if ($nbr_keywords - 1 > 0)
 			{
@@ -235,10 +240,10 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->keyword->get_rewrited_name(), $sort_field, $sort_mode, '%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
-	        {
+		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
-	        }
+		}
 	
 		return $pagination;
 	}

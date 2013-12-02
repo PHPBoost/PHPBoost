@@ -88,4 +88,3 @@ class ArticlesDisplayHomeCategoryController extends ModuleController
 	}
 }
 ?>
-

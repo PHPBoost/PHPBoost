@@ -3,14 +3,14 @@
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('articles'))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			${i18n('articles')}
+			<span class="actions">
+				# IF C_MODERATE #
+			    <a href="${relative_url(ArticlesUrlBuilder::manage_categories())}" title="${i18n('admin.categories.manage')}" class="icon-edit"></a>
+			    # ENDIF #
+			</span>
 		</h1>
 		# IF C_ARTICLES_CAT #
 		<div class="cat">
-		    <div class="cat_tool">
-			    # IF C_MODERATE # 
-			    <a href="${relative_url(ArticlesUrlBuilder::manage_categories())}" title="${i18n('admin.categories.manage')}" class="icon-edit"></a>
-			    # ENDIF #
-		    </div>
 		    <div style="margin-bottom:36px;">
 			${i18n('articles.sub_categories')} :
 			<br /><br />
