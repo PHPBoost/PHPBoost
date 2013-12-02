@@ -72,8 +72,8 @@
 		var already_post = this.already_post;
 		var auth_error = this.get_lang('auth_error');
 		var already_vote = this.get_lang('already_vote');
-		
-		$('noteloading' + id).update('<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/loading_mini.gif" alt="" class="valign_middle" />');
+
+		$$('#notation-' + id + ' .stars').invoke('insert', {after: '<i id="loading-'+ id +'" class="icon-spinner icon-spin"></i>'});
 
 		object = this;
 		
@@ -83,7 +83,7 @@
 			method: 'post',
 			parameters: {'note': note, 'id': id, 'token' : TOKEN},
 			onSuccess: function() {
-				$('noteloading' + id).update('');
+				$('loading-' + id).remove();
 				if (user_connected == 0) {
 					alert(auth_error);
 				}
@@ -116,7 +116,7 @@
 		var decimal;
 		for(var i = 1; i <= this.notation_scale; i++)
 		{
-			var id_star = 'star_' + this.id + '_' + i;
+			var id_star = 'star-' + this.id + '-' + i;
 			
 			decimal = i - note;
 			if(decimal >= 1)
@@ -134,10 +134,10 @@
 	change_nbr_note : function () {
 		var nbr_note = this.number_votes + 1;
 		if (nbr_note > 1) {
-			$('note_value' + this.id).innerHTML = nbr_note + ' ' + this.get_lang('notes');
+			$('number-notes-' + this.id).innerHTML = nbr_note + ' ' + this.get_lang('notes');
 		}
 		else {
-			$('note_value' + this.id).innerHTML = nbr_note + ' ' + this.get_lang('note');
+			$('number-notes-' + this.id).innerHTML = nbr_note + ' ' + this.get_lang('note');
 		}
 	}
 });

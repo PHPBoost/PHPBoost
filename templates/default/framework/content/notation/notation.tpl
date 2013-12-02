@@ -6,7 +6,7 @@
 
 # IF C_STATIC_DISPLAY #
 	# IF C_NOTES #
-	<div itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating" style="display:inline;" class="static-notation">
+	<div class="static-notation" itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
 		# START star #
 			<span class="star # IF star.STAR_EMPTY #icon-star-o# ENDIF ## IF star.STAR_HALF #icon-star-half-o# ENDIF ## IF star.STAR_FULL #icon-star# ENDIF #"></span>
 		# END star #
@@ -32,52 +32,48 @@
 	Note{ID_IN_MODULE}.add_lang('notes', ${escapejs(L_NOTES)});
 	
 	Event.observe(window, 'load', function() {
-		Event.observe($('note_pictures{ID_IN_MODULE}'), 'mouseover', function() {  
+		$$('#notation-{ID_IN_MODULE} .stars').invoke('observe', 'mouseover', function(event) {
 			Note{ID_IN_MODULE}.over_event();
 		});
-		
-		Event.observe($('note_pictures{ID_IN_MODULE}'), 'mouseout', function() {  
+
+		$$('#notation-{ID_IN_MODULE} .stars').invoke('observe', 'mouseout', function(event) {
 			Note{ID_IN_MODULE}.out_event();
 		});
 		
-		$('note_select{ID_IN_MODULE}').hide();
-		$('valid_note{ID_IN_MODULE}').hide();
-		$('note_pictures{ID_IN_MODULE}').style.display = 'inline';
+		$$('.notation .star').invoke('observe', 'click', function(event) {
+			var id_element = event.element().id;
+			var star_nbr = id_element.replace(/star-([0-9]+)-([0-9]+)/g, "$2");
+			Note{ID_IN_MODULE}.send_request(star_nbr);
+		});
+
+		$$('.notation .star').invoke('observe', 'mouseover', function(event) {
+			var id_element = event.element().id;
+			var star_nbr = id_element.replace(/star-([0-9]+)-([0-9]+)/g, "$2");
+			Note{ID_IN_MODULE}.change_picture_status(star_nbr);
+		});
 	});
 -->
 </script>
 	
-<div itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
-	<span style="display:none" class="notation" id="note_pictures{ID_IN_MODULE}">
-	# START star #
-		<a class="star # IF star.STAR_EMPTY #icon-star-o# ENDIF ## IF star.STAR_HALF #icon-star-half-o# ENDIF ## IF star.STAR_FULL #icon-star# ENDIF #" id="star_{ID_IN_MODULE}_{star.I}" href="javascript:Note{ID_IN_MODULE}.send_request({star.I})" onmouseover="javascript:Note{ID_IN_MODULE}.change_picture_status({star.I});"></a>
-	# END star #
-		<span id="noteloading{ID_IN_MODULE}"></span>
+<div class="notation" id="notation-{ID_IN_MODULE}" itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
+	<span class="stars">
+		# START star #
+			<span class="star # IF star.STAR_EMPTY #icon-star-o# ENDIF ## IF star.STAR_HALF #icon-star-half-o# ENDIF ## IF star.STAR_FULL #icon-star# ENDIF #" id="star-{ID_IN_MODULE}-{star.I}"></span>
+		# END star #
 	</span>
-		
-	<form action="" method="post" class="smaller">
-		<span id="note_value{ID_IN_MODULE}">
-			# IF C_NOTES #
-				<span itemprop="reviewCount">{NUMBER_NOTES}</span>
-				# IF C_MORE_1_NOTES #
-					{L_NOTES}
-				# ELSE #
-					{L_NOTE}
-				# ENDIF #
+	<span id="number-notes-{ID_IN_MODULE}">
+		# IF C_NOTES #
+			<span itemprop="reviewCount">{NUMBER_NOTES}</span>
+			# IF C_MORE_1_NOTES #
+				{L_NOTES}
 			# ELSE #
-				{L_NO_NOTE}
+				{L_NOTE}
 			# ENDIF #
-		</span>
-		<select id="note_select{ID_IN_MODULE}" name="note">
-			<option value="-1">{L_NOTE}</option>
-			# START star #
-			<option value="{star.I}">{star.I}</option>
-			# END star #
-		</select>
-		<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
-		<meta itemprop="bestRating" content="{NOTATION_SCALE}">
-		<input type="hidden" name="token" value="{TOKEN}">
-		<button type="submit" name="valid" id="valid_note{ID_IN_MODULE}" value="true" style="padding:1px 2px;">{L_VALID_NOTE}</button>
-	</form>
+		# ELSE #
+			{L_NO_NOTE}
+		# ENDIF #
+	</span>
+	<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
+	<meta itemprop="bestRating" content="{NOTATION_SCALE}">
 </div>
 # ENDIF #
