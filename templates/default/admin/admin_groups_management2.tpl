@@ -33,7 +33,7 @@
 			if( login != "" )
 			{
 				if( document.getElementById('loading_groups') )
-					document.getElementById('loading_groups').innerHTML = '<img src="{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif" alt="" class="valign_middle" />';
+					document.getElementById('loading_groups').innerHTML = '<i class="icon-spinner icon-spin"></i>';
 				
 				data = 'login=' + login;
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&insert_member=1');
