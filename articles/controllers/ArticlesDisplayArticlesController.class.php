@@ -284,10 +284,10 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title(), '%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
-	        {
+		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
-	        }
+		}
 	
 		return $pagination;
 	}

@@ -51,12 +51,12 @@ class ArticlesCommentsTopic extends CommentsTopic
 	}
 	
 	private function get_article()
-        {
-                if ($this->article === null)
-                {
-                        $this->article = ArticlesService::get_article('WHERE articles.id=:id', array('id' => $this->get_id_in_module()));
-                }
-                return $this->article;
-        }
+	{
+		if ($this->article === null)
+		{
+			$this->article = ArticlesService::get_article('WHERE articles.id=:id', array('id' => $this->get_id_in_module()));
+		}
+		return $this->article;
+	}
 }
 ?>

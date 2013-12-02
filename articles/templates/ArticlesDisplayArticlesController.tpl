@@ -1,11 +1,20 @@
 # INCLUDE MSG #
-<article class="module_position" itemscope="itemscope" itemtype="http://schema.org/Article">					
-	<header class="article_top">
-		<h1 class="article_top_title">
+<article itemscope="itemscope" itemtype="http://schema.org/Article">					
+	<header>
+		<h1>
 			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="icon-syndication"></a>
 			<span id="name" itemprop="name">{TITLE}</span>
+			<span class="actions">
+				# IF C_EDIT #
+					<a href="{U_EDIT_ARTICLE_PAGE}" title="${i18n('articles.edit')}" class="icon-pencil"></a>
+				# ENDIF #
+				# IF C_DELETE #
+					<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="icon-delete" data-confirmation="delete-element"></a>
+				# ENDIF #
+				    <a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}" target="blank" class="icon-print"></a>
+			</span>
 		</h1>
-		<div class="article_info">
+		<div class="more">
 			# IF C_AUTHOR_DISPLAYED #
 			<i class="icon-user" title="${i18n('articles.sort_field.author')}"></i><a itemprop="author" href="{U_AUTHOR}" class="small {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a>|
 			# ENDIF #
@@ -30,8 +39,7 @@
 		# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{PICTURE}"># ENDIF #
 		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 	</header>
-	<div class="spacer"></div>
-	<div class="module_contents">
+	<div class="contents">
 			# IF C_PAGINATION #
 			<div style="float:right;margin-right:35px;width:250px;">
 				<b>${i18n('articles.summary')} :</b> # INCLUDE FORM #	
@@ -50,7 +58,7 @@
 			# ENDIF #		
 		<div class="spacer">&nbsp;</div>
 	</div>
-	<aside class="module_bottom">
+	<aside>
 		# IF C_SOURCES #
 		<div><b> ${i18n('articles.sources')} : </b># START sources #{sources.COMMA}<a itemprop="isBasedOnUrl" href="{sources.URL}" target="blank" class="small">{sources.NAME}</a># END sources #</div>
 		# ENDIF #
@@ -64,10 +72,9 @@
 		</div>
 		# ENDIF #
 		<div class="spacer"></div>
+		# IF C_COMMENTS_ENABLED #
+			# INCLUDE COMMENTS #
+		# ENDIF #
 	</aside>
 	<footer></footer>
 </article>
-<br /><br />
-# IF C_COMMENTS_ENABLED #
-    # INCLUDE COMMENTS #
-# ENDIF #
