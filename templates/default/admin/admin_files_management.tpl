@@ -48,7 +48,7 @@
 			var name = document.getElementById("finput" + id_folder).value;
 			var regex = /\/|\.|\\|\||\?|<|>|\"/;
 
-			document.getElementById('img' + id_folder).innerHTML = '<img src="{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif" alt="" class="valign_middle" />';
+			document.getElementById('img' + id_folder).innerHTML = '<i class="icon-spinner icon-spin"></i>';
 			if( name != '' && regex.test(name) ) //interdiction des caract�res sp�ciaux dans le nom.
 			{
 				alert("{L_FOLDER_FORBIDDEN_CHARS}");
@@ -145,7 +145,7 @@
 			var name = document.getElementById("fiinput" + id_file).value;
 			var regex = /\/|\\|\||\?|<|>|\"/;
 			
-			document.getElementById('imgf' + id_file).innerHTML = '<img src="{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif" alt="" class="valign_middle" />';
+			document.getElementById('imgf' + id_file).innerHTML = '<i class="icon-spinner icon-spin"></i>';
 			if( name != '' && regex.test(name) ) //interdiction des caract�res sp�ciaux dans la nom.
 			{
 				alert("{L_FOLDER_FORBIDDEN_CHARS}");	

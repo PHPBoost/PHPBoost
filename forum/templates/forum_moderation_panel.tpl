@@ -1,12 +1,12 @@
 		# INCLUDE forum_top #
 		
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
+		<div class="module_position">
+			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}</div>
 			<div class="module_contents">
 				<table class="module_table">
-					<tr>							
+					<tr>
 						<td style="text-align:center;width:34%" class="row2">
 							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><i class="icon-warning icon-2x"></i></a>
 							<br />
@@ -23,7 +23,7 @@
 							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}">{L_ALERT_MANAGEMENT}</a>
 						</td>
 					</tr>
-				</table>				
+				</table>
 				<br /><br />
 				
 				
@@ -37,8 +37,8 @@
 				}
 				-->
 				</script>
-				<form action="moderation_forum{U_ACTION_HISTORY}" method="post" onsubmit="javascript:return Confirm_history();">					
-					<table class="module_table">	
+				<form action="moderation_forum{U_ACTION_HISTORY}" method="post" onsubmit="javascript:return Confirm_history();">
+					<table class="module_table">
 						<tr>
 							<th colspan="4">
 								{L_HISTORY}
@@ -149,13 +149,13 @@
 						</tr>
 						# END alert_list #
 						
-						# IF C_FORUM_NO_ALERT #		
+						# IF C_FORUM_NO_ALERT #
 						<tr>
 							<td class="row2" colspan="6" style="text-align:center;">
 								{L_NO_ALERT}
 							</td>
-						</tr>		
-						# ENDIF #				
+						</tr>
+						# ENDIF #
 						<tr>
 							<td class="row2" colspan="6">
 								&nbsp;<button type="submit" name="" value="true">{L_DELETE}</button>
@@ -235,7 +235,7 @@
 					<fieldset class="fieldset_submit" style="padding-top:25px;">
 						<legend></legend>
 						<button type="submit" name="valid" value="true">{L_CHANGE_STATUS}</button>
-					</fieldset>		
+					</fieldset>
 				</form>
 				# ENDIF #
 
@@ -245,7 +245,7 @@
 						<th colspan="2">
 							{L_MODERATION_FORUM} :: {L_ALERT_MANAGEMENT} 
 						</th>
-					</tr>				
+					</tr>
 					<tr>
 						<td style="text-align:center;" colspan="2">
 							<br /><br />
@@ -267,7 +267,7 @@
 						if( login != '' )
 						{
 							if( document.getElementById('search_img') )
-								document.getElementById('search_img').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+								document.getElementById('search_img').innerHTML = '<i class="icon-spinner icon-spin"></i>';
 							data = 'login=' + login;
 							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
 							xhr_object.onreadystatechange = function() 
@@ -310,25 +310,25 @@
 							<span style="float:left;margin-left:5px;">
 								<button type="submit" id="search_member" name="search_member">{L_SEARCH}</button>
 								<script type="text/javascript">
-								<!--								
+								<!--
 									document.getElementById('search_member').style.display = 'none';
 									document.write('<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>');
 								-->
-								</script>									
+								</script>
 								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
 							</span>
 						</td>
 					</tr>
 				</table>
 				<table class="module_table">
-					<tr>			
+					<tr>
 						<th style="width:25%;">{L_LOGIN}</th>
 						<th style="width:25%;">{L_INFO}</th>
 						<th style="width:25%;">{L_ACTION_USER}</th>
 						<th style="width:25%;">{L_PM}</th>
 					</tr>
 				</table>
-				<table class="module_table">	
+				<table class="module_table">
 					# START user_list #
 					<tr>
 						<td class="row1" style="text-align:center;width:25%;">
@@ -351,7 +351,7 @@
 						<td class="row1" style="text-align:center;">
 							{L_NO_USER}
 						</td>
-					</tr>		
+					</tr>
 					# ENDIF #
 				</table>
 				</form>
@@ -373,7 +373,7 @@
 				}
 				-->
 				</script>
-				<form action="moderation_forum{U_ACTION_INFO}" method="post">		
+				<form action="moderation_forum{U_ACTION_INFO}" method="post">
 					<table class="module_table">
 						<tr>
 							<td class="row1" style="width:30%;">
@@ -407,22 +407,22 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 									{SELECT}
-								</select></label>	
-								<button type="submit" name="valid_user" value="true">{L_CHANGE_INFO}</button>				
+								</select></label>
+								<button type="submit" name="valid_user" value="true">{L_CHANGE_INFO}</button>
 							</td>
 						</tr>
 					</table>
-				</form>				
+				</form>
 				# ENDIF #
 
 
 				<br /><br />
-			</div>	
+			</div>
 			<div class="module_bottom_r"></div>	
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom text_strong">
 				&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
-			</div>	
+			</div>
 		</div>
 		
 		# INCLUDE forum_bottom #

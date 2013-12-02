@@ -4,10 +4,10 @@
 		var previous_path_pics = '';
 		function display_pics(id, path, type)
 		{
-			document.getElementById('pics_max').innerHTML = '';					
+			document.getElementById('pics_max').innerHTML = '';
 			if( previous_path_pics != path )
-			{	
-				document.getElementById('pics_max').innerHTML = '<img src="' + path + '" alt="" /></a>';	
+			{
+				document.getElementById('pics_max').innerHTML = '<img src="' + path + '" alt="" /></a>';
 				previous_path_pics = path;
 			}
 		}
@@ -44,7 +44,7 @@
 			}
 			else
 			{
-				document.getElementById('img' + id_file).innerHTML = '<img src="{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif" alt="" class="valign_middle" />';
+				document.getElementById('img' + id_file).innerHTML = '<i class="icon-spinner icon-spin"></i>';
 				data = "id_file=" + id_file + "&name=" + name.replace(/&/g, "%26") + "&previous_name=" + previous_cut_name.replace(/&/g, "%26");
 				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?rename_pics=1&token={TOKEN}');
 				xhr_object.onreadystatechange = function() 
@@ -71,7 +71,7 @@
 		{
 			var regex = /\/|\\|\||\?|<|>|\"/;
 			
-			document.getElementById('img' + id_file).innerHTML = '<img src="{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif" alt="" class="valign_middle" />';
+			document.getElementById('img' + id_file).innerHTML = '<i class="icon-spinner icon-spin"></i>';
 
 			data = "id_file=" + id_file;
 			var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&aprob_pics=1&token={TOKEN}');

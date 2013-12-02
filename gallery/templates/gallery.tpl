@@ -1,11 +1,11 @@
 		<script type="text/javascript">
-		<!--		
+		<!--
 		var pics_displayed = 0;
 		function display_pics(id, path)
 		{
 			if( pics_displayed != id )
-			{	
-				document.getElementById('pics_max').innerHTML = '<img src="' + path + '" alt="" />';	
+			{
+				document.getElementById('pics_max').innerHTML = '<img src="' + path + '" alt="" />';
 				pics_displayed = id;
 			}
 			else
@@ -27,13 +27,13 @@
 		function display_rename_file(id, previous_name, previous_cut_name)
 		{
 			if( document.getElementById('fi' + id) )
-			{	
+			{
 				document.getElementById('fi_' + id).style.display = 'none';
 				document.getElementById('fi' + id).style.display = 'inline';
 				document.getElementById('fi' + id).innerHTML = '<input size="27" type="text" name="fiinput' + id + '" id="fiinput' + id + '" value="' + previous_name.replace(/\"/g, "&quot;") + '" onblur="rename_file(\'' + id + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;") + '\');">';
 				document.getElementById('fiinput' + id).focus();
 			}
-		}	
+		}
 		function rename_file(id_file, previous_cut_name)
 		{
 			var name = document.getElementById("fiinput" + id_file).value;
@@ -41,13 +41,13 @@
 
 			if( regex.test(name) ) //interdiction des caractères spéciaux dans le nom.
 			{
-				alert("{L_FILE_FORBIDDEN_CHARS}");	
+				alert("{L_FILE_FORBIDDEN_CHARS}");
 				document.getElementById('fi_' + id_file).style.display = 'inline';
 				document.getElementById('fi' + id_file).style.display = 'none';
 			}
 			else
 			{
-				document.getElementById('img' + id_file).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+				document.getElementById('img' + id_file).innerHTML = '<i class="icon-spinner icon-spin"></i>';
 
 				data = "id_file=" + id_file + "&name=" + name.replace(/&/g, "%26") + "&previous_name=" + previous_cut_name.replace(/&/g, "%26");
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&rename_pics=1&token={TOKEN}');
@@ -73,7 +73,7 @@
 		}
 		function pics_aprob(id_file, aprob)
 		{
-			document.getElementById('img' + id_file).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+			document.getElementById('img' + id_file).innerHTML = '<i class="icon-spinner icon-spin"></i>';
 
 			data = 'id_file=' + id_file;
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&aprob_pics=1&token={TOKEN}');

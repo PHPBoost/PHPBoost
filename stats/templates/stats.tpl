@@ -471,7 +471,7 @@
 				else // XMLHttpRequest non support? par le navigateur
 					return;
 				
-				document.getElementById('load' + divid).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+				document.getElementById('load' + divid).innerHTML = '<i class="icon-spinner icon-spin"></i>';
 				
 				xhr_object.open("POST", filename, true);
 				xhr_object.onreadystatechange = function() 
@@ -557,7 +557,7 @@
 			}
 			else
 			{
-				document.getElementById('load' + divid).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+				document.getElementById('load' + divid).innerHTML = '<i class="icon-spinner icon-spin"></i>';
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_keyword=1&id=' + divid);
 				xhr_object.onreadystatechange = function() 
 				{
