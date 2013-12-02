@@ -37,7 +37,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 	private function get_title()
 	{
-		return LangLoader::get_message('articles', 'articles-common', 'articles');
+		return LangLoader::get_message('articles', 'common', 'articles');
 	}
 
 	private function get_view()

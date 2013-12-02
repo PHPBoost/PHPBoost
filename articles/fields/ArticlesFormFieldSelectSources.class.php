@@ -42,7 +42,7 @@ class ArticlesFormFieldSelectSources extends AbstractFormField
 		$template = $this->get_template_to_use();
 
 		$tpl = new FileTemplate('articles/ArticlesFormFieldSelectSources.tpl');
-		$tpl->add_lang(LangLoader::get('articles-common', 'articles'));
+		$tpl->add_lang(LangLoader::get('common', 'articles'));
 		
 		$tpl->put_all(array(
 			'NAME' => $this->get_html_id(),

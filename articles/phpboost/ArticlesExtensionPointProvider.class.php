@@ -71,5 +71,10 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ArticlesSitemapExtensionPoint();
 	}
+	
+	public function tree_links()
+	{
+		return new ArticlesTreeLinks();
+	}
 }
 ?>

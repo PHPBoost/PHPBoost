@@ -43,7 +43,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('articles-common', 'articles');
+		$this->lang = LangLoader::get('common', 'articles');
 		$this->view = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
 		$this->view->add_lang($this->lang);
 	}
@@ -77,12 +77,10 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHorizontal('filters');
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['articles.sort_filter_title']));
 		$form->add_fieldset($fieldset);
 		
 		$sort_fields = $this->list_sort_fields();
-		
-		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))

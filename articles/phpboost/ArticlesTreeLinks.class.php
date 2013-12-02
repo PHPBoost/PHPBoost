@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                      ArticlesDisplayHomeCategoryController.class.php
+ *		    ArticlesTreeLinks.class.php
  *                            -------------------
- *   begin                : May 13, 2013
+ *   begin                : November 29, 2013
  *   copyright            : (C) 2013 Patrick DUBEAU
  *   email                : daaxwizeman@gmail.com
  *
@@ -28,35 +28,37 @@
 /**
  * @author Patrick DUBEAU <daaxwizeman@gmail.com>
  */
-class ArticlesDisplayHomeCategoryController extends ModuleController
+class ArticlesTreeLinks implements ModuleTreeLinksExtensionPoint
 {
-	private $lang;
 	private $category;
 	
-	public function execute(HTTPRequestCustom $request)
+	public function get_actions_tree_links()
 	{
-		$this->lang = LangLoader::get('common', 'articles');
-		$this->get_category();
+		$lang = LangLoader::get('common', 'articles');
+		$this->category = $this->get_category();
 		
-		return $this->build_response(ArticlesModuleHomePage::get_view());
-	}
+		$tree = new ModuleTreeLinks();
+		
+		$manage_categories_link = new AdminModuleLink($lang['admin.categories.manage'], ArticlesUrlBuilder::manage_categories());
+		$manage_categories_link->add_sub_link(new AdminModuleLink($lang['admin.categories.manage'], ArticlesUrlBuilder::manage_categories()));
+		$manage_categories_link->add_sub_link(new AdminModuleLink($lang['admin.categories.add'], ArticlesUrlBuilder::add_category()));
+		$tree->add_link($manage_categories_link);
 	
-	private function build_response(View $view)
-	{	
-		$response = new ArticlesDisplayResponse();
-		$response->set_page_title($this->category->get_name());
-		$response->set_page_description($this->category->get_description());
+		$manage_articles_link = new AdminModuleLink($lang['articles_management'], ArticlesUrlBuilder::manage_articles());
+		$manage_articles_link->add_sub_link(new AdminModuleLink($lang['articles_management'], ArticlesUrlBuilder::manage_articles()));
+		$manage_articles_link->add_sub_link(new AdminModuleLink($lang['articles.add'], ArticlesUrlBuilder::add_article($this->category->get_id())));
+		$tree->add_link($manage_articles_link);
 		
-		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
-		
-		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->category->get_id(), true));
-		foreach ($categories as $id => $category)
+		$tree->add_link(new AdminModuleLink($lang['articles_configuration'], ArticlesUrlBuilder::articles_configuration()));
+	
+		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			if ($id != Category::ROOT_CATEGORY)
-				$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($id, $category->get_rewrited_name()));
+			$tree->add_link(new ModuleLink($lang['articles.add'], ArticlesUrlBuilder::add_article($this->category->get_id()), ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution()));	
 		}
-		
-		return $response->display($view);
+
+		$tree->add_link(new ModuleLink($lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles(), ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->moderation()));
+	
+		return $tree;
 	}
 	
 	private function get_category()
@@ -88,4 +90,3 @@ class ArticlesDisplayHomeCategoryController extends ModuleController
 	}
 }
 ?>
-

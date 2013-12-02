@@ -29,7 +29,7 @@ class ArticlesCategoriesFormController extends AbstractRichCategoriesFormControl
 {
 	protected function generate_response(View $view)
 	{
-		$page_name = $this->get_id_category() == 0 ? LangLoader::get_message('admin.categories.add', 'articles-common', 'articles') : LangLoader::get_message('admin.categories.edit', 'articles-common', 'articles');
+		$page_name = $this->get_id_category() == 0 ? LangLoader::get_message('admin.categories.add', 'common', 'articles') : LangLoader::get_message('admin.categories.edit', 'common', 'articles');
 		return new AdminArticlesDisplayResponse($view, $page_name);
 	}
 	

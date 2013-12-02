@@ -46,7 +46,7 @@ class ArticlesPrintArticlesController extends ModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('articles-common', 'articles');
+		$this->lang = LangLoader::get('common', 'articles');
 		$this->view = new FileTemplate('articles/ArticlesPrintArticlesController.tpl');
 		$this->view->add_lang($this->lang);
 	}

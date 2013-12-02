@@ -45,7 +45,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('articles-common', 'articles');
+		$this->lang = LangLoader::get('common', 'articles');
 		$this->view = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
 		$this->view->add_lang($this->lang);
 	}
@@ -54,12 +54,12 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHorizontal('filters');
+		$form->set_css_class('options');
+		
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['articles.sort_filter_title']));
 		$form->add_fieldset($fieldset);
 		
 		$sort_fields = $this->list_sort_fields();
-		
-		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
@@ -132,34 +132,16 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'id_category' => $this->category->get_id()
 			), SelectQueryResult::FETCH_ASSOC
 		);
-		//Sub-cats and their children display
+		
+		//Sub-cats
 		while ($row = $result->fetch())
-		{
-			$children_cat = ArticlesService::get_categories_manager()->get_childrens($row['id'], $this->search_category_children_options);
-			$children_cat_links = '';
-			$nbr_children_cat = count($children_cat);
-			
-			if (!empty($children_cat))
-			{
-				foreach ($children_cat as $child_cat)
-				{
-					$children_cat_links .= '<a style="font-size:10px;" href="' . ArticlesUrlBuilder::display_category($child_cat->get_id(), $child_cat->get_rewrited_name())->rel() . '">' . $child_cat->get_name() . '</a>';
-					if ($nbr_children_cat - 1 > 0)
-					{
-					    $children_cat_links .= ', ';
-					    $nbr_children_cat--;
-					}
-				}
-			}
-			
+		{	
 			$this->view->assign_block_vars('cat_list', array(
 				'ID_CATEGORY' => $row['id'],
 				'CATEGORY_NAME' => $row['name'] . ' (' . $row['nbr_articles'] . ')',
 				'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
-				'CATEGORY_ICON_SOURCE' => !empty($row['image']) ? ($row['image'] == 'articles.png' || $row['image'] == 'articles_mini.png' ? ArticlesUrlBuilder::home()->rel() . $row['image'] : $row['image']) : '',
 				'L_NBR_ARTICLES_CAT' => StringVars::replace_vars($this->lang['articles.nbr_articles_category'], array('number' => $row['nbr_articles'])),
-				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel(),
-				'U_SUBCATEGORIES' => (count($children_cat) > 0) ? $children_cat_links : 'aucune'
+				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
 			));
 		}
 		
@@ -282,7 +264,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			$keywords_list .= '<a class="small" href="' . ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel() . '">' . $keyword->get_name() . '</a>';
 			if ($nbr_keywords - 1 > 0)
 			{
-				$keywords_list .= ', ';
+				$keywords_list .= ' ';
 				$nbr_keywords--;
 			}
 		}

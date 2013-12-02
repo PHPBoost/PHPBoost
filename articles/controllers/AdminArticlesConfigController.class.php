@@ -62,7 +62,7 @@ class AdminArticlesConfigController extends AdminModuleController
 	
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('articles-common', 'articles');
+		$this->lang = LangLoader::get('common', 'articles');
 	}
 	
 	private function load_config()

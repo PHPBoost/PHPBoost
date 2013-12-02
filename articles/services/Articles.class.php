@@ -131,7 +131,7 @@ class Articles
 		return !empty($this->description);
 	}
 	
-	public function get_clean_description()
+	public function get_real_description()
 	{
 		if ($this->get_description_enabled())
 		{
@@ -158,25 +158,6 @@ class Articles
 	public function get_contents()
 	{
 		return $this->contents;
-	}
-	
-	public function get_real_description()
-	{			
-	    if ($this->get_description_enabled())
-	    {
-		    return FormatingHelper::second_parse($this->description);
-	    }
-	    else
-	    {
-		    if (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC)
-		    {
-			return FormatingHelper::second_parse(TextHelper::substr_html($this->contents, 0, self::NBR_CHARACTER_TO_CUT_MOSAIC)) . '...';
-		    }
-		    else
-		    {
-			return FormatingHelper::second_parse(TextHelper::substr_html($this->contents, 0, self::NBR_CHARACTER_TO_CUT_LIST)) . '...';
-		    }
-	    }
 	}
 	
 	public function set_picture(Url $picture)
@@ -462,7 +443,6 @@ class Articles
 			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
 			'PSEUDO' => $user->get_pseudo(),
 			'DESCRIPTION' => $this->get_real_description(),
-			'CLEAN_DESCRIPTION' => $this->get_clean_description(),
 			'PICTURE' => $this->get_picture()->rel(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
