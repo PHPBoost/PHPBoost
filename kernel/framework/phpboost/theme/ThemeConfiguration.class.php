@@ -51,9 +51,10 @@ class ThemeConfiguration
 	private $pictures;
 	private $repository;
 	
-	public function __construct($config_ini_file)
+	public function __construct($config_ini_file, $desc_ini_file)
 	{
 		$this->load_configuration($config_ini_file);
+		$this->load_description($desc_ini_file);
 	}
 	
 	public function get_name()
@@ -156,24 +157,30 @@ class ThemeConfiguration
 		
 		$this->check_parse_ini_file($config, $config_ini_file);
 		
-		$this->name = $config['name'];
 		$this->author_name = $config['author'];
 		$this->author_mail = $config['author_mail'];
 		$this->author_link = $config['author_link'];
 		$this->version = $config['version'];
-		$this->description = isset($config['info']) ? $config['info'] : '';
 		$this->date = isset($config['date']) ? $config['date'] : '';
 		$this->compatibility = $config['compatibility'];
 		$this->require_copyright = (bool)$config['require_copyright'];
 		$this->html_version = isset($config['html_version']) ? $config['html_version'] : '';
 		$this->css_version = isset($config['css_version']) ? $config['css_version'] : '';
 		$this->columns_disabled = isset($config['columns_disabled']) ? $this->parse_columns_disabled_array($config['columns_disabled']) : new ColumnsDisabled();
-		$this->main_color = isset($config['main_color']) ? $config['main_color'] : '';
 		$this->variable_width = (bool)$config['variable_width'];
 		$this->width = isset($config['width']) ? $config['width'] : '';
 		$this->pictures = isset($config['pictures']) ? $this->parse_pictures_array($config['pictures']) : array();
 		$this->repository = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 
+	}
+
+	private function load_description($desc_ini_file)
+	{
+		$desc = @parse_ini_file($desc_ini_file);
+		$this->check_parse_ini_file($desc, $desc_ini_file);
+		$this->name = $desc['name'];
+		$this->description = $desc['desc'];
+		$this->main_color = $desc['main_color'];
 	}
 
 	private function parse_pictures_array($pictures)
