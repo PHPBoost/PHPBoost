@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		    AdminManageArticlesController.class.php
+ *		    AdminArticlesManageController.class.php
  *                            -------------------
  *   begin                : June 04, 2013
  *   copyright            : (C) 2013 Patrick DUBEAU
@@ -28,7 +28,7 @@
 /**
  * @author Patrick DUBEAU <daaxwizeman@gmail.com>
  */
-class AdminManageArticlesController extends AdminModuleController
+class AdminArticlesManageController extends AdminModuleController
 {
 	private $lang;
 	private $view;
@@ -46,7 +46,7 @@ class AdminManageArticlesController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'articles');
-		$this->view = new FileTemplate('articles/AdminManageArticlesController.tpl');
+		$this->view = new FileTemplate('articles/AdminArticlesManageController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 	
@@ -122,18 +122,21 @@ class AdminManageArticlesController extends AdminModuleController
 		
 		if($nbr_articles > 0)
 		{	
-			$pagination = new ModulePagination($current_page, $nbr_articles, $nbr_articles_per_page);
-			$pagination->set_url(ArticlesUrlBuilder::manage_articles($sort_field, $sort_mode, '/%d'));
+			$pagination = $this->get_pagination($nbr_articles, $field, $mode);
 			
 			$this->view->put_all(array(
-				'C_ARTICLES_FILTERS' => true,
-				'L_ARTICLES_FILTERS_TITLE' => $this->lang['articles.sort_filter_title'],
-				'L_AUTHOR' => $this->lang['admin.articles.sort_field.author'],
-				'L_CATEGORY' => $this->lang['admin.articles.sort_field.cat'],
-				'L_DATE' => $this->lang['admin.articles.sort_field.date'],
-				'L_PUBLISHED' => $this->lang['admin.articles.sort_field.published'],
-				'L_TITLE' => $this->lang['admin.articles.sort_field.title'],
-				'PAGINATION' => ($nbr_articles > $nbr_articles_per_page) ? $pagination->display()->render() : ''
+				'C_PAGINATION' => $pagination->has_several_pages(),
+				'PAGINATION' => $pagination->display(),
+				'U_SORT_TITLE_ASC' => ArticlesUrlBuilder::manage_articles('title', 'ASC', $current_page)->rel(),
+				'U_SORT_TITLE_DESC' => ArticlesUrlBuilder::manage_articles('title', 'DESC', $current_page)->rel(),
+				'U_SORT_CATEGORY_ASC' => ArticlesUrlBuilder::manage_articles('cat', 'ASC', $current_page)->rel(),
+				'U_SORT_CATEGORY_DESC' => ArticlesUrlBuilder::manage_articles('cat', 'DESC', $current_page)->rel(),
+				'U_SORT_AUTHOR_ASC' => ArticlesUrlBuilder::manage_articles('author', 'ASC', $current_page)->rel(),
+				'U_SORT_AUTHOR_DESC' => ArticlesUrlBuilder::manage_articles('author', 'DESC', $current_page)->rel(),
+				'U_SORT_DATE_ASC' => ArticlesUrlBuilder::manage_articles('date', 'ASC', $current_page)->rel(),
+				'U_SORT_DATE_DESC' => ArticlesUrlBuilder::manage_articles('date', 'DESC', $current_page)->rel(),
+				'U_SORT_PUBLISHED_ASC' => ArticlesUrlBuilder::manage_articles('published', 'ASC', $current_page)->rel(),
+				'U_SORT_PUBLISHED_DESC' => ArticlesUrlBuilder::manage_articles('published', 'DESC', $current_page)->rel(),
 			));
 			
 			while($row = $result->fetch())
@@ -177,7 +180,7 @@ class AdminManageArticlesController extends AdminModuleController
 		else 
 		{
 			$this->view->put_all(array(
-				'L_NO_ARTICLES' => $this->lang['articles.no_article']
+				'C_NO_ARTICLES' => true
 			));
 		}
 		$this->view->put('FORM', $this->form->display());
@@ -194,6 +197,22 @@ class AdminManageArticlesController extends AdminModuleController
 		$options[] = new FormFieldSelectChoiceOption($this->lang['admin.articles.sort_field.published'], 'published');
 
 		return $options;
+	}
+	
+	private function get_pagination($nbr_articles, $field, $mode)
+	{
+		$current_page = AppContext::get_request()->get_getint('page', 1);
+		
+		$pagination = new ModulePagination($current_page, $nbr_articles, ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination->set_url(ArticlesUrlBuilder::manage_articles($field, $mode, '%d'));
+		
+		if ($pagination->current_page_is_empty() && $current_page > 1)
+	        {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+	        }
+	
+		return $pagination;
 	}
 }
 ?>

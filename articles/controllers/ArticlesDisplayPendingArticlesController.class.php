@@ -129,7 +129,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		$nbr_articles_pending = $result->get_rows_count();
 		
-		$pagination = $this->get_pagination($nbr_articles_pending, $sort_field, $sort_mode);
+		$pagination = $this->get_pagination($nbr_articles_pending, $field, $mode);
 		
 		$this->build_form($field, $mode);
 		
@@ -162,17 +162,13 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				$article = new Articles();
 				$article->set_properties($row);
 				
-				$keywords = $article->get_keywords();
-				
-				$keywords_list = $this->build_keywords_list($keywords);
+				$this->build_keywords_view($article);
 		
 				$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
 				
 				$this->view->assign_block_vars('articles',  array_merge($article->get_tpl_vars()), array(
-					'C_KEYWORDS' => count($keywords) > 0 ? true : false,
 					'L_CAT_NAME' => $category->get_name(),
-					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-					'U_KEYWORDS_LIST' => $keywords_list
+					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
 			}
 		}
@@ -185,26 +181,22 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->view->put('FORM', $this->form->display());
 	}
 	
-	private function build_keywords_list($keywords)
+	private function build_keywords_view(Articles $article)
 	{
-		$keywords_list = '';
+		$keywords = $article->get_keywords();
 		$nbr_keywords = count($keywords);
-		
+		$this->view->put('C_KEYWORDS', $nbr_keywords > 0);
+
+		$i = 1;
 		foreach ($keywords as $keyword)
 		{	
-			/* TODO
-			 * 
-			 * Supprimer le code HTML
-			 * 
-			 */
-			$keywords_list .= '<a class="small" href="' . ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel() . '">' . $keyword->get_name() . '</a>';
-			if ($nbr_keywords - 1 > 0)
-			{
-				$keywords_list .= ', ';
-				$nbr_keywords--;
-			}
+			$this->view->assign_block_vars('keywords', array(
+				'C_SEPARATOR' => $i < $nbr_keywords,
+				'NAME' => $keyword->get_name(),
+				'URL' => ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
+			));
+			$i++;
 		}
-		return $keywords_list;
 	}
 	
 	private function check_authorizations()
@@ -230,12 +222,12 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		return $options;
 	}
 	
-	private function get_pagination($nbr_articles_pending, $sort_field, $sort_mode)
+	private function get_pagination($nbr_articles_pending, $field, $mode)
 	{
 		$current_page = AppContext::get_request()->get_getint('page', 1);
 		
 		$pagination = new ModulePagination($current_page, $nbr_articles_pending, ArticlesConfig::load()->get_number_articles_per_page());
-		$pagination->set_url(ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, '/%d'));
+		$pagination->set_url(ArticlesUrlBuilder::display_pending_articles($field, $mode, '/%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
 	        {
