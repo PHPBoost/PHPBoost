@@ -48,7 +48,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('articles-common', 'articles');
+		$this->lang = LangLoader::get('common', 'articles');
 		$this->view = new FileTemplate('articles/ArticlesDisplayArticlesController.tpl');
 		$this->view->add_lang($this->lang);
 	}
@@ -121,8 +121,6 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$this->build_view_keywords();
 		
 		$pagination = $this->get_pagination($nbr_pages, $current_page);
-		//$pagination = new ModulePagination($current_page, $nbr_pages, 1);
-		//$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()), '%d');
 		
 		$this->view->put_all($this->article->get_tpl_vars());
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
@@ -298,7 +296,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	{
 		$response = new ArticlesDisplayResponse();
 		$response->set_page_title($this->article->get_title());
-		$response->set_page_description($this->article->get_clean_description());
+		$response->set_page_description($this->article->get_real_description());
 		$response->set_page_keywords($this->article->get_keywords_name());
 		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
 		

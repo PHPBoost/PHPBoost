@@ -29,7 +29,7 @@ class ArticlesDeleteCategoryController extends AbstractDeleteCategoryController
 {
 	protected function generate_response(View $view)
 	{
-		return new AdminArticlesDisplayResponse($view, LangLoader::get_message('admin.categories.delete', 'articles-common', 'articles'));
+		return new AdminArticlesDisplayResponse($view, LangLoader::get_message('admin.categories.delete', 'common', 'articles'));
 	}
 	
 	protected function get_categories_manager()

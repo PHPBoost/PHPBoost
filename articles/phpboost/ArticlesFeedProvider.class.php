@@ -44,7 +44,7 @@ class ArticlesFeedProvider implements FeedProvider
 		$site_name = GeneralConfig::load()->get_site_name();
 		$site_name = $idcat != Category::ROOT_CATEGORY ? $site_name . ' : ' . $category->get_name() : $site_name;
 
-		$feed_module_name = LangLoader::get_message('articles.feed_name', 'articles-common', 'articles');
+		$feed_module_name = LangLoader::get_message('articles.feed_name', 'common', 'articles');
 		$data = new FeedData();
 		$data->set_title($feed_module_name . ' - ' . $site_name);
 		$data->set_date(new Date());

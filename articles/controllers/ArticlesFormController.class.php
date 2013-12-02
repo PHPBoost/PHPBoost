@@ -54,7 +54,7 @@ class ArticlesFormController extends ModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('articles-common', 'articles');
+		$this->lang = LangLoader::get('common', 'articles');
 		$this->tpl = new StringTemplate($this->get_page_scripts() . ' # INCLUDE MSG # # INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 	}
@@ -127,7 +127,7 @@ class ArticlesFormController extends ModuleController
 	{
 		if ($this->article->get_id() === null)
 		{
-			$id_category = $request->get_getstring('id_category');
+			$id_category = $request->get_getint('id_category');
 		}
 		else
 		{
@@ -168,7 +168,7 @@ class ArticlesFormController extends ModuleController
 		$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->lang['articles.form.category'], ($id_category === null ? $this->get_article()->get_id_category() : $id_category), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.form.description_enabled'], $this->get_article()->get_description_enabled(), 
-			array('description' => StringVars::replace_vars($this->lang['articles.form.description_enabled.description'], array('number' => (ArticlesConfig::DISPLAY_TYPE == ArticlesConfig::DISPLAY_MOSAIC) ? Articles::NBR_CHARACTER_TO_CUT_MOSAIC : Articles::NBR_CHARACTER_TO_CUT_LIST)), 'events' => array('click' => '
+			array('description' => StringVars::replace_vars($this->lang['articles.form.description_enabled.description'], array('number' => (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC) ? Articles::NBR_CHARACTER_TO_CUT_MOSAIC : Articles::NBR_CHARACTER_TO_CUT_LIST)), 'events' => array('click' => '
 			if (HTMLForms.getField("enable_description").getValue()) {
 				HTMLForms.getField("description").enable();
 			} else { 
@@ -176,7 +176,7 @@ class ArticlesFormController extends ModuleController
 			}'))
 		));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('description', StringVars::replace_vars($this->lang['articles.form.description'],array('number' =>(ArticlesConfig::DISPLAY_TYPE == ArticlesConfig::DISPLAY_MOSAIC) ? Articles::NBR_CHARACTER_TO_CUT_MOSAIC : Articles::NBR_CHARACTER_TO_CUT_LIST)), $this->get_article()->get_description(),
+		$fieldset->add_field(new FormFieldRichTextEditor('description', StringVars::replace_vars($this->lang['articles.form.description'],array('number' =>(ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC) ? Articles::NBR_CHARACTER_TO_CUT_MOSAIC : Articles::NBR_CHARACTER_TO_CUT_LIST)), $this->get_article()->get_description(),
 			array('rows' => 3, 'hidden' => !$this->get_article()->get_description_enabled())
 		));
 		
@@ -444,6 +444,7 @@ class ArticlesFormController extends ModuleController
 				ContributionService::save_contribution($article_contribution);
 			}
 		}
+		$article->set_id($id_article);
 	}
 	
 	private function redirect()

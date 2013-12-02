@@ -47,7 +47,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('articles-common', 'articles');
+		$this->lang = LangLoader::get('common', 'articles');
 		$this->view = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
 		$this->view->add_lang($this->lang);
 	}
@@ -58,12 +58,10 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHorizontal('filters');
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['articles.sort_filter_title']));
 		$form->add_fieldset($fieldset);
 		
 		$sort_fields = $this->list_sort_fields();
-		
-		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
@@ -139,7 +137,6 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			'C_PENDING_ARTICLES' => false,
 			'C_PUBLISHED_ARTICLES' => true,
 			'C_ARTICLES_CAT' => false,
-			'C_MOSAIC' => false,
 			'L_TOTAL_PENDING_ARTICLE' => $nbr_articles_pending > 0 ? StringVars::replace_vars($this->lang['articles.nbr_articles.pending'], array('number' => $nbr_articles_pending)) : '', 
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->rel(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()

@@ -34,7 +34,7 @@ class AdminArticlesDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 		
-		$lang = LangLoader::get('articles-common', 'articles');
+		$lang = LangLoader::get('common', 'articles');
 		$this->set_title($lang['articles']);
 		$img = 'articles.png';
 		

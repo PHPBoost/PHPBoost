@@ -1,27 +1,4 @@
 # INCLUDE MSG #
-<menu class="dynamic_menu right">
-	<ul>
-		<li><a><i class="icon-cog"></i></a>
-			<ul>
-				# IF C_EDIT #
-				<li>
-					<a href="{U_EDIT_ARTICLE_PAGE}" title="${i18n('articles.edit')}"><i class="icon-pencil"></i></a>
-				</li>
-				# ENDIF #
-				# IF C_DELETE #
-				<li>
-					<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}"><i style="color:#e80909;" class="icon-delete"></i></a>
-				</li>
-				# ENDIF #
-				<li>
-				    <a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}" target="blank"><i class="icon-print"></i></a>
-				</li>
-			</ul>
-		</li>
-	</ul>
-</menu>
-<div class="spacer"></div>
-
 <article class="module_position" itemscope="itemscope" itemtype="http://schema.org/Article">					
 	<header class="article_top">
 		<h1 class="article_top_title">
@@ -47,7 +24,7 @@
 		</div>
 				
 		<meta itemprop="url" content="{U_ARTICLE}">
-		<meta itemprop="description" content="{CLEAN_DESCRIPTION}">
+		<meta itemprop="description" content="{DESCRIPTION}">
 		<meta itemprop="datePublished" content="{DATE_ISO8601}">
 		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 		# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{PICTURE}"># ENDIF #
