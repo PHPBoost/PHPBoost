@@ -17,7 +17,7 @@
 		{MENUS_FOOTER_CONTENT}
 		# ENDIF #
 		<span>
-			{L_POWERED_BY} <a style="font-size:10px" href="http://phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
+			{L_POWERED_BY} <a href="http://phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
 		</span>	
 		# IF C_DISPLAY_BENCH #
 		<span>
@@ -27,7 +27,7 @@
 		# ENDIF #
 		# IF C_DISPLAY_AUTHOR_THEME #
 		<span>
-			| {L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}" style="font-size:10px;">{L_THEME_AUTHOR}</a>
+			| {L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a>
 		</span>
 		# ENDIF #
 	</footer>
