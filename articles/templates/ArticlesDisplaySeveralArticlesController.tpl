@@ -3,11 +3,6 @@
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('articles'))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			${i18n('articles')}
-			<span class="actions">
-				# IF C_MODERATE #
-			    <a href="${relative_url(ArticlesUrlBuilder::manage_categories())}" title="${i18n('admin.categories.manage')}" class="icon-edit"></a>
-			    # ENDIF #
-			</span>
 		</h1>
 		# IF C_ARTICLES_CAT #
 		<div class="cat">
@@ -66,8 +61,12 @@
 						</div>
 						<h3 itemprop="name"><a itemprop="url" href="{articles.U_ARTICLE}">{articles.TITLE}</a></h3>
 						<p itemprop="description" class="description">{articles.DESCRIPTION}</p>
-						# IF articles.C_KEYWORDS #
-						<div itemprop="url" class="tags">{articles.U_KEYWORDS_LIST}"></div>
+						# IF C_KEYWORDS #
+							# START keywords #
+							<div class="tags">
+								<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #&nbsp;# ENDIF #
+							</div>
+							# END keywords #
 						# ENDIF #	
 						<meta itemprop="url" content="{articles.U_ARTICLE}">
 						<meta itemprop="description" content="{articles.DESCRIPTION}">
@@ -117,8 +116,12 @@
 								<h3 itemprop="name"><a itemprop="url" href="{articles.U_ARTICLE}">{articles.TITLE}</a></h3>
 								<p itemprop="description" class="description">{articles.DESCRIPTION}</p>
 							</header>
-							# IF articles.C_KEYWORDS #
-							<div itemprop="url" class="tags">{articles.U_KEYWORDS_LIST}</div>
+							# IF C_KEYWORDS #
+								# START keywords #
+								<div class="tags">
+									<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #&nbsp;# ENDIF #
+								</div>
+								# END keywords #
 							# ENDIF #
 						</div>
 						<meta itemprop="url" content="{articles.U_ARTICLE}">

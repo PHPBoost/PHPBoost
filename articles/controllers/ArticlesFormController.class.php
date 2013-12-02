@@ -127,7 +127,7 @@ class ArticlesFormController extends ModuleController
 	{
 		if ($this->article->get_id() === null)
 		{
-			$id_category = $request->get_getint('id_category');
+			$id_category = $request->get_getint('id_category',0);
 		}
 		else
 		{
