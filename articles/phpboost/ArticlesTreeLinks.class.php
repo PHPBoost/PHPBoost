@@ -42,14 +42,14 @@ class ArticlesTreeLinks implements ModuleTreeLinksExtensionPoint
 	
 		$manage_articles_link = new AdminModuleLink($lang['articles_management'], ArticlesUrlBuilder::manage_articles());
 		$manage_articles_link->add_sub_link(new AdminModuleLink($lang['articles_management'], ArticlesUrlBuilder::manage_articles()));
-		$manage_articles_link->add_sub_link(new AdminModuleLink($lang['articles.add'], ArticlesUrlBuilder::add_article()));
+		$manage_articles_link->add_sub_link(new AdminModuleLink($lang['articles.add'], ArticlesUrlBuilder::add_article(AppContext::get_request()->get_getstring('id_cat', 0))));
 		$tree->add_link($manage_articles_link);
 		
 		$tree->add_link(new AdminModuleLink($lang['articles_configuration'], ArticlesUrlBuilder::articles_configuration()));
-	
+
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$tree->add_link(new ModuleLink($lang['articles.add'], ArticlesUrlBuilder::add_article(), ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution()));	
+			$tree->add_link(new ModuleLink($lang['articles.add'], ArticlesUrlBuilder::add_article(AppContext::get_request()->get_getstring('id_cat', 0)), ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution()));	
 		}
 
 		$tree->add_link(new ModuleLink($lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles(), ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->moderation()));
