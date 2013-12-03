@@ -1,15 +1,3 @@
-.cat_tool {
-    float:right;
-    padding:0px 30px;
-}
-
-.cat_tool a {text-decoration: none;}
-
-.cat_tool a{ opacity:0.01; }
-.cat_tool a:hover{ opacity:1!important; }
-
-.cat:hover > .cat_tool a{ opacity:0.5; }
-
 .button_cat {
     -moz-border-radius:3px;
     -webkit-border-radius:3px;
@@ -50,7 +38,8 @@
 
 .article_tools {		
     position: absolute;		
-    opacity:0.01;		
+    opacity:0.01;
+    font-size: 14px;
     right: 0px;		
     top: 0px;		
     height: 25px;		
@@ -58,10 +47,6 @@
     -moz-border-radius:1px;		
     -webkit-border-radius:1px;		
     border-radius:1px;		
-}		
-
-.article_tools {		
-    font-size: 14px;		
 }		
 
 .article_tools a.icon-delete { color:#e80909; }		
