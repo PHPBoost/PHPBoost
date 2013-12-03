@@ -29,23 +29,7 @@ class TinyMCESetup extends DefaultModuleSetup
 {
 	public function uninstall()
 	{
-		$editors = AppContext::get_content_formatting_service()->get_available_editors();
-		if (count($editors) > 1)
-		{
-			$default_editor = ContentFormattingConfig::load()->get_default_editor();
-			if ($default_editor !== 'tinymce')
-			{
-				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_editor' => $default_editor), 
-					'WHERE user_editor=:old_user_editor', array('old_user_editor' => 'tinymce'
-				));
-				return null;
-			}
-			else
-			{
-				return LangLoader::get_message('is_default_editor', 'editor-common');
-			}
-		}
-		return LangLoader::get_message('last_editor_installed', 'editor-common');
+		return AppContext::get_content_formatting_service()->uninstall_editor('tinymce');
 	}
 }
 ?>

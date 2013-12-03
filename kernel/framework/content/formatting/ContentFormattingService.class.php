@@ -140,6 +140,31 @@ class ContentFormattingService
     }
     
     /**
+     * @param string $id_module
+     */
+    public function uninstall_editor($id_module)
+    {
+    	$editors = AppContext::get_content_formatting_service()->get_available_editors();
+		
+		if (count($editors) > 1)
+		{
+			$default_editor = ContentFormattingConfig::load()->get_default_editor();
+			if ($default_editor !== $id_module)
+			{
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_editor' => $default_editor), 
+					'WHERE user_editor=:old_user_editor', array('old_user_editor' => $id_module
+				));
+				return null;
+			}
+			else
+			{
+				return LangLoader::get_message('is_default_editor', 'editor-common');
+			}
+		}
+		return LangLoader::get_message('last_editor_installed', 'editor-common');
+    }
+    
+    /**
      * @desc Returns the map of all the formatting types supported by the PHPBoost formatting editors and parsers.
      * The keys of the map are the tags identifiers and the values the tags names.
      * @return string[] The map
