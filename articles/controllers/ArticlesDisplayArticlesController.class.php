@@ -306,9 +306,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			if ($id != Category::ROOT_CATEGORY)
 				$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($id, $category->get_rewrited_name()));
 		}
-		$category = $categories[$this->article->get_id_category()];
-		if (!$this->article->is_published())
-			$response->add_breadcrumb_link ($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles()->rel());
+		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->article->get_id_category());
 		$response->add_breadcrumb_link($this->article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
 		
 		return $response->display($this->view);
