@@ -196,10 +196,11 @@ class ArticlesFormController extends ModuleController
 
 		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 
 			'function(response){
-				if (response.responseJSON.url) {
-					$(\'preview_picture\').src = response.responseJSON.url;
+				if (response.responseJSON.image_url) {
+					$(\'loading-article-picture\').remove();
+					$(\'preview_picture\').src = response.responseJSON.image_url;
 		}}');
-		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').src = PATH_TO_ROOT + \'/templates/'. get_utheme() .'/images/loading_mini.gif\';}');
+		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-article-picture" class="icon-spinner icon-spin"></i>\'}); }');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
 		$other_fieldset->add_field(new FormFieldUploadFileTextEditor('picture', $this->lang['articles.form.picture'], $this->get_article()->get_picture()->relative(), 
 			array('description' => $this->lang['articles.form.picture.description'], 'events' => array('change' => $image_preview_request->render())
