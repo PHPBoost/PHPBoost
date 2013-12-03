@@ -225,7 +225,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	{
 		if ($this->category === null)
 		{
-			$id = AppContext::get_request()->get_getstring('id_cat', 0);
+			$id = AppContext::get_request()->get_getstring('id_category', 0);
 			if (!empty($id))
 			{
 				try {
