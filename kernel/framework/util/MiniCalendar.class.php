@@ -45,9 +45,10 @@ class MiniCalendar
 	 */
 	private $style = '';
 	/**
-	 * @var string The calendar name
+	 * @var string The calendar id
 	 */
-	private $form_name = '';
+	private $html_id = '';
+	
 	/**
 	 * @var Date The date it displays
 	 */
@@ -62,9 +63,9 @@ class MiniCalendar
 	 * @param string $form_name Name of the mini calendar in the HTML code (you will retrieve the data in that field).
 	 * This name must be a HTML identificator.
 	 */
-	public function __construct($form_name, Date $date = null)
+	public function __construct($html_id, Date $date = null)
 	{
-		$this->form_name = $form_name;
+		$this->html_id = $html_id;
 		$this->num_instance = ++self::$num_instances;
 
 		$this->set_date($date);
@@ -100,15 +101,6 @@ class MiniCalendar
 	}
 
 	/**
-	 * Returns the html ID of the element.
-	 * @return string The ID
-	 */
-	public function get_html_id()
-	{
-		return 'calendar_' . $this->num_instance;
-	}
-
-	/**
 	 * @desc Displays the mini calendar. You must call the display method in the same order as the calendars are displayed, because it requires a javascript code loading.
 	 * @return string The code to write in the HTML page.
 	 */
@@ -119,12 +111,11 @@ class MiniCalendar
 
 		$template->put_all(array(
 			'DEFAULT_DATE' => !empty($this->date) ? $this->date->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
-			'CALENDAR_ID' => 'calendar_' . $this->num_instance,
+			'CALENDAR_ID' => $this->html_id,
 			'CALENDAR_NUMBER' => (string)$this->num_instance,
 			'DAY' => !empty($this->date) ? $this->date->get_day() : '',
 			'MONTH' => !empty($this->date) ? $this->date->get_month() : '',
 			'YEAR' => !empty($this->date) ? $this->date->get_year() : '',
-			'FORM_NAME' => $this->form_name,
 			'CALENDAR_STYLE' => $this->style,
 			'C_INCLUDE_JS' => !self::$js_inclusion_already_done
 		));
