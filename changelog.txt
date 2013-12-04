@@ -28,8 +28,6 @@
 [*] Installation : Ajout de la possibilité de modifier la description du site dans l'installation en CLI
 - Etendre les fonctionnalités de l'ExtensionPoint HomePage pour pouvoir avoir la possibilité d'en avoir plusieurs par module et ainsi afficher par exemple 
 les pages du module "pages".
-- Refonte du module Web ?
-- Refonte du système d'événement et intégration d'un système de notification
 [*] Ajout d'une option dans la configuration avancée pour le mode de débogage permettant d'afficher les requêtes SQL
 [*] Création d'un système permettant de gérer facilement des mots clés dans les modules
 - Passage de l'extension mysql à mysqli pour assurer la compatibilité à long terme de PHPBoost sur tous les serveurs
@@ -77,9 +75,9 @@ les pages du module "pages".
 [*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires globalement
 [*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver l'affichage du nom de l'auteur d'un article pour chacun des articles
 [*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver la notation d'un article pour chacun des articles
-- Ajout des microdonnées pour améliorer le référencement
+[*] Ajout des microdonnées pour améliorer le référencement
 
-[b]BugTracker[/b]
+[b]Rapport de bugs[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
 [*] [color=red]Nouveauté :[/color] Filtres en haut des tableaux avec possibilité pour chaque utilisateur d'enregistrer ses combinaisons de filtres favoris
 [*] [color=red]Nouveauté :[/color] Légende en bas des tableaux avec la couleur des niveaux et leurs noms
@@ -106,9 +104,9 @@ les pages du module "pages".
 [*] [color=red]Nouveauté :[/color] Recherche
 [*] [color=red]Nouveauté :[/color] Sitemap
 [*] [color=red]Nouveauté :[/color] Contributions pour l'ajout d'événement
-+ [color=red]Nouveauté :[/color] Possibilité de créer un évènement répétitif (tous les X jours, X semaines, X mois, X années)
+[*] [color=red]Nouveauté :[/color] Possibilité de créer un évènement répétitif (tous les X jours, X semaines, X mois, X années)
 [*] [color=red]Nouveauté :[/color] Ajout des microdonnées pour améliorer le référencement
-+ [color=red]Nouveauté :[/color] Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
+[*] [color=red]Nouveauté :[/color] Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
 
 [b]Contact[/b]
 [*] [color=red]Nouveauté :[/color] Gestion complète des champs du formulaire dans l'administration avec possibilité d'en ajouter
