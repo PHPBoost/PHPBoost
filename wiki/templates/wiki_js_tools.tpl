@@ -7,7 +7,7 @@
 		-->
 		</script>
 
-		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/wiki.js"></script>
+		<script type="text/javascript" src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 		<table class="bbcode" style="margin:4px auto; width:410px;">
 			<tr>

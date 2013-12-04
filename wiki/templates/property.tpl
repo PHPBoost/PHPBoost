@@ -1,5 +1,5 @@
 		# START auth #
-		<form action="action.php?token={TOKEN}" method="post" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" class="fieldset_content">
 			<fieldset>
 				<legend>{auth.L_TITLE}</legend>
 				<p style="text-align:center">
@@ -15,39 +15,39 @@
 				</p>
 				<div class="form-element">
 					<label>{L_RESTORE_ARCHIVE}</label>
-					<div class="form-field"><label>{SELECT_RESTORE_ARCHIVE}</label></div>					
+					<div class="form-field"><label>{SELECT_RESTORE_ARCHIVE}</label></div>
 				</div>
 				<div class="form-element">
 					<label>{L_DELETE_ARCHIVE}</label>
-					<div class="form-field"><label>{SELECT_DELETE_ARCHIVE}</label></div>					
+					<div class="form-field"><label>{SELECT_DELETE_ARCHIVE}</label></div>
 				</div>
 				<div class="form-element">
 					<label>{L_EDIT}</label>
-					<div class="form-field"><label>{SELECT_EDIT}</label></div>					
+					<div class="form-field"><label>{SELECT_EDIT}</label></div>
 				</div>
 				<div class="form-element">
 					<label>{L_DELETE}</label>
-					<div class="form-field"><label>{SELECT_DELETE}</label></div>					
+					<div class="form-field"><label>{SELECT_DELETE}</label></div>
 				</div>
 				<div class="form-element">
 					<label>{L_RENAME}</label>
-					<div class="form-field"><label>{SELECT_RENAME}</label></div>					
+					<div class="form-field"><label>{SELECT_RENAME}</label></div>
 				</div>
 				<div class="form-element">
 					<label>{L_REDIRECT}</label>
-					<div class="form-field"><label>{SELECT_REDIRECT}</label></div>					
+					<div class="form-field"><label>{SELECT_REDIRECT}</label></div>
 				</div>
 				<div class="form-element">
 					<label>{L_MOVE}</label>
-					<div class="form-field"><label>{SELECT_MOVE}</label></div>					
+					<div class="form-field"><label>{SELECT_MOVE}</label></div>
 				</div>
 				<div class="form-element">
 					<label>{L_STATUS}</label>
-					<div class="form-field"><label>{SELECT_STATUS}</label></div>					
+					<div class="form-field"><label>{SELECT_STATUS}</label></div>
 				</div>
 				<div class="form-element">
 					<label>{L_COM}</label>
-					<div class="form-field"><label>{SELECT_COM}</label></div>					
+					<div class="form-field"><label>{SELECT_COM}</label></div>
 				</div>
 			</fieldset>
 			
@@ -67,7 +67,7 @@
 		<!--
 			status = new Array();
 			# START status.status_array #
-			status[{status.status_array.ID}] = "{status.status_array.TEXT}";	
+			status[{status.status_array.ID}] = "{status.status_array.TEXT}";
 			# END status.status_array #
 			
 			function show_status()
@@ -109,9 +109,9 @@
 		-->
 		</script>
 
-		<form action="action.php?token={TOKEN}" method="post" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" class="fieldset_content">
 			<fieldset>
-				<legend>{status.L_TITLE}</legend>				
+				<legend>{status.L_TITLE}</legend>
 				<p style="text-align:center" class="text_strong">{L_CURRENT_STATUS}</p>
 				<div id="current_status" class="row3">{status.CURRENT_STATUS}</div>
 				<br />
@@ -127,7 +127,7 @@
 						<br /><br />
 						<label><input type="radio" name="status" id="radio_undefined" value="radio_undefined" {status.UNDEFINED} onclick="javascript: change_type(-1);" {status.SELECTED_UNDEFINED}>&nbsp;{L_UNDEFINED_STATUS}</label> 
 						
-					</div>					
+					</div>
 				</div>
 				<div class="form-element-textarea">
 					{KERNEL_EDITOR}
@@ -153,27 +153,27 @@
 			var selected_cat = {move.SELECTED_CAT};
 		-->
 		</script>
-		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/wiki.js"></script>
+		<script type="text/javascript" src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 		# INCLUDE message_helper #
 		
-		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset_content">
 			<fieldset>
-				<legend>{move.L_TITLE}</legend>	
+				<legend>{move.L_TITLE}</legend>
 				<div class="form-element">
 					<label>{L_CURRENT_CAT}</label>
 					<div class="form-field">
 						<input type="hidden" name="new_cat" id="id_cat" value="{move.ID_CAT}">
 						<div id="selected_cat">{move.CURRENT_CAT}</div>
-					</div>					
+					</div>
 				</div>
 				<div class="form-element">
 					<label>{L_SELECT_CAT}</label>
 					<div class="form-field">
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{move.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
+						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="icon-folder"></i> <span id="class_0" class="{move.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						{move.CATS}
-					</div>					
+					</div>
 				</div>
 			</fieldset>
 			
@@ -200,20 +200,20 @@
 		</script>
 		# INCLUDE message_helper #
 		
-		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset_content">
 			<fieldset>
-				<legend>{rename.L_TITLE}</legend>				
+				<legend>{rename.L_TITLE}</legend>
 				<p style="text-align:center;">
 					{rename.L_RENAMING_ARTICLE}
 				</p>
 				<br />
 				<div class="form-element">
 					<label for="new_title">{L_NEW_TITLE}</label>
-					<div class="form-field"><input type="text" name="new_title" id="new_title" size="70" maxlength="250" value="{rename.FORMER_NAME}"></div>					
+					<div class="form-field"><input type="text" name="new_title" id="new_title" size="70" maxlength="250" value="{rename.FORMER_NAME}"></div>
 				</div>
 				<div class="form-element">
 					<label for="create_redirection_while_renaming">{rename.L_CREATE_REDIRECTION}</label>
-					<div class="form-field"><label><input type="checkbox" name="create_redirection_while_renaming" id="create_redirection_while_renaming" checked="checked"></label></div>					
+					<div class="form-field"><label><input type="checkbox" name="create_redirection_while_renaming" id="create_redirection_while_renaming" checked="checked"></label></div>
 				</div>
 			</fieldset>
 			
@@ -242,8 +242,7 @@
 			<tfoot>
 				<tr>
 					<th colspan="2">
-						{L_CREATE_REDIRECTION}
-						<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><img src="{PICTURES_DATA_PATH}/images/create_redirection.png" alt="{L_CREATE_REDIRECTION}" /></a>
+						<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><i class="icon-fast-forward"></i> {L_CREATE_REDIRECTION}</a>
 					</th>
 				</tr>
 			</tfoot>
@@ -254,13 +253,13 @@
 						{redirect.list.REDIRECTION_NAME}
 					</td>
 					<td>
-						<a href="{redirect.list.U_REDIRECTION_DELETE}" title="{REDIRECTION_DELETE}" onclick='javascript:return confirm("{L_ALERT_DELETE_REDIRECTION}");'><img src="{PICTURES_DATA_PATH}/images/delete_article.png" alt="{REDIRECTION_DELETE}" /></a>
+						<a href="{redirect.list.U_REDIRECTION_DELETE}" class="icon-delete" title="{REDIRECTION_DELETE}" data-confirmation="{L_ALERT_DELETE_REDIRECTION}"></a>
 					</td>
 				</tr>
 				# END redirect.list #
 				# START redirect.no_redirection #
 				<tr>
-					<td>
+					<td colspan="2">
 						{redirect.no_redirection.L_NO_REDIRECTION}
 					</td>
 				</tr>
@@ -284,12 +283,12 @@
 		</script>
 		# INCLUDE message_helper #
 		
-		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset_content">
 			<fieldset>
-				<legend>{create.L_TITLE}</legend>				
+				<legend>{create.L_TITLE}</legend>
 				<div class="form-element">
 					<label for="redirection_title">{L_REDIRECTION_NAME}</label>
-					<div class="form-field"><label><input type="text" name="redirection_title" id="redirection_title" size="70" maxlength="250" value=""></label></div>					
+					<div class="form-field"><label><input type="text" name="redirection_title" id="redirection_title" size="70" maxlength="250" value=""></label></div>
 				</div>
 			</fieldset>
 			
@@ -308,34 +307,34 @@
 			var selected_cat = {remove.SELECTED_CAT};
 		-->
 		</script>
-		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/wiki.js"></script>
+		<script type="text/javascript" src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 		# INCLUDE message_helper #
 				
-		<form action="action.php?token={TOKEN}" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset_content">
 			<fieldset>
-				<legend>{remove.L_TITLE}</legend>				
+				<legend>{remove.L_TITLE}</legend>
 				<div class="form-element">
 					<label for="action">{L_EXPLAIN_REMOVE_CAT}</label>
 					<div class="form-field">
 						<label><input id="action" name="action" value="remove_all" type="radio"><strong>&nbsp;{remove.L_REMOVE_ALL_CONTENTS}</strong></label>
 						<label><input name="action" value="move_all" type="radio" checked="checked"><strong>&nbsp;{remove.L_MOVE_ALL_CONTENTS}</strong></label>
-					</div>					
+					</div>
 				</div>
 				<div class="form-element">
 					<label>{L_FUTURE_CAT}</label>
 					<div class="form-field">
 						<input type="hidden" name="report_cat" value="{remove.ID_CAT}" id="id_cat">
 						<div id="selected_cat">{remove.CURRENT_CAT}</div>
-					</div>					
+					</div>
 				</div>
 				<div class="form-element">
 					<label>{L_SELECT_CAT}</label>
 					<div class="form-field">
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PICTURES_DATA_PATH}/images/cat_root.png" alt="" /> <span id="class_0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
+						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="icon-folder"></i> <span id="class_0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						{remove.CATS}
-					</div>					
+					</div>
 				</div>
 			</fieldset>
 			

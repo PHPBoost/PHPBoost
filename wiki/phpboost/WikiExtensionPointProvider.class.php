@@ -78,6 +78,18 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 			}
 		}
 	}
+	
+	public function comments()
+	{
+		return new CommentsTopics(array(new WikiCommentsTopic()));
+	}
+	
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('wiki.css');
+		return $module_css_files;
+	}
 
 	public function feeds()
 	{
@@ -88,29 +100,20 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new WikiHomePageExtensionPoint();
 	}
+	
+	public function search()
+	{
+		return new WikiSearchable();
+	}
 
 	public function sitemap()
 	{
 		return new WikiSitemapExtensionPoint();
 	}
 	
-	public function css_files()
+	public function tree_links()
 	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('wiki.css');
-		return $module_css_files;
-	}
-	
-	public function search()
-	{
-		return new WikiSearchable();
-	}
-	
-	public function comments()
-	{
-		return new CommentsTopics(array(
-			new WikiCommentsTopic()
-		));
+		return new WikiTreeLinks();
 	}
 }
 ?>

@@ -32,37 +32,6 @@ $config = WikiConfig::load();
 //On charge le template associé
 $Template->set_filenames(array('wiki_tools'=> 'wiki/wiki_tools.tpl'));
 
-$Template->put_all(array(
-	'L_CONTRIBUTION_TOOLS' => $LANG['wiki_contribution_tools'],
-	'L_OTHER_TOOLS' => $LANG['wiki_other_tools'],
-));
-
-//Définition des images associés
-$action_pictures = array(
-	'edit' => 'edit.png',
-	'delete' => 'delete_article.png',
-	'history' => 'history.png',
-	'create_article' => 'create_article.png',
-	'create_cat' => 'add_cat.png',
-	'add_article' => 'add_article.png',
-	'edit_index' => 'edit_index.png',
-	'rename' => 'rename.png',
-	'move' => 'move.png',
-	'random_page' => 'random_page.png',
-	'restriction_level' => 'restriction_level.png',
-	'article_status' => 'article_status.png',
-	'redirect' => 'redirect.png',
-	'search' => 'search.png',
-	'follow-article' => 'follow-article.png',
-	'followed-articles' => 'followed-articles.png',
-	'rss' => 'rss.png',
-	'explorer' => 'explorer.png',
-	'print' => 'print_mini.png'
-);
-
-$confirm = array();
-$confirm_others = array();
-
 //Définition du tableau comprenant les autorisation de chaque groupe
 if (!empty($article_infos['auth']))
 {
@@ -77,6 +46,8 @@ else
 	
 $Template->put_all(array(
 	'C_INDEX_PAGE' => $page_type == 'index',
+	
+	'L_OTHER_TOOLS' => $LANG['wiki_other_tools'],
 
 	'L_EDIT_INDEX' => $LANG['wiki_update_index'],
 	'U_EDIT_INDEX' => url('admin_wiki.php#index'),
@@ -104,14 +75,6 @@ $Template->put_all(array(
 	'L_MOVE' => $LANG['wiki_move'],
 	'U_MOVE' => url('property.php?move=' . $article_infos['id']),
 
-	'C_ADD_ARTICLE' => $User->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE),
-	'L_ADD_ARTICLE' => $LANG['wiki_create_article'],
-	'U_ADD_ARTICLE' => url('post.php' . ($id_cat > 0 ? '?id_parent=' . $id_cat : '')),
-
-	'C_ADD_CAT' => $User->check_auth($config->get_authorizations(), WIKI_CREATE_CAT),
-	'L_ADD_CAT' => $LANG['wiki_create_cat'],
-	'U_ADD_CAT' => url('post.php?type=cat' . ($id_cat > 0 ? '&amp;id_parent=' . $id_cat : '')),
-
 	'C_STATUS' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS)),
 	'L_STATUS' => $LANG['wiki_article_status'],
 	'U_STATUS' => url('property.php?status=' . $article_infos['id']),
@@ -123,23 +86,8 @@ $Template->put_all(array(
 	'L_PRINT' => $LANG['printable_version'],
 	'U_PRINT' => url('print.php?id=' . $article_infos['id']),
 
-	'L_RANDOM' => $LANG['wiki_random_page'],
-	'U_RANDOM' => url('property.php?random=1'),
-
-	'L_SEARCH' => $LANG['wiki_search'],
-	'U_SEARCH' => url('search.php'),
-
-	'L_FOLLOWED' => $LANG['wiki_followed_articles'],
-	'U_FOLLOWED' => url('favorites.php'),
-
 	'L_WATCH' => $article_infos['id_favorite'] > 0 ? $LANG['wiki_unwatch_this_topic'] : $LANG['wiki_watch'],
 	'U_WATCH' => $article_infos['id_favorite'] > 0 ? url('favorites.php?del=' . $id_article . '&amp;token=' . $Session->get_token()) : url('favorites.php?add=' . $id_article),
-
-	'L_EXPLORE' => $LANG['wiki_explorer_short'],
-	'U_EXPLORE' => url('explorer.php'),
-
-	'L_RSS' => $LANG['wiki_rss'],
-	'U_RSS' => $page_type == 'index' ? SyndicationUrlBuilder::rss('wiki')->rel() : SyndicationUrlBuilder::rss('wiki', $article_infos['id_cat'])->rel(),
 ));
 
 //Discussion

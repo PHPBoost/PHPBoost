@@ -204,6 +204,7 @@ $LANG['wiki_no_favorite'] = 'No topic in favorites';
 $LANG['wiki_confirm_unwatch_this_topic'] = 'Are you sure you want to delete this article from your favorites?';
 
 //Administration
+$LANG['authorizations'] = 'Authorizations';
 $LANG['wiki_groups_config'] = 'Groups management';
 $LANG['explain_wiki_groups'] = 'You can configure here everything concerning authorizations. You can attribute authorizations to a level and specials persmissions to a group.';
 $LANG['wiki_auth_create_article'] = 'Create an article';

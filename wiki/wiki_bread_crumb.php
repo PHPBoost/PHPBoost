@@ -28,6 +28,7 @@
 if (defined('PHPBOOST') !== true)	exit;
 
 require_once(PATH_TO_ROOT .'/wiki/wiki_auth.php');
+$Cache->load('wiki');
 $config = WikiConfig::load();
 
 switch ($bread_crumb_key)

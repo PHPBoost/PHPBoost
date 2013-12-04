@@ -31,6 +31,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 include_once('../wiki/wiki_auth.php');
+$Cache->load('wiki');
 
 $config = WikiConfig::load();
 

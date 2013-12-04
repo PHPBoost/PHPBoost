@@ -31,6 +31,7 @@ load_module_lang('wiki');
 $config = WikiConfig::load();
 
 require_once('../wiki/wiki_auth.php');
+$Cache->load('wiki');
 
 $random = retrieve(GET, 'random', false);
 $id_auth = retrieve(GET, 'auth', 0);
