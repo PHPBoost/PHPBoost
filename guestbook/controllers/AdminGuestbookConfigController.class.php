@@ -53,32 +53,8 @@ class AdminGuestbookConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$tpl->put('MSG', MessageHelper::display($this->lang['admin.config.success'], E_USER_SUCCESS, 5));
 		}
-		
-		//Message helper
-		$error = $request->get_value('error', '');
-		switch ($error)
-		{
-			case 'require_items_per_page':
-				$errstr = $this->lang['admin.config.error.require_items_per_page'];
-				break;
-			default:
-				$errstr = '';
-		}
-		if (!empty($errstr))
-			$tpl->put('MSG', MessageHelper::display($errstr, E_USER_NOTICE));
-		
-		$success = $request->get_value('success', '');
-		switch ($success)
-		{
-			case 'config_modified':
-				$errstr = $this->lang['admin.config.success'];
-				break;
-			default:
-				$errstr = '';
-		}
-		if (!empty($errstr))
-			$tpl->put('MSG', MessageHelper::display($errstr, E_USER_SUCCESS, 5));
 		
 		$tpl->put('FORM', $this->form->display());
 		
@@ -143,28 +119,20 @@ class AdminGuestbookConfigController extends AdminModuleController
 	
 	private function save()
 	{
-		$items_per_page = $this->form->get_value('items_per_page');
-		if (!empty($items_per_page))
+		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
+		
+		$forbidden_tags = array();
+		foreach ($this->form->get_value('forbidden_tags') as $field => $option)
 		{
-			$this->config->set_items_per_page($items_per_page);
-			
-			$forbidden_tags = array();
-			foreach ($this->form->get_value('forbidden_tags') as $field => $option)
-			{
-				$forbidden_tags[] = $option->get_raw_value();
-			}
-			
-			$this->config->set_forbidden_tags($forbidden_tags);
-			$this->config->set_maximum_links_message($this->form->get_value('max_link', -1));
-			$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
-			
-			GuestbookConfig::save();
-			GuestbookMessagesCache::invalidate();
-			
-			AppContext::get_response()->redirect(GuestbookUrlBuilder::configuration_success('config_modified'));
+			$forbidden_tags[] = $option->get_raw_value();
 		}
-		else
-			AppContext::get_response()->redirect(GuestbookUrlBuilder::configuration_error('require_items_per_page'));
+		
+		$this->config->set_forbidden_tags($forbidden_tags);
+		$this->config->set_maximum_links_message($this->form->get_value('max_link', -1));
+		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
+		
+		GuestbookConfig::save();
+		GuestbookMessagesCache::invalidate();
 	}
 }
 ?>
