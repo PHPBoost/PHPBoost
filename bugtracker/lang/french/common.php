@@ -256,7 +256,6 @@ $lang['bugs.config.auth.create_advanced_explain'] = 'Permet de choisir le niveau
 $lang['bugs.config.auth.moderate'] = 'Autorisation de modération des bugs';
 
 //Erreurs
-$lang['bugs.error.require_items_per_page'] = 'Veuillez remplir le champ \"Nombre de bugs par page\"';
 $lang['bugs.error.e_no_fixed_version'] = 'Veuillez sélectionner la version de correction avant de passer à l\'état "' . $lang['bugs.status.fixed'] . '"';
 $lang['bugs.error.e_unexist_bug'] = 'Ce bug n\'existe pas';
 $lang['bugs.error.e_unexist_parameter'] = 'Ce paramètre n\'existe pas';

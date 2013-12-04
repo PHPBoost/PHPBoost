@@ -53,32 +53,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$tpl->put('MSG', MessageHelper::display($this->lang['bugs.success.config'], E_USER_SUCCESS, 5));
 		}
-		
-		//Message helper
-		$error = $request->get_value('error', '');
-		switch ($error)
-		{
-			case 'require_items_per_page':
-				$errstr = $this->lang['bugs.error.require_items_per_page'];
-				break;
-			default:
-				$errstr = '';
-		}
-		if (!empty($errstr))
-			$tpl->put('MSG', MessageHelper::display($errstr, E_USER_NOTICE));
-		
-		$success = $request->get_value('success', '');
-		switch ($success)
-		{
-			case 'config_modified':
-				$errstr = $this->lang['bugs.success.config'];
-				break;
-			default:
-				$errstr = '';
-		}
-		if (!empty($errstr))
-			$tpl->put('MSG', MessageHelper::display($errstr, E_USER_SUCCESS, 5));
 		
 		$tpl->put('FORM', $this->form->display());
 		
@@ -464,222 +440,214 @@ class AdminBugtrackerConfigController extends AdminModuleController
 	
 	private function save()
 	{
-		$items_per_page = $this->form->get_value('items_per_page');
-		if (!empty($items_per_page))
+		$request = AppContext::get_request();
+		
+		$types = $this->config->get_types();
+		$categories = $this->config->get_categories();
+		$severities = $this->config->get_severities();
+		$priorities = $this->config->get_priorities();
+		$versions = $this->config->get_versions();
+		
+		foreach ($types as $key => $type)
 		{
-			$request = AppContext::get_request();
-			
-			$types = $this->config->get_types();
-			$categories = $this->config->get_categories();
-			$severities = $this->config->get_severities();
-			$priorities = $this->config->get_priorities();
-			$versions = $this->config->get_versions();
-			
-			foreach ($types as $key => $type)
+			$new_type_name = $request->get_value('type' . $key, '');
+			$types[$key] = (!empty($new_type_name) && $new_type_name != $type) ? $new_type_name : $type;
+		}
+		
+		$new_type = $this->form->get_value('add_type', '');
+		if (!empty($new_type))
+		{
+			$nb_types = sizeof($types);
+			$array_id = empty($nb_types) ? 1 : ($nb_types + 1);
+			$types[$array_id] = $new_type;
+		}
+		
+		foreach ($categories as $key => $category)
+		{
+			$new_category_name = $request->get_value('category' . $key, '');
+			$categories[$key] = (!empty($new_category_name) && $new_category_name != $category) ? $new_category_name : $category;
+		}
+		
+		$new_category = $this->form->get_value('add_category', '');
+		if (!empty($new_category))
+		{
+			$nb_categories = sizeof($categories);
+			$array_id = empty($nb_categories) ? 1 : ($nb_categories + 1);
+			$categories[$array_id] = $new_category;
+		}
+		
+		foreach ($severities as $key => $severity)
+		{
+			$new_severity_name = $request->get_value('severity' . $key, '');
+			$new_severity_color = $request->get_value('_s_color' . $key, '');
+			$severities[$key]['name'] = (!empty($new_severity_name) && $new_severity_name != $severity['name']) ? $new_severity_name : $severity['name'];
+			$severities[$key]['color'] = ($new_severity_color != $severity['color']) ? $new_severity_color : $severity['color'];
+		}
+		
+		foreach ($priorities as $key => $priority)
+		{
+			$new_priority_name = $request->get_value('priority' . $key, '');
+			$priorities[$key] = (!empty($new_priority_name) && $new_priority_name != $priority) ? $new_priority_name : $priority;
+		}
+		
+		foreach ($versions as $key => $version)
+		{
+			$new_version_name = $request->get_value('version' . $key, '');
+			$new_version_release_date = $request->get_value('release_date' . $key, '00/00/0000');
+			$new_version_detected_in = $request->get_value('detected_in' . $key, '');
+			$versions[$key]['name'] = (!empty($new_version_name) && $new_version_name != $version['name']) ? $new_version_name : $version['name'];
+			$versions[$key]['release_date'] = ($new_version_release_date != $version['release_date']) ? $new_version_release_date : $version['release_date'];
+			$versions[$key]['detected_in'] = ($new_version_detected_in != $version['detected_in']) ? $new_version_detected_in : $version['detected_in'];
+		}
+		
+		$new_version = $this->form->get_value('add_version', '');
+		if (!empty($new_version))
+		{
+			$nb_versions = sizeof($versions);
+			$array_id = empty($nb_versions) ? 1 : ($nb_versions + 1);
+			$versions[$array_id] = array(
+				'name'			=> $new_version,
+				'release_date'	=> $this->form->get_value('add_version_release_date'),
+				'detected_in'	=> (bool)$this->form->get_value('add_version_detected_in', false)
+			);
+		}
+		
+		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
+		$this->config->set_rejected_bug_color($this->form->get_value('rejected_bug_color'));
+		$this->config->set_fixed_bug_color($this->form->get_value('fixed_bug_color'));
+		$this->config->set_date_form($this->form->get_value('date_form')->get_raw_value());
+		
+		if ($this->form->get_value('comments_enabled'))
+			$this->config->enable_comments();
+		else
+			$this->config->disable_comments();
+		
+		if ($this->form->get_value('cat_in_title_displayed'))
+			$this->config->display_cat_in_title();
+		else
+			$this->config->hide_cat_in_title();
+		
+		if ($this->form->get_value('roadmap_enabled'))
+			$this->config->enable_roadmap();
+		else
+			$this->config->disable_roadmap();
+		
+		if ($this->form->get_value('progress_bar_displayed'))
+			$this->config->display_progress_bar();
+		else
+			$this->config->hide_progress_bar();
+		
+		if ($this->form->get_value('stats_enabled'))
+		{
+			$this->config->enable_stats();
+			if ($this->form->get_value('stats_top_posters_enabled'))
 			{
-				$new_type_name = $request->get_value('type' . $key, '');
-				$types[$key] = (!empty($new_type_name) && $new_type_name != $type) ? $new_type_name : $type;
-			}
-			
-			$new_type = $this->form->get_value('add_type', '');
-			if (!empty($new_type))
-			{
-				$nb_types = sizeof($types);
-				$array_id = empty($nb_types) ? 1 : ($nb_types + 1);
-				$types[$array_id] = $new_type;
-			}
-			
-			foreach ($categories as $key => $category)
-			{
-				$new_category_name = $request->get_value('category' . $key, '');
-				$categories[$key] = (!empty($new_category_name) && $new_category_name != $category) ? $new_category_name : $category;
-			}
-			
-			$new_category = $this->form->get_value('add_category', '');
-			if (!empty($new_category))
-			{
-				$nb_categories = sizeof($categories);
-				$array_id = empty($nb_categories) ? 1 : ($nb_categories + 1);
-				$categories[$array_id] = $new_category;
-			}
-			
-			foreach ($severities as $key => $severity)
-			{
-				$new_severity_name = $request->get_value('severity' . $key, '');
-				$new_severity_color = $request->get_value('_s_color' . $key, '');
-				$severities[$key]['name'] = (!empty($new_severity_name) && $new_severity_name != $severity['name']) ? $new_severity_name : $severity['name'];
-				$severities[$key]['color'] = ($new_severity_color != $severity['color']) ? $new_severity_color : $severity['color'];
-			}
-			
-			foreach ($priorities as $key => $priority)
-			{
-				$new_priority_name = $request->get_value('priority' . $key, '');
-				$priorities[$key] = (!empty($new_priority_name) && $new_priority_name != $priority) ? $new_priority_name : $priority;
-			}
-			
-			foreach ($versions as $key => $version)
-			{
-				$new_version_name = $request->get_value('version' . $key, '');
-				$new_version_release_date = $request->get_value('release_date' . $key, '00/00/0000');
-				$new_version_detected_in = $request->get_value('detected_in' . $key, '');
-				$versions[$key]['name'] = (!empty($new_version_name) && $new_version_name != $version['name']) ? $new_version_name : $version['name'];
-				$versions[$key]['release_date'] = ($new_version_release_date != $version['release_date']) ? $new_version_release_date : $version['release_date'];
-				$versions[$key]['detected_in'] = ($new_version_detected_in != $version['detected_in']) ? $new_version_detected_in : $version['detected_in'];
-			}
-			
-			$new_version = $this->form->get_value('add_version', '');
-			if (!empty($new_version))
-			{
-				$nb_versions = sizeof($versions);
-				$array_id = empty($nb_versions) ? 1 : ($nb_versions + 1);
-				$versions[$array_id] = array(
-					'name'			=> $new_version,
-					'release_date'	=> $this->form->get_value('add_version_release_date'),
-					'detected_in'	=> (bool)$this->form->get_value('add_version_detected_in', false)
-				);
-			}
-			
-			$this->config->set_items_per_page($items_per_page);
-			$this->config->set_rejected_bug_color($this->form->get_value('rejected_bug_color'));
-			$this->config->set_fixed_bug_color($this->form->get_value('fixed_bug_color'));
-			$this->config->set_date_form($this->form->get_value('date_form')->get_raw_value());
-			
-			if ($this->form->get_value('comments_enabled'))
-				$this->config->enable_comments();
-			else
-				$this->config->disable_comments();
-			
-			if ($this->form->get_value('cat_in_title_displayed'))
-				$this->config->display_cat_in_title();
-			else
-				$this->config->hide_cat_in_title();
-			
-			if ($this->form->get_value('roadmap_enabled'))
-				$this->config->enable_roadmap();
-			else
-				$this->config->disable_roadmap();
-			
-			if ($this->form->get_value('progress_bar_displayed'))
-				$this->config->display_progress_bar();
-			else
-				$this->config->hide_progress_bar();
-			
-			if ($this->form->get_value('stats_enabled'))
-			{
-				$this->config->enable_stats();
-				if ($this->form->get_value('stats_top_posters_enabled'))
-				{
-					$this->config->enable_stats_top_posters();
-					$this->config->set_stats_top_posters_number($this->form->get_value('stats_top_posters_number'));
-				}
-				else
-					$this->config->disable_stats_top_posters();
+				$this->config->enable_stats_top_posters();
+				$this->config->set_stats_top_posters_number($this->form->get_value('stats_top_posters_number'));
 			}
 			else
-				$this->config->disable_stats();
-			
-			if ($this->form->get_value('admin_alerts_enabled'))
-			{
-				$this->config->enable_admin_alerts();
-				$this->config->set_admin_alerts_fix_action($this->form->get_value('admin_alerts_fix_action')->get_raw_value());
-				
-				$admin_alerts_levels = array();
-				foreach ($this->form->get_value('admin_alerts_levels') as $level => $value)
-				{
-					$admin_alerts_levels[] = (string)$value->get_id();
-				}
-				$this->config->set_admin_alerts_levels($admin_alerts_levels);
-			}
-			else
-				$this->config->disable_admin_alerts();
-			
-			if ($this->form->get_value('pm_enabled'))
-			{
-				$this->config->enable_pm();
-				
-				if ($this->form->get_value('pm_comment_enabled'))
-					$this->config->enable_pm_comment();
-				else
-					$this->config->disable_pm_comment();
-				
-				if ($this->form->get_value('pm_assign_enabled'))
-					$this->config->enable_pm_assign();
-				else
-					$this->config->disable_pm_assign();
-				
-				if ($this->form->get_value('pm_edit_enabled'))
-					$this->config->enable_pm_edit();
-				else
-					$this->config->disable_pm_edit();
-				
-				if ($this->form->get_value('pm_reject_enabled'))
-					$this->config->enable_pm_reject();
-				else
-					$this->config->disable_pm_reject();
-				
-				if ($this->form->get_value('pm_reopen_enabled'))
-					$this->config->enable_pm_reopen();
-				else
-					$this->config->disable_pm_reopen();
-				
-				if ($this->form->get_value('pm_delete_enabled'))
-					$this->config->enable_pm_delete();
-				else
-					$this->config->disable_pm_delete();
-			}
-			else
-				$this->config->disable_pm();
-			
-			$this->config->set_contents_value($this->form->get_value('contents_value'));
-			
-			if ($this->form->get_value('type_mandatory')->get_raw_value())
-				$this->config->type_mandatory();
-			else
-				$this->config->type_not_mandatory();
-			
-			$this->config->set_types($types);
-			$this->config->set_default_type($this->form->get_value('add_type_default') ? sizeof($types) : $request->get_value('default_type', 0));
-			
-			if ($this->form->get_value('category_mandatory')->get_raw_value())
-				$this->config->category_mandatory();
-			else
-				$this->config->category_not_mandatory();
-			
-			$this->config->set_categories($categories);
-			$this->config->set_default_category($this->form->get_value('add_category_default') ? sizeof($categories) : $request->get_value('default_category', 0));
-			
-			if ($this->form->get_value('severity_mandatory')->get_raw_value())
-				$this->config->severity_mandatory();
-			else
-				$this->config->severity_not_mandatory();
-			
-			$this->config->set_severities($severities);
-			$this->config->set_default_severity($request->get_value('default_severity', 0));
-			
-			if ($this->form->get_value('priority_mandatory')->get_raw_value())
-				$this->config->priority_mandatory();
-			else
-				$this->config->priority_not_mandatory();
-			
-			$this->config->set_priorities($priorities);
-			$this->config->set_default_priority($request->get_value('default_priority', 0));
-			
-			if ($this->form->get_value('detected_in_version_mandatory')->get_raw_value())
-				$this->config->detected_in_version_mandatory();
-			else
-				$this->config->detected_in_version_not_mandatory();
-			
-			$this->config->set_versions($versions);
-			$this->config->set_default_version(!$this->form->field_is_disabled('add_version_default') && $this->form->get_value('add_version_default') ? sizeof($versions) : $request->get_value('default_version', 0));
-			
-			BugtrackerConfig::save();
-			
-			BugtrackerStatsCache::invalidate();
-			
-			AppContext::get_response()->redirect(BugtrackerUrlBuilder::configuration_success('config_modified'));
+				$this->config->disable_stats_top_posters();
 		}
 		else
-			AppContext::get_response()->redirect(BugtrackerUrlBuilder::configuration_error('require_items_per_page'));
+			$this->config->disable_stats();
+		
+		if ($this->form->get_value('admin_alerts_enabled'))
+		{
+			$this->config->enable_admin_alerts();
+			$this->config->set_admin_alerts_fix_action($this->form->get_value('admin_alerts_fix_action')->get_raw_value());
+			
+			$admin_alerts_levels = array();
+			foreach ($this->form->get_value('admin_alerts_levels') as $level => $value)
+			{
+				$admin_alerts_levels[] = (string)$value->get_id();
+			}
+			$this->config->set_admin_alerts_levels($admin_alerts_levels);
+		}
+		else
+			$this->config->disable_admin_alerts();
+		
+		if ($this->form->get_value('pm_enabled'))
+		{
+			$this->config->enable_pm();
+			
+			if ($this->form->get_value('pm_comment_enabled'))
+				$this->config->enable_pm_comment();
+			else
+				$this->config->disable_pm_comment();
+			
+			if ($this->form->get_value('pm_assign_enabled'))
+				$this->config->enable_pm_assign();
+			else
+				$this->config->disable_pm_assign();
+			
+			if ($this->form->get_value('pm_edit_enabled'))
+				$this->config->enable_pm_edit();
+			else
+				$this->config->disable_pm_edit();
+			
+			if ($this->form->get_value('pm_reject_enabled'))
+				$this->config->enable_pm_reject();
+			else
+				$this->config->disable_pm_reject();
+			
+			if ($this->form->get_value('pm_reopen_enabled'))
+				$this->config->enable_pm_reopen();
+			else
+				$this->config->disable_pm_reopen();
+			
+			if ($this->form->get_value('pm_delete_enabled'))
+				$this->config->enable_pm_delete();
+			else
+				$this->config->disable_pm_delete();
+		}
+		else
+			$this->config->disable_pm();
+		
+		$this->config->set_contents_value($this->form->get_value('contents_value'));
+		
+		if ($this->form->get_value('type_mandatory')->get_raw_value())
+			$this->config->type_mandatory();
+		else
+			$this->config->type_not_mandatory();
+		
+		$this->config->set_types($types);
+		$this->config->set_default_type($this->form->get_value('add_type_default') ? sizeof($types) : $request->get_value('default_type', 0));
+		
+		if ($this->form->get_value('category_mandatory')->get_raw_value())
+			$this->config->category_mandatory();
+		else
+			$this->config->category_not_mandatory();
+		
+		$this->config->set_categories($categories);
+		$this->config->set_default_category($this->form->get_value('add_category_default') ? sizeof($categories) : $request->get_value('default_category', 0));
+		
+		if ($this->form->get_value('severity_mandatory')->get_raw_value())
+			$this->config->severity_mandatory();
+		else
+			$this->config->severity_not_mandatory();
+		
+		$this->config->set_severities($severities);
+		$this->config->set_default_severity($request->get_value('default_severity', 0));
+		
+		if ($this->form->get_value('priority_mandatory')->get_raw_value())
+			$this->config->priority_mandatory();
+		else
+			$this->config->priority_not_mandatory();
+		
+		$this->config->set_priorities($priorities);
+		$this->config->set_default_priority($request->get_value('default_priority', 0));
+		
+		if ($this->form->get_value('detected_in_version_mandatory')->get_raw_value())
+			$this->config->detected_in_version_mandatory();
+		else
+			$this->config->detected_in_version_not_mandatory();
+		
+		$this->config->set_versions($versions);
+		$this->config->set_default_version(!$this->form->field_is_disabled('add_version_default') && $this->form->get_value('add_version_default') ? sizeof($versions) : $request->get_value('default_version', 0));
+		
+		BugtrackerConfig::save();
+		
+		BugtrackerStatsCache::invalidate();
 	}
 }
 ?>
