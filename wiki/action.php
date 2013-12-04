@@ -32,6 +32,7 @@ load_module_lang('wiki');
 $config = WikiConfig::load();
 
 require('../wiki/wiki_auth.php');
+$Cache->load('wiki');
 
 $id_auth = retrieve(POST, 'id_auth', 0);
 $id_status = retrieve(POST, 'id_status', 0);

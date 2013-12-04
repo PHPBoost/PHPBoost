@@ -40,6 +40,4 @@ define('WIKI_STATUS', 0x200);
 define('WIKI_COM', 0x400);
 define('WIKI_RESTRICTION', 0x800);
 
-$Cache->load('wiki');
-
 ?>

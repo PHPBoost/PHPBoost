@@ -82,6 +82,7 @@ $LANG['wiki_paragraph_name'] = 'Veuillez entrer le titre du paragraphe';
 $LANG['wiki_paragraph_name_example'] = 'Titre du paragraphe';
 
 //Restrictions d'accès
+$LANG['authorizations'] = 'Autorisations';
 $LANG['wiki_member_restriction'] = 'Cet article est protégé, seuls les membres peuvent le modifier';
 $LANG['wiki_modo_restriction'] = 'Cet article est protégé, seuls les modérateurs peuvent le modifier';
 $LANG['wiki_admin_restriction'] = 'Cet article est protégé, seuls les administrateurs peuvent le modifier';
