@@ -256,7 +256,6 @@ $lang['bugs.config.auth.create_advanced_explain'] = 'Permits to choose the sever
 $lang['bugs.config.auth.moderate'] = 'Permission to moderate the Bugtracker';
 
 //Errors
-$lang['bugs.error.require_items_per_page'] = 'The field \"Bugs number per page\" must not be empty';
 $lang['bugs.error.e_no_fixed_version'] = 'Please select the correction version before choosing the status "' . $lang['bugs.status.fixed'] . '"';
 $lang['bugs.error.e_unexist_bug'] = 'This bug does not exist';
 $lang['bugs.error.e_unexist_parameter'] = 'This parameter does not exist';

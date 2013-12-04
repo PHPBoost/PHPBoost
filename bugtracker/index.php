@@ -31,8 +31,6 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminBugtrackerConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminBugtrackerConfigController', '`^/admin/config/error/([a-z_-]+)?/?$`', array('error')),
-	new UrlControllerMapper('AdminBugtrackerConfigController', '`^/admin/config/success/([a-z_-]+)?/?$`', array('success')),
 	new UrlControllerMapper('AdminBugtrackerAuthorizationsController', '`^/admin/authorizations?/?$`'),
 	new UrlControllerMapper('AdminBugtrackerDeleteParameterController', '`^/admin/delete/([a-z]+)/([0-9]+)?/?$`', array('parameter', 'id')),
 	new UrlControllerMapper('AdminBugtrackerDeleteDefaultParameterController', '`^/admin/delete/default/([a-z]+)?/?$`', array('parameter')),

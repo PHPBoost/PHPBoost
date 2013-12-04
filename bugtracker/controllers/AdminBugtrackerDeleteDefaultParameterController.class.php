@@ -59,7 +59,7 @@ class AdminBugtrackerDeleteDefaultParameterController extends AdminController
 			}
 			
 			BugtrackerConfig::save();
-			AppContext::get_response()->redirect(BugtrackerUrlBuilder::configuration_success('config_modified'));
+			AppContext::get_response()->redirect(BugtrackerUrlBuilder::configuration());
 		}
 		else
 		{

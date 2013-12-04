@@ -44,22 +44,6 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function configuration_success($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/config/success/' . $param);
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function configuration_error($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/config/error/' . $param);
-	}
-	
-	/**
-	 * @return Url
-	 */
 	public static function authorizations()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/authorizations');
