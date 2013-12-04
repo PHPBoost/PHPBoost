@@ -31,8 +31,6 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminGuestbookConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminGuestbookConfigController', '`^/admin/config/error/([a-z_-]+)?/?$`', array('error')),
-	new UrlControllerMapper('AdminGuestbookConfigController', '`^/admin/config/success/([a-z_-]+)?/?$`', array('success')),
 	
 	new UrlControllerMapper('GuestbookFormController', '`^/add(?:/[0-9]+)??$`', array('page')),
 	new UrlControllerMapper('GuestbookFormController', '`^/([0-9]+)/edit(?:/([0-9]+))?/?$`', array('id', 'page')),

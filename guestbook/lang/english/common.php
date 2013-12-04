@@ -49,7 +49,6 @@ $lang['admin.authorizations.read']  = 'Permission to display the guestbook';
 $lang['admin.authorizations.write']  = 'Write permission';
 $lang['admin.authorizations.moderation']  = 'Moderation permission';
 $lang['admin.config.success'] = 'The configuration has been modified';
-$lang['admin.config.error.require_items_per_page'] = 'The field \"Messages number per page\" must not be empty';
 $lang['admin.config.error.number-required'] = 'The value entered must be a number';
 
 ?>
