@@ -35,6 +35,8 @@ class PagesTreeLinks implements ModuleTreeLinksExtensionPoint
 		global $LANG;
 		load_module_lang('pages'); //Chargement de la langue du module.
 		require_once(PATH_TO_ROOT . '/pages/pages_defines.php');
+		$current_user = AppContext::get_current_user();
+		$config = PagesConfig::load();
 		
 		$tree = new ModuleTreeLinks();
 		
@@ -45,13 +47,13 @@ class PagesTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/pages/admin_pages.php')));
 		
-		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
+		if (!$current_user->check_level(User::ADMIN_LEVEL))
 		{
-			$tree->add_link(new ModuleLink($LANG['pages_create'], new Url('/pages/post.php'), AppContext::get_current_user()->check_auth(PagesConfig::load()->get_authorizations(), EDIT_PAGE)));
+			$tree->add_link(new ModuleLink($LANG['pages_create'], new Url('/pages/post.php'), $current_user->check_auth($config->get_authorizations(), EDIT_PAGE)));
 		}
 		
-		$tree->add_link(new ModuleLink($LANG['pages_redirection_manage'], new Url('/pages/action.php'), AppContext::get_current_user()->check_auth(PagesConfig::load()->get_authorizations(), EDIT_PAGE)));
-		$tree->add_link(new ModuleLink($LANG['pages_explorer'], new Url('/pages/explorer.php'), AppContext::get_current_user()->check_auth(PagesConfig::load()->get_authorizations(), EDIT_PAGE)));
+		$tree->add_link(new ModuleLink($LANG['pages_redirection_manage'], new Url('/pages/action.php'), $current_user->check_auth($config->get_authorizations(), EDIT_PAGE)));
+		$tree->add_link(new ModuleLink($LANG['pages_explorer'], new Url('/pages/explorer.php'), $current_user->check_auth($config->get_authorizations(), EDIT_PAGE)));
 		
 		return $tree;
 	}
