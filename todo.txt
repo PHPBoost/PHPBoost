@@ -1,4 +1,4 @@
-###################################### PHPBoost 4.0 ##################################
+###################################### PHPBoost 4.1 ##################################
 
 ## AUTRES ##
 - Remplacement des icônes de base par le pack famfamfam
@@ -29,19 +29,6 @@
 #################################################################################
 
 ------------------------------------ MODULES -----------------------------------
-[b]Articles[/b]
-- [color=red]Nouveauté :[/color] Passage du module en MVC
-- [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie
-- [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
-- [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
-- [color=red]Nouveauté :[/color] Nettoyage de la configuration
-- [color=red]Nouveauté :[/color] Refonte graphique
-- [color=red]Nouveauté :[/color] Possibilité de personnaliser l'url d'un article
-- [color=red]Nouveauté :[/color] Amélioration du référencement
-- [color=red]Nouveauté :[/color] Possibilité de personnaliser la pagination
-- [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires globalement
-- [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver l'affichage du nom de l'auteur d'un article pour chacun des articles
-- [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver la notation d'un article pour chacun des articles
 
 #################################################################################
 
@@ -53,8 +40,8 @@
 #################################################################################
 
 ------------------------------------ MODULES -----------------------------------
-[b]Calendrier:[/b]
-+ Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
+[b]Galerie:[/b]
+- ModuleTreeLinks
 
 #################################################################################
 
@@ -63,7 +50,7 @@
 ######################################DOSSIERS##################################
 
 
-###################################### PHPBoost 4.1 ##################################
+###################################### PHPBoost 4.2 ##################################
 
 [b]Structure et fonctionnement:[/b]
 - [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
@@ -87,6 +74,7 @@
 - Possibilité de désactiver l'affichage d'un lien dans les menus
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 - Support mobile et version tablette
+- Refonte du système d'événement et intégration d'un système de notification
 
 [b]Installateur[/b]
 - Ajout d'une option pour supprimer le dossier à la fin de l'installation
@@ -122,7 +110,14 @@
 - [color=red]Nouveauté:[/color] Diaporama sur l'index de la galerie.
 - Possibilité de définir une limite d'upload en fonction des groupes.
 
+[b]FAQ[/b]
+- refonte du module en MVC
+
+[b]Téléchargements[/b]
+- refonte du module en MVC
+
 [b]Liens web[/b]
+- refonte du module en MVC
 - [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
 - [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des liens.
 - Possibilité de signaler les liens cassés.
