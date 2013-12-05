@@ -47,6 +47,17 @@ $unsecure_search = stripslashes(retrieve(REQUEST, 'q', ''));
 $search_in = retrieve(POST, 'search_in', 'all');
 $selected_modules = retrieve(POST, 'searched_modules', array());
 $query_mode = retrieve(POST, 'query_mode', true);
+
+if ($search_in !== 'all')
+{
+	$selected_modules = array($search_in);
+}
+else if (count($selected_modules) == 1)
+{
+	$module = $selected_modules['0'];
+	$search_in = $module;
+}
+
 //--------------------------------------------------------------------- Header
 
 define('TITLE', $LANG['title_search']);
@@ -55,7 +66,7 @@ require_once('../kernel/header.php');
 $Template->assign_vars(Array(
     'L_TITLE_SEARCH' => TITLE,
     'L_SEARCH' => $LANG['title_search'],
-    'TEXT_SEARCHED' => !empty($unsecure_search) ? $unsecure_search : $LANG['search'] . '...',
+    'TEXT_SEARCHED' => $unsecure_search,
     'L_SEARCH_ALL' => $LANG['search_all'],
     'L_SEARCH_KEYWORDS' => $LANG['search_keywords'],
     'L_SEARCH_MIN_LENGTH' => $LANG['search_min_length'],
@@ -91,7 +102,7 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 {
 	if (in_array($module->get_id(), $search_extensions_point_modules))
 	{
-		$module_configuration = ModulesManager::get_module($module->get_id())->get_configuration();
+		$module_configuration = $module->get_configuration();
 		if (!in_array($module->get_id(), $config->get_unauthorized_providers()))
 		{
 			// Ajout du paramètre search à tous les modules
@@ -116,11 +127,12 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 						}
 					}
 				}
-				
+
 				$Template->assign_block_vars('forms', array(
 					'MODULE_NAME' => $module->get_id(),
 					'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
 					'C_SEARCH_FORM' => true,
+					'C_SELECTED' => count($selected_modules) == 1 ? in_array($module->get_id(), $selected_modules) : false,
 					'SEARCH_FORM' => $search_extensions_point[$module->get_id()]->get_search_form($modules_args[$module->get_id()])
 				));
 			}
@@ -130,10 +142,11 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 					'MODULE_NAME' => $module->get_id(),
 					'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
 					'C_SEARCH_FORM' => false,
+					'C_SELECTED' => count($selected_modules) == 1 ? in_array($module->get_id(), $selected_modules) : false,
 					'SEARCH_FORM' => $LANG['search_no_options']
 				));
 			}
-			
+
 			// Récupération de la liste des modules à traiter
 			if ( ($selected_modules === array()) || ($search_in === $module->get_id()) ||
 				(($search_in === 'all') && (in_array($module->get_id(), $selected_modules))) )

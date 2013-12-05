@@ -2,7 +2,7 @@
         <!--
             const FORM = 'form_';
             const SPECIALIZED_FORM_LINK = 'specialize_form_link_';
-            var LastSpecializedFormUsed = 'all';
+            var LastSpecializedFormUsed = '{SEARCH_MODE_MODULE}';
             
             function ChangeForm(module)
             // Change le cadre des résultats
@@ -47,12 +47,12 @@
                     <div class="search_field"><input type="text" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="field-xlarge" placeholder="{L_SEARCH}..."></div>
                     <div class="spacer">&nbsp;</div>
 					<div id="forms_selection" class="options">
-						<a id="specialize_form_link_all" href="javascript:ChangeForm('all');" class="SFL_current">{L_SEARCH_ALL}</a>
+						<a id="specialize_form_link_all" href="javascript:ChangeForm('all');" # IF C_SIMPLE_SEARCH # class="SFL_current" # ENDIF #>{L_SEARCH_ALL}</a>
 						# START forms #
-							<a id="specialize_form_link_{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');">{forms.L_MODULE_NAME}</a>
+							<a id="specialize_form_link_{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" # IF forms.C_SELECTED # class="SFL_current" # ENDIF #>{forms.L_MODULE_NAME}</a>
 						# END forms #
 					</div>
-                    <div id="form_all" class="SpecializedForm">
+                    <div id="form_all" class="SpecializedForm" # IF NOT C_SIMPLE_SEARCH # style="display:none" # ENDIF #>
                         <fieldset class="searchFieldset">
                             <div class="form-element">
                                 <label>{L_SEARCH_IN_MODULES}<br /><span>{L_SEARCH_IN_MODULES_EXPLAIN}</span></label>
@@ -67,7 +67,7 @@
                         </fieldset>
                     </div>
                     # START forms #
-                    <div id="form_{forms.MODULE_NAME}" class="SpecializedForm" style="display:none">
+                    <div id="form_{forms.MODULE_NAME}" class="SpecializedForm" # IF NOT forms.C_SELECTED # style="display:none" # ENDIF #>
                         <fieldset class="searchFieldset">
                         # IF forms.C_SEARCH_FORM #{forms.SEARCH_FORM}# ELSE #<p class="center">{forms.SEARCH_FORM}</p># ENDIF #
                         </fieldset>
