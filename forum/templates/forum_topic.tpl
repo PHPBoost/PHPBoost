@@ -32,7 +32,7 @@
 		{
 			var idtopic = {IDTOPIC};			
 			if( document.getElementById('forum_change_img') )
-				document.getElementById('forum_change_img').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
+				document.getElementById('forum_change_img').innerHTML = '<i class="icon-spinner icon-spin"></i>';
 			
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?msg_d=' + idtopic + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
@@ -42,7 +42,7 @@
 					document.getElementById('display_msg_title').innerHTML = xhr_object.responseText == '1' ? "{L_DISPLAY_MSG}" + ' ' : '';
 					document.getElementById('display_msg_title2').innerHTML = xhr_object.responseText == '1' ? "{L_DISPLAY_MSG}" + ' ' : '';
 					if( document.getElementById('forum_change_img') )
-						document.getElementById('forum_change_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/not_processed_mini.png' : '{PICTURES_DATA_PATH}/images/processed_mini.png';
+						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<img src="{PICTURES_DATA_PATH}/images/not_processed_mini.png" alt="" class="valign_middle" />' : '<img src="{PICTURES_DATA_PATH}/images/processed_mini.png" alt="" class="valign_middle" />';
 					if( document.getElementById('forum_change_msg') )
 						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
 				}
@@ -54,7 +54,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_track_img') )
-				document.getElementById('forum_track_img').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
+				document.getElementById('forum_track_img').innerHTML = '<i class="icon-spinner icon-spin"></i>';
 			
 			xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&' + (is_track ? 'ut' : 't') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
@@ -62,7 +62,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{	
 					if( document.getElementById('forum_track_img') )
-						document.getElementById('forum_track_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/untrack_mini.png' : '{PICTURES_DATA_PATH}/images/track_mini.png';
+						document.getElementById('forum_track_img').innerHTML = xhr_object.responseText == '1' ? '<img src="{PICTURES_DATA_PATH}/images/untrack_mini.png" alt="" class="valign_middle" />' : '<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" />';
 					if( document.getElementById('forum_track_msg') )
 						document.getElementById('forum_track_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNTRACK}" : "{L_TRACK}";
 					is_track = xhr_object.responseText == '1' ? true : false;
@@ -75,7 +75,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_track_pm_img') )
-				document.getElementById('forum_track_pm_img').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
+				document.getElementById('forum_track_pm_img').innerHTML = '<i class="icon-spinner icon-spin"></i>';
 			
 			xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&' + (is_track_pm ? 'utp' : 'tp') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
@@ -83,7 +83,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{	
 					if( document.getElementById('forum_track_pm_img') )
-						document.getElementById('forum_track_pm_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/untrack_pm_mini.png' : '{PICTURES_DATA_PATH}/images/track_pm_mini.png';
+						document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<img src="{PICTURES_DATA_PATH}/images/untrack_pm_mini.png" alt="" class="valign_middle" />' : '<img src="{PICTURES_DATA_PATH}/images/track_pm_mini.png" alt="" class="valign_middle" />';
 					if( document.getElementById('forum_track_pm_msg') )
 						document.getElementById('forum_track_pm_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE_PM}" : "{L_SUSCRIBE_PM}";
 					is_track_pm = xhr_object.responseText == '1' ? true : false;
@@ -96,7 +96,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_track_mail_img') )
-				document.getElementById('forum_track_mail_img').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
+				document.getElementById('forum_track_mail_img').innerHTML = '<i class="icon-spinner icon-spin"></i>';
 			
 			xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&' + (is_track_mail ? 'utm' : 'tm') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
@@ -104,7 +104,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{	
 					if( document.getElementById('forum_track_mail_img') )
-						document.getElementById('forum_track_mail_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/untrack_mail_mini.png' : '{PICTURES_DATA_PATH}/images/track_mail_mini.png';
+						document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<img src="{PICTURES_DATA_PATH}/images/untrack_mail_mini.png" alt="" class="valign_middle" />' : '<img src="{PICTURES_DATA_PATH}/images/track_mail_mini.png" alt="" class="valign_middle" />';
 					if( document.getElementById('forum_track_mail_msg') )
 						document.getElementById('forum_track_mail_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE}" : "{L_SUSCRIBE}";
 					is_track_mail = xhr_object.responseText == '1' ? true : false;

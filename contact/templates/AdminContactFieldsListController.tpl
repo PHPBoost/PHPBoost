@@ -119,7 +119,6 @@ var ContactField = Class.create({
 		}
 	},
 	change_display : function() {
-		$('loading_' + this.id).update('<img src="{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif" alt="" class="valign_middle" />');
 		display = this.is_not_displayed;
 		
 		new Ajax.Request('{REWRITED_SCRIPT}', {
@@ -128,7 +127,6 @@ var ContactField = Class.create({
 		});
 		
 		this.change_display_picture();
-		Element.update.delay(1, 'loading_' + this.id, ''); 
 	},
 	change_display_picture : function() {
 		if (this.is_not_displayed == false) {
@@ -180,7 +178,7 @@ Event.observe(window, 'load', function() {
 							<div class="sortable-options">
 								# IF fields_list.C_DELETE #<a class="icon-delete" data-confirmation="delete-element" title="{@admin.fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
 							</div>
-							# IF NOT fields_list.C_READONLY #<img id="loading_{fields_list.ID}" alt="" class="valign_middle" /><a><i id="change_display_{fields_list.ID}" class="icon-eye"></i></a># ELSE #<span class="not_displayable"><i id="change_display_{fields_list.ID}" class="icon-eye"></i></span># ENDIF #
+							# IF NOT fields_list.C_READONLY #<a><i id="change_display_{fields_list.ID}" class="icon-eye"></i></a># ELSE #<span class="not_displayable"><i id="change_display_{fields_list.ID}" class="icon-eye"></i></span># ENDIF #
 						</div>
 					</div>
 					<div class="spacer"></div>

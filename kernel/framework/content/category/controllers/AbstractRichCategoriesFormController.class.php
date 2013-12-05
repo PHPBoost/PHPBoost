@@ -37,10 +37,11 @@ abstract class AbstractRichCategoriesFormController extends AbstractCategoriesFo
 		$fieldset->add_field(new FormFieldRichTextEditor('description', $this->lang['category.form.description'], $this->get_category()->get_description()));
 		
 		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 'function(response){
-		if (response.responseJSON.url) {
-			$(\'preview_picture\').src = response.responseJSON.url;
+		if (response.responseJSON.image_url) {
+			$(\'loading-category-picture\').remove();
+			$(\'preview_picture\').src = response.responseJSON.image_url;
 		}}');
-		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').src = PATH_TO_ROOT + \'/templates/'. get_utheme() .'/images/loading_mini.gif\';}');
+		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-category-picture" class="icon-spinner icon-spin"></i>\'}); }');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'image\').getValue()');
 		
 		$fieldset->add_field(new FormFieldTextEditor('image', $this->lang['category.form.image'], $this->get_category()->get_image()->relative(), array(

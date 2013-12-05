@@ -294,7 +294,7 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 	if (login != '')
 	{
 		if ($('search_img' + searchid))
-			$('search_img' + searchid).innerHTML = '<img src="' + PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif" alt="" class="valign_middle" />';
+			$('search_img' + searchid).innerHTML = '<i class="icon-spinner icon-spin"></i>';
 		var xhr_object = xmlhttprequest_init(PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?token=' + TOKEN + '&' + insert_mode + '=1');
 		data = 'login=' + login + '&divid=' + searchid;
 		xhr_object.onreadystatechange = function() 

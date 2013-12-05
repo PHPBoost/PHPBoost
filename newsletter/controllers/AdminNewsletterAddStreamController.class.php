@@ -78,9 +78,10 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 		
 		$image_preview_request = new AjaxRequest(NewsletterUrlBuilder::image_preview(), 'function(response){
 		if (response.responseJSON.image_url) {
+			$(\'loading-stream-picture\').remove();
 			$(\'preview_picture\').src = response.responseJSON.image_url;
 		}}');
-		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').src = PATH_TO_ROOT + \'/templates/'. get_utheme() .'/images/loading_mini.gif\';}');
+		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-stream-picture" class="icon-spinner icon-spin"></i>\'}); }');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
 		
 		$fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['streams.picture'], '/newsletter/newsletter.png', array(

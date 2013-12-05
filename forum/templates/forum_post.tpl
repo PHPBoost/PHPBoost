@@ -222,7 +222,7 @@
 							<script type="text/javascript">
 							<!--
 							document.getElementById('forum_change_statut').style.display = 'none';
-							document.write('<a href="javascript:XMLHttpRequest_change_statut()" id="forum_change_img">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
+							document.write('<a href="javascript:XMLHttpRequest_change_statut()" id="forum_change_img">{ICON_DISPLAY_MSG}</a> <a href="javascript:XMLHttpRequest_change_statut()"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
 							-->
 							</script>
 							# ENDIF #
