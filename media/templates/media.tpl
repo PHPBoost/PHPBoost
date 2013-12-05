@@ -132,8 +132,7 @@
 					{NAME} 
 					<span class="actions">
 						# IF A_COM #
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
-							{U_COM}
+							<a href="{U_COM}"><i class="icon-comments-o"></i> {L_COM}</a>
 						# ENDIF #
 						# IF C_MODO #
 							<a href="{U_UNVISIBLE_MEDIA}" class="icon-eye-slash" title="{L_UNAPROBED}"></a>
