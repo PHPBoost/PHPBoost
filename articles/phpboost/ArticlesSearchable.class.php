@@ -57,8 +57,8 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 			articles.rewrited_title,
 			cat.rewrited_name,
 			(2 * FT_SEARCH_RELEVANCE(articles.title, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(articles.contents, '" . $args['search'] . "') +
-			FT_SEARCH_RELEVANCE(articles.description, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance, "
-			. $this->sql_querier->concat("'" . PATH_TO_ROOT . "/articles/index.php?url=/'", "id_category", "-", "cat.rewrited_name", "/", "articles.id", "-", "articles.rewrited_title") . " AS link
+			FT_SEARCH_RELEVANCE(articles.description, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance,
+			CONCAT('" . PATH_TO_ROOT . "/articles/index.php?url=/', id_category, '-', cat.rewrited_name, '/', articles.id, '-', articles.rewrited_title) AS link
 			FROM " . ArticlesSetup::$articles_table . " articles
 			LEFT JOIN ". ArticlesSetup::$articles_cats_table ." cat ON articles.id_category = cat.id
 			WHERE (FT_SEARCH(articles.title, '" . $args['search'] . "') OR FT_SEARCH(articles.contents, '" . $args['search'] . "') OR
