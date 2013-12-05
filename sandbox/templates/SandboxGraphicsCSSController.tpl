@@ -58,7 +58,7 @@
 				<li>Editer : <a href="#" class="icon-edit"></a></li>
 				<li>Supprimer : <a href="#" class="icon-delete"></a></li>
 				<li>Supprimer (contrôle automatique JS avec confirmation de suppression) : <a href="#" class="icon-delete" data-confirmation="delete-element"></a></li>
-				<li>Supprimer (contrôe automatique JS avec confirmation personnalisée) : <a href="#" class="icon-delete" data-confirmation="Message personnalisÃ©"></a></li>
+				<li>Supprimer (contrôle automatique JS avec confirmation personnalisée) : <a href="#" class="icon-delete" data-confirmation="Message personnalisé"></a></li>
 			</ul>
 		</div>
 		
@@ -120,11 +120,16 @@
 									<li><a href="#"><i class="icon-tag"></i> Nom</a></li>
 									<li><a href="#"><i class="icon-clock-o"></i> Date</a></li>
 									<li><a href="#"><i class="icon-eye"></i> Vues</a></li>
+									<li><a href="#"><i class="icon-star-half-empty"></i> Notes</a></li>
+									<li><a href="#"><i class="icon-comments-o"></i> Commentaires</a></li>
 								</ul>
 							</li>
-							<li class="separator"></li>
-							<li><a href="#"><i class="icon-plus"></i> Ajout d'images</a></li>
-							<li><a href="#"><i class="icon-pencil"></i> Edition de la catégorie</a></li>
+							<li class="extend"><a><i class="icon-sort-alpha-asc"></i> Direction</a>
+								<ul>
+									<li><a href="#"><i class="icon-sort-amount-asc"></i> Croissant</a></li>
+									<li><a href="#"><i class="icon-sort-amount-desc"></i> Décroissant</a></li>
+								</ul>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -145,11 +150,16 @@
 									<li><a href="#"><i class="icon-tag"></i> Nom</a></li>
 									<li><a href="#"><i class="icon-clock-o"></i> Date</a></li>
 									<li><a href="#"><i class="icon-eye"></i> Vues</a></li>
+									<li><a href="#"><i class="icon-star-half-empty"></i> Notes</a></li>
+									<li><a href="#"><i class="icon-comments-o"></i> Commentaires</a></li>
 								</ul>
 							</li>
-							<li class="separator"></li>
-							<li><a href="#"><i class="icon-plus"></i> Ajout d'images</a></li>
-							<li><a href="#"><i class="icon-pencil"></i> Edition de la catégorie</a></li>
+							<li class="extend"><a><i class="icon-sort-alpha-asc"></i> Direction</a>
+								<ul>
+									<li><a href="#"><i class="icon-sort-amount-asc"></i> Croissant</a></li>
+									<li><a href="#"><i class="icon-sort-amount-desc"></i> Décroissant</a></li>
+								</ul>
+							</li>
 						</ul>
 					</li>
 				</ul>
