@@ -155,8 +155,6 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'HEIGHT_MAX' => $config->get_mini_max_height(),
 			'WIDTH_MAX' => $column_width_pics,
 			'MODULE_DATA_PATH' => $module_data_path,
-			'U_ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS) ? GalleryUrlBuilder::get_link_cat_add($g_idcat) : '',
-			'L_ADD_PICS' => $LANG['gallery_pics_add'],
 			'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 			'L_APROB' => $LANG['aprob'],
 			'L_UNAPROB' => $LANG['unaprob'],
@@ -217,13 +215,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		##### Catégorie disponibles #####
 		if ($total_cat > 0 && $nbr_unauth_cats < $total_cat && empty($g_idpics))
 		{
-			$Template->put_all(array(
-				'C_GALLERY_CATS' => true,
-				'U_EDIT_CAT' => $is_admin ? PATH_TO_ROOT.'/gallery/admin_gallery_cat.php' : '',
-				'L_EDIT_CAT' => $LANG['gallery_cats_management']
-				
-			));
-	
+			$Template->put('C_GALLERY_CATS', true);
+			
 			$j = 0;
 			$result = $this->sql_querier->query_while ("SELECT gc.id, gc.name, gc.contents, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path
 			FROM " . PREFIX . "gallery_cats gc
@@ -303,12 +296,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			elseif ($g_notes)
 				$g_sql_sort = ' ORDER BY notes.average_notes DESC';
 	
-			$Template->put_all(array(
-				'C_GALLERY_PICS' => true,
-				'U_EDIT' => $is_admin ? PATH_TO_ROOT.'/gallery/admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') : '',
-				'L_CAT_EDIT' => $LANG['cat_edit']
-			));
-	
+			$Template->put('C_GALLERY_PICS', true);
+			
 			//Liste des catégories.
 			$array_cat_list = array(0 => '<option value="-1" %s>' . $LANG['root'] . '</option>');
 			$result = $this->sql_querier->query_while("SELECT id, level, name

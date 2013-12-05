@@ -31,11 +31,11 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
 
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('gallery');
-    }
+	public function __construct()
+	{
+		$this->sql_querier = PersistenceContext::get_sql();
+		parent::__construct('gallery');
+	}
 
 	//Récupération du cache.
 	function get_cache()
@@ -97,9 +97,9 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		return $cat_gallery . "\n" . $_array_random_pics;
 	}
 	
-	function feeds()
+	public function comments()
 	{
-		return new GalleryFeedProvider();
+		return new CommentsTopics(array(new GalleryCommentsTopic()));
 	}
 	
 	public function css_files()
@@ -109,11 +109,9 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		return $module_css_files;
 	}
 	
-	public function menus()
+	public function feeds()
 	{
-		return new ModuleMenus(array(
-			new GalleryModuleMiniMenu()
-		));
+		return new GalleryFeedProvider();
 	}
 	
 	public function home_page()
@@ -121,11 +119,19 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		return new GalleryHomePageExtensionPoint();
 	}
 	
-	public function comments()
+	public function menus()
 	{
-		return new CommentsTopics(array(
-			new GalleryCommentsTopic()
-		));
+		return new ModuleMenus(array(new GalleryModuleMiniMenu()));
+	}
+	
+	public function sitemap()
+	{
+		return new GallerySitemapExtensionPoint();
+	}
+	
+	public function tree_links()
+	{
+		return new GalleryTreeLinks();
 	}
 }
 ?>
