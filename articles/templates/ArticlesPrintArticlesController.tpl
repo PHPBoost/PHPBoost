@@ -12,7 +12,7 @@
 	</div>
 	# IF C_SOURCES #
 	<hr />
-	<div><b> {L_SOURCE} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small">{sources.NAME}</a># END sources #</div>
+	<div><b> {@articles.sources} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small">{sources.NAME}</a># END sources #</div>
 	# ENDIF #
 	</body>
 </html>

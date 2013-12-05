@@ -85,7 +85,6 @@ class ArticlesPrintArticlesController extends ModuleController
 		$this->view->put_all(array(
 			'PAGE_TITLE' => $this->lang['articles.print.article'] . ' - ' . $this->article->get_title() . ' - ' . GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->article->get_title(),
-			'L_SOURCE' => $this->lang['articles.sources'],
 			'CONTENTS' => FormatingHelper::second_parse($contents)
 		));
 	}
