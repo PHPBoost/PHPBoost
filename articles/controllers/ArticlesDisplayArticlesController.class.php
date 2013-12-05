@@ -131,7 +131,6 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_PREVIOUS_PAGE' => ($current_page != 1) ? true : false,
 			'C_NEXT_PAGE' => ($current_page != $nbr_pages) ? true : false,
-			'L_PRINTABLE_VERSION' => LangLoader::get_message('printable_version', 'main'),
 			'L_CAT_NAME' => $this->category->get_name(),
 			'DATE_UPDATED' => $this->article->get_date_updated() != null ? $this->article->get_date_updated()->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
