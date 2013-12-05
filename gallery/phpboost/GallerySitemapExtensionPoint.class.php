@@ -68,7 +68,7 @@ class GallerySitemapExtensionPoint implements SitemapExtensionPoint
 				$this_auth = is_array($properties['auth']) ? $current_user->check_auth($properties['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS) : GalleryAuthorizationsService::check_authorizations()->write();
 			}
 
-			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
+			if ($this_auth && $id != 0 && $properties['aprob'] && $properties['level'] == $id_cat)
 			{
 				$module_map->add($this->create_module_map_sections($id, $auth_mode));
 			}
@@ -94,7 +94,7 @@ class GallerySitemapExtensionPoint implements SitemapExtensionPoint
 		{
 			$id = $keys[$j];
 			$properties = $CAT_GALLERY[$id];
-			if ($id != 0 && $properties['id_left'] == $id_cat)
+			if ($id != 0 && $properties['level'] == $id_cat)
 			{
 				$category->add($this->create_module_map_sections($id, $auth_mode));
 				$i++;
