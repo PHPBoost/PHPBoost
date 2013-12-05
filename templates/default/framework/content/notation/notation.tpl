@@ -1,6 +1,7 @@
 <style>
 <!--
 .static-notation .star, .notation .star { color: #e3cf7a; font-size: 14px; padding-right: 5px; text-decoration: none; }
+.notation .star { cursor:pointer; }
 -->
 </style>
 
