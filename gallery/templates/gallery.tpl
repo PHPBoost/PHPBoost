@@ -249,7 +249,7 @@
 								<li><a href="{U_ORDER_BY_DATE}"><i class="icon-clock-o"></i> {L_DATE}</a></li>
 								<li><a href="{U_ORDER_BY_VIEWS}"><i class="icon-eye"></i> {L_VIEWS}</a></li>
 								<li><a href="{U_ORDER_BY_NOTES}"><i class="icon-star-half-empty"></i> {L_NOTES}</a></li>
-								<li><a href="{U_ORDER_BY_COM}"><i class="icon-comment"></i> {L_COM}</a></li>
+								<li><a href="{U_ORDER_BY_COM}"><i class="icon-comments-o"></i> {L_COM}</a></li>
 							</ul>
 						</li>
 						<li class="extend"><a><i class="icon-sort-alpha-asc"></i> {L_DIRECTION}</a>
