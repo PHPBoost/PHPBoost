@@ -50,7 +50,6 @@ var ExtendedField = Class.create({
 		}
 	},
 	change_display : function() {
-		$('loading_' + this.id).update('<img src="{PATH_TO_ROOT}/templates/default/images/admin/loading_mini.gif" alt="" class="valign_middle" />');
 		display = this.is_not_displayed;
 		
 		new Ajax.Request('{REWRITED_SCRIPT}', {
@@ -59,7 +58,6 @@ var ExtendedField = Class.create({
 		});
 		
 		this.change_display_picture();
-		Element.update.delay(0.3, 'loading_' + this.id, ''); 
 	},
 	change_display_picture : function() {
 		if (this.is_not_displayed == false) {
@@ -93,9 +91,6 @@ Event.observe(window, 'load', function() {
 						{L_NAME} : <span class="text_strong" >{list_extended_fields.NAME}</span>
 						<div class="sortable-actions">
 							{L_REQUIRED} : <span class="text_strong" >{list_extended_fields.L_REQUIRED}</span> 
-							<div class="sortable-options">
-								<img id="loading_{list_extended_fields.ID}" alt="" class="valign_middle" />
-							</div>
 							<div class="sortable-options">
 								<a href="{list_extended_fields.EDIT_LINK}" title="{L_UPDATE}" class="icon-edit"></a>
 							</div>
