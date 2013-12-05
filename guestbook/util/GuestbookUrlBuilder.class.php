@@ -43,22 +43,6 @@ class GuestbookUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function configuration_success($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/config/success/' . $param);
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function configuration_error($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/config/error/' . $param);
-	}
-	
-	/**
-	 * @return Url
-	 */
 	public static function home($page = null, $id = null)
 	{
 		$page = $page !== null ? $page : '';
