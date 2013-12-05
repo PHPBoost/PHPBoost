@@ -72,8 +72,7 @@ class CalendarSetup extends DefaultModuleSetup
 			'content_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'parent_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'exception' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
+			'parent_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id_event'),

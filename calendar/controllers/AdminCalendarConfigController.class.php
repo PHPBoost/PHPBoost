@@ -146,10 +146,5 @@ class AdminCalendarConfigController extends AdminModuleController
 		CalendarService::get_categories_manager()->regenerate_cache();
 		CalendarCurrentMonthEventsCache::invalidate();
 	}
-	
-	private function clear_cache()
-	{
-		AppContext::get_cache_service()->clear_cache();
-	}
 }
 ?>
