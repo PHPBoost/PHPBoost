@@ -34,7 +34,9 @@
 //Admin
 $LANG['upload_pics'] = 'Upload pictures';
 $LANG['gallery_management'] = 'Gallery management';
+$LANG['gallery.manage'] = 'Manage pictures';
 $LANG['gallery_cats_management'] = 'Category management';
+$LANG['admin.categories.manage'] = 'Manage categories';
 $LANG['gallery_pics_add'] = 'Add pics';
 $LANG['gallery_cats_add'] = 'Add category';
 $LANG['gallery_config'] = 'Gallery configuration';

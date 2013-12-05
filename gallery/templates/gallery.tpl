@@ -255,15 +255,9 @@
 						<li class="extend"><a><i class="icon-sort-alpha-asc"></i> {L_DIRECTION}</a>
 							<ul>
 								<li><a href="{U_ASC}"><i class="icon-sort-amount-asc"></i> {L_ASC}</a></li>
-								<li><a href="{U_DESC}"><i class="icon-sort-amount-desc"></i> {L_DESC}</a></li>	
+								<li><a href="{U_DESC}"><i class="icon-sort-amount-desc"></i> {L_DESC}</a></li>
 							</ul>
 						</li>
-						# IF U_ADD_PICS #
-							<li class="separator"></li>
-							<li><a href="{U_ADD_PICS}"><i class="icon-plus"></i> {L_ADD_PICS}</a></li>
-						# ENDIF #
-						# IF U_EDIT #<li><a href="{U_EDIT}"><i class="icon-pencil"></i> {L_CAT_EDIT}</a></li># ENDIF #
-						# IF U_EDIT_CAT #<li><a href="{U_EDIT_CAT}"><i class="icon-bars"></i> {L_EDIT_CAT}</a></li># ENDIF #
 					</ul>
 				</li>
 			</ul>
@@ -272,7 +266,7 @@
 		# INCLUDE message_helper #
 		<div class="spacer"></div>
 		
-		<section>					
+		<section>
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
