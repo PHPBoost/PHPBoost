@@ -50,32 +50,6 @@ class AdminArticlesManageController extends AdminModuleController
 		$this->view->add_lang($this->lang);
 	}
 	
-	private function build_form($field, $mode)
-	{
-		$form = new HTMLForm(__CLASS__);
-		
-		$fieldset = new FormFieldsetHorizontal('filters');
-		$form->add_fieldset($fieldset);
-		
-		$sort_fields = $this->list_sort_fields();
-		
-		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::manage_articles()->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
-		));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
-			array(
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
-			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::manage_articles()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
-		));
-		
-		$this->form = $form;
-	}
-	
 	private function build_view($request)
 	{
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
@@ -118,8 +92,6 @@ class AdminArticlesManageController extends AdminModuleController
 		
 		$nbr_articles = $result->get_rows_count();
 		
-		$this->build_form($field, $mode);
-		
 		if($nbr_articles > 0)
 		{	
 			$pagination = $this->get_pagination($nbr_articles, $field, $mode);
@@ -161,8 +133,6 @@ class AdminArticlesManageController extends AdminModuleController
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
 					'L_TITLE' => $title,
 					'L_CATEGORY' => $category->get_name(),
-					'L_EDIT_ARTICLE' => $this->lang['articles.edit'],
-					'L_DELETE_ARTICLE' => $this->lang['articles.delete'],
 					'DATE' => gmdate_format('date_format_short', $row['date_created']), 
 					'PUBLISHED' => ($row['published'] == 1) ? LangLoader::get_message('yes', 'main') : LangLoader::get_message('no', 'main'),
 					'PUBLISHED_DATE' => $published_date,
@@ -184,19 +154,6 @@ class AdminArticlesManageController extends AdminModuleController
 			));
 		}
 		$this->view->put('FORM', $this->form->display());
-	}
-	
-	private function list_sort_fields()
-	{
-		$options = array();
-
-		$options[] = new FormFieldSelectChoiceOption($this->lang['admin.articles.sort_field.cat'], 'cat');
-		$options[] = new FormFieldSelectChoiceOption($this->lang['admin.articles.sort_field.title'], 'title');
-		$options[] = new FormFieldSelectChoiceOption($this->lang['admin.articles.sort_field.author'], 'author');
-		$options[] = new FormFieldSelectChoiceOption($this->lang['admin.articles.sort_field.date'], 'date');
-		$options[] = new FormFieldSelectChoiceOption($this->lang['admin.articles.sort_field.published'], 'published');
-
-		return $options;
 	}
 	
 	private function get_pagination($nbr_articles, $field, $mode)
