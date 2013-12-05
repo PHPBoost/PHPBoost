@@ -46,8 +46,6 @@ class WikiTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree->add_link(new ModuleLink($LANG['wiki_create_article'], new Url('/wiki/post.php' . ($id_cat > 0 ? '?id_parent=' . $id_cat : '')), $current_user->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE)));
 		$tree->add_link(new ModuleLink($LANG['wiki_create_cat'], new Url('/wiki/post.php?type=cat' . ($id_cat > 0 ? '&amp;id_parent=' . $id_cat : '')), $current_user->check_auth($config->get_authorizations(), WIKI_CREATE_CAT)));
-		$tree->add_link(new ModuleLink($LANG['wiki_random_page'], new Url('/wiki/property.php?random=1')));
-		$tree->add_link(new ModuleLink($LANG['wiki_search'], new Url('/wiki/search.php')));
 		
 		if ($current_user->check_level(User::MEMBER_LEVEL))
 		{
@@ -55,7 +53,6 @@ class WikiTreeLinks implements ModuleTreeLinksExtensionPoint
 		}
 		
 		$tree->add_link(new ModuleLink($LANG['wiki_explorer_short'], new Url('/wiki/explorer.php')));
-		$tree->add_link(new ModuleLink($LANG['wiki_rss'], SyndicationUrlBuilder::rss('wiki', $id_cat)));
 		
 		return $tree;
 	}

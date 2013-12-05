@@ -3,7 +3,7 @@
 				<ul>
 				# IF C_ACTIV_COM #
 					<li>
-						<a href="{U_COM}" ><i class="icon-comments"></i> {L_COM}</a>
+						<a href="{U_COM}" ><i class="icon-comments-o"></i> {L_COM}</a>
 					</li>
 				# ENDIF #
 					<li>
@@ -60,6 +60,17 @@
 										<i class="icon-heart"></i> {L_WATCH}
 									</a></li>
 								# ENDIF #
+							# ENDIF #
+								<li><a href="{U_RANDOM}" title="{L_RANDOM}">
+									<i class="icon-random"></i> {L_RANDOM}
+								</a></li>
+								<li><a href="{U_RSS}" title="{L_RSS}">
+									<i class="icon-rss"></i> {L_RSS}
+								</a></li>
+								<li><a href="{U_SEARCH}" title="{L_SEARCH}">
+									<i class="icon-search"></i> {L_SEARCH}
+								</a></li>
+							# IF NOT C_INDEX_PAGE #
 								<li><a href="{U_PRINT}" title="{L_PRINT}">
 									<i class="icon-print"></i> {L_PRINT}
 								</a></li>
