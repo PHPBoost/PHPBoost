@@ -358,12 +358,24 @@ class News
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		
+		switch ($this->approbation_type) {
+			case self::APPROVAL_NOW:
+				$status = LangLoader::get_message('news.form.approved.now', 'common', 'news');
+			break;
+			case self::APPROVAL_DATE:
+				$status = LangLoader::get_message('news.form.approved.date', 'common', 'news');
+			break;
+			case self::NOT_APPROVAL:
+				$status = LangLoader::get_message('news.form.approved.not', 'common', 'news');
+			break;
+		}
+		
 		return array(
 			'C_EDIT' => $this->is_authorized_edit(),
 			'C_DELETE' => $this->is_authorized_delete(),
 			'C_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
-		
+			
 			//News
 			'ID' => $this->id,
 			'NAME' => $this->name,
@@ -371,17 +383,18 @@ class News
 			'DESCRIPTION' => $this->get_real_short_contents(),
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
+			'STATUS' => $status,
 			'PSEUDO' => $user->get_pseudo(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('news', $this->id),
-		
+			
 			//Category
 			'CATEGORY_ID' => $category->get_id(),
 			'CATEGORY_NAME' => $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
 			'CATEGORY_IMAGE' => $category->get_image(),
-		
+			
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->id_cat)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel(),

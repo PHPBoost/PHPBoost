@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           authorizations-common.php
+ *                           common.php
  *                            -------------------
  *   begin                : December 05, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
@@ -29,9 +29,27 @@
  #                     French                       #
  ####################################################
 
-$lang['contribution'] = 'Contribution';
-$lang['contribution.explain'] = 'Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
-$lang['contribution.description'] = 'Complément de contribution';
-$lang['contribution.description.explain'] = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
-$lang['contribution.entitled'] = '[:module_name] :name';
+$lang['authorizations'] = 'Autorisations';
+$lang['authorizations.read'] = 'Autorisation de lecture';
+$lang['authorizations.write'] = 'Autorisation d\'écriture';
+$lang['authorizations.contribution'] = 'Autorisation de contribution';
+$lang['authorizations.moderation'] = 'Autorisation de modération';
+
+$lang['form.name'] = 'Nom';
+$lang['form.title'] = 'Titre';
+$lang['form.contents'] = 'Contenu';
+$lang['form.approbation'] = 'Publication';
+$lang['form.approbation.not'] = 'Garder en brouillon';
+$lang['form.approbation.now'] = 'Publier maintenant';
+$lang['form.approbation.date'] = 'Publication différée';
+$lang['form.date.start'] = 'A partir du';
+$lang['form.date.end'] = 'Jusqu\'au';
+$lang['form.date.creation'] = 'Date de création';
+$lang['form.date.end.enable'] = 'Définir une date de fin de publication';
+$lang['form.other'] = 'Autre';
+$lang['form.keywords'] = 'Mots clés';
+$lang['form.picture.preview'] = 'Prévisualisation de l\'image';
+$lang['form.sources'] = 'Sources';
+$lang['form.source.name'] = 'Nom de la source';
+$lang['form.source.url'] = 'Adresse de la source';
 ?>

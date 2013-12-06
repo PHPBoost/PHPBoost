@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           authorizations-common.php
+ *                           common.php
  *                            -------------------
  *   begin                : December 05, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
@@ -29,9 +29,27 @@
  #                     English                      #
  ####################################################
 
-$lang['contribution'] = 'Contribution';
-$lang['contribution.explain'] = 'Your contribution will be treated in the contribution panel. In the next field, you can justify your contribution to explain your demarche to a moderator.';
-$lang['contribution.description'] = 'Contribution counterpart';
-$lang['contribution.description.explain'] = 'Explain the reasons of your contribution. This field is not required but it may help the moderator to make his decision.';
-$lang['contribution.entitled'] = '[:module_name] :name';
+$lang['authorizations'] = 'Authorizations';
+$lang['authorizations.read'] = 'Read authorization';
+$lang['authorizations.write'] = 'Write authorization';
+$lang['authorizations.contribution'] = 'Contribution authorization';
+$lang['authorizations.moderation'] = 'Moderation authorization';
+
+$lang['form.name'] = 'Name';
+$lang['form.title'] = 'Title';
+$lang['form.contents'] = 'Content';
+$lang['form.approbation'] = 'Publication';
+$lang['form.approbation.not'] = 'Keep in draft';
+$lang['form.approbation.now'] = 'Publish now';
+$lang['form.approbation.date'] = 'Differed publication';
+$lang['form.date.start'] = 'From';
+$lang['form.date.end'] = 'Until';
+$lang['form.date.creation'] = 'Creation date';
+$lang['form.date.end.enable'] = 'Define a publication end date';
+$lang['form.other'] = 'Other';
+$lang['form.keywords'] = 'Keywords';
+$lang['form.picture.preview'] = 'Picture preview';
+$lang['form.sources'] = 'Sources';
+$lang['form.source.name'] = 'Source name';
+$lang['form.source.url'] = 'Source address';
 ?>

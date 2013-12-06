@@ -33,8 +33,8 @@
 $lang = array();
 $lang['cat.name'] = 'Test';
 $lang['cat.description'] = 'Test category';
-$lang['news.title'] = 'PHPBoost 4';
-$lang['news.content'] = 'Your PHPBoost 4 website is now installed and running. To help you build your website, <br />
+$lang['news.title'] = 'PHPBoost 4.1';
+$lang['news.content'] = 'Your PHPBoost 4.1 website is now installed and running. To help you build your website, <br />
 each module home has a message to guide you through its configuration. We strongly recommand to do the followings :  <br />
 <br />
 <br />
@@ -51,11 +51,11 @@ Access the <a href="/admin/admin_index.php">Administration Panel</a> to set up y
 To do so : <br />
 <br />
 <ul class="bb_ul">
-<li class="bb_li"><a href="/admin/admin_maintain.php">Put your website under maintenance</a> and you won\'t be disturbed while you\'re working on it.	
-</li><li class="bb_li">Now\'s the time to setup the <a href="/admin/config/?url=/general/">main configurations</a> of the website.	
+<li class="bb_li"><a href="/admin/admin_maintain.php">Put your website under maintenance</a> and you won\'t be disturbed while you\'re working on it.
+</li><li class="bb_li">Now\'s the time to setup the <a href="/admin/config/?url=/general/">main configurations</a> of the website.
 </li><li class="bb_li"><a href="/admin/modules/?url=/installed/">Configure the installed modules</a> and give them access rights (If you have not installed the complete package, all modules are available on the <a href="http://www.phpboost.org/download/download.php"PHPBoost website</a> in the resources section.
-</li><li class="bb_li"><a href="/admin/admin_content_config.php">Choose the default content language formatting</a>.	
-</li><li class="bb_li"><a href="/admin/member/?url=/config/">Configure the members settings</a>.	
+</li><li class="bb_li"><a href="/admin/admin_content_config.php">Choose the default content language formatting</a>.
+</li><li class="bb_li"><a href="/admin/member/?url=/config/">Configure the members settings</a>.
 </li><li class="bb_li"><a href="/admin/themes/?url=/installed/">Choose the website style</a> to change the look of your site (You can find more styles on the <a href="http://www.phpboost.org/download/download.php">PHPBoost website</a> in the resources section.
 </li><li class="bb_li"><a href="/news/admin_news_config.php">Change the editorial</a> of your site.
 </li><li class="bb_li">Before giving back access to your members, take time to add content to your website!
