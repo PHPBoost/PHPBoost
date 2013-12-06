@@ -54,7 +54,7 @@ class UserHomeProfileController extends AbstractController
 	
 	private function build_form()
 	{
-		$contribution_number = get_unread_contributions_number();
+		$contribution_number = $this->get_unread_contributions_number();
 		$is_authorized_files_panel = $this->user->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES);
 		$this->tpl->put_all(array(
 			'C_USER_AUTH_FILES' => $is_authorized_files_panel,
