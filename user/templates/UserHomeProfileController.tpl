@@ -9,10 +9,10 @@
 			<tr>
 				<td class="row2" style="text-align:center;">
 					<a href="{U_EDIT_PROFILE}" title="">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/member.png" alt="{profile.edit}" title="{profile.edit}" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/member.png" alt="{@profile.edit}" title="{@profile.edit}" />
 					</a>
 					<br />
-					<a href="{U_EDIT_PROFILE}">{profile.edit}</a> <br /><br />
+					<a href="{U_EDIT_PROFILE}">{@profile.edit}</a> <br /><br />
 				</td>
 				<td class="row2" style="text-align:center;">
 					<a href="{U_USER_PM}">
