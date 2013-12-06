@@ -49,7 +49,7 @@ class ExtendedFieldsService
 		$class = new $name_class();
 		if ($exit_by_type && $class->get_field_used_once() || $class->get_field_used_phpboost_configuration() && $extended_field->get_is_not_installer())
 		{
-			self::set_error(LangLoader::get_message('extended-fields-error-phpboost-config', 'admin-extended-fields-common'));
+			self::set_error(LangLoader::get_message('extended-fields-error-phpboost-config', 'admin-user-common'));
 		}
 		else
 		{
@@ -63,7 +63,7 @@ class ExtendedFieldsService
 				}
 				else
 				{
-					self::set_error(LangLoader::get_message('extended-fields-error-already-exist', 'admin-extended-fields-common'));
+					self::set_error(LangLoader::get_message('extended-fields-error-already-exist', 'admin-user-common'));
 				}
 			}
 		}

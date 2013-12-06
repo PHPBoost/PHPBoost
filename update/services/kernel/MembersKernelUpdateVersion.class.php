@@ -120,13 +120,13 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 	
 	private function add_extended_fields()
 	{
-		$lang = LangLoader::get('admin-extended-fields-common');
+		$lang = LangLoader::get('user-common');
 		
 		//Sex
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.sex']);
+		$extended_field->set_name($lang['extended-field.field.sex']);
 		$extended_field->set_field_name('user_sex');
-		$extended_field->set_description($lang['field-install.sex-explain']);
+		$extended_field->set_description($lang['extended-field.field.sex-explain']);
 		$extended_field->set_field_type('MemberUserSexExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -135,9 +135,9 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		
 		//Date Birth
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.date-birth']);
+		$extended_field->set_name($lang['extended-field.field.date-birth']);
 		$extended_field->set_field_name('user_born');
-		$extended_field->set_description($lang['field-install.date-birth-explain']);
+		$extended_field->set_description($lang['extended-field.field.date-birth-explain']);
 		$extended_field->set_field_type('MemberUserBornExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -146,9 +146,9 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		
 		//Location
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.location']);
+		$extended_field->set_name($lang['extended-field.field.location']);
 		$extended_field->set_field_name('user_location');
-		$extended_field->set_description($lang['field-install.location-explain']);
+		$extended_field->set_description($lang['extended-field.field.location-explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -157,9 +157,9 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		
 		//Website
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.website']);
+		$extended_field->set_name($lang['extended-field.field.website']);
 		$extended_field->set_field_name('user_website');
-		$extended_field->set_description($lang['field-install.website-explain']);
+		$extended_field->set_description($lang['extended-field.field.website-explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -169,9 +169,9 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		
 		//Job
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.job']);
+		$extended_field->set_name($lang['extended-field.field.job']);
 		$extended_field->set_field_name('user_job');
-		$extended_field->set_description($lang['field-install.job-explain']);
+		$extended_field->set_description($lang['extended-field.field.job-explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -180,9 +180,9 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		
 		//Entertainement
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.entertainement']);
+		$extended_field->set_name($lang['extended-field.field.entertainement']);
 		$extended_field->set_field_name('user_entertainement');
-		$extended_field->set_description($lang['field-install.entertainement-explain']);
+		$extended_field->set_description($lang['extended-field.field.entertainement-explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -191,9 +191,9 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		
 		//Sign
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.signing']);
+		$extended_field->set_name($lang['extended-field.field.signing']);
 		$extended_field->set_field_name('user_sign');
-		$extended_field->set_description($lang['field-install.signing-explain']);
+		$extended_field->set_description($lang['extended-field.field.signing-explain']);
 		$extended_field->set_field_type('MemberLongTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -202,9 +202,9 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		
 		//Biography
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.biography']);
+		$extended_field->set_name($lang['extended-field.field.biography']);
 		$extended_field->set_field_name('user_biography');
-		$extended_field->set_description($lang['field-install.biography-explain']);
+		$extended_field->set_description($lang['extended-field.field.biography-explain']);
 		$extended_field->set_field_type('MemberLongTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -213,9 +213,9 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		
 		//MSN
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.msn']);
+		$extended_field->set_name($lang['extended-field.field.msn']);
 		$extended_field->set_field_name('user_msn');
-		$extended_field->set_description($lang['field-install.msn-explain']);
+		$extended_field->set_description($lang['extended-field.field.msn-explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -225,9 +225,9 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		
 		//Yahoo
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.yahoo']);
+		$extended_field->set_name($lang['extended-field.field.yahoo']);
 		$extended_field->set_field_name('user_yahoo');
-		$extended_field->set_description($lang['field-install.yahoo-explain']);
+		$extended_field->set_description($lang['extended-field.field.yahoo-explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -237,9 +237,9 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		
 		//Avatar
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.avatar']);
+		$extended_field->set_name($lang['extended-field.field.avatar']);
 		$extended_field->set_field_name('user_avatar');
-		$extended_field->set_description($lang['field-install.avatar-explain']);
+		$extended_field->set_description($lang['extended-field.field.avatar-explain']);
 		$extended_field->set_field_type('MemberUserAvatarExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);

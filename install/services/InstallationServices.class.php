@@ -247,13 +247,13 @@ class InstallationServices
 
 	private function add_extended_fields()
 	{
-		$lang = LangLoader::get('admin-extended-fields-common');
+		$lang = LangLoader::get('user-common');
 		
 		//Sex
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.sex']);
+		$extended_field->set_name($lang['extended-field.field.sex']);
 		$extended_field->set_field_name('user_sex');
-		$extended_field->set_description($lang['field-install.sex-explain']);
+		$extended_field->set_description($lang['extended-field.field.sex-explain']);
 		$extended_field->set_field_type('MemberUserSexExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -262,9 +262,9 @@ class InstallationServices
 		
 		//Date Birth
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.date-birth']);
+		$extended_field->set_name($lang['extended-field.field.date-birth']);
 		$extended_field->set_field_name('user_born');
-		$extended_field->set_description($lang['field-install.date-birth-explain']);
+		$extended_field->set_description($lang['extended-field.field.date-birth-explain']);
 		$extended_field->set_field_type('MemberUserBornExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -273,9 +273,9 @@ class InstallationServices
 		
 		//Location
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.location']);
+		$extended_field->set_name($lang['extended-field.field.location']);
 		$extended_field->set_field_name('user_location');
-		$extended_field->set_description($lang['field-install.location-explain']);
+		$extended_field->set_description($lang['extended-field.field.location-explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -284,9 +284,9 @@ class InstallationServices
 		
 		//Job
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.job']);
+		$extended_field->set_name($lang['extended-field.field.job']);
 		$extended_field->set_field_name('user_job');
-		$extended_field->set_description($lang['field-install.job-explain']);
+		$extended_field->set_description($lang['extended-field.field.job-explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
@@ -295,9 +295,9 @@ class InstallationServices
 			
 		//Avatar
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.avatar']);
+		$extended_field->set_name($lang['extended-field.field.avatar']);
 		$extended_field->set_field_name('user_avatar');
-		$extended_field->set_description($lang['field-install.avatar-explain']);
+		$extended_field->set_description($lang['extended-field.field.avatar-explain']);
 		$extended_field->set_field_type('MemberUserAvatarExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
