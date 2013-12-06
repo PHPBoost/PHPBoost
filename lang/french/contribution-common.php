@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *		                NewsCategoriesManageController.class.php
+ *                           authorizations-common.php
  *                            -------------------
- *   begin                : February 13, 2013
- *   copyright            : (C) 2013 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
+ *   begin                : December 05, 2013
+ *   copyright            : (C) 2013 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,29 +25,13 @@
  *
  ###################################################*/
 
-/**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- */
-class NewsCategoriesManageController extends AbstractCategoriesManageController
-{
-	protected function generate_response(View $view)
-	{
-		return new AdminNewsDisplayResponse($view, LangLoader::get_message('categories.manage', 'categories-common'));
-	}
-	
-	protected function get_categories_manager()
-	{
-		return NewsService::get_categories_manager();
-	}
-	
-	protected function get_edit_category_url($id)
-	{
-		return NewsUrlBuilder::edit_category($id);
-	}
-	
-	protected function get_delete_category_url($id)
-	{
-		return NewsUrlBuilder::delete_category($id);
-	}
-}
+ ####################################################
+ #                     French                       #
+ ####################################################
+
+$lang['contribution'] = 'Contribution';
+$lang['contribution.explain'] = 'Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
+$lang['contribution.description'] = 'Complément de contribution';
+$lang['contribution.description.explain'] = 'Expliquez les raisons de votre contribution. Ce champ est facultatif.';
+$lang['contribution.entitled'] = '[:module_name] :name';
 ?>

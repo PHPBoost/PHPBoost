@@ -183,11 +183,11 @@ class NewsFormController extends ModuleController
 	{
 		if ($this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', $this->lang['news.form.contribution']);
-			$fieldset->set_description(MessageHelper::display($this->lang['news.form.contribution.explain'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'contribution-common'));
+			$fieldset->set_description(MessageHelper::display(LangLoader::get_message('contribution.explain', 'contribution-common') . ' ' . $this->lang['news.form.contribution.explain'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 			
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['news.form.contribution.description'], '', array('description' => $this->lang['news.form.contribution.description.explain'])));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', LangLoader::get_message('contribution.description', 'contribution-common'), '', array('description' => LangLoader::get_message('contribution.description.explain', 'contribution-common'))));
 		}
 	}
 	
@@ -321,7 +321,7 @@ class NewsFormController extends ModuleController
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id_news);
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-				$contribution->set_entitled(StringVars::replace_vars($this->lang['news.form.contribution.entitled'], array('name' => $news->get_name())));
+				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.entitled', 'contribution-common'), array('module_name' => 'News', 'name' => $news->get_name())));
 				$contribution->set_fixing_url(NewsUrlBuilder::edit_news($id_news)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_attribute('user_id'));
 				$contribution->set_module('news');

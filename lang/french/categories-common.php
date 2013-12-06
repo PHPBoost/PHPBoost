@@ -32,9 +32,15 @@
 $lang['category'] = 'Catégorie';
 $lang['categories'] = 'Catégories';
 
+//Management
+$lang['categories.manage'] = 'Gérer les catégories';
+$lang['category.add'] = 'Ajouter une catégorie';
+$lang['category.edit'] = 'Modifier une catégorie';
+$lang['category.delete'] = 'Supprimer une catégorie';
+
 //Errors
 $lang['errors.unexisting'] = 'La catégorie n\'existe pas.';
-$lang['message.not_categories'] = 'Aucune catégorie existante.';
+$lang['message.no_categories'] = 'Aucune catégorie existante';
 
 //Form
 $lang['category.form.name'] = 'Nom de la catégorie';
