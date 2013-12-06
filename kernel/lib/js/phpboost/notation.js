@@ -29,24 +29,43 @@
 	timeout : null,
 	notation_scale : 0,
 	default_note : 0,
-	number_votes : 0,
 	already_post : 1,
 	user_connected : 0,
 	current_url : '',
 	lang : new Array(),
-	initialize : function(id, notation_scale, number_votes) {
+	initialize : function(id, notation_scale, default_note) {
 		this.id = id;
 		this.notation_scale = notation_scale;
-		this.number_votes = number_votes;
-	},
-	get_id : function() {
-		return this.id;
-	},
-	set_default_note : function(note_bdd) {
-		this.default_note = note_bdd;
-	},
-	get_default_note : function() {
-		return this.default_note;
+		this.default_note = default_note;
+		
+		object = this;
+		
+		Event.observe(window, 'load', function() {
+			$$('#notation-'+object.id+' .stars').invoke('observe', 'mouseover', function(event) {
+				clearTimeout(object.timeout);
+				object.timeout = null;
+			});
+
+			$$('#notation-'+object.id+' .stars').invoke('observe', 'mouseout', function(event) {
+				if(object.timeout == null) {
+					object.timeout = window.setTimeout(function() {
+						object.change_picture_status(object.get_default_note()); 
+					}, 50);
+				}
+			});
+			
+			$$('#notation-'+object.id+' .star').invoke('observe', 'click', function(event) {
+				var id_element = event.element().id;
+				var star_nbr = id_element.replace(/star-([0-9]+)-([0-9]+)/g, "$2");
+				object.send_request(star_nbr);
+			});
+	
+			$$('#notation-'+object.id+' .star').invoke('observe', 'mouseover', function(event) {
+				var id_element = event.element().id;
+				var star_nbr = id_element.replace(/star-([0-9]+)-([0-9]+)/g, "$2");
+				object.change_picture_status(star_nbr);
+			});
+		});
 	},
 	set_already_post : function(already_post) {
 		this.already_post = already_post;
@@ -57,14 +76,8 @@
 	set_current_url : function(current_url) {
 		this.current_url = current_url;
 	},
-	get_current_url : function() {
-		return this.current_url;
-	},
 	add_lang : function(name, value) {
 		this.lang[name] = value;
-	},
-	get_lang : function(name) {
-		return this.lang[name];
 	},
 	send_request : function(note) {
 		var id = this.id;
@@ -98,18 +111,7 @@
 				}
 			}
 		});
-	},
-	over_event : function () {
-		clearTimeout(this.timeout);
-		this.timeout = null;
-	},
-	out_event : function () {
-		if(this.timeout == null) {
-			object = this;
-			this.timeout = window.setTimeout(function() {
-				object.change_picture_status(object.get_default_note()); 
-			}, 50);
-		}
+		
 	},
 	change_picture_status : function (note) {
 		var star_class;
@@ -132,12 +134,9 @@
 		}
 	},
 	change_nbr_note : function () {
-		var nbr_note = this.number_votes + 1;
-		if (nbr_note > 1) {
-			$('number-notes-' + this.id).innerHTML = nbr_note + ' ' + this.get_lang('notes');
-		}
-		else {
-			$('number-notes-' + this.id).innerHTML = nbr_note + ' ' + this.get_lang('note');
-		}
+		var number_notes_el = $$('#notation-' + this.id + ' span.number-notes').first();
+		var number_notes = parseInt(number_notes_el.innerHTML) + 1;
+		number_notes_el.update(number_notes);
+		$$('#notation-' + this.id + ' .notes span:not(.number-notes)').invoke('update', (number_notes > 1 ? this.get_lang('notes') : this.get_lang('note')));
 	}
 });
