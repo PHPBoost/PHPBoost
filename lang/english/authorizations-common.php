@@ -26,12 +26,12 @@
  ###################################################*/
 
  ####################################################
- #                     French                       #
+ #                     English                      #
  ####################################################
 
-$lang['contribution'] = 'Contribution';
-$lang['contribution.explain'] = 'Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
-$lang['contribution.description'] = 'Complément de contribution';
-$lang['contribution.description.explain'] = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
-$lang['contribution.entitled'] = '[:module_name] :name';
+$lang['authorizations'] = 'Authorizations';
+$lang['authorizations.read'] = 'Read authorization';
+$lang['authorizations.write'] = 'Write authorization';
+$lang['authorizations.contribution'] = 'Contribution authorization';
+$lang['authorizations.moderation'] = 'Moderation authorization';
 ?>
