@@ -54,9 +54,8 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$form->set_css_class('options');
-		
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['articles.sort_filter_title']));
+		$fieldset->set_css_class('options');
 		$form->add_fieldset($fieldset);
 		
 		$sort_fields = $this->list_sort_fields();
