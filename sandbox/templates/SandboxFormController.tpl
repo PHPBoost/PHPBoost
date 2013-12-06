@@ -1,5 +1,8 @@
 # IF C_PREVIEW #
-<div class="notice">Prévisualisation</div>
+<div id="id-message-helper" class="message-helper notice">
+	<i class="icon-notice"></i>
+	<div class="message-helper-content">Prévisualisation</div>
+</div>
 # ENDIF #
 
 # IF C_RESULT #

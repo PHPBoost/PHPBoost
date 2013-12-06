@@ -393,7 +393,10 @@
 						</tr>
 						<tr>
 							<td class="row2" colspan="2">
-								<div class="question">{L_ALTERNATIVE_PM}</div>
+								<div id="id-message-helper" class="message-helper question">
+									<i class="icon-question"></i>
+									<div class="message-helper-content">{L_ALTERNATIVE_PM}</div>
+								</div>
 								{KERNEL_EDITOR}
 								<textarea name="action_contents" id="action_contents" rows="12" cols="15">{ALTERNATIVE_PM}</textarea>
 							</td>

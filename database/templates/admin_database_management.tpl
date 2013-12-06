@@ -295,8 +295,9 @@
 					</div>
 					<div class="block_contents2">
 						<span id="errorh"></span>
-						<div class="warning">
-							{L_EXPLAIN_QUERY}
+						<div id="id-message-helper" class="message-helper warning">
+							<i class="icon-warning"></i>
+							<div class="message-helper-content">{L_EXPLAIN_QUERY}</div>
 						</div>
 					</div>
 					<div class="block_top">

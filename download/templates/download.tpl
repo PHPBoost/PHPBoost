@@ -112,8 +112,9 @@
 				# ENDIF #
 				
 				# IF C_NO_FILE #
-					<div class="notice">
-						{L_NO_FILE_THIS_CATEGORY}
+					<div id="id-message-helper" class="message-helper notice">
+						<i class="icon-notice"></i>
+						<div class="message-helper-content">{L_NO_FILE_THIS_CATEGORY}</div>
 					</div>
 				# ENDIF #
 				<div class="spacer"></div>
