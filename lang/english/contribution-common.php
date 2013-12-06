@@ -26,12 +26,12 @@
  ###################################################*/
 
  ####################################################
- #                     French                       #
+ #                     English                      #
  ####################################################
 
 $lang['contribution'] = 'Contribution';
-$lang['contribution.explain'] = 'Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
-$lang['contribution.description'] = 'Complément de contribution';
-$lang['contribution.description.explain'] = 'Expliquez les raisons de votre contribution. Ce champ est facultatif mais il peut aider un approbateur à prendre sa décision.';
+$lang['contribution.explain'] = 'Your contribution will be treated in the contribution panel. In the next field, you can justify your contribution to explain your demarche to a moderator.';
+$lang['contribution.description'] = 'Contribution counterpart';
+$lang['contribution.description.explain'] = 'Explain the reasons of your contribution. This field is not required but it may help the moderator to make his decision.';
 $lang['contribution.entitled'] = '[:module_name] :name';
 ?>
