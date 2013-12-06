@@ -58,8 +58,9 @@
 			</script>
 			
 			# IF C_PREVIEW #
-				<div class="notice">
-					{L_WARNING_PREVIEWING}
+				<div id="id-message-helper" class="message-helper notice">
+					<i class="icon-notice"></i>
+					<div class="message-helper-content">{L_WARNING_PREVIEWING}</div>
 				</div>
 				# INCLUDE download #
 				<hr />
@@ -172,8 +173,9 @@
 				# IF C_CONTRIBUTION #
 				<fieldset>
 					<legend>{L_CONTRIBUTION_LEGEND}</legend>
-					<div class="notice">
-						{L_NOTICE_CONTRIBUTION}
+					<div id="id-message-helper" class="message-helper notice">
+						<i class="icon-notice"></i>
+						<div class="message-helper-content">{L_NOTICE_CONTRIBUTION}</div>
 					</div>
 					<p><label>{L_CONTRIBUTION_COUNTERPART}</label></p>
 					<p class="smaller">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p>

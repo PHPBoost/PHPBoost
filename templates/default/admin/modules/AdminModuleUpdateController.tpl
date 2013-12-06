@@ -4,7 +4,10 @@
 
 # IF C_UPDATES #
 	<form action="{REWRITED_SCRIPT}" method="post">
-		<div class="warning" style="width:300px;margin:auto;">{@modules.updates_available}</div>
+		<div id="id-message-helper" class="message-helper warning">
+			<i class="icon-warning"></i>
+			<div class="message-helper-content">{@modules.updates_available}</div>
+		</div>
 		{@modules.updates_available}
 		<table>
 			<thead>
@@ -43,5 +46,8 @@
 		</table>
 	</form>
 # ELSE #
-	<div class="warning" style="width:300px;margin:auto;margin-top:100px;">{@modules.no_upgradable_module_available}</div>
+	<div id="id-message-helper" class="message-helper warning" style="margin-top:100px;">
+		<i class="icon-warning"></i>
+		<div class="message-helper-content">{@modules.no_upgradable_module_available}</div>
+	</div>
 # ENDIF #

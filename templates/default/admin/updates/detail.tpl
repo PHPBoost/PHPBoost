@@ -27,7 +27,10 @@
 <div id="admin_contents">
 	<div style="clear:right;"></div>
     # IF C_UNEXISTING_UPDATE #
-        <br /><span class="warning" style="text-align:center;width:50%;margin:auto;">{L_UNEXISTING_UPDATE}</span>
+        <div id="id-message-helper" class="message-helper warning" style="text-align:center;width:50%;margin:auto;">
+			<i class="icon-warning"></i>
+			<div class="message-helper-content">{L_UNEXISTING_UPDATE}</div>
+		</div>
     # ELSE #
         <h1>{L_APP_UPDATE_MESSAGE}</h1>
         <table>

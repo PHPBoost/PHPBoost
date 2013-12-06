@@ -26,10 +26,16 @@
 
 <div id="admin_contents">
     # IF C_INCOMPATIBLE_PHP_VERSION #
-        &nbsp;<div class="warning" style="width:450px;margin:auto;margin-top:100px;">{L_INCOMPATIBLE_PHP_VERSION}</div>
+        <div id="id-message-helper" class="message-helper warning" style="margin-top:100px;">
+			<i class="icon-warning"></i>
+			<div class="message-helper-content">{L_INCOMPATIBLE_PHP_VERSION}</div>
+		</div>
     # ELSE #
         # IF C_UPDATES #
-            <div class="warning" style="width:450px;margin:auto;">{L_UPDATES_ARE_AVAILABLE}</div>
+ 			<div id="id-message-helper" class="message-helper warning">
+				<i class="icon-warning"></i>
+				<div class="message-helper-content">{L_UPDATES_ARE_AVAILABLE}</div>
+			</div>
             
             <table class="module_table">
                 <tr><th colspan="5">{L_AVAILABLES_UPDATES}</th></tr>
@@ -59,7 +65,10 @@
                 # END apps #
             </table>
         # ELSE #
-            &nbsp;<div class="question" style="width:300px;margin:auto;margin-top:100px;">{L_NO_AVAILABLES_UPDATES}</div>
+			<div id="id-message-helper" class="message-helper question">
+				<i class="icon-question"></i>
+				<div class="message-helper-content">{L_NO_AVAILABLES_UPDATES}</div>
+			</div>
         # END IF #
         <p class="center" style="margin-top:100px;">
 			<a href="{U_CHECK}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="" /></a>
