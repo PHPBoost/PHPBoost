@@ -62,7 +62,7 @@
 					# IF C_MODERATOR_AUTH # 
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/modo_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small">{L_MODO_PANEL}</a></li> 
 					# ENDIF #
-					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/# IF C_UNREAD_CONTRIBUTION #contribution_panel_mini_new.gif# ELSE #contribution_panel_mini.png# ENDIF #" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small">{L_CONTRIBUTION_PANEL}# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # ({NUM_UNREAD_CONTRIBUTIONS})# ENDIF #</a></li> 
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/# IF C_UNREAD_CONTRIBUTION #contribution_panel_mini_new.gif# ELSE #contribution_panel_mini.png# ENDIF #" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small">{L_CONTRIBUTION_PANEL}# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # ({NUMBER_UNREAD_CONTRIBUTIONS})# ENDIF #</a></li> 
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/home_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::disconnect())}" class="small">{L_DISCONNECT}</a></li>
 				</ul>
 			</div>
@@ -96,7 +96,7 @@
 		# IF C_MODERATOR_AUTH # 
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/modo_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small">{L_MODO_PANEL}</a>&nbsp;
 		# ENDIF #
-		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/# IF C_UNREAD_CONTRIBUTION #contribution_panel_mini_new.gif# ELSE #contribution_panel_mini.png# ENDIF #" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small">{L_CONTRIBUTION_PANEL}# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # ({NUM_UNREAD_CONTRIBUTIONS})# ENDIF #</a>&nbsp;
+		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/# IF C_UNREAD_CONTRIBUTION #contribution_panel_mini_new.gif# ELSE #contribution_panel_mini.png# ENDIF #" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small">{L_CONTRIBUTION_PANEL}# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # ({NUMBER_UNREAD_CONTRIBUTIONS})# ENDIF #</a>&nbsp;
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/home_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::disconnect())}" class="small">{L_DISCONNECT}</a>
 	</div>
 	# ENDIF #
