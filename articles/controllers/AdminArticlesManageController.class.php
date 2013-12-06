@@ -65,7 +65,7 @@ class AdminArticlesManageController extends AdminModuleController
 				$sort_field = 'id_category';
 				break;
 			case 'author':
-				$sort_field = 'author_user_id';
+				$sort_field = 'login';
 				break;
 			case 'title':
 				$sort_field = 'title';
