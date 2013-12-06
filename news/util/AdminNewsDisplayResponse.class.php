@@ -40,7 +40,7 @@ class AdminNewsDisplayResponse extends AdminMenuDisplayResponse
 
 		$this->add_link(LangLoader::get_message('categories.manage', 'categories-common'), NewsUrlBuilder::manage_categories(), $img);
 		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), NewsUrlBuilder::add_category(), $img);
-		$this->add_link($lang['news.manage'], NewsUrlBuilder::manage_news(), $img);
+		$this->add_link($lang['news.management'], NewsUrlBuilder::manage_news(), $img);
 		$this->add_link($lang['news.add'], NewsUrlBuilder::add_news(), $img);
 		$this->add_link(LangLoader::get_message('configuration', 'admin'), NewsUrlBuilder::config(), $img);
 		

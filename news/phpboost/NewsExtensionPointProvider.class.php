@@ -35,9 +35,9 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('news');
 	}
 	
-	public function url_mappings()
+	public function comments()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/news/index.php')));
+		return new CommentsTopics(array(new NewsCommentsTopic()));
 	}
 	
 	public function css_files()
@@ -45,6 +45,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_running_module_displayed_file('news.css');
 		return $module_css_files;
+	}
+	
+	public function feeds()
+	{
+		return new NewsFeedProvider();
 	}
 	
 	public function home_page()
@@ -57,24 +62,19 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		return new NewsSearchable();
 	}
 	
-	public function feeds()
-	{
-		return new NewsFeedProvider();
-	}
-	
 	public function sitemap()
 	{
 		return new NewsSitemapExtensionPoint();
 	}
 	
-	public function comments()
-	{
-		return new CommentsTopics(array(new NewsCommentsTopic()));
-	}
-	
 	public function tree_links()
 	{
 		return new NewsTreeLinks();
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/news/index.php')));
 	}
 }
 ?>

@@ -116,15 +116,15 @@ class AdminNewsConfigController extends AdminModuleController
 			)
 		));
 		
-		$authorizations_lang = LangLoader::get('authorizations-common');
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $authorizations_lang['authorizations']);
+		$common_lang = LangLoader::get('common');
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($authorizations_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new ActionAuthorization($authorizations_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($authorizations_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new ActionAuthorization($authorizations_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());

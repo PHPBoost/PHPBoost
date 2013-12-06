@@ -69,6 +69,7 @@ class NewsFormController extends ModuleController
 	
 	private function build_form()
 	{
+		$common_lang = LangLoader::get('common');
 		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('news', $this->lang['news']);
@@ -96,9 +97,9 @@ class NewsFormController extends ModuleController
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', $this->lang['news.form.category'], $this->get_news()->get_id_cat(), $search_category_children_options));
+		$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', LangLoader::get_message('category', 'categories-common'), $this->get_news()->get_id_cat(), $search_category_children_options));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['news.form.contents'], $this->get_news()->get_contents(), array('rows' => 15, 'required' => true)));
+		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.contents'], $this->get_news()->get_contents(), array('rows' => 15, 'required' => true)));
 		
 		$fieldset->add_field(new FormFieldCheckbox('enable_short_contents', $this->lang['news.form.short_contents.enabled'], $this->get_news()->get_short_contents_enabled(), 
 			array('description' => StringVars::replace_vars($this->lang['news.form.short_contents.enabled.description'], array('number' => NewsConfig::load()->get_number_character_to_cut())), 'events' => array('click' => '
@@ -111,7 +112,7 @@ class NewsFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('short_contents', $this->lang['news.form.short_contents'], $this->get_news()->get_short_contents(), array('hidden' => !$this->get_news()->get_short_contents_enabled())));
 
-		$other_fieldset = new FormFieldsetHTML('other', $this->lang['news.form.other']);
+		$other_fieldset = new FormFieldsetHTML('other', $common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
 
 		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 'function(response){
@@ -124,38 +125,38 @@ class NewsFormController extends ModuleController
 		$other_fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['news.form.picture'], $this->get_news()->get_picture()->relative(), array(
 			'events' => array('change' => $image_preview_request->render())
 		)));
-		$other_fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['news.form.picture.preview'], '<img id="preview_picture" src="'. $this->get_news()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
+		$other_fieldset->add_field(new FormFieldFree('preview_picture', $common_lang['form.picture.preview'], '<img id="preview_picture" src="'. $this->get_news()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
 
-		$other_fieldset->add_field(NewsService::get_keywords_manager()->get_form_field($this->get_news()->get_id(), 'keywords', $this->lang['news.form.keywords'], array('description' => $this->lang['news.form.keywords.description'])));
+		$other_fieldset->add_field(NewsService::get_keywords_manager()->get_form_field($this->get_news()->get_id(), 'keywords', $common_lang['form.keywords'], array('description' => $this->lang['news.form.keywords.description'])));
 		
-		$other_fieldset->add_field(new NewsFormFieldSelectSources('sources', $this->lang['news.form.sources'], $this->get_news()->get_sources()));
+		$other_fieldset->add_field(new NewsFormFieldSelectSources('sources', $common_lang['form.sources'], $this->get_news()->get_sources()));
 		
 		if (!$this->is_contributor_member())
 		{
-			$publication_fieldset = new FormFieldsetHTML('publication', $this->lang['news.form.approbation']);
+			$publication_fieldset = new FormFieldsetHTML('publication', $common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);
 
-			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['news.form.date.creation'], $this->get_news()->get_creation_date()));
+			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $common_lang['form.date.creation'], $this->get_news()->get_creation_date()));
 			
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->lang['news.form.approbation'], $this->get_news()->get_approbation_type(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $common_lang['form.approbation'], $this->get_news()->get_approbation_type(),
 				array(
-					new FormFieldSelectChoiceOption($this->lang['news.form.approbation.not'], News::NOT_APPROVAL),
-					new FormFieldSelectChoiceOption($this->lang['news.form.approbation.now'], News::APPROVAL_NOW),
-					new FormFieldSelectChoiceOption($this->lang['news.form.approbation.date'], News::APPROVAL_DATE),
+					new FormFieldSelectChoiceOption($common_lang['form.approbation.not'], News::NOT_APPROVAL),
+					new FormFieldSelectChoiceOption($common_lang['form.approbation.now'], News::APPROVAL_NOW),
+					new FormFieldSelectChoiceOption($common_lang['form.approbation.date'], News::APPROVAL_DATE),
 				),
 				array('events' => array('change' => '
 				if (HTMLForms.getField("approbation_type").getValue() == 2) {
-					$("'.__CLASS__.'_start_date_field").appear();
+					$("' . __CLASS__ . '_start_date_field").appear();
 					HTMLForms.getField("end_date_enable").enable();
 				} else { 
-					$("'.__CLASS__.'_start_date_field").fade();
+					$("' . __CLASS__ . '_start_date_field").fade();
 					HTMLForms.getField("end_date_enable").disable();
 				}'))
 			));
 			
-			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $this->lang['news.form.date.start'], ($this->get_news()->get_start_date() === null ? new Date() : $this->get_news()->get_start_date()), array('hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE))));
+			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $common_lang['form.date.start'], ($this->get_news()->get_start_date() === null ? new Date() : $this->get_news()->get_start_date()), array('hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE))));
 			
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $this->lang['news.form.date.end.enable'], $this->get_news()->end_date_enabled(), array(
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $common_lang['form.date.end.enable'], $this->get_news()->end_date_enabled(), array(
 			'hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE),
 			'events' => array('click' => '
 			if (HTMLForms.getField("end_date_enable").getValue()) {
@@ -165,7 +166,7 @@ class NewsFormController extends ModuleController
 			}'
 			))));
 			
-			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['news.form.date.end'], ($this->get_news()->get_end_date() === null ? new Date() : $this->get_news()->get_end_date()), array('hidden' => !$this->get_news()->end_date_enabled())));
+			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $common_lang['form.date.end'], ($this->get_news()->get_end_date() === null ? new Date() : $this->get_news()->get_end_date()), array('hidden' => !$this->get_news()->end_date_enabled())));
 		
 			$publication_fieldset->add_field(new FormFieldCheckbox('top_list', $this->lang['news.form.top_list'], $this->get_news()->top_list_enabled()));
 		}
@@ -183,11 +184,11 @@ class NewsFormController extends ModuleController
 	{
 		if ($this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'contribution-common'));
-			$fieldset->set_description(MessageHelper::display(LangLoader::get_message('contribution.explain', 'contribution-common') . ' ' . $this->lang['news.form.contribution.explain'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
+			$fieldset->set_description(MessageHelper::display(LangLoader::get_message('contribution.explain', 'user-common') . ' ' . $this->lang['news.form.contribution.explain'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 			
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', LangLoader::get_message('contribution.description', 'contribution-common'), '', array('description' => LangLoader::get_message('contribution.description.explain', 'contribution-common'))));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', LangLoader::get_message('contribution.description', 'user-common'), '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
 		}
 	}
 	
@@ -232,7 +233,7 @@ class NewsFormController extends ModuleController
 			}
 		}
 		else
-		{			
+		{
 			if (!$news->is_authorized_edit())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
@@ -260,7 +261,7 @@ class NewsFormController extends ModuleController
 			$news->set_picture(new Url($picture));
 		
 		$news->set_sources($this->form->get_value('sources'));
-			
+		
 		if ($this->is_contributor_member())
 		{
 			$news->set_rewrited_name(Url::encode_rewrite($news->get_name()));
@@ -321,7 +322,7 @@ class NewsFormController extends ModuleController
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id_news);
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.entitled', 'contribution-common'), array('module_name' => 'News', 'name' => $news->get_name())));
+				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.entitled', 'user-common'), array('module_name' => $this->lang['news'], 'name' => $news->get_name())));
 				$contribution->set_fixing_url(NewsUrlBuilder::edit_news($id_news)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_attribute('user_id'));
 				$contribution->set_module('news');

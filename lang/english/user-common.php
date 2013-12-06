@@ -40,6 +40,11 @@ $lang['maintain'] = 'Maintain';
 $lang['profile.edit.password.error'] = 'The new password is not correct';
 
 //Contribution
+$lang['contribution'] = 'Contribution';
+$lang['contribution.explain'] = 'Your contribution will be treated in the contribution panel. In the next field, you can justify your contribution to explain your demarche to a moderator.';
+$lang['contribution.description'] = 'Contribution counterpart';
+$lang['contribution.description.explain'] = 'Explain the reasons of your contribution. This field is not required but it may help the moderator to make his decision.';
+$lang['contribution.entitled'] = '[:module_name] :name';
 $lang['contribution.confirmed'] = 'Your contribution has been saved.';
 $lang['contribution.confirmed.messages'] = '<p>You can follow it into the <a href="' . UserUrlBuilder::contribution_panel()->rel() . '">contribution panel</a> 
 and possibly discuss with the validators if their choice is not straightforward.</p><p>Thank you for participating in the life of the site!</p>';

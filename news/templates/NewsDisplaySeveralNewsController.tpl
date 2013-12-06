@@ -6,9 +6,9 @@
 		</h1>
 	</header>
 # IF C_NEWS_NO_AVAILABLE #
-    <div class="center">
-        {@news.message.no_items}
-    </div>
+	<div class="center">
+		{@news.message.no_items}
+	</div>
 # ELSE #
 	# START news #
 		# IF news.C_NEWS_ROW #
@@ -18,19 +18,19 @@
 			<header>
 				<h1>
 					<a href="{news.U_SYNDICATION}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
-        			<a href="{news.U_LINK}"><span id="name" itemprop="name">{news.NAME}</span></a>
-        			<span class="actions">
-        				# IF news.C_EDIT #
+					<a href="{news.U_LINK}"><span id="name" itemprop="name">{news.NAME}</span></a>
+					<span class="actions">
+						# IF news.C_EDIT #
 							<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
 						# ENDIF #
 						# IF news.C_DELETE #
 							<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</span>
-        		</h1>
-        		
-        		<div class="more">
-					{@news.display.posted_by}&nbsp;
+				</h1>
+				
+				<div class="more">
+					{@news.display.written_by}&nbsp;
 					# IF news.PSEUDO #
 					<a itemprop="author" class="small_link {news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}" style="font-size: 12px;" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, 
 					# ENDIF # 
@@ -38,7 +38,7 @@
 					{@news.display.in_category} <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
 				</div>
 				
-        		<meta itemprop="url" content="{news.U_LINK}">
+				<meta itemprop="url" content="{news.U_LINK}">
 				<meta itemprop="description" content="{news.DESCRIPTION}">
 				<meta itemprop="discussionUrl" content="{news.U_COMMENTS}">
 				<meta itemprop="interactionCount" content="{news.NUMBER_COMMENTS} UserComments">

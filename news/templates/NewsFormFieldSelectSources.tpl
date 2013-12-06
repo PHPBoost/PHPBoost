@@ -9,9 +9,9 @@ var NewsFormFieldSelectSources = Class.create({
 			var id = this.id_input + '_' + this.integer;
 
 			var div = Builder.node('div', {'id' : id}, [
-				Builder.node('input', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '${i18n('news.form.sources.name')}'}),
+				Builder.node('input', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@form.source.name}'}),
 				' ',
-				Builder.node('input', {type : 'text', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '${i18n('news.form.sources.url')}'}),
+				Builder.node('input', {type : 'text', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '{@form.source.url}'}),
 				' ',
 				Builder.node('a', {href : 'javascript:NewsFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'icon-delete'}),
 				' ',
@@ -38,11 +38,11 @@ var NewsFormFieldSelectSources = new NewsFormFieldSelectSources();
 
 <div id="input_fields_${escape(ID)}">
 # START fieldelements #
-		<div id="${escape(ID)}_{fieldelements.ID}">
-			<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="${i18n('news.form.sources.name')}"/>
-			<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="${i18n('news.form.sources.url')}" class="field-large"/>
-			<a href="javascript:NewsFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="icon-delete" data-confirmation="delete-element"></a>
-		</div>
+	<div id="${escape(ID)}_{fieldelements.ID}">
+		<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.source.name}"/>
+		<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="{@form.source.url}" class="field-large"/>
+		<a href="javascript:NewsFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="icon-delete" data-confirmation="delete-element"></a>
+	</div>
 # END fieldelements #
 </div>
 <a href="javascript:NewsFormFieldSelectSources.add_field();" class="icon-plus" id="add_${escape(ID)}"></a> 
