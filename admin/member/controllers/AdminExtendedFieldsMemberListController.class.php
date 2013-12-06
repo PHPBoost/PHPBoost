@@ -73,7 +73,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-extended-fields-common');
+		$this->lang = LangLoader::get('admin-user-common');
 		$this->view = new FileTemplate('admin/member/AdminExtendedFieldsMemberlistController.tpl');
 		$this->view->add_lang($this->lang);
 	}

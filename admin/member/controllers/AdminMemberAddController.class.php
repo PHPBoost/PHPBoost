@@ -53,7 +53,7 @@ class AdminMemberAddController extends AdminController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminMembersDisplayResponse($tpl, LangLoader::get_message('members.add-member', 'admin-members-common'));
+		return new AdminMembersDisplayResponse($tpl, LangLoader::get_message('members.add-member', 'admin-user-common'));
 	}
 
 	private function init()
@@ -65,7 +65,7 @@ class AdminMemberAddController extends AdminController
 	{
 		$form = new HTMLForm('member-add');
 		
-		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-members-common'));
+		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-user-common'));
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(

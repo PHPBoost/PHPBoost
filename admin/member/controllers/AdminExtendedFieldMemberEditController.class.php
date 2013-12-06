@@ -91,7 +91,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-extended-fields-common');
+		$this->lang = LangLoader::get('admin-user-common');
 	}
 	
 	private function build_form($id)

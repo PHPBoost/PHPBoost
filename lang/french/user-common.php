@@ -155,4 +155,51 @@ Mot de passe : :password
 $lang['agreement'] = 'Règlement';
 $lang['agreement.agree'] = 'J\'accepte les conditions';
 $lang['agreement.agree.required'] = 'Vous devez accepter le règlement pour vous inscrire';
+
+############## Extended Field ##############
+
+$lang['extended-field.field.default-lang'] = 'Langue par défaut';
+$lang['extended-field.field.default-lang-explain'] = 'Sélectionner la langue que vous souhaitez utiliser';
+
+$lang['extended-field.field.default-theme'] = 'Thème par défaut';
+$lang['extended-field.field.default-theme-explain'] = 'Sélectionner le thème que vous souhaitez utiliser';
+
+$lang['extended-field.field.default-editor'] = 'Editeur de texte par défaut';
+$lang['extended-field.field.default-editor-explain'] = 'Sélectionner l\'éditeur de texte que vous souhaitez utiliser';
+
+$lang['extended-field.field.timezone'] = 'Choix du fuseau horaire';
+$lang['extended-field.field.timezone-explain'] = 'Vous permet d\'ajuster l\'heure en fonction de votre localisation';
+
+$lang['extended-field.field.sex'] = 'Sexe';
+$lang['extended-field.field.sex-explain'] = '';
+
+$lang['extended-field.field.date-birth'] = 'Date de naissance';
+$lang['extended-field.field.date-birth-explain'] = 'De type JJ/MM/AAAA';
+
+$lang['extended-field.field.avatar'] = 'Avatar';
+$lang['extended-field.field.avatar-explain'] = '';
+
+$lang['extended-field.field.website'] = 'Site web';
+$lang['extended-field.field.website-explain'] = 'Veuillez renseigner un site web valide (ex : http://www.phpboost.com)';
+
+$lang['extended-field.field.location'] = 'Localisation';
+$lang['extended-field.field.location-explain'] = '';
+
+$lang['extended-field.field.job'] = 'Emploi';
+$lang['extended-field.field.job-explain'] = '';
+
+$lang['extended-field.field.entertainement'] = 'Loisirs';
+$lang['extended-field.field.entertainement-explain'] = '';
+
+$lang['extended-field.field.signing'] = 'Signature';
+$lang['extended-field.field.signing-explain'] = 'Apparaît sous chacun de vos messages';
+
+$lang['extended-field.field.biography'] = 'Biographie';
+$lang['extended-field.field.biography-explain'] = '';
+
+$lang['extended-field.field.msn'] = 'MSN';
+$lang['extended-field.field.msn-explain'] = '';
+
+$lang['extended-field.field.yahoo'] = 'Yahoo';
+$lang['extended-field.field.yahoo-explain'] = '';
 ?>

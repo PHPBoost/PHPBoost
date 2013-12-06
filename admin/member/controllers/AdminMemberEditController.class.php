@@ -72,7 +72,7 @@ class AdminMemberEditController extends AdminController
 	private function init()
 	{
 		$this->user_lang = LangLoader::get('user-common');
-		$this->admin_user_lang = LangLoader::get('admin-members-common');
+		$this->admin_user_lang = LangLoader::get('admin-user-common');
 		$this->main_lang = LangLoader::get('main');
 	}
 

@@ -38,7 +38,7 @@ class AdminViewAllMembersController extends AdminController
 		$this->init();
 		$this->build_view($request);
 		
-		return new AdminMembersDisplayResponse($this->view, LangLoader::get_message('members.members-management', 'admin-members-common'));
+		return new AdminMembersDisplayResponse($this->view, LangLoader::get_message('members.members-management', 'admin-user-common'));
 	}
 	
 	private function build_form()

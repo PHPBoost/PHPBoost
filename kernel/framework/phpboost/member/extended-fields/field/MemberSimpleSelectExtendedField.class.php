@@ -31,7 +31,7 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 	{
 		parent::__construct();
 		$this->set_disable_fields_configuration(array('regex'));
-		$this->set_name(LangLoader::get_message('type.simple-select','admin-extended-fields-common'));
+		$this->set_name(LangLoader::get_message('type.simple-select','admin-user-common'));
 	}
 	
 	public function display_field_create(MemberExtendedField $member_extended_field)

@@ -58,7 +58,7 @@ class AdminMemberConfigController extends AdminController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-members-common');
+		$this->lang = LangLoader::get('admin-user-common');
 	}
 
 	private function build_form()

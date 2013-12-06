@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           admin-members-common.php
+ *                           admin-user-common.php
  *                            -------------------
  *   begin                : August 14, 2010
  *   copyright            : (C) 2010 Kevin MASSY
@@ -80,4 +80,68 @@ $lang['members.rules.registration-agreement'] = 'Registration agreement';
 
 //Other
 $lang['members.valid'] = 'Valid';
+
+############## Extended Field ##############
+
+$lang['extended-field-add'] = 'Add member field';
+$lang['extended-field-edit'] = 'Edit member field';
+$lang['extended-field'] = 'Member fields';
+$lang['extended-fields-management'] = 'Member field management';
+$lang['extended-fields-error-already-exist'] = 'The extended field already exists.';
+$lang['extended-fields-error-phpboost-config'] = 'The fields used by default PHPBoost can not be created more than one time, please choose another type of field.';
+
+//Type 
+$lang['type.short-text'] = 'Short text (max 255 characters)';
+$lang['type.long-text'] = 'Long text (unlimited)';
+$lang['type.half-text'] = 'Medium text';
+$lang['type.simple-select'] = 'Single selection (between several values)';
+$lang['type.multiple-select'] = 'Multiple selection (between several values)';
+$lang['type.simple-check'] = 'Single choice (between several values)';
+$lang['type.multiple-check'] = 'Multiple choice (between several values)';
+$lang['type.date'] = 'Date';
+$lang['type.user-theme-choice'] = 'Theme';
+$lang['type.user-lang-choice'] = 'Language';
+$lang['type.user_born'] = 'Date of birth';
+$lang['type.user-editor'] = 'Editor';
+$lang['type.user-timezone'] = 'Timezone choice';
+$lang['type.user-sex'] = 'Sex';
+$lang['type.avatar'] = 'Avatar';
+
+$lang['default-field'] = 'Default field';
+
+$lang['field.name'] = 'Name';
+$lang['field.description'] = 'Description';
+$lang['field.type'] = 'Field type';
+$lang['field.regex'] = 'Entry form control';
+$lang['field.regex-explain'] = 'You can control the form of input used. For instance, if an email address is expected, you can verify that its form is correct.<br />For advanced users, it is possible to write your own regular expression (<acronym="Perl Compatible Regular Expression">PCRE</acronym>) to control the user input.';
+$lang['field.predefined-regex'] = 'Predefined pattern';
+$lang['field.required'] = 'Required field';
+$lang['field.required_explain'] = 'Required in the member profile and registration area';
+$lang['field.possible-values'] = 'Possible values';
+$lang['field.possible-values-explain'] = 'Separate each value with |';
+$lang['field.default-values'] = 'Default values';
+$lang['field.default-values-explain'] = 'Separate each value with |';
+$lang['field.default-possible-values'] = 'Yes|No';
+$lang['field.read_authorizations'] = 'Read permissions of the field in the profile';
+$lang['field.actions_authorizations'] = 'Read permissions of the field when creating or editing a profile';
+
+// Regex
+$lang['regex.figures'] = 'Numbers';
+$lang['regex.letters'] = 'Letters';
+$lang['regex.figures-letters'] = 'Numbers and letters';
+$lang['regex.word'] = 'Word';
+$lang['regex.website'] = 'Website';
+$lang['regex.mail'] = 'Mail';
+$lang['regex.personnal-regex'] = 'Custom regular expression';
+
+
+$lang['field.yes'] = 'Yes';
+$lang['field.no'] = 'No';
+
+$lang['field.success'] = 'Success';
+$lang['field.delete_field'] = 'Do you really want to delete this field?';
+$lang['field.position'] = 'Position';
+
+$lang['field.is-required'] = 'Required';
+$lang['field.is-not-required'] = 'Not required';
 ?>

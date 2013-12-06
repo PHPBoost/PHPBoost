@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           admin-extended-fields-common.php
+ *                           admin-user-common.php
  *                            -------------------
  *   begin                : December 17, 2010
  *   copyright            : (C) 2010 Kevin MASSY
@@ -30,6 +30,58 @@
  ####################################################
  
 $lang = array();
+
+// Title 
+$lang['members.config-members'] = 'Configuration des membres';
+$lang['members.members-management'] = 'Gestion des membres';
+$lang['members.add-member'] = 'Ajouter un membre';
+$lang['members.members-punishment'] = 'Gestion des sanctions';
+$lang['members.edit-member'] = 'Edition d\'un membre';
+$lang['members.rules'] = 'Règlement';
+
+//Configuration
+$lang['members.config.registration-activation'] = 'Activer l\'inscription des membres';
+$lang['members.config.type-activation'] = 'Mode d\'activation du compte membre';
+$lang['members.config.unactivated-accounts-timeout'] = 'Nombre de jours après lequel les membres non activés sont effacés';
+$lang['members.config.unactivated-accounts-timeout-explain'] = 'Laisser vide pour ignorer cette option (Non pris en compte si validation par administrateur)';
+$lang['members.config.upload-avatar-server-authorization'] = 'Autoriser l\'upload d\'avatar sur le serveur';
+$lang['members.config.activation-resize-avatar'] = 'Activer le redimensionnement automatique des images';
+$lang['members.activation-resize-avatar-explain'] = 'Attention votre serveur doit avoir l\'extension GD chargée';
+$lang['members.config.maximal-width-avatar'] = 'Largeur maximale de l\'avatar';
+$lang['members.config.maximal-width-avatar-explain'] = 'Par défaut 120';
+$lang['members.config.maximal-height-avatar'] = 'Hauteur maximale de l\'avatar';
+$lang['members.config.maximal-height-avatar-explain'] = 'Par défaut 120';
+$lang['members.config.maximal-weight-avatar'] = 'Poids maximal de l\'avatar en Ko';
+$lang['members.config.maximal-weight-avatar-explain'] = 'Par défaut 20';
+$lang['members.config.default-avatar-activation'] = 'Activer l\'avatar par défaut';
+$lang['members.config.default-avatar-activation-explain'] = 'Met un avatar aux membres qui n\'en ont pas';
+$lang['members.config.default-avatar-link'] = 'Adresse de l\'avatar par défaut';
+$lang['members.default-avatar-link-explain'] = 'Mettre dans le dossier images de votre thème';
+$lang['members.config.authorization-read-member-profile'] = 'Vous définissez ici les permissions de lecture de la liste des membres ainsi que certaines informations personnelles comme leurs emails.';
+$lang['members.config.welcome-message'] = 'Message à tous les membres';
+$lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché dans le profil du membre';
+
+//Other fieldset configuration title
+$lang['members.config.avatars-management'] = 'Gestion des avatars';
+$lang['members.config.authorization'] = 'Autorisations';
+
+//Other fieldset add and edit title
+$lang['members.member-management'] = 'Gestion du membre';
+$lang['members.punishment-management'] = 'Gestion des sanctions';
+
+//Activation type
+$lang['members.config.type-activation.auto'] = 'Automatique';
+$lang['members.config.type-activation.mail'] = 'Mail';
+$lang['members.config.type-activation.admin'] = 'Administrateur';
+
+//Rules
+$lang['members.rules.registration-agreement-description'] = 'Entrez ci-dessous le règlement à afficher lors de l\'enregistrement des membres, ils devront l\'accepter pour s\'enregistrer. Laissez vide pour aucun règlement.';
+$lang['members.rules.registration-agreement'] = 'Contenu du règlement';
+
+//Other
+$lang['members.valid'] = 'Valide';
+
+############## Extended Field ##############
 
 $lang['extended-field-add'] = 'Ajouter un champ membre';
 $lang['extended-field-edit'] = 'Editer un champ membre';
@@ -92,51 +144,4 @@ $lang['field.position'] = 'Position';
 
 $lang['field.is-required'] = 'Requis';
 $lang['field.is-not-required'] = 'Non requis';
-
-
-//Install
-$lang['field-install.default-lang'] = 'Langue par défaut';
-$lang['field-install.default-lang-explain'] = 'Sélectionner la langue que vous souhaitez utiliser';
-
-$lang['field-install.default-theme'] = 'Thème par défaut';
-$lang['field-install.default-theme-explain'] = 'Sélectionner le thème que vous souhaitez utiliser';
-
-$lang['field-install.default-editor'] = 'Editeur de texte par défaut';
-$lang['field-install.default-editor-explain'] = 'Sélectionner l\'éditeur de texte que vous souhaitez utiliser';
-
-$lang['field-install.timezone'] = 'Choix du fuseau horaire';
-$lang['field-install.timezone-explain'] = 'Vous permet d\'ajuster l\'heure en fonction de votre localisation';
-
-$lang['field-install.sex'] = 'Sexe';
-$lang['field-install.sex-explain'] = '';
-
-$lang['field-install.date-birth'] = 'Date de naissance';
-$lang['field-install.date-birth-explain'] = 'De type JJ/MM/AAAA';
-
-$lang['field-install.avatar'] = 'Avatar';
-$lang['field-install.avatar-explain'] = '';
-
-$lang['field-install.website'] = 'Site web';
-$lang['field-install.website-explain'] = 'Veuillez renseigner un site web valide (ex : http://www.phpboost.com)';
-
-$lang['field-install.location'] = 'Localisation';
-$lang['field-install.location-explain'] = '';
-
-$lang['field-install.job'] = 'Emploi';
-$lang['field-install.job-explain'] = '';
-
-$lang['field-install.entertainement'] = 'Loisirs';
-$lang['field-install.entertainement-explain'] = '';
-
-$lang['field-install.signing'] = 'Signature';
-$lang['field-install.signing-explain'] = 'Apparaît sous chacun de vos messages';
-
-$lang['field-install.biography'] = 'Biographie';
-$lang['field-install.biography-explain'] = '';
-
-$lang['field-install.msn'] = 'MSN';
-$lang['field-install.msn-explain'] = '';
-
-$lang['field-install.yahoo'] = 'Yahoo';
-$lang['field-install.yahoo-explain'] = '';
 ?>

@@ -155,4 +155,51 @@ Password : :password
 $lang['agreement'] = 'Agreement';
 $lang['agreement.agree'] = 'I agree this agreement';
 $lang['agreement.agree.required'] = 'You must agree for registration';
+
+############## Extended Field ##############
+
+$lang['extended-field.field.default-lang'] = 'Default language';
+$lang['extended-field.field.default-lang-explain'] = 'Select the language you want to use';
+
+$lang['extended-field.field.default-theme'] = 'Default theme';
+$lang['extended-field.field.default-theme-explain'] = 'Select the theme you want to use';
+
+$lang['extended-field.field.default-editor'] = 'Default text editor';
+$lang['extended-field.field.default-editor-explain'] = 'Select the text editor you want to use on your website';
+
+$lang['extended-field.field.timezone'] = 'Timezone';
+$lang['extended-field.field.timezone-explain'] = 'Select the timezone corresponding to the place you live';
+
+$lang['extended-field.field.sex'] = 'Sex';
+$lang['extended-field.field.sex-explain'] = '';
+
+$lang['extended-field.field.date-birth'] = 'Birth date';
+$lang['extended-field.field.date-birth-explain'] = 'MM/DD/YYYY';
+
+$lang['extended-field.field.avatar'] = 'Avatar';
+$lang['extended-field.field.avatar-explain'] = '';
+
+$lang['extended-field.field.website'] = 'Website';
+$lang['extended-field.field.website-explain'] = 'Please enter a valid url (ex : http://www.phpboost.com)';
+
+$lang['extended-field.field.location'] = 'Location';
+$lang['extended-field.field.location-explain'] = '';
+
+$lang['extended-field.field.job'] = 'Job';
+$lang['extended-field.field.job-explain'] = '';
+
+$lang['extended-field.field.entertainement'] = 'Hobbies';
+$lang['extended-field.field.entertainement-explain'] = '';
+
+$lang['extended-field.field.signing'] = 'Signature';
+$lang['extended-field.field.signing-explain'] = 'The signature appears beyond all your messages';
+
+$lang['extended-field.field.biography'] = 'Biography';
+$lang['extended-field.field.biography-explain'] = 'A few lines describing you';
+
+$lang['extended-field.field.msn'] = 'MSN';
+$lang['extended-field.field.msn-explain'] = '';
+
+$lang['extended-field.field.yahoo'] = 'Yahoo';
+$lang['extended-field.field.yahoo-explain'] = '';
 ?>

@@ -309,11 +309,11 @@ class ForumSetup extends DefaultModuleSetup
 		ExtendedFieldsService::add($extended_field);
 		
 		//Sign
-		$lang = LangLoader::get('admin-extended-fields-common');
+		$lang = LangLoader::get('user-common');
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.signing']);
+		$extended_field->set_name($lang['extended-field.field.signing']);
 		$extended_field->set_field_name('user_sign');
-		$extended_field->set_description($lang['field-install.signing-explain']);
+		$extended_field->set_description($lang['extended-field.field.signing-explain']);
 		$extended_field->set_field_type('MemberLongTextExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
