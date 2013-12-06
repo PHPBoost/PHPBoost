@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                         common.class.php
+ *		                         common.php
  *                            -------------------
  *   begin                : February 20, 2013
  *   copyright            : (C) 2013 Kevin MASSY
@@ -37,6 +37,10 @@ $lang['news.seo.description.root'] = 'Toutes les news du site :site.';
 $lang['news.seo.description.tag'] = 'Toutes les news sur le sujet :subject.';
 $lang['news.seo.description.pending'] = 'Toutes les news en attente.';
 
+$lang['news.display.posted_by'] = 'Posté par';
+$lang['news.display.posted_on'] = 'le';
+$lang['news.display.in_category'] = 'dans la catégorie';
+
 $lang['news.form.name'] = 'Nom de la news';
 $lang['news.form.rewrited_name'] = 'Nom de votre news dans l\'url';
 $lang['news.form.rewrited_name.description'] = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';
@@ -50,11 +54,11 @@ $lang['news.form.approbation'] = 'Publication';
 $lang['news.form.approbation.not'] = 'Garder en brouillon';
 $lang['news.form.approbation.now'] = 'Publier maintenant';
 $lang['news.form.approbation.date'] = 'Publication différée';
-$lang['news.form.approved.not'] = 'Gardé en brouillon';
-$lang['news.form.approved.now'] = 'Publié';
-$lang['news.form.approved.date'] = 'Publié en différé';
+$lang['news.form.approved.not'] = 'Gardée en brouillon';
+$lang['news.form.approved.now'] = 'Publiée';
+$lang['news.form.approved.date'] = 'Publiée en différé';
 $lang['news.form.date.start'] = 'A partir du';
-$lang['news.form.date.end'] = 'Juqu\'au';
+$lang['news.form.date.end'] = 'Jusqu\'au';
 $lang['news.form.date.creation'] = 'Date de création de la news';
 $lang['news.form.date.end.enable'] = 'Définir une date de fin de publication';
 $lang['news.form.top_list'] = 'Placer la news en tête de liste';
@@ -66,32 +70,18 @@ $lang['news.form.picture.preview'] = 'Preview de l\'image';
 $lang['news.form.sources'] = 'Sources';
 $lang['news.form.sources.name'] = 'Nom de la source';
 $lang['news.form.sources.url'] = 'Adresse de la source';
-$lang['news.form.contribution'] = 'Contribution';
-$lang['news.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer une news, cependant vous pouvez proposer une news. Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
-$lang['news.form.contribution.description'] = 'Complément de contribution';
-$lang['news.form.contribution.description.explain'] = 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cette news au site). Ce champ est facultatif.';
-$lang['news.form.contribution.entitled'] = '[News] :name';
+$lang['news.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer une news, cependant vous pouvez en proposer une.';
 
-$lang['admin.config'] = 'Configuration';
+//Administration
 $lang['admin.config.number_news_per_page'] = 'Nombre de news par page';
 $lang['admin.config.number_columns_display_news'] = 'Nombre de colonnes pour afficher les news';
 $lang['admin.config.display_condensed'] = 'Afficher le condensé de la news et non la news toute entière';
-$lang['admin.config.number_character_to_cut'] = 'Nombre de caractère pour couper la news';
+$lang['admin.config.number_character_to_cut'] = 'Nombre de caractères pour couper la news';
 $lang['admin.config.comments_enabled'] = 'Activer les commentaires';
 $lang['admin.config.news_suggestions_enabled'] = 'Activer l\'affichage des suggestions';
 $lang['admin.config.display_type'] = 'Type d\'affichage des news';
 $lang['admin.config.display_type.block'] = 'Affichage en bloc';
 $lang['admin.config.display_type.list'] = 'Affichage en liste';
-$lang['admin.config.authorizations'] = 'Autorisations';
-$lang['admin.config.authorizations.read'] = 'Autorisations de lecture';
-$lang['admin.config.authorizations.write'] = 'Autorisations d\'écriture';
-$lang['admin.config.authorizations.contribution'] = 'Autorisations de contribution';
-$lang['admin.config.authorizations.moderation'] = 'Autorisation de modération';
-
-$lang['admin.categories.manage'] = 'Gérer les catégories';
-$lang['admin.categories.add'] = 'Ajouter une catégorie';
-$lang['admin.categories.edit'] = 'Modifier une catégorie';
-$lang['admin.categories.delete'] = 'Supprimer une catégorie';
 
 //Feed name
 $lang['feed.name'] = 'Actualités';

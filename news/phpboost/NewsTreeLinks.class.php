@@ -35,9 +35,9 @@ class NewsTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'news');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink($lang['admin.categories.manage'], NewsUrlBuilder::manage_categories());
-		$manage_categories_link->add_sub_link(new AdminModuleLink($lang['admin.categories.manage'], NewsUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($lang['admin.categories.add'], NewsUrlBuilder::add_category()));
+		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), NewsUrlBuilder::manage_categories());
+		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), NewsUrlBuilder::manage_categories()));
+		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), NewsUrlBuilder::add_category()));
 		$tree->add_link($manage_categories_link);
 	
 		$manage_news_link = new AdminModuleLink($lang['news.manage'], NewsUrlBuilder::manage_news());
@@ -45,7 +45,7 @@ class NewsTreeLinks implements ModuleTreeLinksExtensionPoint
 		$manage_news_link->add_sub_link(new AdminModuleLink($lang['news.add'], NewsUrlBuilder::add_news()));
 		$tree->add_link($manage_news_link);
 		
-		$tree->add_link(new AdminModuleLink($lang['admin.config'], NewsUrlBuilder::config()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), NewsUrlBuilder::config()));
 	
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{

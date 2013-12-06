@@ -7,7 +7,7 @@
 	</header>
 # IF C_NEWS_NO_AVAILABLE #
     <div class="center">
-        ${i18n('news.message.no_items')}
+        {@news.message.no_items}
     </div>
 # ELSE #
 	# START news #
@@ -30,12 +30,12 @@
         		</h1>
         		
         		<div class="more">
-					Posté par 
+					{@news.display.posted_by}&nbsp;
 					# IF news.PSEUDO #
 					<a itemprop="author" class="small_link {news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}" style="font-size: 12px;" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, 
 					# ENDIF # 
-					le <time datetime="{news.DATE_ISO8601}" itemprop="datePublished">{news.DATE}</time>, 
-					dans la catégorie <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
+					{@news.display.posted_on} <time datetime="{news.DATE_ISO8601}" itemprop="datePublished">{news.DATE}</time>, 
+					{@news.display.in_category} <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
 				</div>
 				
         		<meta itemprop="url" content="{news.U_LINK}">

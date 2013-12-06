@@ -62,7 +62,7 @@ class AdminNewsConfigController extends AdminModuleController
 		
 		$tpl->put('FORM', $this->form->display());
 		
-		return new AdminNewsDisplayResponse($tpl, $this->lang['admin.config']);
+		return new AdminNewsDisplayResponse($tpl, LangLoader::get_message('configuration', 'admin'));
 	}
 	
 	private function init()
@@ -75,7 +75,7 @@ class AdminNewsConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('config', $this->lang['admin.config']);
+		$fieldset = new FormFieldsetHTML('config', LangLoader::get_message('configuration', 'admin'));
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_news_per_page', $this->lang['admin.config.number_news_per_page'], $this->config->get_number_news_per_page(), 
@@ -115,15 +115,16 @@ class AdminNewsConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption($this->lang['admin.config.display_type.list'], NewsConfig::DISPLAY_LIST),
 			)
 		));
-				
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['admin.config.authorizations']);
+		
+		$authorizations_lang = LangLoader::get('authorizations-common');
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $authorizations_lang['authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['admin.config.authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['admin.config.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['admin.config.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['admin.config.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+			new ActionAuthorization($authorizations_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new ActionAuthorization($authorizations_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($authorizations_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new ActionAuthorization($authorizations_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
