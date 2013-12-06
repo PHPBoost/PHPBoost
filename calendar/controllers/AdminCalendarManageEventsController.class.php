@@ -39,7 +39,7 @@ class AdminCalendarManageEventsController extends AdminModuleController
 		
 		$this->build_view($request);
 		
-		return new AdminCalendarDisplayResponse($this->view, $this->lang['calendar.config.events.manage']);
+		return new AdminCalendarDisplayResponse($this->view, $this->lang['calendar.config.events.management']);
 	}
 	
 	private function init()
@@ -67,7 +67,7 @@ class AdminCalendarManageEventsController extends AdminModuleController
 				$sort_field = 'id_category';
 				break;
 			case 'author':
-				$sort_field = 'author_id';
+				$sort_field = 'login';
 				break;
 			case 'title':
 				$sort_field = 'title';
