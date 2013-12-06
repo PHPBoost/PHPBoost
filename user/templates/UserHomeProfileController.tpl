@@ -1,50 +1,50 @@
-<section>					
+<section>
 	<header>
-		<h1>{L_PROFIL}</h1>
+		<h1>{@profile}</h1>
 	</header>
 	<div class="content">
-		<p style="text-align:center;" class="text_strong">{L_WELCOME} {USER_NAME}</p>
+		<p style="text-align:center;" class="text_strong">${LangLoader::get_message('welcome', 'main')} {PSEUDO}</p>
 		
 		<table class="module_table" style="width:99%;margin-top:15px;">
 			<tr>
 				<td class="row2" style="text-align:center;">
 					<a href="{U_EDIT_PROFILE}" title="">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/member.png" alt="{L_PROFIL_EDIT}" title="{L_PROFIL_EDIT}" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/member.png" alt="{profile.edit}" title="{profile.edit}" />
 					</a>
 					<br />
-					<a href="{U_EDIT_PROFILE}">{L_PROFIL_EDIT}</a> <br /><br />
+					<a href="{U_EDIT_PROFILE}">{profile.edit}</a> <br /><br />
 				</td>
 				<td class="row2" style="text-align:center;">
 					<a href="{U_USER_PM}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" alt="{L_PRIVATE_MESSAGE}" title="{L_PRIVATE_MESSAGE}" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/# IF C_HAS_PM #new_pm.gif# ELSE #pm.png# ENDIF #" alt="${LangLoader::get_message('private_message', 'main')}" title="${LangLoader::get_message('private_message', 'main')}" />
 					</a>
 					<br />
-					<a href="{U_USER_PM}">{PM} {L_PRIVATE_MESSAGE}</a> <br /><br />
+					<a href="{U_USER_PM}">{NUMBER_PM} ${LangLoader::get_message('private_message', 'main')}</a> <br /><br />
 				</td>
 				# IF C_USER_AUTH_FILES #
 				<td class="row2" style="text-align:center;">
 					<a href="{U_UPLOAD}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="{L_FILES_MANAGEMENT}" title="{L_FILES_MANAGEMENT}" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="${LangLoader::get_message('files_management', 'main')}" title="${LangLoader::get_message('files_management', 'main')}" />
 					</a>
 					<br />
-					<a href="{U_UPLOAD}">{L_FILES_MANAGEMENT}</a> <br /><br />
-				</td>				
+					<a href="{U_UPLOAD}">${LangLoader::get_message('files_management', 'main')}</a> <br /><br />
+				</td>
 				# ENDIF #
 				<td class="row2" style="text-align:center;">
 					<a href="{U_CONTRIBUTION_PANEL}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution.png" alt="{L_CONTRIBUTION_PANEL}" title="{L_CONTRIBUTION_PANEL}" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution.png" alt="${LangLoader::get_message('contribution_panel', 'main')}" title="${LangLoader::get_message('contribution_panel', 'main')}" />
 					</a>
 					<br />
-					<a href="{U_CONTRIBUTION_PANEL}">{L_CONTRIBUTION_PANEL}</a> <br /><br />
+					<a href="{U_CONTRIBUTION_PANEL}">${LangLoader::get_message('contribution_panel', 'main')}</a> <br /><br />
 				</td>
 				# IF C_IS_MODERATOR #
 				<td class="row2" style="text-align:center;">
 					<a href="{U_MODERATION_PANEL}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" alt="{L_MODERATION_PANEL}" title="{L_MODERATION_PANEL}" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" alt="${LangLoader::get_message('moderation_panel', 'main')}" title="${LangLoader::get_message('moderation_panel', 'main')}" />
 					</a>
 					<br />
-					<a href="{U_MODERATION_PANEL}">{L_MODERATION_PANEL}</a> <br /><br />
-				</td>				
+					<a href="{U_MODERATION_PANEL}">${LangLoader::get_message('moderation_panel', 'main')}</a> <br /><br />
+				</td>
 				# ENDIF #
 			</tr>
 		</table>

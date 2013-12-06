@@ -28,7 +28,6 @@
 class UserHomeProfileController extends AbstractController
 {
 	private $lang;
-	private $main_lang;
 	private $tpl;
 	private $user;
 
@@ -36,14 +35,13 @@ class UserHomeProfileController extends AbstractController
 	{
 		$this->init();
 
-		$user_id = $this->user->get_id();
-		if (!UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $user_id)))
+		if (!UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $this->user->get_id())))
 		{
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);
 		}
-		$this->build_form($user_id);
-		return $this->build_response($this->tpl, $user_id);
+		$this->build_form();
+		return $this->build_response($this->tpl);
 	}
 
 	private function init()
@@ -51,44 +49,84 @@ class UserHomeProfileController extends AbstractController
 		$this->user = AppContext::get_current_user();
 		$this->tpl = new FileTemplate('user/UserHomeProfileController.tpl');
 		$this->lang = LangLoader::get('user-common');
-		$this->main_lang = LangLoader::get('main');
 		$this->tpl->add_lang($this->lang);
 	}
 	
-	private function build_form($user_id)
+	private function build_form()
 	{
+		$contribution_number = get_unread_contributions_number();
 		$is_authorized_files_panel = $this->user->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES);
 		$this->tpl->put_all(array(
 			'C_USER_AUTH_FILES' => $is_authorized_files_panel,
 			'C_USER_INDEX' => true,
 			'C_IS_MODERATOR' => $this->user->get_attribute('level') >= User::MODERATOR_LEVEL,
+			'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
+			'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
+			'C_HAS_PM' => $this->user->get_attribute('user_pm') > 0,
 			'COLSPAN' => $is_authorized_files_panel ? 3 : 2,
-			'USER_NAME' => $this->user->get_attribute('login'),
-			'PM' => $this->user->get_attribute('user_pm'),
-			'IMG_PM' => ($this->user->get_attribute('user_pm') > 0) ? 'new_pm.gif' : 'pm.png',
+			'PSEUDO' => $this->user->get_pseudo(),
+			'NUMBER_UNREAD_CONTRIBUTIONS' => $contribution_number,
+			'NUMBER_PM' => $this->user->get_attribute('user_pm'),
 			'MSG_MBR' => FormatingHelper::second_parse(UserAccountsConfig::load()->get_welcome_message()),
-			'U_USER_ID' => UserUrlBuilder::profile($user_id)->rel(),
-			'U_USER_PM' => UserUrlBuilder::personnal_message($user_id)->rel(),
+			'U_USER_ID' => UserUrlBuilder::profile($this->user->get_id())->rel(),
+			'U_USER_PM' => UserUrlBuilder::personnal_message($this->user->get_id())->rel(),
 			'U_CONTRIBUTION_PANEL' => UserUrlBuilder::contribution_panel()->rel(),
 			'U_MODERATION_PANEL' => UserUrlBuilder::moderation_panel()->rel(),
 			'U_UPLOAD' => UserUrlBuilder::upload_files_panel()->rel(),
-			'U_EDIT_PROFILE' => UserUrlBuilder::edit_profile()->rel(),
-			'L_PROFIL' => $this->lang['profile'],
-			'L_WELCOME' => $this->main_lang['welcome'],
-			'L_PROFIL_EDIT' => $this->lang['profile.edit'],
-			'L_FILES_MANAGEMENT' => $this->main_lang['files_management'],
-			'L_PRIVATE_MESSAGE' => $this->main_lang['private_message'],
-			'L_CONTRIBUTION_PANEL' => $this->main_lang['contribution_panel'],
-			'L_MODERATION_PANEL' => $this->main_lang['moderation_panel']
+			'U_EDIT_PROFILE' => UserUrlBuilder::edit_profile()->rel()
 		));
 	}
+	
+	private function get_unread_contributions_number()
+	{
+		$unread_contributions = UnreadContributionsCache::load();
 
-	private function build_response(View $view, $user_id)
+		//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
+		//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
+		$contribution_number = 0;
+
+		if ($this->user->check_level(User::ADMIN_LEVEL))
+		{
+			$contribution_number = $unread_contributions->get_admin_unread_contributions_number();
+		}
+		elseif ($this->user->check_level(User::MODERATOR_LEVEL))
+		{
+			if ($unread_contributions->have_moderators_unread_contributions())
+			{
+				$contribution_number = -1;
+			}
+		}
+		else
+		{
+			if ($unread_contributions->have_members_unread_contributions())
+			{
+				$contribution_number = -1;
+			}
+			else if ($unread_contributions->has_user_unread_contributions($this->user->get_id()))
+			{
+				$contribution_number = -1;
+			}
+			else
+			{
+				foreach ($this->user->get_groups() as $group_id)
+				{
+					if ($unread_contributions->has_group_unread_contributions($group_id))
+					{
+						$contribution_number = -1;
+						break;
+					}
+				}
+			}
+		}
+		return $contribution_number;
+	}
+
+	private function build_response(View $view)
 	{
 		$response = new UserDisplayResponse();
 		$response->set_page_title($this->lang['profile']);
 		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
-		$response->add_breadcrumb($this->lang['profile'], UserUrlBuilder::profile($user_id)->rel());
+		$response->add_breadcrumb($this->lang['profile'], UserUrlBuilder::profile($this->user->get_id())->rel());
 		return $response->display($view);
 	}
 }
