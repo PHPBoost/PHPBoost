@@ -43,7 +43,7 @@ class BugtrackerConfigUpdateVersion extends ConfigUpdateVersion
 		$types = array();
 		foreach ($config['types'] as $type)
 		{
-			$nb_types = sizeof($types);
+			$nb_types = count($types);
 			$array_id = empty($nb_types) ? 1 : ($nb_types + 1);
 			$types[$array_id] = $type;
 		}
@@ -51,7 +51,7 @@ class BugtrackerConfigUpdateVersion extends ConfigUpdateVersion
 		$categories = array();
 		foreach ($config['categories'] as $category)
 		{
-			$nb_categories = sizeof($categories);
+			$nb_categories = count($categories);
 			$array_id = empty($nb_categories) ? 1 : ($nb_categories + 1);
 			$categories[$array_id] = $category;
 		}
@@ -59,7 +59,7 @@ class BugtrackerConfigUpdateVersion extends ConfigUpdateVersion
 		$versions = array();
 		foreach ($config['versions'] as $version)
 		{
-			$nb_versions = sizeof($versions);
+			$nb_versions = count($versions);
 			$array_id = empty($nb_versions) ? 1 : ($nb_versions + 1);
 			$versions[$array_id] = array(
 				'name' => $version['name'],

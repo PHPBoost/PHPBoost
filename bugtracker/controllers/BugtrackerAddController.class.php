@@ -90,11 +90,11 @@ class BugtrackerAddController extends ModuleController
 		
 		$versions_detected_in = array_reverse($versions_detected_in, true);
 		
-		$display_types = sizeof($types) > 1;
-		$display_categories = sizeof($categories) > 1;
-		$display_priorities = sizeof($priorities) > 1;
-		$display_severities = sizeof($severities) > 1;
-		$display_versions_detected_in = sizeof($versions_detected_in) > 1;
+		$display_types = count($types) > 1;
+		$display_categories = count($categories) > 1;
+		$display_priorities = count($priorities) > 1;
+		$display_severities = count($severities) > 1;
+		$display_versions_detected_in = count($versions_detected_in) > 1;
 		
 		$default_type = $this->config->get_default_type();
 		$default_category = $this->config->get_default_category();

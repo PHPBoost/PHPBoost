@@ -312,7 +312,7 @@ if (!defined("PCL_TAR"))
   //  The properties (array field names) are :
   //    filename, size, mode, uid, gid, mtime, typeflag, status
   //  Exemple : $v_list = PclTarList("my.tar");
-  //            for ($i=0; $i<sizeof($v_list); $i++)
+  //            for ($i=0; $i<count($v_list); $i++)
   //              echo "Filename :'".$v_list[$i][filename]."'<br />";
   // --------------------------------------------------------------------------------
   function PclTarList($p_tarname, $p_mode="")
@@ -1324,7 +1324,7 @@ if (!defined("PCL_TAR"))
     $v_header = array();
 
     // ----- Recuperate the current number of elt in list
-    $v_nb = sizeof($p_list_detail);
+    $v_nb = count($p_list_detail);
 
     // ----- Check the parameters
     if ($p_tar == 0)
@@ -1338,7 +1338,7 @@ if (!defined("PCL_TAR"))
     }
 
     // ----- Check the arguments
-    if (sizeof($p_list) == 0)
+    if (count($p_list) == 0)
     {
       // ----- Error log
       PclErrorLog(-3, "Invalid file list parameter (invalid or empty list)");
@@ -1919,7 +1919,7 @@ if (!defined("PCL_TAR"))
         $v_extract_file = FALSE;
 
         // ----- Look into the file list
-        for ($i=0; $i<sizeof($p_file_list); $i++)
+        for ($i=0; $i<count($p_file_list); $i++)
         {
           TrFctMessage(__FILE__, __LINE__, 2, "Compare archived file '$v_header[filename]' from asked list file '".$p_file_list[$i]."'");
 
@@ -2263,13 +2263,13 @@ if (!defined("PCL_TAR"))
 
     // ----- Loop on the index list
     $v_index=0;
-    for ($i=0; ($i<sizeof($v_list)) && ($v_result); $i++)
+    for ($i=0; ($i<count($v_list)) && ($v_result); $i++)
     {
       TrFctMessage(__FILE__, __LINE__, 3, "Looking for index part '$v_list[$i]'");
 
       // ----- Extract range
       $v_index_list = explode("-", $v_list[$i]);
-      $v_size_index_list = sizeof($v_index_list);
+      $v_size_index_list = count($v_index_list);
       if ($v_size_index_list == 1)
       {
         TrFctMessage(__FILE__, __LINE__, 3, "Only one index '$v_index_list[0]'");
@@ -2314,7 +2314,7 @@ if (!defined("PCL_TAR"))
     $v_tar = $p_tar;
 
     // ----- Look the number of elements already in $p_list_detail
-    $v_nb = sizeof($p_list_detail);
+    $v_nb = count($p_list_detail);
 
     // ----- Read the blocks
     While (!($v_end_of_file = ($p_tar_mode == "tar"?feof($v_tar):gzeof($v_tar))))
@@ -2752,7 +2752,7 @@ if (!defined("PCL_TAR"))
       TrFctMessage(__FILE__, __LINE__, 2, "Found file '$v_header[filename]', size '$v_header[size]'");
 
       // ----- Look for filenames to delete
-      for ($i=0, $v_delete_file=FALSE; ($i<sizeof($p_file_list)) && (!$v_delete_file); $i++)
+      for ($i=0, $v_delete_file=FALSE; ($i<count($p_file_list)) && (!$v_delete_file); $i++)
       {
         // ----- Compare the file names
 //        if ($p_file_list[$i] == $v_header[filename])
@@ -2959,7 +2959,7 @@ if (!defined("PCL_TAR"))
     }
 
     // ----- Prepare the list of files
-    for ($i=0; $i<sizeof($p_file_list); $i++)
+    for ($i=0; $i<count($p_file_list); $i++)
     {
       // ----- Reset the found list
       $v_found_list[$i] = 0;
@@ -3044,7 +3044,7 @@ if (!defined("PCL_TAR"))
       TrFctMessage(__FILE__, __LINE__, 2, "Found file '$v_header[filename]', size '$v_header[size]'");
 
       // ----- Look for filenames to update
-      for ($i=0, $v_update_file=FALSE, $v_found_file=FALSE; ($i<sizeof($v_stored_list)) && (!$v_update_file); $i++)
+      for ($i=0, $v_update_file=FALSE, $v_found_file=FALSE; ($i<count($v_stored_list)) && (!$v_update_file); $i++)
       {
         TrFctMessage(__FILE__, __LINE__, 4, "Compare with file '$v_stored_list[$i]'");
 
@@ -3178,7 +3178,7 @@ if (!defined("PCL_TAR"))
     }
 
     // ----- Look for files that does not exists in the archive and need to be added
-    for ($i=0; $i<sizeof($p_file_list); $i++)
+    for ($i=0; $i<count($p_file_list); $i++)
     {
       // ----- Look if file not found in the archive
       if (!$v_found_list[$i])
@@ -3525,7 +3525,7 @@ if (!defined("PCL_TAR"))
       $v_list = explode("/", $p_dir);
 
       // ----- Study directories from last to first
-      for ($i=sizeof($v_list)-1; $i>=0; $i--)
+      for ($i=count($v_list)-1; $i>=0; $i--)
       {
         // ----- Look for current path
         if ($v_list[$i] == ".")
@@ -3538,14 +3538,14 @@ if (!defined("PCL_TAR"))
           // ----- Ignore it and ignore the $i-1
           $i--;
         }
-        else if (($v_list[$i] == "") && ($i!=(sizeof($v_list)-1)) && ($i!=0))
+        else if (($v_list[$i] == "") && ($i!=(count($v_list)-1)) && ($i!=0))
         {
           // ----- Ignore only the double '//' in path,
           // but not the first and last '/'
         }
         else
         {
-          $v_result = $v_list[$i].($i!=(sizeof($v_list)-1)?"/".$v_result:"");
+          $v_result = $v_list[$i].($i!=(count($v_list)-1)?"/".$v_result:"");
         }
       }
     }

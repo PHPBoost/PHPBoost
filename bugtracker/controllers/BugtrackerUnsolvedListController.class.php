@@ -50,10 +50,10 @@ class BugtrackerUnsolvedListController extends ModuleController
 		$severities = $config->get_severities();
 		$versions = $config->get_versions_detected();
 		
-		$display_types = sizeof($types) > 1;
-		$display_categories = sizeof($categories) > 1;
-		$display_severities = sizeof($severities) > 1;
-		$display_versions = sizeof($versions) > 1;
+		$display_types = count($types) > 1;
+		$display_categories = count($categories) > 1;
+		$display_severities = count($severities) > 1;
+		$display_versions = count($versions) > 1;
 		
 		$field = $request->get_value('field', 'date');
 		$sort = $request->get_value('sort', 'desc');
@@ -139,7 +139,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 			'C_PAGINATION'				=> $pagination->has_several_pages(),
 			'PAGINATION' 				=> $pagination->display(),
 			'BUGS_COLSPAN' 				=> BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4,
-			'L_NO_BUG' 					=> empty($filters) ? $this->lang['bugs.notice.no_bug'] : (sizeof($filters) > 1 ? $this->lang['bugs.notice.no_bug_matching_filters'] : $this->lang['bugs.notice.no_bug_matching_filter']),
+			'L_NO_BUG' 					=> empty($filters) ? $this->lang['bugs.notice.no_bug'] : (count($filters) > 1 ? $this->lang['bugs.notice.no_bug_matching_filters'] : $this->lang['bugs.notice.no_bug_matching_filter']),
 			'FILTER_LIST'				=> BugtrackerViews::build_filters('unsolved', $bugs_number),
 			'LEGEND'					=> BugtrackerViews::build_legend($displayed_severities, 'unsolved'),
 			'LINK_BUG_ID_TOP' 			=> BugtrackerUrlBuilder::unsolved('id/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),

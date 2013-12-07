@@ -294,7 +294,7 @@ elseif ($action == 'restore')
 		}
 	}
 	
-	if(sizeof($filelist) > 0) {
+	if(count($filelist) > 0) {
 		krsort($filelist);
 	}
 	
