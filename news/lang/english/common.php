@@ -59,7 +59,7 @@ $lang['news.form.approved.date'] = 'Published differed';
 $lang['news.form.top_list'] = 'Put the news on the top of the list';
 $lang['news.form.keywords.description'] = 'You can add keywords to your news';
 $lang['news.form.picture'] = 'News picture';
-$lang['news.form.contribution.explain'] = 'You are not authorized to create a news, but you can propose one.';
+$lang['news.form.contribution.explain'] = 'You are not authorized to create a news, however you can contribute by submitting one.';
 
 //Administration
 $lang['admin.config.number_news_per_page'] = 'Number news per page';

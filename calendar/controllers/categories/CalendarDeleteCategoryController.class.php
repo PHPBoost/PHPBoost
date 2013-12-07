@@ -29,7 +29,7 @@ class CalendarDeleteCategoryController extends AbstractDeleteCategoryController
 {
 	protected function generate_response(View $view)
 	{
-		return new AdminCalendarDisplayResponse($view, LangLoader::get_message('calendar.config.category.delete', 'common', 'calendar'));
+		return new AdminCalendarDisplayResponse($view, LangLoader::get_message('category.delete', 'categories-common'));
 	}
 
 	protected function get_categories_manager()

@@ -40,9 +40,9 @@ class CalendarTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'calendar');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_categories_link = new AdminModuleLink($lang['calendar.config.category.manage'], CalendarUrlBuilder::manage_categories());
-		$manage_categories_link->add_sub_link(new AdminModuleLink($lang['calendar.config.category.manage'], CalendarUrlBuilder::manage_categories()));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($lang['calendar.config.category.add'], CalendarUrlBuilder::add_category()));
+		$manage_categories_link = new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CalendarUrlBuilder::manage_categories());
+		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('categories.manage', 'categories-common'), CalendarUrlBuilder::manage_categories()));
+		$manage_categories_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('category.add', 'categories-common'), CalendarUrlBuilder::add_category()));
 		$tree->add_link($manage_categories_link);
 		
 		$manage_events_link = new AdminModuleLink($lang['calendar.manage'], CalendarUrlBuilder::manage_events());
@@ -50,7 +50,7 @@ class CalendarTreeLinks implements ModuleTreeLinksExtensionPoint
 		$manage_events_link->add_sub_link(new AdminModuleLink($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event($year . '/' . $month . '/' . $day)));
 		$tree->add_link($manage_events_link);
 		
-		$tree->add_link(new AdminModuleLink($lang['calendar.titles.admin.config'], CalendarUrlBuilder::configuration()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), CalendarUrlBuilder::configuration()));
 		
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{

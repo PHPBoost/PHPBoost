@@ -72,6 +72,7 @@ class CalendarFormController extends ModuleController
 	
 	private function build_form()
 	{
+		$common_lang = LangLoader::get('common');
 		$event_content = $this->get_event()->get_content();
 		
 		$form = new HTMLForm(__CLASS__);
@@ -79,14 +80,14 @@ class CalendarFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('event', $this->lang['calendar.titles.event']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['calendar.labels.title'], $event_content->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $event_content->get_title(), array('required' => true)));
 
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(CalendarService::get_categories_manager()->get_select_categories_form_field('category_id', $this->lang['calendar.labels.category'], $event_content->get_category_id(), $search_category_children_options));
+		$fieldset->add_field(CalendarService::get_categories_manager()->get_select_categories_form_field('category_id', LangLoader::get_message('category', 'categories-common'), $event_content->get_category_id(), $search_category_children_options));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['calendar.labels.contents'], $event_content->get_contents(), array('rows' => 15, 'required' => true)));
+		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.contents'], $event_content->get_contents(), array('rows' => 15, 'required' => true)));
 		
 		$fieldset->add_field(new FormFieldDateTime('start_date', $this->lang['calendar.labels.start_date'], $this->get_event()->get_start_date(), array('required' => true)));
 		
@@ -161,11 +162,11 @@ class CalendarFormController extends ModuleController
 	{
 		if ($this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', $this->lang['calendar.labels.contribution']);
-			$fieldset->set_description(MessageHelper::display($this->lang['calendar.labels.contribution.explain'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
+			$fieldset->set_description(MessageHelper::display(LangLoader::get_message('contribution.explain', 'user-common') . ' ' . $this->lang['calendar.labels.contribution.explain'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 			
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['calendar.labels.contribution.description'], '', array('description' => $this->lang['calendar.labels.contribution.description.explain'])));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', LangLoader::get_message('contribution.description', 'user-common'), '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));
 		}
 	}
 	
@@ -407,7 +408,7 @@ class CalendarFormController extends ModuleController
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id_event);
 				$contribution->set_description(stripslashes($this->form->get_value('contents')));
-				$contribution->set_entitled(StringVars::replace_vars($this->lang['calendar.labels.contribution.entitled'], array('title' => $this->form->get_value('title'))));
+				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.entitled', 'user-common'), array('module_name' => $this->lang['module_title'], 'title' => $this->form->get_value('title'))));
 				$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($id_event)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('calendar');

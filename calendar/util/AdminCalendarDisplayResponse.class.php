@@ -36,13 +36,14 @@ class AdminCalendarDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 		
 		$lang = LangLoader::get('common', 'calendar');
-		$picture = '/calendar/calendar.png';
 		$this->set_title($lang['module_title']);
-		$this->add_link($lang['calendar.config.category.management'], CalendarUrlBuilder::manage_categories(), $picture);
-		$this->add_link($lang['calendar.config.category.add'], CalendarUrlBuilder::add_category(), $picture);
+		$picture = 'calendar.png';
+		
+		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), CalendarUrlBuilder::manage_categories(), $picture);
+		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), CalendarUrlBuilder::add_category(), $picture);
 		$this->add_link($lang['calendar.config.events.management'], CalendarUrlBuilder::manage_events(), $picture);
 		$this->add_link($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event(), $picture);
-		$this->add_link($lang['calendar.titles.admin.config'], CalendarUrlBuilder::configuration(), $picture);
+		$this->add_link(LangLoader::get_message('configuration', 'admin'), CalendarUrlBuilder::configuration(), $picture);
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);
