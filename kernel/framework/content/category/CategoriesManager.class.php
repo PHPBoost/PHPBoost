@@ -199,11 +199,11 @@ class CategoriesManager
 		}
 		else
 		{
-			if ($id_parent != Category::ROOT_CATEGORY && !$this->get_categories_cache()->category_exists($id_parent))
+			if (!$this->get_categories_cache()->category_exists($id_parent))
 			{
 				throw new CategoryNotFoundException($id_parent);
 			}
-			elseif ($id != Category::ROOT_CATEGORY && !$this->get_categories_cache()->category_exists($id))
+			elseif (!$this->get_categories_cache()->category_exists($id))
 			{
 				throw new CategoryNotFoundException($id);
 			}
@@ -233,7 +233,7 @@ class CategoriesManager
 	public function update_position(Category $category, $id_parent, $position)
 	{
 		$id = $category->get_id();
-		if (($id == Category::ROOT_CATEGORY || $this->get_categories_cache()->category_exists($id)) && ($id_parent == Category::ROOT_CATEGORY || $this->get_categories_cache()->category_exists($id_parent)) && !($category->get_id_parent == $id_parent && $category->get_order() == $position))
+		if ($this->get_categories_cache()->category_exists($id) && $this->get_categories_cache()->category_exists($id_parent) && !($category->get_id_parent() == $id_parent && $category->get_order() == $position))
 		{
 			$options = new SearchCategoryChildrensOptions();
 			$childrens = $this->get_childrens($id, $options);
@@ -263,7 +263,7 @@ class CategoriesManager
 	 */
 	public function delete($id)
 	{
-		if (!$this->get_categories_cache()->category_exists($id) && $id == Category::ROOT_CATEGORY)
+		if (!$this->get_categories_cache()->category_exists($id) || $id == Category::ROOT_CATEGORY)
 		{
 			throw new CategoryNotFoundException($id);
 		}
