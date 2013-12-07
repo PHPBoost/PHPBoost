@@ -72,7 +72,7 @@ function CheckForm() {
 	
 		# INCLUDE filters #
 	
-		<fieldset class="fieldset_submit">
+		<fieldset class="fieldset-submit">
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="action" value="{ACTION}">
 			# IF C_EDIT #<input type="hidden" name="id" value="{IDMENU}"># ENDIF #

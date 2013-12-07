@@ -82,7 +82,7 @@
 					<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
 				</div>
 			</fieldset>	
-			<fieldset class="fieldset_submit">
+			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="is_cat" value="{IS_CAT}">
 				<input type="hidden" name="id_edit" value="{ID_EDIT}">

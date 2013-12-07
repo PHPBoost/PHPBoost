@@ -57,7 +57,7 @@ function CheckForm() {
 
 		# INCLUDE filters #
 	    
-		<fieldset class="fieldset_submit">
+		<fieldset class="fieldset-submit">
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="action" value="{ACTION}">
 			<input type="hidden" name="id" value="{IDMENU}">

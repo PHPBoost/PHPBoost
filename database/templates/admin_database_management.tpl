@@ -306,7 +306,7 @@
 					<div class="block_contents2">
 						<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 					</div>
-					<fieldset class="fieldset_submit" style="margin:0">
+					<fieldset class="fieldset-submit" style="margin:0">
 						<legend>{L_EXECUTE}</legend>
 						<button type="submit" name="submit" value="true">{L_EXECUTE}</button>
 					</fieldset>

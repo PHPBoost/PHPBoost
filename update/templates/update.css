@@ -390,7 +390,7 @@ fieldset{
 	background: #ECEFFA;
 	position: relative;
 }
-fieldset.fieldset_submit{
+fieldset.fieldset-submit{
 	width:250px;
 	margin:auto;
 	margin-top:30px;
@@ -403,12 +403,12 @@ fieldset.fieldset_submit{
 	-khtml-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
-fieldset.fieldset_submit button{
+fieldset.fieldset-submit button{
 	border:0px;
 	cursor:pointer;
 	background-color:#E5E5E5;
 }
-fieldset.fieldset_submit legend{
+fieldset.fieldset-submit legend{
 	display:none;
 }
 fieldset dl{

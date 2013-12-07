@@ -87,7 +87,7 @@
 					</div>
 				</fieldset>
 				
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
 					<button type="reset" value="true">{L_RESET}</button>

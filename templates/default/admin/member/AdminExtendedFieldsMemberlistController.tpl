@@ -126,7 +126,7 @@ Event.observe(window, 'load', function() {
 			# END list_extended_fields #
 		</ul>
 	</fieldset>
-	<fieldset class="fieldset_submit">
+	<fieldset class="fieldset-submit">
 		<button type="submit" name="submit" value="true">{L_VALID}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="position" id="position" value="">

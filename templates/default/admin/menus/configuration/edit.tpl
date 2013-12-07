@@ -15,7 +15,7 @@
 		</div>
 	</fieldset>
 
-	<fieldset class="fieldset_submit">
+	<fieldset class="fieldset-submit">
 		<legend>{EL_SUBMIT}</legend>
 		<button type="submit" name="valid" value="true">{EL_SUBMIT}</button>
 		<button type="reset" value="true">{EL_RESET}</button>

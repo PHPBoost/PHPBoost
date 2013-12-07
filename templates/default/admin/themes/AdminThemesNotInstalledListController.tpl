@@ -85,7 +85,7 @@
 		</tbody>
 	</table>
 	
-	<fieldset class="fieldset_submit">
+	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<input type="hidden" name="token" value="{TOKEN}">
 	</fieldset>

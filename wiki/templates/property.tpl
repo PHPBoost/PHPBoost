@@ -51,7 +51,7 @@
 				</div>
 			</fieldset>
 			
-			<fieldset class="fieldset_submit">
+			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 				&nbsp;&nbsp; 
@@ -134,7 +134,7 @@
 					<textarea rows="15" cols="66" id="contents" name="contents" {status.SELECTED_TEXTAREA}>{status.UNDEFINED_STATUS}</textarea>
 				</div>
 			</fieldset>
-			<fieldset class="fieldset_submit">
+			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_change_status" value="{status.ID_ARTICLE}">
 				<button type="submit" value="true">{L_SUBMIT}</button>
@@ -177,7 +177,7 @@
 				</div>
 			</fieldset>
 			
-			<fieldset class="fieldset_submit">
+			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_move" value="{move.ID_ARTICLE}">
 				<button type="submit" value="true">{L_SUBMIT}</button>
@@ -217,7 +217,7 @@
 				</div>
 			</fieldset>
 			
-			<fieldset class="fieldset_submit">
+			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_rename" value="{rename.ID_ARTICLE}">
 				<button type="submit" value="true">{L_SUBMIT}</button>
@@ -292,7 +292,7 @@
 				</div>
 			</fieldset>
 			
-			<fieldset class="fieldset_submit">
+			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="create_redirection" value="{create.ID_ARTICLE}">
 				<button type="submit" value="true">{L_SUBMIT}</button>
@@ -338,7 +338,7 @@
 				</div>
 			</fieldset>
 			
-			<fieldset class="fieldset_submit">
+			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_remove" value="{remove.ID_ARTICLE}">
 				<button type="submit" value="true">{L_SUBMIT}</button>

@@ -131,7 +131,7 @@
 					</div>
 				</fieldset>		
 				
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{IDWEB}">
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>

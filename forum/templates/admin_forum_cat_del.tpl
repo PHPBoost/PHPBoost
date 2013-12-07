@@ -85,7 +85,7 @@
 					</div>
 				</fieldset>	
 				
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<button type="submit" name="del_cat" value="true">{L_SUBMIT}</button>
 				</fieldset>

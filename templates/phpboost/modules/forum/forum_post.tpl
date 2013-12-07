@@ -209,7 +209,7 @@
 							</script>
 						</fieldset>	
 						
-						<fieldset class="fieldset_submit">
+						<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 							<input type="hidden" name="idm" value="{IDM}">
 							<button type="submit" name="post_topic" value="true">{L_SUBMIT}</button>

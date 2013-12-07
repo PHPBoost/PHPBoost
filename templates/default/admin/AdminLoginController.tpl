@@ -62,7 +62,7 @@
 				</div>
 			</fieldset>
 			<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
-			<fieldset class="fieldset_submit">
+			<fieldset class="fieldset-submit">
 				<button type="submit" name="connect" value="true">{@connect}</button>
 			</fieldset>	
 		</form>

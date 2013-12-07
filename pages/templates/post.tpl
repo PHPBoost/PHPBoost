@@ -124,7 +124,7 @@
 				</span>
 			</fieldset>
 			
-			<fieldset class="fieldset_submit">
+			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_edit" value="{ID_EDIT}">
 				<button type="submit">{L_SUBMIT}</button>

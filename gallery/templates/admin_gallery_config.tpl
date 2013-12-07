@@ -267,7 +267,7 @@
 					</div>
 				</fieldset>
 				
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 				<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 							&nbsp;&nbsp; 
@@ -282,7 +282,7 @@
 					{L_EXPLAIN_GALLERY_CACHE}
 					<br /><br />
 				</fieldset>			
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_EMPTY}</legend>
 					<button type="submit" name="gallery_cache" value="true">{L_EMPTY}</button> 		
 				</fieldset>

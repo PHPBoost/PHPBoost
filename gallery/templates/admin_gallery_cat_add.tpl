@@ -80,7 +80,7 @@
 					</div>
 				</fieldset>
 				
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_ADD}</legend>
 					<button type="submit" name="add" value="true">{L_ADD}</button>
 					&nbsp;&nbsp; 

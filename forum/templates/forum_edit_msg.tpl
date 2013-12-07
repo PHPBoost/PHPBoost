@@ -77,7 +77,7 @@
 							</div>
 						</fieldset>
 						
-						<fieldset class="fieldset_submit">
+						<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 							<input type="hidden" name="p_update" value="{P_UPDATE}">
 							<button type="submit" name="edit_msg" value="true">{L_SUBMIT}</button>

@@ -119,7 +119,7 @@
 				
 				<br /><br />
 				
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 					&nbsp;&nbsp; 
@@ -171,7 +171,7 @@
 					</div>
 				</fieldset>	
 				
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_ADD}</legend>
 					<button type="submit" name="add" value="true">{L_ADD}</button>
 					&nbsp;&nbsp; 

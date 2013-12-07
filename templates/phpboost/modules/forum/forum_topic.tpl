@@ -206,7 +206,7 @@
 					<br />
 					
 					# IF C_POLL_QUESTION #
-					<fieldset class="fieldset_submit">
+					<fieldset class="fieldset-submit">
 						<legend>{L_VOTE}</legend>
 						<input name="valid_forum_poll" type="submit" value="{L_VOTE}" /><br>
 						<a class="small" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
@@ -339,7 +339,7 @@
 					<div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
 					{KERNEL_EDITOR}
 					<label><textarea rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
-					<fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
+					<fieldset class="fieldset-submit" style="padding-top:17px;margin-bottom:0px;">
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 						&nbsp;&nbsp;

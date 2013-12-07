@@ -104,7 +104,7 @@ h6.sub_title2 { /* Sous titre dans les menu */
 
 /* Formulaires 
 --------------------------------------*/
-.fieldset_mini {
+.fieldset-mini {
     width:540px;
     margin:auto;
     margin-top:20px;
@@ -250,7 +250,7 @@ fieldset{
 	background:#ECEFFA;
 	position:relative;
 }
-fieldset.fieldset_submit{
+fieldset.fieldset-submit{
 	margin-top:-10px;
 	padding-bottom:15px;
 	width:99%;
@@ -259,7 +259,7 @@ fieldset.fieldset_submit{
 	border:none;
 }
 
-fieldset.fieldset_submit legend {
+fieldset.fieldset-submit legend {
     display:none;
 }
 

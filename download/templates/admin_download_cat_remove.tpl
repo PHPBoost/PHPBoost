@@ -17,7 +17,7 @@
 					{CATEGORY_TREE}
 				</fieldset>
 				
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="cat_to_del" value="{IDCAT}">
 					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>

@@ -77,7 +77,7 @@
 						</label></div>
 					</div>
 				</fieldset>
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_UPLOAD}</legend>
 					<button type="submit" name="" value="true">{L_UPLOAD}</button>
 				</fieldset>
@@ -105,7 +105,7 @@
 					</div>
 				</fieldset>
 				
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="idc" value="{NEXT_ID}">
 					<button type="submit" name="add" value="true">{L_ADD}</button>
