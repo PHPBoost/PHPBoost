@@ -64,7 +64,7 @@ class AdminNewsConfigController extends AdminModuleController
 		
 		$tpl->put('FORM', $this->form->display());
 		
-		return new AdminNewsDisplayResponse($tpl, LangLoader::get_message('configuration', 'admin'));
+		return new AdminNewsDisplayResponse($tpl, $this->lang['module_config_title']);
 	}
 	
 	private function init()
