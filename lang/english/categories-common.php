@@ -39,6 +39,12 @@ $lang['category.add'] = 'Add category';
 $lang['category.edit'] = 'Edit category';
 $lang['category.delete'] = 'Delete category';
 
+//Page title
+$lang['categories.page_title.management'] = 'Categories management of the module :module_name';
+$lang['category.page_title.add'] = 'Add category to the module :module_name';
+$lang['category.page_title.edit'] = 'Edit category of the module :module_name';
+$lang['category.page_title.delete'] = 'Delete category of the module :module_name';
+
 //Errors
 $lang['errors.unexisting'] = 'The category doesn\'t exist.';
 $lang['message.no_categories'] = 'No category';

@@ -29,7 +29,7 @@ class CalendarCategoriesFormController extends AbstractRichCategoriesFormControl
 {
 	protected function generate_response(View $view)
 	{
-		$page_name = $this->get_id_category() == 0 ? LangLoader::get_message('category.add', 'categories-common') : LangLoader::get_message('category.edit', 'categories-common');
+		$page_name = $this->get_id_category() == 0 ? StringVars::replace_vars(LangLoader::get_message('category.page_title.add', 'categories-common'), array('module_name' => strtolower(LangLoader::get_message('module_title', 'common', 'calendar')))) : StringVars::replace_vars(LangLoader::get_message('category.page_title.edit', 'categories-common'), array('module_name' => strtolower(LangLoader::get_message('module_title', 'common', 'calendar'))));
 		return new AdminCalendarDisplayResponse($view, $page_name);
 	}
 
