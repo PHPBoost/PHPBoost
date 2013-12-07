@@ -698,7 +698,6 @@ div.form_autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 
 /* Messages postés par les membres (messages privés & commentaires) 
 --------------------------------------*/
-
 #comments_list { clear:both; }
 
 .message { 
@@ -773,3 +772,10 @@ div.form_autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 }
 
 .message-moderate a { vertical-align:top; }
+
+i.message-announce,
+i.message-announce-new,
+i.message-announce-track { font-size:1.6em; }
+
+i.message-announce { color:#D1D2D4; }
+i.message-announce-track { color:#4372AA; }

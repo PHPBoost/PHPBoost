@@ -73,7 +73,7 @@
 					<table>
 						<thead>
 							<tr>
-								<th style="width:20px;">
+								<th>
 									<input type="checkbox" id="checkall" onclick="check_convers(this.checked, 'd');">
 								</th>
 								<th colspan="2">
@@ -101,13 +101,13 @@
 						<tbody>
 							# START convers.list #		
 							<tr>
-								<td style="width:20px;">
+								<td>
 									<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}">
 								</td>
-								<td style="width:40px;">
-									<img src="{convers.list.ANNOUNCE}.png" alt="" />
+								<td style="padding-right:0px;">
+									<i class="icon-envelope {convers.list.ANNOUNCE}"></i>
 								</td>
-								<td class="no-separator">
+								<td style="width:50%;" class="no-separator">
 									{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
 									# IF convers.list.PAGINATION_PM #
 										<br/>
@@ -139,13 +139,13 @@
 					<table>
 						<tr> 		
 							<td style="width:33%;"> 
-								<i class="icon-envelope" style="font-size:1.6em;color:#D1D2D4;"></i> {L_READ} 
+								<i class="icon-envelope message-announce"></i> {L_READ} 
 							</td>
 							<td style="width:34%;" class="no-separator">  
-								<i class="icon-envelope" style="font-size:1.6em;color:#4372AA;"></i> {L_TRACK}		
+								<i class="icon-envelope message-announce-track"></i> {L_TRACK}		
 							</td>
 							<td style="width:33%;" class="no-separator">  
-								<i class="icon-envelope" style="font-size:1.6em;"></i> {L_NOT_READ}		
+								<i class="icon-envelope message-announce-new"></i> {L_NOT_READ}		
 							</td>
 						</tr>
 					</table>
