@@ -147,7 +147,7 @@ class CategoriesManager
 	public function move_into_another(Category $category, $id_parent, $position = 0)
 	{
 		$id = $category->get_id();
-		if (($id == Category::ROOT_CATEGORY || $this->get_categories_cache()->category_exists($id)) && ($id_parent == Category::ROOT_CATEGORY || $this->get_categories_cache()->category_exists($id_parent)))
+		if ($this->get_categories_cache()->category_exists($id) && $this->get_categories_cache()->category_exists($id_parent))
 		{
 			$options = new SearchCategoryChildrensOptions();
 			$childrens = $this->get_childrens($id, $options);
@@ -162,7 +162,7 @@ class CategoriesManager
 					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => ($max_order + 1)), 'WHERE id=:id', array('id' => $id));
 
 					//Update items
-					$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), array($this->categories_items_parameters->get_field_name_id_category() => $id_parent), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $category->get_id_parent()));
+					$this->move_items_into_another($category, $id_parent);
 					
 					$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
 					while ($row = $result->fetch())
@@ -181,7 +181,7 @@ class CategoriesManager
 					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => $position), 'WHERE id=:id', array('id' => $id));
 					
 					//Update items
-					$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), array($this->categories_items_parameters->get_field_name_id_category() => $id_parent), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $category->get_id_parent()));
+					$this->move_items_into_another($category, $id_parent);
 					
 					$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
 					while ($row = $result->fetch())
@@ -212,6 +212,19 @@ class CategoriesManager
 	}
 	
 	/**
+	 * @desc Moves items into another category.
+	 * @param Category $category
+	 * @param int $id_parent
+	 */
+	public function move_items_into_another(Category $category, $id_parent)
+	{
+		if ($this->get_categories_cache()->category_exists($category->get_id()) && $this->get_categories_cache()->category_exists($id_parent))
+		{
+			$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), array($this->categories_items_parameters->get_field_name_id_category() => $id_parent), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:old_id_category', array('old_id_category' => $category->get_id()));
+		}
+	}
+	
+	/**
 	 * @desc Update category and items position.
 	 * @param Category $category
 	 * @param int $id_parent
@@ -233,16 +246,10 @@ class CategoriesManager
 				if ($position <= 0 || $position > $max_order)
 				{
 					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => ($max_order + 1)), 'WHERE id=:id', array('id' => $id));
-
-					//Update items
-					$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), array($this->categories_items_parameters->get_field_name_id_category() => $id_parent), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $category->get_id_parent()));
 				}
 				else
 				{
 					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => $position), 'WHERE id=:id', array('id' => $id));
-					
-					//Update items
-					$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), array($this->categories_items_parameters->get_field_name_id_category() => $id_parent), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $category->get_id_parent()));
 				}
 
 				$this->regenerate_cache();
