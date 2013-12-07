@@ -64,7 +64,7 @@ section footer, article footer { margin-bottom: 15px; }
 section footer nav.pagination {	text-align: center; }
 
 /* Block */
-.block, .small_block {
+.block, .small-block {
 	border: 1px solid #CCCCCC;
 	border-top: 2px solid #366393;
 	border-bottom: 1px solid #99B1CB;
@@ -72,20 +72,20 @@ section footer nav.pagination {	text-align: center; }
 	padding: 10px;
 }
 
-.block h1, .small_block h1 { border: none; }
+.block h1, .small-block h1 { border: none; }
 .block { width: auto; }
 .block header {	margin-bottom: 10px; }
 .block footer {	margin: 0; }
 
 /* Affiche 3 blocs côte à côte */
-.small_block {
+.small-block {
 	float: left;
 	width: 32.33%;
 	margin: 0.5%;
 }
 
 /* Affiche plusieurs blocs côte à côte */
-li.small_block {
+li.small-block {
 	display:inline-block;
 	float:none;
 	margin:0px 10px 0 0;
@@ -95,7 +95,7 @@ li.small_block {
     text-align: center;
     width: 130px;
 }
-li.small_block:last-child { margin:0px; }
+li.small-block:last-child { margin:0px; }
 
 /* Exploreur des catégories
 -------------------------------------- */

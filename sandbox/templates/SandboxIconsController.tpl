@@ -4,7 +4,7 @@
 	</header>
 	<div class="content">
 		# START icons #
-			<article class="small_block">
+			<article class="small-block">
 				<header>
 					<h1>.{icons.CLASS}</h1>
 				</header>

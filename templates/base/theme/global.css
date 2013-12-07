@@ -154,7 +154,7 @@ a.member { color:#000000; }
 table .icon-table-sort-up:before { content: "\f062"; }
 table .icon-table-sort-down:before { content: "\f063"; }
 
-li.small_block .icon-stack { height: 2.34em; }
+li.small-block .icon-stack { height: 2.34em; }
 
 .icon-circle-alerte {
 	z-index:1;
