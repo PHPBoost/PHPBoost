@@ -33,6 +33,7 @@ $lang['category'] = 'Category';
 $lang['categories'] = 'Categories';
 
 //Management
+$lang['categories.management'] = 'Categories management';
 $lang['categories.manage'] = 'Manage categories';
 $lang['category.add'] = 'Add category';
 $lang['category.edit'] = 'Edit category';
