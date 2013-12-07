@@ -53,7 +53,7 @@ class AdminNewsConfigController extends AdminModuleController
 		
 		$this->build_form();
 		
-		$tpl = new StringTemplate('# INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
