@@ -211,7 +211,8 @@ ul.rss_feed li {
 	}
 }
 
-/* Lightbox */
+/* Lightbox
+--------------------------------------*/
 #lightbox{  position:absolute;  left:0; width:100%; z-index:103; text-align:center; line-height:0;}
 #lightbox img{ width:auto; height:auto;}
 #lightbox a img{ border:none; }
@@ -239,3 +240,24 @@ ul.rss_feed li {
 #imageData #bottomNavClose{ width:66px; position:relative; float:right; padding-bottom:0.7em; outline:none;}      
 
 #overlay{ position:absolute; top:0; left:0; z-index:102; width:100%; height:500px; background-color:#000; }
+
+/* Effet Blink
+--------------------------------------*/
+@keyframes blink {  
+    0% { opacity:0; }
+    30% { opacity:1; }
+    70% { opacity:1; }
+    100% { opacity:0; }
+}
+@-webkit-keyframes blink {
+    0% { opacity:0; }
+    30% { opacity:1; }
+    70% { opacity:1; }
+    100% { opacity:0; }
+}
+
+.blink {
+	animation: blink 1.5s ease-in-out infinite;
+	-moz-animation: blink 1.5s ease-in-out infinite;
+	-webkit-animation: blink 1.5s ease-in-out infinite;
+}

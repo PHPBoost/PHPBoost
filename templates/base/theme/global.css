@@ -809,25 +809,3 @@ div.message-helper-content{ padding:0px 5px 0px 35px; }
 
 .success { background-color:#E0F1D9; border-color:#D7EAC7; }
 .success, .icon-success:before { color:#478948; }
-
-
-/* Effet Blink
---------------------------------------*/
-@keyframes blink {  
-    0% { opacity:0; }
-    30% { opacity:1; }
-    70% { opacity:1; }
-    100% { opacity:0; }
-}
-@-webkit-keyframes blink {
-    0% { opacity:0; }
-    30% { opacity:1; }
-    70% { opacity:1; }
-    100% { opacity:0; }
-}
-
-.blink {
-	animation: blink 1.5s ease-in-out infinite;
-	-moz-animation: blink 1.5s ease-in-out infinite;
-	-webkit-animation: blink 1.5s ease-in-out infinite;
-}
