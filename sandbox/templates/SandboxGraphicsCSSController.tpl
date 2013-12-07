@@ -580,7 +580,7 @@
 		<h1>Titre de la page</h1>
 	</header>
 	<div class="content">
-		<article class="small_block">
+		<article class="small-block">
 			<header>
 				<h1>Titre du bloc</h1>
 			</header>
@@ -589,7 +589,7 @@
 			</div>
 			<footer></footer>
 		</article>
-		<article class="small_block">
+		<article class="small-block">
 			<header>
 				<h1>Titre du bloc</h1>
 			</header>
@@ -598,7 +598,7 @@
 			</div>
 			<footer></footer>
 		</article>
-		<article class="small_block">
+		<article class="small-block">
 			<header>
 				<h1>Titre du bloc</h1>
 			</header>
