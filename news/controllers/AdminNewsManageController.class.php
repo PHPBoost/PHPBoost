@@ -36,7 +36,7 @@ class AdminNewsManageController extends AdminModuleController
 		
 		$this->build_view($request);
 		
-		return new AdminNewsDisplayResponse($this->view, $this->lang['news.manage']);
+		return new AdminNewsDisplayResponse($this->view, $this->lang['news.management']);
 	}
 	
 	private function init()
