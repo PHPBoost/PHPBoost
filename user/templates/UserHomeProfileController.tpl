@@ -37,7 +37,7 @@
 			# ENDIF #
 			<li class="small-block">
 				<a href="{U_CONTRIBUTION_PANEL}">
-					# IF C_UNREAD_CONTRIBUTION #
+					# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
 					<span class="icon-stack">
 						<i class="icon-circle blink icon-circle-alerte">
 							<span>{NUMBER_UNREAD_CONTRIBUTIONS}</span>
