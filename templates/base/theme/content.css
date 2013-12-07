@@ -709,7 +709,7 @@ div.form_autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 
 .message-date {	margin-left: 10px; }
 
-.message-user_infos {
+.message-user-infos {
 	text-align:center;
 	width:150px;
 	float:left;
@@ -760,7 +760,7 @@ div.form_autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 .message-avatar { width:80px; }
 .message-containt { overflow:auto; }
 .message-pseudo a {}
-.message-user_infos img{ padding:10px 0px; }
+.message-user-infos img{ padding:10px 0px; }
 
 .message-moderate {
 	background:#ECEFFA;

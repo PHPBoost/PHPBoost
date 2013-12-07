@@ -169,7 +169,7 @@
 			
 			# START pm.msg #	
 				<article id="m{pm.msg.ID}" class="message">
-					<div class="message-user_infos">
+					<div class="message-user-infos">
 						<div class="message-pseudo">
 							# IF pm.msg.C_VISITOR #
 								<span>{pm.msg.PSEUDO}</span>

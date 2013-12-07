@@ -6,7 +6,7 @@
 
 		# START messages #
 		<article id="msg{messages.ID}" class="message">
-			<div class="message-user_infos">
+			<div class="message-user-infos">
 				<div class="message-pseudo">
 					# IF messages.C_VISITOR #
 						<span>{messages.PSEUDO}</span>

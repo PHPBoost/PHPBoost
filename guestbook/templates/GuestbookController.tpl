@@ -15,7 +15,7 @@
 		# ENDIF #
 		# START messages #
 			<article id="m{messages.ID}" class="message">
-				<div class="message-user_infos">
+				<div class="message-user-infos">
 					<div class="message-pseudo">
 						# IF messages.C_VISITOR #
 							<span class="text_italic"># IF messages.USER_PSEUDO #{messages.USER_PSEUDO}# ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
