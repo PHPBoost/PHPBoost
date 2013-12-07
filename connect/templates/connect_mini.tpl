@@ -103,7 +103,7 @@
 			</li>
 			<li>
 				<i class="icon-envelope# IF C_HAS_PM # blink# ENDIF #"></i>
-				<a href="{U_USER_PM}" class="small"> {L_NBR_PM}# IF C_HAS_PM # ({NUMBER_UNREAD_ALERTS})# ENDIF #</a>
+				<a href="{U_USER_PM}" class="small"> {L_NBR_PM}</a>
 			</li>
 			# IF C_ADMIN_AUTH #
 			<li>
