@@ -73,5 +73,4 @@ $lang['admin.config.display_type.list'] = 'Display list';
 
 //Feed name
 $lang['feed.name'] = 'News';
-$lang['syndication'] = 'RSS feed';
 ?>
