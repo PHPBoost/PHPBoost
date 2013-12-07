@@ -83,11 +83,11 @@ $lang['members.valid'] = 'Valid';
 
 ############## Extended Field ##############
 
-$lang['extended-field-add'] = 'Add member field';
-$lang['extended-field-edit'] = 'Edit member field';
-$lang['extended-field'] = 'Member fields';
-$lang['extended-fields-management'] = 'Member field management';
-$lang['extended-fields-error-already-exist'] = 'The extended field already exists.';
+$lang['extended-field-add'] = 'Add profile field';
+$lang['extended-field-edit'] = 'Edit profile field';
+$lang['extended-field'] = 'Profile fields';
+$lang['extended-fields-management'] = 'Profile field management';
+$lang['extended-fields-error-already-exist'] = 'The field already exists.';
 $lang['extended-fields-error-phpboost-config'] = 'The fields used by default PHPBoost can not be created more than one time, please choose another type of field.';
 
 //Type 
