@@ -26,13 +26,13 @@
 
 <div id="admin_contents">
     # IF C_INCOMPATIBLE_PHP_VERSION #
-        <div id="id-message-helper" class="message-helper warning" style="margin-top:100px;">
+        <div class="message-helper warning" style="margin-top:100px;">
 			<i class="icon-warning"></i>
 			<div class="message-helper-content">{L_INCOMPATIBLE_PHP_VERSION}</div>
 		</div>
     # ELSE #
         # IF C_UPDATES #
- 			<div id="id-message-helper" class="message-helper warning">
+ 			<div class="message-helper warning">
 				<i class="icon-warning"></i>
 				<div class="message-helper-content">{L_UPDATES_ARE_AVAILABLE}</div>
 			</div>
@@ -65,7 +65,7 @@
                 # END apps #
             </table>
         # ELSE #
-			<div id="id-message-helper" class="message-helper question">
+			<div class="message-helper question">
 				<i class="icon-question"></i>
 				<div class="message-helper-content">{L_NO_AVAILABLES_UPDATES}</div>
 			</div>

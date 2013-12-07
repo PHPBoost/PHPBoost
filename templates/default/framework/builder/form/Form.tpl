@@ -1,5 +1,5 @@
 # IF C_VALIDATION_ERROR #
-<div id="id-message-helper" class="message-helper error">
+<div class="message-helper error">
 	<i class="icon-error"></i>
 	<div class="message-helper-content">
 		<span class="text_strong" >{TITLE_VALIDATION_ERROR_MESSAGE} : </span> <br /><br />
