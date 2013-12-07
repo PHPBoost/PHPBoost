@@ -74,7 +74,7 @@ class UserRegistrationController extends AbstractController
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'description' => $this->lang['pseudo.explain'], 'required' => true),
+			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['pseudo.explain'], 'required' => true),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
 		));		
 		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], '', array(
@@ -125,7 +125,10 @@ class UserRegistrationController extends AbstractController
 			$agreement_fieldset->add_field($agreement);
 	
 			$agreement = new FormFieldHTML('agreement', 
-				'<div style="width:auto;max-height:250px;overflow-y:scroll;border:1px solid #DFDFDF;background-color:#F1F4F1;margin-bottom:10px;">' . $agreement_text . '</div>'
+				'<div id="id-message-helper" class="message-helper notice" style="max-width:none;width:90%;max-height:250px;overflow-y:auto;">
+					<i class="icon-notice"></i>
+					<div class="message-helper-content">' . $agreement_text . '</div>
+				</div>'
 			);
 			$agreement_fieldset->add_field($agreement);
 			
