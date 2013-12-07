@@ -136,7 +136,7 @@ a.modo { color:#006699; }
 a.member { color:#000000; }
 
 
-/* IcÃ´nes spÃ©cifique PHPBoost
+/* Icônes spécifique PHPBoost
 ------------------------------------ */
 [class^="icon-"] { vertical-align:middle; }
 [class^="icon-"]:hover { text-decoration:none; }
@@ -154,6 +154,26 @@ a.member { color:#000000; }
 table .icon-table-sort-up:before { content: "\f062"; }
 table .icon-table-sort-down:before { content: "\f063"; }
 
+li.small_block .icon-stack { height: 2.34em; }
+
+.icon-circle-alerte {
+	z-index:1;
+	position:absolute;
+	top:-3px;
+	left:20px;
+	font-size:1.32em;
+}
+
+.icon-circle-alerte span{
+	display:block;
+	position:absolute;
+	top:3px;
+	width: 100%;
+	margin: 0 auto;
+	color:white;
+	font-size: 0.7em;
+	text-align: center;
+}
 
 /* Mise en forme
 -------------------------------------------*/
@@ -789,3 +809,25 @@ div.message-helper-content{ padding:0px 5px 0px 35px; }
 
 .success { background-color:#E0F1D9; border-color:#D7EAC7; }
 .success, .icon-success:before { color:#478948; }
+
+
+/* Effet Blink
+--------------------------------------*/
+@keyframes blink {  
+    0% { opacity:0; }
+    30% { opacity:1; }
+    70% { opacity:1; }
+    100% { opacity:0; }
+}
+@-webkit-keyframes blink {
+    0% { opacity:0; }
+    30% { opacity:1; }
+    70% { opacity:1; }
+    100% { opacity:0; }
+}
+
+.blink {
+	animation: blink 1.5s ease-in-out infinite;
+	-moz-animation: blink 1.5s ease-in-out infinite;
+	-webkit-animation: blink 1.5s ease-in-out infinite;
+}
