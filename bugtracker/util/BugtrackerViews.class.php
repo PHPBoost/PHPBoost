@@ -92,7 +92,7 @@ class BugtrackerViews
 		$filters_tmp = $filters = !empty($filter) ? explode('-', $filter) : array();
 		$filters_ids_tmp = $filters_ids = !empty($filter_id) ? explode('-', $filter_id) : array();
 		
-		$display_save_button = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && sizeof($filters) >= 1 ? true : false;
+		$display_save_button = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && count($filters) >= 1 ? true : false;
 		
 		$config = BugtrackerConfig::load();
 		$types = $config->get_types();
@@ -101,10 +101,10 @@ class BugtrackerViews
 		$versions = $config->get_versions_detected();
 		$all_versions = $config->get_versions();
 		
-		$display_types = sizeof($types) > 1 ? true : false;
-		$display_categories = sizeof($categories) > 1 ? true : false;
-		$display_severities = sizeof($severities) > 1 ? true : false;
-		$display_versions = sizeof($versions) > 1 ? true : false;
+		$display_types = count($types) > 1 ? true : false;
+		$display_categories = count($categories) > 1 ? true : false;
+		$display_severities = count($severities) > 1 ? true : false;
+		$display_versions = count($versions) > 1 ? true : false;
 		
 		$filters_number = 1;
 		if ($display_types == true) $filters_number = $filters_number + 1;
@@ -152,8 +152,8 @@ class BugtrackerViews
 		$filters_view->put_all(array(
 			'L_FILTERS'				=> $filters_number > 1 ? $lang['bugs.titles.filters'] : $lang['bugs.titles.filter'],
 			'L_DELETE' 				=> LangLoader::get_message('delete', 'main'),
-			'C_FILTER'				=> sizeof($filters) == 1 ? true : false,
-			'C_FILTERS'				=> sizeof($filters) > 1 ? true : false,
+			'C_FILTER'				=> count($filters) == 1 ? true : false,
+			'C_FILTERS'				=> count($filters) > 1 ? true : false,
 			'C_DISPLAY_TYPES'		=> $display_types,
 			'C_DISPLAY_CATEGORIES'	=> $display_categories,
 			'C_DISPLAY_SEVERITIES'	=> $display_severities,

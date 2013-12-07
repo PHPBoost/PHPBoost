@@ -256,7 +256,7 @@ class AdminContactFieldFormController extends AdminController
 		if (!$this->form->field_is_disabled('authorizations'))
 			$field->set_authorization($this->form->get_value('authorizations', $field->get_authorization())->build_auth_array());
 		
-		$fields[!empty($this->id) ? $this->id : sizeof($this->config->get_fields()) + 1] = $field;
+		$fields[!empty($this->id) ? $this->id : count($this->config->get_fields()) + 1] = $field;
 		
 		$this->config->set_fields($fields);
 		

@@ -49,7 +49,7 @@ class BugtrackerDetailController extends ModuleController
 		$config = BugtrackerConfig::load();
 		$types = $config->get_types();
 		$categories = $config->get_categories();
-		$display_categories = sizeof($categories) > 1;
+		$display_categories = count($categories) > 1;
 		$severities = $config->get_severities();
 		$priorities = $config->get_priorities();
 		$versions = $config->get_versions();

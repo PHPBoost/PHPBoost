@@ -47,7 +47,7 @@ class BugtrackerStatsListController extends ModuleController
 	{
 		$config = BugtrackerConfig::load();
 		$versions = $config->get_versions();
-		$display_versions = sizeof($versions);
+		$display_versions = count($versions);
 		
 		$stats_cache = BugtrackerStatsCache::load();
 		$bugs_number_per_version = $stats_cache->get_bugs_number_per_version_list();

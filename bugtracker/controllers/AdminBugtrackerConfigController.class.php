@@ -256,7 +256,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'class' => 'text', 'maxlength' => 100, 'size' => 40)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('add_type_default', $this->lang['bugs.labels.default_value'], (int)!sizeof($types)));
+		$fieldset->add_field(new FormFieldCheckbox('add_type_default', $this->lang['bugs.labels.default_value'], (int)!count($types)));
 		
 		$fieldset->add_field(new FormFieldHTML('types_table', $types_table->render()));
 		
@@ -293,7 +293,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'class' => 'text', 'maxlength' => 100, 'size' => 40)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('add_category_default', $this->lang['bugs.labels.default_value'], (int)!sizeof($categories)));
+		$fieldset->add_field(new FormFieldCheckbox('add_category_default', $this->lang['bugs.labels.default_value'], (int)!count($categories)));
 		
 		$fieldset->add_field(new FormFieldHTML('categories_table', $categories_table->render()));
 		
@@ -404,7 +404,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			array(new FormFieldConstraintRegex('`^(00|0[1-9]|[12][0-9]|3[01])/(00|0[1-9]|1[012])/(0000|(19|20)[0-9]{2})$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('add_version_detected_in', $this->lang['bugs.labels.fields.version_detected_in'], (int)!sizeof($versions),
+		$fieldset->add_field(new FormFieldCheckbox('add_version_detected_in', $this->lang['bugs.labels.fields.version_detected_in'], (int)!count($versions),
 			array('events' => array('click' => '
 				if (HTMLForms.getField("add_version_detected_in").getValue()) {
 					HTMLForms.getField("add_version_default").enable();
@@ -413,8 +413,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				}')
 		)));
 		
-		$fieldset->add_field(new FormFieldCheckbox('add_version_default', $this->lang['bugs.labels.default_value'], (int)!sizeof($versions), array(
-			'hidden' => sizeof($versions) ? true : false
+		$fieldset->add_field(new FormFieldCheckbox('add_version_default', $this->lang['bugs.labels.default_value'], (int)!count($versions), array(
+			'hidden' => count($versions) ? true : false
 		)));
 		
 		$fieldset->add_field(new FormFieldHTML('versions_table', $versions_table->render()));
@@ -457,7 +457,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$new_type = $this->form->get_value('add_type', '');
 		if (!empty($new_type))
 		{
-			$nb_types = sizeof($types);
+			$nb_types = count($types);
 			$array_id = empty($nb_types) ? 1 : ($nb_types + 1);
 			$types[$array_id] = $new_type;
 		}
@@ -471,7 +471,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$new_category = $this->form->get_value('add_category', '');
 		if (!empty($new_category))
 		{
-			$nb_categories = sizeof($categories);
+			$nb_categories = count($categories);
 			$array_id = empty($nb_categories) ? 1 : ($nb_categories + 1);
 			$categories[$array_id] = $new_category;
 		}
@@ -503,7 +503,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$new_version = $this->form->get_value('add_version', '');
 		if (!empty($new_version))
 		{
-			$nb_versions = sizeof($versions);
+			$nb_versions = count($versions);
 			$array_id = empty($nb_versions) ? 1 : ($nb_versions + 1);
 			$versions[$array_id] = array(
 				'name'			=> $new_version,
@@ -611,7 +611,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->config->type_not_mandatory();
 		
 		$this->config->set_types($types);
-		$this->config->set_default_type($this->form->get_value('add_type_default') ? sizeof($types) : $request->get_value('default_type', 0));
+		$this->config->set_default_type($this->form->get_value('add_type_default') ? count($types) : $request->get_value('default_type', 0));
 		
 		if ($this->form->get_value('category_mandatory')->get_raw_value())
 			$this->config->category_mandatory();
@@ -619,7 +619,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->config->category_not_mandatory();
 		
 		$this->config->set_categories($categories);
-		$this->config->set_default_category($this->form->get_value('add_category_default') ? sizeof($categories) : $request->get_value('default_category', 0));
+		$this->config->set_default_category($this->form->get_value('add_category_default') ? count($categories) : $request->get_value('default_category', 0));
 		
 		if ($this->form->get_value('severity_mandatory')->get_raw_value())
 			$this->config->severity_mandatory();
@@ -643,7 +643,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->config->detected_in_version_not_mandatory();
 		
 		$this->config->set_versions($versions);
-		$this->config->set_default_version(!$this->form->field_is_disabled('add_version_default') && $this->form->get_value('add_version_default') ? sizeof($versions) : $request->get_value('default_version', 0));
+		$this->config->set_default_version(!$this->form->field_is_disabled('add_version_default') && $this->form->get_value('add_version_default') ? count($versions) : $request->get_value('default_version', 0));
 		
 		BugtrackerConfig::save();
 		

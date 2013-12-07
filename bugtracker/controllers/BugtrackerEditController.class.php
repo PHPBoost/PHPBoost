@@ -106,12 +106,12 @@ class BugtrackerEditController extends ModuleController
 		$versions_detected_in = $this->config->get_versions_detected();
 		$versions_detected_in = array_reverse($versions_detected_in, true);
 		
-		$display_types = sizeof($types) > 1;
-		$display_categories = sizeof($categories) > 1;
-		$display_priorities = sizeof($priorities) > 1;
-		$display_severities = sizeof($severities) > 1;
-		$display_versions = sizeof($versions) > 1;
-		$display_versions_detected_in = sizeof($versions_detected_in) > 1;
+		$display_types = count($types) > 1;
+		$display_categories = count($categories) > 1;
+		$display_priorities = count($priorities) > 1;
+		$display_severities = count($severities) > 1;
+		$display_versions = count($versions) > 1;
+		$display_versions_detected_in = count($versions_detected_in) > 1;
 		
 		$default_type = $this->config->get_default_type();
 		$default_category = $this->config->get_default_category();
@@ -137,7 +137,7 @@ class BugtrackerEditController extends ModuleController
 			));
 			
 			//Fix versions
-			if (sizeof($versions))
+			if (count($versions))
 			{
 				$array_versions = array();
 				$array_versions[] = new FormFieldSelectChoiceOption('', 0);
@@ -340,7 +340,7 @@ class BugtrackerEditController extends ModuleController
 		$severities = $this->config->get_severities();
 		$priorities = $this->config->get_priorities();
 		$versions = $this->config->get_versions();
-		$display_versions = sizeof($versions) > 1 ? true : false;
+		$display_versions = count($versions) > 1 ? true : false;
 		
 		$bug->set_title($this->form->get_value('title', $old_values->get_title()));
 		$bug->set_contents($this->form->get_value('contents', $old_values->get_contents()));
@@ -367,7 +367,7 @@ class BugtrackerEditController extends ModuleController
 			if (BugtrackerAuthorizationsService::check_authorizations()->moderation() || ($this->current_user->get_id() == $old_values->get_assigned_to_id()))
 			{
 				$versions = $this->config->get_versions();
-				$display_versions = sizeof($versions) > 1 ? true : false;
+				$display_versions = count($versions) > 1 ? true : false;
 				
 				$assigned_to = $this->form->get_value('assigned_to');
 				
@@ -379,7 +379,7 @@ class BugtrackerEditController extends ModuleController
 				
 				$bug->set_assigned_to_id($user_assigned ? $user_assigned->get_id() : 0);
 				
-				if (sizeof($versions))
+				if (count($versions))
 				{
 					if (!$this->form->field_is_disabled('fixed_in'))
 					{

@@ -52,10 +52,10 @@ class BugtrackerRoadmapListController extends ModuleController
 		$categories = $config->get_categories();
 		$severities = $config->get_severities();
 		
-		$display_types = sizeof($types) > 1;
-		$display_categories = sizeof($categories) > 1;
-		$display_versions = sizeof($versions) > 1;
-		$display_severities = sizeof($severities) > 1;
+		$display_types = count($types) > 1;
+		$display_categories = count($categories) > 1;
+		$display_versions = count($versions) > 1;
+		$display_severities = count($severities) > 1;
 		
 		//Reverse versions array to put the newest one at first
 		$versions = array_reverse($versions, true);
