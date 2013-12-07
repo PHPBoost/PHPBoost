@@ -29,12 +29,6 @@
  #                     French                       #
  ####################################################
 
-$lang['authorizations'] = 'Autorisations';
-$lang['authorizations.read'] = 'Autorisation de lecture';
-$lang['authorizations.write'] = 'Autorisation d\'écriture';
-$lang['authorizations.contribution'] = 'Autorisation de contribution';
-$lang['authorizations.moderation'] = 'Autorisation de modération';
-
 $lang['form.name'] = 'Nom';
 $lang['form.title'] = 'Titre';
 $lang['form.contents'] = 'Contenu';
