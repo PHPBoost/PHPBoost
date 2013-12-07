@@ -17,7 +17,7 @@ function serialize_sortable()
 	<fieldset>
 		<legend>{@categories}</legend>
 			<ul id="categories" class="sortable-block">
-				# IF C_NOT_CATEGORIES #
+				# IF C_NO_CATEGORIES #
 					<div class="center">{@message.no_categories}</div>
 				# ELSE #
 					# START childrens #
