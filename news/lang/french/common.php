@@ -73,5 +73,4 @@ $lang['admin.config.display_type.list'] = 'Affichage en liste';
 
 //Feed name
 $lang['feed.name'] = 'Actualités';
-$lang['syndication'] = 'Flux RSS';
 ?>
