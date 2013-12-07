@@ -572,7 +572,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	
 	//Message non lu par autre membre que user_id view_status => 0.
 	//Message lu par autre membre que user_id view_status => 1.
-	
+	$user_accounts_config = UserAccountsConfig::load();
 	$is_guest_in_convers = false;
 	$page = retrieve(GET, 'p', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
@@ -790,12 +790,12 @@ else //Liste des conversation, dans la boite du membre.
 				$view = true;
 		}
 	
-		$img_announce = 'announce';
+		$announce = 'message-announce';
 		//Vérifications des messages Lu/non Lus.
 		if ($view === false) //Nouveau message (non lu).
-			$img_announce = 'new_' . $img_announce;
+			$announce = $announce . '-new';
 		if ($track === true) //Marqueur de reception du message
-			$img_announce = $img_announce . '_track';
+			$announce = $announce . '-track';
 			
 		//Ancre vers vers le dernier message posté.
 		$last_page = ceil( $row['nbr_msg'] / $pagination_msg);
@@ -818,13 +818,13 @@ else //Liste des conversation, dans la boite du membre.
 		
 		//Affichage du dernier message posté.
 		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
-		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite . '.php') . '#m' . $row['last_msg_id'] . '" title=""><i class="icon-anchor"></i></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />';
+		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite . '.php') . '#m' . $row['last_msg_id'] . '" title=""><i class="icon-hand-o-right"></i></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />';
 		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="small_link '.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
 
 		$tpl->assign_block_vars('convers.list', array(
 			'INCR' => $i,
 			'ID' => $row['id'],
-			'ANNOUNCE' => '../templates/' . get_utheme() . '/images/' . $img_announce,
+			'ANNOUNCE' => $announce,
 			'TITLE' => $row['title'],
 			'MSG' => ($row['nbr_msg'] - 1),
 			'U_PARTICIPANTS' => (($row['user_convers_status'] != 0) ? '<strike>' . $participants . '</strike>' : $participants),
