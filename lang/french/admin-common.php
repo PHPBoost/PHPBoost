@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           common.php
+ *                           admin-common.php
  *                            -------------------
- *   begin                : December 05, 2013
+ *   begin                : December 07, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -26,24 +26,17 @@
  ###################################################*/
 
  ####################################################
- #                     English                      #
+ #                     French                       #
  ####################################################
 
-$lang['form.name'] = 'Name';
-$lang['form.title'] = 'Title';
-$lang['form.contents'] = 'Content';
-$lang['form.approbation'] = 'Publication';
-$lang['form.approbation.not'] = 'Keep in draft';
-$lang['form.approbation.now'] = 'Publish now';
-$lang['form.approbation.date'] = 'Differed publication';
-$lang['form.date.start'] = 'From';
-$lang['form.date.end'] = 'Until';
-$lang['form.date.creation'] = 'Creation date';
-$lang['form.date.end.enable'] = 'Define a publication end date';
-$lang['form.other'] = 'Other';
-$lang['form.keywords'] = 'Keywords';
-$lang['form.picture.preview'] = 'Picture preview';
-$lang['form.sources'] = 'Sources';
-$lang['form.source.name'] = 'Source name';
-$lang['form.source.url'] = 'Source address';
+$lang['authorizations'] = 'Autorisations';
+$lang['authorizations.read'] = 'Autorisation de lecture';
+$lang['authorizations.write'] = 'Autorisation d\'écriture';
+$lang['authorizations.contribution'] = 'Autorisation de contribution';
+$lang['authorizations.moderation'] = 'Autorisation de modération';
+
+$lang['admin.config.comments_enabled'] = 'Activer les commentaires';
+$lang['admin.config.notation_enabled'] = 'Activer la notation';
+
+$lang['message.success.config'] = 'La modification a été modifiée';
 ?>

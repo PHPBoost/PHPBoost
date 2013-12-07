@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           common.php
+ *                           admin-common.php
  *                            -------------------
  *   begin                : December 05, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
@@ -29,21 +29,14 @@
  #                     English                      #
  ####################################################
 
-$lang['form.name'] = 'Name';
-$lang['form.title'] = 'Title';
-$lang['form.contents'] = 'Content';
-$lang['form.approbation'] = 'Publication';
-$lang['form.approbation.not'] = 'Keep in draft';
-$lang['form.approbation.now'] = 'Publish now';
-$lang['form.approbation.date'] = 'Differed publication';
-$lang['form.date.start'] = 'From';
-$lang['form.date.end'] = 'Until';
-$lang['form.date.creation'] = 'Creation date';
-$lang['form.date.end.enable'] = 'Define a publication end date';
-$lang['form.other'] = 'Other';
-$lang['form.keywords'] = 'Keywords';
-$lang['form.picture.preview'] = 'Picture preview';
-$lang['form.sources'] = 'Sources';
-$lang['form.source.name'] = 'Source name';
-$lang['form.source.url'] = 'Source address';
+$lang['authorizations'] = 'Authorizations';
+$lang['authorizations.read'] = 'Read authorization';
+$lang['authorizations.write'] = 'Write authorization';
+$lang['authorizations.contribution'] = 'Contribution authorization';
+$lang['authorizations.moderation'] = 'Moderation authorization';
+
+$lang['admin.config.comments_enabled'] = 'Enable comments';
+$lang['admin.config.notation_enabled'] = 'Enable notation';
+
+$lang['message.success.config'] = 'The configuration has been modified';
 ?>

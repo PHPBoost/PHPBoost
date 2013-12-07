@@ -66,7 +66,6 @@ $lang['admin.config.number_news_per_page'] = 'Nombre de news par page';
 $lang['admin.config.number_columns_display_news'] = 'Nombre de colonnes pour afficher les news';
 $lang['admin.config.display_condensed'] = 'Afficher le condensé de la news et non la news entière';
 $lang['admin.config.number_character_to_cut'] = 'Nombre de caractères pour couper la news';
-$lang['admin.config.comments_enabled'] = 'Activer les commentaires';
 $lang['admin.config.news_suggestions_enabled'] = 'Activer l\'affichage des suggestions';
 $lang['admin.config.display_type'] = 'Type d\'affichage des news';
 $lang['admin.config.display_type.block'] = 'Affichage en bloc';
