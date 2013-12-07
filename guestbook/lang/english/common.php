@@ -31,6 +31,7 @@
 
 //Module title
 $lang['module_title'] = 'Guest Book';
+$lang['module_config_title'] = 'Guest Book configuration';
 
 //Title
 $lang['guestbook.titles.more_contents'] = '[Read more...]';
@@ -38,17 +39,12 @@ $lang['guestbook.titles.no_message'] = 'No message';
 $lang['guestbook.add'] = 'Sign the guest book';
 $lang['guestbook.edit'] = 'Message edition';
 
-//Admin
-$lang['admin.config'] = 'Configuration';
+//Administration
 $lang['admin.config.items_per_page'] = 'Messages number per page';
 $lang['admin.config.forbidden-tags'] = 'Forbidden tags';
 $lang['admin.config.max_links'] = 'Max links number in a message';
 $lang['admin.config.max_links_explain'] = '-1 for unlimited';
-$lang['admin.authorizations'] = 'Permissions';
 $lang['admin.authorizations.read']  = 'Permission to display the guestbook';
-$lang['admin.authorizations.write']  = 'Write permission';
-$lang['admin.authorizations.moderation']  = 'Moderation permission';
-$lang['admin.config.success'] = 'The configuration has been modified';
 $lang['admin.config.error.number-required'] = 'The value entered must be a number';
 
 ?>

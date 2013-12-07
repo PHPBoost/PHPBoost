@@ -32,10 +32,9 @@ class GuestbookTreeLinks implements ModuleTreeLinksExtensionPoint
 {
 	public function get_actions_tree_links()
 	{
-		$lang = LangLoader::get('common', 'guestbook');
 		$tree = new ModuleTreeLinks();
 		
-		$tree->add_link(new AdminModuleLink($lang['admin.config'], GuestbookUrlBuilder::configuration()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), GuestbookUrlBuilder::configuration()));
 		
 		return $tree;
 	}
