@@ -161,7 +161,7 @@ table.invisible tr td {
 }
 
 /* Prévisualisation AJAX. */
-.xmlhttprequest_preview{
+.xmlhttprequest-preview{
 	overflow:auto;
 	height:220px;
 	width:94%;

@@ -10,7 +10,7 @@ function XMLHttpRequest_preview(field)
 	tinyMCE.triggerSave();
 		
 	var contents = $(field).value;
-	var preview_field = 'xmlhttprequest_preview' + field;
+	var preview_field = 'xmlhttprequest-preview' + field;
 	
 	if( contents != "" )
 	{
@@ -55,7 +55,7 @@ function insertTinyMceContent(textAreaId, content)
 -->
 </script>
 <div style="position:relative;display:none;" id="loading_preview{FIELD}"><div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><i class="icon-spinner icon-2x icon-spin"></i></div></div>
-<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview{FIELD}"></div>
+<div style="display:none;" class="xmlhttprequest-preview" id="xmlhttprequest-preview{FIELD}"></div>
 
 # IF NOT C_NOT_JS_INCLUDED #
 	<script type="text/javascript" src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tiny_mce.js"></script>

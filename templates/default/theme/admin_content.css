@@ -110,7 +110,7 @@ h6.sub_title2 { /* Sous titre dans les menu */
     margin-top:20px;
 }
 
-input, textarea, optgroup, select, .xmlhttprequest_preview{
+input, textarea, optgroup, select, .xmlhttprequest-preview{
 	font-size:11px;
 	border-left:1px solid #99b1cb;
 	border-top:1px solid #99b1cb;
