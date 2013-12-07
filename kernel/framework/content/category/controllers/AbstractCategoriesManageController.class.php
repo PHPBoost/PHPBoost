@@ -50,14 +50,14 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	{
 		$this->lang = LangLoader::get('categories-common');
 		$this->tpl = new FileTemplate('default/framework/content/categories/manage.tpl');
-		$this->tpl->add_lang($this->lang);	
+		$this->tpl->add_lang($this->lang);
 	}
 	
 	private function build_view()
 	{
 		$categories = $this->get_categories_manager()->get_categories_cache()->get_categories();
 		
-		$this->tpl->put('C_NOT_CATEGORIES', empty($categories));
+		$this->tpl->put('C_NOT_CATEGORIES', sizeof($categories) <= 1);
 		
 		$this->build_children_view($this->tpl, $categories, Category::ROOT_CATEGORY);
 	}
