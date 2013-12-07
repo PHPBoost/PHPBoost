@@ -157,7 +157,7 @@ h4.stitle2{
 }
 
 /* Prévisualisation AJAX. */
-.xmlhttprequest_preview{
+.xmlhttprequest-preview{
 	overflow:auto;
 	height:220px;
 	width:94%;

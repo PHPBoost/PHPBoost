@@ -482,7 +482,7 @@ optgroup { font-weight:bold; border:none; border-bottom:1px solid #5B5A5A; }
 option { padding:0px 3px; }
 
 /* Prévisualition */
-.xmlhttprequest_preview {
+.xmlhttprequest-preview {
 	font-size:11px;
 	border-left:1px solid #99b1cb;
 	border-top:1px solid #99b1cb;

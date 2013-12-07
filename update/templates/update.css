@@ -247,7 +247,7 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 	background:none;	
 }
 
-input, textarea, optgroup, select, .xmlhttprequest_preview{
+input, textarea, optgroup, select, .xmlhttprequest-preview{
 	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
 	font-size:11px;
 	vertical-align:middle;
