@@ -139,13 +139,13 @@
 					<table>
 						<tr> 		
 							<td style="width:33%;"> 
-								<img class="valign_middle" src="../templates/{THEME}/images/announce.png" alt="" /> {L_READ} 
+								<i class="icon-envelope" style="font-size:1.6em;color:#D1D2D4;"></i> {L_READ} 
 							</td>
 							<td style="width:34%;" class="no-separator">  
-								<img class="valign_middle" src="../templates/{THEME}/images/announce_track.png" alt="" /> {L_TRACK}		
+								<i class="icon-envelope" style="font-size:1.6em;color:#4372AA;"></i> {L_TRACK}		
 							</td>
 							<td style="width:33%;" class="no-separator">  
-								<img class="valign_middle" src="../templates/{THEME}/images/new_announce.png" alt="" /> {L_NOT_READ}		
+								<i class="icon-envelope" style="font-size:1.6em;"></i> {L_NOT_READ}		
 							</td>
 						</tr>
 					</table>

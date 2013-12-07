@@ -84,6 +84,19 @@ section footer nav.pagination {	text-align: center; }
 	margin: 0.5%;
 }
 
+/* Affiche plusieurs blocs côte à côte */
+li.small_block {
+	display:inline-block;
+	float:none;
+	margin:0px 10px 0 0;
+    border-color: #CCCCCC #CCCCCC #99B1CB;
+    border-width: 1px;
+	padding: 10px 20px;
+    text-align: center;
+    width: 130px;
+}
+li.small_block:last-child { margin:0px; }
+
 /* Exploreur des catégories
 -------------------------------------- */
 .explorer .cats, .explorer .files {
