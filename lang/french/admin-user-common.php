@@ -83,11 +83,11 @@ $lang['members.valid'] = 'Valide';
 
 ############## Extended Field ##############
 
-$lang['extended-field-add'] = 'Ajouter un champ membre';
-$lang['extended-field-edit'] = 'Editer un champ membre';
-$lang['extended-field'] = 'Champs membres';
-$lang['extended-fields-management'] = 'Gestion des champs membres';
-$lang['extended-fields-error-already-exist'] = 'Le champ étendu existe déjà.';
+$lang['extended-field-add'] = 'Ajouter un champ du profil';
+$lang['extended-field-edit'] = 'Editer un champ du profil';
+$lang['extended-field'] = 'Champs du profil';
+$lang['extended-fields-management'] = 'Gestion des champs du profil';
+$lang['extended-fields-error-already-exist'] = 'Le champ existe déjà.';
 $lang['extended-fields-error-phpboost-config'] = 'Les champs utilisés par défaut par PHPBoost ne peuvent pas être créés plusieurs fois, veuillez choisir un autre type de champ.';
 
 //Type 

@@ -74,7 +74,7 @@ $lang['users'] = 'Users';
 $lang['users.punishement'] = 'Punishement';
 
 $lang['users.groups'] = 'Groups';
-$lang['users.extended-fields'] = 'Extended fields';
+$lang['users.extended-fields'] = 'Profile fields';
 
 
 $lang['content'] = 'Content';

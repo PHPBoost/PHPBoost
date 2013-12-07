@@ -74,7 +74,7 @@ $lang['users'] = 'Utilisateurs';
 $lang['users.punishement'] = 'Sanction';
 
 $lang['users.groups'] = 'Groupes';
-$lang['users.extended-fields'] = 'Champs étendus';
+$lang['users.extended-fields'] = 'Champs du profil';
 
 
 $lang['content'] = 'Contenu';
