@@ -232,7 +232,7 @@
 				</table>	
 
 				<form action="{U_CHANGE_STATUS}" method="post">
-					<fieldset class="fieldset_submit" style="padding-top:25px;">
+					<fieldset class="fieldset-submit" style="padding-top:25px;">
 						<legend></legend>
 						<button type="submit" name="valid" value="true">{L_CHANGE_STATUS}</button>
 					</fieldset>

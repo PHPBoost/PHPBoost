@@ -68,7 +68,7 @@
 										</div>
 									</div>
 								</fieldset>			
-								<fieldset class="fieldset_submit" style="margin-bottom:0px;">
+								<fieldset class="fieldset-submit" style="margin-bottom:0px;">
 									<legend>{L_SEARCH}</legend>
 									<button type="submit" name="valid_search" value="true">{L_SEARCH}</button>			
 								</fieldset>

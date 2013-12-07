@@ -669,7 +669,7 @@
 				</tr>
 			</table>
 			<br /><br />
-			<fieldset class="fieldset_submit">
+			<fieldset class="fieldset-submit">
 				<legend>{L_ERASE_RAPPORT}</legend>
 				<button type="submit" name="erase" value="true">{L_ERASE_RAPPORT}</button> 
 			</fieldset>
@@ -694,7 +694,7 @@
 					</div>
 				</fieldset>
 								
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 					&nbsp;&nbsp; 
 					<button type="reset" value="true">{L_RESET}</button>

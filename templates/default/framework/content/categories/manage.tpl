@@ -26,7 +26,7 @@ function serialize_sortable()
 				# ENDIF #
 			</ul>
 	</fieldset>
-	<fieldset class="fieldset_submit">
+	<fieldset class="fieldset-submit">
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="tree" id="tree" value="">
 		<button type="submit" name="valid" value="true">${LangLoader::get_message('submit', 'main')}</button>					

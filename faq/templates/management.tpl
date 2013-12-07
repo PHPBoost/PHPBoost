@@ -125,7 +125,7 @@
 						</div>
 						# END category.not_root_auth #
 					</fieldset>
-					<fieldset class="fieldset_submit">
+					<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 						<button type="reset" value="true">{L_RESET}</button>
@@ -227,7 +227,7 @@
 						</div>
 					</fieldset>
 					<br />
-					<fieldset class="fieldset_submit">
+					<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 						<button type="reset" value="true">{L_RESET}</button>
@@ -261,7 +261,7 @@
 							</div>
 						</div>
 					</fieldset>
-					<fieldset class="fieldset_submit">
+					<fieldset class="fieldset-submit">
 						<legend>{L_MOVE}</legend>
 						<button type="submit" name="submit" value="true">{L_MOVE}</button>
 						<input type="hidden" name="id_question" value="{move_question.ID_QUESTION}">

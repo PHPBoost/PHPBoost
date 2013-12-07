@@ -49,7 +49,7 @@
 						<input type="hidden" name="max_file_size" value="2000000"></label></div>
 					</div>
 				</fieldset>			
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_UPLOAD}</legend>
 					<button type="submit" name="" value="true">{L_UPLOAD}</button>				
 				</fieldset>
@@ -72,7 +72,7 @@
 						</label></div>
 					</div>
 				</fieldset>			
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_ADD}</legend>
 					<button type="submit" name="add" value="true">{L_ADD}</button>
 					&nbsp;&nbsp; 

@@ -48,7 +48,7 @@
 						* <input type="file" name="gallery" size="30" class="file" /><br /><br>
 					</div>
 					<br />
-					<fieldset class="fieldset_submit">
+					<fieldset class="fieldset-submit">
 					<legend></legend><input type="hidden" name="max_file_size" value="2000000">
 					<button type="submit" name="vupload" value="true">{L_UPLOAD}</button>
 					</fieldset>

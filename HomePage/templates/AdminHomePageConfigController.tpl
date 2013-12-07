@@ -89,7 +89,7 @@ var HomePageConfigSortable = new HomePageConfigSortable();
 				});
 				//-->
 				</script>
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<button type="submit" name="submit" value="true">VALID</button>
 					<input type="hidden" name="token" value="{TOKEN}">
 					<input type="hidden" name="position" id="position" value="">

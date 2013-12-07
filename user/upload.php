@@ -60,7 +60,7 @@ if (!empty($popup)) //Popup.
 </head>
 
 <body>';
-	$footer = '<fieldset class="fieldset_submit" style="width:96%;margin:auto;">
+	$footer = '<fieldset class="fieldset-submit" style="width:96%;margin:auto;">
 			<legend>' . $LANG['close'] . '</legend>
 			<button type="reset" onclick="javascript:close_popup()" value="true">' . $LANG['close'] . '</button>
 		</fieldset>

@@ -57,7 +57,7 @@
 						</label></div>
 					</div>
 				</fieldset>			
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_DELETE}</legend>
 					<input type="hidden" name="idsmiley" value="{IDSMILEY}">
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>

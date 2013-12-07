@@ -196,7 +196,7 @@
 				</tbody>
 			</table>
 			
-			<fieldset class="fieldset_submit">
+			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<button type="submit" name="update_modules_configuration" value="true">{@modules.update}</button>
 				<input type="hidden" name="token" value="{TOKEN}">

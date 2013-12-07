@@ -114,7 +114,7 @@
 				</fieldset>
 				# ENDIF #
 
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="idedit" value="{IDEDIT}">
 					<input type="hidden" name="contrib" value="{C_CONTRIBUTION}">

@@ -73,7 +73,7 @@
                         </fieldset>
                     </div>
                     # END forms #
-                    <fieldset class="fieldset_submit">
+                    <fieldset class="fieldset-submit">
                         <legend>{L_SEARCH}</legend>
                         <input type="hidden" id="search_in" name="search_in" value="all">
                         <input type="hidden" id="query_mode" name="query_mode" value="0">

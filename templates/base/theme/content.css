@@ -453,7 +453,7 @@ button[type=reset]{
 /* Formulaires 
 --------------------------------------*/
 
-.fieldset_mini {
+.fieldset-mini {
     width:540px;
     margin:auto;
     margin-top:20px;
@@ -465,7 +465,7 @@ fieldset {
 	background:none;
 }
 
-fieldset.fieldset_submit { /* A supprimer ou remplacer par un div */
+fieldset.fieldset-submit { /* A supprimer ou remplacer par un div */
 	margin-top:-10px;
 	padding-bottom:15px;
 	width:99%;
@@ -474,7 +474,7 @@ fieldset.fieldset_submit { /* A supprimer ou remplacer par un div */
 	border:none;
 }
 
-fieldset.fieldset_submit legend { /* A supprimer ou remplacer par un div */
+fieldset.fieldset-submit legend { /* A supprimer ou remplacer par un div */
     display:none;
 }
 

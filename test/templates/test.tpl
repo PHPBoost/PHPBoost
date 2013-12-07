@@ -13,7 +13,7 @@
 	<div class="form-field"><input type="checkbox" name="is_html" id="is_html"></div>
 </div>
 </fieldset>
-<fieldset class="fieldset_submit"><input type="button"
+<fieldset class="fieldset-submit"><input type="button"
 	name="run" value="run command" class="run-button"
 	onclick="self.frames['phpunit'].location='run.php?is_html=' + (document.getElementById('is_html').checked ? '1' : '0') + '&amp;params=' + document.getElementById('params').value;" />
 </fieldset>
@@ -27,7 +27,7 @@
     </select></div>
 </div>
 </fieldset>
-<fieldset class="fieldset_submit"><input type="button"
+<fieldset class="fieldset-submit"><input type="button"
     name="run_tu" value="run unit test" class="run-button"
     onclick="self.frames['phpunit'].location='run.php?is_html=0' + '&amp;params=' + document.getElementById('tus').value;" />
 </fieldset>
@@ -41,7 +41,7 @@
     </select></div>
 </div>
 </fieldset>
-<fieldset class="fieldset_submit"><input type="button"
+<fieldset class="fieldset-submit"><input type="button"
     name="run_ts" value="run test suite" class="run-button"
     onclick="self.frames['phpunit'].location='run.php?is_html=0' + '&amp;params=' + document.getElementById('ts').value;" />
 </fieldset>

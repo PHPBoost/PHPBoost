@@ -135,7 +135,7 @@ function addSubMenu(menu_element_id) {
         ]),
         Builder.node('hr'),
         Builder.node('ul', {id: 'menu_element_' + id + '_list', className: 'sortable-block'}),
-        Builder.node('fieldset', {className: 'fieldset_submit'}, [
+        Builder.node('fieldset', {className: 'fieldset-submit'}, [
             Builder.node('button', {type: 'button', id: 'menu_element_' + id + '_add_sub_element', name: 'menu_element_' + id + '_add_sub_element', value: {JL_ADD_SUB_ELEMENT}, onclick: 'addSubElement(\'menu_element_' + id + '\');'},[{JL_ADD_SUB_ELEMENT}]),
             ' ',
             Builder.node('button', {type: 'button', id: 'menu_element_' + id + '_add_sub_menu', name: 'menu_element_' + id + '_add_sub_menu', value: {JL_ADD_SUB_MENU}, onclick: 'addSubMenu(\'menu_element_' + id + '\');'},[{JL_ADD_SUB_MENU}]),
@@ -241,7 +241,7 @@ function image_preview(input,image)
 			<br />
 	    </fieldset>			
 	
-		<fieldset class="fieldset_submit">
+		<fieldset class="fieldset-submit">
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="id" value="{MENU_ID}">
 			<input type="hidden" name="token" value="{TOKEN}">

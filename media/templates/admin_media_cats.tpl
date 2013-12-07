@@ -36,7 +36,7 @@
 					{removing_interface.CATEGORY_TREE}
 				</fieldset>
 
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}">
 					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
@@ -204,7 +204,7 @@
 					</div>
 				</fieldset>
 
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}">
 					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>

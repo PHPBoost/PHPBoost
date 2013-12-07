@@ -24,7 +24,7 @@
 		</tr>
 	</table>
 	<br /><br />	
-	<fieldset class="fieldset_submit">
+	<fieldset class="fieldset-submit">
 		<legend>{@newsletter.types.choice}</legend>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<button type="submit">{@newsletter.types.next}</button>
