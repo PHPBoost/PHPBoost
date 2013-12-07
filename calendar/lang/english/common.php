@@ -40,8 +40,6 @@ $lang['calendar.notice.suscribe.event_date_expired'] = 'The event is finished, y
 $lang['calendar.notice.unsuscribe.event_date_expired'] = 'The event is finished, you can not unsuscribe.';
 
 //Titles
-$lang['calendar.titles.admin.config'] = 'Configuration';
-$lang['calendar.titles.admin.authorizations'] = 'Authorizations';
 $lang['calendar.titles.add_event'] = 'Add event';
 $lang['calendar.titles.edit_event'] = 'Edit event';
 $lang['calendar.titles.delete_event'] = 'Delete event';
@@ -55,11 +53,8 @@ $lang['calendar.pending'] = 'Pending events';
 $lang['calendar.manage'] = 'Manage events';
 
 //Labels
-$lang['calendar.labels.title'] = 'Title';
-$lang['calendar.labels.contents'] = 'Description';
 $lang['calendar.labels.location'] = 'Location';
 $lang['calendar.labels.created_by'] = 'Created by';
-$lang['calendar.labels.category'] = 'Category';
 $lang['calendar.labels.registration_authorized'] = 'Active members registration for the event';
 $lang['calendar.labels.max_registered_members'] = 'Maximum participant number';
 $lang['calendar.labels.max_registered_members.explain'] = 'Set to 0 for no limit';
@@ -77,11 +72,7 @@ $lang['calendar.labels.start_date'] = 'Start date';
 $lang['calendar.labels.end_date'] = 'End date';
 $lang['calendar.labels.approved'] = 'Approved';
 $lang['calendar.labels.approved'] = 'Not approved';
-$lang['calendar.labels.contribution'] = 'Contribution';
-$lang['calendar.labels.contribution.explain'] = 'You aren\'t authorized to add an event, however you can contribute by submitting one. Your contribution will be processed by a moderator.';
-$lang['calendar.labels.contribution.description'] = 'Contribution counterpart';
-$lang['calendar.labels.contribution.description.explain'] = 'Tell us why you want us to add this event. This field is not required, but it may help the moderator to make his decision.';
-$lang['calendar.labels.contribution.entitled'] = '[Calendar] :title';
+$lang['calendar.labels.contribution.explain'] = 'You are not authorized to create an event, however you can contribute by submitting one.';
 $lang['calendar.labels.birthday_title'] = 'Birthday of';
 $lang['calendar.labels.participants'] = 'Participants';
 $lang['calendar.labels.no_one'] = 'No one';
@@ -94,20 +85,9 @@ $lang['calendar.explain.date'] = '<span class="smaller">(mm/dd/yy)</span>';
 //Administration
 $lang['calendar.config.events.management'] = 'Events management';
 $lang['calendar.config.category.color'] = 'Color';
-$lang['calendar.config.category.manage'] = 'Manage categories';
-$lang['calendar.config.category.management'] = 'Categories management';
-$lang['calendar.config.category.add'] = 'Add category';
-$lang['calendar.config.category.edit'] = 'Edit category';
-$lang['calendar.config.category.delete'] = 'Delete category';
 $lang['calendar.config.items_number_per_page'] = 'Events number per page';
-$lang['calendar.config.comments_enabled'] = 'Enable comments';
 $lang['calendar.config.members_birthday_enabled'] = 'Display members birthday';
 $lang['calendar.config.birthday_color'] = 'Birthday color';
-
-$lang['calendar.config.authorizations.read'] = 'Read permissions';
-$lang['calendar.config.authorizations.write'] = 'Write permissions';
-$lang['calendar.config.authorizations.contribution'] = 'Contribution permissions';
-$lang['calendar.config.authorizations.moderation'] = 'Moderation permissions';
 
 $lang['calendar.authorizations.display_registered_users'] = 'Display registered users permissions';
 $lang['calendar.authorizations.register'] = 'Register permissions';
@@ -118,10 +98,6 @@ $lang['calendar.seo.description.pending'] = 'All pending events.';
 
 //Feed name
 $lang['calendar.feed.name'] = 'Events';
-$lang['syndication'] = 'RSS feed';
-
-//Success
-$lang['calendar.success.config'] = 'The configuration has been modified';
 
 //Errors
 $lang['calendar.error.e_unexist_event'] = 'The selected event doesn\'t exist';

@@ -40,8 +40,6 @@ $lang['calendar.notice.suscribe.event_date_expired'] = 'L\'événement est terminé
 $lang['calendar.notice.unsuscribe.event_date_expired'] = 'L\'événement est terminé, vous ne pouvez pas vous désinscrire.';
 
 //Titres
-$lang['calendar.titles.admin.config'] = 'Configuration';
-$lang['calendar.titles.admin.authorizations'] = 'Autorisations';
 $lang['calendar.titles.add_event'] = 'Ajouter un événement';
 $lang['calendar.titles.edit_event'] = 'Editer l\'événement';
 $lang['calendar.titles.delete_event'] = 'Supprimer l\'événement';
@@ -56,11 +54,8 @@ $lang['calendar.pending'] = 'Evénements en attente';
 $lang['calendar.manage'] = 'Gérer les événements';
 
 //Labels
-$lang['calendar.labels.title'] = 'Titre';
-$lang['calendar.labels.contents'] = 'Description';
 $lang['calendar.labels.location'] = 'Adresse';
 $lang['calendar.labels.created_by'] = 'Créé par';
-$lang['calendar.labels.category'] = 'Catégorie';
 $lang['calendar.labels.registration_authorized'] = 'Activer l\'inscription des membres à l\'événement';
 $lang['calendar.labels.max_registered_members'] = 'Nombre de participants maximum';
 $lang['calendar.labels.max_registered_members.explain'] = 'Mettre 0 pour illimité';
@@ -78,11 +73,7 @@ $lang['calendar.labels.start_date'] = 'Date de début';
 $lang['calendar.labels.end_date'] = 'Date de fin';
 $lang['calendar.labels.approved'] = 'Approuvé';
 $lang['calendar.labels.not_approved'] = 'Invisible';
-$lang['calendar.labels.contribution'] = 'Contribution';
-$lang['calendar.labels.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer un événement, cependant vous pouvez en proposer un. Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
-$lang['calendar.labels.contribution.description'] = 'Complément de contribution';
-$lang['calendar.labels.contribution.description.explain'] = 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cet événement). Ce champ est facultatif.';
-$lang['calendar.labels.contribution.entitled'] = '[Calendrier] :title';
+$lang['calendar.labels.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer un événement, cependant vous pouvez en proposer un.';
 $lang['calendar.labels.birthday_title'] = 'Anniversaire de';
 $lang['calendar.labels.participants'] = 'Participants';
 $lang['calendar.labels.no_one'] = 'Personne';
@@ -95,20 +86,9 @@ $lang['calendar.explain.date'] = '<span class="smaller">(jj/mm/aa)</span>';
 //Administration
 $lang['calendar.config.events.management'] = 'Gestion des événements';
 $lang['calendar.config.category.color'] = 'Couleur';
-$lang['calendar.config.category.manage'] = 'Gérer les catégories';
-$lang['calendar.config.category.management'] = 'Gestion les catégories';
-$lang['calendar.config.category.add'] = 'Ajouter une catégorie';
-$lang['calendar.config.category.edit'] = 'Modifier une catégorie';
-$lang['calendar.config.category.delete'] = 'Supprimer une catégorie';
 $lang['calendar.config.items_number_per_page'] = 'Nombre d\'événements affichés par page';
-$lang['calendar.config.comments_enabled'] = 'Activer les commentaires';
 $lang['calendar.config.members_birthday_enabled'] = 'Afficher les anniversaires des membres';
 $lang['calendar.config.birthday_color'] = 'Couleur des anniversaires';
-
-$lang['calendar.config.authorizations.read'] = 'Autorisations de lecture';
-$lang['calendar.config.authorizations.write'] = 'Autorisations d\'écriture';
-$lang['calendar.config.authorizations.contribution'] = 'Autorisations de contribution';
-$lang['calendar.config.authorizations.moderation'] = 'Autorisation de modération';
 
 $lang['calendar.authorizations.display_registered_users'] = 'Autorisation d\'afficher la liste des inscrits';
 $lang['calendar.authorizations.register'] = 'Autorisation de s\'inscrire à l\'événement';
@@ -119,10 +99,6 @@ $lang['calendar.seo.description.pending'] = 'Tous les événements en attente.';
 
 //Feed name
 $lang['calendar.feed.name'] = 'Evénements';
-$lang['syndication'] = 'Flux RSS';
-
-//Succès
-$lang['calendar.success.config'] = 'La configuration a été modifiée';
 
 //Erreurs
 $lang['calendar.error.e_unexist_event'] = 'L\'évènement sélectionné n\'existe pas';

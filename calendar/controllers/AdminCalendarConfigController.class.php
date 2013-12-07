@@ -37,6 +37,7 @@ class AdminCalendarConfigController extends AdminModuleController
 	private $submit_button;
 	
 	private $lang;
+	private $admin_common_lang;
 	
 	/**
 	 * @var CalendarConfig
@@ -55,7 +56,7 @@ class AdminCalendarConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['calendar.success.config'], E_USER_SUCCESS, 5));
+			$tpl->put('MSG', MessageHelper::display($this->admin_common_lang['message.success.config'], E_USER_SUCCESS, 5));
 		}
 		
 		
@@ -63,12 +64,13 @@ class AdminCalendarConfigController extends AdminModuleController
 		$tpl->put('FORM', $this->form->display());
 		
 		//Display the generated page
-		return new AdminCalendarDisplayResponse($tpl, $this->lang['calendar.titles.admin.config']);
+		return new AdminCalendarDisplayResponse($tpl, LangLoader::get_message('configuration', 'admin'));
 	}
 	
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
+		$this->admin_common_lang = LangLoader::get('admin-common');
 		$this->config = CalendarConfig::load();
 	}
 	
@@ -77,7 +79,7 @@ class AdminCalendarConfigController extends AdminModuleController
 		$form = new HTMLForm(__CLASS__);
 		
 		//Configuration
-		$fieldset = new FormFieldsetHTML('configuration_fieldset', $this->lang['calendar.titles.admin.config']);
+		$fieldset = new FormFieldsetHTML('configuration_fieldset', LangLoader::get_message('configuration', 'admin'));
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('items_number_per_page', $this->lang['calendar.config.items_number_per_page'], $this->config->get_items_number_per_page(), 
@@ -85,7 +87,7 @@ class AdminCalendarConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['calendar.config.comments_enabled'], $this->config->are_comments_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->admin_common_lang['admin.config.comments_enabled'], $this->config->are_comments_enabled()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.members_birthday_enabled'], $this->config->is_members_birthday_enabled(),
 			array('events' => array('click' => '
@@ -102,14 +104,14 @@ class AdminCalendarConfigController extends AdminModuleController
 		));
 		
 		//Authorizations
-		$fieldset = new FormFieldsetHTML('authorizations_fieldset', $this->lang['calendar.titles.admin.authorizations']);
+		$fieldset = new FormFieldsetHTML('authorizations_fieldset', $this->admin_common_lang['authorizations']);
 		$form->add_fieldset($fieldset);
 		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['calendar.config.authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['calendar.config.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['calendar.config.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['calendar.config.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+			new ActionAuthorization($this->admin_common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->admin_common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($this->admin_common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new ActionAuthorization($this->admin_common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
