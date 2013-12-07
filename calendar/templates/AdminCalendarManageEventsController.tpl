@@ -3,12 +3,12 @@
 		<tr>
 			<th class="column_title">
 				<a href="{U_SORT_TITLE_ASC}" class="icon-table-sort-up"></a>
-				{@calendar.labels.title}
+				${LangLoader::get_message('form.title', 'common')}
 				<a href="{U_SORT_TITLE_DESC}" class="icon-table-sort-down"></a>
 			</th>
 			<th>
 				<a href="{U_SORT_CATEGORY_ASC}" class="icon-table-sort-up"></a>
-				{@calendar.labels.category}
+				${LangLoader::get_message('category', 'categories-common')}
 				<a href="{U_SORT_CATEGORY_DESC}" class="icon-table-sort-down"></a>
 			</th>
 			<th>

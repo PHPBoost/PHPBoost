@@ -64,7 +64,7 @@ class AdminCalendarConfigController extends AdminModuleController
 		$tpl->put('FORM', $this->form->display());
 		
 		//Display the generated page
-		return new AdminCalendarDisplayResponse($tpl, LangLoader::get_message('configuration', 'admin'));
+		return new AdminCalendarDisplayResponse($tpl, $this->lang['module_config_title']);
 	}
 	
 	private function init()

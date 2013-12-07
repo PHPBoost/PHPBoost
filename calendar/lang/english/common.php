@@ -31,6 +31,7 @@
 
 //Module title
 $lang['module_title'] = 'Calendar';
+$lang['module_config_title'] = 'Calendar configuration';
 
 //Messages divers
 $lang['calendar.notice.no_current_action'] = 'No events scheduled for this date';

@@ -29,6 +29,8 @@
  #                     English                      #
  ####################################################
 
+$lang['module_config_title'] = 'News configuration';
+
 $lang['news'] = 'News';
 $lang['news.add'] = 'Add news';
 $lang['news.edit'] = 'Edit news';
