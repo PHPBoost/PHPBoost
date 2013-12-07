@@ -78,11 +78,14 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 			else
 			{
 				$id_parent = $this->form->get_value('move_in_other_cat')->get_raw_value();
+				$this->get_categories_manager()->move_items_into_another($category, $id_parent);
+				
 				$childrens = $this->get_category_childrens($category, false);
 				foreach ($childrens as $id => $category)
 				{
 					$this->get_categories_manager()->move_into_another($category, $id_parent);
 				}
+				
 				$this->get_categories_manager()->delete($this->get_category()->get_id());
 			}
 			AppContext::get_response()->redirect($this->get_categories_management_url());
