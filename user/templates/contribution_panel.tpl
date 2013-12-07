@@ -7,7 +7,7 @@
 			<h1>{L_CONTRIBUTION_LIST}</h1>
 			<br />
 			# IF C_NO_CONTRIBUTION #
-			<div id="id-message-helper" class="message-helper warning">
+			<div class="message-helper warning">
 				<i class="icon-warning"></i>
 				<div class="message-helper-content">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
 			</div>
@@ -157,7 +157,7 @@
 						<div class="spacer">&nbsp;</div>
 					# END row #
 				# ELSE #
-					<div id="id-message-helper" class="message-helper warning">
+					<div class="message-helper warning">
 						<i class="icon-warning"></i>
 						<div class="message-helper-content">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
 					</div>

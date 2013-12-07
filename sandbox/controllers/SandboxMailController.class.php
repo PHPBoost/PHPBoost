@@ -41,12 +41,12 @@ class SandboxMailController extends ModuleController
 		$view = new StringTemplate('
 		# IF C_MAIL_SENT # 
 			# IF C_SUCCESS # 
-				<div id="id-message-helper" class="message-helper success">
+				<div class="message-helper success">
 					<i class="icon-success"></i>
 					<div class="message-helper-content">The mail has been sent</div>
 				</div>
 			# ELSE # 
-				<div id="id-message-helper" class="message-helper error">
+				<div class="message-helper error">
 					<i class="icon-error"></i>
 					<div class="message-helper-content">{ERROR}</div>
 				</div> 

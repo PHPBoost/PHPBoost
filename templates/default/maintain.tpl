@@ -1,7 +1,7 @@
 # IF C_MAINTAIN_DELAY #
 	# IF C_ALERT_MAINTAIN #
 		<div style="position:absolute;top:5px;width:100%;text-align:center;">
-			<div id="id-message-helper" class="message-helper warning">
+			<div class="message-helper warning">
 				<i class="icon-warning"></i>
 				<div class="message-helper-content">
 					{L_MAINTAIN_DELAY}

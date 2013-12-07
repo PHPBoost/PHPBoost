@@ -102,7 +102,7 @@
 				# IF C_CONTRIBUTION #
 				<fieldset>
 					<legend>{L_CONTRIBUTION_LEGEND}</legend>
-					<div id="id-message-helper" class="message-helper notice">
+					<div class="message-helper notice">
 						<i class="icon-notice"></i>
 						<div class="message-helper-content">{L_NOTICE_CONTRIBUTION}</div>
 					</div>
