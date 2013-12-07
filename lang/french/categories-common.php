@@ -48,16 +48,9 @@ $lang['category.form.rewrited_name'] = 'Nom de votre catégorie dans l\'url';
 $lang['category.form.rewrited_name.description'] = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';
 $lang['category.form.rewrited_name.personalize'] = 'Personnaliser le nom de la catégorie dans l\'url';
 $lang['category.form.parent'] = 'Emplacement de la catégorie';
-$lang['category.form.authorizations'] = 'Autorisations';
-$lang['category.form.authorizations.read'] = 'Autorisations de lecture';
-$lang['category.form.authorizations.write'] = 'Autorisations d\'écriture';
-$lang['category.form.authorizations.contribution'] = 'Autorisations de contribution';
-$lang['category.form.authorizations.moderation'] = 'Autorisations de modération';
 $lang['category.form.authorizations.description'] = 'Par défaut la catégorie aura la configuration générale du module. Vous pouvez lui appliquer des permissions particulières.';
 $lang['category.form.description'] = 'Description de la catégorie';
-$lang['category.form.image'] = 'Image de la catégorie';
-$lang['category.form.image.preview'] = 'Prévisualisation de l\'image';
-$lang['category.form.options'] = 'Options';
+$lang['category.form.picture'] = 'Image de la catégorie';
 
 //Delete category
 $lang['delete.category'] = 'Suppression d\'une catégorie';

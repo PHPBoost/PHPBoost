@@ -29,11 +29,11 @@
  #                     English                      #
  ####################################################
 
-$lang['authorizations'] = 'Authorizations';
-$lang['authorizations.read'] = 'Read authorization';
-$lang['authorizations.write'] = 'Write authorization';
-$lang['authorizations.contribution'] = 'Contribution authorization';
-$lang['authorizations.moderation'] = 'Moderation authorization';
+$lang['authorizations'] = 'Permissions';
+$lang['authorizations.read'] = 'Read permission';
+$lang['authorizations.write'] = 'Write permission';
+$lang['authorizations.contribution'] = 'Contribution permission';
+$lang['authorizations.moderation'] = 'Moderation permission';
 
 $lang['admin.config.comments_enabled'] = 'Enable comments';
 $lang['admin.config.notation_enabled'] = 'Enable notation';

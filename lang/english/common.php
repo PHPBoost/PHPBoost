@@ -41,6 +41,7 @@ $lang['form.date.end'] = 'Until';
 $lang['form.date.creation'] = 'Creation date';
 $lang['form.date.end.enable'] = 'Define a publication end date';
 $lang['form.other'] = 'Other';
+$lang['form.options'] = 'Options';
 $lang['form.keywords'] = 'Keywords';
 $lang['form.picture.preview'] = 'Picture preview';
 $lang['form.sources'] = 'Sources';
