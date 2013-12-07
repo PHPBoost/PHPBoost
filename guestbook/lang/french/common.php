@@ -31,6 +31,7 @@
 
 //Module title
 $lang['module_title'] = 'Livre d\'or';
+$lang['module_config_title'] = 'Configuration du livre d\'or';
 
 //Title
 $lang['guestbook.titles.more_contents'] = '[Suite...]';
@@ -38,17 +39,12 @@ $lang['guestbook.titles.no_message'] = 'Aucun message';
 $lang['guestbook.add'] = 'Signer le livre d\'or';
 $lang['guestbook.edit'] = 'Edition d\'un message';
 
-//Admin
-$lang['admin.config'] = 'Configuration';
+//Administration
 $lang['admin.config.items_per_page'] = 'Nombre de messages par page';
 $lang['admin.config.forbidden-tags'] = 'Formats interdits';
 $lang['admin.config.max_links'] = 'Nombre de liens maximum dans le message';
 $lang['admin.config.max_links_explain'] = 'Mettre -1 pour illimité';
-$lang['admin.authorizations'] = 'Autorisations';
 $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le livre d\'or';
-$lang['admin.authorizations.write']  = 'Autorisation d\'écriture';
-$lang['admin.authorizations.moderation']  = 'Autorisation de supprimer ou modifier un message';
-$lang['admin.config.success'] = 'La configuration a été modifiée';
 $lang['admin.config.error.number-required'] = 'La valeur saisie doit être un nombre';
 
 ?>
