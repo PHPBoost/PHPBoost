@@ -64,17 +64,18 @@ class OnlineUser extends User
 	
 	public function set_avatar($avatar)
 	{
-		$this->avatar = $avatar;
+		$user_accounts_config = UserAccountsConfig::load();
+		
+		if (empty($avatar))
+		{
+			$this->avatar = $user_accounts_config->is_default_avatar_enabled() ? PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() : '';
+		}
+		else
+			$this->avatar = $avatar;
 	}
 	
 	public function get_avatar()
 	{
-		$user_accounts_config = UserAccountsConfig::load();
-		
-		if (empty($this->avatar))
-		{
-			return $user_accounts_config->is_default_avatar_enabled() ? PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() : '';
-		}
 		return Url::to_rel($this->avatar);
 	}
 	
