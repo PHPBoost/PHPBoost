@@ -42,6 +42,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	private $submit_button;
 	
 	protected $lang;
+	protected $admin_common_lang;
 	
 	/**
 	 * @var Category
@@ -71,6 +72,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('categories-common');
+		$this->admin_common_lang = LangLoader::get('admin-common');
 	}
 	
 	private function build_form()
@@ -105,17 +107,17 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		
 		$this->build_fieldset_options($form);
 		
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['category.form.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->admin_common_lang['authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
 		$root_auth = $this->get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_authorizations();
 		
-		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', $this->lang['category.form.authorizations'], (!$this->get_category()->auth_is_empty() && !$this->get_category()->auth_is_equals($root_auth)), 
+		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', $this->admin_common_lang['authorizations'], (!$this->get_category()->auth_is_empty() && !$this->get_category()->auth_is_equals($root_auth)), 
 		array('description' => $this->lang['category.form.authorizations.description'], 'events' => array('click' => '
 		if (HTMLForms.getField("special_authorizations").getValue()) {
-			$("'.__CLASS__.'_authorizations").appear();
+			$("' . __CLASS__ . '_authorizations").appear();
 		} else { 
-			$("'.__CLASS__.'_authorizations").fade();
+			$("' . __CLASS__ . '_authorizations").fade();
 		}')
 		)));
 		
@@ -143,7 +145,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	
 	private function build_fieldset_options(HTMLForm $form)
 	{
-		$fieldset = new FormFieldsetHTML('options_fieldset', $this->lang['category.form.options']);
+		$fieldset = new FormFieldsetHTML('options_fieldset', LangLoader::get_message('form.options', 'common'));
 		$this->get_options_fields($fieldset);
 		if ($fieldset->get_fields())
 		{
@@ -200,10 +202,10 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	public function get_authorizations_settings()
 	{
 		return new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['category.form.authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['category.form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['category.form.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['category.form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+			new ActionAuthorization($this->admin_common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->admin_common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($this->admin_common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new ActionAuthorization($this->admin_common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
 		));
 	}
 	

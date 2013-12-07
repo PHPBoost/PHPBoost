@@ -41,6 +41,7 @@ $lang['form.date.end'] = 'Jusqu\'au';
 $lang['form.date.creation'] = 'Date de création';
 $lang['form.date.end.enable'] = 'Définir une date de fin de publication';
 $lang['form.other'] = 'Autre';
+$lang['form.options'] = 'Options';
 $lang['form.keywords'] = 'Mots clés';
 $lang['form.picture.preview'] = 'Prévisualisation de l\'image';
 $lang['form.sources'] = 'Sources';
