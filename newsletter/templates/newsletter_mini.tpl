@@ -2,7 +2,7 @@
 <form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
 	<div class="module_mini_container">
 		<div class="module_mini_top">
-			<h5 class="sub_title">{L_NEWSLETTER}</h5>
+			<h5 class="sub-title">{L_NEWSLETTER}</h5>
 		</div>
 		<div class="module_mini_contents">
 			<p>

@@ -2,7 +2,7 @@
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{question.ID}" class="normal_form">
 			<div class="module_mini_container">
 				<div class="module_mini_top">
-					<h5 class="sub_title">{L_MINI_POLL}</h5>
+					<h5 class="sub-title">{L_MINI_POLL}</h5>
 				</div>
 				<div class="module_mini_contents" style="text-align:center">
 					<span style="font-size:10px;">{question.QUESTION}</span>
@@ -32,7 +32,7 @@
 		# START result #
 		<div class="module_mini_container">
 			<div class="module_mini_top">
-				<h5 class="sub_title">{L_MINI_POLL}</h5>
+				<h5 class="sub-title">{L_MINI_POLL}</h5>
 			</div>
 			<div class="module_mini_contents" style="text-align:center">
 				<span style="font-size:10px;">{result.QUESTION}</span>

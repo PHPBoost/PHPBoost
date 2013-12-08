@@ -1,6 +1,6 @@
 		<div class="module_mini_container">
 			<div class="module_mini_top">
-				<h5 class="sub_title">{L_RANDOM_PICS}</h5>
+				<h5 class="sub-title">{L_RANDOM_PICS}</h5>
 			</div>
 			<div class="module_mini_contents">
 				<div style="width:{WIDTH_DIV}px;height:{HEIGHT_DIV}px;margin:auto;">

@@ -1,7 +1,7 @@
 # IF C_VERTICAL #
 	<div class="module_mini_container">
 		<div class="module_mini_top">
-			<h5 class="sub_title">{L_SWITCH_LANG}</h5>
+			<h5 class="sub-title">{L_SWITCH_LANG}</h5>
 		</div>
 		<form action="" method="get">
 			<div class="module_mini_contents">

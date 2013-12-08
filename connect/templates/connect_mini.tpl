@@ -15,7 +15,7 @@
 	# IF C_USER_NOTCONNECTED #
 		<div class="module_mini_container">
 			<div class="module_mini_top">
-				<h5 class="sub_title">{L_CONNECT}</h5>
+				<h5 class="sub-title">{L_CONNECT}</h5>
 			</div>
 			<div class="module_mini_contents vertical-fieldset">
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="form-element">
@@ -40,7 +40,7 @@
 	# ELSE #
 		<div class="module_mini_container">
 			<div class="module_mini_top">
-				<h5 class="sub_title">{L_PROFIL}</h5>
+				<h5 class="sub-title">{L_PROFIL}</h5>
 			</div>
 			<div class="module_mini_contents vertical-fieldset">
 				<ul class="connect-content">
