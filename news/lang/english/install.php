@@ -66,5 +66,5 @@ To do so : <br />
 <br /><h4 class="stitle1">What should I do if I have problems ?</h4><br /><br />
 <br />
 Do not hesitate to consult the <a href="http://www.phpboost.org/wiki/wiki.php">PHPBoost documentation</a> or ask your question on the <a href="http://www.phpboost.org/forum/index.php">forum</a> for assistance. As the English community is still young, we strongly recommend that you use the second solution.<br /> <br />
-<p class="float_right">The PHPBoost Team thanks you for using its software to create your Web site!</p>';
+<p class="float-right">The PHPBoost Team thanks you for using its software to create your Web site!</p>';
 ?>

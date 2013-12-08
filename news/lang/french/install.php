@@ -64,5 +64,5 @@ comme vous le souhaitez!  Pour cela : <br />
 <br /><h4 class="stitle1">Que faire si vous rencontrez un problème ?</h4><br /><br />
 <br />
 N\'hésitez pas à consulter <a href="http://www.phpboost.com/wiki/wiki.php">la documentation de PHPBoost</a> ou à poser vos question sur le <a href="http://www.phpboost.com/forum/index.php">forum d\'entraide</a>.<br /> <br />
-<p class="float_right">Toute l\'équipe de PHPBoost vous remercie d\'utiliser son logiciel pour créer votre site web !</p>';
+<p class="float-right">Toute l\'équipe de PHPBoost vous remercie d\'utiliser son logiciel pour créer votre site web !</p>';
 ?>

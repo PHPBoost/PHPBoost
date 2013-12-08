@@ -204,7 +204,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	private function unparse_bbcode_tags()
 	{
 		$array_preg = array(
-			'`<p class="float_(left|right)">(.*)</p>`isU',
+			'`<p class="float-(left|right)">(.*)</p>`isU',
 			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
 			'`<a href="mailto:(.*)">(.*)</a>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',

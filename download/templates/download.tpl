@@ -81,7 +81,7 @@
 							</header>
 							<div class="contents">
 								# IF file.C_IMG #
-									<div class="float_right">
+									<div class="float-right">
 										<a href="{file.U_DOWNLOAD_LINK}">
 											<img src="{file.IMG}" alt="{file.IMG_NAME}" itemprop="image" />
 										</a>
