@@ -54,7 +54,7 @@
 }
 
 /*Affichage du mini calendrier */
-.calendar_block {
+.calendar-block {
     position:absolute;
     text-align:center;
     padding:6px 4px;
@@ -65,7 +65,7 @@
     z-index:100;
 }
 
-.calendar_block .row3{
+.calendar-block .row3{
 	border:none;	
 }
 

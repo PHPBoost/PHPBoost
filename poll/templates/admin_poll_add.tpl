@@ -131,7 +131,7 @@
 								<label><input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING}></label>
 								<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}"> 
 								<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
-									<div id="start_date" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
+									<div id="start_date" class="calendar-block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 									</div>
 								</div>
 								<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;" class="icon-calendar"></a>
@@ -140,7 +140,7 @@
 								
 								<input type="text" size="8" maxlength="8" id="end" name="end" value="{END}"> 
 								<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
-									<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
+									<div id="end_date" class="calendar-block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
 									</div>
 								</div>
 								<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;" class="icon-calendar"></a>
@@ -155,7 +155,7 @@
 						<div class="form-field"><label>
 							<input type="text" size="8" maxlength="8" id="current_date" name="current_date" value="{CURRENT_DATE}"> 
 							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar3">
-								<div id="current" class="calendar_block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">							
+								<div id="current" class="calendar-block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">							
 								</div>
 							</div>
 							<a onclick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;" class="icon-calendar"></a>
