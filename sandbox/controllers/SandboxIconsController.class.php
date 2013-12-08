@@ -46,6 +46,7 @@ class SandboxIconsController extends ModuleController
 			'icon-caret-right',
 			'icon-check',
 			'icon-clock-o',
+			'icon-cloud-upload',
 			'icon-cog',
 			'icon-comment',
 			'icon-comments-o',
@@ -61,11 +62,13 @@ class SandboxIconsController extends ModuleController
 			'icon-facebook',
 			'icon-female',
 			'icon-file',
+			'icon-file-text',
 			'icon-filter',
 			'icon-flag',
 			'icon-folder',
 			'icon-folder-open',
 			'icon-forbidden',
+			'icon-gavel',
 			'icon-google-plus',
 			'icon-male',
 			'icon-minus',
@@ -80,6 +83,8 @@ class SandboxIconsController extends ModuleController
 			'icon-refresh',
 			'icon-remove',
 			'icon-search',
+			'icon-sign-in',
+			'icon-sign-out',
 			'icon-skype',
 			'icon-sort',
 			'icon-sort-alpha-asc',
@@ -93,7 +98,8 @@ class SandboxIconsController extends ModuleController
 			'icon-twitter',
 			'icon-unban',
 			'icon-unlink',
-			'icon-user'
+			'icon-user',
+			'icon-wrench'
 		);
 		
 		foreach ($icons as $icon)
