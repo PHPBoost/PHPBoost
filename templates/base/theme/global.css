@@ -126,7 +126,7 @@ a:hover {
 }
 
 /* A supprimer ou remplacer par "a img" ? */
-.img_link, .img_link:hover {
+.img-link, .img-link:hover {
 	text-decoration:none;
 }
 
