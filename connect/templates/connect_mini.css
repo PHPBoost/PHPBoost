@@ -1,40 +1,43 @@
-div.connect-horizontal {
+div.horizontal_fieldset {
 	text-align:right;
 	padding:4px 8px 0px 0px;
 }
 
-div.connect-vertical form { margin-bottom:10px; }
-div.connect-horizontal form { display:inline-block; }
+div.vertical_fieldset,
+div.horizontal_fieldset { margin:0px; }
+
+div.vertical_fieldset form { margin-bottom:10px; }
+div.horizontal_fieldset form { display:inline-block; }
 
 ul.connect-content {
 	margin:auto;
 	padding-top:3px;
 }
 
-div.connect-vertical ul li,
-div.connect-horizontal ul li { list-style-type: none; }
+div.vertical_fieldset ul li,
+div.horizontal_fieldset ul li { list-style-type: none; }
 
-div.connect-horizontal ul.connect-content li {
+div.horizontal_fieldset ul.connect-content li {
 	display:inline-block;
 	margin-right:10px;
 }
-div.connect-horizontal ul.connect-content li::last-child { margin-right:0px; }
+div.horizontal_fieldset ul.connect-content li::last-child { margin-right:0px; }
 
-div.connect-vertical ul.connect-content li > i{ 
+div.vertical_fieldset ul.connect-content li > i{ 
 	width:18px;
 	text-align:center;
 }
 
-div.connect-horizontal ul li,
-div.connect-horizontal ul li a { color:#FFF; }
-div.connect-horizontal ul li > i{ vertical-align:0px; }
+div.horizontal_fieldset ul li,
+div.horizontal_fieldset ul li a { color:#FFF; }
+div.horizontal_fieldset ul li > i{ vertical-align:0px; }
 
-div.connect-vertical ul.connect-content { text-align:left; }
-div.connect-horizontal ul.connect-content { text-align:center; }
+div.vertical_fieldset label { text-align:center; }
+div.vertical_fieldset ul.connect-content { text-align:left; }
+div.horizontal_fieldset ul.connect-content { text-align:center; }
  
 div.connect-register i { vertical-align:-1px; }
 
-div.connect-vertical label { display:block; }
-div.connect-vertical input#login, 
-div.connect-vertical input#password { width:120px; }
-div.connect-vertical button { margin:5px 0px; }
+div.vertical_fieldset input#login, 
+div.vertical_fieldset input#password { width:120px; }
+div.vertical_fieldset button { margin:5px 0px; }
