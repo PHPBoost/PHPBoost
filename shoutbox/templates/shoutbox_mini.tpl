@@ -115,7 +115,7 @@
 		# IF C_VERTICAL #
 			<div class="module_mini_container">
 				<div class="module_mini_top">
-					<h5 class="sub_title">{L_SHOUTBOX}</h5>
+					<h5 class="sub-title">{L_SHOUTBOX}</h5>
 				</div>
 				<div class="module_mini_contents">
 					<div id="shout_container">					
@@ -145,7 +145,7 @@
 		# ELSE #
 			<div class="module_mini_container" style="width:auto;">
 				<div class="module_mini_top">
-					<h5 class="sub_title">{L_SHOUTBOX}</h5>
+					<h5 class="sub-title">{L_SHOUTBOX}</h5>
 				</div>
 				<div class="module_mini_contents" style="width:auto;">
 					<div class="shout_horizontal">

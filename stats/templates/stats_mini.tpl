@@ -1,6 +1,6 @@
 		<div class="module_mini_container">
 			<div class="module_mini_top">
-				<h5 class="sub_title">{L_STATS}</h5>
+				<h5 class="sub-title">{L_STATS}</h5>
 			</div>
 			<div class="module_mini_contents">
 				<p>

@@ -205,12 +205,12 @@ h3.title {
 }
 
 /* Sous-Titres */
-h5.sub_title { /* Titre des menu */
+h5.sub-title { /* Titre des menu */
     font-size:13px;
     color:#515C68;
 }
 
-h6.sub_title2 { /* Sous titre dans les menu */
+h6.sub-title2 { /* Sous titre dans les menu */
     font-size:12px;
     font-weight:bold;
     padding-top:4px;

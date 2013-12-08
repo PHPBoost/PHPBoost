@@ -1,7 +1,7 @@
 # IF C_VERTICAL_BLOCK #
 <div class="module_mini_container">
 	<div class="module_mini_top">
-		# IF C_DISPLAY_TITLE #<h5 class="sub_title">{TITLE}</h5># ENDIF #
+		# IF C_DISPLAY_TITLE #<h5 class="sub-title">{TITLE}</h5># ENDIF #
 	</div>
 	<div class="module_mini_contents">
 		{CONTENT}
@@ -12,7 +12,7 @@
 # ELSE #
 <div class="block_container">
 	<div class="block_contents">
-		# IF C_DISPLAY_TITLE #<h5 class="sub_title">{TITLE}</h5># ENDIF #
+		# IF C_DISPLAY_TITLE #<h5 class="sub-title">{TITLE}</h5># ENDIF #
 		<div style="text-align:justify; padding-top:5px;">{CONTENT}</div>
 		&nbsp;
 	</div>
