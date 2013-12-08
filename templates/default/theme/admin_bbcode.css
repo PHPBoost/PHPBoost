@@ -23,7 +23,7 @@
 	cursor:pointer;
 }
 /* Menu caché du BBcode */
-.bbcode_block{
+.bbcode-block{
 	position:absolute;
 	text-align:center;
 	padding:6px 4px;
