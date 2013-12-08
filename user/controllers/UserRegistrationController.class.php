@@ -115,7 +115,7 @@ class UserRegistrationController extends AbstractController
 		$member_extended_field->set_template($form);
 		MemberExtendedFieldsService::display_form_fields($member_extended_field);
 
-    	$agreement_text = $this->user_accounts_config->get_registration_agreement();
+    	$agreement_text = FormatingHelper::second_parse($this->user_accounts_config->get_registration_agreement());
     	if (!empty($agreement_text))
     	{
     		$agreement_fieldset = new FormFieldsetHTML('agreement_fieldset', $this->lang['agreement']);
