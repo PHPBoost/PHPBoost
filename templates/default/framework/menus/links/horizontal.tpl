@@ -1,6 +1,6 @@
 # IF C_MENU # <!-- Menu -->
     # IF C_FIRST_MENU # <!-- Title -->
-        <nav class="menu_horizontal">
+        <nav class="menu-horizontal">
             <ul>
                 <li>
                     # IF RELATIVE_URL #

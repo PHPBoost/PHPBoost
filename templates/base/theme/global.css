@@ -675,40 +675,40 @@ menu.dynamic-menu ul li.extend > a:after, menu.dynamic-menu ul li.extend > span:
 }
 
 /* Menu Vertical - Scrolling */
-ul.vertical_scrolling_menu li {
+ul.vertical-scrolling-menu li {
     padding:0px 5px 0px 5px;
 }
 
-ul.vertical_scrolling_menu li ul {
+ul.vertical-scrolling-menu li ul {
     margin-left:155px;
 }
 
-ul.vertical_scrolling_menu li.first_level {
+ul.vertical-scrolling-menu li.first_level {
     padding-left:20px;
 }
 
 /* Menu Horizontal - Scrolling */
-ul.horizontal_scrolling_menu li {
+ul.horizontal-scrolling-menu li {
     display:block;
     padding:0;
 }
 
 /* Menu Horizontal */
-nav.menu_horizontal {
+nav.menu-horizontal {
     padding:10px;
 }
 
-nav.menu_horizontal ul li {
+nav.menu-horizontal ul li {
     display:inline;
 	margin-right:8px;
 }
 
-nav.menu_horizontal ul img {
+nav.menu-horizontal ul img {
     margin-right:5px;
 }
 
 /* Menu Vertical */
-h3.menu_vertical_0 {
+h3.menu-vertical-0 {
     text-align:center;
     font-size:12px;
     font-weight:bold;
@@ -742,24 +742,24 @@ ul.menu_vertical li a,ul.menu_vertical li span {
     font-weight:bold;
 }
 
-ul.menu_vertical_0 li a,ul.menu_vertical_0 li span {
+ul.menu-vertical-0 li a,ul.menu-vertical-0 li span {
     color:#334455;
 }
 
-ul.menu_vertical_1 li a,ul.menu_vertical_1 li span {
+ul.menu-vertical-1 li a,ul.menu-vertical-1 li span {
     color:#445566;
 }
 
-ul.menu_vertical_2 li a,ul.menu_vertical_2 li span {
+ul.menu-vertical-2 li a,ul.menu-vertical-2 li span {
     color:#556677;
 	font-style:italic;
 }
 
-ul.menu_vertical_3 li {
+ul.menu-vertical-3 li {
     font-style:normal;
 }
 
-ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
+ul.menu-vertical-3 li a,ul.menu-vertical-3 li span {
     color:#778899;
     font-size:80%;
 }
