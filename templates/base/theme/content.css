@@ -360,7 +360,7 @@ table tfoot nav.pagination a{
 	
 }
 
-table tfoot nav.pagination a span.current_page {
+table tfoot nav.pagination a span.current-page {
 	color:#ced0d0;
 	text-decoration:none;
 }
