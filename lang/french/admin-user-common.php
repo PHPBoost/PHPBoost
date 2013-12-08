@@ -83,7 +83,7 @@ $lang['members.valid'] = 'Valide';
 
 ############## Extended Field ##############
 
-$lang['extended-field-add'] = 'Ajouter un champ du profil';
+$lang['extended-field-add'] = 'Ajouter un champ au profil';
 $lang['extended-field-edit'] = 'Editer un champ du profil';
 $lang['extended-field'] = 'Champs du profil';
 $lang['extended-fields-management'] = 'Gestion des champs du profil';
