@@ -46,7 +46,7 @@
 			# IF C_NOT_MEMBERS #
 			<tr>
 				<td colspan="4">
-					<span class="text_strong">{@no_member}</span>
+					<span class="text-strong">{@no_member}</span>
 				</td>
 			</tr>
 			# ENDIF #

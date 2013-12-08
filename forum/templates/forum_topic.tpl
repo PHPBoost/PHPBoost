@@ -265,7 +265,7 @@
 					</div>
 					<div class="msg_contents{msg.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
-							# IF msg.L_FORUM_QUOTE_LAST_MSG # <span class="text_strong">{msg.L_FORUM_QUOTE_LAST_MSG}</span><br /><br /> # ENDIF #
+							# IF msg.L_FORUM_QUOTE_LAST_MSG # <span class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</span><br /><br /> # ENDIF #
 							
 							{msg.FORUM_MSG_CONTENTS}
 							

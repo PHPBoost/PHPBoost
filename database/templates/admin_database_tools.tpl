@@ -395,16 +395,16 @@
 			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
 				<table class="module_table">
 					<tr style="text-align:center;">			
-						<td class="row3 text_strong">
+						<td class="row3 text-strong">
 							{L_FIELD_FIELD}
 						</td>
-						<td class="row3 text_strong">
+						<td class="row3 text-strong">
 							{L_FIELD_TYPE}
 						</td>
-						<td class="row3 text_strong">
+						<td class="row3 text-strong">
 							{L_FIELD_NULL}
 						</td>
-						<td class="row3 text_strong">
+						<td class="row3 text-strong">
 							{L_FIELD_VALUE}
 						</td>
 					</tr>

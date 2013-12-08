@@ -59,7 +59,7 @@
 		<tbody>
 			<tr>
 				<td colspan="5">
-					<span class="text_strong">{@newsletter.no_newsletters}</span>
+					<span class="text-strong">{@newsletter.no_newsletters}</span>
 				</td>
 			</tr>
 		</tbody>

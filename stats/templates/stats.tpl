@@ -228,7 +228,7 @@
 				<tr>
 					<td class="row2" style="text-align:center;">
 						<div style="width:50%;text-align:center;margin:auto">
-							<p class="text_strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
+							<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
 							<a href="stats{U_PREVIOUS_LINK}#stats">&laquo;</a>&nbsp;&nbsp;&nbsp;&nbsp;
 							# IF C_STATS_DAY #
 							<select name="d">

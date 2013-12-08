@@ -318,23 +318,23 @@
 							<div class="options">
 								<h6>{L_INFORMATIONS}</h6>
 								# IF C_TITLE_ENABLED #
-									<span class="text_strong">{L_NAME} : </span><span>{NAME}</span><br/> 
+									<span class="text-strong">{L_NAME} : </span><span>{NAME}</span><br/> 
 								# ENDIF #
 								# IF C_AUTHOR_DISPLAYED #
-									<span class="text_strong">{L_POSTOR} : </span><span>{POSTOR}</span><br/>
+									<span class="text-strong">{L_POSTOR} : </span><span>{POSTOR}</span><br/>
 								# ENDIF #
 								# IF C_VIEWS_COUNTER_ENABLED #
-									<span class="text_strong">{L_VIEWS} : </span><span>{VIEWS}</span><br/>
+									<span class="text-strong">{L_VIEWS} : </span><span>{VIEWS}</span><br/>
 								# ENDIF #
-								<span class="text_strong">{L_ADD_ON} : </span><span>{DATE}</span><br/>
-								<span class="text_strong">{L_DIMENSION} : </span><span>{DIMENSION}</span><br/>
-								<span class="text_strong">{L_SIZE} : </span><span>{SIZE} {L_KB}</span><br/>
+								<span class="text-strong">{L_ADD_ON} : </span><span>{DATE}</span><br/>
+								<span class="text-strong">{L_DIMENSION} : </span><span>{DIMENSION}</span><br/>
+								<span class="text-strong">{L_SIZE} : </span><span>{SIZE} {L_KB}</span><br/>
 								# IF C_COMMENTS_ENABLED #
 									{COM}<br/>
 								# ENDIF #
 								<div class="center">
 									# IF C_NOTATION_ENABLED #
-										<span class="text_strong">{KERNEL_NOTATION}</span><br/>
+										<span class="text-strong">{KERNEL_NOTATION}</span><br/>
 									# ENDIF #
 									# IF C_GALLERY_PICS_MODO #
 									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button"><i class="icon-edit"></i></a></span>

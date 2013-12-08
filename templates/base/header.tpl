@@ -60,9 +60,9 @@
 			
 			# IF C_COMPTEUR #
 			<div id="compteur">
-				<span class="text_strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
+				<span class="text-strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
 				<br />
-				<span class="text_strong">{L_TODAY}:</span> {COMPTEUR_DAY}
+				<span class="text-strong">{L_TODAY}:</span> {COMPTEUR_DAY}
 			</div>
 			# ENDIF #
 			

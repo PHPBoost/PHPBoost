@@ -58,8 +58,8 @@ pre { white-space:pre-wrap; }
 img.left, img.right { margin:6px; }
 
 /* Classes textes */
-.text_strong { font-weight:bold; }
-.text_justify { text-align:justify; }
+.text-strong { font-weight:bold; }
+.text-justify { text-align:justify; }
 .text_italic{ font-style:italic; }
 
 .valign_top { vertical-align:top; }

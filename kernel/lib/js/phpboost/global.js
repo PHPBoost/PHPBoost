@@ -324,7 +324,7 @@ function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
 {
     pagin = '<span class="pagination';
     if ( isCurrentPage)
-        pagin += ' pagination_current_page text_strong';
+        pagin += ' pagination_current_page text-strong';
     pagin += '">';
     pagin += '<a href="javascript:' + fctName + '(' + i + fctArgs + ')">' + textPagin + '</a>';
     pagin += '</span>&nbsp;';

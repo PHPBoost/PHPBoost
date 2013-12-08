@@ -44,7 +44,7 @@
 	<tbody>
 		<tr>
 			<td colspan="3">
-				<span class="text_strong">{@subscribers.no_users}</span>
+				<span class="text-strong">{@subscribers.no_users}</span>
 			</td>
 		</tr>
 	</tbody>

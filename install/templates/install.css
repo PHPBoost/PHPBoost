@@ -226,7 +226,7 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 }
 
 /* formulaires */
-.fieldset_content{
+.fieldset-content{
 	width:95%;
 	margin:auto;
 	margin-top:20px;

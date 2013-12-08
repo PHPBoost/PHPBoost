@@ -5,7 +5,7 @@
                 {USER_ONLINE}
                 <a class="msg_link_pseudo" href="{U_USER_PROFILE}">{USER_PSEUDO}</a>
             </div>
-            <span class="text_strong" style="float:left;">&nbsp;&nbsp;{L_TOPIC} :
+            <span class="text-strong" style="float:left;">&nbsp;&nbsp;{L_TOPIC} :
             <a class="small" href="{U_TOPIC}">{TITLE}</a></span>
             <span class="smaller" style="float: right;">{L_ON}: {DATE}</span>&nbsp;
         </div>

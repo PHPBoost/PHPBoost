@@ -146,7 +146,7 @@
 			<div class="content">
 				
 				# IF A_DESC #
-				<p class="text_justify" style="margin-top:15px">
+				<p class="text-justify" style="margin-top:15px">
 					{CONTENTS}
 				</p>
 				# ENDIF #
@@ -158,17 +158,17 @@
 				<div class="options">
 					<h6>{L_MEDIA_INFOS}</h6>
 					# IF A_DATE #
-						<span class="text_strong">{L_DATE} : </span><span>{DATE}</span><br/>
+						<span class="text-strong">{L_DATE} : </span><span>{DATE}</span><br/>
 					# ENDIF #
 					# IF A_USER #
-						<span class="text_strong">{L_BY} : </span><span>{BY}</span><br/>
+						<span class="text-strong">{L_BY} : </span><span>{BY}</span><br/>
 					# ENDIF #
 					# IF A_COUNTER #
-						<span class="text_strong">{L_VIEWED} : </span><span>{HITS}</span><br/>
+						<span class="text-strong">{L_VIEWED} : </span><span>{HITS}</span><br/>
 					# ENDIF #
 					# IF A_NOTE #
 					<div class="center">
-						<span class="text_strong">{KERNEL_NOTATION}</span>
+						<span class="text-strong">{KERNEL_NOTATION}</span>
 					</div>
 					# ENDIF #
 				</div>
