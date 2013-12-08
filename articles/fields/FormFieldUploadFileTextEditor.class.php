@@ -35,7 +35,7 @@ class FormFieldUploadFileTextEditor extends AbstractFormField
     private $size = 30;
     private $maxlength = 255;
     private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(ID)}" value="{VALUE}"
-	class="# IF C_READONLY #low_opacity # ENDIF #${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF # />
+	class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF # />
 	<a title="{L_FILE_ADD}" href="#" onclick="${escape(NAME)}.select();${escape(NAME)}.value=\'\';window.open(\'{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=${escape(NAME)}&amp;parse=true\', \'\', \'height=500,width=720,resizable=yes,scrollbars=yes\');return false;">
 	<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>';
 
