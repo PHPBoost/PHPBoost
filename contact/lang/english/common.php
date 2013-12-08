@@ -32,13 +32,12 @@
  
 //Title 
 $lang['module_title'] = 'Contact';
+$lang['module_config_title'] = 'Contact module configuration';
 
 //Contact form
 $lang['contact.form.message'] = 'Message';
 
 //Admin
-$lang['admin.config'] = 'Configuration';
-$lang['admin.config.page_title'] = 'Contact module configuration';
 $lang['admin.config.title'] = 'Form title';
 $lang['admin.config.informations_bloc'] = 'Informations bloc';
 $lang['admin.config.display_informations_bloc'] = 'Display the informations bloc';
@@ -49,9 +48,8 @@ $lang['admin.config.informations.position_left'] = 'Left';
 $lang['admin.config.informations.position_top'] = 'Top';
 $lang['admin.config.informations.position_right'] = 'Right';
 $lang['admin.config.informations.position_bottom'] = 'Bottom';
-$lang['admin.authorizations'] = 'Authorizations';
-$lang['admin.authorizations.read']  = 'Authorization to display the contact form';
-$lang['admin.authorizations.display_field']  = 'Authorization to display the field';
+$lang['admin.authorizations.read']  = 'Permission to display the contact form';
+$lang['admin.authorizations.display_field']  = 'Permission to display the field';
 
 //Fields
 $lang['admin.fields.manage'] = 'Fields management';
