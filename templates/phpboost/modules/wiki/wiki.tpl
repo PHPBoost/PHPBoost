@@ -42,12 +42,12 @@
 				# START cat #
 					
 					# IF cat.list_cats #
-					<div class="pbt_container block_container">
+					<div class="pbt-container block_container">
 						<div class="pbt_content">
-							<p class="pbt_title">Catégories :</p>
+							<p class="pbt-title">Catégories :</p>
 						</div>
 						
-						<ul class="bb_ul no_list">
+						<ul class="bb_ul no-list">
 							# START cat.list_cats #
 							<li class="bb_li">
 								<img src="{PICTURES_DATA_PATH}/images/cat.png" class="valign-middle" alt="" />
@@ -58,18 +58,18 @@
 						</ul>
 					# ELSE #
 					# IF cat.list_art #
-					<div class="pbt_container block_container">
+					<div class="pbt-container block_container">
 					# END IF #
 					# END IF #
 
 					# IF cat.list_art #
 						<div class="pbt_content">
-							<p class="pbt_title">
-								<p class="pbt_title"><a href=${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))} title="Flux RSS">Articles</a></p>
+							<p class="pbt-title">
+								<p class="pbt-title"><a href=${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))} title="Flux RSS">Articles</a></p>
 							</p>
 						</div>
 		
-						<ul class="bb_ul no_list">
+						<ul class="bb_ul no-list">
 							# START cat.list_art #
 							<li class="bb_li">
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign-middle" alt="" />

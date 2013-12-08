@@ -1,12 +1,12 @@
 			</div>
 			# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
-	        <div id="bottom_contents">
+	        <div id="bottom-contents">
 				{MENUS_BOTTOMCENTRAL_CONTENT}
 			</div>
 			# ENDIF #
 		</div>
 		# IF C_MENUS_TOP_FOOTER_CONTENT #
-		<div id="top_footer">
+		<div id="top-footer">
 			{MENUS_TOP_FOOTER_CONTENT}
 			<div class="spacer"></div>
 		</div>
@@ -14,13 +14,13 @@
 	</div>
 	
 	<div id="footer">
-		<div id="footer_columns_container">
-			<div class="footer_columns">
-				<div class="footer_columns_title">
+		<div id="footer-columns-container">
+			<div class="footer-columns">
+				<div class="footer-columns-title">
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_partners.png" align="center" />
 					Les partenaires
 				</div>
-				<div class="footer_columns_partners">
+				<div class="footer-columns-partners">
 					<a href="http://www.nuxit.com/" style="text-decoration:none;" title="Nuxit">
 						<p style="font-size:9px;color:#dfa959;line-height:0px;margin-bottom: 0px;font-weight:bold;">Hébergement de site web</p>
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/nuxit.png" align="center" alt="Nuxit"/>
@@ -28,8 +28,8 @@
 					</a>
 				</div>
 			</div>
-			<div class="footer_columns">
-				<div class="footer_columns_title"> 
+			<div class="footer-columns">
+				<div class="footer-columns-title"> 
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_phpboost.png" align="center" />
 					Le projet PHPBoost
 				</div>
@@ -40,8 +40,8 @@
 					<li><a href="{PATH_TO_ROOT}/pages/aider-phpboost" title="Soutenir le projet">Contribuer au projet</a></li>
 				</ul>
 			</div>	
-			<div class="footer_columns">
-				<div class="footer_columns_title">
+			<div class="footer-columns">
+				<div class="footer-columns-title">
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_community.png" align="center" />
 					Contribuer au Projet
 				</div>
@@ -53,8 +53,8 @@
 					
 				</ul>
 			</div>	
-			<div class="footer_columns footer_columns_last">
-				<div class="footer_columns_title">
+			<div class="footer-columns footer-columns-last">
+				<div class="footer-columns-title">
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_support.png" align="center" />
 					Support PHPBoost
 				</div>
@@ -84,7 +84,7 @@
 				<a href="{PATH_TO_ROOT}/syndication/rss/news" title="Flux RSS"></a>
 			</div>
 		</div>	
-		<div id="footer_links">
+		<div id="footer-links">
 			# IF C_MENUS_FOOTER_CONTENT #
 			{MENUS_FOOTER_CONTENT}
 			# ENDIF #

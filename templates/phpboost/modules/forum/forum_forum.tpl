@@ -74,9 +74,9 @@
 
 		# IF C_POST_NEW_SUBJECT #
 		<div class="module_position forum_position_cat">
-			<div class="pbt_button pbt_button_gray">
-				<a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" class="pbt_button_a pbt_button_add">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt_button_img valign-middle" />
+			<div class="pbt-button pbt-button-gray">
+				<a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" class="pbt-button-a pbt-button-add">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt-button-img valign-middle" />
 					Créer un nouveau sujet
 				</a>
 			</div>
@@ -180,9 +180,9 @@
 
 		# IF C_POST_NEW_SUBJECT #
 		<div class="module_position forum_position_cat">
-			<div class="pbt_button pbt_button_gray">
-				<a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" class="pbt_button_a pbt_button_add">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt_button_img valign-middle" />
+			<div class="pbt-button pbt-button-gray">
+				<a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" class="pbt-button-a pbt-button-add">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt-button-img valign-middle" />
 					Créer un nouveau sujet
 				</a>
 			</div>

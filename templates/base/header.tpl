@@ -43,14 +43,14 @@
 		
 		<div id="global">
 			<header id="header">
-				<div id="top_header">
+				<div id="top-header">
 					<div id="logo"></div>
-					<div id="site_name"><a href="{PATH_TO_ROOT}/">{SITE_NAME}</a></div>
+					<div id="site-name"><a href="{PATH_TO_ROOT}/">{SITE_NAME}</a></div>
 					# IF C_MENUS_HEADER_CONTENT #
 					{MENUS_HEADER_CONTENT}
 					# ENDIF #
 				</div>
-				<div id="sub_header">
+				<div id="sub-header">
 					# IF C_MENUS_SUB_HEADER_CONTENT #
 					{MENUS_SUB_HEADER_CONTENT}
 					# ENDIF #
@@ -67,25 +67,25 @@
 			# ENDIF #
 			
 			# IF C_MENUS_LEFT_CONTENT #
-			<aside id="menu_left">
+			<aside id="menu-left">
 				{MENUS_LEFT_CONTENT}
 			</aside>
 			# ENDIF #
 			
 			# IF C_MENUS_RIGHT_CONTENT #
-			<aside id="menu_right">
+			<aside id="menu-right">
 				{MENUS_RIGHT_CONTENT}
 			</aside>
 			# ENDIF #
 			
 			<main role="main">
 				# IF C_MENUS_TOPCENTRAL_CONTENT #
-				<div id="top_contents">
+				<div id="top-contents">
 					{MENUS_TOPCENTRAL_CONTENT}
 				</div>
 				<div class="spacer"></div>
 				# ENDIF #
-				<div id="main_content" itemprop="mainContentOfPage">
+				<div id="main-content" itemprop="mainContentOfPage">
 					<nav id="breadcrumb" itemprop="breadcrumb">
 						<ol>
 							<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
