@@ -37,7 +37,7 @@
 				<div class="message-helper-content">{L_UPDATES_ARE_AVAILABLE}</div>
 			</div>
             
-            <table class="module_table">
+            <table class="module-table">
                 <tr><th colspan="5">{L_AVAILABLES_UPDATES}</th></tr>
                 <tr>
                     # IF C_ALL # <td class="row2" style="text-align:center;width:50px;">{L_TYPE}</td> # END IF #

@@ -31,7 +31,7 @@
 		
 		<div id="admin_contents">
 			<div style="width:49%;float:left;">
-				<table class="module_table">
+				<table class="module-table">
 					<tr> 
 						<th colspan="4">
 							{L_ADMIN_ALERTS}
@@ -56,7 +56,7 @@
 						</td>
 					</tr>
 				</table>
-				<table class="module_table">
+				<table class="module-table">
 					<tr> 
 						<th colspan="4">
 							{L_LAST_COMMENTS}
@@ -82,7 +82,7 @@
 			</div>
 			<div style="float:right;width:50%;">
 				<form action="admin_index.php" method="post">
-					<table class="module_table">
+					<table class="module-table">
 						<tr> 
 							<th colspan="4">
 								{L_WRITING_PAD}

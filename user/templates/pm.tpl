@@ -213,7 +213,7 @@
 				<h1>&bull; {show_pm.U_USER_VIEW} &raquo; {show_pm.U_PM_BOX} &raquo; {show_pm.U_TITLE_CONVERS}</h1>
 			</header>
 			<div class="content">
-				<table class="module_table">
+				<table class="module-table">
 					<tr>
 						<th>
 							<div style="float:left;">{L_PREVIEW}</div>
@@ -258,7 +258,7 @@
 				<div class="content">	
 					<!--  
 					# START edit_pm.show_pm #		
-					<table class="module_table">
+					<table class="module-table">
 						<tr>
 							<th>
 								<div style="float:left;">{L_PREVIEW}</div>
@@ -316,7 +316,7 @@
 					
 					<!--  
 					# START post_convers.show_convers #		
-					<table class="module_table">
+					<table class="module-table">
 						<tr>
 							<th>
 								<div style="float:left;">{L_PREVIEW}</div>

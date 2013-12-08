@@ -244,7 +244,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<table class="module_table">
+			<table class="module-table">
 				<tr> 
 					<th>
 						{L_FILES_ACTION}

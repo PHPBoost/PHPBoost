@@ -23,7 +23,7 @@
 				<br />
 				# START last_articles #
 				<hr /><br />
-				<table class="module_table">
+				<table class="module-table">
 					<tr>
 						<th colspan="2">
 							<strong><em>{last_articles.L_ARTICLES}</em></strong> {last_articles.RSS}

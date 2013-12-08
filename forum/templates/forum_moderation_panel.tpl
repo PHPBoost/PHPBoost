@@ -5,7 +5,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}</div>
 			<div class="module_contents">
-				<table class="module_table">
+				<table class="module-table">
 					<tr>
 						<td style="text-align:center;width:34%" class="row2">
 							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><i class="icon-warning icon-2x"></i></a>
@@ -38,7 +38,7 @@
 				-->
 				</script>
 				<form action="moderation_forum{U_ACTION_HISTORY}" method="post" onsubmit="javascript:return Confirm_history();">
-					<table class="module_table">
+					<table class="module-table">
 						<tr>
 							<th colspan="4">
 								{L_HISTORY}
@@ -114,7 +114,7 @@
 				</script>
 		
 				<form name="alert" action="moderation_forum{U_ACTION_ALERT}" method="post" onsubmit="javascript:return Confirm_alert();">
-					<table class="module_table">
+					<table class="module-table">
 						<tr>			
 							<th style="width:25px;"><input type="checkbox" onclick="if(this.checked) {check_alert(true)} else {check_alert(false)};"></th>
 							<th style="width:20%;">{L_TITLE}</th>
@@ -125,7 +125,7 @@
 						</tr>
 					</table>
 				
-					<table class="module_table">
+					<table class="module-table">
 						# START alert_list #
 						<tr>
 							<td class="row1" style="text-align:center;width:25px;">
@@ -167,7 +167,7 @@
 				
 
 				# IF C_FORUM_ALERT_LIST #
-				<table class="module_table">
+				<table class="module-table">
 					<tr>
 						<th colspan="2" style="text-align:center;">
 							{TOPIC}
@@ -240,7 +240,7 @@
 				# ENDIF #
 
 				# IF C_FORUM_ALERT_NOT_AUTH #
-				<table class="module_table">
+				<table class="module-table">
 					<tr>
 						<th colspan="2">
 							{L_MODERATION_FORUM} :: {L_ALERT_MANAGEMENT} 
@@ -300,7 +300,7 @@
 				</script>
 
 				<form action="moderation_forum{U_ACTION}" method="post">
-				<table class="module_table">
+				<table class="module-table">
 					<tr>
 						<td class="row2">
 							<span style="float:left;">
@@ -320,7 +320,7 @@
 						</td>
 					</tr>
 				</table>
-				<table class="module_table">
+				<table class="module-table">
 					<tr>
 						<th style="width:25%;">{L_LOGIN}</th>
 						<th style="width:25%;">{L_INFO}</th>
@@ -328,7 +328,7 @@
 						<th style="width:25%;">{L_PM}</th>
 					</tr>
 				</table>
-				<table class="module_table">
+				<table class="module-table">
 					# START user_list #
 					<tr>
 						<td class="row1" style="text-align:center;width:25%;">
@@ -374,7 +374,7 @@
 				-->
 				</script>
 				<form action="moderation_forum{U_ACTION_INFO}" method="post">
-					<table class="module_table">
+					<table class="module-table">
 						<tr>
 							<td class="row1" style="width:30%;">
 								{L_LOGIN}

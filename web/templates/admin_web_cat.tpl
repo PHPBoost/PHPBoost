@@ -43,7 +43,7 @@
 			# INCLUDE message_helper #
 			
 			<form action="admin_web_cat.php?token={TOKEN}" method="post">
-				<table  class="module_table">
+				<table  class="module-table">
 					<tr> 
 						<th colspan="7">
 							{L_WEB_CAT}

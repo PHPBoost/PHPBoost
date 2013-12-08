@@ -55,7 +55,7 @@
 			</div>
 			
 			# IF C_DATABASE_TABLE_STRUCTURE #
-			<table class="module_table">
+			<table class="module-table">
 				<tr>
 					<th colspan="6" style="text-align:center;">
 						{TABLE_NAME}
@@ -106,7 +106,7 @@
 			</table>
 			
 			<div style="width:95%;margin:auto;">
-				<table class="module_table" style="float:left;width:100px;margin-right:15px">
+				<table class="module-table" style="float:left;width:100px;margin-right:15px">
 					<tr>
 						<th colspan="3" style="text-align:center;">
 							{L_TABLE_INDEX}
@@ -138,7 +138,7 @@
 					# END index #
 				</table>
 			
-				<table class="module_table" style="float:left;width:170px;margin-right:15px">
+				<table class="module-table" style="float:left;width:170px;margin-right:15px">
 					<tr>
 						<th style="text-align:center;" colspan="2">
 							{L_SIZE}
@@ -185,7 +185,7 @@
 					# ENDIF #
 				</table>
 				
-				<table class="module_table" style="float:left;width:300px;margin-right:15px">
+				<table class="module-table" style="float:left;width:300px;margin-right:15px">
 					<tr>
 						<th style="text-align:center;" colspan="2">
 							{L_STATISTICS}
@@ -285,7 +285,7 @@
 					# IF PAGINATION #<strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
 					
 					<div style="width:99%;margin:auto;overflow:auto;padding:0px 2px">
-						<table class="module_table">
+						<table class="module-table">
 							# START line #
 							<tr>
 								# START line.field #
@@ -373,7 +373,7 @@
 					</fieldset>
 					
 					<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
-						<table class="module_table">
+						<table class="module-table">
 							# START line #
 							<tr>
 								# START line.field #
@@ -393,7 +393,7 @@
 			# IF C_DATABASE_UPDATE_FORM #
 			<br />
 			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-				<table class="module_table">
+				<table class="module-table">
 					<tr style="text-align:center;">			
 						<td class="row3 text-strong">
 							{L_FIELD_FIELD}

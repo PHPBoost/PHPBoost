@@ -361,7 +361,7 @@
 								<span style="float:right">{U_NEXT}&nbsp;&nbsp;&nbsp;</span>
 							</div>				
 							<br /><br />					
-							<table class="module_table" style="width:100%;">
+							<table class="module-table" style="width:100%;">
 								<tr>
 									<th colspan="{COLSPAN}">
 										{L_THUMBNAILS}
@@ -384,7 +384,7 @@
 						{COMMENTS}
 						# ENDIF #
 						
-						<table class="module_table">
+						<table class="module-table">
 							# START pics_list #
 								{pics_list.OPEN_TR}
 								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle" class="smaller">

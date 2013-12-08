@@ -23,7 +23,7 @@
 				<div class="forum_position_subcat">
 					<div class="module_contents forum_contents forum_contents_subcat">
 						<div class="row2 text_small">{L_EXPLAIN_TRACK}</div>
-						<table class="module_table forum_table">
+						<table class="module-table forum_table">
 							<tr class="forum_text_column">			
 								<td>{L_TOPIC}</td>
 								<td style="width:100px;">{L_AUTHOR}</td>
@@ -39,7 +39,7 @@
 			</div>	
 			<div class="module_position forum_position_subcat">
 				<div class="module_contents forum_contents forum_contents_subcat">
-					<table class="module_table forum_table">
+					<table class="module-table forum_table">
 						# IF C_NO_TRACKED_TOPICS #
 						<tr>
 							<td class="forum_sous_cat" style="text-align:center;">

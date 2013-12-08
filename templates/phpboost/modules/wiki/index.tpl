@@ -314,7 +314,7 @@
 					# START last_articles #	
 					<hr style="margin:0px 0px 25px 0px;" />			
 					<br />
-					<table class="module_table">
+					<table class="module-table">
 						<tr>
 							<th colspan="2">
 								<strong><em>{last_articles.L_ARTICLES}</em></strong> {last_articles.RSS}

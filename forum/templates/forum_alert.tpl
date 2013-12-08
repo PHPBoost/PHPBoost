@@ -28,7 +28,7 @@
 				</script>
 				
 				<form method="post" action="alert.php?token={TOKEN}" onsubmit="javascript:return check_form_alert();">
-					<table class="module_table" style="width:80%">
+					<table class="module-table" style="width:80%">
 						<tr>
 							<th>{L_ALERT}</th>
 						</tr>
@@ -62,7 +62,7 @@
 
 
 				# START alert_confirm #
-				<table class="module_table" style="width:80%">
+				<table class="module-table" style="width:80%">
 					<tr>
 						<th>{L_ALERT}</th>
 					</tr>

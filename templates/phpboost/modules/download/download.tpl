@@ -341,7 +341,7 @@
 				</tr>
 			</table>
 			<br />
-			<table style="width:430px;margin-right:0;" class="module_table text_small">
+			<table style="width:430px;margin-right:0;" class="module-table text_small">
 				<tr>
 					<th colspan="2">
 						{L_FILE_INFOS}

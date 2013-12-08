@@ -100,7 +100,7 @@ function createSortableMenu()
 
 <div id="admin_contents admin_contents_no_column">
 	<form action="menus.php?action=save" method="post" onsubmit="build_menu_tree();">
-		<table class="module_table" style="background:#f4f4f4;width:99%;margin:auto;padding-bottom:25px;">
+		<table class="module-table" style="background:#f4f4f4;width:99%;margin:auto;padding-bottom:25px;">
 			<tr>
 				<td colspan="3" style="padding:10px;" class="row2">
 					<div style="float:right;">

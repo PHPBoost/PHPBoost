@@ -340,7 +340,7 @@ fieldset dl dd label:hover {
 }
 
 /* Tableau global, utilisé dans les différents modules */
-.module_table {
+.module-table {
     width:98%;
     margin:auto;
 	border-spacing:0px;
@@ -350,6 +350,6 @@ fieldset dl dd label:hover {
     background:#f2f8ff;
     margin-top:15px;
 }
-*+html .module_table { /* Hack ie7 */
+*+html .module-table { /* Hack ie7 */
 	border-collapse:collapse;
 }

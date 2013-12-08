@@ -5,7 +5,7 @@
 </div>
 
 <div class="block_container">
-	<table class="module_table">
+	<table class="module-table">
 		<tr>
 			<th colspan="5">
 				{L_SITE}
@@ -111,7 +111,7 @@
 		</tr>
 	</table>
 
-	<table class="module_table">
+	<table class="module-table">
 		<tr>
 			<th colspan="5">
 				{L_MODULES}

@@ -1,5 +1,5 @@
 	<div id="admin_contents" style="margin-left:0;padding:0">
-		<table class="module_table">
+		<table class="module-table">
 			<tr>
 				<th id="stats" colspan="5">
 					{L_STATS}
@@ -54,7 +54,7 @@
 		<br /><br />
 		
 		# IF C_STATS_SITE #
-		<table class="module_table">
+		<table class="module-table">
 			<tr>
 				<th colspan="3">
 					{L_SITE}
@@ -75,7 +75,7 @@
 		
 		
 		# IF C_STATS_USERS #
-		<table class="module_table">
+		<table class="module-table">
 			<tr>
 				<th colspan="2">	
 					{L_USERS}
@@ -99,7 +99,7 @@
 			</tr>
 		</table>
 		<br /><br />
-		<table class="module_table">
+		<table class="module-table">
 			<tr>
 				<th colspan="2">	
 					{L_TEMPLATES}
@@ -107,7 +107,7 @@
 			</tr>
 			<tr>
 				<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
-					<table class="module_table">						
+					<table class="module-table">						
 						<tr>
 							<th class="center">		
 								{L_TEMPLATES} 
@@ -141,7 +141,7 @@
 			</tr>
 		</table>
 		<br /><br />
-		<table class="module_table">
+		<table class="module-table">
 			<tr>
 				<th colspan="2">	
 					{L_SEX}
@@ -149,7 +149,7 @@
 			</tr>
 			<tr>
 				<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
-					<table class="module_table">						
+					<table class="module-table">						
 						<tr>
 							<th class="center">		
 								{L_SEX} 
@@ -184,7 +184,7 @@
 			</tr>
 		</table>
 		<br /><br />
-		<table class="module_table">
+		<table class="module-table">
 			<tr>
 				<th colspan="3">	
 					{L_TOP_TEN_POSTERS}
@@ -220,7 +220,7 @@
 		
 		# IF C_STATS_VISIT #
 		<form action="admin_stats.php#stats" method="get">
-			<table class="module_table">
+			<table class="module-table">
 				<tr>
 					<th>
 						{L_VISITORS} {MONTH} {U_YEAR}
@@ -254,7 +254,7 @@
 						<br />
 						# IF C_STATS_NO_GD #
 						<br />
-						<table class="module_table" style="width:400px;margin:auto;">
+						<table class="module-table" style="width:400px;margin:auto;">
 							<tr>
 								<td style="background-color: #000000;width:1px;"></td>
 								<td style="height:200px;width:10px;vertical-align:top;text-align:center;font-size:9px;">
@@ -263,7 +263,7 @@
 									
 								# START values #								
 								<td style="height:200px;width:10px;vertical-align:bottom;">
-									<table class="module_table" style="width:14px;margin:auto;">
+									<table class="module-table" style="width:14px;margin:auto;">
 										# START head #
 										<tr>
 											<td style="margin-left:2px;width:10px;height:4px;background-image: url({PATH_TO_ROOT}/stats/templates/images/stats2.png); background-repeat:no-repeat;">
@@ -316,7 +316,7 @@
 			</table>
 		</form>	
 		<br /><br />
-		<table class="module_table" style="width:300px;">
+		<table class="module-table" style="width:300px;">
 			<tr>
 				<th style="width:50%">
 					{L_DAY}
@@ -340,7 +340,7 @@
 
 
 		# IF C_STATS_BROWSERS #
-		<table class="module_table">
+		<table class="module-table">
 			<tr>
 				<th colspan="3">
 					{L_BROWSERS}
@@ -348,7 +348,7 @@
 			</tr>
 			<tr>
 				<td class="row1" style="width:50%;padding-top:30px;vertical-align:top">
-					<table class="module_table">
+					<table class="module-table">
 						# START list #			
 						<tr style="height:35px;">
 							<td style="text-align:center;" class="row2">	
@@ -373,7 +373,7 @@
 
 
 		# IF C_STATS_OS #
-		<table class="module_table">
+		<table class="module-table">
 			<tr>
 				<th colspan="3">
 					{L_OS}
@@ -381,7 +381,7 @@
 			</tr>
 			<tr style="height:35px;">
 				<td class="row1" style="width:50%;padding-top:30px;vertical-align:top">
-					<table class="module_table">
+					<table class="module-table">
 						# START list #			
 						<tr style="height:35px;">
 							<td style="text-align:center;" class="row2">		
@@ -406,7 +406,7 @@
 
 		
 		# IF C_STATS_LANG #
-		<table class="module_table">
+		<table class="module-table">
 			<tr>
 				<th colspan="3">
 					{L_LANG}
@@ -414,7 +414,7 @@
 			</tr>
 			<tr style="height:35px;">
 				<td class="row1" style="width:50%;padding-top:30px;vertical-align:top">
-					<table class="module_table">
+					<table class="module-table">
 						# START list #			
 						<tr>
 							<td style="text-align:center;" class="row2">			
@@ -487,7 +487,7 @@
 		-->
 		</script>
 		
-		<table class="module_table">
+		<table class="module-table">
 			<tr>
 				<th>			
 					{L_REFERER}
@@ -572,7 +572,7 @@
 		-->
 		</script>
 		
-		<table class="module_table">
+		<table class="module-table">
 			<tr>
 				<th>			
 					{L_KEYWORD}
@@ -627,7 +627,7 @@
 		
 		# IF C_STATS_ROBOTS #
 		<form action="admin_stats.php?bot=1#stats" name="form" method="post" style="margin:auto;" onsubmit="return check_form();">
-			<table class="module_table">
+			<table class="module-table">
 				<tr> 
 					<th colspan="2">
 						{L_ROBOTS}
@@ -635,7 +635,7 @@
 				</tr>
 				<tr> 
 					<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
-						<table class="module_table">						
+						<table class="module-table">						
 							<tr>
 								<th style="text-align:center">
 									{L_ROBOTS} 

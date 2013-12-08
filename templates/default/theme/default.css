@@ -146,7 +146,7 @@ table.invisible tr td {
 	padding:0;
 }
 
-.module_table {
+.module-table {
 	width:98%;
 	margin:auto;
 	border-spacing:0px;
@@ -156,13 +156,13 @@ table.invisible tr td {
 	background:#f2f8ff;
 }
 
-.module_table td {
+.module-table td {
 	border:none;
 	background:transparent;
 	text-align:left;
 }
 
-.module_table th {
+.module-table th {
 	color:#FFFFFF;
 	background:#336397;
 	text-align:left;

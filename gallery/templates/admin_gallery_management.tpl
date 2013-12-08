@@ -238,7 +238,7 @@
 			
 			{PAGINATION}
 
-			<table class="module_table">
+			<table class="module-table">
 				<tr> 
 					<th colspan="2">
 						{L_GALLERY}
@@ -257,7 +257,7 @@
 						</p>
 						
 						# START cat #
-						<table class="module_table">
+						<table class="module-table">
 							<tr>
 								<th colspan="{COLSPAN}">
 									{L_CATEGORIES}
@@ -291,7 +291,7 @@
 						<p style="text-align:center">		
 							{PAGINATION_PICS}<span id="pics_max"></span>
 						</p>				
-						<table class="module_table">				
+						<table class="module-table">				
 							<tr>
 								<th colspan="{COLSPAN}">
 									{GALLERY} {pics.EDIT}
@@ -373,7 +373,7 @@
 									
 									<br /><br />
 									
-									<table class="module_table" style="width:100%;">
+									<table class="module-table" style="width:100%;">
 										<tr>
 											<th colspan="{pics.pics_max.COLSPAN}">
 												{L_THUMBNAILS}

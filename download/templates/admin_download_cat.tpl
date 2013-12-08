@@ -4,7 +4,7 @@
 		
 			# INCLUDE message_helper #
 
-			<table class="module_table" style="width:99%;">
+			<table class="module-table" style="width:99%;">
 				<tr>			
 					<th colspan="3">
 						{L_CATS_MANAGEMENT}
