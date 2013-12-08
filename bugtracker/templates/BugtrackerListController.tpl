@@ -57,10 +57,10 @@ function Confirm(action) {
 			<td# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 				<a href="{bug.U_LINK}">\#{bug.ID}</a>
 			</td>
-			<td class="align_left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+			<td class="align-left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 				{bug.TITLE}
 			</td>
-			<td class="align_left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
+			<td class="align-left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
 				# IF bug.C_PROGRESS #
 				{bug.PROGRESS}%
 				<div class="progressbar-container">

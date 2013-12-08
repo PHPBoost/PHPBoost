@@ -26,11 +26,11 @@
 			</tr>
 			# START langs_installed #
 				<tr> 	
-					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row_disabled # ENDIF #" style="text-align:center;">					
+					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #" style="text-align:center;">					
 						<span id="lang-{langs_installed.ID}"></span>
 						<span class="text-strong">{langs_installed.NAME}</span> <span class="text-italic">({langs_installed.VERSION})</span>
 					</td>
-					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row_disabled # ENDIF #">
+					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #">
 						<div id="desc_explain{langs_installed.ID}">
 							<span class="text-strong">{@langs.author}:</span> 
 							<a href="mailto:{langs_installed.AUTHOR_EMAIL}">
@@ -43,7 +43,7 @@
 							<span class="text-strong">{@langs.compatibility}:</span> PHPBoost {langs_installed.COMPATIBILITY}<br />
 						</div>
 					</td>
-					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row_disabled # ENDIF #">
+					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #">
 						# IF NOT langs_installed.C_IS_DEFAULT_LANG #
 							<div id="authorizations_explain-{langs_installed.ID}">
 								{langs_installed.AUTHORIZATIONS}
@@ -52,7 +52,7 @@
 								{@langs.visitor}
 						# ENDIF #
 					</td>
-					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row_disabled # ENDIF #" style="text-align:center;">
+					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #" style="text-align:center;">
 						# IF NOT langs_installed.C_IS_DEFAULT_LANG #
 							<label><input type="radio" name="activated-{langs_installed.ID}" value="1" # IF langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@langs.yes}</label>
 							<label><input type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@langs.no}</label>
