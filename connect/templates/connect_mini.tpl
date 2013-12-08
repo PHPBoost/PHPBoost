@@ -17,7 +17,7 @@
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_CONNECT}</h5>
 			</div>
-			<div class="module_mini_contents vertical_fieldset">
+			<div class="module_mini_contents vertical-fieldset">
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="form-element">
 					<label>{L_PSEUDO}<br /><input type="text" id="login" name="login" maxlength="25"></label>
 					<label>{L_PASSWORD}<br /><input type="password" id="password" name="password" maxlength="30"></label>
@@ -42,7 +42,7 @@
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_PROFIL}</h5>
 			</div>
-			<div class="module_mini_contents vertical_fieldset">
+			<div class="module_mini_contents vertical-fieldset">
 				<ul class="connect-content">
 					<li>
 						<i class="icon-user"></i>
@@ -80,7 +80,7 @@
 	# ENDIF #
 # ELSE #
 	# IF C_USER_NOTCONNECTED #
-	<div class="horizontal_fieldset">
+	<div class="horizontal-fieldset">
 		<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
 			<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25">
 			<input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
@@ -95,7 +95,7 @@
 		# ENDIF #
 	</div>
 	# ELSE #
-	<div class="horizontal_fieldset">
+	<div class="horizontal-fieldset">
 		<ul class="connect-content">
 			<li>
 				<i class="icon-user"></i> 
