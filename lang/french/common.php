@@ -47,4 +47,16 @@ $lang['form.picture.preview'] = 'Prévisualisation de l\'image';
 $lang['form.sources'] = 'Sources';
 $lang['form.source.name'] = 'Nom de la source';
 $lang['form.source.url'] = 'Adresse de la source';
+
+//Administration
+$lang['authorizations'] = 'Autorisations';
+$lang['authorizations.read'] = 'Autorisation de lecture';
+$lang['authorizations.write'] = 'Autorisation d\'écriture';
+$lang['authorizations.contribution'] = 'Autorisation de contribution';
+$lang['authorizations.moderation'] = 'Autorisation de modération';
+
+$lang['admin.config.comments_enabled'] = 'Activer les commentaires';
+$lang['admin.config.notation_enabled'] = 'Activer la notation';
+
+$lang['message.success.config'] = 'La modification a été modifiée';
 ?>

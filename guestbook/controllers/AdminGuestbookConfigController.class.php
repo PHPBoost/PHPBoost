@@ -40,7 +40,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 	private $submit_button;
 	
 	private $lang;
-	private $admin_common_lang;
+	private $common_lang;
 	
 	/**
 	 * @var GuestbookConfig
@@ -59,7 +59,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->admin_common_lang['message.success.config'], E_USER_SUCCESS, 5));
+			$tpl->put('MSG', MessageHelper::display($this->common_lang['message.success.config'], E_USER_SUCCESS, 5));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -70,7 +70,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'guestbook');
-		$this->admin_common_lang = LangLoader::get('admin-common');
+		$this->common_lang = LangLoader::get('common');
 		$this->config = GuestbookConfig::load();
 	}
 	
@@ -95,13 +95,13 @@ class AdminGuestbookConfigController extends AdminModuleController
 			array(new FormFieldConstraintRegex('`^([-]?[0-9]+)$`i', '`^([-]?[0-9]+)$`i', $this->lang['admin.config.error.number-required']))
 		));
 		
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->admin_common_lang['authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->common_lang['authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['admin.authorizations.read'], GuestbookAuthorizationsService::READ_AUTHORIZATIONS),
-			new ActionAuthorization($this->admin_common_lang['authorizations.write'], GuestbookAuthorizationsService::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($this->admin_common_lang['authorizations.moderation'], GuestbookAuthorizationsService::MODERATION_AUTHORIZATIONS)
+			new ActionAuthorization($this->common_lang['authorizations.write'], GuestbookAuthorizationsService::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($this->common_lang['authorizations.moderation'], GuestbookAuthorizationsService::MODERATION_AUTHORIZATIONS)
 		));
 		
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());

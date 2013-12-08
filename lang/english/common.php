@@ -47,4 +47,16 @@ $lang['form.picture.preview'] = 'Picture preview';
 $lang['form.sources'] = 'Sources';
 $lang['form.source.name'] = 'Source name';
 $lang['form.source.url'] = 'Source address';
+
+//Administration
+$lang['authorizations'] = 'Permissions';
+$lang['authorizations.read'] = 'Read permission';
+$lang['authorizations.write'] = 'Write permission';
+$lang['authorizations.contribution'] = 'Contribution permission';
+$lang['authorizations.moderation'] = 'Moderation permission';
+
+$lang['admin.config.comments_enabled'] = 'Enable comments';
+$lang['admin.config.notation_enabled'] = 'Enable notation';
+
+$lang['message.success.config'] = 'The configuration has been modified';
 ?>
