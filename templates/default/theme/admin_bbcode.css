@@ -19,7 +19,7 @@
 }
 
 /* Curseur de la souris au passage sur les icônes */
-.bbcode_hover{
+.bbcode-hover{
 	cursor:pointer;
 }
 /* Menu caché du BBcode */
