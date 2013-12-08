@@ -31,7 +31,7 @@
  */
 class FormFieldsetHorizontal extends AbstractFormFieldset
 {
-	private static $tpl_src = '# INCLUDE ADD_FIELDSET_JS #<div class="horizontal_fieldset" id="${escape(ID)}" # IF C_DISABLED # style="display:none;" # ENDIF #>
+	private static $tpl_src = '# INCLUDE ADD_FIELDSET_JS #<div class="horizontal-fieldset" id="${escape(ID)}" # IF C_DISABLED # style="display:none;" # ENDIF #>
 	    # IF C_DESCRIPTION #<span style="display:inline-table; vertical-align:middle;">${escape(DESCRIPTION)}</span># ENDIF #
 	    # START elements #<div style="display:inline-table; vertical-align:middle;"># INCLUDE elements.ELEMENT #</div># END elements #
     </div>
