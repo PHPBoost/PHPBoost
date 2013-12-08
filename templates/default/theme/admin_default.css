@@ -2,7 +2,7 @@
 		admin_default.css
 Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
 --------------------------------------*/ /* Titres */ /* Menus */
-.row_disabled { background:#E1E1E1 !important; }
+.row-disabled { background:#E1E1E1 !important; }
 
 /* Gestion des Catégories */
 #cats_elements_list{

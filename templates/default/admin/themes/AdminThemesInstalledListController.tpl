@@ -26,7 +26,7 @@
 			</tr>
 			# START themes_installed #
 				<tr> 	
-					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #">					
+					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row-disabled # ENDIF #">					
 						<span id="theme-{themes_installed.ID}"></span>
 						<span class="text-strong">{themes_installed.NAME}</span> <em>({themes_installed.VERSION})</em>
 						<br /><br />
@@ -42,7 +42,7 @@
 						# ENDIF #
 						
 					</td>
-					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #">
+					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row-disabled # ENDIF #">
 						<div id="desc_explain{themes_installed.ID}">
 							<span class="text-strong">{@themes.author}:</span> 
 							<a href="mailto:{themes_installed.AUTHOR_EMAIL}">
@@ -60,7 +60,7 @@
 							<span class="text-strong">{@themes.width}:</span> {themes_installed.WIDTH}<br />
 						</div>
 					</td>
-					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #">
+					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row-disabled # ENDIF #">
 						# IF NOT themes_installed.C_IS_DEFAULT_THEME #
 							<div id="authorizations_explain-{themes_installed.ID}">
 								{themes_installed.AUTHORIZATIONS}
@@ -71,7 +71,7 @@
 							</div>
 						# ENDIF #
 					</td>
-					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #">
+					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row-disabled # ENDIF #">
 						# IF NOT themes_installed.C_IS_DEFAULT_THEME #
 							<label><input type="radio" name="activated-{themes_installed.ID}" value="1" # IF themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.yes}</label>
 							<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.no}</label>
