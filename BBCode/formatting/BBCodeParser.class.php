@@ -210,7 +210,7 @@ class BBCodeParser extends ContentFormattingParser
 			'align' => "<p style=\"text-align:$1\">$2</p>",
 			'float' => "<p class=\"float-$1\">$2</p>",
 			'anchor' => "<span id=\"$1\">$2</span>",
-			'acronym' => "<acronym title=\"$1\" class=\"bb_acronym\">$2</acronym>",
+			'acronym' => "<acronym title=\"$1\" class=\"bb-acronym\">$2</acronym>",
 			'style' => "<span class=\"$1\">$2</span>",
 			'swf' => '[[MEDIA]]insertSwfPlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'movie' => '[[MEDIA]]insertMoviePlayer(\'$3\', $1, $2);[[/MEDIA]]',
@@ -308,14 +308,14 @@ class BBCodeParser extends ContentFormattingParser
             //Block tag
             if (!in_array('block', $this->forbidden_tags))
             {
-            	$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb_block">$1</div>');
-            	$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="bb_block" style="$1">$2</div>');
+            	$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb-block">$1</div>');
+            	$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="bb-block" style="$1">$2</div>');
             }
 
             //Fieldset tag
             if (!in_array('fieldset', $this->forbidden_tags))
             {
-            	$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>');
+            	$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb-fieldset" style="$2"><legend>$1</legend>$3</fieldset>');
             }
 
             // Feed tag

@@ -118,7 +118,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
 			'`<p class="float-(left|right)">(.*)</p>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
-			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
+			'`<acronym title="([^"]+)" class="bb-acronym">(.*)</acronym>`isU',
 			'`<a href="mailto:(.*)">(.*)</a>`isU',
 			'`<a href="([^"]+)">(.*)</a>`isU',
 			'`<h3 class="title([1-2]+)">(.*)</h3>`isU',
@@ -181,17 +181,17 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->content);
 
 		//Block
-		$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
-		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
+		$this->_parse_imbricated('<div class="bb-block"', '`<div class="bb-block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
+		$this->_parse_imbricated('<div class="bb-block" style=', '`<div class="bb-block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
 			
 		##Callbacks
 		//Image
 		$this->content = preg_replace_callback('`<img src="([^"]+)" alt="([^"]*)?"(?: title="([^"]*)")?(?: style="([^"]+)")?(?: class="[^"]+")? />`iU', array($this, 'unparse_img'), $this->content);
 
 		//Fieldset
-		while (preg_match('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
+		while (preg_match('`<fieldset class="bb-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
 		{
-			$this->content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
+			$this->content = preg_replace_callback('`<fieldset class="bb-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
 		}
 
 		//Wikipedia link

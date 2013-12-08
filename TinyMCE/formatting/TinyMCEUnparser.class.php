@@ -205,7 +205,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	{
 		$array_preg = array(
 			'`<p class="float-(left|right)">(.*)</p>`isU',
-			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
+			'`<acronym title="([^"]+)" class="bb-acronym">(.*)</acronym>`isU',
 			'`<a href="mailto:(.*)">(.*)</a>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
 			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/kernel/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
@@ -241,13 +241,13 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->_parse_imbricated('<span class="text-hide">', '`<span class="text-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 
 			//Bloc HTML
-			$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
-			$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
+			$this->_parse_imbricated('<div class="bb-block"', '`<div class="bb-block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
+			$this->_parse_imbricated('<div class="bb-block" style=', '`<div class="bb-block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
 
 			//Bloc de formulaire
-			while (preg_match('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
+			while (preg_match('`<fieldset class="bb-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
 			{
-				$this->content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
+				$this->content = preg_replace_callback('`<fieldset class="bb-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
 			}
 
 			//Liens Wikipédia
