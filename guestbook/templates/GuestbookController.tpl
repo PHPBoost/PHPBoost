@@ -18,7 +18,7 @@
 				<div class="message-user-infos">
 					<div class="message-pseudo">
 						# IF messages.C_VISITOR #
-							<span class="text_italic"># IF messages.USER_PSEUDO #{messages.USER_PSEUDO}# ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
+							<span class="text-italic"># IF messages.USER_PSEUDO #{messages.USER_PSEUDO}# ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #</span>
 						# ELSE #
 							<a href="{messages.U_PROFILE}" class="{messages.USER_LEVEL_CLASS}" # IF messages.C_USER_GROUP_COLOR # style="color:{messages.USER_GROUP_COLOR}" # ENDIF #>
 								{messages.USER_PSEUDO}

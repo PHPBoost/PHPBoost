@@ -21,14 +21,14 @@
 			<tr> 
 				<td colspan="4">
 					# INCLUDE MSG #	
-					<span class="text_strong">{@themes.default_theme_explain}</span>
+					<span class="text-strong">{@themes.default_theme_explain}</span>
 				</td>
 			</tr>
 			# START themes_installed #
 				<tr> 	
 					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #">					
 						<span id="theme-{themes_installed.ID}"></span>
-						<span class="text_strong">{themes_installed.NAME}</span> <em>({themes_installed.VERSION})</em>
+						<span class="text-strong">{themes_installed.NAME}</span> <em>({themes_installed.VERSION})</em>
 						<br /><br />
 						# IF themes_installed.C_PICTURES #
 							<a href="{themes_installed.MAIN_PICTURE}" rel="lightbox[{themes_installed.ID}]" title="{themes_installed.NAME}">
@@ -44,7 +44,7 @@
 					</td>
 					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #">
 						<div id="desc_explain{themes_installed.ID}">
-							<span class="text_strong">{@themes.author}:</span> 
+							<span class="text-strong">{@themes.author}:</span> 
 							<a href="mailto:{themes_installed.AUTHOR_EMAIL}">
 								{themes_installed.AUTHOR_NAME}
 							</a>
@@ -52,12 +52,12 @@
 							<a href="{themes_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a>
 							# ENDIF #
 							<br />
-							<span class="text_strong">{@themes.description}:</span> {themes_installed.DESCRIPTION}<br />
-							<span class="text_strong">{@themes.compatibility}:</span> PHPBoost {themes_installed.COMPATIBILITY}<br />
-							<span class="text_strong">{@themes.html_version}:</span> {themes_installed.HTML_VERSION}<br />
-							<span class="text_strong">{@themes.css_version}:</span> {themes_installed.CSS_VERSION}<br />
-							<span class="text_strong">{@themes.main_color}:</span> {themes_installed.MAIN_COLOR}<br />
-							<span class="text_strong">{@themes.width}:</span> {themes_installed.WIDTH}<br />
+							<span class="text-strong">{@themes.description}:</span> {themes_installed.DESCRIPTION}<br />
+							<span class="text-strong">{@themes.compatibility}:</span> PHPBoost {themes_installed.COMPATIBILITY}<br />
+							<span class="text-strong">{@themes.html_version}:</span> {themes_installed.HTML_VERSION}<br />
+							<span class="text-strong">{@themes.css_version}:</span> {themes_installed.CSS_VERSION}<br />
+							<span class="text-strong">{@themes.main_color}:</span> {themes_installed.MAIN_COLOR}<br />
+							<span class="text-strong">{@themes.width}:</span> {themes_installed.WIDTH}<br />
 						</div>
 					</td>
 					<td class="# IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #">

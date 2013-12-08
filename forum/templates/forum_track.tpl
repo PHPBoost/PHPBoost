@@ -97,7 +97,7 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<span style="float:left;" class="text_strong">
+				<span style="float:left;" class="text-strong">
 					&bull; {U_FORUM_CAT}
 				</span>
 				<span style="float:right;">{PAGINATION}</span>&nbsp;

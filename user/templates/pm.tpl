@@ -129,7 +129,7 @@
 							# START convers.no_pm #	
 							<tr>
 								<td colspan="6">
-									<span class="text_strong">{convers.no_pm.L_NO_PM}</span>
+									<span class="text-strong">{convers.no_pm.L_NO_PM}</span>
 								</td>
 							</tr>
 							# END convers.no_pm #

@@ -2,7 +2,7 @@
 <div class="message-helper error">
 	<i class="icon-error"></i>
 	<div class="message-helper-content">
-		<span class="text_strong" >{TITLE_VALIDATION_ERROR_MESSAGE} : </span> <br /><br />
+		<span class="text-strong" >{TITLE_VALIDATION_ERROR_MESSAGE} : </span> <br /><br />
 		# START validation_error_messages #
 			- {validation_error_messages.ERROR_MESSAGE}<br />
 		# END validation_error_messages #

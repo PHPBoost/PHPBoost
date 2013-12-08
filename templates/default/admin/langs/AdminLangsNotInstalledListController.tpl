@@ -29,7 +29,7 @@
 			<tbody>
 				<tr>
 					<td colspan="4">
-						<span class="text_strong">{@themes.add.not_lang}</span>
+						<span class="text-strong">{@themes.add.not_lang}</span>
 					</td>
 				</tr>
 			# ENDIF #
@@ -37,11 +37,11 @@
 				<tr> 	
 					<td>					
 						<span id="lang-{langs_not_installed.ID}"></span>
-						<span class="text_strong">{langs_not_installed.NAME}</span> <em>({langs_not_installed.VERSION})</em>
+						<span class="text-strong">{langs_not_installed.NAME}</span> <em>({langs_not_installed.VERSION})</em>
 					</td>
 					<td>
 						<div id="desc_explain{langs_not_installed.ID}">
-							<span class="text_strong">{@langs.author}:</span> 
+							<span class="text-strong">{@langs.author}:</span> 
 							<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">
 								{langs_not_installed.AUTHOR_NAME}
 							</a>
@@ -49,7 +49,7 @@
 							<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a>
 							# ENDIF #
 							<br />
-							<span class="text_strong">{@langs.compatibility}:</span> PHPBoost {langs_not_installed.COMPATIBILITY}<br />
+							<span class="text-strong">{@langs.compatibility}:</span> PHPBoost {langs_not_installed.COMPATIBILITY}<br />
 						</div>
 					</td>
 					<td>

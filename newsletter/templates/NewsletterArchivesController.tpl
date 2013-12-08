@@ -57,7 +57,7 @@
 	<tbody>
 		<tr>
 			<td colspan="4">
-				<span class="text_strong" >{@archives.not_archives}</span>
+				<span class="text-strong" >{@archives.not_archives}</span>
 			</td>
 		</tr>
 	</tbody>

@@ -112,7 +112,7 @@
 		<form action="action.php?token={TOKEN}" method="post" class="fieldset-content">
 			<fieldset>
 				<legend>{status.L_TITLE}</legend>
-				<p style="text-align:center" class="text_strong">{L_CURRENT_STATUS}</p>
+				<p style="text-align:center" class="text-strong">{L_CURRENT_STATUS}</p>
 				<div id="current_status" class="row3">{status.CURRENT_STATUS}</div>
 				<br />
 				<div class="form-element">

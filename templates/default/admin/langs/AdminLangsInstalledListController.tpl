@@ -21,18 +21,18 @@
 			<tr> 
 				<td colspan="4">
 					# INCLUDE MSG #	
-					<span class="text_strong">{@langs.default_lang_explain}</span>
+					<span class="text-strong">{@langs.default_lang_explain}</span>
 				</td>
 			</tr>
 			# START langs_installed #
 				<tr> 	
 					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row_disabled # ENDIF #" style="text-align:center;">					
 						<span id="lang-{langs_installed.ID}"></span>
-						<span class="text_strong">{langs_installed.NAME}</span> <span class="text_italic">({langs_installed.VERSION})</span>
+						<span class="text-strong">{langs_installed.NAME}</span> <span class="text-italic">({langs_installed.VERSION})</span>
 					</td>
 					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row_disabled # ENDIF #">
 						<div id="desc_explain{langs_installed.ID}">
-							<span class="text_strong">{@langs.author}:</span> 
+							<span class="text-strong">{@langs.author}:</span> 
 							<a href="mailto:{langs_installed.AUTHOR_EMAIL}">
 								{langs_installed.AUTHOR_NAME}
 							</a>
@@ -40,7 +40,7 @@
 							<a href="{langs_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a>
 							# ENDIF #
 							<br />
-							<span class="text_strong">{@langs.compatibility}:</span> PHPBoost {langs_installed.COMPATIBILITY}<br />
+							<span class="text-strong">{@langs.compatibility}:</span> PHPBoost {langs_installed.COMPATIBILITY}<br />
 						</div>
 					</td>
 					<td class="# IF langs_installed.C_IS_DEFAULT_LANG # row_disabled # ENDIF #">

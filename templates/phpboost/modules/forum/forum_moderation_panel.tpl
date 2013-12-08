@@ -414,7 +414,7 @@
 			</div>	
 			<div class="module_bottom_r"></div>	
 			<div class="module_bottom_l"></div>
-			<div class="module_bottom text_strong">
+			<div class="module_bottom text-strong">
 				&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
 			</div>	
 		</div>

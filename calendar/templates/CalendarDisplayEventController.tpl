@@ -25,7 +25,7 @@
 		# IF C_LOCATION #
 		<div class="spacer">&nbsp;</div>
 		<div itemprop="location" itemscope itemtype="http://schema.org/Place">
-			<span class="text_strong">{@calendar.labels.location}</span> :
+			<span class="text-strong">{@calendar.labels.location}</span> :
 			<span itemprop="name">{LOCATION}</span>
 		</div>
 		# ENDIF #
@@ -33,7 +33,7 @@
 		<div class="spacer">&nbsp;</div>
 		# IF C_DISPLAY_PARTICIPANTS #
 		<div>
-			<span class="text_strong">{@calendar.labels.participants}</span> :
+			<span class="text-strong">{@calendar.labels.participants}</span> :
 			<span>
 				# IF C_PARTICIPANTS #
 					# START participant #

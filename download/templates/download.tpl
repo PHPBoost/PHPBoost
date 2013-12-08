@@ -155,12 +155,12 @@
 						# ENDIF #
 					</div>
 					<h6>{L_FILE_INFOS}</h6>
-					<span class="text_strong">{L_SIZE} : </span><span>{SIZE}</span><br/>
-					<span class="text_strong">{L_INSERTION_DATE} : </span><span itemprop="dateCreated">{CREATION_DATE}</span><br/>
-					<span class="text_strong">{L_RELEASE_DATE} : </span><span itemprop="dateModified">{RELEASE_DATE}</span><br/>
-					<span class="text_strong">{L_DOWNLOADED} : </span><span>{HITS}</span><br/>
+					<span class="text-strong">{L_SIZE} : </span><span>{SIZE}</span><br/>
+					<span class="text-strong">{L_INSERTION_DATE} : </span><span itemprop="dateCreated">{CREATION_DATE}</span><br/>
+					<span class="text-strong">{L_RELEASE_DATE} : </span><span itemprop="dateModified">{RELEASE_DATE}</span><br/>
+					<span class="text-strong">{L_DOWNLOADED} : </span><span>{HITS}</span><br/>
 					<div class="center">
-						<span class="text_strong">{KERNEL_NOTATION}</span>
+						<span class="text-strong">{KERNEL_NOTATION}</span>
 					</div>
 					
 				</div>

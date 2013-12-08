@@ -93,7 +93,7 @@ class DeprecatedPagination
 			{
 				if ($i == $this->page && $link_start_page) //Page courante.
 				{
-					$links .= '&nbsp;<span class="text_strong" style="font-size:' . $font_size . 'px;text-decoration: underline;">' . $this->page . '</span>&nbsp;';
+					$links .= '&nbsp;<span class="text-strong" style="font-size:' . $font_size . 'px;text-decoration: underline;">' . $this->page . '</span>&nbsp;';
 				}
 				elseif ($i <= $this->nbr_start_links || $i > $page_max_end || ($i <= $page_current_max && $i >= $page_current_min))
 				{

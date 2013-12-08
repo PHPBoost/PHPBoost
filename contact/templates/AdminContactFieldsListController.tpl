@@ -161,9 +161,9 @@ Event.observe(window, 'load', function() {
 					<div class="sortable-title">
 						<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows"></i>
 						<i class="icon-globe"></i>
-						<span class="text_strong">{fields_list.NAME}</span>
+						<span class="text-strong">{fields_list.NAME}</span>
 						<div class="sortable-actions">
-							{@admin.field.required} : <span class="text_strong"># IF fields_list.C_REQUIRED #{@admin.field.yes}# ELSE #{@admin.field.no}# ENDIF #</span>
+							{@admin.field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #{@admin.field.yes}# ELSE #{@admin.field.no}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
 								<a title="{@admin.fields.move_field_up}" id="move_up_{fields_list.ID}"><i class="icon-arrow-up"></i></a>

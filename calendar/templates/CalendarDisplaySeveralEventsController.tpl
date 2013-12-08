@@ -55,7 +55,7 @@
 					<div class="spacer">&nbsp;</div>
 					<div itemscope="itemscope" itemtype="http://schema.org/Place">
 						<p itemprop="location">
-							<span class="text_strong">{@calendar.labels.location}</span> : 
+							<span class="text-strong">{@calendar.labels.location}</span> : 
 							<span itemprop="name">{event.LOCATION}</span>
 						</p>
 					</div>
@@ -64,7 +64,7 @@
 					<div class="spacer">&nbsp;</div>
 					# IF event.C_DISPLAY_PARTICIPANTS #
 					<div>
-						<span class="text_strong">{@calendar.labels.participants}</span> :
+						<span class="text-strong">{@calendar.labels.participants}</span> :
 						<span>
 							# IF event.C_PARTICIPANTS #
 								# START event.participant #

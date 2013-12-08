@@ -88,9 +88,9 @@ Event.observe(window, 'load', function() {
 					<div class="sortable-title">
 						<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
 						<i class="icon-globe"></i>
-						{L_NAME} : <span class="text_strong" >{list_extended_fields.NAME}</span>
+						{L_NAME} : <span class="text-strong" >{list_extended_fields.NAME}</span>
 						<div class="sortable-actions">
-							{L_REQUIRED} : <span class="text_strong" >{list_extended_fields.L_REQUIRED}</span> 
+							{L_REQUIRED} : <span class="text-strong" >{list_extended_fields.L_REQUIRED}</span> 
 							<div class="sortable-options">
 								<a href="{list_extended_fields.EDIT_LINK}" title="{L_UPDATE}" class="icon-edit"></a>
 							</div>

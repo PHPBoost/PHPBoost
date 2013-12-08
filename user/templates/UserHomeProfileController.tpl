@@ -3,7 +3,7 @@
 		<h1>{@profile}</h1>
 	</header>
 	<div class="content">
-		<p style="text-align:center;" class="text_strong">${LangLoader::get_message('welcome', 'main')} {PSEUDO}</p>
+		<p style="text-align:center;" class="text-strong">${LangLoader::get_message('welcome', 'main')} {PSEUDO}</p>
 		
 		<ul style="width:99%;margin:30px auto;">
 			<li class="small-block">
