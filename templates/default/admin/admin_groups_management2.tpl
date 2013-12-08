@@ -147,7 +147,7 @@
 						<label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span>
 						<div class="form-field">#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}">
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/color.png" alt="" class="valign-middle" /></a>	
-							<div class="color_picker" style="display:none;" id="bb_block1">
+							<div class="color-picker" style="display:none;" id="bb_block1">
 								<div id="color_group_list" class="bbcode-block" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
 							</div>
@@ -293,7 +293,7 @@
 						<label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span>
 						<div class="form-field">#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}">
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/color.png" alt="" class="valign-middle" /></a>	
-							<div class="color_picker" style="display:none;" id="bb_block1">
+							<div class="color-picker" style="display:none;" id="bb_block1">
 								<div id="color_group_list" class="bbcode-block" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
 							</div>

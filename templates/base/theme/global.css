@@ -288,27 +288,27 @@ ul,ol {
 }
 
 /* Color-Picker */
-.color_picker {
+.color-picker {
 	position:absolute;
 	z-index:100;
 }
 
-.color_picker .bbcode-block {
+.color-picker .bbcode-block {
 	left:80px;
 }
 
-.color_picker .bbcode-block table {
+.color-picker .bbcode-block table {
 	border-collapse:collapse;
 	margin:auto;
 	border:none;
 }
 
-.color_picker td {
+.color-picker td {
 	padding:0;
 	border:1px solid #F3F3F3;
 }
 
-.color_picker td a {
+.color-picker td a {
 	display:block;
 	width:14px;
 	height:14px;
