@@ -51,11 +51,13 @@ $read = retrieve(GET, 'read', false);
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
 
+$user_accounts_config = UserAccountsConfig::load();
+
 //Marque les messages privés comme lus
 if ($read)
 {
 	$nbr_pm = PrivateMsg::count_conversations($User->get_attribute('user_id'));
-	$max_pm_number = UserAccountsConfig::load()->get_max_private_messages_number();
+	$max_pm_number = $user_accounts_config->get_max_private_messages_number();
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $max_pm_number);
 	$unlimited_pm = $User->check_level(User::MODERATOR_LEVEL) || ($limit_group === -1);
 
@@ -91,7 +93,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	$login = retrieve(POST, 'login', '');
 	
-	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
+	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	//Vérification de la boite de l'expéditeur.
 	if (PrivateMsg::count_conversations($User->get_attribute('user_id')) >= $limit_group && (!$User->check_level(User::MODERATOR_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
 		AppContext::get_response()->redirect('/user/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#message_helper');
@@ -143,7 +145,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 		'LOGIN' => $login
 	));
 	
-	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
+	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	$nbr_pm = PrivateMsg::count_conversations($User->get_attribute('user_id'));
 	if (!$User->check_level(User::MODERATOR_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group)
 		$tpl->put('message_helper', MessageHelper::display($LANG['e_pm_full_post'], E_USER_WARNING));
@@ -572,7 +574,6 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	
 	//Message non lu par autre membre que user_id view_status => 0.
 	//Message lu par autre membre que user_id view_status => 1.
-	$user_accounts_config = UserAccountsConfig::load();
 	$is_guest_in_convers = false;
 	$page = retrieve(GET, 'p', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
@@ -687,7 +688,7 @@ else //Liste des conversation, dans la boite du membre.
 	$pagination_pm = 25;
 	$pagination_msg = 25;
 	
-	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
+	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	$unlimited_pm = $User->check_level(User::MODERATOR_LEVEL) || ($limit_group === -1);
 	$pm_max = $unlimited_pm ? $LANG['illimited'] : $limit_group;
 	
