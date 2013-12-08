@@ -73,7 +73,7 @@
 		
 			# INCLUDE message_helper #
 			
-			<form action="admin_forum_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_forum_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_FORUM_CONFIG}</legend>
 					<div class="form-element">
@@ -177,7 +177,7 @@
 				</fieldset>
 			</form>
 
-			<form action="admin_forum_config.php?upd=1&amp;token={TOKEN}" name="form" method="post" class="fieldset_content">
+			<form action="admin_forum_config.php?upd=1&amp;token={TOKEN}" name="form" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_UPDATE_DATA_CACHED}</legend>
 					<p style="text-align:center;">

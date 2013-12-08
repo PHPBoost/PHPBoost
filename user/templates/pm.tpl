@@ -275,7 +275,7 @@
 					</table>
 					# END edit_pm.show_pm #
 					-->
-					<div class="fieldset_content">
+					<div class="fieldset-content">
 						<fieldset>
 							<legend>{L_EDIT}</legend>
 							<p>{L_REQUIRE}</p>
@@ -334,7 +334,7 @@
 					# END post_convers.show_convers #	
 					-->
 					
-					<div class="fieldset_content">
+					<div class="fieldset-content">
 						<fieldset>
 							<legend>{L_POST_NEW_CONVERS}</legend>
 							<p>{L_REQUIRE}</p>

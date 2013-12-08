@@ -163,7 +163,7 @@ class UserMaintainController extends AbstractController
 		$lang = LangLoader::get('user-common');
 		
 		$this->form = new HTMLForm('loginForm');
-		$this->form->set_css_class('fieldset_content');
+		$this->form->set_css_class('fieldset-content');
 
 		$fieldset = new FormFieldsetHTML('loginFieldset', $lang['connect']);
 		$login = new FormFieldTextEditor('login', $this->lang['pseudo'], '', array('required' => true));

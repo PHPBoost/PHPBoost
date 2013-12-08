@@ -15,7 +15,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<fieldset class="fieldset_content">
+			<fieldset class="fieldset-content">
 				<legend>{L_GROUPS_MANAGEMENT}</legend>
 			
 				<table>

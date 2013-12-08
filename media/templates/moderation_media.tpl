@@ -1,5 +1,5 @@
 		# IF C_DISPLAY #
-		<form action="moderation_media.php?token={TOKEN}" method="post" class="fieldset_content">
+		<form action="moderation_media.php?token={TOKEN}" method="post" class="fieldset-content">
 			<fieldset style="padding:15px 10px;">
 				<legend>{L_FILTER}</legend>
 				<div id="form" style="text-align:center;">
@@ -42,7 +42,7 @@
 			}
 			-->
 		</script>
-		<form action="moderation_media.php?token={TOKEN}" method="post" class="fieldset_content">
+		<form action="moderation_media.php?token={TOKEN}" method="post" class="fieldset-content">
 			<fieldset>
 				<legend>{L_MODO_PANEL}</legend>
 				<table>

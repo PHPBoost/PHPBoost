@@ -70,7 +70,7 @@
 					
 			# INCLUDE message_helper #
 				
-			<form action="admin_forum_add.php?token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset_content">
+			<form action="admin_forum_add.php?token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_ADD_CAT}</legend>
 					<p>{L_REQUIRE}</p>

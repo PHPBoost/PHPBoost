@@ -16,7 +16,7 @@ function CheckForm() {
 -->
 </script>
 <div id="admin_contents">
-	<form action="content.php" method="post" onsubmit="return CheckForm();" class="fieldset_content">
+	<form action="content.php" method="post" onsubmit="return CheckForm();" class="fieldset-content">
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
             <div class="form-element">

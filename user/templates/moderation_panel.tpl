@@ -65,7 +65,7 @@
 					-->
 				</script>
 				
-				<form action="{U_ACTION}" method="post" class="fieldset_content">
+				<form action="{U_ACTION}" method="post" class="fieldset-content">
 					<fieldset>
 						<legend>{L_SEARCH_USER}</legend>
 						<div class="form-element">

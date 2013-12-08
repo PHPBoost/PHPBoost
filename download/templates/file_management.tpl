@@ -73,7 +73,7 @@
 				# ENDIF #
 			# ENDIF #
 
-			<form action="{U_TARGET}" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="{U_TARGET}" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_PAGE_TITLE}</legend>
 					<p>{L_REQUIRE}</p>

@@ -45,7 +45,7 @@
 		<div id="admin_contents">
 			# INCLUDE message_helper #
 				
-			<form action="admin_gallery_cat.php?id={ID}&amp;token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset_content">
+			<form action="admin_gallery_cat.php?id={ID}&amp;token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_EDIT_CAT}</legend>
 					<p>{L_REQUIRE}</p>

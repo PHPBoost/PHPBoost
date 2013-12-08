@@ -40,7 +40,7 @@
 		<div id="admin_contents">
 			# INCLUDE message_helper #
 			
-			<form action="admin_smileys_add.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset_content">
+			<form action="admin_smileys_add.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset-content">
 				<fieldset>
 					<legend>{L_UPLOAD_SMILEY}</legend>
 					<div class="form-element">
@@ -55,7 +55,7 @@
 				</fieldset>
 			</form>
 							
-			<form action="admin_smileys_add.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_smileys_add.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<fieldset>
 				<legend>{L_ADD_SMILEY}</legend>
 					<div class="form-element">

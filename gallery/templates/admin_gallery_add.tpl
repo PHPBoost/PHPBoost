@@ -33,7 +33,7 @@
 					
 			# INCLUDE message_helper #
 				
-			<form method="post" enctype="multipart/form-data" class="fieldset_content">
+			<form method="post" enctype="multipart/form-data" class="fieldset-content">
 				<fieldset>
 					<legend>{L_ADD_IMG}</legend>
 					# START image_up #				

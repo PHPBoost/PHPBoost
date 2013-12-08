@@ -40,7 +40,7 @@
 		<div id="admin_contents">
 			# INCLUDE message_helper #
 			
-			<form action="admin_smileys.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_smileys.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<fieldset>
 				<legend>{L_EDIT_SMILEY}</legend>
 					<div class="form-element">

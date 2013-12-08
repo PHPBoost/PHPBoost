@@ -60,7 +60,7 @@
 				<h1>{L_PAGE_TITLE}</h1>
 			</header>
 			<div class="content">
-			<form action="media_action.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="media_action.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_PAGE_TITLE}</legend>
 					<div class="form-element">

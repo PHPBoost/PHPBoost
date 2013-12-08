@@ -43,7 +43,7 @@
 
 		# INCLUDE admin_media_menu #
 		<div id="admin_contents">
-			<form action="admin_media_config.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_media_config.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
 					<fieldset>
 						<legend>{L_CONFIG_GENERAL}</legend>
 						<div class="form-element">
