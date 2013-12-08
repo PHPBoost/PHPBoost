@@ -1,19 +1,19 @@
 # IF C_VERTICAL_BLOCK #
-<div class="module_mini_container">
-	<div class="module_mini_top">
+<div class="module-mini-container">
+	<div class="module-mini-top">
 		<h5 class="sub-title">
 			<a href="{U_LINK}" class="icon-syndication"></a>
 			# IF C_NAME #{NAME}# ELSE #{TITLE}# ENDIF #
 		</h5>
 	</div>
-	<div class="module_mini_contents">
+	<div class="module-mini-contents">
 		<ul class="list">
 			# START item #
 			<li><span class="smaller">{item.DATE}</span> <a href="{item.U_LINK} ">{item.TITLE} </a></li>
 			# END item #
 		</ul>
 	</div>
-	<div class="module_mini_bottom">
+	<div class="module-mini-bottom">
 	</div>
 </div>
 # ELSE #

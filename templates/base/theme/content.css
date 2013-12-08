@@ -548,7 +548,7 @@ input.field-xlarge { width:300px; }
 	width:59%;
 }
 
-.module_mini_container .form-field {
+.module-mini-container .form-field {
 	display:block;
 	width:100%;
 }
@@ -666,7 +666,7 @@ div.form_autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 /* Modules minis
 --------------------------------------*/
 /* Placement des mini modules */
-.module_mini_container {
+.module-mini-container {
     width:190px;
     margin:0px 0px 10px 0px;
     border:1px #bebebe solid;
@@ -677,14 +677,14 @@ div.form_autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 	clear:both;
 }
 
-.module_mini_top {
+.module-mini-top {
     height:24px;
     font-weight:bold;
     text-align:center;
     border-bottom:2px #336397 solid;
 }
 
-.module_mini_contents {
+.module-mini-contents {
     border-top:none;
     border-bottom:none;
     text-align:center;
@@ -692,7 +692,7 @@ div.form_autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 }
 
 /* Bordure inférieure des modules minis */
-.module_mini_bottom { 
+.module-mini-bottom { 
     height:15px;
 }
 

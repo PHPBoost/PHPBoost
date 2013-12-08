@@ -1,10 +1,10 @@
 # IF C_VERTICAL #
 <form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
-	<div class="module_mini_container">
-		<div class="module_mini_top">
+	<div class="module-mini-container">
+		<div class="module-mini-top">
 			<h5 class="sub-title">{L_NEWSLETTER}</h5>
 		</div>
-		<div class="module_mini_contents">
+		<div class="module-mini-contents">
 			<p>
 				<input type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}">
 			</p>
@@ -21,7 +21,7 @@
 				<a href="${relative_url(NewsletterUrlBuilder::archives())}" class="small">{L_ARCHIVES}</a>
 			</p>
 		</div>
-		<div class="module_mini_bottom">
+		<div class="module-mini-bottom">
 		</div>
 	</div>
 </form>

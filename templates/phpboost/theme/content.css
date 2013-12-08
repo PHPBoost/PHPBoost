@@ -573,7 +573,7 @@ a.msg_link_pseudo:hover {
 
 /* Modules minis
 --------------------------------------*/
-.module_mini_container { /*Placement des mini modules */
+.module-mini-container { /*Placement des mini modules */
     width:180px;
     margin:0px;
     margin-bottom:10px;
@@ -585,14 +585,14 @@ a.msg_link_pseudo:hover {
 	clear:both;
 }
 
-.module_mini_top {
+.module-mini-top {
     height:24px;
     font-weight:bold;
     text-align:center;
     border-bottom:2px #336397 solid;
 }
 
-.module_mini_contents {
+.module-mini-contents {
     border-top:none;
     border-bottom:none;
     text-align:center;
@@ -601,7 +601,7 @@ a.msg_link_pseudo:hover {
     padding-bottom:0px;
 }
 
-.module_mini_bottom { /* Bordure inférieure des modules minis */
+.module-mini-bottom { /* Bordure inférieure des modules minis */
     height:15px;
 }
 

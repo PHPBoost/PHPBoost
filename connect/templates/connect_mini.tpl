@@ -13,11 +13,11 @@
 # ENDIF #
 # IF C_VERTICAL #
 	# IF C_USER_NOTCONNECTED #
-		<div class="module_mini_container">
-			<div class="module_mini_top">
+		<div class="module-mini-container">
+			<div class="module-mini-top">
 				<h5 class="sub-title">{L_CONNECT}</h5>
 			</div>
-			<div class="module_mini_contents vertical-fieldset">
+			<div class="module-mini-contents vertical-fieldset">
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="form-element">
 					<label>{L_PSEUDO}<br /><input type="text" id="login" name="login" maxlength="25"></label>
 					<label>{L_PASSWORD}<br /><input type="password" id="password" name="password" maxlength="30"></label>
@@ -34,15 +34,15 @@
 					<a class="small" href="${relative_url(UserUrlBuilder::forget_password())}"><i class="icon-question-circle"></i> {L_FORGOT_PASS}</a>
 				</div>
 			</div>
-			<div class="module_mini_bottom">
+			<div class="module-mini-bottom">
 			</div>
 		</div>
 	# ELSE #
-		<div class="module_mini_container">
-			<div class="module_mini_top">
+		<div class="module-mini-container">
+			<div class="module-mini-top">
 				<h5 class="sub-title">{L_PROFIL}</h5>
 			</div>
-			<div class="module_mini_contents vertical-fieldset">
+			<div class="module-mini-contents vertical-fieldset">
 				<ul class="connect-content">
 					<li>
 						<i class="icon-user"></i>
@@ -74,7 +74,7 @@
 					</li>
 				</ul>
 			</div>
-			<div class="module_mini_bottom">
+			<div class="module-mini-bottom">
 			</div>
 		</div>
 	# ENDIF #
