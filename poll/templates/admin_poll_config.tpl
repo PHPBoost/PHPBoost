@@ -47,7 +47,7 @@
 		</div> 
 		
 		<div id="admin_contents">
-			<form action="admin_poll_config.php?token={TOKEN}" method="post" class="fieldset_content">
+			<form action="admin_poll_config.php?token={TOKEN}" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_POLL_CONFIG_MINI}</legend>
 					<div class="form-element">

@@ -122,7 +122,7 @@
 		
 		<div id="admin_contents">		
 			# IF C_EDIT_GROUP #					
-			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_GROUPS_MANAGEMENT}</legend>
 					<div class="form-element">
@@ -177,7 +177,7 @@
 			
 			# INCLUDE message_helper #
 			
-			<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset_content">
+			<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_ADD_MBR_GROUP}</legend>
 					<div class="form-element">
@@ -249,7 +249,7 @@
 			
 			# INCLUDE message_helper #
 			
-			<form action="admin_groups.php?add=1" method="post" enctype="multipart/form-data" class="fieldset_content">				
+			<form action="admin_groups.php?add=1" method="post" enctype="multipart/form-data" class="fieldset-content">				
 				<fieldset>
 				<legend>{L_UPLOAD_GROUPS}</legend>						
 					<div class="form-element">
@@ -268,7 +268,7 @@
 			</form>
 			
 			
-			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_ADD_GROUPS}</legend>
 					<div class="form-element">

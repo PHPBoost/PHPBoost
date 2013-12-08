@@ -89,7 +89,7 @@ div.horizontal-fieldset [class^="form-element"] label {
 }
 
 /* Imite l'affichage fieldset / legend */
-.fieldset_content {
+.fieldset-content {
     width:95%;
     margin:auto;
     margin-top:20px;

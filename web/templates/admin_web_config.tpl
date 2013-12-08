@@ -55,7 +55,7 @@
 		</div> 
 		
 		<div id="admin_contents">							
-			<form action="admin_web_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_web_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_WEB_CONFIG}</legend>
 					<div class="form-element">

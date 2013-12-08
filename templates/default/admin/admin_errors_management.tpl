@@ -22,7 +22,7 @@
 		-->	
 		</script>
 		<div id="admin_contents">
-			<form action="admin_errors.php" method="post" class="fieldset_content" onsubmit="javascript:return Confirm_del()">
+			<form action="admin_errors.php" method="post" class="fieldset-content" onsubmit="javascript:return Confirm_del()">
 				<fieldset>
 					<legend>{L_ERASE}</legend>
 					<div class="form-element">

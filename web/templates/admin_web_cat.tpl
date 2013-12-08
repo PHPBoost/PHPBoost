@@ -128,7 +128,7 @@
 			</form>
 			
 			<div id="add_cat"></div>
-			<form action="admin_web_cat.php?token={TOKEN}" method="post" class="fieldset_content">
+			<form action="admin_web_cat.php?token={TOKEN}" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_ADD_CAT}</legend>
 					<div class="form-element">

@@ -36,7 +36,7 @@
 		</div>
 		
 		<div id="admin_contents">	
-			<form action="admin_files_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_files_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_CONFIG_FILES}</legend>
 					<div class="form-element"> 

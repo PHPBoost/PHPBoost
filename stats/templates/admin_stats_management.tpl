@@ -677,7 +677,7 @@
 		# ENDIF #
 		
 		<br /><br />
-		<form action="admin_stats.php?token={TOKEN}" method="post" class="fieldset_content">
+		<form action="admin_stats.php?token={TOKEN}" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>
 						{L_AUTHORIZATIONS}

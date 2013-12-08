@@ -1,4 +1,4 @@
-<form action="{U_CLEAR_404_ERRORS}" method="post" class="fieldset_content" onsubmit="javascript:return confirmClear();">
+<form action="{U_CLEAR_404_ERRORS}" method="post" class="fieldset-content" onsubmit="javascript:return confirmClear();">
     <fieldset>
         <legend>{@clear_404_list}</legend>
         <div class="form-element">

@@ -18,13 +18,13 @@
 	
 	<style>
 	<!--
-	.fieldset_content {
+	.fieldset-content {
 		margin-left: auto;
 		margin-right: auto;
 		width: 400px;
 	}
 
-	form#loginForm, form#loginForm.fieldset_content p {
+	form#loginForm, form#loginForm.fieldset-content p {
 		display:none;
 	}
 	

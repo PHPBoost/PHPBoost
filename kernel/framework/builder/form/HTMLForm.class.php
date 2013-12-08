@@ -39,7 +39,7 @@ class HTMLForm
 	const HTTP_METHOD_GET = 'get';
 
 	const SMALL_CSS_CLASS = 'fieldset-mini';
-	const NORMAL_CSS_CLASS = 'fieldset_content';
+	const NORMAL_CSS_CLASS = 'fieldset-content';
 
 	private static $instance_id = 0;
 	

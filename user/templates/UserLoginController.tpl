@@ -1,6 +1,6 @@
 <style>
 <!--
-.fieldset_content {
+.fieldset-content {
 	margin-left: auto;
 	margin-right: auto;
 	width: 400px;

@@ -123,7 +123,7 @@
 					<br /><br />
 					# ENDIF #
 					
-					<div class="fieldset_content">
+					<div class="fieldset-content">
 						<fieldset>
 							<legend>{L_ACTION}</legend>
 							<p>{L_REQUIRE}</p>

@@ -15,7 +15,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<form class="fieldset_content" action="">
+			<form class="fieldset-content" action="">
 				<fieldset>
 					<legend>
 						{L_SERVER}

@@ -42,7 +42,7 @@
 		
 		# INCLUDE message_helper #
 		
-		<form action="{TARGET}" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
+		<form action="{TARGET}" method="post" onsubmit="return check_form_post();" class="fieldset-content">					
 			<fieldset>
 				<p>{L_REQUIRE}</p>
 				<legend>{TITLE}</legend>
