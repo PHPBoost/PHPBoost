@@ -21,7 +21,7 @@
 						{U_COM}
 					# ENDIF #
 					# IF C_EDIT #
-					<a href="{PATH_TO_ROOT}/news/management.php?edit={ID}" title="{L_EDIT}" class="img_link">
+					<a href="{PATH_TO_ROOT}/news/management.php?edit={ID}" title="{L_EDIT}" class="img-link">
 						<img class="valign-middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
 					</a>
 					# ENDIF #
