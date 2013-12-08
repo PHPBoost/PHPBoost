@@ -51,7 +51,7 @@
 			<br />
 				
 			<form action="{TARGET}" method="post">
-				<table class="module_table" id="tables">
+				<table class="module-table" id="tables">
 					<tr>
 						<th colspan="7" style="text-align:center;">
 							{L_TABLE_LIST}
@@ -222,7 +222,7 @@
 					-->
 				</script>
 				
-				<table class="module_table" style="padding:0;margin-top:11px;">
+				<table class="module-table" style="padding:0;margin-top:11px;">
 					<tr>
 						<th colspan="2" style="text-align:center;">
 							{L_BACKUP_DATABASE}
@@ -325,7 +325,7 @@
 						</fieldset>
 						
 						<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
-							<table class="module_table">
+							<table class="module-table">
 								# START line #
 								<tr>
 									# START line.field #
@@ -344,7 +344,7 @@
 
 			
 			# IF C_DATABASE_FILES #
-				<table class="module_table">
+				<table class="module-table">
 					<tr> 
 						<th colspan="4">
 							{L_LIST_FILES}

@@ -1,5 +1,5 @@
 <div class="center" style="width: 70%;">
-	<table class="module_table">	
+	<table class="module-table">	
 		<tr>
 			<td style="vertical-align:top;" class="row2">
 				# INCLUDE SELECT_GROUP #

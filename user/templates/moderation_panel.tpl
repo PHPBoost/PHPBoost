@@ -137,7 +137,7 @@
 				
 				<br /><br />
 				<form action="{U_ACTION_INFO}" method="post">		
-					<table class="module_table">
+					<table class="module-table">
 						<tr>
 							<th colspan="2">{L_ACTION_INFO}</th>
 						</tr>
@@ -188,7 +188,7 @@
 				# IF C_MODO_PANEL_USER_BAN #					
 				<br /><br />
 				<form action="{U_ACTION_INFO}" method="post">		
-					<table class="module_table">
+					<table class="module-table">
 						<tr>
 							<th colspan="2">{L_ACTION_INFO}</th>
 						</tr>

@@ -9,7 +9,7 @@
 	<input type="hidden" name="token" value="{TOKEN}">
 </form>            
 <br />
-<table class="module_table">
+<table class="module-table">
 	<thead>
 		<tr>
             <th>{@404_error_requested_url}</th>

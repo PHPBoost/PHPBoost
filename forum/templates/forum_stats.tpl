@@ -5,7 +5,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top"><strong>{L_STATS}</strong></div>
 			<div class="module_contents">
-				<table class="module_table">
+				<table class="module-table">
 					<tr>
 						<th colspan="2">	
 							{L_STATS}
@@ -26,7 +26,7 @@
 
 				<br /><br />
 				
-				<table class="module_table">
+				<table class="module-table">
 					<tr>
 						<th colspan="2">	
 							{L_LAST_MSG}
@@ -43,7 +43,7 @@
 
 				<br /><br />
 
-				<table class="module_table">
+				<table class="module-table">
 					<tr>
 						<th colspan="2">	
 							{L_POPULAR}
@@ -60,7 +60,7 @@
 
 				<br /><br />
 
-				<table class="module_table">
+				<table class="module-table">
 					<tr>
 						<th colspan="2">	
 							{L_ANSWERS}

@@ -1,5 +1,5 @@
 		<form action="{TARGET}" method="get">
-			<table class="module_table">
+			<table class="module-table">
 				<tr>
 					<th>
 						{L_SEARCH}
@@ -36,7 +36,7 @@
 		<br /><br />
 
 		# START search_result #
-			<table class="module_table">
+			<table class="module-table">
 				<tr>
 					<th colspan="2">
 						{L_SEARCH_RESULT}

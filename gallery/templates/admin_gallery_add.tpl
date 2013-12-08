@@ -83,7 +83,7 @@
 			</form>
 			
 			<form action="admin_gallery_add.php?token={TOKEN}" method="post">
-				<table class="module_table">
+				<table class="module-table">
 					<tr> 
 						<th colspan="2">
 							{L_IMG_DISPO_GALLERY}
@@ -120,7 +120,7 @@
 							
 							# START list #
 								<div style="text-align:center;width:{COLUMN_WIDTH_PICS}%;float:left;">
-									<table class="module_table" style="width:100%;">
+									<table class="module-table" style="width:100%;">
 										<tr>
 											<td class="row2">												
 												<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign-middle"> <span class="smaller">{L_SELECT}</span>

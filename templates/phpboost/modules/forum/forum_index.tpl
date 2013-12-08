@@ -34,7 +34,7 @@
 		# START forums_list.subcats #		
 		<div class="module_position forum_position_subcat">	
 			<div class="module_contents forum_contents_subcat">
-				<table class="module_table forum_table">
+				<table class="module-table forum_table">
 					<tr>
 						# IF forums_list.subcats.U_FORUM_URL #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">

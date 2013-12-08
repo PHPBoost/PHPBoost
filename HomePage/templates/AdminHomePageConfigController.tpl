@@ -69,7 +69,7 @@ var HomePageConfigSortable = new HomePageConfigSortable();
 </script>
 <div id="admin_main">
 	<div id="admin_contents admin_contents_no_column">
-		<div class="module_table" style="background:#f4f4f4;width:99%;margin:auto;padding-bottom:25px;">
+		<div class="module-table" style="background:#f4f4f4;width:99%;margin:auto;padding-bottom:25px;">
 			# INCLUDE CONFIGURATION #
 			<form action="{REWRITED_SCRIPT}" method="post" onsubmit="HomepageConfigSortable.serialize();">
 				<div id="containers">

@@ -28,13 +28,13 @@
 		//-->
 		</script>
 
-		<table class="module_table" style="margin:15px auto">
+		<table class="module-table" style="margin:15px auto">
 			<th colspan="{COLSPAN}">
 				{L_SMILEY}
 			</th>
 			<tr class="row2">
 				<td>
-					<table class="module_table" style="width:auto;text-align:center;margin:15px auto">
+					<table class="module-table" style="width:auto;text-align:center;margin:15px auto">
 					# START smiley #
 						{smiley.TR_START}
 							<td>

@@ -558,7 +558,7 @@ a.msg_link_pseudo:hover {
 
 
 /* Tableau global, utilisé dans les différents modules */
-.module_table {
+.module-table {
     width:98%;
     margin:auto;
 	border-spacing:0px;
@@ -567,7 +567,7 @@ a.msg_link_pseudo:hover {
 	border:1px solid #D6DEE7;
     background:#f2f8ff;
 }
-*+html .module_table { /* Hack ie7 */
+*+html .module-table { /* Hack ie7 */
 	border-collapse:collapse;
 }
 

@@ -1,5 +1,5 @@
 <form action="{REWRITED_SCRIPT}" name="form" method="post">	
-	<table  class="module_table">
+	<table  class="module-table">
 		<tr> 
 			<th colspan="3">
 				{@newsletter.types.choice}

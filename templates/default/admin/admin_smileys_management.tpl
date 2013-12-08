@@ -24,7 +24,7 @@
 		
 		<div id="admin_contents">
 			
-			<table class="module_table">
+			<table class="module-table">
 				<tr> 
 					<th colspan="4">
 						{L_SMILEY_MANAGEMENT}

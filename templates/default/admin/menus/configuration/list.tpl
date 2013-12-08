@@ -1,4 +1,4 @@
-<table class="module_table">
+<table class="module-table">
 	<thead>
 		<tr>
 			<th style="width: 180px;">{L_MENU_CONFIGURATION_NAME}</th>

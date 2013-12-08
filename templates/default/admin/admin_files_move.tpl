@@ -15,7 +15,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<table class="module_table">
+			<table class="module-table">
 				<tr> 
 					<th>
 						{L_FILES_MANAGEMENT}
@@ -41,7 +41,7 @@
 					<td class="row2" style="padding:20px;">							
 						<br />
 						<form action="{TARGET}" method="post">
-						<table class="module_table">
+						<table class="module-table">
 							<tr>
 								<td class="row1" colspan="3">
 									# INCLUDE message_helper #

@@ -35,7 +35,7 @@
 			
 			<br />
 			
-			<table class="module_table">
+			<table class="module-table">
 				<tr> 
 					<th colspan="2">
 						{L_ERRORS}
