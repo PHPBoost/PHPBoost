@@ -107,7 +107,7 @@ button.image{
 }
 
 /* Opacité */
-.low_opacity {
+.low-opacity {
     filter:alpha(opacity=40);
     opacity: 0.40;
     -moz-opacity:0.40;
