@@ -59,7 +59,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->unparse_simple_tags();
 
 		//Unparsage de la balise table.
-		if (strpos($this->content, '<table class="bb_table"') !== false)
+		if (strpos($this->content, '<table class="bb-table"') !== false)
 		{
 			$this->unparse_table();
 		}
@@ -217,9 +217,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_table()
 	{
 		//On boucle pour parcourir toutes les imbrications
-		while (strpos($this->content, '<table class="bb_table"') !== false)
+		while (strpos($this->content, '<table class="bb-table"') !== false)
 		{
-			$this->content = preg_replace('`<table class="bb_table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
+			$this->content = preg_replace('`<table class="bb-table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
 		}
 		while (strpos($this->content, '<tr class="bb_table_row"') !== false)
 		{
@@ -229,9 +229,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		{
 			$this->content = preg_replace('`<th class="bb_table_head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
 		}
-		while (strpos($this->content, '<td class="bb_table_col"') !== false)
+		while (strpos($this->content, '<td class="bb-table-col"') !== false)
 		{
-			$this->content = preg_replace('`<td class="bb_table_col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->content);
+			$this->content = preg_replace('`<td class="bb-table-col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->content);
 		}
 	}
 

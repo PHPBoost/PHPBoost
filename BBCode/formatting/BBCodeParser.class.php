@@ -359,10 +359,10 @@ class BBCodeParser extends ContentFormattingParser
 						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[/row\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
 						//Parsage de row, col et head
 						$content[$i] = preg_replace('`\[row( style="[^"]+")?\](.*)\[/row\]`sU', '<tr class="bb_table_row"$1>$2</tr>', $content[$i]);
-						$content[$i] = preg_replace('`\[col((?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/col\]`sU', '<td class="bb_table_col"$1>$2</td>', $content[$i]);
+						$content[$i] = preg_replace('`\[col((?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/col\]`sU', '<td class="bb-table-col"$1>$2</td>', $content[$i]);
 						$content[$i] = preg_replace('`\[head((?: colspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/head\]`sU', '<th class="bb_table_head"$1>$2</th>', $content[$i]);
 						//parsage réussi (tableau valide), on rajoute le tableau devant
-						$content[$i] = '<table class="bb_table"' . $content[$i - 1] . '>' . $content[$i] . '</table>';
+						$content[$i] = '<table class="bb-table"' . $content[$i - 1] . '>' . $content[$i] . '</table>';
 
 					}
 					else
