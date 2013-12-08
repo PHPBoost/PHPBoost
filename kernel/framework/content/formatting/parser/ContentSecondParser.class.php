@@ -199,11 +199,11 @@ class ContentSecondParser extends AbstractParser
 
 		if (!$inline_code && !empty($matches[1]))
 		{
-			$contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
+			$contents = '<span class="text-code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
 		}
 		else if (!$inline_code && empty($matches[1]))
 		{
-			$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
+			$contents = '<span class="text-code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
 		}
 			
 		return $contents;

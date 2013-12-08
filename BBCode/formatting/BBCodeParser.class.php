@@ -289,14 +289,14 @@ class BBCodeParser extends ContentFormattingParser
             //Quote tag
             if (!in_array('quote', $this->forbidden_tags))
             {
-            	$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>');
-            	$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>');
+            	$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text-blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>');
+            	$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text-blockquote">$1:</span><div class="blockquote">$2</div>');
             }
 
             //Hide tag
             if (!in_array('hide', $this->forbidden_tags))
             {
-            	$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>');
+            	$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text-hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>');
             }
 
             //Indent tag
