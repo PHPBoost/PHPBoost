@@ -36,7 +36,7 @@ function ${escape(NAME)}bbcode_color(field)
 	<img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign-middle" />
 </a>
 <div class="color_picker" style="display:none;" id="bb_block${escape(ID)}">
-	<div id="${escape(ID)}_list" class="bbcode_block" onmouseover="bb_hide_block('${escape(ID)}', '', 1);" onmouseout="bb_hide_block('${escape(ID)}', '', 0);">
+	<div id="${escape(ID)}_list" class="bbcode-block" onmouseover="bb_hide_block('${escape(ID)}', '', 1);" onmouseout="bb_hide_block('${escape(ID)}', '', 0);">
 	</div>
 </div>
 

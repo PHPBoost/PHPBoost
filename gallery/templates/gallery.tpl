@@ -340,7 +340,7 @@
 									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button"><i class="icon-edit"></i></a></span>
 									
 									<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
-										<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
+										<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
 											<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
 											<select class="valign-middle" name="{ID}cat" onchange="document.location = 'gallery{U_MOVE}">
 												{CAT}
@@ -401,7 +401,7 @@
 										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>									
 										<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
 											<div style="position:absolute;z-index:100;margin-top:75px;">
-												<div class="bbcode_block" style="width:170px;overflow:auto;">
+												<div class="bbcode-block" style="width:170px;overflow:auto;">
 													<div style="margin-bottom:4px;" class="smaller"><strong>{L_MOVETO}</strong>:</div>
 													<select class="valign-middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
 														{pics_list.CAT}

@@ -144,7 +144,7 @@ table .icon-table-sort-down:before { content: "\f063"; }
 .icon-block:before{ display:block; }
 
 /* Menu caché */
-.bbcode_block{
+.bbcode-block{
 	position:absolute;
 	text-align:center;
 	padding:6px 4px;
@@ -160,7 +160,7 @@ table .icon-table-sort-down:before { content: "\f063"; }
 	border:1px solid #AAA;
 }
 
-.bbcode_block a{
+.bbcode-block a{
 	cursor:pointer;
 	text-decoration:none;
 }
@@ -171,11 +171,11 @@ table .icon-table-sort-down:before { content: "\f063"; }
 	z-index:100;
 }
 
-.color_picker .bbcode_block {
+.color_picker .bbcode-block {
 	left:80px;
 }
 
-.color_picker .bbcode_block table{
+.color_picker .bbcode-block table{
 	border-collapse:collapse;
 	margin:auto;
 	border:none;

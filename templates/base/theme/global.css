@@ -266,7 +266,7 @@ ul,ol {
 }
 
 /* Menu caché */
-.bbcode_block {
+.bbcode-block {
 	position:absolute;
 	text-align:center;
 	padding:6px 4px;
@@ -282,7 +282,7 @@ ul,ol {
 	border:1px solid #AAA;
 }
 
-.bbcode_block a {
+.bbcode-block a {
 	cursor:pointer;
 	text-decoration:none;
 }
@@ -293,11 +293,11 @@ ul,ol {
 	z-index:100;
 }
 
-.color_picker .bbcode_block {
+.color_picker .bbcode-block {
 	left:80px;
 }
 
-.color_picker .bbcode_block table {
+.color_picker .bbcode-block table {
 	border-collapse:collapse;
 	margin:auto;
 	border:none;

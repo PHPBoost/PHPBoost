@@ -354,7 +354,7 @@
 												<a href="gallery{pics.pics_max.U_DEL}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a> 
 									
 												<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.pics_max.ID}">
-													<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
+													<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
 														<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
 														<select class="valign-middle" name="{pics.pics_max.ID}cat" onchange="document.location = 'gallery{pics.pics_max.U_MOVE}">
 															{pics.pics_max.CAT}
@@ -423,7 +423,7 @@
 												<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
 									
 												<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
-													<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
+													<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
 														<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
 														<select class="valign-middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;token={TOKEN}&amp;move=' + this.options[this.selectedIndex].value">
 															{pics.list.CAT}
