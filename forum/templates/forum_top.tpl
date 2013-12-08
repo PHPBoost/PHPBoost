@@ -90,11 +90,11 @@
 						<div style="margin-top:4px;">
 							# IF C_FORUM_CONNEXION #
 								# IF C_USER_NOTCONNECTED #
-								<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><img src="{PICTURES_DATA_PATH}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
+								<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><i class="icon-sign-in"></i> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
 								# ENDIF #
 								# IF C_USER_CONNECTED #
-									<a class="small" href="?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
-								# ENDIF # 						
+									<a class="small" href="?disconnect=true&amp;token={TOKEN}"><i class="icon-sign-out"></i> {L_DISCONNECT}</a> 
+								# ENDIF #
 							# ENDIF #
 						</div>
 					</div>
