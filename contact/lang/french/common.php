@@ -32,13 +32,12 @@
 
 //Titre
 $lang['module_title'] = 'Contact';
+$lang['module_config_title'] = 'Configuration du module contact';
 
 //Contact form
 $lang['contact.form.message'] = 'Message';
 
 //Admin
-$lang['admin.config'] = 'Configuration';
-$lang['admin.config.page_title'] = 'Configuration du module contact';
 $lang['admin.config.title'] = 'Titre du formulaire';
 $lang['admin.config.informations_bloc'] = 'Zone d\'informations';
 $lang['admin.config.display_informations_bloc'] = 'Afficher la zone d\'informations';
@@ -49,7 +48,6 @@ $lang['admin.config.informations.position_left'] = 'Gauche';
 $lang['admin.config.informations.position_top'] = 'Haut';
 $lang['admin.config.informations.position_right'] = 'Droite';
 $lang['admin.config.informations.position_bottom'] = 'Bas';
-$lang['admin.authorizations'] = 'Autorisations';
 $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le formulaire de contact';
 $lang['admin.authorizations.display_field']  = 'Autorisation d\'afficher le champ';
 
@@ -109,7 +107,6 @@ $lang['regex.personnal-regex'] = 'Expression régulière personnalisée';
 
 //Messages
 $lang['message.field_name_already_used'] = 'Le nom du champ entré est déjà utilisé !';
-$lang['message.success_saving_config'] = 'La configuration a été enregistrée avec succès';
 $lang['message.success_mail'] = 'Votre message a été envoyé avec succès';
 $lang['message.error_mail'] = 'Désolé, votre mail n\'a pas pu être envoyé pour des raisons techniques';
 ?>
