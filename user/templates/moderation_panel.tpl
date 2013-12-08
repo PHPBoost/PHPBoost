@@ -47,8 +47,8 @@
 							{
 								if( xhr_object.readyState == 4 ) 
 								{
-									document.getElementById("xmlhttprequest_result_search").innerHTML = xhr_object.responseText;
-									hide_div("xmlhttprequest_result_search");
+									document.getElementById("xmlhttprequest-result-search").innerHTML = xhr_object.responseText;
+									hide_div("xmlhttprequest-result-search");
 								}
 							}
 							xmlhttprequest_sender(xhr_object, data);
@@ -73,7 +73,7 @@
 							<div class="form-field">
 								<input type="text" size="20" maxlength="25" id="login" value="" name="login">						
 								<button onclick="XMLHttpRequest_search(this.form);" type="button">{L_SEARCH}</button>
-								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+								<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 							</div>
 						</div>
 					</fieldset>

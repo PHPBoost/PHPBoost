@@ -274,8 +274,8 @@
 							{
 								if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
 								{
-									document.getElementById('xmlhttprequest_result_search').innerHTML = xhr_object.responseText;
-									hide_div('xmlhttprequest_result_search');
+									document.getElementById('xmlhttprequest-result-search').innerHTML = xhr_object.responseText;
+									hide_div('xmlhttprequest-result-search');
 									if( document.getElementById('search_img') )
 										document.getElementById('search_img').innerHTML = '';
 								}
@@ -315,7 +315,7 @@
 									document.write('<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>');
 								-->
 								</script>
-								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+								<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 							</span>
 						</td>
 					</tr>

@@ -250,9 +250,9 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 			{
 				if ($('search_img' + searchid))
 					$('search_img' + searchid).innerHTML = '';
-				if ($("xmlhttprequest_result_search" + searchid))
-					$("xmlhttprequest_result_search" + searchid).innerHTML = xhr_object.responseText;
-				Effect.BlindDown('xmlhttprequest_result_search' + searchid, { duration: 0.5 });
+				if ($("xmlhttprequest-result-search" + searchid))
+					$("xmlhttprequest-result-search" + searchid).innerHTML = xhr_object.responseText;
+				Effect.BlindDown('xmlhttprequest-result-search' + searchid, { duration: 0.5 });
 			}
 			else if (xhr_object.readyState == 4) 
 			{
