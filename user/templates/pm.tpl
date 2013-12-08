@@ -107,7 +107,7 @@
 								<td style="padding-right:0px;">
 									<i class="icon-envelope {convers.list.ANNOUNCE}"></i>
 								</td>
-								<td style="width:50%;" class="no-separator">
+								<td style="width:50%;text-align:left;" class="no-separator">
 									{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
 									# IF convers.list.PAGINATION_PM #
 										<br/>
