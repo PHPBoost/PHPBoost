@@ -32,7 +32,7 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 	 */
 	public function get_home_page()
 	{
-		return new DefaultHomePage($this->get_title(), CalendarController::get_view());
+		return new DefaultHomePage($this->get_title(), CalendarDisplayCategoryController::get_view());
 	}
 	
 	 /**
