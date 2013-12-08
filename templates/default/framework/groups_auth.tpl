@@ -36,7 +36,7 @@
 	<button onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" class="small">{L_GO}</button>
 	<br />
 	<span id="search_img{IDSELECT}"></span> 
-	<div id="xmlhttprequest_result_search{IDSELECT}" style="display:none;width:125px;height:67px;margin-top:2px;" class="xmlhttprequest_result_search"></div>
+	<div id="xmlhttprequest-result-search{IDSELECT}" style="display:none;width:125px;height:67px;margin-top:2px;" class="xmlhttprequest-result-search"></div>
 </div>
 # ENDIF #
 

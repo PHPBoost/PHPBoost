@@ -6,7 +6,7 @@
 /* Classes générales
 --------------------------------------*/
 /* Case résultat recherche membre AJAX */
-.xmlhttprequest_result_search {
+.xmlhttprequest-result-search {
     overflow:auto;
     min-height:40px;
     width:100px;

@@ -347,7 +347,7 @@
 										<span id="search_img"></span>
 										<button type="button" value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" >{L_SEARCH}</button>							
 									</label>
-									<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+									<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 									# START post_convers.user_id_dest.search #
 										{post_convers.user_id_dest.search.RESULT}
 									# END post_convers.user_id_dest.search #

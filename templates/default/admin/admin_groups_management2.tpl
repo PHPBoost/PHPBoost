@@ -41,8 +41,8 @@
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					{
-						document.getElementById("xmlhttprequest_result_search").innerHTML = xhr_object.responseText;
-						show_div("xmlhttprequest_result_search");
+						document.getElementById("xmlhttprequest-result-search").innerHTML = xhr_object.responseText;
+						show_div("xmlhttprequest-result-search");
 						if( document.getElementById('loading_groups') )
 							document.getElementById('loading_groups').innerHTML = '';
 					}
@@ -190,7 +190,7 @@
 								document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search();" type="button">');
 							-->
 							</script>
-							<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+							<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 						</div>
 					</div>
 				</fieldset>	
