@@ -668,7 +668,7 @@ class TinyMCEParser extends ContentFormattingParser
 
 		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];
 
-		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia_link">' . $matches[3] . '</a>';
+		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia-link">' . $matches[3] . '</a>';
 	}
 
 	/**
