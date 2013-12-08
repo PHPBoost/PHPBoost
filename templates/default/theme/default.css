@@ -186,7 +186,7 @@ table.invisible tr td {
 }
 
 /* Syndications */
-div.syndication_choices {
+div.syndication-choices {
     position:absolute;
     width:0px;
     height:0px;
@@ -195,12 +195,12 @@ div.syndication_choices {
     margin-top:2px 0px 0px -20px;
 }
 
-div.syndication_choices ul {
+div.syndication-choices ul {
     width:90px;
     list-style-type:none;
 	line-height:18px;
 }
-div.syndication_choices ul li {
+div.syndication-choices ul li {
 	height:18px;
     margin-bottom:1px;
 }

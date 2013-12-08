@@ -1,4 +1,4 @@
-<div title="L_SYNDICATION_CHOICES" class="syndication_choices" onmouseover="ShowSyndicationMenu(this)" onmouseout="HideSyndication(this)">
+<div title="L_SYNDICATION_CHOICES" class="syndication-choices" onmouseover="ShowSyndicationMenu(this)" onmouseout="HideSyndication(this)">
 	<ul>
 		<li>
 			<a href="{U_FEED}{SEPARATOR}feed=rss" title="{L_RSS}">
