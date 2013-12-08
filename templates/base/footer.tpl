@@ -1,12 +1,12 @@
 			</div>
 			# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
-	        <div id="bottom_contents">
+	        <div id="bottom-contents">
 				{MENUS_BOTTOMCENTRAL_CONTENT}
 			</div>
 			# ENDIF #
 		</main>
 		# IF C_MENUS_TOP_FOOTER_CONTENT #
-		<div id="top_footer">
+		<div id="top-footer">
 			{MENUS_TOP_FOOTER_CONTENT}
 			<div class="spacer"></div>
 		</div>

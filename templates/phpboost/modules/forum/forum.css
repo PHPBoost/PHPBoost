@@ -343,11 +343,11 @@ span.forum_nbr{
 	font-size: 16px;
 }
 
-.pbt_button{
+.pbt-button{
 	float: right;
 }
 
-a.pbt_button_add{
+a.pbt-button-add{
 	width:auto;	
 }
 

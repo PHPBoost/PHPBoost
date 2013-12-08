@@ -59,13 +59,13 @@
 	<div id="header_container">
 		<div id="header">
 			<div id="logo"></div>
-			<div id="site_name">{SITE_NAME}</div>
+			<div id="site-name">{SITE_NAME}</div>
 			# IF C_MENUS_HEADER_CONTENT #
 			{MENUS_HEADER_CONTENT}
 			# ENDIF #
 		</div>
 		
-		<div id="sub_header">
+		<div id="sub-header">
 			<ul class="menu_link">
 				<li # IF Url::is_current_url('/', true) # class="current" # ENDIF # # IF Url::is_current_url('/index.php', true) # class="current" # ENDIF # ><a href="{PATH_TO_ROOT}/" class="title" title="Accueil">Accueil</a></li>
 				<li # IF Url::is_current_url('/news') # class="current" # ENDIF #><a href="{PATH_TO_ROOT}/news" class="title" title="Actualités de PHPBoost">Actualités</a></li>
@@ -102,7 +102,7 @@
 	
 	<div id="main">
 		# IF C_MENUS_TOPCENTRAL_CONTENT #
-		<div id="top_contents">
+		<div id="top-contents">
 			{MENUS_TOPCENTRAL_CONTENT}
 		</div>
 		# ENDIF #
@@ -112,4 +112,4 @@
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign-middle" /> <a class="small" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
 			# END link_bread_crumb #
 		</div>
-		<div id="main_content">
+		<div id="main-content">

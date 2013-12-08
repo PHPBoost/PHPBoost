@@ -60,7 +60,7 @@
 		<div id="header_admin_container">
 			<div id="header_admin">
 				<div id="logo"></div>
-				<div id="site_name">{SITE_NAME}</div>
+				<div id="site-name">{SITE_NAME}</div>
 			</div>
 			<div id="sub_header_admin">
 				<nav class="dynamic-menu">
