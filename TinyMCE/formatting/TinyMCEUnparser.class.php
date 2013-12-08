@@ -162,11 +162,11 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
 			//Tableaux
-			while (preg_match('`<table class="bb_table"( style="([^"]+)")?>`i', $this->content))
+			while (preg_match('`<table class="bb-table"( style="([^"]+)")?>`i', $this->content))
 			{
-				$this->content = preg_replace('`<table class="bb_table"( style="([^"]+)")?>`i', "<table border=\"0\"$1><tbody>", $this->content);
-				$this->content = preg_replace('`<td class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<td$1$2$3>", $this->content);
-				$this->content = preg_replace('`<th class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<th$1$2$3>", $this->content);
+				$this->content = preg_replace('`<table class="bb-table"( style="([^"]+)")?>`i', "<table border=\"0\"$1><tbody>", $this->content);
+				$this->content = preg_replace('`<td class="bb-table-col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<td$1$2$3>", $this->content);
+				$this->content = preg_replace('`<th class="bb-table-col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<th$1$2$3>", $this->content);
 			}
 
 			//Listes

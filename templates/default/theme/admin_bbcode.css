@@ -90,13 +90,13 @@ h4.stitle2{
 	margin:5px;
 }
 /* Tableaux */
-.bb_table{
+.bb-table{
 	border:1px solid #2C5169;
 	border-spacing:0px;
 	border-collapse:collapse;
 	margin:2px;
 }
-.bb_table_col{
+.bb-table-col{
 	border:1px solid #2C5169;
 	padding:6px;
 }
