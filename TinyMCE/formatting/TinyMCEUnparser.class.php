@@ -251,7 +251,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			}
 
 			//Liens Wikipédia
-			$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia_link">(.*)</a>`sU', array($this, 'unparse_wikipedia_link'), $this->content);
+			$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`sU', array($this, 'unparse_wikipedia_link'), $this->content);
 
 			//Hide
 			$this->_parse_imbricated('<span class="text-hide">', '`<span class="text-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);

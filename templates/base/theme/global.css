@@ -376,13 +376,13 @@ ul,ol {
 .code ol{ margin-left:3em; }
 
 /*Lien vers Wikipédia*/
-a.wikipedia_link:before {
+a.wikipedia-link:before {
    content:url('wikipedia_icon.png');
    vertical-align:middle;
    padding-right:2px;
 }
 
-a.wikipedia_link{ border-bottom:1px dotted; }
+a.wikipedia-link{ border-bottom:1px dotted; }
 
 /* Menus dynamiques
 --------------------------------------*/
