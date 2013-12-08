@@ -1,10 +1,10 @@
 		# START question #		
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{question.ID}" class="normal_form">
-			<div class="module_mini_container">
-				<div class="module_mini_top">
+			<div class="module-mini-container">
+				<div class="module-mini-top">
 					<h5 class="sub-title">{L_MINI_POLL}</h5>
 				</div>
-				<div class="module_mini_contents" style="text-align:center">
+				<div class="module-mini-contents" style="text-align:center">
 					<span style="font-size:10px;">{question.QUESTION}</span>
 
 					<hr style="width:90%;" />
@@ -23,18 +23,18 @@
 					<input name="valid_poll" type="submit" value="{L_VOTE}" /><br>
 					<a class="small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_POLL_RESULT}</a>
 				</div>	
-				<div class="module_mini_bottom">
+				<div class="module-mini-bottom">
 				</div>
 			</div>		
 		</form>
 		# END question #
 
 		# START result #
-		<div class="module_mini_container">
-			<div class="module_mini_top">
+		<div class="module-mini-container">
+			<div class="module-mini-top">
 				<h5 class="sub-title">{L_MINI_POLL}</h5>
 			</div>
-			<div class="module_mini_contents" style="text-align:center">
+			<div class="module-mini-contents" style="text-align:center">
 				<span style="font-size:10px;">{result.QUESTION}</span>
 				
 				<hr style="width:90%;" />
@@ -51,7 +51,7 @@
 				
 				<span class="smaller">{result.VOTES} {L_VOTE}</span>
 			</div>
-			<div class="module_mini_bottom">
+			<div class="module-mini-bottom">
 			</div>
 		</div>
 		# END result #

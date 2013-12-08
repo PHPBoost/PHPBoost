@@ -1,10 +1,10 @@
 # IF C_VERTICAL #
-	<div class="module_mini_container">
-		<div class="module_mini_top">
+	<div class="module-mini-container">
+		<div class="module-mini-top">
 			<h5 class="sub-title">{L_SWITCH_THEME}</h5>
 		</div>
 		<form action="" method="get">
-			<div class="module_mini_contents">
+			<div class="module-mini-contents">
 				<p style="padding-top: 5px;">
 					<select name="switchtheme" onchange="document.location = '?switchtheme=' + this.options[this.selectedIndex].value;">
 						# START themes #
@@ -21,7 +21,7 @@
 				<a href="?token={TOKEN}&amp;switchtheme={DEFAULT_THEME}">{L_DEFAULT_THEME}</a>
 			</div>
 		</form>
-		<div class="module_mini_bottom">
+		<div class="module-mini-bottom">
 		</div>
 	</div>
 # ELSE #

@@ -19,16 +19,16 @@
  
 # IF C_VERTICAL #
 <form action="{U_FORM_VALID}" onsubmit="return check_search_mini_form_post();" method="post">
-	<div class="module_mini_container">
-		<div class="module_mini_top"><h5 class="sub-title">{SEARCH}</h5></div>
-		<div class="module_mini_contents">
+	<div class="module-mini-container">
+		<div class="module-mini-top"><h5 class="sub-title">{SEARCH}</h5></div>
+		<div class="module-mini-contents">
 			<label><input type="text" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" class="mini_search_vert" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';"></label>
 			<br /><br />
 			<input type="hidden" name="token" value="{TOKEN}">
 			<input type="submit" id="search_mini_submit" name="search_submit"  value="{SEARCH}" /><br>
 			<a href="{U_ADVANCED_SEARCH}" class="small">{L_ADVANCED_SEARCH}</a>
 		</div>
-		<div class="module_mini_bottom"></div>
+		<div class="module-mini-bottom"></div>
 	</div>
 </form>
 # ELSE #

@@ -1,8 +1,8 @@
-		<div class="module_mini_container">
-			<div class="module_mini_top">
+		<div class="module-mini-container">
+			<div class="module-mini-top">
 				<h5 class="sub-title">{L_STATS}</h5>
 			</div>
-			<div class="module_mini_contents">
+			<div class="module-mini-contents">
 				<p>
 					{L_USER_REGISTERED}
 				</p>	
@@ -13,6 +13,6 @@
 				</p>	
 				<a href="{PATH_TO_ROOT}/stats/stats.php{SID}" title="{L_MORE_STAT}" class="small">{L_MORE_STAT}</a>
 			</div>
-			<div class="module_mini_bottom">
+			<div class="module-mini-bottom">
 			</div>
 		</div>

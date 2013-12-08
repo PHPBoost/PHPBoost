@@ -113,11 +113,11 @@
 			
 		<form action="?token={TOKEN}" method="post" onsubmit="return check_form_shout();">
 		# IF C_VERTICAL #
-			<div class="module_mini_container">
-				<div class="module_mini_top">
+			<div class="module-mini-container">
+				<div class="module-mini-top">
 					<h5 class="sub-title">{L_SHOUTBOX}</h5>
 				</div>
-				<div class="module_mini_contents">
+				<div class="module-mini-contents">
 					<div id="shout_container">					
 						# START shout #
 						<p id="shout_container_{shout.IDMSG}">{shout.PSEUDO}<span class="smaller"> : {shout.CONTENTS}</span></p>
@@ -140,14 +140,14 @@
 					</p>
 					<a class="small" href="{PATH_TO_ROOT}/shoutbox/shoutbox.php{SID}" title="">{L_ARCHIVES}</a>
 				</div>
-				<div class="module_mini_bottom"></div>
+				<div class="module-mini-bottom"></div>
 			</div>
 		# ELSE #
-			<div class="module_mini_container" style="width:auto;">
-				<div class="module_mini_top">
+			<div class="module-mini-container" style="width:auto;">
+				<div class="module-mini-top">
 					<h5 class="sub-title">{L_SHOUTBOX}</h5>
 				</div>
-				<div class="module_mini_contents" style="width:auto;">
+				<div class="module-mini-contents" style="width:auto;">
 					<div class="shout_horizontal">
 						<div id="shout_container">
 							# START shout #
@@ -170,7 +170,7 @@
 						<a class="small" href="{PATH_TO_ROOT}/shoutbox/shoutbox.php{SID}" title="">{L_ARCHIVES}</a>
 					</div>
 				</div>
-				<div class="module_mini_bottom"></div>
+				<div class="module-mini-bottom"></div>
 			</div>
 		# ENDIF #
 		</form>

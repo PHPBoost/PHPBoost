@@ -1,7 +1,7 @@
 # IF C_MENU # <!-- Menu -->
 	# IF C_FIRST_MENU # <!-- Title -->
-		<div class="module_mini_container">
-			<div class="module_mini_top">
+		<div class="module-mini-container">
+			<div class="module-mini-top">
 				<h3 class="menu-vertical-{DEPTH} menu_vertical">
 					# IF RELATIVE_URL #
 						<a href="{PATH_TO_ROOT}{RELATIVE_URL}" title="{TITLE}">
@@ -11,10 +11,10 @@
 					# ENDIF #
 				</h3>
 			</div>
-			<div class="module_mini_contents">
+			<div class="module-mini-contents">
 				# IF C_HAS_CHILD #<ul class="menu-vertical-{DEPTH} menu_vertical"># START elements #{elements.DISPLAY}# END elements #</ul># ENDIF #
 			</div>
-			<div class="module_mini_bottom">
+			<div class="module-mini-bottom">
 			</div>
 		</div>
 	# ENDIF #
