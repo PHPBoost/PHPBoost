@@ -32,7 +32,7 @@
 
 $lang = array(
 	'web_title' => 'PHPBoost',
-	'web_contents' => '<p class="float_right"><img src="../templates/base/theme/images/logo.png" alt="" class="valign-" /></p><br />PHPBoost is a CMS (Content Managing System).',
+	'web_contents' => '<p class="float-right"><img src="../templates/base/theme/images/logo.png" alt="" class="valign-" /></p><br />PHPBoost is a CMS (Content Managing System).',
 	'web_url' => 'http://www.phpboost.com',
     'web_name_cat' => 'Test category',
     'web_contents_cat' => 'Test links',

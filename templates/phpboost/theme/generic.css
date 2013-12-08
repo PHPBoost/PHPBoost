@@ -171,12 +171,12 @@ h4.stitle2{
 	background:none;
 	border-bottom:3px solid #336397;
 }
-.float_left
+.float-left
 {
 	float:left;
 	margin:5px;
 }
-.float_right
+.float-right
 {
 	float:right;
 	margin:5px;

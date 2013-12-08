@@ -208,7 +208,7 @@ class BBCodeParser extends ContentFormattingParser
 			'font' => "<span style=\"font-family: $1;\">$2</span>",
 			'pre' => "<pre>$1</pre>",
 			'align' => "<p style=\"text-align:$1\">$2</p>",
-			'float' => "<p class=\"float_$1\">$2</p>",
+			'float' => "<p class=\"float-$1\">$2</p>",
 			'anchor' => "<span id=\"$1\">$2</span>",
 			'acronym' => "<acronym title=\"$1\" class=\"bb_acronym\">$2</acronym>",
 			'style' => "<span class=\"$1\">$2</span>",

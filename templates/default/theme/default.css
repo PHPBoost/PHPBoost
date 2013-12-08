@@ -53,18 +53,18 @@ pre { white-space:pre-wrap; }
     margin:2px 0px;
 }
 
-.float_left, img.left { float:left; }
-.float_right, img.right { float:right; }
+.float-left, img.left { float:left; }
+.float-right, img.right { float:right; }
 img.left, img.right { margin:6px; }
 
 /* Classes textes */
 .text-strong { font-weight:bold; }
 .text-justify { text-align:justify; }
-.text_italic{ font-style:italic; }
+.text-italic { font-style:italic; }
 
-.valign_top { vertical-align:top; }
-.valign_middle { vertical-align:middle; }
-.valign_bottom { vertical-align:bottom; }
+.valign-top { vertical-align:top; }
+.valign-middle { vertical-align:middle; }
+.valign-bottom { vertical-align:bottom; }
 
 .spacer { clear:both; }
 

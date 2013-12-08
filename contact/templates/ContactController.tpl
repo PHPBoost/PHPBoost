@@ -15,13 +15,13 @@
 		# ENDIF #
 		
 		# IF C_INFORMATIONS_LEFT #
-		<div class="float_left informations_side">
+		<div class="float-left informations_side">
 			<p>{INFORMATIONS}</p>
 		</div>
 		# ENDIF #
 		
 		# IF C_INFORMATIONS_SIDE #
-		<div class="# IF C_INFORMATIONS_LEFT #float_right# ELSE #float_left# ENDIF # form_side">
+		<div class="# IF C_INFORMATIONS_LEFT #float-right# ELSE #float-left# ENDIF # form_side">
 		# ENDIF #
 		# INCLUDE FORM #
 		# IF C_INFORMATIONS_SIDE #
@@ -29,7 +29,7 @@
 		# ENDIF #
 		
 		# IF C_INFORMATIONS_RIGHT #
-		<div class="float_right informations_side">
+		<div class="float-right informations_side">
 			<p>{INFORMATIONS}</p>
 		</div>
 		# ENDIF #

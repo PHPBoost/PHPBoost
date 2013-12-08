@@ -245,7 +245,7 @@
 					<div class="block_container" style="margin-bottom:20px;vertical-align:top;">
 						<div class="block_contents">
 							# IF file.C_IMG #
-								<div class="float_right">
+								<div class="float-right">
 									<a href="{file.U_DOWNLOAD_LINK}">
 										<img src="{file.IMG}" alt="{file.IMG_NAME}" />
 									</a>
