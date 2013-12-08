@@ -205,11 +205,11 @@ div.syndication-choices ul li {
     margin-bottom:1px;
 }
 
-ul.rss_feed {
+ul.rss-feed {
     margin-left:20px;
 }
 
-ul.rss_feed li {
+ul.rss-feed li {
     text-align: left;
 }
 
