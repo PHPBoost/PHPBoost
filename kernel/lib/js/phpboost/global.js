@@ -181,71 +181,18 @@ function inArray(aValue, anArray)
 }
 
 //Barre de progression, 
-var timeout_progress_bar = null;
-var max_percent = 0;
-var info_progress_tmp = '';
-var progressbar_speed = 20; //Vitesse de la progression.
-var progressbar_size = 55; //Taille de la barre de progression.
-var progressbar_id = 'progress_info'; //Identifiant de la barre de progression.
-var restart_progress = false;
-var theme = '';
+function change_progressbar(id_element, value, informations) {
+	var progress_bar_el = $(id_element).select('.progressbar').first();
+	progress_bar_el.setStyle({width: value + '%'});
 
-//Configuration de la barre de progression.
-function load_progress_bar(progressbar_speed_tmp, theme_tmp, progressbar_id_tmp)
-{
-	progressbar_speed = progressbar_speed_tmp;
-	restart_progress = true;
-	theme = theme_tmp;
-	progressbar_id = progressbar_id_tmp;
-	if (arguments.length == 4) //Argument optionnel.
-		progressbar_size = arguments[3];
-}
-
-//Barre de progression.
-function progress_bar(percent_progress, info_progress, result_msg, result_id)
-{
-	bar_progress = (percent_progress * progressbar_size) / 100;
-	if (arguments.length < 4)
-	{
-		result_id = "";
-		result_msg = "";
+	if (informations) {
+		var progress_bar_infos_el = $(id_element).select('.progressbar-infos').first();
+		progress_bar_infos_el.update(informations);
 	}
-    
-	// Déclaration et initialisation d'une variable statique
-	if (restart_progress)
-	{	
-		clearTimeout(timeout_progress_bar);
-		this.percent_begin = 0;
-		max_percent = 0;
-		if ($('progress_bar' + progressbar_id))
-			$('progress_bar' + progressbar_id).innerHTML = '';
-		restart_progress = false;
+	else {
+		var progress_bar_infos_el = $(id_element).select('.progressbar-infos').first();
+		progress_bar_infos_el.update(value + '%');
 	}
-
-	if (this.percent_begin <= bar_progress)
-	{
-		if ($('progress_bar' + progressbar_id))
-			$('progress_bar' + progressbar_id).innerHTML += '<img src="' + PATH_TO_ROOT + '/templates/' + theme + '/images/progress.png" alt="" />';
-		if ($('progress_percent' + progressbar_id))
-			$('progress_percent' + progressbar_id).innerHTML = Math.round((this.percent_begin * 100) / progressbar_size);
-		if ($('progress_info' + progressbar_id))
-		{	
-			if (percent_progress > max_percent)
-			{	
-				max_percent = percent_progress;
-				info_progress_tmp = info_progress;
-			}
-			$('progress_info' + progressbar_id).innerHTML = info_progress_tmp;
-		}
-		//Message de fin
-		if (this.percent_begin == progressbar_size && result_id != "" && result_msg != "")
-			$(result_id).innerHTML = result_msg;
-            
-		timeout_progress_bar = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")', progressbar_speed);
-	}
-	else
-		this.percent_begin = this.percent_begin - 1;
-	this.percent_begin++;
 }
 
 //Fonction de préparation de l'ajax.

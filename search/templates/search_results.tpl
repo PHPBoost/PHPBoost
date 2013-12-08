@@ -35,7 +35,6 @@
                     show_div(RESULTS + module);
                     if (!inArray(module, calculatedResults))
                     {
-                        load_progress_bar(1, '{THEME}', '_' + module, 55);
                         XMLHttpRequest_search_module(module);
                     }
                 }
@@ -81,17 +80,16 @@
                     xhr_object.onreadystatechange = function()
                     {
                         if( xhr_object.readyState == 1 )
-                            progress_bar(25, "{L_QUERY_LOADING}");
+                        	change_progressbar('progress_bar_' + module, 25, "{L_QUERY_LOADING}");
                         else if( xhr_object.readyState == 2 )
-                            progress_bar(50, "{L_QUERY_SENT}");
+                        	change_progressbar('progress_bar_' + module, 50, "{L_QUERY_SENT}");
                         else if( xhr_object.readyState == 3 )
-                            progress_bar(75, "{L_QUERY_PROCESSING}");
+                        	change_progressbar('progress_bar_' + module, 75, "{L_QUERY_PROCESSING}");
                         else if( xhr_object.readyState == 4 )
                         {
-                        	//document.getElementById("DEBUG").innerHTML = xhr_object.responseText;
                             if( xhr_object.status == 200 )
                             {
-                                progress_bar(100, "{L_QUERY_SUCCESS}");
+                            	change_progressbar('progress_bar_' + module, 100, "{L_QUERY_SUCCESS}");
                                 // Si les résultats sont toujours en cache, on les récupére.
                                 eval(xhr_object.responseText);
                                 if( !syncErr )
@@ -107,7 +105,7 @@
                                 else window.alert('SYNCHRONISATION ERROR');
                             }
                             else
-                                progress_bar(99, "{L_QUERY_FAILURE}");
+                            	change_progressbar('progress_bar_' + module, 99, "{L_QUERY_FAILURE}");
                         }
                     }
                     xmlhttprequest_sender(xhr_object, GetFormData() + '&moduleName=' + module + '&idSearch=' + idSearch[module]);
@@ -155,9 +153,10 @@
                                 # ENDIF #
                                 {L_NB_RESULTS_FOUND}
                                 <div style="margin:auto;width:500px;">
-                                    <div id="progress_info_{results.MODULE_NAME}" style="text-align:center;"></div>
-                                    <div id="progress_bar_{results.MODULE_NAME}" style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;"></div>
-                                    &nbsp;<span id="progress_percent_{results.MODULE_NAME}">0</span>%
+                                	<div id="progress_bar_{results.MODULE_NAME}" class="progressbar-container">
+										<span class="progressbar-infos"></span>
+										<div class="progressbar"></div>
+									</div>
                                 </div>
                             </div>
                             <div id="results_list_{results.MODULE_NAME}" class="ResultsList"></div>
