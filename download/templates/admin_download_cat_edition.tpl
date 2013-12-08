@@ -16,7 +16,7 @@
 				function change_icon(img_path)
 				{
 					if( document.getElementById('icon_img') )
-						document.getElementById('icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign_middle" />';
+						document.getElementById('icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign-middle" />';
 				}
 				
 				var global_auth = {JS_SPECIAL_AUTH};

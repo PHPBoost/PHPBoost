@@ -102,10 +102,10 @@
 				<div>
 				# IF C_FORUM_CONNEXION #
 					# IF C_USER_NOTCONNECTED #
-						<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
+						<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/connect_mini.png" alt="" class="valign-middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign-middle" /> {L_REGISTER}</a>
 					# ENDIF #
 					# IF C_USER_CONNECTED #
-						<a class="small" href="?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
+						<a class="small" href="?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign-middle" /> {L_DISCONNECT}</a> 
 					# ENDIF # 						
 				# ENDIF #
 				</div>
@@ -113,7 +113,7 @@
 			
 				# IF C_FORUM_CONNEXION # <span style="color:#000000;">&bull;</span> # ENDIF #
 				<a class="small" href="{PATH_TO_ROOT}/forum/moderation_forum.php">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> 
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" class="valign-middle" alt="" /> 
 					{L_MODERATION_PANEL}
 				</a>
 			
@@ -127,19 +127,19 @@
 			</div>
 			# IF C_USER_CONNECTED #
 				<div style="float:right;">
-					<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
-					<img src="{PICTURES_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
-					<img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
+					<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign-middle" /> {U_TOPIC_TRACK} &bull;
+					<img src="{PICTURES_DATA_PATH}/images/last_mini.png" alt="" class="valign-middle" /> {U_LAST_MSG_READ} &bull;
+					<img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign-middle" /> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
 						
 					<div style="position:relative;float:left;">
 						<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread">
 						</div>
 					</div>
 					<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png" alt="" id="refresh_unread2" class="valign_middle" />
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png" alt="" id="refresh_unread2" class="valign-middle" />
 					</a>
 					&bull;
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/read_mini.png" alt="" class="valign-middle" /> {U_MSG_SET_VIEW}
 				</div>
 			# ENDIF #
 			<div class="spacer"></div>

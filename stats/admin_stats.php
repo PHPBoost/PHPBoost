@@ -990,12 +990,12 @@ else
 			$Template->assign_block_vars('referer_list', array(
 				'ID' => $row['id'],
 				'URL' => $row['url'],
-				'IMG_MORE' => '<img src="../templates/default/images/admin/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
+				'IMG_MORE' => '<img src="../templates/default/images/admin/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign-middle" id="img_url' . $row['id'] . '" />',
 				'NBR_LINKS' => $row['count'],
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 				'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-				'TREND' => '<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
+				'TREND' => '<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign-middle" /> (' . $sign . $trend . '%)'
 				));
 		}
 		$Sql->query_close($result);
@@ -1047,12 +1047,12 @@ else
 			$Template->assign_block_vars('keyword_list', array(
 				'ID' => $row['id'],
 				'KEYWORD' => $row['relative_url'],
-				'IMG_MORE' => '<img src="../templates/default/images/admin/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
+				'IMG_MORE' => '<img src="../templates/default/images/admin/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign-middle" id="img_url' . $row['id'] . '" />',
 				'NBR_LINKS' => $row['count'],
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 				'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-				'TREND' => '<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
+				'TREND' => '<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign-middle" /> (' . $sign . $trend . '%)'
 				));
 		}
 		$Sql->query_close($result);

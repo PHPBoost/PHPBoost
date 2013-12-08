@@ -90,7 +90,7 @@
 						<div style="margin-top:4px;">
 							# IF C_FORUM_CONNEXION #
 								# IF C_USER_NOTCONNECTED #
-								<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><i class="icon-sign-in"></i> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
+								<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><i class="icon-sign-in"></i> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign-middle" /> {L_REGISTER}</a>
 								# ENDIF #
 								# IF C_USER_CONNECTED #
 									<a class="small" href="?disconnect=true&amp;token={TOKEN}"><i class="icon-sign-out"></i> {L_DISCONNECT}</a> 
@@ -120,9 +120,9 @@
 				</div>
 				# IF C_USER_CONNECTED #
 					<div style="float:right;">
-						<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
-						<img src="{PICTURES_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
-						<img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
+						<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign-middle" /> {U_TOPIC_TRACK} &bull;
+						<img src="{PICTURES_DATA_PATH}/images/last_mini.png" alt="" class="valign-middle" /> {U_LAST_MSG_READ} &bull;
+						<img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign-middle" /> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
 						
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread">
@@ -131,7 +131,7 @@
 						<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="icon-refresh" id="refresh_unread"></i></a>
 						
 						&bull;
-						<img src="{PICTURES_DATA_PATH}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
+						<img src="{PICTURES_DATA_PATH}/images/read_mini.png" alt="" class="valign-middle" /> {U_MSG_SET_VIEW}
 					</div>
 				# ENDIF #
 				<div class="spacer"></div>

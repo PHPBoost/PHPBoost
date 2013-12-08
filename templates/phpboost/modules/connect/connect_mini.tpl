@@ -55,30 +55,30 @@
 				<ul>
 					<img src="{U_AVATAR_IMG}" alt="avatar" title="Avatar" width="90px" class="connect_avatar"/>
 					<li>
-		         		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{U_HOME_PROFILE}" class="small">{L_PRIVATE_PROFIL}</a>
+		         		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign-middle" /> <a href="{U_HOME_PROFILE}" class="small">{L_PRIVATE_PROFIL}</a>
 					</li>
 					<li>
-		         		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small">{L_NBR_PM}</a>
+		         		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign-middle" alt="" /> <a href="{U_USER_PM}" class="small">{L_NBR_PM}</a>
 					</li>
 					
 					# IF C_ADMIN_AUTH #
 					<li>
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{U_ADMINISTRATION}" class="small">{L_ADMIN_PANEL} # IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS}) # ENDIF # </a>
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign-middle" /> <a href="{U_ADMINISTRATION}" class="small">{L_ADMIN_PANEL} # IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS}) # ENDIF # </a>
 					</li> 
 					# ENDIF #
 					# IF C_UNREAD_CONTRIBUTION #
 						# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
 						<li>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini_new.gif" alt="" class="valign_middle" /> <a href="{U_CONTRIBUTION}" class="small">{L_CONTRIBUTION_PANEL} ({NUM_UNREAD_CONTRIBUTIONS})</a>
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini_new.gif" alt="" class="valign-middle" /> <a href="{U_CONTRIBUTION}" class="small">{L_CONTRIBUTION_PANEL} ({NUM_UNREAD_CONTRIBUTIONS})</a>
 						</li>
 						# ELSE #
 						<li>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini_new.gif" alt="" class="valign_middle" /> <a href="{U_CONTRIBUTION}" class="small">{L_CONTRIBUTION_PANEL}</a>
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini_new.gif" alt="" class="valign-middle" /> <a href="{U_CONTRIBUTION}" class="small">{L_CONTRIBUTION_PANEL}</a>
 						</li>
 						# ENDIF #
 					# ELSE #
 					<li>
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini.png" alt="" class="valign_middle" /> <a href="{U_CONTRIBUTION}" class="small">{L_CONTRIBUTION_PANEL}</a>
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini.png" alt="" class="valign-middle" /> <a href="{U_CONTRIBUTION}" class="small">{L_CONTRIBUTION_PANEL}</a>
 					</li>
 					# ENDIF #	
 				</ul>

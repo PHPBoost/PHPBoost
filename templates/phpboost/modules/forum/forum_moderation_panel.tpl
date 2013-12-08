@@ -261,7 +261,7 @@
 						if( login != '' )
 						{
 							if( document.getElementById('search_img') )
-								document.getElementById('search_img').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+								document.getElementById('search_img').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign-middle" />';
 							data = 'login=' + login;
 							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
 							xhr_object.onreadystatechange = function() 

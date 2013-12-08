@@ -28,9 +28,9 @@
 								<td>{L_TOPIC}</td>
 								<td style="width:100px;">{L_AUTHOR}</td>
 								<td style="width:120px;"></td>
-								<td style="width:40px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'p');"> {L_PM}</td>
-								<td style="width:50px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'm');"> {L_MAIL}</td>
-								<td style="width:85px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'd');"> {L_DELETE}</td>
+								<td style="width:40px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> {L_PM}</td>
+								<td style="width:50px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> {L_MAIL}</td>
+								<td style="width:85px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> {L_DELETE}</td>
 								<td style="width:150px;">{L_LAST_MESSAGE}</td>
 							</tr>
 						</table>

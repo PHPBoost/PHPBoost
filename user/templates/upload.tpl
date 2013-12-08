@@ -282,19 +282,19 @@
 		<tr> 
 			<td class="row2">
 				<span style="float:left;">
-					<a href="upload.php?root=1{POPUP}"><img src="../templates/{THEME}/images/upload/home.png" class="valign_middle" alt="" /></a>
+					<a href="upload.php?root=1{POPUP}"><img src="../templates/{THEME}/images/upload/home.png" class="valign-middle" alt="" /></a>
 					<a href="upload.php?root=1{POPUP}">{L_ROOT}</a>
 					<br />
-					<a href="upload.php?fup={FOLDER_ID}{POPUP}"><img src="../templates/{THEME}/images/upload/folder_up.png" class="valign_middle" alt="" /></a>
+					<a href="upload.php?fup={FOLDER_ID}{POPUP}"><img src="../templates/{THEME}/images/upload/folder_up.png" class="valign-middle" alt="" /></a>
 					<a href="upload.php?fup={FOLDER_ID}{POPUP}">{L_FOLDER_UP}</a>
 				</span>
 				<span style="float:right;">
 					<span id="new_folder_link">
-						<a href="javascript:display_new_folder();"><img src="../templates/{THEME}/images/upload/folder_new.png" class="valign_middle" alt="" /></a>
+						<a href="javascript:display_new_folder();"><img src="../templates/{THEME}/images/upload/folder_new.png" class="valign-middle" alt="" /></a>
 						<a href="javascript:display_new_folder();">{L_FOLDER_NEW}</a>
 					</span>
 					<br />
-					<a href="#new_file"><img src="../templates/{THEME}/images/upload/files_add.png" class="valign_middle" alt="" /></a>
+					<a href="#new_file"><img src="../templates/{THEME}/images/upload/files_add.png" class="valign-middle" alt="" /></a>
 					<a href="#new_file">{L_ADD_FILES}</a>
 					<br />
 				</span>
@@ -306,7 +306,7 @@
 					{L_URL}
 				</div>
 				<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
-						<img src="../templates/{THEME}/images/upload/folder_mini.png" class="valign_middle" alt="" /> {U_ROOT}{URL}
+						<img src="../templates/{THEME}/images/upload/folder_mini.png" class="valign-middle" alt="" /> {U_ROOT}{URL}
 				</div>
 			</td>
 		</tr>	

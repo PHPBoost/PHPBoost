@@ -158,8 +158,8 @@
 					if( start_thumb == 0 )
 						document.getElementById('display_left').innerHTML = '';
 					else
-						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/left.png" class="valign_middle" alt="" /></a>';
-					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/right.png" class="valign_middle" alt="" /></a>';
+						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/left.png" class="valign-middle" alt="" /></a>';
+					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/right.png" class="valign-middle" alt="" /></a>';
 				}
 				else
 					return;
@@ -172,8 +172,8 @@
 					if( start_thumb == ({MAX_START} + 1) )
 						document.getElementById('display_right').innerHTML = '';
 					else
-						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/right.png" class="valign_middle" alt="" /></a>';
-					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/left.png" class="valign_middle" alt="" /></a>';
+						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/right.png" class="valign-middle" alt="" /></a>';
+					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/left.png" class="valign-middle" alt="" /></a>';
 				}
 				else
 					return;
@@ -356,7 +356,7 @@
 												<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.pics_max.ID}">
 													<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.pics_max.ID}, 1);" onmouseout="pics_hide_block({pics.pics_max.ID}, 0);">
 														<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-														<select class="valign_middle" name="{pics.pics_max.ID}cat" onchange="document.location = 'gallery{pics.pics_max.U_MOVE}">
+														<select class="valign-middle" name="{pics.pics_max.ID}cat" onchange="document.location = 'gallery{pics.pics_max.U_MOVE}">
 															{pics.pics_max.CAT}
 														</select>
 														<br /><br />
@@ -425,7 +425,7 @@
 												<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
 													<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
 														<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-														<select class="valign_middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;token={TOKEN}&amp;move=' + this.options[this.selectedIndex].value">
+														<select class="valign-middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;token={TOKEN}&amp;move=' + this.options[this.selectedIndex].value">
 															{pics.list.CAT}
 														</select>
 														<br /><br />

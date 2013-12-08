@@ -37,7 +37,7 @@ function Confirm_del_comment() {
 					<div class="view-topic">
 						<a href="{comments.U_TOPIC}&refresh_all=1\#com{comments.ID_COMMENT}">
 						{L_VIEW_TOPIC}
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" class="valign_middle">
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" class="valign-middle">
 					</a>
 					</div>
 				# ENDIF #

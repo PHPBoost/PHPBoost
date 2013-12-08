@@ -2,7 +2,7 @@
 <div class="dynamic_menu">
 	<ul>
 		<li>
-			<h5 class="links"><a href="{PATH_TO_ROOT}/{URL_MENU}" title="{TITLE_MENU}"><img src="{PATH_TO_ROOT}/{IMAGE_MENU}" class="valign_middle" alt="" /> {TITLE_MENU}</a></h5>
+			<h5 class="links"><a href="{PATH_TO_ROOT}/{URL_MENU}" title="{TITLE_MENU}"><img src="{PATH_TO_ROOT}/{IMAGE_MENU}" class="valign-middle" alt="" /> {TITLE_MENU}</a></h5>
 			{ELEMENT}
 		</li>
 # ENDIF #

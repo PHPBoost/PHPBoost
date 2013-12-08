@@ -160,8 +160,8 @@
 					if( start_thumb == 0 )
 						document.getElementById('display_left').innerHTML = '';
 					else
-						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" class="valign_middle" alt="" /></a>';
-					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" class="valign_middle" alt="" /></a>';
+						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" class="valign-middle" alt="" /></a>';
+					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" class="valign-middle" alt="" /></a>';
 				}
 				else
 					return;
@@ -174,8 +174,8 @@
 					if( start_thumb == ({MAX_START} + 1) )
 						document.getElementById('display_right').innerHTML = '';
 					else
-						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" class="valign_middle" alt="" /></a>';
-					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" class="valign_middle" alt="" /></a>';
+						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" class="valign-middle" alt="" /></a>';
+					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" class="valign-middle" alt="" /></a>';
 				}
 				else
 					return;
@@ -342,7 +342,7 @@
 									<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
 										<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
 											<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-											<select class="valign_middle" name="{ID}cat" onchange="document.location = 'gallery{U_MOVE}">
+											<select class="valign-middle" name="{ID}cat" onchange="document.location = 'gallery{U_MOVE}">
 												{CAT}
 											</select>
 										</div>
@@ -403,7 +403,7 @@
 											<div style="position:absolute;z-index:100;margin-top:75px;">
 												<div class="bbcode_block" style="width:170px;overflow:auto;">
 													<div style="margin-bottom:4px;" class="smaller"><strong>{L_MOVETO}</strong>:</div>
-													<select class="valign_middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
+													<select class="valign-middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
 														{pics_list.CAT}
 													</select>
 													<br /><br />

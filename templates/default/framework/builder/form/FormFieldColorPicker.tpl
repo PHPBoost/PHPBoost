@@ -33,7 +33,7 @@ function ${escape(NAME)}bbcode_color(field)
 
 <input type="text" size="8" maxlength="7" name="${escape(NAME)}" id="${escape(ID)}" value="${escape(VALUE)}" style="background-color:${escape(VALUE)};" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_HIDDEN # style="display:none;" # ENDIF #>
 <a href="javascript:${escape(NAME)}bbcode_color('${escape(ID)}');bb_display_block('${escape(ID)}', '');" onmouseout="bb_hide_block('${escape(ID)}', '', 0);" >
-	<img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign_middle" />
+	<img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign-middle" />
 </a>
 <div class="color_picker" style="display:none;" id="bb_block${escape(ID)}">
 	<div id="${escape(ID)}_list" class="bbcode_block" onmouseover="bb_hide_block('${escape(ID)}', '', 1);" onmouseout="bb_hide_block('${escape(ID)}', '', 0);">

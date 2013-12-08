@@ -253,19 +253,19 @@
 				<tr> 
 					<td class="row2">
 						<span style="float:left;">
-							<a href="admin_files.php?root=1"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/home.png" class="valign_middle" alt="" /></a>
+							<a href="admin_files.php?root=1"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/home.png" class="valign-middle" alt="" /></a>
 							<a href="admin_files.php?root=1">{L_ROOT}</a>
 							<br />					
-							<a href="admin_files.php?fup={FOLDER_ID}{FOLDERM_ID}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_up.png" class="valign_middle" alt="" /></a>
+							<a href="admin_files.php?fup={FOLDER_ID}{FOLDERM_ID}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_up.png" class="valign-middle" alt="" /></a>
 							<a href="admin_files.php?fup={FOLDER_ID}{FOLDERM_ID}">{L_FOLDER_UP}</a>
 						</span>
 						<span style="float:right;">
 							<span id="new_folder_link">
-								<a href="javascript:display_new_folder();"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_new.png" class="valign_middle" alt="" /></a>
+								<a href="javascript:display_new_folder();"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_new.png" class="valign-middle" alt="" /></a>
 								<a href="javascript:display_new_folder();">{L_FOLDER_NEW}</a>
 							</span>
 							<br />
-							<a href="#new_file"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/files_add.png" class="valign_middle" alt="" /></a>
+							<a href="#new_file"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/files_add.png" class="valign-middle" alt="" /></a>
 							<a href="#new_file">{L_ADD_FILES}</a>		
 							<br />
 						</span>
@@ -277,7 +277,7 @@
 							{L_URL}
 						</div>
 						<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
-								<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_mini.png" class="valign_middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
+								<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_mini.png" class="valign-middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
 						</div>
 					</td>
 				</tr>	

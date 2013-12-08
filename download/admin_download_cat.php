@@ -222,7 +222,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			'CATEGORIES_TREE' => $download_categories->build_select_form($DOWNLOAD_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,
 			'VISIBLE_CHECKED' => $DOWNLOAD_CATS[$id_edit]['visible'] ? 'checked="checked"' : '',
-			'IMG_ICON' => !empty($DOWNLOAD_CATS[$id_edit]['icon']) ? '<img src="' . $DOWNLOAD_CATS[$id_edit]['icon'] . '" alt="" class="valign_middle" />' : '',
+			'IMG_ICON' => !empty($DOWNLOAD_CATS[$id_edit]['icon']) ? '<img src="' . $DOWNLOAD_CATS[$id_edit]['icon'] . '" alt="" class="valign-middle" />' : '',
 			'IMG_PATH' => !$in_dir_icon ? $DOWNLOAD_CATS[$id_edit]['icon'] : '',
 			'JS_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'true' : 'false',
 			'DISPLAY_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'block' : 'none',
