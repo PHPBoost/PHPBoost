@@ -1,6 +1,6 @@
 # IF C_MENU #
     # IF C_FIRST_MENU #
-        <nav class="dynamic_menu">
+        <nav class="dynamic-menu">
             <ul class="horizontal_scrolling_menu">
                 # START elements #{elements.DISPLAY}# END elements #
             </ul>

@@ -57,7 +57,7 @@ div#site_name {
 div#header_admin { height:139px; }
 div#sub_header_admin { height: 32px; margin-top: 6px; }
 
-div#sub_header_admin .dynamic_menu {
+div#sub_header_admin .dynamic-menu {
 	width:auto;
 	height:35px;
 	margin-top:-3px;
@@ -65,7 +65,7 @@ div#sub_header_admin .dynamic_menu {
 	float:left;
 }
 
-div#sub_header_admin .dynamic_menu h5 {
+div#sub_header_admin .dynamic-menu h5 {
     color:#FFFFFF;
 	margin-right:2px;
 	background:transparent;
@@ -77,16 +77,16 @@ div#sub_header_admin .dynamic_menu h5 {
 	margin-right:0;
 }
 
-div#sub_header_admin .dynamic_menu > ul > li:hover {
+div#sub_header_admin .dynamic-menu > ul > li:hover {
     background:transparent;
 }
 
-div#sub_header_admin .dynamic_menu > ul > li:hover h5 {
+div#sub_header_admin .dynamic-menu > ul > li:hover h5 {
 	color:#444;
 	background:#FFF;
 }
 
-div#sub_header_admin .dynamic_menu > ul > li > ul {
+div#sub_header_admin .dynamic-menu > ul > li > ul {
 	-moz-border-radius:0 4px 4px 4px;
 	-webkit-border-radius:0 4px 4px 4px;
 	border-radius:0 4px 4px 4px;

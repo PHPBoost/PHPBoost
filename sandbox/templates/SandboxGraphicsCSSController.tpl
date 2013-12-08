@@ -147,7 +147,7 @@
 			
 		<h5>Menus des modules</h5><br />
 		<div class="content" style="height:200px;">
-			<menu class="dynamic_menu">
+			<menu class="dynamic-menu">
 				<ul>
 					<li><a><i class="icon-bars"></i></a>
 						<ul>
@@ -177,7 +177,7 @@
 				</ul>
 			</menu>
 			<br />
-			<menu class="dynamic_menu right">
+			<menu class="dynamic-menu right">
 				<ul>
 					<li><a><i class="icon-bars"></i></a>
 						<ul>
@@ -207,7 +207,7 @@
 				</ul>
 			</menu>
 			<br /><br />
-			<menu class="dynamic_menu group center">
+			<menu class="dynamic-menu group center">
 				<ul>
 					<li>
 						<a href="#">Bugs non-résolus</a> 

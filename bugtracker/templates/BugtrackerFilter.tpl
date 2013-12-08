@@ -1,4 +1,4 @@
-<menu class="dynamic_menu">
+<menu class="dynamic-menu">
 	<ul>
 		<li>
 			<a onclick="Effect.toggle('table_filters', 'appear'); return false;"><i class="icon-filter"></i> {L_FILTERS}</a> 

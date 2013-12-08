@@ -27,7 +27,7 @@
 				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px">
 					- <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> - <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
-				<menu class="dynamic_menu group">
+				<menu class="dynamic-menu group">
 					<ul>
 						<li>
 							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure"><img src="./database_mini.png"/> {L_TABLE_STRUCTURE}</a>

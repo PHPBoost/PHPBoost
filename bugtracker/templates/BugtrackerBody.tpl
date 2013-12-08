@@ -5,7 +5,7 @@
 		</h1>
 	</header>
 	<div class="content">
-		<menu class="dynamic_menu group center">
+		<menu class="dynamic-menu group center">
 			<ul>
 				<li class="{CLASS_BUG_UNSOLVED}">
 					<a href="{LINK_BUG_UNSOLVED}">{@bugs.titles.unsolved}</a> 

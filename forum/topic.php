@@ -199,7 +199,7 @@ $page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;	
 $j = 0;	
-$result = $Sql->query_while("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, m.user_groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, ext_field.user_location, ext_field.user_website, ext_field.user_sex, ext_field.user_msn, ext_field.user_yahoo, m.user_warning, m.user_readonly, m.user_ban, m2.login as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
+$result = $Sql->query_while("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, m.user_groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, ext_field.user_location, ext_field.user_sex, m.user_warning, m.user_readonly, m.user_ban, m2.login as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
 FROM " . PREFIX . "forum_msg msg
 LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = '" . $id_get . "'
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
@@ -510,9 +510,9 @@ else
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
 		'KERNEL_EDITOR' => $editor->display(),
-		'ICON_TRACK' => '<img src="' . $module_data_path . '/images/' . $img_track_display . '" alt="" class="valign_middle" />',
-		'ICON_SUSCRIBE_PM' => '<img src="' . $module_data_path . '/images/' . $img_track_pm_display . '" alt="" class="valign_middle" />',
-		'ICON_SUSCRIBE' => '<img src="' . $module_data_path . '/images/' . $img_track_mail_display . '" alt="" class="valign_middle" />',
+		'ICON_TRACK' => '<img src="' . $module_data_path . '/images/' . $img_track_display . '" alt="" class="valign-middle" />',
+		'ICON_SUSCRIBE_PM' => '<img src="' . $module_data_path . '/images/' . $img_track_pm_display . '" alt="" class="valign-middle" />',
+		'ICON_SUSCRIBE' => '<img src="' . $module_data_path . '/images/' . $img_track_mail_display . '" alt="" class="valign-middle" />',
 		'U_FORUM_ACTION_POST' => url('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg&amp;token=' . $Session->get_token()),
 	));
 
@@ -522,7 +522,7 @@ else
 		$img_msg_display = $topic['display_msg'] ? 'not_processed_mini.png' : 'processed_mini.png';
 		$Template->put_all(array(
 			'C_DISPLAY_MSG' => true,
-			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_msg_display . '" alt="" class="valign_middle" />' : '',
+			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_msg_display . '" alt="" class="valign-middle" />' : '',
 			'L_DISPLAY_MSG' => $CONFIG_FORUM['display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
