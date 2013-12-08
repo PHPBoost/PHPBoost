@@ -26,15 +26,17 @@
 
 class AdminOnlineConfigController extends AdminModuleController
 {
-	private $lang;
 	/**
 	 * @var HTMLForm
 	 */
 	private $form;
 	/**
-	 * @var FormButtonDefaultSubmit
+	 * @var FormButtonSubmit
 	 */
 	private $submit_button;
+	
+	private $lang;
+	private $common_lang;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -47,17 +49,18 @@ class AdminOnlineConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-saving-config'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->common_lang['message.success.config'], E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminOnlineDisplayResponse($tpl, $this->lang['admin.online-config']);
+		return new AdminOnlineDisplayResponse($tpl, $this->lang['module_config_title']);
 	}
 
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'online');
+		$this->common_lang = LangLoader::get('common');
 	}
 
 	private function build_form()
@@ -65,7 +68,7 @@ class AdminOnlineConfigController extends AdminModuleController
 		$form = new HTMLForm('online_admin');
 		$online_config = OnlineConfig::load();
 
-		$fieldset_config = new FormFieldsetHTML('configuration', $this->lang['admin.online-config']);
+		$fieldset_config = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin'));
 		$form->add_fieldset($fieldset_config);
 		
 		$fieldset_config->add_field(new FormFieldTextEditor('number_member_displayed', $this->lang['admin.nbr-displayed'], $online_config->get_number_member_displayed(), array(
@@ -85,7 +88,7 @@ class AdminOnlineConfigController extends AdminModuleController
 			), array('required' => true)
 		));
 		
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['admin.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->common_lang['authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
 		//Authorizations list

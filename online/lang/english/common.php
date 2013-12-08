@@ -30,6 +30,8 @@
  #						English						#
  ####################################################
 
+$lang['module_config_title'] = 'Online module configuration';
+
 //En ligne
 $lang['online.home'] = 'Home';
 $lang['online'] = 'Online';
@@ -41,13 +43,8 @@ $lang['online_users'] = 'online users';
 $lang['online.no_user_online'] = 'No user online';
 
 //Admin
-$lang['admin.online-config'] = 'Configuration';
 $lang['admin.nbr-displayed'] = 'Number of online members displayed in the menu';
 $lang['admin.nbr-members-per-page'] = 'Number of members per page';
 $lang['admin.display-order'] = 'Display order';
-$lang['admin.authorizations'] = 'Permissions';
 $lang['admin.authorizations.read'] = 'Permission to display the online members list';
-
-//Errors
-$lang['admin.success-saving-config'] = 'You have successfully changed the configuration';
 ?>
