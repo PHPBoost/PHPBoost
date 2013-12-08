@@ -1,6 +1,6 @@
 # IF C_MENU # <!--  Menu -->
 	# IF C_FIRST_MENU # <!-- First one -->
-		<nav class="dynamic_menu">
+		<nav class="dynamic-menu">
 			<ul>
                 # IF C_HAS_CHILD #
 			    <li>

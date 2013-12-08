@@ -1,5 +1,5 @@
 		<div style="margin-bottom:10px;">
-			<menu class="dynamic_menu right group">
+			<menu class="dynamic-menu right group">
 				<ul>
 				# IF C_ACTIV_COM #
 					<li>

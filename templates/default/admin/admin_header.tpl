@@ -63,7 +63,7 @@
 				<div id="site_name">{SITE_NAME}</div>
 			</div>
 			<div id="sub_header_admin">
-				<nav class="dynamic_menu">
+				<nav class="dynamic-menu">
 					# INCLUDE subheader_menu #
 				</nav>
 				<div id="admin_extend_link">

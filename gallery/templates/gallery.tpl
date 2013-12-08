@@ -233,7 +233,7 @@
 		-->
 		</script> 
 
-		<menu class="dynamic_menu right">
+		<menu class="dynamic-menu right">
 			<ul>
 				<li><a><i class="icon-bars"></i></a>
 					<ul>

@@ -59,7 +59,7 @@
 				<div class="content">					
 					<div style="float:right;">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
 					<br /><br />
-					<menu class="dynamic_menu group center">
+					<menu class="dynamic-menu group center">
 						<ul>
 							<li >
 								<a href="{convers.U_POST_NEW_CONVERS}"><i class="icon-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
