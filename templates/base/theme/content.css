@@ -617,9 +617,9 @@ textarea {
 .constraint-check-error i:before { content: "\f00d"; color:#C43C35; }
 
 /* Auto-complétion */
-div.form_autocompleter_container { position: relative;}
+div.form-autocompleter-container { position: relative;}
 
-div.form_autocompleter { 
+div.form-autocompleter { 
 	position:absolute;
 	top:-999999em;
 	padding:5px 0;
@@ -636,9 +636,9 @@ div.form_autocompleter {
 	z-index:102;
 }
 
-div.form_autocompleter ul { margin: 0px; padding: 0px; max-height: 20em; overflow: auto; } 
-div.form_autocompleter ul li.selected { background-color: #F0F0F0; }
-div.form_autocompleter ul li { list-style-type:none; display: block; margin: 0; padding:5px 15px; cursor: pointer; }
+div.form-autocompleter ul { margin: 0px; padding: 0px; max-height: 20em; overflow: auto; } 
+div.form-autocompleter ul li.selected { background-color: #F0F0F0; }
+div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; padding:5px 15px; cursor: pointer; }
 
 
 /* A reprendre */
