@@ -134,7 +134,7 @@ class UserViewProfileController extends AbstractController
 				if ($groups_cache->group_exists($group_id))
 				{
 					$group = $groups_cache->get_group($group_id);
-					$group_image = !empty($group['img']) ? '<img src="'. TPL_PATH_TO_ROOT .'/images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />' : $group['name'];
+					$group_image = !empty($group['img']) ? '<img src="'. TPL_PATH_TO_ROOT .'/images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign-middle" />' : $group['name'];
 					$user_groups_html .= '<li><a href="' . UserUrlBuilder::group($group_id)->rel() . '">' . $group_image . '</a></li>';
 				}
 			}

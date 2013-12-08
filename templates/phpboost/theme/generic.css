@@ -52,15 +52,15 @@ p {
     margin:6px;
 }
 
-.valign_top {
+.valign-top {
     vertical-align:top;
 }
 
-.valign_middle {
+.valign-middle {
     vertical-align:middle;
 }
 
-.valign_bottom {
+.valign-bottom {
     vertical-align:bottom;
 }
 

@@ -9,7 +9,7 @@
                 # ENDIF #
 					<h5 class="links">
 					# IF C_URL #<a href="{PATH_TO_ROOT}{RELATIVE_URL}" title="{TITLE}"># ENDIF #
-						# IF C_IMG #<img src="{PATH_TO_ROOT}{RELATIVE_IMG}" class="valign_middle" alt="" /> # ENDIF #
+						# IF C_IMG #<img src="{PATH_TO_ROOT}{RELATIVE_IMG}" class="valign-middle" alt="" /> # ENDIF #
 						{TITLE}
 					# IF C_URL #</a> # ENDIF #
 					</h5>

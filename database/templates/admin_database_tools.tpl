@@ -179,7 +179,7 @@
 					# IF TABLE_FREE #
 					<tr>
 						<td class="row3" colspan="2" style="text-align:center">
-							<img src="./database_mini.png" alt="" class="valign_middle" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">{L_OPTIMIZE}</a>
+							<img src="./database_mini.png" alt="" class="valign-middle" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">{L_OPTIMIZE}</a>
 						</td>
 					</tr>
 					# ENDIF #

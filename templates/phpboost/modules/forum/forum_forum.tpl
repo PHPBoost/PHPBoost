@@ -76,7 +76,7 @@
 		<div class="module_position forum_position_cat">
 			<div class="pbt_button pbt_button_gray">
 				<a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" class="pbt_button_a pbt_button_add">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt_button_img valign_middle" />
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt_button_img valign-middle" />
 					Créer un nouveau sujet
 				</a>
 			</div>
@@ -91,7 +91,7 @@
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
 				<span style="float:right;">
 					# IF IDCAT #
-					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /></a>
+					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign-middle" /></a>
 					# ENDIF #
 					{PAGINATION}
 				</span>
@@ -128,9 +128,9 @@
 							# ENDIF #
 						</td>
 						<td class="forum_sous_cat forum_sous_cat_pbt" style="width:35px;text-align:center;">
-							# IF topics.C_DISPLAY_MSG # <img src="{PICTURES_DATA_PATH}/images/msg_display_mini.png" alt="" class="valign_middle" /> # ENDIF #
-							# IF topics.C_IMG_POLL # <img src="{PICTURES_DATA_PATH}/images/poll_mini.png" class="valign_middle" alt="" /> # ENDIF #
-							# IF topics.C_IMG_TRACK # <img src="{PICTURES_DATA_PATH}/images/track_mini.png" class="valign_middle" alt="" /> # ENDIF #
+							# IF topics.C_DISPLAY_MSG # <img src="{PICTURES_DATA_PATH}/images/msg_display_mini.png" alt="" class="valign-middle" /> # ENDIF #
+							# IF topics.C_IMG_POLL # <img src="{PICTURES_DATA_PATH}/images/poll_mini.png" class="valign-middle" alt="" /> # ENDIF #
+							# IF topics.C_IMG_TRACK # <img src="{PICTURES_DATA_PATH}/images/track_mini.png" class="valign-middle" alt="" /> # ENDIF #
 						</td>
 						<td class="forum_sous_cat forum_sous_cat_pbt" style="min-width:115px;">
 							{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
@@ -182,7 +182,7 @@
 		<div class="module_position forum_position_cat">
 			<div class="pbt_button pbt_button_gray">
 				<a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" class="pbt_button_a pbt_button_add">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt_button_img valign_middle" />
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt_button_img valign-middle" />
 					Créer un nouveau sujet
 				</a>
 			</div>

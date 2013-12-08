@@ -51,7 +51,7 @@ class ForumUserExtensionPoint implements UserExtensionPoint
 	 */
 	public function get_messages_list_link_img()
 	{
-		return '<img src="' . TPL_PATH_TO_ROOT . '/forum/forum_mini.png" alt="" class="valign_middle" />';
+		return '<img src="' . TPL_PATH_TO_ROOT . '/forum/forum_mini.png" alt="" class="valign-middle" />';
 	}
 	
 	public function get_number_messages($user_id)

@@ -232,7 +232,7 @@ else
 			'CAT' => $name,
 			'CONTENTS' => $row['contents'],
 			'IMG_PATH' => $img_direct_path ? $row['icon'] : '',
-			'IMG_ICON' => !empty($row['icon']) ? '<img src="' . $row['icon'] . '" alt="" class="valign_middle" />' : '',		
+			'IMG_ICON' => !empty($row['icon']) ? '<img src="' . $row['icon'] . '" alt="" class="valign-middle" />' : '',		
 			'IMG_LIST' => $image_list,
 			'TOP' => $top_link,
 			'BOTTOM' => $bottom_link,

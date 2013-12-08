@@ -3,7 +3,7 @@
 		function change_icon(id, img_path)
 		{
 			if( document.getElementById(id + 'icon_img') )
-				document.getElementById(id + 'icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign_middle" />';
+				document.getElementById(id + 'icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign-middle" />';
 		}
 		-->
 		</script>

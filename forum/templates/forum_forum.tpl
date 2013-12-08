@@ -83,7 +83,7 @@
 				# ENDIF #
 				<span style="float:right;">
 					# IF IDCAT #
-					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /></a>
+					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign-middle" /></a>
 					# ENDIF #
 					{PAGINATION}
 				</span>
@@ -126,9 +126,9 @@
 							# ENDIF #
 						</td>
 						<td class="forum_sous_cat" style="width:35px;text-align:center;">
-							# IF topics.C_DISPLAY_MSG # <img src="{PICTURES_DATA_PATH}/images/msg_display_mini.png" alt="" class="valign_middle" /> # ENDIF #
-							# IF topics.C_IMG_POLL # <img src="{PICTURES_DATA_PATH}/images/poll_mini.png" class="valign_middle" alt="" /> # ENDIF #
-							# IF topics.C_IMG_TRACK # <img src="{PICTURES_DATA_PATH}/images/track_mini.png" class="valign_middle" alt="" /> # ENDIF #
+							# IF topics.C_DISPLAY_MSG # <img src="{PICTURES_DATA_PATH}/images/msg_display_mini.png" alt="" class="valign-middle" /> # ENDIF #
+							# IF topics.C_IMG_POLL # <img src="{PICTURES_DATA_PATH}/images/poll_mini.png" class="valign-middle" alt="" /> # ENDIF #
+							# IF topics.C_IMG_TRACK # <img src="{PICTURES_DATA_PATH}/images/track_mini.png" class="valign-middle" alt="" /> # ENDIF #
 						</td>
 						<td class="forum_sous_cat" style="min-width:115px;">
 							{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>

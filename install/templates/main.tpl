@@ -40,7 +40,7 @@ ${resources('install/install')}
 									<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
 									# END lang #
 								</select>
-								&nbsp;&nbsp;&nbsp;<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign_middle" />
+								&nbsp;&nbsp;&nbsp;<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign-middle" />
 							</p>
 							<p id="button_change_lang">
 								<button type="submit" value="true">{@change}</button>
@@ -64,7 +64,7 @@ ${resources('install/install')}
 				# START step #
 					<tr>
 						<td class="{step.CSS_CLASS}">
-							<img src="templates/images/{step.IMG}" alt="${escape(step.NAME)}" class="valign_middle" />&nbsp;&nbsp;{step.NAME}
+							<img src="templates/images/{step.IMG}" alt="${escape(step.NAME)}" class="valign-middle" />&nbsp;&nbsp;{step.NAME}
 						</td>
 					</tr>
 				# END step #
@@ -94,14 +94,14 @@ ${resources('install/install')}
 				</tr>
 				<tr>
 					<td class="row_next">
-						<img src="templates/images/help.png" alt="{@documentation}" class="valign_middle" />
+						<img src="templates/images/help.png" alt="{@documentation}" class="valign-middle" />
 						&nbsp;&nbsp;
 						<a href="{@documentation.link}">{@documentation}</a>
 					</td>
 				</tr>
 				<tr>
 					<td class="row_next row_final">
-						<img src="templates/images/intro.png" alt="{@installation.restart}" class="valign_middle" />
+						<img src="templates/images/intro.png" alt="{@installation.restart}" class="valign-middle" />
 						&nbsp;&nbsp;
 						<a href="{RESTART}" onclick="return confirm('${escapejs(@installation.confirmRestart)}');">{@installation.restart}</a>
 					</td>
@@ -113,7 +113,7 @@ ${resources('install/install')}
 			<table class="table_contents">
 				<tr>
 					<th colspan="2">
-						<div style="text-align:right;padding-top:5px;padding-right:30px;"><img src="templates/images/phpboost.png" alt="Logo PHPBoost" class="valign_middle" /> {STEP_TITLE}</div>
+						<div style="text-align:right;padding-top:5px;padding-right:30px;"><img src="templates/images/phpboost.png" alt="Logo PHPBoost" class="valign-middle" /> {STEP_TITLE}</div>
 					</th>
 				</tr>
 

@@ -17,7 +17,7 @@
 		</tr>							
 		<tr> 
 			<td class="row2">
-				<a href="upload.php?root=1{POPUP}"><img src="../templates/{THEME}/images/upload/home.png" class="valign_middle" alt="" /></a>
+				<a href="upload.php?root=1{POPUP}"><img src="../templates/{THEME}/images/upload/home.png" class="valign-middle" alt="" /></a>
 				<a href="upload.php?root=1{POPUP}">{L_ROOT}</a>
 			</td>
 		</tr>							
@@ -27,7 +27,7 @@
 					{L_URL}
 				</div>
 				<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
-						<img src="../templates/{THEME}/images/upload/folder_mini.png" class="valign_middle" alt="" /> {U_ROOT}{URL}
+						<img src="../templates/{THEME}/images/upload/folder_mini.png" class="valign-middle" alt="" /> {U_ROOT}{URL}
 				</div>
 			</td>
 		</tr>			

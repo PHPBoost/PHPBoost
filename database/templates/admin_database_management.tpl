@@ -59,7 +59,7 @@
 					</tr>
 					<tr style="text-align:center;">			
 						<td class="row3" style="width:140px;">
-							{L_SELECTED_TABLES} <br />(<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign_middle"> {L_ALL})
+							{L_SELECTED_TABLES} <br />(<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL})
 						</td>
 						<td class="row2">
 							{L_TABLE_NAME}
@@ -107,7 +107,7 @@
 					# END table_list #
 					<tr style="text-align:center;"> 
 						<td class="row3">
-							( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign_middle"> {L_ALL})
+							( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL})
 						</td>
 						<td class="row3">
 							<strong>{NBR_TABLES}</strong>
@@ -139,7 +139,7 @@
 							<tr>
 								<td><img src="./database.png" alt="optimize" /></td>
 								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="repair" /></td>
-								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="optimize" class="valign_middle" /></td>
+								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="optimize" class="valign-middle" /></td>
 							</tr>
 							<tr>
 								<td><button type="submit" name="optimize" value="true">{L_OPTIMIZE}</button></td>

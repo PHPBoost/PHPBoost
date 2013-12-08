@@ -43,9 +43,9 @@
 <div class="spacer"></div>
 <a class="small" href="javascript:display_div_auto('advanced_auth{IDSELECT}', '');display_div_auto('advanced_authb{IDSELECT}', '');switch_img('advanced_auth_plus{IDSELECT}', '{PATH_TO_ROOT}/templates/default/images/admin/upload/minus.png', '{PATH_TO_ROOT}/templates/default/images/admin/upload/plus.png');">
 	# IF C_ADVANCED_AUTH_OPEN #
-	<img id="advanced_auth_plus{IDSELECT}" src="{PATH_TO_ROOT}/templates/default/images/admin/upload/minus.png" alt="" class="valign_middle" />
+	<img id="advanced_auth_plus{IDSELECT}" src="{PATH_TO_ROOT}/templates/default/images/admin/upload/minus.png" alt="" class="valign-middle" />
 	# ELSE #
-	<img id="advanced_auth_plus{IDSELECT}" src="{PATH_TO_ROOT}/templates/default/images/admin/upload/plus.png" alt="" class="valign_middle" />
+	<img id="advanced_auth_plus{IDSELECT}" src="{PATH_TO_ROOT}/templates/default/images/admin/upload/plus.png" alt="" class="valign-middle" />
 	# ENDIF #
 	{L_ADVANCED_AUTHORIZATION}
 </a>

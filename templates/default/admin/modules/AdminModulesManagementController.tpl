@@ -156,7 +156,7 @@
 					<tr>
 						<td>
 							<span id="m{modules_activated.ID}"></span>
-							<img class="valign_middle" src="{PATH_TO_ROOT}/{modules_activated.ICON}/{modules_activated.ICON}.png" alt="" /><br />
+							<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_activated.ICON}/{modules_activated.ICON}.png" alt="" /><br />
 							<span class="text-strong">{modules_activated.NAME}</span> <em>({modules_activated.VERSION})</em>
 						</td>
 						<td>

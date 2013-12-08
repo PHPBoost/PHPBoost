@@ -58,7 +58,7 @@
 		</ul>
 	</li>
 	<li>
-		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/tools_mini.png" class="valign_middle" alt="" /> {L_TOOLS}</h5>
+		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/tools_mini.png" class="valign-middle" alt="" /> {L_TOOLS}</h5>
 		<ul>
 			<li class="extend">
 				<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png"/> {L_CACHE}</a>
@@ -91,7 +91,7 @@
 		</ul>
 	</li>
 	<li>
-		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/groups_mini.png" class="valign_middle" alt="" /> {L_USER}</h5>
+		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/groups_mini.png" class="valign-middle" alt="" /> {L_USER}</h5>
 		<ul>
 			<li class="extend">
 				<a href="${relative_url(AdminMembersUrlBuilder::management())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/members_mini.png"/> {L_USER}</a>
@@ -125,7 +125,7 @@
 		</ul>
 	</li>
 	<li>
-		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/contents_mini.png" class="valign_middle" alt="" /> {L_CONTENT}</h5>
+		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/contents_mini.png" class="valign-middle" alt="" /> {L_CONTENT}</h5>
 		<ul>
 			<li><a href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/content_mini.png"/> {L_CONTENT_CONFIG}</a></li>
 			<li class="extend">
@@ -167,7 +167,7 @@
 		</ul>
 	</li>
 	<li>
-		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules_mini.png" class="valign_middle" alt="" /> {L_MODULES}</h5>
+		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules_mini.png" class="valign-middle" alt="" /> {L_MODULES}</h5>
 		<ul>
 			<li class="extend">
 				<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules_mini.png"/> {L_MODULES}</a>

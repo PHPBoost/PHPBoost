@@ -23,7 +23,7 @@
 				</tr>							
 				<tr> 
 					<td class="row2">
-						<a href="admin_files.php?root=1{POPUP}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/home.png" class="valign_middle" alt="" /></a>
+						<a href="admin_files.php?root=1{POPUP}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/home.png" class="valign-middle" alt="" /></a>
 						<a href="admin_files.php?root=1{POPUP}">{L_ROOT}</a>
 					</td>
 				</tr>							
@@ -33,7 +33,7 @@
 							{L_URL}
 						</div>
 						<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
-							<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_mini.png" class="valign_middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
+							<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_mini.png" class="valign-middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
 						</div>
 					</td>
 				</tr>			

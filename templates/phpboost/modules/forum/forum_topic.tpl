@@ -160,7 +160,7 @@
 					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}" class="icon-unban"></a>
 						# ENDIF #
 					
-					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{PICTURES_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign_middle" /></a>
+					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{PICTURES_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign-middle" /></a>
 					# ENDIF #
 				</span>
 			</div>
@@ -224,7 +224,7 @@
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
 						# IF msg.C_FORUM_USER_LOGIN # 
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{msg.FORUM_ONLINE_STATUT_USER}.png" alt="" class="valign_middle" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{msg.FORUM_ONLINE_STATUT_USER}.png" alt="" class="valign-middle" />
 							<a class="msg_link_pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
 						# ELSE # 
 							<em>{L_GUEST}</em>
@@ -299,7 +299,7 @@
 					&nbsp;
 					# IF msg.C_FORUM_MODERATOR # 
 					{msg.USER_WARNING}%
-					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/important.png" alt="{L_WARNING_MANAGEMENT}" class="valign_middle" /></a>
+					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/important.png" alt="{L_WARNING_MANAGEMENT}" class="valign-middle" /></a>
 					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}" class="icon-lock"></a>
 					# ENDIF #
 				</span>&nbsp;
@@ -323,7 +323,7 @@
 					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}" class="icon-unban"></a>
 						# ENDIF #
 						
-					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{PICTURES_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign_middle" /></a>
+					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{PICTURES_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign-middle" /></a>
 					# ENDIF #
 				</span>&nbsp;
 			</div>

@@ -5,9 +5,9 @@
 				</div>
 				# IF C_USER_CONNECTED #
 					<div style="float:right;">
-						<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
-						<img src="{PICTURES_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
-						<img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
+						<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign-middle" /> {U_TOPIC_TRACK} &bull;
+						<img src="{PICTURES_DATA_PATH}/images/last_mini.png" alt="" class="valign-middle" /> {U_LAST_MSG_READ} &bull;
+						<img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign-middle" /> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
 						
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread2">
@@ -16,7 +16,7 @@
 						<a href="javascript:XMLHttpRequest_unread_topics('2');" onmouseover="forum_hide_block('forum_unread2', 1);" onmouseout="forum_hide_block('forum_unread2', 0);"><i class="icon-refresh" id="refresh_unread2"></i></a>
 						
 						&bull;
-						<img src=" {PICTURES_DATA_PATH}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
+						<img src=" {PICTURES_DATA_PATH}/images/read_mini.png" alt="" class="valign-middle" /> {U_MSG_SET_VIEW}
 					</div>
 				# ENDIF #
 				<div class="spacer"></div>
@@ -77,7 +77,7 @@
 						{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 					</span>
 					<span style="float:right;">
-						<a href="{PATH_TO_ROOT}/forum/stats.php{SID}">{L_STATS}</a> <a href="{PATH_TO_ROOT}/forum/stats.php{SID}"><img src="{PICTURES_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/forum/stats.php{SID}">{L_STATS}</a> <a href="{PATH_TO_ROOT}/forum/stats.php{SID}"><img src="{PICTURES_DATA_PATH}/images/stats.png" alt="" class="valign-middle" /></a>
 					</span>
 					<div class="spacer"></div>
 				</div>

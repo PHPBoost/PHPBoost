@@ -11,7 +11,7 @@
 								<option value="{langs.IDNAME}"{langs.SELECTED}>{langs.NAME}</option>
 							# END langs #
 						</select>
-						<img src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
+						<img src="{IMG_LANG_IDENTIFIER}" alt="" class="valign-middle" />
  
 						<input style="display: none;" value="{L_SUBMIT}" name="valid" id="switchlang_valid" type="submit">
 					<script type="text/javascript">
@@ -34,7 +34,7 @@
 					<option value="{langs.IDNAME}"{langs.SELECTED}>{langs.NAME}</option>
 				# END langs #
 			</select>
-			<img src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
+			<img src="{IMG_LANG_IDENTIFIER}" alt="" class="valign-middle" />
 			<input style="display: none;" value="{L_SUBMIT}" name="valid" id="switchlang_valid" type="submit">
 				<script type="text/javascript">
 					<!--

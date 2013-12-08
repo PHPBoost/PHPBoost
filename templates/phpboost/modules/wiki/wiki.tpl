@@ -15,7 +15,7 @@
 					<div class="row2" style="width:30%;">
 					{redirect.REDIRECTED}
 						# START redirect.remove_redirection #
-							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" onclick="javascript: return confirm('{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}');"><img src="{PICTURES_DATA_PATH}/images/delete.png" alt="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="valign_middle" /></a>
+							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" onclick="javascript: return confirm('{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}');"><img src="{PICTURES_DATA_PATH}/images/delete.png" alt="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="valign-middle" /></a>
 						# END redirect.remove_redirection #
 					</div>
 					<br />
@@ -50,7 +50,7 @@
 						<ul class="bb_ul no_list">
 							# START cat.list_cats #
 							<li class="bb_li">
-								<img src="{PICTURES_DATA_PATH}/images/cat.png" class="valign_middle" alt="" />
+								<img src="{PICTURES_DATA_PATH}/images/cat.png" class="valign-middle" alt="" />
 								&nbsp;
 								<a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
 							</li>
@@ -72,7 +72,7 @@
 						<ul class="bb_ul no_list">
 							# START cat.list_art #
 							<li class="bb_li">
-								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
+								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign-middle" alt="" />
 								&nbsp;
 								<a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
 							</li>

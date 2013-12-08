@@ -102,7 +102,7 @@
 					<tr> 
 						<td class="row1" colspan="2">
 							<span class="smaller">{L_CAT}:</span> 
-							<select name="root_cat" id="root_cat" class="valign_middle">
+							<select name="root_cat" id="root_cat" class="valign-middle">
 								{CATEGORIES}
 							</select>
 							<script type="text/javascript">
@@ -123,7 +123,7 @@
 									<table class="module_table" style="width:100%;">
 										<tr>
 											<td class="row2">												
-												<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign_middle"> <span class="smaller">{L_SELECT}</span>
+												<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign-middle"> <span class="smaller">{L_SELECT}</span>
 											</td>
 										</tr>
 										<tr>
@@ -134,7 +134,7 @@
 										<tr>
 											<td class="row2">
 												<span class="smaller">{L_NAME}: </span>
-												<input type="text" size="25" name="{list.ID}name" value="{list.NAME}" class="text valign_middle">
+												<input type="text" size="25" name="{list.ID}name" value="{list.NAME}" class="text valign-middle">
 												
 												<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
 											</td>
@@ -142,14 +142,14 @@
 										<tr>
 											<td class="row2">
 												<span class="smaller">{L_CAT}:</span> 
-												<select name="{list.ID}cat" id="{list.ID}cat" class="valign_middle" style="width:{SELECTBOX_WIDTH}%">
+												<select name="{list.ID}cat" id="{list.ID}cat" class="valign-middle" style="width:{SELECTBOX_WIDTH}%">
 													{list.CATEGORIES}
 												</select>
 											</td>
 										</tr>
 										<tr>
 											<td class="row2">												
-												<input type="checkbox" name="{list.ID}del" value="1" class="valign_middle"> <span class="smaller">{L_DELETE}</span> 
+												<input type="checkbox" name="{list.ID}del" value="1" class="valign-middle"> <span class="smaller">{L_DELETE}</span> 
 											</td>
 										</tr>
 									</table>	

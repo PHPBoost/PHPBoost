@@ -12,7 +12,7 @@
 			# IF C_ADMIN #
 				<div style="float:right;padding-right:5px;">
 					<a href="{U_ADMIN_CAT}">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
+						<img class="valign-middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 					</a>
 				</div>
 			# ENDIF #
@@ -56,14 +56,14 @@
 				<div class="pbt_button_container">
 					<div class="pbt_button pbt_button_blue">
 							<a href="{PATH_TO_ROOT}/download/file-229+phpboost-4-0.php" class="pbt_button_a">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="valign_middle pbt_custom_img left"/>
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="valign-middle pbt_custom_img left"/>
 								<p class="pbt_button_title">Télécharger PHPBoost 4.0</p>
 								<p class="pbt_button_com">Rev : 4.0.4 | Req : PHP 5.1.2 | .zip </p>
 							</a>
 						</div>
 						<div class="pbt_button pbt_button_green">
 							<a href="{PATH_TO_ROOT}/download/category-36+mises-jour.php" class="pbt_button_a">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="valign_middle pbt_custom_img left" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="valign-middle pbt_custom_img left" />
 								<p class="pbt_button_title">Mises à jour</p>
 								<p class="pbt_button_com pbt_button_com_green">Mise à jour et migration</p>
 							</a>
@@ -78,14 +78,14 @@
 					<div class="pbt_custom_content">
 						<div style="width: 90%;margin:auto;">
 							<div style="float:left; width: 47%;padding-right:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign_middle pbt_custom_img left" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign-middle pbt_custom_img left" />
 								<h2 class="title pbt_custom_subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-38+modules.php">Modules compatibles</a>
 								</h2>
 								<p class="pbt_custom_desc">Donnez de nouvelles fonctionnalités à votre site.</p>
 							</div>
 							<div style="float:left; width: 47%;padding-left:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign_middle pbt_custom_img left" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign-middle pbt_custom_img left" />
 								<h2 class="title pbt_custom_subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-37+themes.php">Thèmes compatibles</a>
 								</h2>
@@ -128,7 +128,7 @@
 					<div class="pbt_custom_content">
 						<div style="width: 90%;margin:auto;">
 							<div style="float:left; width: 47%;padding-right:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign_middle pbt_custom_img left" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign-middle pbt_custom_img left" />
 								<h2 class="title pbt_custom_subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-29+modules.php">Modules compatibles</a>
 								</h2>
@@ -137,7 +137,7 @@
 								</p>
 							</div>
 							<div style="float:left; width: 47%;padding-left:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign_middle pbt_custom_img left" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign-middle pbt_custom_img left" />
 								<h2 class="title pbt_custom_subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-30+themes.php">Thèmes compatibles</a>
 								</h2>
@@ -172,7 +172,7 @@
 			{TITLE}
 			# IF C_ADMIN #
 			<a href="{U_ADMIN_CAT}">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
+				<img class="valign-middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 			</a>
 			# END IF #
 		</div>
@@ -202,7 +202,7 @@
 							
 							# IF C_ADMIN #
 							<a href="{row.list_cats.U_ADMIN_CAT}">
-								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
+								<img class="valign-middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 							</a>
 							# ENDIF #
 							<div class="smaller">
@@ -255,10 +255,10 @@
 								<a href="{file.U_DOWNLOAD_LINK}" class="big">{file.NAME}</a>
 								# IF C_ADMIN #
 									<a href="{file.U_ADMIN_EDIT_FILE}">
-										<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
+										<img class="valign-middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 									</a>
 									<a href="{file.U_ADMIN_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-										<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
+										<img class="valign-middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
 									</a>
 								# ENDIF #
 							</p>
@@ -308,10 +308,10 @@
 				{U_COM}
 				# IF C_EDIT_AUTH #
 					<a href="{U_EDIT_FILE}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT_FILE}" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign-middle" alt="{L_EDIT_FILE}" />
 					</a>
 					<a href="{U_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE_FILE}" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign-middle" alt="{L_DELETE_FILE}" />
 					</a>
 				# ENDIF #
 			</div>
