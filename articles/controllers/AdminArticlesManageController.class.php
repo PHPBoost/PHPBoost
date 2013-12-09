@@ -153,7 +153,6 @@ class AdminArticlesManageController extends AdminModuleController
 				'C_NO_ARTICLES' => true
 			));
 		}
-		$this->view->put('FORM', $this->form->display());
 	}
 	
 	private function get_pagination($nbr_articles, $field, $mode)
