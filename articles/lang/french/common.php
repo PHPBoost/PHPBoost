@@ -70,14 +70,7 @@ $lang['articles_configuration.display_type'] = 'Type d\'affichage des articles';
 $lang['articles_configuration.display_type.mosaic'] = 'Mosaïque';
 $lang['articles_configuration.display_type.list'] = 'Liste';
 $lang['articles_configuration.notation_scale'] = 'Echelle de notation';
-$lang['articles_configuration.comments_enabled'] = 'Activer les commentaires';
-$lang['articles_configuration_authorizations'] = 'Permissions globales';
 $lang['articles_configuration.authorizations.explain'] = 'Vous définissez ici les permissions globales du module. Vous pourrez changer ces permissions localement sur chaque catégorie';
-$lang['articles_configuration.authorizations.read'] = 'Permissions de lecture';
-$lang['articles_configuration.config.authorizations.contribution'] = 'Permissions de contribution';
-$lang['articles_configuration.config.authorizations.write'] = 'Permissions d\'écriture';
-$lang['articles_configuration.config.authorizations.moderation'] = 'Permissions de modération';
-$lang['articles_configuration.success-saving'] = 'La configuration a été modifiée avec succès !';
 
 //Category
 $lang['admin.categories.manage'] = 'Gérer les catégories';
@@ -100,37 +93,14 @@ $lang['articles.form.description_enabled.description'] = 'ou laissez PHPBoost co
 $lang['articles.form.rewrited_title'] = 'Titre de l\'article dans l\'url';
 $lang['articles.form.rewrited_title.personalize'] = 'Personnaliser le titre de l\'article dans l\'url';
 $lang['articles.form.rewrited_title.description'] = 'Doit contenir uniquement des lettres minuscules, des chiffres et des traits d\'union.';
-$lang['articles.form.contents'] = 'Contenu';
 $lang['articles.form.add_page'] = 'Insérer une page';
-$lang['articles.form.category'] = 'Catégorie de l\'article';
-$lang['articles.form.other'] = 'Autre';
 $lang['articles.form.author_name_displayed'] = 'Afficher le nom de l\'auteur';
 $lang['articles.form.notation_enabled'] = 'Activer la notation de l\'article';
 $lang['articles.form.picture'] = 'Image de l\'article';
 $lang['articles.form.picture.description'] = 'Sélectionnez l\'image ou entrez une url (261x214)';
-$lang['articles.form.picture.preview'] = 'Aperçu de l\'image';
-$lang['articles.form.keywords'] = 'Mots clés';
 $lang['articles.form.keywords.description'] = 'Vous permet d\'ajouter des mots clés à votre article';
-$lang['articles.form.sources'] = 'Sources de l\'article';
 $lang['articles.form.source_name'] = 'Nom de la source';
 $lang['articles.form.source_url'] = 'Url de la source';
-$lang['articles.form.publication'] = 'Publication';
-$lang['articles.form.date.created'] = 'Date de création de l\'article';
-$lang['articles.form.publishing_state'] = 'Publication';
-$lang['articles.form.not_published'] = 'Garder en brouillon';
-$lang['articles.form.published_now'] = 'Publier maintenant';
-$lang['articles.form.published_date'] = 'Publication différée';
-$lang['articles.form.publishing_start_date'] = 'À partir du';
-$lang['articles.form.publishing_end_date'] = 'Jusqu\'au';
-$lang['articles.form.end.date.enable'] = 'Définir une date de fin de publication';
-$lang['articles.form.contribution'] = 'Contribution';
-$lang['articles.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer un article, cependant vous pouvez proposer un article. 
-                                              Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution
-                                              de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer 
-                                              votre démarche à un approbateur.';
-$lang['articles.form.contribution.description'] = 'Complément de contribution'; 
-$lang['articles.form.contribution.description.explain'] = 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cet article). 
-                                                          Ce champ est facultatif.';  
 $lang['articles.form.contribution_entitled'] = '[Article] :title';
 
 //Sort fields title and mode

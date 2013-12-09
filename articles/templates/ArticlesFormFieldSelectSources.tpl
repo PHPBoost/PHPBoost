@@ -9,9 +9,9 @@ var ArticlesFormFieldSelectSources = Class.create({
 			var id = this.id_input + '_' + this.integer;
 
 			var div = Builder.node('div', {'id' : id}, [
-				Builder.node('input', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '${i18n('articles.form.source_name')}'}),
+				Builder.node('input', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@form.source_name}'}),
 				' ',
-				Builder.node('input', {type : 'text', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '${i18n('articles.form.source_url')}'}),
+				Builder.node('input', {type : 'text', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '{@form.source_url}'}),
 				' ',
 				Builder.node('a', {href : 'javascript:ArticlesFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'icon-delete'}),
 				' ',
@@ -39,8 +39,8 @@ var ArticlesFormFieldSelectSources = new ArticlesFormFieldSelectSources();
 <div id="input_fields_${escape(ID)}">
 # START fieldelements #
 		<div id="${escape(ID)}_{fieldelements.ID}">
-			<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="${i18n('articles.form.source_name')}"/>
-			<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="${i18n('articles.form.source_url')}" class="field-large"/>
+			<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.source_name}"/>
+			<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="{@form.source_url}" class="field-large"/>
 			<a href="javascript:ArticlesFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="icon-delete" data-confirmation="delete-element"></a>
 		</div>
 # END fieldelements #
