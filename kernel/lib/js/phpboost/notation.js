@@ -49,7 +49,7 @@
 			$$('#notation-'+object.id+' .stars').invoke('observe', 'mouseout', function(event) {
 				if(object.timeout == null) {
 					object.timeout = window.setTimeout(function() {
-						object.change_picture_status(object.get_default_note()); 
+						object.change_picture_status(object.default_note); 
 					}, 50);
 				}
 			});
@@ -83,15 +83,15 @@
 		var id = this.id;
 		var user_connected = this.user_connected;
 		var already_post = this.already_post;
-		var auth_error = this.get_lang('auth_error');
-		var already_vote = this.get_lang('already_vote');
+		var auth_error = this.lang['auth_error'];
+		var already_vote = this.lang['already_vote'];
 
 		$$('#notation-' + id + ' .stars').invoke('insert', {after: '<i id="loading-'+ id +'" class="icon-spinner icon-spin"></i>'});
 
 		object = this;
 		
 		new Ajax.Request(
-		this.get_current_url(),
+		this.current_url,
 		{
 			method: 'post',
 			parameters: {'note': note, 'id': id, 'token' : TOKEN},
@@ -104,8 +104,8 @@
 					alert(already_vote);
 				}
 				else {
-					object.set_default_note(note);
-					object.set_already_post(1);
+					object.default_note = note;
+					object.already_post = 1;
 					object.change_picture_status(note);
 					object.change_nbr_note();
 				}
@@ -137,6 +137,6 @@
 		var number_notes_el = $$('#notation-' + this.id + ' span.number-notes').first();
 		var number_notes = parseInt(number_notes_el.innerHTML) + 1;
 		number_notes_el.update(number_notes);
-		$$('#notation-' + this.id + ' .notes span:not(.number-notes)').invoke('update', (number_notes > 1 ? this.get_lang('notes') : this.get_lang('note')));
+		$$('#notation-' + this.id + ' .notes span:not(.number-notes)').invoke('update', (number_notes > 1 ? this.lang['notes'] : this.lang['note']));
 	}
 });
