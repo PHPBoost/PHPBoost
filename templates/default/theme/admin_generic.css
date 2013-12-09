@@ -1,0 +1,79 @@
+/* --------------------------------------
+		generic.css
+ Contient les classes génériques, ne devant pas être modifiée pour chaque thême.
+--------------------------------------*/ 
+/* Balises */
+img { border:none; overflow:scroll; }
+hr { color:#061729; height:1px; }
+ul { margin:0; line-height:normal; }
+p { margin-bottom:0.7em; line-height:normal; font-size:1em; }
+
+/* Classes textes */
+.text_center { text-align:center; }
+.text_small { font-size:10px; font-weight:normal; }
+.text-strong { font-weight:bold; }
+.text-justify { text-align:justify; }
+
+.img_right { float:right; margin:6px; }
+.img_left { float:left; margin:6px; }
+
+.valign-top { vertical-align:top; }
+.valign-middle { vertical-align:middle; }
+.valign-bottom { vertical-align:bottom; }
+
+.spacer { clear:both; }
+
+/* Erreurs
+--------------------------------------*/
+div.message-helper {
+	height:auto;
+	max-width:500px;
+	padding:10px;
+	margin:5px auto 15px auto;
+	line-height:20px;
+	border-width:1px;
+	border-style:solid;
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+}
+
+div.message-helper i[class^="icon-"] { 
+	display:block; 
+	float:left;
+	width:25px;
+	text-align:center;
+}
+div.message-helper i[class^="icon-"]:before { font-size: 2em; }
+
+div.message-helper-content{ padding:0px 5px 0px 35px; }
+
+.icon-error:before { content: "\f00d"; }
+.icon-notice:before { content: "\f12a"; }
+.icon-warning:before { content: "\f071"; }
+.icon-success:before { content: "\f00c"; }
+.icon-question:before { content: "\f128"; }
+
+.question { background-color:#DAEEF8; border-color:#BDE9F2; }
+.question, .icon-question:before { color:#3B88AE; }
+
+.notice { background-color:#F0F0F0; border-color:#E2E2E2; }
+.notice, .icon-notice:before { color:#888888; }
+
+.warning { background-color:#FDF9E4; border-color:#FBECCD; }
+.warning, .icon-warning:before { color:#C19954; }
+
+.error { background-color:#F3DFDF; border-color:#ECCDD2; }
+.error, .icon-error:before { color:#BA4B49; }
+
+.success { background-color:#E0F1D9; border-color:#D7EAC7; }
+.success, .icon-success:before { color:#478948; }
+
+
+/* phpinfo */
+h1,h2 { font-family:sans-serif; }
+h1 { font-size:150%; }
+h2 { font-size:125%; }
+.center { text-align:center; }
+.em { color:#666666; background-color:#cccccc; }
+pre { margin:0px; font-family:monospace; color:#000; }

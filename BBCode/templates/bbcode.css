@@ -1,0 +1,85 @@
+/** BBcode **/
+/* Tableau du bbcode */
+
+.bbcode {
+	margin: auto;
+	width: 532px;
+}
+
+.bbcode-container {
+	background-color: #EEE;
+	border: 1px solid #BEBEBE;
+	padding: 5px 5px 0 5px;
+	width:500px;
+}
+
+.bbcode-container + .bbcode-upload + .bbcode-container {
+	border-top:none;
+}
+
+.bbcode .bbcode-container{
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius:3px;
+}
+
+.bbcode.expand .bbcode-container:first-child{
+	-webkit-border-radius:3px 3px 0 0;
+	-moz-border-radius:3px 3px 0 0;
+	border-radius:3px 3px 0 0;
+}
+
+.bbcode.expand .bbcode-container:last-child{
+	-webkit-border-radius:0 0 3px 3px;
+	-moz-border-radius:0 0 3px 3px;
+	border-radius:0 0 3px 3px;
+}
+
+.bbcode-upload {
+	margin:-27px 0 0 5px;
+	float:right;
+}
+
+.bbcode .color_picker .bbcode_block {
+	left:400px;
+}
+
+/* Icones de la barre BBCode */
+i[class^="bbcode-icon-"] { vertical-align:middle; cursor: pointer;}
+
+i.bbcode-icon-separate:before { content: url('images/separate.png'); }
+i.bbcode-icon-bold:before { content: url('images/bold.png'); }
+i.bbcode-icon-italic:before { content: url('images/italic.png'); }
+i.bbcode-icon-underline:before { content: url('images/underline.png'); }
+i.bbcode-icon-strike:before { content: url('images/strike.png'); }
+i.bbcode-icon-smileys:before { content: url('images/smileys.png'); }
+i.bbcode-icon-title:before { content: url('images/title.png'); }
+i.bbcode-icon-subtitle:before { content: url('images/subtitle.png'); }
+i.bbcode-icon-style:before { content: url('images/style.png'); }
+i.bbcode-icon-url:before { content: url('images/url.png'); }
+i.bbcode-icon-image:before { content: url('images/image.png'); }
+i.bbcode-icon-quote:before { content: url('images/quote.png'); }
+i.bbcode-icon-hide:before { content: url('images/hide.png'); }
+i.bbcode-icon-list:before { content: url('images/list.png'); }
+i.bbcode-icon-color:before { content: url('images/color.png'); }
+i.bbcode-icon-size:before { content: url('images/size.png'); }
+i.bbcode-icon-minus:before { content: url('images/minus.png'); }
+i.bbcode-icon-plus:before { content: url('images/plus.png'); }
+i.bbcode-icon-more:before { content: url('images/more.png'); }
+i.bbcode-icon-left:before { content: url('images/left.png'); }
+i.bbcode-icon-center:before { content: url('images/center.png'); }
+i.bbcode-icon-right:before { content: url('images/right.png'); }
+i.bbcode-icon-justify:before { content: url('images/justify.png'); }
+i.bbcode-icon-float_left:before { content: url('images/float_left.png'); }
+i.bbcode-icon-float_right:before { content: url('images/float_right.png'); }
+i.bbcode-icon-sup:before { content: url('images/sup.png'); }
+i.bbcode-icon-sub:before { content: url('images/sub.png'); }
+i.bbcode-icon-indent:before { content: url('images/indent.png'); }
+i.bbcode-icon-table:before { content: url('images/table.png'); }
+i.bbcode-icon-flash:before { content: url('images/flash.png'); }
+i.bbcode-icon-movie:before { content: url('images/movie.png'); }
+i.bbcode-icon-sound:before { content: url('images/sound.png'); }
+i.bbcode-icon-code:before { content: url('images/code.png'); }
+i.bbcode-icon-math:before { content: url('images/math.png'); }
+i.bbcode-icon-html:before { content: url('images/html.png'); }
+i.bbcode-icon-help:before { content: url('images/help.png'); }

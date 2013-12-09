@@ -1,0 +1,274 @@
+/* --------------------------------------
+		default.css
+Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
+--------------------------------------*/
+
+/* Reset */
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+html, body { margin: 0;	padding: 0; }
+img { border:none; overflow:scroll; vertical-align: middle; }
+img, table, td, blockquote, code, pre, textarea, input, video {	max-width: 100%; }
+input, button, label, select, textarea, legend { font-family: inherit; font-size: inherit; vertical-align: middle; }
+optgroup, select, label, button { cursor:pointer; }
+input[type=checkbox] { border:none; background:none; }
+button::-moz-focus-inner, .button::-moz-focus-inner{ border:0; padding:0; }
+
+hr {
+    background:#C4CED6;
+    border:none;
+    margin:1px auto;
+    height:1px;
+    width:99%;
+}
+
+ul, ol { line-height:normal; }
+
+p {
+    margin-bottom:0.7em;
+    line-height:normal;
+    font-size:1em;
+}
+
+pre { white-space:pre-wrap; }
+
+/* Alignements */
+.inline { display:inline; }
+
+.center {
+	text-align:center;
+	display:block;
+	padding:0;
+	margin:2px auto;
+}
+.left {
+    text-align:left;
+    display:block;
+    padding:0;
+    margin:2px 0px;
+}
+.right {
+    text-align:right;
+    display:block;
+    padding:0;
+    margin:2px 0px;
+}
+
+.float-left, img.left { float:left; }
+.float-right, img.right { float:right; }
+img.left, img.right { margin:6px; }
+
+/* Classes textes */
+.text-strong { font-weight:bold; }
+.text-justify { text-align:justify; }
+.text-italic { font-style:italic; }
+
+.valign-top { vertical-align:top; }
+.valign-middle { vertical-align:middle; }
+.valign-bottom { vertical-align:bottom; }
+
+.spacer { clear:both; }
+
+/* Affichage des smiley */
+.smiley { vertical-align:middle; }
+
+/* Fieldsets */
+
+div.vertical-fieldset,
+div.horizontal-fieldset { margin:20px 0; }
+
+div.vertical-fieldset [class^="form-element"],
+div.horizontal-fieldset [class^="form-element"]{ margin: 0px 5px 0px 5px; }
+
+div.horizontal-fieldset [class^="form-element"] label { display: inline; }
+
+div.vertical-fieldset [class^="form-element"] label,
+div.horizontal-fieldset [class^="form-element"] label { 
+	width: auto;
+	vertical-align: middle;
+	font-weight:bold;
+}
+
+/* Imite l'affichage fieldset / legend */
+.fieldset-content {
+    width:95%;
+    margin:auto;
+    margin-top:20px;
+}
+
+/* Boutons */
+.button {
+    cursor:pointer;
+}
+
+button.image{
+    background:none;
+    border:none;
+    cursor:pointer;
+}
+
+/* Opacité */
+.low-opacity {
+    filter:alpha(opacity=40);
+    opacity: 0.40;
+    -moz-opacity:0.40;
+}
+
+/* Liens pagination */
+nav.pagination {
+	display:inline;
+}
+
+nav.pagination .current-page {
+    text-decoration:underline;
+}
+
+/* Debug */
+.pbt-debug { background: orange !important; outline: 3px solid orangered !important; }
+
+#error-handler {
+	width:auto;
+	max-width:750px;
+	margin:15px auto;
+}
+
+/* Patch Tables */
+table.invisible {
+	-moz-border-radius: 0;
+    -webkit-border-radius: 0;
+	border-radius: 0;
+	border:none;
+	width:auto;
+}
+
+table.invisible tr td {
+	background-color:transparent;
+	border:none;
+	padding:0;
+}
+
+.module-table {
+	width:98%;
+	margin:auto;
+	border-spacing:0px;
+	border-collapse:separate;
+	padding:0px;
+	border:1px solid #D6DEE7;
+	background:#f2f8ff;
+}
+
+.module-table td {
+	border:none;
+	background:transparent;
+	text-align:left;
+}
+
+.module-table th {
+	color:#FFFFFF;
+	background:#336397;
+	text-align:left;
+	font-size:11px;
+	font-weight:normal;
+	text-transform:uppercase;
+}
+
+/* Prévisualisation AJAX. */
+.xmlhttprequest-preview{
+	overflow:auto;
+	height:220px;
+	width:94%;
+	font-size:11px;
+	margin:4px auto 3px auto;		
+	padding:1px 2px 1px 2px;
+	border-radius:4px;
+    -moz-border-radius:4px;
+    -khtml-border-radius:4px;
+    -webkit-border-radius:4px;
+}
+
+/* Syndications */
+div.syndication-choices {
+    position:absolute;
+    width:0px;
+    height:0px;
+    visibility:hidden;
+    overflow:visible;
+    margin-top:2px 0px 0px -20px;
+}
+
+div.syndication-choices ul {
+    width:90px;
+    list-style-type:none;
+	line-height:18px;
+}
+div.syndication-choices ul li {
+	height:18px;
+    margin-bottom:1px;
+}
+
+ul.rss-feed {
+    margin-left:20px;
+}
+
+ul.rss-feed li {
+    text-align: left;
+}
+
+@media print {
+	* {
+		background: transparent;
+		color: #000;
+	    text-shadow: none;
+	    box-shadow: none;
+	}
+}
+
+/* Lightbox
+--------------------------------------*/
+#lightbox{  position:absolute;  left:0; width:100%; z-index:103; text-align:center; line-height:0;}
+#lightbox img{ width:auto; height:auto;}
+#lightbox a img{ border:none; }
+
+#outerImageContainer{ position:relative; background-color:#fff; width:250px; height:250px; margin:0 auto; }
+#imageContainer{ padding:10px; }
+
+#loading{ position:absolute; top:40%; left:0%; height:25%; width:100%; text-align:center; line-height:0; }
+#hoverNav{ position:absolute; top:0; left:0; height:100%; width:100%; z-index:10; }
+#imageContainer>#hoverNav{ left:0;}
+#hoverNav a{ outline:none;}
+
+#prevLink, #nextLink{ width:49%; height:100%; background-image:url(data:image/gif;base64,AAAA); /* Trick IE into showing hover */ display:block; }
+#prevLink { left:0; float:left;}
+#nextLink { right:0; float:right;}
+#prevLink:hover, #prevLink:visited:hover { background:url(../images/lightbox/prevlabel.gif) left 15% no-repeat; }
+#nextLink:hover, #nextLink:visited:hover { background:url(../images/lightbox/nextlabel.gif) right 15% no-repeat; }
+
+#imageDataContainer{ font:10px Verdana, Helvetica, sans-serif; background-color:#fff; margin:0 auto; line-height:1.4em; overflow:auto; width:100%   ; }
+
+#imageData{ padding:0 10px; color:#666; }
+#imageData #imageDetails{ width:70%; float:left; text-align:left; } 
+#imageData #caption{ font-weight:bold;  }
+#imageData #numberDisplay{ display:block; clear:left; padding-bottom:1.0em; }           
+#imageData #bottomNavClose{ width:66px; position:relative; float:right; padding-bottom:0.7em; outline:none;}      
+
+#overlay{ position:absolute; top:0; left:0; z-index:102; width:100%; height:500px; background-color:#000; }
+
+/* Effet Blink
+--------------------------------------*/
+@keyframes blink {  
+    0% { opacity:0; }
+    30% { opacity:1; }
+    70% { opacity:1; }
+    100% { opacity:0; }
+}
+@-webkit-keyframes blink {
+    0% { opacity:0; }
+    30% { opacity:1; }
+    70% { opacity:1; }
+    100% { opacity:0; }
+}
+
+.blink {
+	animation: blink 1.5s ease-in-out infinite;
+	-moz-animation: blink 1.5s ease-in-out infinite;
+	-webkit-animation: blink 1.5s ease-in-out infinite;
+}
