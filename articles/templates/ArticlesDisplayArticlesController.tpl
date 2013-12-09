@@ -40,6 +40,7 @@
 		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 	</header>
 	<div class="contents">
+			# INCLUDE FORM #
 			# IF C_PAGINATION #
 			<div style="float:right;margin-right:35px;width:250px;">
 				<b>${i18n('articles.summary')} :</b> # INCLUDE FORM #	
