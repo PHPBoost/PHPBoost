@@ -44,7 +44,7 @@
 							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 						</span>
 						# ENDIF #
-						<a href="{messages.U_ANCHOR}"><i class="icon-anchor"></i></a> ${LangLoader::get_message('on', 'main')} {messages.DATE}
+						<a href="{messages.U_ANCHOR}"><i class="icon-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {messages.DATE}
 					</div>
 					<div class="message-message">
 						<div class="message-containt">{messages.CONTENTS}</div>
