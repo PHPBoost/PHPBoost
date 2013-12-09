@@ -120,33 +120,25 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->build_view_keywords();
 		
-		$pagination = $this->get_pagination($nbr_pages, $current_page);
-		
 		$this->view->put_all($this->article->get_tpl_vars());
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 		
 		$this->view->put_all(array(
 			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'C_DATE_UPDATED' => $this->article->get_date_updated() != null ? true : false,
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_PREVIOUS_PAGE' => ($current_page != 1) ? true : false,
-			'C_NEXT_PAGE' => ($current_page != $nbr_pages) ? true : false,
 			'L_CAT_NAME' => $this->category->get_name(),
 			'DATE_UPDATED' => $this->article->get_date_updated() != null ? $this->article->get_date_updated()->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
-			'PAGINATION_ARTICLES' => ($nbr_pages > 1) ? $pagination->display() : '',
 			'PAGE_NAME' => $page_name,
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->article->get_id()),
-			'U_PREVIOUS_PAGE' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page - 1) : '',
-			'L_PREVIOUS_TITLE' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page-2] : '',
-			'U_NEXT_PAGE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page + 1) : '',
-			'L_NEXT_TITLE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page] : '',
 			'U_CATEGORY' => ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel(),
 			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->rel(),
 			'U_EDIT_ARTICLE_PAGE' => $page_name !== '' ? ArticlesUrlBuilder::edit_article($this->article->get_id(), $page_name)->rel() : ArticlesUrlBuilder::edit_article($this->article->get_id())->rel(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
 		));
+		
+		$this->build_pages_pagination($current_page, $nbr_pages, $array_page);
 		
 		$this->view->put('FORM', $this->form->display());
 		
@@ -165,8 +157,10 @@ class ArticlesDisplayArticlesController extends ModuleController
 	private function build_form($array_page, $current_page)
 	{
 		$form = new HTMLForm(__CLASS__);
+		$form->set_css_class('article_summary options');
 		
-		$fieldset = new FormFieldsetHorizontal('pages');
+		$fieldset = new FormFieldsetHorizontal('pages', array('description' => $this->lang['articles.summary']));
+		
 		$form->add_fieldset($fieldset);
 		
 		$article_pages = $this->list_article_pages($array_page);
@@ -176,6 +170,41 @@ class ArticlesDisplayArticlesController extends ModuleController
 		));
 		
 		$this->form = $form;
+	}
+	
+	private function build_pages_pagination($current_page, $nbr_pages, $array_page)
+	{
+		if ($nbr_pages > 1)
+		{	
+			$pagination = $this->get_pagination($nbr_pages, $current_page);
+			
+			if ($current_page > 1 && $current_page <= $nbr_pages)
+			{
+				$previous_page = ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page - 1);
+				
+				$this->view->put_all(array(
+					'U_PREVIOUS_PAGE' => $previous_page,
+					'L_PREVIOUS_TITLE' => $array_page[1][$current_page-2]
+				));
+			}
+
+			if ($current_page > 0 && $current_page < $nbr_pages)
+			{
+				$next_page = ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page + 1);
+				
+				$this->view->put_all(array(
+					'U_NEXT_PAGE' => $next_page,
+					'L_NEXT_TITLE' => $array_page[1][$current_page]
+				));
+			}
+			
+			$this->view->put_all(array(
+				'C_PAGINATION' => true,
+				'C_PREVIOUS_PAGE' => ($current_page != 1) ? true : false,
+				'C_NEXT_PAGE' => ($current_page != $nbr_pages) ? true : false,
+				'PAGINATION_ARTICLES' => $pagination->display()
+			));
+		}
 	}
 	
 	private function list_article_pages($array_page)

@@ -40,22 +40,30 @@
 		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 	</header>
 	<div class="contents">
-			# INCLUDE FORM #
 			# IF C_PAGINATION #
-			<div style="float:right;margin-right:35px;width:250px;">
-				<b>${i18n('articles.summary')} :</b> # INCLUDE FORM #	
-			</div>
-			<div class="spacer">&nbsp;</div>
+			# INCLUDE FORM #	
+			<div class="spacer">&nbsp;</div>					
 			# ENDIF #					
 			# IF PAGE_NAME #
-			<h2 class="title" style="text-indent:35px;">{PAGE_NAME}</h2>
+			<h2 class="title page_name">{PAGE_NAME}</h2>
 			# ENDIF #	
 			<span itemprop="text">{CONTENTS}</span>
 			<div class="spacer" style="margin-top:35px;">&nbsp;</div>
+			<hr />
 			# IF C_PAGINATION #
-			<div style="float:right;width:33%;text-align:right;"># IF C_NEXT_PAGE #<a style="text-decoration:none;" href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="icon-arrow-right"></i></a># ELSE #&nbsp;# ENDIF #</div>
-			<div style="float:right;width:33%" class="center"># INCLUDE PAGINATION_ARTICLES #</div>
-			<div style="float:right;width:33%;"># IF C_PREVIOUS_PAGE #<a style="text-decoration:none;" href="{U_PREVIOUS_PAGE}"><i class="icon-arrow-left"></i> {L_PREVIOUS_TITLE}</a># ENDIF #</div>
+			<div class="pages_pagination right">
+				# IF C_NEXT_PAGE #
+				<a style="text-decoration:none;" href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="icon-arrow-right"></i></a>
+				# ELSE #
+				&nbsp;
+				# ENDIF #
+			</div>
+			<div class="pages_pagination center"># INCLUDE PAGINATION_ARTICLES #</div>
+			<div class="pages_pagination">
+				# IF C_PREVIOUS_PAGE #
+				<a style="text-decoration:none;" href="{U_PREVIOUS_PAGE}"><i class="icon-arrow-left"></i> {L_PREVIOUS_TITLE}</a>
+				# ENDIF #
+			</div>
 			# ENDIF #		
 		<div class="spacer">&nbsp;</div>
 	</div>

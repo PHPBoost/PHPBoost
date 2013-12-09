@@ -30,10 +30,9 @@
 }
 
 .article_filters { 
-    float:right;
     width:400px;
-    height:20px;
-    margin-bottom:20px;
+    height:55px;
+    padding-right:60px;    
 }
 
 .article_tools {		
@@ -275,4 +274,16 @@
 .content_list .box footer .notes {
     float: right;
     padding: 1px 20px 0 0;
+}
+
+.article_summary {
+    padding-right:100px;
+}
+.page_name {
+    text-indent:35px;
+}
+
+.pages_pagination {
+    float:right;
+    width:33%;
 }
