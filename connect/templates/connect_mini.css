@@ -32,7 +32,10 @@ div.horizontal-fieldset ul li,
 div.horizontal-fieldset ul li a { color:#FFF; }
 div.horizontal-fieldset ul li > i{ vertical-align:0px; }
 
-div.vertical-fieldset label { text-align:center; }
+div.vertical-fieldset label { 
+	text-align:center;
+	padding-right: 0px;
+}
 div.vertical-fieldset ul.connect-content { text-align:left; }
 div.horizontal-fieldset ul.connect-content { text-align:center; }
  
