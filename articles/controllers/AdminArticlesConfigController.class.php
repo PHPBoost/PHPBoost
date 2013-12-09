@@ -31,6 +31,7 @@
 class AdminArticlesConfigController extends AdminModuleController
 {
 	private $lang;
+	private $common_lang;
 	private $config;
 	private $tpl;
 	private $form;
@@ -44,7 +45,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['articles_configuration.success-saving'], MessageHelper::SUCCESS, 4));
+			$this->tpl->put('MSG', MessageHelper::display($this->common_lang['message.success.config'], MessageHelper::SUCCESS, 4));
 		}
 		
 		 $this->tpl->put('FORM', $this->form->display());
@@ -63,6 +64,7 @@ class AdminArticlesConfigController extends AdminModuleController
 	private function load_lang()
 	{
 		$this->lang = LangLoader::get('common', 'articles');
+		$this->common_lang = LangLoader::get('common');
 	}
 	
 	private function load_config()
@@ -90,7 +92,7 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['articles_configuration.comments_enabled'], $this->config->get_comments_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->common_lang['admin.config.comments_enabled'], $this->config->get_comments_enabled()));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles_configuration.display_type'], $this->config->get_display_type(),
 			array(
@@ -99,17 +101,18 @@ class AdminArticlesConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['articles_configuration_authorizations'],
+		$common_lang = LangLoader::get('common');
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->common_lang['authorizations'],
 			array('description' => $this->lang['articles_configuration.authorizations.explain'])
 		);
 		
 		$form->add_fieldset($fieldset_authorizations);
 			
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['articles_configuration.authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['articles_configuration.config.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['articles_configuration.config.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['articles_configuration.config.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
+			new ActionAuthorization($this->common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($this->common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new ActionAuthorization($this->common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		));
 		
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
