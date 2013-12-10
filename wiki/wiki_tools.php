@@ -85,10 +85,7 @@ $Template->put_all(array(
 	
 	'L_RANDOM' => $LANG['wiki_random_page'],
 	'U_RANDOM' => url('property.php?random=1'),
-	
-	'L_RSS' => $LANG['wiki_rss'],
-	'U_RSS' => $page_type == 'index' ? SyndicationUrlBuilder::rss('wiki')->rel() : SyndicationUrlBuilder::rss('wiki', $article_infos['id_cat'])->rel(),
-	
+
 	'L_PRINT' => $LANG['printable_version'],
 	'U_PRINT' => url('print.php?id=' . $article_infos['id']),
 
