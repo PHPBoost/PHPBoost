@@ -1,0 +1,101 @@
+.calendar_content{
+	padding:6px;
+}
+
+.calendar_top_l a, .calendar_top_l a:hover, .calendar_top_r a, .calendar_top_r a:hover{
+	font-size:18px;
+	color:#666;
+	font-weight:bold;
+}
+
+.calendar_top_l{
+	position:absolute;
+	padding-left: 31px;
+	top:1px;
+	padding-top:1px;
+}
+
+.calendar_top_r {
+	position:absolute;
+	right:1px;
+	padding-right:31px;
+	top:1px;
+	padding-top:1px;
+}
+
+.calendar_top{
+	font-size:15px;
+	font-weight:bold;
+	text-align: center;
+	padding:4px;
+	position:relative;
+	float:none;
+	margin:0;
+}
+
+.calendar_table td{
+	height:40px;
+}
+
+div.event_date{
+	text-align:center;
+	font-size:13px;
+	margin-bottom: 30px;
+}
+
+div.event_display_author{
+	float:left;
+	padding-top:4px;
+	padding-bottom:4px;
+}
+
+div.event_display_dates{
+	font-size:10px;
+	font-weight:normal;
+	padding:4px;
+	float:right;
+	width: 175px;
+}
+
+.text_month{
+	font-size:13px;
+	font-weight:bold;
+}
+
+table tr td.calendar_today {
+	background:#DBEEDD;
+}
+
+table tr td.calendar_event {
+	background:#DBE5EE;
+}
+
+table td.calendar_other {
+	background:#F1F1F1;
+}
+
+table tr td.calendar_none {
+	background:#FFFFFF;
+}
+
+table tr td.calendar_weekend{
+	background:#ffe3b6;
+}
+
+table tr td.calendar_week{
+	border-right:2px solid #DDD;
+	width:8%;
+}
+
+.admin_form {
+	float:right;
+	width:300px;
+	margin-right:15px;
+}
+
+.column_title { width:28%; }
+.text_left { text-align:left; }
+
+.change_month_link {
+	cursor:pointer;
+}

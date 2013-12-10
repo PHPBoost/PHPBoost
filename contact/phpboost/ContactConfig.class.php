@@ -1,0 +1,230 @@
+<?php
+/*##################################################
+ *		                  ContactConfig.class.php
+ *                            -------------------
+ *   begin                : May 2, 2010
+ *   copyright            : (C) 2010 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
+ *
+ *
+ ###################################################
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
+
+/**
+ * This class contains the configuration of the contact module.
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ *
+ */
+class ContactConfig extends AbstractConfigData
+{
+	const TITLE = 'title';
+	const INFORMATIONS_ENABLED = 'informations_enabled';
+	const INFORMATIONS = 'informations';
+	const INFORMATIONS_POSITION = 'informations_position';
+	const FIELDS = 'fields';
+	const AUTHORIZATIONS = 'authorizations';
+	
+	const LEFT = 'left';
+	const TOP = 'top';
+	const RIGHT = 'right';
+	const BOTTOM = 'bottom';
+	
+	public function get_title()
+	{
+		return $this->get_property(self::TITLE);
+	}
+	
+	public function set_title($value) 
+	{
+		$this->set_property(self::TITLE, $value);
+	}
+	
+	public function enable_informations()
+	{
+		$this->set_property(self::INFORMATIONS_ENABLED, true);
+	}
+	
+	public function disable_informations()
+	{
+		$this->set_property(self::INFORMATIONS_ENABLED, false);
+	}
+	
+	public function are_informations_enabled()
+	{
+		return $this->get_property(self::INFORMATIONS_ENABLED);
+	}
+	
+	public function get_informations()
+	{
+		return $this->get_property(self::INFORMATIONS);
+	}
+	
+	public function set_informations($value) 
+	{
+		$this->set_property(self::INFORMATIONS, $value);
+	}
+	
+	public function get_informations_position()
+	{
+		return $this->get_property(self::INFORMATIONS_POSITION);
+	}
+	
+	public function set_informations_position($value) 
+	{
+		$this->set_property(self::INFORMATIONS_POSITION, $value);
+	}
+	
+	public function are_informations_left()
+	{
+		return $this->get_property(self::INFORMATIONS_POSITION) == self::LEFT;
+	}
+	
+	public function are_informations_top()
+	{
+		return $this->get_property(self::INFORMATIONS_POSITION) == self::TOP;
+	}
+	
+	public function are_informations_right()
+	{
+		return $this->get_property(self::INFORMATIONS_POSITION) == self::RIGHT;
+	}
+	
+	public function are_informations_bottom()
+	{
+		return $this->get_property(self::INFORMATIONS_POSITION) == self::BOTTOM;
+	}
+	
+	public function get_fields()
+	{
+		return $this->get_property(self::FIELDS);
+	}
+	
+	public function set_fields(Array $array)
+	{
+		$this->set_property(self::FIELDS, $array);
+	}
+	
+	public function get_field_id_by_name($name)
+	{
+		$id = null;
+		foreach (self::get_fields() as $key => $field)
+		{
+			if ($field->get_field_name() == $name)
+				$id = $key;
+		}
+		return $id;
+	}
+	
+	/**
+	 * @method Get authorizations
+	 */
+	public function get_authorizations()
+	{
+		return $this->get_property(self::AUTHORIZATIONS);
+	}
+	
+	 /**
+	 * @method Set authorizations
+	 * @params string[] $array Array of authorizations
+	 */
+	public function set_authorizations(Array $array)
+	{
+		$this->set_property(self::AUTHORIZATIONS, $array);
+	}
+	
+	private function init_fields_array()
+	{
+		$fields = array();
+		
+		$lang = LangLoader::get('config', 'contact');
+		
+		$field = new ContactField();
+		$field->set_name(TextHelper::htmlspecialchars($lang['mail_address']));
+		$field->set_field_name('f_sender_mail');
+		$field->set_description(TextHelper::htmlspecialchars($lang['mail_address_explain']));
+		$field->set_field_type('ContactShortTextField');
+		$field->set_regex(4);
+		$field->readonly();
+		$field->not_deletable();
+		
+		$fields[1] = $field;
+		
+		$field = new ContactField();
+		$field->set_name(TextHelper::htmlspecialchars($lang['contact_subject']));
+		$field->set_field_name('f_subject');
+		$field->set_description(TextHelper::htmlspecialchars($lang['contact_subject_explain']));
+		$field->set_field_type('ContactShortTextField');
+		$field->not_deletable();
+		
+		$fields[2] = $field;
+		
+		$field = new ContactField();
+		$field->set_name(TextHelper::htmlspecialchars($lang['contact_recipients']));
+		$field->set_field_name('f_recipients');
+		$field->set_field_type('ContactSimpleSelectField');
+		$field->set_possible_values(array('admins' => array('is_default' => true, 'title' => $lang['contact_recipients_admins'], 'email' => implode(';', MailServiceConfig::load()->get_administrators_mails()))));
+		$field->not_deletable();
+		$field->not_displayed();
+		
+		$fields[3] = $field;
+		
+		$field = new ContactField();
+		$field->set_name(TextHelper::htmlspecialchars($lang['message']));
+		$field->set_field_name('f_message');
+		$field->set_field_type('ContactHalfLongTextField');
+		$field->readonly();
+		$field->not_deletable();
+		
+		$fields[4] = $field;
+		
+		return $fields;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_default_values()
+	{
+		return array(
+			self::TITLE => LangLoader::get_message('contact_fieldset_title', 'config', 'contact'),
+			self::INFORMATIONS_ENABLED => false,
+			self::INFORMATIONS => '',
+			self::INFORMATIONS_POSITION => self::TOP,
+			self::FIELDS => self::init_fields_array(),
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
+		);
+	}
+	
+	/**
+	 * Returns the configuration.
+	 * @return ContactConfig
+	 */
+	public static function load()
+	{
+		return ConfigManager::load(__CLASS__, 'contact', 'config');
+	}
+	
+	/**
+	 * Saves the configuration in the database. Has it become persistent.
+	 */
+	public static function save()
+	{
+		ConfigManager::save('contact', self::load(), 'config');
+	}
+}
+?>
