@@ -67,9 +67,6 @@
 								<li><a href="{U_RSS}" title="{L_RSS}">
 									<i class="icon-rss"></i> {L_RSS}
 								</a></li>
-								<li><a href="{U_SEARCH}" title="{L_SEARCH}">
-									<i class="icon-search"></i> {L_SEARCH}
-								</a></li>
 							# IF NOT C_INDEX_PAGE #
 								<li><a href="{U_PRINT}" title="{L_PRINT}">
 									<i class="icon-print"></i> {L_PRINT}
