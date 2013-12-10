@@ -11,7 +11,7 @@
 # INCLUDE LOGIN_FORM #
 <div style="text-align:center;">
 	# IF C_REGISTRATION_ENABLED # 
-	<a href="{U_REGISTER}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign-middle" />{@registration}</a><br />
+	<a href="{U_REGISTER}"><i class="icon-ticket"></i> {@registration}</a><br />
 	# ENDIF #
-	<a href="{U_FORGET_PASSWORD}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/forget_mini.png" alt="" class="valign-middle" />{L_FORGET_PASSWORD}</a>
+	<a href="{U_FORGET_PASSWORD}"><i class="icon-question-circle"></i> {L_FORGET_PASSWORD}</a>
 </div>
