@@ -29,12 +29,6 @@
     top:1px;
 }
 
-.article_filters { 
-    width:400px;
-    height:55px;
-    padding-right:60px;    
-}
-
 .article_tools {		
     position: absolute;		
     opacity:0.01;
@@ -276,9 +270,6 @@
     padding: 1px 20px 0 0;
 }
 
-.article_summary {
-    padding-right:100px;
-}
 .page_name {
     text-indent:35px;
 }

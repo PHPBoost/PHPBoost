@@ -85,10 +85,12 @@ $LANG['pages_post_com'] = 'Poster un commentaire';
 $LANG['pages_page_com'] = 'Commentaires de la page %s';
 
 //Accueil
-$LANG['pages_explain'] = 'Vous êtes sur le panneau de contrôle des pages. Vous pouvez ici gérer l\'ensemble de vos pages.
-<div class="question"><p>Vous utilisez l\'éditeur que vous avez choisi dans votre profil pour mettre en forme les pages. Pour insérer du code HTML, utilisez la balise BBCode <span style="font-family:courier new;">[html]code html[/html]</span>, que vous utilisiez l\'éditeur BBCode ou TinyMCE.</p>
-<p>Pour des raisons de sécurité il est interdit d\'insérer du code PHP dans les pages.</p>
-<p>Pour faire des liens entre les différentes pages il suffit d\'utiliser la balise BBCode [link] qui n\'existe que sur ce module et qui s\'utilise de la façon suivante : <span style="font-family:courier new;">[link=titre-de-la-page]Lien vers la page[/link]</span>.</p></div>';
+$LANG['pages_explain'] = 'Vous êtes sur le panneau de contrôle des pages. Vous pouvez ici gérer l\'ensemble de vos pages.<br /><br />
+<p>Vous utilisez l\'éditeur que vous avez choisi dans votre profil pour mettre en forme les pages. Pour insérer du code HTML, utilisez la balise BBCode suivante :<br /><div class="code">[html]code html[/html]</div></p>
+<p>La balise est la même que vous utilisiez l\'éditeur BBCode ou TinyMCE.</p><br />
+<p>Pour faire des liens entre les différentes pages, il suffit d\'utiliser la balise BBCode suivante :<br /><div class="code">[link=titre-de-la-page]Lien vers la page[/link]</div></p>
+<p>Cette balise existe que sur ce module.</p>
+<div class="message-helper warning"><i class="icon-warning"></i><p>Pour des raisons de sécurité il est interdit d\'insérer du code PHP dans les pages.</p></div>';
 $LANG['pages_redirections'] = 'Gestion des redirections';
 $LANG['pages_num_pages'] = '%d page(s) existantes';
 $LANG['pages_num_coms'] = '%d commentaire(s) sur l\'ensemble des pages soit %1.1f commentaire par page';
