@@ -3,7 +3,7 @@
 
 .bbcode {
 	margin: auto;
-	width: 532px;
+	width: 475px;
 }
 
 .bbcode-containers { margin-right:30px; }
@@ -12,12 +12,10 @@
 	background-color: #EEE;
 	border: 1px solid #BEBEBE;
 	margin:0px;
-	height: 28px;
 	padding: 3px 3px;
 }
 
-.bbcode-container li { padding: 3px 3px 5px 3px; }
-.bbcode-more li { padding: 3px 3px 6px 3px; }
+.bbcode-container li { padding: 3px 3px 3px 3px; }
 
 .bbcode-elements { 
 	display:inline;
@@ -87,12 +85,12 @@
 .bbcode-elements a,
 i[class^="bbcode-icon-"] {
 	color:#555555;
-	width:20px;
+	width:17px;
 	text-align:center;
 }
 
 i[class^="bbcode-icon-"] { 
-	font-size:1.619em; 
+	font-size:1.167em; 
 	vertical-align:middle; 
 }
 
