@@ -11,11 +11,8 @@
 		<h1>{TITLE}</h1>
 	</header>
 	<div class="content">
-		<section class="block">
-			<div class="contents">
-				{L_EXPLAIN_PAGES}
-			</div>
-		</section>
+		{L_EXPLAIN_PAGES}	
+		<hr />
 		<div class="explorer">
 			<div class="cats">
 				<h1>{L_CATS}</h1>

@@ -157,7 +157,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	private function build_form($array_page, $current_page)
 	{
 		$form = new HTMLForm(__CLASS__);
-		$form->set_css_class('article_summary options');
+		$form->set_css_class('options');
 		
 		$fieldset = new FormFieldsetHorizontal('pages', array('description' => $this->lang['articles.summary']));
 		
