@@ -90,7 +90,7 @@ $LANG['pages_explain'] = 'Vous êtes sur le panneau de contrôle des pages. Vous p
 <p>La balise est la même que vous utilisiez l\'éditeur BBCode ou TinyMCE.</p><br />
 <p>Pour faire des liens entre les différentes pages, il suffit d\'utiliser la balise BBCode suivante :<br /><div class="code">[link=titre-de-la-page]Lien vers la page[/link]</div></p>
 <p>Cette balise existe que sur ce module.</p>
-<div class="message-helper warning"><i class="icon-warning"></i><p>Pour des raisons de sécurité il est interdit d\'insérer du code PHP dans les pages.</p></div>';
+<div class="message-helper warning"><i class="icon-warning"></i><div class="message-helper-content">Pour des raisons de sécurité il est interdit d\'insérer du code PHP dans les pages.</div></div>';
 $LANG['pages_redirections'] = 'Gestion des redirections';
 $LANG['pages_num_pages'] = '%d page(s) existantes';
 $LANG['pages_num_coms'] = '%d commentaire(s) sur l\'ensemble des pages soit %1.1f commentaire par page';
