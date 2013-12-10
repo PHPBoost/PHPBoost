@@ -78,7 +78,7 @@
 			</aside>
 			# ENDIF #
 			
-			<main role="main">
+			<div id="main" role="main">
 				# IF C_MENUS_TOPCENTRAL_CONTENT #
 				<div id="top-contents">
 					{MENUS_TOPCENTRAL_CONTENT}
