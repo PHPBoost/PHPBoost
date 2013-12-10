@@ -161,11 +161,6 @@ $LANG['wiki_create_redirection'] = 'Créer une redirection vers cet article';
 $LANG['wiki_create_redirection_to_this'] = 'Créer une redirection vers l\'article <em>%s</em>';
 
 //Recherche
-$LANG['wiki_search'] = 'Rechercher';
-$LANG['wiki_search_key_words'] = 'Mots clés (4 caractères minimum)';
-$LANG['wiki_search_result'] = 'Résultats de la recherche';
-$LANG['wiki_search_relevance'] = 'Pertinence du résultat';
-$LANG['wiki_empty_search'] = 'Aucun article n\'a été trouvé.';
 $LANG['wiki_search_where'] = 'Où?';
 $LANG['wiki_search_where_title'] = 'Titre';
 $LANG['wiki_search_where_contents'] = 'Contenu';

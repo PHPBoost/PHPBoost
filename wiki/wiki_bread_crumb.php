@@ -128,10 +128,6 @@ switch ($bread_crumb_key)
 		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
 		$Bread_crumb->add($LANG['wiki_explorer'], url('explorer.php'));
 		break;
-	case 'wiki_search':
-		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
-		$Bread_crumb->add($LANG['wiki_search'], url('search.php'));
-		break;
 	default:
 		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
 		break;
