@@ -204,7 +204,7 @@ class ArticlesFormController extends ModuleController
 		}}');
 		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-article-picture" class="icon-spinner icon-spin"></i>\'}); }');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
-		$other_fieldset->add_field(new FormFieldUploadFileTextEditor('picture', $this->lang['articles.form.picture'], $this->get_article()->get_picture()->relative(), 
+		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->lang['articles.form.picture'], $this->get_article()->get_picture()->relative(), 
 			array('description' => $this->lang['articles.form.picture.description'], 'events' => array('change' => $image_preview_request->render())
 		)));
 		$other_fieldset->add_field(new FormFieldFree('preview_picture', $common_lang['form.picture.preview'], '<img id="preview_picture" src="'. $this->get_article()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
