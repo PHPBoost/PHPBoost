@@ -67,9 +67,9 @@ function addSubElement(menu_element_id) {
 			]),
         
 			Builder.node('div', {className: 'sortable-actions'}, [
-				Builder.node('i', {class: 'icon-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
+				Builder.node('i', {className: 'icon-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
 				' ',
-				Builder.node('i', {class: 'icon-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
+				Builder.node('i', {className: 'icon-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
 			]),
 		]),
         Builder.node('div', {className: 'spacer'}),
@@ -97,7 +97,7 @@ function addSubMenu(menu_element_id) {
         Builder.node('div', {className: 'sortable-title'}, [
 			Builder.node('i', {className: 'icon-arrows', title: "${LangLoader::get_message('move', 'admin')}"}),
             ' ',
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png', alt: 'folder'}),
+            Builder.node('i', {className: 'icon-folder icon-2x'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
@@ -118,9 +118,9 @@ function addSubMenu(menu_element_id) {
 			]),
 		
 			Builder.node('div', {className: 'sortable-actions'}, [
-				Builder.node('i', {class: 'icon-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
+				Builder.node('i', {className: 'icon-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
 				' ',
-				Builder.node('i', {class: 'icon-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
+				Builder.node('i', {className: 'icon-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
 			]),
 		]),
         Builder.node('div', {className: 'spacer'}),
@@ -218,7 +218,7 @@ function image_preview(input,image)
 						# ELSE #
                             <option value="1">{L_ENABLED}</option>
                             <option value="0" selected="selected">{L_DISABLED}</option>
-						# ENDIF #					
+						# ENDIF #
 					</select>
 				</label></div>
 			</div>
@@ -239,14 +239,14 @@ function image_preview(input,image)
             -->
             </script>
 			<br />
-	    </fieldset>			
+	    </fieldset>
 	
 		<fieldset class="fieldset-submit">
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="id" value="{MENU_ID}">
 			<input type="hidden" name="token" value="{TOKEN}">
 			<input type="hidden" name="menu_tree" id="menu_tree" value="">
-			<button type="submit" name="valid" value="true">{L_ACTION}</button>					
+			<button type="submit" name="valid" value="true">{L_ACTION}</button>
 		</fieldset>
 	</form>
 </div>

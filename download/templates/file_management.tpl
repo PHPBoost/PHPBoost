@@ -89,7 +89,7 @@
 						<label for="url">* {L_URL}</label>
 						<div class="form-field">
 							<input type="text" size="50" id="url" name="url" value="{URL}">
-							<a title="{L_FILE_ADD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=url&amp;parse=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+							<a title="{L_FILE_ADD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=url&amp;parse=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><i class="icon-cloud-upload icon-2x"></i></a>
 						</div>
 					</div>
 					<div class="form-element">

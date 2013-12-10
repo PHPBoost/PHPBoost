@@ -141,6 +141,18 @@ function switch_img(id, path, path2)
 	}
 }
 
+//Switch entre deux classes CSS.
+function switch_className(id, class1, class2)
+{
+	if ($(id))
+	{	
+		if ($(id).className == class1)
+			$(id).className = class2;
+		else
+			$(id).className = class1;
+	}
+}
+
 //Afffiche/masque automatiquement un bloc.
 function display_div_auto(divID, type)
 {

@@ -341,11 +341,11 @@ else
 	));
 
 	if ($folder == 0 && !$show_member && empty($folder_member))
-	{	
+	{
 		$template->assign_block_vars('folder', array(
+			'C_MEMBER_FOLDER' => true,
 			'NAME' => '<a class="com" href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>',
 			'U_FOLDER' => '?showm=1',
-			'IMG_FOLDER' => 'member_max.png',
 			'L_TYPE_DEL_FOLDER' => $LANG['empty_member_folder']
 		));
 	}
@@ -395,7 +395,6 @@ else
 			'C_MEMBER_FOLDER' => $show_member,
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
-			'IMG_FOLDER' => $show_member ? 'member_max.png' : 'folder_max.png',
 			'RENAME_FOLDER' => !$show_member ? '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="icon-edit"></a></span>' : '',
 			'DEL_TYPE' => $show_member ? 'eptf' : 'delf',
 			'C_TYPEFOLDER' => !$show_member,

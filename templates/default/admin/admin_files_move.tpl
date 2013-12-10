@@ -20,25 +20,25 @@
 					<th>
 						{L_FILES_MANAGEMENT}
 					</th>
-				</tr>							
+				</tr>
 				<tr> 
 					<td class="row2">
-						<a href="admin_files.php?root=1{POPUP}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/home.png" class="valign-middle" alt="" /></a>
+						<a href="admin_files.php?root=1{POPUP}"><i class="icon-home icon-2x"></i></a>
 						<a href="admin_files.php?root=1{POPUP}">{L_ROOT}</a>
 					</td>
-				</tr>							
+				</tr>
 				<tr> 
 					<td class="row3" style="margin:0px;padding:0px">
 						<div style="float:left;padding:2px;padding-left:8px;">
 							{L_URL}
 						</div>
 						<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
-							<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_mini.png" class="valign-middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
+							<i class="icon-folder"></i> <a href="admin_files.php">{L_ROOT}</a>{URL}
 						</div>
 					</td>
-				</tr>			
-				<tr>	
-					<td class="row2" style="padding:20px;">							
+				</tr>
+				<tr>
+					<td class="row2" style="padding:20px;">
 						<br />
 						<form action="{TARGET}" method="post">
 						<table class="module-table">
@@ -49,37 +49,37 @@
 							</tr>
 							<tr> 
 								<td class="row1" style="width:210px;">
-									# START folder #	
+									# START folder #
 									<table style="border:0;width:210px;">
 										<tr>
 											<td style="width:34px;vertical-align:top;">
-												<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder_max.png" alt="" />
+												<i class="icon-folder icon-2x"></i>
 											</td>
-											<td style="padding-top:8px;">						
-												{folder.NAME}										
+											<td style="padding-top:8px;">
+												{folder.NAME}
 											</td>
-										</tr>						
+										</tr>
 									</table>
 						
 									# END folder #
 									
-									# START file #							
+									# START file #
 									<table style="border:0;width:210px;">
 										<tr>
 											<td style="width:100px;text-align:center;vertical-align:top;">
 												# IF file.C_DISPLAY_REAL_IMG #
 												<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="" style="width:100px;height:auto;" />
 												# ELSE #
-												<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/{file.FILE_ICON}" alt="" />
+												<img src="{PATH_TO_ROOT}/templates/default/images/upload/{file.FILE_ICON}" alt="" />
 												# ENDIF #
 											</td>
-											<td style="padding-top:8px;">						
-												{file.NAME}	
+											<td style="padding-top:8px;">
+												{file.NAME}
 												<br />
 												<span class="smaller">{file.FILETYPE}</span><br />
-												<span class="smaller">{file.SIZE}</span><br />								
+												<span class="smaller">{file.SIZE}</span><br />
 											</td>
-										</tr>						
+										</tr>
 									</table>
 									# END file #
 								</td>
@@ -97,21 +97,21 @@
 										var selected_cat = {SELECTED_CAT};
 									-->
 									</script>
-									<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/cat_root.png" alt="" /> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
+									<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="icon-level-up"></i> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
 									<br />
 									{FOLDERS}
 								</td>
-							</tr>	
+							</tr>
 						</table>
 						<br />
 						<input type="hidden" name="new_cat" id="id_cat" value="{SELECTED_CAT}">
 						<p style="text-align:center;"><button type="submit" value="true" name="valid">{L_SUBMIT}</button></p>
 						</form>
 					</td>
-				</tr>		
+				</tr>
 				<tr> 
 					<th>
-						&nbsp;{CLOSE}				
+						&nbsp;{CLOSE}
 					</th>
 				</tr>
 			</table>

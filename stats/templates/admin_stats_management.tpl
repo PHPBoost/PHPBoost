@@ -11,7 +11,7 @@
 					<br /><a href="admin_stats.php?site=1#stats">{L_SITE}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?members=1#stats"><img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/member.png" alt="" /></a>
+					<a href="admin_stats.php?members=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/member.png" alt="" /></a>
 					<br /><a href="admin_stats.php?members=1#stats">{L_USERS}</a>
 				</td>
 				<td style="width:20%;" class="row1">
@@ -451,7 +451,7 @@
 			if( document.getElementById('url' + divid).style.display == 'table' )
 			{
 				display_div_auto('url' + divid, 'table');
-				document.getElementById('img_url' + divid).src = '{PATH_TO_ROOT}/templates/default/images/admin/upload/plus.png';
+				document.getElementById('img_url' + divid).className = 'icon-plus-square-o';
 			}
 			else
 			{
@@ -476,7 +476,7 @@
 						display_div_auto('url' + divid, 'table');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
-						document.getElementById('img_url' + divid).src = '{PATH_TO_ROOT}/templates/default/images/admin/upload/minus.png';
+						document.getElementById('img_url' + divid).className = 'icon-minus-square-o';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';
@@ -548,7 +548,7 @@
 			if( document.getElementById('url' + divid).style.display == 'table' )
 			{
 				display_div_auto('url' + divid, 'table');
-				document.getElementById('img_url' + divid).src = '{PATH_TO_ROOT}/templates/default/images/admin/upload/plus.png';
+				document.getElementById('img_url' + divid).className = 'icon-plus-square-o';
 			}
 			else
 			{
@@ -561,7 +561,7 @@
 						display_div_auto('url' + divid, 'table');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
-						document.getElementById('img_url' + divid).src = '{PATH_TO_ROOT}/templates/default/images/admin/upload/minus.png';
+						document.getElementById('img_url' + divid).className = 'icon-minus-square-o';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';

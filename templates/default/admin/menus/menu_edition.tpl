@@ -1,23 +1,23 @@
 # IF C_FIRST_MENU #
-    <div id="menu_element_{ID}">
-        <input type="hidden" id="menu_uid" name="menu_uid" value="{ID}">
-    	<ul id="menu_element_{ID}_list" class="sortable-block">
-    		# START elements #
-    			{elements.DISPLAY}
-    		# END elements #
-    	</ul>
-        <fieldset class="fieldset-submit">
-            <button type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
-            <button type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
-        </fieldset>
-    </div>
+	<div id="menu_element_{ID}">
+		<input type="hidden" id="menu_uid" name="menu_uid" value="{ID}">
+		<ul id="menu_element_{ID}_list" class="sortable-block">
+			# START elements #
+				{elements.DISPLAY}
+			# END elements #
+		</ul>
+		<fieldset class="fieldset-submit">
+			<button type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{L_ADD_SUB_ELEMENT}</button>
+			<button type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{L_ADD_SUB_MENU}</button>
+		</fieldset>
+	</div>
 # ENDIF #
 
 # IF C_NEXT_MENU #
 	<li class="sortable-element" id="menu_element_{ID}">
 		<div class="sortable-title">
-			<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
-			<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder.png" alt="plus" class="valign-middle" style="cursor:move" />
+			<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>&nbsp;
+			<i class="icon-folder icon-2x" style="cursor:move"></i>&nbsp;
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
