@@ -6,41 +6,41 @@ Contient les formulaires, les modules (et modules minis), messages.
 /* Conteneurs, éléments de module, ... */
 section, article {
 	width: 96%;
-    margin: auto;
-    margin-bottom: 10px;
+	margin: auto;
+	margin-bottom: 10px;
 }
 
 section header, article header { margin:12px 0 20px 0; }
 
 /* Titre d'une page ou d'un element d'un module */
 section header h1, article header h1 {
-    border-bottom: 1px solid #336397;
+	border-bottom: 1px solid #336397;
 	margin-top:10px;
 }
 
 section header h1, article header h1 {
 	font-size: 16px;
-    font-weight: bold;
+	font-weight: bold;
 }
 
 section header h2, article header h2 {
-    border-bottom: 1px solid #336397;
+	border-bottom: 1px solid #336397;
 	margin-left:16px;
 }
 
 section header h2, article header h2 {
 	font-size: 16px;
-    font-weight: bold;
+	font-weight: bold;
 }
 
 section header h3, article header h3 {
-    border-bottom: 1px solid #336397;
+	border-bottom: 1px solid #336397;
 	margin-left:16px;
 }
 
 section header h3, article header h3 {
 	font-size: 15px;
-    font-weight: bold;
+	font-weight: bold;
 }
 
 /* Icones avec les actions (edition, suppression, etc) */
@@ -55,7 +55,7 @@ span.actions a { font-size: 12px; }
 /* Contenu */
 .content {
 	margin: 0 15px;
-    text-align: justify;
+	text-align: justify;
 	word-wrap: break-word;
 	overflow: auto;
 }
@@ -89,11 +89,11 @@ li.small-block {
 	display:inline-block;
 	float:none;
 	margin:0px 10px 0 0;
-    border-color: #CCCCCC #CCCCCC #99B1CB;
-    border-width: 1px;
+	border-color: #CCCCCC #CCCCCC #99B1CB;
+	border-width: 1px;
 	padding: 10px 20px;
-    text-align: center;
-    width: 130px;
+	text-align: center;
+	width: 130px;
 }
 li.small-block:last-child { margin:0px; }
 
@@ -277,7 +277,7 @@ table tbody td.align-left {
 }
 
 .row1 {
-    background:#E0E9EF;
+	background:#E0E9EF;
 	padding:8px 6px;
 	border-top:1px solid #CCCCCC;
 }
@@ -288,8 +288,8 @@ table tbody td.align-left {
 
 .row3 {
 	background:#F2F7FB;
-    border-color:#C4CED6;
-    padding:8px 6px;
+	border-color:#C4CED6;
+	padding:8px 6px;
 	border-top:1px solid #CCCCCC;
 	border-bottom:1px solid #CCCCCC;
 	-moz-border-radius:0px 0px 5px 5px;
@@ -297,7 +297,7 @@ table tbody td.align-left {
 	-khtml-border-bottom-left-radius:5px;
 	-webkit-border-bottom-right-radius:5px;
 	-webkit-border-bottom-left-radius:5px;
-    border-radius:5px;
+	border-radius:5px;
 }
 
 .row-disabled { background:#E1E1E1 !important; }
@@ -308,14 +308,14 @@ table tfoot {
 }
 
 table tfoot th {
-    color:#aaa;
-    background-color:#f0f0f0;
+	color:#aaa;
+	background-color:#f0f0f0;
 	border-top:1px solid #d1d2d4;
 	padding:8px;
 }
 
 table tfoot th a {
-    color:#676a74;
+	color:#676a74;
 }
 
 table tfoot th:only-child {
@@ -323,13 +323,13 @@ table tfoot th:only-child {
 }
 
 table tfoot th:first-child {
-    -moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-bottomleft: 3px;
 	-webkit-border-bottom-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 }
 
 table tfoot th:last-child {
-    -moz-border-radius-bottomright: 3px;
+	-moz-border-radius-bottomright: 3px;
 	-webkit-border-bottom-right-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
@@ -454,9 +454,9 @@ button[type=reset]{
 --------------------------------------*/
 
 .fieldset-mini {
-    width:540px;
-    margin:auto;
-    margin-top:20px;
+	width:540px;
+	margin:auto;
+	margin-top:20px;
 }
 
 fieldset {
@@ -475,7 +475,7 @@ fieldset.fieldset-submit { /* A supprimer ou remplacer par un div */
 }
 
 fieldset.fieldset-submit legend { /* A supprimer ou remplacer par un div */
-    display:none;
+	display:none;
 }
 
 optgroup { font-weight:bold; border:none; border-bottom:1px solid #5B5A5A; }
@@ -585,10 +585,10 @@ input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disable
 /* Textarea */
 textarea {
 	overflow: auto;
-    display:block;
-    width:94%;
-    margin:5px auto;
-    resize: vertical;
+	display:block;
+	width:94%;
+	margin:5px auto;
+	resize: vertical;
 }
 
 .form-element-textarea-small {
@@ -667,33 +667,33 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 --------------------------------------*/
 /* Placement des mini modules */
 .module-mini-container {
-    width:190px;
-    margin:0px 0px 10px 0px;
-    border:1px #bebebe solid;
-    border-bottom:2px #99b1cb solid;
-    background:#ffffff;
-    border-spacing:1px;
-    padding:5px;
+	width:190px;
+	margin:0px 0px 10px 0px;
+	border:1px #bebebe solid;
+	border-bottom:2px #99b1cb solid;
+	background:#ffffff;
+	border-spacing:1px;
+	padding:5px;
 	clear:both;
 }
 
 .module-mini-top {
-    height:24px;
-    font-weight:bold;
-    text-align:center;
-    border-bottom:2px #336397 solid;
+	height:24px;
+	font-weight:bold;
+	text-align:center;
+	border-bottom:2px #336397 solid;
 }
 
 .module-mini-contents {
-    border-top:none;
-    border-bottom:none;
-    text-align:center;
-    padding:5px 4px 0px 4px;
+	border-top:none;
+	border-bottom:none;
+	text-align:center;
+	padding:5px 4px 0px 4px;
 }
 
 /* Bordure inférieure des modules minis */
 .module-mini-bottom { 
-    height:15px;
+	height:15px;
 }
 
 /* Messages postés par les membres (messages privés & commentaires) 

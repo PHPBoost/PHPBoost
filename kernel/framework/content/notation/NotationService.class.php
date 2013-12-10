@@ -31,6 +31,8 @@
  */
 class NotationService
 {
+	private static $js_already_included = false;
+	
 	private static $user;
 	private static $db_querier;
 	private static $lang;
@@ -116,6 +118,7 @@ class NotationService
 
 			$count_notes = $notation->get_number_notes();
 			$template->put_all(array(
+				'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 				'C_NOTES' => $count_notes > 0 ? true : false,
 				'C_MORE_1_NOTES' => $count_notes > 1 ? true : false,
 				'CURRENT_URL' => REWRITED_SCRIPT,
@@ -131,6 +134,8 @@ class NotationService
 				'L_NOTE' => self::$lang['note'],
 				'L_VALID_NOTE' => self::$lang['valid_note']
 			));
+			
+			self::$js_already_included = true;
 
 			return $template->render();
 		}
