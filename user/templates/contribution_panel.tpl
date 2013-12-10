@@ -183,7 +183,8 @@
 				# IF C_UNPROCESSED_CONTRIBUTION #
 				<div style="text-align:center;margin:auto;width:300px">
 					<div style="float:left;width:50%">
-						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}"><img src="../templates/{THEME}/images/process-contribution.png" alt="{L_PROCESS_CONTRIBUTION}" /></a>
+						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">
+						<i class="icon-wrench icon-3x"></i>
 						<br />
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
 					</div>
