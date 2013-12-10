@@ -32,7 +32,7 @@ function Confirm_del_comment() {
 				<span itemprop="datePublished" content="{comments.DATE_ISO8601}">{comments.DATE}</span>
 			</div>
 			<div class="message-message">
-				<div itemprop="text" class="message-containt" class="content">{comments.MESSAGE}</div>
+				<div itemprop="text" class="message-content" class="content">{comments.MESSAGE}</div>
 				# IF comments.C_VIEW_TOPIC #
 					<div class="view-topic">
 						<a href="{comments.U_TOPIC}&refresh_all=1\#com{comments.ID_COMMENT}">
