@@ -48,7 +48,7 @@
 								if( xhr_object.readyState == 4 ) 
 								{
 									document.getElementById("xmlhttprequest-result-search").innerHTML = xhr_object.responseText;
-									hide_div("xmlhttprequest-result-search");
+									show_div("xmlhttprequest-result-search");
 								}
 							}
 							xmlhttprequest_sender(xhr_object, data);
