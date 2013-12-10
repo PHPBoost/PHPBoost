@@ -39,7 +39,7 @@
 					
 					<article class="block">
 						<header><h1>{QUESTION}</h1></header>
-						<div class="contents">
+						<div class="content">
 							# IF C_POLL_QUESTION #
 							<div class="row1 text_small">
 								# START radio #
@@ -104,7 +104,7 @@
 							</span>
 						</h1>
 					</header>
-					<div class="contents">
+					<div class="content">
 						# START list.result #
 							<div>
 								<h6>{list.result.ANSWERS}</h6>

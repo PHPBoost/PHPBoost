@@ -25,7 +25,7 @@
 	<header>
 		<h1>{@bugs.labels.fields.status}</h1>
 	</header>
-	<div class="contents">
+	<div class="content">
 		# IF C_BUGS #
 		<div class="center">
 			<div id="status_chart"></div>
@@ -83,7 +83,7 @@
 		<h1>{@bugs.labels.top_posters}</h1>
 	<header>
 	<div class="spacer">&nbsp;</div>
-	<div class="contents">
+	<div class="content">
 		<table>
 			<thead>
 				<tr>

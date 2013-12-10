@@ -281,7 +281,7 @@
 				# IF C_GALLERY_CATS #
 				<section class="block">
 					<header><h1>{L_CATEGORIES}</h1></header>
-					<div class="contents">
+					<div class="content">
 						<table style="width:100%">
 							# START cat_list #
 							{cat_list.OPEN_TR}								
@@ -311,7 +311,7 @@
 				# IF C_GALLERY_PICS #
 				<article class="block">
 					<header><h1>{GALLERY}</h1></header>
-					<div class="contents">
+					<div class="content">
 						<p style="text-align:center" id="pics_max">{PAGINATION_PICS}</p>				
 						
 						# IF C_GALLERY_PICS_MAX #

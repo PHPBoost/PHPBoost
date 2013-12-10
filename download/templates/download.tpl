@@ -79,7 +79,7 @@
 									# ENDIF #
 								</h1>
 							</header>
-							<div class="contents">
+							<div class="content">
 								# IF file.C_IMG #
 									<div class="float-right">
 										<a href="{file.U_DOWNLOAD_LINK}">

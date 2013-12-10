@@ -2,7 +2,7 @@
 	<header>
 		<h1><a href="{U_LINK}" class="big">{TITLE}</a></h1>
 	</header>
-    <div class="contents">
+    <div class="content">
         <div class="float-right">
             <a href="{U_LINK}">
                 <img src="{U_IMG}" alt="${escape(TITLE)}">

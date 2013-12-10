@@ -62,7 +62,7 @@
 					<label>{L_CAT}</label>
 					<div class="explorer inline">
 						<div class="cats">
-							<div class="contents">
+							<div class="content">
 								<ul>
 									<li><a class="{CAT_0}" id="class_0" href="javascript:select_cat(0);"><i class="icon-folder"></i>{L_DO_NOT_SELECT_ANY_CAT}</a></li>
 									# START create.list #
