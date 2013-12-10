@@ -37,14 +37,14 @@ function bb_display_block(divID, field)
 	if( timeout )
 		clearTimeout(timeout);
 	
-	var block = document.getElementById('bb_block' + divID + field);
+	var block = document.getElementById('bb-block' + divID + field);
 	if( block.style.display == 'none' )
 	{
 		if( document.getElementById(previous_bblock) )
 			document.getElementById(previous_bblock).style.display = 'none';
 		block.style.display = 'block';
 		displayed = true;
-		previous_bblock = 'bb_block' + divID + field;
+		previous_bblock = 'bb-block' + divID + field;
 	}
 	else
 	{
