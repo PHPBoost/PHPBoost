@@ -22,6 +22,7 @@
 [*] Ajout des liens éditer et supprimer dans la liste déroulante de la recherche d'un membre (les boutons sont visible seulement par les administrateurs)
 [*] Création d'une classe ModuleTreeLinks et d'un ExtensionPoint pour contenir tous les liens avec les différentes actions possible (remplace le admin_links dans desc.ini du module)
 [*] Création d'une API pour pouvoir intégrer facilement des Captchas alternatifs
+[*] Optimisation du système de notation et refonte graphique
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus
@@ -36,6 +37,10 @@
 [*] Refonte du design et du code des formulaires
 [*] Refonte du design et du code des tableaux
 [*] Création d'un menu unique contenant les actions possible d'un module dans la partie visible du site.
+[*] Ajout de Font-Awesome au projet PHPBoost
+[*] Grand nettoyage dans les images et remplacement par les équivalents du projet Font-Awesome
+[*] Le thème base est 500% plus compact en poids que celui de la version 4.0
+[*] Nettoyage du fichier default.css (gain de 30%)
 + Nettoyage des principaux fichiers TPL et CSS
 - Nouveau thème épuré
 - Possibilité d'ajouter un texte de présentation du site en dessous du nom
@@ -145,3 +150,13 @@
 [*] [color=red]Nouveauté :[/color] Amélioration du référencement
 [*] [color=red]Nouveauté :[/color] Suppression de l'édito et ajout d'une option supplémentaire dans le formulaire d'ajout pour placer les news en tête de liste.
 [*] Ajout des microdonnées pour améliorer le référencement
+
+[b]Recherche[/b]
+[*] Refonte visuelle
+
+[b]Téléchargement[/b]
+[*] Améliorations visuelles
+
+[b]Bac à sable[/b]
+[*] Intégration d'une section regroupant tous les styles que l'on peut trouver dans les différentes pages du projet. Elle permettra de gagner du temps lors de la personnalisation d'un thème
+[*] Page regroupant les alias des icônes de Font-Awesome
