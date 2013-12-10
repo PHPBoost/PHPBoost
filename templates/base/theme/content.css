@@ -117,7 +117,7 @@ li.small-block:last-child { margin:0px; }
 	margin:5px 0;
 }
 
-.explorer .contents {
+.explorer .content {
 	border:1px solid #DDD;
 	padding:5px 0;
 	-moz-border-radius: 3px;
@@ -126,19 +126,19 @@ li.small-block:last-child { margin:0px; }
 	min-height:120px;
 }
 
-.explorer .contents ul {
+.explorer .content ul {
 	list-style-type:none;
 	margin:0;
 	padding:0;
 }
 
-.explorer .contents ul a.parent {
+.explorer .content ul a.parent {
 	float:left;
 	display:inline-block;
 	padding-right:0;
 }
 
-.explorer .contents ul a {
+.explorer .content ul a {
 	padding:3px 5px;
 	display:block;
 	text-decoration:none;
@@ -146,34 +146,34 @@ li.small-block:last-child { margin:0px; }
 	font-weight:300;
 }
 
-.explorer .contents ul [class^="icon-"] {
+.explorer .content ul [class^="icon-"] {
 	width:20px;
 }
 
-.explorer .contents ul a.parent [class^="icon-"]:first-child {
+.explorer .content ul a.parent [class^="icon-"]:first-child {
 	width:14px;
 }
 
-.explorer .contents ul [class^="icon-"]:before {
+.explorer .content ul [class^="icon-"]:before {
 	width:20px;
 	text-align:center;
 	vertical-align:middle;
 }
 
-.explorer .contents ul a.parent [class^="icon-"]:first-child:before {
+.explorer .content ul a.parent [class^="icon-"]:first-child:before {
 	width:14px;
 	font-size:11px;
 }
 
-.explorer .contents ul a:hover, .explorer .contents ul a:hover+a {
+.explorer .content ul a:hover, .explorer .content ul a:hover+a {
 	background-color:#EEE;
 }
 
-.explorer .contents ul .sub a, .explorer .contents ul .sub ul .sub {
+.explorer .content ul .sub a, .explorer .content ul .sub ul .sub {
 	padding-left:18px;
 }
 
-.explorer .contents ul .sub a.parent {
+.explorer .content ul .sub a.parent {
 	padding-left:4px;
 }
 
