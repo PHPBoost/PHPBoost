@@ -53,9 +53,7 @@
 							<label for="where">{L_OPTIONS}</label>
 							<div class="form-field">
 								<label><input type="radio" name="where" id="where" value="contents" {CONTENTS_CHECKED}> {L_CONTENTS}</label>
-								<br />
 								<label><input type="radio" name="where" value="title" {TITLE_CHECKED}> {L_TITLE}</label>
-								<br />
 								<label><input type="radio" name="where" value="all" {ALL_CHECKED}> {L_TITLE}/{L_CONTENTS}</label>
 							</div>
 						</div>
