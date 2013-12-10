@@ -28,7 +28,7 @@
 				</form>
 				<div class="connect-register">
 					# IF C_USER_REGISTER # 
-					<a class="small" href="${relative_url(UserUrlBuilder::registration())}">{L_REGISTER}</a> 
+					<a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="icon-ticket"></i> {L_REGISTER}</a> 
 					# ENDIF #
 					<br />
 					<a class="small" href="${relative_url(UserUrlBuilder::forget_password())}"><i class="icon-question-circle"></i> {L_FORGOT_PASS}</a>
