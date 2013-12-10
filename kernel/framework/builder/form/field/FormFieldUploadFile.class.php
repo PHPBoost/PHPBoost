@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *		       FormFieldUploadFileTextEditor.class.php
+ *		       FormFieldUploadFile.class.php
  *                            -------------------
- *   begin                : July 10, 2013
- *   copyright            : (C) 2013 Patrick DUBEAU
- *   email                : daaxwizeman@gmail.com
+ *   begin                : December 10, 2013
+ *   copyright            : (C) 2013 Kévin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,26 +26,14 @@
  ###################################################*/
 
 /**
- * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ * @author Kévin MASSY <kevin.massy@phpboost.com>
  * @desc This class manage single-line text fields with a link to access the upload modal form.
  * @package {@package}
  */
-class FormFieldUploadFileTextEditor extends AbstractFormField
+class FormFieldUploadFile extends AbstractFormField
 {
-    private $size = 30;
-    private $maxlength = 255;
-    private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(ID)}" value="{VALUE}"
-	class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF # />
-	<a title="{L_FILE_ADD}" href="#" onclick="${escape(NAME)}.select();${escape(NAME)}.value=\'\';window.open(\'{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=${escape(NAME)}&amp;parse=true\', \'\', \'height=500,width=720,resizable=yes,scrollbars=yes\');return false;">
-	<i class="icon-cloud-upload icon-2x"></i></a>';
-
     /**
      * @desc Constructs a FormFieldUploadFileTextEditor.
-     * It has these options in addition to the AbstractFormField ones:
-     * <ul>
-     * 	<li>size: The size (width) of the HTML field</li>
-     * 	<li>maxlength: The maximum length for the field</li>
-     * </ul>
      * @param string $id Field identifier
      * @param string $label Field label
      * @param string $value Default value
@@ -54,7 +42,6 @@ class FormFieldUploadFileTextEditor extends AbstractFormField
      */
     public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
     {
-        $this->css_class = "text";
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
 
@@ -65,11 +52,9 @@ class FormFieldUploadFileTextEditor extends AbstractFormField
     {
         $template = $this->get_template_to_use();
 
-        $field = new StringTemplate(self::$tpl_src);
+        $field = new FileTemplate('framework/builder/form/FormFieldUploadFile.tpl');
 
         $field->put_all(array(
-			'SIZE' => $this->size,
-			'MAX_LENGTH' => $this->maxlength,
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'VALUE' => $this->get_value(),
@@ -86,26 +71,6 @@ class FormFieldUploadFileTextEditor extends AbstractFormField
         ));
 
         return $template;
-    }
-
-    protected function compute_options(array &$field_options)
-    {
-        foreach ($field_options as $attribute => $value)
-        {
-            $attribute = strtolower($attribute);
-            switch ($attribute)
-            {
-                case 'size':
-                    $this->size = $value;
-                    unset($field_options['size']);
-                    break;
-                case 'maxlength':
-                    $this->maxlength = $value;
-                    unset($field_options['maxlength']);
-                    break;
-            }
-        }
-        parent::compute_options($field_options);
     }
 
     protected function get_default_template()

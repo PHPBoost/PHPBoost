@@ -122,7 +122,7 @@ class NewsFormController extends ModuleController
 		}}');
 		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-news-picture" class="icon-spinner icon-spin"></i>\'}); }');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
-		$other_fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['news.form.picture'], $this->get_news()->get_picture()->relative(), array(
+		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->lang['news.form.picture'], $this->get_news()->get_picture()->relative(), array(
 			'events' => array('change' => $image_preview_request->render())
 		)));
 		$other_fieldset->add_field(new FormFieldFree('preview_picture', $common_lang['form.picture.preview'], '<img id="preview_picture" src="'. $this->get_news()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));

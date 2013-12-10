@@ -9,7 +9,7 @@
 		
 		var textarea = opener.document.getElementById("{FIELD}");
 		textarea.focus();
-		textarea.value += ' ' + code;
+		textarea.value = code;
 		# ENDIF #
 	}	
 	function close_popup()

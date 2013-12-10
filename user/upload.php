@@ -31,6 +31,7 @@ define('TITLE', $LANG['files_management']);
 $popup = retrieve(GET, 'popup', '');
 $editor = retrieve(GET, 'edt', '');
 $parse = retrieve(GET, 'parse', '');
+$no_path = retrieve(GET, 'no_path', '');
 
 if (!empty($popup)) //Popup.
 {
@@ -462,33 +463,32 @@ else
 			$height_source = !empty($height_source) ? $height_source + 30 : 0;
 			$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
 			$tinymce = '<img src="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '" alt="" />';
-			$link = PATH_TO_ROOT . '/upload/' . $row['path'];
+			$link = '/upload/' . $row['path'];
 			break;
 			//Image svg
 			case 'svg':
 			$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
 			$tinymce = '<img src="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '" alt="" />';
-			$link = 'javascript:popup_upload(\'' . PATH_TO_ROOT . '/upload/' . $row['path'] . '\', 0, 0, \'no\')';
+			$link = '/upload/' . $row['path'];
 			break;
 			//Sons
 			case 'mp3':
 			$bbcode = '[sound]/upload/' . $row['path'] . '[/sound]';
 			$tinymce = '<a href="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
-			$link = 'javascript:popup_upload(\'' . PATH_TO_ROOT . '/upload/' . $row['path'] . '\', 220, 10, \'no\')';
+			$link = '/upload/' . $row['path'];
 			break;
 			default:
 			$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';
 			$tinymce = '<a href="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
-			$link = PATH_TO_ROOT . '/upload/' . $row['path'];
+			$link = '/upload/' . $row['path'];
 		}
-		
 		$is_bbcode_editor = ($editor == 'BBCode');
 		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
-		$inserted_code = !empty($parse) ? $link : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlentities($tinymce));
+		$inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlentities($tinymce));
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'IMG' => $get_img_mimetype['img'],
-			'URL' => $link,
+			'URL' => PATH_TO_ROOT . $link,
 			'TITLE' => str_replace('"', '\"', $row['name']),
 			'NAME' => $name_cut,
 			'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="icon-edit"></a></span>',
