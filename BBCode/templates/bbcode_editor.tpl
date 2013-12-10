@@ -59,7 +59,7 @@ function XMLHttpRequest_preview(field)
 	<script type="text/javascript" src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
 # ENDIF #
 
-<div class="bbcode">
+<div class="bbcode expand">
 	# IF C_UPLOAD_MANAGEMENT #
 		<div class="bbcode-upload" style="float:right;">
 			<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=720,resizable=yes,scrollbars=yes');return false;">
@@ -74,7 +74,7 @@ function XMLHttpRequest_preview(field)
 				<a href="javascript:bb_display_block('1', '{FIELD}');" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_SMILEYS}">
 					<i class="bbcode-icon-smileys" {AUTH_SMILEYS}></i>
 				</a>
-				<div class="bbcode-block-container" style="display:none;" id="bb_block1{FIELD}">
+				<div class="bbcode-block-container" style="display:none;" id="bb-block1{FIELD}">
 					<div class="bbcode-block" style="width:140px;" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
 						# START smileys #
 							<a onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" style="height:{smileys.HEIGHT}px;width:{smileys.WIDTH}px;" alt="{smileys.CODE}"></a>{smileys.END_LINE}
@@ -96,7 +96,7 @@ function XMLHttpRequest_preview(field)
 				<a href="javascript:{DISABLED_TITLE}bb_display_block('2', '{FIELD}');" onmouseout="{DISABLED_TITLE}bb_hide_block('2', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_TITLE}">
 					<i class="bbcode-icon-title" {AUTH_TITLE}></i>
 				</a>
-				<div class="bbcode-block-container" style="display:none;" id="bb_block2{FIELD}">
+				<div class="bbcode-block-container" style="display:none;" id="bb-block2{FIELD}">
 					<div class="bbcode-block" style="margin-left:100px;" onmouseover="bb_hide_block('2', '{FIELD}', 1);" onmouseout="bb_hide_block('2', '{FIELD}', 0);">
 						<select id="title{FIELD}" onchange="insertbbcode_select('title', '[/title]', '{FIELD}')">
 							<option value="" selected="selected" disabled="disabled">{L_TITLE}</option>
@@ -111,7 +111,7 @@ function XMLHttpRequest_preview(field)
 				<a href="javascript:{DISABLED_BLOCK}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_CONTAINER}">
 					<i class="bbcode-icon-subtitle" {AUTH_BLOCK}></i>
 				</a>
-				<div class="bbcode-block-container" style="display:none;" id="bb_block3{FIELD}">
+				<div class="bbcode-block-container" style="display:none;" id="bb-block3{FIELD}">
 					<div class="bbcode-block" style="margin-left:110px;" onmouseover="bb_hide_block('3', '{FIELD}', 1);" onmouseout="bb_hide_block('3', '{FIELD}', 0);">
 						<select id="blocks{FIELD}" onchange="insertbbcode_select2('blocks', '{FIELD}')">
 							<option value="" selected="selected" disabled="disabled">{L_CONTAINER}</option>
@@ -124,7 +124,7 @@ function XMLHttpRequest_preview(field)
 				<a href="javascript:{DISABLED_STYLE}bb_display_block('4', '{FIELD}');" onmouseout="{DISABLED_STYLE}bb_hide_block('4', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_STYLE}">
 					<i class="bbcode-icon-style" {AUTH_STYLE}></i>
 				</a>
-				<div class="bbcode-block-container" style="display:none;" id="bb_block4{FIELD}">
+				<div class="bbcode-block-container" style="display:none;" id="bb-block4{FIELD}">
 					<div class="bbcode-block" style="margin-left:120px;" onmouseover="bb_hide_block('4', '{FIELD}', 1);" onmouseout="bb_hide_block('4', '{FIELD}', 0);">
 						<select id="style{FIELD}" onchange="insertbbcode_select('style', '[/style]', '{FIELD}')">
 							<option value="" selected="selected" disabled="disabled">{L_STYLE}</option>
@@ -147,7 +147,7 @@ function XMLHttpRequest_preview(field)
 				<a href="javascript:{DISABLED_LIST}bb_display_block('9', '{FIELD}');" onmouseout="{DISABLED_LIST}bb_hide_block('9', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_LIST}">
 					<i class="bbcode-icon-list" {AUTH_LIST}></i>
 				</a>
-				<div class="bbcode-block-container" style="display:none;" id="bb_block9{FIELD}">
+				<div class="bbcode-block-container" style="display:none;" id="bb-block9{FIELD}">
 					<div class="bbcode-block" style="margin-left:260px;" onmouseover="bb_hide_block('9', '{FIELD}', 1);" onmouseout="bb_hide_block('9', '{FIELD}', 0);">
 						<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" name="bb_list{FIELD}" id="bb_list{FIELD}" maxlength="3" value="3"></label></p>
 						<p><label style="font-size:10px;font-weight:normal">{L_ORDERED_LIST} <input size="3" type="checkbox" name="bb_ordered_list{FIELD}" id="bb_ordered_list{FIELD}"></label></p>
@@ -163,7 +163,7 @@ function XMLHttpRequest_preview(field)
 				<a href="javascript:{DISABLED_COLOR}bbcode_color('{FIELD}');{DISABLED_COLOR}bb_display_block('5', '{FIELD}');" onmouseout="{DISABLED_COLOR}bb_hide_block('5', '{FIELD}', 0);" title="{L_BB_COLOR}">
 					<i class="bbcode-icon-color" {AUTH_COLOR}></i>
 				</a>
-				<div class="bbcode-block-container color-picker" style="display:none;" id="bb_block5{FIELD}">
+				<div class="bbcode-block-container color-picker" style="display:none;" id="bb-block5{FIELD}">
 					<div id="bbcolor{FIELD}" class="bbcode-block" style="margin-left:250px;left:0px;" onmouseover="bb_hide_block('5', '{FIELD}', 1);" onmouseout="bb_hide_block('5', '{FIELD}', 0);">
 					</div>
 				</div>
@@ -171,7 +171,7 @@ function XMLHttpRequest_preview(field)
 				<a href="javascript:{DISABLED_SIZE}bb_display_block('6', '{FIELD}');" onmouseout="{DISABLED_SIZE}bb_hide_block('6', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_SIZE}">
 					<i class="bbcode-icon-size" {AUTH_SIZE}></i>
 				</a>	
-				<div class="bbcode-block-container" style="display:none;" id="bb_block6{FIELD}">
+				<div class="bbcode-block-container" style="display:none;" id="bb-block6{FIELD}">
 					<div class="bbcode-block" style="margin-left:340px;" onmouseover="bb_hide_block('6', '{FIELD}', 1);" onmouseout="bb_hide_block('6', '{FIELD}', 0);">
 						<select id="size{FIELD}" onchange="insertbbcode_select('size', '[/size]', '{FIELD}')">
 							<option value="" selected="selected" disabled="disabled">{L_SIZE}</option>
@@ -213,7 +213,7 @@ function XMLHttpRequest_preview(field)
 				<a href="javascript:{DISABLED_TABLE}bb_display_block('7', '{FIELD}');" onmouseover="{DISABLED_TABLE}bb_hide_block('7', '{FIELD}', 1);" class="bbcode-hover" title="{L_BB_TABLE}">
 					<i class="bbcode-icon-table" {AUTH_TABLE}></i>
 				</a>
-				<div class="bbcode-block-container" style="display:none;" id="bb_block7{FIELD}">
+				<div class="bbcode-block-container" style="display:none;" id="bb-block7{FIELD}">
 					<div id="bbtable{FIELD}" class="bbcode-block" style="margin-left:130px;width:160px;" onmouseover="bb_hide_block('7', '{FIELD}', 1);" onmouseout="bb_hide_block('7', '{FIELD}', 0);">			
 						<div class="form-element">
 							<label class="smaller" for="bb_lines{FIELD}">* {L_LINES}</label>
@@ -251,7 +251,7 @@ function XMLHttpRequest_preview(field)
 				<a href="javascript:{DISABLED_CODE}bb_display_block('8', '{FIELD}');" onmouseout="{DISABLED_CODE}bb_hide_block('8', '{FIELD}', 0);" class="bbcode-hover" title="{L_BB_CODE}">
 					<i class="bbcode-icon-code" {AUTH_CODE}></i>
 				</a>
-				<div class="bbcode-block-container" style="display:none;" id="bb_block8{FIELD}">
+				<div class="bbcode-block-container" style="display:none;" id="bb-block8{FIELD}">
 					<div class="bbcode-block" style="margin-left:220px;" onmouseover="bb_hide_block('8', '{FIELD}', 1);" onmouseout="bb_hide_block('8', '{FIELD}', 0);">
 						<select id="code{FIELD}" onchange="insertbbcode_select('code', '[/code]', '{FIELD}')">
 							<option value="" selected="selected" disabled="disabled">{L_CODE}</option>
