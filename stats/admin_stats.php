@@ -990,7 +990,7 @@ else
 			$Template->assign_block_vars('referer_list', array(
 				'ID' => $row['id'],
 				'URL' => $row['url'],
-				'IMG_MORE' => '<img src="../templates/default/images/admin/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign-middle" id="img_url' . $row['id'] . '" />',
+				'IMG_MORE' => '<a class="icon-plus-sqare-o" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 				'NBR_LINKS' => $row['count'],
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE_VISIT' => NumberHelper::round($average, 1),
@@ -1043,11 +1043,11 @@ else
 				$sign = '+';
 				$trend = 0;
 			}
-				
+			
 			$Template->assign_block_vars('keyword_list', array(
 				'ID' => $row['id'],
 				'KEYWORD' => $row['relative_url'],
-				'IMG_MORE' => '<img src="../templates/default/images/admin/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign-middle" id="img_url' . $row['id'] . '" />',
+				'IMG_MORE' => '<a class="icon-plus-square-o" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 				'NBR_LINKS' => $row['count'],
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE_VISIT' => NumberHelper::round($average, 1),

@@ -3,13 +3,13 @@
 		<div style="margin-left:{categories.MARGIN_LEFT}px;">
 			<div class="row3 management_cat_admin">
 				<span style="float:left;">
-					&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/upload/folder.png" alt="" style="vertical-align:middle" />
+					&nbsp;&nbsp;<i class="icon-folder icon-2x"></i>
 					&nbsp;
 					
 					# IF categories.C_DISPLAY_URL #
 						<a href="{categories.URL}">{categories.NAME}</a>
 					# ELSE #
-						{categories.NAME}			
+						{categories.NAME}
 					# ENDIF #
 				</span>
 				<span style="float:right;">
