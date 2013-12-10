@@ -86,10 +86,11 @@ $LANG['pages_post_com'] = 'Post a comment';
 $LANG['pages_page_com'] = 'Comments of the page %s';
 
 //Accueil
-$LANG['pages_explain'] = 'You are in the "pages" module control panel. Here you can manage your whole pages.
-<div class="question"><p>You will edit your page with the chosen editor in your personal profile. You can insert some HTML code using the BBCode tag <span style="font-family:courier new;">[html]HTML code[/html]</span></p>
+$LANG['pages_explain'] = 'You are in the "pages" module control panel. Here you can manage your whole pages.<br /><br />
+<p>You will edit your page with the chosen editor in your personal profile. You can insert some HTML code using the BBCode tag <span style="font-family:courier new;">[html]HTML code[/html]</span></p>
 <p>You cannot insert some PHP code in you pages for security reason.</p>
-<p>To create links between different pages of this module, you have to use the <em>link</em> tag which doesn\'t appear in the BBCode toolbar, but the syntax is for instance : <span style="font-family:courier new;">[link=title-of-the-page]Link up to page[/link]</span>.</p></div>';
+<p>To create links between different pages of this module, you have to use the <em>link</em> tag which doesn\'t appear in the BBCode toolbar, but the syntax is for instance : <span style="font-family:courier new;">[link=title-of-the-page]Link up to page[/link]</span>.</p>
+<div class="message-helper warning"><i class="icon-warning"></i><div class="message-helper-content">For security reason, insert PHP code is forbidden in "pages" module.</div></div>';
 $LANG['pages_redirections'] = 'Redirections';
 $LANG['pages_num_pages'] = '%d existing page(s)';
 $LANG['pages_num_coms'] = '%d comments on the whole pages, which corresponds to %1.1f commentary by page';
