@@ -4,20 +4,10 @@
 
 ===================================== Noyau ======================================
 [b]Framework :[/b]
-[*] [color=red]Nouveauté :[/color] 
-	[*] Nouveau système de catégories, plus fiable et plus performant avec ajout du drag & drop pour la gestion des catégories
+[*] Nouveau système de catégories :
+	[*] Plus fiable et plus performant, ajout du drag & drop pour la gestion des catégories
 	[*] Il est maintenant possible de déplacer et de supprimer les éléments contenus dans une catégorie lors de sa suppression
-[*] [color=red]Nouveauté :[/color] Ajout de l'affichage de la taille de la mémoire utilisée par PHP
-[*] Ajout de ReCaptcha
-+ Amélioration du référencement :
-	[*] Le nom du site est affiché à la fin dans la balise title (sauf pour la page d'accueil ou il est au début)
-	[*] Modification de la balise description (elle présentera la description de la page ou du site sur la page d'accueil du site)
-	[*] Ajout des microdonnées : 
-		[*] Modification du système de notation
-		[*] Modification du système de commentaire
-[*] Ajout des liens éditer et supprimer dans la liste déroulante de la recherche d'un membre (les boutons sont visible seulement par les administrateurs)
 [*] Ajout d'une classe ModulePagination pour simplifier l'ajout de la pagination dans un module
-[*] Possibilité d'afficher la liste des requêtes SQL dans la classe Debug et d'afficher le stacktrace pour pouvoir les tracer
 [*] Modification de la classe Date :
 	[*] Refonte des constantes de formatage
 	[*] Ajout d'un formatage relatif (ex : Il y a 9 heures)
@@ -26,13 +16,12 @@
 	- Optimisation des requêtes du système de commentaires
 	[*] Optimisation du code
 [*] Installation : Ajout de la possibilité de modifier la description du site dans l'installation en CLI
-- Etendre les fonctionnalités de l'ExtensionPoint HomePage pour pouvoir avoir la possibilité d'en avoir plusieurs par module et ainsi afficher par exemple 
-les pages du module "pages".
-[*] Ajout d'une option dans la configuration avancée pour le mode de débogage permettant d'afficher les requêtes SQL
 [*] Création d'un système permettant de gérer facilement des mots clés dans les modules
 - Passage de l'extension mysql à mysqli pour assurer la compatibilité à long terme de PHPBoost sur tous les serveurs
 [*] Améliorations de la rapidité d'éxécution et de la fiabilité de l'installateur
-[*] Déplacement de la gestion des rangs dans le module forum
+[*] Ajout des liens éditer et supprimer dans la liste déroulante de la recherche d'un membre (les boutons sont visible seulement par les administrateurs)
+[*] Création d'une classe ModuleTreeLinks et d'un ExtensionPoint pour contenir tous les liens avec les différentes actions possible (remplace le admin_links dans desc.ini du module)
+[*] Création d'une API pour pouvoir intégrer facilement des Captchas alternatifs
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus
@@ -40,28 +29,41 @@ les pages du module "pages".
 
 [b]Personnalisation graphique :[/b]
 [*] Logo cliquable
-+ Intégration des technologies HTML5 + CSS 3
-+ Création d'un menu unique remplaçant les icônes ajouter, éditer, supprimer, etc actuellement et permettant ainsi d'avoir quelque chose de plus harmonieux.
-- Nouveau thème épuré
-- Possibilité d'ajouter un texte de présentation du site en dessous du nom
-+ Nettoyage des fichiers TPL et CSS
-- Nouveau pack de smileys
+[*] Intégration des technologies HTML5 + CSS 3
+[*] Nouveau pack de smileys
 [*] Fin du support d'Internet Explorer 7 et inférieur qui ne représente maintenant plus que 0.6 % du marché des navigateurs
 [*] Unification du design des commentaires, des messages du livre d'or, de la shoutbox ainsi que les messages privés.
 [*] Refonte du design et du code des formulaires
 [*] Refonte du design et du code des tableaux
+[*] Création d'un menu unique contenant les actions possible d'un module dans la partie visible du site.
++ Nettoyage des principaux fichiers TPL et CSS
+- Nouveau thème épuré
+- Possibilité d'ajouter un texte de présentation du site en dessous du nom
 
+[b]Référencement :[/b]
+[*] Le nom du site est affiché à la fin dans la balise title (sauf pour la page d'accueil ou il est au début)
+[*] Modification de la balise description (elle contient la description de la page ou celle du site sur la page d'accueil)
+[*] Ajout des microdonnées : 
+	[*] Modification du système de notation
+	[*] Modification du système de commentaire
 
-[b]Divers :[/b]
+[b]Administration :[/b]
 [*] Suppression du panneau de modération présent dans l'administration qui fait doublon avec celui du dossier user
 [*] Suppression des autorisations d'accès dans la gestion des modules pour plus de cohérence et éviter les doublons avec les autorisations des modules
-[*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
 [*] Harmonisation des liens dans l'administration :
 	[*] Smileys est maintenant dans Contenu
 	[*] Mises à jours dans Administration
 	[*] Maintenance dans Administration
+[*] Ajout d'une option dans la configuration avancée pour pouvoir afficher la liste des requêtes SQL et afficher le stacktrace pour pouvoir les tracer
+	
+[b]Divers :[/b]
+[*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
+[*] Ajout de l'affichage de la taille de la mémoire utilisée par PHP
 
 =================================== Modules =====================================
+
+[color=red]Nouveauté :[/color] Nouveau module ReCaptcha
+
 [b]Articles[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
 [*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie
@@ -125,6 +127,9 @@ les pages du module "pages".
 
 [b]Multimedia[/b]
 [*] Ajout de la balise enclosure dans les flux RSS pour pouvoir diffuser le media
+
+[b]Forum[/b]
+[*] Déplacement de la gestion des rangs dans le module forum
 
 [b]News[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
