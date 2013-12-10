@@ -1,6 +1,9 @@
 		<section>					
 			<header>
-				<h1>{TITLE}</h1>
+				<h1>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" title="${LangLoader::get_message('syndication', 'main')}" class="icon-syndication"></a>
+					{TITLE}
+				</h1>
 			</header>
 			<div class="content">
 				# INCLUDE wiki_tools #

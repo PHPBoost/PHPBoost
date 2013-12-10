@@ -64,9 +64,6 @@
 								<li><a href="{U_RANDOM}" title="{L_RANDOM}">
 									<i class="icon-random"></i> {L_RANDOM}
 								</a></li>
-								<li><a href="{U_RSS}" title="{L_RSS}">
-									<i class="icon-rss"></i> {L_RSS}
-								</a></li>
 							# IF NOT C_INDEX_PAGE #
 								<li><a href="{U_PRINT}" title="{L_PRINT}">
 									<i class="icon-print"></i> {L_PRINT}
