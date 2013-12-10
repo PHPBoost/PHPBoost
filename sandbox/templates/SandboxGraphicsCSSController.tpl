@@ -445,7 +445,7 @@
 					<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">05/09/2013 à 15h37</span>
 				</div>
 				<div class="message-message">
-					<div itemprop="text" class="message-containt" class="content">Ceci est un commentaire</div>
+					<div itemprop="text" class="message-content" class="content">Ceci est un commentaire</div>
 				</div>
 			</div>
 		</div>

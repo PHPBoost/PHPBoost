@@ -194,7 +194,7 @@
 							<span>{pm.msg.DATE}</span>
 						</div>
 						<div class="message-message">
-							<div class="message-containt">{pm.msg.CONTENTS}</div>
+							<div class="message-content">{pm.msg.CONTENTS}</div>
 						</div>
 					</div>
 				</article>

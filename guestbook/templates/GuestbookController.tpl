@@ -47,7 +47,7 @@
 						<a href="{messages.U_ANCHOR}"><i class="icon-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {messages.DATE}
 					</div>
 					<div class="message-message">
-						<div class="message-containt">{messages.CONTENTS}</div>
+						<div class="message-content">{messages.CONTENTS}</div>
 					</div>
 				</div>
 			</article>

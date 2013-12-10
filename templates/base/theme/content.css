@@ -756,7 +756,7 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 }
 
 .message-avatar { width:80px; }
-.message-containt { overflow:auto; }
+.message-content { overflow:auto; }
 .message-pseudo a {}
 .message-user-infos img{ padding:10px 0px; }
 

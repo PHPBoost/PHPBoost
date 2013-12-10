@@ -31,7 +31,7 @@
 					<span>{messages.DATE}</span>
 				</div>
 				<div class="message-message">
-					<div class="message-containt" class="content">{messages.MESSAGE}</div>
+					<div class="message-content" class="content">{messages.MESSAGE}</div>
 				</div>
 			</div>
 		</article>
