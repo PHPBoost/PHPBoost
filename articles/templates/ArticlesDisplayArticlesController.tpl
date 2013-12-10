@@ -39,7 +39,7 @@
 		# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{PICTURE}"># ENDIF #
 		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 	</header>
-	<div class="contents">
+	<div class="content">
 			# IF C_PAGINATION #
 			# INCLUDE FORM #	
 			<div class="spacer">&nbsp;</div>					

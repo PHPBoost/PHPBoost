@@ -189,7 +189,7 @@
 			<div class="explorer">
 				<div class="cats">
 						<h1>Explorateur</h1>
-					<div class="contents">
+					<div class="content">
 						<ul>
 							<li><a id="class_0" href="#"><i class="icon-folder"></i>Racine</a>
 								<ul>
@@ -208,7 +208,7 @@
 				</div>
 				<div class="files">
 						<h1>Arborescence</h1>
-					<div class="contents" id="cat_contents">
+					<div class="content" id="cat_contents">
 						<ul>
 							<li><a href="#"><i class="icon-folder"></i>Catégorie 3</a></li>
 							<li><a href="javascript:open_cat(2); show_cat_contents(0, 0);"><i class="icon-folder"></i>Catégorie 4</a></li>
@@ -522,7 +522,7 @@
 			<header>
 				<h1>Titre du bloc</h1>
 			</header>
-			<div class="contents">
+			<div class="content">
 				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.				
 			</div>
 			<footer></footer>
@@ -542,7 +542,7 @@
 			<header>
 				<h1>Titre du bloc</h1>
 			</header>
-			<div class="contents">
+			<div class="content">
 				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.				
 			</div>
 			<footer></footer>
@@ -551,7 +551,7 @@
 			<header>
 				<h1>Titre du bloc</h1>
 			</header>
-			<div class="contents">
+			<div class="content">
 				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.				
 			</div>
 			<footer></footer>
@@ -560,7 +560,7 @@
 			<header>
 				<h1>Titre du bloc</h1>
 			</header>
-			<div class="contents">
+			<div class="content">
 				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.				
 			</div>
 			<footer></footer>

@@ -1,5 +1,5 @@
 <section class="block">
-	<div class="contents">
+	<div class="content">
 		# INCLUDE SELECT_VERSION #
 	</div>
 </section>

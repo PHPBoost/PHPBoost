@@ -74,7 +74,7 @@
 					<label>{L_CAT}</label>
 					<div class="explorer inline">
 						<div class="cats">
-							<div class="contents">
+							<div class="content">
 								<input type="hidden" name="id_cat" id="id_cat" value="{ID_CAT}"/>
 								<ul>
 									<li><a id="class_0" class="{CAT_0}" href="javascript:select_cat(0);"><i class="icon-folder"></i>{L_ROOT}</a></li>
