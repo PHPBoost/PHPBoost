@@ -662,7 +662,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
 				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || $User->get_attribute('user_id') == $topic['user_id']))
 				{
-					$img_display = $topic['display_msg'] ? 'msg_display2.png' : 'msg_display.png';
+					$img_display = $topic['display_msg'] ? 'msg_not_display.png' : 'msg_display.png';
 					$Template->put_all(array(
 						'C_DISPLAY_MSG' => true,
 						'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign-middle" />' : '',

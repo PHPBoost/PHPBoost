@@ -519,7 +519,7 @@ else
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
 	if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $User->get_attribute('user_id') == $topic['user_id']))
 	{
-		$img_msg_display = $topic['display_msg'] ? 'not_processed_mini.png' : 'processed_mini.png';
+		$img_msg_display = $topic['display_msg'] ? 'msg_not_display_mini.png' : 'msg_display_mini.png';
 		$Template->put_all(array(
 			'C_DISPLAY_MSG' => true,
 			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_msg_display . '" alt="" class="valign-middle" />' : '',

@@ -146,13 +146,13 @@ elseif ($User->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non l
 		
 		$Template->assign_block_vars('topics', array(
 			'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg'])),
+			'C_POLL' => !empty($row['question']),
 			'ID' => $row['id'],
 			'INCR' => $nbr_topics_compt,
 			'CHECKED_PM' => ($row['pm'] == 1) ? 'checked="checked"' : '',
 			'CHECKED_MAIL' => ($row['mail'] == 1) ? 'checked="checked"' : '',
 			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
-			'POLL' => !empty($row['question']) ? '<img src="' . $module_data_path . '/images/poll_mini.png" class="valign-middle" alt="" />' : '',
 			'TRACK' => '<img src="' . $module_data_path . '/images/track_mini.png" class="valign-middle" alt="" />',
 			'DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']) ? '<img src="' . $module_data_path . '/images/msg_display_mini.png" alt="" style="vertical-align:middle;" />' : '',
 			'TYPE' => $type[$row['type']],

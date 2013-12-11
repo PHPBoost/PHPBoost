@@ -131,7 +131,7 @@
 						<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="icon-refresh" id="refresh_unread"></i></a>
 						
 						&bull;
-						<img src="{PICTURES_DATA_PATH}/images/read_mini.png" alt="" class="valign-middle" /> {U_MSG_SET_VIEW}
+						<i class="icon-eraser"></i> {U_MSG_SET_VIEW}
 					</div>
 				# ENDIF #
 				<div class="spacer"></div>

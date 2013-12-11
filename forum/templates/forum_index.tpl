@@ -1,19 +1,19 @@
 		# INCLUDE forum_top #
 			
-	# START forums_list #	
+	# START forums_list #
 		# START forums_list.endcats #
 		<div class="module_position">
-			<div class="module_bottom_l"></div>		
+			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom"></div>
 		</div>
 
-		# END forums_list.endcats #	
+		# END forums_list.endcats #
 			
-		# START forums_list.cats #		
+		# START forums_list.cats #
 		<div style="margin-top:20px;">
-			<div class="module_position">					
-				<div class="module_top_l"></div>		
+			<div class="module_position">
+				<div class="module_top_l"></div>
 				<div class="module_top_r"></div>
 				<div class="module_top">
 					<span class="forum_cat_title">
@@ -26,7 +26,7 @@
 				</div>
 				<div class="module_contents forum_contents">
 					<table class="module-table forum_table">
-						<tr>			
+						<tr>
 							<td class="forum_text_column" style="min-width:175px;">{L_FORUM}</td>
 							<td class="forum_text_column" style="width:60px;">{L_TOPIC}</td>
 							<td class="forum_text_column" style="width:60px;">{L_MESSAGE}</td>
@@ -34,17 +34,17 @@
 						</tr>
 					</table>
 				</div>
-			</div>	
-		</div>	
+			</div>
+		</div>
 		# END forums_list.cats #
-		# START forums_list.subcats #		
+		# START forums_list.subcats #
 		<div class="module_position">
 			<div class="module_contents forum_contents">
 				<table class="module-table forum_table">
 					<tr>
 						# IF forums_list.subcats.U_FORUM_URL #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
-							<img src="{PICTURES_DATA_PATH}/images/weblink.png" alt="" />
+							<i class="icon-globe"></i>
 						</td>
 						<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 							<a href="{forums_list.subcats.U_FORUM_URL}">{forums_list.subcats.NAME}</a>
@@ -71,11 +71,11 @@
 							{forums_list.subcats.U_LAST_TOPIC}
 						</td>
 						# ENDIF #
-					</tr>	
-				</table>		
+					</tr>
+				</table>
 			</div>
 		</div>
-		# END forums_list.subcats #			
+		# END forums_list.subcats #
 	# END forums_list #
 		
 		# INCLUDE forum_bottom #
