@@ -53,7 +53,9 @@
 	margin-top:3px;	
 }
 
-.bbcode-hover { cursor:pointer; }
+.bbcode-hover,
+.bbcode-elements a,
+.bbcode-elements i { cursor:pointer; }
 
 .bbcode-block-container {
 	z-index:10;
