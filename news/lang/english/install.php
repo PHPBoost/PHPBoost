@@ -57,7 +57,6 @@ To do so : <br />
 </li><li class="bb_li"><a href="/admin/admin_content_config.php">Choose the default content language formatting</a>.
 </li><li class="bb_li"><a href="/admin/member/?url=/config/">Configure the members settings</a>.
 </li><li class="bb_li"><a href="/admin/themes/?url=/installed/">Choose the website style</a> to change the look of your site (You can find more styles on the <a href="http://www.phpboost.org/download/download.php">PHPBoost website</a> in the resources section.
-</li><li class="bb_li"><a href="/news/admin_news_config.php">Change the editorial</a> of your site.
 </li><li class="bb_li">Before giving back access to your members, take time to add content to your website!
 </li><li class="bb_li">Finally, Finally, <a href="/admin/admin_maintain.php">put your site online</a> in order to restore access to your site to your visitors.<br />
 </li></ul><br />

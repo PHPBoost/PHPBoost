@@ -181,6 +181,16 @@ class TextHelper
 		}
 		return html_entity_decode($string, $flags, 'ISO-8859-1');
 	}
+	
+	public static function lowercase_first($string)
+	{
+		return lcfirst($string);
+	}
+	
+	public static function uppercase_first($string)
+	{
+		return ucfirst($string);
+	}
 
 	/**
 	 * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).

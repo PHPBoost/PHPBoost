@@ -29,6 +29,10 @@
  #                     English                      #
  ####################################################
 
+$lang['by'] = 'By';
+$lang['the'] = 'The';
+$lang['in'] = 'In';
+
 $lang['form.name'] = 'Name';
 $lang['form.title'] = 'Title';
 $lang['form.contents'] = 'Content';
@@ -54,9 +58,4 @@ $lang['authorizations.read'] = 'Read permission';
 $lang['authorizations.write'] = 'Write permission';
 $lang['authorizations.contribution'] = 'Contribution permission';
 $lang['authorizations.moderation'] = 'Moderation permission';
-
-$lang['admin.config.comments_enabled'] = 'Enable comments';
-$lang['admin.config.notation_enabled'] = 'Enable notation';
-
-$lang['message.success.config'] = 'The configuration has been modified';
 ?>

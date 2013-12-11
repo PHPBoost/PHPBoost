@@ -55,7 +55,6 @@ comme vous le souhaitez!  Pour cela : <br />
 </li><li class="bb_li"><a href="/admin/admin_content_config.php">Choisissez le langage de formatage du contenu</a> par défaut du site.
 </li><li class="bb_li"><a href="/admin/member/?url=/config/">Configurez l\'inscription des membres</a>.
 </li><li class="bb_li"><a href="/admin/themes/?url=/installed/">Choisissez le thème par défaut de votre site</a> pour changer l\'apparence de votre site (vous pouvez en obtenir d\'autres sur le site de <a href="http://www.phpboost.com">phpboost.com</a>).
-</li><li class="bb_li"><a href="/news/admin_news_config.php">Modifiez l\'édito</a> de votre site.
 </li><li class="bb_li">Avant de donner l\'accès de votre site à vos visiteurs, prenez un peu de temps pour y mettre du contenu.
 </li><li class="bb_li">Enfin <a href="/admin/admin_maintain.php">désactivez la maintenance</a> de votre site afin qu\'il soit visible par vos visiteurs.<br />
 </li></ul><br />

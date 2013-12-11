@@ -14,9 +14,9 @@
 		</h1>
 		
 		<div class="more">
-			Par # IF PSEUDO #<a itemprop="author" class="small_link {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>, # ENDIF # 
-			le <time datetime="{DATE_ISO8601}" itemprop="datePublished">{DATE}</time>,
-			dans la catégorie <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+			${LangLoader::get_message('by', 'common')} # IF PSEUDO #<a itemprop="author" class="small_link {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>, # ENDIF # 
+			${TextHelper::lowercase_first(LangLoader::get_message('the', 'common'))} <time datetime="{DATE_ISO8601}" itemprop="datePublished">{DATE}</time>
+			${TextHelper::lowercase_first(LangLoader::get_message('in', 'common'))} <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 		</div>
 		
 		<meta itemprop="url" content="{U_LINK}">

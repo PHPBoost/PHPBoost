@@ -44,10 +44,6 @@ $lang['news.seo.description.root'] = 'Toutes les news du site :site.';
 $lang['news.seo.description.tag'] = 'Toutes les news sur le sujet :subject.';
 $lang['news.seo.description.pending'] = 'Toutes les news en attente.';
 
-$lang['news.display.written_by'] = 'Posté par';
-$lang['news.display.posted_on'] = 'le';
-$lang['news.display.in_category'] = 'dans la catégorie';
-
 $lang['news.form.name'] = 'Nom de la news';
 $lang['news.form.rewrited_name'] = 'Nom de votre news dans l\'url';
 $lang['news.form.rewrited_name.description'] = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';

@@ -44,10 +44,6 @@ $lang['news.seo.description.root'] = 'All website :site news.';
 $lang['news.seo.description.tag'] = 'All news on :subject.';
 $lang['news.seo.description.pending'] = 'All pending news.';
 
-$lang['news.display.written_by'] = 'Written by';
-$lang['news.display.posted_on'] = 'on';
-$lang['news.display.in_category'] = 'in the category';
-
 $lang['news.form.name'] = 'News name';
 $lang['news.form.rewrited_name'] = 'News name in the url';
 $lang['news.form.rewrited_name.description'] = 'Only contains lowercase letters, numbers and hyphens.';
