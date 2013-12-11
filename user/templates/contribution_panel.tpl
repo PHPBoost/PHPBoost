@@ -184,7 +184,10 @@
 				<div style="text-align:center;margin:auto;width:300px">
 					<div style="float:left;width:50%">
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">
-						<i class="icon-wrench icon-2x"></i>
+						<span class="icon-stack icon-lg">
+							<i class="icon-wrench icon-flip-horizontal icon-stack-1x"></i>
+							<i class="icon-file-o icon-stack-2x"></i>
+						</span>
 						<br />
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
 					</div>
