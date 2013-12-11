@@ -223,11 +223,11 @@ Event.observe(window, 'load', function() {
 		</ul>
 		<div id="no_field" class="center"# IF C_FIELDS # style="display:none;"# ENDIF #>{@fields.no_field}</div>
 	</fieldset>
+	# IF C_MORE_THAN_ONE_FIELD #
 	<fieldset class="fieldset-submit">
-		# IF C_MORE_THAN_ONE_FIELD #
 		<button type="submit" name="submit" value="true">{@fields.update_fields_position}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="position" id="position" value="">
-		# ENDIF #
 	</fieldset>
+	# ENDIF #
 </form>
