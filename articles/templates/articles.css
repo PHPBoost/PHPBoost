@@ -1,0 +1,280 @@
+.button_cat {
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    background-color:transparent;
+    font-size:11px;
+    font-weight:bold;
+    padding:10px 10px;
+    text-decoration:none;
+}
+
+.button_cat:hover {
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    background-color:#383435;
+    background-image:linear-gradient(#454042, #383435 45%, #383435);
+    background-repeat:no-repeat no-repeat;
+    box-shadow:rgba(0, 0, 0, 0.6) 0 4px 10px inset;
+    color:#FFFFFF;
+    font-size:11px;
+    font-weight:bold;
+    padding:10px 10px;
+    text-decoration:none;
+}
+
+.button_cat:active {
+    position:relative;
+    top:1px;
+}
+
+.article_tools {		
+    position: absolute;		
+    opacity:0.01;
+    font-size: 14px;
+    right: 0px;		
+    top: 0px;		
+    height: 25px;		
+    background: rgba(245, 245, 245, .83);		
+    -moz-border-radius:1px;		
+    -webkit-border-radius:1px;		
+    border-radius:1px;		
+}		
+
+.article_tools a.icon-delete { color:#e80909; }		
+
+.article_tools a {		
+    opacity:0.01;		
+    float: left;		
+    width: 20px;		
+    height: 25px;		
+    margin: 5px 0 0 10px;		
+    overflow: hidden;		
+    z-index: 50;		
+}		
+.article_tools a:hover { opacity:1!important; }
+
+.content_mosaic figure:hover > .article_tools { opacity:1; }
+.content_mosaic figure:hover > .article_tools a { opacity:0.5; }
+
+.content_list .title_description:hover > .article_tools { opacity:1; }
+.content_list .title_description:hover > .article_tools a { opacity:0.5; }
+
+.content_list .tags { padding-left: 10px; }
+
+.tags a {
+    background-color:#376294;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    -webkit-box-shadow:rgba(0, 0, 0, 0.2) 0 1px 3px inset;
+    background-image:linear-gradient(#5179a5, #376294 45%, #376294);
+    background-repeat:no-repeat no-repeat;
+    box-shadow:rgba(0, 0, 0, 0.2) 0 1px 3px inset;
+    display:inline-block;
+    color:#FFFFFF;
+    font-size:10px;
+    font-weight:bold;
+    padding:3px 3px;
+    text-decoration:none;
+}
+
+.tags a:hover {
+    background-color:#383435;
+    color:#FFFFFF;
+    background-image:linear-gradient(#454042, #383435 45%, #383435);
+    background-repeat:no-repeat no-repeat;
+    box-shadow:rgba(0, 0, 0, 0.6) 0 4px 10px inset;
+    text-decoration:none;
+}
+
+/* --- Affichage mosaique --- */
+.content_mosaic article:after, 
+.content_mosaic .box:after,
+.content_list article:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.content_mosaic .box, .content_list article {
+    background: #f9fbfd;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    -webkit-box-shadow: 0 2px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 2px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+.content_mosaic {
+    margin: 20px 0 63px;
+    overflow: hidden;
+}
+
+.content_mosaic article {
+    width: 960px;
+    margin: -63px 0 63px 0px;
+}
+
+.content_mosaic .box {
+    float: left;
+    width: 261px;
+    height: 470px;
+    margin: 64px 0 0 64px;
+    padding: 0 20px 57px 25px;
+    position: relative;
+    line-height: 16px;
+}
+
+.content_mosaic figure {
+    position: relative;
+    margin: 0 -20px 10px -25px;
+    border-bottom: 1px solid #e9e8e8;
+}
+
+.content_mosaic figure a {display: block; }
+
+.content_mosaic article .box .article_details {
+    float: left;
+    padding: 0 0 20px 20px;
+}
+
+.content_mosaic h3 {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    word-spacing: -1px;
+    color: #334455;
+    margin: 20px 0 12px;
+}
+
+.content_mosaic h3 a {
+    color: #334455;
+    text-decoration: none;
+}
+
+.content_mosaic p {
+    margin: 0 0 15px;
+    word-spacing: 2px;
+}
+
+.content_mosaic .box footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid #e9e8e8;
+    background: #f5f5f5;
+    width: 100%;
+    height: 45px;
+    padding: 13px 21px 0 20px;
+    margin: 0;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    overflow: hidden;
+}
+
+.content_mosaic .box footer a{text-decoration: none;}
+.content_mosaic .box footer a:hover{text-decoration: underline;}
+
+.content_mosaic .box footer .article_comment {
+    float: left;
+    padding: 1px 0 0 0px;
+}
+
+.content_mosaic .box footer .notes {
+    font-size: 15px;
+    float: right;
+    padding: 1px 0 0 0px;
+}
+
+/* --- Affichage liste --- */
+.content_list { padding: 20px 0 70px; }
+
+.content_list article { margin: 0 6px 64px 0; }
+
+.content_list article .box {
+    width: 100%;
+    height: 259px;
+    overflow: hidden;
+}
+
+.content_list article .box figure {
+    float: left;
+    position: relative;
+}
+
+.title_description {
+    padding: 30px 40px 50px 35px;
+    overflow: hidden;
+    position: relative;
+    height: 214px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+
+.content_list article .box header {
+    overflow: hidden;
+    padding: 0 0 0 10px;
+    margin:0 0 10px 0;
+}
+
+.content_list h3 {
+    color: #334455;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    word-spacing: -1px;
+    margin: 0 0 19px -3px;
+    border-bottom: none;
+}
+
+.content_list h3 a {
+    color: #334455;
+    text-decoration: none;
+}
+
+.content_list article .box footer {
+    width: 100%;
+    padding: 12px 22px 0 21px;
+}
+
+.content_list article .box footer {
+    border-top: 1px solid #e9e8e8;
+    background: #f5f5f5;
+    width: 100%;
+    height: 45px;
+    margin: 0;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    overflow: hidden;
+}
+
+.content_list article .box footer .article_details {
+    float: left;
+    padding: 1px 0 0 20px;
+}
+.content_list article .box footer .article_comment { 
+    float:left;
+    padding: 1px 0 0 90px;
+}
+
+.content_list .box footer .notes {
+    float: right;
+    padding: 1px 20px 0 0;
+}
+
+.page_name {
+    text-indent:35px;
+}
+
+.pages_pagination {
+    float:right;
+    width:33%;
+}

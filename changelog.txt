@@ -1,0 +1,162 @@
+#################################################################################
+#                           PHPBoost 4.1 Changelog                              #
+#################################################################################
+
+===================================== Noyau ======================================
+[b]Framework :[/b]
+[*] Nouveau système de catégories :
+	[*] Plus fiable et plus performant, ajout du drag & drop pour la gestion des catégories
+	[*] Il est maintenant possible de déplacer et de supprimer les éléments contenus dans une catégorie lors de sa suppression
+[*] Ajout d'une classe ModulePagination pour simplifier l'ajout de la pagination dans un module
+[*] Modification de la classe Date :
+	[*] Refonte des constantes de formatage
+	[*] Ajout d'un formatage relatif (ex : Il y a 9 heures)
+[+] Optmisation du CMS :
+	[*] Optimisation des requêtes du système de notation
+	- Optimisation des requêtes du système de commentaires
+	[*] Optimisation du code
+[*] Installation : Ajout de la possibilité de modifier la description du site dans l'installation en CLI
+[*] Création d'un système permettant de gérer facilement des mots clés dans les modules
+- Passage de l'extension mysql à mysqli pour assurer la compatibilité à long terme de PHPBoost sur tous les serveurs
+[*] Améliorations de la rapidité d'éxécution et de la fiabilité de l'installateur
+[*] Ajout des liens éditer et supprimer dans la liste déroulante de la recherche d'un membre (les boutons sont visible seulement par les administrateurs)
+[*] Création d'une classe ModuleTreeLinks et d'un ExtensionPoint pour contenir tous les liens avec les différentes actions possible (remplace le admin_links dans desc.ini du module)
+[*] Création d'une API pour pouvoir intégrer facilement des Captchas alternatifs
+[*] Optimisation du système de notation et refonte graphique
+
+[b]Menus :[/b]
+- Possibilité de désactiver l'affichage d'un lien dans les menus
+- Refonte graphique
+
+[b]Personnalisation graphique :[/b]
+[*] Logo cliquable
+[*] Intégration des technologies HTML5 + CSS 3
+[*] Nouveau pack de smileys
+[*] Fin du support d'Internet Explorer 7 et inférieur qui ne représente maintenant plus que 0.6 % du marché des navigateurs
+[*] Unification du design des commentaires, des messages du livre d'or, de la shoutbox ainsi que les messages privés.
+[*] Refonte du design et du code des formulaires
+[*] Refonte du design et du code des tableaux
+[*] Création d'un menu unique contenant les actions possible d'un module dans la partie visible du site.
+[*] Ajout de Font-Awesome au projet PHPBoost
+[*] Grand nettoyage dans les images et remplacement par les équivalents du projet Font-Awesome
+[*] Le thème base est 500% plus compact en poids que celui de la version 4.0
+[*] Nettoyage du fichier default.css (gain de 30%)
++ Nettoyage des principaux fichiers TPL et CSS
+- Nouveau thème épuré
+- Possibilité d'ajouter un texte de présentation du site en dessous du nom
+
+[b]Référencement :[/b]
+[*] Le nom du site est affiché à la fin dans la balise title (sauf pour la page d'accueil ou il est au début)
+[*] Modification de la balise description (elle contient la description de la page ou celle du site sur la page d'accueil)
+[*] Ajout des microdonnées : 
+	[*] Modification du système de notation
+	[*] Modification du système de commentaire
+
+[b]Administration :[/b]
+[*] Suppression du panneau de modération présent dans l'administration qui fait doublon avec celui du dossier user
+[*] Suppression des autorisations d'accès dans la gestion des modules pour plus de cohérence et éviter les doublons avec les autorisations des modules
+[*] Harmonisation des liens dans l'administration :
+	[*] Smileys est maintenant dans Contenu
+	[*] Mises à jours dans Administration
+	[*] Maintenance dans Administration
+[*] Ajout d'une option dans la configuration avancée pour pouvoir afficher la liste des requêtes SQL et afficher le stacktrace pour pouvoir les tracer
+	
+[b]Divers :[/b]
+[*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
+[*] Ajout de l'affichage de la taille de la mémoire utilisée par PHP
+
+=================================== Modules =====================================
+
+[color=red]Nouveauté :[/color] Nouveau module ReCaptcha
+
+[b]Articles[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie
+[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
+[*] [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
+[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
+[*] [color=red]Nouveauté :[/color] Refonte graphique
+[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser l'url d'un article
+[*] [color=red]Nouveauté :[/color] Amélioration du référencement
+[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser la pagination
+[*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires globalement
+[*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver l'affichage du nom de l'auteur d'un article pour chacun des articles
+[*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver la notation d'un article pour chacun des articles
+[*] Ajout des microdonnées pour améliorer le référencement
+
+[b]Rapport de bugs[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Filtres en haut des tableaux avec possibilité pour chaque utilisateur d'enregistrer ses combinaisons de filtres favoris
+[*] [color=red]Nouveauté :[/color] Légende en bas des tableaux avec la couleur des niveaux et leurs noms
+[*] [color=red]Nouveauté :[/color] Affichage du nombre de bugs correspondants aux filtres choisis
+[*] [color=red]Nouveauté :[/color] Options dans l'administration pour personnaliser les statistiques
+[*] [color=red]Nouveauté :[/color] Graphiques dans les statistiques
+[*] [color=red]Nouveauté :[/color] Alertes administrateur en fonction de la criticité du bug lors de l'ajout, possibilité de désactiver l'option dans l'administration
+[*] [color=red]Nouveauté :[/color] Statut d'avancement sous forme de %
+[*] [color=red]Nouveauté :[/color] Ajout d'une date de parution pour les versions (utilisée dans la roadmap)
+[*] [color=red]Nouveauté :[/color] Nouvel état : "En cours", lorsque la version de correction d'un bug est choisie mais qu'il n'est pas encore corrigé
+[*] L'ajout et la suppression de niveaux et priorités n'est plus possible pour être cohérent avec les alertes administrateur. Par contre il est toujours possible de changer leur nom et la couleur des niveaux
+[*] L'envoi de MP peut être activé de manière plus affinée
+[*] Changement de mise en forme des tableaux pour plus de lisibilité
+[*] Amélioration de l'affichage Corrigé/En cours dans la roadmap
+[*] Refonte de l'affichage général du module
+
+[b]Calendrier[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie pour les événements
+[*] [color=red]Nouveauté :[/color] Gestion des événements sur plusieurs jours
+[*] [color=red]Nouveauté :[/color] Module mini-calendrier, module mini attenant au module du calendrier
+[*] [color=red]Nouveauté :[/color] Option pour afficher l'anniversaire des membres dans le calendrier
+[*] [color=red]Nouveauté :[/color] Flux RSS
+[*] [color=red]Nouveauté :[/color] Recherche
+[*] [color=red]Nouveauté :[/color] Sitemap
+[*] [color=red]Nouveauté :[/color] Contributions pour l'ajout d'événement
+[*] [color=red]Nouveauté :[/color] Possibilité de créer un évènement répétitif (tous les X jours, X semaines, X mois, X années)
+[*] [color=red]Nouveauté :[/color] Ajout des microdonnées pour améliorer le référencement
+[*] [color=red]Nouveauté :[/color] Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
+
+[b]Contact[/b]
+[*] [color=red]Nouveauté :[/color] Gestion complète des champs du formulaire dans l'administration avec possibilité d'en ajouter
+[*] [color=red]Nouveauté :[/color] Nouveau champ "Destinataires" (désactivé par défaut) permettant de choisir le/les destinataire(s) du message
+[*] [color=red]Nouveauté :[/color] Possibilité d'envoyer le mail à un destinataire en fonction de l'objet, si le champ destinataires n'est pas affiché
+[*] [color=red]Nouveauté :[/color] Possibilité de configurer le titre du formulaire dans la configuration
+[*] [color=red]Nouveauté :[/color] Possibilité d'afficher une zone d'informations à côté du formulaire (à gauche, au dessus, à droite ou en dessous) et de la configurer dans l'admin
+
+[b]En ligne[/b]
+[*] [color=red]Nouveauté :[/color] Ajout de l'avatar des membres dans la liste
+[*] Refonte de l'affichage
+
+[b]Livre d'or[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] Refonte de l'affichage
+
+[b]Multimedia[/b]
+[*] Ajout de la balise enclosure dans les flux RSS pour pouvoir diffuser le media
+
+[b]Forum[/b]
+[*] Déplacement de la gestion des rangs dans le module forum
+
+[b]News[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie
+[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
+[*] [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
+[*] [color=red]Nouveauté :[/color] Possibilité de couper une news à un certain nombre de caractères
+[*] [color=red]Nouveauté :[/color] Possiblité de désactiver les suggestions de news
+[*] [color=red]Nouveauté :[/color] Suppression de l'affichage en liste devenu inutil
+[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
+[*] [color=red]Nouveauté :[/color] Refonte graphique
+[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser l'url d'une news
+[*] [color=red]Nouveauté :[/color] Amélioration du référencement
+[*] [color=red]Nouveauté :[/color] Suppression de l'édito et ajout d'une option supplémentaire dans le formulaire d'ajout pour placer les news en tête de liste.
+[*] Ajout des microdonnées pour améliorer le référencement
+
+[b]Recherche[/b]
+[*] Refonte visuelle
+
+[b]Téléchargement[/b]
+[*] Améliorations visuelles
+
+[b]Bac à sable[/b]
+[*] Intégration d'une section regroupant tous les styles que l'on peut trouver dans les différentes pages du projet. Elle permettra de gagner du temps lors de la personnalisation d'un thème
+[*] Page regroupant les alias des icônes de Font-Awesome
