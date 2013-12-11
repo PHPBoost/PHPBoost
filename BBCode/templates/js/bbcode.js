@@ -199,7 +199,7 @@ function getCookie(name)
 //Conserve la configuration de la barre bbcode.
 function set_bbcode_preference(divID)
 {
-	if( getCookie('hide_bbcode') == 0 )
+	if( getCookie('hide-bbcode') == 0 )
 	{
 		document.getElementById(divID).style.display = 'none';
 		var parent = document.getElementById(divID).up('.bbcode');
@@ -239,14 +239,14 @@ function bb_display_block(divID, field)
 	if( timeout )
 		clearTimeout(timeout);
 	
-	var block = document.getElementById('bb_block' + divID + field);
+	var block = document.getElementById('bb-block' + divID + field);
 	if( block.style.display == 'none' )
 	{
 		if( document.getElementById(previous_bblock) )
 			document.getElementById(previous_bblock).style.display = 'none';
 		block.style.display = 'block';
 		displayed = true;
-		previous_bblock = 'bb_block' + divID + field;
+		previous_bblock = 'bb-block' + divID + field;
 	}
 	else
 	{
@@ -300,9 +300,9 @@ function bbcode_color(field)
 
 function bbcode_table(field)
 {
-	var cols = document.getElementById('bb_cols' + field).value;
-	var lines = document.getElementById('bb_lines' + field).value;
-	var head = document.getElementById('bb_head' + field).checked;
+	var cols = document.getElementById('bb-cols' + field).value;
+	var lines = document.getElementById('bb-lines' + field).value;
+	var head = document.getElementById('bb-head' + field).checked;
 	var code = '';
 	
 	if( cols >= 0 && lines >= 0 )
@@ -326,8 +326,8 @@ function bbcode_table(field)
 
 function bbcode_list(field)
 {
-	var elements = document.getElementById('bb_list' + field).value;
-	var ordered_list = document.getElementById('bb_ordered_list' + field).checked;
+	var elements = document.getElementById('bb-list' + field).value;
+	var ordered_list = document.getElementById('bb-ordered-list' + field).checked;
 	if( elements <= 0 )
 		elements = 1;
 	
