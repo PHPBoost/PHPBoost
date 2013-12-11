@@ -964,19 +964,19 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$average = ($row['total_visit'] / $row['nbr_day']);
 				if ($row['yesterday_visit'] > $average)
 				{
-					$trend_img = 'up.png';
+					$trend_img = 'up';
 					$sign = '+';
 					$trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average) - 100, 1);
 				}
 				elseif ($row['yesterday_visit'] < $average)
 				{
-					$trend_img = 'down.png';
+					$trend_img = 'down';
 					$sign = '-';
 					$trend = NumberHelper::round(100 - (($row['yesterday_visit'] * 100) / $average), 1);
 				}
 				else
 				{
-					$trend_img = 'right.png';
+					$trend_img = 'right';
 					$sign = '+';
 					$trend = 0;
 				}
@@ -989,7 +989,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 					'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-					'TREND' => '<img src="../templates/' . get_utheme() . '/images/' . $trend_img . '" alt="" class="valign-middle" /> (' . $sign . $trend . '%)'
+					'TREND' => '<i class="icon-arrow-' . $trend_img . ' icon-2x"></i> (' . $sign . $trend . '%)'
 				));
 			}
 			$this->sql_querier->query_close($result);
@@ -1021,19 +1021,19 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$average = ($row['total_visit'] / $row['nbr_day']);
 				if ($row['yesterday_visit'] > $average)
 				{
-					$trend_img = 'up.png';
+					$trend_img = 'up';
 					$sign = '+';
 					$trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
 				}
 				elseif ($row['yesterday_visit'] < $average)
 				{
-					$trend_img = 'down.png';
+					$trend_img = 'down';
 					$sign = '-';
 					$trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
 				}
 				else
 				{
-					$trend_img = 'right.png';
+					$trend_img = 'right';
 					$sign = '+';
 					$trend = 0;
 				}
@@ -1046,7 +1046,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 					'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-					'TREND' => '<img src="../templates/' . get_utheme() . '/images/' . $trend_img . '" alt="" class="valign-middle" /> (' . $sign . $trend . '%)'
+					'TREND' => '<i class="icon-arrow-' . $trend_img . ' icon-2x"></i> (' . $sign . $trend . '%)'
 				));
 			}
 			$this->sql_querier->query_close($result);

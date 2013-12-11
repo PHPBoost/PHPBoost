@@ -452,10 +452,10 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'L_THUMBNAILS' => $LANG['thumbnails'],
 						'U_DEL' => url('gallery.php?del=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;cat=' . $g_idcat),
 						'U_MOVE' => url('gallery.php?id=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
-						'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/left.png" alt="" class="valign-middle" /></a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max">' . $LANG['previous'] . '</a>' : '',
-						'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/right.png" alt="" class="valign-middle" /></a>' : '',
-						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/left.png" class="valign-middle" alt="" /></a></span>' : '<span id="display_left"></span>',
-						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/right.png" class="valign-middle" alt="" /></a></span>' : '<span id="display_right"></span>'
+						'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max"><i class="icon-arrow-left icon-2x"></i></a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max">' . $LANG['previous'] . '</a>' : '',
+						'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max"><i class="icon-arrow-right icon-2x"></i></a>' : '',
+						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><i class="icon-arrow-left icon-2x"></i></a></span>' : '<span id="display_left"></span>',
+						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><i class="icon-arrow-right icon-2x"></i></a></span>' : '<span id="display_right"></span>'
 					));
 	
 					//Affichage de la liste des miniatures sous l'image.

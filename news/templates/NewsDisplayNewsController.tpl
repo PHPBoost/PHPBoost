@@ -66,14 +66,14 @@
 		<div class="navigation_link">
 			# IF C_PREVIOUS_NEWS #
 			<span style="float:left">
-				<a href="{U_PREVIOUS_NEWS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/left.png" alt="" class="valign-middle" /></a>
+				<a href="{U_PREVIOUS_NEWS}"><i class="icon-arrow-left icon-2x"></i></a>
 				<a href="{U_PREVIOUS_NEWS}">{PREVIOUS_NEWS}</a>
 			</span>
 			# ENDIF #
 			# IF C_NEXT_NEWS #
 			<span style="float:right">
 				<a href="{U_NEXT_NEWS}">{NEXT_NEWS}</a>
-				<a href="{U_NEXT_NEWS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" alt="" class="valign-middle" /></a>
+				<a href="{U_NEXT_NEWS}"><i class="icon-arrow-right icon-2x"></i></a>
 			</span>
 			# ENDIF #
 			<div class="spacer"></div>
