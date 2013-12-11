@@ -7,7 +7,7 @@
 		function check_form_msg(){
 			# IF C_BBCODE_TINYMCE_MODE #
 				tinyMCE.triggerSave();
-			# ENDIF #	
+			# ENDIF #
 			
 			if(document.getElementById('contents').value == "") {
 				alert("{L_REQUIRE_MESSAGE}");
@@ -30,7 +30,7 @@
 		}
 		function XMLHttpRequest_change_statut()
 		{
-			var idtopic = {IDTOPIC};			
+			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_change_img') )
 				document.getElementById('forum_change_img').innerHTML = '<i class="icon-spinner icon-spin"></i>';
 			
@@ -42,7 +42,7 @@
 					document.getElementById('display_msg_title').innerHTML = xhr_object.responseText == '1' ? "{L_DISPLAY_MSG}" + ' ' : '';
 					document.getElementById('display_msg_title2').innerHTML = xhr_object.responseText == '1' ? "{L_DISPLAY_MSG}" + ' ' : '';
 					if( document.getElementById('forum_change_img') )
-						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<img src="{PICTURES_DATA_PATH}/images/not_processed_mini.png" alt="" class="valign-middle" />' : '<img src="{PICTURES_DATA_PATH}/images/processed_mini.png" alt="" class="valign-middle" />';
+						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<img src="{PICTURES_DATA_PATH}/images/msg_not_display_mini.png" alt="" class="valign-middle" />' : '<img src="{PICTURES_DATA_PATH}/images/msg_display_mini.png" alt="" class="valign-middle" />';
 					if( document.getElementById('forum_change_msg') )
 						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
 				}

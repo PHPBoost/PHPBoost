@@ -33,7 +33,7 @@
 						<tr>
 							# IF subcats.U_FORUM_URL #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{PICTURES_DATA_PATH}/images/weblink.png" alt="" />
+								<i class="icon-globe"></i>
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 								<a href="{subcats.U_FORUM_URL}">{subcats.NAME}</a>

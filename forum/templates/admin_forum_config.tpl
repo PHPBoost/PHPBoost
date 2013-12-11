@@ -57,12 +57,12 @@
 					<a href="admin_forum_groups.php" class="quick_link">{L_FORUM_GROUPS}</a>
 				</li>
 				<li>
-					<a href="admin_ranks.php"><img src="templates/images/ranks.png" alt="" /></a>
+					<a href="admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks.png" alt="" /></a>
 					<br />
 					<a href="admin_ranks.php" class="quick_link">{L_FORUM_RANKS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_ranks_add.php"><img src="templates/images/ranks.png" alt="" /></a>
+					<a href="admin_ranks_add.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks.png" alt="" /></a>
 					<br />
 					<a href="admin_ranks_add.php" class="quick_link">{L_FORUM_ADD_RANKS}</a>
 				</li>
@@ -164,7 +164,7 @@
 							<label><input type="radio" {ICON_DISPLAY_MSG_ENABLED} name="icon_activ_display_msg" id="icon_activ_display_msg" value="1"> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" {ICON_DISPLAY_MSG_DISABLED} name="icon_activ_display_msg" value="0"> {L_UNACTIVE}</label>
-							&nbsp; <img src="{PICTURES_DATA_PATH}/images/msg_display.png" name="icon" alt="" style="vertical-align:middle" /> / <img src="{PICTURES_DATA_PATH}/images/msg_display2.png" name="icon" alt="" style="vertical-align:middle" />
+							&nbsp; <img src="{PICTURES_DATA_PATH}/images/msg_display.png" name="icon" alt="" style="vertical-align:middle" /> / <img src="{PICTURES_DATA_PATH}/images/msg_not_display.png" name="icon" alt="" style="vertical-align:middle" />
 						</div>
 					</div>
 				</fieldset>

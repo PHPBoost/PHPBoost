@@ -63,7 +63,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{
 					if( document.getElementById('forum_change_img') )
-						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<img src="{PICTURES_DATA_PATH}/images/msg_display2.png" alt="" class="valign-middle" />' : '<img src="{PICTURES_DATA_PATH}/images/msg_display.png" alt="" class="valign-middle" />';
+						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<img src="{PICTURES_DATA_PATH}/images/msg_not_display.png" alt="" class="valign-middle" />' : '<img src="{PICTURES_DATA_PATH}/images/msg_display.png" alt="" class="valign-middle" />';
 					if( document.getElementById('forum_change_msg') )
 						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
 				}

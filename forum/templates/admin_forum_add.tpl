@@ -54,12 +54,12 @@
 					<a href="admin_forum_groups.php" class="quick_link">{L_FORUM_GROUPS}</a>
 				</li>
 				<li>
-					<a href="admin_ranks.php"><img src="templates/images/ranks.png" alt="" /></a>
+					<a href="admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks.png" alt="" /></a>
 					<br />
 					<a href="admin_ranks.php" class="quick_link">{L_FORUM_RANKS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_ranks_add.php"><img src="templates/images/ranks.png" alt="" /></a>
+					<a href="admin_ranks_add.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks.png" alt="" /></a>
 					<br />
 					<a href="admin_ranks_add.php" class="quick_link">{L_FORUM_ADD_RANKS}</a>
 				</li>

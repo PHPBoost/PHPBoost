@@ -240,22 +240,22 @@
 
 		<div id="admin_contents">
 			<table class="module-table" style="width:99%;">
-				<tr>			
+				<tr>
 					<th colspan="3">
 						{L_CAT_MANAGEMENT}
 					</th>
-				</tr>							
+				</tr>
 				<tr>
 					<td class="row2">
 						<span id="display"></span>
 						<br />
-						<div style="width:98%;margin:auto;">						
-							# START list #	
+						<div style="width:98%;margin:auto;">
+							# START list #
 							<span id="c{list.I}">
 								<div style="margin-left:{list.INDENT}px;">
 									<div class="row3 forum_cat_admin">
 										<span style="float:left;">
-											&nbsp;&nbsp;<img src="{PICTURES_DATA_PATH}/images/folder.png" alt="" class="valign-middle" /> {list.LOCK} &nbsp;{list.URL}<a href="{list.U_FORUM_VARS}" class="forum_link_cat">{list.NAME}</a>
+											&nbsp;&nbsp;<i class="icon-folder icon-2x"></i> {list.LOCK} &nbsp;{list.URL}<a href="{list.U_FORUM_VARS}" class="forum_link_cat">{list.NAME}</a>
 										</span>
 										<span style="float:right;">
 											<span id="l{list.ID}"></span> 
