@@ -33,41 +33,34 @@ class AdminExtendedFieldsMemberListController extends AdminController
 
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->init();
+		
 		$this->update_fields($request);
 		
-		$this->init();
-
 		$extended_field = ExtendedFieldsCache::load()->get_extended_fields();
-
+		
+		$fields_number = 0;
 		foreach ($extended_field as $id => $row)
 		{
 			if ($row['name'] !== 'last_view_forum')
 			{
 				$this->view->assign_block_vars('list_extended_fields', array(
+					'C_REQUIRED' => $row['required'],
+					'C_DISPLAY' => $row['display'],
+					'C_FREEZE' => $row['freeze'],
 					'ID' => $row['id'],
 					'NAME' => $row['name'],
-					'L_REQUIRED' => $row['required'] ? $this->lang['field.yes'] : $this->lang['field.no'],
-					'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->rel(),
-					'DISPLAY' => $row['display'],
-					'FREEZE' => $row['freeze']
+					'U_EDIT' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->rel()
 				));
+				$fields_number++;
 			}
 		}
 		
-		$main_lang = LangLoader::get('main');
 		$this->view->put_all(array(
-			'L_MANAGEMENT_EXTENDED_FIELDS' => $this->lang['extended-fields-management'],
-			'L_NAME' => $this->lang['field.name'],
-			'L_POSITION' => $this->lang['field.position'],
-			'L_REQUIRED' => $this->lang['field.required'],
-			'L_DISPLAY' => $main_lang['display'],
-			'L_ALERT_DELETE_FIELD' => $this->lang['field.delete_field'],
-			'L_VALID' => $main_lang['update'],
-			'L_UPDATE' => $main_lang['update'],
-			'L_DELETE' => $main_lang['delete'],
-			'L_PROCESSED_OR_NOT' => $main_lang['display']
+			'C_FIELDS' => $fields_number,
+			'C_MORE_THAN_ONE_FIELD' => $fields_number > 1
 		));
-
+		
 		return new AdminExtendedFieldsDisplayResponse($this->view, $this->lang['extended-fields-management']);
 	}
 

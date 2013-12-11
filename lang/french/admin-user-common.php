@@ -90,6 +90,16 @@ $lang['extended-fields-management'] = 'Gestion des champs du profil';
 $lang['extended-fields-error-already-exist'] = 'Le champ existe déjà.';
 $lang['extended-fields-error-phpboost-config'] = 'Les champs utilisés par défaut par PHPBoost ne peuvent pas être créés plusieurs fois, veuillez choisir un autre type de champ.';
 
+$lang['fields.management'] = 'Gestion des champs du profil';
+$lang['fields.action.add_field'] = 'Ajouter un champ';
+$lang['fields.action.edit_field'] = 'Modifier le champ';
+$lang['fields.action.delete_field'] = 'Supprimer le champ';
+$lang['fields.delete_field.confirm'] = 'Souhaitez vous vraiment supprimer ce champ ?';
+$lang['fields.update_fields_position'] = 'Valider la position des champs';
+$lang['fields.no_field'] = 'Aucun champ';
+$lang['fields.move_field_up'] = 'Monter le champ';
+$lang['fields.move_field_down'] = 'Descendre le champ';
+
 //Type 
 $lang['type.short-text'] = 'Texte court (max 255 caractères)';
 $lang['type.long-text'] = 'Texte long (illimité)';
@@ -124,6 +134,8 @@ $lang['field.default-values-explain'] = 'Séparez les différentes valeurs par le 
 $lang['field.default-possible-values'] = 'Oui|Non';
 $lang['field.read_authorizations'] = 'Autorisations de lecture du champ dans le profil';
 $lang['field.actions_authorizations'] = 'Autorisations de lecture du champ dans la création ou la modification d\'un profil';
+$lang['field.display'] = 'Afficher';
+$lang['field.not_display'] = 'Ne pas afficher';
 
 // Regex
 $lang['regex.figures'] = 'Chiffres';

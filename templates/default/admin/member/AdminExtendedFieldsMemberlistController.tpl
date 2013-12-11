@@ -14,8 +14,29 @@ var ExtendedFields = Class.create({
 	destroy_sortable : function() {
 		Sortable.destroy(this.id); 
 	},
+	
 	serialize_sortable : function() {
 		$('position').value = Sortable.serialize(this.id);
+	},
+	get_sortable_sequence : function() {
+		return Sortable.sequence(this.id);
+	},
+	set_sortable_sequence : function(sequence) {
+		Sortable.setSequence(this.id, sequence);
+	},
+	change_reposition_pictures : function() {
+		sequence = Sortable.sequence(this.id);
+		
+		$('move_up_' + sequence[0]).style.display = "none";
+		$('move_down_' + sequence[0]).style.display = "inline";
+		
+		for (var j = 1 ; j < sequence.length - 1 ; j++) {
+			$('move_up_' + sequence[j]).style.display = "inline";
+			$('move_down_' + sequence[j]).style.display = "inline";
+		}
+		
+		$('move_up_' + sequence[sequence.length - 1]).style.display = "inline";
+		$('move_down_' + sequence[sequence.length - 1]).style.display = "none";
 	}
 });
 
@@ -34,19 +55,68 @@ var ExtendedField = Class.create({
 			this.is_not_displayed = true;
 		}
 		this.change_display_picture();
+		
+		# IF C_MORE_THAN_ONE_FIELD #
+		this.ExtendedFields.change_reposition_pictures();
+		# ENDIF #
 	},
 	delete_fields : function() {
-		if (confirm(${escapejs(L_ALERT_DELETE_FIELD)}))
+		if (confirm(${escapejs(@fields.delete_field.confirm)}))
 		{
 			new Ajax.Request('{PATH_TO_ROOT}/admin/member/?url=/extended-fields/delete/', {
 				method:'post',
-				parameters: {'id' : this.id, 'token' : '{TOKEN}'}
+				asynchronous: false,
+				parameters: {'id' : this.id, 'token' : '{TOKEN}'},
+				onSuccess: function(transport) {
+					if (transport.responseText == 0)
+					{
+						$('no_field').style.display = "";
+					}
+				}
 			});
 			
 			var elementToDelete = $('list_' + this.id);
 			elementToDelete.parentNode.removeChild(elementToDelete);
 			ExtendedFields.destroy_sortable();
 			ExtendedFields.create_sortable();
+		}
+	},
+	move_up : function() {
+		var sequence = ExtendedFields.get_sortable_sequence();
+		var reordered = false;
+		
+		if (sequence.length > 1)
+			for (var j = 1 ; j < sequence.length ; j++) {
+				if (sequence[j].length > 0 && sequence[j] == this.id) {
+					var temp = sequence[j-1];
+					sequence[j-1] = this.id;
+					sequence[j] = temp;
+					reordered = true;
+				}
+			}
+		
+		if (reordered) {
+			ExtendedFields.set_sortable_sequence(sequence);
+			ExtendedFields.change_reposition_pictures();
+		}
+	},
+	move_down : function() {
+		var sequence = ExtendedFields.get_sortable_sequence();
+		var reordered = false;
+		
+		if (sequence.length > 1)
+			for (var j = 0 ; j < sequence.length - 1 ; j++) {
+				if (sequence[j].length > 0 && sequence[j] == this.id) {
+					var temp = sequence[j+1];
+					sequence[j+1] = this.id;
+					sequence[j] = temp;
+					reordered = true;
+				}
+			}
+		
+		if (reordered) {
+			ExtendedFields.set_sortable_sequence(sequence);
+			ExtendedFields.change_reposition_pictures();
 		}
 	},
 	change_display : function() {
@@ -62,10 +132,14 @@ var ExtendedField = Class.create({
 	change_display_picture : function() {
 		if (this.is_not_displayed == false) {
 			$('change_display_' + this.id).className = "icon-eye";
+			$('change_display_' + this.id).title = "{@field.display}";
+			$('change_display_' + this.id).alt = "{@field.display}";
 			this.is_not_displayed = true;
 		}
 		else {
 			$('change_display_' + this.id).className = "icon-eye-slash";
+			$('change_display_' + this.id).title = "{@field.not_display}";
+			$('change_display_' + this.id).alt = "{@field.not_display}";
 			this.is_not_displayed = false;
 		}
 	},
@@ -81,27 +155,35 @@ Event.observe(window, 'load', function() {
 # INCLUDE MSG #
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="ExtendedFields.serialize_sortable();">
 	<fieldset id="management_extended_fields">
-	<legend>{L_MANAGEMENT_EXTENDED_FIELDS}</legend>
+	<legend>{@fields.management}</legend>
 		<ul id="lists" class="sortable-block">
 			# START list_extended_fields #
-				<li id="list_{list_extended_fields.ID}" class="sortable-element">
+				<li class="sortable-element" id="list_{list_extended_fields.ID}">
 					<div class="sortable-title">
-						<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
+						<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows"></i>
 						<i class="icon-globe"></i>
-						{L_NAME} : <span class="text-strong" >{list_extended_fields.NAME}</span>
+						<span class="text-strong" >{list_extended_fields.NAME}</span>
 						<div class="sortable-actions">
-							{L_REQUIRED} : <span class="text-strong" >{list_extended_fields.L_REQUIRED}</span> 
+							{@field.required} : <span class="text-strong"># IF list_extended_fields.C_REQUIRED #{@field.yes}# ELSE #{@field.no}# ENDIF #</span>
+							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
-								<a href="{list_extended_fields.EDIT_LINK}" title="{L_UPDATE}" class="icon-edit"></a>
+								<a title="{@fields.move_field_up}" id="move_up_{list_extended_fields.ID}"><i class="icon-arrow-up"></i></a>
 							</div>
 							<div class="sortable-options">
-								# IF NOT list_extended_fields.FREEZE #
-								<a title="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="icon-delete"></a>
+								<a title="{@fields.move_field_down}" id="move_down_{list_extended_fields.ID}"><i class="icon-arrow-down"></i></a>
+							</div>
+							# ENDIF #
+							<div class="sortable-options">
+								<a href="{list_extended_fields.EDIT_LINK}" title="{@fields.action.edit_field}" class="icon-edit"></a>
+							</div>
+							<div class="sortable-options">
+								# IF NOT list_extended_fields.C_FREEZE #
+								<a title="{@fields.action.delete_field}" id="delete_{list_extended_fields.ID}" class="icon-delete"></a>
 								# ELSE #
 								&nbsp;
 								# ENDIF #
 							</div>
-							<a title="{L_PROCESSED_OR_NOT}" ><i id="change_display_{list_extended_fields.ID}" class="icon-eye-slash"></i></a>
+							<a><i id="change_display_{list_extended_fields.ID}" class="icon-eye"></i></a>
 						</div>
 					</div>
 					<div class="spacer"></div>
@@ -109,9 +191,13 @@ Event.observe(window, 'load', function() {
 				<script type="text/javascript">
 				<!--
 				Event.observe(window, 'load', function() {
-					var extended_field = new ExtendedField({list_extended_fields.ID}, '{list_extended_fields.DISPLAY}', ExtendedFields);
+					var extended_field = new ExtendedField({list_extended_fields.ID}, '{list_extended_fields.C_DISPLAY}', ExtendedFields);
 					
-					# IF NOT list_extended_fields.FREEZE #
+					$('list_{list_extended_fields.ID}').observe('mouseout',function(){
+						ExtendedFields.change_reposition_pictures();
+					});
+					
+					# IF NOT list_extended_fields.C_FREEZE #
 					$('delete_{list_extended_fields.ID}').observe('click',function(){
 						extended_field.delete_fields();
 					});
@@ -120,15 +206,28 @@ Event.observe(window, 'load', function() {
 					$('change_display_{list_extended_fields.ID}').observe('click',function(){
 						extended_field.change_display();
 					});
+					
+					# IF C_MORE_THAN_ONE_FIELD #
+					$('move_up_{list_extended_fields.ID}').observe('click',function(){
+						extended_field.move_up();
+					});
+					
+					$('move_down_{list_extended_fields.ID}').observe('click',function(){
+						extended_field.move_down();
+					});
+					# ENDIF #
 				});
 				-->
 				</script>
 			# END list_extended_fields #
 		</ul>
+		<div id="no_field" class="center"# IF C_FIELDS # style="display:none;"# ENDIF #>{@fields.no_field}</div>
 	</fieldset>
 	<fieldset class="fieldset-submit">
-		<button type="submit" name="submit" value="true">{L_VALID}</button>
+		# IF C_MORE_THAN_ONE_FIELD #
+		<button type="submit" name="submit" value="true">{@fields.update_fields_position}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="position" id="position" value="">
+		# ENDIF #
 	</fieldset>
 </form>

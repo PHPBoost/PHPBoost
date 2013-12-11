@@ -90,6 +90,16 @@ $lang['extended-fields-management'] = 'Profile field management';
 $lang['extended-fields-error-already-exist'] = 'The field already exists.';
 $lang['extended-fields-error-phpboost-config'] = 'The fields used by default PHPBoost can not be created more than one time, please choose another type of field.';
 
+$lang['fields.management'] = 'Profile field management';
+$lang['fields.action.add_field'] = 'Add a field';
+$lang['fields.action.edit_field'] = 'Edit field';
+$lang['fields.action.delete_field'] = 'Delete field';
+$lang['fields.delete_field.confirm'] = 'Delete this field?';
+$lang['fields.update_fields_position'] = 'Change fields position';
+$lang['fields.no_field'] = 'No field';
+$lang['fields.move_field_up'] = 'Move field up';
+$lang['fields.move_field_down'] = 'Move field down';
+
 //Type 
 $lang['type.short-text'] = 'Short text (max 255 characters)';
 $lang['type.long-text'] = 'Long text (unlimited)';
@@ -124,6 +134,8 @@ $lang['field.default-values-explain'] = 'Separate each value with |';
 $lang['field.default-possible-values'] = 'Yes|No';
 $lang['field.read_authorizations'] = 'Read permissions of the field in the profile';
 $lang['field.actions_authorizations'] = 'Read permissions of the field when creating or editing a profile';
+$lang['field.display'] = 'Displayed';
+$lang['field.not_display'] = 'Not displayed';
 
 // Regex
 $lang['regex.figures'] = 'Numbers';
