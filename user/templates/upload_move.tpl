@@ -80,7 +80,7 @@
 						<td class="row1" style="text-align:center;width:100px;">
 							<strong>{L_MOVE_TO}</strong>
 							<br />
-							<img src="../templates/{THEME}/images/right.png" alt="" />
+							<i class="icon-arrow-right icon-2x"></i>
 						</td>
 						<td class="row1">
 							<script type="text/javascript" src="../kernel/lib/js/phpboost/upload.js">

@@ -51,27 +51,27 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
         $average = ($row['total_visit'] / $row['nbr_day']);
         if ($row['yesterday_visit'] > $average)
         {
-            $trend_img = 'up.png';
+            $trend_img = 'up';
             $sign = '+';
             $trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
         }
         elseif ($row['yesterday_visit'] < $average)
         {
-            $trend_img = 'down.png';
+            $trend_img = 'down';
             $sign = '-';
             $trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
         }
         else
         {
-            $trend_img = 'right.png';
+            $trend_img = 'right';
             $sign = '+';
             $trend = 0;
         }
 
         echo '<table style="width:100%;border:none;border-collapse:collapse;">
 			<tr>
-				<td style="text-align:center;">		
-					<a href="' . $row['url'] . $row['relative_url'] . '">' . $row['relative_url'] . '</a>					
+				<td style="text-align:center;">
+					<a href="' . $row['url'] . $row['relative_url'] . '">' . $row['relative_url'] . '</a>
 				</td>
 				<td style="width:112px;text-align:center;">
 					' . $row['total_visit'] . '
@@ -83,7 +83,7 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 					' . gmdate_format('date_format_short', $row['last_update']) . '
 				</td>
 				<td style="width:105px;">
-					<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign-middle" /> (' . $sign . $trend . '%)
+					<i class="icon-arrow-' . $trend_img . ' icon-2x"></i> (' . $sign . $trend . '%)
 				</td>
 			</tr>
 		</table>';
@@ -104,27 +104,27 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
         $average = ($row['total_visit'] / $row['nbr_day']);
         if ($row['yesterday_visit'] > $average)
         {
-            $trend_img = 'up.png';
+            $trend_img = 'up';
             $sign = '+';
             $trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
         }
         elseif ($row['yesterday_visit'] < $average)
         {
-            $trend_img = 'down.png';
+            $trend_img = 'down';
             $sign = '-';
             $trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
         }
         else
         {
-            $trend_img = 'right.png';
+            $trend_img = 'right';
             $sign = '+';
             $trend = 0;
         }
 
         echo '<table style="width:100%;border:none;border-collapse:collapse;">
 			<tr>
-				<td style="text-align:center;">		
-					' . ucfirst($row['url']) . '					
+				<td style="text-align:center;">
+					' . ucfirst($row['url']) . '
 				</td>
 				<td style="width:112px;text-align:center;">
 					' . $row['total_visit'] . '
@@ -136,7 +136,7 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
 					' . gmdate_format('date_format_short', $row['last_update']) . '
 				</td>
 				<td style="width:105px;">
-					<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign-middle" /> (' . $sign . $trend . '%)
+					<i class="icon-arrow-' . $trend_img . ' icon-2x"></i> (' . $sign . $trend . '%)
 				</td>
 			</tr>
 		</table>';

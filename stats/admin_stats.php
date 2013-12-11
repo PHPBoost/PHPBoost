@@ -970,19 +970,19 @@ else
 			$average = ($row['total_visit'] / $row['nbr_day']);
 			if ($row['yesterday_visit'] > $average)
 			{
-				$trend_img = 'up.png';
+				$trend_img = 'up';
 				$sign = '+';
 				$trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
 			}
 			elseif ($row['yesterday_visit'] < $average)
 			{
-				$trend_img = 'down.png';
+				$trend_img = 'down';
 				$sign = '-';
 				$trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
 			}
 			else
 			{
-				$trend_img = 'right.png';
+				$trend_img = 'right';
 				$sign = '+';
 				$trend = 0;
 			}
@@ -995,7 +995,7 @@ else
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 				'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-				'TREND' => '<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign-middle" /> (' . $sign . $trend . '%)'
+				'TREND' => '<i class="icon-arrow-' . $trend_img . ' icon-2x"></i> (' . $sign . $trend . '%)'
 				));
 		}
 		$Sql->query_close($result);
@@ -1027,19 +1027,19 @@ else
 			$average = ($row['total_visit'] / $row['nbr_day']);
 			if ($row['yesterday_visit'] > $average)
 			{
-				$trend_img = 'up.png';
+				$trend_img = 'up';
 				$sign = '+';
 				$trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
 			}
 			elseif ($row['yesterday_visit'] < $average)
 			{
-				$trend_img = 'down.png';
+				$trend_img = 'down';
 				$sign = '-';
 				$trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
 			}
 			else
 			{
-				$trend_img = 'right.png';
+				$trend_img = 'right';
 				$sign = '+';
 				$trend = 0;
 			}
@@ -1052,7 +1052,7 @@ else
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 				'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-				'TREND' => '<img src="../templates/default/images/admin/' . $trend_img . '" alt="" class="valign-middle" /> (' . $sign . $trend . '%)'
+				'TREND' => '<i class="icon-arrow-' . $trend_img . ' icon-2x"></i> (' . $sign . $trend . '%)'
 				));
 		}
 		$Sql->query_close($result);

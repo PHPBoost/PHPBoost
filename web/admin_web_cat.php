@@ -139,8 +139,8 @@ elseif (!empty($_POST['add'])) //Ajout du lien.
 		AppContext::get_response()->redirect('/web/admin_web_cat.php?error=incomplete#message_helper');
 }
 //Sinon on rempli le formulaire
-else	
-{		
+else
+{
 	$Template->set_filenames(array(
 		'admin_web_cat'=> 'web/admin_web_cat.tpl'
 	));
@@ -154,7 +154,7 @@ else
 		while (! is_bool($lang = @readdir($dh)))
 		{	
 			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)$`i', $lang))
-				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
+				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.
 		}	
 		@closedir($dh); //On ferme le dossier
 	}
@@ -165,7 +165,7 @@ else
 		
 	$Template->put_all(array(
 		'IMG_LIST' => $image_list,
-		'L_DEL_ENTRY' => $LANG['del_entry'],		
+		'L_DEL_ENTRY' => $LANG['del_entry'],
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_CAT' => $LANG['cat_management'],
@@ -210,14 +210,14 @@ else
 		$name = TextHelper::htmlspecialchars($name);
 
 		//Activation des catégories.
-		$enabled = $row['aprob'] == '1' ? 'checked="checked"' : '';	
-		$disabled = $row['aprob'] == '0' ? 'checked="checked"' : '';				
+		$enabled = $row['aprob'] == '1' ? 'checked="checked"' : '';
+		$disabled = $row['aprob'] == '0' ? 'checked="checked"' : '';
 		
 		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
 		$top_link = ($min_cat != $row['class']) ? '<a href="admin_web_cat.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" title="">
-		<img src="../templates/default/images/admin/up.png" alt="" title="" /></a>' : '';
+		<i class="icon-arrow-up"></i></a>' : '';
 		$bottom_link = ($max_cat != $row['class']) ? '<a href="admin_web_cat.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" title="">
-		<img src="../templates/default/images/admin/down.png" alt="" title="" /></a>' : '';
+		<i class="icon-arrow-down"></i></a>' : '';
 		
 		$img_direct_path = (strpos($row['icon'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
@@ -232,31 +232,31 @@ else
 			'CAT' => $name,
 			'CONTENTS' => $row['contents'],
 			'IMG_PATH' => $img_direct_path ? $row['icon'] : '',
-			'IMG_ICON' => !empty($row['icon']) ? '<img src="' . $row['icon'] . '" alt="" class="valign-middle" />' : '',		
+			'IMG_ICON' => !empty($row['icon']) ? '<img src="' . $row['icon'] . '" alt="" class="valign-middle" />' : '',
 			'IMG_LIST' => $image_list,
 			'TOP' => $top_link,
 			'BOTTOM' => $bottom_link,
 			'ACTIV_ENABLED' => $enabled,
 			'ACTIV_DISABLED' => $disabled
-		));			
+		));
 		
 		//Rang d'autorisation.
 		for ($i = -1; $i <= 2; $i++)
 		{
 			switch ($i) 
-			{	
+			{
 				case -1:
 					$rank = $LANG['guest'];
-				break;				
+				break;
 				case 0:
 					$rank = $LANG['member'];
-				break;				
+				break;
 				case 1: 
 					$rank = $LANG['modo'];
-				break;		
+				break;
 				case 2:
 					$rank = $LANG['admin'];
-				break;					
+				break;
 				default: -1;
 			} 
 
@@ -268,7 +268,7 @@ else
 		}
 	}
 	$Sql->query_close($result);
-		
+	
 	$Template->pparse('admin_web_cat'); // traitement du modele	
 }
 

@@ -158,8 +158,8 @@
 					if( start_thumb == 0 )
 						document.getElementById('display_left').innerHTML = '';
 					else
-						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/left.png" class="valign-middle" alt="" /></a>';
-					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/right.png" class="valign-middle" alt="" /></a>';
+						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="icon-arrow-left icon-2x"></i></a>';
+					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="icon-arrow-right icon-2x"></i></a>';
 				}
 				else
 					return;
@@ -172,8 +172,8 @@
 					if( start_thumb == ({MAX_START} + 1) )
 						document.getElementById('display_right').innerHTML = '';
 					else
-						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/right.png" class="valign-middle" alt="" /></a>';
-					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><img src="{PATH_TO_ROOT}/templates/default/images/admin/left.png" class="valign-middle" alt="" /></a>';
+						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="icon-arrow-right icon-2x"></i></a>';
+					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="icon-arrow-left icon-2x"></i></a>';
 				}
 				else
 					return;
