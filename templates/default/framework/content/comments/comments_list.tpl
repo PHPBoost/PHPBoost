@@ -1,10 +1,3 @@
-<script type="text/javascript">
-<!--
-function Confirm_del_comment() {
-	return confirm("{L_CONFIRM_DELETE}");
-}
--->
-</script>
 # START comments #
 	<article id="com{comments.ID_COMMENT}" class="message" itemscope="itemscope" itemtype="http://schema.org/Comment">
 		<div class="message-user-infos">
@@ -50,4 +43,4 @@ function Confirm_del_comment() {
 			</div>
 		</div>
 	</article>
-# END comments #	
+# END comments #
