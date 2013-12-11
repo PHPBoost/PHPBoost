@@ -255,7 +255,7 @@
 								<div style="margin-left:{list.INDENT}px;">
 									<div class="row3 forum_cat_admin">
 										<span style="float:left;">
-											&nbsp;&nbsp;<i class="icon-folder icon-2x"></i> {list.LOCK} &nbsp;{list.URL}<a href="{list.U_FORUM_VARS}" class="forum_link_cat">{list.NAME}</a>
+											&nbsp;&nbsp;<i class="icon-folder"></i> {list.LOCK} &nbsp;{list.URL}<a href="{list.U_FORUM_VARS}" class="forum_link_cat">{list.NAME}</a>
 										</span>
 										<span style="float:right;">
 											<span id="l{list.ID}"></span> 
