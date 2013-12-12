@@ -139,7 +139,7 @@ if ($calendar_type == 'date')
     {
         if ($i >= $first_day && $i < $last_day)
         {
-            $class = ($day == $j) ? ' style="padding:0px;" class="row2"' : ' style="padding:0px;" class="row3"';
+            $class = ($day == $j) ? ' style="padding:0px;"' : ' style="padding:0px;"';
             $style = ($day == $j) ? '' : '';
             $date = sprintf($format, (($j < 10 && substr($j, 0, 1) != 0) ? '0' . $j : $j), $month, $year);
             	
@@ -148,7 +148,7 @@ if ($calendar_type == 'date')
         }
         else
         {
-            $contents = '<td style="padding:0px;height:21px;" class="row3 empty">&nbsp;</td>';
+            $contents = '<td style="padding:0px;height:21px;" class="calendar_none">&nbsp;</td>';
         }
 
         $Template->assign_block_vars('calendar', array(

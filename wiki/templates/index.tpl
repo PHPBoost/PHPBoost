@@ -20,8 +20,11 @@
 					{L_NO_CAT}
 				# END cat_list #
 				<br /><br />
-				<div style="text-align:center;" class="row3">
-					<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" class="icon-folder-open" title="{L_EXPLORER}"></a> &nbsp; <a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}">{L_EXPLORER}</a>
+				<div class="options" style="float:none;text-align:center;">
+					<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" title="{L_EXPLORER}">
+						<i class="icon-folder-open"></i>
+						{L_EXPLORER}
+					</a>
 				</div>
 				<br />
 				# START last_articles #

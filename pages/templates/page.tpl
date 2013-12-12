@@ -19,7 +19,7 @@
 			</header>
 			<div class="content" style="padding-bottom:85px;">
 				# START redirect #
-					<div class="row3" style="width:auto; float:left;">
+					<div class="options" style="width:auto; float:left;">
 					{redirect.REDIRECTED_FROM} {redirect.DELETE_REDIRECTION}
 					</div>
 				# END redirect #
