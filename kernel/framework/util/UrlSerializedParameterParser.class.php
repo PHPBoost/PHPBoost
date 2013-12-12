@@ -118,8 +118,8 @@ class UrlSerializedParameterParser
 		{
 			$this->parse_next_parameter($values);
 		}
-		$this->consume_if (self::$composed_parameter_end_char);
-		$this->consume_if (self::$parameter_separator);
+		$this->consume_if(self::$composed_parameter_end_char);
+		$this->consume_if(self::$parameter_separator);
 		return $values;
 	}
 
@@ -184,7 +184,7 @@ class UrlSerializedParameterParser
 		return $this->args[$this->args_index] == $char;
 	}
 
-	private function consume_if ($char)
+	private function consume_if($char)
 	{
 		if (!$this->is_ended() && $this->assert_next_character_is($char))
 		{

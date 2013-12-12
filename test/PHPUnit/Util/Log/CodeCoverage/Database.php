@@ -349,13 +349,13 @@ class PHPUnit_Util_Log_CodeCoverage_Database
                 $classLoc           = $classMetrics->getLoc();
                 $classLocExecutable = $classMetrics->getLocExecutable();
                 $classLocExecuted   = $classMetrics->getLocExecuted();
-                $classAif           = $classMetrics->getAif ();
+                $classAif           = $classMetrics->getAIF();
                 $classAhf           = $classMetrics->getAHF();
                 $classCis           = $classMetrics->getCIS();
                 $classCsz           = $classMetrics->getCSZ();
                 $classDit           = $classMetrics->getDIT();
                 $classImpl          = $classMetrics->getIMPL();
-                $classMif           = $classMetrics->getMif ();
+                $classMif           = $classMetrics->getMIF();
                 $classMhf           = $classMetrics->getMHF();
                 $classNoc           = $classMetrics->getNOC();
                 $classPf            = $classMetrics->getPF();

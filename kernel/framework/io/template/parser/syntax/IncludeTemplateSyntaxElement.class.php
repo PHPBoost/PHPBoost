@@ -92,7 +92,7 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
     private function write_subtemplate_call()
     {
-        $this->output->write('if (' . self::$subtpl . ' !== null){' . TemplateSyntaxElement::RESULT . '.=' . self::$subtpl . '->render();}');
+        $this->output->write('if(' . self::$subtpl . ' !== null){' . TemplateSyntaxElement::RESULT . '.=' . self::$subtpl . '->render();}');
     }
 }
 ?>
