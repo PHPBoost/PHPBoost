@@ -54,7 +54,8 @@ class CalendarFeedProvider implements FeedProvider
 		$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 		$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 		
-		$authorized_categories = CalendarService::get_authorized_categories($idcat);
+		$categories = CalendarService::get_categories_manager()->get_childrens($idcat, new SearchCategoryChildrensOptions(), true);
+		$ids_categories = array_keys($categories);
 		
 		$result = $querier->select('SELECT *
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
@@ -63,7 +64,7 @@ class CalendarFeedProvider implements FeedProvider
 		LEFT JOIN '. CalendarSetup::$calendar_cats_table .' cat ON cat.id = event_content.id_category
 		WHERE approved = 1 AND id_category IN :cats_ids
 		ORDER BY start_date DESC', array(
-			'cats_ids' => $authorized_categories
+			'cats_ids' => $ids_categories
 		));
 		
 		while ($row = $result->fetch())

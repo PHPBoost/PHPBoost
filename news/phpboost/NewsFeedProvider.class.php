@@ -55,7 +55,8 @@ class NewsFeedProvider implements FeedProvider
 		$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 		$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
-		$authorized_categories = NewsService::get_authorized_categories($idcat);
+		$categories = NewsService::get_categories_manager()->get_childrens($idcat, new SearchCategoryChildrensOptions(), true);
+		$ids_categories = array_keys($categories);
 
 		$now = new Date();
 		$results = $querier->select('SELECT news.id, news.id_category, news.name, news.rewrited_name, news.contents, news.short_contents, news.creation_date, news.picture_url, cat.rewrited_name AS rewrited_name_cat
@@ -63,7 +64,7 @@ class NewsFeedProvider implements FeedProvider
 			LEFT JOIN '. NewsSetup::$news_cats_table .' cat ON cat.id = news.id_category
 			WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now OR news.end_date = 0))) AND news.id_category IN :cats_ids
 			ORDER BY news.creation_date DESC', array(
-			'cats_ids' => $authorized_categories,
+			'cats_ids' => $ids_categories,
 			'timestamp_now' => $now->get_timestamp()
 		));
 
