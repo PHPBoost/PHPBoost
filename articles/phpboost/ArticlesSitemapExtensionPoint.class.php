@@ -35,9 +35,9 @@ class ArticlesSitemapExtensionPoint extends SitemapCategoriesModule
 		parent::__construct(ArticlesService::get_categories_manager());
 	}
 	
-	protected function get_category_url($id, $rewrited_name)
+	protected function get_category_url($category)
 	{
-		return ArticlesUrlBuilder::display_category($id, $rewrited_name);
+		return ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name());
 	}
 }
 ?>
