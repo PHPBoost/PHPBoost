@@ -74,8 +74,8 @@ class TemplateHighlighter extends AbstractParser
 		//Now we highlight the specific syntax of PHPBoost templates
 
 		//Conditionnal block
-		$this->content = preg_replace('`# if ( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">IF$1</span> <span style="' . self::TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . self::TPL_VARIABLE_STYLE . '">$3</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
-		$this->content = preg_replace('`# ELSEif ( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">ELSEIF$1</span> <span style="' . self::TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . self::TPL_VARIABLE_STYLE . '">$3</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
+		$this->content = preg_replace('`# IF ( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">IF$1</span> <span style="' . self::TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . self::TPL_VARIABLE_STYLE . '">$3</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
+		$this->content = preg_replace('`# ELSEIF ( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">ELSEIF$1</span> <span style="' . self::TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . self::TPL_VARIABLE_STYLE . '">$3</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
 		$this->content = str_replace('# ELSE #', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">ELSE</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
 		$this->content = str_replace('# ENDIF #', '<span style="' . self::TPL_SHARP_STYLE . '">#</span> <span style="' . self::TPL_KEYWORD_STYLE . '">ENDIF</span> <span style="' . self::TPL_SHARP_STYLE . '">#</span>', $this->content);
 
