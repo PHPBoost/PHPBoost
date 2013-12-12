@@ -40,14 +40,14 @@ class NewsCategoriesManageController extends AbstractCategoriesManageController
 		return NewsService::get_categories_manager();
 	}
 	
-	protected function get_edit_category_url($id)
+	protected function get_edit_category_url($category)
 	{
-		return NewsUrlBuilder::edit_category($id);
+		return NewsUrlBuilder::edit_category($category->get_id());
 	}
 	
-	protected function get_delete_category_url($id)
+	protected function get_delete_category_url($category)
 	{
-		return NewsUrlBuilder::delete_category($id);
+		return NewsUrlBuilder::delete_category($category->get_id());
 	}
 }
 ?>

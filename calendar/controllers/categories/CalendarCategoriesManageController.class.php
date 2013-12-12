@@ -37,14 +37,14 @@ class CalendarCategoriesManageController extends AbstractCategoriesManageControl
 		return CalendarService::get_categories_manager();
 	}
 
-	protected function get_edit_category_url($id)
+	protected function get_edit_category_url($category)
 	{
-		return CalendarUrlBuilder::edit_category($id);
+		return CalendarUrlBuilder::edit_category($category->get_id());
 	}
 
-	protected function get_delete_category_url($id)
+	protected function get_delete_category_url($category)
 	{
-		return CalendarUrlBuilder::delete_category($id);
+		return CalendarUrlBuilder::delete_category($category->get_id());
 	}
 }
 ?>
