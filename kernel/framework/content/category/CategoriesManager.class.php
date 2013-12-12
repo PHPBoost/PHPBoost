@@ -287,11 +287,19 @@ class CategoriesManager
 	 * @param int $id_category
 	 * @param SearchCategoryChildrensOptions $search_category_children_options
 	 */
-	public function get_childrens($id_category, SearchCategoryChildrensOptions $search_category_children_options)
+	public function get_childrens($id_category, SearchCategoryChildrensOptions $search_category_children_options, $add_this = false)
 	{
-		$all_categories = $this->categories_cache->get_categories();
-		$root_category = $all_categories[Category::ROOT_CATEGORY];
-		$categories = array();
+		if (!$this->get_categories_cache()->category_exists($id_category))
+		{
+			throw new CategoryNotFoundException($id_category);
+		}
+		
+		$categories = $this->categories_cache->get_categories();
+		$root_category = $categories[Category::ROOT_CATEGORY];
+		$childrens_categories = array();
+		
+		if ($add_this)
+			$childrens_categories[$id_category] = $this->categories_cache->get_category($id_category);
 		
 		if (($search_category_children_options->is_excluded_categories_recursive() && $search_category_children_options->category_is_excluded($root_category)) || !$search_category_children_options->check_authorizations($root_category))
 		{
@@ -300,10 +308,10 @@ class CategoriesManager
 		
 		if ($id_category == Category::ROOT_CATEGORY && !$search_category_children_options->category_is_excluded($root_category))
 		{
-			$categories[Category::ROOT_CATEGORY] = $root_category;
+			$childrens_categories[Category::ROOT_CATEGORY] = $root_category;
 		}
 
-		return $this->build_children_map($id_category, $all_categories, $id_category, $search_category_children_options, $categories);
+		return $this->build_children_map($id_category, $categories, $id_category, $search_category_children_options, $childrens_categories);
 	}
 	
 	/**
@@ -313,21 +321,27 @@ class CategoriesManager
 	 */
 	public function get_parents($id_category, $add_this = false)
 	{
-		$list = array();
+		if (!$this->get_categories_cache()->category_exists($id_category))
+		{
+			throw new CategoryNotFoundException($id_category);
+		}
+		
+		$parents_categories = array();
+		
 		if ($add_this)
-			$list[$id_category] = $this->categories_cache->get_category($id_category);
+			$parents_categories[$id_category] = $this->categories_cache->get_category($id_category);
 
 		if ($id_category > 0)
 		{
 			while ((int)$this->categories_cache->get_category($id_category)->get_id_parent() != Category::ROOT_CATEGORY)
 			{
 				$id_parent = $this->categories_cache->get_category($id_category)->get_id_parent();
-			    $list[$id_parent] = $this->categories_cache->get_category($id_parent);
+			    $parents_categories[$id_parent] = $this->categories_cache->get_category($id_parent);
 			    $id_category = $id_parent;
 			}
-			$list[Category::ROOT_CATEGORY] = $this->categories_cache->get_category(Category::ROOT_CATEGORY);
+			$parents_categories[Category::ROOT_CATEGORY] = $this->categories_cache->get_category(Category::ROOT_CATEGORY);
 		}
-		return $list;
+		return $parents_categories;
 	}
 	
 	/**
@@ -389,20 +403,20 @@ class CategoriesManager
 	 */
 	public function get_categories_items_parameters() { return $this->categories_items_parameters; }
 	
-	private function build_children_map($id_category, $all_categories, $id_parent, $search_category_children_options, &$categories = array(), $node = 1)
+	private function build_children_map($id_category, $categories, $id_parent, $search_category_children_options, &$childrens_categories = array(), $node = 1)
 	{
-		foreach ($all_categories as $id => $category)
+		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id_parent() == $id_parent && $id != Category::ROOT_CATEGORY)
 			{
 				if ($search_category_children_options->check_authorizations($category) && !$search_category_children_options->category_is_excluded($category))
-					$categories[$id] = $category;
+					$childrens_categories[$id] = $category;
 				
 				if ($search_category_children_options->check_authorizations($category) && ($search_category_children_options->is_excluded_categories_recursive() ? !$search_category_children_options->category_is_excluded($category) : true) && $search_category_children_options->is_enabled_recursive_exploration())
-					$this->build_children_map($id_category, $all_categories, $id, $search_category_children_options, $categories, ($node+1));
+					$this->build_children_map($id_category, $categories, $id, $search_category_children_options, $childrens_categories, ($node+1));
 			}
 		}
-		return $categories;
+		return $childrens_categories;
 	}
 }
 ?>
