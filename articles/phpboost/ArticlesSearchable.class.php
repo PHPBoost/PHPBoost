@@ -41,7 +41,7 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 	{
 		$now = new Date();
 		$timestamp = $now->get_timestamp();
-		$authorized_categories = NewsService::get_authorized_categories($this->get_category()->get_id());
+		$authorized_categories = NewsService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		
 		return "SELECT " . $args['id_search'] . " AS id_search,
