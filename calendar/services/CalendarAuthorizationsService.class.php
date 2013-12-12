@@ -38,27 +38,28 @@ class CalendarAuthorizationsService
 	
 	public function read()
 	{
-		return $this->get_authorizations(Category::READ_AUTHORIZATIONS);
+		return $this->is_authorized(Category::READ_AUTHORIZATIONS);
 	}
 	
 	public function contribution()
 	{
-		return $this->get_authorizations(Category::CONTRIBUTION_AUTHORIZATIONS);
+		return $this->is_authorized(Category::CONTRIBUTION_AUTHORIZATIONS);
 	}
 	
 	public function write()
 	{
-		return $this->get_authorizations(Category::WRITE_AUTHORIZATIONS);
+		return $this->is_authorized(Category::WRITE_AUTHORIZATIONS);
 	}
 	
 	public function moderation()
 	{
-		return $this->get_authorizations(Category::MODERATION_AUTHORIZATIONS);
+		return $this->is_authorized(Category::MODERATION_AUTHORIZATIONS);
 	}
 	
-	private function get_authorizations($bit)
+	private function is_authorized($bit)
 	{
-		return CalendarService::get_categories_manager()->get_categories_cache()->get_category($this->id_category)->check_auth($bit);
+		$auth = CalendarService::get_categories_manager()->get_heritated_authorizations($this->id_category, $bit, Authorizations::AUTH_PARENT_PRIORITY);
+		return AppContext::get_current_user()->check_auth($auth, $bit);
 	}
 }
 ?>
