@@ -55,46 +55,34 @@ class NewsFeedProvider implements FeedProvider
 		$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 		$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
-		if ($idcat != Category::ROOT_CATEGORY)
-		{
-			$ids_categories[] = $idcat;
-		}
-		else
-		{
-			$search_category_children_options = new SearchCategoryChildrensOptions();
-			$categories = NewsService::get_categories_manager()->get_childrens($idcat, $search_category_children_options);
-			$ids_categories = array_keys($categories);
-		}
+		$authorized_categories = NewsService::get_authorized_categories($idcat);
 
-		if (!empty($ids_categories))
-		{
-			$now = new Date();
-			$results = $querier->select('SELECT news.id, news.id_category, news.name, news.rewrited_name, news.contents, news.short_contents, news.creation_date, news.picture_url, cat.rewrited_name AS rewrited_name_cat
-                 FROM ' . NewsSetup::$news_table . ' news
-                 LEFT JOIN '. NewsSetup::$news_cats_table .' cat ON cat.id = news.id_category
-                 WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now OR news.end_date = 0))) AND news.id_category IN :cats_ids
-                 ORDER BY news.creation_date DESC', array(
-			        'cats_ids' => $ids_categories,
-					'timestamp_now' => $now->get_timestamp()
-			));
+		$now = new Date();
+		$results = $querier->select('SELECT news.id, news.id_category, news.name, news.rewrited_name, news.contents, news.short_contents, news.creation_date, news.picture_url, cat.rewrited_name AS rewrited_name_cat
+			FROM ' . NewsSetup::$news_table . ' news
+			LEFT JOIN '. NewsSetup::$news_cats_table .' cat ON cat.id = news.id_category
+			WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now OR news.end_date = 0))) AND news.id_category IN :cats_ids
+			ORDER BY news.creation_date DESC', array(
+			'cats_ids' => $authorized_categories,
+			'timestamp_now' => $now->get_timestamp()
+		));
 
-			foreach ($results as $row)
-			{
-				$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
-				$link = NewsUrlBuilder::display_news($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_name'])->rel();
-				
-				$item = new FeedItem();
-				$item->set_title($row['name']);
-				$item->set_link($link);
-				$item->set_guid($link);
-				$item->set_desc(FormatingHelper::second_parse($row['contents']));
-				$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']));
-				$item->set_image_url($row['picture_url']);
-				$item->set_auth(NewsService::get_categories_manager()->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
-				$data->add_item($item);
-			}
-			$results->dispose();
+		foreach ($results as $row)
+		{
+			$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
+			$link = NewsUrlBuilder::display_news($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_name'])->rel();
+			
+			$item = new FeedItem();
+			$item->set_title($row['name']);
+			$item->set_link($link);
+			$item->set_guid($link);
+			$item->set_desc(FormatingHelper::second_parse($row['contents']));
+			$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']));
+			$item->set_image_url($row['picture_url']);
+			$item->set_auth(NewsService::get_categories_manager()->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
+			$data->add_item($item);
 		}
+		$results->dispose();
 
 		return $data;
 	}
