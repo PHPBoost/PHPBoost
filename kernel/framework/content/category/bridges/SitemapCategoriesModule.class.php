@@ -80,7 +80,7 @@ abstract class SitemapCategoriesModule implements SitemapExtensionPoint
 	private function create_module_map_sections($categories, $id_cat, $auth_mode)
 	{
 		$category = $this->categories_manager->get_categories_cache()->get_category($id_cat);
-		$this_category = new SitemapLink($category->get_name(), $this->get_category_url($id_cat, $category->get_rewrited_name()));
+		$this_category = new SitemapLink($category->get_name(), $this->get_category_url($category));
 
 		$section = new SitemapSection($this_category);
 	
@@ -95,6 +95,6 @@ abstract class SitemapCategoriesModule implements SitemapExtensionPoint
 		return $section;
 	}
 	
-	abstract protected function get_category_url($id, $rewrited_name);
+	abstract protected function get_category_url(Category $category);
 }
 ?>
