@@ -174,7 +174,7 @@ Event.observe(window, 'load', function() {
 							</div>
 							# ENDIF #
 							<div class="sortable-options">
-								<a href="{list_extended_fields.EDIT_LINK}" title="{@fields.action.edit_field}" class="icon-edit"></a>
+								<a href="{list_extended_fields.U_EDIT}" title="{@fields.action.edit_field}" class="icon-edit"></a>
 							</div>
 							<div class="sortable-options">
 								# IF NOT list_extended_fields.C_FREEZE #
