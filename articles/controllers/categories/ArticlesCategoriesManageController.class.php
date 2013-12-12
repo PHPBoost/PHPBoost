@@ -37,14 +37,14 @@ class ArticlesCategoriesManageController extends AbstractCategoriesManageControl
 		return ArticlesService::get_categories_manager();
 	}
 	
-	protected function get_edit_category_url($id)
+	protected function get_edit_category_url($category)
 	{
-		return ArticlesUrlBuilder::edit_category($id);
+		return ArticlesUrlBuilder::edit_category($category->get_id());
 	}
 	
-	protected function get_delete_category_url($id)
+	protected function get_delete_category_url($category)
 	{
-		return ArticlesUrlBuilder::delete_category($id);
+		return ArticlesUrlBuilder::delete_category($category->get_id());
 	}
 }
 ?>

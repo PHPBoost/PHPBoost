@@ -72,8 +72,8 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 				$category_view = new FileTemplate('default/framework/content/categories/category.tpl');
 				$category_view->put_all(array(
 					'C_DESCRIPTION' => $description_exists,
-					'U_EDIT' => $this->get_edit_category_url($id)->rel(),
-					'U_DELETE' => $this->get_delete_category_url($id)->rel(),
+					'U_EDIT' => $this->get_edit_category_url($category)->rel(),
+					'U_DELETE' => $this->get_delete_category_url($category)->rel(),
 					'L_EDIT' => LangLoader::get_message('update', 'main'),
 					'L_DELETE' => LangLoader::get_message('delete', 'main'),
 					'ID' => $id,
@@ -137,15 +137,15 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	abstract protected function get_categories_manager();
 	
 	/**
-	 * @param int $id category id to edit
+	 * @param int $category Category
 	 * @return Url
 	 */
-	abstract protected function get_edit_category_url($id);
+	abstract protected function get_edit_category_url($category);
 	
 	/**
-	 * @param int $id category id to delete
+	 * @param int $category Category
 	 * @return Url
 	 */
-	abstract protected function get_delete_category_url($id);
+	abstract protected function get_delete_category_url($category);
 }
 ?>
