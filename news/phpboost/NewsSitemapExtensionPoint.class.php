@@ -35,9 +35,9 @@ class NewsSitemapExtensionPoint extends SitemapCategoriesModule
 		parent::__construct(NewsService::get_categories_manager());
 	}
 	
-	protected function get_category_url($id, $rewrited_name)
+	protected function get_category_url($category)
 	{
-		return NewsUrlBuilder::display_category($id, $rewrited_name);
+		return NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name());
 	}
 }
 ?>
