@@ -340,15 +340,13 @@ class CategoriesManager
 	public function get_heritated_authorizations($id_category, $bit, $mode)
 	{
 		$categories = array_reverse($this->get_parents($id_category, true));
-		$root_authorizations = $this->categories_cache->get_root_category()->get_authorizations();
 
-		$result = array();
-		
+		$result = $this->categories_cache->get_root_category()->get_authorizations();
 		if (!empty($categories))
-		{	
+		{
 			foreach ($categories as $category)
 			{
-				if (!$category->auth_is_equals($root_authorizations) || $category->get_id() == Category::ROOT_CATEGORY)
+				if ($category->get_id() !== Category::ROOT_CATEGORY)
 				{
 					$result = Authorizations::merge_auth($result, $category->get_authorizations(), $bit, $mode);
 				}
