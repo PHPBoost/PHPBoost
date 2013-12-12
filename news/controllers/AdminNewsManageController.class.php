@@ -94,8 +94,7 @@ class AdminNewsManageController extends AdminModuleController
 			$news = new News();
 			$news->set_properties($row);
 			
-			$this->view->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
-			)));
+			$this->view->assign_block_vars('news', $news->get_array_tpl_vars());
 		}
 	}
 	

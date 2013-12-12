@@ -58,8 +58,7 @@ class AdminCalendarConfigController extends AdminModuleController
 			$this->save();
 			$tpl->put('MSG', MessageHelper::display($this->common_lang['message.success.config'], E_USER_SUCCESS, 5));
 		}
-		
-		
+
 		//Display the form on the template
 		$tpl->put('FORM', $this->form->display());
 		

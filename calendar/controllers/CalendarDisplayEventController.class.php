@@ -85,7 +85,7 @@ class CalendarDisplayEventController extends ModuleController
 			$this->tpl->assign_block_vars('participant', $participant->get_array_tpl_vars());
 		}
 		
-		if (CalendarConfig::load()->are_comments_enabled() && is_numeric($event->get_id()))
+		if (CalendarConfig::load()->are_comments_enabled())
 		{
 			$comments_topic = new CalendarCommentsTopic($event);
 			$comments_topic->set_id_in_module($event->get_id());

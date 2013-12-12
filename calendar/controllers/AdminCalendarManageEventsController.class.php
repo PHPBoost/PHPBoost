@@ -98,9 +98,7 @@ class AdminCalendarManageEventsController extends AdminModuleController
 			$event = new CalendarEvent();
 			$event->set_properties($row);
 			
-			$this->view->assign_block_vars('event', array_merge($event->get_array_tpl_vars(), array(
-				'U_DELETE' => CalendarUrlBuilder::delete_event($event->get_id() . '/admin/' . $field . '/' . $mode . '/' . $page)->rel()
-			)));
+			$this->view->assign_block_vars('event', $event->get_array_tpl_vars());
 		}
 		
 		$this->view->put_all(array(
