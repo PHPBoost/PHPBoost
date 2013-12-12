@@ -29,8 +29,6 @@ class ArticlesPrintArticlesController extends ModuleController
 {	
 	private $lang;
 	private $view;
-	private $auth_moderation;
-	private $auth_write;
 	private $article;
 	
 	public function execute(HTTPRequestCustom $request)
@@ -112,10 +110,7 @@ class ArticlesPrintArticlesController extends ModuleController
 	{
 		$article = $this->get_article();
 		
-		$this->auth_write = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write();
-		$this->auth_moderation = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation();
-		
-		$not_authorized = !$this->auth_moderation && (!$this->auth_write && $article->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
+		$not_authorized = !ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write() && (!ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation() && $article->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
 		
 		switch ($article->get_publishing_state()) 
 		{
@@ -149,8 +144,7 @@ class ArticlesPrintArticlesController extends ModuleController
 	
 	private function generate_response()
 	{
-		$response = new SiteNodisplayResponse($this->view);
-		return $response;
+		return new SiteNodisplayResponse($this->view);
 	}
 }
 ?>
