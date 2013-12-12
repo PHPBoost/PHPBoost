@@ -1,27 +1,25 @@
 <section>	
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('articles'))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			${i18n('articles')}
 		</h1>
-		# IF C_ARTICLES_CAT #
 		<div class="cat">
-		    <div style="margin-bottom:36px;">
+			<div style="margin-bottom:36px;">
 			${i18n('articles.sub_categories')} :
 			<br /><br />
 			<ul style="list-style:none;">
-			    # IF C_CURRENT_CAT #
-			    <li style="float:left;"><a class="button_read_more" href="">{ID_CAT}</a></li>
-			    # ENDIF #
-			    # START cat_list #
-			    <li style="float:left;margin:0 5px 0 5px"><a itemprop="about" style="display:inline-block;" class="button_cat" href="{cat_list.U_CATEGORY}" title="{cat_list.CATEGORY_DESCRIPTION}">{cat_list.CATEGORY_NAME}</a></li>
-			    # END cat_list #
-			</ul>   
-		    </div>
+				# IF C_CURRENT_CAT #
+				<li style="float:left;"><a class="button_read_more" href="">{ID_CAT}</a></li>
+				# ENDIF #
+				# START cat_list #
+				<li style="float:left;margin:0 5px 0 5px"><a itemprop="about" style="display:inline-block;" class="button_cat" href="{cat_list.U_CATEGORY}" title="{cat_list.CATEGORY_DESCRIPTION}">{cat_list.CATEGORY_NAME} ({cat_list.NBR_ARTICLES})</a></li>
+				# END cat_list #
+			</ul>
+			</div>
 		</div>
 		<div class="spacer">&nbsp;</div>
 		<hr />
-		# ENDIF #
 	</header>
 	# IF C_NO_ARTICLE_AVAILABLE #
 	<div class="center">
@@ -77,7 +75,7 @@
 						<footer>
 							# IF C_COMMENTS_ENABLED #
 							<div class="article_comment">
-							    <i class="icon-comment"></i><a itemprop="discussionUrl" class="small" href="{articles.U_COMMENTS}" title="{articles.L_COMMENTS}">&nbsp;{articles.NUMBER_COMMENTS}</a>
+								<i class="icon-comment"></i><a itemprop="discussionUrl" class="small" href="{articles.U_COMMENTS}" title="{articles.L_COMMENTS}">&nbsp;{articles.NUMBER_COMMENTS}</a>
 								# ELSE #
 								&nbsp;
 								# ENDIF #

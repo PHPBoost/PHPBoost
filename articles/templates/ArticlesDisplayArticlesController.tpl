@@ -11,7 +11,7 @@
 				# IF C_DELETE #
 					<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="icon-delete" data-confirmation="delete-element"></a>
 				# ENDIF #
-				    <a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank" class="icon-print"></a>
+					<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank" class="icon-print"></a>
 			</span>
 		</h1>
 		<div class="more">

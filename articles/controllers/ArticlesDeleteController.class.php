@@ -49,12 +49,12 @@ class ArticlesDeleteController extends ModuleController
 		}
 		
 		ArticlesService::delete('WHERE id=:id', array('id' => $article->get_id()));
-		
 		ArticlesService::get_keywords_manager()->delete_relations($article->get_id());
-		
+
 		PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'articles', 'id' => $article->get_id()));
 		
 		CommentsService::delete_comments_topic_module('articles', $article->get_id());
+		NotationService::delete_notes_id_in_module('articles', $article->get_id());
 		
 		Feed::clear_cache('articles');
 		
@@ -64,7 +64,6 @@ class ArticlesDeleteController extends ModuleController
 	private function get_article(HTTPRequestCustom $request)
 	{
 		$id = $request->get_getint('id', 0);
-	
 		if (!empty($id))
 		{
 			try {

@@ -151,7 +151,6 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			$this->view->put_all(array(
 				'C_MODERATE' => $auth_moderation,
 				'C_ARTICLES_FILTERS' => true,
-				'C_ADD' => $add_auth,
 				'C_COMMENTS_ENABLED' => $comments_enabled,
 				'C_PAGINATION' => $pagination->has_several_pages(),
 				'PAGINATION' => $pagination->display()
@@ -230,10 +229,10 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$pagination->set_url(ArticlesUrlBuilder::display_pending_articles($field, $mode, '/%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
-	        {
+		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
-	        }
+		}
 	
 		return $pagination;
 	}

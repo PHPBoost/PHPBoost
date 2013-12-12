@@ -163,10 +163,10 @@ class AdminArticlesManageController extends AdminModuleController
 		$pagination->set_url(ArticlesUrlBuilder::manage_articles($field, $mode, '%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
-	        {
+		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
-	        }
+		}
 	
 		return $pagination;
 	}

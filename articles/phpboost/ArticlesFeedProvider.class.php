@@ -54,49 +54,37 @@ class ArticlesFeedProvider implements FeedProvider
 		$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 		$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
-		if ($idcat != Category::ROOT_CATEGORY)
-		{
-			$ids_categories[] = $idcat;
-		}
-		else
-		{
-		    $search_category_children_options = new SearchCategoryChildrensOptions();
-		    $categories = ArticlesService::get_categories_manager()->get_childrens($idcat, $search_category_children_options);
-		    $ids_categories = array_keys($categories);
-		}
+		$categories = ArticlesService::get_categories_manager()->get_childrens($idcat, new SearchCategoryChildrensOptions(), true);
+		$ids_categories = array_keys($categories);
+		
+		$now = new Date();
+		$results = $querier->select('SELECT articles.id, articles.id_category, articles.title, articles.rewrited_title, articles.picture_url, 
+		articles.contents, articles.description, articles.date_created, cat.rewrited_name AS rewrited_name_cat
+		FROM ' . ArticlesSetup::$articles_table . ' articles
+		LEFT JOIN '. ArticlesSetup::$articles_cats_table .' cat ON cat.id = articles.id_category
+		WHERE (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
+		AND articles.publishing_end_date = 0) OR articles.publishing_end_date > :timestamp_now)) AND articles.id_category IN :cats_ids
+		ORDER BY articles.date_created DESC', 
+		array(
+			'cats_ids' => $ids_categories,
+			'timestamp_now' => $now->get_timestamp()
+		));
 
-		if (!empty($ids_categories))
+		foreach ($results as $row)
 		{
-			$now = new Date();
-			
-			$results = $querier->select('SELECT articles.id, articles.id_category, articles.title, articles.rewrited_title, articles.picture_url, 
-			articles.contents, articles.description, articles.date_created, cat.rewrited_name AS rewrited_name_cat
-			FROM ' . ArticlesSetup::$articles_table . ' articles
-			LEFT JOIN '. ArticlesSetup::$articles_cats_table .' cat ON cat.id = articles.id_category
-			WHERE (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
-			AND articles.publishing_end_date = 0) OR articles.publishing_end_date > :timestamp_now)) AND articles.id_category IN :cats_ids
-			ORDER BY articles.date_created DESC', 
-			array(
-				'cats_ids' => $ids_categories,
-				'timestamp_now' => $now->get_timestamp()
-			));
-
-			foreach ($results as $row)
-			{
-				$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
-				$link = ArticlesUrlBuilder::display_article($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_title'])->rel();
-				$item = new FeedItem();
-				$item->set_title($row['title']);
-				$item->set_link($link);
-				$item->set_guid($link);
-				$item->set_desc(FormatingHelper::second_parse($row['contents']));
-				$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['date_created']));
-				$item->set_image_url($row['picture_url']);
-				$item->set_auth(ArticlesService::get_categories_manager()->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
-				$data->add_item($item);
-			}
-			$results->dispose();
+			$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
+			$link = ArticlesUrlBuilder::display_article($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_title'])->rel();
+			$item = new FeedItem();
+			$item->set_title($row['title']);
+			$item->set_link($link);
+			$item->set_guid($link);
+			$item->set_desc(FormatingHelper::second_parse($row['contents']));
+			$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['date_created']));
+			$item->set_image_url($row['picture_url']);
+			$item->set_auth(ArticlesService::get_categories_manager()->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
+			$data->add_item($item);
 		}
+		$results->dispose();
 
 		return $data;
 	}

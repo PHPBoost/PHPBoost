@@ -145,10 +145,9 @@ class ArticlesDisplayArticlesController extends ModuleController
 		//Affichage commentaires
 		if ($comments_enabled)
 		{
-		    $comments_topic = new ArticlesCommentsTopic();
+		    $comments_topic = new ArticlesCommentsTopic($this->get_article());
 		    $comments_topic->set_id_in_module($this->article->get_id());
 		    $comments_topic->set_url(ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
-
 
 		    $this->view->put('COMMENTS', $comments_topic->display());
 		}

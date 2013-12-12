@@ -61,6 +61,7 @@ class ArticlesFormController extends ModuleController
 	
 	private function get_page_scripts()
 	{
+		//Mets ça dans un tpl :)
 		$script = '<script type="text/javascript">
 			    <!--
 			    function bbcode_page()
@@ -120,16 +121,7 @@ class ArticlesFormController extends ModuleController
 		return $script;
 	}
 	private function build_form($request)
-	{
-		if ($this->article->get_id() === null)
-		{
-			$id_category = $request->get_getint('id_category',0);
-		}
-		else
-		{
-			$id_category = null;
-		}
-		
+	{		
 		$common_lang = LangLoader::get('common');
 		
 		$form = new HTMLForm(__CLASS__);
@@ -160,6 +152,8 @@ class ArticlesFormController extends ModuleController
 			));
 		}
 
+		$id_category = $this->article->get_id() === null ? $request->get_getint('id_category', 0) : null;
+		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);

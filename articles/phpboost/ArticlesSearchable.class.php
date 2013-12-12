@@ -41,14 +41,7 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 	{
 		$now = new Date();
 		$timestamp = $now->get_timestamp();
-		
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories = ArticlesService::get_categories_manager()->get_childrens(Category::ROOT_CATEGORY, $search_category_children_options);
-		$ids_categories = array_keys($categories);
-		
-		$where = !empty($ids_categories) ? " AND id_category IN(" . implode(", ", $ids_categories) . ")" : " AND id_category = '0'";
-		
+		$authorized_categories = NewsService::get_authorized_categories($this->get_category()->get_id());
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		
 		return "SELECT " . $args['id_search'] . " AS id_search,
@@ -65,7 +58,8 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 			FT_SEARCH_RELEVANCE(articles.description, '" . $args['search'] . "') )
 			AND articles.published = 1 OR (articles.published = 2 AND publishing_start_date < '" . $timestamp . 
 			"' AND (publishing_end_date > '" . $timestamp . "' OR publishing_end_date = 0))
-			" . $where . " ORDER BY relevance DESC " . $this->sql_querier->limit(0, 100);
+			AND id_category IN(" . implode(", ", $authorized_categories) . ")
+			 ORDER BY relevance DESC " . $this->sql_querier->limit(0, 100);
 	}
 }
 ?>

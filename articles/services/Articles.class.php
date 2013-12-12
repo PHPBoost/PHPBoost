@@ -63,8 +63,6 @@ class Articles
 
 	const AUTHOR_NAME_NOTDISPLAYED = 0;
 	const AUTHOR_NAME_DISPLAYED = 1;
-	
-	const DEFAULT_NBR_VIEW = 0;
         
 	const DEFAULT_PICTURE = '/articles/templates/images/default.png';
 	
@@ -402,7 +400,7 @@ class Articles
 		$this->notation_enabled = self::NOTATION_ENABLED;
 		$this->sources = array();
 		$this->picture_url = new Url(self::DEFAULT_PICTURE);
-		$this->number_view = self::DEFAULT_NBR_VIEW;
+		$this->number_view = 0;
 	}
 
 	public function clean_publishing_start_and_end_date()
