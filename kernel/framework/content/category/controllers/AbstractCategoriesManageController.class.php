@@ -140,12 +140,12 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	 * @param int $category Category
 	 * @return Url
 	 */
-	abstract protected function get_edit_category_url($category);
+	abstract protected function get_edit_category_url(Category $category);
 	
 	/**
 	 * @param int $category Category
 	 * @return Url
 	 */
-	abstract protected function get_delete_category_url($category);
+	abstract protected function get_delete_category_url(Category $category);
 }
 ?>

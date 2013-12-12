@@ -143,7 +143,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			
 			$this->build_keywords_view($article);
 			
-			$this->view->assign_block_vars('articles', array_merge($article->get_tpl_vars()));
+			$this->view->assign_block_vars('articles', $article->get_tpl_vars());
 		}
 	}
 	

@@ -167,6 +167,7 @@ class CalendarDisplayCategoryController extends ModuleController
 		$request = AppContext::get_request();
 		$error = $request->get_value('error', '');
 		
+		## TODO Afficher directement le message ? Moins de redirection, affichage plus rapide, ...
 		//Gestion des messages
 		switch ($error)
 		{
