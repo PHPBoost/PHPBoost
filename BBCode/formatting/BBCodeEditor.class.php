@@ -153,8 +153,6 @@ class BBCodeEditor extends ContentEditor
         $smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
         $smile_by_line = 5; //Smiley par ligne.
 
-        $height_max = 50;
-        $width_max = 50;
         $nbr_smile = count($smileys_cache->get_smileys());
         $i = 1;
         $z = 0;
@@ -166,39 +164,9 @@ class BBCodeEditor extends ContentEditor
                 break;
             }
 
-            $smiley_height = 18;
-            $smiley_width = 18;
-
-            $smiley = new Image(PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley']);
-			$smiley_height = $smiley->get_height();
-			$smiley_width = $smiley->get_width();
-			
-            if ($smiley_width > $width_max || $smiley_height > $height_max)
-            {
-                if ($smiley_width > $smiley_height)
-                {
-                    $ratio = $smiley_width / $smiley_height;
-                    $width = $width_max;
-                    $height = $width / $ratio;
-                }
-                else
-                {
-                    $ratio = $smiley_height / $smiley_width;
-                    $height = $height_max;
-                    $width = $height / $ratio;
-                }
-            }
-            else
-            {
-                $width = $smiley_width;
-                $height = $smiley_height;
-            }
-
             $template->assign_block_vars('smileys', array(
 				'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 				'CODE' => addslashes($code_smile),
-				'HEIGHT' => $height,
-                'WIDTH' => $width,
 				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
 			));
 
