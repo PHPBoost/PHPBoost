@@ -36,12 +36,7 @@ class CalendarSearchable extends AbstractSearchableExtensionPoint
 	
 	public function get_search_request($args)
 	{
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories = CalendarService::get_categories_manager()->get_childrens(Category::ROOT_CATEGORY, $search_category_children_options);
-		$ids_categories = array_keys($categories);
-		
-		$where = !empty($ids_categories) ? " AND id_category IN(" . implode(", ", $ids_categories) . ")" : " AND id_category = '0'";
+		$authorized_categories = CalendarService::get_authorized_categories(Category::ROOT_CATEGORY);
 
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 
@@ -56,7 +51,7 @@ class CalendarSearchable extends AbstractSearchableExtensionPoint
 			LEFT JOIN ". CalendarSetup::$calendar_cats_table ." cat ON id_category = cat.id
 			WHERE ( FT_SEARCH(title, '" . $args['search'] . "') OR FT_SEARCH(contents, '" . $args['search'] . "') )
 			AND event_content.approved = 1
-			" . $where . "
+			AND id_category IN(" . implode(", ", $authorized_categories) . ")
 			ORDER BY relevance DESC " . $this->sql_querier->limit(0, 100);
 	}
 }
