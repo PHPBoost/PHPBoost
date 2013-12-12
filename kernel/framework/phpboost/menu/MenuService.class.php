@@ -342,7 +342,7 @@ class MenuService
 						}
 						$cache_filter = trim($cache_filter, '|| ');
 						
-						$cache_str .= ($has_filter) ? 'if(' . $cache_filter . '){' . "\n" : '';
+						$cache_str .= ($has_filter) ? 'if (' . $cache_filter . '){' . "\n" : '';
 						$cache_str .= '$__menu=\'' . $menu->cache_export() . '\';' . "\n";
 						$cache_str .= '$MENUS[' . $menu->get_block() . '].=$__menu;' . "\n";
 						$cache_str .= ($has_filter) ? '}' . "\n" : '';

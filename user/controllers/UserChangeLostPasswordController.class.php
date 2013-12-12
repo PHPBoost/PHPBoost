@@ -44,7 +44,7 @@ class UserChangeLostPasswordController extends AbstractController
 		
 		$this->build_form();
 		
-		if($this->submit_button->has_been_submited() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->change_password($change_password_pass, $this->form->get_value('password'));
 		}

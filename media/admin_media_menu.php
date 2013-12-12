@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-if( !defined('PHPBOOST') ) 
+if ( !defined('PHPBOOST') ) 
 {
 	exit;
 }

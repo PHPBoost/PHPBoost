@@ -68,9 +68,9 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
 	$smiley_height = $smiley->get_height();
 	$smiley_width = $smiley->get_width();
 	
-    if( $smiley_width > $width_max || $smiley_height > $height_max )
+    if ( $smiley_width > $width_max || $smiley_height > $height_max )
     {
-        if( $smiley_width > $smiley_height )
+        if ( $smiley_width > $smiley_height )
         {
             $ratio = $smiley_width / $smiley_height;
             $width = $width_max;
@@ -97,7 +97,7 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
     $tr_end = (is_int($multiple_x)) ? '</tr>' : '';
 
     //Si la ligne n'est pas complète on termine par </tr>.
-    if( $nbr_smile == $j )
+    if ( $nbr_smile == $j )
     {
         $tr_end = '</tr>';
     }
@@ -111,7 +111,7 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
     ));
 
     //Création des cellules du tableau si besoin est.
-    if( $nbr_smile == $j && $nbr_smile > $smile_by_line )
+    if ( $nbr_smile == $j && $nbr_smile > $smile_by_line )
     {
         while( !is_int($j / $smile_by_line) )
         {

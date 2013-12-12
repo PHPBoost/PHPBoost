@@ -594,7 +594,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		if ($is_admin)
 			$row['level'] = 2;
 		
-		if( !$is_guest_in_convers )
+		if ( !$is_guest_in_convers )
 			$is_guest_in_convers = empty($row['login']);
 		
 		//Avatar

@@ -144,7 +144,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		}
 		elseif (!empty($avatar))
 		{
-			if(UserAccountsConfig::load()->is_avatar_upload_enabled())
+			if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 			{
 				$dir = '/images/avatars/';
 			

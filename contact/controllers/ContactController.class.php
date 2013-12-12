@@ -90,7 +90,7 @@ class ContactController extends ModuleController
 		
 		foreach($this->config->get_fields() as $id => $field)
 		{
-			if($field->is_displayed() && $field->is_authorized())
+			if ($field->is_displayed() && $field->is_authorized())
 			{
 				if ($field->get_field_name() == 'f_sender_mail')
 					$field->set_default_value(AppContext::get_current_user()->get_attribute('user_mail'));
@@ -128,7 +128,7 @@ class ContactController extends ModuleController
 		$display_message_title = false;
 		foreach($this->config->get_fields() as $id => $field)
 		{
-			if($field->is_displayed() && $field->is_authorized() && $field->is_deletable())
+			if ($field->is_displayed() && $field->is_authorized() && $field->is_deletable())
 			{
 				try{
 					$value = ContactFieldsFactory::return_value($this->form, $field);

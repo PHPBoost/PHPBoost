@@ -47,7 +47,7 @@ class MemberExtendedFieldsService
 			$template->add_fieldset($fieldset);
 
 			$user_id = $member_extended_field->get_user_id();
-			if($user_id == null)
+			if ($user_id == null)
 			{
 				self::display_create_form($member_extended_field);
 			}
@@ -68,7 +68,7 @@ class MemberExtendedFieldsService
         if ($extended_fields_displayed)
 		{
 			$user_id = $member_extended_field->get_user_id();
-			if($user_id !== null)
+			if ($user_id !== null)
 			{
 				$template = $member_extended_field->get_template();
 				$fieldset = new FormFieldsetHTML('other', LangLoader::get_message('other', 'main'));
@@ -112,7 +112,7 @@ class MemberExtendedFieldsService
 	 */
 	public static function register_fields(HTMLForm $form, $user_id)
 	{
-		if(!empty($user_id))
+		if (!empty($user_id))
 		{
 			$extended_fields_displayed = MemberExtendedFieldsDAO::extended_fields_displayed();
 			if ($extended_fields_displayed)

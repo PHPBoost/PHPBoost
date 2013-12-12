@@ -398,8 +398,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldTextEditor('add_version_release_date', $this->lang['bugs.labels.fields.version_release_date'], '00/00/0000', array(
 			'class' => 'text', 'maxlength' => 10, 'size' => 11, 'description' => $this->lang['bugs.labels.fields.version_release_date.explain'], 'events' => array(
-				'click' => 'if(this.value == \'00/00/0000\') this.value = \'\';',
-				'blur' => 'if(this.value == \'\') this.value = \'00/00/0000\';',
+				'click' => 'if (this.value == \'00/00/0000\') this.value = \'\';',
+				'blur' => 'if (this.value == \'\') this.value = \'00/00/0000\';',
 			)),
 			array(new FormFieldConstraintRegex('`^(00|0[1-9]|[12][0-9]|3[01])/(00|0[1-9]|1[012])/(0000|(19|20)[0-9]{2})$`i'))
 		));

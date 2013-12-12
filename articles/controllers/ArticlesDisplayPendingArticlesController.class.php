@@ -142,7 +142,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()
 		));
 		
-		if($nbr_articles_pending > 0)
+		if ($nbr_articles_pending > 0)
 		{	
 			$add_auth = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
 			$auth_moderation = ArticlesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY)->moderation();
@@ -201,7 +201,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		if(!(ArticlesAuthorizationsService::check_authorizations()->read()))
+		if (!(ArticlesAuthorizationsService::check_authorizations()->read()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

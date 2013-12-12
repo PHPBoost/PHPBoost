@@ -50,7 +50,7 @@ class CommentsManager
 			$id_topic = CommentsTopicDAO::get_id_topic_module($module_id, $id_in_module, $topic_identifier);
 		}
 		
-		if(self::$user->check_level(User::MEMBER_LEVEL))
+		if (self::$user->check_level(User::MEMBER_LEVEL))
 		{
 			$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), self::$user->get_pseudo(), self::$user->get_ip());
 		}

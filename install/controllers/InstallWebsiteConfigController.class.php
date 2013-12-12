@@ -118,7 +118,7 @@ class InstallWebsiteConfigController extends InstallController
 	{
 		$tpl = new StringTemplate('var field = $FF(${escapejs(ID)});
 var value = ${escapejs(VALUE)};
-if(field.getValue()!=value && !confirm(${escapejs(MESSAGE)})){field.setValue(value);}');
+if (field.getValue()!=value && !confirm(${escapejs(MESSAGE)})){field.setValue(value);}');
 		$tpl->put('ID', $field->get_id());
 		$tpl->put('VALUE', $field->get_value());
 		$tpl->put('MESSAGE', $message);

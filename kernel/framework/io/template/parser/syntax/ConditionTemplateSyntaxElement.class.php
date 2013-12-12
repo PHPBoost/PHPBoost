@@ -49,7 +49,7 @@ class ConditionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	private function process_start()
 	{
 		$this->input->consume_next('#\sIF\s+');
-		$this->output->write('\';if(');
+		$this->output->write('\';if (');
 		if ($this->input->consume_next('NOT\s+'))
 		{
 			$this->output->write('!');

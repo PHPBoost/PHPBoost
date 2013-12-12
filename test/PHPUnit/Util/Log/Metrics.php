@@ -116,7 +116,7 @@ class PHPUnit_Util_Log_Metrics extends PHPUnit_Util_Printer
                     $xmlClass->setAttribute('loc', $classMetrics->getLoc());
                     $xmlClass->setAttribute('locExecutable', $classMetrics->getLocExecutable());
                     $xmlClass->setAttribute('locExecuted', $classMetrics->getLocExecuted());
-                    $xmlClass->setAttribute('aif', sprintf('%F', $classMetrics->getAIF()));
+                    $xmlClass->setAttribute('aif', sprintf('%F', $classMetrics->getAif ()));
                     $xmlClass->setAttribute('ahf', sprintf('%F', $classMetrics->getAHF()));
                     $xmlClass->setAttribute('ca', $classMetrics->getCa());
                     $xmlClass->setAttribute('ce', $classMetrics->getCe());
@@ -126,7 +126,7 @@ class PHPUnit_Util_Log_Metrics extends PHPUnit_Util_Printer
                     $xmlClass->setAttribute('dit', $classMetrics->getDIT());
                     $xmlClass->setAttribute('i', sprintf('%F', $classMetrics->getI()));
                     $xmlClass->setAttribute('impl', $classMetrics->getIMPL());
-                    $xmlClass->setAttribute('mif', sprintf('%F', $classMetrics->getMIF()));
+                    $xmlClass->setAttribute('mif', sprintf('%F', $classMetrics->getMif ()));
                     $xmlClass->setAttribute('mhf', sprintf('%F', $classMetrics->getMHF()));
                     $xmlClass->setAttribute('noc', $classMetrics->getNOC());
                     $xmlClass->setAttribute('pf', sprintf('%F', $classMetrics->getPF()));
