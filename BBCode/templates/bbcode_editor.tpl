@@ -77,7 +77,7 @@ function XMLHttpRequest_preview(field)
 				<div class="bbcode-block-container" style="display:none;" id="bb-block1{FIELD}">
 					<div class="bbcode-block" style="width:140px;" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
 						# START smileys #
-							<a onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" style="height:{smileys.HEIGHT}px;width:{smileys.WIDTH}px;" alt="{smileys.CODE}"></a>{smileys.END_LINE}
+							<a onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" alt="{smileys.CODE}"></a>{smileys.END_LINE}
 						# END smileys #
 						# IF C_BBCODE_SMILEY_MORE #
 							<br /><br />
