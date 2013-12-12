@@ -271,7 +271,7 @@ class PHPUnit_Util_Metrics_Class extends PHPUnit_Util_Metrics
      * @return integer
      * @see    http://www.aivosto.com/project/help/pm-oo-mood.html
      */
-    public function getAIF()
+    public function getAif ()
     {
         return $this->aif;
     }
@@ -396,7 +396,7 @@ class PHPUnit_Util_Metrics_Class extends PHPUnit_Util_Metrics
      * @return float
      * @see    http://www.aivosto.com/project/help/pm-oo-mood.html
      */
-    public function getMIF()
+    public function getMif ()
     {
         return $this->mif;
     }

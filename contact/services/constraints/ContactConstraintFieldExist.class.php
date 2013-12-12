@@ -32,12 +32,12 @@ class ContactConstraintFieldExist extends AbstractFormFieldConstraint
 	
 	public function __construct($field_id = 0, $error_message = '')
 	{
-		if(!empty($field_id))
+		if (!empty($field_id))
 		{
 			$this->field_id = $field_id;
 		}
 		
-		if(empty($error_message))
+		if (empty($error_message))
 		{
 			$error_message = LangLoader::get_message('message.field_name_already_used', 'common', 'contact');
 		}

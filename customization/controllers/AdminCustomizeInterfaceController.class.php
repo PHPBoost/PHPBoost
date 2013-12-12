@@ -60,7 +60,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		{
 			$header_logo = $this->form->get_value('header_logo', null);
 			
-			if($header_logo !== null)
+			if ($header_logo !== null)
 			{
 				$file_type = new FileType(new File($header_logo->get_name()));
 				if ($file_type->is_picture())

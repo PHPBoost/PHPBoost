@@ -44,7 +44,7 @@ class SearchWeightings
 	
 	public function get_module_weighting($module_id)
 	{
-		if($this->module_weighting_exists($module_id))
+		if ($this->module_weighting_exists($module_id))
 		{
 			return $this->weightings[$module_id];
 		}

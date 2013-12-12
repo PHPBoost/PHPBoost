@@ -62,7 +62,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	{
 		$input = 'this is a <?php simple(); ?> text';
 		$output = '<?php $_result=\'this is a \';$_ob_length=ob_get_length();' .
-        'simple();if(ob_get_length()>$_ob_length){$_content=ob_get_clean();$_result.=substr($_content, $_ob_length);echo substr($_content, 0, $_ob_length);}$_result.=\' text\'; ?>';
+        'simple();if (ob_get_length()>$_ob_length){$_content=ob_get_clean();$_result.=substr($_content, $_ob_length);echo substr($_content, 0, $_ob_length);}$_result.=\' text\'; ?>';
 		$this->assert_parse($output, $input);
 	}
 
@@ -147,7 +147,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	coucou
 # END #';
 		$output = '<?php $_result=\'
-\';if($_data->is_true($_data->get(\'condition\'))){$_result.=\'
+\';if ($_data->is_true($_data->get(\'condition\'))){$_result.=\'
 	coucou
 \';}$_result.=\'\'; ?>';
 		$this->assert_parse($output, $input);
@@ -160,7 +160,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	coucou
 # END #';
 		$output = '<?php $_result=\'
-\';if(!$_data->is_true($_data->get(\'condition\'))){$_result.=\'
+\';if (!$_data->is_true($_data->get(\'condition\'))){$_result.=\'
 	coucou
 \';}$_result.=\'\'; ?>';
 		$this->assert_parse($output, $input);
@@ -175,7 +175,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	hello
 # END #';
 		$output = '<?php $_result=\'
-\';if($_data->is_true($_data->get(\'condition\'))){$_result.=\'
+\';if ($_data->is_true($_data->get(\'condition\'))){$_result.=\'
 	coucou
 \';}else{$_result.=\'
 	hello
@@ -198,7 +198,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 		$output = '<?php $_result=\'this is \' . $_data->get(\'a\') . ' .
 			'\' sim\' . $_data->get(\'pl\') . \'e
 \';foreach($_data->get_block(\'tex\') as $_tmp_tex){$_result.=\'
-	\';if($_data->is_true($_data->get_from_list(\'coucou\', $_tmp_tex))){$_result.=\'
+	\';if ($_data->is_true($_data->get_from_list(\'coucou\', $_tmp_tex))){$_result.=\'
 		\';foreach($_data->get_block_from_list(\'ext\', $_tmp_tex) as $_tmp_tex_ext){$_result.=\'
 			\' . $_data->get_from_list(\'text\', $_tmp_tex_ext) . \'
 		\';}$_result.=\'
@@ -331,7 +331,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	{
 		$input = 'this is a simple # INCLUDE tpl #';
 		$output = '<?php $_result=\'this is a simple \';' .
-'$_subtpl=$_data->get(\'tpl\');if($_subtpl !== null){$_result.=$_subtpl->render();}' .
+'$_subtpl=$_data->get(\'tpl\');if ($_subtpl !== null){$_result.=$_subtpl->render();}' .
 '$_result.=\'\'; ?>';
 		$this->assert_parse($output, $input);
 	}
@@ -349,7 +349,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	{
 		$input = 'this is a simple # INCLUDE block.tpl #';
 		$output = '<?php $_result=\'this is a simple \';' .
-'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_block);if($_subtpl !== null){$_result.=$_subtpl->render();}' .
+'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_block);if ($_subtpl !== null){$_result.=$_subtpl->render();}' .
 '$_result.=\'\'; ?>';
 		$this->assert_parse($output, $input);
 	}
@@ -358,7 +358,7 @@ class TemplateSyntaxParserTest extends PHPBoostUnitTestCase
 	{
 		$input = 'this is a simple # INCLUDE block.imbricated.tpl #';
 		$output = '<?php $_result=\'this is a simple \';' .
-'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_imbricated);if($_subtpl !== null){$_result.=$_subtpl->render();}' .
+'$_subtpl=$_data->get_from_list(\'tpl\', $_tmp_imbricated);if ($_subtpl !== null){$_result.=$_subtpl->render();}' .
 '$_result.=\'\'; ?>';
 		$this->assert_parse($output, $input);
 	}

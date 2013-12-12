@@ -68,7 +68,7 @@ class MenusKernelUpdateVersion extends KernelUpdateVersion
 				$object = str_replace('feedmenu', 'FeedMenu', $row['object']);
 				$this->querier->update(PREFIX .'menus', array('class' => 'FeedMenu', 'object' => $object), 'WHERE id=:id', array('id' => $row['id']));
 			}
-			elseif($row['class'] == 'moduleminimenu')
+			elseif ($row['class'] == 'moduleminimenu')
 			{
 				$menu_info = $this->convert_title_and_class($row['title']);
 				if ($menu_info)

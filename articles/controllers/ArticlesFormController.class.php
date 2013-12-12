@@ -67,19 +67,16 @@ class ArticlesFormController extends ModuleController
 			    {
 				    var page = prompt("Titre de la nouvelle page");
 
-				    if (page)
-				    {
+				    if (page) {
 					    var textarea = $(\'ArticlesFormController_contents\');
 					    var start = textarea.selectionStart;
 					    var end = textarea.selectionEnd;
 
-					    if (start == end)
-					    {
+					    if (start == end) {
 						    var insert_value = \'[page]\' + page + \'[/page]\';
 						    textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
 					    }
-					    else
-					    {
+					    else {
 						    var value = textarea.value;
 						    var insert_value = \'[page]\' + value.substring(start, end) + \'[/page]\';
 						    textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
@@ -98,13 +95,12 @@ class ArticlesFormController extends ModuleController
 			
 			$script .= '<script type="text/javascript">
 				    <!--
-				    function page_to_edit(page)
-				    {
+				    function page_to_edit(page) {
 					    var searchText = page;
 					    var t = $(\'ArticlesFormController_contents\');
 					    var l = t.value.indexOf(searchText);
 
-					    if(l != -1)
+					    if (l != -1)
 					    {
 						    t.focus();
 						    t.selectionStart = l;
@@ -145,7 +141,7 @@ class ArticlesFormController extends ModuleController
 			array('required' => true)
 		));
 
-		if(!$this->is_contributor_member())
+		if (!$this->is_contributor_member())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->lang['articles.form.rewrited_title.personalize'], $this->get_article()->rewrited_title_is_personalized(),
 				array('events' => array('click' =>'
@@ -215,7 +211,7 @@ class ArticlesFormController extends ModuleController
 
 		$other_fieldset->add_field(new ArticlesFormFieldSelectSources('sources', $common_lang['form.sources'], $this->get_article()->get_sources()));
 
-		if(!$this->is_contributor_member())
+		if (!$this->is_contributor_member())
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);
@@ -289,10 +285,10 @@ class ArticlesFormController extends ModuleController
 
 	private function get_article()
 	{
-		if($this->article === null)
+		if ($this->article === null)
 		{
 			$id = AppContext::get_request()->get_getint('id', 0);
-			if(!empty($id))
+			if (!empty($id))
 			{
 				try
 				{
@@ -317,7 +313,7 @@ class ArticlesFormController extends ModuleController
 	{
 		$article = $this->get_article();
                 
-		if($article->get_id() === null)
+		if ($article->get_id() === null)
 		{
 			if (!$article->is_authorized_add())
 			{
@@ -355,7 +351,7 @@ class ArticlesFormController extends ModuleController
 		$article->set_notation_enabled($notation_enabled);
 
 		$picture = $this->form->get_value('picture');
-		if(!empty($picture))
+		if (!empty($picture))
 		{
 			$article->set_picture(new Url($picture));
 		}

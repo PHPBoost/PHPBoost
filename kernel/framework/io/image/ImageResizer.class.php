@@ -98,7 +98,7 @@ class ImageResizer
 					return imagecreatefrompng($Image->get_path());
 				break;
 			case 'image/gif':
-					return imagecreatefromgif($Image->get_path());
+					return imagecreatefromgif ($Image->get_path());
 				break;
 			default:
 				throw new MimeTypeNotSupportedException($Image->get_mime_type());
@@ -140,7 +140,7 @@ class ImageResizer
 				return imagepng($create_picture, $directory);
 					break;
 			case 'gif':
-				return imagegif($create_picture, $directory);
+				return imagegif ($create_picture, $directory);
 					break;
 			default:
 				throw new MimeTypeNotSupportedException($image->get_mime_type());

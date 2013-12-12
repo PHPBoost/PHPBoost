@@ -52,7 +52,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 		{
 			$favicon = $this->form->get_value('favicon', null);
 			
-			if($favicon !== null)
+			if ($favicon !== null)
 			{
 				$file_type = new FileType(new File($favicon->get_name()));
 				if ($file_type->is_picture())

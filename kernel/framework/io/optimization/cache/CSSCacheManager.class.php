@@ -65,7 +65,7 @@ class CSSCacheManager
 			$files = $this->css_optimizer->get_files();
 			foreach ($files as $file)
 			{
-				if(filemtime($file) > filemtime($this->cache_file_location))
+				if (filemtime($file) > filemtime($this->cache_file_location))
 				{
 					$this->force_regenerate_cache($intensity);
 					break;

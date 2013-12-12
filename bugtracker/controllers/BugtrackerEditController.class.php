@@ -198,7 +198,7 @@ class BugtrackerEditController extends ModuleController
 			));
 		}
 		
-		if(BugtrackerAuthorizationsService::check_authorizations()->advanced_write())
+		if (BugtrackerAuthorizationsService::check_authorizations()->advanced_write())
 		{
 			//Severities
 			if ($display_severities)

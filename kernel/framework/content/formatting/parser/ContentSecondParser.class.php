@@ -138,7 +138,7 @@ class ContentSecondParser extends AbstractParser
 			$template_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
 			$contents = $template_highlighter->get_content();
 		}
-		elseif( strtolower($language) == 'plain')
+		elseif ( strtolower($language) == 'plain')
 		{
 			$plain_code_highlighter = new PlainCodeHighlighter();
 			$plain_code_highlighter->set_content($contents);

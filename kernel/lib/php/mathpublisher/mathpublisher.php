@@ -340,7 +340,7 @@ $result=array();
 $d=0;
 for($i = 0; $i < count($t); $i++)
 	{
-	if(is_array($t[$i])) $t[$i] = $t[$i][1];
+	if (is_array($t[$i])) $t[$i] = $t[$i][1];
 	if (@ereg("formula", $t[$i]))
 		{
 		$d=$i+2;
@@ -349,27 +349,27 @@ for($i = 0; $i < count($t); $i++)
 	}
 for($i = $d; $i < count($t) - 1; $i++)
 	{
-	if(is_array($t[$i])) $t[$i] = $t[$i][1];
-	if($t[$i] == '<=') $t[$i] = 'le';
-	elseif($t[$i] == '!=') $t[$i] = 'ne';
-	elseif($t[$i] == '<>') $t[$i] = 'ne';
-	elseif($t[$i] == '>=') $t[$i] = 'ge';
-	elseif($t[$i] == '--')
+	if (is_array($t[$i])) $t[$i] = $t[$i][1];
+	if ($t[$i] == '<=') $t[$i] = 'le';
+	elseif ($t[$i] == '!=') $t[$i] = 'ne';
+	elseif ($t[$i] == '<>') $t[$i] = 'ne';
+	elseif ($t[$i] == '>=') $t[$i] = 'ge';
+	elseif ($t[$i] == '--')
 		{
 		$t[$i] = '-';
 		$t[$i+1] = '-' . $t[$i+1];
 		}
-	elseif($t[$i] == '++') $t[$i] = '+';
-	elseif($t[$i] == '-')
+	elseif ($t[$i] == '++') $t[$i] = '+';
+	elseif ($t[$i] == '-')
 		{
-		if($t[$i - 1] == '^' || $t[$i - 1] == '_' || $t[$i - 1] == '*' || $t[$i - 1] == '/' || $t[$i - 1] == '+' || $t[$i - 1] == '(')
+		if ($t[$i - 1] == '^' || $t[$i - 1] == '_' || $t[$i - 1] == '*' || $t[$i - 1] == '/' || $t[$i - 1] == '+' || $t[$i - 1] == '(')
 			{
 			$t[$i] = '';
-			if(is_array($t[$i+1])) $t[$i+1][1] = '-' . $t[$i+1][1];
+			if (is_array($t[$i+1])) $t[$i+1][1] = '-' . $t[$i+1][1];
             		else $t[$i+1] = '-' . $t[$i+1];
 			}
 		}
-	if(trim($t[$i]) != '') $extraits[] = $t[$i];
+	if (trim($t[$i]) != '') $extraits[] = $t[$i];
 	}
 for($i = 0; $i < count($extraits); $i++)
 	{
@@ -504,11 +504,11 @@ switch($texte)
 	break;
 	case '_dintegrale':
 	case '_tintegrale':
-	if(isset($fontesmath[$texte])) $font = PHP_MATH_PUBLISHER_FONT_DIR."/".$fontesmath[$texte].".ttf";
+	if (isset($fontesmath[$texte])) $font = PHP_MATH_PUBLISHER_FONT_DIR."/".$fontesmath[$texte].".ttf";
 	elseif (est_nombre($texte)) $font = PHP_MATH_PUBLISHER_FONT_DIR."/cmr10.ttf";
 	else $font = PHP_MATH_PUBLISHER_FONT_DIR."/cmmi10.ttf";
 	$t=6;
-	if(isset($symboles[$texte])) $texte = $symboles[$texte];
+	if (isset($symboles[$texte])) $texte = $symboles[$texte];
 	do
 		{
 		$tmp_dim = ImageTTFBBox($t, 0, $font , $texte);
@@ -565,11 +565,11 @@ switch($texte)
 		}
 	break;
 	default:
-	if(isset($fontesmath[$texte])) $font = PHP_MATH_PUBLISHER_FONT_DIR."/".$fontesmath[$texte].".ttf";
+	if (isset($fontesmath[$texte])) $font = PHP_MATH_PUBLISHER_FONT_DIR."/".$fontesmath[$texte].".ttf";
 	elseif (est_nombre($texte)) $font = PHP_MATH_PUBLISHER_FONT_DIR."/cmr10.ttf";
 	else $font = PHP_MATH_PUBLISHER_FONT_DIR."/cmmi10.ttf";
 	$t=6;
-	if(isset($symboles[$texte])) $texte = $symboles[$texte];
+	if (isset($symboles[$texte])) $texte = $symboles[$texte];
 	do
 		{
 		$tmp_dim = ImageTTFBBox($t, 0, $font , $texte);
@@ -657,10 +657,10 @@ function affiche_math($texte, $taille)
 $taille=max($taille,6);
 global $symboles, $fontesmath;
 $texte=stripslashes($texte);
-if(isset($fontesmath[$texte])) $font = PHP_MATH_PUBLISHER_FONT_DIR."/".$fontesmath[$texte].".ttf";
+if (isset($fontesmath[$texte])) $font = PHP_MATH_PUBLISHER_FONT_DIR."/".$fontesmath[$texte].".ttf";
 elseif (@ereg("[a-zA-Z]", $texte)) $font = PHP_MATH_PUBLISHER_FONT_DIR."/cmmi10.ttf";
 else $font = PHP_MATH_PUBLISHER_FONT_DIR."/cmr10.ttf";
-if(isset($symboles[$texte])) $texte = $symboles[$texte];
+if (isset($symboles[$texte])) $texte = $symboles[$texte];
 $htexte = 'dg'.$texte;
 $hdim = ImageTTFBBox($taille, 0, $font, $htexte);
 $wdim = ImageTTFBBox($taille, 0, $font, $texte); 
@@ -760,26 +760,26 @@ $this->noeuds = $this->parse();
 
 function parse()
 {
-if(count($this->noeuds) <= 3) return $this->noeuds;
+if (count($this->noeuds) <= 3) return $this->noeuds;
 $ret = array();
 $parentheses = array();
 for($i = 0; $i < count($this->noeuds); $i++)
 	{
-	if($this->noeuds[$i]->texte == '(' || $this->noeuds[$i]->texte == '{') array_push($parentheses, $i);
-	elseif($this->noeuds[$i]->texte == ')' || $this->noeuds[$i]->texte == '}')
+	if ($this->noeuds[$i]->texte == '(' || $this->noeuds[$i]->texte == '{') array_push($parentheses, $i);
+	elseif ($this->noeuds[$i]->texte == ')' || $this->noeuds[$i]->texte == '}')
 		{
 		$pos = array_pop($parentheses);
-		if(count($parentheses) == 0)
+		if (count($parentheses) == 0)
 			{
 			$sub = array_slice($this->noeuds, $pos + 1, $i - $pos - 1);
-			if($this->noeuds[$i]->texte == ')') 
+			if ($this->noeuds[$i]->texte == ')') 
 				{
 				$ret[] = new expression_math(array(new expression_texte("("), new expression_math($sub), new expression_texte(")")));
 				}
 			else $ret[] = new expression_math($sub);
 			}
 		}
-	elseif(count($parentheses) == 0) $ret[] = $this->noeuds[$i];
+	elseif (count($parentheses) == 0) $ret[] = $this->noeuds[$i];
 	}
 $ret = $this->traite_fonction($ret, 'sqrt', 1);
 $ret = $this->traite_fonction($ret, 'vec', 1);
@@ -816,11 +816,11 @@ function traite_operation($noeuds, $operation)
 do
 	{
 	$change = false;
-	if(count($noeuds) <= 3) return $noeuds;
+	if (count($noeuds) <= 3) return $noeuds;
 	$ret = array();
 	for($i = 0; $i < count($noeuds); $i++)
 		{
-		if(!$change && $i < count($noeuds) - 2 && $noeuds[$i+1]->texte == $operation)
+		if (!$change && $i < count($noeuds) - 2 && $noeuds[$i+1]->texte == $operation)
 			{
 			$ret[] = new expression_math(array($noeuds[$i], $noeuds[$i+1], $noeuds[$i+2]));
 			$i += 2;
@@ -837,11 +837,11 @@ return $ret;
 
 function traite_fonction($noeuds, $fonction, $nbarg)
 {
-if(count($noeuds) <= $nbarg + 1) return $noeuds;
+if (count($noeuds) <= $nbarg + 1) return $noeuds;
 $ret = array();
 for($i = 0; $i < count($noeuds); $i++)
 {
-if($i < count($noeuds) - $nbarg && $noeuds[$i]->texte == $fonction)
+if ($i < count($noeuds) - $nbarg && $noeuds[$i]->texte == $fonction)
 {
 	$a = array();
 	for($j = $i; $j <= $i + $nbarg; $j++)
@@ -992,7 +992,7 @@ $paro=parenthese(max($dessus,$dessous)*2,"(");
 $parf=parenthese(max($dessus,$dessous)*2,")");
 for($i = 0; $i < count($this->noeuds); $i++)
         {
-	if(!isset($img[$i]))
+	if (!isset($img[$i]))
 		{
 		if ($this->noeuds[$i]->texte == "(") $img[$i] = $paro;
 		else $img[$i] = $parf;
@@ -1012,7 +1012,7 @@ ImageFilledRectangle($result,0,0,$largeur-1,$hauteur-1,$blanc);
 $pos = 0;
 for($i = 0; $i < count($img); $i++)
 	{
-	if(isset($img[$i]))
+	if (isset($img[$i]))
 		{
 		ImageCopy($result, $img[$i],$pos,$dessus-$base[$i], 0, 0,imagesx($img[$i]),imagesy($img[$i]));
 		$pos += imagesx($img[$i]);

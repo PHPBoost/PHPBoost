@@ -82,9 +82,9 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
 
     // On recupère la hauteur et la largeur de l'image.
     list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley']);
-    if( $width_source > $width_max || $height_source > $height_max )
+    if ( $width_source > $width_max || $height_source > $height_max )
     {
-        if( $width_source > $height_source )
+        if ( $width_source > $height_source )
         {
             $ratio = $width_source / $height_source;
             $width = $width_max;
@@ -113,7 +113,7 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
     $tr_end = (is_int($multiple_x)) ? '</tr>' : '';
 
     //Si la ligne n'est pas complète on termine par </tr>.
-    if( $nbr_smile == $j )
+    if ( $nbr_smile == $j )
     {
         $tr_end = '</tr>';
     }
@@ -126,7 +126,7 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
     ));
 
     //Création des cellules du tableau si besoin est.
-    if( $nbr_smile == $j && $nbr_smile > $smile_by_line )
+    if ( $nbr_smile == $j && $nbr_smile > $smile_by_line )
     {
        	while( !is_int($j / $smile_by_line) )
         {
