@@ -30,7 +30,6 @@
  #						English						#
  ####################################################
 
-$lang = array();
 $lang['cat.name'] = 'Test';
 $lang['cat.description'] = 'Test category';
 $lang['news.title'] = 'PHPBoost 4.1';
@@ -40,8 +39,7 @@ each module home has a message to guide you through its configuration. We strong
 <br />
 <br /><h4 class="stitle1">Delete the "install" folder</h4><br /><br />
 <br />
-For security reasons, you must delete the entire "install" folder located in the PHPBoost root directory. 
-<br />
+For security reasons, you must delete the entire "install" folder located in the PHPBoost root directory.<br />
 Otherwise, some people may try to re-install the software and in that case you may lose datas.
 <br />
 <br />
@@ -54,7 +52,7 @@ To do so : <br />
 <li class="bb_li"><a href="/admin/admin_maintain.php">Put your website under maintenance</a> and you won\'t be disturbed while you\'re working on it.
 </li><li class="bb_li">Now\'s the time to setup the <a href="/admin/config/?url=/general/">main configurations</a> of the website.
 </li><li class="bb_li"><a href="/admin/modules/?url=/installed/">Configure the installed modules</a> and give them access rights (If you have not installed the complete package, all modules are available on the <a href="http://www.phpboost.org/download/download.php"PHPBoost website</a> in the resources section.
-</li><li class="bb_li"><a href="/admin/admin_content_config.php">Choose the default content language formatting</a>.
+</li><li class="bb_li"><a href="/admin/content/?url=/config/">Choose the default content language formatting</a>.
 </li><li class="bb_li"><a href="/admin/member/?url=/config/">Configure the members settings</a>.
 </li><li class="bb_li"><a href="/admin/themes/?url=/installed/">Choose the website style</a> to change the look of your site (You can find more styles on the <a href="http://www.phpboost.org/download/download.php">PHPBoost website</a> in the resources section.
 </li><li class="bb_li">Before giving back access to your members, take time to add content to your website!
