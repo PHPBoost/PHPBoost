@@ -193,7 +193,7 @@ Event.observe(window, 'load', function() {
 				Event.observe(window, 'load', function() {
 					var extended_field = new ExtendedField({list_extended_fields.ID}, '{list_extended_fields.C_DISPLAY}', ExtendedFields);
 					
-					$('list_{list_extended_fields.ID}').observe('mouseout',function(){
+					$('list_{list_extended_fields.ID}').observe('mouseup',function(){
 						ExtendedFields.change_reposition_pictures();
 					});
 					
