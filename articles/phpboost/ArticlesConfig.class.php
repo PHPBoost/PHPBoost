@@ -80,14 +80,19 @@ class ArticlesConfig extends AbstractConfigData
 		$this->set_property(self::NOTATION_SCALE, $notation_scale);
 	}
 	
-	public function get_comments_enabled()
+	public function enable_comments()
+	{
+		$this->set_property(self::COMMENTS_ENABLED, true);
+	}
+	
+	public function disable_comments()
+	{
+		$this->set_property(self::COMMENTS_ENABLED, false);
+	}
+	
+	public function are_comments_enabled()
 	{
 		return $this->get_property(self::COMMENTS_ENABLED);
-	}
-
-	public function set_comments_enabled($comments_enabled)
-	{
-		$this->set_property(self::COMMENTS_ENABLED, $comments_enabled);
 	}
 	
 	public function get_date_updated_displayed()

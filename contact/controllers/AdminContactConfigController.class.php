@@ -37,7 +37,6 @@ class AdminContactConfigController extends AdminController
 	private $submit_button;
 	
 	private $lang;
-	private $common_lang;
 	
 	/**
 	 * @var GuestbookConfig
@@ -47,6 +46,7 @@ class AdminContactConfigController extends AdminController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
+		
 		$this->build_form();
 		
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
@@ -55,7 +55,7 @@ class AdminContactConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->common_lang['message.success.config'], E_USER_SUCCESS, 5));
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 5));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -66,7 +66,6 @@ class AdminContactConfigController extends AdminController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'contact');
-		$this->common_lang = LangLoader::get('common');
 		$this->config = ContactConfig::load();
 	}
 	
@@ -107,7 +106,7 @@ class AdminContactConfigController extends AdminController
 			array('class' => 'text', 'rows' => 8, 'cols' => 47, 'hidden' => !$this->config->are_informations_enabled())
 		));
 		
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->common_lang['authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
 		$form->add_fieldset($fieldset_authorizations);
 		
 		$auth_settings = new AuthorizationsSettings(array(

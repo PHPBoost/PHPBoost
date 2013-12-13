@@ -146,7 +146,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		{	
 			$add_auth = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
 			$auth_moderation = ArticlesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY)->moderation();
-			$comments_enabled = ArticlesConfig::load()->get_comments_enabled();
+			$comments_enabled = ArticlesConfig::load()->are_comments_enabled();
 			
 			$this->view->put_all(array(
 				'C_MODERATE' => $auth_moderation,

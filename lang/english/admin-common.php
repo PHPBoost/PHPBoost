@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                                errors-common.php
+ *                           admin-common.php
  *                            -------------------
- *   begin                : April 12, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
+ *   begin                : December 13, 2013
+ *   copyright            : (C) 2013 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,14 +25,11 @@
  *
  ###################################################*/
 
-$lang['success'] = 'Success';
-$lang['error'] = 'Error';
+ ####################################################
+ #                     English                      #
+ ####################################################
 
-//Process
-$lang['process.success'] = 'The operation is a success';
-$lang['process.error'] = 'An error occurred during the operation';
-
-$lang['confirm.delete'] = 'Do you really want to delete this item ?';
-
-$lang['message.success.config'] = 'The configuration has been modified';
+$lang['config.comments_enabled'] = 'Enable comments';
+$lang['config.notation_enabled'] = 'Enable notation';
+$lang['config.notation_scale'] = 'Notation scale';
 ?>
