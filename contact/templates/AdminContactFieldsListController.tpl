@@ -188,7 +188,7 @@ Event.observe(window, 'load', function() {
 				Event.observe(window, 'load', function() {
 					var contact_field = new ContactField({fields_list.ID}, '{fields_list.C_DISPLAY}', ContactFields);
 					
-					$('list_{fields_list.ID}').observe('mouseout',function(){
+					$('list_{fields_list.ID}').observe('mouseup',function(){
 						ContactFields.change_reposition_pictures();
 					});
 					
