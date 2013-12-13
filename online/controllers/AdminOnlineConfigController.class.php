@@ -36,59 +36,63 @@ class AdminOnlineConfigController extends AdminModuleController
 	private $submit_button;
 	
 	private $lang;
-	private $common_lang;
-
+	
+	/**
+	 * @var OnlineConfig
+	 */
+	private $config;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
+		
 		$this->build_form();
-
+		
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
-
+		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->common_lang['message.success.config'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 4));
 		}
-
+		
 		$tpl->put('FORM', $this->form->display());
-
+		
 		return new AdminOnlineDisplayResponse($tpl, $this->lang['module_config_title']);
 	}
-
+	
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'online');
-		$this->common_lang = LangLoader::get('common');
+		$this->config = OnlineConfig::load();
 	}
-
+	
 	private function build_form()
 	{
-		$form = new HTMLForm('online_admin');
-		$online_config = OnlineConfig::load();
-
+		$form = new HTMLForm(__CLASS__);
+		
 		$fieldset_config = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin'));
 		$form->add_fieldset($fieldset_config);
 		
-		$fieldset_config->add_field(new FormFieldTextEditor('number_member_displayed', $this->lang['admin.nbr-displayed'], $online_config->get_number_member_displayed(), array(
+		$fieldset_config->add_field(new FormFieldTextEditor('number_member_displayed', $this->lang['admin.nbr-displayed'], $this->config->get_number_member_displayed(), array(
 			'class' => 'text', 'size' => 3, 'maxlength' => 3, 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset_config->add_field(new FormFieldTextEditor('number_members_per_page', $this->lang['admin.nbr-members-per-page'], $online_config->get_number_members_per_page(), array(
+		$fieldset_config->add_field(new FormFieldTextEditor('number_members_per_page', $this->lang['admin.nbr-members-per-page'], $this->config->get_number_members_per_page(), array(
 			'class' => 'text', 'size' => 3, 'maxlength' => 2, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset_config->add_field(new FormFieldSimpleSelectChoice('display_order', $this->lang['admin.display-order'], $online_config->get_display_order(), array(
+		$fieldset_config->add_field(new FormFieldSimpleSelectChoice('display_order', $this->lang['admin.display-order'], $this->config->get_display_order(), array(
 				new FormFieldSelectChoiceOption(LangLoader::get_message('ranks', 'main'), OnlineConfig::LEVEL_DISPLAY_ORDER),
 				new FormFieldSelectChoiceOption($this->lang['online.last_update'], OnlineConfig::SESSION_TIME_DISPLAY_ORDER),
 				new FormFieldSelectChoiceOption(LangLoader::get_message('ranks', 'main') . ' ' . LangLoader::get_message('and', 'main') . ' ' . $this->lang['online.last_update'], OnlineConfig::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER)
 			), array('required' => true)
 		));
 		
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->common_lang['authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
 		$form->add_fieldset($fieldset_authorizations);
 		
 		//Authorizations list
@@ -96,7 +100,7 @@ class AdminOnlineConfigController extends AdminModuleController
 			new ActionAuthorization($this->lang['admin.authorizations.read'], OnlineAuthorizationsService::READ_AUTHORIZATIONS)
 		));
 		
-		$auth_settings->build_from_auth_array(OnlineConfig::load()->get_authorizations());
+		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -108,11 +112,10 @@ class AdminOnlineConfigController extends AdminModuleController
 	
 	private function save()
 	{
-		$online_config = OnlineConfig::load();
-		$online_config->set_number_member_displayed($this->form->get_value('number_member_displayed'));
-		$online_config->set_number_members_per_page($this->form->get_value('number_members_per_page'));
-		$online_config->set_display_order($this->form->get_value('display_order')->get_raw_value());
-		$online_config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
+		$this->config->set_number_member_displayed($this->form->get_value('number_member_displayed'));
+		$this->config->set_number_members_per_page($this->form->get_value('number_members_per_page'));
+		$this->config->set_display_order($this->form->get_value('display_order')->get_raw_value());
+		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		OnlineConfig::save();
 	}
 }

@@ -106,7 +106,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_PENDING_ARTICLES' => false,
 			'C_PUBLISHED_ARTICLES' => true,
 			'C_ARTICLES_CAT' => false,
-			'C_COMMENTS_ENABLED' => ArticlesConfig::load()->get_comments_enabled(),
+			'C_COMMENTS_ENABLED' => ArticlesConfig::load()->are_comments_enabled(),
 			'C_ARTICLES_FILTERS' => true,
 			'L_TAG' => $this->lang['articles.tags'] . ' : ' . $this->get_keyword()->get_name(),
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->rel(),

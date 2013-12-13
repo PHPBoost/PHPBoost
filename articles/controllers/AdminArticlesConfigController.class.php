@@ -30,35 +30,45 @@
  */
 class AdminArticlesConfigController extends AdminModuleController
 {
-	private $lang;
-	private $common_lang;
-	private $config;
-	private $tpl;
+	/**
+	 * @var HTMLForm
+	 */
 	private $form;
+	/**
+	 * @var FormButtonSubmit
+	 */
 	private $submit_button;
+	
+	private $lang;
+	
+	/**
+	 * @var ArticlesConfig
+	 */
+	private $config;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
+		
 		$this->build_form();
-
+		
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl->add_lang($this->lang);
+		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->tpl->put('MSG', MessageHelper::display($this->common_lang['message.success.config'], MessageHelper::SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), MessageHelper::SUCCESS, 4));
 		}
 		
-		 $this->tpl->put('FORM', $this->form->display());
+		$tpl->put('FORM', $this->form->display());
 
-		return new AdminArticlesDisplayResponse($this->tpl, $this->lang['articles_configuration']);
+		return new AdminArticlesDisplayResponse($tpl, $this->lang['articles_configuration']);
 	}
 	
 	private function init()
-	{			
-		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+	{
 		$this->lang = LangLoader::get('common', 'articles');
-		$this->common_lang = LangLoader::get('common');
-		$this->tpl->add_lang($this->lang);
 		$this->config = ArticlesConfig::load();
 	}
 	
@@ -66,7 +76,7 @@ class AdminArticlesConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('articles_configuration', $this->lang['articles_configuration']);
+		$fieldset = new FormFieldsetHTML('articles_configuration', LangLoader::get_message('configuration', 'admin'));
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_articles_per_page', $this->lang['articles_configuration.number_articles_per_page'], $this->config->get_number_articles_per_page(),
@@ -77,12 +87,12 @@ class AdminArticlesConfigController extends AdminModuleController
 			array('maxlength' => 3, 'size' => 4, 'required' => true), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('notation_scale', $this->lang['articles_configuration.notation_scale'], $this->config->get_notation_scale(),
+		$fieldset->add_field(new FormFieldTextEditor('notation_scale', LangLoader::get_message('admin.config.notation_scale', 'admin-common'), $this->config->get_notation_scale(),
 			array('maxlength' => 2, 'size' => 4),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->common_lang['admin.config.comments_enabled'], $this->config->get_comments_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', LangLoader::get_message('admin.config.comments_enabled', 'admin-common'), $this->config->are_comments_enabled()));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles_configuration.display_type'], $this->config->get_display_type(),
 			array(
@@ -92,17 +102,17 @@ class AdminArticlesConfigController extends AdminModuleController
 		));
 		
 		$common_lang = LangLoader::get('common');
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->common_lang['authorizations'],
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $common_lang['authorizations'],
 			array('description' => $this->lang['articles_configuration.authorizations.explain'])
 		);
 		
 		$form->add_fieldset($fieldset_authorizations);
 			
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new ActionAuthorization($this->common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($this->common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new ActionAuthorization($this->common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
+			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new ActionAuthorization($common_lang['authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		));
 		
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
@@ -117,15 +127,20 @@ class AdminArticlesConfigController extends AdminModuleController
 	}
 	
 	private function save()
-	{	
+	{
 		$this->config->set_number_articles_per_page($this->form->get_value('number_articles_per_page'));
 		$this->config->set_number_categories_per_page($this->form->get_value('number_categories_per_page'));
 		
 		if ($this->form->get_value('notation_scale') != $this->config->get_notation_scale())
 			NotationService::update_notation_scale('articles', $this->config->get_notation_scale(), $this->form->get_value('notation_scale'));
-			
+		
 		$this->config->set_notation_scale($this->form->get_value('notation_scale'));
-		$this->config->set_comments_enabled($this->form->get_value('comments_enabled'));
+		
+		if ($this->form->get_value('comments_enabled'))
+			$this->config->enable_comments();
+		else
+			$this->config->disable_comments();
+		
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
