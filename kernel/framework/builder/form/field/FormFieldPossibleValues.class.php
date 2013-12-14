@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		               ContactFormFieldPossibleValues.class.php
+ *		               FormFieldPossibleValues.class.php
  *                            -------------------
  *   begin                : September 15, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
@@ -29,7 +29,7 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class ContactFormFieldPossibleValues extends AbstractFormField
+class FormFieldPossibleValues extends AbstractFormField
 {
 	private $max_input = 30;
 	
@@ -43,7 +43,7 @@ class ContactFormFieldPossibleValues extends AbstractFormField
 		$template = $this->get_template_to_use();
 		$lang = LangLoader::get('common', 'contact');
 		
-		$tpl = new FileTemplate('contact/ContactFormFieldPossibleValues.tpl');
+		$tpl = new FileTemplate('framework/builder/form/FormFieldPossibleValues.tpl');
 		$tpl->add_lang($lang);
 		
 		$this->assign_common_template_variables($template);

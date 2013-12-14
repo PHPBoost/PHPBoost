@@ -30,7 +30,7 @@ class ContactMultipleSelectField extends AbstractContactField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex'));
+		$this->set_disable_fields_configuration(array('regex', 'default_value'));
 		$this->set_name(LangLoader::get_message('field.type.multiple-select', 'common', 'contact'));
 	}
 	
