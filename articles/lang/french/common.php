@@ -29,12 +29,10 @@
  #                      French					    #
  ####################################################
 
-$lang = array();
-
 //Titles
 $lang['articles'] = 'Articles';
+$lang['module_config_title'] = 'Configuration des articles';
 $lang['articles_management'] = 'Gestion des articles';
-$lang['articles_configuration'] = 'Configuration';
 $lang['articles.add'] = 'Ajouter un article';
 $lang['articles.edit'] = 'Modifier un article';
 $lang['articles.delete'] = 'Supprimer un article';
@@ -43,10 +41,6 @@ $lang['articles.no_article.category'] = 'Aucun article dans cette catégorie';
 $lang['articles.no_article'] = 'Aucun article disponible';
 $lang['articles.no_notes'] = 'Aucun avis';
 $lang['articles.nbr_articles_category'] = ':number article(s) dans la catégorie';
-$lang['categories_management'] = 'Gestion des catégories';
-$lang['add_category'] = 'Ajouter une catégorie';
-$lang['edit_category'] = 'Modifier une catégorie';
-$lang['edit_category'] = 'Supprimer une catégorie';
 $lang['articles.sub_categories'] = 'Sous-catégories';
 $lang['articles.category'] = 'Catégorie';
 $lang['articles.feed_name'] = 'Derniers articles';
@@ -69,21 +63,7 @@ $lang['articles_configuration.number_categories_per_page'] = 'Nombre de catégori
 $lang['articles_configuration.display_type'] = 'Type d\'affichage des articles';
 $lang['articles_configuration.display_type.mosaic'] = 'Mosaïque';
 $lang['articles_configuration.display_type.list'] = 'Liste';
-$lang['articles_configuration.notation_scale'] = 'Echelle de notation';
 $lang['articles_configuration.authorizations.explain'] = 'Vous définissez ici les permissions globales du module. Vous pourrez changer ces permissions localement sur chaque catégorie';
-
-//Category
-$lang['admin.categories.manage'] = 'Gérer les catégories';
-$lang['admin.categories.add'] = 'Ajouter une catégorie';
-$lang['admin.categories.edit'] = 'Modifier une catégorie';
-$lang['admin.categories.delete'] = 'Supprimer une catégorie';
-$lang['delete_category.explain'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous :<br />
-									<ol><li>Supprimer l\'ensemble de la catégorie (articles et sous-catégories).<b>Attention, cette dernière action est irréversible !</b></li>
-									<li>Vous pouvez déplacer l\'ensemble de son contenu (articles et sous-catégories) dans une autre catégorie</li></ol>';
-$lang['delete_category.choice_solution'] = 'Déplacer ou supprimer';
-$lang['delete_category.choice_1'] = 'Supprimer la catégorie et tout son contenu';
-$lang['delete_category.choice_2'] = 'Déplacer son contenu dans :';
-$lang['delete_category.success-saving'] = 'La solution que vous avez choisie a été effectuée avec succès !';
 
 //Form
 $lang['articles.form.title'] = 'Titre';

@@ -63,7 +63,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminArticlesDisplayResponse($tpl, $this->lang['articles_configuration']);
+		return new AdminArticlesDisplayResponse($tpl, $this->lang['module_config_title']);
 	}
 	
 	private function init()
