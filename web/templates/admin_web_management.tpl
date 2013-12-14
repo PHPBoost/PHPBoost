@@ -38,31 +38,17 @@
 		</div> 
 		
 		<div id="admin_contents">
-			{L_LISTE}
 			<table>
+				<caption>{L_LISTE}</caption>
 				<thead>
 					<tr> 
-						<th>
-							{L_NAME}
-						</th>
-						<th>
-							{L_CATEGORY}
-						</th>
-						<th>
-							{L_VIEW}
-						</th>
-						<th>
-							{L_DATE}
-						</th>
-						<th>
-							{L_APROB}
-						</th>
-						<th>
-							{L_UPDATE}
-						</th>
-						<th>
-							{L_DELETE}
-						</th>
+						<th>{L_NAME}</th>
+						<th>{L_CATEGORY}</th>
+						<th>{L_VIEW}</th>
+						<th>{L_DATE}</th>
+						<th>{L_APROB}</th>
+						<th>{L_UPDATE}</th>
+						<th>{L_DELETE}</th>
 					</tr>
 				</thead>
 				# IF C_PAGINATION #
