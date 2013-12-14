@@ -3,13 +3,49 @@
 Event.observe(window, 'load', function() {
 	Sortable.destroy('categories'); 
 	Sortable.create('categories', {tree:true, dropOnEmpty: true});  
-	console.log(Sortable.serialize('categories'));
 });
 
 function serialize_sortable()
 {
 	$('tree').value = Sortable.serialize('categories');
-	console.log(Sortable.serialize('categories'));
+}
+
+function move_category_up(parent_id, id) {
+	var childs = $(parent_id).childNodes;
+	var cat_id = 0;
+	var previous_id = 0;
+	
+	for (index = 0; index < childs.length; index++) {
+		if (childs[index].id == id) {
+			cat_id = index;
+		}
+		if (childs[index].id != '' && cat_id == 0) {
+			previous_id = index;
+		}
+	}
+	
+	if (cat_id > 0 || previous_id > 0) {
+		$(parent_id).insertBefore(childs[cat_id], childs[previous_id]);
+	}
+}
+
+function move_category_down(parent_id, id){
+	var childs = $(parent_id).childNodes;
+	var cat_id = 0;
+	var previous_id = 0;
+	
+	for (index = 0; index < childs.length; index++) {
+		if (childs[index].id != '' && cat_id > 0 && previous_id == 0) {
+			previous_id = index;
+		}
+		if (childs[index].id == id) {
+			cat_id = index;
+		}
+	}
+	
+	if (cat_id > 0 || previous_id > 0) {
+		$(parent_id).insertBefore(childs[previous_id], childs[cat_id]);
+	}
 }
 -->
 </script>
@@ -29,6 +65,6 @@ function serialize_sortable()
 	<fieldset class="fieldset-submit">
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="tree" id="tree" value="">
-		<button type="submit" name="valid" value="true">${LangLoader::get_message('submit', 'main')}</button>					
+		<button type="submit" name="valid" value="true">${LangLoader::get_message('submit', 'main')}</button>
 	</fieldset>
 </form>
