@@ -31,7 +31,7 @@
  * @desc
  */
 abstract class AbstractCategoriesManageController extends AdminModuleController
-{	
+{
 	protected $lang;
 	protected $tpl;
 	
@@ -67,22 +67,21 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id_parent() == $id_parent && $id != Category::ROOT_CATEGORY)
-			{	
+			{
 				$description_exists = method_exists($category, 'get_description');
 				$category_view = new FileTemplate('default/framework/content/categories/category.tpl');
+				$category_view->add_lang($this->lang);
 				$category_view->put_all(array(
 					'C_DESCRIPTION' => $description_exists,
 					'U_EDIT' => $this->get_edit_category_url($category)->rel(),
 					'U_DELETE' => $this->get_delete_category_url($category)->rel(),
-					'L_EDIT' => LangLoader::get_message('update', 'main'),
-					'L_DELETE' => LangLoader::get_message('delete', 'main'),
 					'ID' => $id,
 					'NAME' => $category->get_name(),
 					'DESCRIPTION' => $description_exists ? $category->get_description() : ''
 				));
 				
 				$this->build_children_view($category_view, $categories, $id);
-					
+				
 				$template->assign_block_vars('childrens', array('child' => $category_view->render()));
 			}
 		}
@@ -116,7 +115,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 				if (is_int($position))
 				{
 					$category = $this->get_categories_manager()->get_categories_cache()->get_category($tree['id']);
-	
+					
 					$this->get_categories_manager()->update_position($category, $id_parent, ($position +1));
 					
 					$this->update_childrens_positions($tree, $category->get_id());

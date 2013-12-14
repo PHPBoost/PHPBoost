@@ -38,6 +38,8 @@ $lang['categories.manage'] = 'Gérer les catégories';
 $lang['category.add'] = 'Ajouter une catégorie';
 $lang['category.edit'] = 'Modifier une catégorie';
 $lang['category.delete'] = 'Supprimer une catégorie';
+$lang['category.move_up'] = 'Monter la catégorie';
+$lang['category.move_down'] = 'Descendre la catégorie';
 
 //Errors
 $lang['errors.unexisting'] = 'La catégorie n\'existe pas.';
