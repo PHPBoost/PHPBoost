@@ -51,11 +51,6 @@ class AdminCalendarManageEventsController extends AdminModuleController
 	
 	private function build_view(HTTPRequestCustom $request)
 	{
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-		$categories = CalendarService::get_categories_manager()->get_categories_cache()->get_categories();
-		
-		$main_lang = LangLoader::get('main');
-		
 		$mode = $request->get_getvalue('sort', 'desc');
 		$field = $request->get_getvalue('field', 'date');
 		
