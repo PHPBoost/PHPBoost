@@ -79,11 +79,15 @@
 					<p>{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="title">* {L_TITLE}</label>
-						<div class="form-field"><input type="text" size="50" maxlength="100" id="title" name="title" value="{TITLE}"></div>
+						<div class="form-field">
+							<input type="text" size="50" maxlength="100" id="title" name="title" value="{TITLE}">
+						</div>
 					</div>
 					<div class="form-element">
 						<label for="idcat">* {L_CATEGORY}</label>
-						<div class="form-field">{CATEGORIES_TREE}</div>
+						<div class="form-field">
+							{CATEGORIES_TREE}
+						</div>
 					</div>
 					<div class="form-element">
 						<label for="url">* {L_URL}</label>
@@ -94,14 +98,22 @@
 					</div>
 					<div class="form-element">
 						<label for="size">{L_SIZE}</label>
-						<div class="form-field"><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE_FORM}"> {L_UNIT_SIZE}</div>
+						<div class="form-field">
+							<input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE_FORM}">
+							{L_UNIT_SIZE}
+						</div>
 					</div>
 					<div class="form-element">
 						<label for="count">{L_NUMBER_OF_HITS}</label>
-						<div class="form-field"><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}"></div>
+						<div class="form-field">
+							<input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}">
+						</div>
 					</div>
 					<div class="form-element">					
-						<label for="download_method">{L_DOWNLOAD_METHOD}<span class="field-description">{L_DOWNLOAD_METHOD_EXPLAIN}</span></label>
+						<label for="download_method">
+							{L_DOWNLOAD_METHOD}
+							<span class="field-description">{L_DOWNLOAD_METHOD_EXPLAIN}</span>
+						</label>
 						<div class="form-field">
 							<select name="download_method" id="download_method">
 								<option value="force_download" {FORCE_DOWNLOAD_SELECTED}>{L_FORCE_DOWNLOAD}</option>
@@ -147,18 +159,18 @@
 						<label>* {L_FILE_VISIBILITY}</label>
 						<div class="form-field">
 							<input type="radio" value="2" name="visibility" {VISIBLE_WAITING}> 
-						{L_FROM_DATE}&nbsp;
-						{BEGINING_CALENDAR}
-						&nbsp;{L_TO_DATE}&nbsp;
-						{END_CALENDAR}
-						<br />
-						<label>
-							<input type="radio" value="1" name="visibility" {VISIBLE_ENABLED} id="release_date"> {L_NOW}
-						</label>
-						<br />
-						<label>
-							<input type="radio" value="0" name="visibility" {VISIBLE_HIDDEN}> {L_HIDDEN}
-						</label>
+							{L_FROM_DATE}&nbsp;
+							{BEGINING_CALENDAR}
+							&nbsp;{L_TO_DATE}&nbsp;
+							{END_CALENDAR}
+							<br />
+							<label>
+								<input type="radio" value="1" name="visibility" {VISIBLE_ENABLED} id="release_date"> {L_NOW}
+							</label>
+							<br />
+							<label>
+								<input type="radio" value="0" name="visibility" {VISIBLE_HIDDEN}> {L_HIDDEN}
+							</label>
 						</div>
 					</div>
 					# IF NOT C_CONTRIBUTION #
@@ -187,13 +199,11 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
-					&nbsp;&nbsp; 
 					<button type="submit" name="preview" value="true">{L_PREVIEW}</button>
-					&nbsp;&nbsp; 
 					<button type="reset" value="true">{L_RESET}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>
 			</form>
-			</div>
-			<footer></footer>
-		</section>
+		</div>
+	<footer></footer>
+</section>

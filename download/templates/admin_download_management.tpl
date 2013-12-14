@@ -4,27 +4,13 @@
 			<table>
 				<thead>
 					<tr>
-						<th>
-							{L_TITLE}
-						</th>
-						<th>
-							{L_SIZE}
-						</th>
-						<th>
-							{L_CATEGORY}
-						</th>
-						<th>
-							{L_DATE}
-						</th>
-						<th>
-							{L_APROB}
-						</th>
-						<th>
-							{L_UPDATE}
-						</th>
-						<th>
-							{L_DELETE}
-						</th>
+						<th>{L_TITLE}</th>
+						<th>{L_SIZE}</th>
+						<th>{L_CATEGORY}</th>
+						<th>{L_DATE}</th>
+						<th>{L_APROB}</th>
+						<th>{L_UPDATE}</th>
+						<th>{L_DELETE}</th>
 					</tr>
 				</thead>
 				# IF PAGINATION #
