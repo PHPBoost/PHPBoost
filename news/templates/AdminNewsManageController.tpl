@@ -28,6 +28,7 @@
 			</th>
 		</tr>
 	</thead>
+	# IF C_PAGINATION #
 	<tfoot>
 		<tr>
 			<th colspan="6">
@@ -35,6 +36,7 @@
 			</th>
 		</tr>
 	</tfoot>
+	# ENDIF #
 	<tbody>
 		# START news #
 			<tr>
@@ -45,7 +47,7 @@
 					<a href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
 				</td>
 				<td>
-					<a href="{news.U_AUTHOR_PROFILE}" class="small_link {news.AUTHOR_LEVEL_CLASS}" # IF news.C_AUTHOR_GROUP_COLOR # style="color:{news.AUTHOR_GROUP_COLOR}"# ENDIF #>{news.AUTHOR}</a>
+					<a href="{news.U_AUTHOR_PROFILE}" class="small_link {news.USER_LEVEL_CLASS}" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}"# ENDIF #>{news.PSEUDO}</a>
 				</td>
 				<td>
 					{news.DATE}
@@ -59,5 +61,12 @@
 				</td>
 			</tr>
 		# END news #
+		# IF NOT C_NEWS #
+		<tr> 
+			<td colspan="6">
+				{@news.message.no_items}
+			</td>
+		</tr>
+		# ENDIF #
 	</tbody>
 </table>
