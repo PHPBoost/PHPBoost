@@ -38,8 +38,8 @@ class ArticlesPrintArticlesController extends ModuleController
 		$this->init();
 		
 		$this->build_view($request);
-					
-		return $this->generate_response();
+		
+		return new SiteNodisplayResponse($this->view);
 	}
 	
 	private function init()
@@ -63,20 +63,18 @@ class ArticlesPrintArticlesController extends ModuleController
 				catch (RowNotFoundException $e) 
 				{
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
-			    $this->article = new Articles();
+				$this->article = new Articles();
 		}
 		return $this->article;
 	}
 	
 	private function build_view()
-	{	
-		$article_contents = $this->article->get_contents();
-		
-		$contents = preg_replace('`\[page\](.*)\[/page\]`', '<h2>$1</h2>', $article_contents);
+	{
+		$contents = preg_replace('`\[page\](.*)\[/page\]`', '<h2>$1</h2>', $this->article->get_contents());
 		
 		$this->build_view_sources();
 		
@@ -89,23 +87,23 @@ class ArticlesPrintArticlesController extends ModuleController
 	
 	private function build_view_sources()
 	{
-	    $sources = $this->article->get_sources();
-	    
-	    $this->view->put('C_SOURCES', !empty($sources));
-	    
-	    $i = 0;
-	    foreach ($sources as $name => $url)
-	    {	
-		    $this->view->assign_block_vars('sources', array(
-			    'I' => $i,
-			    'NAME' => $name,
-			    'URL' => $url,
-			    'COMMA' => $i > 0 ? ', ' : ' '
-		    ));
-		    $i++;
-	    }	
-	}
+		$sources = $this->article->get_sources();
 		
+		$this->view->put('C_SOURCES', !empty($sources));
+		
+		$i = 0;
+		foreach ($sources as $name => $url)
+		{
+			$this->view->assign_block_vars('sources', array(
+				'I' => $i,
+				'NAME' => $name,
+				'URL' => $url,
+				'COMMA' => $i > 0 ? ', ' : ' '
+			));
+			$i++;
+		}
+	}
+	
 	private function check_authorizations()
 	{
 		$article = $this->get_article();
@@ -118,33 +116,28 @@ class ArticlesPrintArticlesController extends ModuleController
 				if (!ArticlesAuthorizationsService::check_authorizations()->read() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
-		   			DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			break;
 			case Articles::NOT_PUBLISHED:
 				if ($not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
-		   			DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			break;
 			case Articles::PUBLISHED_DATE:
 				if (!$article->is_published() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
-		   			DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			break;
 			default:
 				$error_controller = PHPBoostErrors::unexisting_page();
-   				DispatchManager::redirect($error_controller);
+				DispatchManager::redirect($error_controller);
 			break;
 		}
-	}
-	
-	private function generate_response()
-	{
-		return new SiteNodisplayResponse($this->view);
 	}
 }
 ?>

@@ -428,13 +428,22 @@ class Articles
 			'C_DELETE' => $this->is_authorized_delete(),
 			'C_HAS_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
+			'C_PUBLISHED' => $this->get_publishing_state(),
+			'C_PUBLISHING_START_AND_END_DATE' => $this->publishing_start_date != null && $this->publishing_end_date != null,
+			'C_PUBLISHING_START_DATE' => $this->publishing_start_date != null,
+			'C_PUBLISHING_END_DATE' => $this->publishing_end_date != null,
 			'C_AUTHOR_DISPLAYED' => $this->get_author_name_displayed(),
 			'C_NOTATION_ENABLED' => $this->get_notation_enabled(),
 			
 			//Articles
 			'TITLE' => $this->get_title(),
+			'SHORT_TITLE' => strlen($this->get_title()) > 45 ? TextHelper::substr_html($this->content->get_title(), 0, 45) . '...' : $this->get_title(),
 			'DATE' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'DATE_ISO8601' => $this->get_date_created()->format(Date::FORMAT_ISO8601),
+			'PUBLISHING_START_DATE' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
+			'PUBLISHING_START_DATE_ISO8601' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_ISO8601) : '',
+			'PUBLISHING_END_DATE' => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
+			'PUBLISHING_END_DATE_ISO8601' => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_ISO8601) : '',
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->get_id()),
 			'NUMBER_VIEW' => $this->get_number_view(),
@@ -444,7 +453,13 @@ class Articles
 			'PICTURE' => $this->get_picture()->rel(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
-		    
+			
+			//Category
+			'CATEGORY_ID' => $category->get_id(),
+			'CATEGORY_NAME' => $category->get_name(),
+			'CATEGORY_DESCRIPTION' => $category->get_description(),
+			'CATEGORY_IMAGE' => $category->get_image(),
+			
 			//Links
 			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
 			'U_AUTHOR' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
