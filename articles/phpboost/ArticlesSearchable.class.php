@@ -40,15 +40,12 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 	public function get_search_request($args)
 	{
 		$now = new Date();
-		$timestamp = $now->get_timestamp();
-		$authorized_categories = NewsService::get_authorized_categories(Category::ROOT_CATEGORY);
+		$authorized_categories = ArticlesService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		
 		return "SELECT " . $args['id_search'] . " AS id_search,
 			articles.id AS id_content,
 			articles.title AS title,
-			articles.rewrited_title,
-			cat.rewrited_name,
 			(2 * FT_SEARCH_RELEVANCE(articles.title, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(articles.contents, '" . $args['search'] . "') +
 			FT_SEARCH_RELEVANCE(articles.description, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance,
 			CONCAT('" . PATH_TO_ROOT . "/articles/index.php?url=/', id_category, '-', cat.rewrited_name, '/', articles.id, '-', articles.rewrited_title) AS link
@@ -56,8 +53,8 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 			LEFT JOIN ". ArticlesSetup::$articles_cats_table ." cat ON articles.id_category = cat.id
 			WHERE (FT_SEARCH(articles.title, '" . $args['search'] . "') OR FT_SEARCH(articles.contents, '" . $args['search'] . "') OR
 			FT_SEARCH_RELEVANCE(articles.description, '" . $args['search'] . "') )
-			AND articles.published = 1 OR (articles.published = 2 AND publishing_start_date < '" . $timestamp . 
-			"' AND (publishing_end_date > '" . $timestamp . "' OR publishing_end_date = 0))
+			AND articles.published = 1 OR (articles.published = 2 AND publishing_start_date < '" . $now->get_timestamp() . 
+			"' AND (publishing_end_date > '" . $now->get_timestamp() . "' OR publishing_end_date = 0))
 			AND id_category IN(" . implode(", ", $authorized_categories) . ")
 			 ORDER BY relevance DESC " . $this->sql_querier->limit(0, 100);
 	}

@@ -37,13 +37,11 @@ class CalendarSearchable extends AbstractSearchableExtensionPoint
 	public function get_search_request($args)
 	{
 		$authorized_categories = CalendarService::get_authorized_categories(Category::ROOT_CATEGORY);
-
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-
+		
 		return "SELECT " . $args['id_search'] . " AS id_search,
 			id_event AS id_content,
 			title,
-			cat.rewrited_name,
 			( 2 * FT_SEARCH_RELEVANCE(title, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(contents, '" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance,
 			CONCAT('" . PATH_TO_ROOT . "/calendar/index.php?url=/', id_category, '-', cat.rewrited_name, '/', id_event, '-', event_content.rewrited_title) AS link
 			FROM " . CalendarSetup::$calendar_events_table . " event
