@@ -81,6 +81,7 @@ $lang['admin.field.possible_values.email'] = 'Adresse(s) email';
 $lang['admin.field.possible_values.email.explain'] = 'Il est possible d\'indiquer plusieurs adresses email séparées par un point-virgule';
 $lang['admin.field.possible_values.recipient'] = 'Destinataire(s)';
 $lang['admin.field.possible_values.recipient.explain'] = 'Le mail sera envoyé au(x) destinataire(s) sélectionné(s) si le champ destinataire n\'est pas affiché';
+$lang['admin.field.default-value'] = 'Valeur par défaut';
 $lang['admin.field.display'] = 'Afficher';
 $lang['admin.field.not_display'] = 'Ne pas afficher';
 $lang['admin.field.yes'] = 'Oui';

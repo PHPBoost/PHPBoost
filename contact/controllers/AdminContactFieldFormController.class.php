@@ -50,7 +50,8 @@ class AdminContactFieldFormController extends AdminController
 		
 		$this->build_form();
 		
-		$this->tpl = new StringTemplate('<script type="text/javascript">
+		$this->tpl = new StringTemplate('# INCLUDE FORM #
+			<script type="text/javascript">
 			<!--
 				Event.observe(window, \'load\', function() {
 					' . $this->get_readonly_fields() . '
@@ -88,8 +89,7 @@ class AdminContactFieldFormController extends AdminController
 					return \'\';
 				}
 			-->
-			</script>
-			# INCLUDE FORM #');
+			</script>');
 		$this->tpl->add_lang($this->lang);
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -174,10 +174,14 @@ class AdminContactFieldFormController extends AdminController
 		}
 		else
 		{
-			$fieldset->add_field(new ContactFormFieldPossibleValues('possible_values', $this->lang['admin.field.possible-values'], $field->get_possible_values(), array(
+			$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['admin.field.possible-values'], $field->get_possible_values(), array(
 				'readonly' => $field->is_readonly())
 			));
 		}
+		
+		$fieldset->add_field(new FormFieldTextEditor('default_value', $this->lang['admin.field.default-value'], $field->get_default_value(), array(
+			'class' => 'text')
+		));
 		
 		$fieldset->add_field(new FormFieldRadioChoice('display', $this->lang['admin.field.display'], (int)$field->is_displayed(),
 			array(
@@ -247,6 +251,7 @@ class AdminContactFieldFormController extends AdminController
 		}
 		
 		$field->set_possible_values($this->form->get_value('possible_values'));
+		$field->set_default_value($this->form->get_value('default_value'));
 		
 		if ((bool)$this->form->get_value('display')->get_raw_value())
 			$field->displayed();
@@ -340,6 +345,7 @@ class AdminContactFieldFormController extends AdminController
 			'name' => array(), 
 			'description' => array(), 
 			'possible_values' => array(), 
+			'default_value' => array(), 
 			'regex' => array()
 		);
 		

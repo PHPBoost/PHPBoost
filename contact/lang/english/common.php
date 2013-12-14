@@ -81,6 +81,7 @@ $lang['admin.field.possible_values.email'] = 'Mail address(es)';
 $lang['admin.field.possible_values.email.explain'] = 'It is possible to put more than one mail address separated by a semi-colon';
 $lang['admin.field.possible_values.recipient'] = 'Recipient(s)';
 $lang['admin.field.possible_values.recipient.explain'] = 'The mail will ve sent to the selected recipient(s) if the recipients field is not displayed';
+$lang['admin.field.default-value'] = 'Default value';
 $lang['admin.field.display'] = 'Displayed';
 $lang['admin.field.not_display'] = 'Not displayed';
 $lang['admin.field.yes'] = 'Yes';
