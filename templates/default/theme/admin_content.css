@@ -583,6 +583,8 @@ input.field-xlarge { width:300px; }
 	margin:0px;
 }
 
+.form-field i {	vertical-align: middle; }
+
 .module-mini-container .form-field {
 	display:block;
 	width:100%;

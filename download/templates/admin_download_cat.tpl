@@ -11,7 +11,7 @@
 					</th>
 				</tr>							
 				<tr>
-					<td style="padding-left:20px;" class="row2">
+					<td style="padding-left:20px;">
 						<br />
 						{CATEGORIES}
 						<br />
@@ -19,7 +19,7 @@
 				</tr>
 			</table>
 			
-			<div style="text-align:center; margin:30px 20px;" class="row1">
+			<div style="text-align:center; margin:30px 20px;">
 				<a href="{U_RECOUNT_SUBFILES}" title="{L_RECOUNT_SUBFILES}">
 					<i class="icon-refresh icon-2x"></i>
 				</a>
