@@ -131,46 +131,6 @@ nav.pagination .current-page {
 	margin:15px auto;
 }
 
-/* Patch Tables */
-table.invisible {
-	-moz-border-radius: 0;
-    -webkit-border-radius: 0;
-	border-radius: 0;
-	border:none;
-	width:auto;
-}
-
-table.invisible tr td {
-	background-color:transparent;
-	border:none;
-	padding:0;
-}
-
-.module-table {
-	width:98%;
-	margin:auto;
-	border-spacing:0px;
-	border-collapse:separate;
-	padding:0px;
-	border:1px solid #D6DEE7;
-	background:#f2f8ff;
-}
-
-.module-table td {
-	border:none;
-	background:transparent;
-	text-align:left;
-}
-
-.module-table th {
-	color:#FFFFFF;
-	background:#336397;
-	text-align:left;
-	font-size:11px;
-	font-weight:normal;
-	text-transform:uppercase;
-}
-
 /* Prévisualisation AJAX. */
 .xmlhttprequest-preview{
 	overflow:auto;
