@@ -71,12 +71,8 @@ class AdminNewsManageController extends AdminModuleController
 				break;
 		}
 		
-		$pagination = $this->get_pagination($field, $mode);
-		
-		$this->view->put_all(array(
-			'C_NEWS_EXISTS' => !$pagination->current_page_is_empty(),
-			'PAGINATION' => $pagination->display()
-		));
+		$page = $request->get_getint('page', 1);
+		$pagination = $this->get_pagination($page, $field, $mode);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM '. NewsSetup::$news_table .' news
@@ -96,13 +92,26 @@ class AdminNewsManageController extends AdminModuleController
 			
 			$this->view->assign_block_vars('news', $news->get_array_tpl_vars());
 		}
+		
+		$this->view->put_all(array(
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'C_NEWS' => !$pagination->current_page_is_empty(),
+			'PAGINATION' => $pagination->display(),
+			'U_SORT_NAME_ASC' => NewsUrlBuilder::manage_news('name/asc/'. $page)->rel(),
+			'U_SORT_NAME_DESC' => NewsUrlBuilder::manage_news('name/desc/'. $page)->rel(),
+			'U_SORT_CATEGORY_ASC' => NewsUrlBuilder::manage_news('category/asc/'. $page)->rel(),
+			'U_SORT_CATEGORY_DESC' => NewsUrlBuilder::manage_news('category/desc/'. $page)->rel(),
+			'U_SORT_AUTHOR_ASC' => NewsUrlBuilder::manage_news('author/asc/'. $page)->rel(),
+			'U_SORT_AUTHOR_DESC' => NewsUrlBuilder::manage_news('author/desc/'. $page)->rel(),
+			'U_SORT_DATE_ASC' => NewsUrlBuilder::manage_news('date/asc/'. $page)->rel(),
+			'U_SORT_DATE_DESC' => NewsUrlBuilder::manage_news('date/desc/'. $page)->rel()
+		));
 	}
 	
-	private function get_pagination($sort_field, $sort_mode)
+	private function get_pagination($page, $sort_field, $sort_mode)
 	{
 		$news_number = PersistenceContext::get_querier()->count(CalendarSetup::$calendar_events_table);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $news_number, (int)NewsConfig::load()->get_number_news_per_page());
 		$pagination->set_url(NewsUrlBuilder::manage_news($sort_field, $sort_mode, '%d'));
 		
