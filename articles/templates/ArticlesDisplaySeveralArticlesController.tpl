@@ -9,9 +9,6 @@
 			${i18n('articles.sub_categories')} :
 			<br /><br />
 			<ul style="list-style:none;">
-				# IF C_CURRENT_CAT #
-				<li style="float:left;"><a class="button_read_more" href="">{ID_CAT}</a></li>
-				# ENDIF #
 				# START cat_list #
 				<li style="float:left;margin:0 5px 0 5px"><a itemprop="about" style="display:inline-block;" class="button_cat" href="{cat_list.U_CATEGORY}" title="{cat_list.CATEGORY_DESCRIPTION}">{cat_list.CATEGORY_NAME} ({cat_list.NBR_ARTICLES})</a></li>
 				# END cat_list #
