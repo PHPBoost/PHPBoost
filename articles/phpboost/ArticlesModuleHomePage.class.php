@@ -118,15 +118,11 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_MODERATE' =>  ArticlesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_COMMENTS_ENABLED' => ArticlesConfig::load()->are_comments_enabled(),
-			'C_CURRENT_CAT' => $this->category->get_id() != Category::ROOT_CATEGORY,
-			'C_PUBLISHED_ARTICLES' => false,
-		
-		    'C_ARTICLES_FILTERS' => true,
-		    'C_PAGINATION' => $pagination->has_several_pages(),
+			'C_ARTICLES_FILTERS' => true,
+			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
-		
-		    'PAGINATION' => $pagination->display(),
-			'ID_CAT' => $this->category->get_name(),
+			'PAGINATION' => $pagination->display(),
+			'ID_CAT' => $this->category->get_name()
 		));
 	}
 	
