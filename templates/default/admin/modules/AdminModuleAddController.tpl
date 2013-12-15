@@ -35,7 +35,7 @@
 				<span class="text-strong">{@modules.compatibility}:</span> PHPBoost {available.COMPATIBILITY}<br />
 			</td>
 			<td class="input-radio">	
-				<label></label><input type="radio" name="activated-{available.ID}" value="1" checked="checked"> {@modules.yes}</label>
+				<label><input type="radio" name="activated-{available.ID}" value="1" checked="checked"> {@modules.yes}</label>
 				<label><input type="radio" name="activated-{available.ID}" value="0"> {@modules.no}</label>
 			</td>
 			<td>
