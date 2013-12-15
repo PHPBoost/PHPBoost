@@ -69,6 +69,11 @@ class ArticlesService
 		return $article;
 	}
 	
+	public static function update_number_view(Articles $article)
+	{
+		self::$db_querier->update(ArticlesSetup::$articles_table, array('number_view' => $article->get_number_view()), 'WHERE id=:id', array('id' => $article->get_id()));
+	}
+	
 	public static function get_authorized_categories($current_id_category)
 	{
 		$search_category_children_options = new SearchCategoryChildrensOptions();

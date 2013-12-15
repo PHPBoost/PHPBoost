@@ -114,13 +114,13 @@ class Articles
 		return $this->rewrited_title != Url::encode_rewrite($this->title);
 	}
 	
-	public function set_description($description)		
-	{		
-		$this->description = $description;		
-	}		
-			
+	public function set_description($description)
+	{
+		$this->description = $description;
+	}
+	
 	public function get_description()
-	{		
+	{
 		return $this->description;
 	}
 	

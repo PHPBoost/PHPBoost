@@ -26,10 +26,10 @@
  ###################################################*/
 
 class ArticlesDisplayArticlesController extends ModuleController
-{	
+{
 	private $lang;
 	private $form;
-	private $view;
+	private $tpl;
 	private $article;
 	private $category;
 	
@@ -42,15 +42,15 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$this->check_pending_article();
 		
 		$this->build_view($request);
-					
+		
 		return $this->generate_response();
 	}
 	
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'articles');
-		$this->view = new FileTemplate('articles/ArticlesDisplayArticlesController.tpl');
-		$this->view->add_lang($this->lang);
+		$this->tpl = new FileTemplate('articles/ArticlesDisplayArticlesController.tpl');
+		$this->tpl->add_lang($this->lang);
 	}
 	
 	private function get_article()
@@ -71,23 +71,24 @@ class ArticlesDisplayArticlesController extends ModuleController
 				}
 			}
 			else
-			    $this->article = new Articles();
+				$this->article = new Articles();
 		}
 		return $this->article;
 	}
 	
 	private function check_pending_article()
 	{
-	    if (!$this->article->is_published())
-	    {
-		    $this->view->put('MSG', MessageHelper::display($this->lang['articles.not_published'], MessageHelper::WARNING));
-	    }
-	    else
-	    {
-		    $this->update_number_view();
-	    }
+		if (!$this->article->is_published())
+		{
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['articles.not_published'], MessageHelper::WARNING));
+		}
+		else
+		{
+			$this->article->set_number_view($this->article->get_number_view() + 1);
+			ArticlesService::update_number_view($this->article);
+		}
 	}
-	private function build_view($request)
+	private function build_view(HTTPRequestCustom $request)
 	{
 		$current_page = $request->get_getint('page', 1);
 		$comments_enabled = ArticlesConfig::load()->are_comments_enabled();
@@ -116,14 +117,14 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->build_form($array_page, $current_page);
 		
-		$this->build_view_sources();
+		$this->build_sources_view();
 		
-		$this->build_view_keywords();
+		$this->build_keywords_view();
 		
-		$this->view->put_all($this->article->get_tpl_vars());
+		$this->tpl->put_all($this->article->get_tpl_vars());
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 		
-		$this->view->put_all(array(
+		$this->tpl->put_all(array(
 			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'C_DATE_UPDATED' => $this->article->get_date_updated() != null ? true : false,
 			'L_CAT_NAME' => $this->category->get_name(),
@@ -140,16 +141,16 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->build_pages_pagination($current_page, $nbr_pages, $array_page);
 		
-		$this->view->put('FORM', $this->form->display());
+		$this->tpl->put('FORM', $this->form->display());
 		
 		//Affichage commentaires
 		if ($comments_enabled)
 		{
-		    $comments_topic = new ArticlesCommentsTopic($this->get_article());
-		    $comments_topic->set_id_in_module($this->article->get_id());
-		    $comments_topic->set_url(ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
+			$comments_topic = new ArticlesCommentsTopic($this->get_article());
+			$comments_topic->set_id_in_module($this->article->get_id());
+			$comments_topic->set_url(ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
 
-		    $this->view->put('COMMENTS', $comments_topic->display());
+			$this->tpl->put('COMMENTS', $comments_topic->display());
 		}
 	}
 	
@@ -181,7 +182,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			{
 				$previous_page = ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page - 1);
 				
-				$this->view->put_all(array(
+				$this->tpl->put_all(array(
 					'U_PREVIOUS_PAGE' => $previous_page,
 					'L_PREVIOUS_TITLE' => $array_page[1][$current_page-2]
 				));
@@ -191,13 +192,13 @@ class ArticlesDisplayArticlesController extends ModuleController
 			{
 				$next_page = ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page + 1);
 				
-				$this->view->put_all(array(
+				$this->tpl->put_all(array(
 					'U_NEXT_PAGE' => $next_page,
 					'L_NEXT_TITLE' => $array_page[1][$current_page]
 				));
 			}
 			
-			$this->view->put_all(array(
+			$this->tpl->put_all(array(
 				'C_PAGINATION' => true,
 				'C_PREVIOUS_PAGE' => ($current_page != 1) ? true : false,
 				'C_NEXT_PAGE' => ($current_page != $nbr_pages) ? true : false,
@@ -219,42 +220,40 @@ class ArticlesDisplayArticlesController extends ModuleController
 		return $options;
 	}
 	
-	private function build_view_sources()
+	private function build_sources_view()
 	{
-	    $sources = $this->article->get_sources();
-	    
-	    $this->view->put('C_SOURCES', !empty($sources));
-	    
-	    $i = 0;
-	    foreach ($sources as $name => $url)
-	    {			    
-		    $this->view->assign_block_vars('sources', array(
-			    'I' => $i,
-			    'NAME' => $name,
-			    'URL' => $url,
-			    'COMMA' => $i > 0 ? ', ' : ' '
-		    ));
-		    $i++;
-	    }
+		$sources = $this->article->get_sources();
+		$nbr_sources = count($sources);
+		$this->tpl->put('C_SOURCES', $nbr_sources > 0);
+		
+		$i = 1;
+		foreach ($sources as $name => $url)
+		{
+			$this->tpl->assign_block_vars('sources', array(
+				'C_SEPARATOR' => $i < $nbr_sources,
+				'NAME' => $name,
+				'URL' => $url,
+			));
+			$i++;
+		}
 	}
 	
-	private function build_view_keywords()
+	private function build_keywords_view()
 	{
 		$keywords = $this->article->get_keywords();
 		$nbr_keywords = count($keywords);
+		$this->tpl->put('C_KEYWORDS', $nbr_keywords > 0);
 		
-		$this->view->put('C_KEYWORDS', $nbr_keywords > 0);
-		
-		$i = 0;
+		$i = 1;
 		foreach ($keywords as $keyword)
-		{	
-			$this->view->assign_block_vars('keywords', array(
-				'COMMA' => $i > 0 ? ', ' : ' ',
+		{
+			$this->tpl->assign_block_vars('keywords', array(
+				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
 			));
 			$i++;
-		}	
+		}
 	}
 	
 	private function check_authorizations()
@@ -291,22 +290,13 @@ class ArticlesDisplayArticlesController extends ModuleController
 			break;
 			default:
 				$error_controller = PHPBoostErrors::unexisting_page();
-   				DispatchManager::redirect($error_controller);
+				DispatchManager::redirect($error_controller);
 			break;
 		}
 	}
 	
-	private function update_number_view()
-	{
-		PersistenceContext::get_querier()->inject('UPDATE ' . LOW_PRIORITY . ' ' . ArticlesSetup::$articles_table . ' SET number_view = number_view + 1 WHERE id=:id', 
-			array(
-				'id' => $this->article->get_id()
-			)
-		);
-	}
-	
 	private function get_pagination($nbr_pages, $current_page)
-	{	
+	{
 		$pagination = new ModulePagination($current_page, $nbr_pages, 1);
 		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title(), '%d'));
 		
@@ -315,7 +305,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-	
+		
 		return $pagination;
 	}
 	
@@ -336,7 +326,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->article->get_id_category());
 		$response->add_breadcrumb_link($this->article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
 		
-		return $response->display($this->view);
+		return $response->display($this->tpl);
 	}
 }
 ?>
