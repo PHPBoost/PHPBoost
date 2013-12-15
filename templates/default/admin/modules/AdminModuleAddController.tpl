@@ -2,7 +2,7 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	# INCLUDE MSG #	
 	<table>
-		<caption>{@modules.modules_available}</caption>
+		<caption><h2>{@modules.modules_available}</h2></caption>
 		# IF C_MODULES_AVAILABLE #
 		<thead>
 			<tr> 
@@ -29,10 +29,10 @@
 				<span class="text-strong">{available.NAME}</span>
 				<em>({available.VERSION})</em>
 			</td>
-			<td>	
-				<span class="text-strong">{@modules.author}:</span> {available.AUTHOR} {available.AUTHOR_WEBSITE}<br />
-				<span class="text-strong">{@modules.description}:</span> {available.DESCRIPTION}<br />
-				<span class="text-strong">{@modules.compatibility}:</span> PHPBoost {available.COMPATIBILITY}<br />
+			<td style="text-align:left;">	
+				<span class="text-strong">{@modules.author} :</span> {available.AUTHOR} {available.AUTHOR_WEBSITE}<br />
+				<span class="text-strong">{@modules.description} :</span> {available.DESCRIPTION}<br />
+				<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {available.COMPATIBILITY}<br />
 			</td>
 			<td class="input-radio">	
 				<label><input type="radio" name="activated-{available.ID}" value="1" checked="checked"> {@modules.yes}</label>

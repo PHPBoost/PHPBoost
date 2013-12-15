@@ -43,7 +43,7 @@
 		</script>
 		<form action="{REWRITED_SCRIPT}" method="post">
 			<table>
-				<caption>{@modules.installed_not_activated_modules}</caption>
+				<caption><h2>{@modules.installed_not_activated_modules}</h2></caption>
 				# IF C_MODULES_NOT_ACTIVATED #
 				<thead>
 					<tr>
@@ -79,7 +79,7 @@
 							<span class="text-strong">{modules_not_activated.NAME}</span> <em>({modules_not_activated.VERSION})</em>
 						</td>
 						<td>
-							<div id="desc_explain{modules_not_activated.ID}" style="display: none;">
+							<div id="desc_explain{modules_not_activated.ID}" style="text-align:left;display: none;">
 								<span class="text-strong">{@modules.name} :</span> # IF modules_not_activated.C_AUTHOR #<a href="mailto:{modules_not_activated.AUTHOR_EMAIL}">{modules_not_activated.AUTHOR}</a># ELSE #{modules_not_activated.AUTHOR}# ENDIF # # IF modules_not_activated.C_AUTHOR_WEBSITE #<a href="{modules_not_activated.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 								<span class="text-strong">{@modules.description} :</span> {modules_not_activated.DESCRIPTION}<br />
 								<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_not_activated.COMPATIBILITY}<br />
@@ -116,7 +116,7 @@
 			</table>
 			
 			<table>
-				<caption>{@modules.installed_activated_modules}</caption>
+				<caption><h2>{@modules.installed_activated_modules}</h2></caption>
 				# IF C_MODULES_ACTIVATED #
 				<thead>
 					<tr> 
@@ -144,7 +144,7 @@
 							<span class="text-strong">{modules_activated.NAME}</span> <em>({modules_activated.VERSION})</em>
 						</td>
 						<td>
-							<div id="desc_explain{modules_activated.ID}" style="display: none;">
+							<div id="desc_explain{modules_activated.ID}" style="text-align:left;display:none;">
 								<span class="text-strong">{@modules.name} :</span> # IF modules_activated.C_AUTHOR #<a href="mailto:{modules_activated.AUTHOR_EMAIL}">{modules_activated.AUTHOR}</a># ELSE #{modules_activated.AUTHOR}# ENDIF # # IF modules_activated.C_AUTHOR_WEBSITE #<a href="{modules_activated.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 								<span class="text-strong">{@modules.description} :</span> {modules_activated.DESCRIPTION}<br />
 								<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_activated.COMPATIBILITY}<br />
