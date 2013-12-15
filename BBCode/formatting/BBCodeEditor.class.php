@@ -37,36 +37,36 @@ class BBCodeEditor extends ContentEditor
 	 */
 	private static $editor_already_included = false;
 
-    function __construct()
-    {
-        parent::__construct();
-    }
-    
- 	public function get_template()
-    {
-        if (!is_object($this->template) || !($this->template instanceof Template))
-        {
-            $this->template = new FileTemplate('BBCode/bbcode_editor.tpl');
-        }
-        return $this->template;
-    }
+	function __construct()
+	{
+		parent::__construct();
+	}
 
-    /**
+	public function get_template()
+	{
+		if (!is_object($this->template) || !($this->template instanceof Template))
+		{
+			$this->template = new FileTemplate('BBCode/bbcode_editor.tpl');
+		}
+		return $this->template;
+	}
+
+	/**
 	 * @desc Display the editor
 	 * @return string Formated editor.
 	 */
- 	public function display()
-    {
-        global $LANG, $Cache;
+	public function display()
+	{
+		global $LANG, $Cache;
 
-        $template = $this->get_template();
+		$template = $this->get_template();
 
-        $smileys_cache = SmileysCache::load();
+		$smileys_cache = SmileysCache::load();
 
-        $bbcode_lang = LangLoader::get('editor-common');
-        
-        $template->put_all(array(
-        	'PAGE_PATH' => $_SERVER['PHP_SELF'],
+		$bbcode_lang = LangLoader::get('editor-common');
+		
+		$template->put_all(array(
+			'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !self::$editor_already_included,
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
@@ -102,6 +102,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_INDENT' => $bbcode_lang['bb_indent'],
 			'L_BB_LIST' => $bbcode_lang['bb_list'],
 			'L_BB_TABLE' => $bbcode_lang['bb_table'],
+			'L_BB_SWF' => $bbcode_lang['bb_swf'],
 			'L_BB_YOUTUBE' => $bbcode_lang['bb_youtube'],
 			'L_BB_FLASH' => $bbcode_lang['bb_swf'],
 			'L_BB_MOVIE' => $bbcode_lang['bb_movie'],
@@ -112,7 +113,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_HELP' => $bbcode_lang['bb_help'],
 			'L_BB_MORE' => $bbcode_lang['bb_more'],
 			'L_URL_PROMPT' => $bbcode_lang['bb_url_prompt'],
-        	'L_IMAGE_PROMPT' => $bbcode_lang['bb_image_prompt'],
+			'L_ANCHOR_PROMPT' => $bbcode_lang['bb_anchor_prompt'],
 			'L_TITLE' => $bbcode_lang['format_title'],
 			'L_CONTAINER' => $bbcode_lang['bb_container'],
 			'L_BLOCK' => $bbcode_lang['bb_block'],
@@ -137,34 +138,34 @@ class BBCodeEditor extends ContentEditor
 			'L_INSERT_LIST' => $bbcode_lang['insert_list'],
 			'L_INSERT_TABLE' => $bbcode_lang['insert_table'],
 			'L_PHPBOOST_LANGUAGES' => $bbcode_lang['phpboost_languages']
-        ));
+		));
 
-        foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
-        {
-            if ($forbidden_tag == 'fieldset')
-            	$forbidden_tag = 'block';
+		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
+		{
+			if ($forbidden_tag == 'fieldset')
+				$forbidden_tag = 'block';
 
-        	$template->put_all(array(
+			$template->put_all(array(
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
 				'DISABLED_' . strtoupper($forbidden_tag) => 'true'
 			));
-        }
+		}
 
-        $smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
-        $smile_by_line = 5; //Smiley par ligne.
+		$smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
+		$smile_by_line = 5; //Smiley par ligne.
 
-        $nbr_smile = count($smileys_cache->get_smileys());
-        $i = 1;
-        $z = 0;
-        foreach ($smileys_cache->get_smileys() as $code_smile => $infos)
-        {
-            if ($z == $smile_max)
-            {
-                $z++;
-                break;
-            }
+		$nbr_smile = count($smileys_cache->get_smileys());
+		$i = 1;
+		$z = 0;
+		foreach ($smileys_cache->get_smileys() as $code_smile => $infos)
+		{
+			if ($z == $smile_max)
+			{
+				$z++;
+				break;
+			}
 
-            $template->assign_block_vars('smileys', array(
+			$template->assign_block_vars('smileys', array(
 				'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 				'CODE' => addslashes($code_smile),
 				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
@@ -172,23 +173,23 @@ class BBCodeEditor extends ContentEditor
 
 			$i++;
 			$z++;
-        }
+		}
 
-        if ($z > $smile_max) //Lien vers tous les smiley!
-        {
-            $template->put_all(array(
+		if ($z > $smile_max) //Lien vers tous les smiley!
+		{
+			$template->put_all(array(
 				'C_BBCODE_SMILEY_MORE' => true,
 				'L_ALL_SMILEY' => $LANG['all_smiley'],
 				'L_SMILEY' => $LANG['smiley']
-            ));
-        }
+			));
+		}
 
-        if (!self::$editor_already_included)
-        {
-        	self::$editor_already_included = true;
-        }
+		if (!self::$editor_already_included)
+		{
+			self::$editor_already_included = true;
+		}
 
-        return $template->render();
-    }
+		return $template->render();
+	}
 }
 ?>

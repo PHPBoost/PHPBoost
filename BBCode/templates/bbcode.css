@@ -102,6 +102,7 @@ i[class^="bbcode-icon-"]:hover {
 	text-decoration:none;
 }
 
+i.bbcode-icon-anchor:before { content: "\f13d"; }
 i.bbcode-icon-bold:before { content: "\f032"; }
 i.bbcode-icon-italic:before { content: "\f033"; }
 i.bbcode-icon-underline:before { content: "\f0cd"; }
@@ -111,8 +112,8 @@ i.bbcode-icon-title:before { content: "\f022"; }
 i.bbcode-icon-subtitle:before { content: "\f096"; }
 i.bbcode-icon-style:before { content: "\f071"; }
 i.bbcode-icon-url:before { content: "\f0ac"; }
-i.bbcode-icon-image:before { content: "\f030"; }
-i.bbcode-icon-lightbox:before { content: "\f03e"; }
+i.bbcode-icon-image:before { content: "\f03e"; }
+i.bbcode-icon-lightbox:before { content: "\f030"; }
 i.bbcode-icon-quote:before { content: "\f10d"; }
 i.bbcode-icon-hide:before { content: "\f070"; }
 i.bbcode-icon-list:before { content: "\f03a"; }
