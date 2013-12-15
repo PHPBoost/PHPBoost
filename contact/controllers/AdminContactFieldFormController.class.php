@@ -236,7 +236,7 @@ class AdminContactFieldFormController extends AdminController
 		if (!$this->form->field_is_disabled('field_type'))
 			$field->set_field_type($this->form->get_value('field_type')->get_raw_value());
 		
-		if ($field->get_field_name() != 'f_recipients')
+		if ($field->get_field_name() != 'f_recipients' && !$this->form->field_is_disabled('regex_type'))
 		{
 			$regex = 0;
 			if (!$this->form->field_is_disabled('regex_type'))
@@ -250,8 +250,22 @@ class AdminContactFieldFormController extends AdminController
 				$field->not_required();
 		}
 		
-		$field->set_possible_values($this->form->get_value('possible_values'));
-		$field->set_default_value($this->form->get_value('default_value'));
+		if (!$this->form->field_is_disabled('possible_values'))
+		{
+			if ($field->get_field_name() != 'f_recipients')
+			{
+				$field->set_possible_values($this->form->get_value('possible_values'));
+			}
+			else
+			{
+				$possible_values = $this->form->get_value('possible_values');
+				$possible_values['admins']['email'] = implode(';', MailServiceConfig::load()->get_administrators_mails());
+				$field->set_possible_values($possible_values);
+			}
+		}
+		
+		if (!$this->form->field_is_disabled('default_value'))
+			$field->set_default_value($this->form->get_value('default_value'));
 		
 		if ((bool)$this->form->get_value('display')->get_raw_value())
 			$field->displayed();
