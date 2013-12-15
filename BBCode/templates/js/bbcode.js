@@ -348,3 +348,12 @@ function bbcode_url(field, prompt_text)
 	else
 		insertbbcode('[url]', '[/url]', field);
 }
+
+function bbcode_anchor(field, prompt_text)
+{
+	var anchor = prompt(prompt_text);
+	if( anchor != null && anchor != '' )
+		insertbbcode('[anchor=' + anchor + ']', '[/anchor]', field);
+	else
+		insertbbcode('[anchor]', '[/anchor]', field);
+}

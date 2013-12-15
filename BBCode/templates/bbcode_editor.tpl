@@ -138,9 +138,9 @@ function XMLHttpRequest_preview(field)
 				</div>
 			</li>
 			<li class="bbcode-elements">
-				<i class="bbcode-icon-url" {AUTH_URL} onclick="{DISABLED_URL}bbcode_url('{FIELD}', '{L_URL_PROMPT}');" title="{L_BB_URL}"></i>
+				<i class="bbcode-icon-url" {AUTH_URL} onclick="{DISABLED_URL}bbcode_url('{FIELD}', ${escapejs(L_URL_PROMPT)});" title="{L_BB_URL}"></i>
 				<i class="bbcode-icon-image" {AUTH_IMG} onclick="{DISABLED_IMG}insertbbcode('[img]', '[/img]', '{FIELD}');" title="{L_BB_IMAGE}"></i>
-				<i class="bbcode-icon-lightbox" {AUTH_LIGHTBOX} onclick="{DISABLED_lightbox}insertbbcode('[lightbox=][IMG]', '[IMG][/lightbox]', '{FIELD}');" title="{L_BB_LIGHTBOX}"></i> 
+				<i class="bbcode-icon-lightbox" {AUTH_LIGHTBOX} onclick="{DISABLED_lightbox}insertbbcode('[lightbox=][img]', '[/img][/lightbox]', '{FIELD}');" title="{L_BB_LIGHTBOX}"></i> 
 				<i class="bbcode-icon-quote" {AUTH_QUOTE} onclick="{DISABLED_QUOTE}insertbbcode('[quote]', '[/quote]', '{FIELD}');" title="{L_BB_QUOTE}"></i>
 				<i class="bbcode-icon-hide" {AUTH_HIDE} onclick="{DISABLED_HIDE}insertbbcode('[hide]', '[/hide]', '{FIELD}');" title="{L_BB_HIDE}"></i>
 				
@@ -209,6 +209,7 @@ function XMLHttpRequest_preview(field)
 				<i class="bbcode-icon-sup" {AUTH_SUP} onclick="{DISABLED_SUP}insertbbcode('[sup]', '[/sup]', '{FIELD}');" title="{L_BB_SUP}"></i>
 				<i class="bbcode-icon-sub" {AUTH_SUB} onclick="{DISABLED_SUB}insertbbcode('[sub]', '[/sub]', '{FIELD}');" title="{L_BB_SUB}"></i>
 				<i class="bbcode-icon-indent" {AUTH_INDENT} onclick="{DISABLED_INDENT}insertbbcode('[indent]', '[/indent]', '{FIELD}');" title="{L_BB_INDENT}"></i>
+				<i class="bbcode-icon-anchor" {AUTH_ANCHOR} onclick="{DISABLED_ANCHOR}bbcode_anchor('{FIELD}', ${escapejs(L_ANCHOR_PROMPT)});" title="{L_BB_ANCHOR}"></i>
 				
 				<a href="javascript:{DISABLED_TABLE}bb_display_block('7', '{FIELD}');" onmouseover="{DISABLED_TABLE}bb_hide_block('7', '{FIELD}', 1);" class="bbcode-hover" title="{L_BB_TABLE}">
 					<i class="bbcode-icon-table" {AUTH_TABLE}></i>
@@ -258,7 +259,7 @@ function XMLHttpRequest_preview(field)
 							<optgroup label="{L_TEXT}">
 								<option value="text">Text</option>
 								<option value="sql">Sql</option>
-								<option value="xml">Xml</option>										
+								<option value="xml">Xml</option>
 							</optgroup>
 							<optgroup label="{L_PHPBOOST_LANGUAGES}">
 								<option value="bbcode">BBCode</option>
