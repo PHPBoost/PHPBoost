@@ -4,7 +4,6 @@
 }
 
 .form_side{ width: 60%; }
-.not_displayable { opacity:0.5; }
-.per_default { margin: 0 45px 0 25px; }
+.per_default { margin: 0 25px 0 25px; }
 .is_default_title { margin-right: 30px; }
 .name_title { margin-right: 92px; }

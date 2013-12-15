@@ -178,7 +178,9 @@ Event.observe(window, 'load', function() {
 							<div class="sortable-options">
 								# IF fields_list.C_DELETE #<a class="icon-delete" data-confirmation="delete-element" title="{@admin.fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
 							</div>
-							# IF NOT fields_list.C_READONLY #<a><i id="change_display_{fields_list.ID}" class="icon-eye"></i></a># ELSE #<span class="not_displayable"><i id="change_display_{fields_list.ID}" class="icon-eye"></i></span># ENDIF #
+							<div class="sortable-options">
+							# IF NOT fields_list.C_READONLY #<a><i id="change_display_{fields_list.ID}" class="icon-eye"></i></a># ELSE #&nbsp;# ENDIF #
+							</div>
 						</div>
 					</div>
 					<div class="spacer"></div>
