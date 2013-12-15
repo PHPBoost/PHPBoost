@@ -1,22 +1,15 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post">
-	{@themes.not_installed}
 	<table>
+		<caption>{@themes.not_installed}</caption>
 		# IF C_THEME_INSTALL #
 		<thead>
 			<tr> 
-				<th>
-					{@themes.name}
-				</th>
-				<th>
-					{@themes.description}
-				</th>
-				<th>
-					{@themes.authorisations}
-				</th>
-				<th>
-					{@themes.activated}
-				</th>
+				<th>{@themes.name}</th>
+				<th>{@themes.description}</th>
+				<th>{@themes.authorisations}</th>
+				<th>{@themes.activated}</th>
+				<th>{L_ADD}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -74,10 +67,11 @@
 							{themes_not_installed.AUTHORIZATIONS}
 						</div>
 					</td>
-					<td>
+					<td class="input-radio">
 						<label><input type="radio" name="activated-{themes_not_installed.ID}" value="1" checked="checked"> {@themes.yes}</label>
 						<label><input type="radio" name="activated-{themes_not_installed.ID}" value="0"> {@themes.no}</label>
-						<br /><br />
+					</td>
+					<td>
 						<button type="submit" name="add-{themes_not_installed.ID}" value="true">{L_ADD}</button>
 					</td>
 				</tr>						

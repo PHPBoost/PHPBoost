@@ -1,20 +1,12 @@
 <form action="{REWRITED_SCRIPT}" method="post">
-	{@themes.installed}
 	<table>
+		<caption>{@themes.installed}</caption>
 		<thead>
 			<tr> 
-				<th>
-					{@themes.name}
-				</th>
-				<th>
-					{@themes.description}
-				</th>
-				<th>
-					{@themes.authorisations}
-				</th>
-				<th>
-					{@themes.activated}
-				</th>
+				<th>{@themes.name}</th>
+				<th>{@themes.description}</th>
+				<th>{@themes.authorisations}</th>
+				<th>{@themes.activated}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -75,7 +67,6 @@
 						# IF NOT themes_installed.C_IS_DEFAULT_THEME #
 							<label><input type="radio" name="activated-{themes_installed.ID}" value="1" # IF themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.yes}</label>
 							<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.no}</label>
-							<br /><br />
 							<button type="submit" name="delete-{themes_installed.ID}" value="true">{L_DELETE}</button>
 						# ELSE #
 							{@themes.yes}
