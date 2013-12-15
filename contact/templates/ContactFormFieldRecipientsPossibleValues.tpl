@@ -44,7 +44,7 @@ var ContactFormFieldRecipientsPossibleValues = new ContactFormFieldRecipientsPos
 	<div id="${escape(ID)}_{fieldelements.ID}">
 		<input type="checkbox" name="field_is_default_${escape(ID)}_{fieldelements.ID}" id="field_is_default_${escape(ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per_default" />
 		<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@admin.field.name}"/>
-		<input type="text" name="field_email_${escape(ID)}_{fieldelements.ID}" id="field_email_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.EMAIL}" placeholder="{@admin.field.possible_values.email}" class="field-large"/>
+		<input type="text" name="field_email_${escape(ID)}_{fieldelements.ID}" id="field_email_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.EMAIL}" placeholder="{@admin.field.possible_values.email}" class="field-large"# IF NOT fieldelements.C_DELETABLE #readonly="readonly"# ENDIF # />
 		# IF fieldelements.C_DELETABLE #<a href="javascript:ContactFormFieldRecipientsPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a># ENDIF #
 	</div>
 # END fieldelements #
