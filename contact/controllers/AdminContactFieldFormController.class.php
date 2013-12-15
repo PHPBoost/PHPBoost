@@ -252,16 +252,7 @@ class AdminContactFieldFormController extends AdminController
 		
 		if (!$this->form->field_is_disabled('possible_values'))
 		{
-			if ($field->get_field_name() != 'f_recipients')
-			{
-				$field->set_possible_values($this->form->get_value('possible_values'));
-			}
-			else
-			{
-				$possible_values = $this->form->get_value('possible_values');
-				$possible_values['admins']['email'] = implode(';', MailServiceConfig::load()->get_administrators_mails());
-				$field->set_possible_values($possible_values);
-			}
+			$field->set_possible_values($this->form->get_value('possible_values'));
 		}
 		
 		if (!$this->form->field_is_disabled('default_value'))
