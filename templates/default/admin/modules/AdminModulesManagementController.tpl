@@ -42,26 +42,18 @@
 			-->
 		</script>
 		<form action="{REWRITED_SCRIPT}" method="post">
-			{@modules.installed_not_activated_modules}
 			<table>
+				<caption>{@modules.installed_not_activated_modules}</caption>
 				# IF C_MODULES_NOT_ACTIVATED #
 				<thead>
 					<tr>
-						<th>
-							{@modules.name}
-						</th>
-						<th>
-							{@modules.description}
-						</th>
-						<th>
-							{@modules.activated_module}
-						</th>
+						<th>{@modules.name}</th>
+						<th>{@modules.description}</th>
+						<th>{@modules.activated_module}</th>
 						<!-- <th>
 							{@modules.authorization}
 						</th> -->
-						<th>
-							{@modules.delete}
-						</th>
+						<th>{@modules.delete}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -95,7 +87,7 @@
 							</div>
 							<div style="text-align: center;cursor: pointer;"><i class="icon-plus" id="picture_desc{modules_not_activated.ID}"></i></div>
 						</td>
-						<td>
+						<td class="input-radio">
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="0" # IF NOT modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
 						</td>
@@ -123,23 +115,15 @@
 				</tbody>
 			</table>
 			
-			{@modules.installed_activated_modules}
 			<table>
+				<caption>{@modules.installed_activated_modules}</caption>
 				# IF C_MODULES_ACTIVATED #
 				<thead>
 					<tr> 
-						<th>
-							{@modules.name}
-						</th>
-						<th>
-							{@modules.description}
-						</th>
-						<th>
-							{@modules.activated_module}
-						</th>
-						<th>
-							{@modules.delete}
-						</th>
+						<th>{@modules.name}</th>
+						<th>{@modules.description}</th>
+						<th>{@modules.activated_module}</th>
+						<th>{@modules.delete}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -168,7 +152,7 @@
 							</div>
 							<div style="text-align: center;cursor: pointer;"><i class="icon-plus" id="picture_desc{modules_activated.ID}"></i></div>
 						</td>
-						<td>
+						<td class="input-radio">
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
 						</td>
@@ -201,7 +185,6 @@
 				<button type="submit" name="update_modules_configuration" value="true">{@modules.update}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
 				<input type="hidden" name="update" value="true">
-				&nbsp;&nbsp; 
 				<button type="reset" value="true">{@modules.reset}</button>
 			</fieldset>
 		</form>

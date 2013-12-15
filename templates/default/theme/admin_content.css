@@ -82,6 +82,15 @@ table tbody td.align-left {
 	text-align:left;
 }
 
+table td.input-radio { 
+	width:60px;
+	text-align:left;
+}
+
+table td.input-radio label { display:block; }
+
+table td.input-radio label input { vertical-align:-2px; }
+
 .row1 {
 	background:#E0E9EF;
 	padding:8px 6px;
@@ -496,7 +505,6 @@ fieldset {
 }
 
 fieldset.fieldset-submit { /* A supprimer ou remplacer par un div */
-	margin-top:-10px;
 	padding-bottom:15px;
 	width:99%;
 	text-align:center;
