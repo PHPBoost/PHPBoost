@@ -1,7 +1,7 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post">
 	<table>
-		<caption>{@themes.not_installed}</caption>
+		<caption><h2>{@themes.not_installed}</h2></caption>
 		# IF C_THEME_INSTALL #
 		<thead>
 			<tr> 
@@ -14,14 +14,14 @@
 		</thead>
 		<tbody>
 			<tr> 
-				<td colspan="4">
+				<td colspan="5">
 					# INCLUDE MSG #	
 				</td>
 			</tr>
 			# ELSE #
 			<tbody>
 				<tr>
-					<td colspan="4">
+					<td colspan="5">
 						<span class="text-strong">{@themes.add.not_theme}</span>
 					</td>
 				</tr>
@@ -45,21 +45,19 @@
 						
 					</td>
 					<td>
-						<div id="desc_explain{themes_not_installed.ID}">
-							<span class="text-strong">{@themes.author}:</span> 
-							<a href="mailto:{themes_not_installed.AUTHOR_EMAIL}">
-								{themes_not_installed.AUTHOR_NAME}
-							</a>
+						<div id="desc_explain{themes_not_installed.ID}" style="text-align:left;">
+							<span class="text-strong">{@themes.author} :</span> 
+							<a href="mailto:{themes_not_installed.AUTHOR_EMAIL}">{themes_not_installed.AUTHOR_NAME}</a>
 							# IF themes_not_installed.C_WEBSITE # 
 							<a href="{themes_not_installed.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a>
 							# ENDIF #
 							<br />
-							<span class="text-strong">{@themes.description}:</span> {themes_not_installed.DESCRIPTION}<br />
-							<span class="text-strong">{@themes.compatibility}:</span> PHPBoost {themes_not_installed.COMPATIBILITY}<br />
-							<span class="text-strong">{@themes.html_version}:</span> {themes_not_installed.HTML_VERSION}<br />
-							<span class="text-strong">{@themes.css_version}:</span> {themes_not_installed.CSS_VERSION}<br />
-							<span class="text-strong">{@themes.main_color}:</span> {themes_not_installed.MAIN_COLOR}<br />
-							<span class="text-strong">{@themes.width}:</span> {themes_not_installed.WIDTH}<br />
+							<span class="text-strong">{@themes.description} :</span> {themes_not_installed.DESCRIPTION}<br />
+							<span class="text-strong">{@themes.compatibility} :</span> PHPBoost {themes_not_installed.COMPATIBILITY}<br />
+							<span class="text-strong">{@themes.html_version} :</span> {themes_not_installed.HTML_VERSION}<br />
+							<span class="text-strong">{@themes.css_version} :</span> {themes_not_installed.CSS_VERSION}<br />
+							<span class="text-strong">{@themes.main_color} :</span> {themes_not_installed.MAIN_COLOR}<br />
+							<span class="text-strong">{@themes.width} :</span> {themes_not_installed.WIDTH}<br />
 						</div>
 					</td>
 					<td>

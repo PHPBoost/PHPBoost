@@ -8,19 +8,14 @@
 			<i class="icon-warning"></i>
 			<div class="message-helper-content">{@modules.updates_available}</div>
 		</div>
-		{@modules.updates_available}
+		
 		<table>
+			<caption><h2>{@modules.updates_available}</h2></caption>
 			<thead>
 				<tr>
-					<th>
-						{@modules.name}
-					</th>
-					<th>
-						{@modules.description}
-					</th>
-					<th>
-						{@modules.upgrade_module}
-					</th>
+					<th>{@modules.name}</th>
+					<th>{@modules.description}</th>
+					<th>{@modules.upgrade_module}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -29,10 +24,10 @@
 					<td>					
 						<img src="{PATH_TO_ROOT}/{modules_upgradable.ICON}/{modules_upgradable.ICON}.png" alt="" /> <span class="text-strong">{modules_upgradable.NAME}</span> <span class="text-italic">({modules_upgradable.VERSION})</span>
 					</td>
-					<td>	
-						<span class="text-strong">{@modules.author}:</span> {modules_upgradable.AUTHOR} {modules_upgradable.AUTHOR_WEBSITE}<br />
-						<span class="text-strong">{@modules.description}:</span> {modules_upgradable.DESCRIPTION}<br />
-						<span class="text-strong">{@modules.compatibility}:</span> PHPBoost {modules_upgradable.COMPATIBILITY}<br />
+					<td style="text-align:left;">	
+						<span class="text-strong">{@modules.author} :</span> {modules_upgradable.AUTHOR} {modules_upgradable.AUTHOR_WEBSITE}<br />
+						<span class="text-strong">{@modules.description} :</span> {modules_upgradable.DESCRIPTION}<br />
+						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_upgradable.COMPATIBILITY}<br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_upgradable.PHP_VERSION}
 					</td>
 					<td>
