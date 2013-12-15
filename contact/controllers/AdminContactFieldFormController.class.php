@@ -149,7 +149,7 @@ class AdminContactFieldFormController extends AdminController
 			));
 			
 			$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['regex.personnal-regex'], $regex, array(
-				'class' => 'text', 'maxlength' => 25, 'readonly' => $field->is_readonly())
+				'class' => 'text', 'maxlength' => 25, 'disabled' => $field->is_readonly())
 			));
 		}
 		
@@ -163,13 +163,13 @@ class AdminContactFieldFormController extends AdminController
 		if ($field->get_field_name() == 'f_recipients')
 		{
 			$fieldset->add_field(new ContactFormFieldRecipientsPossibleValues('possible_values', $this->lang['admin.field.possible-values'], $field->get_possible_values(), array(
-				'description' => $this->lang['admin.field.possible_values.email.explain'], 'readonly' => $field->is_readonly())
+				'description' => $this->lang['admin.field.possible_values.email.explain'], 'disabled' => $field->is_readonly())
 			));
 		}
 		else if ($field->get_field_name() == 'f_subject')
 		{
 			$fieldset->add_field(new ContactFormFieldObjectPossibleValues('possible_values', $this->lang['admin.field.possible-values'], $field->get_possible_values(), array(
-				'description' => $this->lang['admin.field.possible_values.recipient.explain'], 'readonly' => $field->is_readonly())
+				'description' => $this->lang['admin.field.possible_values.recipient.explain'], 'disabled' => $field->is_readonly())
 			));
 		}
 		else
