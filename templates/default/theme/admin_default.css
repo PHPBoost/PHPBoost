@@ -177,7 +177,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	-webkit-border-bottom-left-radius:0px;
 	-webkit-border-bottom-right-radius:0px;
 }
-.menus_block_container {
+.menus-block-container {
 	width:190px;
 	margin:0px;
 	margin-bottom:6px;
@@ -208,10 +208,10 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	width:16px;	
 }
 
-.menus_block_container:hover > div.menus_block_move_top { 
+.menus-block-container:hover > div.menus_block_move_top { 
 	background:url('../images/admin/move_top.png');
 }
-.menus_block_container:hover > div.menus_block_move_bot { 
+.menus-block-container:hover > div.menus_block_move_bot { 
 	background:url('../images/admin/move_bot.png');
 }
 
@@ -240,24 +240,24 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 }
 
 /* Container */
-#container_header,#container_subheader,#container_leftmenu,
-#container_rightmenu,#container_topcentral,#container_central,
-#container_bottomcentral,#container_topfooter,#container_footer {
+#container-header,#container-subheader,#container-leftmenu,
+#container-rightmenu,#container-topcentral,#container-central,
+#container-bottomcentral,#container-topfooter,#container-footer {
 	padding:5px; 
 	vertical-align:top;
 	padding-bottom:5px;
 }
-#container_header {
+#container-header {
 	padding-top:10px;
 }
-#container_central .menus_block_container {
+#container-central .menus-block-container {
 	margin:5px;
 	margin-top:0px;
 	float:left
 }
-#container_leftmenu {
+#container-leftmenu {
 	width:226px;
 }
-#container_rightmenu {
+#container-rightmenu {
 	width:226px;
 }

@@ -1,7 +1,96 @@
 /* --------------------------------------
 		global.css
  Contient les classes globales au site, peuvent être utilisées partout.
---------------------------------------*/ /* Classes générales
+--------------------------------------*/ 
+
+/* Mise en forme
+-------------------------------------------*/
+
+/* Taille police alternative */
+.smaller { font-size: 10px; }
+.small { font-size: 12px; }
+.big { font-size: 16px; }
+.bigger { font-size: 18px; }
+.biggest { font-size: 20px; }
+
+/* Titres */
+h1 { font-size:32px; }
+h2 { font-size:28px; }
+h3 { font-size:24px; }
+h4 { font-size:20px; }
+h5 { font-size:18px; }
+h6 { font-size:16px; }
+
+h2.title {
+	font-size:16px;
+	font-weight:bold;
+}
+
+h3.title {
+	font-size:12px;
+	font-weight:bold;
+	display:inline;
+}
+
+/* Sous-Titres */
+h5.sub-title { /* Titre des menu */
+	font-size:13px;
+	color:#515C68;
+}
+
+h6.sub-title2 { /* Sous titre dans les menu */
+	font-size:12px;
+	font-weight:bold;
+	padding-top:4px;
+	text-indent:10px;
+	width:155px;
+	height:32px;
+	color:#515C68;
+}
+
+/* BBCode */
+
+/* Titres */
+h3.title1, h3.title2 {
+	border-bottom:1px solid #366393;
+	font-weight:bold;
+	padding:0px 0px 0px 3px;
+	margin-bottom:15px;
+}
+	
+/* Titre 1 */
+h3.title1 {
+	font-size:2em;
+}
+
+/* Titre 2 */
+h3.title2 {
+	font-size:1.7em;
+	display:inline-block;
+	margin-left:20px;
+}
+
+/* Sous titres */
+/* Sous titre 1 */
+h4.stitle1 {
+	font-size:1.5em;
+	color:#366393;
+	margin:0px 0px 10px 40px;
+}
+
+/* Sous titre 2 */
+h4.stitle2 {
+	font-size:1.3em;
+	margin:0px 0px 10px 60px;
+}
+
+
+
+
+
+
+
+/* Classes générales
 --------------------------------------*/
 /* Case générale des tableaux du site*/
 .row1,.block_contents1 {
@@ -478,3 +567,49 @@ menu.dynamic-menu ul li.extend > a:after, menu.dynamic-menu ul li.extend > span:
     background:#e8edf3;
 	height:1px;
 }
+
+/* Erreurs
+--------------------------------------*/
+div.message-helper {
+	height:auto;
+	max-width:500px;
+	padding:10px;
+	margin:5px auto 15px auto;
+	line-height:20px;
+	border-width:1px;
+	border-style:solid;
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+}
+
+div.message-helper i[class^="icon-"] { 
+	display:block; 
+	float:left;
+	width:25px;
+	text-align:center;
+}
+div.message-helper i[class^="icon-"]:before { font-size: 2em; }
+
+div.message-helper-content{ padding:0px 5px 0px 35px; }
+
+.icon-error:before { content: "\f00d"; }
+.icon-notice:before { content: "\f12a"; }
+.icon-warning:before { content: "\f071"; }
+.icon-success:before { content: "\f00c"; }
+.icon-question:before { content: "\f128"; }
+
+.question { background-color:#DAEEF8; border-color:#BDE9F2; }
+.question, .icon-question:before { color:#3B88AE; }
+
+.notice { background-color:#F0F0F0; border-color:#E2E2E2; }
+.notice, .icon-notice:before { color:#888888; }
+
+.warning { background-color:#FDF9E4; border-color:#FBECCD; }
+.warning, .icon-warning:before { color:#C19954; }
+
+.error { background-color:#F3DFDF; border-color:#ECCDD2; }
+.error, .icon-error:before { color:#BA4B49; }
+
+.success { background-color:#E0F1D9; border-color:#D7EAC7; }
+.success, .icon-success:before { color:#478948; }
