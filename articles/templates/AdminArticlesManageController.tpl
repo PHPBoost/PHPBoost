@@ -43,7 +43,7 @@
 		# START articles #
 		<tr> 
 			<td class="text_left">
-				<a href="{articles.U_ARTICLE}">{articles.SHORT_TITLE}</a>
+				<a href="{articles.U_ARTICLE}">{articles.TITLE}</a>
 			</td>
 			<td> 
 				<a href="{articles.U_CATEGORY}">{articles.CATEGORY_NAME}</a>

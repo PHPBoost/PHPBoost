@@ -179,7 +179,6 @@ class CalendarEvent
 			'ID' => $this->id,
 			'CONTENT_ID' => $this->content->get_id(),
 			'TITLE' => $this->content->get_title(),
-			'SHORT_TITLE' => strlen($this->content->get_title()) > 45 ? TextHelper::substr_html($this->content->get_title(), 0, 45) . '...' : $this->content->get_title(),
 			'CONTENTS' => FormatingHelper::second_parse($this->content->get_contents()),
 			'LOCATION' => $this->content->get_location(),
 			'START_DATE' => $this->start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),

@@ -437,7 +437,6 @@ class Articles
 			
 			//Articles
 			'TITLE' => $this->get_title(),
-			'SHORT_TITLE' => strlen($this->get_title()) > 45 ? TextHelper::substr_html($this->content->get_title(), 0, 45) . '...' : $this->get_title(),
 			'DATE' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'DATE_ISO8601' => $this->get_date_created()->format(Date::FORMAT_ISO8601),
 			'PUBLISHING_START_DATE' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',

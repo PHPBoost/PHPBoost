@@ -44,7 +44,7 @@
 		# START event #
 		<tr> 
 			<td class="text_left">
-				<a href="{event.U_LINK}">{event.SHORT_TITLE}</a>
+				<a href="{event.U_LINK}">{event.TITLE}</a>
 			</td>
 			<td> 
 				<a href="{event.U_CATEGORY}"# IF event.CATEGORY_COLOR # style="color:{event.CATEGORY_COLOR}"# ENDIF #>{event.CATEGORY_NAME}</a>
