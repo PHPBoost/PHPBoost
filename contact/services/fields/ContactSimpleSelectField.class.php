@@ -30,8 +30,8 @@ class ContactSimpleSelectField extends AbstractContactField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'default_value'));
-		$this->set_name(LangLoader::get_message('field.type.simple-select', 'common', 'contact'));
+		$this->set_disable_fields_configuration(array('regex', 'default_value_small', 'default_value_medium'));
+		$this->set_name(LangLoader::get_message('type.simple-select', 'admin-user-common'));
 	}
 	
 	public function display_field(ContactField $field)

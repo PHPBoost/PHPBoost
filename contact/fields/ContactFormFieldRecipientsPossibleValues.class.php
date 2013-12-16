@@ -41,7 +41,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 	function display()
 	{
 		$template = $this->get_template_to_use();
-		$lang = LangLoader::get('common', 'contact');
+		$lang = LangLoader::get('admin-user-common');
 		
 		$tpl = new FileTemplate('contact/ContactFormFieldRecipientsPossibleValues.tpl');
 		$tpl->add_lang($lang);

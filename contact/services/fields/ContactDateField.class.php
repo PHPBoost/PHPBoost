@@ -30,16 +30,15 @@ class ContactDateField extends AbstractContactField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'possible_values'));
-		$this->set_name(LangLoader::get_message('field.type.date', 'common', 'contact'));
+		$this->set_disable_fields_configuration(array('regex', 'possible_values', 'default_value_small', 'default_value_medium'));
+		$this->set_name(LangLoader::get_message('type.date', 'admin-user-common'));
 	}
 	
 	public function display_field(ContactField $field)
 	{
 		$fieldset = $field->get_fieldset();
 		
-		$value = $field->get_default_value() ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $field->get_default_value()) : null;
-		$fieldset->add_field(new FormFieldDate($field->get_field_name(), $field->get_name(), $value, 
+		$fieldset->add_field(new FormFieldDate($field->get_field_name(), $field->get_name(), null, 
 			array('description' => $field->get_description(), 'required' =>(bool)$field->is_required())
 		));
 	}

@@ -30,8 +30,8 @@ class ContactShortTextField extends AbstractContactField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('possible_values'));
-		$this->set_name(LangLoader::get_message('field.type.short-text', 'common', 'contact'));
+		$this->set_disable_fields_configuration(array('possible_values', 'default_value_medium'));
+		$this->set_name(LangLoader::get_message('type.short-text', 'admin-user-common'));
 	}
 	
 	public function display_field(ContactField $field)
