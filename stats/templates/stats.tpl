@@ -127,17 +127,19 @@
 					<td>
 						<table>						
 							<tbody>
-								<tr>
-									<td>			
-										{L_TEMPLATES} 
-									</td>
-									<td>			
-										{L_COLORS}
-									</td>
-									<td>
-										{L_USERS}
-									</td>				
-								</tr>						
+								<thead>
+									<tr>
+										<th>			
+											{L_TEMPLATES} 
+										</th>
+										<th>			
+											{L_COLORS}
+										</th>
+										<th>
+											{L_USERS}
+										</th>				
+									</tr>	
+								</thead>
 								# START templates #	
 								<tr>
 									<td>			
@@ -176,17 +178,19 @@
 					<td>
 						<table>						
 							<tbody>
-								<tr>
-									<td>			
-										{L_SEX} 
-									</td>
-									<td>			
-										{L_COLORS}
-									</td>
-									<td>
-										{L_USERS}
-									</td>				
-								</tr>						
+								<thead>
+									<tr>
+										<th>			
+											{L_SEX} 
+										</th>
+										<th>			
+											{L_COLORS}
+										</th>
+										<th>
+											{L_USERS}
+										</th>				
+									</tr>
+								</thead>
 								# START sex #	
 								<tr>
 									<td>			
