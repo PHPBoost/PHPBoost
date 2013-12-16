@@ -57,12 +57,12 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$this->tpl = new StringTemplate('<script type="text/javascript">
+		$this->tpl = new StringTemplate('# INCLUDE MSG #
+				# INCLUDE FORM #
+				<script type="text/javascript">
 				Event.observe(window, \'load\', function() {
 				'.$this->get_events_select_type().'});
-				</script>
-				# INCLUDE MSG #
-				# INCLUDE FORM #');
+				</script>');
 				
 		$this->tpl->add_lang($this->lang);
 		$extended_field_cache = ExtendedFieldsCache::load()->get_extended_field($id);
@@ -140,26 +140,24 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['regex.personnal-regex'], $regex, array(
 			'class' => 'text', 'maxlength' => 25)
 		));
-		$required = $extended_field_cache['required'] ? (string)$extended_field_cache['required'] : '0';
-		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->lang['field.required'], $required,
+		
+		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->lang['field.required'], (int)$extended_field_cache['required'],
 			array(
-				new FormFieldRadioChoiceOption($this->lang['field.yes'], '1'),
-				new FormFieldRadioChoiceOption($this->lang['field.no'], '0')
+				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1),
+				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0)
 			), array('description' => $this->lang['field.required_explain'])
 		));
-
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('possible_values', $this->lang['field.possible-values'], $extended_field_cache['possible_values'], array(
-			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => $this->lang['field.possible-values-explain'])
+		
+		$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['field.possible-values'], $extended_field_cache['possible_values']));
+		
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value', $this->lang['field.default-value'], $extended_field_cache['default_value'], array(
+			'class' => 'text', 'width' => 60, 'rows' => 4)
 		));
 		
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_values', $this->lang['field.default-values'], $extended_field_cache['default_values'], array(
-			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => $this->lang['field.default-values-explain'])
-		));
-		$display = $extended_field_cache['display'] ? (string)$extended_field_cache['display'] : '0';
-		$fieldset->add_field(new FormFieldRadioChoice('display', LangLoader::get_message('display', 'main'), $display,
+		$fieldset->add_field(new FormFieldRadioChoice('display', $this->lang['field.display'], (int)$extended_field_cache['display'],
 			array(
-				new FormFieldRadioChoiceOption($this->lang['field.yes'], '1'),
-				new FormFieldRadioChoiceOption($this->lang['field.no'], '0')
+				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1),
+				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0)
 			)
 		));
 		
@@ -197,8 +195,15 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$extended_field->set_name(TextHelper::htmlspecialchars($this->form->get_value('name')));
 		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "", __LINE__, __FILE__));
 		$extended_field->set_description(TextHelper::htmlspecialchars($this->form->get_value('description', $extended_field->get_description())));
-		$extended_field->set_possible_values(TextHelper::htmlspecialchars($this->form->get_value('possible_values', $extended_field->get_possible_values())));
-		$extended_field->set_default_values(TextHelper::htmlspecialchars($this->form->get_value('default_values', $extended_field->get_default_values())));
+		
+		if (!$this->form->field_is_disabled('possible_values'))
+		{
+			$extended_field->set_possible_values($this->form->get_value('possible_values'));
+		}
+		
+		if (!$this->form->field_is_disabled('default_value'))
+			$extended_field->set_default_value($this->form->get_value('default_value'));
+		
 		$extended_field->set_is_required((bool)$this->form->get_value('field_required')->get_raw_value());
 		$extended_field->set_display((bool)$this->form->get_value('display')->get_raw_value());
 		$regex = 0;
@@ -282,7 +287,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			'name' => array(), 
 			'description' => array(), 
 			'possible_values' => array(), 
-			'default_values' => array(), 
+			'default_value' => array(), 
 			'regex' => array(), 
 			'authorizations' => array()
 		);

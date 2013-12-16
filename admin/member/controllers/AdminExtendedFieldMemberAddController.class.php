@@ -44,17 +44,17 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$this->init();
 		$this->build_form();
 
-		$this->tpl = new StringTemplate('<script type="text/javascript">
+		$this->tpl = new StringTemplate('
+				# INCLUDE MSG #
+				# INCLUDE FORM #
+				<script type="text/javascript">
 				<!--
 					Event.observe(window, \'load\', function() {
 						'. $this->get_events_select_type() .'
 					});
-				-->		
-				</script>
-				# INCLUDE MSG #
-				# INCLUDE FORM #');
+				-->
+				</script>');
 		$this->tpl->add_lang($this->lang);
-
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -123,25 +123,23 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			'class' => 'text', 'maxlength' => 25)
 		));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->lang['field.required'], '1',
+		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->lang['field.required'], 1,
 			array(
-				new FormFieldRadioChoiceOption($this->lang['field.yes'], '1'),
-				new FormFieldRadioChoiceOption($this->lang['field.no'], '0')
+				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1),
+				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0)
 			), array('description' => $this->lang['field.required_explain'])
 		));
 
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('possible_values', $this->lang['field.possible-values'], '', array(
-			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => $this->lang['field.possible-values-explain'])
-		));
+		$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['field.possible-values'], array()));
 		
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_values', $this->lang['field.default-values'], '', array(
-			'class' => 'text', 'width' => 60, 'rows' => 4,'description' => $this->lang['field.default-values-explain'])
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value', $this->lang['field.default-value'], '', array(
+			'class' => 'text', 'width' => 60, 'rows' => 4)
 		));
 
-		$fieldset->add_field(new FormFieldRadioChoice('display', LangLoader::get_message('display', 'main'), '1',
+		$fieldset->add_field(new FormFieldRadioChoice('display', $this->lang['field.display'], 1,
 			array(
-				new FormFieldRadioChoiceOption($this->lang['field.yes'], '1'),
-				new FormFieldRadioChoiceOption($this->lang['field.no'], '0')
+				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1),
+				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0)
 			)
 		));
 
@@ -166,8 +164,15 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$extended_field->set_description(TextHelper::htmlspecialchars($this->form->get_value('description')));
 		$field_type = $this->form->get_value('field_type')->get_raw_value();
 		$extended_field->set_field_type($field_type);
-		$extended_field->set_possible_values(TextHelper::htmlspecialchars($this->form->get_value('possible_values', '')));
-		$extended_field->set_default_values(TextHelper::htmlspecialchars($this->form->get_value('default_values', '')));
+		
+		if (!$this->form->field_is_disabled('possible_values'))
+		{
+			$extended_field->set_possible_values($this->form->get_value('possible_values'));
+		}
+		
+		if (!$this->form->field_is_disabled('default_value'))
+			$extended_field->set_default_value($this->form->get_value('default_value'));
+		
 		$extended_field->set_is_required((bool)$this->form->get_value('field_required')->get_raw_value());
 		$extended_field->set_display((bool)$this->form->get_value('display')->get_raw_value());
 		$regex = 0;
@@ -252,7 +257,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			'name' => array(), 
 			'description' => array(), 
 			'possible_values' => array(), 
-			'default_values' => array(), 
+			'default_value' => array(), 
 			'regex' => array(), 
 			'authorizations' => array()
 		);

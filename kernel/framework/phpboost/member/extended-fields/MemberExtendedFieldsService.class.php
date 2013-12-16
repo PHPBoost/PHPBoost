@@ -75,7 +75,7 @@ class MemberExtendedFieldsService
 				$member_extended_field->set_fieldset($fieldset);
 
 				$nbr_field = 0;
-				$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.field_name, exc.default_values, exc.auth, exc.field_type, ex.*
+				$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.field_name, exc.default_value, exc.auth, exc.field_type, ex.*
 				FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
 				LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = '" . $user_id . "'
 				WHERE exc.display = 1
@@ -85,7 +85,7 @@ class MemberExtendedFieldsService
 					$member_extended_field->set_name($extended_field['name']);
 					$member_extended_field->set_field_name($extended_field['field_name']);
 					$member_extended_field->set_field_type($extended_field['field_type']);
-					$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_values'];
+					$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_value'];
 					$member_extended_field->set_value($value);
 					
 					$authorizations = unserialize($extended_field['auth']);
@@ -153,7 +153,7 @@ class MemberExtendedFieldsService
 	 */
 	private static function display_create_form(MemberExtendedField $member_extended_field)
 	{
-		$extended_fields_cache = ExtendedFieldsCache::load()->get_extended_fields();	
+		$extended_fields_cache = ExtendedFieldsCache::load()->get_extended_fields();
 		foreach ($extended_fields_cache as $id => $extended_field)
 		{
 			if ($extended_field['display'] == 1)
@@ -163,7 +163,7 @@ class MemberExtendedFieldsService
 				$member_extended_field->set_description($extended_field['description']);
 				$member_extended_field->set_field_type($extended_field['field_type']);
 				$member_extended_field->set_possible_values($extended_field['possible_values']);
-				$member_extended_field->set_default_values($extended_field['default_values']);
+				$member_extended_field->set_default_value($extended_field['default_value']);
 				$member_extended_field->set_required($extended_field['required']);
 				$member_extended_field->set_regex($extended_field['regex']);
 				
@@ -183,7 +183,7 @@ class MemberExtendedFieldsService
 	private static function display_update_form(MemberExtendedField $member_extended_field)
 	{
 		$user_id = $member_extended_field->get_user_id();
-		$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_values, exc.auth, exc.regex, ex.*
+		$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
 		FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = '" . $user_id . "'
 		WHERE exc.display = 1
@@ -191,14 +191,14 @@ class MemberExtendedFieldsService
 		while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))
 		{
 			$member_extended_field->set_field_type($extended_field['field_type']);
-			$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_values'];
+			$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_value'];
 			
 			$member_extended_field->set_name($extended_field['name']);
 			$member_extended_field->set_field_name($extended_field['field_name']);
 			$member_extended_field->set_description($extended_field['description']);
 			$member_extended_field->set_value($value);
-			$member_extended_field->set_possible_values($extended_field['possible_values']);
-			$member_extended_field->set_default_values($extended_field['default_values']);
+			$member_extended_field->set_possible_values(unserialize($extended_field['possible_values']));
+			$member_extended_field->set_default_value($extended_field['default_value']);
 			$required = $member_extended_field->get_is_admin() ? 0 : $extended_field['required'];
 			$member_extended_field->set_required($required);
 			$member_extended_field->set_regex($extended_field['regex']);

@@ -44,6 +44,7 @@ class ExtendedFieldsCache implements CacheData
 		while ($row = $result->fetch())
 		{
 			$auth = unserialize($row['auth']);
+			$possible_values = unserialize($row['possible_values']);
 			
 			$this->extended_fields[$row['id']] = array(
 				'id' => $row['id'],
@@ -52,8 +53,8 @@ class ExtendedFieldsCache implements CacheData
 				'field_name' => !empty($row['field_name']) ? $row['field_name'] : '',
 				'description' => !empty($row['description']) ? $row['description'] : '',
 				'field_type' => !empty($row['field_type']) ? $row['field_type'] : '',
-				'possible_values' => !empty($row['possible_values']) ? $row['possible_values'] : '',
-				'default_values' => !empty($row['default_values']) ? $row['default_values'] : '',
+				'possible_values' => !empty($possible_values) ? $possible_values : array(),
+				'default_value' => !empty($row['default_value']) ? $row['default_value'] : '',
 				'required' => !empty($row['required']) ? (bool)$row['required'] : false,
 				'display' => !empty($row['display']) ? (bool)$row['display'] : false,
 				'freeze' => !empty($row['freeze']) ? (bool)$row['freeze'] : false,

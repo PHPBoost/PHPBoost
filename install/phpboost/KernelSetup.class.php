@@ -408,7 +408,7 @@ class KernelSetup
 			'description' => array('type' => 'text', 'length' => 65000),
 			'field_type' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'possible_values' => array('type' => 'text', 'length' => 65000),
-			'default_values' => array('type' => 'text', 'length' => 65000),
+			'default_value' => array('type' => 'text', 'length' => 65000),
 			'required' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'display' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'regex' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),

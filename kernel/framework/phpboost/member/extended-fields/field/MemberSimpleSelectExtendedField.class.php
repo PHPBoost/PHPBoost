@@ -30,7 +30,7 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex'));
+		$this->set_disable_fields_configuration(array('regex', 'default_value'));
 		$this->set_name(LangLoader::get_message('type.simple-select','admin-user-common'));
 	}
 	
@@ -38,42 +38,52 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$field = array();
-		$array_values = $this->possible_values($member_extended_field);
+		$options = array();
 		$i = 0;
 		$default = '';
-		foreach ($array_values as $values)
+		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
-			$field[] = new FormFieldSelectChoiceOption($values, $member_extended_field->get_field_name() . '_' . $i);
-			if ($values == $member_extended_field->get_default_values())
+			$options[] = new FormFieldSelectChoiceOption(stripslashes($parameters['title']), $name);
+			if ($parameters['is_default'])
 			{
-				$default = $member_extended_field->get_field_name() . '_' . $i;
+				$default = $name;
 			}
 			$i++;
 		}
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $field, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
+		if (empty($default))
+		{
+			$options = array_merge(array(new FormFieldSelectChoiceOption('', '')), $options);
+			$default = '';
+		}
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $options, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$field = array();
-		$array_values = $this->possible_values($member_extended_field);
+		$options = array();
 		$i = 0;
 		$default = '';
-		foreach ($array_values as $values)
+		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
-			$field[] = new FormFieldSelectChoiceOption($values, $member_extended_field->get_field_name() . '_' . $i);
-			if ($values == $member_extended_field->get_value())
+			$options[] = new FormFieldSelectChoiceOption(stripslashes($parameters['title']), $name);
+			if ($parameters['is_default'])
 			{
-				$default = $member_extended_field->get_field_name() . '_' . $i;
+				$default = $name;
 			}
 			$i++;
 		}
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $field, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
+		if (empty($default))
+		{
+			$options = array_merge(array(new FormFieldSelectChoiceOption('', '')), $options);
+			$default = '';
+		}
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $options, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
@@ -88,11 +98,6 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 		}
 		
 		return '';
-	}
-	
-	private function possible_values(MemberExtendedField $member_extended_field)
-	{
-		return explode('|', $member_extended_field->get_possible_values());
 	}
 }
 ?>

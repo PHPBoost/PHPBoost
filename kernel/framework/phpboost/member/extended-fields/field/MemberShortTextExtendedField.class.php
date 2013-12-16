@@ -30,7 +30,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{	
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('possible_values', 'default_values'));
+		$this->set_disable_fields_configuration(array('possible_values'));
 		$this->set_name(LangLoader::get_message('type.short-text','admin-user-common'));
 	}
 	
@@ -38,7 +38,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$fieldset->add_field(new FormFieldTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_values(), array(
+		$fieldset->add_field(new FormFieldTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_value(), array(
 			'class' => 'text', 'required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description()),
 			array($this->constraint($member_extended_field->get_regex()))
 		));
