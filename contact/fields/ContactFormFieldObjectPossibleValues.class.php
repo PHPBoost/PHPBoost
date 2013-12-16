@@ -64,31 +64,28 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 		}
 		
 		$i = 0;
-		$subjects = array();
 		foreach ($this->get_value() as $name => $options)
 		{
-			$recipients = array();
-			foreach ($fields[$recipients_field_id]->get_possible_values() as $id => $recipient_options)
-			{
-				if (!empty($recipient_options))
-				{
-					$recipients[] = array(
-						'C_RECIPIENT_SELECTED' => $options['recipient'] == $id,
-						'ID' => $id,
-						'NAME' => stripslashes($recipient_options['title'])
-					);
-				}
-			}
+			
 			if (!empty($options))
 			{
-				$subjects[] = array(
+				$tpl->assign_block_vars('fieldelements', array(
 					'ID' => $i,
 					'NAME' => stripslashes($options['title']),
-					'IS_DEFAULT' => (int) $options['is_default'],
-					'recipients_list' => $recipients
-				);
+					'IS_DEFAULT' => (int) $options['is_default']
+				));
+				foreach ($fields[$recipients_field_id]->get_possible_values() as $id => $recipient_options)
+				{
+					if (!empty($recipient_options))
+					{
+						$tpl->assign_block_vars('fieldelements.recipients_list', array(
+							'C_RECIPIENT_SELECTED' => $options['recipient'] == $id,
+							'ID' => $id,
+							'NAME' => stripslashes($recipient_options['title'])
+						));
+					}
+				}
 			}
-			$tpl->put('fieldelements', $subjects);
 			
 			$i++;
 		}
@@ -100,6 +97,16 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 				'NAME' => '',
 				'IS_DEFAULT' => 0,
 			));
+			foreach ($fields[$recipients_field_id]->get_possible_values() as $id => $options)
+			{
+				if (!empty($options))
+				{
+					$tpl->assign_block_vars('fieldelements.recipients_list', array(
+						'ID' => $id,
+						'NAME' => stripslashes($options['title'])
+					));
+				}
+			}
 			$i++;
 		}
 		
