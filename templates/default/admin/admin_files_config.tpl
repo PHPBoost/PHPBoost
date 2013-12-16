@@ -60,7 +60,7 @@
 					<div class="form-element"> 
 						<label>* {L_AUTH_EXTENSIONS}</label>
 						<div class="form-field">
-							<select id="auth_extensions" name="auth_extensions[]" size="25" multiple="multiple">
+							<select id="auth_extensions" name="auth_extensions[]" size="12" multiple="multiple">
 								{AUTH_EXTENSIONS}
 							</select>	
 							<br />

@@ -85,8 +85,7 @@ class FileUploadConfig extends AbstractConfigData
 				'jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico', 'rar', 'zip', 
 				'gz', 'txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods',
 				'odg', 'odc', 'odf', 'odb', 'xcf','flv', 'mp3','ogg', 'mpg', 'mov',
-				'swf', 'wav', 'wmv', 'midi', 'mng',	'qt', 'c', 'h',  'cpp', 'java', 
-				'py', 'css', 'html', 'xml', 'ttf', 	'tex', 'rtf', 'psd'		
+				'swf', 'wav', 'wmv', 'midi', 'mng',	'qt', 'ttf', 'tex', 'rtf', 'psd'		
 			)			
 		);
 	}
