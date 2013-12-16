@@ -36,8 +36,8 @@ $template = new FileTemplate('admin/admin_phpinfo.tpl');
 phpinfo();
 $phpinfo = ob_get_contents();
 $phpinfo = preg_replace('`^.*<body>`is', '', $phpinfo);
-$phpinfo = str_replace(array('class="e"', 'class="v"', 'class="h"', '<i>', '</i>', '<hr />', '<img border="0"', '<table border="0" cellpadding="3" width="600">', '</body></html>'), 
-array('class="row1"', 'class="row2"', 'class="row3"', '<em class="em">', '</em>', '', '<img style="float:right;"', '<table class="module-table">', ''), $phpinfo);
+$phpinfo = str_replace(array('class="e"', 'class="v"', '<tr class="h">', '</tbody><tbody>', '<i>', '</i>', '<hr />', '<img border="0"', '<table border="0" cellpadding="3" width="600">', '</body></html>'), 
+array('', 'style="overflow:auto;"', '<thead><tr>', '</thead><tbody>', '<em class="em">', '</em>', '', '<img style="float:right;"', '<table style="table-layout:fixed;">', ''), $phpinfo);
 ob_end_clean();
 
 ob_start();
