@@ -51,101 +51,109 @@
 			<br />
 				
 			<form action="{TARGET}" method="post">
-				<table class="module-table" id="tables">
-					<tr>
-						<th colspan="7" style="text-align:center;">
-							{L_TABLE_LIST}
-						</th>
-					</tr>
-					<tr style="text-align:center;">			
-						<td class="row3" style="width:140px;">
-							{L_SELECTED_TABLES} <br />(<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL})
-						</td>
-						<td class="row2">
-							{L_TABLE_NAME}
-						</td>
-						<td class="row2" style="width:70px;">
-							{L_TABLE_ROWS}
-						</td>
-						<td class="row2" style="width:100px;">
-							{L_TABLE_ENGINE}
-						</td>
-						<td class="row2" style="width:150px;">
-							{L_TABLE_COLLATION}
-						</td>
-						<td class="row2" style="width:70px;">
-							{L_TABLE_DATA}
-						</td>
-						<td class="row2" style="width:70px;">
-							{L_TABLE_FREE}
-						</td>
-					</tr>
-					# START table_list #
-					<tr>			
-						<td class="row2" style="text-align:center;">
-							<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}">
-						</td>
-						<td class="row2">
-							<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME}</a>
-						</td>			
-						<td class="row2" style="text-align:right;">
-							{table_list.TABLE_ROWS}
-						</td>
-						<td class="row2" style="text-align:center;">
-							{table_list.TABLE_ENGINE}
-						</td>
-						<td class="row2" style="text-align:center;">
-							{table_list.TABLE_COLLATION}
-						</td>
-						<td class="row2" style="text-align:right;">
-							{table_list.TABLE_DATA}
-						</td>
-						<td class="row2" style="text-align:right;">
-							{table_list.TABLE_FREE}
-						</td>
-					</tr>
-					# END table_list #
-					<tr style="text-align:center;"> 
-						<td class="row3">
-							( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL})
-						</td>
-						<td class="row3">
-							<strong>{NBR_TABLES}</strong>
-						</td>
-						<td class="row3" style="text-align:right;">
-							<strong>{NBR_ROWS}</strong>
-						</td>
-						<td class="row3">
-							--
-						</td>
-						<td class="row3">
-							--
-						</td>
-						<td class="row3" style="text-align:right;">
-							<strong>{NBR_DATA}</strong>
-						</td>
-						<td class="row3" style="text-align:right;">
-							<strong>{NBR_FREE}</strong>
-						</td>
-					</tr>
+				<table id="tables">
+					<thead>
+						<tr class="center">
+							<th colspan="7">
+								{L_TABLE_LIST}
+							</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr class="center"> 
+							<td>
+								( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL})
+							</td>
+							<td>
+								<strong>{NBR_TABLES}</strong>
+							</td>
+							<td style="text-align:right;">
+								<strong>{NBR_ROWS}</strong>
+							</td>
+							<td>
+								--
+							</td>
+							<td>
+								--
+							</td>
+							<td style="text-align:right;">
+								<strong>{NBR_DATA}</strong>
+							</td>
+							<td style="text-align:right;">
+								<strong>{NBR_FREE}</strong>
+							</td>
+						</tr>
+					</tfoot>
+					<tbody>
+						<tr class="center">
+							<td style="width:140px;">
+								<span class="text-strong">{L_SELECTED_TABLES} <br />(<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL})</span>
+							</td>
+							<td>
+								<span class="text-strong">{L_TABLE_NAME}</span>
+							</td>
+							<td style="width:70px;">
+								<span class="text-strong">{L_TABLE_ROWS}</span>
+							</td>
+							<td style="width:100px;">
+								<span class="text-strong">{L_TABLE_ENGINE}</span>
+							</td>
+							<td style="width:150px;">
+								<span class="text-strong">{L_TABLE_COLLATION}</span>
+							</td>
+							<td style="width:70px;">
+								<span class="text-strong">{L_TABLE_DATA}</span>
+							</td>
+							<td style="width:70px;">
+								<span class="text-strong">{L_TABLE_FREE}</span>
+							</td>
+						</tr>
+						# START table_list #
+						<tr class="center">
+							<td>
+								<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}">
+							</td>
+							<td>
+								<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME}</a>
+							</td>
+							<td style="text-align:right;">
+								{table_list.TABLE_ROWS}
+							</td>
+							<td>
+								{table_list.TABLE_ENGINE}
+							</td>
+							<td>
+								{table_list.TABLE_COLLATION}
+							</td>
+							<td style="text-align:right;">
+								{table_list.TABLE_DATA}
+							</td>
+							<td style="text-align:right;">
+								{table_list.TABLE_FREE}
+							</td>
+						</tr>
+						# END table_list #
+					</tbody>
 				</table>
-							
+				
 				<div class="block_container">
 					<div class="block_top text_center">
 						{ACTION_FOR_SELECTION}
 					</div>
 					<div class="block_contents1 text_center">
 						<table style="margin:auto;">
-							<tr>
-								<td><img src="./database.png" alt="optimize" /></td>
-								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="repair" /></td>
-								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="optimize" class="valign-middle" /></td>
-							</tr>
-							<tr>
-								<td><button type="submit" name="optimize" value="true">{L_OPTIMIZE}</button></td>
-								<td>&nbsp;&nbsp;<button type="submit" name="repair" value="true">{L_REPAIR}</button></td>
-								<td>&nbsp;&nbsp;<button type="submit" name="backup" value="true">{L_BACKUP}</button></td>
-							</tr>
+							<tbody>
+								<tr>
+									<td><img src="./database.png" alt="optimize" /></td>
+									<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="repair" /></td>
+									<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="optimize" class="valign-middle" /></td>
+								</tr>
+								<tr>
+									<td><button type="submit" name="optimize" value="true">{L_OPTIMIZE}</button></td>
+									<td>&nbsp;&nbsp;<button type="submit" name="repair" value="true">{L_REPAIR}</button></td>
+									<td>&nbsp;&nbsp;<button type="submit" name="backup" value="true">{L_BACKUP}</button></td>
+								</tr>
+							</tbody>
 						</table>
 					</div>
 				</div>
@@ -167,14 +175,7 @@
 			
 			# IF C_DATABASE_BACKUP #
 			# IF TABLE_NAME #
-			<script type="text/javascript">
-			<!--
-			function Confirm_truncate_table() {
-				return confirm("{L_CONFIRM_TRUNCATE_TABLE}");
-			}
-			-->	
-			</script>
-			<div style="width:95%;margin:auto;">	
+			<div style="width:95%;margin:auto;">
 				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px;">
 					- <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> - <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
@@ -196,7 +197,7 @@
 							<a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache_mini.png"/> {L_BACKUP}</a>
 						</li>
 						<li>
-							<a onclick="javascript:return Confirm_truncate_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/trash_mini.png"/> {L_TRUNCATE}</a>
+							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/trash_mini.png"/> {L_TRUNCATE}</a>
 						</li>
 						<li>
 							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp" data-confirmation="delete-element"><i class="icon-delete"></i> {L_DELETE}</a>
@@ -222,35 +223,39 @@
 					-->
 				</script>
 				
-				<table class="module-table" style="padding:0;margin-top:11px;">
-					<tr>
-						<th colspan="2" style="text-align:center;">
-							{L_BACKUP_DATABASE}
-						</th>
-					</tr>
-					<tr>
-						<td class="row1" style="text-align:center;">
-							{L_SELECTION}
-							<br /><br />
-							<select name="table_list[]" size="8" multiple="multiple">
-							# START table_list #
-								<option value="{table_list.NAME}" name="table_{table_list.NAME}" id="{table_list.I}" {table_list.SELECTED}>{table_list.NAME}</option>
-							# END table_list #
-							</select>
-							<br /><br />
-							<a class="small" href="javascript:check_select_multiple(true);">{SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple(false);">{SELECT_NONE}</a>
-						</td>
-						<td class="row1" style="text-align:center;">
-							{L_EXPLAIN_BACKUP}
-							<br /><br />
-							<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="backup" /><br />
-							<label><input type="radio" name="backup_type" checked="checked" value="all"/> {L_BACKUP_ALL}</label>
-							<label><input type="radio" name="backup_type" value="struct"> {L_BACKUP_STRUCT}</label>
-							<label><input type="radio" name="backup_type" value="data"/> {L_BACKUP_DATA}</label>
-							<br /><br />
-							<button type="submit" name="" value="true">{L_BACKUP}</button>
-						</td>
-					</tr>
+				<table>
+					<thead>
+						<tr>
+							<th colspan="2" style="text-align:center;">
+								{L_BACKUP_DATABASE}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="center">
+							<td>
+								{L_SELECTION}
+								<br /><br />
+								<select name="table_list[]" size="8" multiple="multiple">
+								# START table_list #
+									<option value="{table_list.NAME}" name="table_{table_list.NAME}" id="{table_list.I}" {table_list.SELECTED}>{table_list.NAME}</option>
+								# END table_list #
+								</select>
+								<br /><br />
+								<a class="small" href="javascript:check_select_multiple(true);">{SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple(false);">{SELECT_NONE}</a>
+							</td>
+							<td>
+								{L_EXPLAIN_BACKUP}
+								<br /><br />
+								<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="backup" /><br />
+								<label><input type="radio" name="backup_type" checked="checked" value="all"/> {L_BACKUP_ALL}</label>
+								<label><input type="radio" name="backup_type" value="struct"> {L_BACKUP_STRUCT}</label>
+								<label><input type="radio" name="backup_type" value="data"/> {L_BACKUP_DATA}</label>
+								<br /><br />
+								<button type="submit" name="" value="true">{L_BACKUP}</button>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</form>
 			# ENDIF #
@@ -325,16 +330,18 @@
 						</fieldset>
 						
 						<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
-							<table class="module-table">
-								# START line #
-								<tr>
-									# START line.field #
-									<td class="{line.field.CLASS}" style="{line.field.STYLE}">
-										{line.field.FIELD}
-									</td>
-									# END line.field #
-								</tr>
-								# END line #
+							<table>
+								<tbody>
+									# START line #
+									<tr>
+										# START line.field #
+										<td class="{line.field.CLASS}" style="{line.field.STYLE}">
+											{line.field.FIELD}
+										</td>
+										# END line.field #
+									</tr>
+									# END line #
+								</tbody>
 							</table>
 						</div>
 					</div>
@@ -342,50 +349,53 @@
 				# ENDIF #
 			# ENDIF #
 
-			
 			# IF C_DATABASE_FILES #
-				<table class="module-table">
-					<tr> 
-						<th colspan="4">
-							{L_LIST_FILES}
-						</th>
-					</tr>
-					# INCLUDE message_helper #
-					<tr>
-						<td class="row1" colspan="4" style="text-align:center;">
-							{L_INFO}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1" style="padding-left:20px;">
-							{L_NAME}
-						</td>
-						<td class="row1" style="text-align:center;width:120px;">
-							{L_WEIGHT}
-						</td>
-						<td class="row1" style="text-align:center;width:140px;">
-							{L_DATE}
-						</td>
-						<td class="row1" style="text-align:center;width:120px;">
-							{L_DELETE}
-						</td>
-					</tr>
-					# START file #
-					<tr>
-						<td class="row2" style="padding-left:20px;">
-							<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');"><img src="./database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');">{file.FILE_NAME}</a>
-						</td>
-						<td class="row2" style="text-align:center;width:120px;">
-							{file.WEIGHT}
-						</td>
-						<td class="row2" style="text-align:center;width:120px;">
-							{file.FILE_DATE}
-						</td>
-						<td class="row2" style="text-align:center;width:120px;">
-							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>
-						</td>
-					</tr>
-					# END file #
+				<table>
+					<thead>
+						<tr> 
+							<th colspan="4">
+								{L_LIST_FILES}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="center">
+							<td style="text-align:left;padding-left:20px;">
+								<span class="text-strong">{L_NAME}</span>
+							</td>
+							<td style="width:120px;">
+								<span class="text-strong">{L_WEIGHT}</span>
+							</td>
+							<td style="width:140px;">
+								<span class="text-strong">{L_DATE}</span>
+							</td>
+							<td style="width:120px;">
+								<span class="text-strong">{L_DELETE}</span>
+							</td>
+						</tr>
+						# START file #
+						<tr class="center">
+							<td style="text-align:left;padding-left:20px;">
+								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');"><img src="./database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');">{file.FILE_NAME}</a>
+							</td>
+							<td style="width:120px;">
+								{file.WEIGHT}
+							</td>
+							<td style="width:120px;">
+								{file.FILE_DATE}
+							</td>
+							<td style="width:120px;">
+								<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>
+							</td>
+						</tr>
+						# END file #
+						<tr class="center">
+							<td colspan="4">
+								# INCLUDE message_helper #
+								{L_INFO}
+							</td>
+						</tr>
+					</tbody>
 				</table>
 
 			# ENDIF #
