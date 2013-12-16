@@ -1,4 +1,4 @@
-<table class="module-table">
+<table>
 	<thead>
 		<tr>
 			<th style="width: 180px;">{L_MENU_CONFIGURATION_NAME}</th>
@@ -9,13 +9,13 @@
 	<tbody>
 		# START menu_configuration #
 		<tr>
-			<td class="row1"><a href="{menu_configuration.U_CONFIGURE}"
-				title="{EL_MENU_CONFIGURATION_CONFIGURE}">
-			{menu_configuration.E_NAME}</a></td>
-			<td class="row2">{menu_configuration.E_MATCH_REGEX}</td>
-			<td class="row2" style="text-align: center;"><a
-				href="{menu_configuration.U_EDIT}"
-				title="{L_MENU_CONFIGURATION_EDIT}" class="icon-edit"></a></td>
+			<td>
+				<a href="{menu_configuration.U_CONFIGURE}" title="{EL_MENU_CONFIGURATION_CONFIGURE}">{menu_configuration.E_NAME}</a>
+			</td>
+			<td>{menu_configuration.E_MATCH_REGEX}</td>
+			<td class="center">
+				<a href="{menu_configuration.U_EDIT}" title="{L_MENU_CONFIGURATION_EDIT}" class="icon-edit"></a>
+			</td>
 		</tr>
 		# END menu_configuration #
 	</tbody>
