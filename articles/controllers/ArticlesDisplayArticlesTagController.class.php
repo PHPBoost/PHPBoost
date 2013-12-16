@@ -174,7 +174,6 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['articles.sort_filter_title']));
 		$form->add_fieldset($fieldset);
 		
-		// TODO Fais attention, tu dois rediriger vers les articles en attente pour le tri et pas l'affichage d'une catégorie
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, array(
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.title'], 'title'),
@@ -183,7 +182,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author')
 			),
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_pending_articles()->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -191,7 +190,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
 			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_pending_articles()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$this->view->put('FORM', $form->display());
