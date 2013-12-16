@@ -51,7 +51,7 @@
 				<fieldset>
 					<legend>{L_POLL_CONFIG_MINI}</legend>
 					<div class="form-element">
-						<label for="displayed_in_mini_module_list">{L_DISPLAYED_IN_MINI_MODULE_LIST}</label><br /><span>{L_DISPLAYED_IN_MINI_MODULE_LIST_EXPLAIN}</span>
+						<label for="displayed_in_mini_module_list">{L_DISPLAYED_IN_MINI_MODULE_LIST} <span class="field-description">{L_DISPLAYED_IN_MINI_MODULE_LIST_EXPLAIN}</span></label>
 						<div class="form-field"><label>
 							<select id="displayed_in_mini_module_list" name="displayed_in_mini_module_list[]" size="5" multiple="multiple">
 								{POLL_LIST}				
@@ -65,11 +65,11 @@
 					<legend>{L_POLL_CONFIG_ADVANCED}</legend>
 					<div class="form-element">
 						<label for="cookie_name">* {L_COOKIE_NAME}</label>
-						<div class="form-field"><label><input type="text" maxlength="25" size="25" name="cookie_name" id="cookie_name" value="{COOKIE_NAME}"></label></div>
+						<div class="form-field"><input type="text" maxlength="25" size="25" name="cookie_name" id="cookie_name" value="{COOKIE_NAME}"></div>
 					</div>
 					<div class="form-element">
 						<label for="cookie_lenght">* {L_COOKIE_LENGHT}</label>
-						<div class="form-field"><label><input type="text" maxlength="11" size="6" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}"></label> {L_DAYS}</div>
+						<div class="form-field"><input type="text" maxlength="11" size="6" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}"> {L_DAYS}</div>
 					</div>
 				</fieldset>
 				<fieldset>
@@ -77,21 +77,17 @@
 						{L_AUTHORIZATIONS}
 					</legend>
 					<div class="form-element">
-						
-							<label>
-								{L_READ_AUTHORIZATION}
-							</label>
-						
+						<label>
+							{L_READ_AUTHORIZATION}
+						</label>
 						<div class="form-field">
 							{READ_AUTHORIZATION}
 						</div>
 					</div>
 					<div class="form-element">
-						
-							<label>
-								{L_WRITE_AUTHORIZATION}
-							</label>
-						
+						<label>
+							{L_WRITE_AUTHORIZATION}
+						</label>
 						<div class="form-field">
 							{WRITE_AUTHORIZATION}
 						</div>
@@ -100,7 +96,6 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
-					&nbsp;&nbsp; 
 					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>	
 			</form>

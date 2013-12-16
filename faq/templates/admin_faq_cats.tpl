@@ -103,31 +103,25 @@
 					<legend>{L_CATEGORY}</legend>
 					<p>{L_REQUIRED_FIELDS}</p>
 					<div class="form-element">
-						
-							<label for="name">
-								* {L_NAME}
-							</label>
-						
+						<label for="name">
+							* {L_NAME}
+						</label>
 						<div class="form-field">
 							<input type="text" size="65" maxlength="100" id="name" name="name" value="{edition_interface.NAME}">
 						</div>
 					</div>
 					<div class="form-element">
-						
-							<label for="id_parent">
-								* {L_LOCATION}
-							</label>
-						
+						<label for="id_parent">
+							* {L_LOCATION}
+						</label>
 						<div class="form-field">
 							{edition_interface.CATEGORIES_TREE}
 						</div>
 					</div>
 					<div class="form-element">
-						
-							<label for="image">
-								{L_IMAGE}
-							</label>
-						
+						<label for="image">
+							{L_IMAGE}
+						</label>
 						<div class="form-field">
 							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}">
 						</div>

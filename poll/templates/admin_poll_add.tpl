@@ -64,13 +64,12 @@
 					<p>{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="question">* {L_QUESTION}</label>
-						<div class="form-field"><label><input type="text" size="40" maxlength="100" id="question" name="question"></label></div>
+						<div class="form-field"><input type="text" size="40" maxlength="100" id="question" name="question"></div>
 					</div>
 					<div class="form-element">
 						<label for="type">* {L_ANSWERS_TYPE}</label>
 						<div class="form-field">
 							<label><input type="radio" name="type" id="type" value="1" checked="checked"> {L_SINGLE}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" name="type" value="0"> {L_MULTIPLE}</label>
 						</div>
 					</div>
@@ -78,7 +77,6 @@
 						<label for="archive">* {L_ARCHIVED}</label>
 						<div class="form-field">
 							<label><input type="radio" name="archive" value="1"> {L_YES}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" name="archive" id="archive" value="0" checked="checked"> {L_NO}</label>
 						</div>
 					</div>
@@ -128,25 +126,26 @@
 						<label for="release_date">* {L_RELEASE_DATE}</label>
 						<div class="form-field">
 							<div onclick="document.getElementById('start_end_date').checked = true;">
-								<label><input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING}></label>
-								<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}"> 
-								<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
-									<div id="start_date" class="calendar-block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
+								<label>
+									<input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING}>
+									<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}"> 
+									<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
+										<div id="start_date" class="calendar-block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
+										</div>
 									</div>
-								</div>
-								<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;" class="icon-calendar"></a>
-								
-								{L_UNTIL}&nbsp;
-								
-								<input type="text" size="8" maxlength="8" id="end" name="end" value="{END}"> 
-								<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
-									<div id="end_date" class="calendar-block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
+									<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;" class="icon-calendar"></a>
+									
+									{L_UNTIL}&nbsp;
+									
+									<input type="text" size="8" maxlength="8" id="end" name="end" value="{END}"> 
+									<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
+										<div id="end_date" class="calendar-block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
+										</div>
 									</div>
-								</div>
-								<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;" class="icon-calendar"></a>
+									<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;" class="icon-calendar"></a>
+								</label>
 							</div>
 							<label><input type="radio" value="1" id="release_date" name="visible" {VISIBLE_ENABLED}> {L_IMMEDIATE}</label>
-							<br />
 							<label><input type="radio" value="0" name="visible" {VISIBLE_UNAPROB}> {L_UNAPROB}</label>
 						</div>
 					</div>
@@ -169,7 +168,6 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
-					&nbsp;&nbsp; 
 					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>					
 			</form>

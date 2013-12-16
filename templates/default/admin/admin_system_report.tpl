@@ -21,15 +21,15 @@
 						{L_SERVER}
 					</legend>
 					<div class="form-element">
-						{L_PHP_VERSION}
+						<label>{L_PHP_VERSION}</label>
 						<div class="form-field">{PHP_VERSION}</div>
 					</div>
 					<div class="form-element">
-						{L_DBMS_VERSION}
+						<label>{L_DBMS_VERSION}</label>
 						<div class="form-field">{DBMS_VERSION}</div>
 					</div>
 					<div class="form-element">
-						{L_GD_LIBRARY}
+						<label>{L_GD_LIBRARY}</label>
 						<div class="form-field">
 							# IF C_SERVER_GD_LIBRARY #
 							<i class="icon-success icon-2x" title="{L_YES}"></i>
@@ -39,7 +39,7 @@
 						</div>
 					</div>
 					<div class="form-element">
-						{L_URL_REWRITING}
+						<label>{L_URL_REWRITING}</label>
 						<div class="form-field">
 							# IF C_URL_REWRITING_KNOWN #
 								# IF C_SERVER_URL_REWRITING #
@@ -53,7 +53,7 @@
 						</div>
 					</div>
 					<div class="form-element">
-						{L_REGISTER_GLOBALS_OPTION}
+						<label>{L_REGISTER_GLOBALS_OPTION}</label>
 						<div class="form-field">
 							# IF C_REGISTER_GLOBALS #
 							<i class="icon-success icon-2x" title="{L_YES}"></i>
@@ -63,11 +63,11 @@
 						</div>
 					</div>
 					<div class="form-element">
-						{L_SERVER_URL}
+						<label>{L_SERVER_URL}</label>
 						<div class="form-field">{SERV_SERV_URL}</div>
 					</div>
 					<div class="form-element">
-						{L_SITE_PATH}
+						<label>{L_SITE_PATH}</label>
 						<div class="form-field">{SERV_SITE_PATH}</div>
 					</div>
 				</fieldset>
@@ -76,35 +76,35 @@
 						{L_PHPBOOST_CONFIG}
 					</legend>
 					<div class="form-element">
-						{L_KERNEL_VERSION}
+						<label>{L_KERNEL_VERSION}</label>
 						<div class="form-field">{KERNEL_VERSION}</div>
 					</div>
 					<div class="form-element">
-						{L_SERVER_URL}
+						<label>{L_SERVER_URL}</label>
 						<div class="form-field">{KERNEL_SERV_URL}</div>
 					</div>
 					<div class="form-element">
-						{L_SITE_PATH}
+						<label>{L_SITE_PATH}</label>
 						<div class="form-field">{KERNEL_SITE_PATH}</div>
 					</div>
 					<div class="form-element">
-						{L_DEFAULT_THEME}
+						<label>{L_DEFAULT_THEME}</label>
 						<div class="form-field">{KERNEL_DEFAULT_THEME}</div>
 					</div>
 					<div class="form-element">
-						{L_DEFAULT_LANG}
+						<label>{L_DEFAULT_LANG}</label>
 						<div class="form-field">{KERNEL_DEFAULT_LANGUAGE}</div>
 					</div>
 					<div class="form-element">
-						{L_DEFAULT_EDITOR}
+						<label>{L_DEFAULT_EDITOR}</label>
 						<div class="form-field">{KERNEL_DEFAULT_EDITOR}</div>
 					</div>
 					<div class="form-element">
-						{L_START_PAGE}
+						<label>{L_START_PAGE}</label>
 						<div class="form-field">{KERNEL_START_PAGE}</div>
 					</div>
 					<div class="form-element">
-						{L_URL_REWRITING}
+						<label>{L_URL_REWRITING}</label>
 						<div class="form-field">
 							# IF C_KERNEL_URL_REWRITING #
 							<i class="icon-success icon-2x" title="{L_YES}"></i>
@@ -114,7 +114,7 @@
 						</div>
 					</div>
 					<div class="form-element">
-						{L_OUTPUT_GZ}
+						<label>{L_OUTPUT_GZ}</label>
 						<div class="form-field">
 							# IF C_KERNEL_OUTPUT_GZ #
 							<i class="icon-success icon-2x" title="{L_YES}"></i>
@@ -124,15 +124,15 @@
 						</div>
 					</div>
 					<div class="form-element">
-						{L_COOKIE_NAME}
+						<label>{L_COOKIE_NAME}</label>
 						<div class="form-field">{COOKIE_NAME}</div>
 					</div>
 					<div class="form-element">
-						{L_SESSION_LENGTH}
+						<label>{L_SESSION_LENGTH}</label>
 						<div class="form-field">{SESSION_LENGTH}</div>
 					</div>
 					<div class="form-element">
-						{L_SESSION_GUEST_LENGTH}
+						<label>{L_SESSION_GUEST_LENGTH}</label>
 						<div class="form-field">{SESSION_LENGTH_GUEST}</div>
 					</div>
 				</fieldset>
@@ -140,7 +140,7 @@
 					<legend>{L_DIRECTORIES_AUTH}</legend>
 					# START directories #
 					<div class="form-element">
-						{directories.NAME}
+						<label>{directories.NAME}</label>
 						<div class="form-field">
 							# IF directories.C_AUTH_DIR #
 							<i class="icon-success icon-2x" title="{L_YES}"></i>

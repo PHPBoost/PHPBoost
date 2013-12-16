@@ -11,7 +11,7 @@
 	# ENDIF #
 	<textarea id="${escape(ID)}" name="${escape(ID)}" rows="{ROWS}" cols="{COLS}" class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" onblur="{ONBLUR}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #>{VALUE}</textarea>
 	# IF C_EDITOR_ENABLED #
-		<div style="text-align:center;">{PREVIEW_BUTTON}</div>
+		<div class="center">{PREVIEW_BUTTON}</div>
 	# ENDIF #
 	<br />
 </div>
