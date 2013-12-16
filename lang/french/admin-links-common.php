@@ -26,10 +26,11 @@
  ###################################################*/
 
  ####################################################
- #                     English                      #
+ #                     French                       #
  ####################################################
  
 //Common
+$lang['quick_links'] = 'Liens rapides';
 $lang['management'] = 'Gestion';
 $lang['add'] = 'Ajouter';
 $lang['configuration'] = 'Configuration';

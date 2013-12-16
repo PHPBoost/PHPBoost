@@ -34,6 +34,7 @@ $template = new FileTemplate('admin/admin_extend.tpl');
 
 $admin_links_lang = LangLoader::get('admin-links-common');
 $template->put_all(array(
+	'L_QUICK_LINKS' => $admin_links_lang['quick_links'],
 	'L_CONFIGURATION' => $admin_links_lang['configuration'],
 	'L_SITE' => $admin_links_lang['index.site'],
 	'L_DISCONNECT' => $admin_links_lang['index.disconnect'],
@@ -72,8 +73,8 @@ foreach ($modules as $module)
 		$template->assign_block_vars('modules_extend', array(
 			'NAME' => $name,
 			'IMG' => PATH_TO_ROOT .'/' . $module->get_id() . '/' . $module->get_id() . '.png',
-			'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
-			'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',			
+			'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr class="center">' : '',
+			'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',
 			'U_ADMIN_MODULE' => PATH_TO_ROOT .'/' . $module->get_id() . '/' . $admin_home_page
 		));
 		$i++;
@@ -86,7 +87,7 @@ if ($i != 0)
 	while (($i % 5) != 0)
 	{
 		$template->assign_block_vars('modules_extend.td', array(
-			'TD' => '<td class="row2" style="width:20%;">&nbsp;</td>'
+			'TD' => '<td class="no-separator" style="width:20%;">&nbsp;</td>'
 		));
 		$i++;
 	}
