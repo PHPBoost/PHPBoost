@@ -158,7 +158,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 				case 'possible_values':
 					$this->disable_fields_configuration[] = $name;
 					break;
-				case 'default_values':
+				case 'default_value':
 					$this->disable_fields_configuration[] = $name;
 					break;
 				case 'authorizations':

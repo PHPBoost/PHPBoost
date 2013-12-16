@@ -167,7 +167,7 @@ class ExtendedFieldsService
 			$extended_field->set_description($data['description']);
 			$extended_field->set_field_type($data['field_type']);
 			$extended_field->set_possible_values($data['possible_values']);
-			$extended_field->set_default_values($data['default_values']);
+			$extended_field->set_default_value($data['default_value']);
 			$extended_field->set_is_required($data['required']);
 			$extended_field->set_display($data['display']);
 			$extended_field->set_regex($data['regex']);

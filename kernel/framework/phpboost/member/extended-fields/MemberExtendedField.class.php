@@ -37,7 +37,7 @@ class MemberExtendedField
 	private $description;
 	private $field_type;
 	private $value;
-	private $default_values;
+	private $default_value;
 	private $possible_values;
 	private $required;
 	private $regex;
@@ -97,14 +97,14 @@ class MemberExtendedField
 		return $this->description;
 	}
 	
-	public function set_default_values($default_values)
+	public function set_default_value($default_value)
 	{
-		$this->default_values = $default_values;
+		$this->default_value = $default_value;
 	}
 	
-	public function get_default_values()
+	public function get_default_value()
 	{
-		return $this->default_values;
+		return $this->default_value;
 	}
 	
 	public function set_possible_values($possible_values)

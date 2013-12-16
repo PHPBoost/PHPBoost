@@ -42,7 +42,7 @@ class ExtendedField
 	private $field_type;
 	private $description;
 	private $possible_values;
-	private $default_values;
+	private $default_value;
 	private $required;
 	private $display;
 	private $regex;
@@ -132,14 +132,14 @@ class ExtendedField
 		return !empty($this->possible_values) ? $this->possible_values : '';
 	}
 	
-	public function set_default_values($default_values)
+	public function set_default_value($default_value)
 	{
-		$this->default_values = $default_values;
+		$this->default_value = $default_value;
 	}
 	
-	public function get_default_values()
+	public function get_default_value()
 	{
-		return !empty($this->default_values) ? $this->default_values : '';
+		return !empty($this->default_value) ? $this->default_value : '';
 	}
 	
 	public function set_is_required($required)

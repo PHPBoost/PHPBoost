@@ -30,7 +30,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'possible_values', 'default_values'));
+		$this->set_disable_fields_configuration(array('regex', 'possible_values', 'default_value'));
 		$this->set_name(LangLoader::get_message('extended_fields.newsletter.name', 'newsletter_common', 'newsletter'));
 	}
 	
