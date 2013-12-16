@@ -114,7 +114,7 @@ function createSortableMenu()
 				</td>
 			</tr>
 			<tr>
-				<td id="container_header" colspan="3">
+				<td id="container-header" colspan="3">
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;z-index:99;">
 							<div style="position:absolute;margin-top:38px;margin-left:0px;float:left;display:none;" id="moveaddmenu1">
@@ -154,7 +154,7 @@ function createSortableMenu()
 				</td>
 			</tr>
 			<tr>
-				<td id="container_subheader" colspan="3">
+				<td id="container-subheader" colspan="3">
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;z-index:99;">
 							<div style="position:absolute;margin-top:38px;margin-left:0px;float:left;display:none;" id="moveaddmenu2">
@@ -194,7 +194,7 @@ function createSortableMenu()
 				</td>
 			</tr>
 			<tr>				
-				<td id="container_leftmenu">
+				<td id="container-leftmenu">
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;z-index:99;">
 							<div style="position:absolute;margin-top:38px;margin-left:0px;float:left;display:none;" id="moveaddmenu3">
@@ -236,7 +236,7 @@ function createSortableMenu()
 				<td style="vertical-align:top;">
 					<table style="width:100%;">
 						<tr>
-							<td id="container_topcentral">
+							<td id="container-topcentral">
 								<div style="width:165px;margin:auto;">
 									<div style="position:relative;float:left;z-index:99;">
 										<div style="position:absolute;margin-top:38px;margin-left:0px;float:left;display:none;" id="moveaddmenu4">
@@ -276,7 +276,7 @@ function createSortableMenu()
 							</td>
 						</tr>
 						<tr>
-							<td id="container_central">
+							<td id="container-central">
 								<div style="width:165px;margin:auto;">
 									<div style="position:relative;float:left;margin-top:5px;z-index:99;">
 										<p class="menu_block_libelle">{L_MENUS_AVAILABLE}</p>
@@ -295,7 +295,7 @@ function createSortableMenu()
 							</td>
 						</tr>
 						<tr>
-							<td id="container_bottomcentral">
+							<td id="container-bottomcentral">
 								<div style="width:165px;margin:auto;">
 									<div style="position:relative;float:left;z-index:99;">
 										<div style="position:absolute;margin-top:38px;margin-left:0px;float:left;display:none;" id="moveaddmenu5">
@@ -336,7 +336,7 @@ function createSortableMenu()
 						<tr>
 					</table>
 				</td>
-				<td id="container_rightmenu">
+				<td id="container-rightmenu">
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;z-index:99;">
 							<div style="position:absolute;margin-top:38px;margin-left:0px;float:left;display:none;" id="moveaddmenu6">
@@ -377,7 +377,7 @@ function createSortableMenu()
 				</td>
 			</tr>
 			<tr>
-				<td colspan="3" id="container_topfooter">
+				<td colspan="3" id="container-topfooter">
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;z-index:99;">
 							<div style="position:absolute;margin-top:38px;margin-left:0px;float:left;display:none;" id="moveaddmenu7">
@@ -417,7 +417,7 @@ function createSortableMenu()
 				</td>
 			</tr>
 			<tr>
-				<td colspan="3" id="container_footer">
+				<td colspan="3" id="container-footer">
 					<div style="width:165px;margin:auto;">
 						<div style="position:relative;float:left;z-index:99;">
 							<div style="position:absolute;margin-top:38px;margin-left:0px;float:left;display:none;" id="moveaddmenu8">

@@ -582,6 +582,12 @@ input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disable
 	border: 1px solid #CCCCCC;
 }
 
+input[readonly=readonly], input[readonly=readonly]:hover, input[readonly=readonly]:focus {
+	background:#F1F1F1;
+	color:#AAAAAA;
+	border: 1px solid #CCCCCC;
+}
+
 /* Textarea */
 textarea {
 	overflow: auto;
@@ -730,7 +736,7 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 	border-radius: 4px;
 }
 
-.message-message:before {
+.message-message::before {
 	content: "";
 	top: 15px;
 	bottom: auto;
@@ -743,7 +749,7 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 	width: 0;
 }
 
-.message-message:after {
+.message-message::after {
 	content: "";
 	top: 16px;
 	bottom: auto;

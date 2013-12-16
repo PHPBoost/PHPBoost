@@ -9,19 +9,16 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css" />
 
-		
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/css_cache.php?name=admin-theme-{THEME}&files=
 		/templates/default/theme/admin_design.css;
 		/templates/default/theme/admin_global.css;
-		/templates/default/theme/admin_content.css;
-		/templates/default/theme/admin_generic.css" type="text/css" media="screen, print, handheld" />
+		/templates/default/theme/admin_content.css" type="text/css" media="screen, print, handheld" />
 		# ELSE #
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_global.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_generic.css" type="text/css" media="screen" />
 		# ENDIF #
 		
 		<!-- Modules CSS -->
