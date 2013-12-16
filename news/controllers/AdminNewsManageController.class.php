@@ -110,7 +110,7 @@ class AdminNewsManageController extends AdminModuleController
 	
 	private function get_pagination($page, $sort_field, $sort_mode)
 	{
-		$news_number = PersistenceContext::get_querier()->count(CalendarSetup::$calendar_events_table);
+		$news_number = PersistenceContext::get_querier()->count(NewsSetup::$news_table);
 		
 		$pagination = new ModulePagination($page, $news_number, (int)NewsConfig::load()->get_number_news_per_page());
 		$pagination->set_url(NewsUrlBuilder::manage_news($sort_field, $sort_mode, '%d'));
