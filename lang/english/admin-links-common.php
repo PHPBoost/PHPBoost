@@ -30,6 +30,7 @@
  ####################################################
  
 //Common
+$lang['quick_links'] = 'Quick links';
 $lang['management'] = 'Management';
 $lang['add'] = 'Add';
 $lang['configuration'] = 'Configuration';
