@@ -87,12 +87,12 @@ class AdminArticlesConfigController extends AdminModuleController
 			array('maxlength' => 3, 'size' => 4, 'required' => true), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('notation_scale', LangLoader::get_message('admin.config.notation_scale', 'admin-common'), $this->config->get_notation_scale(),
+		$fieldset->add_field(new FormFieldTextEditor('notation_scale', LangLoader::get_message('config.notation_scale', 'admin-common'), $this->config->get_notation_scale(),
 			array('maxlength' => 2, 'size' => 4),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', LangLoader::get_message('admin.config.comments_enabled', 'admin-common'), $this->config->are_comments_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', LangLoader::get_message('config.comments_enabled', 'admin-common'), $this->config->are_comments_enabled()));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles_configuration.display_type'], $this->config->get_display_type(),
 			array(
