@@ -27,7 +27,6 @@ p { margin-bottom:0.7em; line-height:normal; font-size:1em; }
 --------------------------------------*/
 div.message-helper {
 	height:auto;
-	max-width:500px;
 	padding:10px;
 	margin:5px auto 15px auto;
 	line-height:20px;

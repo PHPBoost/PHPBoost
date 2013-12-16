@@ -34,24 +34,9 @@ pre { white-space:pre-wrap; }
 /* Alignements */
 .inline { display:inline; }
 
-.center {
-	text-align:center;
-	display:block;
-	padding:0;
-	margin:2px auto;
-}
-.left {
-    text-align:left;
-    display:block;
-    padding:0;
-    margin:2px 0px;
-}
-.right {
-    text-align:right;
-    display:block;
-    padding:0;
-    margin:2px 0px;
-}
+.center { text-align:center; }
+.left { text-align:left; }
+.right { text-align:right; }
 
 .float-left, img.left { float:left; }
 .float-right, img.right { float:right; }

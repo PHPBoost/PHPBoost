@@ -41,10 +41,10 @@
                     <legend>{L_SEARCH_CONFIG}</legend>
                     <div class="form-element">
                         <label for="nb_results_p">* {L_NB_RESULTS_P}</label>
-                        <div class="form-field"><label><input type="text" maxlength="2" size="4" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}"></label></div>
+                        <div class="form-field"><input type="text" maxlength="2" size="4" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}"></div>
                     </div>
                     <div class="form-element">
-                        <label for="authorized_modules[]">* {L_AUTHORIZED_MODULES}</label><br /><span>{L_AUTHORIZED_MODULES_EXPLAIN}</span>
+                        <label for="authorized_modules[]">* {L_AUTHORIZED_MODULES} <span class="field-description">{L_AUTHORIZED_MODULES_EXPLAIN}</span></label>
                         <div class="form-field"><label>
                             <select id="authorized_modules[]" name="authorized_modules[]" size="5" multiple="multiple" class="list_modules">
                                 # START authorized_modules #
@@ -58,12 +58,12 @@
                 <fieldset>
                     <legend>{L_SEARCH_CACHE}</legend>
                     <div class="form-element">
-                        <label for="cache_time">* {L_CACHE_TIME}</label><br /><span>{L_CACHE_TIME_EXPLAIN}</span>
-                        <div class="form-field"><label><input type="text" maxlength="4" size="4" id="cache_time" name="cache_time" value="{CACHE_TIME}"></label></div>
+                        <label for="cache_time">* {L_CACHE_TIME} <span class="field-description">{L_CACHE_TIME_EXPLAIN}</span></label>
+                        <div class="form-field"><input type="text" maxlength="4" size="4" id="cache_time" name="cache_time" value="{CACHE_TIME}"></div>
                     </div>
                     <div class="form-element">
-                        <label for="max_use">* {L_MAX_USE}</label><br /><span>{L_MAX_USE_EXPLAIN}</span>
-                        <div class="form-field"><label><input type="text" maxlength="3" size="4" id="max_use" name="max_use" value="{MAX_USE}"></label></div>
+                        <label for="max_use">* {L_MAX_USE} <span class="field-description">{L_MAX_USE_EXPLAIN}</span></label>
+                        <div class="form-field"><input type="text" maxlength="3" size="4" id="max_use" name="max_use" value="{MAX_USE}"></div>
                     </div>
                 </fieldset>
                 
@@ -72,11 +72,9 @@
 						{L_AUTHORIZATIONS}
 					</legend>
 					<div class="form-element">
-						
-							<label>
-								{L_READ_AUTHORIZATION}
-							</label>
-						
+						<label>
+							{L_READ_AUTHORIZATION}
+						</label>
 						<div class="form-field">
 							{READ_AUTHORIZATION}
 						</div>
@@ -122,8 +120,7 @@
                 
                 <fieldset class="fieldset-submit">
                 <legend>{L_UPDATE}</legend>
-                    <button type="submit" name="valid" value="true">{L_UPDATE}</button>
-                    &nbsp;&nbsp; 
+                    <button type="submit" name="valid" value="true">{L_UPDATE}</button> 
                     <button type="reset" value="true">{L_RESET}</button>
                 </fieldset>
             </form>

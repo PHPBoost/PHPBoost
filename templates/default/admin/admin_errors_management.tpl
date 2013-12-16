@@ -26,8 +26,8 @@
 				<fieldset>
 					<legend>{L_ERASE}</legend>
 					<div class="form-element">
-						<label>{L_ERASE_RAPPORT}</label><br /><span>{L_ERASE_RAPPORT_EXPLAIN}!</span>
-						<div class="form-field"><label><button type="submit" name="erase" value="true">{L_ERASE}</button> </label></div>
+						<label>{L_ERASE_RAPPORT} <span class="field-description">{L_ERASE_RAPPORT_EXPLAIN}!</span></label>
+						<div class="form-field"><label><button type="submit" name="erase" value="true">{L_ERASE}</button></label></div>
 					</div>
 				</fieldset>
 				<input type="hidden" name="token" value="{TOKEN}">
@@ -35,37 +35,45 @@
 			
 			<br />
 			
-			<table class="module-table">
+		<table>
+			<caption>
+				{L_ERRORS}
+			</caption>
+			<thead>
 				<tr> 
-					<th colspan="2">
-						{L_ERRORS}
+					<th>
+						{L_DESC}
+					</th>
+					<th>
+						{L_DATE}
 					</th>
 				</tr>
-				<tr> 
-					<td class="row2" style="text-align: center;" colspan="2">
+			</thead>
+			<tfoot>
+				<tr>
+					<th>
 						<a href="admin_errors.php?all=1">{@all_errors}</a>
-					</td>
+					</th>
 				</tr>
-				<tr> 
-					<td class="row1" style="text-align: center;">
-						{L_DESC}
-					</td>
-					<td  class="row1" style="text-align: center;">
-						{L_DATE}
-					</td>
-				</tr>	
+			</tfoot>
+			<tbody>
 				# START errors #
 				<tr>
-					<td class="row2">
-						<p class="{errors.CLASS}" style="width:auto;margin:auto;">
-							<strong>{errors.ERROR_TYPE} : </strong>{errors.ERROR_MESSAGE}<br /><br /><br />
-                            <em>{errors.ERROR_STACKTRACE}</em>
-						</p>
+					<td> 
+						<div class="message-helper {errors.CLASS}">
+							<i class="icon-{errors.CLASS}"></i>
+							<div class="message-helper-content">
+								<strong>{errors.ERROR_TYPE} : </strong>{errors.ERROR_MESSAGE}<br /><br /><br />
+                            	<em>{errors.ERROR_STACKTRACE}</em>
+							</div>
+						</div>
 					</td>
-					<td class="row2" style="text-align:center;width:80px;">
+					<td>
 						{errors.DATE}
 					</td>
 				</tr>
 				# END errors #
-			</table>
+			</tbody>
+		</table>
+			
 		</div>

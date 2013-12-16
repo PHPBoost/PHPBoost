@@ -37,31 +37,28 @@
 				<fieldset>
 					<legend>{L_CONFIG_MANAGEMENT}</legend>
 					<div class="form-element">
-						
-							<label for="faq_name">{L_FAQ_NAME}</label>
-							<br />
-							<span class="smaller">{L_FAQ_NAME_EXPLAIN}</span>
-						
+						<label for="faq_name">
+							{L_FAQ_NAME}
+							<span class="field-description">{L_FAQ_NAME_EXPLAIN}</span>
+						</label>
 						<div class="form-field">
 							<input type="text" size="65" maxlength="100" id="faq_name" name="faq_name" value="{FAQ_NAME}">
 						</div>	
 					</div>
 					<div class="form-element">
-						
-							<label for="num_cols">{L_NBR_COLS}</label>
-							<br />
-							<span class="smaller">{L_NBR_COLS_EXPLAIN}</span>
-						
+						<label for="num_cols">
+							{L_NBR_COLS}
+							<span class="field-description">{L_NBR_COLS_EXPLAIN}</span>
+						</label>
 						<div class="form-field">
 							<input type="text" size="3" maxlength="3" id="num_cols" name="num_cols" value="{NUM_COLS}">
 						</div>	
 					</div>
 					<div class="form-element">
-						
-							<label for="display_mode">{L_DISPLAY_MODE}</label>
-							<br />
-							<span class="smaller">{L_DISPLAY_MODE_EXPLAIN}</span>
-						
+						<label for="display_mode">
+							{L_DISPLAY_MODE}
+							<span class="field-description">{L_DISPLAY_MODE_EXPLAIN}</span>
+						</label>
 						<div class="form-field">
 							<select name="display_mode" id="display_mode">
 								<option value="block"{SELECTED_BLOCK}>{L_BLOCKS}</option>
@@ -97,4 +94,3 @@
 				</fieldset>
 			</form>
 		</div>		
-		

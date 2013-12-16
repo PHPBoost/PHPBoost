@@ -50,7 +50,7 @@ function CheckForm() {
 				</div>
 			</div>
 			<div class="form-element">
-				{L_AUTHS}
+				<label>{L_AUTHS}</label>
 				<div class="form-field">{AUTH_MENUS}</div>
 			</div>
 		</fieldset>		

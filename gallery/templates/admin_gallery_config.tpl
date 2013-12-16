@@ -102,36 +102,36 @@
 					<legend>{L_CONFIG_CONFIG}</legend>
 					<p>{L_REQUIRE}</p>
 					<div class="form-element">
-						<label for="max_width">* {L_MAX_WIDTH}</label><br /><span>{L_MAX_WIDTH_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="5" id="max_width" name="max_width" value="{MAX_WIDTH}"> {L_UNIT_PX}</label></div>
+						<label for="max_width">* {L_MAX_WIDTH} <span class="field-description">{L_MAX_WIDTH_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="5" id="max_width" name="max_width" value="{MAX_WIDTH}"> {L_UNIT_PX}</div>
 					</div>
 					<div class="form-element">
-						<label for="max_height">* {L_MAX_HEIGHT}</label><br /><span>{L_MAX_HEIGHT_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="5" id="max_height" name="max_height" value="{MAX_HEIGHT}"> {L_UNIT_PX}</label></div>
+						<label for="max_height">* {L_MAX_HEIGHT} <span class="field-description">{L_MAX_HEIGHT_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="5" id="max_height" name="max_height" value="{MAX_HEIGHT}"> {L_UNIT_PX}</div>
 					</div>
 					<div class="form-element">
-						<label for="mini_max_height">* {L_MINI_MAX_HEIGHT}</label><br /><span>{L_MINI_MAX_HEIGHT_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="5" id="mini_max_height" name="mini_max_height" value="{MINI_MAX_HEIGHT}"> {L_UNIT_PX}</label></div>
+						<label for="mini_max_height">* {L_MINI_MAX_HEIGHT} <span class="field-description">{L_MINI_MAX_HEIGHT_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="5" id="mini_max_height" name="mini_max_height" value="{MINI_MAX_HEIGHT}"> {L_UNIT_PX}</div>
 					</div>
 					<div class="form-element">
-						<label for="mini_max_width">* {L_MINI_MAX_WIDTH}</label><br /><span>{L_MINI_MAX_WIDTH_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="5" id="mini_max_width" name="mini_max_width" value="{MINI_MAX_WIDTH}"> {L_UNIT_PX}</label></div>
+						<label for="mini_max_width">* {L_MINI_MAX_WIDTH} <span class="field-description">{L_MINI_MAX_WIDTH_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="5" id="mini_max_width" name="mini_max_width" value="{MINI_MAX_WIDTH}"> {L_UNIT_PX}</div>
 					</div>
 					<div class="form-element">
-						<label for="max_weight">* {L_MAX_WEIGHT}</label><br /><span>{L_MAX_WEIGHT_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="6" id="max_weight" name="max_weight" value="{MAX_WEIGHT}"> {L_UNIT_KO}</label></div>
+						<label for="max_weight">* {L_MAX_WEIGHT} <span class="field-description">{L_MAX_WEIGHT_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="6" id="max_weight" name="max_weight" value="{MAX_WEIGHT}"> {L_UNIT_KO}</div>
 					</div>
 					<div class="form-element">
-						<label for="quality">* {L_QUALITY_THUMB}</label><br /><span>{L_QUALITY_THUMB_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="3" id="quality" name="quality" value="{QUALITY}"> %</label></div>
+						<label for="quality">* {L_QUALITY_THUMB} <span class="field-description">{L_QUALITY_THUMB_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="3" id="quality" name="quality" value="{QUALITY}"> %</div>
 					</div>
 					<div class="form-element">
-						<label for="columns_number">* {L_COLUMNS_NUMBER}</label><br /><span>{L_COLUMNS_NUMBER_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="1" maxlength="1" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}"> {L_COLUMN}</label></div>
+						<label for="columns_number">* {L_COLUMNS_NUMBER} <span class="field-description">{L_COLUMNS_NUMBER_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="1" maxlength="1" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}"> {L_COLUMN}</div>
 					</div>
 					<div class="form-element">
 						<label for="pics_number_per_page">* {L_PICS_NUMBER_PER_PAGE}</label>
-						<div class="form-field"><label><input type="text" size="6" maxlength="6" id="pics_number_per_page" name="pics_number_per_page" value="{PICS_NUMBER_PER_PAGE}"></label></div>
+						<div class="form-field"><input type="text" size="6" maxlength="6" id="pics_number_per_page" name="pics_number_per_page" value="{PICS_NUMBER_PER_PAGE}"></div>
 					</div>
 				</fieldset>
 				
@@ -140,33 +140,30 @@
 					<div class="form-element">
 						<label for="pics_enlargement_mode">{L_DISPLAY_MODE}</label>
 						<div class="form-field">
-							<label><input type="radio" # IF C_DISPLAY_PICS_NEW_PAGE #checked="checked" # ENDIF #name="pics_enlargement_mode" id="pics_enlargement_mode" value="{NEW_PAGE}" /> {L_NEW_PAGE}</label><br>
-							<label><input type="radio" # IF C_DISPLAY_PICS_RESIZE #checked="checked" # ENDIF #name="pics_enlargement_mode" value="{RESIZE}" /> {L_RESIZE}</label><br>
-							<label><input type="radio" # IF C_DISPLAY_PICS_POPUP #checked="checked" # ENDIF #name="pics_enlargement_mode" value="{POPUP}" /> {L_POPUP}</label><br>
+							<label><input type="radio" # IF C_DISPLAY_PICS_NEW_PAGE #checked="checked" # ENDIF #name="pics_enlargement_mode" id="pics_enlargement_mode" value="{NEW_PAGE}" /> {L_NEW_PAGE}</label>
+							<label><input type="radio" # IF C_DISPLAY_PICS_RESIZE #checked="checked" # ENDIF #name="pics_enlargement_mode" value="{RESIZE}" /> {L_RESIZE}</label>
+							<label><input type="radio" # IF C_DISPLAY_PICS_POPUP #checked="checked" # ENDIF #name="pics_enlargement_mode" value="{POPUP}" /> {L_POPUP}</label>
 							<label><input type="radio" # IF C_DISPLAY_PICS_FULL_SCREEN #checked="checked" # ENDIF #name="pics_enlargement_mode" value="{FULL_SCREEN}"> {L_POPUP_FULL}</label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="title_enabled">{L_TITLE_ENABLED}</label><br /><span>{L_TITLE_ENABLED_EXPLAIN}</span>
+						<label for="title_enabled">{L_TITLE_ENABLED} <span class="field-description">{L_TITLE_ENABLED_EXPLAIN}</span></label>
 						<div class="form-field">
 							<label><input type="radio" # IF C_TITLE_ENABLED #checked="checked" # ENDIF #name="title_enabled" id="activ_title" value="1"> {L_ENABLED}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" # IF NOT C_TITLE_ENABLED #checked="checked" # ENDIF #name="title_enabled" value="0"> {L_DISABLED}</label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="author_displayed">{L_AUTHOR_DISPLAYED}</label><br /><span>{L_AUTHOR_DISPLAYED_EXPLAIN}</span>
+						<label for="author_displayed">{L_AUTHOR_DISPLAYED} <span class="field-description">{L_AUTHOR_DISPLAYED_EXPLAIN}</span></label>
 						<div class="form-field">
 							<label><input type="radio" # IF C_AUTHOR_DISPLAYED #checked="checked" # ENDIF #name="author_displayed" id="author_displayed" value="1"> {L_ENABLED}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" # IF NOT C_AUTHOR_DISPLAYED #checked="checked" # ENDIF #name="author_displayed" value="0"> {L_DISABLED}</label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="views_counter_enabled">{L_VIEWS_COUNTER_ENABLED}</label><br /><span>{L_VIEWS_COUNTER_ENABLED_EXPLAIN}</span>
+						<label for="views_counter_enabled">{L_VIEWS_COUNTER_ENABLED} <span class="field-description">{L_VIEWS_COUNTER_ENABLED_EXPLAIN}</span></label>
 						<div class="form-field">
 							<label><input type="radio" # IF C_VIEWS_COUNTER_ENABLED #checked="checked" # ENDIF #name="views_counter_enabled" id="views_counter_enabled" value="1"> {L_ENABLED}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" # IF NOT C_VIEWS_COUNTER_ENABLED #checked="checked" # ENDIF #name="views_counter_enabled" value="0"> {L_DISABLED}</label>
 						</div>
 					</div>
@@ -174,7 +171,6 @@
 						<label for="comments_enabled">{L_COMMENTS_ENABLED}</label>
 						<div class="form-field">
 							<label><input type="radio" # IF C_COMMENTS_ENABLED #checked="checked" # ENDIF #name="comments_enabled" id="comments_enabled" value="1"> {L_ENABLED}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" # IF NOT C_COMMENTS_ENABLED #checked="checked" # ENDIF #name="comments_enabled" value="0"> {L_DISABLED}</label>
 						</div>
 					</div>
@@ -182,7 +178,6 @@
 						<label for="notation_enabled">{L_NOTATION_ENABLED}</label>
 						<div class="form-field">
 							<label><input type="radio" # IF C_NOTATION_ENABLED #checked="checked" # ENDIF #name="notation_enabled" id="notation_enabled" value="1"> {L_ENABLED}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" # IF NOT C_NOTATION_ENABLED #checked="checked" # ENDIF #name="notation_enabled" value="0"> {L_DISABLED}</label>
 						</div>
 					</div>
@@ -190,12 +185,11 @@
 						<label for="notes_number_displayed">{L_NOTES_NUMBER_DISPLAYED}</label>
 						<div class="form-field">
 							<label><input type="radio" # IF C_NOTES_NUMBER_DISPLAYED #checked="checked" # ENDIF #name="notes_number_displayed" id="notes_number_displayed" value="1"> {L_YES}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" # IF NOT C_NOTES_NUMBER_DISPLAYED #checked="checked" # ENDIF #name="notes_number_displayed" value="0"> {L_NO}</label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="notation_scale">{L_NOTATION_SCALE}</label><br /><span>{L_NOTATION_SCALE_EXPLAIN}</span>
+						<label for="notation_scale">{L_NOTATION_SCALE} <span class="field-description">{L_NOTATION_SCALE_EXPLAIN}</span></label>
 						<div class="form-field"><label><input type="text" size="3" name="notation_scale" id="notation_scale" value="{NOTATION_SCALE}"></label></div>
 					</div>
 				</fieldset>
@@ -216,7 +210,7 @@
 						<div class="form-field"><label><input type="text" size="3" name="pics_number_in_mini" id="pics_number_in_mini" value="{PICS_NUMBER_IN_MINI}"> </label></div>
 					</div>
 					<div class="form-element">
-						<label for="mini_pics_speed">{L_MINI_PICS_SPEED}</label><br /><span>{L_MINI_PICS_SPEED_EXPLAIN}</span>
+						<label for="mini_pics_speed">{L_MINI_PICS_SPEED} <span class="field-description">{L_MINI_PICS_SPEED_EXPLAIN}</span></label>
 						<div class="form-field">
 							<label>
 								<select name="mini_pics_speed" id="mini_pics_speed">
@@ -230,40 +224,39 @@
 				<fieldset>
 					<legend>{L_IMG_PROTECT}</legend>
 					<div class="form-element">
-						<label for="logo_enabled">{L_LOGO_ENABLED}</label><br /><span>{L_LOGO_ENABLED_EXPLAIN}</span>
+						<label for="logo_enabled">{L_LOGO_ENABLED} <span class="field-description">{L_LOGO_ENABLED_EXPLAIN}</span></label>
 						<div class="form-field">
 							<label><input type="radio" # IF C_LOGO_ENABLED #checked="checked" # ENDIF #name="logo_enabled" id="logo_ENABLED" value="1"> {L_ENABLED}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" # IF NOT C_LOGO_ENABLED #checked="checked" # ENDIF #name="logo_enabled" value="0"> {L_DISABLED}</label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="logo">{L_LOGO_URL}</label><br /><span>{L_LOGO_URL_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="25" name="logo" id="logo" value="{LOGO}"></label></div>
+						<label for="logo">{L_LOGO_URL} <span class="field-description">{L_LOGO_URL_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="25" name="logo" id="logo" value="{LOGO}"></div>
 					</div>
 					<div class="form-element">
-						<label for="logo_transparency">{L_LOGO_TRANSPARENCY}</label><br /><span>{L_LOGO_TRANSPARENCY_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="3" name="logo_transparency" id="logo_transparency" value="{LOGO_TRANSPARENCY}"> %</label></div>
+						<label for="logo_transparency">{L_LOGO_TRANSPARENCY} <span class="field-description">{L_LOGO_TRANSPARENCY_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="3" name="logo_transparency" id="logo_transparency" value="{LOGO_TRANSPARENCY}"> %</div>
 					</div>
 					<div class="form-element">
-						<label for="logo_horizontal_distance">{L_WIDTH_BOTTOM_RIGHT}</label><br /><span>{L_WIDTH_BOTTOM_RIGHT_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="5" name="logo_horizontal_distance" id="logo_horizontal_distance" value="{LOGO_HORIZONTAL_DISTANCE}"> {L_UNIT_PX}</label></div>
+						<label for="logo_horizontal_distance">{L_WIDTH_BOTTOM_RIGHT} <span class="field-description">{L_WIDTH_BOTTOM_RIGHT_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="5" name="logo_horizontal_distance" id="logo_horizontal_distance" value="{LOGO_HORIZONTAL_DISTANCE}"> {L_UNIT_PX}</div>
 					</div>
 					<div class="form-element">
-						<label for="logo_vertical_distance">{L_HEIGHT_BOTTOM_RIGHT}</label><br /><span>{L_HEIGHT_BOTTOM_RIGHT_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="5" name="logo_vertical_distance" id="logo_vertical_distance" value="{LOGO_VERTICAL_DISTANCE}"> {L_UNIT_PX}</label></div>
+						<label for="logo_vertical_distance">{L_HEIGHT_BOTTOM_RIGHT} <span class="field-description">{L_HEIGHT_BOTTOM_RIGHT_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="5" name="logo_vertical_distance" id="logo_vertical_distance" value="{LOGO_VERTICAL_DISTANCE}"> {L_UNIT_PX}</div>
 					</div>
 				</fieldset>	
 					
 				<fieldset>
 					<legend>{L_UPLOAD_PICS}</legend>
 					<div class="form-element">
-						<label for="member_max_pics_number">{L_MEMBER_MAX_PICS_NUMBER}</label><br /><span>{L_MEMBER_MAX_PICS_NUMBER_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="5" name="member_max_pics_number" id="member_max_pics_number" value="{MEMBER_MAX_PICS_NUMBER}"></label></div>
+						<label for="member_max_pics_number">{L_MEMBER_MAX_PICS_NUMBER} <span class="field-description">{L_MEMBER_MAX_PICS_NUMBER_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="5" name="member_max_pics_number" id="member_max_pics_number" value="{MEMBER_MAX_PICS_NUMBER}"></div>
 					</div>
 					<div class="form-element">
-						<label for="moderator_max_pics_number">{L_MODERATOR_MAX_PICS_NUMBER}</label><br /><span>{L_MODERATOR_MAX_PICS_NUMBER_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="5" name="moderator_max_pics_number" id="moderator_max_pics_number" value="{MODERATOR_MAX_PICS_NUMBER}"></label></div>
+						<label for="moderator_max_pics_number">{L_MODERATOR_MAX_PICS_NUMBER} <span class="field-description">{L_MODERATOR_MAX_PICS_NUMBER_EXPLAIN}</span></label>
+						<div class="form-field"><input type="text" size="5" name="moderator_max_pics_number" id="moderator_max_pics_number" value="{MODERATOR_MAX_PICS_NUMBER}"></div>
 					</div>
 				</fieldset>
 				

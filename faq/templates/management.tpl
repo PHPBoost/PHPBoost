@@ -63,9 +63,7 @@
 						<legend>{L_CAT_PROPERTIES}</legend>
 						# START category.not_root_name #
 						<div class="form-element">
-							
-								<label for="cat_title">{L_CAT_NAME}</label>
-							
+							<label for="cat_title">{L_CAT_NAME}</label>
 							<div class="form-field">
 								<input type="text" name="cat_name" id="cat_name" value="{category.not_root_name.CAT_TITLE}">
 							</div>
@@ -75,15 +73,13 @@
 						{KERNEL_EDITOR}
 						<div class="form-element-textarea">
 							<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
-							<button type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" >{L_PREVIEW}</button>
+							<div class="center">
+								<button type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="small">{L_PREVIEW}</button>
+							</div>
 						</div>
 						<br />
 						<div class="form-element">
-							
-							<label for="display_mode">{L_DISPLAY_MODE}</label>
-							<br />
-							<span class="smaller">{L_DISPLAY_EXPLAIN}</span>
-							
+							<label for="display_mode">{L_DISPLAY_MODE} <span class="field-description">{L_DISPLAY_EXPLAIN}</span></label>
 							<div class="form-field">
 								<select name="display_mode" id="display_mode">
 									<option value="0" {AUTO_SELECTED}>{L_DISPLAY_AUTO}</option>
@@ -103,21 +99,17 @@
 						</div>
 						<div id="hide_global_auth" style="display:{DISPLAY_GLOBAL};">
 							<div class="form-element">
-								
-									<label>
-										{L_READ_AUTH}
-									</label>
-								
+								<label>
+									{L_READ_AUTH}
+								</label>
 								<div class="form-field">
 									{category.READ_AUTH}
 								</div>					
 							</div>
 							<div class="form-element">
-								
-									<label>
-										{L_WRITE_AUTH}
-									</label>
-								
+								<label>
+									{L_WRITE_AUTH}
+								</label>
 								<div class="form-field">
 									{category.WRITE_AUTH}
 								</div>					
@@ -212,9 +204,7 @@
 					<fieldset>
 						<legend>{L_QUESTION}</legend>
 						<div class="form-element">
-							
-								<label for="entitled">{L_ENTITLED}</label>
-							
+							<label for="entitled">{L_ENTITLED}</label>
 							<div class="form-field">
 								<input type="text" value="{edit_question.ENTITLED}" maxlength="255" size="50" id="entitled" name="entitled">
 							</div>
@@ -223,10 +213,11 @@
 						{KERNEL_EDITOR}
 						<div class="form-element-textarea">
 							<textarea id="contents" rows="15" cols="66" name="answer">{edit_question.ANSWER}</textarea>
-							<button type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" >{L_PREVIEW}</button>
+							<div class="center">
+								<button type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="small">{L_PREVIEW}</button>
+							</div>
 						</div>
 					</fieldset>
-					<br />
 					<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
@@ -236,7 +227,6 @@
 						<input type="hidden" name="after" value="{edit_question.ID_AFTER}">
 					</fieldset>					
 				</form>
-				&nbsp;
 			</div>
 			<footer></footer>
 		</section>
@@ -253,9 +243,7 @@
 					<fieldset>
 						<legend>{L_TARGET}</legend>
 						<div class="form-element">
-							
-								<label for="target">{L_TARGET}</label>
-							
+							<label for="target">{L_TARGET}</label>
 							<div class="form-field">
 								{move_question.CATEGORIES_TREE}
 							</div>
@@ -268,7 +256,6 @@
 						<input type="hidden" name="move_question" value="true">
 					</fieldset>					
 				</form>
-				&nbsp;
 			</div>
 			<footer></footer>
 		</section>

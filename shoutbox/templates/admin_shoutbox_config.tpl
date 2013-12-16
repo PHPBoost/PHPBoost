@@ -43,18 +43,22 @@
 				<fieldset>
 					<legend>{L_SHOUTBOX_CONFIG}</legend>
 					<div class="form-element">
-						<label for="shoutbox_refresh_delay">* {L_SHOUTBOX_REFRESH_DELAY}</label><br /><span>{L_SHOUTBOX_REFRESH_DELAY_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="3" id="shoutbox_refresh_delay" name="shoutbox_refresh_delay" value="{SHOUTBOX_REFRESH_DELAY}"> {L_MINUTES}</label></div>
+						<label for="shoutbox_refresh_delay">
+							* {L_SHOUTBOX_REFRESH_DELAY}
+							<span class="field-description">{L_SHOUTBOX_REFRESH_DELAY_EXPLAIN}</span>
+						</label>
+						<div class="form-field"><input type="text" size="3" id="shoutbox_refresh_delay" name="shoutbox_refresh_delay" value="{SHOUTBOX_REFRESH_DELAY}"> {L_MINUTES}</div>
 					</div>
 					<div class="form-element">
-						<label for="shoutbox_max_msg">* {L_SHOUTBOX_MAX_MSG}</label><br /><span>{L_SHOUTBOX_MAX_MSG_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="3" id="shoutbox_max_msg" name="shoutbox_max_msg" value="{SHOUTBOX_MAX_MSG}"></label></div>
+						<label for="shoutbox_max_msg">
+							* {L_SHOUTBOX_MAX_MSG}
+							<span class="field-description">{L_SHOUTBOX_MAX_MSG_EXPLAIN}</span>
+						</label>
+						<div class="form-field"><input type="text" size="3" id="shoutbox_max_msg" name="shoutbox_max_msg" value="{SHOUTBOX_MAX_MSG}"></div>
 					</div>
 					<div class="form-element">
-						<label>* {L_FORBIDDEN_TAGS}</label>
+						<label>* {L_FORBIDDEN_TAGS}<span class="field-description">({L_EXPLAIN_SELECT_MULTIPLE})</span></label>
 						<div class="form-field"><label>
-							<span class="smaller">({L_EXPLAIN_SELECT_MULTIPLE})</span>
-							<br />
 							<select name="shoutbox_forbidden_tags[]" size="10" multiple="multiple">
 								# START forbidden_tags #
 									{forbidden_tags.TAGS}
@@ -65,8 +69,11 @@
 						</label></div>
 					</div>
 					<div class="form-element">
-						<label for="shoutbox_max_link">* {L_MAX_LINK}</label><br /><span>{L_MAX_LINK_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="2" name="shoutbox_max_link" id="shoutbox_max_link" value="{MAX_LINK}"></label></div>
+						<label for="shoutbox_max_link">
+							* {L_MAX_LINK}
+							<span class="field-description">{L_MAX_LINK_EXPLAIN}</span>
+						</label>
+						<div class="form-field"><input type="text" size="2" name="shoutbox_max_link" id="shoutbox_max_link" value="{MAX_LINK}"></div>
 					</div>
 				</fieldset>	
 				

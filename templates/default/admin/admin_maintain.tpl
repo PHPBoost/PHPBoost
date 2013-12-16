@@ -23,18 +23,14 @@
 					<div class="form-element" class="overflow_visible">
 						<label for="maintain">{L_SET_MAINTAIN}</label>
 						<div class="form-field">
-							<label>
-								<input type="radio" name="maintain_check" value="0"{MAINTAIN_CHECK_NO}> {L_NO}
-							</label>
-							<br />	
+							<label><input type="radio" name="maintain_check" value="0"{MAINTAIN_CHECK_NO}> {L_NO}</label>
 							<label for="maintain" onclick="document.getElementById('maintain_check1').checked = 'checked';">
 								<input type="radio" name="maintain_check" id="maintain_check1" value="1"{MAINTAIN_CHECK_DELAY}>
 								{L_DURING}
 								<select name="maintain" id="maintain">				
 									{DELAY_MAINTAIN_OPTION}				
 								</select>
-							</label>
-							<br />							
+							</label>						
 							<label>
 								<input type="radio" name="maintain_check" id="maintain_check2" value="2"{MAINTAIN_CHECK_UNTIL}>
 								{L_UNTIL}&nbsp;
@@ -50,13 +46,11 @@
 					<div class="form-element">
 						<label for="display_delay">{L_MAINTAIN_DELAY}</label>
 						<div class="form-field"><label><input type="radio" {DISPLAY_DELAY_ENABLED} name="display_delay" id="display_delay" value="1"> {L_YES}</label>
-						&nbsp;&nbsp; 
 						<label><input type="radio" {DISPLAY_DELAY_DISABLED} name="display_delay" value="0"> {L_NO}</label></div>
 					</div>
 					<div class="form-element">
 						<label for="maintain_display_admin">{L_MAINTAIN_DISPLAY_ADMIN}</label>
 						<div class="form-field"><label><input type="radio" {DISPLAY_ADMIN_ENABLED} name="maintain_display_admin" id="maintain_display_admin" value="1"> {L_YES}</label>
-						&nbsp;&nbsp; 
 						<label><input type="radio" {DISPLAY_ADMIN_DISABLED} name="maintain_display_admin" value="0"> {L_NO}</label></div>
 					</div>
 					<div class="form-element-textarea">
@@ -72,9 +66,7 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
-					&nbsp;
 					<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
-					&nbsp;
 					<button type="reset" value="true">{L_RESET}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>	
