@@ -59,8 +59,8 @@ class FormFieldPossibleValues extends AbstractFormField
 					'IS_DEFAULT' => (int) $options['is_default'],
 					'TITLE' => stripslashes($options['title'])
 				));
+				$i++;
 			}
-			$i++;
 		}
 		
 		if ($i == 0)

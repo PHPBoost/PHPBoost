@@ -66,7 +66,6 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 		$i = 0;
 		foreach ($this->get_value() as $name => $options)
 		{
-			
 			if (!empty($options))
 			{
 				$tpl->assign_block_vars('fieldelements', array(
@@ -85,9 +84,8 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 						));
 					}
 				}
+				$i++;
 			}
-			
-			$i++;
 		}
 		
 		if ($i == 0)

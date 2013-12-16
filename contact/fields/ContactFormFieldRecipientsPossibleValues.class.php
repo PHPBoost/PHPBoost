@@ -60,8 +60,8 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 					'IS_DEFAULT' => (int) $options['is_default'],
 					'EMAIL' => stripslashes($options['email'])
 				));
+				$i++;
 			}
-			$i++;
 		}
 		
 		if ($i == 0)
