@@ -9,9 +9,9 @@ var ContactFormFieldPossibleValues = Class.create({
 			var id = this.id_input + '_' + this.integer;
 			
 			var div = Builder.node('div', {'id' : id}, [
-				Builder.node('input', {type : 'checkbox', id : 'field_is_default_' + id, name : 'field_is_default_' + id, value : '1', 'class' : 'per_default'}),
+				Builder.node('input', {type : 'checkbox', id : 'field_is_default_' + id, name : 'field_is_default_' + id, value : '1', 'style' : 'margin: 0 25px 0 25px;'}),
 				' ',
-				Builder.node('input', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@admin.field.name}'}),
+				Builder.node('input', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}),
 				' ',
 				Builder.node('a', {href : 'javascript:ContactFormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'main')}", class : 'icon-delete'}),
 				' ',
@@ -37,11 +37,11 @@ var ContactFormFieldPossibleValues = new ContactFormFieldPossibleValues();
 </script>
 
 <div id="input_fields_${escape(ID)}">
-<span class="text-strong">{@admin.field.possible_values.is_default}</span>
+<span class="text-strong">{@field.possible_values.is_default}</span>
 # START fieldelements #
 	<div id="${escape(ID)}_{fieldelements.ID}">
-		<input type="checkbox" name="field_is_default_${escape(ID)}_{fieldelements.ID}" id="field_is_default_${escape(ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per_default" />
-		<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@admin.field.name}"/>
+		<input type="checkbox" name="field_is_default_${escape(ID)}_{fieldelements.ID}" id="field_is_default_${escape(ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # style="margin: 0 25px 0 25px;" />
+		<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.name}"/>
 		<a href="javascript:ContactFormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
 	</div>
 # END fieldelements #

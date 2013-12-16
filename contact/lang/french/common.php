@@ -58,53 +58,12 @@ $lang['admin.fields.title.add_field'] = 'Ajout d\'un nouveau champ';
 $lang['admin.fields.title.add_field.page_title'] = 'Ajout d\'un nouveau champ dans le formulaire du module contact';
 $lang['admin.fields.title.edit_field'] = 'Edition d\'un champ';
 $lang['admin.fields.title.edit_field.page_title'] = 'Edition d\'un champ dans le formulaire du module contact';
-$lang['admin.fields.action.add_field'] = 'Ajouter un champ';
-$lang['admin.fields.action.edit_field'] = 'Modifier le champ';
-$lang['admin.fields.action.delete_field'] = 'Supprimer le champ';
-$lang['admin.fields.delete_field.confirm'] = 'Souhaitez vous vraiment supprimer ce champ ?';
-$lang['admin.fields.update_fields_position'] = 'Valider la position des champs';
-$lang['admin.fields.no_field'] = 'Aucun champ';
-$lang['admin.fields.move_field_up'] = 'Monter le champ';
-$lang['admin.fields.move_field_down'] = 'Descendre le champ';
 
 //Field
-$lang['admin.field.name'] = 'Nom';
-$lang['admin.field.description'] = 'Description';
-$lang['admin.field.type'] = 'Type de champ';
-$lang['admin.field.regex'] = 'Contrôle de la forme de l\'entrée';
-$lang['admin.field.regex-explain'] = 'Permet d\'effectuer un contrôle sur la forme de ce que l\'utilisateur a entré. Par exemple, si il s\'agit d\'une adresse mail, on peut contrôler que sa forme est correcte. <br />Vous pouvez effectuer un contrôle personnalisé en tapant une expression régulière (utilisateurs expérimentés seulement).';
-$lang['admin.field.predefined-regex'] = 'Forme prédéfinie';
-$lang['admin.field.required'] = 'Champ requis';
-$lang['admin.field.possible-values'] = 'Valeurs possibles';
-$lang['admin.field.possible_values.is_default'] = 'Par défaut';
-$lang['admin.field.possible_values.email'] = 'Adresse(s) email';
-$lang['admin.field.possible_values.email.explain'] = 'Il est possible d\'indiquer plusieurs adresses email séparées par un point-virgule';
-$lang['admin.field.possible_values.recipient'] = 'Destinataire(s)';
-$lang['admin.field.possible_values.recipient.explain'] = 'Le mail sera envoyé au(x) destinataire(s) sélectionné(s) si le champ destinataire n\'est pas affiché';
-$lang['admin.field.default-value'] = 'Valeur par défaut';
-$lang['admin.field.display'] = 'Afficher';
-$lang['admin.field.not_display'] = 'Ne pas afficher';
-$lang['admin.field.yes'] = 'Oui';
-$lang['admin.field.no'] = 'Non';
-
-//Field type
-$lang['field.type.short-text'] = 'Texte court (max 255 caractères)';
-$lang['field.type.long-text'] = 'Texte long (illimité)';
-$lang['field.type.half-text'] = 'Text semi long';
-$lang['field.type.simple-select'] = 'Sélection unique (parmi plusieurs valeurs)';
-$lang['field.type.multiple-select'] = 'Sélection multiple (parmi plusieurs valeurs)';
-$lang['field.type.simple-check'] = 'Choix unique (parmi plusieurs valeurs)';
-$lang['field.type.multiple-check'] = 'Choix multiples (parmi plusieurs valeurs)';
-$lang['field.type.date'] = 'Date';
-
-// Regex
-$lang['regex.figures'] = 'Chiffres';
-$lang['regex.letters'] = 'Lettres';
-$lang['regex.figures-letters'] = 'Chiffres et lettres';
-$lang['regex.word'] = 'Mot';
-$lang['regex.website'] = 'Site web';
-$lang['regex.mail'] = 'Mail';
-$lang['regex.personnal-regex'] = 'Expression régulière personnalisée';
+$lang['field.possible_values.email'] = 'Adresse(s) email';
+$lang['field.possible_values.email.explain'] = 'Il est possible d\'indiquer plusieurs adresses email séparées par un point-virgule';
+$lang['field.possible_values.recipient'] = 'Destinataire(s)';
+$lang['field.possible_values.recipient.explain'] = 'Le mail sera envoyé au(x) destinataire(s) sélectionné(s) si le champ destinataire n\'est pas affiché';
 
 //Messages
 $lang['message.field_name_already_used'] = 'Le nom du champ entré est déjà utilisé !';

@@ -29,8 +29,6 @@
 #                     French                       #
  ####################################################
  
-$lang = array();
-
 // Title 
 $lang['members.config-members'] = 'Configuration des membres';
 $lang['members.members-management'] = 'Gestion des membres';
@@ -129,6 +127,8 @@ $lang['field.required'] = 'Champ requis';
 $lang['field.required_explain'] = 'Obligatoire dans le profil du membre et à son inscription.';
 $lang['field.possible-values'] = 'Valeurs possibles';
 $lang['field.possible-values-explain'] = 'Séparez les différentes valeurs par le symbole |';
+$lang['field.possible_values.is_default'] = 'Par défaut';
+$lang['field.default-value'] = 'Valeur par défaut';
 $lang['field.default-values'] = 'Valeurs par défaut';
 $lang['field.default-values-explain'] = 'Séparez les différentes valeurs par le symbole |';
 $lang['field.default-possible-values'] = 'Oui|Non';

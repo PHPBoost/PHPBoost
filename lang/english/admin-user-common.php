@@ -29,8 +29,6 @@
 #                     English                       #
  ####################################################
  
-$lang = array();
-
 // Title 
 $lang['members.config-members'] = 'Members configuration';
 $lang['members.members-management'] = 'Members management';
@@ -129,6 +127,8 @@ $lang['field.required'] = 'Required field';
 $lang['field.required_explain'] = 'Required in the member profile and registration area';
 $lang['field.possible-values'] = 'Possible values';
 $lang['field.possible-values-explain'] = 'Separate each value with |';
+$lang['field.possible_values.is_default'] = 'Is default';
+$lang['field.default-value'] = 'Default value';
 $lang['field.default-values'] = 'Default values';
 $lang['field.default-values-explain'] = 'Separate each value with |';
 $lang['field.default-possible-values'] = 'Yes|No';

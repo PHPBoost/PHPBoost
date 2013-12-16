@@ -122,7 +122,10 @@ abstract class AbstractContactField implements ContactFieldType
 				case 'possible_values':
 					$this->disable_fields_configuration[] = $name;
 					break;
-				case 'default_value':
+				case 'default_value_small':
+					$this->disable_fields_configuration[] = $name;
+					break;
+				case 'default_value_medium':
 					$this->disable_fields_configuration[] = $name;
 					break;
 				case 'authorizations':

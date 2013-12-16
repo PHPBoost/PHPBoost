@@ -60,7 +60,7 @@ var ContactField = Class.create({
 		# ENDIF #
 	},
 	delete_fields : function() {
-		if (confirm(${escapejs(@admin.fields.delete_field.confirm)}))
+		if (confirm(${escapejs(@fields.delete_field.confirm)}))
 		{
 			new Ajax.Request('${relative_url(ContactUrlBuilder::delete_field())}', {
 				method:'post',
@@ -131,14 +131,14 @@ var ContactField = Class.create({
 	change_display_picture : function() {
 		if (this.is_not_displayed == false) {
 			$('change_display_' + this.id).className = "icon-eye";
-			$('change_display_' + this.id).title = "{@admin.field.display}";
-			$('change_display_' + this.id).alt = "{@admin.field.display}";
+			$('change_display_' + this.id).title = "{@field.display}";
+			$('change_display_' + this.id).alt = "{@field.display}";
 			this.is_not_displayed = true;
 		}
 		else {
 			$('change_display_' + this.id).className = "icon-eye-slash";
-			$('change_display_' + this.id).title = "{@admin.field.not_display}";
-			$('change_display_' + this.id).alt = "{@admin.field.not_display}";
+			$('change_display_' + this.id).title = "{@field.not_display}";
+			$('change_display_' + this.id).alt = "{@field.not_display}";
 			this.is_not_displayed = false;
 		}
 	},
@@ -154,7 +154,7 @@ Event.observe(window, 'load', function() {
 # INCLUDE MSG #
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="ContactFields.serialize_sortable();">
 	<fieldset id="contact_fields_management">
-	<legend>{@admin.fields.manage}</legend>
+	<legend>${LangLoader::get_message('admin.fields.manage', 'common', 'contact')}</legend>
 		<ul id="fields_list" class="sortable-block">
 			# START fields_list #
 				<li class="sortable-element" id="list_{fields_list.ID}">
@@ -163,20 +163,20 @@ Event.observe(window, 'load', function() {
 						<i class="icon-globe"></i>
 						<span class="text-strong">{fields_list.NAME}</span>
 						<div class="sortable-actions">
-							{@admin.field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #{@admin.field.yes}# ELSE #{@admin.field.no}# ENDIF #</span>
+							{@field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
-								<a title="{@admin.fields.move_field_up}" id="move_up_{fields_list.ID}"><i class="icon-arrow-up"></i></a>
+								<a title="{@fields.move_field_up}" id="move_up_{fields_list.ID}"><i class="icon-arrow-up"></i></a>
 							</div>
 							<div class="sortable-options">
-								<a title="{@admin.fields.move_field_down}" id="move_down_{fields_list.ID}"><i class="icon-arrow-down"></i></a>
+								<a title="{@fields.move_field_down}" id="move_down_{fields_list.ID}"><i class="icon-arrow-down"></i></a>
 							</div>
 							# ENDIF #
 							<div class="sortable-options">
-								<a href="{fields_list.U_EDIT}" title="{@admin.fields.action.edit_field}" class="icon-edit"></a>
+								<a href="{fields_list.U_EDIT}" title="{@fields.action.edit_field}" class="icon-edit"></a>
 							</div>
 							<div class="sortable-options">
-								# IF fields_list.C_DELETE #<a class="icon-delete" data-confirmation="delete-element" title="{@admin.fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
+								# IF fields_list.C_DELETE #<a class="icon-delete" data-confirmation="delete-element" title="{@fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
 							</div>
 							<div class="sortable-options">
 							# IF NOT fields_list.C_READONLY #<a><i id="change_display_{fields_list.ID}" class="icon-eye"></i></a># ELSE #&nbsp;# ENDIF #
@@ -220,14 +220,14 @@ Event.observe(window, 'load', function() {
 				</script>
 			# END fields_list #
 		</ul>
-		<div id="no_field" class="center"# IF C_FIELDS # style="display:none;"# ENDIF #>{@admin.fields.no_field}</div>
+		<div id="no_field" class="center"# IF C_FIELDS # style="display:none;"# ENDIF #>{@fields.no_field}</div>
 	</fieldset>
 	<fieldset class="fieldset-submit">
 		# IF C_MORE_THAN_ONE_FIELD #
-		<button type="submit" name="submit" value="true">{@admin.fields.update_fields_position}</button>
+		<button type="submit" name="submit" value="true">{@fields.update_fields_position}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="position" id="position" value="">
 		# ENDIF #
-		<button type="submit" name="add_field" value="true">{@admin.fields.action.add_field}</button>
+		<button type="submit" name="add_field" value="true">{@fields.action.add_field}</button>
 	</fieldset>
 </form>

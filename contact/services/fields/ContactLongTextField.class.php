@@ -30,8 +30,8 @@ class ContactLongTextField extends AbstractContactField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('possible_values'));
-		$this->set_name(LangLoader::get_message('field.type.long-text', 'common', 'contact'));
+		$this->set_disable_fields_configuration(array('possible_values', 'default_value_small'));
+		$this->set_name(LangLoader::get_message('type.long-text', 'admin-user-common'));
 	}
 	
 	public function display_field(ContactField $field)

@@ -60,12 +60,12 @@ class AdminContactFieldsListController extends AdminController
 			'C_MORE_THAN_ONE_FIELD' => $fields_number > 1
 		));
 		
-		return new AdminContactDisplayResponse($this->view, $this->lang['admin.fields.manage.page_title']);
+		return new AdminContactDisplayResponse($this->view, LangLoader::get_message('admin.fields.manage.page_title', 'common', 'contact'));
 	}
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'contact');
+		$this->lang = LangLoader::get('admin-user-common');
 		$this->view = new FileTemplate('contact/AdminContactFieldsListController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->config = ContactConfig::load();
