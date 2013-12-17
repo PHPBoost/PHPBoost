@@ -500,11 +500,6 @@
 						</table>
 					</td>
 				</tr>
-				<tr>
-					<td colspan="2">
-						{L_LANG_ALL}
-					</td>
-				</tr>
 			</tbody>
 		</table>
 		# ENDIF #
