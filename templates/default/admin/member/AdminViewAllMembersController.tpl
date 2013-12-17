@@ -1,7 +1,7 @@
 		# INCLUDE FORM #
-		
-		{L_USERS_MANAGEMENT}
+				
 		<table>
+			<caption>{L_USERS_MANAGEMENT}</caption>
 			<thead>
 				<tr>
 					<th>
