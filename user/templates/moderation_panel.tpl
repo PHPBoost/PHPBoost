@@ -69,7 +69,7 @@
 					<fieldset>
 						<legend>{L_SEARCH_USER}</legend>
 						<div class="form-element">
-							<label for="login">{L_SEARCH_USER}</label><br /><span>{L_JOKER}</span>
+							<label for="login">{L_SEARCH_USER} <span class="field-description">{L_JOKER}</span></label>
 							<div class="form-field">
 								<input type="text" size="20" maxlength="25" id="login" value="" name="login">						
 								<button onclick="XMLHttpRequest_search(this.form);" type="button">{L_SEARCH}</button>
