@@ -1,7 +1,7 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post">
 	<table>
-		<caption><h2>{@langs.not_installed}</h2></caption>
+		<caption>{@langs.not_installed}</caption>
 		# IF C_LANG_INSTALL #
 		<thead>
 			<tr> 

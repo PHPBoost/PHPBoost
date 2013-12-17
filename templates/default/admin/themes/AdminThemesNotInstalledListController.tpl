@@ -1,7 +1,7 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post">
 	<table>
-		<caption><h2>{@themes.not_installed}</h2></caption>
+		<caption>{@themes.not_installed}</caption>
 		# IF C_THEME_INSTALL #
 		<thead>
 			<tr> 

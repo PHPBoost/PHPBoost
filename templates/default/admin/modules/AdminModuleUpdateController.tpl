@@ -10,7 +10,7 @@
 		</div>
 		
 		<table>
-			<caption><h2>{@modules.updates_available}</h2></caption>
+			<caption>{@modules.updates_available}</caption>
 			<thead>
 				<tr>
 					<th>{@modules.name}</th>

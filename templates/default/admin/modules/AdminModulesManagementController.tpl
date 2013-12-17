@@ -43,7 +43,7 @@
 		</script>
 		<form action="{REWRITED_SCRIPT}" method="post">
 			<table>
-				<caption><h2>{@modules.installed_not_activated_modules}</h2></caption>
+				<caption>{@modules.installed_not_activated_modules}</caption>
 				# IF C_MODULES_NOT_ACTIVATED #
 				<thead>
 					<tr>
@@ -116,7 +116,7 @@
 			</table>
 			
 			<table>
-				<caption><h2>{@modules.installed_activated_modules}</h2></caption>
+				<caption>{@modules.installed_activated_modules}</caption>
 				# IF C_MODULES_ACTIVATED #
 				<thead>
 					<tr> 

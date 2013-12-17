@@ -119,7 +119,7 @@
 			
 			<div style="clear:right;"></div>
 			<table>
-				<caption><h2>{L_USER_ONLINE}</h2></caption>
+				<caption>{L_USER_ONLINE}</caption>
 				<thead>
 					<tr> 
 						<th>
