@@ -153,7 +153,7 @@
 							</tbody>
 						</table>
 					</td>
-					<td>
+					<td class="no-separator">
 						<img src="display_stats.php?theme=1" alt="" />
 					</td>
 				</tr>
@@ -202,7 +202,7 @@
 						</tbody>
 					</table>
 				</td>
-				<td>
+				<td class="no-separator">
 					{GRAPH_RESULT_SEX}
 				</td>
 			</tr>
@@ -410,7 +410,7 @@
 							</tbody>
 						</table>
 					</td>
-					<td>
+					<td class="no-separator">
 						{GRAPH_RESULT}
 					</td>
 				</tr>
@@ -449,7 +449,7 @@
 							</tbody>
 						</table>
 					</td>
-					<td>
+					<td class="no-separator">
 						{GRAPH_RESULT}
 					</td>
 				</tr>
@@ -488,13 +488,8 @@
 							</tbody>
 						</table>
 					</td>
-					<td>
+					<td class="no-separator">
 						{GRAPH_RESULT}
-					</td>
-				</tr>
-				<tr>
-					<td>
-						{L_LANG_ALL}
 					</td>
 				</tr>
 			</tbody>
@@ -744,7 +739,7 @@
 								</tbody>
 							</table>
 						</td>
-						<td>
+						<td class="no-separator">
 							<img src="display_stats.php?bot=1" alt="" />
 						</td>
 					</tr>
