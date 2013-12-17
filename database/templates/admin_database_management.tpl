@@ -325,18 +325,26 @@
 					</div>
 					<div class="block_contents2">
 						<fieldset style="background-color:white;margin:0px">
-							<legend><strong>{L_EXECUTED_QUERY}:</strong></legend>
 							<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
 						</fieldset>
 						
 						<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
 							<table>
+								# IF C_HEAD #
+								<thead>
+									<tr class="center">
+										# START head #
+										<th>{head.FIELD_NAME}</th>
+										# END head #
+									</tr>
+								</thead>
+								# ENDIF #
 								<tbody>
 									# START line #
 									<tr>
 										# START line.field #
-										<td class="{line.field.CLASS}" style="{line.field.STYLE}">
-											{line.field.FIELD}
+										<td style="{line.field.STYLE}">
+											{line.field.FIELD_NAME}
 										</td>
 										# END line.field #
 									</tr>

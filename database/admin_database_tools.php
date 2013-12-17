@@ -83,7 +83,7 @@ if (!empty($table) && $action == 'data')
 	//On éxécute la requête
 	$nbr_lines = $Sql->query("SELECT COUNT(*) FROM ".$table, __LINE__, __FILE__);
 	$query = "SELECT * FROM ".$table.$Sql->limit($Pagination->get_first_msg(30, 'p'), 30);
-	$result = $Sql->query_while ($query, __LINE__, __FILE__);			
+	$result = $Sql->query_while ($query, __LINE__, __FILE__);
 	$i = 1;
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -91,48 +91,28 @@ if (!empty($table) && $action == 'data')
 		//Premier passage: on liste le nom des champs sélectionnés
 		if ($i == 1)
 		{
-			$Template->assign_block_vars('line.field', array(
-				'FIELD' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-				'CLASS' => 'row1',
-				'STYLE' => ''
-			));
-				
 			foreach ($row as $field_name => $field_value)
 			{
-				$Template->assign_block_vars('line.field', array(
-					'FIELD' => '<strong>' . $field_name . '</strong>',
-					'CLASS' => 'row1'
+				$Template->assign_block_vars('head', array(
+					'FIELD_NAME' => $field_name
 				));
 			}
-			$Template->assign_block_vars('line', array());
 		}
 		
 		//On parse les valeurs de sortie
 		$j = 0;
 		foreach ($row as $field_name => $field_value)
 		{
-			/*
-			if ($j == 0 && !empty($primary_key)) //Clée primaire détectée.
-			{
-				$Template->assign_block_vars('line.field', array(
-					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . $Session->get_token() . '" title="' . $LANG['update'] . '" class="icon-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="icon-delete" data-confirmation="delete-element"></a>',
-					'CLASS' => 'row1',
-					'STYLE' => ''
-				));
-			}
-			*/
 			if ($j == 0)
 			{
 				$Template->assign_block_vars('line.field', array(
-					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . $Session->get_token() . '" title="' . $LANG['update'] . '" class="icon-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="icon-delete" data-confirmation="delete-element"></a>',
-					'CLASS' => 'row1',
+					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . $Session->get_token() . '" title="' . $LANG['update'] . '" class="icon-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="icon-delete" data-confirmation="delete-element"></a></span>',
 					'STYLE' => ''
 				));
 			}
 			
 			$Template->assign_block_vars('line.field', array(
-				'FIELD' => str_replace("\n", '<br />', TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE)),
-				'CLASS' => 'row2',
+				'FIELD_NAME' => str_replace("\n", '<br />', TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE)),
 				'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 			));
 			$j++;
@@ -313,12 +293,12 @@ elseif (!empty($table) && $action == 'query')
 		$Template->put_all(array(
 			'C_QUERY_RESULT' => true
 		));
-	
-		$lower_query = strtolower($query);		
+		
+		$lower_query = strtolower($query);
 		if (strtolower(substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
 			//On éxécute la requête
-			$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
+			$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);
 			$i = 1;
 			while ($row = $Sql->fetch_assoc($result))
 			{
@@ -327,17 +307,14 @@ elseif (!empty($table) && $action == 'query')
 				if ($i == 1)
 				{
 					foreach ($row as $field_name => $field_value)
-						$Template->assign_block_vars('line.field', array(
-							'FIELD' => '<strong>' . $field_name . '</strong>',
-							'CLASS' => 'row3'
+						$Template->assign_block_vars('head', array(
+							'FIELD_NAME' => $field_name
 						));
-					$Template->assign_block_vars('line', array());
 				}
 				//On parse les valeurs de sortie
 				foreach ($row as $field_name => $field_value)
 				$Template->assign_block_vars('line.field', array(
-					'FIELD' => TextHelper::strprotect($field_value),
-					'CLASS' => 'row1',
+					'FIELD_NAME' => TextHelper::strprotect($field_value),
 					'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 				));
 				
@@ -347,7 +324,7 @@ elseif (!empty($table) && $action == 'query')
 		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
 			$result = $Sql->query_inject($query, __LINE__, __FILE__);
-			$affected_rows = @$Sql->affected_rows($result, "");			
+			$affected_rows = @$Sql->affected_rows($result, "");
 		}
 	}	
 	elseif (!empty($table))

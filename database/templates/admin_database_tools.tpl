@@ -278,7 +278,6 @@
 				</div>
 				<div class="block_contents">
 					<fieldset style="background-color:white;margin:0px">
-						<legend><strong>{L_EXECUTED_QUERY}:</strong></legend>
 						<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
 					</fieldset>
 					
@@ -286,22 +285,32 @@
 					# IF PAGINATION #<strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
 					
 					<div style="width:99%;margin:auto;overflow:auto;padding:0px 2px">
-						<table class="module-table">
-							# START line #
-							<tr>
-								# START line.field #
-								<td class="{line.field.CLASS}" style="{line.field.STYLE}">
-									{line.field.FIELD}
-								</td>
-								# END line.field #
-							</tr>
-							# END line #
+						<table>
+							<thead>
+								<tr class="center">
+									<th>&nbsp;</th>
+									# START head #
+									<th>{head.FIELD_NAME}</th>
+									# END head #
+								</tr>
+							</thead>
+							<tbody>
+								# START line #
+								<tr>
+									# START line.field #
+									<td style="{line.field.STYLE}">
+										{line.field.FIELD_NAME}
+									</td>
+									# END line.field #
+								</tr>
+								# END line #
+							</tbody>
 						</table>
 					</div>
 					<br />
 					# IF PAGINATION #<strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
 				</div>
-			</div>			
+			</div>
 			# ENDIF #
 			
 			
@@ -369,21 +378,29 @@
 				</div>
 				<div class="block_contents2">
 					<fieldset style="background-color:white;margin:0px">
-						<legend><strong>{L_EXECUTED_QUERY}:</strong></legend>
 						<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
 					</fieldset>
 					
 					<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
-						<table class="module-table">
-							# START line #
-							<tr>
-								# START line.field #
-								<td class="{line.field.CLASS}" style="{line.field.STYLE}">
-									{line.field.FIELD}
-								</td>
-								# END line.field #
-							</tr>
-							# END line #
+						<table>
+							<thead>
+								<tr class="center">
+									# START head #
+									<th>{head.FIELD_NAME}</th>
+									# END head #
+								</tr>
+							</thead>
+							<tbody>
+								# START line #
+								<tr>
+									# START line.field #
+									<td style="{line.field.STYLE}">
+										{line.field.FIELD_NAME}
+									</td>
+									# END line.field #
+								</tr>
+								# END line #
+							</tbody>
 						</table>
 					</div>
 				</div>
