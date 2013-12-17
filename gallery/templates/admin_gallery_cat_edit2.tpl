@@ -67,7 +67,6 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid_root" value="true">{L_UPDATE}</button>
-					&nbsp;&nbsp; 
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>	
 			</form>

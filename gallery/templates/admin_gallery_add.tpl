@@ -83,25 +83,17 @@
 			</form>
 			
 			<form action="admin_gallery_add.php?token={TOKEN}" method="post">
-				<table class="module-table">
-					<tr> 
-						<th colspan="2">
-							{L_IMG_DISPO_GALLERY}
-						</th>
-					</tr>
-					<tr> 
-						<td class="row1" colspan="2">
-							{L_REQUIRE}
-						</td>
-					</tr>
-					<tr> 
-						<td class="row1" colspan="2">
-							{L_SELECT_IMG_ADD}
-						</td>
-					</tr>
-					<tr> 
-						<td class="row1" colspan="2">
-							<span class="smaller">{L_CAT}:</span> 
+				<fieldset>
+					<legend>{L_IMG_DISPO_GALLERY}</legend>
+					
+					<div id="id-message-helper" class="message-helper notice">
+						<i class="icon-notice"></i>
+						<div class="message-helper-content">{L_REQUIRE}<br />{L_SELECT_IMG_ADD}</div>
+					</div>
+
+					<div class="form-element">
+						<label for="category" style="text-align:right;vertical-align: middle;">{L_CAT}</label>
+						<div class="form-field">
 							<select name="root_cat" id="root_cat" class="valign-middle">
 								{CATEGORIES}
 							</select>
@@ -113,59 +105,74 @@
 								# END list #
 							});
 							</script>
-						</td>
-					</tr>
-					<tr> 	
-						<td>
-							
-							# START list #
-								<div style="text-align:center;width:{COLUMN_WIDTH_PICS}%;float:left;">
-									<table class="module-table" style="width:100%;">
-										<tr>
-											<td>												
-												<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign-middle"> <span class="smaller">{L_SELECT}</span>
-											</td>
-										</tr>
-										<tr>
-											<td style="height:{IMG_HEIGHT_MAX}px;padding:3px;text-align:center;">
-												{list.THUMNAILS}
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<span class="smaller">{L_NAME}: </span>
-												<input type="text" size="25" name="{list.ID}name" value="{list.NAME}" class="text valign-middle">
-												
-												<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<span class="smaller">{L_CAT}:</span> 
-												<select name="{list.ID}cat" id="{list.ID}cat" class="valign-middle" style="width:{SELECTBOX_WIDTH}%">
-													{list.CATEGORIES}
-												</select>
-											</td>
-										</tr>
-										<tr>
-											<td>												
-												<input type="checkbox" name="{list.ID}del" value="1" class="valign-middle"> <span class="smaller">{L_DELETE}</span> 
-											</td>
-										</tr>
-									</table>	
-							</div>
-							# END list #
+						</div>
+					</div>
+
+					# START list #
+						<div style="text-align:center;width:{COLUMN_WIDTH_PICS}%;float:left;">
+							<table>
+								<thead>
+									<tr>
+										<th>
+											<div class="form-element" style="margin:0px">
+												<label for="category" style="text-align:right;vertical-align: middle; width:auto; padding-right:0xp;">{L_NAME}</label>
+												<div class="form-field" style="width:auto;">
+													<input type="text" size="25" name="{list.ID}name" value="{list.NAME}" class="text valign-middle">
+													<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
+												</div>
+											</div>
+										</th>
+									</tr>
+								</thead>
+								<tfoot>
+									<tr>
+										<th>												
+											<div class="form-element" style="margin:0px">
+												<label for="category" style="text-align:right;vertical-align: middle; width:25%; padding-right:0xp;">{L_SELECT}</label>
+												<div class="form-field" style="width:auto;">
+													<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign-middle">
+												</div>
+											</div>
+											<div class="form-element" style="margin:0px">
+												<label for="category" style="text-align:right;vertical-align: middle; width:25%; padding-right:0xp;">{L_DELETE}</label>
+												<div class="form-field" style="width:auto;">
+													<input type="checkbox" name="{list.ID}del" value="1" class="valign-middle">
+												</div>
+											</div>
+										</th>
+									</tr>
+								</tfoot>
+								<tbody>
+									<tr>
+										<td style="height:{IMG_HEIGHT_MAX}px;padding:3px;text-align:center;">
+											{list.THUMNAILS}
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="form-element" style="margin:0px">
+												<label for="category" style="text-align:right;vertical-align: middle; width:auto; padding-right:0xp;">{L_CAT}</label>
+												<div class="form-field">
+													<select name="{list.ID}cat" id="{list.ID}cat" class="valign-middle" style="width:{SELECTBOX_WIDTH}%">
+														{list.CATEGORIES}
+													</select>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>	
+						</div>
+					# END list #
 														
-							# START no_img #						
-							<p style="text-align:center" class="row1">
-								<strong>{no_img.L_NO_IMG}</strong>
-							</p>
-							# END no_img #
-						</td>
-					</tr>
-				</table>
+					# START no_img #						
+					<div id="id-message-helper" class="message-helper notice">
+						<i class="icon-notice"></i>
+						<div class="message-helper-content">{no_img.L_NO_IMG}</div>
+					</div>
+					# END no_img #
 				
-				<br /><br />
+				</fieldset>
 				
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
