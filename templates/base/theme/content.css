@@ -43,6 +43,8 @@ section header h3, article header h3 {
 	font-weight: bold;
 }
 
+#actions-links-menu { float:right; }
+
 /* Icones avec les actions (edition, suppression, etc) */
 span.actions { float: right; }
 span.actions a { font-size: 12px; }
