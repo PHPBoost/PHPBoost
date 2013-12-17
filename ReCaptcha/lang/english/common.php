@@ -32,8 +32,7 @@
 $lang = array();
 
 $lang['incorrect_sol'] = 'The string you entered for the image verification did not match what was displayed.';
-$lang['input_text'] = 'Enter the words displayed above :';
-$lang['input_numbers'] = 'Enter the numbers you hear :';
+$lang['type_the_answer_here'] = 'Type the answer here ...';
 $lang['image_captcha'] = 'Get a new image';
 $lang['audio_captcha'] = 'Get an audio test';
 $lang['captcha_help'] = 'Help';
