@@ -127,24 +127,31 @@
 					<legend>{L_GROUPS_MANAGEMENT}</legend>
 					<div class="form-element">
 						<label for="name">* {L_NAME}</label>
-						<div class="form-field"><label><input type="text" size="25" id="name" name="name" value="{NAME}"></label></div>
+						<div class="form-field">
+							<label><input type="text" size="25" id="name" name="name" value="{NAME}"></label>
+						</div>
 					</div>
 					<div class="form-element">
 						<label for="auth_flood">{L_AUTH_FLOOD}</label>
-						<div class="form-field"><label><input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1"> {L_YES}
-						</label>&nbsp;&nbsp; 
-						<label><input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" value="0"> {L_NO}</label></div>
+						<div class="form-field">
+							<label><input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1"> {L_YES}</label>
+							<label><input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" value="0"> {L_NO}</label>
+						</div>
 					</div>
 					<div class="form-element">
-						<label for="pm_group_limit">{L_PM_GROUP_LIMIT}</label><br /><span>{L_PM_GROUP_LIMIT_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="{PM_GROUP_LIMIT}"></label></div>
+						<label for="pm_group_limit">{L_PM_GROUP_LIMIT} <span>{L_PM_GROUP_LIMIT_EXPLAIN}</span></label>
+						<div class="form-field">
+							<label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="{PM_GROUP_LIMIT}"></label>
+						</div>
 					</div>
 					<div class="form-element">
-						<label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}"> {L_MB}</label></div>
+						<label for="data_group_limit">{L_DATA_GROUP_LIMIT} <span class="field-description">{L_DATA_GROUP_LIMIT_EXPLAIN}</span></label>
+						<div class="form-field">
+							<label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}"> {L_MB}</label>
+						</div>
 					</div>
 					<div class="form-element" class="overflow_visible">
-						<label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span>
+						<label for="color_group">{L_COLOR_GROUP} <span class="field-description">{L_COLOR_GROUP_EXPLAIN}</span></label>
 						<div class="form-field">#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}">
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode-hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/default/images/color.png" alt="" class="valign-middle" /></a>	
 							<div class="color-picker" style="display:none;" id="bb_block1">
@@ -154,7 +161,7 @@
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span>
+						<label for="img_group">{L_IMG_ASSOC_GROUP} <span class="field-description">{L_IMG_ASSOC_GROUP_EXPLAIN}</span></label>
 						<div class="form-field">
 							<label>
 								<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
@@ -169,7 +176,6 @@
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{GROUP_ID}" class="update">
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
-					&nbsp;&nbsp; 
 					<button type="reset" value="true">{L_RESET}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>
@@ -185,11 +191,7 @@
 						<div class="form-field">
 							<input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr"> 
 							<span id="loading_groups"></span>
-							<script type="text/javascript">
-							<!--								
-								document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search();" type="button">');
-							-->
-							</script>
+							<button onclick="XMLHttpRequest_search();" type="submit">{L_SEARCH}</button>
 							<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 						</div>
 					</div>
@@ -201,8 +203,11 @@
 				</fieldset>
 			</form>
 			
-			{L_MBR_GROUP}
+			
 			<table>
+				<caption>
+					{L_MBR_GROUP}
+				</caption>
 				<thead>
 					<tr> 
 						<th>
@@ -253,7 +258,7 @@
 				<fieldset>
 				<legend>{L_UPLOAD_GROUPS}</legend>						
 					<div class="form-element">
-						<label for="upload_groups">{L_UPLOAD_GROUPS}</label><br />{L_UPLOAD_FORMAT}
+						<label for="upload_groups">{L_UPLOAD_GROUPS} <span class="field-description">{L_UPLOAD_FORMAT}</span></label>
 						<div class="form-field"><label>
 							<input type="hidden" name="max_file_size" value="2000000">
 							<input type="file" id="upload_groups" name="upload_groups" size="30" class="file">
@@ -267,30 +272,36 @@
 				</fieldset>
 			</form>
 			
-			
 			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_ADD_GROUPS}</legend>
 					<div class="form-element">
 						<label for="name">* {L_NAME}</label>
-						<div class="form-field"><label><input type="text" maxlength="25" size="25" id="name" name="name" value=""></label></div>
+						<div class="form-field">
+							<label><input type="text" maxlength="25" size="25" id="name" name="name" value=""></label>
+						</div>
 					</div>
 					<div class="form-element">
 						<label for="auth_flood">{L_AUTH_FLOOD}</label>
-						<div class="form-field"><label><input type="radio" name="auth_flood" id="auth_flood" checked="checked" value="1"> {L_YES}</label>
-						&nbsp;&nbsp; 
-						<label><input type="radio" name="auth_flood" value="0"> {L_NO}</label></div>
+						<div class="form-field">
+							<label><input type="radio" name="auth_flood" id="auth_flood" checked="checked" value="1"> {L_YES}</label> 
+							<label><input type="radio" name="auth_flood" value="0"> {L_NO}</label>
+						</div>
 					</div>
 					<div class="form-element">
-						<label for="pm_group_limit">{L_PM_GROUP_LIMIT}</label><br /><span>{L_PM_GROUP_LIMIT_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="75"></label></div>
+						<label for="pm_group_limit">{L_PM_GROUP_LIMIT} <span class="field-description">{L_PM_GROUP_LIMIT_EXPLAIN}</span></label>
+						<div class="form-field">
+							<label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="75"></label>
+						</div>
 					</div>
 					<div class="form-element">
-						<label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span>
-						<div class="form-field"><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="5"> {L_MB}</label></div>
+						<label for="data_group_limit">{L_DATA_GROUP_LIMIT} <span class="field-description">{L_DATA_GROUP_LIMIT_EXPLAIN}</span></label>
+						<div class="form-field">
+							<label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="5"> {L_MB}</label>
+						</div>
 					</div>
 					<div class="form-element" class="overflow_visible">
-						<label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span>
+						<label for="color_group">{L_COLOR_GROUP} <span class="field-description">{L_COLOR_GROUP_EXPLAIN}</span></label>
 						<div class="form-field">#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}">
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode-hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/default/images/color.png" alt="" class="valign-middle" /></a>	
 							<div class="color-picker" style="display:none;" id="bb_block1">
@@ -300,7 +311,7 @@
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span>
+						<label for="img_group">{L_IMG_ASSOC_GROUP} <span class="field-description">{L_IMG_ASSOC_GROUP_EXPLAIN}</span></label>
 						<div class="form-field"><label>
 							<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 								{IMG_GROUPS}
@@ -318,4 +329,3 @@
 			</form>
 			# ENDIF #
 		</div>
-		

@@ -1,6 +1,6 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<table>
-		<caption><h2>{@themes.installed}</h2></caption>
+		<caption>{@themes.installed}</caption>
 		<thead>
 			<tr> 
 				<th>{@themes.name}</th>

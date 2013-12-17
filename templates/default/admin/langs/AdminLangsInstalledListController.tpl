@@ -1,6 +1,6 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<table>
-		<caption><h2>{@langs.installed}</h2></caption>
+		<caption>{@langs.installed}</caption>
 		<thead>
 			<tr> 
 				<th>{@langs.name}</th>

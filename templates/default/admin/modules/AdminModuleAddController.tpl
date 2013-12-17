@@ -2,7 +2,7 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	# INCLUDE MSG #	
 	<table>
-		<caption><h2>{@modules.modules_available}</h2></caption>
+		<caption>{@modules.modules_available}</caption>
 		# IF C_MODULES_AVAILABLE #
 		<thead>
 			<tr> 
