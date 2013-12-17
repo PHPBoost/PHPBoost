@@ -3,19 +3,19 @@
 			# INCLUDE message_helper #
 
 			# START categories_management #
-				<table class="module-table" style="width:99%;">
-					<tr>
-						<th colspan="3">
-							{L_MANAGEMENT_CATS}
-						</th>
-					</tr>
-					<tr>
-						<td style="padding-left:20px;" class="row2">
-							<br />
-							{categories_management.CATEGORIES}
-							<br />
-						</td>
-					</tr>
+				<table>
+					<thead>
+						<tr> 
+							<th>{L_MANAGEMENT_CATS}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td> 
+								{categories_management.CATEGORIES}
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			# END categories_management #
 

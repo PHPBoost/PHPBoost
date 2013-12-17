@@ -94,8 +94,7 @@ class CalendarAjaxCalendarController extends AbstractController
 			{
 				if (($event['type'] == 'EVENT' && $start_date->get_month() == $month && $start_date->get_year() == $year) || ($event['type'] == 'BIRTHDAY' && $start_date->get_month() == $month))
 				{
-					$title = isset($array_events[$j]['title']) ? $array_events[$j]['title'] . '
-' : '';
+					$title = isset($array_events[$j]['title']) ? $array_events[$j]['title']: '';
 					$array_events[$j] = array(
 						'title' => $title . ($event['type'] != 'BIRTHDAY' ? ($j == $start_date->get_day() ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : $this->lang['calendar.labels.birthday_title'] . ' ') . $event['title'],
 						'type' => $event['type'],

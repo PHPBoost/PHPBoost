@@ -1,22 +1,21 @@
 		# INCLUDE admin_download_menu #
 		
 		<div id="admin_contents">
-		
 			# INCLUDE message_helper #
 
-			<table class="module-table" style="width:99%;">
-				<tr>			
-					<th colspan="3">
-						{L_CATS_MANAGEMENT}
-					</th>
-				</tr>							
-				<tr>
-					<td style="padding-left:20px;">
-						<br />
-						{CATEGORIES}
-						<br />
-					</td>
-				</tr>
+			<table>
+				<thead>
+					<tr> 
+						<th>{L_CATS_MANAGEMENT}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td> 
+							{CATEGORIES}
+						</td>
+					</tr>
+				</tbody>
 			</table>
 			
 			<div style="text-align:center; margin:30px 20px;">
@@ -26,5 +25,4 @@
 				<br />
 				<a href="{U_RECOUNT_SUBFILES}">{L_RECOUNT_SUBFILES}</a>
 			</div>
-				
 		</div>

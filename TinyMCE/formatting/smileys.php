@@ -37,7 +37,7 @@ require_once(PATH_TO_ROOT . '/kernel/begin.php');
 define('TITLE', $LANG['all_smiley']);
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$tpl_smileys = new FileTemplate('TinyMCE/smileys_tinymce.tpl');
+$tpl_smileys = new FileTemplate('TinyMCE/smileys.tpl');
 
 //Chargement de la configuration.
 $smileys_cache = SmileysCache::load();
@@ -61,34 +61,6 @@ $nbr_smile = count($smileys_cache->get_smileys());
 $j = 0;
 foreach($smileys_cache->get_smileys() as $code_smile => $infos)
 {
-    $smiley_width = 18; //Valeur par défaut.
-    $smiley_height = 18;
-
-    $smiley = new Image(Url::to_absolute('/images/smileys/' . $infos['url_smiley']));
-	$smiley_height = $smiley->get_height();
-	$smiley_width = $smiley->get_width();
-	
-    if ( $smiley_width > $width_max || $smiley_height > $height_max )
-    {
-        if ( $smiley_width > $smiley_height )
-        {
-            $ratio = $smiley_width / $smiley_height;
-            $width = $width_max;
-            $height = $width / $ratio;
-        }
-        else
-        {
-            $ratio = $smiley_height / $smiley_width;
-            $height = $height_max;
-            $width = $height / $ratio;
-        }
-    }
-    else
-    {
-        $width = $smiley_width;
-        $height = $smiley_height;
-    }
-
     //On genère le tableau pour $smile_by_line colonnes
     $multiple_x = $j / $smile_by_line ;
     $tr_start = (is_int($multiple_x)) ? '<tr>' : '';
@@ -104,7 +76,7 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
 
     $tpl_smileys->assign_block_vars('smiley', array(
 		'URL' => $infos['url_smiley'],
-		'IMG' => '<img src="' . $smiley->get_path() . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />',
+		'IMG' => '<img src="' . Url::to_absolute('/images/smileys/' . $infos['url_smiley']) . '" alt="' . $code_smile . '" title="' . $code_smile . '" />',
 		'CODE' => addslashes($code_smile),
 		'TR_START' => $tr_start,
 		'TR_END' => $tr_end,

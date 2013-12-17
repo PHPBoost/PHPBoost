@@ -28,13 +28,14 @@
 		//-->
 		</script>
 
-		<table class="module-table" style="margin:15px auto">
-			<th colspan="{COLSPAN}">
-				{L_SMILEY}
-			</th>
-			<tr class="row2">
-				<td>
-					<table class="module-table" style="width:auto;text-align:center;margin:15px auto">
+		<table>
+			<thead>
+				<tr> 
+					<th colspan="{COLSPAN}">{L_SMILEY}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
 					# START smiley #
 						{smiley.TR_START}
 							<td>
@@ -45,15 +46,8 @@
 							# END smiley.td #
 						{smiley.TR_END}
 					# END smiley #
-					</table>
-					<p style="text-align:center;">
-						<a href="javascript:fermer()" title="{L_CLOSE}"><span style="color:red;">{L_CLOSE}</span></a>
-					</p>
-				</td>
-			</tr>
-			<th colspan="{COLSPAN}">
-				&nbsp;
-			</th>
-		</table>	
+				</tr>
+			</tbody>
+		</table>
 	</body>
 </html>
