@@ -53,11 +53,11 @@
 				# START subgalleries #
 				<fieldset>
 					<legend>{subgalleries.L_KEEP}</legend>
-					<div class="error_warning" style="width:500px;margin:auto;padding:15px;">
-						<i class="icon-notice"></i> &nbsp;{subgalleries.L_EXPLAIN_CAT}
-						<br />	
+					<div id="id-message-helper" class="message-helper warning">
+						<i class="icon-notice"></i>
+						<div class="message-helper-content">{subgalleries.L_EXPLAIN_CAT}</div>
 					</div>
-					<br />	
+
 					<div class="form-element">
 						<label for="f_to">{subgalleries.L_MOVE_GALLERIES}</label>
 						<div class="form-field"><label>
