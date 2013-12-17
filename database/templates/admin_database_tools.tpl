@@ -19,7 +19,7 @@
 				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px">
 					- <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> - <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
-				<menu class="dynamic-menu group">
+				<menu class="dynamic-menu group center">
 					<ul>
 						<li>
 							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure"><img src="./database_mini.png"/> {L_TABLE_STRUCTURE}</a>
@@ -394,41 +394,45 @@
 			# IF C_DATABASE_UPDATE_FORM #
 			<br />
 			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-				<table class="module-table">
-					<tr style="text-align:center;">
-						<td class="row3 text-strong">
-							{L_FIELD_FIELD}
-						</td>
-						<td class="row3 text-strong">
-							{L_FIELD_TYPE}
-						</td>
-						<td class="row3 text-strong">
-							{L_FIELD_NULL}
-						</td>
-						<td class="row3 text-strong">
-							{L_FIELD_VALUE}
-						</td>
-					</tr>
-					# START fields #
-					<tr>
-						<td class="row1">
-							{fields.FIELD_NAME}
-						</td>
-						<td class="row1">
-							{fields.FIELD_TYPE}
-						</td>
-						<td class="row2">
-							{fields.FIELD_NULL}
-						</td>
-						<td class="row2">
-							# IF fields.C_FIELD_FORM_EXTEND #
-							<textarea rows="6" cols="37" name="{fields.FIELD_NAME}">{fields.FIELD_VALUE}</textarea>
-							# ELSE #
-							<input type="text" size="30" name="{fields.FIELD_NAME}" value="{fields.FIELD_VALUE}">
-							# ENDIF #
-						</td>
-					</tr>
-					# END fields #
+				<table>
+					<thead>
+						<tr class="center">
+							<th>
+								{L_FIELD_FIELD}
+							</th>
+							<th>
+								{L_FIELD_TYPE}
+							</th>
+							<th>
+								{L_FIELD_NULL}
+							</th>
+							<th>
+								{L_FIELD_VALUE}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						# START fields #
+						<tr>
+							<td>
+								<span class="text-strong">{fields.FIELD_NAME}</span>
+							</td>
+							<td>
+								<span class="text-strong">{fields.FIELD_TYPE}</span>
+							</td>
+							<td>
+								{fields.FIELD_NULL}
+							</td>
+							<td>
+								# IF fields.C_FIELD_FORM_EXTEND #
+								<textarea rows="6" cols="37" name="{fields.FIELD_NAME}">{fields.FIELD_VALUE}</textarea>
+								# ELSE #
+								<input type="text" size="30" name="{fields.FIELD_NAME}" value="{fields.FIELD_VALUE}">
+								# ENDIF #
+							</td>
+						</tr>
+						# END fields #
+					</tbody>
 				</table>
 				<fieldset class="fieldset-submit" style="margin:0">
 					<legend>{L_EXECUTE}</legend>
