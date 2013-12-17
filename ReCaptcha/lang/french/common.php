@@ -32,8 +32,7 @@
 $lang = array();
 
 $lang['incorrect_sol'] = 'Le mot entré ne correspondait pas à celui qui était affiché. Veuillez réessayer.';
-$lang['input_text'] = 'Saisissez le texte affiché :';
-$lang['input_numbers'] = 'Saisissez les numéros entendus :';
+$lang['type_the_answer_here'] = 'Saisissez la valeur ...';
 $lang['image_captcha'] = 'Obtenir une nouvelle image';
 $lang['audio_captcha'] = 'Obtenir un test audio';
 $lang['captcha_help'] = 'Aide';
