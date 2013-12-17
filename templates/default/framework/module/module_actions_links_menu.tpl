@@ -1,5 +1,5 @@
 # IF C_DISPLAY #
-<menu class="dynamic-menu right">
+<menu id="actions-links-menu" class="dynamic-menu right">
 	<ul>
 		<li><a><i class="icon-cog"></i></a>
 			<ul>

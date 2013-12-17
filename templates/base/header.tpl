@@ -86,6 +86,7 @@
 				<div class="spacer"></div>
 				# ENDIF #
 				<div id="main-content" itemprop="mainContentOfPage">
+					# INCLUDE ACTIONS_MENU #
 					<nav id="breadcrumb" itemprop="breadcrumb">
 						<ol>
 							<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
@@ -106,4 +107,3 @@
 							# END link_bread_crumb #
 						</ol>
 					</nav>
-					# INCLUDE ACTIONS_MENU #
