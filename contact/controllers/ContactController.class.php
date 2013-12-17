@@ -27,6 +27,7 @@
 
 class ContactController extends ModuleController
 {
+	private $view;
 	private $lang;
 	/**
 	 * @var HTMLForm
