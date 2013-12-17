@@ -238,52 +238,36 @@
 			
 			{PAGINATION}
 
-			<table class="module-table">
-				<tr> 
-					<th colspan="2">
-						{L_GALLERY}
-					</th>
-				</tr>
-				<tr>
-					<td class="row2">				
-						<p class="row3">
-							<span style="float:left">
-								<a href="admin_gallery.php">{L_GALLERY_MANAGEMENT}</a> &raquo; {U_GALLERY_CAT_LINKS}
-							</span>
-							<span style="float:right">
-								{PAGINATION}
-							</span>
-							<br />
-						</p>
+			# START cat #
+			<table>
+				<thead>
+					<tr>
+						<th colspan="{COLSPAN}">
+							{L_CATEGORIES}
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+				# START cat.list #
+				{cat.list.TR_START}								
+					<td class="row2" style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%">
+						<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.IMG}</a>
 						
-						# START cat #
-						<table class="module-table">
-							<tr>
-								<th colspan="{COLSPAN}">
-									{L_CATEGORIES}
-								</th>
-							</tr>
-								
-							# START cat.list #
-							{cat.list.TR_START}								
-								<td class="row2" style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%">
-									<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.IMG}</a>
-									
-									<br />
-									<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> <a href="admin_gallery_cat.php?id={cat.list.IDCAT}" title="{L_EDIT}" class="icon-edit"></a> 
-									<br />
-									{cat.list.LOCK} <span class="smaller">{cat.list.L_NBR_PICS}</span> 
-								</td>	
-							{cat.list.TR_END}
-							# END cat.list #						
-						
-							# START cat.end_td #
-								{cat.end_td.TD_END}
-							{cat.end_td.TR_END}
-							# END cat.end_td #
-							
-						</table>	
-						# END cat #
+						<br />
+						<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> <a href="admin_gallery_cat.php?id={cat.list.IDCAT}" title="{L_EDIT}" class="icon-edit"></a> 
+						<br />
+						{cat.list.LOCK} <span class="smaller">{cat.list.L_NBR_PICS}</span> 
+					</td>	
+				{cat.list.TR_END}
+				# END cat.list #						
+				
+				# START cat.end_td #
+					{cat.end_td.TD_END}
+				{cat.end_td.TR_END}
+				# END cat.end_td #
+				</tbody>
+			</table>	
+			# END cat #
 						
 						<br />
 						
@@ -457,17 +441,4 @@
 						<p style="text-align:center" class="smaller">
 							{L_TOTAL_IMG}
 						</p>	
-
-						<p class="row3">
-							<span style="float:left">
-								<a href="admin_gallery.php">{L_GALLERY_MANAGEMENT}</a> &raquo; {U_GALLERY_CAT_LINKS}
-							</span>
-							<span style="float:right">
-								{PAGINATION}
-							</span>
-							<br />
-						</p>				
-					</td>
-				</tr>
-			</table>
 		</div>	

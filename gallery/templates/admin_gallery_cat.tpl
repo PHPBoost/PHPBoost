@@ -235,55 +235,55 @@
 		</div>
 
 		<div id="admin_contents">
+			# INCLUDE message_helper #
 			<table class="module-table" style="width:99%;">
-				<tr>			
-					<th colspan="3">
-						{L_GALLERY_CAT_MANAGEMENT}
-					</th>
-				</tr>
-				<tr> 
-					<td class="row1" colspan="2" style="text-align:center;">
-						# INCLUDE message_helper #		
-					</td>
-				</tr>
-				<tr>
-					<td style="padding-left:20px;" class="row2">
-						<span id="display"></span>
-						<br />
-						<div style="width:80%;margin:auto;">						
-							<div>
-								<div class="row3 gallery_cat_admin">
-									<span style="float:left;">
-										&nbsp;&nbsp;<i class="icon-folder"></i> <a href="gallery.php" class="gallery_link_cat">{L_ROOT}</a>
-									</span>
-									<span style="float:right;">
-										<a href="admin_gallery_cat.php?root=1" class="icon-edit"></a>&nbsp;&nbsp;
-									</span>&nbsp;
-								</div>	
-							</div>
-							
-							# START list #	
-							<span id="c{list.I}">
-								<div style="margin-left:{list.INDENT}px;">
+				<thead>
+					<tr>
+						<th colspan="3">
+							{L_GALLERY_CAT_MANAGEMENT}
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<span id="display"></span>
+							<br />
+							<div>						
+								<div>
 									<div class="row3 gallery_cat_admin">
 										<span style="float:left;">
-											&nbsp;&nbsp;<i class="icon-folder"></i> {list.LOCK} &nbsp;<a href="gallery{list.U_GALLERY_VARS}" class="gallery_link_cat">{list.NAME}</a> &nbsp;<span class="smaller">{list.DESC}</span>
+											&nbsp;&nbsp;<i class="icon-folder"></i> <a href="gallery.php" class="gallery_link_cat">{L_ROOT}</a>
 										</span>
 										<span style="float:right;">
-											<span id="l{list.ID}"></span> 
-											<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');"><i class="icon-arrow-up"></i></a>
-											<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');"><i class="icon-arrow-down"></i></a>
-											<a href="admin_gallery_cat.php?id={list.ID}" title="{L_EDIT_CAT}" class="icon-edit"></a>
-											<a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>
-										</span>
+											<a href="admin_gallery_cat.php?root=1" class="icon-edit"></a>&nbsp;&nbsp;
+										</span>&nbsp;
 									</div>	
 								</div>
-							</span>					
-							# END list #
-							<br />
-						</div>
-					</td>
-				</tr>
+								
+								# START list #	
+								<span id="c{list.I}">
+									<div style="margin-left:{list.INDENT}px;">
+										<div class="row3 gallery_cat_admin">
+											<span style="float:left;">
+												&nbsp;&nbsp;<i class="icon-folder"></i> {list.LOCK} &nbsp;<a href="gallery{list.U_GALLERY_VARS}" class="gallery_link_cat">{list.NAME}</a> &nbsp;<span class="smaller">{list.DESC}</span>
+											</span>
+											<span style="float:right;">
+												<span id="l{list.ID}"></span> 
+												<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');"><i class="icon-arrow-up"></i></a>
+												<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');"><i class="icon-arrow-down"></i></a>
+												<a href="admin_gallery_cat.php?id={list.ID}" title="{L_EDIT_CAT}" class="icon-edit"></a>
+												<a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>
+											</span>
+										</div>	
+									</div>
+								</span>					
+								# END list #
+								<br />
+							</div>
+						</td>
+					</tr>
+				</tbody>
 			</table>
 		</div>	
 		
