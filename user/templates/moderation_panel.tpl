@@ -145,7 +145,7 @@
 							<td class="row1" style="width:30%;">
 								{L_LOGIN}
 							</td>
-							<td class="row2">
+							<td>
 								<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
 							</td>
 						</tr>
@@ -153,7 +153,7 @@
 							<td class="row1">
 								{L_PM}
 							</td>
-							<td class="row2">
+							<td>
 								<a href="{U_PM}" class="basic-button smaller">MP</a>
 							</td>
 						</tr>
@@ -161,7 +161,7 @@
 							<td class="row1" style="vertical-align:top">
 								<label for="action_contents">{L_ALTERNATIVE_PM}</label>
 							</td>
-							<td class="row2">
+							<td>
 								{KERNEL_EDITOR}
 								<textarea name="action_contents" id="action_contents" rows="12">{ALTERNATIVE_PM}</textarea>
 							</td>
@@ -170,7 +170,7 @@
 							<td class="row1">
 								{L_INFO_EXPLAIN}
 							</td>
-							<td class="row2">
+							<td>
 								<span id="action_info">{INFO}</span>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
@@ -196,7 +196,7 @@
 							<td class="row1" style="width:30%;">
 								{L_LOGIN}
 							</td>
-							<td class="row2">
+							<td>
 								<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
 							</td>
 						</tr>
@@ -204,7 +204,7 @@
 							<td class="row1">
 								{L_PM}
 							</td>
-							<td class="row2">
+							<td>
 								<a href="{U_PM}" class="basic-button smaller">MP</a>
 							</td>
 						</tr>
@@ -212,7 +212,7 @@
 							<td class="row1">
 								{L_DELAY_BAN}
 							</td>
-							<td class="row2">
+							<td>
 								<select name="user_ban">					
 									# START select_ban #	
 										{select_ban.TIME}
@@ -221,7 +221,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="row2" colspan="2" style="text-align:center;">
+							<td colspan="2" style="text-align:center;">
 								<button type="submit" name="valid_user" value="true">{L_BAN}</button>					
 							</td>
 						</tr>

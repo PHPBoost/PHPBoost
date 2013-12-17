@@ -171,21 +171,21 @@
 						<tbody>
 							# START poll_radio #
 							<tr>
-								<td class="row2" style="font-size:10px;">
+								<td style="font-size:10px;">
 									<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}"> {poll_radio.ANSWERS}</label>
 								</td>
 							</tr>
 							# END poll_radio #
 							# START poll_checkbox #
 							<tr>
-								<td class="row2">
+								<td>
 									<label><input type="{poll_checkbox.TYPE}" name="{poll_checkbox.NAME}" value="{poll_checkbox.NAME}"> {poll_checkbox.ANSWERS}</label>
 								</td>
 							</tr>
 							# END poll_checkbox #
 							# START poll_result #
 							<tr>
-								<td class="row2" style="font-size:10px;">
+								<td style="font-size:10px;">
 									{poll_result.ANSWERS}
 									<table width="95%">
 										<tr>

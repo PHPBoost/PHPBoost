@@ -31,7 +31,7 @@
 	<div class="content">
 		# START description #
 			{description.DESCRIPTION}
-			<hr style="margin-top:25px;" />
+			<hr style="margin-top:25px;margin-bottom:25px;" />
 		# END description #
 		
 		# IF C_FAQ_CATS #
@@ -58,7 +58,7 @@
 		
 		# START questions #
 			# START questions.faq #
-				<div style="margin-top:15px;" id="q{questions.faq.ID_QUESTION}">
+				<div id="q{questions.faq.ID_QUESTION}">
 					<div class="row1">
 						<span style="float:left;">
 							<a href="javascript:show_answer({questions.faq.ID_QUESTION});" >
@@ -89,7 +89,7 @@
 						<div style="clear:both"></div>
 					</div>
 					<br />
-					<div id="a{questions.faq.ID_QUESTION}" class="blockquote">
+					<div id="a{questions.faq.ID_QUESTION}" class="blockquote" style="margin-bottom:30px;">
 						<div>{questions.faq.ANSWER}</div>
 					</div>
 					# IF questions.faq.C_HIDE_ANSWER #
@@ -122,7 +122,7 @@
 						<i class="icon-caret-right icon-2x"></i>
 						{questions_block.contents.QUESTION}
 					</span>
-					<span class="row2" style="float:right;">
+					<span style="float:right;">
 						<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}" class="icon-flag"></a>
 						# IF C_ADMIN_TOOLS #
 							<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}" class="icon-move"></a>

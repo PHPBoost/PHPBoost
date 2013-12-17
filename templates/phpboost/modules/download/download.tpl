@@ -351,7 +351,7 @@
 					<td class="row1" style="padding:3px">
 						{L_SIZE}
 					</td>
-					<td class="row2" style="padding:3px">
+					<td style="padding:3px">
 						{SIZE}
 					</td>
 				</tr>
@@ -359,7 +359,7 @@
 					<td class="row1" style="padding:3px">
 						{L_INSERTION_DATE}
 					</td>
-					<td class="row2" style="padding:3px">
+					<td style="padding:3px">
 						{CREATION_DATE}
 					</td>
 				</tr>
@@ -367,7 +367,7 @@
 					<td class="row1" style="padding:3px">
 						{L_RELEASE_DATE}
 					</td>
-					<td class="row2" style="padding:3px">
+					<td style="padding:3px">
 						{RELEASE_DATE}
 					</td>
 				</tr>
@@ -375,7 +375,7 @@
 					<td class="row1" style="padding:3px">
 						{L_DOWNLOADED}
 					</td>
-					<td class="row2" style="padding:3px">
+					<td style="padding:3px">
 						{HITS}
 					</td>
 				</tr>
@@ -383,7 +383,7 @@
 					<td class="row1" style="padding:3px">
 						{L_NOTE} <em><span id="nbrnote{ID_FILE}">({NUM_NOTES})</span></em>
 					</td>
-					<td class="row2" style="padding:1px">
+					<td style="padding:1px">
 						{KERNEL_NOTATION}
 					</td>
 				</tr>

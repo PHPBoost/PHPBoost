@@ -51,7 +51,7 @@
 			</thead>
 			<tfoot>
 				<tr>
-					<th>
+					<th colspan="2">
 						<a href="admin_errors.php?all=1">{@all_errors}</a>
 					</th>
 				</tr>

@@ -250,7 +250,7 @@
 				<tbody>
 				# START cat.list #
 				{cat.list.TR_START}								
-					<td class="row2" style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%">
+					<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%">
 						<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.IMG}</a>
 						
 						<br />
@@ -282,7 +282,7 @@
 								</th>
 							</tr>
 							<tr>
-								<td colspan="{COLSPAN}" style="text-align:center;" class="row2">
+								<td colspan="{COLSPAN}" style="text-align:center;">
 									{pics.PICS_MAX}
 								</td>
 							</tr>
@@ -290,7 +290,7 @@
 							# START pics.pics_max #
 							<tr>
 								<td colspan="{COLSPAN}" class="row1">
-									<table style="border-collapse:collapse;margin:auto;width:400px" class="row2">
+									<table style="border-collapse:collapse;margin:auto;width:400px">
 										<tr>
 											<td>
 												&nbsp;&nbsp;&nbsp;{pics.pics_max.U_PREVIOUS} 
@@ -301,7 +301,7 @@
 										</tr>
 									</table>
 									<br />
-									<table style="border-collapse:collapse;margin:auto;width:100%" class="row2">
+									<table style="border-collapse:collapse;margin:auto;width:100%">
 										<tr>
 											<th colspan="2">
 												{L_INFORMATIONS}
@@ -364,7 +364,7 @@
 											</th>
 										</tr>
 										<tr>
-											<td class="row2" style="width:50px;text-align:center">
+											<td style="width:50px;text-align:center">
 												{pics.pics_max.U_LEFT_THUMBNAILS}
 											</td>
 											
@@ -372,7 +372,7 @@
 												{pics.pics_max.list_preview_pics.PICS}
 											# END pics.pics_max.list_preview_pics #
 											
-											<td class="row2" style="width:50px;text-align:center">
+											<td style="width:50px;text-align:center">
 												{pics.pics_max.U_RIGHT_THUMBNAILS}
 											</td>
 										</tr>
@@ -386,7 +386,7 @@
 							
 							# START pics.list #
 							{pics.list.TR_START}
-								<td class="row2" style="padding:6px;text-align:center;width:{COLUMN_WIDTH_PICS}%">
+								<td style="padding:6px;text-align:center;width:{COLUMN_WIDTH_PICS}%">
 									<table style="border:0;margin:auto;">
 										<tr>
 											<td style="height:{HEIGHT_MAX}px;">

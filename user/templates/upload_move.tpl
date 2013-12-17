@@ -16,7 +16,7 @@
 			</th>
 		</tr>
 		<tr> 
-			<td class="row2">
+			<td>
 				<a href="upload.php?root=1{POPUP}"><i class="icon-home icon-2x"></i></a>
 				<a href="upload.php?root=1{POPUP}">{L_ROOT}</a>
 			</td>
@@ -32,7 +32,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="row2" style="padding:20px;">
+			<td style="padding:20px;">
 				<br />
 				<form action="{TARGET}" method="post">
 				<table class="module-table">

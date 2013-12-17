@@ -7,13 +7,13 @@
 			<div class="module_contents">
 				<table class="module-table">
 					<tr>							
-						<td style="text-align:center;" class="row2">
+						<td style="text-align:center;">
 							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/notice.png" alt="{L_USERS_WARNING}" /><br />{L_USERS_WARNING}</a>
 						</td>
-						<td style="text-align:center;" class="row2">
+						<td style="text-align:center;">
 							<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_USERS_PUNISHMENT}" /><br />{L_USERS_PUNISHMENT}</a>
 						</td>
-						<td style="text-align:center;" class="row2">
+						<td style="text-align:center;">
 							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/important.png" alt="{L_ALERT_MANAGEMENT}" /><br />{L_ALERT_MANAGEMENT}</a>
 						</td>
 					</tr>
@@ -55,16 +55,16 @@
 						
 						# START action_list # 
 						<tr style="text-align:center;">
-							<td class="row2" style="width: 150px">
+							<td style="width: 150px">
 								<a href="{action_list.U_USER_PROFILE}">{action_list.LOGIN}</a>
 							</td>
-							<td class="row2">
+							<td>
 								{action_list.U_ACTION}
 							</td>
-							<td class="row2" style="width: 150px">
+							<td style="width: 150px">
 								{action_list.U_USER_CONCERN}
 							</td>
-							<td class="row2" style="width: 150px">
+							<td style="width: 150px">
 								{action_list.DATE}
 							</td>
 						</tr>
@@ -72,7 +72,7 @@
 						
 						# IF C_FORUM_NO_ACTION #
 						<tr style="text-align:center;">
-							<td class="row2" colspan="4">
+							<td colspan="4">
 								{L_NO_ACTION}
 							</td>
 						</tr>
@@ -145,13 +145,13 @@
 						
 						# IF C_FORUM_NO_ALERT #		
 						<tr>
-							<td class="row2" colspan="6" style="text-align:center;">
+							<td colspan="6" style="text-align:center;">
 								{L_NO_ALERT}
 							</td>
 						</tr>		
 						# ENDIF #				
 						<tr>
-							<td class="row2" colspan="6">
+							<td colspan="6">
 								&nbsp;<button type="submit" name="" value="true">{L_DELETE}</button>
 							</td>
 						</tr>
@@ -171,7 +171,7 @@
 						<td class="row1" style="width:25%;">
 							{L_TITLE}
 						</td>
-						<td class="row2">
+						<td>
 							{TITLE}
 						</td>
 					</tr>
@@ -179,7 +179,7 @@
 						<td class="row1">
 							{L_TOPIC}
 						</td>
-						<td class="row2">
+						<td>
 							{TOPIC}
 						</td>
 					</tr>
@@ -187,7 +187,7 @@
 						<td class="row1">
 							{L_CAT}
 						</td>
-						<td class="row2">
+						<td>
 							{CAT}
 						</td>
 					</tr>
@@ -195,7 +195,7 @@
 						<td class="row1">
 							{L_CONTENTS}
 						</td>
-						<td class="row2">
+						<td>
 							{CONTENTS}
 						</td>
 					</tr>
@@ -203,7 +203,7 @@
 						<td class="row1">
 							{L_STATUS}
 						</td>
-						<td class="row2">
+						<td>
 							{STATUS}
 						</td>
 					</tr>
@@ -211,7 +211,7 @@
 						<td class="row1">
 							{L_LOGIN}
 						</td>
-						<td class="row2">
+						<td>
 							{LOGIN}
 						</td>
 					</tr>
@@ -219,7 +219,7 @@
 						<td class="row1">
 							{L_TIME}
 						</td>
-						<td class="row2">
+						<td>
 							{TIME}
 						</td>
 					</tr>
@@ -296,7 +296,7 @@
 				<form action="moderation_forum{U_ACTION}" method="post">
 				<table class="module-table">
 					<tr>
-						<td class="row2">
+						<td>
 							<span style="float:left;">
 								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" name="login">
 								<span id="search_img"></span>
@@ -373,7 +373,7 @@
 							<td class="row1" style="width:30%;">
 								{L_LOGIN}
 							</td>
-							<td class="row2">
+							<td>
 								{LOGIN}
 							</td>
 						</tr>
@@ -381,12 +381,12 @@
 							<td class="row1">
 								{L_PM}
 							</td>
-							<td class="row2">
+							<td>
 								<a href="{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
 							</td>
 						</tr>
 						<tr>
-							<td class="row2" colspan="2">
+							<td colspan="2">
 								<div class="question">{L_ALTERNATIVE_PM}</div>
 								{KERNEL_EDITOR}
 								<label><textarea name="action_contents" id="action_contents" rows="12" cols="15">{ALTERNATIVE_PM}</textarea></label>
@@ -396,7 +396,7 @@
 							<td class="row1">
 								<label for="new_info">{L_INFO_EXPLAIN}</label>
 							</td>
-							<td class="row2">
+							<td>
 								<span id="action_info">{INFO}</span>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">

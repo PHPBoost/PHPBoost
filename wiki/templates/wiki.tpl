@@ -15,7 +15,7 @@
 				# END warning #
 						
 				# START redirect #
-					<div class="row2" style="width:30%;">
+					<div style="width:30%;">
 					{redirect.REDIRECTED}
 						# START redirect.remove_redirection #
 							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="icon-delete" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}"></a>

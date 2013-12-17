@@ -193,7 +193,7 @@ else
 		{
 			$i++;
 			$Template->assign_block_vars('cat.end_td', array(
-				'TD_END' => '<td class="row2" style="width:' . $column_width_cats . '%">&nbsp;</td>',
+				'TD_END' => '<td style="width:' . $column_width_cats . '%">&nbsp;</td>',
 				'TR_END' => (is_int($i/$nbr_column_cats)) ? '</tr>' : ''
 			));
 		}
@@ -255,7 +255,7 @@ else
 						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
 					//Affichage de la liste des miniatures sous l'image.
-					$array_pics[] = '<td class="row2" style="text-align:center;height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
+					$array_pics[] = '<td style="text-align:center;height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
 
 					if ($row['id'] == $idpics)
 					{
@@ -415,7 +415,7 @@ else
 			{
 				$j++;
 				$Template->assign_block_vars('pics.end_td_pics', array(
-					'TD_END' => '<td class="row2" style="width:' . $column_width_pics . '%">&nbsp;</td>',
+					'TD_END' => '<td style="width:' . $column_width_pics . '%">&nbsp;</td>',
 					'TR_END' => (is_int($j/$nbr_column_pics)) ? '</tr>' : ''
 				));
 			}

@@ -122,17 +122,17 @@
 								<div style="text-align:center;width:{COLUMN_WIDTH_PICS}%;float:left;">
 									<table class="module-table" style="width:100%;">
 										<tr>
-											<td class="row2">												
+											<td>												
 												<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign-middle"> <span class="smaller">{L_SELECT}</span>
 											</td>
 										</tr>
 										<tr>
-											<td class="row2" style="height:{IMG_HEIGHT_MAX}px;padding:3px;text-align:center;">
+											<td style="height:{IMG_HEIGHT_MAX}px;padding:3px;text-align:center;">
 												{list.THUMNAILS}
 											</td>
 										</tr>
 										<tr>
-											<td class="row2">
+											<td>
 												<span class="smaller">{L_NAME}: </span>
 												<input type="text" size="25" name="{list.ID}name" value="{list.NAME}" class="text valign-middle">
 												
@@ -140,7 +140,7 @@
 											</td>
 										</tr>
 										<tr>
-											<td class="row2">
+											<td>
 												<span class="smaller">{L_CAT}:</span> 
 												<select name="{list.ID}cat" id="{list.ID}cat" class="valign-middle" style="width:{SELECTBOX_WIDTH}%">
 													{list.CATEGORIES}
@@ -148,7 +148,7 @@
 											</td>
 										</tr>
 										<tr>
-											<td class="row2">												
+											<td>												
 												<input type="checkbox" name="{list.ID}del" value="1" class="valign-middle"> <span class="smaller">{L_DELETE}</span> 
 											</td>
 										</tr>

@@ -356,7 +356,7 @@
 								# ENDIF #
 							</div>
 							<p style="text-align:center;padding:15px 0px;overflow:auto;">{IMG_MAX}</p>
-							<div style="margin:auto;width:400px;height:32px;padding:0;" class="row2">
+							<div style="margin:auto;width:400px;height:32px;padding:0;">
 								<span style="float:left">&nbsp;&nbsp;&nbsp;{U_PREVIOUS}</span>
 								<span style="float:right">{U_NEXT}&nbsp;&nbsp;&nbsp;</span>
 							</div>				
@@ -368,7 +368,7 @@
 									</th>
 								</tr>
 								<tr>
-									<td class="row2" style="width:50px;text-align:center">
+									<td style="width:50px;text-align:center">
 										{U_LEFT_THUMBNAILS}
 									</td>
 									
@@ -376,7 +376,7 @@
 										{list_preview_pics.PICS}
 									# END list_preview_pics #
 									
-									<td class="row2" style="width:50px;text-align:center">
+									<td style="width:50px;text-align:center">
 										{U_RIGHT_THUMBNAILS}
 									</td>
 								</tr>

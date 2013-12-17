@@ -102,7 +102,7 @@ function createSortableMenu()
 	<form action="menus.php?action=save" method="post" onsubmit="build_menu_tree();">
 		<table style="background:#f4f4f4;width:99%;margin:auto;padding-bottom:25px;">
 			<tr>
-				<td colspan="3" style="padding:10px;" class="row2">
+				<td colspan="3" style="padding:10px;">
 					<div style="float:right;">
 						<strong>{L_THEME_MANAGEMENT} :</strong> 
 						<select name="switchtheme" onchange="document.location = '?token={TOKEN}&amp;theme=' + this.options[this.selectedIndex].value;">
