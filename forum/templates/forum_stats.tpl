@@ -15,7 +15,7 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td class="row2">
+							<td>
 								{L_NBR_TOPICS}: <strong>{NBR_TOPICS}</strong><br />
 								{L_NBR_MSG}: <strong>{NBR_MSG}</strong>
 								<br /><br />
@@ -41,7 +41,7 @@
 					<tbody>
 						# START last_msg #
 						<tr>
-							<td class="row2">
+							<td>
 								<a href="{PATH_TO_ROOT}/forum/topic{last_msg.U_TOPIC_ID}">{last_msg.TITLE}</a>
 							</td>
 						</tr>
@@ -62,7 +62,7 @@
 					<tbody>
 						# START popular #
 						<tr>
-							<td class="row2">
+							<td>
 								<a href="{PATH_TO_ROOT}/forum/topic{popular.U_TOPIC_ID}">{popular.TITLE}</a>
 							</td>
 						</tr>
@@ -83,7 +83,7 @@
 					<tbody>
 						# START answers #
 						<tr>
-							<td class="row2">
+							<td>
 								<a href="{PATH_TO_ROOT}/forum/topic{answers.U_TOPIC_ID}">{answers.TITLE}</a>
 							</td>
 						</tr>

@@ -280,7 +280,7 @@
 			</th>
 		</tr>
 		<tr> 
-			<td class="row2">
+			<td>
 				<span style="float:left;">
 					<a href="upload.php?root=1{POPUP}"><i class="icon-home icon-2x"></i></a>&nbsp;<a href="upload.php?root=1{POPUP}">{L_ROOT}</a>
 					<br />
@@ -309,7 +309,7 @@
 		</tr>	
 		
 		<tr>	
-			<td class="row2" style="padding:10px 2px;">
+			<td style="padding:10px 2px;">
 				<div style="height:260px;overflow:auto;">
 					# IF C_EMPTY_FOLDER #
 						<p style="text-align:center;padding-top:25px;" id="empty_folder">

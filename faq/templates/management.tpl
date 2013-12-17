@@ -140,7 +140,7 @@
 								<i class="icon-caret-right icon-2x"></i>
 								{category.questions.QUESTION}
 							</span>
-							<span class="row2" style="float:right;">
+							<span style="float:right;">
 								<a href="{category.questions.U_MOVE}" title="{L_MOVE}" class="icon-move"></a>
 								# START category.questions.up #
 									<a href="{category.questions.U_UP}" title="{L_UP}" class="icon-arrow-up"></a>

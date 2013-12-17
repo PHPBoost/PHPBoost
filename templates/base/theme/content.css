@@ -276,32 +276,6 @@ table tbody td.align-left {
 	text-align:left;
 }
 
-.row1 {
-	background:#E0E9EF;
-	padding:8px 6px;
-	border-top:1px solid #CCCCCC;
-}
-
-.row2 {
-	padding:8px 6px;
-}
-
-.row3 {
-	background:#F2F7FB;
-	border-color:#C4CED6;
-	padding:8px 6px;
-	border-top:1px solid #CCCCCC;
-	border-bottom:1px solid #CCCCCC;
-	-moz-border-radius:0px 0px 5px 5px;
-	-khtml-border-bottom-right-radius:5px;
-	-khtml-border-bottom-left-radius:5px;
-	-webkit-border-bottom-right-radius:5px;
-	-webkit-border-bottom-left-radius:5px;
-	border-radius:5px;
-}
-
-.row-disabled { background:#E1E1E1 !important; }
-
 /* Pied */
 table tfoot {
 	border-top:1px solid #d1d2d4;
@@ -364,6 +338,29 @@ table tfoot nav.pagination a span.current-page {
 	color:#ced0d0;
 	text-decoration:none;
 }
+
+/* Deprecated */
+.row1 {
+	background:#E0E9EF;
+	padding:8px 6px;
+	border-top:1px solid #CCCCCC;
+}
+
+.row3 {
+	background:#F2F7FB;
+	border-color:#C4CED6;
+	padding:8px 6px;
+	border-top:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+	-moz-border-radius:0px 0px 5px 5px;
+	-khtml-border-bottom-right-radius:5px;
+	-khtml-border-bottom-left-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
+	border-radius:5px;
+}
+
+.row-disabled { background:#E1E1E1 !important; }
 
 /* Boutons
 ------------------------------------ */

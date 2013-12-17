@@ -110,8 +110,8 @@
                                 <tr><th>{L_MODULES}</th><th>{L_WEIGHTS}</th></tr>
                                 # START weights #
                                 <tr>
-                                    <td class="row2"><label for="{weights.MODULE}">{weights.L_MODULE_NAME}</label></td>
-                                    <td class="row2" style="text-align:center;"><input type="text" id="{weights.MODULE}" name="{weights.MODULE}" value="{weights.WEIGHT}" size="2" maxlength="3"></td>
+                                    <td><label for="{weights.MODULE}">{weights.L_MODULE_NAME}</label></td>
+                                    <td style="text-align:center;"><input type="text" id="{weights.MODULE}" name="{weights.MODULE}" value="{weights.WEIGHT}" size="2" maxlength="3"></td>
                                 </tr>
                                 # END weights #
                             </tbody>

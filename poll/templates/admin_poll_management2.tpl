@@ -99,13 +99,13 @@
 									</th>
 								</tr>
 								<tr>
-									<td class="row2" style="text-align:center;">
+									<td style="text-align:center;">
 										# START answers #			
 										<label><input type="text" size="40" name="a{answers.ID}" value="{answers.ANSWER}" /></label><br>			
 										# END answers #
 										<span id="a{MAX_ID}"></span>
 									</td>
-									<td class="row2" style="text-align:center;">
+									<td style="text-align:center;">
 										# START votes #			
 										<label><input type="text" size="3" name="v{votes.ID}" value="{votes.VOTES}" /> {votes.PERCENT}</label><br>			
 										# END votes #	

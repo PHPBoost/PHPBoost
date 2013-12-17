@@ -92,7 +92,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			if ($articles_number == 0)
 			{
 				$Template->put_all(array(
-					'L_NO_ARTICLE' => '<td style="text-align:center;" class="row2">' . $LANG['wiki_no_article'] . '</td>',
+					'L_NO_ARTICLE' => '<td style="text-align:center;">' . $LANG['wiki_no_article'] . '</td>',
 				));
 			}
 		}

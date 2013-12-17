@@ -251,7 +251,7 @@
 					</th>
 				</tr>
 				<tr> 
-					<td class="row2">
+					<td>
 						<span style="float:left;">
 							<a href="admin_files.php?root=1"><i class="icon-home icon-2x"></i></a>&nbsp;
 							<a href="admin_files.php?root=1">{L_ROOT}</a>
@@ -272,7 +272,7 @@
 					</td>
 				</tr>
 				<tr> 
-					<td class="row2" style="margin:0px;padding:0px">
+					<td style="margin:0px;padding:0px">
 						<div style="float:left;padding:2px;padding-left:8px;">
 							{L_URL}
 						</div>
@@ -283,7 +283,7 @@
 				</tr>
 				
 				<tr>
-					<td class="row2" style="padding:5px 2px;">
+					<td style="padding:5px 2px;">
 						# IF C_EMPTY_FOLDER #
 							<p style="text-align:center;padding-top:15px;" id="empty_folder">
 								{L_EMPTY_FOLDER}

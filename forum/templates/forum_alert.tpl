@@ -33,12 +33,12 @@
 							<th>{L_ALERT}</th>
 						</tr>
 						<tr>
-							<td class="row2">
+							<td>
 								{L_ALERT_EXPLAIN}: <a href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a><br />
 							</td>			
 						</tr>
 						<tr>
-							<td class="row2">
+							<td>
 								<p style="text-align:center;">
 									<label>{L_ALERT_TITLE} <input type="text" name="title" id="title" size="50"></label>
 								</p>
@@ -67,7 +67,7 @@
 						<th>{L_ALERT}</th>
 					</tr>
 					<tr>
-						<td class="row2" style="text-align:center;">
+						<td style="text-align:center;">
 							<br /><br />
 							{alert_confirm.MSG}
 							<br /><br />

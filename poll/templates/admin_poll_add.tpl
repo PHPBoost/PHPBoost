@@ -93,7 +93,7 @@
 									</th>
 								</tr>
 								<tr>
-									<td class="row2" style="text-align:center;">								
+									<td style="text-align:center;">								
 										<label><input type="text" size="40" name="a0" id="a0" value="{ANSWER0}" /></label><br>
 										<label><input type="text" size="40" name="a1" value="{ANSWER1}" /></label><br>
 										<label><input type="text" size="40" name="a2" value="{ANSWER2}" /></label><br>
@@ -101,7 +101,7 @@
 										<label><input type="text" size="40" name="a4" value="{ANSWER4}" /></label><br>
 										<span id="a5"></span>
 									</td>
-									<td class="row2" style="text-align:center;">								
+									<td style="text-align:center;">								
 										<label><input type="text" size="3" name="v0" value="{VOTES0}" /> {PERCENT0}</label><br>
 										<label><input type="text" size="3" name="v1" value="{VOTES1}" /> {PERCENT1}</label><br>
 										<label><input type="text" size="3" name="v2" value="{VOTES2}" /> {PERCENT2}</label><br>
