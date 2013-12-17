@@ -15,26 +15,26 @@
 		<script type="text/javascript" src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/plugins/emotions/js/emotions.js"></script>
 	</head>
 	<body>
-		<table class="module-table" style="margin:15px auto">
-			<th>
-				{L_SMILEY}
-			</th>
-			<tr class="row2">
-				<td>
-					<table class="module-table" style="width:96%;text-align:center;margin:15px auto">
+		<table>
+			<thead>
+				<tr> 
+					<th colspan="{COLSPAN}">{L_SMILEY}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
 					# START smiley #
 						{smiley.TR_START}
-							<td style="padding:4px;">
-								<a href="javascript:EmotionsDialog.insert('{smiley.URL}','{smiley.CODE}');" title="{smiley.CODE}">{smiley.IMG}</a>
+							<td>
+								<a href="javascript:insert_popup('{smiley.CODE}')">{smiley.IMG}</a>&nbsp;&nbsp;
 							</td>
 							# START smiley.td #
 							{smiley.td.TD}
 							# END smiley.td #
 						{smiley.TR_END}
 					# END smiley #
-					</table>
-				</td>
-			</tr>
-		</table>	
+				</tr>
+			</tbody>
+		</table>
 	</body>
 </html>

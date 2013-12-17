@@ -29,21 +29,23 @@
 				<br />
 				# START last_articles #
 				<hr /><br />
-				<table class="module-table">
-					<tr>
-						<th colspan="2">
-							<strong><em>{last_articles.L_ARTICLES}</em></strong> {last_articles.RSS}
-						</th>
-					</tr>
-					<tr>
-						# START last_articles.list #
-						{last_articles.list.TR}
-							<td class="row2" style="width:50%">
-								<i class="icon-file"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}">{last_articles.list.ARTICLE}</a>
-							</td>
-						# END last_articles.list #
-						{L_NO_ARTICLE}
-					</tr>
+				<table>
+					<thead>
+						<tr> 
+							<th colspan="2"><strong><em>{last_articles.L_ARTICLES}</em></strong> {last_articles.RSS}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							# START last_articles.list #
+							{last_articles.list.TR}
+								<td class="row2" style="width:50%">
+									<i class="icon-file"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}">{last_articles.list.ARTICLE}</a>
+								</td>
+							# END last_articles.list #
+							{L_NO_ARTICLE}
+						</tr>
+					</tbody>
 				</table>
 				# END last_articles #
 			</div>

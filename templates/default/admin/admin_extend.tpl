@@ -132,7 +132,7 @@
 		</tbody>
 	</table>
 
-	<table class="module-table">
+	<table>
 		<thead>
 			<tr>
 				<th colspan="5">

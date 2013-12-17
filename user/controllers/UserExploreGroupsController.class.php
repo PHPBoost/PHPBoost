@@ -29,7 +29,6 @@ class UserExploreGroupsController extends AbstractController
 {
 	private $lang;
 	private $groups_cache;
-	private $user_account_config;
 	private $view;
 
 	public function execute(HTTPRequestCustom $request)
@@ -65,6 +64,7 @@ class UserExploreGroupsController extends AbstractController
 			));
 		}
 		
+		$user_accounts_config = UserAccountsConfig::load();
 		$number_member = 0;
 		foreach ($this->get_members_group($group_id) as $user_id)
 		{
@@ -163,7 +163,6 @@ class UserExploreGroupsController extends AbstractController
 		$this->view = new FileTemplate('user/UserExploreGroupsController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->groups_cache = GroupsCache::load();
-		$this->user_account_config = UserAccountsConfig::load();
 	}
 
 	private function build_response()
