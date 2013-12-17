@@ -162,43 +162,47 @@
 		<div class="module_position">
 			<div class="module_contents">
 				<form method="post" action="action{U_POLL_ACTION}">
-					<table class="module-table" style="width:75%">
-						<tr>
-							<th>{L_POLL}: {QUESTION}</th>
-						</tr>
-						# START poll_radio #
-						<tr>
-							<td class="row2" style="font-size:10px;">
-								<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}"> {poll_radio.ANSWERS}</label>
-							</td>
-						</tr>
-						# END poll_radio #
-						# START poll_checkbox #
-						<tr>
-							<td class="row2">
-								<label><input type="{poll_checkbox.TYPE}" name="{poll_checkbox.NAME}" value="{poll_checkbox.NAME}"> {poll_checkbox.ANSWERS}</label>
-							</td>
-						</tr>
-						# END poll_checkbox #
-						# START poll_result #
-						<tr>
-							<td class="row2" style="font-size:10px;">
-								{poll_result.ANSWERS}
-								<table width="95%">
-									<tr>
-										<td>
-											<div class="progressbar-container" title="{poll_result.PERCENT}%">
-												<span class="progressbar-infos">
-													{poll_result.PERCENT}% [{poll_result.NBRVOTE} {L_VOTE}]
-												</span>
-												<div class="progressbar" style="width:{poll_result.PERCENT}%"></div>
-											</div>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-						# END poll_result #
+					<table style="width:75%;">
+						<thead>
+							<tr>
+								<th>{L_POLL}: {QUESTION}</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START poll_radio #
+							<tr>
+								<td class="row2" style="font-size:10px;">
+									<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}"> {poll_radio.ANSWERS}</label>
+								</td>
+							</tr>
+							# END poll_radio #
+							# START poll_checkbox #
+							<tr>
+								<td class="row2">
+									<label><input type="{poll_checkbox.TYPE}" name="{poll_checkbox.NAME}" value="{poll_checkbox.NAME}"> {poll_checkbox.ANSWERS}</label>
+								</td>
+							</tr>
+							# END poll_checkbox #
+							# START poll_result #
+							<tr>
+								<td class="row2" style="font-size:10px;">
+									{poll_result.ANSWERS}
+									<table width="95%">
+										<tr>
+											<td>
+												<div class="progressbar-container" title="{poll_result.PERCENT}%">
+													<span class="progressbar-infos">
+														{poll_result.PERCENT}% [{poll_result.NBRVOTE} {L_VOTE}]
+													</span>
+													<div class="progressbar" style="width:{poll_result.PERCENT}%"></div>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							# END poll_result #
+						</tbody>
 					</table>
 					<br />
 					

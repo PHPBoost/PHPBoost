@@ -239,38 +239,41 @@
 		</div>
 
 		<div id="admin_contents">
-			<table class="module-table" style="width:99%;">
-				<tr>
-					<th colspan="3">
-						{L_CAT_MANAGEMENT}
-					</th>
-				</tr>
-				<tr>
-					<td class="row2">
-						<span id="display"></span>
-						<br />
-						<div style="width:98%;margin:auto;">
-							# START list #
-							<span id="c{list.I}">
-								<div style="margin-left:{list.INDENT}px;">
-									<div class="row3 forum_cat_admin">
-										<span style="float:left;">
-											&nbsp;&nbsp;<i class="icon-folder"></i> {list.LOCK} &nbsp;{list.URL}<a href="{list.U_FORUM_VARS}" class="forum_link_cat">{list.NAME}</a>
-										</span>
-										<span style="float:right;">
-											<span id="l{list.ID}"></span> 
-											<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');"><i class="icon-arrow-up"></i></a>
-											<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');"><i class="icon-arrow-down"></i></a>
-											<a href="admin_forum.php?id={list.ID}" class="icon-edit"></a> <a href="admin_forum.php?del={list.ID}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>&nbsp;&nbsp;
-										</span>&nbsp;
-									</div>	
-								</div>
-							</span>					
-							# END list #
+			<table>
+				<thead>
+					<tr> 
+						<th colspan="3">
+							{L_CAT_MANAGEMENT}
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<span id="display"></span>
 							<br />
-						</div>
-					</td>
-				</tr>
+							<div style="width:98%;margin:auto;">
+								# START list #
+								<span id="c{list.I}">
+									<div style="margin-left:{list.INDENT}px;">
+										<div class="row3 forum_cat_admin">
+											<span style="float:left;">
+												&nbsp;&nbsp;<i class="icon-folder"></i> {list.LOCK} &nbsp;{list.URL}<a href="{list.U_FORUM_VARS}" class="forum_link_cat">{list.NAME}</a>
+											</span>
+											<span style="float:right;">
+												<span id="l{list.ID}"></span> 
+												<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');"><i class="icon-arrow-up"></i></a>
+												<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');"><i class="icon-arrow-down"></i></a>
+												<a href="admin_forum.php?id={list.ID}" class="icon-edit"></a> <a href="admin_forum.php?del={list.ID}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>&nbsp;&nbsp;
+											</span>&nbsp;
+										</div>	
+									</div>
+								</span>					
+								# END list #
+								<br />
+							</div>
+						</td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
-		

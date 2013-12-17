@@ -5,24 +5,26 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}</div>
 			<div class="module_contents">
-				<table class="module-table">
-					<tr>
-						<td style="text-align:center;width:34%" class="row2">
-							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><i class="icon-warning icon-2x"></i></a>
-							<br />
-							<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
-						</td>
-						<td style="text-align:center;width:33%" class="row2">
-							<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><i class="icon-error icon-2x"></i></a>
-							<br />
-							<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
-						</td>
-						<td style="text-align:center;width:33%" class="row2">
-							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><i class="icon-notice icon-2x"></i></a>
-							<br />
-							<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}">{L_ALERT_MANAGEMENT}</a>
-						</td>
-					</tr>
+				<table>
+					<thead>
+						<tr>
+							<td style="text-align:center;width:34%" class="row2">
+								<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><i class="icon-warning icon-2x"></i></a>
+								<br />
+								<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
+							</td>
+							<td style="text-align:center;width:33%" class="row2">
+								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><i class="icon-error icon-2x"></i></a>
+								<br />
+								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
+							</td>
+							<td style="text-align:center;width:33%" class="row2">
+								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><i class="icon-notice icon-2x"></i></a>
+								<br />
+								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}">{L_ALERT_MANAGEMENT}</a>
+							</td>
+						</tr>
+					</thead>
 				</table>
 				<br /><br />
 				
@@ -38,27 +40,39 @@
 				-->
 				</script>
 				<form action="moderation_forum{U_ACTION_HISTORY}" method="post" onsubmit="javascript:return Confirm_history();">
-					<table class="module-table">
-						<tr>
-							<th colspan="4">
-								{L_HISTORY}
-							</th>
-						</tr>
-						<tr style="text-align:center;font-weight: bold;width: 150px">
-							<td class="row3">
-								{L_MODO}
-							</td>
-							<td class="row3">
-								{L_ACTION}
-							</td>
-							<td class="row3">
-								{L_USER_CONCERN}
-							</td>
-							<td class="row3" style="width: 150px">
-								{L_DATE}
-							</td>
-						</tr>
-						
+					<table>
+						<caption>
+							{L_HISTORY}
+						</caption>
+						<thead>
+							<tr style="text-align:center;font-weight: bold;width: 150px">
+								<th>
+									{L_MODO}
+								</th>
+								<th>
+									{L_ACTION}
+								</th>
+								<th>
+									{L_USER_CONCERN}
+								</th>
+								<th style="width: 150px">
+									{L_DATE}
+								</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th colspan="4" style="text-align:center;">
+									# IF C_FORUM_ADMIN #
+									<span style="float:left"><button type="submit" name="valid" value="true">{L_DELETE}</button></span> 
+									# ENDIF #
+									# IF C_DISPLAY_LINK_MORE_ACTION #
+									<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
+									# ENDIF #
+								</th>
+							</tr>
+						</tfoot>
+						<tbody>
 						# START action_list # 
 						<tr style="text-align:center;">
 							<td class="row2" style="width: 150px">
@@ -75,7 +89,6 @@
 							</td>
 						</tr>
 						# END action_list #
-						
 						# IF C_FORUM_NO_ACTION #
 						<tr style="text-align:center;">
 							<td class="row2" colspan="4">
@@ -83,17 +96,7 @@
 							</td>
 						</tr>
 						# ENDIF #
-						
-						<tr>
-							<td class="row3" colspan="4" style="text-align:center;">
-								# IF C_FORUM_ADMIN #
-								<span style="float:left"><button type="submit" name="valid" value="true">{L_DELETE}</button></span> 
-								# ENDIF #
-								# IF C_DISPLAY_LINK_MORE_ACTION #
-								<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
-								# ENDIF #
-							</td>
-						</tr>
+						</tbody>
 					</table>
 				</form>	
 				# ENDIF #
@@ -114,53 +117,56 @@
 				</script>
 		
 				<form name="alert" action="moderation_forum{U_ACTION_ALERT}" method="post" onsubmit="javascript:return Confirm_alert();">
-					<table class="module-table">
-						<tr>			
-							<th style="width:25px;"><input type="checkbox" onclick="if(this.checked) {check_alert(true)} else {check_alert(false)};"></th>
-							<th style="width:20%;">{L_TITLE}</th>
-							<th style="width:20%;">{L_TOPIC}</th>
-							<th style="width:100px;">{L_STATUS}</th>
-							<th style="width:70px;">{L_LOGIN}</th>
-							<th style="width:70px;">{L_TIME}</th>
-						</tr>
-					</table>
-				
-					<table class="module-table">
-						# START alert_list #
-						<tr>
-							<td class="row1" style="text-align:center;width:25px;">
-								<input type="checkbox" name="{alert_list.ID}">
-							</td>
-							<td class="row1" style="text-align:center;width:20%;">
-								{alert_list.TITLE} {alert_list.EDIT}
-							</td>
-							<td class="row1" style="text-align:center;width:20%;">
-								{alert_list.TOPIC}
-							</td>
-							<td class="row1" style="text-align:center;width:100px;{alert_list.BACKGROUND_COLOR}">
-								{alert_list.STATUS}
-							</td>
-							<td class="row1" style="text-align:center;width:70px;">
-								{alert_list.LOGIN}
-							</td>
-							<td class="row1" style="text-align:center;width:70px;">
-								{alert_list.TIME}
-							</td>
-						</tr>
-						# END alert_list #
-						
-						# IF C_FORUM_NO_ALERT #
-						<tr>
-							<td class="row2" colspan="6" style="text-align:center;">
-								{L_NO_ALERT}
-							</td>
-						</tr>
-						# ENDIF #
-						<tr>
-							<td class="row2" colspan="6">
-								&nbsp;<button type="submit" name="" value="true">{L_DELETE}</button>
-							</td>
-						</tr>
+					<table>
+						<thead>
+							<tr>			
+								<th style="width:25px;"><input type="checkbox" onclick="if(this.checked) {check_alert(true)} else {check_alert(false)};"></th>
+								<th style="width:20%;">{L_TITLE}</th>
+								<th style="width:20%;">{L_TOPIC}</th>
+								<th style="width:100px;">{L_STATUS}</th>
+								<th style="width:70px;">{L_LOGIN}</th>
+								<th style="width:70px;">{L_TIME}</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th colspan="6">
+									<button type="submit" name="" value="true">{L_DELETE}</button>
+								</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							# START alert_list #
+							<tr>
+								<td class="row1" style="text-align:center;width:25px;">
+									<input type="checkbox" name="{alert_list.ID}">
+								</td>
+								<td class="row1" style="text-align:center;width:20%;">
+									{alert_list.TITLE} {alert_list.EDIT}
+								</td>
+								<td class="row1" style="text-align:center;width:20%;">
+									{alert_list.TOPIC}
+								</td>
+								<td class="row1" style="text-align:center;width:100px;{alert_list.BACKGROUND_COLOR}">
+									{alert_list.STATUS}
+								</td>
+								<td class="row1" style="text-align:center;width:70px;">
+									{alert_list.LOGIN}
+								</td>
+								<td class="row1" style="text-align:center;width:70px;">
+									{alert_list.TIME}
+								</td>
+							</tr>
+							# END alert_list #
+							
+							# IF C_FORUM_NO_ALERT #
+							<tr>
+								<td class="row2" colspan="6" style="text-align:center;">
+									{L_NO_ALERT}
+								</td>
+							</tr>
+							# ENDIF #
+						</tbody>
 					</table>
 				</form>
 				# ENDIF #
@@ -240,19 +246,23 @@
 				# ENDIF #
 
 				# IF C_FORUM_ALERT_NOT_AUTH #
-				<table class="module-table">
-					<tr>
-						<th colspan="2">
-							{L_MODERATION_FORUM} :: {L_ALERT_MANAGEMENT} 
-						</th>
-					</tr>
-					<tr>
-						<td style="text-align:center;" colspan="2">
-							<br /><br />
-							{L_NO_ALERT}
-							<br /><br />
-						</td>
-					</tr>
+				<table>
+					<thead>
+						<tr>
+							<th colspan="2">
+								{L_MODERATION_FORUM} :: {L_ALERT_MANAGEMENT} 
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="text-align:center;" colspan="2">
+								<br /><br />
+								{L_NO_ALERT}
+								<br /><br />
+							</td>
+						</tr>
+					</tbody>
 				</table>
 				# ENDIF #
 
@@ -300,7 +310,7 @@
 				</script>
 
 				<form action="moderation_forum{U_ACTION}" method="post">
-				<table class="module-table">
+				<table>
 					<tr>
 						<td class="row2">
 							<span style="float:left;">
@@ -320,39 +330,42 @@
 						</td>
 					</tr>
 				</table>
-				<table class="module-table">
-					<tr>
-						<th style="width:25%;">{L_LOGIN}</th>
-						<th style="width:25%;">{L_INFO}</th>
-						<th style="width:25%;">{L_ACTION_USER}</th>
-						<th style="width:25%;">{L_PM}</th>
-					</tr>
-				</table>
-				<table class="module-table">
-					# START user_list #
-					<tr>
-						<td class="row1" style="text-align:center;width:25%;">
-							<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color:{user_list.GROUP_COLOR}" # ENDIF #>{user_list.LOGIN}</a>
-						</td>
-						<td class="row1" style="text-align:center;width:25%;">
-							{user_list.INFO}
-						</td>
-						<td class="row1" style="text-align:center;width:25%;">
-							{user_list.U_ACTION_USER}
-						</td>
-						<td class="row1" style="text-align:center;width:25%;">
-							<a href="{user_list.U_PM}" class="basic-button smaller">MP</a>
-						</td>
-					</tr>
-					# END user_list #
-					
-					# IF C_FORUM_NO_USER #
-					<tr>
-						<td class="row1" style="text-align:center;">
-							{L_NO_USER}
-						</td>
-					</tr>
-					# ENDIF #
+				
+				<table>
+					<thead>
+						<tr>
+							<th style="width:25%;">{L_LOGIN}</th>
+							<th style="width:25%;">{L_INFO}</th>
+							<th style="width:25%;">{L_ACTION_USER}</th>
+							<th style="width:25%;">{L_PM}</th>
+						</tr>
+					</thead>
+					<tbody>
+						# START user_list #
+						<tr>
+							<td class="row1" style="text-align:center;width:25%;">
+								<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color:{user_list.GROUP_COLOR}" # ENDIF #>{user_list.LOGIN}</a>
+							</td>
+							<td class="row1" style="text-align:center;width:25%;">
+								{user_list.INFO}
+							</td>
+							<td class="row1" style="text-align:center;width:25%;">
+								{user_list.U_ACTION_USER}
+							</td>
+							<td class="row1" style="text-align:center;width:25%;">
+								<a href="{user_list.U_PM}" class="basic-button smaller">MP</a>
+							</td>
+						</tr>
+						# END user_list #
+						
+						# IF C_FORUM_NO_USER #
+						<tr>
+							<td style="text-align:center;" colspan="4">
+								{L_NO_USER}
+							</td>
+						</tr>
+						# ENDIF #
+					</tbody>
 				</table>
 				</form>
 				# ENDIF #
