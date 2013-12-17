@@ -92,12 +92,12 @@ if (!empty($_GET['query']))
 			'C_QUERY_RESULT' => true
 		));
 	
-		$lower_query = strtolower($query);		
+		$lower_query = strtolower($query);
 		if (strtolower(substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
 			//On éxécute la requête
 			try {
-				$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
+				$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);
 				$i = 1;
 				while ($row = $Sql->fetch_assoc($result))
 				{
@@ -105,18 +105,17 @@ if (!empty($_GET['query']))
 					//Premier passage: on liste le nom des champs sélectionnés
 					if ($i == 1)
 					{
+						$Template->put('C_HEAD', true);
+						
 						foreach ($row as $field_name => $field_value)
-							$Template->assign_block_vars('line.field', array(
-								'FIELD' => '<strong>' . $field_name . '</strong>',
-								'CLASS' => 'row3'
+							$Template->assign_block_vars('head', array(
+								'FIELD_NAME' => $field_name
 							));
-						$Template->assign_block_vars('line', array());
 					}
 					//On parse les valeurs de sortie
 					foreach ($row as $field_name => $field_value)
 					$Template->assign_block_vars('line.field', array(
-						'FIELD' => TextHelper::strprotect($field_value),
-						'CLASS' => 'row1',
+						'FIELD_NAME' => TextHelper::strprotect($field_value),
 						'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 					));
 					
@@ -125,8 +124,7 @@ if (!empty($_GET['query']))
 			} catch (MySQLQuerierException $e) {
 				$Template->assign_block_vars('line', array());
 				$Template->assign_block_vars('line.field', array(
-					'FIELD' => $e->GetMessage(),
-					'CLASS' => 'row1',
+					'FIELD_NAME' => $e->GetMessage(),
 					'STYLE' => ''
 				));
 			}
@@ -140,11 +138,10 @@ if (!empty($_GET['query']))
 			} catch (MySQLQuerierException $e) {
 				$Template->assign_block_vars('line', array());
 				$Template->assign_block_vars('line.field', array(
-					'FIELD' => $e->GetMessage(),
-					'CLASS' => 'row1',
+					'FIELD_NAME' => $e->GetMessage(),
 					'STYLE' => ''
 				));
-			}	
+			}
 		}
 	}	
 	
