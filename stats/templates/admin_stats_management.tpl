@@ -9,45 +9,45 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>
+					<td class="no-separator">
 						<a href="admin_stats.php?site=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/site.png" alt="" /></a>
 						<br /><a href="admin_stats.php?site=1#stats">{L_SITE}</a>
 					</td>
-					<td>
+					<td class="no-separator">
 						<a href="admin_stats.php?members=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/member.png" alt="" /></a>
 						<br /><a href="admin_stats.php?members=1#stats">{L_USERS}</a>
 					</td>
-					<td>
+					<td class="no-separator">
 						<a href="admin_stats.php?visit=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/visitors.png" alt="" /></a>
 						<br /><a href="admin_stats.php?visit=1#stats">{L_VISITS}</a>
 					</td>
-					<td>
+					<td class="no-separator">
 						<a href="admin_stats.php?pages=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/pages.png" alt="" /></a>
 						<br /><a href="admin_stats.php?pages=1#stats">{L_PAGES}</a>
 					</td>				
-					<td>
+					<td class="no-separator">
 						<a href="admin_stats.php?browser=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/browsers.png" alt="" /></a>
 						<br /><a href="admin_stats.php?browser=1#stats">{L_BROWSERS}</a>
 					</td>
 				</tr>
 				<tr>						
-					<td>	
+					<td class="no-separator">	
 						<a href="admin_stats.php?os=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/os.png" alt="" /></a>
 						<br /><a href="admin_stats.php?os=1#stats">{L_OS}</a>		
 					</td>
-					<td>
+					<td class="no-separator">
 						<a href="admin_stats.php?lang=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/countries.png" alt="" /></a>
 						<br /><a href="admin_stats.php?lang=1#stats">{L_LANG}</a>
 					</td>				
-					<td>
+					<td class="no-separator">
 						<a href="admin_stats.php?referer=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/referer.png" alt="" /></a>
 						<br /><a href="admin_stats.php?referer=1#stats">{L_REFERER}</a>
 					</td>
-					<td>
+					<td class="no-separator">
 						<a href="admin_stats.php?keyword=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/keyword.png" alt="" /></a>
 						<br /><a href="admin_stats.php?keyword=1#stats">{L_KEYWORD}</a>
 					</td>
-					<td>
+					<td class="no-separator">
 						<a href="admin_stats.php?bot=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/robots.png" alt="" /></a>
 						<br /><a href="admin_stats.php?bot=1#stats">{L_ROBOTS}</a>
 					</td>	
@@ -396,13 +396,13 @@
 							<tbody>
 								# START list #			
 								<tr>
-									<td>	
+									<td class="no-separator">	
 										{list.IMG}
 									</td>
-									<td>			
+									<td class="no-separator">			
 										<div style="margin:auto;width:10px;height:10px;margin:auto;background:{list.COLOR};border:1px solid black;"></div>
 									</td>
-									<td>
+									<td class="no-separator">
 										 {list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 									</td>				
 								</tr>
@@ -435,13 +435,13 @@
 							<tbody>
 								# START list #			
 								<tr>
-									<td>		
+									<td class="no-separator">		
 										{list.IMG}
 									</td>
-									<td>			
+									<td class="no-separator">			
 										<div style="margin:auto;width:10px;height:10px;background:{list.COLOR};border:1px solid black;"></div>
 									</td>
-									<td>
+									<td class="no-separator">
 										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 									</td>				
 								</tr>
@@ -474,13 +474,13 @@
 							<tbody>
 								# START list #			
 								<tr>
-									<td>			
+									<td class="no-separator">			
 										{list.IMG}
 									</td>
-									<td>			
+									<td class="no-separator">			
 										<div style="margin:auto;width:10px;margin:auto;height:10px;background:{list.COLOR};border:1px solid black;"></div>
 									</td>
-									<td>
+									<td class="no-separator">
 										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 									</td>				
 								</tr>

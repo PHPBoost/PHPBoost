@@ -123,7 +123,7 @@ class ImagesStats
 			$border = imagecolorallocate($image, 117, 119, 131);
 			$black = imagecolorallocate($image, 0, 0, 0);
 			imagefilledrectangle($image, 0, 0, $w_arc + $x_legend_extend, $h_arc + $height_3d + $y_legend_extend, $border);
-			imagefilledrectangle($image, 1, 1, $w_arc + $x_legend_extend - 3, $h_arc + $height_3d + $y_legend_extend - 3, $background);
+			imagefilledrectangle($image, 1, 1, $w_arc + $x_legend_extend - 2, $h_arc + $height_3d + $y_legend_extend - 2, $background);
 
 			// Création de l'effet 3D
 			for ($i = ($h_ellipse + $height_3d); $i >= $h_ellipse; $i--)
@@ -189,15 +189,8 @@ class ImagesStats
 			//Légende
 			if ($draw_legend) //Tracé de la légende de l'ellipse.
 			{
-				$white = imagecolorallocate($image, 255, 255, 255);
-				$shadow = imagecolorallocate($image, 125, 121, 118);
 				$x_legend_extend = $w_arc + (2 * $x_ellipse) + 10;
 				$y_legend_extend = 10;
-				$width_legend = 150;
-				$height_legend = 138;
-				imagefilledrectangle($image, $x_legend_extend - 4, $y_legend_extend + 2, $x_legend_extend + $width_legend - 2, $y_legend_extend + $height_legend + 4, $shadow);
-				imagefilledrectangle($image, $x_legend_extend - 1, $y_legend_extend - 1, $x_legend_extend + $width_legend + 1, $y_legend_extend + $height_legend + 1, $black);
-				imagefilledrectangle($image, $x_legend_extend, $y_legend_extend, $x_legend_extend + $width_legend, $y_legend_extend + $height_legend, $white);
 
 				$this->color_index = 0;
 				$i = 0;
