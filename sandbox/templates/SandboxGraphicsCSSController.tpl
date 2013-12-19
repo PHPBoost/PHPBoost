@@ -435,7 +435,7 @@
 				<div class="message-level">Administrateur</div>
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/no_avatar.png" class="message-avatar" />
 			</div>
-			<div class="message-content">
+			<div class="message-container">
 				<div class="message-date">
 					<span class="actions">
 						<a itemprop="url" href="#com2">#2</a>

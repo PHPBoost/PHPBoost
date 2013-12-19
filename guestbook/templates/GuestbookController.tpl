@@ -36,7 +36,7 @@
 						# END user_groups #
 					# ENDIF #
 				</div>
-				<div class="message-content">
+				<div class="message-container">
 					<div class="message-date">
 						# IF messages.C_MODERATOR #
 						<span class="actions">

@@ -19,7 +19,7 @@
 				<div class="message-level">{messages.L_LEVEL}</div>
 				# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" class="message-avatar" /># ENDIF #
 			</div>
-			<div class="message-content">
+			<div class="message-container">
 				<div class="message-date">
 					<span class="actions">
 						<a href="\#msg{messages.ID_COMMENT}">\#{messages.ID}</a>
