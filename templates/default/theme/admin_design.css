@@ -7,9 +7,6 @@ Contient les conteneur, fortement dépendant du design.
 	margin:0;
 	padding:0;
 	font-size:100%;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box; 
 }
 
 html, body{	height: 100%; }
@@ -19,8 +16,6 @@ body {
     font-size:12px;
     font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
     color:#3F5164;
-    margin:0;
-    padding:0;
 }
 
 div#global {
@@ -30,7 +25,7 @@ div#global {
 }
 
 /* ##### Entête de la page ###### */
-div#header_admin_container {
+header#header_admin_container {
     background-position:20px 0px;
 	margin-bottom:8px;
 	height:170px;
@@ -141,7 +136,7 @@ div#admin_quick_menu {
 div#admin_quick_menu ul {
     list-style-type:none;
     width:169px;
-    margin-top:12px;
+    margin:12px 0 0 0;
 }
 
 div#admin_quick_menu li {
@@ -205,15 +200,14 @@ a.admin_extend_link {
 }
 
 /* ##### Pied de page ###### */
-div#footer {
+footer#footer {
+	height:40px;
 	clear:both;
-    margin-top:0px;
-    padding:10px 20px 0px 0px;
-    text-align:right;
-    border-top:#336397 2px solid;
+	padding:10px 20px 0px 0px;
+	text-align:right;
+	border-top:#336397 2px solid;
 	background:#212121;
 	min-width:1000px;
 }
 
-div#footer span { color:#FFF; font-size:10px; }
-div#footer span a { color:#FFF; font-size:10px; }
+footer#footer span { color:#FFF; font-size:10px; }
