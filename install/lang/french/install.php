@@ -215,7 +215,7 @@ Cordialement l\'équipe PHPBoost.',
                         <fieldset>
                             <legend>Remerciements</legend>
                             <h2>Membres de la communauté</h2>
-                            <p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à une version 4.0 stable et efficace.</p>
+                            <p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à une version 4.1 stable et efficace.</p>
                             <p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>soupaloignon</strong> de l\'équipe communication, <strong>Ptithom</strong>, <strong>aiglobulles</strong>, <strong>55 Escape</strong> et <strong>Micman</strong> pour la documentation, <strong>ElenWii</strong> et <strong>Teki</strong> pour les graphismes, <strong>julienseth78</strong> et <strong>DaaX</strong> de l\'équipe de développement de modules et <strong>benflovideo</strong> pour la modération de la communauté.</p>
                             <h2>Projets</h2>
                             <p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>

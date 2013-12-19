@@ -37,13 +37,13 @@ $lang['news.content'] = 'Votre site boosté par ' . $lang['news.title'] . ' est b
 l\'accueil de chaque module contient un message pour vous guider vos premiers pas. Voici également quelques recommandations supplémentaires que nous vous proposons de lire avec attention : <br />
 <br />
 <br />
-<br /><h4 class="stitle1">N\'oubliez pas de supprimer le répertoire "install"</h4><br /><br />
+<br /><h4 class="stitle1">N\'oubliez pas de supprimer le répertoire "install"</h4><br />
 <br />
 Supprimez le répertoire /install à la racine de votre site pour des raisons <br />
 de sécurité afin que personne ne puisse recommencer l\'installation.<br />
 <br />
 <br />
-<br /><h4 class="stitle1">Administrez votre site</h4><br /><br />
+<br /><h4 class="stitle1">Administrez votre site</h4><br />
 <br />
 Accédez au <a href="/admin/admin_index.php">panneau d\'administration de votre site</a> afin de le paramétrer <br />
 comme vous le souhaitez!  Pour cela : <br />
@@ -60,8 +60,9 @@ comme vous le souhaitez!  Pour cela : <br />
 </li></ul><br />
 <br />
 <br />
-<br /><h4 class="stitle1">Que faire si vous rencontrez un problème ?</h4><br /><br />
+<br /><h4 class="stitle1">Que faire si vous rencontrez un problème ?</h4><br />
 <br />
 N\'hésitez pas à consulter <a href="http://www.phpboost.com/wiki/wiki.php">la documentation de PHPBoost</a> ou à poser vos question sur le <a href="http://www.phpboost.com/forum/index.php">forum d\'entraide</a>.<br /> <br />
+<br />
 <p class="float-right">Toute l\'équipe de PHPBoost vous remercie d\'utiliser son logiciel pour créer votre site web !</p>';
 ?>
