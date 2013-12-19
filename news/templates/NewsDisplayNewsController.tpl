@@ -60,7 +60,7 @@
 			</div>
 		<!-- # ENDIF # -->
 		
-		<hr style="width:70%;margin:0px auto 40px auto;">
+		<hr style="width:70%;margin:20px auto 20px auto;">
 		
 		# IF C_NEWS_NAVIGATION_LINKS #
 		<div class="navigation_link">

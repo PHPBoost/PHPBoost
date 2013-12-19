@@ -182,7 +182,7 @@
 						<div class="message-level">{pm.msg.L_LEVEL}</div>
 						# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" title="{pm.msg.USER_PSEUDO}" class="message-avatar"># ENDIF #
 					</div>
-					<div class="message-content">
+					<div class="message-container">
 						<div class="message-date">
 							<span class="actions">
 								<a href="#m{pm.msg.ID}">\#{pm.msg.ID}</a>
