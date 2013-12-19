@@ -32,8 +32,8 @@
 
 $lang['cat.name'] = 'Test';
 $lang['cat.description'] = 'Test category';
-$lang['news.title'] = 'PHPBoost 4.1';
-$lang['news.content'] = 'Your PHPBoost 4.1 website is now installed and running. To help you build your website, <br />
+$lang['news.title'] = 'PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version();
+$lang['news.content'] = 'Your ' . $lang['news.title'] . ' website is now installed and running. To help you build your website, <br />
 each module home has a message to guide you through its configuration. We strongly recommand to do the followings :  <br />
 <br />
 <br />
