@@ -8,45 +8,45 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>
+					<td class="no-separator">
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/site.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats">{L_SITE}</a>
 					</td>
-					<td>
+					<td class="no-separator">
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/member.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats">{L_USERS}</a>
 					</td>
-					<td>
+					<td class="no-separator">
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/visitors.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats">{L_VISITS}</a>
 					</td>
-					<td>
+					<td v>
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/pages.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats">{L_PAGES}</a>
 					</td>
-					<td>
+					<td v>
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/browsers.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats">{L_BROWSERS}</a>
 					</td>
 				</tr>
 				<tr>				
-					<td>	
+					<td class="no-separator">	
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/os.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats">{L_OS}</a>		
 					</td>		
-					<td>
+					<td class="no-separator">
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/countries.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats">{L_LANG}</a>
 					</td>
-					<td>
+					<td class="no-separator">
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/referer.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats">{L_REFERER}</a>
 					</td>
-					<td>
+					<td class="no-separator">
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/keyword.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats">{L_KEYWORD}</a>
 					</td>
-					<td>
+					<td class="no-separator">
 						&nbsp;
 					</td>
 				</tr>
@@ -403,13 +403,13 @@
 							<tbody>
 								# START list #			
 								<tr>
-									<td>			
+									<td class="no-separator">			
 										{list.IMG}
 									</td>
-									<td>			
+									<td class="no-separator">			
 										<div style="width:10px;height:10px;margin:auto;background:{list.COLOR};border:1px solid black;"></div>
 									</td>
-									<td>
+									<td class="no-separator">
 										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 									</td>				
 								</tr>
@@ -444,13 +444,13 @@
 							<thead>
 								# START list #			
 								<tr>
-									<td>			
+									<td class="no-separator">			
 										{list.IMG}
 									</td>
-									<td>			
+									<td class="no-separator">			
 										<div style="width:10px;height:10px;margin:auto;background:{list.COLOR};border:1px solid black;"></div>
 									</td>
-									<td>
+									<td class="no-separator">
 										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 									</td>				
 								</tr>
@@ -485,13 +485,13 @@
 							<tbody>
 								# START list #			
 								<tr>
-									<td>			
+									<td class="no-separator">			
 										{list.IMG}
 									</td>
-									<td>			
+									<td class="no-separator">			
 										<div style="width:10px;margin:auto;height:10px;background:{list.COLOR};border:1px solid black;"></div>
 									</td>
-									<td>
+									<td class="no-separator">
 										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 									</td>				
 								</tr>
