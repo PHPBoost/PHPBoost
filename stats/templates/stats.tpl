@@ -20,11 +20,11 @@
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/visitors.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats">{L_VISITS}</a>
 					</td>
-					<td v>
+					<td class="no-separator">
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/pages.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats">{L_PAGES}</a>
 					</td>
-					<td v>
+					<td class="no-separator">
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/browsers.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats">{L_BROWSERS}</a>
 					</td>
