@@ -37,13 +37,13 @@ $lang['news.content'] = 'Your ' . $lang['news.title'] . ' website is now install
 each module home has a message to guide you through its configuration. We strongly recommand to do the followings :  <br />
 <br />
 <br />
-<br /><h4 class="stitle1">Delete the "install" folder</h4><br /><br />
+<br /><h4 class="stitle1">Delete the "install" folder</h4><br />
 <br />
 For security reasons, you must delete the entire "install" folder located in the PHPBoost root directory.<br />
 Otherwise, some people may try to re-install the software and in that case you may lose datas.
 <br />
 <br />
-<br /><h4 class="stitle1">Manage your website</h4><br /><br />
+<br /><h4 class="stitle1">Manage your website</h4><br />
 <br />
 Access the <a href="/admin/admin_index.php">Administration Panel</a> to set up your website as you wish.<br />
 To do so : <br />
@@ -60,8 +60,9 @@ To do so : <br />
 </li></ul><br />
 <br />
 <br />
-<br /><h4 class="stitle1">What should I do if I have problems ?</h4><br /><br />
+<br /><h4 class="stitle1">What should I do if I have problems ?</h4><br />
 <br />
 Do not hesitate to consult the <a href="http://www.phpboost.org/wiki/wiki.php">PHPBoost documentation</a> or ask your question on the <a href="http://www.phpboost.org/forum/index.php">forum</a> for assistance. As the English community is still young, we strongly recommend that you use the second solution.<br /> <br />
+<br />
 <p class="float-right">The PHPBoost Team thanks you for using its software to create your Web site!</p>';
 ?>
