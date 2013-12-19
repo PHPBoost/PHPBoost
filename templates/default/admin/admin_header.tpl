@@ -4,18 +4,20 @@
 		<title>{TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
-		<!-- Default CSS -->
+
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_default.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css" />
 
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/css_cache.php?name=admin-theme-{THEME}&files=
+		/templates/default/theme/default.css;
+		/kernel/lib/css/font-awesome/css/font-awesome.css;
 		/templates/default/theme/admin_design.css;
 		/templates/default/theme/admin_global.css;
 		/templates/default/theme/admin_content.css" type="text/css" media="screen, print, handheld" />
 		# ELSE #
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_global.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen" />
@@ -38,10 +40,6 @@
 		</script>
 
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
-
 	</head>
 	<body>
 	
@@ -54,7 +52,7 @@
 	# ENDIF #
 	
 	<div id="global">
-		<div id="header_admin_container">
+		<header id="header_admin_container">
 			<div id="header_admin">
 				<div id="logo"></div>
 				<div id="site-name">{SITE_NAME}</div>
@@ -70,7 +68,7 @@
 				</div>
 				<div class="spacer"></div>
 			</div>
-		</div>
+		</header>
 		
 		<div id="admin_main">
 			
