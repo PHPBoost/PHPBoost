@@ -27,10 +27,27 @@
 
 class SandboxIconsController extends ModuleController
 {
+	private $view;
+	private $lang;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$view = new FileTemplate('sandbox/SandboxIconsController.tpl');
+		$this->init();
 		
+		$this->build_view();
+		
+		return $this->generate_response();
+	}
+	
+	private function init()
+	{
+		$this->lang = LangLoader::get('common', 'sandbox');
+		$this->view = new FileTemplate('sandbox/SandboxIconsController.tpl');
+		$this->view->add_lang($this->lang);
+	}
+	
+	private function build_view()
+	{
 		$icons = array(
 			'icon-arrow-right',
 			'icon-arrow-left',
@@ -120,9 +137,21 @@ class SandboxIconsController extends ModuleController
 		
 		foreach ($icons as $icon)
 		{
-			$view->assign_block_vars('icons', array('CLASS' => $icon));
+			$this->view->assign_block_vars('icons', array('CLASS' => $icon));
 		}
-		return new SiteDisplayResponse($view);
+	}
+	
+	private function generate_response()
+	{
+		$response = new SiteDisplayResponse($this->view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['module_title'] . ' - ' . $this->lang['title.icons']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['title.icons'], SandboxUrlBuilder::icons()->rel());
+		
+		return $response;
 	}
 }
 ?>

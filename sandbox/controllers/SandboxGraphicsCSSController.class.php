@@ -27,28 +27,56 @@
 
 class SandboxGraphicsCSSController extends ModuleController
 {
+	private $view;
+	private $lang;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$view = new FileTemplate('sandbox/SandboxGraphicsCSSController.tpl');
+		$this->init();
 		
+		$this->build_view();
+		
+		return $this->generate_response();
+	}
+	
+	private function init()
+	{
+		$this->lang = LangLoader::get('common', 'sandbox');
+		$this->view = new FileTemplate('sandbox/SandboxGraphicsCSSController.tpl');
+		$this->view->add_lang($this->lang);
+	}
+	
+	private function build_view()
+	{
 		$messages = array(
-			MessageHelper::display('Ceci est un message de succès', MessageHelper::SUCCESS),
-			MessageHelper::display('Ceci est un message d\'information', MessageHelper::NOTICE),
-			MessageHelper::display('Ceci est un message d\'avertissement', MessageHelper::WARNING),
-			MessageHelper::display('Ceci est un message d\'erreur', MessageHelper::ERROR),
-			MessageHelper::display('Ceci est une question, est-ce que l\'affichage sur deux lignes fonctionne correctement ?', MessageHelper::QUESTION)
+			MessageHelper::display($this->lang['css.message_success'], MessageHelper::SUCCESS),
+			MessageHelper::display($this->lang['css.message_notice'], MessageHelper::NOTICE),
+			MessageHelper::display($this->lang['css.message_warning'], MessageHelper::WARNING),
+			MessageHelper::display($this->lang['css.message_error'], MessageHelper::ERROR),
+			MessageHelper::display($this->lang['css.message_question'], MessageHelper::QUESTION)
 		);
 		
 		foreach ($messages as $message)
 		{
-			$view->assign_block_vars('messages', array('VIEW' => $message));
+			$this->view->assign_block_vars('messages', array('VIEW' => $message));
 		}
 		
 		$pagination = new ModulePagination(2, 15, 5);
 		$pagination->set_url(new Url('#%d'));
-		$view->put('PAGINATION', $pagination->display());
+		$this->view->put('PAGINATION', $pagination->display());
+	}
+	
+	private function generate_response()
+	{
+		$response = new SiteDisplayResponse($this->view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['module_title'] . ' - ' . $this->lang['title.css']);
 		
-		return new SiteDisplayResponse($view);
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['title.css'], SandboxUrlBuilder::css()->rel());
+		
+		return $response;
 	}
 }
 ?>

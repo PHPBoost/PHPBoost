@@ -27,6 +27,9 @@
 
 class SandboxFormController extends ModuleController
 {
+	private $view;
+	private $lang;
+	
 	/**
 	 * @var FormButtonSubmit
 	 */
@@ -38,13 +41,15 @@ class SandboxFormController extends ModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$view = new FileTemplate('sandbox/SandboxFormController.tpl');
+		$this->init();
+		
 		$form = $this->build_form();
+		
 		if ($this->submit_button->has_been_submited() || $this->preview_button->has_been_submited())
 		{
 			if ($form->validate())
 			{
-				$view->put_all(array(
+				$this->view->put_all(array(
 					'C_RESULT' => true,
 					'TEXT' => $form->get_value('text'),
 					'MAIL' => $form->get_value('mail'),
@@ -62,18 +67,27 @@ class SandboxFormController extends ModuleController
 					'H_T_TEXT_FIELD' => $form->get_value('alone'),
 					'C_PREVIEW' => $this->preview_button->has_been_submited()                
 				));
-
+				
 				$file = $form->get_value('file');
 				if ( $file !== null)
 				{
-					$view->put_all(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
+					$this->view->put_all(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
 				}
 			}
 		}
-		$view->put('form', $form->display());
-		return new SiteDisplayResponse($view);
+		
+		$this->view->put('form', $form->display());
+		
+		return $this->generate_response();
 	}
-
+	
+	private function init()
+	{
+		$this->lang = LangLoader::get('common', 'sandbox');
+		$this->view = new FileTemplate('sandbox/SandboxFormController.tpl');
+		$this->view->add_lang($this->lang);
+	}
+	
 	private function build_form()
 	{
 		$form = new HTMLForm('sandboxForm');
@@ -83,7 +97,7 @@ class SandboxFormController extends ModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->set_description('Ceci est ma description');
-	   
+		
 		// SINGLE LINE TEXT
 		$fieldset->add_field(new FormFieldTextEditor('text', 'Champ texte', 'toto', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
@@ -182,7 +196,7 @@ class SandboxFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldTimezone('timezone', 'TimeZone', 'UTC+0'));
 		
-		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('user_completition', 'auto completition', ''));
+		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('user_completition', 'auto completition', ''));
 		
 		$fieldset->add_element(new FormButtonButton('Envoyer'));
 
@@ -190,7 +204,7 @@ class SandboxFormController extends ModuleController
 		$form->add_fieldset($fieldset2);
 
 		// CAPTCHA
-		$fieldset2->add_field(new FormFieldCaptcha());
+		$fieldset2->add_field(new FormFieldCaptcha('captcha'));
 
 		// HIDDEN
 		$fieldset2->add_field(new FormFieldHidden('hidden', 'hidden'));
@@ -249,6 +263,19 @@ class SandboxFormController extends ModuleController
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 
 		return $form;
+	}
+	
+	private function generate_response()
+	{
+		$response = new SiteDisplayResponse($this->view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['module_title'] . ' - ' . $this->lang['title.form_builder']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['title.form_builder'], SandboxUrlBuilder::form()->rel());
+		
+		return $response;
 	}
 }
 ?>
