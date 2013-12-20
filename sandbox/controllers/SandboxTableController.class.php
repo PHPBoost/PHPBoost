@@ -27,18 +27,42 @@
 
 class SandboxTableController extends ModuleController
 {
+	private $view;
+	private $lang;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$view = new FileTemplate('sandbox/SandboxTableController.tpl');
+		$this->init();
+		
 		$table = $this->build_table();
-		$view->put('table', $table->export());
-		return new SiteDisplayResponse($view);
+		$this->view->put('table', $table->export());
+		
+		return $this->generate_response();
 	}
-
+	
+	private function init()
+	{
+		$this->lang = LangLoader::get('common', 'sandbox');
+		$this->view = new StringTemplate('# INCLUDE table #');
+	}
+	
 	private function build_table()
 	{
 		$table = new HTMLTable(new SandboxHTMLTableModel());
 		return $table;
+	}
+	
+	private function generate_response()
+	{
+		$response = new SiteDisplayResponse($this->view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['module_title'] . ' - ' . $this->lang['title.table_builder']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['title.table_builder'], SandboxUrlBuilder::table()->rel());
+		
+		return $response;
 	}
 }
 ?>

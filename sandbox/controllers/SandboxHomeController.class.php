@@ -27,34 +27,32 @@
 
 class SandboxHomeController extends ModuleController
 {
-	private static $tpl_src = '<h1>Sandbox parts</h1>
-	<ul class="bb_ul">
-	# START parts #
-		<li><a href="{parts.URL}">{parts.NAME}</a>
-	# END parts #
-	</ul>';
-
-	private static $links = array(
-		'Form builder' => '?url=/form', 
-		'CSS' => '?url=/css',
-		'Icons' => '?url=/icons',
-		'Table builder' => '?url=/table', 
-		'String template bencher' => '?url=/template', 
-		'Mail sender' => '?url=/mail'
-	);
-
+	private $view;
+	private $lang;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$tpl = new StringTemplate(self::$tpl_src);
-
-		foreach (self::$links as $name => $url)
-		{
-			$tpl->assign_block_vars('parts', array(
-				'URL' => $url,
-				'NAME' => $name
-			));
-		}
-		return new SiteDisplayResponse($tpl);
+		$this->init();
+		
+		$this->view->put('WELCOME_MESSAGE', FormatingHelper::second_parse($this->lang['welcome_message']));
+		
+		return $this->generate_response();
+	}
+	
+	private function init()
+	{
+		$this->lang = LangLoader::get('common', 'sandbox');
+		$this->view = new FileTemplate('sandbox/SandboxHomeController.tpl');
+		$this->view->add_lang($this->lang);
+	}
+	
+	private function generate_response()
+	{
+		$response = new SiteDisplayResponse($this->view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['module_title']);
+		
+		return $response;
 	}
 }
 ?>

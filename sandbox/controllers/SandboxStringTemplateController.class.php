@@ -27,6 +27,9 @@
 
 class SandboxStringTemplateController extends ModuleController
 {
+	private $view;
+	private $lang;
+	
 	private $test = 'This is a list of {CONTENT}
 <ul class="bb_ul">
 # START elements #
@@ -36,35 +39,39 @@ class SandboxStringTemplateController extends ModuleController
 
 	private $fruits = array('apple', 'pear', 'banana');
 
-	private $result_tpl = 'Non cached: {NON_CACHED_TIME} s - Cached: {CACHED_TIME} s<br />lenght of the parsed string: {STRING_LENGTH} chars';
-
 	public function execute(HTTPRequestCustom $request)
 	{
-		$tpl = new StringTemplate($this->result_tpl);
-
+		$this->init();
+		
 		$this->test = str_repeat($this->test, 1);
-
+		
 		$bench_non_cached = new Bench();
 		$bench_non_cached->start();
 		$this->run_non_cached_parsing();
 		$bench_non_cached->stop();
-
+		
 		$bench_cached = new Bench();
 		$bench_cached->start();
 		$this->run_cached_parsing();
 		$bench_cached->stop();
-		$tpl->put_all(array(
-			'CACHED_TIME' => $bench_cached->to_string(5),
-			'NON_CACHED_TIME' => $bench_non_cached->to_string(5),
-			'STRING_LENGTH' => strlen($this->test)
+		
+		$this->view->put_all(array(
+			'RESULT' => StringVars::replace_vars($this->lang['string_template.result'], array('non_cached_time' => $bench_non_cached->to_string(5), 'cached_time' => $bench_cached->to_string(5), 'string_length' => strlen($this->test)))
 		));
+		
+		return $this->generate_response();
+	}
 
-		return new SiteDisplayResponse($tpl);
+	private function init()
+	{
+		$this->lang = LangLoader::get('common', 'sandbox');
+		$this->view = new StringTemplate('{RESULT}');
+		$this->view->add_lang($this->lang);
 	}
 
 	private function assign_template(Template $tpl)
 	{
-		$tpl->put_all(array('CONTENT' => 'fruits:'));
+		$tpl->put('CONTENT', 'fruits:');
 
 		foreach ($this->fruits as $fruit)
 		{
@@ -90,6 +97,19 @@ class SandboxStringTemplateController extends ModuleController
 			$this->assign_template($tpl);
 			$tpl->render();
 		}
+	}
+	
+	private function generate_response()
+	{
+		$response = new SiteDisplayResponse($this->view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['module_title'] . ' - ' . $this->lang['title.string_template']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], SandboxUrlBuilder::home()->rel());
+		$breadcrumb->add($this->lang['title.string_template'], SandboxUrlBuilder::mail()->rel());
+		
+		return $response;
 	}
 }
 ?>

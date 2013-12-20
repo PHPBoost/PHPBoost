@@ -40,6 +40,11 @@ class SandboxExtensionPointProvider extends ExtensionPointProvider
 		return new CommentsTopics(array(new SandboxCommentsTopic()));
 	}
 	
+	public function tree_links()
+	{
+		return new SandboxTreeLinks();
+	}
+	
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/sandbox/index.php')));
