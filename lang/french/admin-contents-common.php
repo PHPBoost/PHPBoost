@@ -47,6 +47,10 @@ $lang['content.config.anti-flood-enabled-explain'] = 'Empêche les messages trop 
 $lang['content.config.delay-flood'] = 'Interval minimum de temps entre les messages';
 $lang['content.config.delay-flood-explain'] = '7 secondes par défaut';
 
+$lang['content.config.captcha'] = 'Captcha';
+$lang['content.config.captcha-used'] = 'Code de vérification utilisé par défaut.';
+$lang['content.config.captcha-used-explain'] = 'Le code de vérification vous permet de vous prémunir contre le spam sur votre site.';
+
 $lang['comments'] = 'Commentaires';
 $lang['comments.config'] = 'Configuration des commentaires';
 $lang['comments.management'] = 'Gestion des commentaires';

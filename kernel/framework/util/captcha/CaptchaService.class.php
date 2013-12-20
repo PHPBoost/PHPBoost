@@ -50,8 +50,7 @@ class CaptchaService
 	
 	public function get_default_captcha()
 	{
-		// PHPBoost, ReCaptcha, ... for use
-		return 'ReCaptcha';
+		return ContentManagementConfig::load()->get_used_captcha_module();
 	}
 
 	public function is_available()
@@ -94,6 +93,31 @@ class CaptchaService
     		$available_captchas[$id] = $provider->get_name();
     	}
     	return $available_captchas;
+    }
+    
+	/**
+     * @param string $id_module
+     */
+    public function uninstall_captcha($id_module)
+    {
+    	$captchas = $this->get_available_captchas();
+		
+		if (count($captchas) > 1)
+		{
+			$default_captcha = $this->get_default_captcha();
+			if ($default_captcha !== $id_module)
+			{
+				$config = ContentManagementConfig::load();
+				$config->set_used_captcha_module($default_captcha);
+				ContentManagementConfig::save();
+				return null;
+			}
+			else
+			{
+				return LangLoader::get_message('captcha.is_default', 'errors-common');
+			}
+		}
+		return LangLoader::get_message('captcha.last_installed', 'errors-common');
     }
 }
 ?>

@@ -113,6 +113,13 @@ class AdminContentConfigController extends AdminController
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
 		));
 		
+		$fieldset = new FormFieldsetHTML('captcha', $this->lang['content.config.captcha']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_used', $this->lang['content.config.captcha-used'], $this->content_management_config->get_used_captcha_module(),
+			$this->generate_captcha_available_option(), array('description' => $this->lang['content.config.captcha-used-explain'])
+		));
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
@@ -134,6 +141,7 @@ class AdminContentConfigController extends AdminController
 		
 		$this->content_management_config->set_anti_flood_enabled($this->form->get_value('anti_flood_enabled')->get_raw_value());
 		$this->content_management_config->set_anti_flood_duration($this->form->get_value('delay_flood'));
+		$this->content_management_config->set_used_captcha_module($this->form->get_value('captcha_used')->get_raw_value());
 		ContentManagementConfig::save();
 		
 		$this->user_accounts_config->set_max_private_messages_number($this->form->get_value('max_pm_number'));
@@ -145,6 +153,17 @@ class AdminContentConfigController extends AdminController
 		$options = array();
 		$available_tags = AppContext::get_content_formatting_service()->get_available_tags();
 		foreach ($available_tags as $identifier => $name)
+		{
+			$options[] = new FormFieldSelectChoiceOption($name, $identifier);
+		}
+		return $options;
+	}
+	
+	private function generate_captcha_available_option()
+	{
+		$options = array();
+		$captchas = AppContext::get_captcha_service()->get_available_captchas();
+		foreach ($captchas as $identifier => $name)
 		{
 			$options[] = new FormFieldSelectChoiceOption($name, $identifier);
 		}

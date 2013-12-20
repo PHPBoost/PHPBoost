@@ -47,6 +47,10 @@ $lang['content.config.anti-flood-enabled-explain'] = 'Block too rapid repeat mes
 $lang['content.config.delay-flood'] = 'Minimal interval of time between two messages';
 $lang['content.config.delay-flood-explain'] = '7 seconds by default';
 
+$lang['content.config.captcha'] = 'Captcha';
+$lang['content.config.captcha-used'] = 'Captcha used by default.';
+$lang['content.config.captcha-used-explain'] = 'The captcha allows you to protect yourself against spam on your site.';
+
 $lang['comments'] = 'Comments';
 $lang['comments.config'] = 'Comments configuration';
 $lang['comments.management'] = 'Comments management';

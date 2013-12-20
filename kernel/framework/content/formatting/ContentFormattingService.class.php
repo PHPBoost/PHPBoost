@@ -144,7 +144,7 @@ class ContentFormattingService
      */
     public function uninstall_editor($id_module)
     {
-    	$editors = AppContext::get_content_formatting_service()->get_available_editors();
+    	$editors = $this->get_available_editors();
 		
 		if (count($editors) > 1)
 		{

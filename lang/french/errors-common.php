@@ -35,4 +35,9 @@ $lang['process.error'] = 'Une erreur s\'est produite lors de l\'opération';
 $lang['confirm.delete'] = 'Voulez-vous vraiment supprimer cet élément ?';
 
 $lang['message.success.config'] = 'La configuration a été modifiée';
+
+//Captcha
+$lang['captcha.is_default'] = 'Le captcha que vous souhaitez désinstaller ou désactiver est défini par défaut, veuillez d\'abord sélectionner un autre captcha par défaut';
+$lang['captcha.last_installed'] = 'Dernier captcha de texte, vous ne pouvez pas le supprimer ou le désactiver. Veuillez d\'abord en installer un autre.';
+
 ?>
