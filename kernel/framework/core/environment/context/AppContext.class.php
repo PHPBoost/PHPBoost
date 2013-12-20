@@ -75,6 +75,10 @@ class AppContext
 	 * @var ContentFormattingService
 	 */
 	private static $content_formatting_service;
+	/**
+	 * @var CaptchaService
+	 */
+	private static $captcha_service;
 
 	/**
 	 * @desc Returns a unique identifier (useful for example to generate some javascript ids)
@@ -268,6 +272,18 @@ class AppContext
 			self::$content_formatting_service = new ContentFormattingService();
 		}
 		return self::$content_formatting_service;
+	}
+	
+	/**
+	 * @return CaptchaService
+	 */
+	public static function get_captcha_service()
+	{
+		if (self::$captcha_service === null)
+		{
+			self::$captcha_service = new CaptchaService();
+		}
+		return self::$captcha_service;
 	}
 }
 ?>

@@ -49,8 +49,7 @@ class FormFieldCaptcha extends AbstractFormField
         }
         else
         {
-        	$captcha_service = new CaptchaService();
-            $this->captcha = $captcha_service->get_default_factory();
+            $this->captcha = AppContext::get_captcha_service()->get_default_factory();
         }
         
         $field_options = $this->is_enabled() ? array('required' => true) : array();
