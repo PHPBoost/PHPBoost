@@ -17,7 +17,7 @@
 		<div id="admin_contents">
 			<div style="width:95%;margin:auto;">
 				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px">
-					- <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> - <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
+					<a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> / <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
 				<menu class="dynamic-menu group center">
 					<ul>
@@ -45,6 +45,7 @@
 					</ul>
 				</menu>
 			</div>
+			<div class="spacer">&nbsp;</div>
 			
 			# IF C_DATABASE_TABLE_STRUCTURE #
 			<table>
@@ -112,7 +113,7 @@
 					</thead>
 					<tbody>
 						<tr class="center">
-							<td>
+							<td style="min-width:80px;">
 								<span class="text-strong">{L_INDEX_NAME}</span>
 							</td>
 							<td>
@@ -148,7 +149,7 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td style="width:50px;">
+							<td style="min-width:60px;">
 								<span class="text-strong">{L_TABLE_DATA}</span>
 							</td>
 							<td style="text-align:right;">
@@ -272,45 +273,48 @@
 			
 			
 			# IF C_DATABASE_TABLE_DATA #
-			<div class="block_container" style="width:98%;margin-top:28px;" id="executed_query">
-				<div class="block_top">
-					{L_RESULT}
-				</div>
-				<div class="block_contents">
-					<fieldset style="background-color:white;margin:0px">
-						<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
-					</fieldset>
-					
-					<br />
-					# IF PAGINATION #<strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
-					
-					<div style="width:99%;margin:auto;overflow:auto;padding:0px 2px">
-						<table>
-							<thead>
-								<tr class="center">
-									<th>&nbsp;</th>
-									# START head #
-									<th>{head.FIELD_NAME}</th>
-									# END head #
-								</tr>
-							</thead>
-							<tbody>
-								# START line #
-								<tr>
-									# START line.field #
-									<td style="{line.field.STYLE}">
-										{line.field.FIELD_NAME}
-									</td>
-									# END line.field #
-								</tr>
-								# END line #
-							</tbody>
-						</table>
+			<section>
+					<header></header>
+					<div class="content" id="executed_query">
+						<article class="block">
+							<header>{L_EXECUTED_QUERY}</header>
+							<div class="content">
+								<fieldset style="background-color:white;margin:0px">
+									<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
+								</fieldset>
+								
+								<div class="spacer">&nbsp;</div>
+								# IF PAGINATION #<strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
+								<div style="width:99%;margin:auto;overflow:auto;padding:0px 2px">
+									<table>
+										<thead>
+											<tr class="center">
+												<th>&nbsp;</th>
+												# START head #
+												<th>{head.FIELD_NAME}</th>
+												# END head #
+											</tr>
+										</thead>
+										<tbody>
+											# START line #
+											<tr>
+												# START line.field #
+												<td style="{line.field.STYLE}">
+													{line.field.FIELD_NAME}
+												</td>
+												# END line.field #
+											</tr>
+											# END line #
+										</tbody>
+									</table>
+								</div>
+								<div class="spacer">&nbsp;</div>
+								# IF PAGINATION #<strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
+							<footer></footer>
+						</article>
 					</div>
-					<br />
-					# IF PAGINATION #<strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
-				</div>
-			</div>
+					<footer></footer>
+				</section>
 			# ENDIF #
 			
 			
@@ -343,73 +347,83 @@
 				}
 				return true;
 			}
-			-->	
+			-->
 			</script>
 			
 			<form action="admin_database_tools.php?table={TABLE_NAME}&action=query&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-				<div class="block_container" style="margin-top:28px;">
-					<div class="block_top">
-						{L_QUERY}
+				<section>
+					<header>
+						<h1>{L_QUERY}</h1>
+					</header>
+					<div class="content">
+						<article>
+							<header></header>
+							<div class="content">
+								<span id="errorh"></span>
+								<div class="message-helper warning">
+									<i class="icon-warning"></i>
+									<div class="message-helper-content">{L_EXPLAIN_QUERY}</div>
+								</div>
+								<fieldset>
+									<label for="query">* {L_EXECUTED_QUERY}</label>
+									<textarea rows="12" id="query" name="query">{QUERY}</textarea>
+								</fieldset>
+								<fieldset class="fieldset-submit" style="margin:0">
+									<button type="submit" name="submit" value="true">{L_EXECUTE}</button>
+								</fieldset>
+							</div>
+							<footer></footer>
+						</article>
 					</div>
-					<div class="block_contents2">
-						<span id="errorh"></span>
-						<div class="message-helper warning">
-							<i class="icon-warning"></i>
-							<div class="message-helper-content">{L_EXPLAIN_QUERY}</div>
-						</div>
-					</div>
-					<div class="block_top">
-						* {L_EXECUTED_QUERY}
-					</div>
-					<div class="block_contents2">
-						<textarea rows="12" id="query" name="query">{QUERY}</textarea>
-					</div>
-					<fieldset class="fieldset-submit" style="margin:0">
-						<legend>{L_EXECUTE}</legend>
-						<button type="submit" name="submit" value="true">{L_EXECUTE}</button>
-					</fieldset>
-				</div>
+					<footer></footer>
+				</section>
 			</form>
 			
-			# IF C_QUERY_RESULT #
-			<div class="block_container" style="width:98%;margin-top:0" id="executed_query">
-				<div class="block_top">
-					{L_RESULT}
-				</div>
-				<div class="block_contents2">
-					<fieldset style="background-color:white;margin:0px">
-						<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
-					</fieldset>
-					
-					<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
-						<table>
-							<thead>
-								<tr class="center">
-									# START head #
-									<th>{head.FIELD_NAME}</th>
-									# END head #
-								</tr>
-							</thead>
-							<tbody>
-								# START line #
-								<tr>
-									# START line.field #
-									<td style="{line.field.STYLE}">
-										{line.field.FIELD_NAME}
-									</td>
-									# END line.field #
-								</tr>
-								# END line #
-							</tbody>
-						</table>
+				# IF C_QUERY_RESULT #
+				<section>
+					<header>
+						<h1>{L_RESULT}</h1>
+					</header>
+					<div class="content" id="executed_query">
+						<article class="block">
+							<header>{L_EXECUTED_QUERY}</header>
+							<div class="content">
+								<fieldset style="background-color:white;margin:0px">
+									<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
+								</fieldset>
+								
+								<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
+									<table>
+										<thead>
+											<tr class="center">
+												# START head #
+												<th>{head.FIELD_NAME}</th>
+												# END head #
+											</tr>
+										</thead>
+										<tbody>
+											# START line #
+											<tr>
+												# START line.field #
+												<td style="{line.field.STYLE}">
+													{line.field.FIELD_NAME}
+												</td>
+												# END line.field #
+											</tr>
+											# END line #
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<footer></footer>
+						</article>
 					</div>
-				</div>
-			</div>
-			# ENDIF #
+					<footer></footer>
+				</section>
+				# ENDIF #
 			# ENDIF #
 			
 			# IF C_DATABASE_UPDATE_FORM #
-			<br />
 			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
 				<table>
 					<thead>
@@ -455,7 +469,7 @@
 					<legend>{L_EXECUTE}</legend>
 					<button type="submit" name="submit" value="true">{L_EXECUTE}</button>
 				</fieldset>
-			</form>	
+			</form>
 			# ENDIF #
 		</div>
 		
