@@ -18,38 +18,60 @@
 			# IF C_DATABASE_INDEX #
 
 			<form method="post" action="admin_database.php?action=restore&amp;token={TOKEN}" enctype="multipart/form-data" name="upload_file">
-			<div class="block_container">
-				<div class="block_top" style="text-align:center;">
-					{L_DATABASE_MANAGEMENT}
+			
+			<section>
+				<header>
+					<h1>{L_DATABASE_MANAGEMENT}</h1>
+				</header>
+				<div class="content">
+					<article class="block">
+						<header></header>
+						<div class="content">
+							{L_EXPLAIN_ACTIONS}
+							<div class="spacer">&nbsp;</div>
+							<div class="message-helper question">
+								<i class="icon-question"></i>
+								<div class="message-helper-content">{L_EXPLAIN_ACTIONS_QUESTION}</div>
+							</div>
+						</div>
+						<footer></footer>
+					</article>
 				</div>
-				<div class="block_contents1">
-					{L_EXPLAIN}
+				<footer></footer>
+			</section>
+			
+			<section>
+				<header>
+					<h1>{L_DB_RESTORE}</h1>
+				</header>
+				<div class="content">
+					<article class="block" style="float:left;width:49%;min-height:238px;margin-right:7px;">
+						<header></header>
+						<div class="content">
+							{L_RESTORE_FROM_SERVER}
+							<br /><br />
+							<a href="admin_database.php?action=restore">{L_FILE_LIST}</a>
+						</div>
+						<footer></footer>
+					</article>
+					<article class="block" style="float:left;width:49%;margin-left:7px;">
+						<header></header>
+						<div class="content">
+							{L_RESTORE_FROM_UPLOADED_FILE}
+							<br /><br />
+							<input type="file" class="file" name="file_sql">
+							<input type="hidden" name="max_file_size" value="10485760">
+							<br /><br />
+							<div class="center"><button type="submit" name="" value="true">{L_RESTORE_NOW}</button></div>
+						</div>
+						<footer></footer>
+					</article>
 				</div>
-				<div class="block_top" style="text-align:center;">
-					{L_DB_RESTORE}
-				</div>
-				<div class="block_contents1">
-					<div style="float:left;width:50%">
-						{L_RESTORE_FROM_SERVER}
-						<br /><br />
-						<a href="admin_database.php?action=restore">{L_FILE_LIST}</a>
-					</div>
-					<div style="float:left;width:50%">
-						{L_RESTORE_FROM_UPLOADED_FILE}
-						<br /><br />
-						<input type="file" class="file" name="file_sql">
-						<input type="hidden" name="max_file_size" value="10485760">
-						<br /><br />
-						<button type="submit" name="" value="true">{L_RESTORE_NOW}</button>
-					</div>
-					<div class="spacer"></div>
-				</div>
+				<footer></footer>
+			</section>
 				# INCLUDE message_helper #
-			</div>
 			</form>
 
-			<br />
-				
 			<form action="{TARGET}" method="post">
 				<table id="tables">
 					<thead>
@@ -62,7 +84,7 @@
 					<tfoot>
 						<tr class="center"> 
 							<td>
-								( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL})
+								(<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL})
 							</td>
 							<td>
 								<strong>{NBR_TABLES}</strong>
@@ -136,27 +158,30 @@
 					</tbody>
 				</table>
 				
-				<div class="block_container">
-					<div class="block_top text_center">
-						{ACTION_FOR_SELECTION}
+				<div class="spacer">&nbsp;</div>
+				
+				<section>
+					<header>
+						<h1>{ACTION_FOR_SELECTION}</h1>
+					</header>
+					<div class="content">
+						<ul class="center" style="width:99%;margin:20px auto;">
+							<li class="small-block">
+								<img src="./database.png" alt="optimize" /><br/>
+								<button type="submit" name="optimize" value="true">{L_OPTIMIZE}</button>
+							</li>
+							<li class="small-block">
+								<img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="repair" /><br/>
+								<button type="submit" name="repair" value="true">{L_REPAIR}</button>
+							</li>
+							<li class="small-block">
+								<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="backup" class="valign-middle" /><br/>
+								<button type="submit" name="backup" value="true">{L_BACKUP}</button>
+							</li>
+						</ul>
 					</div>
-					<div class="block_contents1 text_center">
-						<table style="margin:auto;">
-							<tbody>
-								<tr>
-									<td><img src="./database.png" alt="optimize" /></td>
-									<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="repair" /></td>
-									<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="optimize" class="valign-middle" /></td>
-								</tr>
-								<tr>
-									<td><button type="submit" name="optimize" value="true">{L_OPTIMIZE}</button></td>
-									<td>&nbsp;&nbsp;<button type="submit" name="repair" value="true">{L_REPAIR}</button></td>
-									<td>&nbsp;&nbsp;<button type="submit" name="backup" value="true">{L_BACKUP}</button></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
+					<footer></footer>
+				</section>
 				
 				<script type="text/javascript">
 				<!--
@@ -205,8 +230,7 @@
 					</ul>
 				</menu>
 			</div>
-			<br />
-			<br />
+			<div class="spacer">&nbsp;</div>
 			# ENDIF #
 			
 			<form action="admin_database.php?action=backup&amp;token={TOKEN}" method="post" name="table_list">
@@ -294,66 +318,77 @@
 				</script>
 				
 				<form action="admin_database.php?query=1&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-				<div class="block_container">
-					<div class="block_top">
-						{L_QUERY}
+				<section>
+					<header>
+						<h1>{L_QUERY}</h1>
+					</header>
+					<div class="content">
+						<article>
+							<header></header>
+							<div class="content">
+								<span id="errorh"></span>
+								<div class="message-helper warning">
+									<i class="icon-warning"></i>
+									<div class="message-helper-content">{L_EXPLAIN_QUERY}</div>
+								</div>
+								<fieldset>
+									<label for="query">* {L_EXECUTED_QUERY}</label>
+									<textarea rows="12" id="query" name="query">{QUERY}</textarea>
+								</fieldset>
+								<fieldset class="fieldset-submit" style="margin:0">
+									<button type="submit" name="submit" value="true">{L_EXECUTE}</button>
+								</fieldset>
+							</div>
+							<footer></footer>
+						</article>
 					</div>
-					<div class="block_contents2">
-						<span id="errorh"></span>
-						<div class="message-helper warning">
-							<i class="icon-warning"></i>
-							<div class="message-helper-content">{L_EXPLAIN_QUERY}</div>
-						</div>
-					</div>
-					<div class="block_top">
-						* {L_EXECUTED_QUERY}
-					</div>
-					<div class="block_contents2">
-						<textarea rows="12" id="query" name="query">{QUERY}</textarea>
-					</div>
-					<fieldset class="fieldset-submit" style="margin:0">
-						<legend>{L_EXECUTE}</legend>
-						<button type="submit" name="submit" value="true">{L_EXECUTE}</button>
-					</fieldset>
-				</div>
+					<footer></footer>
+				</section>
 				</form>
 				
 				# IF C_QUERY_RESULT #
-				<div class="block_container" style="width:98%;margin-top:0" id="executed_query">
-					<div class="block_top">
-						{L_RESULT}
+				<section>
+					<header>
+						<h1>{L_RESULT}</h1>
+					</header>
+					<div class="content" id="executed_query">
+						<article class="block">
+							<header>{L_EXECUTED_QUERY}</header>
+							<div class="content">
+								<fieldset style="background-color:white;margin:0px">
+									<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
+								</fieldset>
+								
+								<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
+									<table>
+										# IF C_HEAD #
+										<thead>
+											<tr class="center">
+												# START head #
+												<th>{head.FIELD_NAME}</th>
+												# END head #
+											</tr>
+										</thead>
+										# ENDIF #
+										<tbody>
+											# START line #
+											<tr>
+												# START line.field #
+												<td style="{line.field.STYLE}">
+													{line.field.FIELD_NAME}
+												</td>
+												# END line.field #
+											</tr>
+											# END line #
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<footer></footer>
+						</article>
 					</div>
-					<div class="block_contents2">
-						<fieldset style="background-color:white;margin:0px">
-							<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
-						</fieldset>
-						
-						<div style="width:99%;margin:auto;overflow:auto;padding:18px 2px">
-							<table>
-								# IF C_HEAD #
-								<thead>
-									<tr class="center">
-										# START head #
-										<th>{head.FIELD_NAME}</th>
-										# END head #
-									</tr>
-								</thead>
-								# ENDIF #
-								<tbody>
-									# START line #
-									<tr>
-										# START line.field #
-										<td style="{line.field.STYLE}">
-											{line.field.FIELD_NAME}
-										</td>
-										# END line.field #
-									</tr>
-									# END line #
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
+					<footer></footer>
+				</section>
 				# ENDIF #
 			# ENDIF #
 
@@ -384,7 +419,7 @@
 						# START file #
 						<tr class="center">
 							<td style="text-align:left;padding-left:20px;">
-								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');"><img src="./database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');">{file.FILE_NAME}</a>
+								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_RESTORE}"><img src="./database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_RESTORE}">{file.FILE_NAME}</a>
 							</td>
 							<td style="width:120px;">
 								{file.WEIGHT}
