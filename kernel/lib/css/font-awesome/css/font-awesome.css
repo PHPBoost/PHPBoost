@@ -1345,9 +1345,12 @@ readers do not read off random characters that represent icons */
 	content: "\f196";
 }
 
+/* Config spécifique PHPBoost */
+[class^="icon-"] { vertical-align:middle; }
+[class^="icon-"]:hover { text-decoration:none; }
+[class^="icon-"]:before { font-size:1.167em; }
 
-
-/* ComplÃ©ment PHPBoost */
+/* Alias */
 .icon-remove:before { /* copie times */
 	content: "\f00d";
 }
@@ -1367,3 +1370,5 @@ readers do not read off random characters that represent icons */
 .icon-offline:before { /* copie user */
 	content: "\f007";
 }
+.icon-table-sort-up:before { content: "\f062"; }
+.icon-table-sort-down:before { content: "\f063"; }

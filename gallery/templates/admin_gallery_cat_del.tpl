@@ -53,7 +53,7 @@
 				# START subgalleries #
 				<fieldset>
 					<legend>{subgalleries.L_KEEP}</legend>
-					<div id="id-message-helper" class="message-helper warning">
+					<div class="message-helper warning">
 						<i class="icon-notice"></i>
 						<div class="message-helper-content">{subgalleries.L_EXPLAIN_CAT}</div>
 					</div>
