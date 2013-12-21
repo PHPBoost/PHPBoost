@@ -251,7 +251,7 @@
 							<br />
 							<div>						
 								<div>
-									<div class="row3 gallery_cat_admin">
+									<div class="gallery_cat_admin">
 										<span style="float:left;">
 											&nbsp;&nbsp;<i class="icon-folder"></i> <a href="gallery.php" class="gallery_link_cat">{L_ROOT}</a>
 										</span>
@@ -264,7 +264,7 @@
 								# START list #	
 								<span id="c{list.I}">
 									<div style="margin-left:{list.INDENT}px;">
-										<div class="row3 gallery_cat_admin">
+										<div class="gallery_cat_admin">
 											<span style="float:left;">
 												&nbsp;&nbsp;<i class="icon-folder"></i> {list.LOCK} &nbsp;<a href="gallery{list.U_GALLERY_VARS}" class="gallery_link_cat">{list.NAME}</a> &nbsp;<span class="smaller">{list.DESC}</span>
 											</span>

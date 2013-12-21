@@ -41,7 +41,7 @@
 						<header><h1>{QUESTION}</h1></header>
 						<div class="content">
 							# IF C_POLL_QUESTION #
-							<div class="row1 text_small">
+							<div class="text_small">
 								# START radio #
 								<p style="margin-top:15px;padding-left:25px;"><label><input type="{radio.TYPE}" name="radio" value="{radio.NAME}"> {radio.ANSWERS}</label></p>
 								# END radio #

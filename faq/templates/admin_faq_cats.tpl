@@ -47,7 +47,7 @@
 					</tbody>
 				</table>
 				
-				<div style="text-align:center; margin:30px 20px;" class="row1">
+				<div style="text-align:center; margin:30px 20px;">
 					<a href="admin_faq_cats.php?recount=1" title="{L_RECOUNT_QUESTIONS}">
 						<i class="icon-refresh icon-2x"></i>
 					</a>

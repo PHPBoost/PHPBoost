@@ -275,7 +275,7 @@ else
 			{
 				$j++;
 				$Template->assign_block_vars('end_td_pics', array(
-					'TD_END' => '<td class="row1" style="width:' . $column_width_pics . '%;padding:0">&nbsp;</td>',
+					'TD_END' => '<td style="width:' . $column_width_pics . '%;padding:0">&nbsp;</td>',
 					'TR_END' => (is_int($j/$nbr_column_pics)) ? '</tr>' : ''
 				));
 			}

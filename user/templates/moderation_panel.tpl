@@ -134,99 +134,80 @@
 				}
 				-->
 				</script>
-				
-				<br /><br />
-				<form action="{U_ACTION_INFO}" method="post">		
-					<table class="module-table">
-						<tr>
-							<th colspan="2">{L_ACTION_INFO}</th>
-						</tr>
-						<tr>
-							<td class="row1" style="width:30%;">
-								{L_LOGIN}
-							</td>
-							<td>
+
+				<form action="{U_ACTION_INFO}" method="post">
+					<fieldset>
+						<legend>{L_ACTION_INFO}</legend>
+						
+						<div class="form-element">
+							<label>{L_LOGIN}</label>
+							<div class="form-field">
 								<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
-							</td>
-						</tr>
-						<tr>
-							<td class="row1">
-								{L_PM}
-							</td>
-							<td>
+							</div>
+						</div>
+						<div class="form-element">
+							<label>{L_PM}</label>
+							<div class="form-field">
 								<a href="{U_PM}" class="basic-button smaller">MP</a>
-							</td>
-						</tr>
-						<tr>
-							<td class="row1" style="vertical-align:top">
-								<label for="action_contents">{L_ALTERNATIVE_PM}</label>
-							</td>
-							<td>
-								{KERNEL_EDITOR}
-								<textarea name="action_contents" id="action_contents" rows="12">{ALTERNATIVE_PM}</textarea>
-							</td>
-						</tr>
-						<tr>
-							<td class="row1">
-								{L_INFO_EXPLAIN}
-							</td>
-							<td>
+							</div>
+						</div>
+						<div class="form-element-textarea" >
+							<label for="action_contents">{L_ALTERNATIVE_PM}</label>
+							{KERNEL_EDITOR}
+							<textarea name="action_contents" id="action_contents" rows="12">{ALTERNATIVE_PM}</textarea>
+						</div>
+						<div class="form-element">
+							<label>{L_INFO_EXPLAIN}</label>
+							<div class="form-field">
 								<span id="action_info">{INFO}</span>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 									{SELECT}
-								</select>
-								<button type="submit" name="valid_user" value="true">{L_CHANGE_INFO}</button>					
-							</td>
-						</tr>
-					</table>
-				</form>					
+								</select>	
+							</div>
+						</div>
+					</fieldset>	
+					
+					<fieldset class="fieldset-submit">
+						<legend></legend>
+						<button type="submit" name="valid_user" value="true">{L_CHANGE_INFO}</button>
+					</fieldset>
+				</form>
 				# ENDIF #
 				
-				
-				
 				# IF C_MODO_PANEL_USER_BAN #					
-				<br /><br />
-				<form action="{U_ACTION_INFO}" method="post">		
-					<table class="module-table">
-						<tr>
-							<th colspan="2">{L_ACTION_INFO}</th>
-						</tr>
-						<tr>
-							<td class="row1" style="width:30%;">
-								{L_LOGIN}
-							</td>
-							<td>
+				<form action="{U_ACTION_INFO}" method="post">
+					<fieldset>
+						<legend>{L_ACTION_INFO}</legend>
+						
+						<div class="form-element">
+							<label>{L_LOGIN}</label>
+							<div class="form-field">
 								<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
-							</td>
-						</tr>
-						<tr>
-							<td class="row1">
-								{L_PM}
-							</td>
-							<td>
+							</div>
+						</div>
+						<div class="form-element">
+							<label>{L_PM}</label>
+							<div class="form-field">
 								<a href="{U_PM}" class="basic-button smaller">MP</a>
-							</td>
-						</tr>
-						<tr>
-							<td class="row1">
-								{L_DELAY_BAN}
-							</td>
-							<td>
+							</div>
+						</div>
+						<div class="form-element" >
+							<label>{L_DELAY_BAN}</label>
+							<div class="form-field">
 								<select name="user_ban">					
-									# START select_ban #	
-										{select_ban.TIME}
-									# END select_ban #						
+								# START select_ban #	
+									{select_ban.TIME}
+								# END select_ban #						
 								</select>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2" style="text-align:center;">
-								<button type="submit" name="valid_user" value="true">{L_BAN}</button>					
-							</td>
-						</tr>
-					</table>
-				</form>					
+							</div>
+						</div>
+					</fieldset>	
+					
+					<fieldset class="fieldset-submit">
+						<legend></legend>
+						<button type="submit" name="valid_user" value="true">{L_BAN}</button>
+					</fieldset>
+				</form>
 				# ENDIF #
 			# ENDIF #
 				</div>

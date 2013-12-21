@@ -112,20 +112,22 @@
 		<form action="action.php?token={TOKEN}" method="post" class="fieldset-content">
 			<fieldset>
 				<legend>{status.L_TITLE}</legend>
-				<p style="text-align:center" class="text-strong">{L_CURRENT_STATUS}</p>
-				<div id="current_status" class="row3">{status.CURRENT_STATUS}</div>
+				
+				<span class="text-blockquote">{L_CURRENT_STATUS} :</span>
+				<div id="current_status" class="blockquote">{status.CURRENT_STATUS}</div>
+
 				<br />
 				<div class="form-element">
 					<label>{L_STATUS}</label>
 					<div class="form-field">
-						<label><input type="radio" name="status" id="radio_defined" value="radio_defined" {status.DEFINED} onclick="javascript: change_type(0);" {status.SELECTED_DEFINED}>&nbsp;{L_DEFINED_STATUS}</label>
+						<label style="display:inline-block;"><input type="radio" name="status" id="radio_defined" value="radio_defined" {status.DEFINED} onclick="javascript: change_type(0);" {status.SELECTED_DEFINED}> {L_DEFINED_STATUS}</label>
 						<select id="id_status" name="id_status" {status.SELECTED_SELECT} class="nav" onchange="javascript:show_status();">
 						# START status.list #
 							<option value="{status.list.ID_STATUS}" {status.list.SELECTED}>{status.list.L_STATUS}</option>
 						# END status.list #
 						</select>
 						<br /><br />
-						<label><input type="radio" name="status" id="radio_undefined" value="radio_undefined" {status.UNDEFINED} onclick="javascript: change_type(-1);" {status.SELECTED_UNDEFINED}>&nbsp;{L_UNDEFINED_STATUS}</label> 
+						<label><input type="radio" name="status" id="radio_undefined" value="radio_undefined" {status.UNDEFINED} onclick="javascript: change_type(-1);" {status.SELECTED_UNDEFINED}> {L_UNDEFINED_STATUS}</label> 
 						
 					</div>
 				</div>
