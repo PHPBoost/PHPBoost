@@ -858,7 +858,7 @@ else
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'DESC' => $row['contents'],
-			'INDENT' => ($row['level'] + 1) * 75, //Indentation des sous catégories.
+			'INDENT' => ($row['level'] + 1) * 30, //Indentation des sous catégories.
 			'LOCK' => ($row['status'] == 0) ? '<i class="icon-lock"></i>' : '',
 			'U_GALLERY_VARS' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php')
 		));
