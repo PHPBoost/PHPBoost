@@ -86,7 +86,7 @@
 				<fieldset>
 					<legend>{L_IMG_DISPO_GALLERY}</legend>
 					
-					<div id="id-message-helper" class="message-helper notice">
+					<div class="message-helper notice">
 						<i class="icon-notice"></i>
 						<div class="message-helper-content">{L_REQUIRE}<br />{L_SELECT_IMG_ADD}</div>
 					</div>
@@ -166,7 +166,7 @@
 					# END list #
 														
 					# START no_img #						
-					<div id="id-message-helper" class="message-helper notice">
+					<div class="message-helper notice">
 						<i class="icon-notice"></i>
 						<div class="message-helper-content">{no_img.L_NO_IMG}</div>
 					</div>

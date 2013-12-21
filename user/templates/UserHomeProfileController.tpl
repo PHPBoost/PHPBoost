@@ -16,7 +16,7 @@
 				<a href="{U_USER_PM}">
 					# IF C_HAS_PM #
 					<span class="icon-stack">
-						<i class="icon-circle blink icon-circle-alerte">
+						<i class="icon-circle blink icon-circle-alert">
 							<span>{NUMBER_PM}</span>
 						</i>
 						<i class="icon-envelope-o icon-stack-2x"></i>
@@ -39,7 +39,7 @@
 				<a href="{U_CONTRIBUTION_PANEL}">
 					# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
 					<span class="icon-stack">
-						<i class="icon-circle blink icon-circle-alerte">
+						<i class="icon-circle blink icon-circle-alert">
 							<span>{NUMBER_UNREAD_CONTRIBUTIONS}</span>
 						</i>
 						<i class="icon-file-text-o icon-stack-2x"></i>

@@ -50,12 +50,12 @@ class ReCaptcha extends Captcha
 	
 	public function is_valid()
 	{
-		$response_field = AppContext::get_request()->get_value('recaptcha_response_field', false);
+		$response_field = AppContext::get_request()->get_value($this->get_html_id(), false);
 		if ($response_field)
 		{
 			$challenge_field = AppContext::get_request()->get_value('recaptcha_challenge_field');
 		
-			$this->recaptcha_response = recaptcha_check_answer(self::PRIVATE_KEY, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+			$this->recaptcha_response = recaptcha_check_answer(self::PRIVATE_KEY, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $response_field);
 			
 			return $this->recaptcha_response->is_valid;
 		}
@@ -66,7 +66,10 @@ class ReCaptcha extends Captcha
 		$tpl = new FileTemplate('ReCaptcha/ReCaptcha.tpl');
 		$this->lang = LangLoader::get('common', 'ReCaptcha');
 		$tpl->add_lang($this->lang);
-		$tpl->put('PUBLIC_KEY', self::PUBLIC_KEY);
+		$tpl->put_all(array(
+			'PUBLIC_KEY' => self::PUBLIC_KEY,
+			'HTML_ID' => $this->get_html_id()
+		));
 		return $tpl->render();
 	}
 	

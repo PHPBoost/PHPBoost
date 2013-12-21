@@ -3,9 +3,9 @@
  Contient les classes globales au site, peuvent être utilisées partout.
 --------------------------------------*/ 
 
-/* Classes générales
+/* Classes generales
 --------------------------------------*/
-/* Case résultat recherche membre AJAX */
+/* Case resultat recherche membre AJAX */
 .xmlhttprequest-result-search {
 	overflow:auto;
 	min-height:40px;
@@ -129,11 +129,6 @@ a:hover {
 	text-decoration:underline;
 }
 
-/* A supprimer ou remplacer par "a img" ? */
-.img-link, .img-link:hover {
-	text-decoration:none;
-}
-
 /* Lien des utilisateurs */
 a.admin { color:#FFA34F; }
 a.modo { color:#006699; }
@@ -142,10 +137,6 @@ a.member { color:#000000; }
 
 /* Ic�nes sp�cifique PHPBoost
 ------------------------------------ */
-[class^="icon-"] { vertical-align:middle; }
-[class^="icon-"]:hover { text-decoration:none; }
-[class^="icon-"]:before { font-size:1.167em; }
-
 .icon-syndication:before { color:#f57900; }
 .icon-forbidden:before { color:#BA4B49; }
 .icon-ban:before { color:#BA4B49; }
@@ -155,12 +146,9 @@ a.member { color:#000000; }
 .icon-online:before { color:#52D132; }
 .icon-offline:before { color:#E05759; }
 
-table .icon-table-sort-up:before { content: "\f062"; }
-table .icon-table-sort-down:before { content: "\f063"; }
-
 li.small-block .icon-stack { height: 2.34em; }
 
-.icon-circle-alerte {
+.icon-circle-alert {
 	z-index:1;
 	position:absolute;
 	top:-3px;
@@ -168,7 +156,7 @@ li.small-block .icon-stack { height: 2.34em; }
 	font-size:1.32em;
 }
 
-.icon-circle-alerte span{
+.icon-circle-alert span {
 	display:block;
 	position:absolute;
 	top:3px;
@@ -221,7 +209,6 @@ h3.title2 {
 	margin-left:20px;
 }
 
-/* Sous titres */
 /* Sous titre 1 */
 h4.stitle1 {
 	font-size:1.5em;
@@ -306,7 +293,7 @@ ul, ol {
 }
 
 /* Affichage balise quote, code, hide */
-.text-blockquote, .text-code, .text-hide{
+.text-blockquote, .text-code, .text-hide {
 	display:block;
 	width:93%;
 	padding-bottom:2px;
@@ -325,31 +312,13 @@ ul, ol {
 	padding:8px;
 	margin:0px 25px;
 }
-.hide {
-	cursor:pointer;
-	height:10px;
-	overflow:hidden;
-}
-.hide2 {
-	visibility:hidden;
-	overflow:auto;
-}
-.indent {
-	margin-left:30px;
-}
-.bb-acronym {
-	cursor:help;
-}
 
-.bb-block {
-	margin:5px 20px;
-	padding:5px;
-	border:1px solid #C4CED6;
-}
-
-.bb-fieldset {
-	margin:10px;
-}
+.hide {	cursor:pointer;	height:10px; overflow:hidden; }
+.hide2 { visibility:hidden; overflow:auto; }
+.indent { margin-left:30px; }
+.bb-acronym { cursor:help; }
+.bb-block {	margin:5px 20px; padding:5px; border:1px solid #C4CED6; }
+.bb-fieldset { margin:10px; }
 
 /* Code avec numerotation des listes */
 .code ol { margin-left:3em; }
@@ -361,14 +330,12 @@ a.wikipedia-link:before {
 	padding-right:2px;
 }
 
-a.wikipedia-link{ border-bottom:1px dotted; }
+a.wikipedia-link { border-bottom:1px dotted; }
 
 /* Menus dynamiques
 --------------------------------------*/
 
-.dynamic-menu {
-	position:relative;
-}
+.dynamic-menu { position:relative; }
 
 /* Niveau 1 */
 .dynamic-menu ul {
@@ -747,7 +714,6 @@ ul.menu-vertical-3 li a,ul.menu-vertical-3 li span {
 --------------------------------------*/
 div.message-helper {
 	height:auto;
-	max-width:500px;
 	padding:10px;
 	margin:5px auto 15px auto;
 	line-height:20px;

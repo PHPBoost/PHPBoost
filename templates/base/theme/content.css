@@ -643,8 +643,6 @@ div.form-autocompleter ul { margin: 0px; padding: 0px; max-height: 20em; overflo
 div.form-autocompleter ul li.selected { background-color: #F0F0F0; }
 div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; padding:5px 15px; cursor: pointer; }
 
-
-/* A reprendre */
 .field-button {
 	display: inline-block;
 	font-size: 0;
@@ -687,6 +685,11 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 	border-bottom:2px #336397 solid;
 }
 
+h5.sub-title { /* Titre des modules minis */
+	font-size:13px;
+	color:#515C68;
+}
+
 .module-mini-contents {
 	border-top:none;
 	border-bottom:none;
@@ -697,11 +700,6 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 /* Bordure inférieure des modules minis */
 .module-mini-bottom { 
 	height:15px;
-}
-
-h5.sub-title { /* Titre des modules minis */
-	font-size:13px;
-	color:#515C68;
 }
 
 /* Messages postés par les membres (messages privés & commentaires) 

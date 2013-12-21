@@ -4,7 +4,7 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
 --------------------------------------*/
 
 /* Reset */
-* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+* { margin:0; padding:0; font-size:100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 html, body { margin: 0;	padding: 0; }
 img { border:none; overflow:scroll; vertical-align: middle; }
 img, table, td, blockquote, code, pre, textarea, input, video {	max-width: 100%; }
@@ -53,6 +53,9 @@ img.left, img.right { margin:6px; }
 
 .spacer { clear:both; }
 
+/* Image */
+.img-link, .img-link:hover { text-decoration:none; }
+
 /* Affichage des smiley */
 .smiley { vertical-align:middle; }
 
@@ -81,31 +84,15 @@ div.horizontal-fieldset [class^="form-element"] label {
 }
 
 /* Boutons */
-.button {
-    cursor:pointer;
-}
-
-button.image{
-    background:none;
-    border:none;
-    cursor:pointer;
-}
+.button { cursor:pointer; }
+button.image{ background:none; border:none; cursor:pointer; }
 
 /* Opacité */
-.low-opacity {
-    filter:alpha(opacity=40);
-    opacity: 0.40;
-    -moz-opacity:0.40;
-}
+.low-opacity { filter:alpha(opacity=40); opacity: 0.40; -moz-opacity:0.40; }
 
 /* Liens pagination */
-nav.pagination {
-	display:inline;
-}
-
-nav.pagination .current-page {
-    text-decoration:underline;
-}
+nav.pagination { display:inline; }
+nav.pagination .current-page { text-decoration:underline; }
 
 /* Debug */
 .pbt-debug { background: orange !important; outline: 3px solid orangered !important; }
@@ -117,7 +104,7 @@ nav.pagination .current-page {
 }
 
 /* Prévisualisation AJAX. */
-.xmlhttprequest-preview{
+.xmlhttprequest-preview {
 	overflow:auto;
 	height:220px;
 	width:94%;
@@ -169,17 +156,17 @@ ul.rss-feed li {
 
 /* Lightbox
 --------------------------------------*/
-#lightbox{  position:absolute;  left:0; width:100%; z-index:103; text-align:center; line-height:0;}
-#lightbox img{ width:auto; height:auto;}
-#lightbox a img{ border:none; }
+#lightbox {  position:absolute;  left:0; width:100%; z-index:103; text-align:center; line-height:0;}
+#lightbox img { width:auto; height:auto;}
+#lightbox a img { border:none; }
 
-#outerImageContainer{ position:relative; background-color:#fff; width:250px; height:250px; margin:0 auto; }
-#imageContainer{ padding:10px; }
+#outerImageContainer { position:relative; background-color:#fff; width:250px; height:250px; margin:0 auto; }
+#imageContainer { padding:10px; }
 
-#loading{ position:absolute; top:40%; left:0%; height:25%; width:100%; text-align:center; line-height:0; }
-#hoverNav{ position:absolute; top:0; left:0; height:100%; width:100%; z-index:10; }
-#imageContainer>#hoverNav{ left:0;}
-#hoverNav a{ outline:none;}
+#loading { position:absolute; top:40%; left:0%; height:25%; width:100%; text-align:center; line-height:0; }
+#hoverNav { position:absolute; top:0; left:0; height:100%; width:100%; z-index:10; }
+#imageContainer>#hoverNav { left:0;}
+#hoverNav a { outline:none;}
 
 #prevLink, #nextLink{ width:49%; height:100%; background-image:url(data:image/gif;base64,AAAA); /* Trick IE into showing hover */ display:block; }
 #prevLink { left:0; float:left;}
@@ -187,33 +174,18 @@ ul.rss-feed li {
 #prevLink:hover, #prevLink:visited:hover { background:url(../images/lightbox/prevlabel.gif) left 15% no-repeat; }
 #nextLink:hover, #nextLink:visited:hover { background:url(../images/lightbox/nextlabel.gif) right 15% no-repeat; }
 
-#imageDataContainer{ font:10px Verdana, Helvetica, sans-serif; background-color:#fff; margin:0 auto; line-height:1.4em; overflow:auto; width:100%   ; }
+#imageDataContainer { font:10px Verdana, Helvetica, sans-serif; background-color:#fff; margin:0 auto; line-height:1.4em; overflow:auto; width:100%   ; }
 
-#imageData{ padding:0 10px; color:#666; }
-#imageData #imageDetails{ width:70%; float:left; text-align:left; } 
-#imageData #caption{ font-weight:bold;  }
-#imageData #numberDisplay{ display:block; clear:left; padding-bottom:1.0em; }           
-#imageData #bottomNavClose{ width:66px; position:relative; float:right; padding-bottom:0.7em; outline:none;}      
+#imageData { padding:0 10px; color:#666; }
+#imageData #imageDetails { width:70%; float:left; text-align:left; } 
+#imageData #caption { font-weight:bold;  }
+#imageData #numberDisplay { display:block; clear:left; padding-bottom:1.0em; }           
+#imageData #bottomNavClose { width:66px; position:relative; float:right; padding-bottom:0.7em; outline:none;}      
 
-#overlay{ position:absolute; top:0; left:0; z-index:102; width:100%; height:500px; background-color:#000; }
+#overlay { position:absolute; top:0; left:0; z-index:102; width:100%; height:500px; background-color:#000; }
 
 /* Effet Blink
 --------------------------------------*/
-@keyframes blink {  
-    0% { opacity:0; }
-    30% { opacity:1; }
-    70% { opacity:1; }
-    100% { opacity:0; }
-}
-@-webkit-keyframes blink {
-    0% { opacity:0; }
-    30% { opacity:1; }
-    70% { opacity:1; }
-    100% { opacity:0; }
-}
-
-.blink {
-	animation: blink 1.5s ease-in-out infinite;
-	-moz-animation: blink 1.5s ease-in-out infinite;
-	-webkit-animation: blink 1.5s ease-in-out infinite;
-}
+@keyframes blink { 0% { opacity:0; } 30% { opacity:1; } 70% { opacity:1; } 100% { opacity:0; }}
+@-webkit-keyframes blink { 0% { opacity:0; } 30% { opacity:1; } 70% { opacity:1; } 100% { opacity:0; }}
+.blink { animation: blink 1.5s ease-in-out infinite; -moz-animation: blink 1.5s ease-in-out infinite; -webkit-animation: blink 1.5s ease-in-out infinite; }

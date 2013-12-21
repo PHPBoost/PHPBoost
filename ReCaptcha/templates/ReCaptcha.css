@@ -30,7 +30,7 @@
 	margin:5px;
 }
 
-#recaptcha_response_field {
+#recaptcha_container input {
 	width:100%;
 	border:none;
 	border-top:1px solid #CCC;

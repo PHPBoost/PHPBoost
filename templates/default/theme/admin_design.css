@@ -3,12 +3,6 @@
 Contient les conteneur, fortement dépendant du design.
 --------------------------------------*/ 
 
-* { 
-	margin:0;
-	padding:0;
-	font-size:100%;
-}
-
 html, body{	height: 100%; }
 
 body {
