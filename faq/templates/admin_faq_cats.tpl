@@ -32,21 +32,11 @@
 			# INCLUDE message_helper #
 			
 			# START categories_management #
-				<table>
-					<thead>
-						<tr> 
-							<th>{L_CATS_MANAGEMENT}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td> 
-								{categories_management.CATEGORIES}
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				
+				<fieldset>
+					<legend>{L_CATS_MANAGEMENT}</legend>
+					{categories_management.CATEGORIES}
+				</fieldset>
+
 				<div style="text-align:center; margin:30px 20px;">
 					<a href="admin_faq_cats.php?recount=1" title="{L_RECOUNT_QUESTIONS}">
 						<i class="icon-refresh icon-2x"></i>
