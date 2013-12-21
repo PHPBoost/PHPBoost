@@ -59,7 +59,7 @@
 		# START questions #
 			# START questions.faq #
 				<div id="q{questions.faq.ID_QUESTION}">
-					<div class="row1">
+					<div>
 						<span style="float:left;">
 							<a href="javascript:show_answer({questions.faq.ID_QUESTION});" >
 								<i id="faq_i{questions.faq.ID_QUESTION}" class="icon-caret-right icon-2x"></i>
@@ -117,7 +117,7 @@
 			</ol>			
 			<hr style="margin:20px 0;" />			
 			# START questions_block.contents #
-				<div class="row1" id="q{questions_block.contents.ID}">
+				<div id="q{questions_block.contents.ID}">
 					<span style="float:left;">
 						<i class="icon-caret-right icon-2x"></i>
 						{questions_block.contents.QUESTION}

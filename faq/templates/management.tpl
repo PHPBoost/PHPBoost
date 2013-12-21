@@ -135,7 +135,7 @@
 					</p>
 					<br />
 					# START category.questions #
-						<div class="row1" id="q{category.questions.ID}">
+						<div id="q{category.questions.ID}">
 							<span style="float:left;">
 								<i class="icon-caret-right icon-2x"></i>
 								{category.questions.QUESTION}

@@ -22,7 +22,7 @@
 						# END image_up #
 						
 						# START image_quota #	
-						<div class="row3" style="width:50%;margin:auto">
+						<div style="width:50%;margin:auto">
 							<strong>{image_quota.L_IMAGE_QUOTA}</strong>
 						</div>
 						# END image_quota #

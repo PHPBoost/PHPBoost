@@ -28,7 +28,7 @@
 			</header>
 			<div class="content" id="preview">
 				# START preview.menu #
-					<div class="row3" style="width:70%">
+					<div class="options" style="float:none;width:70%">
 						<div style="text-align:center;"><strong>{L_TABLE_OF_CONTENTS}</strong></div>
 						{preview.menu.MENU}
 					</div>

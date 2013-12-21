@@ -138,7 +138,7 @@
 			</fieldset>
 		</form>
 		# IF C_ADMIN #
-		<div style="text-align:center; margin:20px 20px;" class="row1">
+		<div style="text-align:center; margin:20px 20px;">
 			<a href="moderation_media.php?recount=1" title="{L_RECOUNT_MEDIA}">
 				<i class="icon-refresh icon-2x"></i>
 			</a>

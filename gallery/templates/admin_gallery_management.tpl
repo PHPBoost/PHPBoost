@@ -289,7 +289,7 @@
 							
 							# START pics.pics_max #
 							<tr>
-								<td colspan="{COLSPAN}" class="row1">
+								<td colspan="{COLSPAN}">
 									<table style="border-collapse:collapse;margin:auto;width:400px">
 										<tr>
 											<td>
@@ -308,31 +308,31 @@
 											</th>
 										</tr>
 										<tr>
-											<td class="row2 text_small" style="width:50%;border:none;padding:4px;">
+											<td class="text_small" style="width:50%;border:none;padding:4px;">
 												<strong>{L_NAME}:</strong> {pics.pics_max.NAME}
 											</td>
-											<td class="row2 text_small" style="border:none;padding:4px;">
+											<td class="text_small" style="border:none;padding:4px;">
 												<strong>{L_POSTOR}:</strong> {pics.pics_max.POSTOR}
 											</td>
 										</tr>
 										<tr>										
-											<td class="row2 text_small" style="border:none;padding:4px;">
+											<td class="text_small" style="border:none;padding:4px;">
 												<strong>{L_VIEWS}:</strong> {pics.pics_max.VIEWS}
 											</td>
-											<td class="row2 text_small" style="border:none;padding:4px;">
+											<td class="text_small" style="border:none;padding:4px;">
 												<strong>{L_ADD_ON}:</strong> {pics.pics_max.DATE}
 											</td>
 										</tr>
 										<tr>										
-											<td class="row2 text_small" style="border:none;padding:4px;">
+											<td class="text_small" style="border:none;padding:4px;">
 												<strong>{L_DIMENSION}:</strong> {pics.pics_max.DIMENSION}
 											</td>
-											<td class="row2 text_small" style="border:none;padding:4px;">
+											<td class="text_small" style="border:none;padding:4px;">
 												<strong>{L_SIZE}:</strong> {pics.pics_max.SIZE} Ko
 											</td>
 										</tr>
 										<tr>										
-											<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
+											<td colspan="2" class="text_small" style="border:none;padding:4px;">
 												&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="icon-edit"></a>
 												
 												<a href="gallery{pics.pics_max.U_DEL}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a> 

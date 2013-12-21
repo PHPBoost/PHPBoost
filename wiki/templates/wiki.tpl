@@ -9,9 +9,10 @@
 				# INCLUDE wiki_tools #
 				
 				# START warning #
-					<br /><br />
-					<div class="row3">{warning.UPDATED_ARTICLE}</div>
-					<br />
+				<div id="id-message-helper" class="message-helper warning">
+					<i class="icon-warning"></i>
+					<div class="message-helper-content">{warning.UPDATED_ARTICLE}</div>
+				</div>
 				# END warning #
 						
 				# START redirect #
@@ -26,12 +27,12 @@
 				
 				# START status #
 					<br /><br />
-					<div class="row3">{status.ARTICLE_STATUS}</div>
+					<div class="blockquote">{status.ARTICLE_STATUS}</div>
 					<br />
 				# END status #
 				
 				# START menu #
-					<div class="row3" style="width:50%">
+					<div class="options" style="float:none;width:50%">
 						<div style="text-align:center;"><strong>{L_TABLE_OF_CONTENTS}</strong></div>
 						{menu.MENU}
 					</div>

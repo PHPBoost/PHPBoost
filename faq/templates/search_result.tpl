@@ -1,4 +1,4 @@
-<div class="row1">
+<div>
     <span style="float: left;">
         <i class="icon-caret-right icon-2x"></i>
         <a href="{U_QUESTION}">{QUESTION}</a>
