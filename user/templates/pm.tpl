@@ -206,33 +206,6 @@
 		</section>
 		# END pm #
 
-
-		# START show_pm #
-		<section>					
-			<header>
-				<h1>&bull; {show_pm.U_USER_VIEW} &raquo; {show_pm.U_PM_BOX} &raquo; {show_pm.U_TITLE_CONVERS}</h1>
-			</header>
-			<div class="content">
-				<table class="module-table">
-					<tr>
-						<th>
-							<div style="float:left;">{L_PREVIEW}</div>
-							<div style="float:right;">{show_pm.DATE}</div>	
-						</th>
-					</tr>
-					<tr>	
-						<td>
-							{show_pm.CONTENTS}<br /><br /><br />
-							<hr / class="basic-button smaller">MP
-						</td>
-					</tr>	
-				</table>
-			</div>
-			<footer></footer>
-		</section>
-		# END show_pm #
-
-
 		# START post_pm #
 		# INCLUDE message_helper #
 		<span id="quote"></span>			
@@ -256,25 +229,6 @@
 					<h1>&bull; {edit_pm.U_USER_VIEW} &raquo; {edit_pm.U_PM_BOX}</h1>
 				</header>
 				<div class="content">	
-					<!--  
-					# START edit_pm.show_pm #		
-					<table class="module-table">
-						<tr>
-							<th>
-								<div style="float:left;">{L_PREVIEW}</div>
-								<div style="float:right;">{edit_pm.show_pm.DATE}</div>		
-							</th>
-						</tr>
-						<tr>	
-							<td>														
-								{edit_pm.show_pm.CONTENTS}
-								<br /><br /><br />
-								<hr / class="basic-button smaller">MP
-							</td>
-						</tr>	
-					</table>
-					# END edit_pm.show_pm #
-					-->
 					<div class="fieldset-content">
 						<fieldset>
 							<legend>{L_EDIT}</legend>
@@ -313,26 +267,6 @@
 				</header>
 				<div class="content">	
 					# INCLUDE message_helper #
-					
-					<!--  
-					# START post_convers.show_convers #		
-					<table class="module-table">
-						<tr>
-							<th>
-								<div style="float:left;">{L_PREVIEW}</div>
-								<div style="float:right;">{post_convers.show_convers.DATE}</div>		
-							</th>
-						</tr>
-						<tr>	
-							<td>														
-								{post_convers.show_convers.CONTENTS}
-								<br /><br /><br />
-								<hr / class="basic-button smaller">MP
-							</td>
-						</tr>	
-					</table>
-					# END post_convers.show_convers #	
-					-->
 					
 					<div class="fieldset-content">
 						<fieldset>

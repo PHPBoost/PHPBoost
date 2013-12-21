@@ -219,19 +219,19 @@ function XMLHttpRequest_preview(field)
 						<div class="form-element">
 							<label class="smaller" for="bb_lines{FIELD}">* {L_LINES}</label>
 							<div class="form-field">
-								<input type="text" maxlength="2" name="bb_lines{FIELD}" id="bb_lines{FIELD}" value="2" class="field-smaller" data-cip-id="bb_lines{FIELD}">
+								<input type="text" maxlength="2" name="bb-lines{FIELD}" id="bb-lines{FIELD}" value="2" class="field-smaller" data-cip-id="bb_lines{FIELD}">
 							</div>
 						</div>
 						<div class="form-element">
 							<label class="smaller" for="bb_cols{FIELD}">* {L_COLS}</label>
 							<div class="form-field">
-								<input type="text" maxlength="2" name="bb_cols{FIELD}" id="bb_cols{FIELD}" value="2" class="field-smaller" data-cip-id="bb_cols{FIELD}">
+								<input type="text" maxlength="2" name="bb-cols{FIELD}" id="bb-cols{FIELD}" value="2" class="field-smaller" data-cip-id="bb_cols{FIELD}">
 							</div>
 						</div>
 						<div class="form-element">
 							<label class="smaller" for="bb_head{FIELD}">{L_ADD_HEAD}</label>
 							<div class="form-field">
-								<input type="checkbox" name="bb_head{FIELD}" id="bb_head{FIELD}" class="field-smaller" data-cip-id="bb_head{FIELD}">
+								<input type="checkbox" name="bb-head{FIELD}" id="bb-head{FIELD}" class="field-smaller" data-cip-id="bb_head{FIELD}">
 							</div>
 						</div>
 						<div class="bbcode-form-element-text">
