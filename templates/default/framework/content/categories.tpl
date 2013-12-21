@@ -54,11 +54,12 @@ function ajax_change_cat_visibility(id, status)
 }
 -->
 </script>
-<div id="cat_administration">
+<style> .sortable-block .sortable-options { width:22px; } </style>
+<ul id="categories cat_administration" class="sortable-block" style="position:relative;" >
 # ENDIF #
 
 {NESTED_CATEGORIES}
 
 # IF C_AJAX_MODE #
-</div>
+</ul>
 # ENDIF #
