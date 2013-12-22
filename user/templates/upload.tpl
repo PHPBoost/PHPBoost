@@ -33,8 +33,8 @@
 	
 	function display_new_folder()
 	{
-		if( document.getElementById('empty_folder') )
-				document.getElementById('empty_folder').style.display = 'none';	
+		if( document.getElementById('empty-folder') )
+				document.getElementById('empty-folder').style.display = 'none';	
 		
 		if ( typeof this.divid == 'undefined' )
 			this.divid = 0;
@@ -43,13 +43,13 @@
 			
 		if( !hide_folder )
 		{
-			document.getElementById('new_folder').innerHTML += '<div style="width:190px;height:50px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table class="module-table mini" style="border:0"><tr><td style="width:34px;vertical-align:top;"><i class="icon-folder icon-2x"></i></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></td></tr></table></div>';
+			document.getElementById('new-folder').innerHTML += '<div style="width:190px;height:50px;float:left;margin-top:5px;" id="new-folder' + divid + '"><table class="module-table mini" style="border:0"><tr><td style="width:34px;vertical-align:top;"><i class="icon-folder icon-2x"></i></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></td></tr></table></div>';
 			document.getElementById('folder_name').focus();
 		}
 		else
 		{	
-			document.getElementById('new_folder' + (divid - 1)).style.display = 'block';
-			document.getElementById('new_folder' + (divid - 1)).innerHTML = '<div style="width:190px;height:50px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table class="module-table mini" style="border:0"><tr><td style="width:34px;vertical-align:top;"><i class="icon-folder icon-2x"></i></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></td></tr></table></div>';
+			document.getElementById('new-folder' + (divid - 1)).style.display = 'block';
+			document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div style="width:190px;height:50px;float:left;margin-top:5px;" id="new-folder' + divid + '"><table class="module-table mini" style="border:0"><tr><td style="width:34px;vertical-align:top;"><i class="icon-folder icon-2x"></i></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></td></tr></table></div>';
 			document.getElementById('folder_name').focus();
 			this.divid--;
 			hide_folder = false;
@@ -110,11 +110,11 @@
 		if( name != '' && regex.test(name) ) //interdiction des caractères spéciaux dans le nom.
 		{
 			alert("{L_FOLDER_FORBIDDEN_CHARS}");
-			document.getElementById('new_folder' + divid).innerHTML = '';
-			document.getElementById('new_folder' + divid).style.display = 'none';
+			document.getElementById('new-folder' + divid).innerHTML = '';
+			document.getElementById('new-folder' + divid).style.display = 'none';
 			hide_folder = true;
-			if( document.getElementById('empty_folder') && empty_folder == 0 )
-				document.getElementById('empty_folder').style.display = 'block';
+			if( document.getElementById('empty-folder') && empty_folder == 0 )
+				document.getElementById('empty-folder').style.display = 'block';
 		}
 		else if( name != '' )
 		{
@@ -127,18 +127,18 @@
 				{
 					if( xhr_object.responseText > 0 )
 					{
-						document.getElementById('new_folder' + divid).innerHTML = '<table class="module-table mini"><tr><td style="width:34px;vertical-align:top;"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}"><i class="icon-folder icon-2x"></i></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="icon-edit"></a></span></a></span> <a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" class="icon-delete" data-confirmation="delete-element"></a> <a href="upload.php?move=' + xhr_object.responseText + '{POPUP}" title="{L_MOVETO}" class="icon-move"></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
-						var total_folder = document.getElementById('total_folder').innerHTML;
+						document.getElementById('new-folder' + divid).innerHTML = '<table class="module-table mini"><tr><td style="width:34px;vertical-align:top;"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}"><i class="icon-folder icon-2x"></i></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="icon-edit"></a></span></a></span> <a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" class="icon-delete" data-confirmation="delete-element"></a> <a href="upload.php?move=' + xhr_object.responseText + '{POPUP}" title="{L_MOVETO}" class="icon-move"></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
+						var total_folder = document.getElementById('total-folder').innerHTML;
 						total_folder++;
-						document.getElementById('total_folder').innerHTML = total_folder;
+						document.getElementById('total-folder').innerHTML = total_folder;
 						
 						empty_folder++;
 					}
 					else
 					{	
 						alert("{L_FOLDER_ALREADY_EXIST}");
-						document.getElementById('new_folder' + divid).innerHTML = '';
-						document.getElementById('new_folder' + divid).style.display = 'none';
+						document.getElementById('new-folder' + divid).innerHTML = '';
+						document.getElementById('new-folder' + divid).style.display = 'none';
 						hide_folder = true;
 					}
 				}
@@ -147,10 +147,10 @@
 		}
 		else
 		{
-			if( document.getElementById('empty_folder') && empty_folder == 0 )
-				document.getElementById('empty_folder').style.display = 'block';
-			document.getElementById('new_folder' + divid).innerHTML = '';
-			document.getElementById('new_folder' + divid).style.display = 'none';
+			if( document.getElementById('empty-folder') && empty_folder == 0 )
+				document.getElementById('empty-folder').style.display = 'block';
+			document.getElementById('new-folder' + divid).innerHTML = '';
+			document.getElementById('new-folder' + divid).style.display = 'none';
 			hide_folder = true;
 		}
 	}
@@ -273,127 +273,95 @@
 	-->
 	</script>
 	
-	<table class="module-table mini" style="margin:8px;margin-bottom:0px;">
-		<tr> 
-			<th>
-				{L_FILES_ACTION}
-			</th>
-		</tr>
-		<tr> 
-			<td>
-				<span style="float:left;">
-					<a href="upload.php?root=1{POPUP}"><i class="icon-home icon-2x"></i></a>&nbsp;<a href="upload.php?root=1{POPUP}">{L_ROOT}</a>
-					<br />
-					<a href="upload.php?fup={FOLDER_ID}{POPUP}"><i class="icon-level-up icon-2x"></i></a>&nbsp;<a href="upload.php?fup={FOLDER_ID}{POPUP}">{L_FOLDER_UP}</a>
-				</span>
-				<span style="float:right;">
-					<span id="new_folder_link">
-						<a href="javascript:display_new_folder();"><i class="icon-plus icon-2x"></i></a>&nbsp;<a href="javascript:display_new_folder();">{L_FOLDER_NEW}</a>
-					</span>
-					<br />
-					<a href="#new_file"><i class="icon-save icon-2x"></i></a>
-					<a href="#new_file">{L_ADD_FILES}</a>
-					<br />
-				</span>
-			</td>
-		</tr>
-		<tr> 
-			<td class="row3" style="margin:0px;padding:0px">
-				<div style="float:left;padding:2px;padding-left:8px;">
-					{L_URL}
-				</div>
-				<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
-					<i class="icon-folder"></i> {U_ROOT}{URL}
-				</div>
-			</td>
-		</tr>	
-		
-		<tr>	
-			<td style="padding:10px 2px;">
-				<div style="height:260px;overflow:auto;">
-					# IF C_EMPTY_FOLDER #
-						<p style="text-align:center;padding-top:25px;" id="empty_folder">
-							{L_EMPTY_FOLDER}
-						</p>
-					# ENDIF #
-					# START folder #
-					<div style="width:190px;height:50px;float:left;margin-top:5px;">
-						<table class="module-table mini" style="border:0;">
-							<tr>
-								<td style="width:34px;vertical-align:top;">
-									<a href="upload.php?f={folder.ID}{POPUP}"><i class="icon-folder icon-2x"></i></a>
-								</td>
-								<td style="padding-top:8px;">
-									<span id="f{folder.ID}"><a href="upload.php?f={folder.ID}{POPUP}" class="com">{folder.NAME}</a></span>
-									<div style="padding-top:5px;">
-										{folder.RENAME_FOLDER} <a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{folder.L_TYPE_DEL_FOLDER}" class="icon-delete" data-confirmation="delete-element"></a>
-									
-										<a href="upload{folder.U_MOVE}" title="{L_MOVETO}" class="icon-move"></a>
-										
-										<span id="img{folder.ID}"></span>
-									</div>
-								</td>
-							</tr>
-						</table>
-					</div>
-					# END folder #
+	<section>
+		<header><h1>{L_FILES_ACTION}</h1></header>
+		<div class="content">
+			<div class="upload-address-bar">
+				<a href="upload.php?root=1{POPUP}"><i class="icon-home"></i> {L_ROOT}</a>{URL}
+			</div>
+
+			<div class="upload-address-bar-links">
+				<a href="upload.php?fup={FOLDER_ID}{POPUP}">
+					<i class="icon-home"></i> {L_ROOT}
+				</a>
+				<a href="upload.php?fup={FOLDER_ID}{POPUP}">
+					<i class="icon-level-up"></i> {L_FOLDER_UP}
+				</a>
+				<a href="javascript:display_new_folder();">
+					<i class="icon-plus"></i> {L_FOLDER_NEW}
+				</a>
+				<a href="#new-file">
+					<i class="icon-save"></i> {L_ADD_FILES}
+				</a>
+			</div>
 			
-					<span id="new_folder"></span>
-					
-					# START files #
-					<div style="width:190px;height:50px;float:left;margin-top:5px;">
-						<table class="module-table mini" style="border:0;">
-							<tr>
-								<td style="width:34px;vertical-align:top;">
-									<img src="../templates/default/images/upload/{files.IMG}" alt="" />
-								</td>
-								<td style="padding-top:8px;">
-									<a class="com" href="{files.URL}" title="{files.TITLE}"{files.LIGHTBOX}><span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />
-									{files.BBCODE}<br />
-									<span class="smaller">{files.FILETYPE}</span><br />
-									<span class="smaller">{files.SIZE}</span><br />
-									{files.RENAME_FILE}
-									<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a> 
-									
-									<a href="upload{files.U_MOVE}" title="{L_MOVETO}" class="icon-move"></a>
-									
-									{files.INSERT}
-									<span id="imgf{files.ID}"></span>
-								</td>
-							</tr>
-						</table>
+			<legend>Contenu du répertoire</legend>
+			
+			<div class="upload-elements-container">
+			
+				# IF C_EMPTY_FOLDER #
+					<div id="empty-folder" class="message-helper notice">
+						<i class="icon-notice"></i>
+						<div class="message-helper-content">{L_EMPTY_FOLDER}</div>
+					</div>
+				# ELSE #
+					# START folder #
+						<div class="upload-elements-repertory">
+							<a href="upload.php?f={folder.ID}{POPUP}"><i class="# IF folder.C_MEMBER_FOLDER #icon-users# ELSE #icon-folder# ENDIF # icon-2x"></i></a>
+							<span id="f{folder.ID}"><a href="upload.php?f={folder.ID}{POPUP}" class="com">{folder.NAME}</a></span><br />
+							{folder.RENAME_FOLDER}
+							<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="delete-element"><i class="icon-delete"></i></a>			
+							<a href="upload{folder.U_MOVE}" title="{L_MOVETO}" class="icon-move"></a>
+							<span id="img{folder.ID}"></span>
+						</div>	
+					# END folder #
+					<span id="new-folder"></span>
+	
+					# START files #	
+					<div class="upload-elements-file">
+						<img src="{PATH_TO_ROOT}/templates/default/images/upload/{files.IMG}" alt=""/>
+						<a class="com" href="{files.URL}" title="{files.TITLE}"{files.LIGHTBOX}><span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />
+						{files.BBCODE}<br />
+						<span class="text-strong">{files.FILETYPE}</span><br />
+						<span class="text-strong">{files.SIZE}</span><br />
+						{files.RENAME_FILE}
+						<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
+						<a href="upload{files.U_MOVE}" title="{L_MOVETO}" class="icon-move"></a>
+						{files.INSERT}
+						<span id="imgf{files.ID}"></span>
 					</div>
 					# END files #
-				</div>
-			</td>
-		</tr>
-		
-		<tr>
-			<td class="row3">
+				
+					<div class="spacer"></div>
+				# ENDIF #
+			</div>
+			
+			<div id="new-file">
 				# INCLUDE message_helper #
-			</td>
-		</tr>
-		<tr>
-			<td class="row3" id="new_file">
 				<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
-					<span style="float:left">
-						<strong>{L_ADD_FILES}</strong>
-						<br />
-							<input type="file" name="upload_file" size="30" class="file">
-							<input type="hidden" name="max_file_size" value="2000000">
-							<br />
+					<fieldset>
+						<legend>{L_ADD_FILES}</legend>
+						<div class="form-element"  style="margin:auto;width:50%;">
+							<div class="form-field" style="width:auto;">
+								<input type="file" name="upload_file" size="30" id="upload-file">					
+								<input type="hidden" name="max_file_size" value="2000000">
+							</div>
 							<button type="submit" name="valid_up" value="true">{L_UPLOAD}</button>
-					</span>	
-					<span style="float:right;text-align:right">
-						{L_FOLDERS}: <strong><span id="total_folder">{TOTAL_FOLDERS}</span></strong><br />
-						{L_FILES}: <strong>{TOTAL_FILES}</strong><br />
-						{L_FOLDER_SIZE}: <strong>{TOTAL_FOLDER_SIZE}</strong><br />
-						{L_DATA}: <strong>{TOTAL_SIZE}/{SIZE_LIMIT} {PERCENT}</strong>
-					</span>	
-				</form>				
-			</td>
-		</tr>	
-	</table>
-	
+							</div>
+					</fieldset>
+				</form>	
+			</div>
+			
+		</div>
+		<footer>
+			<div class="options">
+				{L_FOLDERS} : <strong><span id="total-folder">{TOTAL_FOLDERS}</span></strong><br />
+				{L_FILES} : <strong>{TOTAL_FILES}</strong><br />
+				{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong><br />
+				{L_DATA} : <strong>{TOTAL_SIZE}</strong>
+			</div>
+		</footer>
+	</section>
+		
 	{FOOTER}
 	

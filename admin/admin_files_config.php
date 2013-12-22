@@ -72,11 +72,11 @@ else
 	
 	$array_ext_sup = $file_upload_config->get_authorized_extensions();
 	$array_extensions_type = array(
-		$LANG['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico'),
-		$LANG['files_archives'] => array('rar', 'zip', 'gz'), 
-		$LANG['files_text'] => array('txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf'),
-		$LANG['files_media'] => array('flv', 'mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt'), 
-		$LANG['files_misc'] => array('ttf', 'tex', 'rtf', 'psd')
+		$LANG['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico', 'nef'),
+		$LANG['files_archives'] => array('rar', 'zip', 'gz', '7z'), 
+		$LANG['files_text'] => array('txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv'),
+		$LANG['files_media'] => array('flv', 'mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv'), 
+		$LANG['files_misc'] => array('ttf', 'tex', 'rtf', 'psd', 'iso')
 	);
 
 	$i = 0;
