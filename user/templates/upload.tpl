@@ -282,9 +282,6 @@
 
 			<div class="upload-address-bar-links">
 				<a href="upload.php?fup={FOLDER_ID}{POPUP}">
-					<i class="icon-home"></i> {L_ROOT}
-				</a>
-				<a href="upload.php?fup={FOLDER_ID}{POPUP}">
 					<i class="icon-level-up"></i> {L_FOLDER_UP}
 				</a>
 				<a href="javascript:display_new_folder();">
@@ -360,6 +357,7 @@
 				{L_FOLDER_SIZE} : <strong>{TOTAL_FOLDER_SIZE}</strong><br />
 				{L_DATA} : <strong>{TOTAL_SIZE}</strong>
 			</div>
+			<div class="spacer"></div>
 		</footer>
 	</section>
 		
