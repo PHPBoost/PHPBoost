@@ -138,22 +138,22 @@
 						<tbody>
 							# START alert_list #
 							<tr>
-								<td class="row1" style="text-align:center;width:25px;">
+								<td style="text-align:center;width:25px;">
 									<input type="checkbox" name="{alert_list.ID}">
 								</td>
-								<td class="row1" style="text-align:center;width:20%;">
+								<td style="text-align:center;width:20%;">
 									{alert_list.TITLE} {alert_list.EDIT}
 								</td>
-								<td class="row1" style="text-align:center;width:20%;">
+								<td style="text-align:center;width:20%;">
 									{alert_list.TOPIC}
 								</td>
-								<td class="row1" style="text-align:center;width:100px;{alert_list.BACKGROUND_COLOR}">
+								<td style="text-align:center;width:100px;{alert_list.BACKGROUND_COLOR}">
 									{alert_list.STATUS}
 								</td>
-								<td class="row1" style="text-align:center;width:70px;">
+								<td style="text-align:center;width:70px;">
 									{alert_list.LOGIN}
 								</td>
-								<td class="row1" style="text-align:center;width:70px;">
+								<td style="text-align:center;width:70px;">
 									{alert_list.TIME}
 								</td>
 							</tr>
@@ -173,68 +173,44 @@
 				
 
 				# IF C_FORUM_ALERT_LIST #
-				<table class="module-table">
-					<tr>
-						<th colspan="2" style="text-align:center;">
-							{TOPIC}
-						</th>
-					</tr>
-					<tr>
-						<td class="row1" style="width:25%;">
-							{L_TITLE}
-						</td>
-						<td>
-							{TITLE}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_TOPIC}
-						</td>
-						<td>
-							{TOPIC}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_CAT}
-						</td>
-						<td>
-							{CAT}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_CONTENTS}
-						</td>
-						<td>
-							{CONTENTS}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_STATUS}
-						</td>
-						<td>
-							{STATUS}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_LOGIN}
-						</td>
-						<td>
-							{LOGIN}
-						</td>
-					</tr>
-					<tr>
-						<td class="row1">
-							{L_TIME}
-						</td>
-						<td>
-							{TIME}
-						</td>
-					</tr>
+				<table>
+					<thead>
+						<tr>
+							<th colspan="2" style="text-align:center;">
+								{TOPIC}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="width:25%;">{L_TITLE}</td>
+							<td>{TITLE}</td>
+						</tr>
+						<tr>
+							<td>{L_TOPIC}</td>
+							<td>{TOPIC}</td>
+						</tr>
+						<tr>
+							<td>{L_CAT}</td>
+							<td>{CAT}</td>
+						</tr>
+						<tr>
+							<td>{L_CONTENTS}</td>
+							<td>{CONTENTS}</td>
+						</tr>
+						<tr>
+							<td>{L_STATUS}</td>
+							<td>{STATUS}</td>
+						</tr>
+						<tr>
+							<td>{L_LOGIN}</td>
+							<td>{LOGIN}</td>
+						</tr>
+						<tr>
+							<td>{L_TIME}</td>
+							<td>{TIME}</td>
+						</tr>
+					</tbody>
 				</table>	
 
 				<form action="{U_CHANGE_STATUS}" method="post">
@@ -343,16 +319,16 @@
 					<tbody>
 						# START user_list #
 						<tr>
-							<td class="row1" style="text-align:center;width:25%;">
+							<td style="text-align:center;width:25%;">
 								<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color:{user_list.GROUP_COLOR}" # ENDIF #>{user_list.LOGIN}</a>
 							</td>
-							<td class="row1" style="text-align:center;width:25%;">
+							<td style="text-align:center;width:25%;">
 								{user_list.INFO}
 							</td>
-							<td class="row1" style="text-align:center;width:25%;">
+							<td style="text-align:center;width:25%;">
 								{user_list.U_ACTION_USER}
 							</td>
-							<td class="row1" style="text-align:center;width:25%;">
+							<td style="text-align:center;width:25%;">
 								<a href="{user_list.U_PM}" class="basic-button smaller">MP</a>
 							</td>
 						</tr>
@@ -387,46 +363,50 @@
 				-->
 				</script>
 				<form action="moderation_forum{U_ACTION_INFO}" method="post">
-					<table class="module-table">
-						<tr>
-							<td class="row1" style="width:30%;">
-								{L_LOGIN}
-							</td>
-							<td>
-								{LOGIN}
-							</td>
-						</tr>
-						<tr>
-							<td class="row1">
-								{L_PM}
-							</td>
-							<td>
-								<a href="{U_PM}" class="basic-button smaller">MP</a>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<div class="message-helper question">
-									<i class="icon-question"></i>
-									<div class="message-helper-content">{L_ALTERNATIVE_PM}</div>
-								</div>
-								{KERNEL_EDITOR}
-								<textarea name="action_contents" id="action_contents" rows="12" cols="15">{ALTERNATIVE_PM}</textarea>
-							</td>
-						</tr>
-						<tr>
-							<td class="row1">
-								<label for="new_info">{L_INFO_EXPLAIN}</label>
-							</td>
-							<td>
-								<span id="action_info">{INFO}</span>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
-									{SELECT}
-								</select></label>
-								<button type="submit" name="valid_user" value="true">{L_CHANGE_INFO}</button>
-							</td>
-						</tr>
+					<table>
+						<thead>
+							<tr>
+								<th style="width:30%;">
+									{L_LOGIN}
+								</th>
+								<th>
+									{LOGIN}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									{L_PM}
+								</td>
+								<td>
+									<a href="{U_PM}" class="basic-button smaller">MP</a>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="message-helper question">
+										<i class="icon-question"></i>
+										<div class="message-helper-content">{L_ALTERNATIVE_PM}</div>
+									</div>
+									{KERNEL_EDITOR}
+									<textarea name="action_contents" id="action_contents" rows="12" cols="15">{ALTERNATIVE_PM}</textarea>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="new_info">{L_INFO_EXPLAIN}</label>
+								</td>
+								<td>
+									<span id="action_info">{INFO}</span>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
+										{SELECT}
+									</select></label>
+									<button type="submit" name="valid_user" value="true">{L_CHANGE_INFO}</button>
+								</td>
+							</tr>
+						</tbody>
 					</table>
 				</form>
 				# ENDIF #

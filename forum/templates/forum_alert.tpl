@@ -28,55 +28,47 @@
 				</script>
 				
 				<form method="post" action="alert.php?token={TOKEN}" onsubmit="javascript:return check_form_alert();">
-					<table class="module-table" style="width:80%">
-						<tr>
-							<th>{L_ALERT}</th>
-						</tr>
-						<tr>
-							<td>
-								{L_ALERT_EXPLAIN}: <a href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a><br />
-							</td>			
-						</tr>
-						<tr>
-							<td>
-								<p style="text-align:center;">
-									<label>{L_ALERT_TITLE} <input type="text" name="title" id="title" size="50"></label>
-								</p>
-								<br />
-								<p style="text-align:center;"><label for="contents">{L_ALERT_CONTENTS}</label></p>
-								{KERNEL_EDITOR}
-								<textarea style="width:70%" rows="15" cols="40" id="contents" name="contents"></textarea> 
-								<br />
-								<input type="hidden" name="id" value="{alert_form.ID_ALERT}">
-								<p style="text-align:center;">
-									<button type="submit" name="edit_msg" value="true">{L_SUBMIT}</button>
-									<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
-									<button type="reset" value="true">{L_RESET}</button>								
-								</p>
-							</td>
-						</tr>
-					</table> 
+					<fieldset>
+						<legend>{L_ALERT}</legend>
+						
+						<div id="id-message-helper" class="message-helper notice" style="width:80%;">
+							<i class="icon-notice"></i>
+							<div class="message-helper-content">{L_ALERT_EXPLAIN}: <a href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
+						</div>
+						<div class="form-element">
+							<label for="">{L_ALERT_TITLE}</label>
+							<div class="form-field">
+								<input type="text" name="" id="" size="50">
+							</div>
+						</div>
+						<div class="form-element-textarea">
+							<label for="contents">{L_ALERT_CONTENTS}</label>
+							{KERNEL_EDITOR}
+							<textarea style="width:70%" rows="15" cols="40" id="contents" name="contents"></textarea> 
+							<input type="hidden" name="id" value="{alert_form.ID_ALERT}">
+						</div>
+					</fieldset>
+
+					<fieldset class="fieldset-submit">
+							<button type="submit" name="edit_msg" value="true">{L_SUBMIT}</button>
+							<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
+							<button type="reset" value="true">{L_RESET}</button>								
+					</fieldset>
 				</form>
 				<br />
 				# END alert_form #
 
 
 				# START alert_confirm #
-				<table class="module-table" style="width:80%">
-					<tr>
-						<th>{L_ALERT}</th>
-					</tr>
-					<tr>
-						<td style="text-align:center;">
-							<br /><br />
-							{alert_confirm.MSG}
-							<br /><br />
-							<a href="{URL_TOPIC}">{L_BACK_TOPIC}</a>
-							<br /><br />
-						</td>
-					</tr>
-				</table>	
-				<br />
+				<fieldset>
+					<legend>{L_ALERT}</legend>
+					<div style="text-align:center;">
+						<br /><br />
+						{alert_confirm.MSG}
+						<br /><br />
+						<a href="{URL_TOPIC}">{L_BACK_TOPIC}</a>
+
+				</fieldset>
 				# END alert_confirm #
 			</div>
 			<div class="module_bottom_l"></div>		
