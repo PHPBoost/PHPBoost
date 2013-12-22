@@ -51,9 +51,9 @@
 						<tr>
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
 								# IF NOT topics.C_HOT_TOPIC # 
-								<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
+								<i class="{topics.IMG_ANNOUNCE}"></i>
 								# ELSE #
-								<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}_hot.gif" alt="" /> 
+								<i class="{topics.IMG_ANNOUNCE}-hot"></i>
 								# ENDIF #
 							</td>
 							<td class="forum_sous_cat" style="width:35px;text-align:center;">

@@ -86,10 +86,10 @@ while ($row = $Sql->fetch_assoc($result))
 	//On définit un array pour l'appelation correspondant au type de champ
 	$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
 		
-	$img_announce = 'new_announce'; //Forcement non lu.
-	$img_announce .= ($row['type'] == '1') ? '_post' : '';
-	$img_announce .= ($row['type'] == '2') ? '_top' : '';
-	$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '_lock' : '';
+	$img_announce = 'blink icon-announce-new'; //Forcement non lu.
+	$img_announce .= ($row['type'] == '1') ? '-post' : '';
+	$img_announce .= ($row['type'] == '2') ? '-top' : '';
+	$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '-lock' : '';
 	
 	//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.		
 	if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
