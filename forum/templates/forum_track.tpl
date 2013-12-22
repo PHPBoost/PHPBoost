@@ -21,7 +21,7 @@
 					<span style="float:right;">{PAGINATION}</span>
 				</div>
 				<div class="module_contents forum_contents">
-					<div class="row2 text_small">{L_EXPLAIN_TRACK}</div>
+					<div class="text_small">{L_EXPLAIN_TRACK}</div>
 					<table class="module-table forum_table">
 						<tr class="forum_text_column">			
 							<td>{L_TOPIC}</td>
