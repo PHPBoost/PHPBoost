@@ -393,3 +393,17 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
 .icon-announce-new:before,
 .icon-announce-new-hot:before { color:#676A74; }
 
+.icon-msg-display:before { content: "\f00c"; color:#478948; }
+.icon-msg-not-display:before { content: "\f00d"; color:#BA4B49; }
+
+.icon-msg-track:before { content: "\f004"; color:#BA4B49; }
+.icon-msg-not-track:before { content: "\f004"; color:#000000; }
+
+.icon-pm-track:before { content: "\f0e0"; color:#4372AA; }
+.icon-pm-not-track:before { content: "\f0e0"; color:#000000; }
+
+.icon-mail-track:before { content: "\f003"; color:#4372aa; }
+.icon-mail-not-track:before { content: "\f003"; color:#000000; }
+
+.icon-lastview:before { content: "\f017"; color:#334455; }
+.icon-notread:before { content: "\f0f6"; color:#334455; }

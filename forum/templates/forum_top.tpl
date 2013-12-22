@@ -120,9 +120,9 @@
 				</div>
 				# IF C_USER_CONNECTED #
 					<div style="float:right;">
-						<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign-middle" /> {U_TOPIC_TRACK} &bull;
-						<img src="{PICTURES_DATA_PATH}/images/last_mini.png" alt="" class="valign-middle" /> {U_LAST_MSG_READ} &bull;
-						<img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign-middle" /> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
+						<i class="icon-msg-track"></i> {U_TOPIC_TRACK} &bull;
+						<i class="icon-lastview"></i> {U_LAST_MSG_READ} &bull;
+						<i class="icon-notread"></i> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
 						
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread">
