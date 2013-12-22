@@ -394,7 +394,7 @@ else
 			'I' => $i,
 			'ID' => $row['id'],
 			'NAME' => (strlen($row['name']) > 60) ? (substr($row['name'], 0, 60) . '...') : $row['name'],
-			'INDENT' => $row['level'] * 75, //Indentation des sous cat�gories.
+			'INDENT' => $row['level'] * 35, //Indentation des sous cat�gories.
 			'LOCK' => ($row['status'] == 0) ? '<i class="icon-lock"></i>' : '',
 			'URL' => !empty($row['url']) ? '<a href="' . $row['url'] . '"><img src="./forum_mini.png" alt="" class="valign-middle" /></a> ' : '',
 			'U_FORUM_VARS' => !empty($row['url']) ? $row['url'] : (($row['level'] > 0) ? 'forum' . url('.php?id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php') : url('index.php?id=' . $row['id'], 'cat-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php'))
