@@ -222,13 +222,13 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 					}
 	
 					//Vérifications des topics Lu/non Lus.
-					$img_announce = 'announce';
+					$img_announce = 'icon-announce';
 					if (!$is_guest)
 					{
 						if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
-							$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
+							$img_announce =  'blink ' . $img_announce . '-new'; //Image affiché aux visiteurs.
 					}
-					$img_announce .= ($row['status'] == '0') ? '_lock' : '';
+					$img_announce .= ($row['status'] == '0') ? '-lock' : '';
 	
 					$total_topic += $row['nbr_topic'];
 					$total_msg += $row['nbr_msg'];

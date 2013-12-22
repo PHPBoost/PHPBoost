@@ -8,6 +8,7 @@ section#main * {
 	width:100%;
 	border-collapse:collapse;
 	border:none;
+	margin:0px;
 }
  
 /* Classe du lien du pseudo sur forum */
@@ -237,7 +238,7 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
 
 /* Conteneur des messages */
 .msg_position { 
-    width:98%;
+    width:96%;
     margin:5px auto;
     background:#f0f3ff;
     border: 1px solid #D1D4DF;
@@ -293,7 +294,8 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
 
 /* Case au dessus du message, indique la date et les boutons d'administration */
 .msg_top_row {
-    height:16px;
+	height:auto;
+    min-height:26px;
     background:#366393;
     font-size:11px;
     color:#e8eaeb;
@@ -301,7 +303,6 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
     border-bottom:1px solid #325889;
     padding:4px 0px 0px 127px;
     overflow:hidden !important;
-    height:auto !important;
 }
 
 .msg_top_row a {
@@ -370,3 +371,25 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
     border:none;
     background:none;
 }
+
+.icon-announce:before,
+.icon-announce-new:before { content: "\f075"; }
+
+.icon-announce-hot:before
+.icon-announce-new-hot:before { content: "\f086"; }
+
+.icon-announce-lock:before,
+.icon-announce-new-lock:before { content: "\f023"; }
+
+.icon-announce-post:before,
+.icon-announce-new-post:before { content: "\f071"; }
+
+.icon-announce-top:before,
+.icon-announce-new-top:before { content: "\f06a"; }
+
+.icon-announce:before,
+.icon-announce-hot:before { color:#D1D2D4; }
+
+.icon-announce-new:before,
+.icon-announce-new-hot:before { color:#676A74; }
+

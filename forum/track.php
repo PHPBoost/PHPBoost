@@ -101,20 +101,20 @@ elseif ($User->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non l
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
 		
 		//Vérifications des topics Lu/non Lus.
-		$img_announce = 'announce';		
+		$img_announce = 'icon-announce';		
 		$new_msg = false;
 		if (!$is_guest) //Non visible aux invités.
 		{
 			$new_msg = false;
 			if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
 			{	
-				$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
+				$img_announce =  'blink ' .$img_announce . '-new'; //Image affiché aux visiteurs.
 				$new_msg = true;
 			}
 		}
-		$img_announce .= ($row['type'] == '1') ? '_post' : '';
-		$img_announce .= ($row['type'] == '2') ? '_top' : '';
-		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '_lock' : '';
+		$img_announce .= ($row['type'] == '1') ? '-post' : '';
+		$img_announce .= ($row['type'] == '2') ? '-top' : '';
+		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '-lock' : '';
 		
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 		//Puis calcul de la page du last_msg_id ou du last_view_id.
