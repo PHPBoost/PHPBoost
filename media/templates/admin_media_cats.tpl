@@ -3,20 +3,10 @@
 			# INCLUDE message_helper #
 
 			# START categories_management #
-				<table>
-					<thead>
-						<tr> 
-							<th>{L_MANAGEMENT_CATS}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td> 
-								{categories_management.CATEGORIES}
-							</td>
-						</tr>
-					</tbody>
-				</table>
+			<fieldset>
+				<legend>{L_MANAGEMENT_CATS}</legend>
+				{categories_management.CATEGORIES}
+			</fieldset>
 			# END categories_management #
 
 			# START removing_interface #

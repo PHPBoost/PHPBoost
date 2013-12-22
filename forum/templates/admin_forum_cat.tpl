@@ -239,41 +239,37 @@
 		</div>
 
 		<div id="admin_contents">
-			<table>
-				<thead>
-					<tr> 
-						<th colspan="3">
-							{L_CAT_MANAGEMENT}
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<span id="display"></span>
-							<br />
-							<div style="width:98%;margin:auto;">
-								# START list #
-								<span id="c{list.I}">
-									<div style="margin-left:{list.INDENT}px;">
-										<div class="row3 forum_cat_admin">
-											<span style="float:left;">
-												&nbsp;&nbsp;<i class="icon-folder"></i> {list.LOCK} &nbsp;{list.URL}<a href="{list.U_FORUM_VARS}" class="forum_link_cat">{list.NAME}</a>
-											</span>
-											<span style="float:right;">
-												<span id="l{list.ID}"></span> 
-												<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');"><i class="icon-arrow-up"></i></a>
-												<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');"><i class="icon-arrow-down"></i></a>
-												<a href="admin_forum.php?id={list.ID}" class="icon-edit"></a> <a href="admin_forum.php?del={list.ID}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>&nbsp;&nbsp;
-											</span>&nbsp;
-										</div>	
-									</div>
-								</span>					
-								# END list #
-								<br />
+			
+			<fieldset>
+				<legend>{L_CAT_MANAGEMENT}</legend>
+				<style> .sortable-block .sortable-options { width:22px; } </style>
+				<ul id="categories forum-administration" class="sortable-block" style="position:relative;" >
+					# START list #	
+					<li id="c{list.I}" class="sortable-element" style="cursor:default;margin-left:{list.INDENT}px;">
+						<div class="sortable-title" >
+							<i class="icon-folder"></i> 
+							{list.LOCK} 
+							{list.URL}
+							<a href="{list.U_FORUM_VARS}" class="forum_link_cat">{list.NAME}</a>
+							<div class="sortable-actions">
+								<span id="l{list.ID}"></span> 
+								<div class="sortable-options">
+									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');" class="icon-arrow-up"></a>
+								</div>
+								<div class="sortable-options">
+									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');" class="icon-arrow-down"></a>
+								</div>
+								<div class="sortable-options">
+									<a href="admin_forum.php?id={list.ID}" title="{L_EDIT_CAT}" class="icon-edit"></a>
+								</div>
+								<div class="sortable-options">
+									<a href="admin_forum.php?del={list.ID}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>
+								</div>
 							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+						</div>
+					</li>					
+					# END list #
+				</ul>
+			</fieldset>
+
 		</div>
