@@ -580,8 +580,8 @@ input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disable
 }
 
 input[readonly=readonly], input[readonly=readonly]:hover, input[readonly=readonly]:focus {
-	background:#F1F1F1;
-	color:#AAAAAA;
+	background:#FAFAFA;
+	color:#888888;
 	border: 1px solid #CCCCCC;
 }
 

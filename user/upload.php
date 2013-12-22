@@ -45,7 +45,6 @@ if (!empty($popup)) //Popup.
 <meta http-equiv="Content-Style-Type" content="text/css" />
 
 <title>' . $LANG['files_management'] . '</title>
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/default.css"  type="text/css" media="screen, print, handheld" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/kernel/lib/css/font-awesome/css/font-awesome.css" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/design.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/global.css" type="text/css" media="screen, print, handheld" />
@@ -60,7 +59,7 @@ if (!empty($popup)) //Popup.
 <script type="text/javascript" src="' . PATH_TO_ROOT . '/kernel/lib/js/phpboost/global.js"></script>
 </head>
 
-<body>';
+<body style="background:#FAFAFA;">';
 	$footer = '<fieldset class="fieldset-submit" style="width:96%;margin:auto;">
 			<legend>' . $LANG['close'] . '</legend>
 			<button type="reset" onclick="javascript:close_popup()" value="true">' . $LANG['close'] . '</button>
@@ -493,9 +492,9 @@ else
 			'NAME' => $name_cut,
 			'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="icon-edit"></a></span>',
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-			'BBCODE' => '<input size="25" type="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $displayed_code . '">',
+			'BBCODE' => '<input size="25" type="text" readonly="readonly" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $displayed_code . '">',
 			'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
-			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . $inserted_code . '\')" title="' . $LANG['popup_insert'] . '"><i class="icon-level-down"></i></a>' : '',
+			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . $inserted_code . '\')" title="' . $LANG['popup_insert'] . '"><i class="icon-clipboard"></i></a>' : '',
 			'LIGHTBOX' => !empty($size_img) ? ' rel="lightbox[1]"' : '',
 			'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . $popup)
 		));

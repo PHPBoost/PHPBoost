@@ -754,3 +754,38 @@ div.message-helper-content{ padding:0px 5px 0px 35px; }
 
 .success { background-color:#E0F1D9; border-color:#D7EAC7; }
 .success, .icon-success:before { color:#478948; }
+
+/* Système d'Upload
+--------------------------------------*/
+.upload-address-bar {
+	background: #FAFAFA;
+	border: 1px solid #DDDDDD;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	color: #444444;
+	margin: 0px 25px; 
+	padding:6px;
+}
+
+.upload-address-bar-links {
+	float:right;
+	margin:0 25px 25px 25px;
+}
+
+.upload-address-bar-links a {
+	margin-left:10px;
+}
+			
+#empty-folder { width:70%; }
+			
+.upload-elements-container { margin:20px 0 70px 60px }
+			
+.upload-elements-file,
+.upload-elements-repertory { 
+	float:left; 
+	margin-top:5px;
+	width:180px;
+}
+			
+.upload-elements-repertory { height:90px; }
