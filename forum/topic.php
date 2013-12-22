@@ -499,9 +499,9 @@ elseif (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM)
 }
 else
 {
-	$img_track_display = $track ? 'untrack_mini.png' : 'track_mini.png';
-	$img_track_pm_display = $track_pm ? 'untrack_pm_mini.png' : 'track_pm_mini.png';
-	$img_track_mail_display = $track_mail ? 'untrack_mail_mini.png' : 'track_mail_mini.png';
+	$img_track_display = $track ? 'icon-msg-not-track' : 'icon-msg-track';
+	$img_track_pm_display = $track_pm ? 'icon-pm-not-track' : 'icon-pm-track';
+	$img_track_mail_display = $track_mail ? 'icon-mail-not-track' : 'icon-mail-track';
 	
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
@@ -510,19 +510,19 @@ else
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
 		'KERNEL_EDITOR' => $editor->display(),
-		'ICON_TRACK' => '<img src="' . $module_data_path . '/images/' . $img_track_display . '" alt="" class="valign-middle" />',
-		'ICON_SUSCRIBE_PM' => '<img src="' . $module_data_path . '/images/' . $img_track_pm_display . '" alt="" class="valign-middle" />',
-		'ICON_SUSCRIBE' => '<img src="' . $module_data_path . '/images/' . $img_track_mail_display . '" alt="" class="valign-middle" />',
+		'ICON_TRACK' => '<i class="' . $img_track_display . '"></i>',
+		'ICON_SUSCRIBE_PM' => '<i class="' . $img_track_pm_display . '"></i>',
+		'ICON_SUSCRIBE' => '<i class="' . $img_track_mail_display . '"></i>',
 		'U_FORUM_ACTION_POST' => url('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg&amp;token=' . $Session->get_token()),
 	));
 
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
 	if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $User->get_attribute('user_id') == $topic['user_id']))
 	{
-		$img_msg_display = $topic['display_msg'] ? 'msg_not_display_mini.png' : 'msg_display_mini.png';
+		$img_msg_display = $topic['display_msg'] ? 'icon-msg-not-display' : 'icon-msg-display';
 		$Template->put_all(array(
 			'C_DISPLAY_MSG' => true,
-			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_msg_display . '" alt="" class="valign-middle" />' : '',
+			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<i class="' . $img_msg_display . '"></i>' : '',
 			'L_DISPLAY_MSG' => $CONFIG_FORUM['display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
