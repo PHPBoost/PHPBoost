@@ -41,7 +41,7 @@ abstract class AbstractRichCategoriesFormController extends AbstractCategoriesFo
 			$(\'loading-category-picture\').remove();
 			$(\'preview_picture\').src = response.responseJSON.image_url;
 		}}');
-		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-category-picture" class="icon-spinner icon-spin"></i>\'}); }');
+		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-category-picture" class="fa fa-spinner fa-spin"></i>\'}); }');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'image\').getValue()');
 		
 		$fieldset->add_field(new FormFieldUploadFile('image', $this->lang['category.form.picture'], $this->get_category()->get_image()->relative(), array(

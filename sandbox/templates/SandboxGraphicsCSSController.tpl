@@ -52,11 +52,11 @@
 		<h5>{@css.main_actions_icons}</h5><br />
 		<div class="content">
 			<ul>
-				<li>{@css.rss_feed} : <a href="#" class="icon-syndication"></a></li>
-				<li>{@css.edit} : <a href="#" class="icon-edit"></a></li>
-				<li>{@css.delete} : <a href="#" class="icon-delete"></a></li>
-				<li>{@css.delete.confirm} : <a href="#" class="icon-delete" data-confirmation="delete-element"></a></li>
-				<li>{@css.delete.confirm.custom} : <a href="#" class="icon-delete" data-confirmation="{@css.delete.custom_message}"></a></li>
+				<li>{@css.rss_feed} : <a href="#" class="fa fa-syndication"></a></li>
+				<li>{@css.edit} : <a href="#" class="fa fa-edit"></a></li>
+				<li>{@css.delete} : <a href="#" class="fa fa-delete"></a></li>
+				<li>{@css.delete.confirm} : <a href="#" class="fa fa-delete" data-confirmation="delete-element"></a></li>
+				<li>{@css.delete.confirm.custom} : <a href="#" class="fa fa-delete" data-confirmation="{@css.delete.custom_message}"></a></li>
 			</ul>
 		</div>
 		
@@ -105,27 +105,27 @@
 		<div class="content" style="height:200px;">
 			<menu class="dynamic-menu">
 				<ul>
-					<li><a><i class="icon-bars"></i></a>
+					<li><a><i class="fa fa-bars"></i></a>
 						<ul>
-							<li class="extend"><a><i class="icon-eye"></i> {@css.modules_menus.display}</a>
+							<li class="extend"><a><i class="fa fa-eye"></i> {@css.modules_menus.display}</a>
 								<ul>
-									<li><a href="#"><i class="icon-eye"></i> {@css.modules_menus.display.most_viewed}</a></li>
-									<li><a href="#"><i class="icon-star-half-empty"></i> {@css.modules_menus.display.top_rated}</a></li>
+									<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.display.most_viewed}</a></li>
+									<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.display.top_rated}</a></li>
 								</ul>
 							</li>
-							<li class="extend"><a><i class="icon-sort"></i> {@css.modules_menus.order_by}</a>
+							<li class="extend"><a><i class="fa fa-sort"></i> {@css.modules_menus.order_by}</a>
 								<ul>
-									<li><a href="#"><i class="icon-tag"></i> {@css.modules_menus.order_by.name}</a></li>
-									<li><a href="#"><i class="icon-clock-o"></i> {@css.modules_menus.order_by.date}</a></li>
-									<li><a href="#"><i class="icon-eye"></i> {@css.modules_menus.order_by.views}</a></li>
-									<li><a href="#"><i class="icon-star-half-empty"></i> {@css.modules_menus.order_by.notes}</a></li>
-									<li><a href="#"><i class="icon-comments-o"></i> {@css.modules_menus.order_by.coms}</a></li>
+									<li><a href="#"><i class="fa fa-tag"></i> {@css.modules_menus.order_by.name}</a></li>
+									<li><a href="#"><i class="fa fa-clock-o"></i> {@css.modules_menus.order_by.date}</a></li>
+									<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.order_by.views}</a></li>
+									<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.order_by.notes}</a></li>
+									<li><a href="#"><i class="fa fa-comments-o"></i> {@css.modules_menus.order_by.coms}</a></li>
 								</ul>
 							</li>
-							<li class="extend"><a><i class="icon-sort-alpha-asc"></i> {@css.modules_menus.direction}</a>
+							<li class="extend"><a><i class="fa fa-sort-alpha-asc"></i> {@css.modules_menus.direction}</a>
 								<ul>
-									<li><a href="#"><i class="icon-sort-amount-asc"></i> {@css.modules_menus.direction.up}</a></li>
-									<li><a href="#"><i class="icon-sort-amount-desc"></i> {@css.modules_menus.direction.down}</a></li>
+									<li><a href="#"><i class="fa fa-sort-amount-asc"></i> {@css.modules_menus.direction.up}</a></li>
+									<li><a href="#"><i class="fa fa-sort-amount-desc"></i> {@css.modules_menus.direction.down}</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -135,27 +135,27 @@
 			<br />
 			<menu class="dynamic-menu right">
 				<ul>
-					<li><a><i class="icon-bars"></i></a>
+					<li><a><i class="fa fa-bars"></i></a>
 						<ul>
-							<li class="extend"><a><i class="icon-eye"></i> {@css.modules_menus.display}</a>
+							<li class="extend"><a><i class="fa fa-eye"></i> {@css.modules_menus.display}</a>
 								<ul>
-									<li><a href="#"><i class="icon-eye"></i> {@css.modules_menus.display.most_viewed}</a></li>
-									<li><a href="#"><i class="icon-star-half-empty"></i> {@css.modules_menus.display.top_rated}</a></li>
+									<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.display.most_viewed}</a></li>
+									<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.display.top_rated}</a></li>
 								</ul>
 							</li>
-							<li class="extend"><a><i class="icon-sort"></i> {@css.modules_menus.order_by}</a>
+							<li class="extend"><a><i class="fa fa-sort"></i> {@css.modules_menus.order_by}</a>
 								<ul>
-									<li><a href="#"><i class="icon-tag"></i> {@css.modules_menus.order_by.name}</a></li>
-									<li><a href="#"><i class="icon-clock-o"></i> {@css.modules_menus.order_by.date}</a></li>
-									<li><a href="#"><i class="icon-eye"></i> {@css.modules_menus.order_by.views}</a></li>
-									<li><a href="#"><i class="icon-star-half-empty"></i> {@css.modules_menus.order_by.notes}</a></li>
-									<li><a href="#"><i class="icon-comments-o"></i> {@css.modules_menus.order_by.coms}</a></li>
+									<li><a href="#"><i class="fa fa-tag"></i> {@css.modules_menus.order_by.name}</a></li>
+									<li><a href="#"><i class="fa fa-clock-o"></i> {@css.modules_menus.order_by.date}</a></li>
+									<li><a href="#"><i class="fa fa-eye"></i> {@css.modules_menus.order_by.views}</a></li>
+									<li><a href="#"><i class="fa fa-star-half-empty"></i> {@css.modules_menus.order_by.notes}</a></li>
+									<li><a href="#"><i class="fa fa-comments-o"></i> {@css.modules_menus.order_by.coms}</a></li>
 								</ul>
 							</li>
-							<li class="extend"><a><i class="icon-sort-alpha-asc"></i> {@css.modules_menus.direction}</a>
+							<li class="extend"><a><i class="fa fa-sort-alpha-asc"></i> {@css.modules_menus.direction}</a>
 								<ul>
-									<li><a href="#"><i class="icon-sort-amount-asc"></i> {@css.modules_menus.direction.up}</a></li>
-									<li><a href="#"><i class="icon-sort-amount-desc"></i> {@css.modules_menus.direction.down}</a></li>
+									<li><a href="#"><i class="fa fa-sort-amount-asc"></i> {@css.modules_menus.direction.up}</a></li>
+									<li><a href="#"><i class="fa fa-sort-amount-desc"></i> {@css.modules_menus.direction.down}</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -189,14 +189,14 @@
 						<h1>{@css.explorer}</h1>
 					<div class="content">
 						<ul>
-							<li><a id="class_0" href="#"><i class="icon-folder"></i>{@css.root}</a>
+							<li><a id="class_0" href="#"><i class="fa fa-folder"></i>{@css.root}</a>
 								<ul>
-									<li class="sub"><a id="class_1" href="#"><i class="icon-folder"></i>{@css.cat} 1</a><span id="cat_1"></span></li>
-									<li class="sub"><a class="parent" href="javascript:show_cat_contents(2, 0);"><span class="icon-minus-square-o" id="img2_2"></span><span class="icon-folder-open" id ="img_2"></span></a><a class="selected" id="class_2" href="#">{@css.cat} 2</a>
+									<li class="sub"><a id="class_1" href="#"><i class="fa fa-folder"></i>{@css.cat} 1</a><span id="cat_1"></span></li>
+									<li class="sub"><a class="parent" href="javascript:show_cat_contents(2, 0);"><span class="fa fa-minus-square-o" id="img2_2"></span><span class="fa fa-folder-open" id ="img_2"></span></a><a class="selected" id="class_2" href="#">{@css.cat} 2</a>
 									<span id="cat_2">
 										<ul>
-											<li class="sub"><a href="#"><i class="icon-folder"></i>{@css.cat} 3</a></li>
-											<li class="sub"><a href="#"><i class="icon-folder"></i>{@css.cat} 4</a></li>
+											<li class="sub"><a href="#"><i class="fa fa-folder"></i>{@css.cat} 3</a></li>
+											<li class="sub"><a href="#"><i class="fa fa-folder"></i>{@css.cat} 4</a></li>
 										</ul>
 									</span></li>
 								</ul>
@@ -208,10 +208,10 @@
 						<h1>{@css.tree}</h1>
 					<div class="content" id="cat_contents">
 						<ul>
-							<li><a href="#"><i class="icon-folder"></i>{@css.cat} 3</a></li>
-							<li><a href="javascript:open_cat(2); show_cat_contents(0, 0);"><i class="icon-folder"></i>{@css.cat} 4</a></li>
-							<li><a href="#"><i class="icon-file"></i>{@css.file} 1</a></li>
-							<li><a href="#"><i class="icon-file"></i>{@css.file} 2</a></li>
+							<li><a href="#"><i class="fa fa-folder"></i>{@css.cat} 3</a></li>
+							<li><a href="javascript:open_cat(2); show_cat_contents(0, 0);"><i class="fa fa-folder"></i>{@css.cat} 4</a></li>
+							<li><a href="#"><i class="fa fa-file"></i>{@css.file} 1</a></li>
+							<li><a href="#"><i class="fa fa-file"></i>{@css.file} 2</a></li>
 						</ul>
 					</div>
 				</div>
@@ -361,9 +361,9 @@
 			<thead>
 				<tr> 
 					<th>
-						<a href="#" class="icon-table-sort-up"></a>
+						<a href="#" class="fa fa-table-sort-up"></a>
 						{@css.table.name}
-						<a href="#" class="icon-table-sort-down"></a>
+						<a href="#" class="fa fa-table-sort-down"></a>
 					</th>
 					<th>
 						{@css.table.description}
@@ -437,8 +437,8 @@
 				<div class="message-date">
 					<span class="actions">
 						<a itemprop="url" href="#com2">#2</a>
-							<a href="#comments_message" class="icon-edit"></a> 
-							<a href="#comments_message" class="icon-delete" data-confirmation="delete-element"></a>
+							<a href="#comments_message" class="fa fa-edit"></a> 
+							<a href="#comments_message" class="fa fa-delete" data-confirmation="delete-element"></a>
 					</span>
 					<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">{@css.messages.date}</span>
 				</div>

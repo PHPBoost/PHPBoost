@@ -5,7 +5,7 @@
 # IF C_UPDATES #
 	<form action="{REWRITED_SCRIPT}" method="post">
 		<div class="message-helper warning">
-			<i class="icon-warning"></i>
+			<i class="fa fa-warning"></i>
 			<div class="message-helper-content">{@modules.updates_available}</div>
 		</div>
 		
@@ -42,7 +42,7 @@
 	</form>
 # ELSE #
 	<div class="message-helper warning" style="margin-top:100px;">
-		<i class="icon-warning"></i>
+		<i class="fa fa-warning"></i>
 		<div class="message-helper-content">{@modules.no_upgradable_module_available}</div>
 	</div>
 # ENDIF #

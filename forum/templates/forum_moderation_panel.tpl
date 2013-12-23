@@ -9,17 +9,17 @@
 					<thead>
 						<tr>
 							<td style="text-align:center;width:34%">
-								<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><i class="icon-warning icon-2x"></i></a>
+								<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}"><i class="fa fa-warning fa-2x"></i></a>
 								<br />
 								<a href="moderation_forum.php?action=warning" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
 							</td>
 							<td style="text-align:center;width:33%">
-								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><i class="icon-error icon-2x"></i></a>
+								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}"><i class="fa fa-error fa-2x"></i></a>
 								<br />
 								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
 							</td>
 							<td style="text-align:center;width:33%">
-								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><i class="icon-notice icon-2x"></i></a>
+								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><i class="fa fa-notice fa-2x"></i></a>
 								<br />
 								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}">{L_ALERT_MANAGEMENT}</a>
 							</td>
@@ -253,7 +253,7 @@
 						if( login != '' )
 						{
 							if( document.getElementById('search_img') )
-								document.getElementById('search_img').innerHTML = '<i class="icon-spinner icon-spin"></i>';
+								document.getElementById('search_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 							data = 'login=' + login;
 							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
 							xhr_object.onreadystatechange = function() 
@@ -386,7 +386,7 @@
 							<tr>
 								<td colspan="2">
 									<div class="message-helper question">
-										<i class="icon-question"></i>
+										<i class="fa fa-question"></i>
 										<div class="message-helper-content">{L_ALTERNATIVE_PM}</div>
 									</div>
 									{KERNEL_EDITOR}

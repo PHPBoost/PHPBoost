@@ -2,24 +2,24 @@
 	<thead>
 		<tr>
 			<th class="column_title">
-				<a href="{U_SORT_TITLE_ASC}" class="icon-table-sort-up"></a>
+				<a href="{U_SORT_TITLE_ASC}" class="fa fa-table-sort-up"></a>
 				${LangLoader::get_message('form.title', 'common')}
-				<a href="{U_SORT_TITLE_DESC}" class="icon-table-sort-down"></a>
+				<a href="{U_SORT_TITLE_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{U_SORT_CATEGORY_ASC}" class="icon-table-sort-up"></a>
+				<a href="{U_SORT_CATEGORY_ASC}" class="fa fa-table-sort-up"></a>
 				${LangLoader::get_message('category', 'categories-common')}
-				<a href="{U_SORT_CATEGORY_DESC}" class="icon-table-sort-down"></a>
+				<a href="{U_SORT_CATEGORY_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{U_SORT_AUTHOR_ASC}" class="icon-table-sort-up"></a>
+				<a href="{U_SORT_AUTHOR_ASC}" class="fa fa-table-sort-up"></a>
 				{@calendar.labels.created_by}
-				<a href="{U_SORT_AUTHOR_DESC}" class="icon-table-sort-down"></a>
+				<a href="{U_SORT_AUTHOR_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{U_SORT_DATE_ASC}" class="icon-table-sort-up"></a>
+				<a href="{U_SORT_DATE_ASC}" class="fa fa-table-sort-up"></a>
 				{@calendar.labels.date}
-				<a href="{U_SORT_DATE_DESC}" class="icon-table-sort-down"></a>
+				<a href="{U_SORT_DATE_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
 				{@calendar.titles.repetion}
@@ -63,8 +63,8 @@
 				# IF event.C_APPROVED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #
 			</td>
 			<td> 
-				<a href="{event.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-				<a href="{event.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete"# IF NOT event.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
+				<a href="{event.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+				<a href="{event.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete"# IF NOT event.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
 			</td>
 		</tr>
 		# END event #

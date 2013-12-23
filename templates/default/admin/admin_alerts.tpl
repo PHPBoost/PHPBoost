@@ -13,7 +13,7 @@
 		<!--
 		function change_alert_status(id, status)
 		{
-			document.getElementById("status_" + id).innerHTML = '<i class="icon-spinner icon-spin"></i>';
+			document.getElementById("status_" + id).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 			
 			var xhr_object = null;
 			var data = null;
@@ -33,13 +33,13 @@
 				{
 					if( status == 0 )
 					{
-						document.getElementById("status_" + id).innerHTML = "<i class=\"icon-eye\"></i>";
+						document.getElementById("status_" + id).innerHTML = "<i class=\"fa-eye\"></i>";
 						document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '2');";
 						document.getElementById("status_" + id).title = "{L_UNFIX}";
 					}
 					else
 					{
-						document.getElementById("status_" + id).innerHTML = "<i class=\"icon-eye-slash\"></i>";
+						document.getElementById("status_" + id).innerHTML = "<i class=\"fa-eye-slash\"></i>";
 						document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '0');";
 						document.getElementById("status_" + id).title = "{L_FIX}";
 					}
@@ -55,7 +55,7 @@
 			if( !confirm("{L_CONFIRM_DELETE_ALERT}") )
 				return;
 			
-			document.getElementById("status_" + id).innerHTML = '<i class="icon-spinner icon-spin"></i>';
+			document.getElementById("status_" + id).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 			
 			var xhr_object = null;
 			var data = null;
@@ -91,38 +91,38 @@
 					<tr> 
 						<th>
 							# IF NOT C_ORDER_ENTITLED_ASC #
-								<a href="{U_ORDER_ENTITLED_ASC}" class="icon-table-sort-up"></a>
+								<a href="{U_ORDER_ENTITLED_ASC}" class="fa fa-table-sort-up"></a>
 							# ENDIF #
 							{L_TYPE}
 							# IF NOT C_ORDER_ENTITLED_DESC #
-								<a href="{U_ORDER_ENTITLED_DESC}" class="icon-table-sort-down"></a>
+								<a href="{U_ORDER_ENTITLED_DESC}" class="fa fa-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_CREATION_DATE_ASC #
-								<a href="{U_ORDER_CREATION_DATE_ASC}" class="icon-table-sort-up"></a>
+								<a href="{U_ORDER_CREATION_DATE_ASC}" class="fa fa-table-sort-up"></a>
 							# ENDIF #
 							{L_DATE}
 							# IF NOT C_ORDER_CREATION_DATE_DESC #
-								<a href="{U_ORDER_CREATION_DATE_DESC}" class="icon-table-sort-down"></a>
+								<a href="{U_ORDER_CREATION_DATE_DESC}" class="fa fa-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_PRIORITY_ASC #
-								<a href="{U_ORDER_PRIORITY_ASC}" class="icon-table-sort-up"></a>
+								<a href="{U_ORDER_PRIORITY_ASC}" class="fa fa-table-sort-up"></a>
 							# ENDIF #
 							{L_PRIORITY}
 							# IF NOT C_ORDER_PRIORITY_DESC #
-								<a href="{U_ORDER_PRIORITY_DESC}" class="icon-table-sort-down"></a>
+								<a href="{U_ORDER_PRIORITY_DESC}" class="fa fa-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_STATUS_ASC #
-								<a href="{U_ORDER_STATUS_ASC}" class="icon-table-sort-up"></a>
+								<a href="{U_ORDER_STATUS_ASC}" class="fa fa-table-sort-up"></a>
 							# ENDIF #
 							{L_ACTIONS}
 							# IF NOT C_ORDER_STATUS_DESC #
-								<a href="{U_ORDER_STATUS_DESC}" class="icon-table-sort-down"></a>
+								<a href="{U_ORDER_STATUS_DESC}" class="fa fa-table-sort-down"></a>
 							# ENDIF #
 						</th>
 					</tr>
@@ -150,8 +150,8 @@
 						</td>
 						<td>
 							{alerts.ACTIONS}
-							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="# IF alerts.C_PROCESSED #icon-eye# ELSE #icon-eye-slash# ENDIF #"></i></a>
-							<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
+							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="# IF alerts.C_PROCESSED #fa-eye# ELSE #fa-eye-slash# ENDIF #"></i></a>
+							<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>
 					# END alerts #
@@ -159,7 +159,7 @@
 			</table>
 			# ELSE #
 				<div class="message-helper question">
-					<i class="icon-question"></i>
+					<i class="fa fa-question"></i>
 					<div class="message-helper-content">{L_NO_ALERT}</div>
 				</div>
 			# ENDIF #

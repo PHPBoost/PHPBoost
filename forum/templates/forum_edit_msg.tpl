@@ -36,8 +36,8 @@
 						<div class="msg_container">
 							<div class="msg_pseudo_mbr"></div>
 							<div class="msg_top_row">
-								<div style="float:left;">&nbsp;&nbsp;<i class="icon-hand-o-right"></i> {DATE}</div>
-								<div style="float:right;"><i class="icon-quote-right"></i>&nbsp;&nbsp;</div>
+								<div style="float:left;">&nbsp;&nbsp;<i class="fa fa-hand-o-right"></i> {DATE}</div>
+								<div style="float:right;"><i class="fa fa-quote-right"></i>&nbsp;&nbsp;</div>
 							</div>
 							<div class="msg_contents_container">
 								<div class="msg_info_mbr">

@@ -2,31 +2,31 @@
 <article itemscope="itemscope" itemtype="http://schema.org/Article">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="icon-syndication"></a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="fa fa-syndication"></a>
 			<span id="name" itemprop="name">{TITLE}</span>
 			<span class="actions">
 				# IF C_EDIT #
-					<a href="{U_EDIT_ARTICLE_PAGE}" title="${i18n('articles.edit')}" class="icon-pencil"></a>
+					<a href="{U_EDIT_ARTICLE_PAGE}" title="${i18n('articles.edit')}" class="fa fa-pencil"></a>
 				# ENDIF #
 				# IF C_DELETE #
-					<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="icon-delete" data-confirmation="delete-element"></a>
+					<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				# ENDIF #
-					<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank" class="icon-print"></a>
+					<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank" class="fa fa-print"></a>
 			</span>
 		</h1>
 		
 		<div class="more">
 			# IF C_AUTHOR_DISPLAYED #
-			<i class="icon-user" title="{@articles.sort_field.author}"></i><a itemprop="author" href="{U_AUTHOR}" class="small {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a>|&nbsp;
+			<i class="fa fa-user" title="{@articles.sort_field.author}"></i><a itemprop="author" href="{U_AUTHOR}" class="small {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a>|&nbsp;
 			# ENDIF #
-			<i class="icon-calendar" title="{@articles.sort_field.date}"></i>&nbsp;<time datetime="{DATE_ISO8601}" itemprop="datePublished">{DATE}</time>&nbsp;|
-			&nbsp;<i class="icon-eye" title="{@articles.sort_field.views}"></i>&nbsp;{NUMBER_VIEW}
+			<i class="fa fa-calendar" title="{@articles.sort_field.date}"></i>&nbsp;<time datetime="{DATE_ISO8601}" itemprop="datePublished">{DATE}</time>&nbsp;|
+			&nbsp;<i class="fa fa-eye" title="{@articles.sort_field.views}"></i>&nbsp;{NUMBER_VIEW}
 			# IF C_COMMENTS_ENABLED #
-				&nbsp;|&nbsp;<i class="icon-comment"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
+				&nbsp;|&nbsp;<i class="fa fa-comment"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 			# ENDIF #
-			&nbsp;|&nbsp;<i class="icon-folder" title="{@articles.category}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{L_CAT_NAME}</a>
+			&nbsp;|&nbsp;<i class="fa fa-folder" title="{@articles.category}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{L_CAT_NAME}</a>
 			# IF C_KEYWORDS #
-			&nbsp;|&nbsp;<i title="{@articles.tags}" class="icon-tags"></i> 
+			&nbsp;|&nbsp;<i title="{@articles.tags}" class="fa fa-tags"></i> 
 				# START keywords #
 					<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 				# END keywords #
@@ -54,7 +54,7 @@
 		# IF C_PAGINATION #
 			<div class="pages_pagination right">
 				# IF C_NEXT_PAGE #
-				<a style="text-decoration:none;" href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="icon-arrow-right"></i></a>
+				<a style="text-decoration:none;" href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="fa fa-arrow-right"></i></a>
 				# ELSE #
 				&nbsp;
 				# ENDIF #
@@ -62,7 +62,7 @@
 			<div class="pages_pagination center"># INCLUDE PAGINATION_ARTICLES #</div>
 			<div class="pages_pagination">
 				# IF C_PREVIOUS_PAGE #
-				<a style="text-decoration:none;" href="{U_PREVIOUS_PAGE}"><i class="icon-arrow-left"></i> {L_PREVIOUS_TITLE}</a>
+				<a style="text-decoration:none;" href="{U_PREVIOUS_PAGE}"><i class="fa fa-arrow-left"></i> {L_PREVIOUS_TITLE}</a>
 				# ENDIF #
 			</div>
 		# ENDIF #

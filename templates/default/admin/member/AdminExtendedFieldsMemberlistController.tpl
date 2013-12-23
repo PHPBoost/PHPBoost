@@ -131,13 +131,13 @@ var ExtendedField = Class.create({
 	},
 	change_display_picture : function() {
 		if (this.is_not_displayed == false) {
-			$('change_display_' + this.id).className = "icon-eye";
+			$('change_display_' + this.id).className = "fa-eye";
 			$('change_display_' + this.id).title = "{@field.display}";
 			$('change_display_' + this.id).alt = "{@field.display}";
 			this.is_not_displayed = true;
 		}
 		else {
-			$('change_display_' + this.id).className = "icon-eye-slash";
+			$('change_display_' + this.id).className = "fa-eye-slash";
 			$('change_display_' + this.id).title = "{@field.not_display}";
 			$('change_display_' + this.id).alt = "{@field.not_display}";
 			this.is_not_displayed = false;
@@ -160,30 +160,30 @@ Event.observe(window, 'load', function() {
 			# START list_extended_fields #
 				<li class="sortable-element" id="list_{list_extended_fields.ID}">
 					<div class="sortable-title">
-						<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows"></i>
-						<i class="icon-globe"></i>
+						<i title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></i>
+						<i class="fa fa-globe"></i>
 						<span class="text-strong" >{list_extended_fields.NAME}</span>
 						<div class="sortable-actions">
 							{@field.required} : <span class="text-strong"># IF list_extended_fields.C_REQUIRED #{@field.yes}# ELSE #{@field.no}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
-								<a title="{@fields.move_field_up}" id="move_up_{list_extended_fields.ID}"><i class="icon-arrow-up"></i></a>
+								<a title="{@fields.move_field_up}" id="move_up_{list_extended_fields.ID}"><i class="fa fa-arrow-up"></i></a>
 							</div>
 							<div class="sortable-options">
-								<a title="{@fields.move_field_down}" id="move_down_{list_extended_fields.ID}"><i class="icon-arrow-down"></i></a>
+								<a title="{@fields.move_field_down}" id="move_down_{list_extended_fields.ID}"><i class="fa fa-arrow-down"></i></a>
 							</div>
 							# ENDIF #
 							<div class="sortable-options">
-								<a href="{list_extended_fields.U_EDIT}" title="{@fields.action.edit_field}" class="icon-edit"></a>
+								<a href="{list_extended_fields.U_EDIT}" title="{@fields.action.edit_field}" class="fa fa-edit"></a>
 							</div>
 							<div class="sortable-options">
 								# IF NOT list_extended_fields.C_FREEZE #
-								<a title="{@fields.action.delete_field}" id="delete_{list_extended_fields.ID}" class="icon-delete"></a>
+								<a title="{@fields.action.delete_field}" id="delete_{list_extended_fields.ID}" class="fa fa-delete"></a>
 								# ELSE #
 								&nbsp;
 								# ENDIF #
 							</div>
-							<a><i id="change_display_{list_extended_fields.ID}" class="icon-eye"></i></a>
+							<a><i id="change_display_{list_extended_fields.ID}" class="fa fa-eye"></i></a>
 						</div>
 					</div>
 					<div class="spacer"></div>

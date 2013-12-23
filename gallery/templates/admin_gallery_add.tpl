@@ -87,7 +87,7 @@
 					<legend>{L_IMG_DISPO_GALLERY}</legend>
 					
 					<div class="message-helper notice">
-						<i class="icon-notice"></i>
+						<i class="fa fa-notice"></i>
 						<div class="message-helper-content">{L_REQUIRE}<br />{L_SELECT_IMG_ADD}</div>
 					</div>
 
@@ -167,7 +167,7 @@
 														
 					# START no_img #						
 					<div class="message-helper notice">
-						<i class="icon-notice"></i>
+						<i class="fa fa-notice"></i>
 						<div class="message-helper-content">{no_img.L_NO_IMG}</div>
 					</div>
 					# END no_img #

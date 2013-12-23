@@ -28,7 +28,7 @@
 			if( document.getElementById('v'+i) )
 				document.getElementById('v'+i).innerHTML = '<label><input type="text" size="3" name="v'+i+'" value="" /></label><br><span id="v'+i2+'"></span>';		
 			if( document.getElementById('s'+i) )
-				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><i class="icon-plus"></i></a></span>' : '';
+				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><i class="fa fa-plus"></i></a></span>' : '';
 		}
 		-->
 		</script>
@@ -112,7 +112,7 @@
 								</tr>
 								<tr>
 									<td style="text-align:center;" colspan="2">
-										<span id="s5"><a href="javascript:add_field(5, 20)"><i class="icon-plus"></i></a></span>						
+										<span id="s5"><a href="javascript:add_field(5, 20)"><i class="fa fa-plus"></i></a></span>						
 									</td>
 								</tr>
 							</table>
@@ -133,7 +133,7 @@
 										<div id="start_date" class="calendar-block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 										</div>
 									</div>
-									<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;" class="icon-calendar"></a>
+									<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;" class="fa fa-calendar"></a>
 									
 									{L_UNTIL}&nbsp;
 									
@@ -142,7 +142,7 @@
 										<div id="end_date" class="calendar-block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
 										</div>
 									</div>
-									<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;" class="icon-calendar"></a>
+									<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;" class="fa fa-calendar"></a>
 								</label>
 							</div>
 							<label><input type="radio" value="1" id="release_date" name="visible" {VISIBLE_ENABLED}> {L_IMMEDIATE}</label>
@@ -157,7 +157,7 @@
 								<div id="current" class="calendar-block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">							
 								</div>
 							</div>
-							<a onclick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;" class="icon-calendar"></a>
+							<a onclick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;" class="fa fa-calendar"></a>
 							
 							{L_AT}
 							<input type="text" size="2" maxlength="2" name="hour" value="{HOUR}" /> H <input type="text" size="2" maxlength="2" name="min" value="{MIN}">

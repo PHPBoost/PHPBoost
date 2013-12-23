@@ -62,10 +62,10 @@
 					<menu class="dynamic-menu group center">
 						<ul>
 							<li >
-								<a href="{convers.U_POST_NEW_CONVERS}"><i class="icon-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
+								<a href="{convers.U_POST_NEW_CONVERS}"><i class="fa fa-plus"></i> {convers.L_POST_NEW_CONVERS}</a>
 							</li>
 							<li>
-								<a href="{convers.U_MARK_AS_READ}"><i class="icon-eraser"></i> {convers.L_MARK_AS_READ}</a>
+								<a href="{convers.U_MARK_AS_READ}"><i class="fa fa-eraser"></i> {convers.L_MARK_AS_READ}</a>
 							</li>
 						</ul>
 					</menu>
@@ -105,7 +105,7 @@
 									<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}">
 								</td>
 								<td style="padding-right:0px;">
-									<i class="icon-envelope {convers.list.ANNOUNCE}"></i>
+									<i class="fa fa-envelope {convers.list.ANNOUNCE}"></i>
 								</td>
 								<td style="width:50%;text-align:left;" class="no-separator">
 									{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
@@ -139,13 +139,13 @@
 					<table>
 						<tr> 		
 							<td style="width:33%;"> 
-								<i class="icon-envelope message-announce"></i> {L_READ} 
+								<i class="fa fa-envelope message-announce"></i> {L_READ} 
 							</td>
 							<td style="width:34%;" class="no-separator">  
-								<i class="icon-envelope message-announce-track"></i> {L_TRACK}		
+								<i class="fa fa-envelope message-announce-track"></i> {L_TRACK}		
 							</td>
 							<td style="width:33%;" class="no-separator">  
-								<i class="icon-envelope message-announce-new"></i> {L_NOT_READ}		
+								<i class="fa fa-envelope message-announce-new"></i> {L_NOT_READ}		
 							</td>
 						</tr>
 					</table>
@@ -187,8 +187,8 @@
 							<span class="actions">
 								<a href="#m{pm.msg.ID}">\#{pm.msg.ID}</a>
 								# IF pm.msg.C_MODERATION_TOOLS #
-								<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="icon-edit"></a>
-								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
+								<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="fa fa-edit"></a>
+								<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								# ENDIF #
 							</span>
 							<span>{pm.msg.DATE}</span>

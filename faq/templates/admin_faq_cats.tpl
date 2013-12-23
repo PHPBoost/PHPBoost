@@ -39,7 +39,7 @@
 
 				<div style="text-align:center; margin:30px 20px;">
 					<a href="admin_faq_cats.php?recount=1" title="{L_RECOUNT_QUESTIONS}">
-						<i class="icon-refresh icon-2x"></i>
+						<i class="fa fa-refresh fa-2x"></i>
 					</a>
 					<br />
 					<a href="admin_faq_cats.php?recount=1">{L_RECOUNT_QUESTIONS}</a>

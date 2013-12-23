@@ -57,7 +57,7 @@
 								# ENDIF #
 							</td>
 							<td class="forum_sous_cat" style="width:35px;text-align:center;">
-								{topics.DISPLAY_MSG} {topics.TRACK} # IF C_POLL #<i class="icon-tasks"></i># ENDIF #
+								{topics.DISPLAY_MSG} {topics.TRACK} # IF C_POLL #<i class="fa fa-tasks"></i># ENDIF #
 							</td>
 							<td class="forum_sous_cat">
 								{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>

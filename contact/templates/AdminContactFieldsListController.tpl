@@ -130,13 +130,13 @@ var ContactField = Class.create({
 	},
 	change_display_picture : function() {
 		if (this.is_not_displayed == false) {
-			$('change_display_' + this.id).className = "icon-eye";
+			$('change_display_' + this.id).className = "fa-eye";
 			$('change_display_' + this.id).title = "{@field.display}";
 			$('change_display_' + this.id).alt = "{@field.display}";
 			this.is_not_displayed = true;
 		}
 		else {
-			$('change_display_' + this.id).className = "icon-eye-slash";
+			$('change_display_' + this.id).className = "fa-eye-slash";
 			$('change_display_' + this.id).title = "{@field.not_display}";
 			$('change_display_' + this.id).alt = "{@field.not_display}";
 			this.is_not_displayed = false;
@@ -159,27 +159,27 @@ Event.observe(window, 'load', function() {
 			# START fields_list #
 				<li class="sortable-element" id="list_{fields_list.ID}">
 					<div class="sortable-title">
-						<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows"></i>
-						<i class="icon-globe"></i>
+						<i title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></i>
+						<i class="fa fa-globe"></i>
 						<span class="text-strong">{fields_list.NAME}</span>
 						<div class="sortable-actions">
 							{@field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
-								<a title="{@fields.move_field_up}" id="move_up_{fields_list.ID}"><i class="icon-arrow-up"></i></a>
+								<a title="{@fields.move_field_up}" id="move_up_{fields_list.ID}"><i class="fa fa-arrow-up"></i></a>
 							</div>
 							<div class="sortable-options">
-								<a title="{@fields.move_field_down}" id="move_down_{fields_list.ID}"><i class="icon-arrow-down"></i></a>
+								<a title="{@fields.move_field_down}" id="move_down_{fields_list.ID}"><i class="fa fa-arrow-down"></i></a>
 							</div>
 							# ENDIF #
 							<div class="sortable-options">
-								<a href="{fields_list.U_EDIT}" title="{@fields.action.edit_field}" class="icon-edit"></a>
+								<a href="{fields_list.U_EDIT}" title="{@fields.action.edit_field}" class="fa fa-edit"></a>
 							</div>
 							<div class="sortable-options">
-								# IF fields_list.C_DELETE #<a class="icon-delete" data-confirmation="delete-element" title="{@fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
+								# IF fields_list.C_DELETE #<a class="fa fa-delete" data-confirmation="delete-element" title="{@fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
 							</div>
 							<div class="sortable-options">
-							# IF NOT fields_list.C_READONLY #<a><i id="change_display_{fields_list.ID}" class="icon-eye"></i></a># ELSE #&nbsp;# ENDIF #
+							# IF NOT fields_list.C_READONLY #<a><i id="change_display_{fields_list.ID}" class="fa fa-eye"></i></a># ELSE #&nbsp;# ENDIF #
 							</div>
 						</div>
 					</div>

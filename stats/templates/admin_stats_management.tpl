@@ -262,7 +262,7 @@
 						<td>
 							<div style="width:50%;text-align:center;margin:auto">
 								<p class="text-strong">{L_TOTAL}: {VISIT_TOTAL} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {L_TODAY}: {VISIT_DAY}</p>
-								<a class="icon-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+								<a class="fa fa-arrow-left" href="admin_stats{U_PREVIOUS_LINK}#stats"></a>&nbsp;&nbsp;&nbsp;&nbsp;
 								# IF C_STATS_DAY #
 								<select name="d">
 									{STATS_DAY}
@@ -281,7 +281,7 @@
 								<input type="hidden" name="{TYPE}" value="1">
 								<button type="submit" name="date" value="true">{L_SUBMIT}</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;
-								<a class="icon-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>				
+								<a class="fa fa-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>				
 							</div>
 							<br />
 							# IF C_STATS_NO_GD #
@@ -505,7 +505,7 @@
 			if( document.getElementById('url' + divid).style.display == 'table' )
 			{
 				display_div_auto('url' + divid, 'table');
-				document.getElementById('img_url' + divid).className = 'icon-plus-square-o';
+				document.getElementById('img_url' + divid).className = 'fa-plus-square-o';
 			}
 			else
 			{
@@ -520,7 +520,7 @@
 				else // XMLHttpRequest non support� par le navigateur
 					return;
 				
-				document.getElementById('load' + divid).innerHTML = '<i class="icon-spinner icon-spin"></i>';
+				document.getElementById('load' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 				
 				xhr_object.open("POST", filename, true);
 				xhr_object.onreadystatechange = function() 
@@ -530,7 +530,7 @@
 						display_div_auto('url' + divid, 'table');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
-						document.getElementById('img_url' + divid).className = 'icon-minus-square-o';
+						document.getElementById('img_url' + divid).className = 'fa-minus-square-o';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';
@@ -610,11 +610,11 @@
 			if( document.getElementById('url' + divid).style.display == 'table' )
 			{
 				display_div_auto('url' + divid, 'table');
-				document.getElementById('img_url' + divid).className = 'icon-plus-square-o';
+				document.getElementById('img_url' + divid).className = 'fa-plus-square-o';
 			}
 			else
 			{
-				document.getElementById('load' + divid).innerHTML = '<i class="icon-spinner icon-spin"></i>';
+				document.getElementById('load' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_keyword=1&id=' + divid);
 				xhr_object.onreadystatechange = function() 
 				{
@@ -623,7 +623,7 @@
 						display_div_auto('url' + divid, 'table');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
-						document.getElementById('img_url' + divid).className = 'icon-minus-square-o';
+						document.getElementById('img_url' + divid).className = 'fa-minus-square-o';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';

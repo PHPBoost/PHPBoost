@@ -18,7 +18,7 @@ var FormFieldMultipleAutocompleter = Class.create({
 
 			this.load_autocompleter('field_' + id);
 			
-			var delete_input = new Element('a', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'class' : 'icon-delete'});
+			var delete_input = new Element('a', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'class' : 'fa-delete'});
 			$(id).insert('&nbsp;');
 			$(id).insert(delete_input);
 		
@@ -52,8 +52,8 @@ var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 	<div id="${escape(ID)}_{fieldelements.ID}" class="form-autocompleter-container">
 		<input type="text" name="field_${escape(ID)}_{fieldelements.ID}" id="field_${escape(ID)}_{fieldelements.ID}" onfocus="javascript:FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(ID)}_{fieldelements.ID}');" value="{fieldelements.VALUE}" size="{SIZE}" autocomplete="off"/>
 		<div id="field_${escape(ID)}_{fieldelements.ID}_completer" class="form-autocompleter"></div>
-		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="icon-delete" data-confirmation="delete-element"></a>
+		<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="fa fa-delete" data-confirmation="delete-element"></a>
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:FormFieldMultipleAutocompleter.add_field();" class="icon-plus" id="add_${escape(ID)}"></a>
+<a href="javascript:FormFieldMultipleAutocompleter.add_field();" class="fa fa-plus" id="add_${escape(ID)}"></a>

@@ -1,7 +1,7 @@
 <menu class="dynamic-menu">
 	<ul>
 		<li>
-			<a onclick="Effect.toggle('table_filters', 'appear'); return false;"><i class="icon-filter"></i> {L_FILTERS}</a> 
+			<a onclick="Effect.toggle('table_filters', 'appear'); return false;"><i class="fa fa-filter"></i> {L_FILTERS}</a> 
 		</li>
 	</ul>
 </menu>
@@ -71,7 +71,7 @@
 			# ENDIF #
 			# IF C_DISPLAY_SAVE_BUTTON #
 			<td class="no-separator">
-				<a href="{LINK_FILTER_SAVE}" title="{@bugs.labels.save_filters}" class="icon-save"></a>
+				<a href="{LINK_FILTER_SAVE}" title="{@bugs.labels.save_filters}" class="fa fa-save"></a>
 			</td>
 			# ENDIF #
 		</tr>
@@ -79,7 +79,7 @@
 		# START filters #
 		<tr>
 			<td colspan="{FILTERS_NUMBER}">
-				<a href="{filters.LINK_FILTER_DELETE}" title="{L_DELETE}" class="icon-delete" data-confirmation="{@bugs.actions.confirm.del_filter}"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				<a href="{filters.LINK_FILTER_DELETE}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_filter}"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>
 		# END filters #

@@ -1,7 +1,7 @@
 <section>	
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			${i18n('articles')}
 		</h1>
 		<div class="cat">
@@ -35,10 +35,10 @@
 						<figure>
 							<div class="article_tools">
 								# IF articles.C_EDIT #
-								<a href="{articles.U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="icon-edit"></a>
+								<a href="{articles.U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="fa fa-edit"></a>
 								# ENDIF #
 								# IF articles.C_DELETE #
-								<a href="{articles.U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="icon-delete" data-confirmation="delete-element"></a>
+								<a href="{articles.U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								# ENDIF #
 							</div>
 							# IF articles.C_HAS_PICTURE #
@@ -47,12 +47,12 @@
 						</figure>
 						<div class="article_details">
 							# IF articles.C_AUTHOR_DISPLAYED #
-							<i class="icon-user" title="${i18n('articles.sort_field.author')}"></i>&nbsp;<a itemprop="author" href="{articles.U_AUTHOR}" class="small {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>&nbsp;|
+							<i class="fa fa-user" title="${i18n('articles.sort_field.author')}"></i>&nbsp;<a itemprop="author" href="{articles.U_AUTHOR}" class="small {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>&nbsp;|
 							# ELSE #
 							&nbsp;
 							# ENDIF #
-							<i class="icon-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
-							<i class="icon-eye" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
+							<i class="fa fa-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
+							<i class="fa fa-eye" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
 						</div>
 						<h3 itemprop="name"><a itemprop="url" href="{articles.U_ARTICLE}">{articles.TITLE}</a></h3>
 						<p itemprop="description" class="description">{articles.DESCRIPTION}</p>
@@ -72,7 +72,7 @@
 						<footer>
 							# IF C_COMMENTS_ENABLED #
 							<div class="article_comment">
-								<i class="icon-comment"></i><a itemprop="discussionUrl" class="small" href="{articles.U_COMMENTS}" title="{articles.L_COMMENTS}">&nbsp;{articles.NUMBER_COMMENTS}</a>
+								<i class="fa fa-comment"></i><a itemprop="discussionUrl" class="small" href="{articles.U_COMMENTS}" title="{articles.L_COMMENTS}">&nbsp;{articles.NUMBER_COMMENTS}</a>
 								# ELSE #
 								&nbsp;
 								# ENDIF #
@@ -101,10 +101,10 @@
 						<div class="title_description">
 							<div class="article_tools">
 								# IF articles.C_EDIT #
-								<a href="{articles.U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="icon-edit"></a>
+								<a href="{articles.U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="fa fa-edit"></a>
 								# ENDIF #
 								# IF articles.C_DELETE #
-								<a href="{articles.U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="icon-delete" data-confirmation="delete-element"></a>
+								<a href="{articles.U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								# ENDIF #
 							</div>
 							<header>
@@ -128,16 +128,16 @@
 						<footer>	
 							<div class="article_details">
 								# IF articles.C_AUTHOR_DISPLAYED #
-								<i class="icon-user" title="${i18n('articles.sort_field.author')}"></i>&nbsp;<a itemprop="author" href="{articles.U_AUTHOR}" class="small {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>&nbsp;|
+								<i class="fa fa-user" title="${i18n('articles.sort_field.author')}"></i>&nbsp;<a itemprop="author" href="{articles.U_AUTHOR}" class="small {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>&nbsp;|
 								# ELSE #
 								&nbsp;
 								# ENDIF #
-								<i class="icon-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
-								<i class="icon-eye" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
+								<i class="fa fa-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
+								<i class="fa fa-eye" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
 							</div>
 							<div class="article_comment">
 								# IF C_COMMENTS_ENABLED #
-								<i class="icon-comment"></i><a itemprop="discussionUrl" class="small" href="{articles.U_COMMENTS}">&nbsp;{articles.L_COMMENTS}</a>
+								<i class="fa fa-comment"></i><a itemprop="discussionUrl" class="small" href="{articles.U_COMMENTS}">&nbsp;{articles.L_COMMENTS}</a>
 								# ELSE #
 								&nbsp;
 								# ENDIF #

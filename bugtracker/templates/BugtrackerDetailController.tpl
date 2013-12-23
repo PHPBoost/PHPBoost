@@ -19,19 +19,19 @@
 		{@bugs.titles.bugs_treatment_state}
 		&nbsp;
 		# IF C_REOPEN_BUG #
-			<a href="{U_REOPEN}" onclick="javascript:return Confirm_reopen();" class="icon-bugtracker-rejected" title="{@bugs.actions.reopen}"></a>
+			<a href="{U_REOPEN}" onclick="javascript:return Confirm_reopen();" class="fa bugtracker-icon-rejected" title="{@bugs.actions.reopen}"></a>
 		# ENDIF #
 		# IF C_REJECT_BUG #
-			<a href="{U_REJECT}" onclick="javascript:return Confirm_reject();" class="icon-bugtracker-opened" title="{@bugs.actions.reject}"></a>
+			<a href="{U_REJECT}" onclick="javascript:return Confirm_reject();" class="fa bugtracker-icon-opened" title="{@bugs.actions.reject}"></a>
 		# ENDIF #
 		# IF C_EDIT_BUG #
-			<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+			<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 		# ENDIF #
 		# IF C_HISTORY_BUG #
-			<a href="{U_HISTORY}" title="{@bugs.actions.history}" class="icon-bugtracker-history"></a>
+			<a href="{U_HISTORY}" title="{@bugs.actions.history}" class="fa bugtracker-icon-history"></a>
 		# ENDIF #
 		# IF C_DELETE_BUG #
-			<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+			<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 		# ENDIF #
 	</legend>
 	# IF C_PROGRESS #

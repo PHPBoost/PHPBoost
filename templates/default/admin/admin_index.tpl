@@ -44,12 +44,12 @@
 							<td>
 								# IF C_UNREAD_ALERTS #
 									<div class="message-helper warning" style="width:auto;">
-										<i class="icon-warning"></i>
+										<i class="fa fa-warning"></i>
 										<div class="message-helper-content">{L_UNREAD_ALERT}</div>
 									</div>
 								# ELSE #
 									<div class="message-helper success" style="width:auto;">
-										<i class="icon-success"></i>
+										<i class="fa fa-success"></i>
 										<div class="message-helper-content">{L_NO_UNREAD_ALERT}</div>
 									</div>
 								# ENDIF #
@@ -74,7 +74,7 @@
 								<div style="height:140px;width:358px;overflow:auto;margin:auto;">
 									# START comments_list #	
 									<div style="margin-bottom:10px;">
-										<a href="{comments_list.U_LINK}"><i class="icon-hand-o-right"></i></a> <span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span>
+										<a href="{comments_list.U_LINK}"><i class="fa fa-hand-o-right"></i></a> <span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span>
 										<p class="smaller">{comments_list.CONTENT}</p>
 									</div>	
 									# END comments_list #

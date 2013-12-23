@@ -37,7 +37,7 @@ function display_default_version_radio(version_id)
 			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 		<tr>
 			<th colspan="5">
-				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="{@bugs.actions.confirm.del_version}"></a>
+				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_version}"></a>
 			</th>
 		</tr>
 			# ENDIF #
@@ -59,7 +59,7 @@ function display_default_version_radio(version_id)
 				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF #>
 			</td> 
 			<td>
-				<a href="{versions.LINK_DELETE}" title="{L_DELETE}" class="icon-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}"></a>
+				<a href="{versions.LINK_DELETE}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}"></a>
 			</td>
 		</tr>
 		# END versions #

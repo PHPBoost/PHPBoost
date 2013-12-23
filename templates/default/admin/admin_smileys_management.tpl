@@ -31,8 +31,8 @@
 					# START list #
 					<tr>
 						<td> 
-							<a href="admin_smileys.php?id={list.IDSMILEY}&amp;edit=1" title="{L_EDIT}" class="icon-edit"></a>
-							<a href="admin_smileys.php?id={list.IDSMILEY}&amp;del=1&amp;token={TOKEN}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
+							<a href="admin_smileys.php?id={list.IDSMILEY}&amp;edit=1" title="{L_EDIT}" class="fa fa-edit"></a>
+							<a href="admin_smileys.php?id={list.IDSMILEY}&amp;del=1&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						</td>
 						<td>
 							<img src="{PATH_TO_ROOT}/images/smileys/{list.URL_SMILEY}" alt="" />

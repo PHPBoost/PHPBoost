@@ -59,7 +59,7 @@
 			
 			# IF C_PREVIEW #
 				<div class="message-helper notice">
-					<i class="icon-notice"></i>
+					<i class="fa fa-notice"></i>
 					<div class="message-helper-content">{L_WARNING_PREVIEWING}</div>
 				</div>
 				# INCLUDE download #
@@ -93,7 +93,7 @@
 						<label for="url">* {L_URL}</label>
 						<div class="form-field">
 							<input type="text" size="50" id="url" name="url" value="{URL}">
-							<a title="{L_FILE_ADD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=url&amp;parse=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><i class="icon-cloud-upload icon-2x"></i></a>
+							<a title="{L_FILE_ADD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=url&amp;parse=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-cloud-upload fa-2x"></i></a>
 						</div>
 					</div>
 					<div class="form-element">
@@ -186,7 +186,7 @@
 				<fieldset>
 					<legend>{L_CONTRIBUTION_LEGEND}</legend>
 					<div class="message-helper notice">
-						<i class="icon-notice"></i>
+						<i class="fa fa-notice"></i>
 						<div class="message-helper-content">{L_NOTICE_CONTRIBUTION}</div>
 					</div>
 					<p><label>{L_CONTRIBUTION_COUNTERPART}</label></p>

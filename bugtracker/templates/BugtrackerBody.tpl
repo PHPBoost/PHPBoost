@@ -40,7 +40,7 @@
 				# ENDIF #
 				# IF C_ADD_PAGE #
 				<li class="current">
-					<a href="{LINK_BUG_ADD}"><i class="icon-plus"></i> {@bugs.titles.add}</a>
+					<a href="{LINK_BUG_ADD}"><i class="fa fa-plus"></i> {@bugs.titles.add}</a>
 				</li>
 				# ENDIF #
 			</ul>

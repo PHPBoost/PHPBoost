@@ -17,11 +17,11 @@
 				<div class="module_top_r"></div>
 				<div class="module_top">
 					<span class="forum_cat_title">
-						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',forums_list.cats.IDCAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+						<a href="${relative_url(SyndicationUrlBuilder::rss('forum',forums_list.cats.IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 						&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum_link_cat">{forums_list.cats.NAME}</a>
 					</span>
 					<span style="float:right">
-						<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="icon-notread"></i></a>
+						<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
 					</span>
 				</div>
 				<div class="module_contents forum_contents">
@@ -44,7 +44,7 @@
 					<tr>
 						# IF forums_list.subcats.U_FORUM_URL #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
-							<i class="icon-globe"></i>
+							<i class="fa fa-globe"></i>
 						</td>
 						<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 							<a href="{forums_list.subcats.U_FORUM_URL}">{forums_list.subcats.NAME}</a>

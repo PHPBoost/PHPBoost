@@ -93,7 +93,7 @@
                     <legend>{L_CLEAR_OUT_CACHE}</legend>
                     <p style="text-align:center;">
                         <a href="admin_search.php?clear=1" title="{L_CLEAR_OUT_CACHE}">
-							<i class="icon-refresh icon-2x"></i>
+							<i class="fa fa-refresh fa-2x"></i>
 						</a>
                         <br />
                         <a href="admin_search.php?clear=1">{L_CLEAR_OUT_CACHE}</a>

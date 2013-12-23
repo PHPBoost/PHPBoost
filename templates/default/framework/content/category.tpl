@@ -1,7 +1,7 @@
 # START categories #
 	<li id="c{categories.ID}" class="sortable-element" style="cursor:default;margin-left:{categories.MARGIN_LEFT}px;">
 		<div class="sortable-title">
-			<i class="icon-folder icon-2x"></i>
+			<i class="fa fa-folder fa-2x"></i>
 			# IF categories.C_DISPLAY_URL #
 				<a href="{categories.URL}">{categories.NAME}</a>
 			# ELSE #
@@ -12,7 +12,7 @@
 				<span id="l{categories.ID}"></span>
 				# IF categories.C_NOT_FIRST_CAT #
 					<div class="sortable-options">
-						<a href="{categories.ACTION_GO_UP}" class="icon-arrow-up"></a>
+						<a href="{categories.ACTION_GO_UP}" class="fa fa-arrow-up"></a>
 					</div>
 					# IF C_AJAX_MODE #
 						<script type="text/javascript">
@@ -23,7 +23,7 @@
 				
 				# IF categories.C_NOT_LAST_CAT #
 					<div class="sortable-options">
-						<a href="{categories.ACTION_GO_DOWN}" class="icon-arrow-down"></a>
+						<a href="{categories.ACTION_GO_DOWN}" class="fa fa-arrow-down"></a>
 					</div>
 					# IF C_AJAX_MODE #
 						<script type="text/javascript">
@@ -34,7 +34,7 @@
 				
 				# IF categories.C_VISIBLE #
 					<div class="sortable-options">
-						<a href="{categories.ACTION_HIDE}" title="{L_MANAGEMENT_HIDE_CAT}" id="visibility_{categories.ID}" class="icon-eye"></a>
+						<a href="{categories.ACTION_HIDE}" title="{L_MANAGEMENT_HIDE_CAT}" id="visibility_{categories.ID}" class="fa fa-eye"></a>
 					</div>
 					# IF C_AJAX_MODE #
 						<script type="text/javascript">
@@ -43,7 +43,7 @@
 					# ENDIF #
 				# ELSE #
 					<div class="sortable-options">
-						<a href="{categories.ACTION_SHOW}" title="{L_MANAGEMENT_SHOW_CAT}" id="visibility_{categories.ID}" class="icon-eye-slash"></a>&nbsp;
+						<a href="{categories.ACTION_SHOW}" title="{L_MANAGEMENT_SHOW_CAT}" id="visibility_{categories.ID}" class="fa fa-eye-slash"></a>&nbsp;
 					</div>
 					# IF C_AJAX_MODE #
 						<script type="text/javascript">
@@ -53,10 +53,10 @@
 				# ENDIF #
 				
 				<div class="sortable-options">
-					<a href="{categories.ACTION_EDIT}" class="icon-edit"></a>
+					<a href="{categories.ACTION_EDIT}" class="fa fa-edit"></a>
 				</div>
 				<div class="sortable-options">
-					<a href="{categories.ACTION_DELETE}" title="{L_CONFIRM_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
+					<a href="{categories.ACTION_DELETE}" title="{L_CONFIRM_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				</div>
 			</div>	
 		</div>

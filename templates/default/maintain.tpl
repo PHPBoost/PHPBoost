@@ -2,7 +2,7 @@
 	# IF C_ALERT_MAINTAIN #
 		<div style="position:absolute;top:5px;width:100%;text-align:center;">
 			<div class="message-helper warning">
-				<i class="icon-warning"></i>
+				<i class="fa fa-warning"></i>
 				<div class="message-helper-content">
 					{L_MAINTAIN_DELAY}
 					<br /><br />

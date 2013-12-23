@@ -6,12 +6,12 @@
 		# IF C_MAIL_SENT # 
 			# IF C_SUCCESS # 
 				<div class="message-helper success">
-					<i class="icon-success"></i>
+					<i class="fa fa-success"></i>
 					<div class="message-helper-content">{@mail.success}</div>
 				</div>
 			# ELSE # 
 				<div class="message-helper error">
-					<i class="icon-error"></i>
+					<i class="fa fa-error"></i>
 					<div class="message-helper-content">{ERROR}</div>
 				</div> 
 			# ENDIF #

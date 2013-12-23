@@ -103,7 +103,7 @@
 				<fieldset>
 					<legend>{L_CONTRIBUTION_LEGEND}</legend>
 					<div class="message-helper notice">
-						<i class="icon-notice"></i>
+						<i class="fa fa-notice"></i>
 						<div class="message-helper-content">{L_NOTICE_CONTRIBUTION}</div>
 					</div>
 					<div class="form-element-textarea">

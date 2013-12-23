@@ -40,7 +40,7 @@
 							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_TRUNCATE_TABLE}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/trash_mini.png"/> {L_TRUNCATE}</a>
 						</li>
 						<li>
-							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element"><i class="icon-delete"></i> {L_DELETE}</a>
+							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" data-confirmation="delete-element"><i class="fa fa-delete"></i> {L_DELETE}</a>
 						</li>
 					</ul>
 				</menu>
@@ -361,7 +361,7 @@
 							<div class="content">
 								<span id="errorh"></span>
 								<div class="message-helper warning">
-									<i class="icon-warning"></i>
+									<i class="fa fa-warning"></i>
 									<div class="message-helper-content">{L_EXPLAIN_QUERY}</div>
 								</div>
 								<fieldset>

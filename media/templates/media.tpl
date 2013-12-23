@@ -2,7 +2,7 @@
 			<section>
 				<header>
 					<h1>
-						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 						{TITLE}
 					</h1>
 				</header>
@@ -22,7 +22,7 @@
 									<br />
 									<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
 									# IF C_ADMIN #
-									<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+									<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 									# ENDIF #
 									# IF row.list_cats.NUM_MEDIA #
 									<div class="smaller">
@@ -68,9 +68,9 @@
 										<a href="{file.U_MEDIA_LINK}">{file.NAME}</a>
 										# IF C_MODO #
 										<span class="actions">
-											<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="icon-eye-slash" title="{L_UNAPROBED}"></a>
-											<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-											<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+											<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="fa fa-eye-slash" title="{L_UNAPROBED}"></a>
+											<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+											<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 										</span>
 										# ENDIF #
 									</h1>
@@ -117,7 +117,7 @@
 	
 					# IF C_NO_FILE #
 						<div class="message-helper notice">
-							<i class="icon-notice"></i>
+							<i class="fa fa-notice"></i>
 							<div class="message-helper-content">{L_NO_FILE_THIS_CATEGORY}</div>
 						</div>
 					# ENDIF #
@@ -133,12 +133,12 @@
 					{NAME} 
 					<span class="actions">
 						# IF A_COM #
-							<a href="{U_COM}"><i class="icon-comments-o"></i> {L_COM}</a>
+							<a href="{U_COM}"><i class="fa fa-comments-o"></i> {L_COM}</a>
 						# ENDIF #
 						# IF C_MODO #
-							<a href="{U_UNVISIBLE_MEDIA}" class="icon-eye-slash" title="{L_UNAPROBED}"></a>
-							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+							<a href="{U_UNVISIBLE_MEDIA}" class="fa fa-eye-slash" title="{L_UNAPROBED}"></a>
+							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</span>
 				</h1>

@@ -27,13 +27,13 @@
 <div id="admin_contents">
 	# IF C_INCOMPATIBLE_PHP_VERSION #
 		<div class="message-helper warning" style="margin-top:100px;">
-			<i class="icon-warning"></i>
+			<i class="fa fa-warning"></i>
 			<div class="message-helper-content">{L_INCOMPATIBLE_PHP_VERSION}</div>
 		</div>
 	# ELSE #
 		# IF C_UPDATES #
  			<div class="message-helper warning">
-				<i class="icon-warning"></i>
+				<i class="fa fa-warning"></i>
 				<div class="message-helper-content">{L_UPDATES_ARE_AVAILABLE}</div>
 			</div>
 			
@@ -76,7 +76,7 @@
 			</table>
 		# ELSE #
 			<div class="message-helper question">
-				<i class="icon-question"></i>
+				<i class="fa fa-question"></i>
 				<div class="message-helper-content">{L_NO_AVAILABLES_UPDATES}</div>
 			</div>
 		# ENDIF #

@@ -13,7 +13,7 @@ var ArticlesFormFieldSelectSources = Class.create({
 				' ',
 				Builder.node('input', {type : 'text', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '{@form.source.url}'}),
 				' ',
-				Builder.node('a', {href : 'javascript:ArticlesFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'icon-delete'}),
+				Builder.node('a', {href : 'javascript:ArticlesFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa-delete'}),
 				' ',
 			]);
 			$('input_fields_' + this.id_input).insert(div);
@@ -41,8 +41,8 @@ var ArticlesFormFieldSelectSources = new ArticlesFormFieldSelectSources();
 		<div id="${escape(ID)}_{fieldelements.ID}">
 			<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.source.name}"/>
 			<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="{@form.source.url}" class="field-large"/>
-			<a href="javascript:ArticlesFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="icon-delete" data-confirmation="delete-element"></a>
+			<a href="javascript:ArticlesFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="fa fa-delete" data-confirmation="delete-element"></a>
 		</div>
 # END fieldelements #
 </div>
-<a href="javascript:ArticlesFormFieldSelectSources.add_field();" class="icon-plus" id="add_${escape(ID)}"></a> 
+<a href="javascript:ArticlesFormFieldSelectSources.add_field();" class="fa fa-plus" id="add_${escape(ID)}"></a> 

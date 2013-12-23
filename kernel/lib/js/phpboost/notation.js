@@ -67,7 +67,7 @@
 		var id = this.id;
 		var object = this;
 		
-		$$('#notation-' + id + ' .stars').invoke('insert', {after: '<i id="loading-'+ id +'" class="icon-spinner icon-spin"></i>'});
+		$$('#notation-' + id + ' .stars').invoke('insert', {after: '<i id="loading-'+ id +'" class="fa fa-spinner fa-spin"></i>'});
 
 		new Ajax.Request('', {
 			method: 'post',
@@ -98,11 +98,11 @@
 			
 			decimal = i - note;
 			if(decimal >= 1)
-				star_class = 'star star-hover icon-star-o';
+				star_class = 'star star-hover fa-star-o';
 			else if(decimal <= 0.50 && decimal > 0)
-				star_class = 'star star-hover icon-star-half-o';
+				star_class = 'star star-hover fa-star-half-o';
 			else if(note >= i)
-				star_class = 'star star-hover icon-star';
+				star_class = 'star star-hover fa-star';
 
 			if($(id_star)) {
 				$(id_star).className = star_class;

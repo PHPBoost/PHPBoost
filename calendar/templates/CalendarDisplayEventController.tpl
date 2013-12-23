@@ -1,14 +1,14 @@
 <article itemscope="itemscope" itemtype="http://schema.org/Event">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="icon-syndication"></a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="fa fa-syndication"></a>
 			<span id="name" itemprop="name">{TITLE}</span>
 			<span class="actions">
 				# IF C_EDIT #
-					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 				# ENDIF #
 				# IF C_DELETE #
-					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
+					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
 				# ENDIF #
 			</span>
 		</h1>

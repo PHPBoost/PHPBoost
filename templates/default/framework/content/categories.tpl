@@ -1,6 +1,6 @@
 # IF C_NO_CATEGORY #
 <div class="message-helper notice">
-	<i class="icon-notice"></i>
+	<i class="fa fa-notice"></i>
 	<div class="message-helper-content">{L_NO_EXISTING_CATEGORY}</div>
 </div>
 # ENDIF #
@@ -15,7 +15,7 @@ function ajax_move_cat(id, direction)
 	direction = (direction == 'up' ? 'up' : 'down');
 	var xhr_object = xmlhttprequest_init('{CONFIG_XMLHTTPREQUEST_FILE}?token={TOKEN}&id_' + direction + '=' + id);
 	
-	document.getElementById('l' + id).innerHTML = '<i class="icon-spinner icon-spin"></i>';
+	document.getElementById('l' + id).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 	
 	xhr_object.onreadystatechange = function() 
 	{
@@ -37,7 +37,7 @@ function ajax_change_cat_visibility(id, status)
 	status = (status == 'show' ? 'show' : 'hide');
 	var xhr_object = xmlhttprequest_init('{CONFIG_XMLHTTPREQUEST_FILE}?token={TOKEN}&' + status + '=' + id);
 	
-	document.getElementById('l' + id).innerHTML = '<i class="icon-spinner icon-spin"></i>';
+	document.getElementById('l' + id).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 	
 	xhr_object.onreadystatechange = function() 
 	{

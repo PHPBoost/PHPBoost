@@ -2,11 +2,11 @@
 		<section>
 			<header>
 				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{TITLE}
 					# IF C_ADMIN #
 					<span class="actions">
-						<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+						<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 					</span>
 					# END IF #
 				</h1>
@@ -28,7 +28,7 @@
 								<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
 								
 								# IF C_ADMIN #
-								<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+								<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 								# ENDIF #
 								<div class="smaller">
 									{row.list_cats.NUM_FILES}
@@ -73,8 +73,8 @@
 									<a href="{file.U_DOWNLOAD_LINK}" itemprop="name">{file.NAME}</a>
 									# IF C_ADMIN #
 									<span class="actions">
-										<a href="{file.U_ADMIN_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-										<a href="{file.U_ADMIN_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+										<a href="{file.U_ADMIN_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+										<a href="{file.U_ADMIN_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 									</span>
 									# ENDIF #
 								</h1>
@@ -113,7 +113,7 @@
 				
 				# IF C_NO_FILE #
 					<div class="message-helper notice">
-						<i class="icon-notice"></i>
+						<i class="fa fa-notice"></i>
 						<div class="message-helper-content">{L_NO_FILE_THIS_CATEGORY}</div>
 					</div>
 				# ENDIF #
@@ -131,8 +131,8 @@
 					<span class="actions">
 						{U_COM}
 						# IF C_EDIT_AUTH #
-							<a href="{U_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-							<a href="{U_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+							<a href="{U_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+							<a href="{U_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</span>
 				</h1>
@@ -146,11 +146,11 @@
 							<br /><br />
 						# ENDIF #
 						<a href="{U_DOWNLOAD_FILE}" class="basic-button">
-							<i class="icon-download"></i> {L_DOWNLOAD_FILE}
+							<i class="fa fa-download"></i> {L_DOWNLOAD_FILE}
 						</a>
 						# IF IS_USER_CONNECTED #
 						<a href="{U_DEADLINK}" class="basic-button alt" title="{L_DEADLINK}">
-							<i class="icon-unlink"></i>
+							<i class="fa fa-unlink"></i>
 						</a>
 						# ENDIF #
 					</div>

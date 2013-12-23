@@ -6,15 +6,15 @@
 		<span id="m{IDMENU}"></span>
 		<h5 class="menus_block_title">{NAME}</h5>
 		
-		<i title="${LangLoader::get_message('move', 'admin')}" class="icon-arrows"></i>
+		<i title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></i>
 		# IF C_EDIT #
-			<a href="{U_EDIT}" title="{L_EDIT}" class="icon-edit"></a>
+			<a href="{U_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
 		# ENDIF #
 		# IF C_DEL #
-			<a href="{U_DELETE}" title="{L_DEL}" class="icon-delete" data-confirmation="delete-element"></a>
+			<a href="{U_DELETE}" title="{L_DEL}" class="fa fa-delete" data-confirmation="delete-element"></a>
 		# ENDIF #
 		
-		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}"# ELSE #{L_ACTIVATE}# ENDIF #"><i class="# IF C_MENU_ACTIVATED #icon-eye# ELSE #icon-eye-slash# ENDIF #"></i></a>
+		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}"# ELSE #{L_ACTIVATE}# ENDIF #"><i class="# IF C_MENU_ACTIVATED #fa-eye# ELSE #fa-eye-slash# ENDIF #"></i></a>
 	</div>
 	
 	{CONTENTS}

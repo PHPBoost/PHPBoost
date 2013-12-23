@@ -192,7 +192,7 @@ class ArticlesFormController extends ModuleController
 					$(\'loading-article-picture\').remove();
 					$(\'preview_picture\').src = response.responseJSON.image_url;
 		}}');
-		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-article-picture" class="icon-spinner icon-spin"></i>\'}); }');
+		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-article-picture" class="fa fa-spinner fa-spin"></i>\'}); }');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
 		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->lang['articles.form.picture'], $this->get_article()->get_picture()->relative(), 
 			array('description' => $this->lang['articles.form.picture.description'], 'events' => array('change' => $image_preview_request->render())

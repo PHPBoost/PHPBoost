@@ -55,7 +55,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_change_img') )
-				document.getElementById('forum_change_img').innerHTML = '<i class="icon-spinner icon-2x icon-spin"></i>';
+				document.getElementById('forum_change_img').innerHTML = '<i class="fa fa-spinner fa-2x fa-spin"></i>';
 			
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&msg_d=' + idtopic);
 			xhr_object.onreadystatechange = function()
@@ -93,8 +93,8 @@
 						<div class="msg_container">
 							<div class="msg_pseudo_mbr"></div>
 							<div class="msg_top_row">
-								<div style="float:left;">&nbsp;&nbsp;<i class="icon-hand-o-right"></i> {DATE}</div>
-								<div style="float:right;"><i class="icon-quote-right"></i>&nbsp;&nbsp;</div>
+								<div style="float:left;">&nbsp;&nbsp;<i class="fa fa-hand-o-right"></i> {DATE}</div>
+								<div style="float:right;"><i class="fa fa-quote-right"></i>&nbsp;&nbsp;</div>
 							</div>
 							<div class="msg_contents_container">
 								<div class="msg_info_mbr">
@@ -193,7 +193,7 @@
 										
 										<p style="text-align:center;width:165px;" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
-											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><i class="icon-plus"></i></a>
+											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><i class="fa fa-plus"></i></a>
 											# ENDIF #
 										</p>
 									</div>

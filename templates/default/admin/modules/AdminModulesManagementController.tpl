@@ -30,10 +30,10 @@
 					$(this.id).hide();
 				},
 				change_picture_more : function () {
-					$(this.id_click).className = 'icon-plus';
+					$(this.id_click).className = 'fa-plus';
 				},
 				change_picture_less : function () {
-					$(this.id_click).className = 'icon-minus';
+					$(this.id_click).className = 'fa-minus';
 				},
 				get_already_click : function () {
 					return this.already_click;
@@ -85,7 +85,7 @@
 								<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_not_activated.COMPATIBILITY}<br />
 								<span class="text-strong">{@modules.php_version} :</span> {modules_not_activated.PHP_VERSION}
 							</div>
-							<div style="text-align: center;cursor: pointer;"><i class="icon-plus" id="picture_desc{modules_not_activated.ID}"></i></div>
+							<div style="text-align: center;cursor: pointer;"><i class="fa fa-plus" id="picture_desc{modules_not_activated.ID}"></i></div>
 						</td>
 						<td class="input-radio">
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
@@ -150,7 +150,7 @@
 								<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_activated.COMPATIBILITY}<br />
 								<span class="text-strong">{@modules.php_version} :</span> {modules_activated.PHP_VERSION}
 							</div>
-							<div style="text-align: center;cursor: pointer;"><i class="icon-plus" id="picture_desc{modules_activated.ID}"></i></div>
+							<div style="text-align: center;cursor: pointer;"><i class="fa fa-plus" id="picture_desc{modules_activated.ID}"></i></div>
 						</td>
 						<td class="input-radio">
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>

@@ -1,7 +1,7 @@
 <section>
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('news'))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('news'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			{L_NEWS_TITLE}
 		</h1>
 	</header>
@@ -15,14 +15,14 @@
 			<article # IF C_DISPLAY_BLOCK_TYPE # class="block" # ENDIF # # IF C_SEVERAL_COLUMNS # style="display:inline-block;width:calc(98% / {NUMBER_COLUMNS})" # ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
 					<h1>
-						<a href="{news.U_SYNDICATION}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+						<a href="{news.U_SYNDICATION}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 						<a href="{news.U_LINK}"><span id="name" itemprop="name">{news.NAME}</span></a>
 						<span class="actions">
 							# IF news.C_EDIT #
-								<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+								<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 							# ENDIF #
 							# IF news.C_DELETE #
-								<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+								<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 							# ENDIF #
 						</span>
 					</h1>

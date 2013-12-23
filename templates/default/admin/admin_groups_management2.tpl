@@ -33,7 +33,7 @@
 			if( login != "" )
 			{
 				if( document.getElementById('loading_groups') )
-					document.getElementById('loading_groups').innerHTML = '<i class="icon-spinner icon-spin"></i>';
+					document.getElementById('loading_groups').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 				
 				data = 'login=' + login;
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&insert_member=1');
@@ -234,7 +234,7 @@
 							<a href="{member.U_PROFILE}" class="{member.LEVEL_CLASS}" # IF member.C_GROUP_COLOR # style="color:{member.GROUP_COLOR}" # ENDIF #>{member.LOGIN}</a>
 						</td>
 						<td>
-							<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>
+							<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>
 					# END member #

@@ -143,7 +143,7 @@ if ($action == 'punish')
 				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('punish', $row['user_id'])->rel() .'" class="icon-lock"></a>',
+				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('punish', $row['user_id'])->rel() .'" class="fa fa-lock"></a>',
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			));
 			
@@ -309,7 +309,7 @@ else if ($action == 'warning')
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => $row['user_warning'] . '%',
-				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('warning', $row['user_id'])->rel() .'" class="icon-warning"></a>',
+				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('warning', $row['user_id'])->rel() .'" class="fa fa-warning"></a>',
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel()
 			));
@@ -431,7 +431,7 @@ else
 				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel()  .'" class="icon-forbidden"></a>',
+				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel()  .'" class="fa fa-forbidden"></a>',
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
 			));
 			

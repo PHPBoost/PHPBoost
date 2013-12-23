@@ -2,29 +2,29 @@
 	<thead>
 		<tr>
 			<th class="column_title">
-				<a href="{U_SORT_TITLE_ASC}" class="icon-table-sort-up"></a>
+				<a href="{U_SORT_TITLE_ASC}" class="fa fa-table-sort-up"></a>
 				${LangLoader::get_message('form.title', 'common')}
-				<a href="{U_SORT_TITLE_DESC}" class="icon-table-sort-down"></a>
+				<a href="{U_SORT_TITLE_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{U_SORT_CATEGORY_ASC}" class="icon-table-sort-up"></a>
+				<a href="{U_SORT_CATEGORY_ASC}" class="fa fa-table-sort-up"></a>
 				${LangLoader::get_message('category', 'categories-common')}
-				<a href="{U_SORT_CATEGORY_DESC}" class="icon-table-sort-down"></a>
+				<a href="{U_SORT_CATEGORY_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{U_SORT_AUTHOR_ASC}" class="icon-table-sort-up"></a>
+				<a href="{U_SORT_AUTHOR_ASC}" class="fa fa-table-sort-up"></a>
 				{@admin.articles.sort_field.author}
-				<a href="{U_SORT_AUTHOR_DESC}" class="icon-table-sort-down"></a>
+				<a href="{U_SORT_AUTHOR_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{U_SORT_DATE_ASC}" class="icon-table-sort-up"></a>
+				<a href="{U_SORT_DATE_ASC}" class="fa fa-table-sort-up"></a>
 				{@admin.articles.sort_field.date}
-				<a href="{U_SORT_DATE_DESC}" class="icon-table-sort-down"></a>
+				<a href="{U_SORT_DATE_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{U_SORT_PUBLISHED_DESC}" class="icon-table-sort-up"></a>
+				<a href="{U_SORT_PUBLISHED_DESC}" class="fa fa-table-sort-up"></a>
 				{@admin.articles.sort_field.published}
-				<a href="{U_SORT_PUBLISHED_DESC}" class="icon-table-sort-down"></a>
+				<a href="{U_SORT_PUBLISHED_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
 			</th>
@@ -73,8 +73,8 @@
 				</span>
 			</td>
 			<td> 
-				<a href="{articles.U_EDIT_ARTICLE}" title="{@articles.edit}" class="icon-edit"></a>
-				<a href="{articles.U_DELETE_ARTICLE}" title="{@articles.delete}" class="icon-delete" data-confirmation="delete-element"></a>
+				<a href="{articles.U_EDIT_ARTICLE}" title="{@articles.edit}" class="fa fa-edit"></a>
+				<a href="{articles.U_DELETE_ARTICLE}" title="{@articles.delete}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</td>
 		</tr>
 		# END articles #

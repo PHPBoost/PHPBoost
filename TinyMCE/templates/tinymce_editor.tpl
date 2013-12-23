@@ -54,7 +54,7 @@ function insertTinyMceContent(textAreaId, content)
 
 -->
 </script>
-<div style="position:relative;display:none;" id="loading_preview{FIELD}"><div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><i class="icon-spinner icon-2x icon-spin"></i></div></div>
+<div style="position:relative;display:none;" id="loading_preview{FIELD}"><div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><i class="fa fa-spinner fa-2x fa-spin"></i></div></div>
 <div style="display:none;" class="xmlhttprequest-preview" id="xmlhttprequest-preview{FIELD}"></div>
 
 # IF NOT C_NOT_JS_INCLUDED #
@@ -85,6 +85,6 @@ tinyMCE.init({
 
 # IF C_UPLOAD_MANAGEMENT #
 	<div style="float:right;margin-left:5px;">
-<a style="font-size: 10px;" title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={IDENTIFIER}&amp;edt=TinyMCE', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><i class="icon-upload icon-2x"></i></a>
+<a style="font-size: 10px;" title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={IDENTIFIER}&amp;edt=TinyMCE', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><i class="fa fa-upload fa-2x"></i></a>
 	</div>
 # ENDIF #
