@@ -4,11 +4,11 @@
 		<title>{SITE_NAME} : {TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
+		<!-- Default CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
         <!-- Theme CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/generic.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/content.css" type="text/css" media="screen, print, handheld" />
 		
 		<script type="text/javascript" src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tiny_mce_popup.js"></script>
