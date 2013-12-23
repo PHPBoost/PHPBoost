@@ -103,7 +103,7 @@
 					{
 						if( xhr_object.responseText > 0 )
 						{
-							document.getElementById('new-folder' + divid).innerHTML = '<div class="upload-elements-repertory" ><a href="admin_files.php?f=' + xhr_object.responseText + '"><i class="icon-folder icon-2x"></i></a> <span id="f' + xhr_object.responseText + '"><a href="admin_files.php?f=' + xhr_object.responseText + '" class="com">' + name + '</a></span><br /><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="icon-edit"></a></span></span> <a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" class="icon-delete" data-confirmation="delete-element"></a> <a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" title="{L_MOVETO}" class="icon-move"></a> <span id="img' + xhr_object.responseText + '"></span></div>';
+							document.getElementById('new-folder' + divid).innerHTML = '<a href="admin_files.php?f=' + xhr_object.responseText + '"><i class="icon-folder icon-2x"></i></a> <span id="f' + xhr_object.responseText + '"><a href="admin_files.php?f=' + xhr_object.responseText + '" class="com">' + name + '</a></span><br /><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');" class="icon-edit"></a></span></span> <a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" class="icon-delete" data-confirmation="delete-element"></a> <a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" title="{L_MOVETO}" class="icon-move"></a> <span id="img' + xhr_object.responseText + '"></span>';
 							var total_folder = document.getElementById('total-folder').innerHTML;
 							total_folder++;
 							document.getElementById('total-folder').innerHTML = total_folder;
@@ -262,7 +262,7 @@
 						<a href="javascript:display_new_folder();">
 							<i class="icon-plus"></i> {L_FOLDER_NEW}
 						</a>
-						<a href="#new-file">
+						<a href="javascript:document.getElementById('upload-file').click();">
 							<i class="icon-save"></i> {L_ADD_FILES}
 						</a>
 					</div>
