@@ -1,0 +1,409 @@
+section#main * { 
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box; 
+}
+
+.forum_table {
+	width:100%;
+	border-collapse:collapse;
+	border:none;
+	margin:0px;
+}
+ 
+/* Classe du lien du pseudo sur forum */
+a.forum_link_pseudo{
+	color:#e8eaeb; 
+	font-weight:bold;
+}
+a.forum_link_pseudo:hover { 
+	color:#f2fbff; 
+	font-weight:bold;
+}
+/* Barre du titre du forum */
+.forum_title_l{
+	float:left;
+	width:5px;
+	height: 55px;
+	border-top:1px solid #D1D4DF;
+	border-left:1px solid #D1D4DF;
+}
+.forum_title_r{
+	float:right;
+	width:5px;
+	height: 55px;
+	border-top:1px solid #D1D4DF;
+	border-right:1px solid #D1D4DF;
+}
+.forum_title{
+	margin:auto;
+	height:55px;
+	color:#334455;
+	background:#ECEFFA;
+	border-top:1px solid #D1D4DF;
+
+}
+.forum_title h2{ /* Titre du forum */
+	font-size:14px;
+	font-weight:bold;
+	color:#334455;
+}
+.forum_title a{ /* Couleur des liens */
+	color:#334455;
+}
+/* Barre de liens du forum */
+.forum_links{
+	color:#334455;
+	padding:6px;
+	border: 2px solid #336397;
+	border-left:1px solid #D1D4DF;
+	border-right:1px solid #D1D4DF;
+	background:#ECEFFA;
+}
+.forum_links a{ /* Couleur des liens */
+	color:#334455;
+}
+.forum_notread{ /* Message non lus */
+	background:#5D7C94;
+	padding:4px;
+	font-size:10px;
+	color:#366393;
+}
+/* Barre des textes relatifs aux colonnes */
+td.forum_text_column {	
+	height:20px;
+	font-size:11px;
+	color:#FFFFFF;	
+	text-align:center;
+	background:#366393;
+}
+/* Case des liens sous-catégories */
+td.forum_sous_cat{
+	background:#ECEFFA;
+	border-right:1px dotted #C4CED6;
+	padding:1px;
+}
+
+td.forum_sous_cat + td.forum_sous_cat{
+	padding:6px;
+}
+/* Case compteur message/topic */
+td.forum_sous_cat_compteur{	
+	width:60px;
+	background:#ECEFFA;
+	border-right:1px dotted #C4CED6;
+	color:#000000;
+	text-align:center; 
+}
+/* Case compteur dernier topic/dernier message */
+td.forum_sous_cat_last{
+	width:150px;
+	background:#ECEFFA;
+	font-size:10px;
+	color:#000000;
+	text-align:center; 
+}
+
+/* Formulaire pour poster les messages */
+.forum_post_form{
+	width:80%;
+	margin:auto;
+	margin-top:15px;
+}
+/* Cadre des liens:alerter les modérateurs et suivre le sujet */
+.forum_action{	
+	margin-top:5px;
+	text-align: center;
+}
+
+/* Les des catégories de niveau 0 */
+a.forum_link_cat{
+	font-weight:bold;
+}
+/* Affichage des membres en ligne */
+.forum_online{
+	color:#334455;
+	border-top:none;
+	padding:6px;
+	overflow:hidden !important;
+	height:auto !important;
+	overflow:visible;
+	height:1%;
+	clear:both;
+	border-bottom:1px solid #D1D4DF;
+	border-left:1px solid #D1D4DF;
+	border-right:1px solid #D1D4DF;
+	background:#ECEFFA;
+}
+.forum_online_select_cat{
+	float:left;
+	text-align:right;
+	clear:both;
+	padding:5px;	
+}
+.forum_online_select{
+	min-width:160px;
+	max-width:530px;	
+}
+
+/* Fond des catégories dans l'administration */
+.forum_cat_admin{
+	width:100%;
+	height:20px;
+	margin-bottom:2px;
+	padding:4px 0px;
+}
+/* Contenu */
+.forum_contents{
+	padding:0px;
+	margin:0px;
+	border:1px solid #D1D4DF;
+	border-bottom:none;
+}
+.forum_cat_title{
+	padding:0px 5px;
+}
+.forum_cat_title a{
+}
+a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
+	color:#FFFFFF;
+}
+
+.forum_search_word{
+	background:yellow;
+	color:black;	
+}
+
+/* Module */
+.module_position {
+    width:96%;
+    margin:auto;
+}
+
+.module_top_l{ /* Barre supérieur des modules */
+}
+.module_top_r{
+}
+.module_top{
+	min-height:20px;
+	height:auto;
+	padding:8px;
+	background:#ECEFFA;
+	border:1px solid #D1D4DF;
+	color:#334455;
+	font-weight:normal;
+	text-indent:0px;
+}
+.module_top a:not(.*button) {
+	color:#334455;
+	font-size:13px;
+}
+.module_contents{ /* Contenu des modules */
+	clear:both;
+}
+
+.module_bottom_l{ /* Barre inférieure des modules */
+}
+.module_bottom_r{
+}
+.module_bottom{
+	min-height:20px;
+	height:auto;
+	padding:10px 5px 10px 5px;
+	background:#ECEFFA;
+	border:1px solid #D1D4DF;
+	color:#334455;
+	font-weight:normal;
+	text-indent:0px;
+}
+.module_bottom a:not(.*button) {
+	color:#334455;
+	font-size:13px;
+}
+
+.desc_forum{
+	font-size: 10px;
+}
+
+/* Messages postés par les membres 
+--------------------------------------*/
+/* Classe du lien du pseudo des messages */
+a.msg_link_pseudo {
+	font-size:11px;
+    color:#e8eaeb;
+    font-weight:bold;
+}
+
+a.msg_link_pseudo:hover { color:#f2fbff; }
+
+/* Conteneur des messages */
+.msg_position { 
+    width:96%;
+    margin:5px auto;
+    background:#f0f3ff;
+    border: 1px solid #D1D4DF;
+}
+
+/* Case contenant l'ensemble du message */
+.msg_container, .msg_container2 {
+    background: #FCFCFD;
+    overflow:hidden !important;
+    height:auto !important;
+    clear:both;
+}
+
+/*  Case contenant l'ensemble du message => Couleur alternative */
+.msg_container2 { background: #FCFCFD; }
+
+/* Barre superieur des messages */
+.msg_top_l{
+	margin-right:0px !important;
+	height:34px;
+	width:29px;
+	background:#ECEFFA;
+	float:left;
+}
+
+.msg_top_r{
+	margin-left:0px !important;
+	height:34px;
+	width:21px;
+	background:#ECEFFA;
+	float:right;
+}
+
+.msg_top {
+	height:25px;
+	background:#ECEFFA;
+	padding:9px 0px 0px 6px;
+	margin:0px 15px 0px 20px;
+}
+
+.msg_top a { color:#3F5164; }
+
+/* Pseudo du membre */
+.msg_pseudo_mbr {
+    width:127px;
+    background:#366393;
+    padding:2px 4px;
+    float:left;
+    margin-right:0px !important;
+    margin-left:-127px !important;
+    margin-top:-4px;
+}
+
+/* Case au dessus du message, indique la date et les boutons d'administration */
+.msg_top_row {
+	height:auto;
+    min-height:26px;
+    background:#366393;
+    font-size:11px;
+    color:#e8eaeb;
+    border-top:1px solid #325889;
+    border-bottom:1px solid #325889;
+    padding:4px 0px 0px 127px;
+    overflow:hidden !important;
+}
+
+.msg_top_row a {
+	color:#e8eaeb;
+}
+
+.msg_info_mbr { /* Case des informations du membre */
+    background:#f0f3ff;
+    width:136px;
+    padding:4px;
+    float:left;
+    font-size:10px;
+    border-right:1px dotted #C4CED6;
+}
+
+.msg_info_mbr img {	max-width: 120px; }
+
+/* Case contenant l'ensemble du message, infos membre + contenu */
+.msg_contents_container { background:#f0f3ff; }
+
+/* Case du message */
+.msg_contents, .msg_contents2 { 
+    margin-left:135px;
+    background: #FCFCFD;
+    padding:0px 5px;
+    border-left:1px dotted #C4CED6;
+}
+
+/* Case du message => Couleur alternative */
+.msg_contents2 { background: #FCFCFD; }
+
+/* Case du contents du message, évite que les images trop grandes soient déformées */
+.msg_contents_overflow {
+    width:99%;
+    height:auto;
+    min-height:80px;
+    overflow:auto;
+    padding:10px 0px;
+    word-wrap:break-word;
+}
+
+/* Signature du membre */
+.msg_sign, .msg_sign2 { 
+   	background: #FCFCFD;
+    padding:4px;
+    font-size:11px;
+    margin-left:135px;
+    border-left:1px dotted #C4CED6;
+}
+
+/* Signature du membre => Couleur alternative */
+.msg_sign2 { background: #FCFCFD; }
+
+/* Signature du membre, fixe la hauteur maximale */
+.msg_sign_overflow { 
+    height:auto !important;
+    width:99%;
+    max-height:80px;
+    max-width:99%;
+    overflow:hidden;
+}
+
+.msg_bottom {
+    height:23px;
+    padding:6px 6px 0px 6px;
+    border:none;
+    background:none;
+}
+
+.fa-announce:before,
+.fa-announce-new:before { content: "\f075"; }
+
+.fa-announce-hot:before
+.fa-announce-new-hot:before { content: "\f086"; }
+
+.fa-announce-lock:before,
+.fa-announce-new-lock:before { content: "\f023"; }
+
+.fa-announce-post:before,
+.fa-announce-new-post:before { content: "\f071"; }
+
+.fa-announce-top:before,
+.fa-announce-new-top:before { content: "\f06a"; }
+
+.fa-announce:before,
+.fa-announce-hot:before { color:#D1D2D4; }
+
+.fa-announce-new:before,
+.fa-announce-new-hot:before { color:#676A74; }
+
+.fa-msg-display:before { content: "\f00c"; color:#478948; }
+.fa-msg-not-display:before { content: "\f00d"; color:#BA4B49; }
+
+.fa-msg-track:before { content: "\f004"; color:#BA4B49; }
+.fa-msg-not-track:before { content: "\f004"; color:#000000; }
+
+.fa-pm-track:before { content: "\f0e0"; color:#4372AA; }
+.fa-pm-not-track:before { content: "\f0e0"; color:#000000; }
+
+.fa-mail-track:before { content: "\f003"; color:#4372aa; }
+.fa-mail-not-track:before { content: "\f003"; color:#000000; }
+
+.fa-lastview:before { content: "\f017"; color:#334455; }
+.fa-notread:before { content: "\f0f6"; color:#334455; }
