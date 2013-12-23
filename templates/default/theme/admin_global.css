@@ -634,13 +634,13 @@ div.message-helper {
 	-webkit-border-radius:3px;
 }
 
-div.message-helper i[class^="fa-"] { 
+div.message-helper .fa { 
 	display:block; 
 	float:left;
 	width:25px;
 	text-align:center;
 }
-div.message-helper i[class^="fa-"]:before { font-size: 2em; }
+div.message-helper .fa:before { font-size: 2em; }
 
 div.message-helper-content{ padding:0px 5px 0px 35px; }
 
