@@ -163,9 +163,15 @@ class UserEditProfileController extends AbstractController
 			
 			$this->user->set_email($this->form->get_value('email'));
 			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
-			$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 			$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
 			$this->user->set_show_email(!$this->form->get_value('user_hide_mail'));
+			
+			$timezone = $this->form->get_value('timezone')->get_raw_value();
+			if ($timezone !== GeneralConfig::load()->get_site_timezone())
+				$this->user->set_timezone($timezone);
+			else
+				$this->user->set_timezone('');
+			
 			UserService::update($this->user, 'WHERE user_id=:id', array('id' => $user_id));
 		}
 		
