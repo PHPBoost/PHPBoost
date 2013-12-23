@@ -14,7 +14,7 @@
 			<a href="{U_DELETE}" title="{L_DEL}" class="fa fa-delete" data-confirmation="delete-element"></a>
 		# ENDIF #
 		
-		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}"# ELSE #{L_ACTIVATE}# ENDIF #"><i class="# IF C_MENU_ACTIVATED #fa-eye# ELSE #fa-eye-slash# ENDIF #"></i></a>
+		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}"# ELSE #{L_ACTIVATE}# ENDIF #"><i class="fa # IF C_MENU_ACTIVATED #fa-eye# ELSE #fa-eye-slash# ENDIF #"></i></a>
 	</div>
 	
 	{CONTENTS}
