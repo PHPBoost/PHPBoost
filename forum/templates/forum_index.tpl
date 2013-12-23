@@ -53,7 +53,7 @@
 						</td>
 						# ELSE #
 						<td class="forum_sous_cat" style="width:30px;text-align:center;">
-							<i class="{forums_list.subcats.IMG_ANNOUNCE}"></i>
+							<i class="fa {forums_list.subcats.IMG_ANNOUNCE}"></i>
 						</td>
 						<td class="forum_sous_cat" style="min-width:150px;">
 							<a href="{forums_list.subcats.U_FORUM_VARS}">{forums_list.subcats.NAME}</a>

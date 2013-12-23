@@ -22,7 +22,7 @@
     <legend>{@php.extensions}</legend>
     <p>{@php.extensions.check}</p>
     <div class="form-element">
-        <label>{@php.extensions.check.gdLibrary}</label><br /><span>{@php.extensions.check.gdLibrary.explanation}</span>
+        <label>{@php.extensions.check.gdLibrary} <span class="field-description">{@php.extensions.check.gdLibrary.explanation}</span></label>
         <div class="form-field">
         # IF HAS_GD_LIBRARY #
             <img src="templates/images/success.png" alt="{@yes}" />
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="form-element">
-        <label>{@server.urlRewriting}</label><br /><span>{@server.urlRewriting.explanation}</span>
+        <label>{@server.urlRewriting} <span class="field-description">{@server.urlRewriting.explanation}</span></label>
         <div class="form-field">
         # IF URL_REWRITING_KNOWN #
             # IF URL_REWRITING_AVAILABLE #

@@ -285,8 +285,11 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function delete_member_extended_field()
 	{
-		PersistenceContext::get_dbms_utils()->drop_column(DB_TABLE_MEMBER_EXTENDED_FIELDS, self::$member_extended_field_last_view_forum_column);
-		PersistenceContext::get_dbms_utils()->drop_column(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'user_sign');
+		ExtendedFieldsService::delete_by_field_name(self::$member_extended_field_last_view_forum_column);
+		ExtendedFieldsService::delete_by_field_name('user_website');
+		ExtendedFieldsService::delete_by_field_name('user_msn');
+		ExtendedFieldsService::delete_by_field_name('user_yahoo');
+		ExtendedFieldsService::delete_by_field_name('user_sign');
 	}
 
 	private function insert_data()
@@ -308,15 +311,51 @@ class ForumSetup extends DefaultModuleSetup
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 		
-		//Sign
+		//Website
 		$lang = LangLoader::get('user-common');
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['extended-field.field.website']);
+		$extended_field->set_field_name('user_website');
+		$extended_field->set_description($lang['extended-field.field.website-explain']);
+		$extended_field->set_field_type('MemberShortTextExtendedField');
+		$extended_field->set_is_required(false);
+		$extended_field->set_display(false);
+		$extended_field->set_is_freeze(true);
+		$extended_field->set_regex(5);
+		ExtendedFieldsService::add($extended_field);
+		
+		//MSN
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['extended-field.field.msn']);
+		$extended_field->set_field_name('user_msn');
+		$extended_field->set_description($lang['extended-field.field.msn-explain']);
+		$extended_field->set_field_type('MemberShortTextExtendedField');
+		$extended_field->set_is_required(false);
+		$extended_field->set_display(false);
+		$extended_field->set_is_freeze(true);
+		$extended_field->set_regex(4);
+		ExtendedFieldsService::add($extended_field);
+		
+		//Yahoo
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['extended-field.field.yahoo']);
+		$extended_field->set_field_name('user_yahoo');
+		$extended_field->set_description($lang['extended-field.field.yahoo-explain']);
+		$extended_field->set_field_type('MemberShortTextExtendedField');
+		$extended_field->set_is_required(false);
+		$extended_field->set_display(false);
+		$extended_field->set_is_freeze(true);
+		$extended_field->set_regex(4);
+		ExtendedFieldsService::add($extended_field);
+		
+		//Sign
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.signing']);
 		$extended_field->set_field_name('user_sign');
 		$extended_field->set_description($lang['extended-field.field.signing-explain']);
 		$extended_field->set_field_type('MemberLongTextExtendedField');
 		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
+		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 	}

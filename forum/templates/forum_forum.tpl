@@ -42,7 +42,7 @@
 							</td>
 							# ELSE #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<i class="{subcats.IMG_ANNOUNCE}"></i>
+								<i class="fa {subcats.IMG_ANNOUNCE}"></i>
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;">
 								<a href="forum{subcats.U_FORUM_VARS}">{subcats.NAME}</a>
@@ -120,9 +120,9 @@
 						# ENDIF #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
 							# IF NOT topics.C_HOT_TOPIC #
-							<i class="{topics.IMG_ANNOUNCE}"></i>
+							<i class="fa {topics.IMG_ANNOUNCE}"></i>
 							# ELSE #
-							<i class="{topics.IMG_ANNOUNCE}-hot"></i>
+							<i class="fa {topics.IMG_ANNOUNCE}-hot"></i>
 							# ENDIF #
 						</td>
 						<td class="forum_sous_cat" style="width:35px;text-align:center;">

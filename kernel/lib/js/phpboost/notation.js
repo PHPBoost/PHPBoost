@@ -98,11 +98,11 @@
 			
 			decimal = i - note;
 			if(decimal >= 1)
-				star_class = 'star star-hover fa-star-o';
+				star_class = 'fa star star-hover fa-star-o';
 			else if(decimal <= 0.50 && decimal > 0)
-				star_class = 'star star-hover fa-star-half-o';
+				star_class = 'fa star star-hover fa-star-half-o';
 			else if(note >= i)
-				star_class = 'star star-hover fa-star';
+				star_class = 'fa star star-hover fa-star';
 
 			if($(id_star)) {
 				$(id_star).className = star_class;

@@ -51,9 +51,9 @@
 						<tr>
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
 								# IF NOT topics.C_HOT_TOPIC # 
-								<i class="{topics.IMG_ANNOUNCE}"></i>
+								<i class="fa {topics.IMG_ANNOUNCE}"></i>
 								# ELSE #
-								<i class="{topics.IMG_ANNOUNCE}-hot"></i>
+								<i class="fa {topics.IMG_ANNOUNCE}-hot"></i>
 								# ENDIF #
 							</td>
 							<td class="forum_sous_cat" style="width:35px;text-align:center;">
