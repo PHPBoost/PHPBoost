@@ -82,7 +82,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    	}
 	    	
 			$user_accounts_config = UserAccountsConfig::load();
-	    	$user_avatar = MemberExtendedFieldsService::return_field_member('user_avatar', $user->get_id());
+	    	$user_avatar = AppContext::get_current_user()->get_attribute('user_avatar');
 	    	if (empty($user_avatar))
 			{
 				$user_avatar = '/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name();

@@ -204,7 +204,6 @@ class AppContext
 
 	public static function set_current_user($current_user)
 	{
-		// TODO ben, supprime ça, mais casse pas l'installateur
 		self::$current_user = $current_user;
 	}
 
