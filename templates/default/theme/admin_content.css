@@ -8,6 +8,7 @@ section, article {
 	width: 96%;
 	margin: auto;
 	margin-bottom: 10px;
+	vertical-align:top;
 }
 
 section header, article header { margin:12px 0 20px 0; }
