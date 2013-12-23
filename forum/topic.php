@@ -199,7 +199,7 @@ $page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;	
 $j = 0;	
-$result = $Sql->query_while("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, m.user_groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, ext_field.user_location, ext_field.user_sex, m.user_warning, m.user_readonly, m.user_ban, m2.login as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
+$result = $Sql->query_while("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, m.user_groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, ext_field.user_website, ext_field.user_msn, ext_field.user_yahoo, m.user_warning, m.user_readonly, m.user_ban, m2.login as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
 FROM " . PREFIX . "forum_msg msg
 LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = '" . $id_get . "'
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
@@ -359,19 +359,6 @@ while ( $row = $Sql->fetch_assoc($result) )
 	else
 		$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt=""	/>';
 		
-	//Affichage du sexe et du statut (connecté/déconnecté).	
-	if ($row['user_sex'] == 1)	
-		$user_sex = $LANG['sex'] . ': <i class="fa fa-male"></i><br />';	
-	elseif ($row['user_sex'] == 2) 
-		$user_sex = $LANG['sex'] . ': <i class="fa fa-female"></i><br />';
-	else $user_sex = '';
-			
-	//Localisation.
-	if (!empty($row['user_location'])) 
-		$user_local = $LANG['place'] . ': ' . (strlen($row['user_location']) > 15 ? TextHelper::substr_html($row['user_location'], 0, 15) . '...<br />' : $row['user_location'] . '<br />');	
-	else 
-		$user_local = '';
-
 	//Affichage du nombre de message.
 	if ($row['user_msg'] >= 1)
 		$user_msg = '<a href="'. UserUrlBuilder::messages($row['user_id'])->rel() . '" class="small">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
@@ -392,9 +379,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'USER_AVATAR' => $user_avatar,			
 		'USER_GROUP' => $user_groups,
 		'USER_DATE' => (!$is_guest) ? $LANG['registered_on'] . ': ' . gmdate_format('date_format_short', $row['registered']) : '',
-		'USER_SEX' => $user_sex,
 		'USER_MSG' => (!$is_guest) ? $user_msg : '',
-		'USER_LOCAL' => $user_local,
 		'USER_MAIL' => ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '" class="basic-button smaller">Mail</a>' : '',			
 		'USER_MSN' => (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '" class="basic-button smaller">MSN</a>' : '',
 		'USER_YAHOO' => (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '" class="basic-button smaller">Yahoo</a>' : '',
@@ -510,9 +495,9 @@ else
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
 		'KERNEL_EDITOR' => $editor->display(),
-		'ICON_TRACK' => '<i class="' . $img_track_display . '"></i>',
-		'ICON_SUSCRIBE_PM' => '<i class="' . $img_track_pm_display . '"></i>',
-		'ICON_SUSCRIBE' => '<i class="' . $img_track_mail_display . '"></i>',
+		'ICON_TRACK' => '<i class="fa ' . $img_track_display . '"></i>',
+		'ICON_SUSCRIBE_PM' => '<i class="fa ' . $img_track_pm_display . '"></i>',
+		'ICON_SUSCRIBE' => '<i class="fa ' . $img_track_mail_display . '"></i>',
 		'U_FORUM_ACTION_POST' => url('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg&amp;token=' . $Session->get_token()),
 	));
 
@@ -522,7 +507,7 @@ else
 		$img_msg_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
 		$Template->put_all(array(
 			'C_DISPLAY_MSG' => true,
-			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<i class="' . $img_msg_display . '"></i>' : '',
+			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<i class="fa ' . $img_msg_display . '"></i>' : '',
 			'L_DISPLAY_MSG' => $CONFIG_FORUM['display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],

@@ -13,10 +13,8 @@
             <div class="msg_info_mbr">
                 <p style="text-align:center;">{USER_IMG_ASSOC}</p>
                 <p style="text-align:center;">{USER_AVATAR}</p>
-                {USER_SEX}
                 {USER_DATE}<br />
                 {USER_MSG}<br />
-                {USER_LOCAL}
             </div>
             <div class="msg_contents">
                 <div class="msg_contents_overflow">

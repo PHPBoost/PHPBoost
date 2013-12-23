@@ -18,7 +18,7 @@
 			# ENDIF #
 		</div>
 		<div class="module_top">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			{TITLE}
 		</div>
 		<div class="module_contents">
@@ -168,7 +168,7 @@
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			{TITLE}
 			# IF C_ADMIN #
 			<a href="{U_ADMIN_CAT}">

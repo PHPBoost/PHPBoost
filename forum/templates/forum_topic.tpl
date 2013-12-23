@@ -225,7 +225,7 @@
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
 						# IF msg.C_FORUM_USER_LOGIN # 
-							<i class="# IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a class="msg_link_pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
+							<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a class="msg_link_pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
 						# ELSE # 
 							<em>{L_GUEST}</em>
 						# ENDIF #
@@ -262,10 +262,8 @@
 						<p style="text-align:center;">{msg.USER_IMG_ASSOC}</p>
 						<p style="text-align:center;">{msg.USER_AVATAR}</p>
 						<p style="text-align:center;">{msg.USER_GROUP}</p>	
-						{msg.USER_SEX}
 						{msg.USER_DATE}<br />
-						{msg.USER_MSG}<br />
-						{msg.USER_LOCAL}		
+						{msg.USER_MSG}<br />	
 					</div>
 					<div class="msg_contents{msg.CLASS_COLOR}">
 						<div class="msg_contents_overflow">

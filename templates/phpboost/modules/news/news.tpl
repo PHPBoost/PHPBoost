@@ -12,7 +12,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
                	<div class="module_top_title">
-					<a href="{U_SYNDICATION}" class="fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					<a href="{U_SYNDICATION}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{TITLE}
                	</div>
                	<div class="module_top_com">

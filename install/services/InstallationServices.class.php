@@ -249,7 +249,7 @@ class InstallationServices
 	{
 		$lang = LangLoader::get('user-common');
 		
-		//Sex
+		/*//Sex
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.sex']);
 		$extended_field->set_field_name('user_sex');
@@ -278,7 +278,7 @@ class InstallationServices
 		$extended_field->set_description($lang['extended-field.field.location-explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
+		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 		
@@ -289,10 +289,11 @@ class InstallationServices
 		$extended_field->set_description($lang['extended-field.field.job-explain']);
 		$extended_field->set_field_type('MemberShortTextExtendedField');
 		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
+		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-			
+		*/
+		
 		//Avatar
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.avatar']);
