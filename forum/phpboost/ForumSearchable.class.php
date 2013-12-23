@@ -246,7 +246,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		));
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($result_data['title']) : '';
 		$tpl->put_all(array(
-            'USER_ONLINE' => '<i class="' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'fa-online' : 'fa-offline') . '"></i>',
+            'USER_ONLINE' => '<i class="fa ' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'fa-online' : 'fa-offline') . '"></i>',
             'U_USER_PROFILE' => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
             'USER_PSEUDO' => !empty($result_data['login']) ? TextHelper::wordwrap_html($result_data['login'], 13) : $LANG['guest'],
             'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
@@ -254,7 +254,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
             'DATE' => gmdate_format('d/m/y', $result_data['date']),
             'CONTENTS' => FormatingHelper::second_parse($result_data['contents']),
             'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" />'
-            ));
+		));
 
             return $tpl->render();
 	}

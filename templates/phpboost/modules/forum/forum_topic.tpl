@@ -147,7 +147,7 @@
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top forum_breadcrumb_topic">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				
 				<span style="float:right;">
@@ -310,7 +310,7 @@
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom forum_breadcrumb_topic">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				
 				<span style="float:right;">
