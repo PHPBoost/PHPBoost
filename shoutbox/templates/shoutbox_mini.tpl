@@ -11,7 +11,7 @@
 
 			if( pseudo != '' && contents != '' )
 			{
-				document.getElementById('shoutimg').className = 'fa-spinner fa-spin';
+				document.getElementById('shoutimg').className = 'fa fa-spinner fa-spin';
 
 				pseudo = escape_xmlhttprequest(pseudo);
 				contents = escape_xmlhttprequest(contents);
@@ -25,11 +25,11 @@
 						eval(xhr_object.responseText);
 						document.getElementById('shout_container').innerHTML = '<p id="shout_container_' + array_shout[2] + '">' + array_shout[0] + '<span class="smaller">: ' + array_shout[1] + '</span></p>' + document.getElementById('shout_container').innerHTML;
 						document.getElementById('shout_contents').value = '';
-						document.getElementById('shoutimg').className = 'fa-refresh';
+						document.getElementById('shoutimg').className = 'fa fa-refresh';
 					}
 					else if( xhr_object.readyState == 4 )
 					{	
-						document.getElementById('shoutimg').className = 'fa-refresh';
+						document.getElementById('shoutimg').className = 'fa fa-refresh';
 						switch( xhr_object.responseText )
 						{
 							case '-1': 
@@ -60,35 +60,35 @@
 		}
 		function XMLHttpRequest_shoutdelmsg(idmsg)
 		{
-			document.getElementById('shoutimg').className = 'fa-spinner fa-spin';
+			document.getElementById('shoutimg').className = 'fa fa-spinner fa-spin';
 			data = "idmsg=" + idmsg;
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?del=1&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )
 				{
-					document.getElementById('shoutimg').className = 'fa-refresh';
+					document.getElementById('shoutimg').className = 'fa fa-refresh';
 					document.getElementById('shout_container_' + idmsg).style.display = 'none';
 				}
 				else if( xhr_object.readyState == 4 )
-					document.getElementById('shoutimg').className = 'fa-refresh';
+					document.getElementById('shoutimg').className = 'fa fa-refresh';
 			}
 			xmlhttprequest_sender(xhr_object, data);
 		}
 
 		function XMLHttpRequest_shoutrefresh()
 		{
-			document.getElementById('shoutimg').className = 'fa-spinner fa-spin';
+			document.getElementById('shoutimg').className = 'fa fa-spinner fa-spin';
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?refresh=1# IF C_HORIZONTAL #&display_date=1# ENDIF #&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 				{
-					document.getElementById('shoutimg').className = 'fa-refresh';
+					document.getElementById('shoutimg').className = 'fa fa-refresh';
 					document.getElementById('shout_container').innerHTML = xhr_object.responseText;
 				}
 				else if( xhr_object.readyState == 4 )
-					document.getElementById('shoutimg').className = 'fa-refresh';
+					document.getElementById('shoutimg').className = 'fa fa-refresh';
 			}
 			xmlhttprequest_sender(xhr_object, null);
 			if( {SHOUT_REFRESH_DELAY} > 0 )

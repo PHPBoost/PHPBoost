@@ -94,7 +94,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'ID' => $row['id'],
-			'USER_ONLINE' => '<i class="' . (!empty($row['connect']) ? 'fa-online' : 'fa-offline') . '"></i>',
+			'USER_ONLINE' => '<i class="fa ' . (!empty($row['connect']) ? 'fa-online' : 'fa-offline') . '"></i>',
 			'USER_PSEUDO' => !empty($row['login']) ? wordwrap(TextHelper::html_entity_decode($row['login']), 13, '<br />', 1) : $LANG['guest'],
 			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 			'GROUP_COLOR' => $group_color,

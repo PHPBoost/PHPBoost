@@ -513,7 +513,7 @@
 			if ( document.getElementById('url' + divid).style.display == 'table' )
 			{
 				display_div_auto('url' + divid, 'table');
-				document.getElementById('img_url' + divid).className = 'fa-plus-square-o';
+				document.getElementById('img_url' + divid).className = 'fa fa-plus-square-o';
 			}
 			else
 			{
@@ -538,7 +538,7 @@
 						display_div_auto('url' + divid, 'table');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
-						document.getElementById('img_url' + divid).className = 'fa-minus-square-o';
+						document.getElementById('img_url' + divid).className = 'fa fa-minus-square-o';
 					}
 					else if ( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';
@@ -618,7 +618,7 @@
 			if ( document.getElementById('url' + divid).style.display == 'table' )
 			{
 				display_div_auto('url' + divid, 'table');
-				document.getElementById('img_url' + divid).className = 'fa-plus-square-o';
+				document.getElementById('img_url' + divid).className = 'fa fa-plus-square-o';
 			}
 			else
 			{
@@ -631,7 +631,7 @@
 						display_div_auto('url' + divid, 'table');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
-						document.getElementById('img_url' + divid).className = 'fa-minus-square-o';
+						document.getElementById('img_url' + divid).className = 'fa fa-minus-square-o';
 					}
 					else if ( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';

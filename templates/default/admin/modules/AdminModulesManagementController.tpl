@@ -30,10 +30,10 @@
 					$(this.id).hide();
 				},
 				change_picture_more : function () {
-					$(this.id_click).className = 'fa-plus';
+					$(this.id_click).className = 'fa fa-plus';
 				},
 				change_picture_less : function () {
-					$(this.id_click).className = 'fa-minus';
+					$(this.id_click).className = 'fa fa-minus';
 				},
 				get_already_click : function () {
 					return this.already_click;
