@@ -141,7 +141,7 @@ class AdminNewsConfigController extends AdminModuleController
 	private function save()
 	{
 		$this->config->set_number_news_per_page($this->form->get_value('number_news_per_page'));
-		$this->config->set_number_columns_display_news($this->form->get_value('number_columns_display_news'));
+		$this->config->set_number_columns_display_news($this->form->get_value('number_columns_display_news')->get_raw_value());
 		$this->config->set_display_condensed_enabled($this->form->get_value('display_condensed'));
 		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut'));
 		$this->config->set_comments_enabled($this->form->get_value('comments_enabled'));

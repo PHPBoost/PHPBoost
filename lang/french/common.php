@@ -32,6 +32,7 @@
 $lang['by'] = 'Par';
 $lang['the'] = 'Le';
 $lang['in'] = 'Dans';
+$lang['read-more'] = 'Lire la suite';
 
 $lang['form.name'] = 'Nom';
 $lang['form.title'] = 'Titre';

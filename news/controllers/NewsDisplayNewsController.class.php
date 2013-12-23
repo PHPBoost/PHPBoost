@@ -137,40 +137,28 @@ class NewsDisplayNewsController extends ModuleController
 		$now = new Date();
 		$timestamp_news = $news->get_creation_date()->get_timestamp();
 
-		try {
-			$previous_news = PersistenceContext::get_querier()->select_single_row(NewsSetup::$news_table, array('id', 'name', 'id_category', 'rewrited_name'), 
-				'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date < :timestamp_news AND id_category IN :authorized_categories ORDER BY creation_date DESC LIMIT 1 OFFSET 0', 
-				array(
-					'timestamp_now' => $now->get_timestamp(),
-					'timestamp_news' => $timestamp_news,
-					'authorized_categories' => array($news->get_id_cat())
-			));
-			
-			$this->tpl->put_all(array(
-				'C_NEWS_NAVIGATION_LINKS' => true,
-				'C_PREVIOUS_NEWS' => true,
-				'PREVIOUS_NEWS' => $previous_news['name'],
-				'U_PREVIOUS_NEWS' => NewsUrlBuilder::display_news($previous_news['id_category'], NewsService::get_categories_manager()->get_categories_cache()->get_category($previous_news['id_category'])->get_rewrited_name(), $previous_news['id'], $previous_news['rewrited_name'])->rel(),
-			));
-		} catch (RowNotFoundException $e) {
-		}
+		$result = PersistenceContext::get_querier()->select('
+		(SELECT id, name, id_category, rewrited_name, \'PREVIOUS\' as type
+		FROM '. NewsSetup::$news_table .'
+		WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date < :timestamp_news AND id_category IN :authorized_categories ORDER BY creation_date DESC LIMIT 1 OFFSET 0)
+		UNION
+		(SELECT id, name, id_category, rewrited_name, \'NEXT\' as type
+		FROM '. NewsSetup::$news_table .'
+		WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date > :timestamp_news AND id_category IN :authorized_categories ORDER BY creation_date ASC LIMIT 1 OFFSET 0)
+		', array(
+			'timestamp_now' => $now->get_timestamp(),
+			'timestamp_news' => $timestamp_news,
+			'authorized_categories' => array($news->get_id_cat())
+		));
 		
-		try {
-			$next_news = PersistenceContext::get_querier()->select_single_row(NewsSetup::$news_table, array('id', 'name', 'id_category', 'rewrited_name'), 
-				'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date > :timestamp_news AND id_category IN :authorized_categories ORDER BY creation_date ASC LIMIT 1 OFFSET 0', 
-				array(
-					'timestamp_now' => $now->get_timestamp(),
-					'timestamp_news' => $timestamp_news,
-					'authorized_categories' => array($news->get_id_cat())
-			));
-			
+		while ($row = $result->fetch())
+		{
 			$this->tpl->put_all(array(
 				'C_NEWS_NAVIGATION_LINKS' => true,
-				'C_NEXT_NEWS' => true,
-				'NEXT_NEWS' => $next_news['name'],
-				'U_NEXT_NEWS' => NewsUrlBuilder::display_news($next_news['id_category'], NewsService::get_categories_manager()->get_categories_cache()->get_category($next_news['id_category'])->get_rewrited_name(), $next_news['id'], $next_news['rewrited_name'])->rel(),
+				'C_'. $row['type'] .'_NEWS' => true,
+				$row['type'] . '_NEWS' => $row['name'],
+				'U_'. $row['type'] .'_NEWS' => NewsUrlBuilder::display_news($row['id_category'], NewsService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
 			));
-		} catch (RowNotFoundException $e) {
 		}
 	}
 	

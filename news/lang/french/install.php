@@ -32,8 +32,8 @@
 
 $lang['cat.name'] = 'Test';
 $lang['cat.description'] = 'Catégorie de test';
-$lang['news.title'] = 'PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version();
-$lang['news.content'] = 'Votre site boosté par ' . $lang['news.title'] . ' est bien installé. Afin de vous aider à le prendre en main, <br />
+$lang['news.title'] = 'Votre site sous PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version();
+$lang['news.content'] = 'Votre site boosté par PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' est bien installé. Afin de vous aider à le prendre en main, <br />
 l\'accueil de chaque module contient un message pour vous guider vos premiers pas. Voici également quelques recommandations supplémentaires que nous vous proposons de lire avec attention : <br />
 <br />
 <br />
