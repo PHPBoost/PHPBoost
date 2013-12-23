@@ -216,13 +216,13 @@ function show_bbcode_div(divID, hide)
 	{	
 		Effect.Appear(divID);
 		parent.className = 'bbcode expand';
-		sendCookie('hide_bbcode', 1); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
+		sendCookie('hide-bbcode', 1); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
 	}
 	else
 	{	
 		Effect.Fade(divID);
 		parent.className = 'bbcode';
-		sendCookie('hide_bbcode', 0); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
+		sendCookie('hide-bbcode', 0); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
 	}
 }
 
