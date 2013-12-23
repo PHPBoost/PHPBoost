@@ -5,14 +5,14 @@
 	<div class="content">
 		<p style="text-align:center;" class="text-strong">${LangLoader::get_message('welcome', 'main')} {PSEUDO}</p>
 		
-		<ul style="width:99%;margin:30px auto;">
-			<li class="small-block">
+		<ul class="center" style="width:99%;margin:30px auto;">
+			<li class="small-block" style="width:15%;">
 				<a href="{U_EDIT_PROFILE}" title="">
 					<i class="icon-user icon-2x"></i><br/>
 					{@profile.edit}
 				</a> 
 			</li>
-			<li class="small-block">
+			<li class="small-block" style="width:15%;">
 				<a href="{U_USER_PM}">
 					# IF C_HAS_PM #
 					<span class="icon-stack">
@@ -28,14 +28,14 @@
 				</a>
 			</li>
 			# IF C_USER_AUTH_FILES #
-			<li class="small-block">
+			<li class="small-block" style="width:15%;">
 				<a href="{U_UPLOAD}">
 					<i class="icon-cloud-upload icon-2x"></i><br />
 					${LangLoader::get_message('files_management', 'main')}
 				</a>
 			</li>
 			# ENDIF #
-			<li class="small-block">
+			<li class="small-block" style="width:15%;">
 				<a href="{U_CONTRIBUTION_PANEL}">
 					# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
 					<span class="icon-stack">
@@ -51,7 +51,7 @@
 				</a>
 			</li>
 			# IF C_IS_MODERATOR #
-			<li class="small-block">
+			<li class="small-block" style="width:15%;">
 				<a href="{U_MODERATION_PANEL}">
 					<i class="icon-gavel icon-2x"></i><br />
 					${LangLoader::get_message('moderation_panel', 'main')}
