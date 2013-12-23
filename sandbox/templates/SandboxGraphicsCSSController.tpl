@@ -529,7 +529,36 @@
 	<footer></footer>
 </section>
 
-<h2>{@css.blocks.three}</h2><br />
+<h2>{@css.blocks.medium}</h2><br />
+
+<section>
+	<header>
+		<h1>{@css.page.title}</h1>
+	</header>
+	<div class="content">
+		<article class="medium-block">
+			<header>
+				<h1>{@css.block.title}</h1>
+			</header>
+			<div class="content">
+				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.
+			</div>
+			<footer></footer>
+		</article>
+		<article class="medium-block">
+			<header>
+				<h1>{@css.block.title}</h1>
+			</header>
+			<div class="content">
+				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.
+			</div>
+			<footer></footer>
+		</article>
+	</div>
+	<footer></footer>
+</section>
+
+<h2>{@css.blocks.small}</h2><br />
 
 <section>
 	<header>
@@ -541,7 +570,7 @@
 				<h1>{@css.block.title}</h1>
 			</header>
 			<div class="content">
-				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.
+				Inpares parte deviis.
 			</div>
 			<footer></footer>
 		</article>
@@ -550,7 +579,7 @@
 				<h1>{@css.block.title}</h1>
 			</header>
 			<div class="content">
-				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.
+				Inpares parte deviis.
 			</div>
 			<footer></footer>
 		</article>
@@ -559,7 +588,7 @@
 				<h1>{@css.block.title}</h1>
 			</header>
 			<div class="content">
-				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.
+				Inpares parte deviis.
 			</div>
 			<footer></footer>
 		</article>

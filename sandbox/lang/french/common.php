@@ -143,7 +143,8 @@ $lang['css.page.subtitle'] = 'Sous-Titre';
 $lang['css.page.subsubtitle'] = 'Sous-Sous-Titre';
 $lang['css.blocks'] = 'Blocs';
 $lang['css.block.title'] = 'Titre du bloc';
-$lang['css.blocks.three'] = 'Blocs (3 sur une ligne)';
+$lang['css.blocks.medium'] = 'Blocs (2 sur une ligne)';
+$lang['css.blocks.small'] = 'Blocs (3 sur une ligne)';
 
 $lang['mail.title'] = 'Email';
 $lang['mail.sender_mail'] = 'Email de l\'expéditeur';

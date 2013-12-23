@@ -166,15 +166,15 @@
 					</header>
 					<div class="content">
 						<ul class="center" style="width:99%;margin:20px auto;">
-							<li class="small-block">
+							<li class="small-block" style="width:20%;">
 								<img src="./database.png" alt="optimize" /><br/>
 								<button type="submit" name="optimize" value="true">{L_OPTIMIZE}</button>
 							</li>
-							<li class="small-block">
+							<li class="small-block" style="width:20%;">
 								<img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="repair" /><br/>
 								<button type="submit" name="repair" value="true">{L_REPAIR}</button>
 							</li>
-							<li class="small-block">
+							<li class="small-block" style="width:20%;">
 								<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="backup" class="valign-middle" /><br/>
 								<button type="submit" name="backup" value="true">{L_BACKUP}</button>
 							</li>
