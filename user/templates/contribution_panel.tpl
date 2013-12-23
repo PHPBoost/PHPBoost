@@ -8,7 +8,7 @@
 			<br />
 			# IF C_NO_CONTRIBUTION #
 			<div class="message-helper warning">
-				<i class="icon-warning"></i>
+				<i class="fa fa-warning"></i>
 				<div class="message-helper-content">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
 			</div>
 			# ELSE #						
@@ -17,65 +17,65 @@
 					<tr>
 						<th>
 							# IF NOT C_ORDER_ENTITLED_ASC #
-								<a href="{U_ORDER_ENTITLED_ASC}" class="icon-table-sort-up"></a>
+								<a href="{U_ORDER_ENTITLED_ASC}" class="fa fa-table-sort-up"></a>
 							# ENDIF #
 							{L_ENTITLED}
 							# IF NOT C_ORDER_ENTITLED_DESC #
-								<a href="{U_ORDER_ENTITLED_DESC}" class="icon-table-sort-down"></a>
+								<a href="{U_ORDER_ENTITLED_DESC}" class="fa fa-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_MODULE_ASC #
-								<a href="{U_ORDER_MODULE_ASC}" class="icon-table-sort-up"></a>
+								<a href="{U_ORDER_MODULE_ASC}" class="fa fa-table-sort-up"></a>
 							# ENDIF #
 							{L_MODULE}
 							# IF NOT C_ORDER_MODULE_DESC #
-								<a href="{U_ORDER_MODULE_DESC}" class="icon-table-sort-down"></a>
+								<a href="{U_ORDER_MODULE_DESC}" class="fa fa-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_STATUS_ASC #
-								<a href="{U_ORDER_STATUS_ASC}" class="icon-table-sort-up"></a>
+								<a href="{U_ORDER_STATUS_ASC}" class="fa fa-table-sort-up"></a>
 							# ENDIF #
 							{L_STATUS}
 							# IF NOT C_ORDER_STATUS_DESC #
-								<a href="{U_ORDER_STATUS_DESC}" class="icon-table-sort-down"></a>
+								<a href="{U_ORDER_STATUS_DESC}" class="fa fa-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_CREATION_DATE_ASC #
-								<a href="{U_ORDER_CREATION_DATE_ASC}" class="icon-table-sort-up"></a>
+								<a href="{U_ORDER_CREATION_DATE_ASC}" class="fa fa-table-sort-up"></a>
 							# ENDIF #
 							{L_CREATION_DATE}
 							# IF NOT C_ORDER_CREATION_DATE_DESC #
-								<a href="{U_ORDER_CREATION_DATE_DESC}" class="icon-table-sort-down"></a>
+								<a href="{U_ORDER_CREATION_DATE_DESC}" class="fa fa-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_FIXING_DATE_ASC #
-								<a href="{U_ORDER_FIXING_DATE_ASC}" class="icon-table-sort-up"></a>
+								<a href="{U_ORDER_FIXING_DATE_ASC}" class="fa fa-table-sort-up"></a>
 							# ENDIF #
 							{L_FIXING_DATE}
 							# IF NOT C_ORDER_FIXING_DATE_DESC #
-								<a href="{U_ORDER_FIXING_DATE_DESC}" class="icon-table-sort-down"></a>
+								<a href="{U_ORDER_FIXING_DATE_DESC}" class="fa fa-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_POSTER_ASC #
-								<a href="{U_ORDER_POSTER_ASC}" class="icon-table-sort-up"></a>
+								<a href="{U_ORDER_POSTER_ASC}" class="fa fa-table-sort-up"></a>
 							# ENDIF #
 							{L_POSTER}
 							# IF NOT C_ORDER_POSTER_DESC #
-								<a href="{U_ORDER_POSTER_DESC}" class="icon-table-sort-down"></a>
+								<a href="{U_ORDER_POSTER_DESC}" class="fa fa-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_FIXER_ASC #
-								<a href="{U_ORDER_FIXER_ASC}" class="icon-table-sort-up"></a>
+								<a href="{U_ORDER_FIXER_ASC}" class="fa fa-table-sort-up"></a>
 							# ENDIF #
 							{L_FIXER}
 							# IF NOT C_ORDER_FIXER_DESC #
-								<a href="{U_ORDER_FIXER_DESC}" class="icon-table-sort-down"></a>
+								<a href="{U_ORDER_FIXER_DESC}" class="fa fa-table-sort-down"></a>
 							# ENDIF #
 						</th>
 					</tr>
@@ -158,7 +158,7 @@
 					# END row #
 				# ELSE #
 					<div class="message-helper warning">
-						<i class="icon-warning"></i>
+						<i class="fa fa-warning"></i>
 						<div class="message-helper-content">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
 					</div>
 				# ENDIF #
@@ -173,8 +173,8 @@
 			<h1>{ENTITLED}</h1>
 			# IF C_WRITE_AUTH #
 			<span style="float:right;">
-				<a href="{U_UPDATE}" title="{L_UPDATE}" class="icon-edit"></a>
-				<a href="{U_DELETE}" title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>
+				<a href="{U_UPDATE}" title="{L_UPDATE}" class="fa fa-edit"></a>
+				<a href="{U_DELETE}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</span>
 			# ENDIF #
 		</header>
@@ -184,15 +184,15 @@
 				<div style="text-align:center;margin:auto;width:300px">
 					<div style="float:left;width:50%">
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">
-						<span class="icon-stack icon-lg">
-							<i class="icon-wrench icon-flip-horizontal icon-stack-1x"></i>
-							<i class="icon-file-o icon-stack-2x"></i>
+						<span class="fa fa-stack fa-lg">
+							<i class="fa fa-wrench fa-flip-horizontal fa-stack-1x"></i>
+							<i class="fa fa-file-o fa-stack-2x"></i>
 						</span>
 						<br />
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
 					</div>
 					<div style="float:left;width:50%">
-						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}"><i class="icon-success icon-2x"></i></a>
+						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}"><i class="fa fa-success fa-2x"></i></a>
 						<br />
 						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}">{L_UPDATE} {L_STATUS}</a>
 					</div>

@@ -56,8 +56,8 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		-->
 		</script>";
 		
-		$edit = '<a href="../web/admin_web' . url('.php?id=' . $web['id']) . '" title="' . $LANG['edit'] . '" class="icon-edit"></a>';
-		$del = '<a href="../web/admin_web.php?delete=1&amp;id=' . $web['id'] . '&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="icon-delete" data-confirmation="delete-element"></a>';
+		$edit = '<a href="../web/admin_web' . url('.php?id=' . $web['id']) . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>';
+		$del = '<a href="../web/admin_web.php?delete=1&amp;id=' . $web['id'] . '&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="delete-element"></a>';
 	}
 	else
 	{

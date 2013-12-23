@@ -126,7 +126,7 @@ class UserRegistrationController extends AbstractController
 	
 			$agreement = new FormFieldHTML('agreement', 
 				'<div id="id-message-helper" class="message-helper notice" style="max-width:none;width:90%;max-height:250px;overflow-y:auto;">
-					<i class="icon-notice"></i>
+					<i class="fa fa-notice"></i>
 					<div class="message-helper-content">' . $agreement_text . '</div>
 				</div>'
 			);

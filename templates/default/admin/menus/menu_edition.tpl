@@ -16,8 +16,8 @@
 # IF C_NEXT_MENU #
 	<li class="sortable-element" id="menu_element_{ID}">
 		<div class="sortable-title">
-			<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>&nbsp;
-			<i class="icon-folder icon-2x" style="cursor:move"></i>&nbsp;
+			<i class="fa fa-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>&nbsp;
+			<i class="fa fa-folder fa-2x" style="cursor:move"></i>&nbsp;
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
@@ -25,8 +25,8 @@
 				<img src="{PATH_TO_ROOT}/{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
 			<div class="sortable-actions">
-				<i class="icon-plus" title="More..." id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
-				<i class="icon-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
+				<i class="fa fa-plus" title="More..." id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
+				<i class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
 			</div>
 		</div>
 		<div class="spacer"></div>
@@ -53,8 +53,8 @@
 # IF C_LINK #
     <li class="sortable-element" id="menu_element_{ID}">
    		<div class="sortable-title">
-			<i class="icon-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
-   			<i class="icon-globe"></i>
+			<i class="fa fa-arrows" title="${LangLoader::get_message('move', 'admin')}"></i>
+   			<i class="fa fa-globe"></i>
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
@@ -62,8 +62,8 @@
 				<img src="{PATH_TO_ROOT}/{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
 			<div class="sortable-actions">
-				<i class="icon-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
-				<i class="icon-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
+				<i class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
+				<i class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
 			</div>
 		</div>
 		<div class="spacer"></div>

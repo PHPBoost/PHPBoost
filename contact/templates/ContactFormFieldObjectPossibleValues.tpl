@@ -22,7 +22,7 @@ var ContactFormFieldObjectPossibleValues = Class.create({
 			# END recipients_list #
 			$(div).insert(select);
 			
-			var delete_input = new Element('a', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'main')}", 'class' : 'icon-delete'});
+			var delete_input = new Element('a', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'main')}", 'class' : 'fa-delete'});
 			$(div).insert('&nbsp;');
 			$(div).insert(delete_input);
 			
@@ -55,8 +55,8 @@ var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleVal
 			<option value="{fieldelements.recipients_list.ID}" # IF fieldelements.recipients_list.C_RECIPIENT_SELECTED #selected="selected"# ENDIF #>{fieldelements.recipients_list.NAME}</option>
 			# END fieldelements.recipients_list #
 		</select>
-		<a href="javascript:ContactFormFieldObjectPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+		<a href="javascript:ContactFormFieldObjectPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 	</div>
 # END fieldelements #
 </div>
-<a href="javascript:ContactFormFieldObjectPossibleValues.add_field();" class="icon-plus" id="add_${escape(ID)}"></a>
+<a href="javascript:ContactFormFieldObjectPossibleValues.add_field();" class="fa fa-plus" id="add_${escape(ID)}"></a>

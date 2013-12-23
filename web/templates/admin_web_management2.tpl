@@ -78,7 +78,7 @@
 						</p>
 						<p class="center">
 							<button type="button" name="{NAME}" class="visit" value="true">
-								{L_VISIT}<i class="icon-globe"></i>
+								{L_VISIT}<i class="fa fa-globe"></i>
 							</button>
 						</p>
 						<br />

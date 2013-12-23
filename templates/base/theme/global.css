@@ -137,18 +137,18 @@ a.member { color:#000000; }
 
 /* Icônes spécifique PHPBoost
 ------------------------------------ */
-.icon-syndication:before { color:#f57900; }
-.icon-forbidden:before { color:#BA4B49; }
-.icon-ban:before { color:#BA4B49; }
-.icon-unban:before { color:#478948; }
-.icon-male:before { color:#8DC3E9; }
-.icon-female:before { color:#F49CC4; }
-.icon-online:before { color:#52D132; }
-.icon-offline:before { color:#E05759; }
+.fa-syndication:before { color:#f57900; }
+.fa-forbidden:before { color:#BA4B49; }
+.fa-ban:before { color:#BA4B49; }
+.fa-unban:before { color:#478948; }
+.fa-male:before { color:#8DC3E9; }
+.fa-female:before { color:#F49CC4; }
+.fa-online:before { color:#52D132; }
+.fa-offline:before { color:#E05759; }
 
-li.small-block .icon-stack { height: 2.34em; }
+li.small-block .fa-stack { height: 2.34em; }
 
-.icon-circle-alert {
+.fa-circle-alert {
 	z-index:1;
 	position:absolute;
 	top:-3px;
@@ -156,7 +156,7 @@ li.small-block .icon-stack { height: 2.34em; }
 	font-size:1.32em;
 }
 
-.icon-circle-alert span {
+.fa-circle-alert span {
 	display:block;
 	position:absolute;
 	top:3px;
@@ -724,36 +724,36 @@ div.message-helper {
 	-webkit-border-radius:3px;
 }
 
-div.message-helper i[class^="icon-"] { 
+div.message-helper i[class^="fa-"] { 
 	display:block; 
 	float:left;
 	width:25px;
 	text-align:center;
 }
-div.message-helper i[class^="icon-"]:before { font-size: 2em; }
+div.message-helper i[class^="fa-"]:before { font-size: 2em; }
 
 div.message-helper-content{ padding:0px 5px 0px 35px; }
 
-.icon-error:before { content: "\f00d"; }
-.icon-notice:before { content: "\f12a"; }
-.icon-warning:before { content: "\f071"; }
-.icon-success:before { content: "\f00c"; }
-.icon-question:before { content: "\f128"; }
+.fa-error:before { content: "\f00d"; }
+.fa-notice:before { content: "\f12a"; }
+.fa-warning:before { content: "\f071"; }
+.fa-success:before { content: "\f00c"; }
+.fa-question:before { content: "\f128"; }
 
 .question { background-color:#DAEEF8; border-color:#BDE9F2; }
-.question, .icon-question:before { color:#3B88AE; }
+.question, .fa-question:before { color:#3B88AE; }
 
 .notice { background-color:#F0F0F0; border-color:#E2E2E2; }
-.notice, .icon-notice:before { color:#888888; }
+.notice, .fa-notice:before { color:#888888; }
 
 .warning { background-color:#FDF9E4; border-color:#FBECCD; }
-.warning, .icon-warning:before { color:#C19954; }
+.warning, .fa-warning:before { color:#C19954; }
 
 .error { background-color:#F3DFDF; border-color:#ECCDD2; }
-.error, .icon-error:before { color:#BA4B49; }
+.error, .fa-error:before { color:#BA4B49; }
 
 .success { background-color:#E0F1D9; border-color:#D7EAC7; }
-.success, .icon-success:before { color:#478948; }
+.success, .fa-success:before { color:#478948; }
 
 /* Système d'Upload
 --------------------------------------*/

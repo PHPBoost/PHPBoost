@@ -42,7 +42,7 @@
     border-radius:1px;		
 }		
 
-.article_tools a.icon-delete { color:#e80909; }		
+.article_tools a.fa-delete { color:#e80909; }		
 
 .article_tools a {		
     opacity:0.01;		

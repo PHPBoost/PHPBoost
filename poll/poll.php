@@ -333,8 +333,8 @@ elseif ($archives) //Archives.
 		$Template->assign_block_vars('list', array(
 			'ID' => $row['id'],
 			'QUESTION' => $row['question'],
-			'EDIT' => '<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '" class="icon-edit"></a>',
-			'DEL' => '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" class="icon-delete" data-confirmation="delete-element"></a>',
+			'EDIT' => '<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>',
+			'DEL' => '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="delete-element"></a>',
 			'VOTE' => $sum_vote,
 			'DATE' => gmdate_format('date_format'),			
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])

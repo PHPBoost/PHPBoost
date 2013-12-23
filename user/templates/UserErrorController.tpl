@@ -5,7 +5,7 @@
 	<header><h1>${escape(TITLE)}</h1></header>
 	<div class="content">
 		<div class="message-helper {ERROR_TYPE}">
-      <i class="icon-{ERROR_TYPE}"></i>
+      <i class="fa fa-{ERROR_TYPE}"></i>
 			<div class="message-helper-content">{MESSAGE}</div>
 		</div>
 	    # IF HAS_LINK #

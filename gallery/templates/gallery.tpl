@@ -47,7 +47,7 @@
 			}
 			else
 			{
-				document.getElementById('img' + id_file).innerHTML = '<i class="icon-spinner icon-spin"></i>';
+				document.getElementById('img' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 
 				data = "id_file=" + id_file + "&name=" + name.replace(/&/g, "%26") + "&previous_name=" + previous_cut_name.replace(/&/g, "%26");
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&rename_pics=1&token={TOKEN}');
@@ -62,7 +62,7 @@
 						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');"><i class="icon-edit"></i></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');"><i class="fa fa-edit"></i></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -73,7 +73,7 @@
 		}
 		function pics_aprob(id_file, aprob)
 		{
-			document.getElementById('img' + id_file).innerHTML = '<i class="icon-spinner icon-spin"></i>';
+			document.getElementById('img' + id_file).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 
 			data = 'id_file=' + id_file;
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&aprob_pics=1&token={TOKEN}');
@@ -84,24 +84,24 @@
 					var img_aprob, title_aprob;
 					if( xhr_object.responseText == 0 )
 					{
-						img_aprob = 'icon-eye-slash';
+						img_aprob = 'fa-eye-slash';
 						title_aprob = '{L_UNAPROB}';
 					}
 					else
 					{
-						img_aprob = 'icon-eye';
+						img_aprob = 'fa-eye';
 						title_aprob = '{L_APROB}';
 					}
 					
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )
 					{
-						if(document.getElementById('img_aprob' + id_file).hasClassName('icon-eye')){
-							document.getElementById('img_aprob' + id_file).removeClassName('icon-eye');
-							document.getElementById('img_aprob' + id_file).addClassName('icon-eye-slash');
+						if(document.getElementById('img_aprob' + id_file).hasClassName('fa-eye')){
+							document.getElementById('img_aprob' + id_file).removeClassName('fa-eye');
+							document.getElementById('img_aprob' + id_file).addClassName('fa-eye-slash');
 						} else {
-							document.getElementById('img_aprob' + id_file).removeClassName('icon-eye-slash');
-							document.getElementById('img_aprob' + id_file).addClassName('icon-eye');
+							document.getElementById('img_aprob' + id_file).removeClassName('fa-eye-slash');
+							document.getElementById('img_aprob' + id_file).addClassName('fa-eye');
 						}
 						document.getElementById('img_aprob' + id_file).title = '' + title_aprob;
 						document.getElementById('img_aprob' + id_file).alt = '' + title_aprob;
@@ -160,8 +160,8 @@
 					if( start_thumb == 0 )
 						document.getElementById('display_left').innerHTML = '';
 					else
-						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="icon-arrow-left icon-2x"></i></a>';
-					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="icon-arrow-right icon-2x"></i></a>';
+						document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a>';
+					document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a>';
 				}
 				else
 					return;
@@ -174,8 +174,8 @@
 					if( start_thumb == ({MAX_START} + 1) )
 						document.getElementById('display_right').innerHTML = '';
 					else
-						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="icon-arrow-right icon-2x"></i></a>';
-					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="icon-arrow-left icon-2x"></i></a>';
+						document.getElementById('display_right').innerHTML = '<a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a>';
+					document.getElementById('display_left').innerHTML = '<a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a>';
 				}
 				else
 					return;
@@ -235,27 +235,27 @@
 
 		<menu class="dynamic-menu right">
 			<ul>
-				<li><a><i class="icon-bars"></i></a>
+				<li><a><i class="fa fa-bars"></i></a>
 					<ul>
-						<li class="extend"><a><i class="icon-eye"></i> {L_DISPLAY}</a>
+						<li class="extend"><a><i class="fa fa-eye"></i> {L_DISPLAY}</a>
 							<ul>
-								<li><a href="{U_BEST_VIEWS}"><i class="icon-eye"></i> {L_BEST_VIEWS}</a></li>
-								<li><a href="{U_BEST_NOTES}"><i class="icon-star-half-empty"></i> {L_BEST_NOTES}</a></li>
+								<li><a href="{U_BEST_VIEWS}"><i class="fa fa-eye"></i> {L_BEST_VIEWS}</a></li>
+								<li><a href="{U_BEST_NOTES}"><i class="fa fa-star-half-empty"></i> {L_BEST_NOTES}</a></li>
 							</ul>
 						</li>
-						<li class="extend"><a><i class="icon-sort"></i> {L_ORDER_BY}</a>
+						<li class="extend"><a><i class="fa fa-sort"></i> {L_ORDER_BY}</a>
 							<ul>
-								<li><a href="{U_ORDER_BY_NAME}"><i class="icon-tag"></i> {L_NAME}</a></li>
-								<li><a href="{U_ORDER_BY_DATE}"><i class="icon-clock-o"></i> {L_DATE}</a></li>
-								<li><a href="{U_ORDER_BY_VIEWS}"><i class="icon-eye"></i> {L_VIEWS}</a></li>
-								<li><a href="{U_ORDER_BY_NOTES}"><i class="icon-star-half-empty"></i> {L_NOTES}</a></li>
-								<li><a href="{U_ORDER_BY_COM}"><i class="icon-comments-o"></i> {L_COM}</a></li>
+								<li><a href="{U_ORDER_BY_NAME}"><i class="fa fa-tag"></i> {L_NAME}</a></li>
+								<li><a href="{U_ORDER_BY_DATE}"><i class="fa fa-clock-o"></i> {L_DATE}</a></li>
+								<li><a href="{U_ORDER_BY_VIEWS}"><i class="fa fa-eye"></i> {L_VIEWS}</a></li>
+								<li><a href="{U_ORDER_BY_NOTES}"><i class="fa fa-star-half-empty"></i> {L_NOTES}</a></li>
+								<li><a href="{U_ORDER_BY_COM}"><i class="fa fa-comments-o"></i> {L_COM}</a></li>
 							</ul>
 						</li>
-						<li class="extend"><a><i class="icon-sort-alpha-asc"></i> {L_DIRECTION}</a>
+						<li class="extend"><a><i class="fa fa-sort-alpha-asc"></i> {L_DIRECTION}</a>
 							<ul>
-								<li><a href="{U_ASC}"><i class="icon-sort-amount-asc"></i> {L_ASC}</a></li>
-								<li><a href="{U_DESC}"><i class="icon-sort-amount-desc"></i> {L_DESC}</a></li>
+								<li><a href="{U_ASC}"><i class="fa fa-sort-amount-asc"></i> {L_ASC}</a></li>
+								<li><a href="{U_DESC}"><i class="fa fa-sort-amount-desc"></i> {L_DESC}</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -269,7 +269,7 @@
 		<section>
 			<header>
 				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{L_GALLERY} {U_GALLERY_CAT_LINKS}
 					
 					<span class="actions">
@@ -337,7 +337,7 @@
 										<span class="text-strong">{KERNEL_NOTATION}</span><br/>
 									# ENDIF #
 									# IF C_GALLERY_PICS_MODO #
-									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button"><i class="icon-edit"></i></a></span>
+									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button"><i class="fa fa-edit"></i></a></span>
 									
 									<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
 										<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
@@ -347,11 +347,11 @@
 											</select>
 										</div>
 									</div>
-									<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="basic-button" title="{L_MOVETO}"><i class="icon-move"></i></a>
+									<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="basic-button" title="{L_MOVETO}"><i class="fa fa-move"></i></a>
 
 									<a href="javascript:pics_aprob({ID});" class="basic-button" title="{L_APROB_IMG}"><i id="img_aprob{ID}" class="{IMG_APROB}"></i></a>
 									<span id="img{ID}"></span>
-									<a href="{U_DEL}" title="{L_DELETE}" class="basic-button alt" data-confirmation="delete-element"><i class="icon-delete"></i></a>
+									<a href="{U_DEL}" title="{L_DELETE}" class="basic-button alt" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
 								</div>
 								# ENDIF #
 							</div>
@@ -397,8 +397,8 @@
 										
 									<div style="width:180px;margin:auto;">										
 										# IF C_GALLERY_MODO #
-										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="icon-edit"></a></span>
-										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="icon-delete" data-confirmation="delete-element"></a>									
+										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a></span>
+										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>									
 										<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
 											<div style="position:absolute;z-index:100;margin-top:75px;">
 												<div class="bbcode-block" style="width:170px;overflow:auto;">
@@ -410,7 +410,7 @@
 												</div>
 											</div>
 										</div>
-										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="icon-move" title="{L_MOVETO}"></a>
+										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
 										
 										<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" class="{pics_list.IMG_APROB}" title="{pics_list.L_APROB_IMG}"></a>
 										&nbsp;<span id="img{ID}"></span>

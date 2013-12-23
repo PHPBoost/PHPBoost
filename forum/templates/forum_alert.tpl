@@ -32,7 +32,7 @@
 						<legend>{L_ALERT}</legend>
 						
 						<div id="id-message-helper" class="message-helper notice" style="width:80%;">
-							<i class="icon-notice"></i>
+							<i class="fa fa-notice"></i>
 							<div class="message-helper-content">{L_ALERT_EXPLAIN}: <a href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
 						</div>
 						<div class="form-element">

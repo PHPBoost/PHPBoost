@@ -155,9 +155,9 @@
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}" class="icon-ban"></a>
+					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-ban"></a>
 						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}" class="icon-unban"></a>
+					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-unban"></a>
 						# ENDIF #
 					
 					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{PICTURES_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign-middle" /></a>
@@ -300,7 +300,7 @@
 					# IF msg.C_FORUM_MODERATOR # 
 					{msg.USER_WARNING}%
 					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/important.png" alt="{L_WARNING_MANAGEMENT}" class="valign-middle" /></a>
-					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}" class="icon-lock"></a>
+					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}" class="fa fa-lock"></a>
 					# ENDIF #
 				</span>&nbsp;
 			</div>	
@@ -318,9 +318,9 @@
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}" class="icon-ban"></a>
+					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-ban"></a>
 						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}" class="icon-unban"></a>
+					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-unban"></a>
 						# ENDIF #
 						
 					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{PICTURES_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign-middle" /></a>

@@ -1,7 +1,7 @@
 		<article>					
 			<header>
 				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'main')}" class="icon-syndication"></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'main')}" class="fa fa-syndication"></a>
 					{TITLE}
 				</h1>
 			</header>
@@ -10,7 +10,7 @@
 				
 				# START warning #
 				<div id="id-message-helper" class="message-helper warning">
-					<i class="icon-warning"></i>
+					<i class="fa fa-warning"></i>
 					<div class="message-helper-content">{warning.UPDATED_ARTICLE}</div>
 				</div>
 				# END warning #
@@ -19,7 +19,7 @@
 					<div style="width:30%;">
 					{redirect.REDIRECTED}
 						# START redirect.remove_redirection #
-							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="icon-delete" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}"></a>
+							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="fa fa-delete" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}"></a>
 						# END redirect.remove_redirection #
 					</div>
 					<br />
@@ -47,17 +47,17 @@
 					<strong>{L_SUB_CATS}</strong>
 					<br /><br />
 					# START cat.list_cats #
-						<i class="icon-folder"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a><br />
+						<i class="fa fa-folder"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a><br />
 					# END cat.list_cats #
 					# START cat.no_sub_cat #
 					{cat.no_sub_cat.NO_SUB_CAT}<br />
 					# END cat.no_sub_cat #
 					# END IF #
 					<br />
-					<strong>{L_SUB_ARTICLES}</strong> &nbsp; <a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					<strong>{L_SUB_ARTICLES}</strong> &nbsp; <a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					<br /><br />
 					# START cat.list_art #
-						<i class="icon-file"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a><br />
+						<i class="fa fa-file"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a><br />
 					# END cat.list_art #
 					
 					# START cat.no_sub_article #

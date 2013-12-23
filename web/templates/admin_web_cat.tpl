@@ -92,7 +92,7 @@
 								{cat.BOTTOM}
 							</td>
 							<td>
-								<a href="admin_web_cat.php?del=1&amp;id={cat.IDCAT}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>
+								<a href="admin_web_cat.php?del=1&amp;id={cat.IDCAT}&amp;token={TOKEN}" class="fa fa-delete" data-confirmation="delete-element"></a>
 							</td>
 						</tr>
 						# END cat #

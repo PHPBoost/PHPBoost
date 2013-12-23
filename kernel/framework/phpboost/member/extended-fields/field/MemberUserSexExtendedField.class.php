@@ -88,10 +88,10 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 		switch ($value) 
 		{
 			case 1:
-				return '<i class="icon-male"></i>';
+				return '<i class="fa fa-male"></i>';
 				break;
 			case 2:
-				return '<i class="icon-female"></i>';
+				return '<i class="fa fa-female"></i>';
 				break;		
 			default:
 				return '';

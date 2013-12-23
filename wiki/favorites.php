@@ -119,7 +119,7 @@ else
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 			'ARTICLE' => $row['title'],
 			'ID' => $row['id'],
-			'ACTIONS' => '<a href="' . url('favorites.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['wiki_unwatch_this_topic'] . '" class="icon-delete" data-confirmation="' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '"></a>'
+			'ACTIONS' => '<a href="' . url('favorites.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['wiki_unwatch_this_topic'] . '" class="fa fa-delete" data-confirmation="' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '"></a>'
 		));
 	}
 

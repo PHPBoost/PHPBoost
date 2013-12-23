@@ -87,7 +87,7 @@
 						<tr>
 							<td style="background:{files.COLOR};">
 								<a href="{files.U_FILE}">{files.NAME}</a>
-								<a href="{files.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+								<a href="{files.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 							</td>
 							<td style="background:{files.COLOR};">
 								<a href="{files.U_CAT}">{files.CAT}</a>
@@ -140,7 +140,7 @@
 		# IF C_ADMIN #
 		<div style="text-align:center; margin:20px 20px;">
 			<a href="moderation_media.php?recount=1" title="{L_RECOUNT_MEDIA}">
-				<i class="icon-refresh icon-2x"></i>
+				<i class="fa fa-refresh fa-2x"></i>
 			</a>
 			<br />
 			<a href="moderation_media.php?recount=1">{L_RECOUNT_MEDIA}</a>

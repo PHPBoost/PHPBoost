@@ -19,7 +19,7 @@
 				<header><h1>{L_FILES_MANAGEMENT}</h1></header>
 				<div class="content">
 					<div class="upload-address-bar">
-						<a href="admin_files.php"><i class="icon-home"></i> {L_ROOT}</a>{URL}
+						<a href="admin_files.php"><i class="fa fa-home"></i> {L_ROOT}</a>{URL}
 					</div>
 					
 					# INCLUDE message_helper #
@@ -27,7 +27,7 @@
 						<div class="upload-elements-container">
 							# START folder #
 								<div style="float:left;width:33%;text-align:center;">
-									<i class="icon-folder icon-2x"></i> {folder.NAME}
+									<i class="fa fa-folder fa-2x"></i> {folder.NAME}
 								</div>	
 							# END folder #
 									
@@ -47,7 +47,7 @@
 							<div style="float:left;width:33%;text-align:center;">
 								<strong>{L_MOVE_TO}</strong>
 								<br />
-								<i class="icon-arrow-right icon-2x"></i>
+								<i class="fa fa-arrow-right fa-2x"></i>
 							</div>
 							<div style="float:left;width:33%;text-align:center;">
 									<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>
@@ -57,7 +57,7 @@
 										var selected_cat = {SELECTED_CAT};
 									-->
 									</script>
-									<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="icon-home"></i> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
+									<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="fa fa-home"></i> <span id="class_0" class="{CAT_0}">{L_ROOT}</span></a></span>
 									<br />
 									{FOLDERS}
 							</div>

@@ -41,7 +41,7 @@
 				<fieldset>
 					<legend>{topics.L_KEEP}</legend>
 					<div class="error_warning" style="width:500px;margin:auto;padding:15px;">
-						<i class="icon-notice icon-2x"></i> &nbsp;{topics.L_EXPLAIN_CAT}
+						<i class="fa fa-notice fa-2x"></i> &nbsp;{topics.L_EXPLAIN_CAT}
 						<br />	
 						<br />	
 					</div>
@@ -61,7 +61,7 @@
 				<fieldset>
 					<legend>{subforums.L_KEEP}</legend>
 					<div class="error_warning" style="width:500px;margin:auto;padding:15px;">
-						<i class="icon-notice"></i> &nbsp;{subforums.L_EXPLAIN_CAT}
+						<i class="fa fa-notice"></i> &nbsp;{subforums.L_EXPLAIN_CAT}
 						<br />	
 						<br />	
 					</div>

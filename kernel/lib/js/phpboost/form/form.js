@@ -274,7 +274,7 @@ var FormField = Class.create({
 		}
 		if ($('onblurContainerResponse' + this.getHTMLId())
 				&& $('onblurMessageResponse' + this.getHTMLId())) {
-			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<i class="icon-forbidden"></i>';
+			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<i class="fa fa-forbidden"></i>';
 			$('onblurMessageResponse' + this.getHTMLId()).innerHTML = message;
 
 			Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
@@ -292,7 +292,7 @@ var FormField = Class.create({
 			return;
 		}
 		if ($('onblurContainerResponse' + this.getHTMLId())) {
-			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<i class="icon-success"></i>';
+			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<i class="fa fa-success"></i>';
 			Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
 			{
 				duration : 0.2

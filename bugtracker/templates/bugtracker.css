@@ -25,6 +25,6 @@
 
 #status_chart { width: 90%; }
 
-a.icon-bugtracker-opened:before { content: "\f070"; }
-a.icon-bugtracker-rejected:before { content: "\f06E"; }
-a.icon-bugtracker-history:before { content: "\f129"; }
+a.bugtracker-icon-opened:before { content: "\f070"; }
+a.bugtracker-icon-rejected:before { content: "\f06E"; }
+a.bugtracker-icon-history:before { content: "\f129"; }

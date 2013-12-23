@@ -16,24 +16,24 @@ function Confirm(action) {
 	<thead>
 		<tr>
 			<th class="column_id">
-				<a href="{LINK_BUG_ID_TOP}" class="icon-table-sort-up"></a>
+				<a href="{LINK_BUG_ID_TOP}" class="fa fa-table-sort-up"></a>
 				{@bugs.labels.fields.id}
-				<a href="{LINK_BUG_ID_BOTTOM}" class="icon-table-sort-down"></a>
+				<a href="{LINK_BUG_ID_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{LINK_BUG_TITLE_TOP}" class="icon-table-sort-up"></a>
+				<a href="{LINK_BUG_TITLE_TOP}" class="fa fa-table-sort-up"></a>
 				{@bugs.labels.fields.title}
-				<a href="{LINK_BUG_TITLE_BOTTOM}" class="icon-table-sort-down"></a>
+				<a href="{LINK_BUG_TITLE_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th class="column_informations">
-				<a href="{LINK_BUG_STATUS_TOP}" class="icon-table-sort-up"></a>
+				<a href="{LINK_BUG_STATUS_TOP}" class="fa fa-table-sort-up"></a>
 				{@bugs.titles.informations}
-				<a href="{LINK_BUG_STATUS_BOTTOM}" class="icon-table-sort-down"></a>
+				<a href="{LINK_BUG_STATUS_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th class="column_date">
-				<a href="{LINK_BUG_DATE_TOP}" class="icon-table-sort-up"></a>
+				<a href="{LINK_BUG_DATE_TOP}" class="fa fa-table-sort-up"></a>
 				# IF C_UNSOLVED #{@bugs.labels.detected}# ELSE #{@bugs.labels.fields.fix_date}# ENDIF #
-				<a href="{LINK_BUG_DATE_BOTTOM}" class="icon-table-sort-down"></a>
+				<a href="{LINK_BUG_DATE_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			# IF C_IS_ADMIN #
 			<th class="column_admin">
@@ -76,10 +76,10 @@ function Confirm(action) {
 			</td>
 			# IF C_IS_ADMIN #
 			<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
-				<a href="{bug.U_REOPEN_REJECT}" onclick="javascript:return Confirm('# IF C_UNSOLVED #reject# ELSE #reopen# ENDIF #');" # IF C_UNSOLVED #class="icon-bugtracker-opened" title="{@bugs.actions.reject}"# ELSE #class="icon-bugtracker-rejected" title="{@bugs.actions.reopen}"# ENDIF #></a>
-				<a href="{bug.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-				<a href="{bug.U_HISTORY}" class="icon-bugtracker-history" title="{@bugs.actions.history}"></a>
-				<a href="{bug.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+				<a href="{bug.U_REOPEN_REJECT}" onclick="javascript:return Confirm('# IF C_UNSOLVED #reject# ELSE #reopen# ENDIF #');" # IF C_UNSOLVED #class="fa bugtracker-icon-opened" title="{@bugs.actions.reject}"# ELSE #class="fa bugtracker-icon-rejected" title="{@bugs.actions.reopen}"# ENDIF #></a>
+				<a href="{bug.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+				<a href="{bug.U_HISTORY}" class="fa bugtracker-icon-history" title="{@bugs.actions.history}"></a>
+				<a href="{bug.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</td>
 			# ENDIF #
 		</tr>

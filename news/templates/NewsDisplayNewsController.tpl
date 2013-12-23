@@ -1,14 +1,14 @@
 <article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="icon-syndication"></a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="fa fa-syndication"></a>
 			<span id="name" itemprop="name">{NAME}</span>
 			<span class="actions">
 				# IF C_EDIT #
-					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 				# ENDIF #
 				# IF C_DELETE #
-					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				# ENDIF #
 			</span>
 		</h1>
@@ -66,14 +66,14 @@
 		<div class="navigation_link">
 			# IF C_PREVIOUS_NEWS #
 			<span style="float:left">
-				<a href="{U_PREVIOUS_NEWS}"><i class="icon-arrow-left icon-2x"></i></a>
+				<a href="{U_PREVIOUS_NEWS}"><i class="fa fa-arrow-left fa-2x"></i></a>
 				<a href="{U_PREVIOUS_NEWS}">{PREVIOUS_NEWS}</a>
 			</span>
 			# ENDIF #
 			# IF C_NEXT_NEWS #
 			<span style="float:right">
 				<a href="{U_NEXT_NEWS}">{NEXT_NEWS}</a>
-				<a href="{U_NEXT_NEWS}"><i class="icon-arrow-right icon-2x"></i></a>
+				<a href="{U_NEXT_NEWS}"><i class="fa fa-arrow-right fa-2x"></i></a>
 			</span>
 			# ENDIF #
 			<div class="spacer"></div>

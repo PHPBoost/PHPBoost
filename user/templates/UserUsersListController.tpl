@@ -14,27 +14,27 @@
 		<thead>
 			<tr>
 				<th>
-					<a href="{SORT_LOGIN_TOP}" class="icon-table-sort-up"></a>
+					<a href="{SORT_LOGIN_TOP}" class="fa fa-table-sort-up"></a>
 					{@pseudo} 
-					<a href="{SORT_LOGIN_BOTTOM}" class="icon-table-sort-down"></a>
+					<a href="{SORT_LOGIN_BOTTOM}" class="fa fa-table-sort-down"></a>
 				</th>
 				<th>
 					{@email}
 				</th>
 				<th>
-					<a href="{SORT_REGISTERED_TOP}" class="icon-table-sort-up"></a>
+					<a href="{SORT_REGISTERED_TOP}" class="fa fa-table-sort-up"></a>
 					{@registration_date}
-					<a href="{SORT_REGISTERED_BOTTOM}" class="icon-table-sort-down"></a>
+					<a href="{SORT_REGISTERED_BOTTOM}" class="fa fa-table-sort-down"></a>
 				</th>
 				<th>
-					<a href="{SORT_MSG_TOP}" class="icon-table-sort-up"></a>
+					<a href="{SORT_MSG_TOP}" class="fa fa-table-sort-up"></a>
 					{@messages}
-					<a href="{SORT_MSG_BOTTOM}" class="icon-table-sort-down"></a>	
+					<a href="{SORT_MSG_BOTTOM}" class="fa fa-table-sort-down"></a>	
 				</th>
 				<th>
-					<a href="{SORT_LAST_CONNECT_TOP}" class="icon-table-sort-up"></a>
+					<a href="{SORT_LAST_CONNECT_TOP}" class="fa fa-table-sort-up"></a>
 					{@last_connection}
-					<a href="{SORT_LAST_CONNECT_BOTTOM}" class="icon-table-sort-down"></a>
+					<a href="{SORT_LAST_CONNECT_BOTTOM}" class="fa fa-table-sort-down"></a>
 				</th>
 				<th>
 					{@private_message}

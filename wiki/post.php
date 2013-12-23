@@ -265,13 +265,13 @@ else
 			if ($sub_cats_number > 0)
 			{	
 				$Template->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><i class="icon-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="icon-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 			else
 			{
 				$Template->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');"><i class="icon-folder"></i>' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');"><i class="fa fa-folder"></i>' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 		}

@@ -990,12 +990,12 @@ else
 			$Template->assign_block_vars('referer_list', array(
 				'ID' => $row['id'],
 				'URL' => $row['url'],
-				'IMG_MORE' => '<a class="icon-plus-sqare-o" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
+				'IMG_MORE' => '<a class="fa fa-plus-sqare-o" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 				'NBR_LINKS' => $row['count'],
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 				'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-				'TREND' => '<i class="icon-arrow-' . $trend_img . ' icon-2x"></i> (' . $sign . $trend . '%)'
+				'TREND' => '<i class="fa fa-arrow-' . $trend_img . ' fa-2x"></i> (' . $sign . $trend . '%)'
 				));
 		}
 		$Sql->query_close($result);
@@ -1047,12 +1047,12 @@ else
 			$Template->assign_block_vars('keyword_list', array(
 				'ID' => $row['id'],
 				'KEYWORD' => $row['relative_url'],
-				'IMG_MORE' => '<a class="icon-plus-square-o" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
+				'IMG_MORE' => '<a class="fa fa-plus-square-o" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 				'NBR_LINKS' => $row['count'],
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 				'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-				'TREND' => '<i class="icon-arrow-' . $trend_img . ' icon-2x"></i> (' . $sign . $trend . '%)'
+				'TREND' => '<i class="fa fa-arrow-' . $trend_img . ' fa-2x"></i> (' . $sign . $trend . '%)'
 				));
 		}
 		$Sql->query_close($result);

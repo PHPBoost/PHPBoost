@@ -11,7 +11,7 @@
 			
 		function XMLHttpRequest_get_parent(divid, direction)
 		{
-			document.getElementById('l' + divid).innerHTML = '<i class="icon-spinner icon-spin"></i>';
+			document.getElementById('l' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 			
 			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&g_' + direction + '=' + divid + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
@@ -242,11 +242,11 @@
 				<ul id="categories cat_administration" class="sortable-block" style="position:relative;" >
 					<li class="sortable-element" style="cursor:default;">
 						<div class="sortable-title">
-							<i class="icon-folder"></i>
+							<i class="fa fa-folder"></i>
 							<a href="gallery.php" class="gallery_link_cat">{L_ROOT}</a>
 							<div class="sortable-actions">
 								<div class="sortable-options">
-									<a href="admin_gallery_cat.php?root=1" class="icon-edit"></a>
+									<a href="admin_gallery_cat.php?root=1" class="fa fa-edit"></a>
 								</div>
 							</div>
 						</div>
@@ -256,23 +256,23 @@
 					# START list #	
 					<li id="c{list.I}" class="sortable-element" style="cursor:default;margin-left:{list.INDENT}px;">
 						<div class="sortable-title" >
-							<i class="icon-folder"></i>
+							<i class="fa fa-folder"></i>
 							{list.LOCK}
 							<a href="gallery{list.U_GALLERY_VARS}" class="gallery_link_cat">{list.NAME}</a>
 							<span class="cat_desc"> | {list.DESC}</span>
 							<div class="sortable-actions">
 								<span id="l{list.ID}"></span> 
 								<div class="sortable-options">
-									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');" class="icon-arrow-up"></a>
+									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');" class="fa fa-arrow-up"></a>
 								</div>
 								<div class="sortable-options">
-									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');" class="icon-arrow-down"></a>
+									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');" class="fa fa-arrow-down"></a>
 								</div>
 								<div class="sortable-options">
-									<a href="admin_gallery_cat.php?id={list.ID}" title="{L_EDIT_CAT}" class="icon-edit"></a>
+									<a href="admin_gallery_cat.php?id={list.ID}" title="{L_EDIT_CAT}" class="fa fa-edit"></a>
 								</div>
 								<div class="sortable-options">
-									<a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" class="icon-delete" data-confirmation="delete-element"></a>
+									<a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								</div>
 							</div>
 						</div>

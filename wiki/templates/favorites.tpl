@@ -3,7 +3,7 @@
 		# IF NO_FAVORITE #
 			# START no_favorite #
 				<div class="message-helper notice">
-					<i class="icon-notice"></i>
+					<i class="fa fa-notice"></i>
 					<div class="message-helper-content">{no_favorite.L_NO_FAVORITE}</div>
 				</div>
 			# END no_favorite #	

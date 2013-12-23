@@ -18,8 +18,8 @@
 				<span class="actions">
 					<a itemprop="url" href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
 					# IF comments.C_MODERATOR #
-						<a href="{comments.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-						<a href="{comments.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+						<a href="{comments.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+						<a href="{comments.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 					# ENDIF #
 				</span>
 				<span itemprop="datePublished" content="{comments.DATE_ISO8601}">{comments.DATE}</span>
@@ -30,7 +30,7 @@
 					<div class="view-topic">
 						<a href="{comments.U_TOPIC}&refresh_all=1\#com{comments.ID_COMMENT}">
 						{L_VIEW_TOPIC}
-						<i class="icon-arrow-right icon-2x"></i>
+						<i class="fa fa-arrow-right fa-2x"></i>
 					</a>
 					</div>
 				# ENDIF #

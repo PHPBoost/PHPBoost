@@ -141,21 +141,21 @@ section footer nav.pagination {	text-align: center; }
 	font-weight:300;
 }
 
-.explorer .content ul [class^="icon-"] {
+.explorer .content ul .fa {
 	width:20px;
 }
 
-.explorer .content ul a.parent [class^="icon-"]:first-child {
+.explorer .content ul a.parent .fa:first-child {
 	width:14px;
 }
 
-.explorer .content ul [class^="icon-"]:before {
+.explorer .content ul .fa:before {
 	width:20px;
 	text-align:center;
 	vertical-align:middle;
 }
 
-.explorer .content ul a.parent [class^="icon-"]:first-child:before {
+.explorer .content ul a.parent .fa:first-child:before {
 	width:14px;
 	font-size:11px;
 }
@@ -436,10 +436,6 @@ button[type=reset]{
 
 .basic-button.alt:hover {
 	background: #BBB;
-}
-
-.basic-button [class^="icon-"]{
-	vertical-align:middle;
 }
 
 /* Formulaires 
@@ -750,7 +746,7 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 	margin-left:14px;
 }
 
-.sortable-block .sortable-element [class^="icon-"]:not(.icon-arrows):hover, .sortable-block .sortable-actions img { cursor:pointer; }
+.sortable-block .sortable-element .fa:not(.fa-arrows):hover, .sortable-block .sortable-actions img { cursor:pointer; }
 .sortable-block .sortable-element:hover label { cursor:pointer; }
 
 /* Gestion des Menus */

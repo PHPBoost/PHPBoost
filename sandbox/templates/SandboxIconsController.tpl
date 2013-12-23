@@ -9,7 +9,7 @@
 					<h1>.{icons.CLASS}</h1>
 				</header>
 				<div class="content">
-					<i class="{icons.CLASS}"></i> <i class="{icons.CLASS} icon-2x"></i> <i class="{icons.CLASS} icon-3x"></i>
+					<i class="{icons.CLASS}"></i> <i class="{icons.CLASS} fa fa-2x"></i> <i class="{icons.CLASS} fa fa-3x"></i>
 				</div>
 			</article>
 		# END icons #

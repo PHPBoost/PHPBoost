@@ -9,24 +9,24 @@
 	<thead>
 		<tr>
 			<th class="column_id">
-				<a href="{LINK_BUG_ID_TOP}" class="icon-table-sort-up"></a>
+				<a href="{LINK_BUG_ID_TOP}" class="fa fa-table-sort-up"></a>
 				{@bugs.labels.fields.id}
-				<a href="{LINK_BUG_ID_BOTTOM}" class="icon-table-sort-down"></a>
+				<a href="{LINK_BUG_ID_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{LINK_BUG_TITLE_TOP}" class="icon-table-sort-up"></a>
+				<a href="{LINK_BUG_TITLE_TOP}" class="fa fa-table-sort-up"></a>
 				{@bugs.labels.fields.title}
-				<a href="{LINK_BUG_TITLE_BOTTOM}" class="icon-table-sort-down"></a>
+				<a href="{LINK_BUG_TITLE_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th class="column_informations">
-				<a href="{LINK_BUG_STATUS_TOP}" class="icon-table-sort-up"></a>
+				<a href="{LINK_BUG_STATUS_TOP}" class="fa fa-table-sort-up"></a>
 				{@bugs.titles.informations}
-				<a href="{LINK_BUG_STATUS_BOTTOM}" class="icon-table-sort-down"></a>
+				<a href="{LINK_BUG_STATUS_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th class="column_date">
-				<a href="{LINK_BUG_DATE_TOP}" class="icon-table-sort-up"></a>
+				<a href="{LINK_BUG_DATE_TOP}" class="fa fa-table-sort-up"></a>
 				{@bugs.labels.fields.fix_date}
-				<a href="{LINK_BUG_DATE_BOTTOM}" class="icon-table-sort-down"></a>
+				<a href="{LINK_BUG_DATE_BOTTOM}" class="fa fa-table-sort-down"></a>
 			</th>
 		</tr>
 	</thead>

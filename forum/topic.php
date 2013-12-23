@@ -361,9 +361,9 @@ while ( $row = $Sql->fetch_assoc($result) )
 		
 	//Affichage du sexe et du statut (connecté/déconnecté).	
 	if ($row['user_sex'] == 1)	
-		$user_sex = $LANG['sex'] . ': <i class="icon-male"></i><br />';	
+		$user_sex = $LANG['sex'] . ': <i class="fa fa-male"></i><br />';	
 	elseif ($row['user_sex'] == 2) 
-		$user_sex = $LANG['sex'] . ': <i class="icon-female"></i><br />';
+		$user_sex = $LANG['sex'] . ': <i class="fa fa-female"></i><br />';
 	else $user_sex = '';
 			
 	//Localisation.
@@ -499,9 +499,9 @@ elseif (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM)
 }
 else
 {
-	$img_track_display = $track ? 'icon-msg-not-track' : 'icon-msg-track';
-	$img_track_pm_display = $track_pm ? 'icon-pm-not-track' : 'icon-pm-track';
-	$img_track_mail_display = $track_mail ? 'icon-mail-not-track' : 'icon-mail-track';
+	$img_track_display = $track ? 'fa-msg-not-track' : 'fa-msg-track';
+	$img_track_pm_display = $track_pm ? 'fa-pm-not-track' : 'fa-pm-track';
+	$img_track_mail_display = $track_mail ? 'fa-mail-not-track' : 'fa-mail-track';
 	
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
@@ -519,7 +519,7 @@ else
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
 	if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $User->get_attribute('user_id') == $topic['user_id']))
 	{
-		$img_msg_display = $topic['display_msg'] ? 'icon-msg-not-display' : 'icon-msg-display';
+		$img_msg_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
 		$Template->put_all(array(
 			'C_DISPLAY_MSG' => true,
 			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<i class="' . $img_msg_display . '"></i>' : '',

@@ -47,7 +47,7 @@ abstract class AbstractAdminFormPageController extends AdminController
 		$template = new StringTemplate('
 		# IF C_SUCCESS #
 		<div id="success_message" class="message-helper success">
-			<i class="icon-success"></i>
+			<i class="fa fa-success"></i>
 			<div class="message-helper-content">{SUCCESS_MESSAGE}</div>
 		</div>
 		# ENDIF #

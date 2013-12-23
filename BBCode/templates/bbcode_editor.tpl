@@ -49,7 +49,7 @@ function XMLHttpRequest_preview(field)
 
 <div style="position:relative;display:none;" id="loading_preview{FIELD}">
 	<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;">
-		<i class="icon-spinner icon-2x icon-spin"></i>
+		<i class="fa fa-spinner fa-2x fa-spin"></i>
 	</div>
 </div>
 

@@ -1,6 +1,6 @@
 # IF C_VALIDATION_ERROR #
 <div class="message-helper error">
-	<i class="icon-error"></i>
+	<i class="fa fa-error"></i>
 	<div class="message-helper-content">
 		<span class="text-strong" >{TITLE_VALIDATION_ERROR_MESSAGE} : </span> <br /><br />
 		# START validation_error_messages #

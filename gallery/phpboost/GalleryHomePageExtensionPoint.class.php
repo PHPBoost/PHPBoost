@@ -236,8 +236,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					'CAT' => $row['name'],
 					'DESC' => $row['contents'],
 					'IMG' => !empty($row['path']) ? '<img src="'. PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'] . '" alt="" />' : '',
-					'EDIT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php?id=' . $row['id'] . '" title="' . $LANG['cat_edit'] . '" class="icon-edit"></a>' : '',
-					'LOCK' => ($row['status'] == 0) ? '<i class="icon-lock"></>' : '',
+					'EDIT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php?id=' . $row['id'] . '" title="' . $LANG['cat_edit'] . '" class="fa fa-edit"></a>' : '',
+					'LOCK' => ($row['status'] == 0) ? '<i class="fa fa-lock"></>' : '',
 					'OPEN_TR' => is_int($j++/$nbr_column_cats) ? '<tr>' : '',
 					'CLOSE_TR' => is_int($j/$nbr_column_cats) ? '</tr>' : '',
 					'L_NBR_PICS' => sprintf($LANG['nbr_pics_info'], $row['nbr_pics']),
@@ -431,7 +431,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'CAT' => $cat_list,
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
-						'IMG_APROB' => ($info_pics['aprob'] == 1) ? 'icon-eye-slash' : 'icon-eye',
+						'IMG_APROB' => ($info_pics['aprob'] == 1) ? 'fa-eye-slash' : 'fa-eye',
 						'ARRAY_JS' => $array_js,
 						'NBR_PICS' => ($i - 1),
 						'MAX_START' => ($i - 1) - $nbr_column_pics,
@@ -452,10 +452,10 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'L_THUMBNAILS' => $LANG['thumbnails'],
 						'U_DEL' => url('gallery.php?del=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;cat=' . $g_idcat),
 						'U_MOVE' => url('gallery.php?id=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
-						'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max"><i class="icon-arrow-left icon-2x"></i></a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max">' . $LANG['previous'] . '</a>' : '',
-						'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max"><i class="icon-arrow-right icon-2x"></i></a>' : '',
-						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><i class="icon-arrow-left icon-2x"></i></a></span>' : '<span id="display_left"></span>',
-						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><i class="icon-arrow-right icon-2x"></i></a></span>' : '<span id="display_right"></span>'
+						'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max"><i class="fa fa-arrow-left fa-2x"></i></a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max">' . $LANG['previous'] . '</a>' : '',
+						'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max"><i class="fa fa-arrow-right fa-2x"></i></a>' : '',
+						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a></span>' : '<span id="display_left"></span>',
+						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><i class="fa fa-arrow-right fa-2x"></i></a></span>' : '<span id="display_right"></span>'
 					));
 	
 					//Affichage de la liste des miniatures sous l'image.
@@ -565,7 +565,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'CAT' => $cat_list,
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
-						'IMG_APROB' => ($row['aprob'] == 1) ? 'icon-eye-slash' : 'icon-eye',
+						'IMG_APROB' => ($row['aprob'] == 1) ? 'fa-eye-slash' : 'fa-eye',
 						'OPEN_TR' => is_int($j++/$nbr_column_pics) ? '<tr>' : '',
 						'CLOSE_TR' => is_int($j/$nbr_column_pics) ? '</tr>' : '',
 						'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],

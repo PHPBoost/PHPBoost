@@ -182,7 +182,7 @@
 					<legend>{L_UPDATE_DATA_CACHED}</legend>
 					<p style="text-align:center;">
 						<a href="admin_forum_config.php?upd=1" title="{L_UPDATE_DATA_CACHED}">
-							<i class="icon-refresh icon-2x"></i>
+							<i class="fa fa-refresh fa-2x"></i>
 						</a>
 						<br />
 						<a href="admin_forum_config.php?upd=1">{L_UPDATE_DATA_CACHED}</a>

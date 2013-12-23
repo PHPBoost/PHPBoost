@@ -135,7 +135,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    	{
 	    		$row['user_id'] = (int)$row['user_id'];
 	    		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
-	    			$del_message = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><i class="icon-remove"></i></a>';
+	    			$del_message = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><i class="fa fa-remove"></i></a>';
 	    		else
 	    			$del_message = '';
 	

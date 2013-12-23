@@ -8,10 +8,10 @@
 		<input type="text" id="{HTML_ID}" name="{HTML_ID}" placeholder="{@type_the_answer_here}"/>
 	</div>
 	<div class="options">
-		<a href="javascript:Recaptcha.reload()"><i class="icon-refresh"></i></a>
-		<div class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')" title="{@audio_captcha}"><i class="icon-volume-up"></i></a></div>
-		<div class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')" title="{@image_captcha}"><i class="icon-picture-o"></i></a></div>
-		<div><a href="javascript:Recaptcha.showhelp()" title="{@captcha_help}"><i class="icon-question-circle"></i></a></div>
+		<a href="javascript:Recaptcha.reload()"><i class="fa fa-refresh"></i></a>
+		<div class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type('audio')" title="{@audio_captcha}"><i class="fa fa-volume-up"></i></a></div>
+		<div class="recaptcha_only_if_audio"><a href="javascript:Recaptcha.switch_type('image')" title="{@image_captcha}"><i class="fa fa-picture-o"></i></a></div>
+		<div><a href="javascript:Recaptcha.showhelp()" title="{@captcha_help}"><i class="fa fa-question-circle"></i></a></div>
 	</div>
 	
 </div>

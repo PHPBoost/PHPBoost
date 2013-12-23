@@ -17,7 +17,7 @@
 			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 		<tr>
 			<th colspan="3">
-				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}">{@bugs.labels.del_default_value}</a>
+				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}">{@bugs.labels.del_default_value}</a>
 			</th>
 		</tr>
 			# ENDIF #
@@ -33,7 +33,7 @@
 				<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}">
 			</td>
 			<td>
-				<a href="{types.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="{@bugs.actions.confirm.del_type}"></a>
+				<a href="{types.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_type}"></a>
 			</td>
 		</tr>
 		# END types #

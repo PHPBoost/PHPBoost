@@ -12,7 +12,7 @@
 				<div class="module_top_l"></div>
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
 				</div>
 				<div class="module_contents forum_contents">
@@ -33,7 +33,7 @@
 						<tr>
 							# IF subcats.U_FORUM_URL #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<i class="icon-globe"></i>
+								<i class="fa fa-globe"></i>
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 								<a href="{subcats.U_FORUM_URL}">{subcats.NAME}</a>
@@ -77,13 +77,13 @@
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
+				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
 				# IF C_POST_NEW_SUBJECT #
 					&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 				# ENDIF #
 				<span style="float:right;">
 					# IF IDCAT #
-					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="icon-notread"></i></a>
+					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
 					# ENDIF #
 					{PAGINATION}
 				</span>
@@ -126,9 +126,9 @@
 							# ENDIF #
 						</td>
 						<td class="forum_sous_cat" style="width:35px;text-align:center;">
-							# IF topics.C_DISPLAY_MSG #<i class="icon-msg-display"></i># ENDIF #
+							# IF topics.C_DISPLAY_MSG #<i class="fa fa-msg-display"></i># ENDIF #
 							# IF topics.C_IMG_POLL # <img src="{PICTURES_DATA_PATH}/images/poll_mini.png" class="valign-middle" alt="" /> # ENDIF #
-							# IF topics.C_IMG_TRACK #<i class="icon-msg-track"></i># ENDIF #
+							# IF topics.C_IMG_TRACK #<i class="fa fa-msg-track"></i># ENDIF #
 						</td>
 						<td class="forum_sous_cat" style="min-width:115px;">
 							{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
@@ -165,7 +165,7 @@
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
+				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
 				# IF C_POST_NEW_SUBJECT #
 					&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 				# ENDIF #

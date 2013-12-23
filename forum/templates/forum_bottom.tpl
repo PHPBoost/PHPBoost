@@ -5,18 +5,18 @@
 				</div>
 				# IF C_USER_CONNECTED #
 					<div style="float:right;">
-						<i class="icon-msg-track"></i> {U_TOPIC_TRACK} &bull;
-						<i class="icon-lastview"></i> {U_LAST_MSG_READ} &bull;
-						<i class="icon-notread"></i> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
+						<i class="fa fa-msg-track"></i> {U_TOPIC_TRACK} &bull;
+						<i class="fa fa-lastview"></i> {U_LAST_MSG_READ} &bull;
+						<i class="fa fa-notread"></i> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
 						
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread2">
 							</div>
 						</div>
-						<a href="javascript:XMLHttpRequest_unread_topics('2');" onmouseover="forum_hide_block('forum_unread2', 1);" onmouseout="forum_hide_block('forum_unread2', 0);"><i class="icon-refresh" id="refresh_unread2"></i></a>
+						<a href="javascript:XMLHttpRequest_unread_topics('2');" onmouseover="forum_hide_block('forum_unread2', 1);" onmouseout="forum_hide_block('forum_unread2', 0);"><i class="fa fa-refresh" id="refresh_unread2"></i></a>
 						
 						&bull;
-						<i class="icon-eraser"></i> {U_MSG_SET_VIEW}
+						<i class="fa fa-eraser"></i> {U_MSG_SET_VIEW}
 					</div>
 				# ENDIF #
 				<div class="spacer"></div>
@@ -97,7 +97,7 @@
 					</script>
 					&bull;
 					# ENDIF #
-					<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" class="icon-warning"></a></a> <a href="alert{U_ALERT}#go_bottom" class="small">{L_ALERT}</a>
+					<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" class="fa fa-warning"></a></a> <a href="alert{U_ALERT}#go_bottom" class="small">{L_ALERT}</a>
 					<span id="forum_track">
 						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" class="small">{L_TRACK_DEFAULT}</a>
 					</span>

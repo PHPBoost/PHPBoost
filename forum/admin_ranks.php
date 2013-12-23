@@ -104,7 +104,7 @@ else //Sinon on rempli le formulaire
 	foreach($ranks_cache as $msg => $row)
 	{				
 		if ($row['special'] == 0)
-			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" class="icon-delete" data-confirmation="delete-element"></a>';
+			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" class="fa fa-delete" data-confirmation="delete-element"></a>';
 		else
 			$del = $LANG['special_rank'];
 

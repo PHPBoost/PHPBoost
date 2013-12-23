@@ -5,12 +5,12 @@
 		if( document.getElementById("a" + id_question).style.display == "none" )
 		{
 			Effect.Appear("a" + id_question);
-			document.getElementById("faq_i" + id_question).className="icon-caret-down icon-2x"
+			document.getElementById("faq_i" + id_question).className="fa-caret-down fa-2x"
 		}
 		else
 		{
 			Effect.Fade("a" + id_question);
-			document.getElementById("faq_i" + id_question).className="icon-caret-right icon-2x"
+			document.getElementById("faq_i" + id_question).className="fa-caret-right fa-2x"
 		}
 	}
 -->
@@ -19,11 +19,11 @@
 <section>
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_FAQ))}" class="icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_FAQ))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			{TITLE}
 			# IF C_ADMIN #
 			<span class="actions">
-				<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+				<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 			</span>
 			# ENDIF #
 		</h1>
@@ -44,7 +44,7 @@
 						# ENDIF #
 						<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
 						# IF C_ADMIN #
-						<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
+						<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 						# ENDIF #
 						<div class="smaller">
 							{row.list_cats.NUM_QUESTIONS}
@@ -62,7 +62,7 @@
 					<div>
 						<span style="float:left;">
 							<a href="javascript:show_answer({questions.faq.ID_QUESTION});" >
-								<i id="faq_i{questions.faq.ID_QUESTION}" class="icon-caret-right icon-2x"></i>
+								<i id="faq_i{questions.faq.ID_QUESTION}" class="fa fa-caret-right fa-2x"></i>
 							</a>
 							<a id="faq_l{questions.faq.ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
 							<script type="text/javascript">
@@ -73,17 +73,17 @@
 							</script>
 						</span>
 						<span style="float:right;">
-							<a href="{questions.faq.U_QUESTION}" title="{L_QUESTION_URL}" class="icon-flag"></a>
+							<a href="{questions.faq.U_QUESTION}" title="{L_QUESTION_URL}" class="fa fa-flag"></a>
 							# IF C_ADMIN_TOOLS #
-								<a href="{questions.faq.U_MOVE}" title="{L_MOVE}" class="icon-move"></a>
+								<a href="{questions.faq.U_MOVE}" title="{L_MOVE}" class="fa fa-move"></a>
 								# START questions.faq.up #
-									<a href="{questions.faq.U_UP}" title="{L_UP}" class="icon-arrow-up"></a>
+									<a href="{questions.faq.U_UP}" title="{L_UP}" class="fa fa-arrow-up"></a>
 								# END questions.faq.up #
 								# START questions.faq.down #
-									<a href="{questions.faq.U_DOWN}" title="{L_DOWN}" class="icon-arrow-down"></a>
+									<a href="{questions.faq.U_DOWN}" title="{L_DOWN}" class="fa fa-arrow-down"></a>
 								# END questions.faq.down #
-								<a href="{questions.faq.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-								<a href="{questions.faq.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+								<a href="{questions.faq.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+								<a href="{questions.faq.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								# ENDIF #
 						</span>
 						<div style="clear:both"></div>
@@ -95,12 +95,12 @@
 					# IF questions.faq.C_HIDE_ANSWER #
 					<script type="text/javascript">
 						document.getElementById("a{questions.faq.ID_QUESTION}").style.display = "none";
-						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="icon-caret-right icon-2x";
+						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="fa-caret-right fa-2x";
 					</script>
 					# ENDIF #
 					# IF questions.faq.C_SHOW_ANSWER #
 					<script type="text/javascript">
-						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="icon-caret-down icon-2x";
+						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="fa-caret-down fa-2x";
 					</script>
 					# ENDIF #		
 				</div>
@@ -119,21 +119,21 @@
 			# START questions_block.contents #
 				<div id="q{questions_block.contents.ID}">
 					<span style="float:left;">
-						<i class="icon-caret-right icon-2x"></i>
+						<i class="fa fa-caret-right fa-2x"></i>
 						{questions_block.contents.QUESTION}
 					</span>
 					<span style="float:right;">
-						<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}" class="icon-flag"></a>
+						<a href="{questions_block.contents.U_QUESTION}" title="{L_QUESTION_URL}" class="fa fa-flag"></a>
 						# IF C_ADMIN_TOOLS #
-							<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}" class="icon-move"></a>
+							<a href="{questions_block.contents.U_MOVE}" title="{L_MOVE}" class="fa fa-move"></a>
 							# START questions_block.contents.up #
-							<a href="{questions_block.contents.U_UP}" title="{L_UP}" class="icon-arrow-up"></a>
+							<a href="{questions_block.contents.U_UP}" title="{L_UP}" class="fa fa-arrow-up"></a>
 							# END questions_block.contents.up #
 							# START questions_block.contents.down #
-								<a href="{questions_block.contents.U_DOWN}" title="{L_DOWN}" class="icon-arrow-down"></a>
+								<a href="{questions_block.contents.U_DOWN}" title="{L_DOWN}" class="fa fa-arrow-down"></a>
 							# END questions_block.contents.down #
-							<a href="{questions_block.contents.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-							<a href="{questions_block.contents.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+							<a href="{questions_block.contents.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+							<a href="{questions_block.contents.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 							# ENDIF #
 					</span>
 					<div style="clear:both"></div>

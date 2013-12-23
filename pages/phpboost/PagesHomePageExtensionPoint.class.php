@@ -83,7 +83,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 					//Vérification de l'autorisation d'éditer la page
 					if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 					{
-						$root .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><i class="icon-folder"></i>' . $value['name'] . '</a></li>';
+						$root .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $value['name'] . '</a></li>';
 					}
 				}
 			}
@@ -101,7 +101,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			//Vérification de l'autorisation d'éditer la page
 			if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 			{
-				$root .= '<li><a href="' . PagesUrlBuilder::get_link_item($row['encoded_title']) . '"><i class="icon-file"></i>' . $row['title'] . '</a></li>';
+				$root .= '<li><a href="' . PagesUrlBuilder::get_link_item($row['encoded_title']) . '"><i class="fa fa-file"></i>' . $row['title'] . '</a></li>';
 			}
 		}
 		$this->sql_querier->query_close($result);
@@ -129,13 +129,13 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			if ($sub_cats_number > 0)
 			{	
 				$tpl->assign_block_vars('list', array(
-					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><i class="icon-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="icon-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></li>'
+					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></li>'
 				));
 			}
 			else
 			{
 				$tpl->assign_block_vars('list', array(
-					'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');"><i class="icon-folder"></i>' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:open_cat(' . $row['id'] . ');"><i class="fa fa-folder"></i>' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 		}

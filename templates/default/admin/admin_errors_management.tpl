@@ -61,7 +61,7 @@
 				<tr>
 					<td> 
 						<div class="message-helper {errors.CLASS}">
-							<i class="icon-{errors.CLASS}"></i>
+							<i class="fa fa-{errors.CLASS}"></i>
 							<div class="message-helper-content">
 								<strong>{errors.ERROR_TYPE} : </strong>{errors.ERROR_MESSAGE}<br /><br /><br />
                             	<em>{errors.ERROR_STACKTRACE}</em>

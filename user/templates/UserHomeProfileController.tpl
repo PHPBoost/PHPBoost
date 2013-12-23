@@ -8,21 +8,21 @@
 		<ul class="center" style="width:99%;margin:30px auto;">
 			<li class="small-block" style="width:15%;">
 				<a href="{U_EDIT_PROFILE}" title="">
-					<i class="icon-user icon-2x"></i><br/>
+					<i class="fa fa-user fa-2x"></i><br/>
 					{@profile.edit}
 				</a> 
 			</li>
 			<li class="small-block" style="width:15%;">
 				<a href="{U_USER_PM}">
 					# IF C_HAS_PM #
-					<span class="icon-stack">
-						<i class="icon-circle blink icon-circle-alert">
+					<span class="fa fa-stack">
+						<i class="fa fa-circle blink fa-circle-alert">
 							<span>{NUMBER_PM}</span>
 						</i>
-						<i class="icon-envelope-o icon-stack-2x"></i>
+						<i class="fa fa-envelope-o fa-stack-2x"></i>
 					</span><br/>
 					# ELSE #
-					<i class="icon-envelope-o icon-2x"></i><br/>
+					<i class="fa fa-envelope-o fa-2x"></i><br/>
 					# END IF #
 					${LangLoader::get_message('private_message', 'main')}
 				</a>
@@ -30,7 +30,7 @@
 			# IF C_USER_AUTH_FILES #
 			<li class="small-block" style="width:15%;">
 				<a href="{U_UPLOAD}">
-					<i class="icon-cloud-upload icon-2x"></i><br />
+					<i class="fa fa-cloud-upload fa-2x"></i><br />
 					${LangLoader::get_message('files_management', 'main')}
 				</a>
 			</li>
@@ -38,14 +38,14 @@
 			<li class="small-block" style="width:15%;">
 				<a href="{U_CONTRIBUTION_PANEL}">
 					# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
-					<span class="icon-stack">
-						<i class="icon-circle blink icon-circle-alert">
+					<span class="fa fa-stack">
+						<i class="fa fa-circle blink fa-circle-alert">
 							<span>{NUMBER_UNREAD_CONTRIBUTIONS}</span>
 						</i>
-						<i class="icon-file-text-o icon-stack-2x"></i>
+						<i class="fa fa-file-text-o fa-stack-2x"></i>
 					</span><br/>
 					# ELSE #
-					<i class="icon-file-text-o icon-2x"></i><br />
+					<i class="fa fa-file-text-o fa-2x"></i><br />
 					# ENDIF #
 					${LangLoader::get_message('contribution_panel', 'main')}
 				</a>
@@ -53,7 +53,7 @@
 			# IF C_IS_MODERATOR #
 			<li class="small-block" style="width:15%;">
 				<a href="{U_MODERATION_PANEL}">
-					<i class="icon-gavel icon-2x"></i><br />
+					<i class="fa fa-gavel fa-2x"></i><br />
 					${LangLoader::get_message('moderation_panel', 'main')}
 				</a>
 			</li>

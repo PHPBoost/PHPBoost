@@ -145,7 +145,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 		$Template->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
 			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) ||
-				(!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="icon-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>' : ''
+				(!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="fa fa-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>' : ''
 		));
 	}
 	

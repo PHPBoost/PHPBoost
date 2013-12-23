@@ -131,25 +131,25 @@
 						<div style="text-align:center;"><a href="javascript:show_hide_questions();" id="l_change_answers_status">{L_DISPLAY_ANSWERS}</a></div><br />
 					# ENDIF #
 					<p style="text-align:center;">
-						<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}" class="icon-plus button"> {L_INSERT_QUESTION_BEFORE}</a>
+						<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}" class="fa fa-plus button"> {L_INSERT_QUESTION_BEFORE}</a>
 					</p>
 					<br />
 					# START category.questions #
 						<div id="q{category.questions.ID}">
 							<span style="float:left;">
-								<i class="icon-caret-right icon-2x"></i>
+								<i class="fa fa-caret-right fa-2x"></i>
 								{category.questions.QUESTION}
 							</span>
 							<span style="float:right;">
-								<a href="{category.questions.U_MOVE}" title="{L_MOVE}" class="icon-move"></a>
+								<a href="{category.questions.U_MOVE}" title="{L_MOVE}" class="fa fa-move"></a>
 								# START category.questions.up #
-									<a href="{category.questions.U_UP}" title="{L_UP}" class="icon-arrow-up"></a>
+									<a href="{category.questions.U_UP}" title="{L_UP}" class="fa fa-arrow-up"></a>
 								# END category.questions.up #
 								# START category.questions.down #
-									<a href="{category.questions.U_DOWN}" title="{L_DOWN}" class="icon-arrow-down"></a>
+									<a href="{category.questions.U_DOWN}" title="{L_DOWN}" class="fa fa-arrow-down"></a>
 								# END category.questions.down #
-								<a href="{category.questions.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-								<a href="{category.questions.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+								<a href="{category.questions.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+								<a href="{category.questions.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 							</span>
 							<div style="clear:both"></div>
 						</div>
@@ -159,7 +159,7 @@
 						</div>	
 						<br />
 						<div style="text-align:center;">
-							<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}" class="icon-plus button"> {L_INSERT_QUESTION}</a>
+							<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}" class="fa fa-plus button"> {L_INSERT_QUESTION}</a>
 							</a>
 						</div>
 						<br />

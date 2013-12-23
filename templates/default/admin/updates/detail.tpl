@@ -28,7 +28,7 @@
 	<div style="clear:right;"></div>
     # IF C_UNEXISTING_UPDATE #
         <div class="message-helper warning" style="text-align:center;width:50%;margin:auto;">
-			<i class="icon-warning"></i>
+			<i class="fa fa-warning"></i>
 			<div class="message-helper-content">{L_UNEXISTING_UPDATE}</div>
 		</div>
     # ELSE #

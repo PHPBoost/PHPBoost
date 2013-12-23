@@ -8,7 +8,7 @@
 		function XMLHttpRequest_unread_topics(divID)
 		{
 			if( document.getElementById('refresh_unread' + divID) )
-				document.getElementById('refresh_unread' + divID).className = 'icon-spinner icon-spin';
+				document.getElementById('refresh_unread' + divID).className = 'fa-spinner fa-spin';
 				
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&refresh_unread=1');
 			xhr_object.onreadystatechange = function() 
@@ -16,7 +16,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 				{	
 					if( document.getElementById('refresh_unread' + divID) )
-						document.getElementById('refresh_unread' + divID).className = 'icon-refresh';
+						document.getElementById('refresh_unread' + divID).className = 'fa-refresh';
 					
 					var array_unread_topics = new Array('', '');
 					eval(xhr_object.responseText);
@@ -33,7 +33,7 @@
 				{	
 					alert("{L_AUTH_ERROR}");
 					if( document.getElementById('refresh_unread' + divID) )
-						document.getElementById('refresh_unread' + divID).className = 'icon-refresh';
+						document.getElementById('refresh_unread' + divID).className = 'fa-refresh';
 				}
 			}
 			xmlhttprequest_sender(xhr_object, null);
@@ -90,10 +90,10 @@
 						<div style="margin-top:4px;">
 							# IF C_FORUM_CONNEXION #
 								# IF C_USER_NOTCONNECTED #
-								<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><i class="icon-sign-in"></i> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="icon-ticket"></i> {L_REGISTER}</a>
+								<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a>
 								# ENDIF #
 								# IF C_USER_CONNECTED #
-									<a class="small" href="?disconnect=true&amp;token={TOKEN}"><i class="icon-sign-out"></i> {L_DISCONNECT}</a> 
+									<a class="small" href="?disconnect=true&amp;token={TOKEN}"><i class="fa fa-sign-out"></i> {L_DISCONNECT}</a> 
 								# ENDIF #
 							# ENDIF #
 						</div>
@@ -102,7 +102,7 @@
 						<form action="{PATH_TO_ROOT}/forum/search.php?token={TOKEN}" method="post">
                             <div>
                                 <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." placeholder="{L_SEARCH}..."></label>
-                                <button type="submit" name="valid_search"><i class="icon-search"></i></button><br/>
+                                <button type="submit" name="valid_search"><i class="fa fa-search"></i></button><br/>
                                 <a href="{PATH_TO_ROOT}/forum/search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small">{L_ADVANCED_SEARCH}</a>
                                 
                                 <input type="hidden" name="time" value="30000">
@@ -120,18 +120,18 @@
 				</div>
 				# IF C_USER_CONNECTED #
 					<div style="float:right;">
-						<i class="icon-msg-track"></i> {U_TOPIC_TRACK} &bull;
-						<i class="icon-lastview"></i> {U_LAST_MSG_READ} &bull;
-						<i class="icon-notread"></i> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
+						<i class="fa fa-msg-track"></i> {U_TOPIC_TRACK} &bull;
+						<i class="fa fa-lastview"></i> {U_LAST_MSG_READ} &bull;
+						<i class="fa fa-notread"></i> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
 						
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread">
 							</div>
 						</div>
-						<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="icon-refresh" id="refresh_unread"></i></a>
+						<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><i class="fa fa-refresh" id="refresh_unread"></i></a>
 						
 						&bull;
-						<i class="icon-eraser"></i> {U_MSG_SET_VIEW}
+						<i class="fa fa-eraser"></i> {U_MSG_SET_VIEW}
 					</div>
 				# ENDIF #
 				<div class="spacer"></div>

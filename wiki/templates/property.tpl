@@ -172,7 +172,7 @@
 				<div class="form-element">
 					<label>{L_SELECT_CAT}</label>
 					<div class="form-field">
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="icon-folder"></i> <span id="class_0" class="{move.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
+						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="fa fa-folder"></i> <span id="class_0" class="{move.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						{move.CATS}
 					</div>
@@ -244,7 +244,7 @@
 			<tfoot>
 				<tr>
 					<th colspan="2">
-						<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><i class="icon-fast-forward"></i> {L_CREATE_REDIRECTION}</a>
+						<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><i class="fa fa-fast-forward"></i> {L_CREATE_REDIRECTION}</a>
 					</th>
 				</tr>
 			</tfoot>
@@ -255,7 +255,7 @@
 						{redirect.list.REDIRECTION_NAME}
 					</td>
 					<td>
-						<a href="{redirect.list.U_REDIRECTION_DELETE}" class="icon-delete" title="{REDIRECTION_DELETE}" data-confirmation="{L_ALERT_DELETE_REDIRECTION}"></a>
+						<a href="{redirect.list.U_REDIRECTION_DELETE}" class="fa fa-delete" title="{REDIRECTION_DELETE}" data-confirmation="{L_ALERT_DELETE_REDIRECTION}"></a>
 					</td>
 				</tr>
 				# END redirect.list #
@@ -333,7 +333,7 @@
 				<div class="form-element">
 					<label>{L_SELECT_CAT}</label>
 					<div class="form-field">
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="icon-folder"></i> <span id="class_0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
+						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="fa fa-folder"></i> <span id="class_0" class="{remove.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						{remove.CATS}
 					</div>

@@ -246,7 +246,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		));
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($result_data['title']) : '';
 		$tpl->put_all(array(
-            'USER_ONLINE' => '<i class="' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'icon-online' : 'icon-offline') . '"></i>',
+            'USER_ONLINE' => '<i class="' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'fa-online' : 'fa-offline') . '"></i>',
             'U_USER_PROFILE' => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
             'USER_PSEUDO' => !empty($result_data['login']) ? TextHelper::wordwrap_html($result_data['login'], 13) : $LANG['guest'],
             'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],

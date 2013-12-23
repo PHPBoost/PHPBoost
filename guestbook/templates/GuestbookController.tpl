@@ -40,11 +40,11 @@
 					<div class="message-date">
 						# IF messages.C_MODERATOR #
 						<span class="actions">
-							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="icon-edit"></a>
-							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="icon-delete" data-confirmation="delete-element"></a>
+							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						</span>
 						# ENDIF #
-						<a href="{messages.U_ANCHOR}"><i class="icon-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {messages.DATE}
+						<a href="{messages.U_ANCHOR}"><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {messages.DATE}
 					</div>
 					<div class="message-message">
 						<div class="message-content">{messages.CONTENTS}</div>
