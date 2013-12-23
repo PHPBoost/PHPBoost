@@ -538,11 +538,6 @@ input.field-xlarge { width:300px; }
 	width:59%;
 }
 
-.module-mini-container .form-field {
-	display:block;
-	width:100%;
-}
-
 /* Label pour les checkbox et radio */
 .form-field label {
 	margin: 0 10px 0 0;
@@ -669,6 +664,11 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 	border-spacing:1px;
 	padding:5px;
 	clear:both;
+}
+
+.module-mini-container .form-field {
+	display:block;
+	width:100%;
 }
 
 .module-mini-top {

@@ -85,7 +85,6 @@ div.horizontal-fieldset [class^="form-element"] label {
 
 /* Boutons */
 .button { cursor:pointer; }
-button.image{ background:none; border:none; cursor:pointer; }
 
 /* Opacité */
 .low-opacity { filter:alpha(opacity=40); opacity: 0.40; -moz-opacity:0.40; }

@@ -40,13 +40,6 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		return new CommentsTopics(array(new NewsCommentsTopic()));
 	}
 	
-	public function css_files()
-	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('news.css');
-		return $module_css_files;
-	}
-	
 	public function feeds()
 	{
 		return new NewsFeedProvider();
