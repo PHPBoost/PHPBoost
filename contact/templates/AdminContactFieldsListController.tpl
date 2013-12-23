@@ -130,13 +130,13 @@ var ContactField = Class.create({
 	},
 	change_display_picture : function() {
 		if (this.is_not_displayed == false) {
-			$('change_display_' + this.id).className = "fa-eye";
+			$('change_display_' + this.id).className = "fa fa-eye";
 			$('change_display_' + this.id).title = "{@field.display}";
 			$('change_display_' + this.id).alt = "{@field.display}";
 			this.is_not_displayed = true;
 		}
 		else {
-			$('change_display_' + this.id).className = "fa-eye-slash";
+			$('change_display_' + this.id).className = "fa fa-eye-slash";
 			$('change_display_' + this.id).title = "{@field.not_display}";
 			$('change_display_' + this.id).alt = "{@field.not_display}";
 			this.is_not_displayed = false;
