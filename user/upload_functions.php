@@ -88,7 +88,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 			if ($sub_cats_number > 0)
 				$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="icon-plus-square-o" id="img2_' . $row['id'] . '"></i></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="icon-folder" id="img_' . $row['id'] . '"></i></a>&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
 			else //Sinon on n'affiche pas le "+"
-				$line .= '<li style="padding-left:17px;"><i class="icon-folder">&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span></li>';
+				$line .= '<li style="padding-left:17px;"><i class="icon-folder"></i>&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span></li>';
 		}
 	}
 	$Sql->query_close($result);
