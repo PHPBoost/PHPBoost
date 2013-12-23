@@ -23,10 +23,10 @@
 [*] Création d'une classe ModuleTreeLinks et d'un ExtensionPoint pour contenir tous les liens avec les différentes actions possible (remplace le admin_links dans desc.ini du module)
 [*] Création d'une API pour pouvoir intégrer facilement des Captchas alternatifs
 [*] Optimisation du système de notation et refonte graphique
+[*] Création d'un FormFieldUploadFile permettant d'utiliser le gestionnaire d'upload pour attacher un fichier à un élément facilement
 
 [b]Menus :[/b]
-- Possibilité de désactiver l'affichage d'un lien dans les menus
-- Refonte graphique
+[*] Améliorations graphique
 
 [b]Personnalisation graphique :[/b]
 [*] Logo cliquable
@@ -41,8 +41,8 @@
 [*] Grand nettoyage dans les images et remplacement par les équivalents du projet Font-Awesome
 [*] Le thème base est 500% plus compact en poids que celui de la version 4.0
 [*] Nettoyage du fichier default.css (gain de 30%)
-+ Nettoyage des principaux fichiers TPL et CSS
-- Nouveau thème épuré
+[*] Refonte de l'affichage de l'upload
+[*] Nettoyage des principaux fichiers TPL et CSS
 - Possibilité d'ajouter un texte de présentation du site en dessous du nom
 
 [b]Référencement :[/b]
