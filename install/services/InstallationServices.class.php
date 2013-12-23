@@ -392,7 +392,6 @@ class InstallationServices
             'user_show_mail' => 1,
             'timestamp' => time(),
             'user_aprob' => 1,
-            'user_timezone' => $timezone
 		);
 		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, $columns, 'WHERE user_id=1');
 	}
