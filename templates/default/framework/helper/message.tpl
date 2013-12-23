@@ -1,4 +1,4 @@
-		<div id="id-message-helper" class="message-helper {MESSAGE_CSS_CLASS}">
+		<div id="msg-helper-{TOKEN}" class="message-helper {MESSAGE_CSS_CLASS}">
 			<i class="icon-{MESSAGE_CSS_CLASS}"></i>
 			<div class="message-helper-content">{MESSAGE_CONTENT}</div>
 		</div>
@@ -6,7 +6,7 @@
 		<script type="text/javascript">
 		<!--
 			//Javascript timeout to hide this message
-			setTimeout('Effect.Fade(id-message-helper);', {TIMEOUT});
+			setTimeout('Effect.Fade("msg-helper-{TOKEN}");', {TIMEOUT});
 		-->
 		</script>
 		# ENDIF #
