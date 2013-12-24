@@ -335,7 +335,7 @@
 				<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
 					<fieldset>
 						<legend>{L_ADD_FILES}</legend>
-						<div class="form-element"  style="margin:auto;width:50%;">
+						<div class="form-element" >
 							<div class="form-field" style="width:auto;">
 								<input type="file" name="upload_file" size="30" id="upload-file">					
 								<input type="hidden" name="max_file_size" value="2000000">

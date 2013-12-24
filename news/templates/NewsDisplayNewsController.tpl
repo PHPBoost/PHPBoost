@@ -20,7 +20,7 @@
 		</div>
 		
 		<meta itemprop="url" content="{U_LINK}">
-		<meta itemprop="description" content="{DESCRIPTION}">
+		<meta itemprop="description" content="${escape(DESCRIPTION)}" />
 		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 		

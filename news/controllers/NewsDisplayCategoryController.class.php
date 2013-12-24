@@ -88,6 +88,7 @@ class NewsDisplayCategoryController extends ModuleController
 		$this->tpl->put_all(array(
 			'C_DISPLAY_BLOCK_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_BLOCK,
 			'C_DISPLAY_LIST_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_LIST,
+			'C_DISPLAY_CONDENSED_CONTENT' => $news_config->get_display_condensed_enabled(),
 		
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_ADD' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->contribution(),

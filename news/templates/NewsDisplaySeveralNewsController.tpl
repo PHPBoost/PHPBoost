@@ -15,7 +15,6 @@
 			<article # IF C_DISPLAY_BLOCK_TYPE # class="block" # ENDIF # # IF C_SEVERAL_COLUMNS # style="display:inline-block;width:calc(98% / {NUMBER_COLUMNS})" # ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
 					<h1>
-						<a href="{news.U_SYNDICATION}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 						<a href="{news.U_LINK}"><span id="name" itemprop="name">{news.NAME}</span></a>
 						<span class="actions">
 							# IF news.C_EDIT #
@@ -37,7 +36,7 @@
 					</div>
 					
 					<meta itemprop="url" content="{news.U_LINK}">
-					<meta itemprop="description" content="{news.DESCRIPTION}">
+					<meta itemprop="description" content="${escape(news.DESCRIPTION)}"/>
 					<meta itemprop="discussionUrl" content="{news.U_COMMENTS}">
 					<meta itemprop="interactionCount" content="{news.NUMBER_COMMENTS} UserComments">
 					
@@ -45,7 +44,7 @@
 				
 				<div class="content">
 					# IF news.C_PICTURE #<img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="right" /># ENDIF #
-					<span itemprop="text">{news.DESCRIPTION}... <a href="{news.U_LINK}">[${LangLoader::get_message('read-more', 'common')}]</a></span>
+					<span itemprop="text"># IF C_DISPLAY_CONDENSED_CONTENT # {news.DESCRIPTION}... <a href="{news.U_LINK}">[${LangLoader::get_message('read-more', 'common')}]</a># ELSE # {news.CONTENTS} # ENDIF #</span>
 				</div>
 				
 				<footer></footer>

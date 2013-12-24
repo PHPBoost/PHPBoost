@@ -133,7 +133,7 @@ class NewsConfig extends AbstractConfigData
 		return array(
 			self::NUMBER_NEWS_PER_PAGE => 10,
 			self::NUMBER_COLUMNS_DISPLAY_NEWS => 1,
-			self::DISPLAY_CONDENSED_ENABLED => true,
+			self::DISPLAY_CONDENSED_ENABLED => false,
 			self::NUMBER_CHARACTER_TO_CUT => 250,
 			self::COMMENTS_ENABLED => true,
 			self::NEWS_SUGGESTIONS_ENABLED => true,

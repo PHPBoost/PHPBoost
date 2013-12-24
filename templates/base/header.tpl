@@ -3,7 +3,7 @@
 	<head>
 		<title>{TITLE}</title>
 		<meta charset="iso-8859-1" />
-		<meta name="description" content="{SITE_DESCRIPTION}" />
+		<meta name="description" content="${escape(SITE_DESCRIPTION)}" />
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta name="generator" content="PHPBoost {PHPBOOST_VERSION}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
