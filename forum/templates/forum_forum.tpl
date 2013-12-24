@@ -7,76 +7,73 @@
 		# END error_auth_write #
 
 		# IF C_FORUM_SUB_CATS #
-		<div style="margin-top:20px;margin-bottom:20px;">
 			<div class="module_position">
 				<div class="module_top_l"></div>
 				<div class="module_top_r"></div>
-				<div class="module_top">
+				<div class="module_top options">
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
 				</div>
 				<div class="module_contents forum_contents">
-					<table class="module-table forum_table">
-						<tr>
-							<td class="forum_text_column" style="min-width:175px;">{L_FORUM}</td>
-							<td class="forum_text_column" style="width:60px;">{L_TOPIC}</td>
-							<td class="forum_text_column" style="width:60px;">{L_MESSAGE}</td>
-							<td class="forum_text_column" style="width:150px;">{L_LAST_MESSAGE}</td>
-						</tr>
+					<table class="forum_table">
+						<thead>
+							<tr>
+								<th class="forum_text_column" colspan="2">{L_FORUM}</th>
+								<th class="forum_text_column">{L_TOPIC}</th>
+								<th class="forum_text_column">{L_MESSAGE}</th>
+								<th class="forum_text_column">{L_LAST_MESSAGE}</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th colspan="6">
+								</th>
+							</tr>
+						</tfoot>
+						<tbody>
+				# START subcats #
+							<tr>
+								# IF subcats.U_FORUM_URL #
+								<td class="forum_sous_cat" style="width:25px;text-align:center;">
+									<i class="fa fa-globe"></i>
+								</td>
+								<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
+									<a href="{subcats.U_FORUM_URL}">{subcats.NAME}</a>
+									<br />
+									<span class="smaller">{subcats.DESC}</span>
+								</td>
+								# ELSE #
+								<td class="forum_sous_cat" style="width:25px;text-align:center;">
+									<i class="fa {subcats.IMG_ANNOUNCE}"></i>
+								</td>
+								<td class="forum_sous_cat" style="min-width:150px;">
+									<a href="forum{subcats.U_FORUM_VARS}">{subcats.NAME}</a>
+									<br />
+									<span class="smaller">{subcats.DESC}</span>
+									<span class="smaller">{subcats.SUBFORUMS}</span>
+								</td>
+								<td class="forum_sous_cat_compteur">
+									{subcats.NBR_TOPIC}
+								</td>
+								<td class="forum_sous_cat_compteur">
+									{subcats.NBR_MSG}
+								</td>
+								<td class="forum_sous_cat_last">
+									{subcats.U_LAST_TOPIC}
+								</td>
+								# ENDIF #
+							</tr>
+				# END subcats #
+						</tbody>
 					</table>
 				</div>
 			</div>
-			# START subcats #
-			<div class="module_position">
-				<div class="module_contents forum_contents">
-					<table class="module-table forum_table">
-						<tr>
-							# IF subcats.U_FORUM_URL #
-							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<i class="fa fa-globe"></i>
-							</td>
-							<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
-								<a href="{subcats.U_FORUM_URL}">{subcats.NAME}</a>
-								<br />
-								<span class="smaller">{subcats.DESC}</span>
-							</td>
-							# ELSE #
-							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<i class="fa {subcats.IMG_ANNOUNCE}"></i>
-							</td>
-							<td class="forum_sous_cat" style="min-width:150px;">
-								<a href="forum{subcats.U_FORUM_VARS}">{subcats.NAME}</a>
-								<br />
-								<span class="smaller">{subcats.DESC}</span>
-								<span class="smaller">{subcats.SUBFORUMS}</span>
-							</td>
-							<td class="forum_sous_cat_compteur">
-								{subcats.NBR_TOPIC}
-							</td>
-							<td class="forum_sous_cat_compteur">
-								{subcats.NBR_MSG}
-							</td>
-							<td class="forum_sous_cat_last">
-								{subcats.U_LAST_TOPIC}
-							</td>
-							# ENDIF #
-						</tr>
-					</table>
-				</div>
-			</div>
-			# END subcats #
-			<div class="module_position">
-				<div class="module_bottom_l"></div>
-				<div class="module_bottom_r"></div>
-				<div class="module_bottom"></div>
-			</div>
-		</div>
 		# ENDIF #
 
 		<div class="module_position">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
-			<div class="module_top">
+			<div class="module_top options">
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
 				# IF C_POST_NEW_SUBJECT #
 					&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
@@ -89,20 +86,29 @@
 				</span>
 			</div>
 			<div class="module_contents forum_contents">
-				<table class="module-table forum_table">
-					<tr>
-						<td class="forum_text_column" style="min-width:175px;">{L_TOPIC}</td>
-						<td class="forum_text_column" style="width:100px;">{L_AUTHOR}</td>
-						<td class="forum_text_column" style="width:60px;">{L_ANSWERS}</td>
-						<td class="forum_text_column" style="width:60px;">{L_VIEW}</td>
-						<td class="forum_text_column" style="width:150px;">{L_LAST_MESSAGE}</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-		<div class="module_position">
-			<div class="module_contents forum_contents">
-				<table class="module-table forum_table">
+				<table class="forum_table">
+					<thead>
+						<tr>
+							<th class="forum_text_column" colspan="3">{L_TOPIC}</th>
+							<th class="forum_text_column">{L_AUTHOR}</th>
+							<th class="forum_text_column">{L_ANSWERS}</th>
+							<th class="forum_text_column">{L_VIEW}</th>
+							<th class="forum_text_column">{L_LAST_MESSAGE}</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th colspan="7">
+								<div style="float:left;">
+									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
+									# IF C_POST_NEW_SUBJECT #
+										&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
+									# ENDIF #
+								</div>
+								<span style="float:right;">{PAGINATION}</span>&nbsp;
+							</th>
+						</tr>
+					</tfoot>
 					# IF C_NO_MSG_NOT_READ #
 					<tr>
 						<td class="forum_sous_cat" style="text-align:center;">
@@ -161,16 +167,6 @@
 			</div>
 		</div>
 
-		<div class="module_position">
-			<div class="module_bottom_l"></div>
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
-				# IF C_POST_NEW_SUBJECT #
-					&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
-				# ENDIF #
-				<span style="float:right;">{PAGINATION}</span>&nbsp;
-			</div>
-		</div>
+
 
 		# INCLUDE forum_bottom #

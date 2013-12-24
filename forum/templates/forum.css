@@ -5,10 +5,7 @@ section#main * {
 }
 
 .forum_table {
-	width:100%;
-	border-collapse:collapse;
-	border:none;
-	margin:0px;
+
 }
  
 /* Classe du lien du pseudo sur forum */
@@ -21,47 +18,52 @@ a.forum_link_pseudo:hover {
 	font-weight:bold;
 }
 /* Barre du titre du forum */
+#forum_top {
+	float:none;
+	padding:15px;
+	margin-bottom:20px;
+}
+
+#forum_bottom {
+	float:none;
+	padding:15px;
+	margin-top:16px;
+}
+
 .forum_title_l{
 	float:left;
 	width:5px;
-	height: 55px;
-	border-top:1px solid #D1D4DF;
-	border-left:1px solid #D1D4DF;
 }
 .forum_title_r{
 	float:right;
 	width:5px;
-	height: 55px;
-	border-top:1px solid #D1D4DF;
-	border-right:1px solid #D1D4DF;
 }
 .forum_title{
 	margin:auto;
-	height:55px;
-	color:#334455;
-	background:#ECEFFA;
-	border-top:1px solid #D1D4DF;
-
 }
 .forum_title h2{ /* Titre du forum */
 	font-size:14px;
-	font-weight:bold;
-	color:#334455;
 }
 .forum_title a{ /* Couleur des liens */
-	color:#334455;
+	
 }
 /* Barre de liens du forum */
 .forum_links{
 	color:#334455;
 	padding:6px;
-	border: 2px solid #336397;
-	border-left:1px solid #D1D4DF;
-	border-right:1px solid #D1D4DF;
-	background:#ECEFFA;
 }
 .forum_links a{ /* Couleur des liens */
 	color:#334455;
+}
+
+#forum_top .forum_links{
+	margin-top:8px;
+	border-top:1px solid #CCC;
+}
+
+#forum_bottom .forum_links{
+	margin-bottom:8px;
+	border-bottom:1px solid #CCC;
 }
 .forum_notread{ /* Message non lus */
 	background:#5D7C94;
@@ -73,15 +75,14 @@ a.forum_link_pseudo:hover {
 td.forum_text_column {	
 	height:20px;
 	font-size:11px;
-	color:#FFFFFF;	
-	text-align:center;
-	background:#366393;
 }
 /* Case des liens sous-catégories */
+td.forum_sous_cat_img{
+	width:30px;
+}
+
 td.forum_sous_cat{
-	background:#ECEFFA;
-	border-right:1px dotted #C4CED6;
-	padding:1px;
+	text-align:left;
 }
 
 td.forum_sous_cat + td.forum_sous_cat{
@@ -90,18 +91,11 @@ td.forum_sous_cat + td.forum_sous_cat{
 /* Case compteur message/topic */
 td.forum_sous_cat_compteur{	
 	width:60px;
-	background:#ECEFFA;
-	border-right:1px dotted #C4CED6;
-	color:#000000;
-	text-align:center; 
 }
 /* Case compteur dernier topic/dernier message */
 td.forum_sous_cat_last{
 	width:150px;
-	background:#ECEFFA;
 	font-size:10px;
-	color:#000000;
-	text-align:center; 
 }
 
 /* Formulaire pour poster les messages */
@@ -122,18 +116,12 @@ a.forum_link_cat{
 }
 /* Affichage des membres en ligne */
 .forum_online{
-	color:#334455;
-	border-top:none;
 	padding:6px;
 	overflow:hidden !important;
 	height:auto !important;
 	overflow:visible;
 	height:1%;
 	clear:both;
-	border-bottom:1px solid #D1D4DF;
-	border-left:1px solid #D1D4DF;
-	border-right:1px solid #D1D4DF;
-	background:#ECEFFA;
 }
 .forum_online_select_cat{
 	float:left;
@@ -157,7 +145,6 @@ a.forum_link_cat{
 .forum_contents{
 	padding:0px;
 	margin:0px;
-	border:1px solid #D1D4DF;
 	border-bottom:none;
 }
 .forum_cat_title{
@@ -178,21 +165,18 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 .module_position {
     width:96%;
     margin:auto;
+	float:none;
 }
 
-.module_top_l{ /* Barre supérieur des modules */
+/* Barre supérieur des modules */
+.module_top_l{ 
 }
 .module_top_r{
 }
 .module_top{
-	min-height:20px;
-	height:auto;
 	padding:8px;
-	background:#ECEFFA;
-	border:1px solid #D1D4DF;
-	color:#334455;
-	font-weight:normal;
-	text-indent:0px;
+	float:none;
+	margin:0;
 }
 .module_top a:not(.*button) {
 	color:#334455;
