@@ -11,12 +11,11 @@ section, article {
 	vertical-align:top;
 }
 
-section header, article header { margin:12px 0 20px 0; }
+section header, article header { margin:0 0 20px 0; }
 
 /* Titre d'une page ou d'un element d'un module */
 section header h1, article header h1 {
 	border-bottom: 1px solid #336397;
-	margin-top:10px;
 }
 
 section header h1, article header h1 {
@@ -26,7 +25,7 @@ section header h1, article header h1 {
 
 section header h2, article header h2 {
 	border-bottom: 1px solid #336397;
-	margin-left:16px;
+	margin-left: 16px;
 }
 
 section header h2, article header h2 {
@@ -36,15 +35,13 @@ section header h2, article header h2 {
 
 section header h3, article header h3 {
 	border-bottom: 1px solid #336397;
-	margin-left:16px;
+	margin-left: 16px;
 }
 
 section header h3, article header h3 {
 	font-size: 15px;
 	font-weight: bold;
 }
-
-#actions-links-menu { float:right; }
 
 /* Icones avec les actions (edition, suppression, etc) */
 span.actions { float: right; }
@@ -74,6 +71,8 @@ section footer nav.pagination {	text-align: center; }
 	background: #F2F8FF;
 	padding: 10px;
 }
+
+.block .content, .medium-block .content, .small-block .content { margin:0; }
 
 .block h1, .medium-block h1, .small-block h1 { border: none; }
 .block { width: auto; }

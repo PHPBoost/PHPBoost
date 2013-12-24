@@ -779,7 +779,7 @@ div.message-helper-content{ padding:0px 5px 0px 35px; }
 			
 #empty-folder { width:70%; }
 			
-.upload-elements-container { margin:20px 0 70px 60px }
+.upload-elements-container { margin: 0 0 0 20px; }
 			
 .upload-elements-file,
 .upload-elements-repertory { 

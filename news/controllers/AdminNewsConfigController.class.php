@@ -143,7 +143,7 @@ class AdminNewsConfigController extends AdminModuleController
 		$this->config->set_number_news_per_page($this->form->get_value('number_news_per_page'));
 		$this->config->set_number_columns_display_news($this->form->get_value('number_columns_display_news')->get_raw_value());
 		$this->config->set_display_condensed_enabled($this->form->get_value('display_condensed'));
-		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut'));
+		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
 		$this->config->set_comments_enabled($this->form->get_value('comments_enabled'));
 		$this->config->set_news_suggestions_enabled($this->form->get_value('news_suggestions_enabled'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());

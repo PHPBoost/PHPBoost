@@ -66,8 +66,8 @@ if (!empty($popup)) //Popup.
 		</fieldset>
 	</body>
 </html>';
-	$popup = '&amp;popup=1&amp;fd=' . $field . '&amp;edt=' . $editor;
-	$popup_noamp = '&popup=1&fd=' . $field . '&edt=' . $editor;
+	$popup = '&popup=1&fd=' . $field . '&edt=' . $editor . '&no_path=' . $no_path;
+	$popup_noamp = '&popup=1&fd=' . $field . '&edt=' . $editor . '&no_path=' . $no_path;
 }
 else //Affichage de l'interface de gestion.
 {
