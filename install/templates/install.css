@@ -477,6 +477,36 @@ fieldset dl dd label:hover{
 	font-size:12px;
 }
 
-div.form-field {
+/* Element du formulaire (englobe le label et l'input d'un champ) */
+.form-element, .form-element-textarea {
+	margin: 0px 15px 10px 15px;
+}
+
+.fieldset-description { margin: 0px 15px 10px 15px;}
+
+.form-field {
 	display:inline-block;
+	width:59%;
+}
+
+/* Label pour les checkbox et radio */
+.form-field label {
+	margin: 0 10px 0 0;
+	display: block;
+}
+
+/* Label pour les inputs [for] et pour les élements sans associations*/
+.form-element > label {
+	display:inline-block;
+	width: 40%;
+	text-align: left;
+	padding-right: 10px;
+	padding-top: 3px;
+	vertical-align: top;
+}
+
+.field-description {
+	font-size:10px;
+	display: block;
+	line-height: 12px;
 }

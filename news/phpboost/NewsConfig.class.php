@@ -137,7 +137,7 @@ class NewsConfig extends AbstractConfigData
 			self::NUMBER_CHARACTER_TO_CUT => 250,
 			self::COMMENTS_ENABLED => true,
 			self::NEWS_SUGGESTIONS_ENABLED => true,
-			self::DISPLAY_TYPE => self::DISPLAY_BLOCK,
+			self::DISPLAY_TYPE => self::DISPLAY_LIST,
 			self::AUTHORIZATIONS => array('r1' => 13, 'r0' => 5, 'r-1' => 1)
 		);
 	}
