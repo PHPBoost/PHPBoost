@@ -80,14 +80,14 @@
 		-->
 		</script>
 		
-		<div class="module_position" style="margin-bottom:15px;background:none;border:none">
+		<div id="forum_top" class="options">
 			<div class="forum_title_l"></div>
 			<div class="forum_title_r"></div>
 			<div class="forum_title">
-				<div style="padding:10px;">
+				<div>
 					<div style="float:left;">
 						<h2>{FORUM_NAME}</h2>
-						<div style="margin-top:4px;">
+						<div>
 							# IF C_FORUM_CONNEXION #
 								# IF C_USER_NOTCONNECTED #
 								<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><i class="fa fa-sign-in"></i> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a>
@@ -114,7 +114,7 @@
 					<div class="spacer"></div>		
 				</div>
 			</div>
-			<div class="forum_links" style="border-top:none;">
+			<div class="forum_links">
 				<div style="float:left;">
 					&bull; <a href="index.php?{SID}">{L_FORUM_INDEX}</a>
 				</div>

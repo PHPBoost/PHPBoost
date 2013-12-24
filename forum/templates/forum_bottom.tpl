@@ -1,5 +1,5 @@
-		<div class="module_position" style="margin-top:15px;">
-			<div class="forum_links" style="border-bottom:none;">
+		<div id="forum_bottom" class="options">
+			<div class="forum_links">
 				<div style="float:left;">
 					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 
 				</div>
