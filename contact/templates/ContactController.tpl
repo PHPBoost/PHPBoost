@@ -2,7 +2,7 @@
 	<header>
 		<h1>{@module_title}</h1>
 	</header>
-	<div class="module_contents">
+	<div class="content">
 		# INCLUDE MSG #
 		
 		# IF C_INFORMATIONS_TOP #
