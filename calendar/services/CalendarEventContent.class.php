@@ -227,6 +227,7 @@ class CalendarEventContent
 			'id' => $this->get_id(),
 			'id_category' => $this->get_category_id(),
 			'title' => $this->get_title(),
+			'rewrited_title' => $this->get_rewrited_title(),
 			'contents' => $this->get_contents(),
 			'location' => $this->get_location(),
 			'approved' => (int)$this->is_approved(),
@@ -245,7 +246,7 @@ class CalendarEventContent
 		$this->id = $properties['id'];
 		$this->category_id = $properties['id_category'];
 		$this->title = $properties['title'];
-		$this->rewrited_title = $properties['title'];
+		$this->rewrited_title = $properties['rewrited_title'];
 		$this->contents = $properties['contents'];
 		$this->location = $properties['location'];
 		
