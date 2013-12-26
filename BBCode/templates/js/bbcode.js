@@ -326,8 +326,8 @@ function bbcode_table(field)
 
 function bbcode_list(field)
 {
-	var elements = document.getElementById('bb-list' + field).value;
-	var ordered_list = document.getElementById('bb-ordered-list' + field).checked;
+	var elements = document.getElementById('bb_list' + field).value;
+	var ordered_list = document.getElementById('bb_ordered_list' + field).checked;
 	if( elements <= 0 )
 		elements = 1;
 	
