@@ -192,7 +192,9 @@ function XMLHttpRequest_preview(field)
 				<i class="fa bbcode-icon-minus" onclick="textarea_resize('{FIELD}', -100, 'height');textarea_resize('xmlhttprequest-preview', -100, 'height');" title="{L_BB_SMALL}"></i>
 				<i class="fa bbcode-icon-plus" onclick="textarea_resize('{FIELD}', 100, 'height');textarea_resize('xmlhttprequest-preview', 100, 'height');" title="{L_BB_LARGE}"></i>
 				<!-- bbcode-more button */ --> 
-				<a onclick="show_bbcode_div('bbcode_more{FIELD}', 1);" style="display:inline-block; float:right;"><i class="fa bbcode-icon-more" title="{L_BB_MORE}" class="bbcode-hover"></i></a>
+				<a title="{L_BB_MORE}" onclick="show_bbcode_div('bbcode_more{FIELD}', 1);" style="display:inline-block; float:right;">
+					<i class="fa bbcode-icon-more" class="bbcode-hover"></i>
+				</a>
 			</li>
 		</ul>
 		
