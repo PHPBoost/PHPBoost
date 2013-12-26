@@ -200,7 +200,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	{
 		$number_articles = PersistenceContext::get_querier()->count(
 			ArticlesSetup::$articles_table, 
-			'WHERE id_category = :id_category AND (published = 1 OR (published = 2 AND (publishing_start_date < :timestamp_now AND publishing_end_date = 0) OR publishing_end_date > :timestamp_now))', 
+			'WHERE id_category IN :id_category AND (published = 1 OR (published = 2 AND (publishing_start_date < :timestamp_now AND publishing_end_date = 0) OR publishing_end_date > :timestamp_now))', 
 			array(
 				'id_category' => $authorized_categories,
 				'timestamp_now' => $now->get_timestamp()
