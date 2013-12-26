@@ -32,7 +32,7 @@ class MediaTreeLinks implements ModuleTreeLinksExtensionPoint
 {
 	public function get_actions_tree_links()
 	{
-		global $MEDIA_LANG, $Cache;
+		global $MEDIA_LANG, $MEDIA_CATS, $Cache;
 		load_module_lang('media'); //Chargement de la langue du module.
 		$Cache->load('media');
 		require_once(PATH_TO_ROOT . '/media/media_constant.php');
