@@ -36,5 +36,10 @@ class PHPBoostCaptchaExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new PHPBoostCaptcha();
 	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/PHPBoostCaptcha/index.php')));
+	}
 }
 ?>
