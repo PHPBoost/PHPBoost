@@ -41,7 +41,7 @@
 # ENDIF #
 
 <div class="spacer"></div>
-<a class="small" href="javascript:display_div_auto('advanced_auth{IDSELECT}', '');display_div_auto('advanced_authb{IDSELECT}', '');switch_className('advanced_auth_plus{IDSELECT}', 'fa-minus-square-o', 'fa-plus-square-o');">
+<a class="small" href="javascript:display_div_auto('advanced_auth{IDSELECT}', '');display_div_auto('advanced_authb{IDSELECT}', '');switch_className('advanced_auth_plus{IDSELECT}', 'fa fa-minus-square-o', 'fa fa-plus-square-o');">
 	# IF C_ADVANCED_AUTH_OPEN #
 	<i id="advanced_auth_plus{IDSELECT}" class="fa fa-minus-square-o"></i>
 	# ELSE #
