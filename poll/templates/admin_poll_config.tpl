@@ -12,16 +12,16 @@
 				}
 				return true;
 			}
-			function check_select_multiple(id, status)
+			function select_displayed_polls_in_mini(id, status)
 			{
 				var i;
 				
 				for(i = 0; i < {NBR_POLL}; i++)
-				{	
+				{
 					if( document.getElementById(id + i) )
-						document.getElementById(id + i).selected = status;			
+						document.getElementById(id + i).selected = status;
 				}
-			}			
+			}
 			-->
 			</script>
 			
@@ -54,10 +54,10 @@
 						<label for="displayed_in_mini_module_list">{L_DISPLAYED_IN_MINI_MODULE_LIST} <span class="field-description">{L_DISPLAYED_IN_MINI_MODULE_LIST_EXPLAIN}</span></label>
 						<div class="form-field"><label>
 							<select id="displayed_in_mini_module_list" name="displayed_in_mini_module_list[]" size="5" multiple="multiple">
-								{POLL_LIST}				
+								{POLL_LIST}
 							</select>
 							<br />
-							<a class="small" href="javascript:check_select_multiple('displayed_in_mini_module_list', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple('displayed_in_mini_module_list', false);">{L_SELECT_NONE}</a>
+							<a class="small" href="javascript:select_displayed_polls_in_mini('displayed_in_mini_module_list', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:select_displayed_polls_in_mini('displayed_in_mini_module_list', false);">{L_SELECT_NONE}</a>
 						</label></div>
 					</div>
 				</fieldset>	
