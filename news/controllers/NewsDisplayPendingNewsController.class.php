@@ -53,7 +53,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 	{
 		$now = new Date();
 		$authorized_categories = NewsService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$number_columns_display_news = NewsConfig::load()->get_number_columns_display_news();
+		$news_config = NewsConfig::load();
 		$pagination = $this->get_pagination($now, $authorized_categories);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*
@@ -71,43 +71,32 @@ class NewsDisplayPendingNewsController extends ModuleController
 		$i = 0;
 		while ($row = $result->fetch())
 		{
-			if ($number_columns_display_news > 1)
-			{
-				$new_row = (($i % $number_columns_display_news) == 0 && $i > 0);
-				$i++;
-			}
-			else
-				$new_row = false;
-				
 			$news = new News();
 			$news->set_properties($row);
 						
 			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
-				'C_NEWS_ROW' => $new_row,
 				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
-				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0,
+				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0
 			)));
 		}
 		
+		$number_columns_display_news = $news_config->get_number_columns_display_news();
 		$this->tpl->put_all(array(
+			'C_DISPLAY_BLOCK_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_BLOCK,
+			'C_DISPLAY_LIST_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_LIST,
+			'C_DISPLAY_CONDENSED_CONTENT' => $news_config->get_display_condensed_enabled(),
+		
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_ADD' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution(),
 			'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 		
 			'PAGINATION' => $pagination->display(),
-		
+			'C_SEVERAL_COLUMNS' => $number_columns_display_news > 1,
+			'NUMBER_COLUMNS' => $number_columns_display_news,
+
 			'L_NEWS_TITLE' => $this->lang['news.pending'],
 		));
-		
-		if ($number_columns_display_news > 1)
-		{
-			$column_width = floor(100 / $number_columns_display_news);
-			$this->tpl->put_all(array(
-				'C_NEWS_BLOCK_COLUMN' => true,
-				'COLUMN_WIDTH' => $column_width
-			));
-		}
 	}
 	
 	private function get_pagination(Date $now, $authorized_categories)
