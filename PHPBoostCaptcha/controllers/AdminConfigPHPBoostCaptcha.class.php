@@ -77,11 +77,11 @@ class AdminConfigPHPBoostCaptcha extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('difficulty', $this->lang['difficulty'], $this->config->get_difficulty(),
 			array(
-				new FormFieldSelectChoiceOption('0', PHPBoostCaptcha::CAPTCHA_VERY_EASY),
-				new FormFieldSelectChoiceOption('1', PHPBoostCaptcha::CAPTCHA_EASY),
-				new FormFieldSelectChoiceOption('2', PHPBoostCaptcha::CAPTCHA_NORMAL),
-				new FormFieldSelectChoiceOption('3', PHPBoostCaptcha::CAPTCHA_HARD),
-				new FormFieldSelectChoiceOption('4', PHPBoostCaptcha::CAPTCHA_VERY_HARD),
+				new FormFieldSelectChoiceOption($this->lang['difficulty.very_easy'], PHPBoostCaptcha::CAPTCHA_VERY_EASY),
+				new FormFieldSelectChoiceOption($this->lang['difficulty.easy'], PHPBoostCaptcha::CAPTCHA_EASY),
+				new FormFieldSelectChoiceOption($this->lang['difficulty.normal'], PHPBoostCaptcha::CAPTCHA_NORMAL),
+				new FormFieldSelectChoiceOption($this->lang['difficulty.hard'], PHPBoostCaptcha::CAPTCHA_HARD),
+				new FormFieldSelectChoiceOption($this->lang['difficulty.very_hard'], PHPBoostCaptcha::CAPTCHA_VERY_HARD),
 		)));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -100,7 +100,7 @@ class AdminConfigPHPBoostCaptcha extends AdminModuleController
 	private function build_response(View $tpl)
 	{
 		$response = new AdminMenuDisplayResponse($tpl);
-		$response->set_title($this->lang['admin.config']);		        
+		$response->set_title($this->lang['admin.config']);
 		$response->add_link($this->lang['admin.config'], DispatchManager::get_url('/PHPBoostCaptcha', '/admin/config/'), 'PHPBoostCaptcha.png');
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($this->lang['admin.config']);

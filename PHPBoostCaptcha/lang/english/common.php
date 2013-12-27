@@ -26,10 +26,10 @@
  ###################################################*/
 
 $lang['admin.config'] = 'Configuration';
-$lang['difficulty'] = 'Difficulté du code de vérification';
-$lang['difficulty.very_easy'] = 'Très facile';
-$lang['difficulty.easy'] = 'Facile';
+$lang['difficulty'] = 'Verification code difficulty';
+$lang['difficulty.very_easy'] = 'Very easy';
+$lang['difficulty.easy'] = 'Easy';
 $lang['difficulty.normal'] = 'Normal';
-$lang['difficulty.hard'] = 'Dur';
-$lang['difficulty.very_hard'] = 'Très dur';
+$lang['difficulty.hard'] = 'Hard';
+$lang['difficulty.very_hard'] = 'Very hard';
 ?>
