@@ -5,8 +5,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
 
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_default.css" type="text/css" media="screen" />
-
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/css_cache.php?name=admin-theme-{THEME}&files=
