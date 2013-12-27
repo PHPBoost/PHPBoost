@@ -93,7 +93,7 @@ class AdminConfigPHPBoostCaptcha extends AdminModuleController
 	
 	private function save()
 	{
-		$this->config->set_difficulty($this->form->get_value('difficulty'));
+		$this->config->set_difficulty($this->form->get_value('difficulty')->get_raw_value());
 		PHPBoostCaptchaConfig::save();
 	}
 	
