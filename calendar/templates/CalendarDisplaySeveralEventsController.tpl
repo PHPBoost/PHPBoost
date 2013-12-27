@@ -20,9 +20,8 @@
 	
 	<section id="events" class="event_container">
 		<header>
-			<h2># IF C_PENDING_PAGE #{@calendar.pending}# ELSE #{@calendar.titles.events}# ENDIF #</h2>
+			<h2 class="center"># IF C_PENDING_PAGE #{@calendar.pending}# ELSE #{@calendar.titles.events_of} {DATE}# ENDIF #</h2>
 		</header>
-		# IF NOT C_PENDING_PAGE #<div class="event_date">{DATE}</div># ENDIF #
 		
 		# IF C_EVENTS #
 			# START event #
