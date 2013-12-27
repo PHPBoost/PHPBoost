@@ -13,7 +13,7 @@ var NewsFormFieldSelectSources = Class.create({
 				' ',
 				Builder.node('input', {type : 'text', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '{@form.source.url}'}),
 				' ',
-				Builder.node('a', {href : 'javascript:NewsFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa-delete'}),
+				Builder.node('a', {href : 'javascript:NewsFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete'}),
 				' ',
 			]);
 			$('input_fields_' + this.id_input).insert(div);

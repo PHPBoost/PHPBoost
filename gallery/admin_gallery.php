@@ -400,7 +400,7 @@ else
 					'NAME' => stripslashes($name_cut),
 					'TITLE' => stripslashes($row['name']),
 					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="fa fa-edit"></a></span>',
-					'IMG_APROB' => ($row['aprob'] == 1) ? 'fa-eye-slash' : 'fa-eye',
+					'IMG_APROB' => ($row['aprob'] == 1) ? 'fa fa-eye-slash' : 'fa fa-eye',
 					'TR_START' => $tr_start,
 					'TR_END' => $tr_end,
 					'CAT' => $cat_list,
