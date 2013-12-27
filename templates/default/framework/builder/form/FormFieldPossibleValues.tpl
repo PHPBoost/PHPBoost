@@ -13,7 +13,7 @@ var ContactFormFieldPossibleValues = Class.create({
 				' ',
 				Builder.node('input', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}),
 				' ',
-				Builder.node('a', {href : 'javascript:ContactFormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'main')}", class : 'fa-delete'}),
+				Builder.node('a', {href : 'javascript:ContactFormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'main')}", class : 'fa fa-delete'}),
 				' ',
 			]);
 			$('input_fields_' + this.id_input).insert(div);

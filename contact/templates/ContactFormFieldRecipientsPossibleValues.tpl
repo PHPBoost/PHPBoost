@@ -15,7 +15,7 @@ var ContactFormFieldRecipientsPossibleValues = Class.create({
 				' ',
 				Builder.node('input', {type : 'text', id : 'field_email_' + id, name : 'field_email_' + id, class : 'field-large', placeholder : "${LangLoader::get_message('field.possible_values.email', 'common', 'contact')}"}),
 				' ',
-				Builder.node('a', {href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'main')}", class : 'fa-delete'}),
+				Builder.node('a', {href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'main')}", class : 'fa fa-delete'}),
 				' ',
 			]);
 			$('input_fields_' + this.id_input).insert(div);
