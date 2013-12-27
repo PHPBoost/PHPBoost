@@ -127,14 +127,14 @@ class CalendarAjaxCalendarController extends AbstractController
 			{
 				if (($i >= $first_day + 1) && $i < $last_day)
 				{
-					if ( !empty($array_events[$day]) )
+					if (($day == Date("j")) && ($month == Date("m")) && ($year == Date("Y")))
+						$class = 'calendar_today';
+					else if (!empty($array_events[$day]))
 					{
 						$birthday_day = ($array_events[$day]['type'] == 'BIRTHDAY' ? true : false);
 						$color = $array_events[$day]['color'];
 						$class = 'calendar_event';
 					}
-					elseif (($day == Date("j")) && ($month == Date("m")) && ($year == Date("Y")) )
-						$class = 'calendar_today';
 					else
 					{
 						if ( (($i % 8) == 7) || (($i % 8) == 0))
