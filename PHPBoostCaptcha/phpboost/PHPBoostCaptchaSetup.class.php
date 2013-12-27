@@ -29,6 +29,7 @@ class PHPBoostCaptchaSetup extends DefaultModuleSetup
 {
 	public function uninstall()
 	{
+		ConfigManager::delete('phpboost-captcha', 'config');
 		return AppContext::get_captcha_service()->uninstall_captcha('PHPBoostCaptcha');
 	}
 }
