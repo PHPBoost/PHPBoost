@@ -46,5 +46,21 @@ class ModuleTreeLinks
 	{
 		return !empty($this->links);
 	}
+	
+	public function has_visible_links()
+	{
+		if (!empty($this->links))
+		{
+			$visible_links = false;
+			foreach ($this->links as $link)
+			{
+				if ($link->is_visible())
+					$visible_links = true;
+			}
+			return $visible_links;
+		}
+		else
+			return false;
+	}
 }
 ?>

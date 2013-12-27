@@ -38,7 +38,7 @@ class ModuleTreeLinksService
 			$actions_tree_links = $tree_links->get_actions_tree_links();
 			
 			$tpl = new FileTemplate('framework/module/module_actions_links_menu.tpl');
-			$tpl->put('C_DISPLAY', $actions_tree_links->has_links());
+			$tpl->put('C_DISPLAY', $actions_tree_links->has_visible_links());
 			
 			return self::display($actions_tree_links, $tpl);
 			
