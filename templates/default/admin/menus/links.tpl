@@ -14,12 +14,12 @@ function toggleProperties(id) {
     if (document.getElementById("menu_element_" + id + "_properties").style.display == "none")
     {   //Si les propriétés sont repliées, on les affiche
         Effect.Appear("menu_element_" + id + "_properties");
-        document.getElementById("menu_element_" + id + "_more_image").className = "fa-minus";
+        document.getElementById("menu_element_" + id + "_more_image").className = "fa fa-minus";
     }
     else
     {   //Sinon, on les cache
         Effect.Fade("menu_element_" + id + "_properties");
-        document.getElementById("menu_element_" + id + "_more_image").className = "fa-plus";
+        document.getElementById("menu_element_" + id + "_more_image").className = "fa fa-plus";
     }
 }
 
@@ -44,9 +44,9 @@ function addSubElement(menu_element_id) {
     var id = idMax++;
     var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'sortable-element', style: 'display:none;' }, [
         Builder.node('div', {className: 'sortable-title'}, [
-			Builder.node('i', {className: 'fa-arrows', title: "${LangLoader::get_message('move', 'admin')}"}),
+			Builder.node('i', {className: 'fa fa-arrows', title: "${LangLoader::get_message('move', 'admin')}"}),
             ' ',
-            Builder.node('i', {className: 'fa-globe'}),
+            Builder.node('i', {className: 'fa fa-globe'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
@@ -67,9 +67,9 @@ function addSubElement(menu_element_id) {
 			]),
         
 			Builder.node('div', {className: 'sortable-actions'}, [
-				Builder.node('i', {className: 'fa-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
+				Builder.node('i', {className: 'fa fa-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
 				' ',
-				Builder.node('i', {className: 'fa-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
+				Builder.node('i', {className: 'fa fa-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
 			]),
 		]),
         Builder.node('div', {className: 'spacer'}),
@@ -95,9 +95,9 @@ function addSubMenu(menu_element_id) {
     var id = idMax++;
     var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'sortable-element', style: 'display:none;' }, [
         Builder.node('div', {className: 'sortable-title'}, [
-			Builder.node('i', {className: 'fa-arrows', title: "${LangLoader::get_message('move', 'admin')}"}),
+			Builder.node('i', {className: 'fa fa-arrows', title: "${LangLoader::get_message('move', 'admin')}"}),
             ' ',
-            Builder.node('i', {className: 'fa-folder fa-2x'}),
+            Builder.node('i', {className: 'fa fa-folder'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
@@ -118,9 +118,9 @@ function addSubMenu(menu_element_id) {
 			]),
 		
 			Builder.node('div', {className: 'sortable-actions'}, [
-				Builder.node('i', {className: 'fa-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
+				Builder.node('i', {className: 'fa fa-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
 				' ',
-				Builder.node('i', {className: 'fa-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
+				Builder.node('i', {className: 'fa fa-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
 			]),
 		]),
         Builder.node('div', {className: 'spacer'}),
