@@ -80,7 +80,7 @@ ${resources('install/install')}
 					<td class="row_next row_final">
 						<div style="margin:auto;width:200px">
 							<div style="text-align:center;margin-bottom:5px;">{STEP_TITLE} :&nbsp;{PROGRESSION}%</div>
-							<div style="float:left;height:12px;border:1px solid black;background:white;width:192px;padding:2px;padding-left:3px;padding-right:1px;">
+							<div style="float:left;border:1px solid black;background:white;width:200px;padding:0px 3px 3px 3px;">
 								# START progress_bar #<img src="templates/images/progress.png" alt="" /># END progress_bar #
 							</div>
 						</div>
