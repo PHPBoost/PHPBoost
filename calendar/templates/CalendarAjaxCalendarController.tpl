@@ -17,29 +17,30 @@
 			# INCLUDE FORM #
 		</div>
 		# ENDIF #
-		<div class="calendar_container">
-			<div class="calendar_top options">
-				<div class="calendar_top_l">
-					<a class="change_month_link" onclick="ChangeMonth(${escapejs(U_PREVIOUS_MONTH)});" title="{PREVIOUS_MONTH_TITLE}">&laquo;</a>
+		<div class="calendar-container">
+			<div class="calendar-top-container options">
+				<div class="calendar-top-l">
+					<a class="fa fa-angle-double-left" onclick="ChangeMonth(${escapejs(U_PREVIOUS_MONTH)});" title="{PREVIOUS_MONTH_TITLE}"></a>
 				</div>
-				<div class="calendar_top_r">
-					<a class="change_month_link" onclick="ChangeMonth(${escapejs(U_NEXT_MONTH)});" title="{NEXT_MONTH_TITLE}">&raquo;</a>
+				<div class="calendar-top-r">
+					<a class="fa fa-angle-double-right" onclick="ChangeMonth(${escapejs(U_NEXT_MONTH)});" title="{NEXT_MONTH_TITLE}"></a>
 				</div>
-				{DATE} 
+				<div class="calendar-top-content">{DATE}</div>
+				
 			</div>
 			
-			<div class="calendar_content">
-				<table class="mini calendar_table">
+			<div class="calendar-content">
+				<table class="mini calendar-table">
 					<thead>
 						<tr>
 							<th></th>
-							<th><span class="text_month">{L_MONDAY}</span></th>
-							<th><span class="text_month">{L_TUESDAY}</span></th>
-							<th><span class="text_month">{L_WEDNESDAY}</span></th>
-							<th><span class="text_month">{L_THURSDAY}</span></th>
-							<th><span class="text_month">{L_FRIDAY}</span></th>
-							<th><span class="text_month">{L_SATURDAY}</span></th>
-							<th><span class="text_month">{L_SUNDAY}</span></th>
+							<th class="text-strong">{L_MONDAY}</th>
+							<th class="text-strong">{L_TUESDAY}</th>
+							<th class="text-strong">{L_WEDNESDAY}</th>
+							<th class="text-strong">{L_THURSDAY}</th>
+							<th class="text-strong">{L_FRIDAY}</th>
+							<th class="text-strong">{L_SATURDAY}</th>
+							<th class="text-strong">{L_SUNDAY}</th>
 						</tr>
 					</thead>
 					<tbody>

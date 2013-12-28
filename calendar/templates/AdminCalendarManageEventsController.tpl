@@ -1,7 +1,7 @@
 <table>
 	<thead>
 		<tr>
-			<th class="column_title">
+			<th class="column-title">
 				<a href="{U_SORT_TITLE_ASC}" class="fa fa-table-sort-up"></a>
 				${LangLoader::get_message('form.title', 'common')}
 				<a href="{U_SORT_TITLE_DESC}" class="fa fa-table-sort-down"></a>
@@ -43,7 +43,7 @@
 	<tbody>
 		# START event #
 		<tr> 
-			<td class="text_left">
+			<td class="left">
 				<a href="{event.U_LINK}">{event.TITLE}</a>
 			</td>
 			<td> 
