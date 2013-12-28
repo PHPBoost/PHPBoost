@@ -9,6 +9,9 @@
 .fa:before { font-size:1.167em; }
 
 /* Alias */
+.fa-move:before { /* copie share */
+	content: "\f064";	
+}
 .fa-remove:before { /* copie times */
 	content: "\f00d";
 }
