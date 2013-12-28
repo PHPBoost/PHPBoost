@@ -150,7 +150,7 @@
 						</td>
 						<td>
 							{alerts.ACTIONS}
-							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="# IF alerts.C_PROCESSED #fa-eye# ELSE #fa-eye-slash# ENDIF #"></i></a>
+							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa # IF alerts.C_PROCESSED #fa-eye# ELSE #fa-eye-slash# ENDIF #"></i></a>
 							<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>

@@ -304,7 +304,7 @@
 				# ELSE #
 					# START folder #
 						<div class="upload-elements-repertory">
-							<a href="upload.php?f={folder.ID}{POPUP}"><i class="# IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a>
+							<a href="upload.php?f={folder.ID}{POPUP}"><i class="fa # IF folder.C_MEMBER_FOLDER #fa-users# ELSE #fa-folder# ENDIF # fa-2x"></i></a>
 							<span id="f{folder.ID}"><a href="upload.php?f={folder.ID}{POPUP}" class="com">{folder.NAME}</a></span><br />
 							{folder.RENAME_FOLDER}
 							<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" title="{folder.L_TYPE_DEL_FOLDER}" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>			
