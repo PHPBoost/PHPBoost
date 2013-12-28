@@ -41,7 +41,7 @@
 						<header><h1>{QUESTION}</h1></header>
 						<div class="content">
 							# IF C_POLL_QUESTION #
-							<div class="text_small">
+							<div>
 								# START radio #
 								<p style="margin-top:15px;padding-left:25px;"><label><input type="{radio.TYPE}" name="radio" value="{radio.NAME}"> {radio.ANSWERS}</label></p>
 								# END radio #
@@ -51,7 +51,8 @@
 								# END checkbox #
 								
 								<p class="center">
-									<input name="valid_poll" type="submit" value="{L_VOTE}" /><br>
+									<button name="valid_poll" type="submit" value="{L_VOTE}">{L_VOTE}</button>
+									<br />
 									<a class="small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
 								</p>
 							</div>							
