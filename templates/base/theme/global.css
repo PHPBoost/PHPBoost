@@ -27,8 +27,8 @@
 .calendar-block {
 	position:absolute;
 	text-align:center;
-	background:#fff;
-	border:1px solid #999;
+	background:#FFFFFF;
+	border:1px solid #999999;
 	bottom:0;
 	left:100px;
 	z-index:100;
@@ -42,8 +42,6 @@
 }
 
 .calendar-block .date-picker {
-	border-collapse:collapse;
-	border:none;
 	background:#FFF;
 	margin:0;
 }
@@ -55,11 +53,20 @@
 	padding:3px 0;
 }
 
+
+.calendar-block .date-picker select,
+.calendar-block .date-picker select:focus{
+	box-shadow:none;
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
+}
+
 .calendar-block .date-picker th {
 	padding:1px 0px;
 	background:#FFF;
 	color:#888;
 }
+
 
 .calendar-block .date-picker th a{
 	color:#888;
@@ -68,6 +75,11 @@
 .calendar-block .date-picker td {
 	padding:2px 4px;
 }
+.calendar-block table.date-picker thead th { border-bottom:1px solid #999999; }
+
+.calendar-block table.date-picker tbody tr td:first-child { border-left:none; }
+.calendar-block table.date-picker tbody tr td:last-child { border-right:none; }
+.calendar-block table.date-picker tbody tr:last-child { border-bottom:none; }
 
 /* Delacement des fichiers */
 .upload-selected-cat {
