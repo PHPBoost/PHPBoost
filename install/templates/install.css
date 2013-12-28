@@ -274,6 +274,9 @@ fieldset textarea.post{
 	-khtml-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
+fieldset ul{
+	margin:0px 0px 30px 30px;
+}
 textarea{
 	display:block;
 	width:94%;
@@ -509,4 +512,5 @@ fieldset dl dd label:hover{
 	font-size:10px;
 	display: block;
 	line-height: 12px;
+	font-weight: normal;
 }
