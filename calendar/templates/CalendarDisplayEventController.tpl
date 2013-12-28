@@ -49,10 +49,10 @@
 		# ENDIF #
 		
 		<div class="spacer">&nbsp;</div>
-		<div class="event_display_author" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+		<div class="event-display-author" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			{@calendar.labels.created_by} : # IF AUTHOR #<a itemprop="author" href="{U_AUTHOR_PROFILE}" class="small_link {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #
 		</div>
-		<div class="event_display_dates">
+		<div class="event-display-dates">
 			{@calendar.labels.start_date} : <span class="float-right"><time datetime="{START_DATE_ISO8601}" itemprop="startDate">{START_DATE}</time></span>
 			<div class="spacer"></div>
 			{@calendar.labels.end_date} : <span class="float-right"><time datetime="{END_DATE_ISO8601}" itemprop="endDate">{END_DATE}</time></span>

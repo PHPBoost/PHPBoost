@@ -120,7 +120,7 @@ class CalendarAjaxCalendarController extends AbstractController
 			if ( (($i % 8) == 1) && $i < $last_day)
 			{
 				$content = date('W', mktime(0, 0, 0, $month, $day, $year));
-				$class = 'calendar_week';
+				$class = 'calendar-week';
 				$last_day++;
 			}
 			else
@@ -128,19 +128,19 @@ class CalendarAjaxCalendarController extends AbstractController
 				if (($i >= $first_day + 1) && $i < $last_day)
 				{
 					if (($day == Date("j")) && ($month == Date("m")) && ($year == Date("Y")))
-						$class = 'calendar_today';
+						$class = 'calendar-today';
 					else if (!empty($array_events[$day]))
 					{
 						$birthday_day = ($array_events[$day]['type'] == 'BIRTHDAY' ? true : false);
 						$color = $array_events[$day]['color'];
-						$class = 'calendar_event';
+						$class = 'calendar-event';
 					}
 					else
 					{
 						if ( (($i % 8) == 7) || (($i % 8) == 0))
-							$class = 'calendar_weekend';
+							$class = 'calendar-weekend';
 						else
-							$class = 'calendar_other';
+							$class = 'calendar-other';
 					}
 					
 					$content = $day;
@@ -149,9 +149,9 @@ class CalendarAjaxCalendarController extends AbstractController
 				else
 				{
 					if ( ((($i % 8) == 7) || (($i % 8) == 0)) && ($i > $first_day) && ($day <= $month_days))
-						$class = 'calendar_weekend';
+						$class = 'calendar-weekend';
 					else
-						$class = 'calendar_none';
+						$class = 'calendar-none';
 				}
 			}
 			if (($day > $month_days) && ($i % 8) == 0)

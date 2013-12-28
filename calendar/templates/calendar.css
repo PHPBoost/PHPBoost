@@ -1,49 +1,38 @@
-.calendar_content{
-	padding:6px;
-}
+.calendar-content{ padding:6px;}
 
-.calendar_top_l a, .calendar_top_l a:hover, .calendar_top_r a, .calendar_top_r a:hover{
-	font-size:18px;
-	color:#666;
-	font-weight:bold;
+/* Affichage du mois en cours*/
+.calendar-top-container {
+	padding:4px;
+	float:none;
+	margin:0px;
 }
-
-.calendar_top_l{
-	position:absolute;
-	padding-left: 31px;
-	top:1px;
-	padding-top:1px;
-}
-
-.calendar_top_r {
-	position:absolute;
-	right:1px;
-	padding-right:31px;
-	top:1px;
-	padding-top:1px;
-}
-
-.calendar_top{
+.calendar-top-content {
 	font-size:15px;
 	font-weight:bold;
-	text-align: center;
-	padding:4px;
-	position:relative;
-	float:none;
-	margin:0;
+	text-align:center;
 }
 
-.calendar_table td{
-	height:40px;
+.calendar-top-container a, 
+.calendar-top-container a:hover {
+	color:#666666;
+	cursor:pointer;
 }
 
-div.event_display_author{
+.calendar-top-l,
+.calendar-top-r {
+	padding-top:1px;
+}
+.calendar-top-l { float:left; padding-left:25px; }
+.calendar-top-r { float:right; padding-right:25px; }
+
+/* Affichage des évenements */
+div.event-display-author{
 	float:left;
 	padding-top:4px;
 	padding-bottom:4px;
 }
 
-div.event_display_dates{
+div.event-display-dates{
 	font-size:10px;
 	font-weight:normal;
 	padding:4px;
@@ -51,45 +40,21 @@ div.event_display_dates{
 	width: 175px;
 }
 
-.text_month{
-	font-size:13px;
-	font-weight:bold;
-}
+/* Particularité du tableau du calendrier */
+table.calendar-table thead tr th.text-strong{ font-size:13px; }
+table.calendar-table tbody tr td { height:40px; }
 
-table tr td.calendar_today {
-	background:#B5E5B9;
-}
+/* Couleur des différents évenements */
+table tbody tr td.calendar-none { background:#FFFFFF; }
+table tbody tr td.calendar-today { background:#B5E5B9; }
+table tbody tr td.calendar-event { background:#DBE5EE; }
+table tbody tr td.calendar-other { background:#F1F1F1; }
 
-table tr td.calendar_event {
-	background:#DBE5EE;
-}
-
-table td.calendar_other {
-	background:#F1F1F1;
-}
-
-table tr td.calendar_none {
-	background:#FFFFFF;
-}
-
-table tr td.calendar_weekend{
-	background:#ffe3b6;
-}
-
-table tr td.calendar_week{
-	border-right:2px solid #DDD;
+table tbody tr td.calendar-weekend { background:#FFE3B6; }
+table tbody tr td.calendar-week { 
+	border-right:1px solid #AAAAAA; 
 	width:8%;
 }
 
-.admin_form {
-	float:right;
-	width:300px;
-	margin-right:15px;
-}
-
-.column_title { width:28%; }
-.text_left { text-align:left; }
-
-.change_month_link {
-	cursor:pointer;
-}
+/* Affichage de du titre de l'évenement dans le tableau de l'administration */
+table tbody tr th.column-title { width:28%; }
