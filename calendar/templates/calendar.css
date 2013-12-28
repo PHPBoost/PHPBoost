@@ -1,29 +1,29 @@
-.calendar-content{ padding:6px;}
+div.calendar-content{ padding:6px;}
 
 /* Affichage du mois en cours*/
-.calendar-top-container {
+div.calendar-top-container {
 	padding:4px;
 	float:none;
 	margin:0px;
 }
-.calendar-top-content {
+div.calendar-top-content {
 	font-size:15px;
 	font-weight:bold;
 	text-align:center;
 }
 
-.calendar-top-container a, 
-.calendar-top-container a:hover {
+div.calendar-top-container a, 
+div.calendar-top-container a:hover {
 	color:#666666;
 	cursor:pointer;
 }
 
-.calendar-top-l,
-.calendar-top-r {
+div.calendar-top-l,
+div.calendar-top-r {
 	padding-top:1px;
 }
-.calendar-top-l { float:left; padding-left:25px; }
-.calendar-top-r { float:right; padding-right:25px; }
+div.calendar-top-l { float:left; padding-left:25px; }
+div.calendar-top-r { float:right; padding-right:25px; }
 
 /* Affichage des évenements */
 div.event-display-author{
@@ -58,3 +58,21 @@ table tbody tr td.calendar-week {
 
 /* Affichage de du titre de l'évenement dans le tableau de l'administration */
 table tbody tr th.column-title { width:28%; }
+
+/* Affichage du mini calendrier dans une colonne */
+div.module-mini-contents div.calendar-top-container { padding:2px; }
+
+div.module-mini-contents div.calendar-top-content {
+	font-size:12px;
+	padding-top:1px;
+}
+
+div.module-mini-contents div.calendar-top-l,
+div.module-mini-contents div.calendar-top-r { padding-top:0px; }
+
+div.module-mini-contents div.calendar-top-l { padding-left:7px; }
+div.module-mini-contents div.calendar-top-r { padding-right:7px; }
+
+div.module-mini-contents table.calendar-table thead tr th.text-strong{ font-size:11px; }
+div.module-mini-contents table.calendar-table tbody tr td { height:auto; }
+div.module-mini-contents table.calendar-table tbody tr td.calendar-week { width:auto; }
