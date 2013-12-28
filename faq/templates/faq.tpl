@@ -5,12 +5,12 @@
 		if( document.getElementById("a" + id_question).style.display == "none" )
 		{
 			Effect.Appear("a" + id_question);
-			document.getElementById("faq_i" + id_question).className="fa-caret-down fa-2x"
+			document.getElementById("faq_i" + id_question).className="fa fa-caret-down fa-2x"
 		}
 		else
 		{
 			Effect.Fade("a" + id_question);
-			document.getElementById("faq_i" + id_question).className="fa-caret-right fa-2x"
+			document.getElementById("faq_i" + id_question).className="fa fa-caret-right fa-2x"
 		}
 	}
 -->
@@ -95,12 +95,12 @@
 					# IF questions.faq.C_HIDE_ANSWER #
 					<script type="text/javascript">
 						document.getElementById("a{questions.faq.ID_QUESTION}").style.display = "none";
-						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="fa-caret-right fa-2x";
+						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="fa fa-caret-right fa-2x";
 					</script>
 					# ENDIF #
 					# IF questions.faq.C_SHOW_ANSWER #
 					<script type="text/javascript">
-						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="fa-caret-down fa-2x";
+						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="fa fa-caret-down fa-2x";
 					</script>
 					# ENDIF #		
 				</div>

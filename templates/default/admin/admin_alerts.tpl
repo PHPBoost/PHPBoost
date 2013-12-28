@@ -33,13 +33,13 @@
 				{
 					if( status == 0 )
 					{
-						document.getElementById("status_" + id).innerHTML = "<i class=\"fa-eye\"></i>";
+						document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-eye\"></i>";
 						document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '2');";
 						document.getElementById("status_" + id).title = "{L_UNFIX}";
 					}
 					else
 					{
-						document.getElementById("status_" + id).innerHTML = "<i class=\"fa-eye-slash\"></i>";
+						document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-eye-slash\"></i>";
 						document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '0');";
 						document.getElementById("status_" + id).title = "{L_FIX}";
 					}
