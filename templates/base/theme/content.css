@@ -653,7 +653,6 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 --------------------------------------*/
 /* Placement des mini modules */
 .module-mini-container {
-	width:190px;
 	margin:0px 0px 10px 0px;
 	border:1px #bebebe solid;
 	border-bottom:2px #99b1cb solid;
