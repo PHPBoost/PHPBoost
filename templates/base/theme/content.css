@@ -193,122 +193,93 @@ section footer nav.pagination {	text-align: center; }
 
 /* Tableaux
 -------------------------------------- */
-
 table {
 	width:100%;
-	border-spacing:0;
 	padding:0px;
-	border:1px solid #d1d2d4;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	margin:8px 0;
+	margin:8px 0px;
+	border-spacing:0;
 }
 
 /* Entête */
 table caption {
-	text-align:left;
-	margin: 5px 0 5px 20px;
-	border-bottom:1px solid #d1d2d5;
 	color:#757679;
 	font-size:13px;
+	text-align:left;
+	margin:5px 0 5px 20px;
+	border-bottom:1px solid #D1D2D5;
 }
 
 table thead th{
-	color:#e5e6e6;
-	background-color:#4d4c50;
-	font-size:12px;
-	font-weight:normal;
 	padding:8px;
+	background-color:#4D4C50;
+	color:#E5E6E6;
+	font-size:12px;
 	text-align:center;
+	font-weight:normal;
 }
 
 table thead th:first-child {
-	-moz-border-radius-topleft: 3px;
-	-webkit-border-top-left-radius: 3px;
-	border-top-left-radius: 3px;
+	border-top-left-radius:3px;
+	-moz-border-radius-topleft:3px;
+	-webkit-border-top-left-radius:3px;
 }
 
 table thead th:last-child {
-	-moz-border-radius-topright: 3px;
-	-webkit-border-top-right-radius: 3px;
-	border-top-right-radius: 3px;
+	border-top-right-radius:3px;
+	-moz-border-radius-topright:3px;
+	-webkit-border-top-right-radius:3px;
 }
 
-table thead th a {
-	color:#e5e6e6;
-}
-
-table thead th a:hover {
-	color:#fff;
-}
+table thead th a { color:#E5E6E6; }
+table thead th a:hover { color:#FFFFFF; }
 
 /* Contenu */
-table td {
-	background-color:#f5f5f5;
-	border-top:1px solid #d1d2d4;
-	border-left:1px solid #d1d2d4;
+table tbody td {
+	background-color:#F5F5F5;
+	border-top:1px solid #D1D2D4;
+	border-left:1px solid #D1D2D4;
 	padding:8px;
 	color:#676a74;
 	text-align:center;
 }
 
-table tr:nth-child(even) td {
-	background-color:#fff;
-}
+table tbody tr:nth-child(even) td {	background-color:#FFFFFF; }
+table tbody tr:first-child td{ border-top: none; }
+table tbody tr td:last-child{ border-right:1px solid #D1D2D4; }
+table tbody tr:last-child td{ border-bottom:1px solid #D1D2D4; }
 
-table td:first-child, table td.no-separator{
-	border-left: none;
-}
+table tbody tr td.no-separator{ border-left: none; }
+table tbody tr td.no-separator:first-child{ border-left:1px solid #D1D2D4; }
 
-table tr:first-child td{
-	border-top: none;
-}
-
-
-table tbody td.align-left {
-	text-align:left;
-}
+table tbody td.align-left {	text-align:left; }
 
 /* Pied */
-table tfoot {
-	border-top:1px solid #d1d2d4;
-}
-
-table tfoot th {
-	color:#aaa;
-	background-color:#f0f0f0;
-	border-top:1px solid #d1d2d4;
+table tfoot tr th {
+	color:#AAAAAA;
+	background-color:#F0F0F0;
 	padding:8px;
+	border-bottom:1px solid #D1D2D4;
 }
 
-table tfoot th a {
-	color:#676a74;
+table tfoot tr th:first-child {
+	border-left:1px solid #D1D2D4;
+	border-bottom-left-radius:3px;
+	-moz-border-radius-bottomleft:3px;
+	-webkit-border-bottom-left-radius:3px;
 }
 
-table tfoot th:only-child {
-	text-align:right;
+table tfoot tr th:last-child {
+	border-right:1px solid #D1D2D4;
+	border-bottom-right-radius:3px;
+	-moz-border-radius-bottomright:3px;
+	-webkit-border-bottom-right-radius:3px;
 }
 
-table tfoot th:first-child {
-	-moz-border-radius-bottomleft: 3px;
-	-webkit-border-bottom-left-radius: 3px;
-	border-bottom-left-radius: 3px;
-}
+table tfoot tr th:only-child { text-align:right; }
 
-table tfoot th:last-child {
-	-moz-border-radius-bottomright: 3px;
-	-webkit-border-bottom-right-radius: 3px;
-	border-bottom-right-radius: 3px;
-}
-
-table tfoot th * {
-	vertical-align:middle;
-}
-
-table tfoot th select {
-	padding:2px 5px;
-}
+table tfoot tr th * { vertical-align:middle; }
+table tfoot tr th a { color:#676A74; }
+table tfoot tr th select { padding:2px 5px; }
 
 /* Mini tableaux */
 table.mini th, table.mini td {
@@ -322,14 +293,14 @@ table.mini th a, table.mini td a {
 
 /* Pagination footer tableaux */
 table tfoot nav.pagination a{
-	color:#8b8d90;
+	color:#8B8D90;
 	text-decoration:none;
 	padding:3px 3px;
 	
 }
 
 table tfoot nav.pagination a span.current-page {
-	color:#ced0d0;
+	color:#CED0D0;
 	text-decoration:none;
 }
 
