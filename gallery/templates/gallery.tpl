@@ -339,10 +339,10 @@
 									# IF C_GALLERY_PICS_MODO #
 									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button"><i class="fa fa-edit"></i></a></span>
 									
-									<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
+									<div style="position:absolute;z-index:100;margin-top:10px;float:left;display:none;" id="move{ID}">
 										<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
 											<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-											<select class="valign-middle" name="{ID}cat" onchange="document.location = 'gallery{U_MOVE}">
+											<select class="valign-middle" name="{ID}cat" onchange="document.location = '{U_MOVE}">
 												{CAT}
 											</select>
 										</div>
@@ -395,27 +395,24 @@
 									{pics_list.COM}
 									{pics_list.KERNEL_NOTATION}
 										
-									<div style="width:180px;margin:auto;">										
+									<div style="width:180px;margin:auto;">
 										# IF C_GALLERY_MODO #
 										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a></span>
-										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>									
-										<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
-											<div style="position:absolute;z-index:100;margin-top:75px;">
-												<div class="bbcode-block" style="width:170px;overflow:auto;">
-													<div style="margin-bottom:4px;" class="smaller"><strong>{L_MOVETO}</strong>:</div>
-													<select class="valign-middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
-														{pics_list.CAT}
-													</select>
-													<br /><br />
-												</div>
-											</div>
+										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+										<div style="position:absolute;z-index:100;margin-top:10px;float:left;display:none;" id="move{pics_list.ID}">
+										<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);">
+											<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
+											<select class="valign-middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
+												{pics_list.CAT}
+											</select>
 										</div>
+									</div>
 										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
 										
 										<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" class="{pics_list.IMG_APROB}" title="{pics_list.L_APROB_IMG}"></a>
 										&nbsp;<span id="img{ID}"></span>
-										# ENDIF #											
-										<span id="img{pics_list.ID}"></span>										
+										# ENDIF #
+										<span id="img{pics_list.ID}"></span>
 									</div>
 								</td>
 								{pics_list.CLOSE_TR}
