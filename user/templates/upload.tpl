@@ -43,13 +43,13 @@
 			
 		if( !hide_folder )
 		{
-			document.getElementById('new-folder').innerHTML += '<div class="upload-elements-repertory" id="new-folder' + divid + '"><table class="module-table mini" style="border:0"><tr><td style="width:34px;vertical-align:top;"><i class="fa fa-folder fa-2x"></i></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></td></tr></table></div>';
+			document.getElementById('new-folder').innerHTML += '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder fa-2x"></i> <input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div>';
 			document.getElementById('folder_name').focus();
 		}
 		else
 		{	
 			document.getElementById('new-folder' + (divid - 1)).style.display = 'block';
-			document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div class="upload-elements-repertory" id="new-folder' + divid + '"><table class="module-table mini" style="border:0"><tr><td style="width:34px;vertical-align:top;"><i class="fa fa-folder fa-2x"></i></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></td></tr></table></div>';
+			document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div class="upload-elements-repertory" id="new-folder' + divid + '"><i class="fa fa-folder fa-2x"></i> <input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></div>';
 			document.getElementById('folder_name').focus();
 			this.divid--;
 			hide_folder = false;
@@ -329,6 +329,7 @@
 					# END files #
 				# ENDIF #
 			</div>
+			
 			<div class="spacer"></div>
 			<div id="new-file">
 				# INCLUDE message_helper #
