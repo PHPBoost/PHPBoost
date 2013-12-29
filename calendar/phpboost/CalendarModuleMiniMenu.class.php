@@ -41,7 +41,7 @@ class CalendarModuleMiniMenu extends ModuleMiniMenu
 			
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
 			
-			$tpl->put('CALENDAR', CalendarAjaxCalendarController::get_view());
+			$tpl->put('CALENDAR', CalendarAjaxCalendarController::get_view(true));
 			
 			return $tpl->render();  
 		}
