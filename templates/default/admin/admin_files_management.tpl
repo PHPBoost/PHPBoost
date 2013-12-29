@@ -275,6 +275,8 @@
 								<i class="fa fa-notice"></i>
 								<div class="message-helper-content">{L_EMPTY_FOLDER}</div>
 							</div>
+							<span id="new-folder"></span>
+							
 						# ELSE #
 							# START folder #
 								<div class="upload-elements-repertory">
@@ -302,9 +304,10 @@
 								<span id="imgf{files.ID}"></span>
 							</div>
 							# END files #
-							<div class="spacer"></div>
 						# ENDIF #
 					</div>
+					
+					<div class="spacer"></div>
 					<div id="new-file">
 						# INCLUDE message_helper #
 						<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" enctype="multipart/form-data" method="post">
