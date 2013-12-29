@@ -33,6 +33,17 @@ class CalendarAjaxCalendarController extends AbstractController
 	 * @var HTMLForm
 	 */
 	private $form;
+	private $mini_calendar = false;
+	
+	public function set_mini_calendar()
+	{
+		$this->mini_calendar = true;
+	}
+	
+	public function is_mini_calendar()
+	{
+		return $this->mini_calendar;
+	}
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -80,7 +91,7 @@ class CalendarAjaxCalendarController extends AbstractController
 			'NEXT_MONTH_TITLE' => ($month == 12) ? $array_l_month[0] . ' ' . ($year + 1) : $array_l_month[$month] . ' ' . $year,
 			'U_PREVIOUS_MONTH' => CalendarUrlBuilder::ajax_month_calendar($previous_year . '/' . $previous_month)->rel(),
 			'U_NEXT_MONTH' => CalendarUrlBuilder::ajax_month_calendar($next_year . '/' . $next_month)->rel(),
-			'C_MINI_MODULE' => true
+			'C_MINI_MODULE' => $this->is_mini_calendar()
 		));
 		
 		//Retrieve all the events of the selected month
@@ -210,10 +221,12 @@ class CalendarAjaxCalendarController extends AbstractController
 		$this->view->add_lang($this->lang);
 	}
 	
-	public static function get_view()
+	public static function get_view($is_mini = false)
 	{
 		$object = new self();
 		$object->init();
+		if ($is_mini)
+			$object->set_mini_calendar();
 		$object->build_view(AppContext::get_request());
 		return $object->view;
 	}
