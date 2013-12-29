@@ -79,7 +79,8 @@ class CalendarAjaxCalendarController extends AbstractController
 			'PREVIOUS_MONTH_TITLE' => ($month == 1) ? $array_l_month[11] . ' ' . ($year - 1) : $array_l_month[$month - 2] . ' ' . $year,
 			'NEXT_MONTH_TITLE' => ($month == 12) ? $array_l_month[0] . ' ' . ($year + 1) : $array_l_month[$month] . ' ' . $year,
 			'U_PREVIOUS_MONTH' => CalendarUrlBuilder::ajax_month_calendar($previous_year . '/' . $previous_month)->rel(),
-			'U_NEXT_MONTH' => CalendarUrlBuilder::ajax_month_calendar($next_year . '/' . $next_month)->rel()
+			'U_NEXT_MONTH' => CalendarUrlBuilder::ajax_month_calendar($next_year . '/' . $next_month)->rel(),
+			'C_MINI_MODULE' => true
 		));
 		
 		//Retrieve all the events of the selected month
