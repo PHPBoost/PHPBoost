@@ -30,7 +30,7 @@
 			</div>
 			
 			<div class="calendar-content">
-				<table class="mini calendar-table">
+				<table class="# IF C_MINI_MODULE #mini # END IF #calendar-table">
 					<thead>
 						<tr>
 							<th></th>
