@@ -78,9 +78,8 @@ class AdminArticlesManageController extends AdminModuleController
 		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($page, $field, $mode);
 		
-		$result = PersistenceContext::get_querier()->select('SELECT *
+		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, notes.average_notes, notes.number_notes, note.note
 		FROM '. ArticlesSetup::$articles_table . ' articles
-		LEFT JOIN ' . ArticlesSetup::$articles_cats_table . ' articles_cat ON articles_cat.id = articles.id_category 
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
