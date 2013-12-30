@@ -1,6 +1,6 @@
-		# START article #
-		{article.L_TITLE}
+		# IF C_ARTICLE #
 		<table>
+			<caption>{L_HISTORY}: <a href="{U_ARTICLE}">{TITLE}</a></caption>
 			<thead>
 				<tr>
 					<th>
@@ -18,69 +18,68 @@
 				</tr>
 			</thead>
 			<tbody>
-				# START article.list #
+				# START list #
 				<tr>
 					<td>
-						<a href="{article.list.U_ARTICLE}">{article.list.TITLE}</a> {article.list.CURRENT_RELEASE}
+						<a href="{list.U_ARTICLE}">{list.TITLE}</a> {list.CURRENT_RELEASE}
 					</td>
 					<td>
-						{article.list.DATE}
+						{list.DATE}
 					</td>
 					<td>
-						{article.list.AUTHOR}
+						{list.AUTHOR}
 					</td>
 					<td>
-						{article.list.ACTIONS}
+						{list.ACTIONS}
 					</td>
 				</tr>
-				# END article.list #
+				# END list #
 			</tbody>
 		</table>
-		# END article #
-
-		# START index #
+		# ELSE #
 		<table>
+			<caption>{L_HISTORY}</caption>
 			<thead>
 				<tr>
 					<th>
-						<a href="{index.TOP_TITLE}" class="fa fa-table-sort-up"></a>
-						{index.L_TITLE}
-						<a href="{index.BOTTOM_TITLE}" class="fa fa-table-sort-down"></a>
+						<a href="{TOP_TITLE}" class="fa fa-table-sort-up"></a>
+						{L_TITLE}
+						<a href="{BOTTOM_TITLE}" class="fa fa-table-sort-down"></a>
 					</th>
 					<th>
-						<a href="{index.TOP_DATE}" class="fa fa-table-sort-up"></a>
-						{index.L_DATE}
-						<a href="{index.BOTTOM_DATE}" class="fa fa-table-sort-down"></a>
+						<a href="{TOP_DATE}" class="fa fa-table-sort-up"></a>
+						{L_DATE}
+						<a href="{BOTTOM_DATE}" class="fa fa-table-sort-down"></a>
 					</th>
 					<th>
-						{index.L_AUTHOR}
+						{L_AUTHOR}
 					</th>
 				</tr>
 			</thead>
-			# IF index.PAGINATION #
+			# IF C_PAGINATION #
 			<tfoot>
 				<tr>
 					<th colspan="3">
-						{index.PAGINATION}
+						# INCLUDE PAGINATION #
 					</th>
 				</tr>
 			</tfoot>
 			# ENDIF #
 			<tbody>
-				# START index.list #
+				# START list #
 				<tr>
 					<td>
-						<a href="{index.list.U_ARTICLE}">{index.list.TITLE}</a>
+						<a href="{list.U_ARTICLE}">{list.TITLE}</a>
 					</td>
 					<td>
-						{index.list.DATE}
+						{list.DATE}
 					</td>
 					<td>
-						{index.list.AUTHOR}
+						{list.AUTHOR}
 					</td>
 				</tr>
-				# END index.list #
+				# END list #
 			</tbody>
 		</table>
-		# END index #
+		# END IF #
 		

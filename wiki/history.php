@@ -49,11 +49,14 @@ if (!empty($id_article))
 {
 	$Template = new FileTemplate('wiki/history.tpl');
 
-	$Template->assign_block_vars('article', array(
-		'L_TITLE' => $LANG['wiki_history'] . ': <a href="' . $article_infos['encoded_title'] . '">' . $article_infos['title'] . '</a>',
+	$Template->put_all(array(
+		'C_ARTICLE' => true,
+		'L_HISTORY' => $LANG['wiki_history'],
+		'TITLE' => $article_infos['title'],
+		'U_ARTICLE' => url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])
 	));
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
+	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	$restore_auth = (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_RESTORE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_RESTORE_ARCHIVE)) ? true : false;
 	$delete_auth = (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
@@ -76,7 +79,7 @@ if (!empty($id_article))
 		
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 		
-		$Template->assign_block_vars('article.list', array(
+		$Template->assign_block_vars('list', array(
 			'TITLE' => $LANG['wiki_consult_article'],
 			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
@@ -94,7 +97,7 @@ if (!empty($id_article))
 		'L_ACTIONS' => $LANG['wiki_possible_actions'],
 		));
 	
-	$Template->display();	
+	$Template->display();
 }
 else //On affiche la liste des modifications 
 {
@@ -108,36 +111,45 @@ else //On affiche la liste des modifications
 	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE redirect = '0'", __LINE__, __FILE__);
 	
 	//On instancie la classe de pagination
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $nbr_articles, $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY);
+	$pagination->set_url(new Url('/wiki/history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'));
 	
-	$Pagination = new DeprecatedPagination();
-	$show_pagin = $Pagination->display(url('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$Template = new FileTemplate('wiki/history.tpl');
 
-	$Template->assign_block_vars('index', array(
+	$Template->put_all(array(
+		'C_PAGINATION' => $pagination->has_several_pages(),
 		'L_HISTORY' => $LANG['wiki_history'],
 		'L_TITLE' => $LANG['wiki_article_title'],
 		'L_AUTHOR' => $LANG['wiki_author'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
-		'TOP_TITLE' => ($field == 'title' && $order == 'asc') ? '' : url('history.php?p=' . $Pagination->get_page() . '&amp;field=title&amp;order=asc'),
-		'BOTTOM_TITLE' => ($field == 'title' && $order == 'desc') ? '' : url('history.php?p=' . $Pagination->get_page() . '&amp;field=title&amp;order=desc'),
-		'TOP_DATE' => ($field == 'timestamp' && $order == 'asc') ? '' : url('history.php?p=' . $Pagination->get_page() . '&amp;field=timestamp&amp;order=asc'),
-		'BOTTOM_DATE' => ($field == 'timestamp' && $order == 'desc') ? '' : url('history.php?p=' . $Pagination->get_page() . '&amp;field=timestamp&amp;order=desc'),
-		'PAGINATION' => ($nbr_articles > $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY  ?  $show_pagin : '') //Affichage de la pagination si il le faut
-	));	
+		'TOP_TITLE' => ($field == 'title' && $order == 'asc') ? '' : url('history.php?p=' . $page . '&amp;field=title&amp;order=asc'),
+		'BOTTOM_TITLE' => ($field == 'title' && $order == 'desc') ? '' : url('history.php?p=' . $page . '&amp;field=title&amp;order=desc'),
+		'TOP_DATE' => ($field == 'timestamp' && $order == 'asc') ? '' : url('history.php?p=' . $page . '&amp;field=timestamp&amp;order=asc'),
+		'BOTTOM_DATE' => ($field == 'timestamp' && $order == 'desc') ? '' : url('history.php?p=' . $page . '&amp;field=timestamp&amp;order=desc'),
+		'PAGINATION' => $pagination->display(),
+	));
 
-	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.login, c.id_article, c.activ,  a.id_contents
+	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.login, m.user_groups, m.level, c.id_article, c.activ,  a.id_contents
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
 		WHERE a.redirect = 0
 		ORDER BY " . ($field == 'title' ? 'a' : 'c') . "." . $field . " " . $order . "
-		" . $Sql->limit($Pagination->get_first_msg($_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 'p'),$_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
+		" . $Sql->limit($pagination->get_display_from(), $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$Template->assign_block_vars('index.list', array(
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		
+		$Template->assign_block_vars('list', array(
 			'TITLE' => $row['title'],
-			'AUTHOR' => !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . $row['login'] . '</a>' : $row['user_ip'],
+			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 		));
