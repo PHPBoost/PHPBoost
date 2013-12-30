@@ -189,11 +189,20 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			));
 				
 			//On crée une pagination si le nombre de fichiers est trop important.
-			$Pagination = new DeprecatedPagination();
+			$page = AppContext::get_request()->get_getint('p', 1);
+			$pagination = new ModulePagination($page, $nbr_files, $config->get_max_files_number_per_page());
+			$pagination->set_url(new Url('/download/download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d'));
+			
+			if ($pagination->current_page_is_empty() && $page > 1)
+			{
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
+			}
 			
 			$tpl->put_all(array(
-				'PAGINATION' => $Pagination->display(url(PATH_TO_ROOT . '/download/download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $config->get_max_files_number_per_page(), 3),
 				'C_FILES' => true,
+				'C_PAGINATION' => $pagination->has_several_pages(),
+				'PAGINATION' => $pagination->display(),
 				'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
 			));
 	
@@ -202,7 +211,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module AND module_name = 'download'
 			WHERE approved = 1 AND idcat = '" . $category_id . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))
 			ORDER BY " . $sort . " " . $mode . 
-			$this->sql_querier->limit($Pagination->get_first_msg($config->get_max_files_number_per_page(), 'p'), $config->get_max_files_number_per_page()), __LINE__, __FILE__);
+			$this->sql_querier->limit($pagination->get_display_from(), $config->get_max_files_number_per_page()), __LINE__, __FILE__);
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				$notation->set_id_in_module($row['id']);

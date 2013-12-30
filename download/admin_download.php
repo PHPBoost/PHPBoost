@@ -31,6 +31,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 $Cache->load('download');
+$config = DownloadConfig::load();
 
 $Template->set_filenames(array(
 	'admin_download_management'=> 'download/admin_download_management.tpl'
@@ -39,11 +40,19 @@ $Template->set_filenames(array(
 $nbr_dl = $Sql->count_table(PREFIX . 'download', __LINE__, __FILE__);
 
 //On crée une pagination si le nombre de fichier est trop important.
+$page = AppContext::get_request()->get_getint('p', 1);
+$pagination = new ModulePagination($page, $nbr_dl, $config->get_max_files_number_per_page());
+$pagination->set_url(new Url('/download/admin_download.php?p=%d'));
 
-$Pagination = new DeprecatedPagination();
+if ($pagination->current_page_is_empty() && $page > 1)
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 $Template->put_all(array(
-	'PAGINATION' => $Pagination->display('admin_download.php?p=%d', $nbr_dl, 'p', 25, 3),
+	'C_PAGINATION' => $pagination->has_several_pages(),
+	'PAGINATION' => $pagination->display(),
 	'L_DEL_ENTRY' => $LANG['del_entry'],
 	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
 	'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
@@ -61,7 +70,7 @@ $Template->put_all(array(
 $result = $Sql->query_while("SELECT id, idcat, title, timestamp, approved, start, end, size
 FROM " . PREFIX . "download
 ORDER BY timestamp DESC 
-" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
+" . $Sql->limit($pagination->get_display_from(), $config->get_max_files_number_per_page()), __LINE__, __FILE__);
 
 while ($row = $Sql->fetch_assoc($result))
 {

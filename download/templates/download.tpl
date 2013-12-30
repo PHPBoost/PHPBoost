@@ -103,12 +103,11 @@
 									<br />
 									{L_NOTE} {file.NOTE}
 								</div>
-								<div class="spacer"></div>								
+								<div class="spacer"></div>
 							</div>
 							<footer></footer>
-						</article>						
+						</article>
 					# END file #
-					<div style="text-align:center;">{PAGINATION}</div>
 				# ENDIF #
 				
 				# IF C_NO_FILE #
@@ -119,12 +118,12 @@
 				# ENDIF #
 				<div class="spacer"></div>
 			</div>
-			<footer></footer>
+			<footer># IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #</footer>
 		</section>
 		# ENDIF #
 		
-		# IF C_DISPLAY_DOWNLOAD #			
-		<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">					
+		# IF C_DISPLAY_DOWNLOAD #
+		<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			<header>
 				<h1 itemprop="name">
 					{NAME}

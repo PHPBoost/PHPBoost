@@ -55,7 +55,7 @@
 				<tfoot>
 					<tr>
 						<th colspan="8">
-							{PAGINATION}
+							# INCLUDE PAGINATION #
 						</th>
 					</tr>
 				</tfoot>
@@ -68,7 +68,7 @@
 						</td>
 						<td> 
 							{questions.QUESTIONS}
-						</td>			
+						</td>
 						<td> 
 							{questions.PSEUDO}
 						</td>

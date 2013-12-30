@@ -51,20 +51,29 @@ if (retrieve(POST, 'submit', false))
 //Questions list
 if ($page > 0)
 {
+	$_NBR_QUESTIONS_PER_PAGE = 25;
+	
 	$Template->set_filenames(array(
 		'admin_faq_questions'=> 'faq/admin_faq_questions.tpl'
 	));
 	
-	 
-	$Pagination = new DeprecatedPagination();
+	$nbr_questions = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq", __LINE__, __FILE__);
+	
+	//On instancie la classe de pagination
+	$pagination = new ModulePagination($page, $nbr_questions, $_NBR_QUESTIONS_PER_PAGE);
+	$pagination->set_url(new Url('/faq/admin_faq.php?p=%d'));
+	
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$result = $Sql->query_while("SELECT q.id, q.question, q.timestamp, q.idcat, c.name
 	FROM " . PREFIX . "faq q
 	LEFT JOIN " . PREFIX . "faq_cats c ON c.id = q.idcat
 	ORDER BY q.timestamp DESC
-	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
-	
-	$nbr_questions = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq", __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $_NBR_QUESTIONS_PER_PAGE), __LINE__, __FILE__);
 	
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -80,7 +89,8 @@ if ($page > 0)
 	}
 	
 	$Template->put_all(array(
-		'PAGINATION' => $Pagination->display('admin_faq.php?p=%d', $nbr_questions, 'p', 25, 3),
+		'C_PAGINATION' => $pagination->has_several_pages(),
+		'PAGINATION' => $pagination->display(),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_CATEGORY' => $FAQ_LANG['category'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),

@@ -5,8 +5,8 @@
 			</header>
 			<div class="content" style="text-align:center;">
 				{L_POLL_MAIN}
-				<br /><br />		
-				# START list #					
+				<br /><br />
+				# START list #
 				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}">{list.QUESTION}
 				<br />  
 				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}"><img src="{PATH_TO_ROOT}/poll/poll.png" alt="" title="{list.QUESTION}" /></a> 
@@ -22,7 +22,7 @@
 		
 	# IF C_POLL_VIEW #
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{U_POLL_ACTION}">
-			<article>					
+			<article>
 				<header>
 					<h1>
 						{QUESTION}
@@ -89,7 +89,7 @@
 		<section>					
 			<header>
 				<h1>{L_ARCHIVE}</h1>
-				<span style="float:right;">{PAGINATION}</span>
+				# IF C_PAGINATION #<span style="float:right;"># INCLUDE PAGINATION #</span># ENDIF #
 			</header>
 			<div class="content">
 				# START list #
@@ -125,8 +125,8 @@
 						</div>
 					</div>
 				</article>
-				# END list #				
+				# END list #
 			</div>
-			<footer><span style="float:right;">{PAGINATION}</span></footer>
+			<footer># IF C_PAGINATION #<span style="float:right;"># INCLUDE PAGINATION #</span># ENDIF #</footer>
 		</section>
 	# ENDIF #

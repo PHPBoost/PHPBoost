@@ -48,14 +48,6 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		
 	if ($User->check_level(User::ADMIN_LEVEL))
 	{
-		$java = "<script language='JavaScript' type='text/javascript'>
-		<!--
-		function Confirm() {
-		return confirm('" . $LANG['delete_link'] . "');
-		}
-		-->
-		</script>";
-		
 		$edit = '<a href="../web/admin_web' . url('.php?id=' . $web['id']) . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>';
 		$del = '<a href="../web/admin_web.php?delete=1&amp;id=' . $web['id'] . '&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="delete-element"></a>';
 	}
@@ -63,11 +55,9 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	{
 		$edit = '';
 		$del = '';
-		$java = '';
 	}
 
 	$tpl->put_all(array(
-		'JAVA' => $java,
 		'EDIT' => $edit,
 		'DEL' => $del
 	));
@@ -126,7 +116,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	$tpl->put_all(array(
 		'C_WEB_LINK' => true,
 		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
-		'CAT_NAME' => $CAT_WEB[$idcat]['name'],		
+		'CAT_NAME' => $CAT_WEB[$idcat]['name'],
 		'NO_CAT' => ($nbr_web == 0) ? $LANG['none_link'] : '',
 		'MAX_NOTE' => $web_config->get_note_max(),
 		'L_LINK' => $LANG['link'],
@@ -146,23 +136,23 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		'U_WEB_NOTE_BOTTOM' => url('.php?sort=note&amp;mode=asc&amp;cat=' . $idcat, '-' . $idcat . '.php?sort=note&amp;mode=asc'),
 		'U_WEB_COM_TOP' => url('.php?sort=com&amp;mode=desc&amp;cat=' . $idcat, '-' . $idcat . '.php?sort=com&amp;mode=desc'),
 		'U_WEB_COM_BOTTOM' => url('.php?sort=com&amp;mode=asc&amp;cat=' . $idcat, '-' . $idcat . '.php?sort=com&amp;mode=asc')
-	));		
+	));
 	
-	$get_sort = retrieve(GET, 'sort', '');	
+	$get_sort = retrieve(GET, 'sort', '');
 	switch ($get_sort)
 	{
 		case 'alpha' : 
 		$sort = 'title';
-		break;		
+		break;
 		case 'date' : 
 		$sort = 'timestamp';
-		break;		
+		break;
 		case 'view' : 
 		$sort = 'compt';
-		break;		
+		break;
 		case 'note' :
 		$sort = 'average_notes';
-		break;		
+		break;
 		case 'com' :
 		$sort = 'com.number_comments';
 		break;
@@ -170,16 +160,24 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		$sort = 'timestamp';
 	}
 	
-	$get_mode = retrieve(GET, 'mode', '');	
-	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
+	$get_mode = retrieve(GET, 'mode', '');
+	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de lien est trop important.
-	 
-	$Pagination = new DeprecatedPagination();
-		
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $nbr_web, $web_config->get_max_nbr_weblinks());
+	$pagination->set_url(new Url('/web/web.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d'));
+	
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	$tpl->put_all(array(
-		'PAGINATION' => $Pagination->display('web' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $web_config->get_max_nbr_weblinks(), 3)
+		'C_PAGINATION' => $pagination->has_several_pages(),
+		'PAGINATION' => $pagination->display()
 	));
 
 	$result = $Sql->query_while("SELECT w.id, w.title, w.timestamp, w.compt, notes.average_notes, com.number_comments
@@ -188,16 +186,16 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON w.id = com.id_in_module AND com.module_id = 'web'
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
-	$Sql->limit($Pagination->get_first_msg($web_config->get_max_nbr_weblinks(), 'p'), $web_config->get_max_nbr_weblinks()), __LINE__, __FILE__);
+	$Sql->limit($pagination->get_display_from(), $web_config->get_max_nbr_weblinks()), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$notation->set_id_in_module($row['id']);
 		$notation->set_average_notes($row['average_notes']);
 		
-		//On reccourci le lien si il est trop long.
+		//On raccourci le lien si il est trop long.
 		$row['title'] = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 		
-		$tpl->assign_block_vars('web', array(			
+		$tpl->assign_block_vars('web', array(
 			'NAME' => $row['title'],
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),

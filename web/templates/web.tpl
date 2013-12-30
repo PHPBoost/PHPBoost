@@ -1,5 +1,3 @@
-{JAVA} 
-
 # IF C_WEB_CAT #
 
 <section>
@@ -10,7 +8,6 @@
 				# IF C_IS_ADMIN # 
 				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}" class="fa fa-edit"></a> 
 				# ENDIF #
-				{PAGINATION}
 			</span>
 		</h1>
 	</header>
@@ -21,7 +18,7 @@
 			<a href="{PATH_TO_ROOT}/web/web{cat_list.U_WEB_CAT}">{cat_list.CAT}</a> <span class="smaller">({cat_list.TOTAL})</span><br />
 			<span class="smaller">{cat_list.CONTENTS}</span>
 			<br /><br /><br />
-		</div>	
+		</div>
 		# END cat_list #
 		
 		<div class="smaller" style="padding-top:10px;text-align:center;clear:both">
@@ -29,15 +26,16 @@
 		</div>
 	</div>
 	<footer>
-		<div style="float:right">
-			{PAGINATION}
-		</div>
+		# IF C_PAGINATION #
+		<div class="spacer">&nbsp;</div>
+		<div class="center"># INCLUDE PAGINATION #</div>
+		# ENDIF #
 	</footer>
 </section>
 # ENDIF #
 
 # IF C_WEB_LINK #
-<section>					
+<section>
 	<header>
 		<h1>
 			{L_WEB} - {CAT_NAME}
@@ -62,17 +60,17 @@
 						</th>
 						<th>
 							<a href="web{U_WEB_DATE_TOP}" class="fa fa-table-sort-up"></a>
-							{L_DATE}					
+							{L_DATE}
 							<a href="web{U_WEB_DATE_BOTTOM}" class="fa fa-table-sort-down"></a>
 						</th>
 						<th>
 							<a href="web{U_WEB_VIEW_TOP}" class="fa fa-table-sort-up"></a>
-							{L_VIEW}					
+							{L_VIEW}
 							<a href="web{U_WEB_VIEW_BOTTOM}" class="fa fa-table-sort-down"></a>
 						</th>
 						<th>
 							<a href="web{U_WEB_NOTE_TOP}" class="fa fa-table-sort-up"></a>
-							{L_NOTE}					
+							{L_NOTE}
 							<a href="web{U_WEB_NOTE_BOTTOM}" class="fa fa-table-sort-down"></a>
 						</th>
 						<th>
@@ -82,11 +80,11 @@
 						</th>
 					</tr>
 				</thead>
-				# IF PAGINATION #
+				# IF C_PAGINATION #
 				<tfoot>
 					<tr>
 						<th colspan="5">
-							{PAGINATION}
+							# INCLUDE PAGINATION #
 						</th>
 					</tr>
 				</tfoot>
@@ -119,7 +117,7 @@
 # ENDIF #
 
 # IF C_DISPLAY_WEB #
-<article>					
+<article>
 	<header>
 		<h1>
 			{NAME}
@@ -136,12 +134,12 @@
 			
 			<a href="{PATH_TO_ROOT}/web/web{U_WEB_CAT}" title="{CAT}">{CAT}</a><br />
 			
-			<strong>{L_DATE}:</strong> {DATE}<br />						
+			<strong>{L_DATE}:</strong> {DATE}<br />
 			<strong>{L_VIEWS}:</strong> {COMPT} {L_TIMES}
 			
 			<span class="spacer">&nbsp;</span>
 		</p>
-		<p class="center">					
+		<p class="center">
 			<button type="button" name="{NAME}" class="visit" onclick="document.location = 'count.php?id={IDWEB}';" value="true">{L_VISIT} <i class="fa fa-globe"></i></button>
 		</p>
 		{KERNEL_NOTATION}

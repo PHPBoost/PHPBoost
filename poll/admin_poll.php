@@ -234,20 +234,31 @@ elseif (!empty($id))
 	));
 	
 	$Template->pparse('admin_poll_management2'); 
-}			
+}
 else
-{			
+{
+	$_NBR_ELEMENTS_PER_PAGE = 20;
+	
 	$Template->set_filenames(array(
 		'admin_poll_management'=> 'poll/admin_poll_management.tpl'
 	));
 	 
 	$nbr_poll = $Sql->count_table(PREFIX . 'poll', __LINE__, __FILE__);
 
-	 
-	$Pagination = new DeprecatedPagination();
-	
+	//On crée une pagination si le nombre de sondages est trop important.
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $nbr_poll, $_NBR_ELEMENTS_PER_PAGE);
+	$pagination->set_url(new Url('/poll/admin_poll.php?p=%d'));
+
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+
 	$Template->put_all(array(
-		'PAGINATION' => $Pagination->display('admin_poll.php?p=%d', $nbr_poll, 'p', 20, 3),
+		'C_PAGINATION' => $pagination->has_several_pages(),
+		'PAGINATION' => $pagination->display(),
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
 		'L_POLL_ADD' => $LANG['poll_add'],
 		'L_POLL_CONFIG' => $LANG['poll_config'],
@@ -265,13 +276,13 @@ else
 
 	$result = $Sql->query_while("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, m.login 
 	FROM " . PREFIX . "poll p
-	LEFT JOIN " . DB_TABLE_MEMBER . " m ON p.user_id = m.user_id	
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON p.user_id = m.user_id
 	ORDER BY p.timestamp DESC 
-	" . $Sql->limit($Pagination->get_first_msg(20, 'p'), 20), __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		if ($row['visible'] == 2)
-			$aprob = $LANG['waiting'];			
+			$aprob = $LANG['waiting'];
 		elseif ($row['visible'] == 1)
 			$aprob = $LANG['yes'];
 		else
