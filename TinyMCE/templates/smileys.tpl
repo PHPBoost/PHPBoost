@@ -26,7 +26,7 @@
 					# START smiley #
 						{smiley.TR_START}
 							<td>
-								<a href="javascript:insert_popup('{smiley.CODE}')">{smiley.IMG}</a>&nbsp;&nbsp;
+								<a href="javascript:EmotionsDialog.insert('{smiley.URL}', '{smiley.CODE}')">{smiley.IMG}</a>&nbsp;&nbsp;
 							</td>
 							# START smiley.td #
 							{smiley.td.TD}
