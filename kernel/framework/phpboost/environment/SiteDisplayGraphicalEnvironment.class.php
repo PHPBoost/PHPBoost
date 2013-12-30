@@ -114,7 +114,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 			$template->put_all(array(
 				'L_VISIT' => self::$main_lang['guest_s'],
-				'L_TODAY' => self::$main_lang['today'],
+				'L_TODAY' => LangLoader::get_message('today', 'date-common'),
 				'C_COMPTEUR' => true,
 				'COMPTEUR_TOTAL' => $compteur_total,
 				'COMPTEUR_DAY' => $compteur_day
