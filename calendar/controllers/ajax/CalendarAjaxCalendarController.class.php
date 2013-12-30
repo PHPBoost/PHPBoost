@@ -52,7 +52,7 @@ class CalendarAjaxCalendarController extends AbstractController
 		return new SiteNodisplayResponse($this->view);
 	}
 	
-	private function build_view($request)
+	private function build_view(HTTPRequestCustom $request)
 	{
 		$config = CalendarConfig::load();
 		$categories = CalendarService::get_categories_manager()->get_categories_cache()->get_categories();
@@ -89,8 +89,8 @@ class CalendarAjaxCalendarController extends AbstractController
 			'DATE' => $array_l_month[$month - 1] . ' ' . $year,
 			'PREVIOUS_MONTH_TITLE' => ($month == 1) ? $array_l_month[11] . ' ' . ($year - 1) : $array_l_month[$month - 2] . ' ' . $year,
 			'NEXT_MONTH_TITLE' => ($month == 12) ? $array_l_month[0] . ' ' . ($year + 1) : $array_l_month[$month] . ' ' . $year,
-			'U_PREVIOUS_MONTH' => CalendarUrlBuilder::ajax_month_calendar($previous_year . '/' . $previous_month)->rel(),
-			'U_NEXT_MONTH' => CalendarUrlBuilder::ajax_month_calendar($next_year . '/' . $next_month)->rel(),
+			'U_PREVIOUS_MONTH' => CalendarUrlBuilder::ajax_month_calendar($previous_year . '/' . $previous_month . '/' . (int)$this->is_mini_calendar())->rel(),
+			'U_NEXT_MONTH' => CalendarUrlBuilder::ajax_month_calendar($next_year . '/' . $next_month . '/' . (int)$this->is_mini_calendar())->rel(),
 			'C_MINI_MODULE' => $this->is_mini_calendar()
 		));
 		
@@ -204,11 +204,11 @@ class CalendarAjaxCalendarController extends AbstractController
 		}
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('month', '', $month, $array_month,
-			array('events' => array('change' => 'ChangeMonth("' . CalendarUrlBuilder::ajax_month_calendar($year)->rel() . '" + "/" + HTMLForms.getField("month").getValue());')
+			array('events' => array('change' => 'ChangeMonth("' . CalendarUrlBuilder::ajax_month_calendar($year)->rel() . '" + "/" + HTMLForms.getField("month").getValue() + "/" + ' . (int)$this->is_mini_calendar() . ');')
 		)));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('year', '', $year, $array_year,
-			array('events' => array('change' => 'ChangeMonth("' . CalendarUrlBuilder::ajax_month_calendar()->rel() . '" + HTMLForms.getField("year").getValue() + "/" + HTMLForms.getField("month").getValue());')
+			array('events' => array('change' => 'ChangeMonth("' . CalendarUrlBuilder::ajax_month_calendar()->rel() . '" + HTMLForms.getField("year").getValue() + "/" + HTMLForms.getField("month").getValue() + "/" + ' . (int)$this->is_mini_calendar() . ');')
 		)));
 		
 		$this->form = $form;
@@ -219,6 +219,9 @@ class CalendarAjaxCalendarController extends AbstractController
 		$this->lang = LangLoader::get('common', 'calendar');
 		$this->view = new FileTemplate('calendar/CalendarAjaxCalendarController.tpl');
 		$this->view->add_lang($this->lang);
+		
+		if (in_array('mini', array_keys($_GET)) && $_GET['mini'] == 1)
+			$this->set_mini_calendar();
 	}
 	
 	public static function get_view($is_mini = false)
