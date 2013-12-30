@@ -17,7 +17,7 @@
 	[*] Optimisation du code
 [*] Installation : Ajout de la possibilité de modifier la description du site dans l'installation en CLI
 [*] Création d'un système permettant de gérer facilement des mots clés dans les modules
-- Passage de l'extension mysql à mysqli pour assurer la compatibilité à long terme de PHPBoost sur tous les serveurs
+[*] Passage de l'extension mysql à mysqli pour assurer la compatibilité à long terme de PHPBoost sur tous les serveurs
 [*] Améliorations de la rapidité d'éxécution et de la fiabilité de l'installateur
 [*] Ajout des liens éditer et supprimer dans la liste déroulante de la recherche d'un membre (les boutons sont visible seulement par les administrateurs)
 [*] Création d'une classe ModuleTreeLinks et d'un ExtensionPoint pour contenir tous les liens avec les différentes actions possible (remplace le admin_links dans desc.ini du module)

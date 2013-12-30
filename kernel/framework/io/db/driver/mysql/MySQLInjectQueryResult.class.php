@@ -55,8 +55,8 @@ class MySQLInjectQueryResult extends AbstractQueryResult implements InjectQueryR
 	public function __construct($query, $parameters, $resource, $link)
 	{
 		$this->resource = $resource;
-		$this->affected_rows = mysql_affected_rows($link);
-		$this->last_inserted_id = mysql_insert_id($link);
+		$this->affected_rows = mysqli_affected_rows($link);
+		$this->last_inserted_id = mysqli_insert_id($link);
 		parent::__construct($query, $parameters);
 	}
 
@@ -79,7 +79,7 @@ class MySQLInjectQueryResult extends AbstractQueryResult implements InjectQueryR
 	{
 		if (!$this->is_disposed && is_resource($this->resource))
 		{
-			if (!@mysql_free_result($this->resource))
+			if (!@mysqli_free_result($this->resource))
 			{
 				throw new MySQLQuerierException('can\'t close sql resource');
 			}

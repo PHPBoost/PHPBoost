@@ -36,7 +36,6 @@ abstract class AbstractSelectQueryResult extends AbstractQueryResult implements 
 {
 	public function  __construct($query, array $parameters)
 	{
-		
 		parent::__construct($query, $parameters);
 	}
 	

@@ -261,5 +261,10 @@ class DBQuerier implements SQLQuerier
 		$row = $this->querier->select($query, $parameters, SelectQueryResult::FETCH_NUM)->fetch();
 		return (int) $row[0];
 	}
+	
+	public function get_querier()
+	{
+		return $this->querier;
+	}
 }
 ?>

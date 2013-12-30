@@ -36,7 +36,7 @@ abstract class AbstractSQLQuerier implements SQLQuerier
 	/**
 	 * @var mixed
 	 */
-	protected $link;
+	private $link;
 
 	/**
 	 * @var SQLQueryTranslator
@@ -58,7 +58,6 @@ abstract class AbstractSQLQuerier implements SQLQuerier
 		$this->link = $connection->get_link();
 		$this->translator = $translator;
 	}
-
 
 	function enable_query_translator()
 	{
@@ -83,6 +82,11 @@ abstract class AbstractSQLQuerier implements SQLQuerier
 			return $this->translator->translate($query);
 		}
 		return $query;
+	}
+	
+	public function get_link()
+	{
+		return $this->link;
 	}
 }
 ?>
