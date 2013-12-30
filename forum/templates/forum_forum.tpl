@@ -111,7 +111,7 @@
 					</tfoot>
 					# IF C_NO_MSG_NOT_READ #
 					<tr>
-						<td class="forum_sous_cat" style="text-align:center;">
+						<td colspan="7" class="forum_sous_cat" style="text-align:center;">
 							<strong>{L_MSG_NOT_READ}</strong>
 						</td>
 					</tr>
@@ -158,7 +158,7 @@
 
 					# IF C_NO_TOPICS #
 					<tr>
-						<td class="forum_sous_cat" style="text-align:center;">
+						<td colspan="7" class="forum_sous_cat" style="text-align:center;">
 							<strong>{L_NO_TOPICS}</strong>
 						</td>
 					</tr>
