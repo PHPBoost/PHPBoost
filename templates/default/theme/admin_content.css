@@ -244,10 +244,10 @@ table tbody td {
 }
 
 table tbody tr:nth-child(even) td {	background-color:#FFFFFF; }
-table tbody tr:first-child td{ border-top: none; }
-table tbody tr td:last-child{ border-right:1px solid #D1D2D4; }
 table tbody tr:last-child td{ border-bottom:1px solid #D1D2D4; }
+table tbody tr td:last-child{ border-right:1px solid #D1D2D4; }
 
+table tbody tr.no-separator td{ border-top: none; }
 table tbody tr td.no-separator{ border-left: none; }
 table tbody tr td.no-separator:first-child{ border-left:1px solid #D1D2D4; }
 
