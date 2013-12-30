@@ -47,19 +47,30 @@ class MySQLDBConnection implements DBConnection
 
 	public function connect(array $db_connection_data)
 	{
-		$mysql_link = @mysql_connect(
-		$db_connection_data['host'] . ':' . $db_connection_data['port'],
+		$mysqli_link = mysqli_init();
+		if (!$mysqli_link) {
+			throw new MySQLDBConnectionException('MySQLi init failed');
+		}
+
+		$mysqli_connect = mysqli_real_connect(
+		$mysqli_link,
+		$db_connection_data['host'],
 		$db_connection_data['login'],
-		$db_connection_data['password']);
-		if ($mysql_link)
+		$db_connection_data['password'],
+		$db_connection_data['database'],
+		$db_connection_data['port']);
+
+		if ($mysqli_connect)
 		{
-			$this->link = $mysql_link;
-			$this->select_database($db_connection_data['database']);
-			mysql_query("SET NAMES 'latin1'");
+			$this->link = $mysqli_link;
+			$this->execute("SET NAMES 'latin1'");
 		}
 		else
 		{
-			throw new MySQLDBConnectionException('can\'t connect to database!');
+			if (mysqli_connect_errno() == '1049')
+				throw new MySQLUnexistingDatabaseException();
+			else
+				throw new MySQLDBConnectionException('can\'t connect to database!');
 		}
 	}
 
@@ -72,7 +83,7 @@ class MySQLDBConnection implements DBConnection
 	{
 		if ($this->link !== null)
 		{
-			if (!is_resource($this->link) || !@mysql_close($this->link))
+			if (!@mysqli_close($this->link))
 			{
 				throw new MySQLDBConnectionException('can\'t close database connection');
 			}
@@ -100,18 +111,10 @@ class MySQLDBConnection implements DBConnection
 
 	private function execute($command)
 	{
-		$resource = mysql_query($command, $this->link);
+		$resource = mysqli_query($this->link, $command);
 		if ($resource === false)
 		{
-			throw new MySQLQuerierException('invalid mysql command');
-		}
-	}
-
-	private function select_database($database)
-	{
-		if (!@mysql_select_db($database, $this->link))
-		{
-			throw new MySQLUnexistingDatabaseException();
+			throw new MySQLQuerierException('invalid mysql command', $command);
 		}
 	}
 }

@@ -45,7 +45,7 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 	/**
 	 * @var string[string]
 	 */
-	private $current;
+	private $current = '';
 
 	/**
 	 * @var int
@@ -76,14 +76,14 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 
 	public function get_rows_count()
 	{
-		return mysql_num_rows($this->resource);
+		return mysqli_num_rows($this->resource);
 	}
 
 	public function rewind()
 	{
 		if ($this->index > 0)
 		{
-			@mysql_data_seek($this->resource, 0);
+			@mysqli_data_seek($this->resource, 0);
 			$this->index = 0;
 		}
 		$this->next();
@@ -91,7 +91,7 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 
 	public function valid()
 	{
-		return $this->current !== false;
+		return $this->current !== null;
 	}
 
 	public function current()
@@ -109,11 +109,11 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 		switch ($this->fetch_mode)
 		{
 			case SelectQueryResult::FETCH_NUM:
-				$this->current = mysql_fetch_row($this->resource);
+				$this->current = mysqli_fetch_row($this->resource);
 				break;
 			case SelectQueryResult::FETCH_ASSOC:
 			default:
-				$this->current = mysql_fetch_assoc($this->resource);
+				$this->current = mysqli_fetch_assoc($this->resource);
 				break;
 		}
 		$this->index++;
@@ -123,7 +123,7 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 	{
 		if (!$this->is_disposed && is_resource($this->resource))
 		{
-			if (!@mysql_free_result($this->resource))
+			if (!@mysqli_free_result($this->resource))
 			{
 				throw new MySQLQuerierException('can\'t close sql resource');
 			}

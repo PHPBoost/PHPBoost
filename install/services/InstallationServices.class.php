@@ -109,6 +109,7 @@ class InstallationServices
 			'login' => $login,
 			'password' => $password,
 			'database' => $database,
+			'port' => $port
 		);
 		$db_connection = new MySQLDBConnection();
 		DBFactory::init_factory($db_connection_data['dbms']);

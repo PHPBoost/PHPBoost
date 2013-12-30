@@ -57,7 +57,7 @@ class MySQLQuerier extends AbstractSQLQuerier
 
 	public function escape($value)
 	{
-		return mysql_real_escape_string($value, $this->link);
+		return mysqli_real_escape_string($this->link, $value);
 	}
 
 	private function execute($query, $parameters)
@@ -67,8 +67,8 @@ class MySQLQuerier extends AbstractSQLQuerier
 		{
 			$query = $this->query_var_replacator->replace($query, $parameters);
 		}
-		$resource = mysql_query($query, $this->link);
-		$has_error = mysql_error() !== '' && mysql_errno() > 0;
+		$resource = mysqli_query($this->link, $query);
+		$has_error = mysqli_error($this->link) !== '' && mysqli_errno($this->link) > 0;
 		if ($resource === false && $has_error)
 		{
 			throw new MySQLQuerierException('invalid query', $query);
