@@ -35,6 +35,7 @@ require_once('../admin/admin_header.php');
 $id = retrieve(GET, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
+$web_config = WebConfig::load();
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
@@ -221,9 +222,9 @@ elseif ($del && !empty($id)) //Suppresion du lien web.
 	CommentsService::delete_comments_topic_module('web', $id);
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);
-}		
+}
 else
-{			
+{
 	$Template->set_filenames(array(
 		'admin_web_management'=> 'web/admin_web_management.tpl'
 	));
@@ -231,11 +232,19 @@ else
 	$nbr_web = $Sql->count_table(PREFIX . 'web', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de web est trop important.
-	 
-	$Pagination = new DeprecatedPagination();
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $nbr_web, $web_config->get_max_nbr_weblinks());
+	$pagination->set_url(new Url('/web/admin_web.php?p=%d'));
+	
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 
-	$Template->put_all(array(	
-		'PAGINATION' => $Pagination->display('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
+	$Template->put_all(array(
+		'C_PAGINATION' => $pagination->has_several_pages(),
+		'PAGINATION' => $pagination->display(),
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
@@ -258,7 +267,7 @@ else
 	FROM " . PREFIX . "web d 
 	LEFT JOIN " . PREFIX . "web_cat ad ON ad.id = d.idcat
 	ORDER BY timestamp DESC 
-	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $web_config->get_max_nbr_weblinks()), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$aprob = ($row['aprob'] == 1) ? $LANG['yes'] : $LANG['no'];

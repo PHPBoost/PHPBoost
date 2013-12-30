@@ -66,8 +66,15 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		$total_cat = $this->sql_querier->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 		
 		//On créé une pagination si le nombre de catégories est trop important.
-		 
-		$Pagination = new DeprecatedPagination();
+		$page = AppContext::get_request()->get_getint('p', 1);
+		$pagination = new ModulePagination($page, $total_cat, $web_config->get_max_nbr_category());
+		$pagination->set_url(new Url('/web/web.php?p=%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 		
 		$nbr_column_config = $web_config->get_number_columns();
 		$nbr_column = ($total_cat > $nbr_column_config) ? $nbr_column_config : $total_cat;
@@ -75,8 +82,9 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		$tpl->put_all(array(
 			'C_WEB_CAT' => true,
+			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
-			'PAGINATION' => $Pagination->display('web' . url('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $web_config->get_max_nbr_category(), 3),
+			'PAGINATION' => $pagination->display(),
 			'TOTAL_FILE' => $total_link,
 			'L_CATEGORIES' => $LANG['categories'],
 			'L_EDIT' => $LANG['edit'],
@@ -98,7 +106,7 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		WHERE aw.aprob = 1 AND aw.secure <= '" . $User->get_attribute('level') . "'
 		GROUP BY aw.id
 		ORDER BY aw.class
-		" . $this->sql_querier->limit($Pagination->get_first_msg($web_config->get_max_nbr_category(), 'p'), $web_config->get_max_nbr_category()), __LINE__, __FILE__);
+		" . $this->sql_querier->limit($pagination->get_display_from(), $web_config->get_max_nbr_category()), __LINE__, __FILE__);
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$tpl->assign_block_vars('cat_list', array(

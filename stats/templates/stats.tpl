@@ -569,21 +569,23 @@
 					</th>
 				</tr>
 			</thead>
+			# IF C_PAGINATION #
 			<tfoot>
 				<tr>
 					<th colspan="5">
-						{PAGINATION}
+						# INCLUDE PAGINATION #
 					</th>
 				</tr>
 			</tfoot>
+			# ENDIF #
 			<tbody>
-				# START referer_list #	
+				# START referer_list #
 				<tr>
-					<td colspan="5">			
+					<td colspan="5">
 						<table>
 							<tbody>
 								<tr>
-									<td>		
+									<td>
 										{referer_list.IMG_MORE} <span class="smaller">({referer_list.NBR_LINKS})</span> <a href="{referer_list.URL}">{referer_list.URL}</a>	<span id="load{referer_list.ID}"></span>	 			
 									</td>
 									<td>
@@ -645,7 +647,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th>			
+					<th>
 						{L_KEYWORD}
 					</th>
 					<th>
@@ -656,28 +658,30 @@
 					</th>
 					<th>
 						{L_LAST_UPDATE}
-					</th>	
+					</th>
 					<th>
 						{L_TREND}
 					</th>
 				</tr>
 			</thead>
+			# IF C_PAGINATION #
 			<tfoot>
 				<tr>
 					<th colspan="5">
-						{PAGINATION}&nbsp;
+						# INCLUDE PAGINATION #
 					</th>
 				</tr>
 			</tfoot>
+			# ENDIF #
 			<tbody>
-				# START keyword_list #	
+				# START keyword_list #
 				<tr>
-					<td colspan="5">			
+					<td colspan="5">
 						<table>
 							<tbody>
 								<tr>
-									<td>		
-										{keyword_list.IMG_MORE} <span class="smaller">({keyword_list.NBR_LINKS})</span> {keyword_list.KEYWORD}	<span id="load{keyword_list.ID}"></span>	 			
+									<td>
+										{keyword_list.IMG_MORE} <span class="smaller">({keyword_list.NBR_LINKS})</span> {keyword_list.KEYWORD}	<span id="load{keyword_list.ID}"></span>
 									</td>
 									<td>
 										{keyword_list.TOTAL_VISIT}

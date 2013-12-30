@@ -178,12 +178,20 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			));
 	
 			//On crée une pagination si le nombre de fichiers est trop important.
+			$page = AppContext::get_request()->get_getint('p', 1);
+			$pagination = new ModulePagination($page, $MEDIA_CATS[$id_cat]['num_media'], $MEDIA_CONFIG['pagin']);
+			$pagination->set_url(new Url('/media/' . url('media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d'));
+
+			if ($pagination->current_page_is_empty() && $page > 1)
+			{
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
+			}
 			
-			$Pagination = new DeprecatedPagination();
-	
 			$tpl->put_all(array(
-				'PAGINATION' => $Pagination->display(PATH_TO_ROOT . '/media/' . url('media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d', 'media-0-' . $id_cat . '-%d' . '+' . Url::encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php' . $unget), $MEDIA_CATS[$id_cat]['num_media'], 'p', $MEDIA_CONFIG['pagin'], 3),
 				'C_FILES' => true,
+				'C_PAGINATION' => $pagination->has_several_pages(),
+				'PAGINATION' => $pagination->display(),
 				'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $id_cat . '.php?' : 'media.php?cat=' . $id_cat . '&'
 			));
 	
@@ -194,7 +202,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON v.id = com.id_in_module AND com.module_id = 'media'
 				WHERE idcat = '" . $id_cat . "' AND infos = '" . MEDIA_STATUS_APROBED . "'
 				ORDER BY " . $sort . " " . $mode .
-				$this->sql_querier->limit($Pagination->get_first_msg($MEDIA_CONFIG['pagin'], 'p'), $MEDIA_CONFIG['pagin']), __LINE__, __FILE__);
+				$this->sql_querier->limit($pagination->get_display_from(), $MEDIA_CONFIG['pagin']), __LINE__, __FILE__);
 	
 			$notation = new Notation();
 			$notation->set_module_name('media');

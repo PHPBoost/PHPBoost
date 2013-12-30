@@ -122,7 +122,7 @@
 						</div>
 					# ENDIF #
 				</div>
-				<footer>{PAGINATION}</footer>
+				<footer># IF C_PAGINATION #<span class="center"># INCLUDE PAGINATION #</span># ENDIF #</footer>
 			</section>
 		# ENDIF #
 

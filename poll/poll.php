@@ -297,20 +297,32 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 }
 elseif ($archives) //Archives.
 {
+	$_NBR_ELEMENTS_PER_PAGE = 10;
+	
 	$Template->set_filenames(array(
 		'poll'=> 'poll/poll.tpl'
 	));
-		
+	
 	$nbrarchives = $Sql->query("SELECT COUNT(*) as id FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
 	
-	$Pagination = new DeprecatedPagination();
+	//On crée une pagination si le nombre de sondages est trop important.
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $nbrarchives, $_NBR_ELEMENTS_PER_PAGE);
+	$pagination->set_url(new Url('/poll/poll.php?p=%d'));
+
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$Template->put_all(array(
-		'C_POLL_ARCHIVES' => true,	
+		'C_POLL_ARCHIVES' => true,
 		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
-		'PAGINATION' => $Pagination->display('poll' . url('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
+		'C_PAGINATION' => $pagination->has_several_pages(),
+		'PAGINATION' => $pagination->display(),
 		'L_ARCHIVE' => $LANG['archives'],
-		'L_BACK_POLL' => $LANG['poll_back'],		
+		'L_BACK_POLL' => $LANG['poll_back'],
 		'L_ON' => $LANG['on'],
 		'L_EDIT' => $LANG['edit'],
 		'L_DELETE' => $LANG['delete']
@@ -321,7 +333,7 @@ elseif ($archives) //Archives.
 	FROM " . PREFIX . "poll
 	WHERE archive = 1 AND visible = 1
 	ORDER BY timestamp DESC
-	" . $Sql->limit($Pagination->get_first_msg(10, 'archives'), 10), __LINE__, __FILE__); 
+	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__); 
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$array_answer = explode('|', $row['answers']);

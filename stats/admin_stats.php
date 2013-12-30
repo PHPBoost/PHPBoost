@@ -42,6 +42,9 @@ if (!empty($_POST['valid']))
 //Sinon on remplit le formulaire
 else
 {
+	$_NBR_ELEMENTS_PER_PAGE = 15;
+	
+	
 	$Template->set_filenames(array(
 		'admin_stats_management'=> 'stats/admin_stats_management.tpl'
 	));
@@ -955,16 +958,24 @@ else
 	}
 	elseif (!empty($referer))
 	{
-
-		$Pagination = new DeprecatedPagination();
-
 		$nbr_referer = $Sql->query("SELECT COUNT(DISTINCT(url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 0", __LINE__, __FILE__);
+		
+		$page = AppContext::get_request()->get_getint('p', 1);
+		$pagination = new ModulePagination($page, $nbr_referer, $_NBR_ELEMENTS_PER_PAGE);
+		$pagination->set_url(new Url('/stats/admin_stats.php?referer=1&amp;p=%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$result = $Sql->query_while ("SELECT id, count(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 		FROM " . PREFIX . "stats_referer
 		WHERE type = 0
 		GROUP BY url
 		ORDER BY total_visit DESC
-		" . $Sql->limit($Pagination->get_first_msg(15, 'p'), 15), __LINE__, __FILE__);
+		" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$average = ($row['total_visit'] / $row['nbr_day']);
@@ -1002,7 +1013,8 @@ else
 
 		$Template->put_all(array(
 			'C_STATS_REFERER' => true,
-			'PAGINATION' => $Pagination->display('admin_stats' . url('.php?referer=1&amp;p=%d'), $nbr_referer, 'p', 15, 3),
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'PAGINATION' => $pagination->display(),
 			'L_URL' => $LANG['url'],
 			'L_TOTAL_VISIT' => $LANG['total_visit'],
 			'L_AVERAGE_VISIT' => $LANG['average_visit'],
@@ -1012,16 +1024,24 @@ else
 	}
 	elseif (!empty($keyword))
 	{
-
-		$Pagination = new DeprecatedPagination();
-
 		$nbr_keyword = $Sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 1", __LINE__, __FILE__);
+		
+		$page = AppContext::get_request()->get_getint('p', 1);
+		$pagination = new ModulePagination($page, $nbr_keyword, $_NBR_ELEMENTS_PER_PAGE);
+		$pagination->set_url(new Url('/stats/admin_stats.php?keyword=1&amp;p=%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$result = $Sql->query_while ("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 		FROM " . PREFIX . "stats_referer
 		WHERE type = 1
 		GROUP BY relative_url
 		ORDER BY total_visit DESC
-		" . $Sql->limit($Pagination->get_first_msg(15, 'p'), 15), __LINE__, __FILE__);
+		" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$average = ($row['total_visit'] / $row['nbr_day']);
@@ -1059,7 +1079,8 @@ else
 
 		$Template->put_all(array(
 			'C_STATS_KEYWORD' => true,
-			'PAGINATION' => $Pagination->display('admin_stats' . url('.php?keyword=1&amp;p=%d'), $nbr_keyword, 'p', 15, 3),
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'PAGINATION' => $pagination->display(),
 			'L_SEARCH_ENGINE' => $LANG['keyword_s'],
 			'L_TOTAL_VISIT' => $LANG['total_visit'],
 			'L_AVERAGE_VISIT' => $LANG['average_visit'],

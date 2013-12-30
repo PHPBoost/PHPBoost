@@ -55,12 +55,12 @@
 				<tfoot>
 					<tr>
 						<th colspan="7">
-							{PAGINATION}
+							# INCLUDE PAGINATION #
 						</th>
 					</tr>
 				</tfoot>
 				# ENDIF #
-				<tbody>				
+				<tbody>
 					# START web #
 					<tr>
 						<td>

@@ -59,9 +59,20 @@ $Template->put_all(array(
 
 if (!empty($table) && $action == 'data')
 {
+	$_NBR_ELEMENTS_PER_PAGE = 30;
+	
+	$nbr_lines = $Sql->query("SELECT COUNT(*) FROM " . $table, __LINE__, __FILE__);
+	
 	//On crée une pagination (si activé) si le nombre de news est trop important.
-	 
-	$Pagination = new DeprecatedPagination();
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $nbr_lines, $_NBR_ELEMENTS_PER_PAGE);
+	$pagination->set_url(new Url('/database/admin_database_tools.php?table=' . $table . '&amp;action=data&amp;p=%d'));
+	
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
@@ -81,8 +92,7 @@ if (!empty($table) && $action == 'data')
 	}
 
 	//On éxécute la requête
-	$nbr_lines = $Sql->query("SELECT COUNT(*) FROM ".$table, __LINE__, __FILE__);
-	$query = "SELECT * FROM ".$table.$Sql->limit($Pagination->get_first_msg(30, 'p'), 30);
+	$query = "SELECT * FROM ".$table.$Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE);
 	$result = $Sql->query_while ($query, __LINE__, __FILE__);
 	$i = 1;
 	while ($row = $Sql->fetch_assoc($result))
@@ -123,9 +133,10 @@ if (!empty($table) && $action == 'data')
 	$Template->put_all(array(
 		'C_DATABASE_TABLE_DATA' => true,
 		'C_DATABASE_TABLE_STRUCTURE' => false,
+		'C_PAGINATION' => $pagination->has_several_pages(),
+		'PAGINATION' => $pagination->display(),
 		'QUERY' => Sql::indent_query($query),
 		'QUERY_HIGHLIGHT' => Sql::highlight_query($query),
-		'PAGINATION' => $Pagination->display('admin_database_tools.php?table=' . $table . '&amp;action=data&amp;p=%d', $nbr_lines, 'p', 30, 3),
 		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],

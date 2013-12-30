@@ -284,7 +284,7 @@
 								</fieldset>
 								
 								<div class="spacer">&nbsp;</div>
-								# IF PAGINATION #<strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
+								# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 								<div style="width:99%;margin:auto;overflow:auto;padding:0px 2px">
 									<table>
 										<thead>
@@ -309,8 +309,7 @@
 									</table>
 								</div>
 								<div class="spacer">&nbsp;</div>
-								# IF PAGINATION #<strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
-							<footer></footer>
+							<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
 						</article>
 					</div>
 					<footer></footer>
