@@ -66,7 +66,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 				if ($file_type->is_picture())
 				{
 					$this->save($header_logo, $theme);
-					AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->rel());
+					AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface());
 				}
 				else
 				{
@@ -76,7 +76,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 			elseif ($this->form->get_value('use_default_logo'))
 			{
 				$this->delete_pictures_saved($theme);
-				AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->rel());
+				AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface());
 			}
 			else
 			{
