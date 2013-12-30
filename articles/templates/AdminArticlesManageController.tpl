@@ -66,7 +66,7 @@
 						{articles.PUBLISHING_START_DATE}
 					# ELSE #
 						# IF articles.C_PUBLISHING_END_DATE #
-							${LangLoader::get_message('until', 'main')} {articles.PUBLISHING_END_DATE} {ID}
+							${LangLoader::get_message('until', 'main')} {articles.PUBLISHING_END_DATE}
 						# ENDIF #
 					# ENDIF #
 				# ENDIF #
