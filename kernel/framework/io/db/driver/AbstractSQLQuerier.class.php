@@ -36,7 +36,7 @@ abstract class AbstractSQLQuerier implements SQLQuerier
 	/**
 	 * @var mixed
 	 */
-	private $link;
+	protected $link;
 
 	/**
 	 * @var SQLQueryTranslator
