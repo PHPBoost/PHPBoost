@@ -81,26 +81,26 @@
 						<div class="form-field"><label><input type="text" maxlength="255" size="40" id="forum_name" name="forum_name" value="{FORUM_NAME}"></label></div>
 					</div>
 					<div class="form-element">
-						<label for="pagination_topic">* {L_NBR_TOPIC_P}</label><br /><span>{L_NBR_TOPIC_P_EXPLAIN}</span>
+						<label for="pagination_topic">* {L_NBR_TOPIC_P} <span class="field-description">{L_NBR_TOPIC_P_EXPLAIN}</span></label>
 						<div class="form-field"><label><input type="text" maxlength="3" size="3" id="pagination_topic" name="pagination_topic" value="{PAGINATION_TOPIC}"></label></div>
 					</div>
 					<div class="form-element">
-						<label for="pagination_msg">* {L_NBR_MSG_P}</label><br /><span>{L_NBR_MSG_P_EXPLAIN}</span>
+						<label for="pagination_msg">* {L_NBR_MSG_P} <span class="field-description">{L_NBR_MSG_P_EXPLAIN}</span></label>
 						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="pagination_msg" name="pagination_msg" value="{PAGINATION_MSG}"></label></div>
 					</div>
 					<div class="form-element">
-						<label for="view_time">* {L_TIME_NEW_MSG}</label><br /><span>{L_TIME_NEW_MSG_EXPLAIN}</span>
+						<label for="view_time">* {L_TIME_NEW_MSG} <span class="field-description">{L_TIME_NEW_MSG_EXPLAIN}</span></label>
 						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="view_time" name="view_time" value="{VIEW_TIME}"> {L_DAYS}</label></div>
 					</div>
 					<div class="form-element">
-						<label for="topic_track">* {L_TOPIC_TRACK_MAX}</label><br /><span>{L_TOPIC_TRACK_MAX_EXPLAIN}</span>
+						<label for="topic_track">* {L_TOPIC_TRACK_MAX} <span class="field-description">{L_TOPIC_TRACK_MAX_EXPLAIN}</span></label>
 						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="topic_track" name="topic_track" value="{TOPIC_TRACK_MAX}"></label></div>
 					</div>
 					<div class="form-element">
 						<label for="edit_mark">{L_EDIT_MARK}</label>
 						<div class="form-field">
 							<label><input type="radio" {EDIT_MARK_ENABLED} name="edit_mark" id="edit_mark" value="1"> {L_ACTIV}</label>
-							&nbsp;&nbsp; 
+
 							<label><input type="radio" {EDIT_MARK_DISABLED} name="edit_mark" value="0"> {L_UNACTIVE}</label>
 						</div>
 					</div>
@@ -108,7 +108,6 @@
 						<label for="display_connexion">{L_DISPLAY_CONNEXION}</label>
 						<div class="form-field">
 							<label><input type="radio" {DISPLAY_CONNEXION_ENABLED} name="display_connexion" id="display_connexion" value="1"> {L_YES}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" {DISPLAY_CONNEXION_DISABLED} name="display_connexion" value="0"> {L_NO}</label>
 						</div>
 					</div>
@@ -116,7 +115,6 @@
 						<label for="no_left_column">{L_NO_LEFT_COLUMN}</label>
 						<div class="form-field">
 							<label><input type="radio" {NO_LEFT_COLUMN_ENABLED} name="no_left_column" id="no_left_column" value="1"> {L_YES}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" {NO_LEFT_COLUMN_DISABLED} name="no_left_column" value="0"> {L_NO}</label>
 						</div>
 					</div>
@@ -124,7 +122,6 @@
 						<label for="no_right_column">{L_NO_RIGHT_COLUMN}</label>
 						<div class="form-field">
 							<label><input type="radio" {NO_RIGHT_COLUMN_ENABLED} name="no_right_column" id="no_right_column" value="1"> {L_YES}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" {NO_RIGHT_COLUMN_DISABLED} name="no_right_column" value="0"> {L_NO}</label>
 						</div>
 					</div>
@@ -136,7 +133,6 @@
 						<label for="activ_display_msg">{L_ACTIV_DISPLAY_MSG}</label>
 						<div class="form-field">
 							<label><input type="radio" {DISPLAY_MSG_ENABLED} name="activ_display_msg" id="activ_display_msg" value="1"> {L_ACTIV}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" {DISPLAY_MSG_DISABLED} name="activ_display_msg" value="0"> {L_UNACTIVE}</label>
 						</div>
 					</div>
@@ -147,13 +143,13 @@
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="explain_display_msg">{L_EXPLAIN_DISPLAY_MSG}</label><br /><span>{L_EXPLAIN_DISPLAY_MSG_EXPLAIN}</span>
+						<label for="explain_display_msg">{L_EXPLAIN_DISPLAY_MSG} <span class="field-description">{L_EXPLAIN_DISPLAY_MSG_EXPLAIN}</span></label>
 						<div class="form-field">
 							<label><input type="text" size="40" name="explain_display_msg" id="explain_display_msg" value="{EXPLAIN_DISPLAY_MSG}"></label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="explain_display_msg_bis">{L_EXPLAIN_DISPLAY_MSG_BIS}</label><br /><span>{L_EXPLAIN_DISPLAY_MSG_BIS_EXPLAIN}</span>
+						<label for="explain_display_msg_bis">{L_EXPLAIN_DISPLAY_MSG_BIS} <span class="field-description">{L_EXPLAIN_DISPLAY_MSG_BIS_EXPLAIN}</span></label>
 						<div class="form-field">
 							<label><input type="text" size="40" name="explain_display_msg_bis" id="explain_display_msg_bis" value="{EXPLAIN_DISPLAY_MSG_BIS}"></label>
 						</div>
@@ -161,10 +157,8 @@
 					<div class="form-element">
 						<label for="icon_activ_display_msg">{L_ICON_DISPLAY_MSG}</label>
 						<div class="form-field">
-							<label><input type="radio" {ICON_DISPLAY_MSG_ENABLED} name="icon_activ_display_msg" id="icon_activ_display_msg" value="1"> {L_ACTIV}</label>
-							&nbsp;&nbsp; 
-							<label><input type="radio" {ICON_DISPLAY_MSG_DISABLED} name="icon_activ_display_msg" value="0"> {L_UNACTIVE}</label>
-							&nbsp; <img src="{PICTURES_DATA_PATH}/images/msg_display.png" name="icon" alt="" style="vertical-align:middle" /> / <img src="{PICTURES_DATA_PATH}/images/msg_not_display.png" name="icon" alt="" style="vertical-align:middle" />
+							<label><i class="fa fa-msg-display fa-2x"></i> <input type="radio" {ICON_DISPLAY_MSG_ENABLED} name="icon_activ_display_msg" id="icon_activ_display_msg" value="1"> {L_ACTIV}</label>
+							<label><i class="fa fa-msg-not-display fa-2x"></i><input type="radio" {ICON_DISPLAY_MSG_DISABLED} name="icon_activ_display_msg" value="0"> {L_UNACTIVE}</label>
 						</div>
 					</div>
 				</fieldset>
