@@ -34,7 +34,7 @@
 					</thead>
 					<tfoot>
 						<tr>
-							<th colspan="6">
+							<th colspan="5">
 							</th>
 						</tr>
 					</tfoot>
