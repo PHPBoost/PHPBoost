@@ -235,7 +235,9 @@ function image_preview(input,image)
 			{MENU_TREE}
 		    <script type="text/javascript">
 		    <!--
-		    createSortableMenu();
+		    Event.observe(window, 'load', function() {
+		    	createSortableMenu();
+		    });
             -->
             </script>
 			<br />
