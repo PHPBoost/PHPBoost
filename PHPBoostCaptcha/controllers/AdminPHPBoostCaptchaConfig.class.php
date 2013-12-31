@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		               AdminConfigPHPBoostCaptcha.class.php
+ *		               AdminPHPBoostCaptchaConfig.class.php
  *                            -------------------
  *   begin                : February 28, 2013
  *   copyright            : (C) 2013 Kevin MASSY
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminConfigPHPBoostCaptcha extends AdminModuleController
+class AdminPHPBoostCaptchaConfig extends AdminModuleController
 {
 	/**
 	 * @var HTMLForm

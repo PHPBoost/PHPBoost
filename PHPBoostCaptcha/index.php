@@ -29,6 +29,6 @@ define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(new UrlControllerMapper('AdminConfigPHPBoostCaptcha', '`^/admin(?:/config)?/?$`'));
+$url_controller_mappers = array(new UrlControllerMapper('AdminPHPBoostCaptchaConfig', '`^/admin(?:/config)?/?$`'));
 DispatchManager::dispatch($url_controller_mappers);
 ?>
