@@ -26,13 +26,15 @@
 			</th>
 		</tr>
 	</thead>
+	# IF C_PAGINATION #
 	<tfoot>
 		<tr>
 			<th colspan="{NUMBER_COLUMN}">
-				{PAGINATION}
+				# INCLUDE PAGINATION #
 			</th>
 		</tr>
 	</tfoot>
+	# ENDIF #
 	<tbody>
 		# START archives_list #
 			<tr>

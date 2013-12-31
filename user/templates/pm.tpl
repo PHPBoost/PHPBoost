@@ -94,12 +94,12 @@
 							<tr>
 								<th colspan="6">
 									<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<button type="submit" name="valid" value="true">{L_DELETE}</button></div>
-									<div style="float:right;">{convers.PAGINATION}&nbsp;</div>
+									# IF convers.C_PAGINATION #<div class="float-right"># INCLUDE convers.PAGINATION #</div># ENDIF #
 								</th>
 							</tr>
 						</tfoot>
 						<tbody>
-							# START convers.list #		
+							# START convers.list #
 							<tr>
 								<td>
 									<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}">
@@ -109,10 +109,6 @@
 								</td>
 								<td style="width:50%;text-align:left;" class="no-separator">
 									{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
-									# IF convers.list.PAGINATION_PM #
-										<br/>
-										{convers.list.PAGINATION_PM}
-									# ENDIF #
 								</td>
 								<td>
 									{convers.list.U_PARTICIPANTS}
@@ -163,11 +159,9 @@
 			</header>
 			
 			<div class="content">
-				<div style="float:right;">
-					{pm.PAGINATION}
-				</div>
+				# IF pm.C_PAGINATION #<div class="float-right"># INCLUDE pm.PAGINATION #</div># ENDIF #
 			
-			# START pm.msg #	
+			# START pm.msg #
 				<article id="m{pm.msg.ID}" class="message">
 					<div class="message-user-infos">
 						<div class="message-pseudo">
@@ -201,23 +195,23 @@
 			# END pm.msg #
 			</div>
 			<footer>
-				<div style="float:right;">{pm.PAGINATION}</div>
+				# IF pm.C_PAGINATION #<div class="float-right"># INCLUDE pm.PAGINATION #</div># ENDIF #
 			</footer>
 		</section>
 		# END pm #
 
 		# START post_pm #
 		# INCLUDE message_helper #
-		<span id="quote"></span>			
-		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">						
-			<legend>{L_RESPOND}</legend>				
-			{KERNEL_EDITOR}		
+		<span id="quote"></span>
+		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">
+			<legend>{L_RESPOND}</legend>
+			{KERNEL_EDITOR}
 			<textarea rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 			<div class="center">
 				<button type="submit" name="pm" value="true">{L_SUBMIT}</button>
-				<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>			
-				<button type="reset" value="true">{L_RESET}</button>				
-			</div>				
+				<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
+				<button type="reset" value="true">{L_RESET}</button>
+			</div>
 		</form>
 		# END post_pm #
 

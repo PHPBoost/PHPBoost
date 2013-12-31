@@ -68,29 +68,34 @@ class AdminNewsletterStreamsListController extends AdminModuleController
 		}
 		
 		$nbr_cats = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_streams, __LINE__, __FILE__);
-		$nbr_pages =  ceil($nbr_cats / $this->nbr_categories_per_page);
-		$pagination = new Pagination($nbr_pages, $current_page);
 		
-		$pagination->set_url_sprintf_pattern(NewsletterUrlBuilder::streams($field .'/'. $sort .'/%d')->rel());
+		$pagination = new ModulePagination($current_page, $nbr_cats, $this->nbr_categories_per_page);
+		$pagination->set_url(NewsletterUrlBuilder::streams($field .'/'. $sort .'/%d'));
+
+		if ($pagination->current_page_is_empty() && $current_page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$this->view->put_all(array(
 			'C_STREAMS_EXIST' => (float)$nbr_cats,
 			'C_ADD_STREAM' => NewsletterUrlBuilder::add_stream()->rel(),
+			'C_PAGINATION' => $pagination->has_several_pages(),
 			'SORT_NAME_TOP' => NewsletterUrlBuilder::streams('name/top/'. $current_page)->rel(),
 			'SORT_NAME_BOTTOM' => NewsletterUrlBuilder::streams('name/bottom/'. $current_page)->rel(),
 			'SORT_STATUS_TOP' => NewsletterUrlBuilder::streams('status/top/'. $current_page)->rel(),
 			'SORT_STATUS_BOTTOM' => NewsletterUrlBuilder::streams('status/bottom/'. $current_page)->rel(),
-			'PAGINATION' => $pagination->export()->render()
+			'PAGINATION' => $pagination->display()
 		));
 
-		$limit_page = $current_page > 0 ? $current_page : 1;
-		$limit_page = (($limit_page - 1) * $this->nbr_categories_per_page);
-		
 		$result = PersistenceContext::get_querier()->select("SELECT cat.id, cat.name, cat.description, cat.visible
 		FROM " . NewsletterSetup::$newsletter_table_streams . " cat
 		ORDER BY ". $field_bdd ." ". $mode ."
-		LIMIT ". $this->nbr_categories_per_page ." OFFSET :start_limit",
+		LIMIT :number_items_per_page OFFSET :display_from",
 			array(
-				'start_limit' => $limit_page
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
 			), SelectQueryResult::FETCH_ASSOC
 		);
 		while ($row = $result->fetch())

@@ -36,14 +36,13 @@ require_once('../kernel/header.php');
 $view_msg = retrieve(GET, 'id', 0);
 if (!empty($view_msg)) //Affichage de tous les messages du membre
 {
+	$_NBR_ELEMENTS_PER_PAGE = 10;
+	
 	$Template->set_filenames(array(
 		'membermsg'=> 'forum/forum_membermsg.tpl',
 		'forum_top'=> 'forum/forum_top.tpl',
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
-	
-	
-	$Pagination = new DeprecatedPagination();
 	
 	$auth_cats = '';
 	foreach ($CAT_FORUM as $idcat => $key)
@@ -52,16 +51,26 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			$auth_cats .= $idcat . ',';
 	}
 	$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
-
+	
 	$nbr_msg = $Sql->query("SELECT COUNT(*)
 	FROM " . PREFIX . "forum_msg msg
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
 	JOIN " . PREFIX . "forum_cats c ON t.idcat = c.id AND c.aprob = 1" . $auth_cats . "
 	WHERE msg.user_id = '" . $view_msg . "'", __LINE__, __FILE__);
+	
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $nbr_msg, $_NBR_ELEMENTS_PER_PAGE);
+	$pagination->set_url(new Url('/forum/membermsg.php?id=' . $view_msg . '&amp;p=%d'));
 
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	$Template->put_all(array(
+		'C_PAGINATION' => $pagination->has_several_pages(),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['show_member_msg'],
-		'PAGINATION' => $Pagination->display('membermsg' . url('.php?id=' . $view_msg . '&amp;p=%d'), $nbr_msg, 'p', 10, 3),
+		'PAGINATION' => $pagination->display(),
 		'L_BACK' => $LANG['back'],
 		'L_VIEW_MSG_USER' => $LANG['show_member_msg'],
 		'L_FORUM_INDEX' => $LANG['forum_index'],
@@ -76,7 +85,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
 	WHERE msg.user_id = '" . $view_msg . "'" . $auth_cats . "
 	ORDER BY msg.id DESC
-	" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande

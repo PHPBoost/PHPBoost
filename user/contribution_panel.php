@@ -253,8 +253,6 @@ elseif ($id_update > 0)
 }
 else
 {
-	$pagination = new DeprecatedPagination();
-	
 	$template->put_all(array(
 		'C_CONTRIBUTION_LIST' => true
 	));
@@ -262,6 +260,8 @@ else
 	//Nombre de contributions
 	$num_contributions = 1;
 	define('CONTRIBUTIONS_PER_PAGE', 20);
+	
+	$page = AppContext::get_request()->get_getint('p', 1);
 	
 	//Gestion des critères de tri
 	$criteria = retrieve(GET, 'criteria', 'current_status');
@@ -282,7 +282,7 @@ else
 		if ($User->check_auth($this_contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) || $User->get_id() == $this_contribution->get_poster_id())
 		{
 			//On affiche seulement si on est dans le bon cadre d'affichage
-			if ($num_contributions > CONTRIBUTIONS_PER_PAGE * ($pagination->get_current_page() - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $pagination->get_current_page())
+			if ($num_contributions > CONTRIBUTIONS_PER_PAGE * ($page - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $page)
 			{
 				$poster_group_color = User::get_group_color($this_contribution->get_poster_groups(), $this_contribution->get_poster_level());
 				$fixer_group_color = User::get_group_color($this_contribution->get_fixer_groups(), $this_contribution->get_fixer_level());
@@ -314,9 +314,19 @@ else
 		}
 	}
 	
+	$pagination = new ModulePagination($page, $num_contributions, CONTRIBUTIONS_PER_PAGE);
+	$pagination->set_url(new Url('/user/contribution_panel.php?p=%d&criteria=' . $criteria . '&order=' . $order));
+
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
 	if ($num_contributions > 1)
 		$template->put_all(array(
-			'PAGINATION' => $pagination->display('contribution_panel.php?p=%d&criteria=' . $criteria . '&order=' . $order, $num_contributions - 1, 'p', CONTRIBUTIONS_PER_PAGE, 3)
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'PAGINATION' => $pagination->display()
 		));
 	else
 		$template->put_all(array(
@@ -368,33 +378,33 @@ else
 	//Gestion du tri
 	$template->put_all(array(
 		'C_ORDER_ENTITLED_ASC' => $criteria == 'entitled' && $order == 'asc',
-		'U_ORDER_ENTITLED_ASC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=entitled&amp;order=asc'),
+		'U_ORDER_ENTITLED_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=entitled&amp;order=asc'),
 		'C_ORDER_ENTITLED_DESC' => $criteria == 'entitled' && $order == 'desc',
-		'U_ORDER_ENTITLED_DESC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=entitled&amp;order=desc'),
+		'U_ORDER_ENTITLED_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=entitled&amp;order=desc'),
 		'C_ORDER_MODULE_ASC' => $criteria == 'module' && $order == 'asc',
-		'U_ORDER_MODULE_ASC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=module&amp;order=asc'),
+		'U_ORDER_MODULE_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=module&amp;order=asc'),
 		'C_ORDER_MODULE_DESC' => $criteria == 'module' && $order == 'desc',
-		'U_ORDER_MODULE_DESC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=module&amp;order=desc'),
+		'U_ORDER_MODULE_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=module&amp;order=desc'),
 		'C_ORDER_STATUS_ASC' => $criteria == 'current_status' && $order == 'asc',
-		'U_ORDER_STATUS_ASC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=current_status&amp;order=asc'),
+		'U_ORDER_STATUS_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=current_status&amp;order=asc'),
 		'C_ORDER_STATUS_DESC' => $criteria == 'current_status' && $order == 'desc',
-		'U_ORDER_STATUS_DESC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=current_status&amp;order=desc'),
+		'U_ORDER_STATUS_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=current_status&amp;order=desc'),
 		'C_ORDER_CREATION_DATE_ASC' => $criteria == 'creation_date' && $order == 'asc',
-		'U_ORDER_CREATION_DATE_ASC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=creation_date&amp;order=asc'),
+		'U_ORDER_CREATION_DATE_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=creation_date&amp;order=asc'),
 		'C_ORDER_CREATION_DATE_DESC' => $criteria == 'creation_date' && $order == 'desc',
-		'U_ORDER_CREATION_DATE_DESC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=creation_date&amp;order=desc'),
+		'U_ORDER_CREATION_DATE_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=creation_date&amp;order=desc'),
 		'C_ORDER_FIXING_DATE_ASC' => $criteria == 'fixing_date' && $order == 'asc',
-		'U_ORDER_FIXING_DATE_ASC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=fixing_date&amp;order=asc'),
+		'U_ORDER_FIXING_DATE_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=fixing_date&amp;order=asc'),
 		'C_ORDER_FIXING_DATE_DESC' => $criteria == 'fixing_date' && $order == 'desc',
-		'U_ORDER_FIXING_DATE_DESC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=fixing_date&amp;order=desc'),	
+		'U_ORDER_FIXING_DATE_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=fixing_date&amp;order=desc'),
 		'C_ORDER_POSTER_ASC' => $criteria == 'poster_id' && $order == 'asc',
-		'U_ORDER_POSTER_ASC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=poster_id&amp;order=asc'),
+		'U_ORDER_POSTER_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=poster_id&amp;order=asc'),
 		'C_ORDER_POSTER_DESC' => $criteria == 'poster_id' && $order == 'desc',
-		'U_ORDER_POSTER_DESC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=poster_id&amp;order=desc'),
+		'U_ORDER_POSTER_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=poster_id&amp;order=desc'),
 		'C_ORDER_FIXER_ASC' => $criteria == 'fixer_id' && $order == 'asc',
-		'U_ORDER_FIXER_ASC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=fixer_id&amp;order=asc'),
+		'U_ORDER_FIXER_ASC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=fixer_id&amp;order=asc'),
 		'C_ORDER_FIXER_DESC' => $criteria == 'fixer_id' && $order == 'desc',
-		'U_ORDER_FIXER_DESC' => url('contribution_panel.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=fixer_id&amp;order=desc')
+		'U_ORDER_FIXER_DESC' => url('contribution_panel.php?p=' . $page . '&amp;criteria=fixer_id&amp;order=desc')
 	));
 }
 

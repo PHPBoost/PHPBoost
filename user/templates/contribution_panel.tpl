@@ -80,11 +80,11 @@
 						</th>
 					</tr>
 				</thead>
-				# IF PAGINATION #
+				# IF C_PAGINATION #
 				<tfoot>
 					<tr>
 						<th colspan="7">
-							{PAGINATION}
+							# INCLUDE PAGINATION #
 						</td>
 					</tr>
 				</tfoot>

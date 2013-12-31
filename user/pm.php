@@ -53,6 +53,8 @@ $editor->set_identifier('contents');
 
 $user_accounts_config = UserAccountsConfig::load();
 
+$_NBR_ELEMENTS_PER_PAGE = 25;
+
 //Marque les messages privés comme lus
 if ($read)
 {
@@ -292,10 +294,6 @@ elseif ($pm_del_convers) //Suppression de conversation.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	
-	$Pagination = new DeprecatedPagination();
-	$pagination_pm = 25;
-
 	//Conversation présente chez les deux membres: user_convers_status => 0.
 	//Conversation supprimée chez l'expediteur: user_convers_status => 1.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
@@ -315,8 +313,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 			(user_id = '" . $User->get_attribute('user_id') . "' AND user_convers_status = 2)
 		)
 	)
-	ORDER BY last_timestamp DESC
-	" . $Sql->limit($Pagination->get_first_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
+	ORDER BY last_timestamp DESC"), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$del_convers = isset($_POST[$row['id']]) ? trim($_POST[$row['id']]) : '';
@@ -530,10 +527,6 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 {
 	$tpl = new FileTemplate('user/pm.tpl');
 	
-	//On crée une pagination si le nombre de MP est trop important.
-	
-	$Pagination = new DeprecatedPagination();
-
 	//On récupère les info de la conversation.
 	$convers = $Sql->query_array(DB_TABLE_PM_TOPIC, 'id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm', "WHERE id = '" . $pm_id_get . "' AND '" . $User->get_attribute('user_id') . "' IN (user_id, user_id_dest)", __LINE__, __FILE__);
 
@@ -551,9 +544,20 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_PM_MSG . " SET view_status = 1 WHERE idconvers = '" . $convers['id'] . "' AND user_id <> '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	}
 	
-	$pagination_msg = 25;
+	//On crée une pagination si le nombre de MP est trop important.
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $convers['nbr_msg'], $_NBR_ELEMENTS_PER_PAGE);
+	$pagination->set_url(new Url('/user/pm.php?id=' . $pm_id_get . '&amp;p=%d'));
+
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+
 	$tpl->assign_block_vars('pm', array(
-		'PAGINATION' => $Pagination->display('pm' . url('.php?id=' . $pm_id_get . '&amp;p=%d', '-0-' . $pm_id_get . '-%d.php'), $convers['nbr_msg'], 'p', $pagination_msg, 3),
+		'C_PAGINATION' => $pagination->has_several_pages(),
+		'PAGINATION' => $pagination->display(),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers['title'] . '</a>',
 		'U_USER_VIEW' => '<a href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->rel() . '">' . $LANG['member_area'] . '</a>'
@@ -586,7 +590,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id <> -1
 	WHERE msg.idconvers = '" . $pm_id_get . "'
 	ORDER BY msg.timestamp
-	" . $Sql->limit(($Pagination->get_first_msg($pagination_msg, 'p') - $quote_last_msg), ($pagination_msg + $quote_last_msg)), __LINE__, __FILE__);
+	" . $Sql->limit(($pagination->get_display_from() - $quote_last_msg), ($_NBR_ELEMENTS_PER_PAGE + $quote_last_msg)), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
@@ -682,20 +686,25 @@ else //Liste des conversation, dans la boite du membre.
 	$nbr_pm = PrivateMsg::count_conversations($User->get_attribute('user_id'));
 	
 	//On crée une pagination si le nombre de MP est trop important.
-	
-	$Pagination = new DeprecatedPagination();
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $nbr_pm, $_NBR_ELEMENTS_PER_PAGE);
+	$pagination->set_url(new Url('/user/pm.php?p=%d'));
 
-	$pagination_pm = 25;
-	$pagination_msg = 25;
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	$unlimited_pm = $User->check_level(User::MODERATOR_LEVEL) || ($limit_group === -1);
 	$pm_max = $unlimited_pm ? $LANG['illimited'] : $limit_group;
 	
 	$tpl->assign_block_vars('convers', array(
+		'C_PAGINATION' => $pagination->has_several_pages(),
+		'PAGINATION' => $pagination->display(),
 		'NBR_PM' => $pagination_pm,
 		'PM_POURCENT' => '<strong>' . $nbr_pm . '</strong> / <strong>' . $pm_max . '</strong>',
-		'PAGINATION' => $Pagination->display('pm' . url('.php?p=%d', '-0-0-%d.php'), $nbr_pm, 'p', $pagination_pm, 3),
 		'U_MARK_AS_READ' => 'pm.php?read=1',
 		'L_MARK_AS_READ' => $LANG['mark_pm_as_read'],
 		'U_USER_ACTION_PM' => url('.php?del_convers=1&amp;p=' . $page . '&amp;token=' . $Session->get_token()),
@@ -766,7 +775,7 @@ else //Liste des conversation, dans la boite du membre.
 		)
 	)
 	ORDER BY pm.last_timestamp DESC
-	" . $Sql->limit($Pagination->get_first_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On saute l'itération si la limite est dépassé, si ce n'est pas un message privé du système.
@@ -799,7 +808,7 @@ else //Liste des conversation, dans la boite du membre.
 			$announce = $announce . '-track';
 			
 		//Ancre vers vers le dernier message posté.
-		$last_page = ceil( $row['nbr_msg'] / $pagination_msg);
+		$last_page = ceil( $row['nbr_msg'] / $_NBR_ELEMENTS_PER_PAGE);
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? 'p=' . $last_page . '&amp;' : '';
 		

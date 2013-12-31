@@ -213,18 +213,27 @@ if (!empty($id_get))
 		));
 	}
 	
+	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $id_get . "'", __LINE__, __FILE__);
+	
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
-	 
-	$Pagination = new DeprecatedPagination();
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $nbr_topic, $CONFIG_FORUM['pagination_topic']);
+	$pagination->set_url(new Url('/forum/forum.php?id=' . $id_get . '&amp;p=%d'));
+
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
-	$forum_cats = '';	
+	$forum_cats = '';
 	foreach ($Bread_crumb->get_links() as $key => $array)
 	{
 		if ($i == 2)
 			$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
-		elseif ($i > 2)		
+		elseif ($i > 2)
 			$forum_cats .= ' &raquo; <a href="' . $array[1] . '">' . $array[0] . '</a>';
 		$i++;
 	}
@@ -232,10 +241,10 @@ if (!empty($id_get))
 	//Si l'utilisateur a les droits d'édition.	
 	$check_group_edit_auth = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 
-	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $id_get . "'", __LINE__, __FILE__);
 	$Template->put_all(array(
+		'C_PAGINATION' => $pagination->has_several_pages(),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-		'PAGINATION' => $Pagination->display('forum' . url('.php?id=' . $id_get . '&amp;p=%d', '-' . $id_get . '-%d.php'), $nbr_topic, 'p', $CONFIG_FORUM['pagination_topic'], 3),
+		'PAGINATION' => $pagination->display(),
 		'IDCAT' => $id_get,
 		//'C_MASS_MODO_CHECK' => $check_group_edit_auth ? true : false,
 		'C_MASS_MODO_CHECK' => false,
@@ -244,12 +253,12 @@ if (!empty($id_get))
 		'U_CHANGE_CAT'=> 'forum' . url('.php?id=' . $id_get . '&amp;token=' . $Session->get_token(), '-' . $id_get . $rewrited_title . '.php?token=' . $Session->get_token()),
 		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
-		'U_FORUM_CAT' => $forum_cats,		
+		'U_FORUM_CAT' => $forum_cats,
 		'U_POST_NEW_SUBJECT' => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
-		'L_FORUM_INDEX' => $LANG['forum_index'],		
+		'L_FORUM_INDEX' => $LANG['forum_index'],
 		'L_SUBFORUMS' => $LANG['sub_forums'],
 		'L_DISPLAY_UNREAD_MSG' => $LANG['show_not_reads'],
-		'L_FORUM' => $LANG['forum'],		
+		'L_FORUM' => $LANG['forum'],
 		'L_AUTHOR' => $LANG['author'],
 		'L_TOPIC' => $LANG['topic_s'],
 		'L_ANSWERS' => $LANG['replies'],
@@ -265,7 +274,7 @@ if (!empty($id_get))
 		'L_LOCK' => $LANG['forum_lock'],
 		'L_UNLOCK' => $LANG['forum_unlock'],
 		'L_GO' => $LANG['go']
-	));		
+	));
 
 	$nbr_topics_display = 0;
 	$result = $Sql->query_while("SELECT m1.login AS login, m1.level AS user_level, m1.user_groups AS user_groups, m2.login AS last_login, m2.level AS last_user_level, m2.user_groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
@@ -277,7 +286,7 @@ if (!empty($id_get))
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $User->get_attribute('user_id') . "'
 	WHERE t.idcat = '" . $id_get . "'
 	ORDER BY t.type DESC , t.last_timestamp DESC
-	" . $Sql->limit($Pagination->get_first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);	
+	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
 	while ( $row = $Sql->fetch_assoc($result) )
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
@@ -325,9 +334,15 @@ if (!empty($id_get))
 		//Ancre ajoutée aux messages non lus.	
 		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>' : '';
 		
+		//On crée une pagination (si activé) si le nombre de topics est trop important.
+		$page = AppContext::get_request()->get_getint('pt', 1);
+		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $CONFIG_FORUM['pagination_msg']);
+		$topic_pagination->set_url(new Url('/forum/topic.php?id=' . $row['id'] . '&amp;pt=%d'));
+		
 		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 		
 		$Template->assign_block_vars('topics', array(
+			'C_PAGINATION' => $topic_pagination->has_several_pages(),
 			'C_IMG_POLL' => !empty($row['question']),
 			'C_IMG_TRACK' => !empty($row['idtrack']),
 			'C_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']),
@@ -335,10 +350,10 @@ if (!empty($id_get))
 			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
 			'TYPE' => $type[$row['type']],
-			'TITLE' => ucfirst($row['title']),			
+			'TITLE' => ucfirst($row['title']),
 			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="small_link '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 			'DESC' => $row['subtitle'],
-			'PAGINATION_TOPICS' => $Pagination->display('topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d.php'), $row['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 2, 10, NO_PREVIOUS_NEXT_LINKS, LINK_START_PAGE),
+			'PAGINATION' => $topic_pagination->display(),
 			'MSG' => ($row['nbr_msg'] - 1),
 			'VUS' => $row['nbr_views'],
 			'L_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '', 

@@ -82,7 +82,7 @@
 					# IF IDCAT #
 					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
 					# ENDIF #
-					{PAGINATION}
+					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 				</span>
 			</div>
 			<div class="module_contents forum_contents">
@@ -105,7 +105,7 @@
 										&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 									# ENDIF #
 								</div>
-								<span style="float:right;">{PAGINATION}</span>&nbsp;
+								# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
 							</th>
 						</tr>
 					</tfoot>
@@ -139,7 +139,7 @@
 						<td class="forum_sous_cat" style="min-width:115px;">
 							{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 							<br />
-							<span class="smaller">{topics.DESC}</span> &nbsp;<span class="pagin_forum">{topics.PAGINATION_TOPICS}</span>
+							<span class="smaller">{topics.DESC}</span># IF topics.C_PAGINATION # &nbsp;<span class="pagin_forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
 						</td>
 						<td class="forum_sous_cat_compteur" style="width:100px;">
 							{topics.AUTHOR}

@@ -222,7 +222,7 @@
 				<tfoot>
 					<tr>
 						<th colspan="2">
-							{PAGINATION}
+							# INCLUDE PAGINATION #
 						</th>
 					</tr>
 				</tfoot>

@@ -10,21 +10,21 @@
 		-->
 		</script>
 		
-		<form action="track{U_TRACK_ACTION}" method="post">	
-			<div class="module_position">					
-				<div class="module_top_l"></div>		
+		<form action="track{U_TRACK_ACTION}" method="post">
+			<div class="module_position">
+				<div class="module_top_l"></div>
 				<div class="module_top_r"></div>
 				<div class="module_top">
 					<span style="float:left;">
 						&bull; {U_FORUM_CAT}
 					</span>
-					<span style="float:right;">{PAGINATION}</span>
+					# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
 				</div>
 				<div class="module_contents forum_contents">
 					<div class="text_small">{L_EXPLAIN_TRACK}</div>
 					<table class="module-table forum_table">
 						<thead>
-							<tr class="forum_text_column">			
+							<tr class="forum_text_column">
 								<th>{L_TOPIC}</td>
 								<th style="width:100px;">{L_AUTHOR}</td>
 								<th style="width:60px;">{L_MESSAGE}</td>
@@ -65,7 +65,7 @@
 								<td class="forum_sous_cat">
 									{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 									<br />
-									<span class="smaller">{topics.DESC}</span> &nbsp;<span class="pagin_forum">{topics.PAGINATION_TOPICS}</span>
+									<span class="smaller">{topics.DESC}</span># IF topics.C_PAGINATION # &nbsp;<span class="pagin_forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
 								</td>
 								<td class="forum_sous_cat_compteur" style="width:100px;">
 									{topics.AUTHOR}
@@ -88,7 +88,7 @@
 								<td class="forum_sous_cat_last">
 									{topics.U_LAST_MSG}
 								</td>
-							</tr>	
+							</tr>
 							# END topics #
 						</tbody>
 					</table>
@@ -98,15 +98,15 @@
 		</form>
 		
 		<div class="module_position">
-			<div class="module_bottom_l"></div>		
+			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
 				<span style="float:left;" class="text-strong">
 					&bull; {U_FORUM_CAT}
 				</span>
-				<span style="float:right;">{PAGINATION}</span>&nbsp;
+				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
 			</div>
-		</div>		
+		</div>
 		
 		# INCLUDE forum_bottom #
 		

@@ -136,30 +136,38 @@ if (!empty($idm))
 	}
 	
 	$_GET['pt'] = ceil(($nbr_msg_before + 1) / $CONFIG_FORUM['pagination_msg']); //Modification de la page affichée.
-}	
-	
+}
+
 //On crée une pagination si le nombre de msg est trop important.
- 
-$Pagination = new DeprecatedPagination();	
+$page = AppContext::get_request()->get_getint('pt', 1);
+$pagination = new ModulePagination($page, $topic['nbr_msg'], $CONFIG_FORUM['pagination_msg']);
+$pagination->set_url(new Url('/forum/topic.php?id=' . $id_get . '&amp;pt=%d'));
+
+if ($pagination->current_page_is_empty() && $page > 1)
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 //Affichage de l'arborescence des catégories.
 $i = 0;
-$forum_cats = '';	
+$forum_cats = '';
 $Bread_crumb->remove_last();
 foreach ($Bread_crumb->get_links() as $key => $array)
 {
 	if ($i == 2)
 		$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
-	elseif ($i > 2)		
+	elseif ($i > 2)
 		$forum_cats .= ' &raquo; <a href="' . $array[1] . '">' . $array[0] . '</a>';
 	$i++;
 }
 
 $Template->put_all(array(
-	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],		
+	'C_PAGINATION' => $pagination->has_several_pages(),
+	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'MODULE_DATA_PATH' => $module_data_path,
 	'DESC' => !empty($topic['subtitle']) ? $topic['subtitle'] : '',
-	'PAGINATION' => $Pagination->display('topic' . url('.php?id=' . $id_get . '&amp;pt=%d', '-' . $id_get . '-%d' . $rewrited_title . '.php'), $topic['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 3),
+	'PAGINATION' => $pagination->display(),
 	'USER_ID' => $topic['user_id'],
 	'ID' => $topic['idcat'],
 	'IDTOPIC' => $id_get,
@@ -207,9 +215,9 @@ LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = msg.user_id_edit
 LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
 LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = '" . $id_get . "' AND tr.user_id = '" . $User->get_attribute('user_id') . "'
 LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
-WHERE msg.idtopic = '" . $id_get . "'	
+WHERE msg.idtopic = '" . $id_get . "'
 ORDER BY msg.timestamp 
-" . $Sql->limit(($Pagination->get_first_msg($CONFIG_FORUM['pagination_msg'], 'pt') - $quote_last_msg), ($CONFIG_FORUM['pagination_msg'] + $quote_last_msg)), __LINE__, __FILE__);
+" . $Sql->limit(($pagination->get_display_from() - $quote_last_msg), ($CONFIG_FORUM['pagination_msg'] + $quote_last_msg)), __LINE__, __FILE__);
 while ( $row = $Sql->fetch_assoc($result) )
 {
 	//Invité?

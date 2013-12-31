@@ -78,15 +78,16 @@
 			}
 
 			xhr_object.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr_object.send(data);	
+			xhr_object.send(data);
 		}
 		-->
 		</script>
 				
 		<div id="admin_contents">
-			{L_ADMIN_ALERTS}
+			
 			# IF C_EXISTING_ALERTS #
 			<table>
+				<caption>{L_ADMIN_ALERTS}</caption>
 				<thead>
 					<tr> 
 						<th>
@@ -131,8 +132,8 @@
 				<tfoot>
 					<tr> 
 						<th colspan="4">
-							{PAGINATION}
-						</th>					
+							# INCLUDE PAGINATION #
+						</th>
 					</tr>
 				</tfoot>
 				# ENDIF #
