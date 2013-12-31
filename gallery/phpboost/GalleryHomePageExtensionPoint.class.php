@@ -121,9 +121,16 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			$Template->put('message_helper', MessageHelper::display(LangLoader::get_message('e_unexist_cat', 'errors'), E_USER_NOTICE));
 	
 		//On crée une pagination si le nombre de catégories est trop important.
-	
-		$Pagination = new DeprecatedPagination();
-	
+		$page = AppContext::get_request()->get_getint('p', 1);
+		$pagination = new ModulePagination($page, $total_cat, $config->get_pics_number_per_page());
+		$pagination->set_url(new Url('/gallery/gallery.php?p=%d&amp;cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;' . $g_sort));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		//Colonnes des catégories.
 		$nbr_column_cats = ($total_cat > $config->get_columns_number()) ? $config->get_columns_number() : $total_cat;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
@@ -141,12 +148,13 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		$rewrite_title = Url::encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
 	
 		$Template->put_all(array(
+			'C_PAGINATION' => $pagination->has_several_pages(),
 			'ARRAY_JS' => '',
 			'NBR_PICS' => 0,
 			'MAX_START' => 0,
 			'START_THUMB' => 0,
 			'END_THUMB' => 0,
-			'PAGINATION' => $Pagination->display('gallery' . url('.php?p=%d&amp;cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;' . $g_sort, '-' . $g_idcat . '-' . $g_idpics . '-%d.php?&' . $g_sort), $total_cat, 'p', $config->get_pics_number_per_page(), 3),
+			'PAGINATION' => $pagination->display(),
 			'COLUMN_WIDTH_CATS' => $column_width_cats,
 			'COLUMN_WIDTH_PICS' => $column_width_pics,
 			'CAT_ID' => $g_idcat,
@@ -224,7 +232,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			" . $clause_cat . $clause_unauth_cats . "
 			GROUP BY gc.id
 			ORDER BY gc.id_left
-			" . $this->sql_querier->limit($Pagination->get_first_msg($config->get_pics_number_per_page(), 'p'), $config->get_pics_number_per_page()), __LINE__, __FILE__);
+			" . $this->sql_querier->limit($pagination->get_display_from(), $config->get_pics_number_per_page()), __LINE__, __FILE__);
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
@@ -490,20 +498,28 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			else
 			{
-				//On crée une pagination si le nombre de photos est trop important.
-	
-				$Pagination = new DeprecatedPagination();
-	
 				$sort = retrieve(GET, 'sort', '');
+				
+				//On crée une pagination si le nombre de photos est trop important.
+				$page = AppContext::get_request()->get_getint('pp', 1);
+				$pagination = new ModulePagination($page, $nbr_pics, $config->get_pics_number_per_page());
+				$pagination->set_url(new Url('/gallery/gallery.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $g_idcat));
+				
+				if ($pagination->current_page_is_empty() && $page > 1)
+				{
+					$error_controller = PHPBoostErrors::unexisting_page();
+					DispatchManager::redirect($error_controller);
+				}
+				
 				$Template->put_all(array(
-					'C_GALLERY_MODO' => $is_modo ? true : false,
-					'PAGINATION_PICS' => $Pagination->display(PATH_TO_ROOT . '/gallery/gallery' . url('.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $config->get_pics_number_per_page(), 3),
+					'C_GALLERY_MODO' => $is_modo,
+					'C_PAGINATION' => $pagination->has_several_pages(),
+					'PAGINATION' => $pagination->display()
 					'L_EDIT' => $LANG['edit'],
 					'L_VIEW' => $LANG['view'],
 					'L_VIEWS' => $LANG['views']
 				));
-	
-	
+				
 				$is_connected = $User->check_level(User::MEMBER_LEVEL);
 				$j = 0;
 				$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob, m.login, m.user_groups, m.level, notes.average_notes, notes.number_notes, note.note
@@ -514,7 +530,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = g.id AND note.module_name = 'gallery' AND note.user_id = " . AppContext::get_current_user()->get_id() . "
 				WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
 				" . $g_sql_sort . "
-				" . $this->sql_querier->limit($Pagination->get_first_msg($config->get_pics_number_per_page(), 'pp'), $config->get_pics_number_per_page()), __LINE__, __FILE__);
+				" . $this->sql_querier->limit($pagination->get_display_from(), $config->get_pics_number_per_page()), __LINE__, __FILE__);
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
 					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.

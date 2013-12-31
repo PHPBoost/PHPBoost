@@ -102,8 +102,15 @@ else
 		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], E_USER_NOTICE));
 
 	//On crée une pagination si le nombre de catégories est trop important.
-
-	$Pagination = new DeprecatedPagination();
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $total_cat, $config->get_pics_number_per_page());
+	$pagination->set_url(new Url('/gallery/admin_gallery.php?p=%d'));
+	
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
 
 	//Colonnes des catégories.
 	$nbr_column_cats = ($total_cat > $config->get_columns_number()) ? $config->get_columns_number() : $total_cat;
@@ -116,7 +123,8 @@ else
 	$column_width_pics = floor(100/$nbr_column_pics);
 
 	$Template->put_all(array(
-		'PAGINATION' => $Pagination->display('admin_gallery.php?p=%d', $total_cat, 'p', $config->get_pics_number_per_page(), 3),
+		'C_PAGINATION' => $pagination->has_several_pages(),
+		'PAGINATION' => $pagination->display(),
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
 		'COLUMN_WIDTH_PICS' => $column_width_pics,
 		'COLSPAN' => $config->get_columns_number(),
@@ -162,7 +170,7 @@ else
 		" . $clause_cat . "
 		GROUP BY gc.id
 		ORDER BY gc.id_left
-		" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);
+		" . $Sql->limit($pagination->get_display_from(), $config->get_pics_number_per_page()), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On genère le tableau pour $config->get_columns_number() colonnes
@@ -208,11 +216,19 @@ else
 		));
 
 		//On crée une pagination si le nombre de photos est trop important.
-
-		$Pagination = new DeprecatedPagination();
-
+		$page = AppContext::get_request()->get_getint('pp', 1);
+		$pagination = new ModulePagination($page, $nbr_pics, $config->get_pics_number_per_page());
+		$pagination->set_url(new Url('/gallery/admin_gallery.php?cat=' . $idcat . '&amp;pp=%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$Template->put_all(array(
-			'PAGINATION_PICS' => $Pagination->display('admin_gallery.php?cat=' . $idcat . '&amp;pp=%d', $nbr_pics, 'pp', $config->get_pics_number_per_page(), 3),
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'PAGINATION' => $pagination->display()
 		));
 
 		$array_cat_list = array(0 => '<option value="0" %s>' . $LANG['root'] . '</option>');
@@ -359,7 +375,7 @@ else
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $idcat . "'
 			ORDER BY g.timestamp
-			" . $Sql->limit($Pagination->get_first_msg($config->get_pics_number_per_page(), 'pp'), $config->get_pics_number_per_page()), __LINE__, __FILE__);
+			" . $Sql->limit($pagination->get_display_from(), $config->get_pics_number_per_page()), __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
