@@ -49,6 +49,7 @@ $lang['news.form.rewrited_name'] = 'Nom de votre news dans l\'url';
 $lang['news.form.rewrited_name.description'] = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';
 $lang['news.form.rewrited_name.personalize'] = 'Personnaliser le nom de la news dans l\'url';
 $lang['news.form.short_contents'] = 'Condensé de la news';
+$lang['news.form.short_contents.description'] = 'Pour que le condensé de la news soit affiché, veuillez activer l\'option dans la configuration du module';
 $lang['news.form.short_contents.enabled'] = 'Personnaliser le condensé de la news';
 $lang['news.form.short_contents.enabled.description'] = 'Si non coché, la news est automatiquement coupée à :number caractères.';
 $lang['news.form.approved.not'] = 'Gardée en brouillon';
