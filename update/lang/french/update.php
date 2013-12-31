@@ -148,6 +148,7 @@ $lang = array(
                                 <li><a href="http://script.aculo.us/">script.aculo.us</a> : Framework Javascript et <acronym title="Asynchronous Javascript And XML">AJAX</acronym></li>
                                 <li><a href="http://www.alsacreations.fr/mp3-dewplayer.html">Dewplayer</a> : lecteur audio au format flash</li>
                                 <li><a href="http://flowplayer.org">Flowplayer</a> : lecteur vidéo au format flash</li>
+                                <li><a href="http://fontawesome.io">Font Awesome</a> : librairie d\'icônes</li>
                             </ul>
                         </fieldset>
                         <fieldset>

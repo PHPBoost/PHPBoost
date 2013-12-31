@@ -148,6 +148,7 @@ Cordially, the PHPBoost Team.</p>',
                                 <li><a href="http://script.aculo.us/">script.aculo.us</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
                                 <li><a href="http://www.alsacreations.fr/mp3-dewplayer.html">Dewplayer</a> : flash audio reader</li>
                                 <li><a href="http://flowplayer.org">Flowplayer</a> : flash video reader</li>
+                                <li><a href="http://fontawesome.io">Font Awesome</a> : icons librairy</li>
                             </ul>
                         </fieldset>
                         <fieldset>
