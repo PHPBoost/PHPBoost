@@ -80,13 +80,20 @@ class NewsletterArchivesController extends ModuleController
 		
 		$stream_condition = empty($this->id_stream) ? "" : "WHERE stream_id = '". $this->id_stream ."'";
 		$nbr_archives = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_archives, $stream_condition);
-		$nbr_pages =  ceil($nbr_archives / $this->nbr_archives_per_page);
-		$pagination = new Pagination($nbr_pages, $current_page);
 		
-		$pagination->set_url_sprintf_pattern(NewsletterUrlBuilder::archives($this->id_stream .'/'. $field .'/'. $sort .'/%d')->rel());
+		$pagination = new ModulePagination($current_page, $nbr_archives, $this->nbr_archives_per_page);
+		$pagination->set_url(NewsletterUrlBuilder::archives($this->id_stream .'/'. $field .'/'. $sort .'/%d'));
+
+		if ($pagination->current_page_is_empty() && $current_page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$this->view->put_all(array(
 			'C_ARCHIVES' => (float)$nbr_archives,
 			'C_SPECIFIC_STREAM' => !empty($this->id_stream),
+			'C_PAGINATION' => $pagination->has_several_pages(),
 			'NUMBER_COLUMN' => empty($this->id_stream) && !empty($nbr_archives) ? 4 : 3,
 			'SORT_STREAM_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/top/'. $current_page)->rel(),
 			'SORT_STREAM_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/bottom/'. $current_page)->rel(),
@@ -96,19 +103,17 @@ class NewsletterArchivesController extends ModuleController
 			'SORT_DATE_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/date/bottom/'. $current_page)->rel(),
 			'SORT_SUBSCRIBERS_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/subscribers/top/'. $current_page)->rel(),
 			'SORT_SUBSCRIBERS_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/subscribers/bottom/'. $current_page)->rel(),
-			'PAGINATION' => $pagination->export()->render()
+			'PAGINATION' => $pagination->display()
 		));
 
-		$limit_page = $current_page > 0 ? $current_page : 1;
-		$limit_page = (($limit_page - 1) * $this->nbr_archives_per_page);
-		
 		$result = PersistenceContext::get_querier()->select("SELECT *
 		FROM " . NewsletterSetup::$newsletter_table_archives . "
 		". $stream_condition ."
 		ORDER BY ". $field_bdd ." ". $mode ."
-		LIMIT ". $this->nbr_archives_per_page ." OFFSET :start_limit",
+		LIMIT :number_items_per_page OFFSET :display_from",
 			array(
-				'start_limit' => $limit_page
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
 			), SelectQueryResult::FETCH_ASSOC
 		);
 		while ($row = $result->fetch())

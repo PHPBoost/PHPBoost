@@ -41,15 +41,14 @@ if (!$User->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
 {	
 	AppContext::get_response()->redirect(UserUrlBuilder::connect()->rel()); 
 }
-	
+
 $Template->set_filenames(array(
 	'forum_forum'=> 'forum/forum_forum.tpl',
 	'forum_top'=> 'forum/forum_top.tpl',
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
- 
-$Pagination = new DeprecatedPagination();
+$idcat_unread = retrieve(GET, 'cat', 0);
 
 //Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 $max_time_msg = forum_limit_time_msg();
@@ -67,8 +66,24 @@ if (is_array($CAT_FORUM))
 }
 
 //Catégorie pour laquelle il faut afficher les messages non lus.
-$idcat_unread = retrieve(GET, 'cat', 0);
 $clause_cat = !empty($idcat_unread) ? "(c.id_left >= '" . $CAT_FORUM[$idcat_unread]['id_left'] . "' AND c.id_right <= '" . $CAT_FORUM[$idcat_unread]['id_right'] . "') AND " : '';
+
+$nbr_topics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
+LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . $User->get_attribute('user_id') . "'
+WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats, __LINE__, __FILE__);
+
+$cat_filter = !empty($idcat_unread) ? '&amp;cat=' . $idcat_unread : '';
+
+$page = AppContext::get_request()->get_getint('p', 1);
+$pagination = new ModulePagination($page, $nbr_topics, $CONFIG_FORUM['pagination_topic']);
+$pagination->set_url(new Url('/forum/unread.php?p=%d' . $cat_filter));
+
+if ($pagination->current_page_is_empty() && $page > 1)
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 
 $result = $Sql->query_while("SELECT c.id as cid, m1.login AS login, m1.level AS user_level, m1.user_groups AS user_groups, m2.login AS last_login, m2.level AS last_user_level, m2.user_groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 FROM " . PREFIX . "forum_topics t
@@ -80,7 +95,7 @@ LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
 WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "
 ORDER BY t.last_timestamp DESC 
-" . $Sql->limit($Pagination->get_first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
+" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
 	//On définit un array pour l'appelation correspondant au type de champ
@@ -116,9 +131,15 @@ while ($row = $Sql->fetch_assoc($result))
 	//Ancre ajoutée aux messages non lus.	
 	$new_ancre = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><i class="fa fa-hand-o-right"></i></a>';
 	
+	//On crée une pagination (si activé) si le nombre de topics est trop important.
+	$page = AppContext::get_request()->get_getint('pt', 1);
+	$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $CONFIG_FORUM['pagination_msg']);
+	$topic_pagination->set_url(new Url('/forum/topic.php?id=' . $row['id'] . '&amp;pt=%d'));
+	
 	$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 	
 	$Template->assign_block_vars('topics', array(
+		'C_PAGINATION' => $topic_pagination->has_several_pages(),
 		'C_IMG_POLL' => !empty($row['question']),
 		'C_IMG_TRACK' => !empty($row['idtrack']),
 		'C_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']),
@@ -126,10 +147,10 @@ while ($row = $Sql->fetch_assoc($result))
 		'IMG_ANNOUNCE' => $img_announce,
 		'ANCRE' => $new_ancre,
 		'TYPE' => $type[$row['type']],
-		'TITLE' => ucfirst($row['title']),			
+		'TITLE' => ucfirst($row['title']),
 		'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="small_link '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 		'DESC' => $row['subtitle'],
-		'PAGINATION_TOPICS' => $Pagination->display('topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d.php'), $row['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 2, 10, false),
+		'PAGINATION' => $topic_pagination->display(),
 		'MSG' => ($row['nbr_msg'] - 1),
 		'VUS' => $row['nbr_views'],
 		'U_TOPIC_VARS' => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title . '.php'),
@@ -138,11 +159,6 @@ while ($row = $Sql->fetch_assoc($result))
 	));	
 }
 $Sql->query_close($result);
-
-$nbr_topics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
-LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id	AND v.user_id = '" . $User->get_attribute('user_id') . "'
-WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats, __LINE__, __FILE__);
 
 //Le membre a déjà lu tous les messages.
 if ($nbr_topics == 0)
@@ -155,17 +171,17 @@ if ($nbr_topics == 0)
 
 $l_topic = ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'];
 
-$cat_filter = !empty($idcat_unread) ? '&amp;cat=' . $idcat_unread : '';
 $Template->put_all(array(
+	'C_PAGINATION' => $pagination->has_several_pages(),
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-	'PAGINATION' => $Pagination->display('unread' . url('.php?p=%d' . $cat_filter), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
+	'PAGINATION' => $pagination->display(),
 	'U_CHANGE_CAT'=> 'unread.php' . SID . '&amp;token=' . $Session->get_token(),
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
-	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
+	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 	'U_FORUM_CAT' => '<a href="../forum/unread.php' . SID . '">' . $LANG['show_not_reads'] . '</a>',
-	'U_POST_NEW_SUBJECT' => '',		
+	'U_POST_NEW_SUBJECT' => '',
 	'L_FORUM_INDEX' => $LANG['forum_index'],
-	'L_FORUM' => $LANG['forum'],	
+	'L_FORUM' => $LANG['forum'],
 	'L_AUTHOR' => $LANG['author'],
 	'L_TOPIC' => $l_topic,
 	'L_MESSAGE' => $LANG['replies'],

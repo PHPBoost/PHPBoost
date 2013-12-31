@@ -180,7 +180,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			//On crée une pagination si le nombre de fichiers est trop important.
 			$page = AppContext::get_request()->get_getint('p', 1);
 			$pagination = new ModulePagination($page, $MEDIA_CATS[$id_cat]['num_media'], $MEDIA_CONFIG['pagin']);
-			$pagination->set_url(new Url('/media/' . url('media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d'));
+			$pagination->set_url(new Url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d'));
 
 			if ($pagination->current_page_is_empty() && $page > 1)
 			{

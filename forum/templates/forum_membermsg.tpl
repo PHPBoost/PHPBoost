@@ -1,17 +1,17 @@
-		<span id="go_top"></span>	
+		<span id="go_top"></span>
 
 		# INCLUDE forum_top #
 		
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
+		<div class="module_position">
+			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<span class="forum_cat_title">
 					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_USER}</a>
 				</span>
-				<span style="float:right;">{PAGINATION}</span>
+				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
 			</div>
-		</div>	
+		</div>
 
 		# START list #
 		<div class="msg_position">
@@ -38,24 +38,22 @@
 						</div>
 					</div>
 				</div>
-			</div>		
-		</div>	
+			</div>
+		</div>
 		# END list #
 		
-		<div class="msg_position">		
-			<div class="msg_bottom_l"></div>		
+		<div class="msg_position">
+			<div class="msg_bottom_l"></div>
 			<div class="msg_bottom_r"></div>
 			<div class="msg_bottom" style="text-align:center;">
 				<span style="float:left;">
 					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_USER}</a>
 				</span>
-				<span style="float:right;">
-					{PAGINATION}
-				</span>&nbsp;
+				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
 			</div>
 		</div>
 		
-		# INCLUDE forum_bottom #	
+		# INCLUDE forum_bottom #
 		
 		<span id="go_bottom"></span>
 		

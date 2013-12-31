@@ -24,7 +24,7 @@
 				<a href="{C_ADD_STREAM}">{@streams.add}</a>
 			</th>
 			<th colspan="2">
-				<span style="float:right;">{PAGINATION}</span>
+				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
 			</th>
 		</tr>
 	</tfoot>

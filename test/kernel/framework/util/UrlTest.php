@@ -9,7 +9,6 @@ class urlTest extends PHPBoostUnitTestCase {
 		$url = new Url('' , '..', '/phpboost-svn/trunk/forum/topic.php');
 		$rel = $url->relative();
 		$abs = $url->absolute();
-		$tmp = $url->path_to_root();
 		self::assertEquals('', $rel, $rel . ' != /forum/');
 		self::assertEquals('', $abs, $abs . ' != ' . Url::get_absolute_root() . '/forum/');
 
@@ -38,24 +37,6 @@ class urlTest extends PHPBoostUnitTestCase {
 		$url = new Url('protocole://url/../coucou//file');
 		$rel = $url->relative();
 		self::assertFalse($url->is_relative());
-	}
-
-	function test_path_to_root()
-	{
-		$url = new Url('');
-		$path = $url->path_to_root();
-		self::assertEquals(PATH_TO_ROOT, $path);
-		$path = $url->path_to_root('root');
-		self::assertEquals('root', $path);
-	}
-
-	function test_server_url()
-	{
-		$url = new Url('');
-		$path = $url->server_url();
-		self::assertEquals(SERVER_URL, $path);
-		$path = $url->path_to_root('server_url');
-		self::assertEquals('server_url', $path);
 	}
 
 	function test_compress()

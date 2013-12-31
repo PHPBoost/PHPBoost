@@ -39,7 +39,7 @@
 						<tr>
 							<th colspan="4">
 								<span><a href="admin_groups.php?add=1" title="{L_ADD_GROUPS}">{L_ADD_GROUPS}</a></span>
-								<span class="float-right">{PAGINATION}</span>
+								# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
 							</th>
 						</tr>
 					</tfoot>

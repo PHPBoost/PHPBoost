@@ -143,7 +143,7 @@
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				
 				<span style="float:right;">
-					{PAGINATION} 
+					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
@@ -312,7 +312,7 @@
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				
 				<span style="float:right;">
-					{PAGINATION}
+					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #

@@ -68,11 +68,11 @@
 							</th>
 						</tr>
 					</thead>
-					# IF PAGINATION #
+					# IF C_PAGINATION #
 					<tfoot>
 						<tr>
 							<th colspan="6">
-								{PAGINATION}
+								# INCLUDE PAGINATION #
 							</th>
 						</tr>
 					</tfoot>

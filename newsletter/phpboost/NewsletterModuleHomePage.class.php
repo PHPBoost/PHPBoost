@@ -48,25 +48,30 @@ class NewsletterModuleHomePage implements ModuleHomePage
 		
 		$current_page = $request->get_int('page', 1);
 		$nbr_streams = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_streams, __LINE__, __FILE__);
-		$nbr_pages =  ceil($nbr_streams / $this->nbr_streams_per_page);
-		$pagination = new Pagination($nbr_pages, $current_page);
 		
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '')->rel());
+		$pagination = new ModulePagination($current_page, $nbr_streams, $this->nbr_streams_per_page);
+		$pagination->set_url(NewsletterUrlBuilder::home('%d'));
+
+		if ($pagination->current_page_is_empty() && $current_page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$this->view->put_all(array(
 			'C_STREAMS' => (float)$nbr_streams,
+			'C_PAGINATION' => $pagination->has_several_pages(),
 			'LINK_SUBSCRIBE' => NewsletterUrlBuilder::subscribe()->rel(),
 			'LINK_UNSUBSCRIBE' => NewsletterUrlBuilder::unsubscribe()->rel(),
-			'PAGINATION' => $pagination->export()->render()
+			'PAGINATION' => $pagination->display()
 		));
 
-		$limit_page = $current_page > 0 ? $current_page : 1;
-		$limit_page = (($limit_page - 1) * $this->nbr_streams_per_page);
-		
 		$result = PersistenceContext::get_querier()->select("SELECT id, name, description, picture, visible, auth
 		FROM " . NewsletterSetup::$newsletter_table_streams . "
-		LIMIT ". $this->nbr_streams_per_page ." OFFSET :start_limit",
+		LIMIT :number_items_per_page OFFSET :display_from",
 			array(
-				'start_limit' => $limit_page
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
 			), SelectQueryResult::FETCH_ASSOC
 		);
 		while ($row = $result->fetch())

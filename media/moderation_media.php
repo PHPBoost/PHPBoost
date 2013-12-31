@@ -169,16 +169,28 @@ else
 		$media_categories->build_children_id_list(0, $array_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST, MEDIA_AUTH_READ);
 	}
 	
-	//On crée une pagination si le nombre de fichier est trop important.
+	$nbr_media = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "media
+	WHERE " . (!empty($array_cats) ? 'idcat IN (' . "'" . implode("', '", $array_cats) . "'" . ')' : 'idcat=' . (!empty($cat) ? $cat : 0)) . (is_null($db_where) ? '' : ' AND infos=' . $db_where), __LINE__, __FILE__);
 	
-	$Pagination = new DeprecatedPagination();
+	//On crée une pagination si le nombre de fichier est trop important.
+	$page = AppContext::get_request()->get_getint('p', 1);
+	$pagination = new ModulePagination($page, $nbr_media, NUM_MODO_MEDIA);
+	$pagination->set_url(new Url('/media/moderation_media.php?p=%d'));
 
-	$nbr_media = 0;
-	$result = $Sql->query_while("SELECT * FROM " . PREFIX . "media WHERE " . (!empty($array_cats) ? 'idcat IN (' . "'" . implode("', '", $array_cats) . "'" . ')' : 'idcat=' . (!empty($cat) ? $cat : 0)) . (is_null($db_where) ? '' : ' AND infos=' . $db_where) . " ORDER BY infos ASC, timestamp DESC" . $Sql->limit($Pagination->get_first_msg(NUM_MODO_MEDIA, 'p'), NUM_MODO_MEDIA), __LINE__, __FILE__);
+	if ($pagination->current_page_is_empty() && $page > 1)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+
+	$result = $Sql->query_while("SELECT *
+		FROM " . PREFIX . "media
+		WHERE " . (!empty($array_cats) ? 'idcat IN (' . "'" . implode("', '", $array_cats) . "'" . ')' : 'idcat=' . (!empty($cat) ? $cat : 0)) . (is_null($db_where) ? '' : ' AND infos=' . $db_where) . "
+		ORDER BY infos ASC, timestamp DESC
+		" . $Sql->limit($pagination->get_display_from(), NUM_MODO_MEDIA), __LINE__, __FILE__);
 
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$nbr_media++;
 		$js_array[] = $row['id'];
 
 		$Template->assign_block_vars('files', array(
@@ -198,7 +210,8 @@ else
 	$Sql->query_close($result);
 
 	$Template->put_all(array(
-		'C_DISPLAY' => 1,
+		'C_DISPLAY' => true,
+		'C_PAGINATION' => $pagination->has_several_pages(),
 		'L_FILTER' => $MEDIA_LANG['filter'],
 		'L_DISPLAY_FILE' => $MEDIA_LANG['display_file'],
 		'L_ALL' => $MEDIA_LANG['all_file'],
@@ -227,7 +240,7 @@ else
 		'L_FILE_UNAPROBED' => $MEDIA_LANG['file_unaprobed'],
 		'L_FILE_UNVISIBLE' => $MEDIA_LANG['file_unvisible'],
 		'L_FILE_VISIBLE' => $MEDIA_LANG['file_visible'],
-		'PAGINATION' => $Pagination->display('moderation_media.php?p=%d', $nbr_media, 'p', NUM_MODO_MEDIA, 3),
+		'PAGINATION' => $pagination->display(),
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset'],
 		'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
