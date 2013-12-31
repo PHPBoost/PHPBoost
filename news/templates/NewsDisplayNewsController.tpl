@@ -42,7 +42,7 @@
 
 		# IF C_KEYWORDS #
 		<div id="news_tags_container">
-			<span class="news_more_title">{@news.form.keywords}</span> :
+			<span class="news_more_title">${LangLoader::get_message('form.keywords', 'common')}</span> :
 				# START keywords #
 					<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 				# END keywords #
