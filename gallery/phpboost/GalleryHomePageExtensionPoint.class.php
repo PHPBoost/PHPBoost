@@ -514,7 +514,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				$Template->put_all(array(
 					'C_GALLERY_MODO' => $is_modo,
 					'C_PAGINATION' => $pagination->has_several_pages(),
-					'PAGINATION' => $pagination->display()
+					'PAGINATION' => $pagination->display(),
 					'L_EDIT' => $LANG['edit'],
 					'L_VIEW' => $LANG['view'],
 					'L_VIEWS' => $LANG['views']
