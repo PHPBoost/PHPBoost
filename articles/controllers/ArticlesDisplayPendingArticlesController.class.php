@@ -81,10 +81,11 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	private function build_view($request)
 	{
 		$now = new Date();
+		$authorized_categories = ArticlesService::get_authorized_categories(Category::ROOT_CATEGORY);
 		
 		$mode = $request->get_getstring('sort', 'desc');
 		$field = $request->get_getstring('field', 'date');
-			
+		
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 
 		switch ($field)
@@ -109,27 +110,27 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				break;
 		}
 		
-		$current_page = $request->get_getint('page', 1) > 0 ? $request->get_getint('page', 1) : 1;
+		$current_page = $request->get_getint('page', 1);
 		$nbr_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
 
-		$limit_page = ($current_page - 1) * $nbr_articles_per_page;
+		$pagination = $this->get_pagination($nbr_articles_pending, $field, $mode);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, notes.number_notes, notes.average_notes, note.note 
 		FROM '. ArticlesSetup::$articles_table .' articles
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
-		WHERE articles.published = 0 OR (articles.published = 2 AND (articles.publishing_start_date > :timestamp_now 
-		AND articles.publishing_end_date < :timestamp_now)) ORDER BY ' . $sort_field . ' ' . $sort_mode . ' LIMIT ' . $nbr_articles_per_page .
-		' OFFSET ' . $limit_page, 
-			array(
-				'timestamp_now' => $now->get_timestamp(),
-				), SelectQueryResult::FETCH_ASSOC
-		);
+		WHERE articles.published = 0 OR (articles.published = 2 AND (articles.publishing_start_date > :timestamp_now AND articles.id_category IN :authorized_categories
+		AND articles.publishing_end_date < :timestamp_now))
+		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
+		LIMIT :number_items_per_page OFFSET :display_from', array(
+			'timestamp_now' => $now->get_timestamp(),
+			'authorized_categories' => $authorized_categories,
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
+		));
 		
 		$nbr_articles_pending = $result->get_rows_count();
-		
-		$pagination = $this->get_pagination($nbr_articles_pending, $field, $mode);
 		
 		$this->build_form($field, $mode);
 		
