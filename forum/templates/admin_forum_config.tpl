@@ -157,8 +157,8 @@
 					<div class="form-element">
 						<label for="icon_activ_display_msg">{L_ICON_DISPLAY_MSG}</label>
 						<div class="form-field">
-							<label><i class="fa fa-msg-display fa-2x"></i> <input type="radio" {ICON_DISPLAY_MSG_ENABLED} name="icon_activ_display_msg" id="icon_activ_display_msg" value="1"> {L_ACTIV}</label>
-							<label><i class="fa fa-msg-not-display fa-2x"></i><input type="radio" {ICON_DISPLAY_MSG_DISABLED} name="icon_activ_display_msg" value="0"> {L_UNACTIVE}</label>
+							<label><input type="radio" {ICON_DISPLAY_MSG_ENABLED} name="icon_activ_display_msg" id="icon_activ_display_msg" value="1"> {L_ACTIV}&nbsp;&nbsp;<i class="fa fa-msg-display fa-2x"></i> / <i class="fa fa-msg-not-display fa-2x"></i></label>
+							<label><input type="radio" {ICON_DISPLAY_MSG_DISABLED} name="icon_activ_display_msg" value="0"> {L_UNACTIVE}</label>
 						</div>
 					</div>
 				</fieldset>

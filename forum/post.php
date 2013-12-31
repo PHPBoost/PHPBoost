@@ -662,10 +662,10 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
 				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || $User->get_attribute('user_id') == $topic['user_id']))
 				{
-					$img_display = $topic['display_msg'] ? 'msg_not_display.png' : 'msg_display.png';
+					$img_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
 					$Template->put_all(array(
 						'C_DISPLAY_MSG' => true,
-						'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign-middle" />' : '',
+						'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<i class="fa ' . $img_display . '"></i>' : '',
 						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 						'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
 						'L_EXPLAIN_DISPLAY_MSG_BIS' => $CONFIG_FORUM['explain_display_msg_bis'],

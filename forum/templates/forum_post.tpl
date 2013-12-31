@@ -63,7 +63,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{
 					if( document.getElementById('forum_change_img') )
-						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<img src="{PICTURES_DATA_PATH}/images/msg_not_display.png" alt="" class="valign-middle" />' : '<img src="{PICTURES_DATA_PATH}/images/msg_display.png" alt="" class="valign-middle" />';
+						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-msg-not-display"></i>' : '<i class="fa fa-msg-display"></i>';
 					if( document.getElementById('forum_change_msg') )
 						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
 				}
@@ -76,7 +76,7 @@
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
-			<div class="module_contents">		
+			<div class="module_contents">
 				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
 					# INCLUDE message_helper #
 
