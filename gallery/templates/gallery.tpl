@@ -272,12 +272,14 @@
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{L_GALLERY} {U_GALLERY_CAT_LINKS}
 					
+					# IF C_PAGINATION #
 					<span class="actions">
-						{PAGINATION}
+						# INCLUDE PAGINATION #
 					</span>
+					# ENDIF #
 				</h1>
 			</header>
-			<div class="content">				
+			<div class="content">
 				# IF C_GALLERY_CATS #
 				<section class="block">
 					<header><h1>{L_CATEGORIES}</h1></header>
@@ -312,7 +314,11 @@
 				<article class="block">
 					<header><h1>{GALLERY}</h1></header>
 					<div class="content">
-						<p style="text-align:center" id="pics_max">{PAGINATION_PICS}</p>				
+						# IF C_PAGINATION #
+						<p class="center" id="pics_max">
+							# INCLUDE PAGINATION #
+						</p>
+						# ENDIF #
 						
 						# IF C_GALLERY_PICS_MAX #
 							<div class="options">
@@ -359,8 +365,8 @@
 							<div style="margin:auto;width:400px;height:32px;padding:0;">
 								<span style="float:left">&nbsp;&nbsp;&nbsp;{U_PREVIOUS}</span>
 								<span style="float:right">{U_NEXT}&nbsp;&nbsp;&nbsp;</span>
-							</div>				
-							<br /><br />					
+							</div>
+							<br /><br />
 							<table class="module-table" style="width:100%;">
 								<tr>
 									<th colspan="{COLSPAN}">
@@ -384,7 +390,7 @@
 						{COMMENTS}
 						# ENDIF #
 						
-						<table class="module-table">
+						<table>
 							# START pics_list #
 								{pics_list.OPEN_TR}
 								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle" class="smaller">
@@ -424,17 +430,24 @@
 							{end_table.TR_END}
 							# END end_table #
 						</table>
-						<p style="text-align:center">{PAGINATION_PICS}</p>			
 					</div>
-					<footer></footer>
+					<footer>
+						# IF C_PAGINATION #
+						<p class="center">
+							# INCLUDE PAGINATION #
+						</p>
+						# ENDIF #
+					</footer>
 				</article>
 				# ENDIF #
 					
 				<p style="text-align:center;padding-top:15px;" class="smaller">{L_TOTAL_IMG}</p>
 			</div>
 			<footer>
+				# IF C_PAGINATION #
 				<div style="float:right">
-					{PAGINATION}
+					# INCLUDE PAGINATION #
 				</div>
+				# ENDIF #
 			</footer>
 		</section>

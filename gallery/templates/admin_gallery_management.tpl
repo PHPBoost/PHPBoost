@@ -236,8 +236,6 @@
 		<div id="admin_contents">
 			# INCLUDE message_helper #
 			
-			{PAGINATION}
-
 			# START cat #
 			<table>
 				<thead>
@@ -247,9 +245,18 @@
 						</th>
 					</tr>
 				</thead>
+				# IF C_PAGINATION #
+				<thead>
+					<tr>
+						<th colspan="{COLSPAN}">
+							# INCLUDE PAGINATION #
+						</th>
+					</tr>
+				</thead>
+				# ENDIF #
 				<tbody>
 				# START cat.list #
-				{cat.list.TR_START}								
+				{cat.list.TR_START}
 					<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%">
 						<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.IMG}</a>
 						
@@ -257,9 +264,9 @@
 						<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> <a href="admin_gallery_cat.php?id={cat.list.IDCAT}" title="{L_EDIT}" class="fa fa-edit"></a> 
 						<br />
 						{cat.list.LOCK} <span class="smaller">{cat.list.L_NBR_PICS}</span> 
-					</td>	
+					</td>
 				{cat.list.TR_END}
-				# END cat.list #						
+				# END cat.list #
 				
 				# START cat.end_td #
 					{cat.end_td.TD_END}
@@ -272,10 +279,13 @@
 						<br />
 						
 						# START pics #
-						<p style="text-align:center">		
-							{PAGINATION_PICS}<span id="pics_max"></span>
-						</p>				
-						<table class="module-table">				
+						# IF C_PAGINATION #
+						<p class="center" id="pics_max">
+							# INCLUDE PAGINATION #
+						</p>
+						# ENDIF #
+						
+						<table>
 							<tr>
 								<th colspan="{COLSPAN}">
 									{GALLERY} {pics.EDIT}
@@ -308,31 +318,31 @@
 											</th>
 										</tr>
 										<tr>
-											<td class="text_small" style="width:50%;border:none;padding:4px;">
+											<td class="smaller" style="width:50%;border:none;padding:4px;">
 												<strong>{L_NAME}:</strong> {pics.pics_max.NAME}
 											</td>
-											<td class="text_small" style="border:none;padding:4px;">
+											<td class="smaller" style="border:none;padding:4px;">
 												<strong>{L_POSTOR}:</strong> {pics.pics_max.POSTOR}
 											</td>
 										</tr>
-										<tr>										
-											<td class="text_small" style="border:none;padding:4px;">
+										<tr>
+											<td class="smaller" style="border:none;padding:4px;">
 												<strong>{L_VIEWS}:</strong> {pics.pics_max.VIEWS}
 											</td>
-											<td class="text_small" style="border:none;padding:4px;">
+											<td class="smaller" style="border:none;padding:4px;">
 												<strong>{L_ADD_ON}:</strong> {pics.pics_max.DATE}
 											</td>
 										</tr>
-										<tr>										
-											<td class="text_small" style="border:none;padding:4px;">
+										<tr>
+											<td class="smaller" style="border:none;padding:4px;">
 												<strong>{L_DIMENSION}:</strong> {pics.pics_max.DIMENSION}
 											</td>
-											<td class="text_small" style="border:none;padding:4px;">
+											<td class="smaller" style="border:none;padding:4px;">
 												<strong>{L_SIZE}:</strong> {pics.pics_max.SIZE} Ko
 											</td>
 										</tr>
-										<tr>										
-											<td colspan="2" class="text_small" style="border:none;padding:4px;">
+										<tr>
+											<td colspan="2" class="smaller" style="border:none;padding:4px;">
 												&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a>
 												
 												<a href="gallery{pics.pics_max.U_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a> 
@@ -357,7 +367,7 @@
 									
 									<br /><br />
 									
-									<table class="module-table" style="width:100%;">
+									<table style="width:100%;">
 										<tr>
 											<th colspan="{pics.pics_max.COLSPAN}">
 												{L_THUMBNAILS}
@@ -399,7 +409,7 @@
 												<br />
 												{pics.list.U_POSTOR}
 											</td>
-										</tr>									
+										</tr>
 										<tr>
 											<td style="text-align:center;">
 												{pics.list.RENAME_FILE}
@@ -424,21 +434,23 @@
 									</table>
 								</td>
 							{pics.list.TR_END}
-							# END pics.list #				
+							# END pics.list #
 						
 							# START pics.end_td_pics #
 								{pics.end_td_pics.TD_END}
 							{pics.end_td_pics.TR_END}
 							# END pics.end_td_pics #
 							
-						</table>	
+						</table>
 						
-						<p style="text-align:center">		
-							{PAGINATION_PICS}
-						</p>			
+						# IF C_PAGINATION #
+						<p class="center" id="pics_max">
+							# INCLUDE PAGINATION #
+						</p>
+						# ENDIF #
 						# END pics #
 						
 						<p style="text-align:center" class="smaller">
 							{L_TOTAL_IMG}
-						</p>	
+						</p>
 		</div>	
