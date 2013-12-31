@@ -113,15 +113,15 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$current_page = $request->get_getint('page', 1);
 		$nbr_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
 
-		$pagination = $this->get_pagination($nbr_articles_pending, $field, $mode);
+		$pagination = $this->get_pagination($now, $authorized_categories, $field, $mode);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, notes.number_notes, notes.average_notes, note.note 
 		FROM '. ArticlesSetup::$articles_table .' articles
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
-		WHERE articles.published = 0 OR (articles.published = 2 AND (articles.publishing_start_date > :timestamp_now AND articles.id_category IN :authorized_categories
-		AND articles.publishing_end_date < :timestamp_now))
+		WHERE articles.published = 0 OR (articles.published = 2 AND (articles.publishing_start_date > :timestamp_now AND articles.publishing_end_date < :timestamp_now)) AND articles.id_category IN :authorized_categories
+		
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'timestamp_now' => $now->get_timestamp(),
@@ -144,7 +144,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		));
 		
 		if ($nbr_articles_pending > 0)
-		{	
+		{
 			$add_auth = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
 			$auth_moderation = ArticlesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY)->moderation();
 			$comments_enabled = ArticlesConfig::load()->are_comments_enabled();
@@ -156,14 +156,14 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				'C_PAGINATION' => $pagination->has_several_pages(),
 				'PAGINATION' => $pagination->display()
 			));
-						
+			
 			while($row = $result->fetch())
 			{
 				$article = new Articles();
 				$article->set_properties($row);
 				
 				$this->build_keywords_view($article);
-		
+				
 				$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
 				
 				$this->view->assign_block_vars('articles',  array_merge($article->get_tpl_vars()), array(
@@ -222,11 +222,19 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		return $options;
 	}
 	
-	private function get_pagination($nbr_articles_pending, $field, $mode)
+	private function get_pagination(Date $now, $authorized_categories, $field, $mode)
 	{
+		$number_articles = PersistenceContext::get_querier()->count(
+			ArticlesSetup::$articles_table, 
+			'WHERE published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now AND publishing_end_date < :timestamp_now)) AND id_category IN :authorized_categories', 
+			array(
+				'timestamp_now' => $now->get_timestamp(),
+				'authorized_categories' => $authorized_categories
+		));
+		
 		$current_page = AppContext::get_request()->get_getint('page', 1);
 		
-		$pagination = new ModulePagination($current_page, $nbr_articles_pending, ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination = new ModulePagination($current_page, $number_articles, ArticlesConfig::load()->get_number_articles_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_pending_articles($field, $mode, '/%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
