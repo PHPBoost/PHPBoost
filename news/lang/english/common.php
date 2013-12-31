@@ -49,6 +49,7 @@ $lang['news.form.rewrited_name'] = 'News name in the url';
 $lang['news.form.rewrited_name.description'] = 'Only contains lowercase letters, numbers and hyphens.';
 $lang['news.form.rewrited_name.personalize'] = 'Personalize news name in url';
 $lang['news.form.short_contents'] = 'News short content';
+$lang['news.form.short_contents.description'] = 'For the short content of the news is displayed, please activate the option in the module configuration';
 $lang['news.form.short_contents.enabled'] = 'Personalize news short content';
 $lang['news.form.short_contents.enabled.description'] = 'If unchecked, the news is automatically cut to :number caracters.';
 $lang['news.form.approved.not'] = 'Kept in draft';
