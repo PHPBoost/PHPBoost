@@ -135,9 +135,10 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->build_form($field, $mode);
 		
 		$this->view->put_all(array(
-			'C_PENDING_ARTICLES' => false,
+			'C_PENDING_ARTICLES' => true,
 			'C_PUBLISHED_ARTICLES' => true,
 			'C_ARTICLES_CAT' => false,
+			'C_NO_ARTICLE_AVAILABLE' => $nbr_articles_pending == 0,
 			'L_TOTAL_PENDING_ARTICLE' => $nbr_articles_pending > 0 ? StringVars::replace_vars($this->lang['articles.nbr_articles.pending'], array('number' => $nbr_articles_pending)) : '', 
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->rel(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()
