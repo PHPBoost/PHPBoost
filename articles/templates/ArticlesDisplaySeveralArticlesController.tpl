@@ -1,4 +1,4 @@
-<section>	
+<section>
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
@@ -20,7 +20,7 @@
 	</header>
 	# IF C_NO_ARTICLE_AVAILABLE #
 	<div class="center">
-		${i18n('articles.no_article.category')}
+		# IF C_PENDING_ARTICLES #{@articles.no_pending_article}# ELSE #{@articles.no_article.category}# ENDIF #
 	</div>
 	# ELSE #
 		# IF C_ARTICLES_FILTERS #
