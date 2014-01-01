@@ -259,7 +259,7 @@ class InstallationServices
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
+		ExtendedFieldsService::add($extended_field);*/
 		
 		//Date Birth
 		$extended_field = new ExtendedField();
@@ -268,11 +268,11 @@ class InstallationServices
 		$extended_field->set_description($lang['extended-field.field.date-birth-explain']);
 		$extended_field->set_field_type('MemberUserBornExtendedField');
 		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
+		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 		
-		//Location
+		/*//Location
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.location']);
 		$extended_field->set_field_name('user_location');
