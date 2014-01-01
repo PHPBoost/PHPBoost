@@ -236,7 +236,7 @@
 			<form action="admin_database.php?action=backup&amp;token={TOKEN}" method="post" name="table_list">
 				<script type="text/javascript">
 					<!--
-						function check_select_multiple(status)
+						function check_select_all_tables(status)
 						{
 							for(var i = 0; i < {NBR_TABLES}; i++)
 							{
@@ -265,8 +265,8 @@
 									<option value="{table_list.NAME}" name="table_{table_list.NAME}" id="{table_list.I}" {table_list.SELECTED}>{table_list.NAME}</option>
 								# END table_list #
 								</select>
-								<br /><br />
-								<a class="small" href="javascript:check_select_multiple(true);">{SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple(false);">{SELECT_NONE}</a>
+								<br />
+								<a class="small" href="javascript:check_select_all_tables(true);">{SELECT_ALL}</a> / <a class="small" href="javascript:check_select_all_tables(false);">{SELECT_NONE}</a>
 							</td>
 							<td>
 								{L_EXPLAIN_BACKUP}
