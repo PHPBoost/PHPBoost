@@ -271,10 +271,11 @@ else
 		'L_APROB' => $LANG['aprob'],
 		'L_UPDATE' => $LANG['update'],
 		'L_DELETE' => $LANG['delete'],
+		'L_GUEST' => $LANG['guest'],
 		'L_SHOW' => $LANG['show']
 	)); 
 
-	$result = $Sql->query_while("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, m.login 
+	$result = $Sql->query_while("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, p.user_id, m.login, m.user_groups, m.level
 	FROM " . PREFIX . "poll p
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON p.user_id = m.user_id
 	ORDER BY p.timestamp DESC 
@@ -301,14 +302,20 @@ else
 		elseif ($row['end'] > 0)
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 		
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		
 		$Template->assign_block_vars('questions', array(
+			'C_USER_GROUP_COLOR' => !empty($group_color),
 			'QUESTIONS' => $question,
 			'IDPOLL' => $row['id'],
-			'PSEUDO' => !empty($row['login']) ? $row['login'] : $LANG['guest'],			
+			'PSEUDO' => $row['login'],
+			'USER_GROUP_COLOR' => $group_color,
+			'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'ARCHIVES' => $archive,
 			'APROBATION' => $aprob,
-			'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : '')
+			'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : ''),
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
 		));
 	}
 	$Sql->query_close($result);	

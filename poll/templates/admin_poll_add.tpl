@@ -24,9 +24,9 @@
 			var i2 = i + 1;
 
 			if( document.getElementById('a'+i) )
-				document.getElementById('a'+i).innerHTML = '<label><input type="text" size="40" name="a'+i+'" value="" /></label><br><span id="a'+i2+'"></span>';
+				document.getElementById('a'+i).innerHTML = '<label><input type="text" size="40" name="a'+i+'" value="" /></label><br /><span id="a'+i2+'"></span>';
 			if( document.getElementById('v'+i) )
-				document.getElementById('v'+i).innerHTML = '<label><input type="text" size="3" name="v'+i+'" value="" /></label><br><span id="v'+i2+'"></span>';		
+				document.getElementById('v'+i).innerHTML = '<label><input type="text" size="3" name="v'+i+'" value="" /></label><br /><span id="v'+i2+'"></span>';
 			if( document.getElementById('s'+i) )
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<span id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><i class="fa fa-plus"></i></a></span>' : '';
 		}
@@ -83,42 +83,44 @@
 					<div class="form-element">
 						<label for="a0">* {L_ANSWERS}</label>
 						<div class="form-field">
-							<table style="border:none;border-spacing:0">
-								<tr>
-									<th style="text-align:center;">
-										{L_ANSWERS}
-									</th>
-									<th style="text-align:center;">
-										{L_NUMBER_VOTE}
-									</th>
-								</tr>
-								<tr>
-									<td style="text-align:center;">								
-										<label><input type="text" size="40" name="a0" id="a0" value="{ANSWER0}" /></label><br>
-										<label><input type="text" size="40" name="a1" value="{ANSWER1}" /></label><br>
-										<label><input type="text" size="40" name="a2" value="{ANSWER2}" /></label><br>
-										<label><input type="text" size="40" name="a3" value="{ANSWER3}" /></label><br>
-										<label><input type="text" size="40" name="a4" value="{ANSWER4}" /></label><br>
-										<span id="a5"></span>
-									</td>
-									<td style="text-align:center;">								
-										<label><input type="text" size="3" name="v0" value="{VOTES0}" /> {PERCENT0}</label><br>
-										<label><input type="text" size="3" name="v1" value="{VOTES1}" /> {PERCENT1}</label><br>
-										<label><input type="text" size="3" name="v2" value="{VOTES2}" /> {PERCENT2}</label><br>
-										<label><input type="text" size="3" name="v3" value="{VOTES3}" /> {PERCENT3}</label><br>
-										<label><input type="text" size="3" name="v4" value="{VOTES4}" /> {PERCENT4}</label><br>
-										<span id="v5"></span>					
-									</td>
-								</tr>
-								<tr>
-									<td style="text-align:center;" colspan="2">
-										<span id="s5"><a href="javascript:add_field(5, 20)"><i class="fa fa-plus"></i></a></span>						
-									</td>
-								</tr>
+							<table>
+								<tbody>
+									<tr>
+										<td class="no-separator text-strong">
+											{L_ANSWERS}
+										</td>
+										<td class="no-separator text-strong">
+											{L_NUMBER_VOTE}
+										</td>
+									</tr>
+									<tr>
+										<td class="no-separator">
+											<label><input type="text" size="40" name="a0" id="a0" value="{ANSWER0}" /></label><br />
+											<label><input type="text" size="40" name="a1" value="{ANSWER1}" /></label><br />
+											<label><input type="text" size="40" name="a2" value="{ANSWER2}" /></label><br />
+											<label><input type="text" size="40" name="a3" value="{ANSWER3}" /></label><br />
+											<label><input type="text" size="40" name="a4" value="{ANSWER4}" /></label><br />
+											<span id="a5"></span>
+										</td>
+										<td class="no-separator">
+											<label><input type="text" size="3" name="v0" value="{VOTES0}" /> {PERCENT0}</label><br />
+											<label><input type="text" size="3" name="v1" value="{VOTES1}" /> {PERCENT1}</label><br />
+											<label><input type="text" size="3" name="v2" value="{VOTES2}" /> {PERCENT2}</label><br />
+											<label><input type="text" size="3" name="v3" value="{VOTES3}" /> {PERCENT3}</label><br />
+											<label><input type="text" size="3" name="v4" value="{VOTES4}" /> {PERCENT4}</label><br />
+											<span id="v5"></span>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<span id="s5"><a href="javascript:add_field(5, 20)"><i class="fa fa-plus"></i></a></span>
+										</td>
+									</tr>
+								</tbody>
 							</table>
 						</div>
 					</div>
-				</fieldset>		
+				</fieldset>
 
 				<fieldset>
 					<legend>{L_DATE}</legend>
@@ -130,7 +132,7 @@
 									<input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING}>
 									<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}"> 
 									<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
-										<div id="start_date" class="calendar-block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
+										<div id="start_date" class="calendar-block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">
 										</div>
 									</div>
 									<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;" class="fa fa-calendar"></a>
@@ -139,7 +141,7 @@
 									
 									<input type="text" size="8" maxlength="8" id="end" name="end" value="{END}"> 
 									<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
-										<div id="end_date" class="calendar-block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
+										<div id="end_date" class="calendar-block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">
 										</div>
 									</div>
 									<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;" class="fa fa-calendar"></a>
@@ -154,13 +156,13 @@
 						<div class="form-field"><label>
 							<input type="text" size="8" maxlength="8" id="current_date" name="current_date" value="{CURRENT_DATE}"> 
 							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar3">
-								<div id="current" class="calendar-block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">							
+								<div id="current" class="calendar-block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">
 								</div>
 							</div>
 							<a onclick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;" class="fa fa-calendar"></a>
 							
 							{L_AT}
-							<input type="text" size="2" maxlength="2" name="hour" value="{HOUR}" /> H <input type="text" size="2" maxlength="2" name="min" value="{MIN}">
+							<input type="text" size="2" maxlength="2" name="hour" value="{HOUR}" /> h <input type="text" size="2" maxlength="2" name="min" value="{MIN}">
 						</label></div>
 					</div>
 				</fieldset>
@@ -168,8 +170,8 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
-					<button type="reset" value="true">{L_RESET}</button>				
-				</fieldset>					
+					<button type="reset" value="true">{L_RESET}</button>
+				</fieldset>
 			</form>
 		</div>
 		

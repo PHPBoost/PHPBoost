@@ -1,5 +1,5 @@
 	# IF C_POLL_MAIN #
-		<section>	
+		<section>
 			<header>
 				<h1>{L_POLL} <span class="actions">{EDIT}</span></h1>
 			</header>
@@ -55,8 +55,8 @@
 									<br />
 									<a class="small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
 								</p>
-							</div>							
-							# ENDIF #														
+							</div>
+							# ENDIF #
 							
 							# START result #
 							<div>
@@ -69,7 +69,7 @@
 								</div>
 								<br/>
 							</div>
-							# END result #	
+							# END result #
 							<div>
 								<span class="smaller" style="float:left;">{VOTES} {L_VOTE}</span>
 								<span class="smaller" style="float:right;">{L_ON}:&nbsp;&nbsp;{DATE}&nbsp;&nbsp;</span>
@@ -86,7 +86,7 @@
 	
 	
 	# IF C_POLL_ARCHIVES #
-		<section>					
+		<section>
 			<header>
 				<h1>{L_ARCHIVE}</h1>
 				# IF C_PAGINATION #<span style="float:right;"># INCLUDE PAGINATION #</span># ENDIF #
@@ -117,7 +117,7 @@
 								</div>
 								<br/>
 							</div>
-						# END list.result #	
+						# END list.result #
 						<div>
 							<span class="smaller" style="float:left;">{list.VOTE} {list.L_VOTE}</span>
 							<span class="smaller" style="float: right;">{L_ON}:&nbsp;&nbsp;{list.DATE}&nbsp;&nbsp;</span>
