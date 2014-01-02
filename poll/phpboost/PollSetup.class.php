@@ -121,7 +121,7 @@ class PollSetup extends DefaultModuleSetup
 			'visible' => 1,
 			'start' => 0,
 			'end' => 0,
-			'user_id' => -1
+			'user_id' => 1
 		));
 	}
 }

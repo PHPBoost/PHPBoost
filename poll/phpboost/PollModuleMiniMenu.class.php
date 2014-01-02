@@ -44,7 +44,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		$poll_config = PollConfig::load();
 		$config_cookie_name = $poll_config->get_cookie_name();
 		
-	    if (!empty($_array_poll) && $_array_poll != array() && !Url::is_current_url('/poll/poll.php') && PollAuthorizationsService::check_authorizations()->read())
+	    if (!empty($_array_poll) && $_array_poll != array() && !Url::is_current_url('/poll/') && PollAuthorizationsService::check_authorizations()->read())
 	    {
 	    	//Chargement de la langue du module.
 	    	load_module_lang('poll');
