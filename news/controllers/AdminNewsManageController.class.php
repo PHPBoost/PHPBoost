@@ -76,7 +76,6 @@ class AdminNewsManageController extends AdminModuleController
 		
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM '. NewsSetup::$news_table .' news
-		LEFT JOIN '. NewsSetup::$news_cats_table .' cat ON cat.id = news.id_category
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_per_page OFFSET :start_limit',
