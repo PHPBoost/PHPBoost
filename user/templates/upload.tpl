@@ -8,8 +8,9 @@
 		# ELSE #
 		
 		var textarea = opener.document.getElementById("{FIELD}");
+		var value = textarea.value;
 		textarea.focus();
-		textarea.value = code;
+		textarea.value = value + code;
 		# ENDIF #
 	}	
 	function close_popup()
