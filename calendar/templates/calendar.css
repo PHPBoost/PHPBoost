@@ -79,5 +79,5 @@ div.module-mini-contents table.calendar-table tbody tr td.calendar-week { width:
 
 div.module-mini-contents div#date_select_form form.fieldset-content { margin-top:0px; }
 div.module-mini-contents div#CalendarAjaxCalendarController_choose-date { margin:5px 0px 10px 0px; }
-div.module-mini-contents div#CalendarAjaxCalendarController_choose-date div.form-element { margin:0px 0px 0px 2px; }
+div.module-mini-contents div#CalendarAjaxCalendarController_choose-date div.form-element { margin:0px; }
 

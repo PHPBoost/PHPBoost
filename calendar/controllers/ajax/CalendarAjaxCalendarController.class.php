@@ -29,10 +29,6 @@ class CalendarAjaxCalendarController extends AbstractController
 {
 	private $lang;
 	private $view;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
 	private $mini_calendar = false;
 	
 	public function set_mini_calendar()
@@ -72,13 +68,28 @@ class CalendarAjaxCalendarController extends AbstractController
 		$next_month = ($month == 12) ? 1 : ($month + 1);
 		$next_year = ($month == 12) ? ($year + 1) : $year;
 		
-		$this->build_form($month, $year, $array_l_month);
-		$this->view->put_all(array(
-			'C_FORM' => true,
-			'FORM' => $this->form->display()
-		));
+		//Months
+		for ($i = 1; $i <= 12; $i++)
+		{
+			$this->view->assign_block_vars('months', array(
+				'VALUE' => $i,
+				'NAME' => $array_l_month[$i - 1],
+				'SELECTED' => $month == $i,
+			));
+		}
+		
+		//Years
+		for ($i = 1970; $i <= 2037; $i++)
+		{
+			$this->view->assign_block_vars('years', array(
+				'VALUE' => $i,
+				'NAME' => $i,
+				'SELECTED' => $year == $i,
+			));
+		}
 		
 		$this->view->put_all(array(
+			'C_MINI_MODULE' => $this->is_mini_calendar(),
 			'L_MONDAY' => $date_lang['monday_mini'],
 			'L_TUESDAY' => $date_lang['tuesday_mini'],
 			'L_WEDNESDAY' => $date_lang['wednesday_mini'],
@@ -87,11 +98,11 @@ class CalendarAjaxCalendarController extends AbstractController
 			'L_SATURDAY' => $date_lang['saturday_mini'],
 			'L_SUNDAY' => $date_lang['sunday_mini'],
 			'DATE' => $array_l_month[$month - 1] . ' ' . $year,
+			'MINI_MODULE' => (int)$this->is_mini_calendar(),
 			'PREVIOUS_MONTH_TITLE' => ($month == 1) ? $array_l_month[11] . ' ' . ($year - 1) : $array_l_month[$month - 2] . ' ' . $year,
 			'NEXT_MONTH_TITLE' => ($month == 12) ? $array_l_month[0] . ' ' . ($year + 1) : $array_l_month[$month] . ' ' . $year,
 			'U_PREVIOUS_MONTH' => CalendarUrlBuilder::ajax_month_calendar($previous_year . '/' . $previous_month . '/' . (int)$this->is_mini_calendar())->rel(),
-			'U_NEXT_MONTH' => CalendarUrlBuilder::ajax_month_calendar($next_year . '/' . $next_month . '/' . (int)$this->is_mini_calendar())->rel(),
-			'C_MINI_MODULE' => $this->is_mini_calendar()
+			'U_NEXT_MONTH' => CalendarUrlBuilder::ajax_month_calendar($next_year . '/' . $next_month . '/' . (int)$this->is_mini_calendar())->rel()
 		));
 		
 		//Retrieve all the events of the selected month
@@ -182,36 +193,6 @@ class CalendarAjaxCalendarController extends AbstractController
 				'U_DAY_EVENTS' => CalendarUrlBuilder::home($year . '/' . $month . '/' . $today . (!empty($array_events[$today]) ? '/' . $categories[$array_events[$today]['id_category']]->get_id() . '-' . $categories[$array_events[$today]['id_category']]->get_rewrited_name() : '') . '#events')->rel()
 			));
 		}
-	}
-	
-	private function build_form($month, $year, $array_l_month)
-	{
-		$form = new HTMLForm(__CLASS__);
-		
-		$fieldset = new FormFieldsetHorizontal('choose-date');
-		$form->add_fieldset($fieldset);
-		
-		//Month
-		for ($i = 1; $i <= 12; $i++)
-		{
-			$array_month[] = new FormFieldSelectChoiceOption($array_l_month[$i - 1], $i);
-		}
-		
-		//Year
-		for ($i = 1970; $i <= 2037; $i++)
-		{
-			$array_year[] = new FormFieldSelectChoiceOption($i, $i);
-		}
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('month', '', $month, $array_month,
-			array('events' => array('change' => 'ChangeMonth("' . CalendarUrlBuilder::ajax_month_calendar($year)->rel() . '" + "/" + HTMLForms.getField("month").getValue() + "/" + ' . (int)$this->is_mini_calendar() . ');')
-		)));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('year', '', $year, $array_year,
-			array('events' => array('change' => 'ChangeMonth("' . CalendarUrlBuilder::ajax_month_calendar()->rel() . '" + HTMLForms.getField("year").getValue() + "/" + HTMLForms.getField("month").getValue() + "/" + ' . (int)$this->is_mini_calendar() . ');')
-		)));
-		
-		$this->form = $form;
 	}
 	
 	private function init()
