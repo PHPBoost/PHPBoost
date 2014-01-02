@@ -275,7 +275,8 @@ class NewsFormController extends ModuleController
 		else
 		{
 			$news->set_creation_date($this->form->get_value('creation_date'));
-			$rewrited_name = $this->form->get_value('personalize_rewrited_name') ? $this->form->get_value('rewrited_name') : Url::encode_rewrite($news->get_name());
+			$rewrited_name = $this->form->get_value('rewrited_name');
+			$rewrited_name = $this->form->get_value('personalize_rewrited_name') && !empty($rewrited_name) ? $rewrited_name : Url::encode_rewrite($news->get_name());
 			$news->set_rewrited_name($rewrited_name);
 			$news->set_top_list_enabled($this->form->get_value('top_list'));
 			$news->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
