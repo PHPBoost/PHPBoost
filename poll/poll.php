@@ -53,7 +53,7 @@ $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 //Récupération des éléments de configuration
 $config_cookie_name = $poll_config->get_cookie_name();
-$config_cookie_lenght = $poll_config->get_cookie_lenght();
+$config_cookie_lenght = $poll_config->get_cookie_lenght_in_seconds();
 $config_displayed_in_mini_module_list = $poll_config->get_displayed_in_mini_module_list();
 
 if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
