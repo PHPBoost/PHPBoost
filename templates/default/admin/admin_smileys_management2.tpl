@@ -61,7 +61,6 @@
 					<legend>{L_DELETE}</legend>
 					<input type="hidden" name="idsmiley" value="{IDSMILEY}">
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
-					&nbsp;&nbsp; 
 					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>	
 			</form>

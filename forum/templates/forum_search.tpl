@@ -86,7 +86,7 @@
 								<div class="msg_pseudo_mbr">
 									{list.USER_ONLINE} {list.USER_PSEUDO}
 								</div>
-								<span class="text-strong" style="float:left;">&nbsp;&nbsp;{L_TOPIC}: {list.U_TITLE}</span>
+								<span class="text-strong" style="float:left;">{L_TOPIC}: {list.U_TITLE}</span>
 								<span class="smaller" style="float: right;">{L_ON}: {list.DATE}</span>&nbsp;
 							</div>
 							<div class="msg_contents_container">

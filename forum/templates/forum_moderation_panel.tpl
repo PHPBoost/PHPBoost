@@ -399,7 +399,6 @@
 								</td>
 								<td>
 									<span id="action_info">{INFO}</span>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 										{SELECT}
 									</select></label>

@@ -54,7 +54,6 @@
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<button type="submit" name="valid" value="true">{L_UPDATE}</button>
-				&nbsp;&nbsp; 
 				<button type="reset" value="true">{L_RESET}</button>
 				<input type="hidden" name="id_auth" value="{auth.ID}">
 			</fieldset>
