@@ -12,11 +12,36 @@
 			}
 		-->
 		</script>
-		# IF C_FORM #
+		
 		<div id="date_select_form" class="center">
-			# INCLUDE FORM #
+			<form method="post" class="fieldset-content">
+				<div class="horizontal-fieldset" id="CalendarAjaxCalendarController_choose-date" >
+					<div style="display:inline-table; vertical-align:middle;">
+						<div id="CalendarAjaxCalendarController_month_field" class="form-element" >
+							<div class="form-field">
+								<select name="CalendarAjaxCalendarController_month" id="CalendarAjaxCalendarController_month" onchange="ChangeMonth('/phpboost/calendar/?url=/ajax_month_calendar/' + $(CalendarAjaxCalendarController_year).value + '/' + $(CalendarAjaxCalendarController_month).value + '/' + {MINI_MODULE});">
+									# START months #
+									<option value="{months.VALUE}"# IF months.SELECTED # selected="selected"# ENDIF #>{months.NAME}</option>
+									# END months #
+								</select>
+							</div>
+						</div>
+					</div>
+					<div style="display:inline-table; vertical-align:middle;">
+						<div id="CalendarAjaxCalendarController_year_field" class="form-element" >
+							<div class="form-field">
+								<select name="CalendarAjaxCalendarController_year" id="CalendarAjaxCalendarController_year" onchange="ChangeMonth('/phpboost/calendar/?url=/ajax_month_calendar/' + $(CalendarAjaxCalendarController_year).value + '/' + $(CalendarAjaxCalendarController_month).value + '/' + {MINI_MODULE});">
+									# START years #
+									<option value="{years.VALUE}"# IF years.SELECTED # selected="selected"# ENDIF #>{years.NAME}</option>
+									# END years #
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
 		</div>
-		# ENDIF #
+		
 		<div class="calendar-container">
 			<div class="calendar-top-container options">
 				<div class="calendar-top-l">
