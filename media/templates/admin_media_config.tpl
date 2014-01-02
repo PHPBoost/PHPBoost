@@ -160,7 +160,7 @@
 						<legend>{L_UPDATE}</legend>
 						<button type="submit" name="valid" value="true">{L_UPDATE}</button>
 						&nbsp;&nbsp;
-						<input value="{L_PREVIEW}" type="button" name="valid" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;">
+						<button type="button" name="valid" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;" value="true">{L_PREVIEW}</button>
 						&nbsp;&nbsp;
 						<button type="reset" value="true">{L_RESET}</button>
 					</fieldset>
