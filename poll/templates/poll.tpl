@@ -72,7 +72,7 @@
 							# END result #
 							<div>
 								<span class="smaller" style="float:left;">{VOTES} {L_VOTE}</span>
-								<span class="smaller" style="float:right;">{L_ON}:&nbsp;&nbsp;{DATE}&nbsp;&nbsp;</span>
+								<span class="smaller" style="float:right;">{L_ON} : {DATE} </span>
 								&nbsp;
 							</div>
 						</div>
@@ -120,7 +120,7 @@
 						# END list.result #
 						<div>
 							<span class="smaller" style="float:left;">{list.VOTE} {list.L_VOTE}</span>
-							<span class="smaller" style="float: right;">{L_ON}:&nbsp;&nbsp;{list.DATE}&nbsp;&nbsp;</span>
+							<span class="smaller" style="float: right;">{L_ON} : {list.DATE} </span>
 							&nbsp;
 						</div>
 					</div>

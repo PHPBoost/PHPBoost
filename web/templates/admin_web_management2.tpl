@@ -125,7 +125,6 @@
 						<label for="aprob">* {L_APROB}</label>
 						<div class="form-field">
 							<label><input type="radio" {APROB_ENABLED} name="aprob" id="aprob" value="1"> {L_YES}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" {APROB_DISABLED}  name="aprob" value="0"> {L_NO}</label>
 						</div>
 					</div>
@@ -135,9 +134,7 @@
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{IDWEB}">
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
-					&nbsp;&nbsp; 
 					<button type="submit" name="previs" value="true">{L_PREVIEW}</button>
-					&nbsp;&nbsp; 
 					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>	
 			</form>

@@ -74,7 +74,6 @@
 						<label for="type">* {L_ANSWER_TYPE}</label>
 						<div class="form-field">
 							<label><input type="radio" name="type" id="type" {TYPE_UNIQUE} value="1"> {L_SINGLE}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" name="type" {TYPE_MULTIPLE} value="0"> {L_MULTIPLE}</label>
 						</div>
 					</div>
@@ -82,7 +81,6 @@
 						<label for="archive">* {L_ARCHIVED}</label>
 						<div class="form-field">
 							<label><input type="radio" name="archive" {ARCHIVES_ENABLED} value="1"> {L_YES}</label>
-							&nbsp;&nbsp; 
 							<label><input type="radio" name="archive" {ARCHIVES_DISABLED} id="archive" value="0"> {L_NO}</label>
 						</div>
 					</div>
@@ -180,7 +178,6 @@
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{IDPOLL}">
 					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
-					&nbsp;&nbsp; 
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>

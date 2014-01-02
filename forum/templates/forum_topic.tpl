@@ -230,10 +230,10 @@
 							<em>{L_GUEST}</em>
 						# ENDIF #
 					</div>
-					<span style="float:left;">&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}</span>
+					<span style="float:left;"><a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}</span>
 					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a>
 					# IF msg.C_FORUM_MSG_EDIT # 
-					&nbsp;&nbsp;<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
+					<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
 					# ENDIF #
 					
 					# IF msg.C_FORUM_MSG_DEL #
@@ -252,9 +252,9 @@
 						# ENDIF #
 					# ENDIF #
 					
-					# IF msg.C_FORUM_MSG_CUT # &nbsp;&nbsp;<a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" onclick="javascript:return Confirm_cut_topic();"><i class="fa fa-cut"></i></a> # ENDIF #
+					# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" onclick="javascript:return Confirm_cut_topic();"><i class="fa fa-cut"></i></a> # ENDIF #
 					
-					&nbsp;&nbsp;<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><i class="fa fa-arrow-up"></i></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><i class="fa fa-arrow-down"></i></a>&nbsp;&nbsp;</span>
+					<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><i class="fa fa-arrow-up"></i></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><i class="fa fa-arrow-down"></i></a></span>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">

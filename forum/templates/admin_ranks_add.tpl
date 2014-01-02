@@ -109,7 +109,6 @@
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="idc" value="{NEXT_ID}">
 					<button type="submit" name="add" value="true">{L_ADD}</button>
-					&nbsp;&nbsp; 
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>
