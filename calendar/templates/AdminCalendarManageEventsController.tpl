@@ -34,7 +34,7 @@
 	# IF C_PAGINATION #
 	<tfoot>
 		<tr>
-			<th colspan="6">
+			<th colspan="7">
 				# INCLUDE PAGINATION #
 			</th>
 		</tr>

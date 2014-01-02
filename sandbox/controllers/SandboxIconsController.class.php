@@ -70,7 +70,6 @@ class SandboxIconsController extends ModuleController
 			'fa fa-delete',
 			'fa fa-download',
 			'fa fa-edit',
-			'fa fa-edit-sign',
 			'fa fa-envelope',
 			'fa fa-envelope-o',
 			'fa fa-eraser',
