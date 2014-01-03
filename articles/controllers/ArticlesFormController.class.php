@@ -459,14 +459,13 @@ class ArticlesFormController extends ModuleController
 		{
 			AppContext::get_response()->redirect(ArticlesUrlBuilder::display_pending_articles());
 		}
-	}				
+	}
 
 	private function build_response(View $tpl)
 	{
 		$article = $this->get_article();
-		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
-
-		$response = new ArticlesDisplayResponse();	
+		
+		$response = new ArticlesDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
 
 		if ($article->get_id() === null)
@@ -479,10 +478,9 @@ class ArticlesFormController extends ModuleController
 			$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($article->get_id_category(), true));
 			foreach ($categories as $id => $category)
 			{
-				if ($id != Category::ROOT_CATEGORY)
-					$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($id, $category->get_rewrited_name()));
+				if ($category->get_id() != Category::ROOT_CATEGORY)
+					$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
-			$category = $categories[$article->get_id_category()];
 			$response->add_breadcrumb_link($article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
 
 			$response->add_breadcrumb_link($this->lang['articles.edit'], ArticlesUrlBuilder::edit_article($article->get_id()));
