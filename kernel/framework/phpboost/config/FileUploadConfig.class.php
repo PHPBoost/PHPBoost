@@ -82,10 +82,11 @@ class FileUploadConfig extends AbstractConfigData
 			self::MAXIMUM_SIZE_UPLOAD => 512,
 			self::ENABLE_BANDWIDTH_PROTECTION => true,
 			self::AUTHORIZED_EXTENSIONS => array(
-				'jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico', 'rar', 'zip', 
-				'gz', 'txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods',
-				'odg', 'odc', 'odf', 'odb', 'xcf','flv', 'mp3','ogg', 'mpg', 'mov',
-				'swf', 'wav', 'wmv', 'midi', 'mng',	'qt', 'ttf', 'tex', 'rtf', 'psd'		
+				'jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico', 'nef',
+				'rar', 'zip', 'gz', '7z',
+				'txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv',
+				'flv', 'mp3','ogg', 'mpg', 'mov','swf', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv',
+				'ttf', 'tex', 'rtf', 'psd', 'iso'		
 			)			
 		);
 	}
