@@ -11,4 +11,5 @@
 		# ENDIF #
 		<a class="small" href="{U_GUESTBOOK}">{@module_title}</a>
 	</div>
+	<div class="module-mini-bottom"></div>
 </div>
