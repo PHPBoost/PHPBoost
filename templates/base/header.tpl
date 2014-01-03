@@ -45,7 +45,10 @@
 			<header id="header">
 				<div id="top-header">
 					<div id="logo"></div>
-					<div id="site-name"><a href="{PATH_TO_ROOT}/">{SITE_NAME}</a></div>
+					<div id="site-name">
+						<a href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
+						<span id="site-name-desc">{SITE_NAME_DESC}</span>
+					</div>
 					# IF C_MENUS_HEADER_CONTENT #
 					{MENUS_HEADER_CONTENT}
 					# ENDIF #
