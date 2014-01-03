@@ -44,7 +44,7 @@
 					<span class="smaller">{result.answers.ANSWERS} : {result.answers.PERCENT}%</span>
 					<br />
 					<div class="progressbar-container" title="{result.answers.WIDTH}%">
-						<div class="progressbar" style="width:{result.answers.WIDTH}%"></div>
+						<div class="progressbar" style="width:{result.answers.WIDTH}%;"></div>
 					</div>
 				</p>
 				# END result.answers #

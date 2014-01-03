@@ -65,7 +65,7 @@
 									<span class="progressbar-infos">
 										{result.NBRVOTE} {L_VOTE}
 									</span>
-									<div class="progressbar" style="width:{result.PERCENT}%"></div>
+									<div class="progressbar" style="width:{result.PERCENT}%;"></div>
 								</div>
 								<br/>
 							</div>
