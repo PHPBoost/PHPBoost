@@ -71,7 +71,7 @@ $server_path = trim(str_replace('/admin', '', dirname($server_path)));
 $server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
 
 $lang_ini_file = load_ini_file(PATH_TO_ROOT .'/lang/', get_ulang());
-$template_ini_file = load_ini_file(PATH_TO_ROOT .'/templates/' . get_utheme() . '/config/', get_ulang());
+$template_ini_file = @parse_ini_file(PATH_TO_ROOT .'/templates/' . get_utheme() . '/lang/' . get_ulang() . '/desc.ini');
 
 $directories_summerization = '';
 foreach (PHPBoostFoldersPermissions::get_permissions() as $key => $folder)
@@ -124,8 +124,8 @@ default theme            : " . $template_ini_file['name'] . "
 default language         : " . $lang_ini_file['name'] . "
 default editor           : " . $content_formatting_config->get_default_editor() . "
 home page                : " . Environment::get_home_page() . "
-url rewriting            : " . $server_environment_config->is_url_rewriting_enabled() . "
-output gzip              : " . $server_environment_config->is_output_gziping_enabled() . "
+url rewriting            : " . (int)$server_environment_config->is_url_rewriting_enabled() . "
+output gzip              : " . (int)$server_environment_config->is_output_gziping_enabled() . "
 session cookie name      : " . $sessions_config->get_cookie_name() . "
 session duration         : " . $sessions_config->get_session_duration() . "
 active session duration  : " . $sessions_config->get_active_session_duration() . "
