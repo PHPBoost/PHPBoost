@@ -7,6 +7,7 @@
 		
 		# IF C_PAGINATION #
 			<div class="center"># INCLUDE PAGINATION #</div>
+			<div class="spacer">&nbsp;</div>
 		# ENDIF #
 		# IF C_NO_MESSAGE #
 			<div class="center">
@@ -53,5 +54,6 @@
 			</article>
 		# END messages #
 	</div>
-	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
+	<footer># IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #
+	</footer>
 </section>
