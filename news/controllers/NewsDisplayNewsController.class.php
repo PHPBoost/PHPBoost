@@ -208,10 +208,9 @@ class NewsDisplayNewsController extends ModuleController
 		$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));
 		foreach ($categories as $id => $category)
 		{
-			if ($id != Category::ROOT_CATEGORY)
-				$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($id, $category->get_rewrited_name()));
+			if ($category->get_id() != Category::ROOT_CATEGORY)
+				$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($this->get_news()->get_id_cat());
 		$response->add_breadcrumb_link($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
 		
 		return $response->display($this->tpl);

@@ -242,7 +242,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		));
 		
 		$current_page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = new ModulePagination($current_page, $number_articles, ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination = new ModulePagination($current_page, $number_articles, (int)ArticlesConfig::load()->get_number_articles_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $field, $mode, '%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
