@@ -53,7 +53,10 @@
 		<header id="header_admin_container">
 			<div id="header_admin">
 				<div id="logo"></div>
-				<div id="site-name">{SITE_NAME}</div>
+				<div id="site-name">
+					<a href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
+					<span id="site-name-desc">{SITE_NAME_DESC}</span>
+				</div>
 			</div>
 			<div id="sub_header_admin">
 				<nav class="dynamic-menu">

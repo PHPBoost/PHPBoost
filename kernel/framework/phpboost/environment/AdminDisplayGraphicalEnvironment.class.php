@@ -149,6 +149,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			$template->put_all(array(
 				'L_XML_LANGUAGE' => self::$lang['xml_lang'],
 				'SITE_NAME' => GeneralConfig::load()->get_site_name(),
+				'SITE_NAME_DESC' => 'Le CMS tout en un !',
 				'TITLE' => TITLE,
 				'L_REQUIRE_PSEUDO' => self::$lang['require_pseudo'],
 				'L_REQUIRE_PASSWORD' => self::$lang['require_password'],
@@ -199,6 +200,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'C_HEADER_LOGO' => !empty($header_logo_path),
 			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
+			'SITE_NAME_DESC' => 'Le CMS tout en un !',
 			'TITLE' => $this->get_seo_meta_data()->get_full_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),

@@ -74,6 +74,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$template->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
+			'SITE_NAME_DESC' => 'Le CMS tout en un !',
 			'MAINTAIN' => $this->display_site_maintenance(),
 			'C_COMPTEUR' => false,
 			'C_FAVICON' => $customization_config->favicon_exists(),
