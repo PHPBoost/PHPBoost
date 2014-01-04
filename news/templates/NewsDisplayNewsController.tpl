@@ -33,7 +33,7 @@
 	<aside>
 		# IF C_SOURCES #
 		<div id="news_sources_container">
-			<span class="news_more_title">{@news.form.sources}</span> :
+			<span class="news_more_title">${LangLoader::get_message('form.sources', 'common')}</span> :
 			# START sources #
 			<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small">{sources.NAME}</a># IF sources.C_SEPARATOR #, # ENDIF #
 			# END sources #
