@@ -29,7 +29,8 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$all = !empty($_GET['all']) ? true : false;
+$all = !empty($_GET['all']);
+$_NB_ELEMENTS_PER_PAGE = 15;
 
 $tpl = new FileTemplate('admin/admin_errors_management.tpl');
 
@@ -48,15 +49,7 @@ if (!empty($_POST['erase']))
 	}
 }
 
-$tpl->add_lang(LangLoader::get('admin-errors-Common'));
-$tpl->put_all(array(
-	'L_ERRORS' => LangLoader::get_message('logged_errors', 'admin-errors-Common'),
-	'L_DESC' => $LANG['description'],
-	'L_DATE' => LangLoader::get_message('date', 'date-common'),
-	'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
-	'L_ERASE_RAPPORT_EXPLAIN' => $LANG['final'],
-	'L_ERASE' => $LANG['erase']
-));
+$nb_errors = 0;
 
 if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lecture
 {
@@ -88,9 +81,9 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 				'errstacktrace'=> $errinfo['errstacktrace'], 
 				'errdate' => $errinfo['errdate']
 				);
-				break;	
+				break;
 			}
-			$i++;						
+			$i++;
 		}
 		@fclose($handle);
 		
@@ -115,23 +108,24 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 			));
 			$i++;
 			
-			if ($i > 15 && !$all)
+			if ($i > $_NB_ELEMENTS_PER_PAGE && !$all)
 			{
 				break;
 			}
 		}
-	}
-	else
-	{
-		$tpl->assign_block_vars('errors', array(
-			'TYPE' => '&nbsp;',
-			'DESC' => '',
-			'FILE' => '',
-			'LINE' => '',
-			'DATE' => ''
-		));
+		$nb_errors = $i;
 	}
 }
+
+$tpl->add_lang(LangLoader::get('admin-errors-Common'));
+$tpl->put_all(array(
+	'C_ERRORS' => $nb_errors,
+	'C_MORE_ERRORS' => $nb_errors > $_NB_ELEMENTS_PER_PAGE,
+	'L_DESC' => $LANG['description'],
+	'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
+	'L_ERASE_RAPPORT_EXPLAIN' => $LANG['final'],
+	'L_ERASE' => $LANG['erase']
+));
 
 $tpl->display();
 

@@ -30,8 +30,9 @@
  ####################################################
 
 $lang = array(
-    'logged_errors' => 'Logged errors',
-    '404_errors' => '404 errors',
+	'logged_errors' => 'Logged errors',
+	'404_errors' => '404 errors',
+	'no_error' => 'No error',
 	'all_errors' => 'Show all errors',
 	'error_management' => 'Error handler'
 );
