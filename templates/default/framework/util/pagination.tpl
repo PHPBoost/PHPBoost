@@ -1,7 +1,35 @@
-<nav class="pagination">
+<ul class="pagination">
 	# START page #
-	<a href="{page.URL}" # IF page.C_PREVIOUS # rel="prev" # ENDIF # # IF page.C_NEXT # rel="next" # ENDIF # title="">
-		<span # IF page.C_CURRENT_PAGE # class="current-page" # ENDIF #>{page.NAME}</span>
-	</a>
+	<li>
+		# IF page.C_PREVIOUS #
+		<a href="{page.URL}" rel="prev" title="" class="prev-page" >&laquo;</a>
+		# ENDIF #
+		
+		# IF page.NAME #
+		<a href="{page.URL}" title="" class="# IF page.C_CURRENT_PAGE #current-page# ENDIF #" >{page.NAME}</a>
+		# ENDIF #
+		
+		# IF page.C_NEXT #
+		<a href="{page.URL}" rel="next" title="" class="next-page" >&raquo;</a>
+		# ENDIF #
+	</li>
 	# END page #
-</nav>
+</ul>
+
+<ul class="pagination pagination-block">
+	# START page #
+	<li>
+		# IF page.C_PREVIOUS #
+		<a href="{page.URL}" rel="prev" title="" class="prev-page" >&laquo;</a>
+		# ENDIF #
+		
+		# IF page.NAME #
+		<a href="{page.URL}" title="" class="# IF page.C_CURRENT_PAGE #current-page# ENDIF #" >{page.NAME}</a>
+		# ENDIF #
+		
+		# IF page.C_NEXT #
+		<a href="{page.URL}" rel="next" title="" class="next-page" >&raquo;</a>
+		# ENDIF #
+	</li>
+	# END page #
+</ul>

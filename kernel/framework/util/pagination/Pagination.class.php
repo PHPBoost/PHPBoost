@@ -88,7 +88,7 @@ class Pagination
 	{
 		if ($this->current_page > 1)
 		{
-			$this->add_pagination_page('&laquo;', 1);
+			$this->add_pagination_page('prev-page', 1);
 		}
 	}
 
@@ -110,7 +110,7 @@ class Pagination
 	{
 		if ($this->current_page < $this->nb_pages)
 		{
-			$this->add_pagination_page('&raquo;', $this->nb_pages);
+			$this->add_pagination_page('next-page', $this->nb_pages);
 		}
 	}
 
@@ -118,10 +118,10 @@ class Pagination
 	{
 		$this->tpl->assign_block_vars('page', array(
 			'URL' => $this->get_url($page_number),
-			'NAME' => $name,
+			'NAME' => $name == 'prev-page' || $name == 'next-page' ? '' : $name,
 			'C_CURRENT_PAGE' => $is_current_page,
-			'C_PREVIOUS' => $name == '&laquo;',
-			'C_NEXT' => $name == '&raquo;'
+			'C_PREVIOUS' => $name == 'prev-page',
+			'C_NEXT' => $name == 'next-page',
 		));
 	}
 
