@@ -41,31 +41,37 @@ class AdminErrorsController404List extends AdminController
 	{
 		$this->load_env();
 		$errors_404 = AdminError404Service::list_404_errors();
-
+		$nb_errors = 0;
+		
 		foreach ($errors_404 as $error)
 		{
 			$this->view->assign_block_vars('errors', array(
-                'REQUESTED_URL' => $error->get_requested_url(),
-                'FROM_URL' => $error->get_from_url(),
-                'TIMES' => $error->get_times(),
-                'U_DELETE' => AdminErrorsUrlBuilder::delete_404_error($error->get_id())->rel(),
+				'REQUESTED_URL' => $error->get_requested_url(),
+				'FROM_URL' => $error->get_from_url(),
+				'TIMES' => $error->get_times(),
+				'U_DELETE' => AdminErrorsUrlBuilder::delete_404_error($error->get_id())->rel(),
 			));
+			$nb_errors++;
 		}
-		$this->view->put_all(array('U_CLEAR_404_ERRORS' => AdminErrorsUrlBuilder::clear_404_errors()->rel()));
+		
+		$this->view->put_all(array(
+			'C_ERRORS' => $nb_errors,
+			'U_CLEAR_404_ERRORS' => AdminErrorsUrlBuilder::clear_404_errors()->rel()
+		));
 
 		return $this->response;
 	}
 
 	private function load_env()
 	{
-        $lang = LangLoader::get_class(__CLASS__);
-        
+		$lang = LangLoader::get_class(__CLASS__);
+		
 		$this->view = new FileTemplate('admin/errors/AdminErrorsController404List.tpl');
-        $this->view->add_lang($lang);
-        
+		$this->view->add_lang($lang);
+		
 		$this->response = new AdminErrorsDisplayResponse($this->view);
-        
-        $env = $this->response->get_graphical_environment();
+		
+		$env = $this->response->get_graphical_environment();
 		$env->set_page_title($lang['404_list']);
 	}
 }

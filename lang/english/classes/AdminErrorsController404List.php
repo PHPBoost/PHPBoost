@@ -31,15 +31,16 @@
  ####################################################
 
 $lang = array(
-    '404_list' => '404 errors list',
-    '404_error_requested_url' => 'Requested url',
-    '404_error_from_url' => 'Source',
-    '404_error_times' => 'Times',
-    '404_error_delete' => 'Delete',
-    '404_error_delete_confirmation' => 'Delete this entry?',
-    'clear_404_list' => 'Clear the 404 errors list',
-    'clear_404_list_explain' => 'This cannot be undone!',
-    '404_errors_clear_confirmation' => 'Erase all 404 errors?',
+	'404_list' => '404 errors list',
+	'404_error_requested_url' => 'Requested url',
+	'404_error_from_url' => 'Source',
+	'404_error_times' => 'Times',
+	'404_error_delete' => 'Delete',
+	'404_error_delete_confirmation' => 'Delete this entry?',
+	'clear_404_list' => 'Clear the 404 errors list',
+	'clear_404_list_explain' => 'This cannot be undone!',
+	'404_errors_clear_confirmation' => 'Erase all 404 errors?',
+	'404_no_error' => 'No 404 error to display',
 );
 
 ?>
