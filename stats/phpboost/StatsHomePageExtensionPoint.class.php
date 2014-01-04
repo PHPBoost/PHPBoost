@@ -993,7 +993,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->assign_block_vars('referer_list', array(
 					'ID' => $row['id'],
 					'URL' => $row['url'],
-					'IMG_MORE' => '<a class="fa fa-plus-square-o" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
+					'IMG_MORE' => '<a class="fa fa-plus-square-o" style="cursor:pointer;" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 					'NBR_LINKS' => $row['count'],
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => NumberHelper::round($average, 1),
@@ -1005,6 +1005,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			
 			$tpl->put_all(array(
 				'C_STATS_REFERER' => true,
+				'C_REFERERS' => $nbr_referer,
 				'C_PAGINATION' => $pagination->has_several_pages(),
 				'PAGINATION' => $pagination->display(),
 				'L_URL' => $LANG['url'],
@@ -1012,6 +1013,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_AVERAGE_VISIT' => $LANG['average_visit'],
 				'L_TREND' => $LANG['trend'],
 				'L_LAST_UPDATE' => $LANG['last_update'],
+				'L_NO_REFERER' => $LANG['no_referer'],
 			));
 		}
 		elseif ($keyword)
@@ -1059,7 +1061,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->assign_block_vars('keyword_list', array(
 					'ID' => $row['id'],
 					'KEYWORD' => $row['relative_url'],
-					'IMG_MORE' => '<a class="fa fa-plus-square-o" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
+					'IMG_MORE' => '<a class="fa fa-plus-square-o" style="cursor:pointer;" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 					'NBR_LINKS' => $row['count'],
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => NumberHelper::round($average, 1),
@@ -1071,6 +1073,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				
 			$tpl->put_all(array(
 				'C_STATS_KEYWORD' => true,
+				'C_KEYWORDS' => $nbr_keyword,
 				'C_PAGINATION' => $pagination->has_several_pages(),
 				'PAGINATION' => $pagination->display(),
 				'L_SEARCH_ENGINE' => $LANG['keyword_s'],
@@ -1078,6 +1081,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_AVERAGE_VISIT' => $LANG['average_visit'],
 				'L_TREND' => $LANG['trend'],
 				'L_LAST_UPDATE' => $LANG['last_update'],
+				'L_NO_KEYWORD' => $LANG['no_keyword'],
 			));
 		}
 		elseif ($browser || $os || $user_lang) //Graphiques camenbert.

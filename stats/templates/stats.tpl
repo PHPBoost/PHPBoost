@@ -29,11 +29,11 @@
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats">{L_BROWSERS}</a>
 					</td>
 				</tr>
-				<tr>				
-					<td class="no-separator">	
+				<tr>
+					<td class="no-separator">
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/os.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats">{L_OS}</a>		
-					</td>		
+					</td>
 					<td class="no-separator">
 						<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/countries.png" alt="" /></a>
 						<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats">{L_LANG}</a>
@@ -68,12 +68,12 @@
 				<tr>
 					<td>
 						{L_START}: <strong>{START}</strong>
-					</td>		
+					</td>
 				</tr>
 				<tr>
 					<td>
 						{L_VERSION} PHPBoost: <strong>{VERSION}</strong>
-					</td>		
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -84,7 +84,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2">	
+					<th colspan="2">
 						{L_USERS}
 					</th>
 				</tr>
@@ -112,7 +112,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2">	
+					<th colspan="2">
 						{L_TEMPLATES}
 					</th>
 				</tr>
@@ -125,32 +125,32 @@
 				</tr>
 				<tr>
 					<td>
-						<table>						
+						<table>
 							<tbody>
 								<thead>
 									<tr>
-										<th>			
+										<th>
 											{L_TEMPLATES} 
 										</th>
-										<th>			
+										<th>
 											{L_COLORS}
 										</th>
 										<th>
 											{L_USERS}
-										</th>				
-									</tr>	
+										</th>
+									</tr>
 								</thead>
-								# START templates #	
+								# START templates #
 								<tr>
-									<td>			
+									<td>
 										{templates.THEME} <span class="smaller">({templates.PERCENT}%)</span>
-									</td>							
-									<td>			
+									</td>
+									<td>
 										<div style="margin:auto;width:10px;margin:auto;height:10px;background:{templates.COLOR};border:1px solid black;"></div>
 									</td>
 									<td>
 										{templates.NBR_THEME}
-									</td>				
+									</td>
 								</tr>
 								# END templates #
 							</tbody>
@@ -163,7 +163,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2">	
+					<th colspan="2">
 						{L_SEX}
 					</th>
 				</tr>
@@ -176,32 +176,32 @@
 				</tr>
 				<tr>
 					<td>
-						<table>						
+						<table>
 							<tbody>
 								<thead>
 									<tr>
-										<th>			
+										<th>
 											{L_SEX} 
 										</th>
-										<th>			
+										<th>
 											{L_COLORS}
 										</th>
 										<th>
 											{L_USERS}
-										</th>				
+										</th>
 									</tr>
 								</thead>
-								# START sex #	
+								# START sex #
 								<tr>
-									<td>			
+									<td>
 										{sex.SEX} <span class="smaller">({sex.PERCENT}%)</span>
-									</td>							
-									<td>			
+									</td>
+									<td>
 										<div style="margin:auto;width:10px;margin:auto;height:10px;background:{sex.COLOR};border:1px solid black;"></div>
 									</td>
 									<td>
 										{sex.NBR_MBR}
-									</td>				
+									</td>
 								</tr>
 								# END sex #
 							</tbody>
@@ -214,7 +214,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="3">	
+					<th colspan="3">
 						{L_TOP_TEN_POSTERS}
 					</th>
 				</tr>
@@ -230,8 +230,8 @@
 					<td>
 						{L_MSG}
 					</td>
-				</tr>			
-				# START top_poster #			
+				</tr>
+				# START top_poster #
 				<tr>
 					<td>
 						{top_poster.ID}
@@ -242,7 +242,7 @@
 					<td>
 						{top_poster.USER_POST}
 					</td>
-				</tr>			
+				</tr>
 				# END top_poster #
 			</tbody>
 		</table>
@@ -283,7 +283,7 @@
 								<input type="hidden" name="{TYPE}" value="1">
 								<button type="submit" name="date" value="true">{L_SUBMIT}</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;
-								<a class="fa fa-arrow-right" href="stats{U_NEXT_LINK}#stats"></a>				
+								<a class="fa fa-arrow-right" href="stats{U_NEXT_LINK}#stats"></a>
 							</div>
 							<br />
 							# IF C_STATS_NO_GD #
@@ -296,7 +296,7 @@
 											{MAX_NBR}
 										</td>
 
-										# START values #								
+										# START values #
 										<td>
 											<table>
 												<tbody>
@@ -312,23 +312,23 @@
 													</tr>
 												</tbody>
 											</table>
-										</td>	
+										</td>
 										# END values #
 
-										# START end_td #							
-											{end_td.END_TD}							
+										# START end_td #
+											{end_td.END_TD}
 										# END end_td #
 									</tr>
 									<tr>
 										<td></td>
 										<td>
 											0
-										</td>								
-										# START legend #								
+										</td>
+										# START legend #
 										<td>
 											{legend.LEGEND}
-										</td>								
-										# END legend #								
+										</td>
+										# END legend #
 									</tr>
 									<tr>
 										<td colspan="{COLSPAN}"></td>
@@ -375,7 +375,7 @@
 					<td>
 						{value.NBR}
 					</td>
-				</tr>		
+				</tr>
 				# END value #
 			</tbody>
 		</table>
@@ -401,17 +401,17 @@
 					<td>
 						<table>
 							<tbody>
-								# START list #			
+								# START list #
 								<tr>
-									<td class="no-separator">			
+									<td class="no-separator">
 										{list.IMG}
 									</td>
-									<td class="no-separator">			
+									<td class="no-separator">
 										<div style="width:10px;height:10px;margin:auto;background:{list.COLOR};border:1px solid black;"></div>
 									</td>
 									<td class="no-separator">
 										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-									</td>				
+									</td>
 								</tr>
 								# END list #
 							</tbody>
@@ -442,17 +442,17 @@
 					<td>
 						<table>
 							<thead>
-								# START list #			
+								# START list #
 								<tr>
-									<td class="no-separator">			
+									<td class="no-separator">
 										{list.IMG}
 									</td>
-									<td class="no-separator">			
+									<td class="no-separator">
 										<div style="width:10px;height:10px;margin:auto;background:{list.COLOR};border:1px solid black;"></div>
 									</td>
 									<td class="no-separator">
 										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-									</td>				
+									</td>
 								</tr>
 								# END list #
 							</thead>
@@ -483,17 +483,17 @@
 					<td>
 						<table>
 							<tbody>
-								# START list #			
+								# START list #
 								<tr>
-									<td class="no-separator">			
+									<td class="no-separator">
 										{list.IMG}
 									</td>
-									<td class="no-separator">			
+									<td class="no-separator">
 										<div style="width:10px;margin:auto;height:10px;background:{list.COLOR};border:1px solid black;"></div>
 									</td>
 									<td class="no-separator">
 										{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
-									</td>				
+									</td>
 								</tr>
 								# END list #
 							</tbody>
@@ -510,9 +510,9 @@
 		<!--
 		function XMLHttpRequest_referer(divid)
 		{
-			if ( document.getElementById('url' + divid).style.display == 'table' )
+			if ( document.getElementById('url' + divid).style.display == 'inline' )
 			{
-				display_div_auto('url' + divid, 'table');
+				display_div_auto('url' + divid, 'none');
 				document.getElementById('img_url' + divid).className = 'fa fa-plus-square-o';
 			}
 			else
@@ -534,8 +534,8 @@
 				xhr_object.onreadystatechange = function() 
 				{
 					if ( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-					{	
-						display_div_auto('url' + divid, 'table');
+					{
+						display_div_auto('url' + divid, 'inline');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
 						document.getElementById('img_url' + divid).className = 'fa fa-minus-square-o';
@@ -552,19 +552,19 @@
 		<table>
 			<thead>
 				<tr>
-					<th>			
+					<th>
 						{L_REFERER}
 					</th>
-					<th>
+					<th style="width:70px;">
 						{L_TOTAL_VISIT}
 					</th>
-					<th>
+					<th style="width:60px;">
 						{L_AVERAGE_VISIT}
 					</th>
-					<th>
+					<th style="width:96px;">
 						{L_LAST_UPDATE}
-					</th>	
-					<th>
+					</th>
+					<th style="width:100px;">
 						{L_TREND}
 					</th>
 				</tr>
@@ -586,27 +586,34 @@
 							<tbody>
 								<tr>
 									<td>
-										{referer_list.IMG_MORE} <span class="smaller">({referer_list.NBR_LINKS})</span> <a href="{referer_list.URL}">{referer_list.URL}</a>	<span id="load{referer_list.ID}"></span>	 			
+										{referer_list.IMG_MORE} <span class="smaller">({referer_list.NBR_LINKS})</span> <a href="{referer_list.URL}">{referer_list.URL}</a>	<span id="load{referer_list.ID}"></span>
 									</td>
-									<td>
+									<td style="width:70px;">
 										{referer_list.TOTAL_VISIT}
 									</td>
-									<td>
+									<td style="width:60px;">
 										{referer_list.AVERAGE_VISIT}
 									</td>
-									<td>
+									<td style="width:96px;">
 										{referer_list.LAST_UPDATE}
 									</td>
-									<td>
+									<td style="width:95px;">
 										{referer_list.TREND}
 									</td>
 								</tr>
 							</tbody>
 						</table>
-						<div id="url{referer_list.ID}" style="display:none;width:100%;"></div>					
-					</td>	
+						<div id="url{referer_list.ID}" style="display:none;width:100%;"></div>
+					</td>
 				</tr>
 				# END referer_list #
+				# IF NOT C_REFERERS #
+				<tr>
+					<td colspan="5">
+					{L_NO_REFERER}
+					</td>
+				</tr>
+				# ENDIF #
 			</tbody>
 		</table>
 		# ENDIF #
@@ -617,9 +624,9 @@
 		<!--
 		function XMLHttpRequest_referer(divid)
 		{
-			if ( document.getElementById('url' + divid).style.display == 'table' )
+			if ( document.getElementById('url' + divid).style.display == 'inline' )
 			{
-				display_div_auto('url' + divid, 'table');
+				display_div_auto('url' + divid, 'none');
 				document.getElementById('img_url' + divid).className = 'fa fa-plus-square-o';
 			}
 			else
@@ -629,8 +636,8 @@
 				xhr_object.onreadystatechange = function() 
 				{
 					if ( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-					{	
-						display_div_auto('url' + divid, 'table');
+					{
+						display_div_auto('url' + divid, 'inline');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
 						document.getElementById('img_url' + divid).className = 'fa fa-minus-square-o';
@@ -650,16 +657,16 @@
 					<th>
 						{L_KEYWORD}
 					</th>
-					<th>
+					<th style="width:70px;">
 						{L_TOTAL_VISIT}
 					</th>
-					<th>
+					<th style="width:60px;">
 						{L_AVERAGE_VISIT}
 					</th>
-					<th>
+					<th style="width:96px;">
 						{L_LAST_UPDATE}
 					</th>
-					<th>
+					<th style="width:100px;">
 						{L_TREND}
 					</th>
 				</tr>
@@ -681,27 +688,34 @@
 							<tbody>
 								<tr>
 									<td>
-										{keyword_list.IMG_MORE} <span class="smaller">({keyword_list.NBR_LINKS})</span> {keyword_list.KEYWORD}	<span id="load{keyword_list.ID}"></span>
+										{keyword_list.IMG_MORE} <span class="smaller">({keyword_list.NBR_LINKS})</span> {keyword_list.KEYWORD} <span id="load{keyword_list.ID}"></span>
 									</td>
-									<td>
+									<td style="width:70px;">
 										{keyword_list.TOTAL_VISIT}
 									</td>
-									<td>
+									<td style="width:60px;">
 										{keyword_list.AVERAGE_VISIT}
 									</td>
-									<td>
+									<td style="width:96px;">
 										{keyword_list.LAST_UPDATE}
 									</td>
-									<td>
+									<td style="width:95px;">
 										{keyword_list.TREND}
 									</td>
 								</tr>
 							</tbody>
 						</table>
-						<div id="url{keyword_list.ID}" style="display:none;width:100%;"></div>					
-					</td>	
+						<div id="url{keyword_list.ID}" style="display:none;width:100%;"></div>
+					</td>
 				</tr>
 				# END keyword_list #
+				# IF NOT C_KEYWORDS #
+				<tr>
+					<td colspan="5">
+					{L_NO_KEYWORD}
+					</td>
+				</tr>
+				# ENDIF #
 			</tbody>
 		</table>
 		# ENDIF #

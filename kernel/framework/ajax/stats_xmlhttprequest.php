@@ -68,24 +68,26 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
             $trend = 0;
         }
 
-        echo '<table style="width:100%;border:none;border-collapse:collapse;">
-			<tr>
-				<td style="text-align:center;">
-					<a href="' . $row['url'] . $row['relative_url'] . '">' . $row['relative_url'] . '</a>
-				</td>
-				<td style="width:112px;text-align:center;">
-					' . $row['total_visit'] . '
-				</td>
-				<td style="width:112px;text-align:center;">
-					' . NumberHelper::round($average, 1) . '
-				</td>
-				<td style="width:102px;text-align:center;">
-					' . gmdate_format('date_format_short', $row['last_update']) . '
-				</td>
-				<td style="width:105px;">
-					<i class="fa fa-arrow-' . $trend_img . ' fa-2x"></i> (' . $sign . $trend . '%)
-				</td>
-			</tr>
+        echo '<table>
+			<tbody>
+				<tr>
+					<td class="no-separator">
+						<a href="' . $row['url'] . $row['relative_url'] . '">' . $row['relative_url'] . '</a>
+					</td>
+					<td class="no-separator" style="width:60px;">
+						' . $row['total_visit'] . '
+					</td>
+					<td class="no-separator" style="width:60px;">
+						' . NumberHelper::round($average, 1) . '
+					</td>
+					<td class="no-separator" style="width:96px;">
+						' . gmdate_format('date_format_short', $row['last_update']) . '
+					</td>
+					<td class="no-separator" style="width:95px;">
+						<i class="fa fa-arrow-' . $trend_img . ' fa-2x"></i> (' . $sign . $trend . '%)
+					</td>
+				</tr>
+			</tbody>
 		</table>';
     }
     $sql_querier->query_close($result);
@@ -121,24 +123,26 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
             $trend = 0;
         }
 
-        echo '<table style="width:100%;border:none;border-collapse:collapse;">
-			<tr>
-				<td style="text-align:center;">
-					' . ucfirst($row['url']) . '
-				</td>
-				<td style="width:112px;text-align:center;">
-					' . $row['total_visit'] . '
-				</td>
-				<td style="width:112px;text-align:center;">
-					' . NumberHelper::round($average, 1) . '
-				</td>
-				<td style="width:102px;text-align:center;">
-					' . gmdate_format('date_format_short', $row['last_update']) . '
-				</td>
-				<td style="width:105px;">
-					<i class="fa fa-arrow-' . $trend_img . ' fa-2x"></i> (' . $sign . $trend . '%)
-				</td>
-			</tr>
+        echo '<table>
+			<tbody>
+				<tr>
+					<td class="no-separator">
+						' . $row['url'] . '
+					</td>
+					<td class="no-separator" style="width:70px;">
+						' . $row['total_visit'] . '
+					</td>
+					<td class="no-separator" style="width:60px;">
+						' . NumberHelper::round($average, 1) . '
+					</td>
+					<td class="no-separator" style="width:96px;">
+						' . gmdate_format('date_format_short', $row['last_update']) . '
+					</td>
+					<td class="no-separator" style="width:95px;">
+						<i class="fa fa-arrow-' . $trend_img . ' fa-2x"></i> (' . $sign . $trend . '%)
+					</td>
+				</tr>
+			</tbody>
 		</table>';
     }
     $sql_querier->query_close($result);
