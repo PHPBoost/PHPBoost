@@ -313,7 +313,8 @@ elseif ($pm_del_convers) //Suppression de conversation.
 			(user_id = '" . $User->get_attribute('user_id') . "' AND user_convers_status = 2)
 		)
 	)
-	ORDER BY last_timestamp DESC"), __LINE__, __FILE__);
+	ORDER BY last_timestamp DESC", __LINE__, __FILE__);
+	
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$del_convers = isset($_POST[$row['id']]) ? trim($_POST[$row['id']]) : '';
@@ -703,7 +704,7 @@ else //Liste des conversation, dans la boite du membre.
 	$tpl->assign_block_vars('convers', array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION' => $pagination->display(),
-		'NBR_PM' => $pagination_pm,
+		'NBR_PM' => $nbr_pm,
 		'PM_POURCENT' => '<strong>' . $nbr_pm . '</strong> / <strong>' . $pm_max . '</strong>',
 		'U_MARK_AS_READ' => 'pm.php?read=1',
 		'L_MARK_AS_READ' => $LANG['mark_pm_as_read'],
