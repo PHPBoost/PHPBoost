@@ -70,7 +70,7 @@ class AdminErrorsUrlBuilder
 	 */
 	public static function all_logged_errors()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/list/1');
+		return DispatchManager::get_url(self::$dispatcher, '/list/all');
 	}
 
 	/**
