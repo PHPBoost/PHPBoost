@@ -21,8 +21,6 @@ define('DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST', PREFIX . 'member_extended_fields_
 define('DB_TABLE_MENUS', PREFIX . 'menus');
 define('DB_TABLE_PM_MSG', PREFIX . 'pm_msg');
 define('DB_TABLE_PM_TOPIC', PREFIX . 'pm_topic');
-define('DB_TABLE_SEARCH_INDEX', PREFIX . 'search_index');
-define('DB_TABLE_SEARCH_RESULTS', PREFIX . 'search_results');
 define('DB_TABLE_SESSIONS', PREFIX . 'sessions');
 define('DB_TABLE_SMILEYS', PREFIX . 'smileys');
 define('DB_TABLE_STATS', PREFIX . 'stats');
