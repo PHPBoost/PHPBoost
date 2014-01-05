@@ -223,13 +223,6 @@ class Environment
 
 		define('USE_DEFAULT_IF_EMPTY', 1);
 
-		### Regex options ###
-		define('REGEX_MULTIPLICITY_NOT_USED', 0x01);
-		define('REGEX_MULTIPLICITY_OPTIONNAL', 0x02);
-		define('REGEX_MULTIPLICITY_REQUIRED', 0x03);
-		define('REGEX_MULTIPLICITY_AT_LEAST_ONE', 0x04);
-		define('REGEX_MULTIPLICITY_ALL', 0x05);
-
 		DBFactory::load_prefix();
 	}
 
@@ -452,9 +445,9 @@ class Environment
 		//If the user configured a delay and member accounts must be activated
 		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != 2)
 		{
-			PersistenceContext::get_querier()->inject("DELETE FROM " . DB_TABLE_MEMBER .
-				" WHERE timestamp < :timestamp AND user_aprob = 0",
-			array('timestamp' => (time() - $delay_unactiv_max)));
+			PersistenceContext::get_querier()->delete(DB_TABLE_MEMBER, 'WHERE timestamp < :timestamp AND user_aprob = 0', array(
+				'timestamp' => (time() - $delay_unactiv_max
+			)));
 		}
 	}
 

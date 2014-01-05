@@ -359,16 +359,16 @@ class Url
 	 * @param int $anchor REGEX_MULTIPLICITY_OPTION for the anchor sub-regex
 	 * @param bool $forbid_js true if you want to forbid javascript uses in urls
 	 * @return the regex matching the requested url form
-	 * @see REGEX_MULTIPLICITY_OPTIONNAL
+	 * @see RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL
 	 * @see REGEX_MULTIPLICITY_NEEDED
-	 * @see REGEX_MULTIPLICITY_AT_LEAST_ONE
-	 * @see REGEX_MULTIPLICITY_ALL
-	 * @see REGEX_MULTIPLICITY_NOT_USED
+	 * @see RegexHelper::REGEX_MULTIPLICITY_AT_LEAST_ONE
+	 * @see RegexHelper::REGEX_MULTIPLICITY_ALL
+	 * @see RegexHelper::REGEX_MULTIPLICITY_NOT_USED
 	 */
-	public static function get_wellformness_regex($protocol = REGEX_MULTIPLICITY_OPTIONNAL,
-	$user = REGEX_MULTIPLICITY_OPTIONNAL, $domain = REGEX_MULTIPLICITY_OPTIONNAL,
-	$folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
-	$args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
+	public static function get_wellformness_regex($protocol = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
+	$user = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $domain = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
+	$folders = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $file = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
+	$args = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $anchor = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
 	{
 		if ($forbid_js)
 		{
@@ -384,9 +384,9 @@ class Url
 		RegexHelper::set_subregex_multiplicity(self::DOMAIN_REGEX, $domain) .
 		RegexHelper::set_subregex_multiplicity(self::FOLDERS_REGEX, $folders) .
 		RegexHelper::set_subregex_multiplicity(self::FILE_REGEX, $file);
-		if ($anchor == REGEX_MULTIPLICITY_OPTIONNAL)
+		if ($anchor == RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL)
 		{
-			$regex .= RegexHelper::set_subregex_multiplicity(self::ANCHOR_REGEX, REGEX_MULTIPLICITY_OPTIONNAL);
+			$regex .= RegexHelper::set_subregex_multiplicity(self::ANCHOR_REGEX, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL);
 		}
 		$regex .= RegexHelper::set_subregex_multiplicity(self::ARGS_REGEX, $args) .
 		RegexHelper::set_subregex_multiplicity(self::ANCHOR_REGEX, $anchor);
@@ -405,16 +405,16 @@ class Url
 	 * @param int $anchor REGEX_MULTIPLICITY_OPTION for the anchor sub-regex
 	 * @param bool $forbid_js true if you want to forbid javascript uses in urls
 	 * @return true if the url match the requested url form
-	 * @see REGEX_MULTIPLICITY_OPTIONNAL
+	 * @see RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL
 	 * @see REGEX_MULTIPLICITY_NEEDED
-	 * @see REGEX_MULTIPLICITY_AT_LEAST_ONE
-	 * @see REGEX_MULTIPLICITY_ALL
-	 * @see REGEX_MULTIPLICITY_NOT_USED
+	 * @see RegexHelper::REGEX_MULTIPLICITY_AT_LEAST_ONE
+	 * @see RegexHelper::REGEX_MULTIPLICITY_ALL
+	 * @see RegexHelper::REGEX_MULTIPLICITY_NOT_USED
 	 */
-	public static function check_wellformness($url, $protocol = REGEX_MULTIPLICITY_OPTIONNAL,
-	$user = REGEX_MULTIPLICITY_OPTIONNAL, $domain = REGEX_MULTIPLICITY_OPTIONNAL,
-	$folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
-	$args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
+	public static function check_wellformness($url, $protocol = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
+	$user = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $domain = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
+	$folders = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $file = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
+	$args = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $anchor = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
 	{
 		return (bool) preg_match('`^' . self::get_wellformness_regex($protocol, $user, $domain,
 		$folders, $file, $args, $anchor, $forbid_js) . '$`i', $url);
