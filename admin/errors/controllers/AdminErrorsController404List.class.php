@@ -27,19 +27,28 @@
 
 class AdminErrorsController404List extends AdminController
 {
-	/**
-	 * @var View
-	 */
 	private $view;
-
-	/**
-	 * @var SiteDisplayResponse
-	 */
-	private $response;
+	private $lang;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->load_env();
+		$this->init();
+		
+		$this->build_view();
+		
+		return new AdminErrorsDisplayResponse($this->view, $this->lang['404_list']);
+	}
+
+	private function init()
+	{
+		$this->lang = LangLoader::get('admin-errors-common');
+		
+		$this->view = new FileTemplate('admin/errors/AdminErrorsController404List.tpl');
+		$this->view->add_lang($this->lang);
+	}
+
+	private function build_view()
+	{
 		$errors_404 = AdminError404Service::list_404_errors();
 		$nb_errors = 0;
 		
@@ -58,21 +67,6 @@ class AdminErrorsController404List extends AdminController
 			'C_ERRORS' => $nb_errors,
 			'U_CLEAR_404_ERRORS' => AdminErrorsUrlBuilder::clear_404_errors()->rel()
 		));
-
-		return $this->response;
-	}
-
-	private function load_env()
-	{
-		$lang = LangLoader::get_class(__CLASS__);
-		
-		$this->view = new FileTemplate('admin/errors/AdminErrorsController404List.tpl');
-		$this->view->add_lang($lang);
-		
-		$this->response = new AdminErrorsDisplayResponse($this->view);
-		
-		$env = $this->response->get_graphical_environment();
-		$env->set_page_title($lang['404_list']);
 	}
 }
 ?>

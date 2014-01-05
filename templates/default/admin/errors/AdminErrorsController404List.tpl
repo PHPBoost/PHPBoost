@@ -1,9 +1,9 @@
 	# IF C_ERRORS #
 	<form action="{U_CLEAR_404_ERRORS}" method="post" class="fieldset-content">
 		<fieldset>
-			<legend>{@clear_404_list}</legend>
+			<legend>{@clear_list}</legend>
 			<div class="form-element">
-				<label>{@clear_404_list} <span class="field-description">{@clear_404_list_explain}</span></label>
+				<label>{@clear_list} <span class="field-description">{@clear_list_explain}</span></label>
 				<div class="form-field"><label><button type="submit" name="clear" data-confirmation="{@404_errors_clear_confirmation}" value="true">{@clear_404_list}</button></label></div>
 			</div>
 		</fieldset>

@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                         admin-errors-AdminErrorsController404List.php
+ *                           AdminLoggedErrorsControllerClear.class.php
  *                            -------------------
- *   begin                : December 13, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : January 05 2014
+ *   copyright            : (C) 2014 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,22 +25,25 @@
  *
  ###################################################*/
 
-
- ####################################################
-#                     French                       #
- ####################################################
-
-$lang = array(
-	'404_list' => 'Liste des erreurs 404',
-	'404_error_requested_url' => 'Url demandée',
-	'404_error_from_url' => 'Url de provenance',
-	'404_error_times' => 'Nombre',
-	'404_error_delete' => 'Supprimer',
-	'404_error_delete_confirmation' => 'Etes vous sûr de vouloir supprimer cette entrée ?',
-	'clear_404_list' => 'Vider la liste',
-	'clear_404_list_explain' => 'Définitif !',
-	'404_errors_clear_confirmation' => 'Effacer toutes les erreurs 404 ?',
-	'404_no_error' => 'Aucune erreur à afficher',
-);
-
+class AdminLoggedErrorsControllerClear extends AdminController
+{
+	public function execute(HTTPRequestCustom $request)
+	{
+		AppContext::get_session()->csrf_get_protect();
+		
+		$file_path = PATH_TO_ROOT . '/cache/error.log';
+		
+		$error_log_file = new File($file_path);
+		try
+		{
+			$error_log_file->delete();
+		}
+		catch (IOException $exception)
+		{
+			echo $exception->getMessage();
+		}
+		
+		AppContext::get_response()->redirect(AdminErrorsUrlBuilder::logged_errors());
+	}
+}
 ?>
