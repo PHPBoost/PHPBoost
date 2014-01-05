@@ -79,8 +79,6 @@ class KernelSetup
 		self::$menus_table = PREFIX . 'menus';
 		self::$pm_msg_table = PREFIX . 'pm_msg';
 		self::$pm_topic_table = PREFIX . 'pm_topic';
-		self::$search_index_table = PREFIX . 'search_index';
-		self::$search_results_table = PREFIX . 'search_results';
 		self::$sessions_table = PREFIX . 'sessions';
 		self::$smileys_table = PREFIX . 'smileys';
 		self::$stats_table = PREFIX . 'stats';
