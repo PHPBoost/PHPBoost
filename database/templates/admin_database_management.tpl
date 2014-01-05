@@ -83,33 +83,33 @@
 					</thead>
 					<tfoot>
 						<tr class="center"> 
-							<td>
-								(<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL})
-							</td>
-							<td>
+							<th>
+								( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL} )
+							</th>
+							<th>
 								<strong>{NBR_TABLES}</strong>
-							</td>
-							<td style="text-align:right;">
+							</th>
+							<th style="text-align:right;">
 								<strong>{NBR_ROWS}</strong>
-							</td>
-							<td>
+							</th>
+							<th>
 								--
-							</td>
-							<td>
+							</th>
+							<th>
 								--
-							</td>
-							<td style="text-align:right;">
+							</th>
+							<th style="text-align:right;">
 								<strong>{NBR_DATA}</strong>
-							</td>
-							<td style="text-align:right;">
+							</th>
+							<th style="text-align:right;">
 								<strong>{NBR_FREE}</strong>
-							</td>
+							</th>
 						</tr>
 					</tfoot>
 					<tbody>
 						<tr class="center">
 							<td style="width:140px;">
-								<span class="text-strong">{L_SELECTED_TABLES} <br />(<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL})</span>
+								<span class="text-strong">{L_SELECTED_TABLES} <br />( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL} )</span>
 							</td>
 							<td>
 								<span class="text-strong">{L_TABLE_NAME}</span>
