@@ -35,5 +35,10 @@ interface ScheduledJobExtensionPoint extends ExtensionPoint
 	 * @param Date $today date representing today
 	 */
 	function on_changeday(Date $yesterday, Date $today);
+	
+	/**
+	 * @desc Execute commands to change page.
+	 */
+	function on_changepage();
 }
 ?>

@@ -96,6 +96,7 @@ class Environment
 		self::load_lang_files();
 		self::process_changeday_tasks_if_needed();
 		self::compute_running_module_name();
+		self::execute_modules_changepage_tasks();
 		self::csrf_protect_post_requests();
 		self::enable_errors_and_exceptions_management();
 	}
@@ -454,6 +455,15 @@ class Environment
 	private static function check_updates()
 	{
 		new Updates();
+	}
+	
+	private static function execute_modules_changepage_tasks()
+	{
+		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
+		foreach ($jobs as $job)
+		{
+			$job->on_changepage();
+		}
 	}
 
 	public static function compute_running_module_name()

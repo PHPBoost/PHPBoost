@@ -31,5 +31,7 @@ abstract class AbstractScheduledJobExtensionPoint implements ScheduledJobExtensi
 	 * {@inheritDoc}
 	 */
 	public function on_changeday(Date $yesterday, Date $today) { }
+	
+	public function on_changepage() { }
 }
 ?>
