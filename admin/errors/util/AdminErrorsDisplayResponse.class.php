@@ -31,15 +31,19 @@
  */
 class AdminErrorsDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function __construct($view)
+	public function __construct($view, $title_page)
 	{
-        parent::__construct($view);
-        $lang = LangLoader::get('admin-errors-Common');
-
-        $img = '/templates/default/images/admin/errors.png';
-        $this->set_title($lang['logged_errors']);
-        $this->add_link($lang['logged_errors'], AdminErrorsUrlBuilder::logged_errors()->relative(), $img);
-        $this->add_link($lang['404_errors'], AdminErrorsUrlBuilder::list_404_errors()->relative(), $img);
+		parent::__construct($view);
+		
+		$lang = LangLoader::get('admin-errors-common');
+		$this->set_title($lang['logged_errors']);
+		$picture = '/templates/default/images/admin/errors.png';
+		
+		$this->add_link($lang['logged_errors'], AdminErrorsUrlBuilder::logged_errors(), $picture);
+		$this->add_link($lang['404_errors'], AdminErrorsUrlBuilder::list_404_errors(), $picture);
+		
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
 	}
 }
 ?>
