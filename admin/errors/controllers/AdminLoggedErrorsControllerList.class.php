@@ -37,7 +37,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 	{
 		$this->init();
 		
-		$this->build_view($request);
+		$this->build_view();
 		
 		return new AdminErrorsDisplayResponse($this->view, $this->lang['logged_errors']);
 	}
@@ -50,12 +50,11 @@ class AdminLoggedErrorsControllerList extends AdminController
 		$this->view->add_lang($this->lang);
 	}
 
-	private function build_view(HTTPRequestCustom $request)
+	private function build_view()
 	{
 		$file_path = PATH_TO_ROOT .'/cache/error.log';
 		$nb_errors = 0;
 		
-		$all = $request->get_int('all', 0);
 		$_NB_ELEMENTS_PER_PAGE = 15;
 		
 		if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lecture
@@ -115,7 +114,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 					));
 					$i++;
 					
-					if ($i > $_NB_ELEMENTS_PER_PAGE && !$all)
+					if ($i > $_NB_ELEMENTS_PER_PAGE && !Url::is_current_url('/all'))
 					{
 						break;
 					}
