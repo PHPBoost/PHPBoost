@@ -95,8 +95,8 @@ class Search
         // Deletes old results
         if ($nbIdsToDelete > 0)
         {
-            $reqDeleteIdx = "DELETE FROM " . DB_TABLE_SEARCH_INDEX . " WHERE id_search IN (".$idsToDelete.")";
-            $reqDeleteRst = "DELETE FROM " . DB_TABLE_SEARCH_RESULTS . " WHERE id_search IN (".$idsToDelete.")";
+            $reqDeleteIdx = "DELETE FROM " . SearchSetup::$search_index_table . " WHERE id_search IN (".$idsToDelete.")";
+            $reqDeleteRst = "DELETE FROM " . SearchSetup::$search_results_table . " WHERE id_search IN (".$idsToDelete.")";
 
             $this->sql_querier->query_inject($reqDeleteIdx, __LINE__, __FILE__);
             $this->sql_querier->query_inject($reqDeleteRst, __LINE__, __FILE__);
@@ -107,7 +107,7 @@ class Search
         if ($this->search != '')
         {
             // Checks cache results meta-inf
-            $reqCache  = "SELECT id_search, module FROM " . DB_TABLE_SEARCH_INDEX . " WHERE ";
+            $reqCache  = "SELECT id_search, module FROM " . SearchSetup::$search_index_table . " WHERE ";
             $reqCache .= "search='" . $this->search . "' AND id_user='" . $this->id_user . "'";
             if ($this->modules_conditions != '')
             {
@@ -125,7 +125,7 @@ class Search
             // Updates cache results meta-inf
             if (count($this->id_search) > 0)
             {
-                $reqUpdate  = "UPDATE " . DB_TABLE_SEARCH_INDEX . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
+                $reqUpdate  = "UPDATE " . SearchSetup::$search_index_table . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
                 $reqUpdate .= "id_search IN (" . implode(',', $this->id_search) . ");";
                 $this->sql_querier->query_inject($reqUpdate, __LINE__, __FILE__);
             }
@@ -144,7 +144,7 @@ class Search
                         // Executes 10 insertions
                         if ($nbReqInsert == 10)
                         {
-                            $reqInsert = "INSERT INTO " . DB_TABLE_SEARCH_INDEX .
+                            $reqInsert = "INSERT INTO " . SearchSetup::$search_index_table .
                                 " (id_user, module, search, options, last_search_use, times_used) VALUES " . rtrim($reqInsert, ',');
                             $this->sql_querier->query_inject($reqInsert, __LINE__, __FILE__);
                             $reqInsert = '';
@@ -160,11 +160,11 @@ class Search
                 // Executes last insertions queries
                 if ($nbReqInsert > 0)
                 {
-                    $this->sql_querier->query_inject("INSERT INTO " . DB_TABLE_SEARCH_INDEX . " (id_user, module, search, options, last_search_use, times_used) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "", __LINE__, __FILE__);
+                    $this->sql_querier->query_inject("INSERT INTO " . SearchSetup::$search_index_table . " (id_user, module, search, options, last_search_use, times_used) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "", __LINE__, __FILE__);
                 }
 
                 // Checks and retrieves cache meta-informations
-                $reqCache  = "SELECT id_search, module FROM " . DB_TABLE_SEARCH_INDEX . " WHERE ";
+                $reqCache  = "SELECT id_search, module FROM " . SearchSetup::$search_index_table . " WHERE ";
                 $reqCache .= "search='" . $this->search . "' AND id_user='" . $this->id_user . "'";
                 if ($this->modules_conditions != '')
                 {
@@ -198,7 +198,7 @@ class Search
 
         // Building request
         $reqResults = "SELECT module, id_content, title, relevance, link
-                        FROM " . DB_TABLE_SEARCH_INDEX . " idx, " . DB_TABLE_SEARCH_RESULTS . " rst
+                        FROM " . SearchSetup::$search_index_table . " idx, " . SearchSetup::$search_results_table . " rst
                         WHERE idx.id_search = '" . $id_search . "' AND rst.id_search = '" . $id_search . "'
                         AND id_user = '".$this->id_user."' ORDER BY relevance DESC ";
         if ($nb_lines > 0)
@@ -212,7 +212,7 @@ class Search
         {
             $results[] = $result;
         }
-        $nbResults = $this->sql_querier->num_rows($request, "SELECT COUNT(*) " . DB_TABLE_SEARCH_RESULTS . " WHERE id_search = ".$id_search);
+        $nbResults = $this->sql_querier->num_rows($request, "SELECT COUNT(*) " . SearchSetup::$search_results_table . " WHERE id_search = ".$id_search);
         $this->sql_querier->query_close($request);
 
         return $nbResults;
@@ -253,7 +253,7 @@ class Search
 
         // Builds search results retrieval request
         $reqResults  = "SELECT module, id_content, title, relevance, link
-                        FROM " . DB_TABLE_SEARCH_INDEX . " idx, " . DB_TABLE_SEARCH_RESULTS . " rst
+                        FROM " . SearchSetup::$search_index_table . " idx, " . SearchSetup::$search_results_table . " rst
                         WHERE (idx.id_search = rst.id_search) ";
         if ($modules_conditions != '')
         {
@@ -350,7 +350,7 @@ class Search
             // Executes last insertions
             if ($nbReqInsert > 0)
             {
-                $this->sql_querier->query_inject("INSERT INTO " . DB_TABLE_SEARCH_RESULTS . " VALUES ".$reqInsert, __LINE__, __FILE__);
+                $this->sql_querier->query_inject("INSERT INTO " . SearchSetup::$search_results_table . " VALUES ".$reqInsert, __LINE__, __FILE__);
             }
         }
     }
@@ -368,11 +368,11 @@ class Search
             return true;
         }
 
-        $id = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_SEARCH_INDEX . " WHERE id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';", __LINE__, __FILE__);
+        $id = $this->sql_querier->query("SELECT COUNT(*) FROM " . SearchSetup::$search_index_table . " WHERE id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';", __LINE__, __FILE__);
         if ($id == 1)
         {
             // Search is already in cache, we update it.
-            $reqUpdate  = "UPDATE " . DB_TABLE_SEARCH_INDEX . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
+            $reqUpdate  = "UPDATE " . SearchSetup::$search_index_table . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
             $reqUpdate .= "id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';";
             $this->sql_querier->query_inject($reqUpdate, __LINE__, __FILE__);
 

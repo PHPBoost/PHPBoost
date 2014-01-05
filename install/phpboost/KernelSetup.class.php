@@ -52,12 +52,8 @@ class KernelSetup
 	private static $menus_table;
 	private static $pm_msg_table;
 	private static $pm_topic_table;
-	private static $search_index_table;
-	private static $search_results_table;
 	private static $sessions_table;
 	private static $smileys_table;
-	private static $stats_table;
-	private static $stats_referer_table;
 	private static $upload_table;
 	private static $upload_cat_table;
 
@@ -120,8 +116,6 @@ class KernelSetup
 			self::$menus_table,
 			self::$pm_msg_table,
 			self::$pm_topic_table,
-			self::$search_index_table,
-			self::$search_results_table,
 			self::$sessions_table,
 			self::$smileys_table,
 			self::$stats_table,
@@ -150,8 +144,6 @@ class KernelSetup
 		$this->create_menus_table();
 		$this->create_pm_msg_table();
 		$this->create_pm_topic_table();
-		$this->create_search_index_table();
-		$this->create_search_results_table();
 		$this->create_sessions_table();
 		$this->create_smileys_table();
 		$this->create_stats_table();
@@ -479,47 +471,6 @@ class KernelSetup
 				'id_user' => array('type' => 'key', 'fields' => array('user_id', 'user_id_dest', 'user_convers_status', 'last_timestamp'))
 		));
 		self::$db_utils->create_table(self::$pm_topic_table, $fields, $options);
-	}
-
-	private function create_search_index_table()
-	{
-		$fields = array(
-			'id_search' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_user' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'module' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => 0),
-			'search' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'options' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'last_search_use' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'times_used' => array('type' => 'integer', 'length' => 3, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id_search'),
-			'indexes' => array(
-				'id_user' => array('type' => 'unique', 'fields' => array('id_user', 'module', 'search', 'options')),
-				'last_search_use' => array('type' => 'key', 'fields' => 'last_search_use')
-			)
-		);
-		self::$db_utils->create_table(self::$search_index_table, $fields, $options);
-	}
-
-	private function create_search_results_table()
-	{
-		$fields = array(
-			'id_search' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_content' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'relevance' => array('type' => 'decimal', 'scale' => 3, 'notnull' => 1, 'default' => 0.00),
-			'link' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''")
-
-		);
-
-		$options = array(
-			'primary' => array('id_search', 'id_content'),
-			'indexes' => array(
-				'relevance' => array('type' => 'key', 'fields' => 'relevance')
-			)
-		);
-		self::$db_utils->create_table(self::$search_results_table, $fields, $options);
 	}
 
 	private function create_sessions_table()
