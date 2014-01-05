@@ -27,10 +27,51 @@
 
 class PHPBoostCaptchaSetup extends DefaultModuleSetup
 {
+	private static $db_utils;
+	public static $verif_code_table;
+	
+	public static function __static()
+	{
+		self::$db_utils = PersistenceContext::get_dbms_utils();
+		self::$verif_code_table = PREFIX . 'verif_code';
+	}
+	
+	public function install()
+	{
+		$this->drop_tables();
+		$this->create_tables();
+	}
+
 	public function uninstall()
 	{
+		$this->drop_tables();
 		ConfigManager::delete('phpboost-captcha', 'config');
 		return AppContext::get_captcha_service()->uninstall_captcha('PHPBoostCaptcha');
+	}
+
+	private function drop_tables()
+	{
+		PersistenceContext::get_dbms_utils()->drop(array(self::$verif_code_table));
+	}
+
+	private function create_tables()
+	{
+		$this->create_verif_code_table();
+	}
+
+	private function create_verif_code_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'user_id' => array('type' => 'integer', 'length' => 15, 'notnull' => 1, 'default' => 0),
+			'code' => array('type' => 'string', 'length' => 20, 'notnull' => 1, 'default' => 0),
+			'difficulty' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1),
+			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+		);
+		$options = array(
+			'primary' => array('id')
+		);
+		self::$db_utils->create_table(self::$verif_code_table, $fields, $options);
 	}
 }
 ?>
