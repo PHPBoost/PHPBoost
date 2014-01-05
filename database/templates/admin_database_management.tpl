@@ -74,10 +74,29 @@
 
 			<form action="{TARGET}" method="post">
 				<table id="tables">
+					<caption>{L_TABLE_LIST}</caption>
 					<thead>
 						<tr class="center">
-							<th colspan="7">
-								{L_TABLE_LIST}
+							<th style="width:140px;">
+								<span class="text-strong">{L_SELECTED_TABLES} <br />( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL} )</span>
+							</th>
+							<th>
+								<span class="text-strong">{L_TABLE_NAME}</span>
+							</th>
+							<th style="width:70px;">
+								<span class="text-strong">{L_TABLE_ROWS}</span>
+							</th>
+							<th style="width:100px;">
+								<span class="text-strong">{L_TABLE_ENGINE}</span>
+							</th>
+							<th style="width:150px;">
+								<span class="text-strong">{L_TABLE_COLLATION}</span>
+							</th>
+							<th style="width:70px;">
+								<span class="text-strong">{L_TABLE_DATA}</span>
+							</th>
+							<th style="width:70px;">
+								<span class="text-strong">{L_TABLE_FREE}</span>
 							</th>
 						</tr>
 					</thead>
@@ -107,29 +126,6 @@
 						</tr>
 					</tfoot>
 					<tbody>
-						<tr class="center">
-							<td style="width:140px;">
-								<span class="text-strong">{L_SELECTED_TABLES} <br />( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign-middle"> {L_ALL} )</span>
-							</td>
-							<td>
-								<span class="text-strong">{L_TABLE_NAME}</span>
-							</td>
-							<td style="width:70px;">
-								<span class="text-strong">{L_TABLE_ROWS}</span>
-							</td>
-							<td style="width:100px;">
-								<span class="text-strong">{L_TABLE_ENGINE}</span>
-							</td>
-							<td style="width:150px;">
-								<span class="text-strong">{L_TABLE_COLLATION}</span>
-							</td>
-							<td style="width:70px;">
-								<span class="text-strong">{L_TABLE_DATA}</span>
-							</td>
-							<td style="width:70px;">
-								<span class="text-strong">{L_TABLE_FREE}</span>
-							</td>
-						</tr>
 						# START table_list #
 						<tr class="center">
 							<td>
