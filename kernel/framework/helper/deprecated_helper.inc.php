@@ -221,18 +221,6 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 
 /**
  * @deprecated
- * @desc Checks if a string could match an email address form.
- * @param string $mail String to check
- * @return bool true if the form is correct, false otherwhise.
- * @see MailService::is_mail_valid
- */
-function check_mail($mail)
-{
-	throw new Exception('Deprecated, please use AppContext::get_mail_service()->is_mail_valid()');
-}
-
-/**
- * @deprecated
  * @desc Formats a date according to a specific form.
  * @param string $format Formatting name (date_format, date_format_tiny, date_format_short, date_format_long)
  * @param int $timestamp Time to format (UNIX timestamp)
@@ -432,43 +420,6 @@ function get_ulang()
 {
 	$user = AppContext::get_current_user();
 	return $user->get_locale();
-}
-
-/**
- * @deprecated
- * @desc Returns the HTML code of the user editor. It uses the ContentFormattingFactory class, it allows you to write less code lines.
- * @param string $field The name of the HTTP parameter which you will retrieve the value entered by the user.
- * @param string[] $forbidden_tags The list of the tags you don't want to appear in the editor.
- * @return The HTML code of the editor that you can directly display in a template.
- */
-function display_editor($field = 'contents', $forbidden_tags = array())
-{
-	throw new Exception('Deprecated, please use AppContext::get_content_formatting_service()->get_default_editor(), set identifier and use display function');
-	/*
-	$editor = AppContext::get_content_formatting_service()->get_default_editor();
-	if (!empty($forbidden_tags) && is_array($forbidden_tags))
-	{
-		$editor->set_forbidden_tags($forbidden_tags);
-	}
-	$editor->set_identifier($field);
-
-	return $editor->display();
-	*/
-}
-
-/**
- * @deprecated
- * @desc Returns the HTML code of the comments manager.
- * @param string $script
- * @param int $idprov The data base id of the item for which you want to display the commenting interface.
- * @param string $vars The URL of the curent page (the comments API will always redirect the user to the current page). You just have to add a 'com' HTTP parameter
- * for which the value must be %s (it will be used by the comments API).
- * @param string $module_folder The identifier of your module (the name of its folder).
- * @return The HTML code of the commenting interface that you can directly display in a template.
- */
-function display_comments($script, $idprov, $vars, $module_folder = '')
-{
-	throw new Exception('Deprecated, please use CommentsService class');
 }
 
 /**

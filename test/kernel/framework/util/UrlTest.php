@@ -61,54 +61,54 @@ class urlTest extends PHPBoostUnitTestCase {
 
 	function test_get_wellformness_regex()
 	{
-		self::assertEquals(Url::get_wellformness_regex(REGEX_MULTIPLICITY_REQUIRED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED), URL::FORBID_JS_REGEX . URL::PROTOCOL_REGEX);
+		self::assertEquals(Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED), URL::FORBID_JS_REGEX . URL::PROTOCOL_REGEX);
 
-		self::assertEquals(Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED), URL::USER_REGEX);
+		self::assertEquals(Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED), URL::USER_REGEX);
 
-		self::assertEquals(Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED), URL::DOMAIN_REGEX);
+		self::assertEquals(Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED), URL::DOMAIN_REGEX);
 
-		self::assertEquals(Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_REQUIRED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED), URL::FOLDERS_REGEX);
+		self::assertEquals(Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED), URL::FOLDERS_REGEX);
 
-		self::assertEquals(Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED), URL::FILE_REGEX);
+		self::assertEquals(Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED), URL::FILE_REGEX);
 
-		self::assertEquals(Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_NOT_USED), URL::ARGS_REGEX);
+		self::assertEquals(Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED), URL::ARGS_REGEX);
 
-		self::assertEquals(Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_REQUIRED), URL::ANCHOR_REGEX);
+		self::assertEquals(Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED), URL::ANCHOR_REGEX);
 
-		self::assertEquals(Url::get_wellformness_regex(REGEX_MULTIPLICITY_REQUIRED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED,
-		REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, REGEX_MULTIPLICITY_NOT_USED, false), URL::PROTOCOL_REGEX);
+		self::assertEquals(Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED,
+		RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, RegexHelper::REGEX_MULTIPLICITY_NOT_USED, false), URL::PROTOCOL_REGEX);
 	}
 
 	function test_check_wellformness()
 	{
 		self::assertTrue(Url::check_wellformness('http://www.phpboost.com'));
-		self::assertFalse(Url::check_wellformness('http://www.phpboost.com', REGEX_MULTIPLICITY_REQUIRED,
-		REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_REQUIRED,
-		REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_OPTIONNAL));
-		self::assertFalse(Url::check_wellformness('http://www.phpboost.com', REGEX_MULTIPLICITY_REQUIRED,
-		REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_OPTIONNAL,
-		REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_OPTIONNAL));
-		self::assertFalse(Url::check_wellformness('http://www.phpboost.com', REGEX_MULTIPLICITY_REQUIRED,
-		REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_OPTIONNAL,
-		REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_OPTIONNAL));
-		self::assertFalse(Url::check_wellformness('http://www.phpboost.com', REGEX_MULTIPLICITY_REQUIRED,
-		REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_OPTIONNAL,
-		REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_REQUIRED));
+		self::assertFalse(Url::check_wellformness('http://www.phpboost.com', RegexHelper::REGEX_MULTIPLICITY_REQUIRED,
+		RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED,
+		RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL));
+		self::assertFalse(Url::check_wellformness('http://www.phpboost.com', RegexHelper::REGEX_MULTIPLICITY_REQUIRED,
+		RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
+		RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL));
+		self::assertFalse(Url::check_wellformness('http://www.phpboost.com', RegexHelper::REGEX_MULTIPLICITY_REQUIRED,
+		RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
+		RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL));
+		self::assertFalse(Url::check_wellformness('http://www.phpboost.com', RegexHelper::REGEX_MULTIPLICITY_REQUIRED,
+		RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
+		RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_REQUIRED));
 		self::assertTrue(Url::check_wellformness('http://www.phpboost.com/'));
 		self::assertTrue(Url::check_wellformness('http://www.phpboost.com/admin/'));
 		self::assertTrue(Url::check_wellformness('http://www.phpboost.com/admin/menus/'));
@@ -121,21 +121,21 @@ class urlTest extends PHPBoostUnitTestCase {
 		self::assertFalse(Url::check_wellformness('http://user:pass@word@www.phpboost.com/admin/menus/menus.php?id=3&save=true#m24'));
 		self::assertFalse(Url::check_wellformness('http://user:pass:word@www.phpboost.com/admin/menus/menus.php?id=3&save=true#4'));
 		self::assertTrue(Url::check_wellformness('www.phpboost.com/admin/menus/menus.php?id=3&save=true#4'));
-		self::assertFalse(Url::check_wellformness('www.phpboost.com/admin/menus/menus.php?id=3&save=true#4', REGEX_MULTIPLICITY_REQUIRED));
+		self::assertFalse(Url::check_wellformness('www.phpboost.com/admin/menus/menus.php?id=3&save=true#4', RegexHelper::REGEX_MULTIPLICITY_REQUIRED));
 		self::assertTrue(Url::check_wellformness('/admin/menus/menus.php?id=3&save=true#4'));
 		self::assertTrue(Url::check_wellformness('admin/menus/menus.php?id=3&save=true#4'));
-		self::assertFalse(Url::check_wellformness('/admin/menus/menus.php?id=3&save=true#4', REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_REQUIRED));
-		self::assertTrue(Url::check_wellformness('admin/menus/menus.php?id=3&save=true#4', REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_REQUIRED));
+		self::assertFalse(Url::check_wellformness('/admin/menus/menus.php?id=3&save=true#4', RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_REQUIRED));
+		self::assertTrue(Url::check_wellformness('admin/menus/menus.php?id=3&save=true#4', RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_REQUIRED));
 		self::assertTrue(Url::check_wellformness('jdbc:mysql://user:password@www.server.com/db/mysql/connect.php?ids=3&transaxtion=true#4',
-		REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_REQUIRED,
-		REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_REQUIRED));
+		RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED,
+		RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED));
 		self::assertFalse(Url::check_wellformness('javascript:window.open(\'coucou\');',
-		REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_REQUIRED,
-		REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_REQUIRED, REGEX_MULTIPLICITY_REQUIRED, true));
+		RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED,
+		RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, RegexHelper::REGEX_MULTIPLICITY_REQUIRED, true));
 		self::assertTrue(Url::check_wellformness('javascript:cou.cou',
-		REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_OPTIONNAL,
-		REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_OPTIONNAL, REGEX_MULTIPLICITY_OPTIONNAL, false));
-		self::assertTrue(Url::check_wellformness('http://www.phpboost.com/news.php', REGEX_MULTIPLICITY_REQUIRED));
+		RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL,
+		RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, false));
+		self::assertTrue(Url::check_wellformness('http://www.phpboost.com/news.php', RegexHelper::REGEX_MULTIPLICITY_REQUIRED));
 		self::assertTrue(Url::check_wellformness('http://boughafer.free.fr/kernel/framework/ajax/display_stats.php?visit_month=1&year=2009&month=8'));
         self::assertTrue(Url::check_wellformness('http://www.hiboox.fr/go/images/informatique/erreur,cd530f4bc06560c2a61b8ee0e7d2169a.jpg.html'));
         self::assertTrue(Url::check_wellformness('http://www.hiboox.fr/go/images/informatique/erreur?cd530f4bc06560c2a61b8ee0e7d2169a'));
