@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                    PHPBoostCaptchaExtensionPointProvider.class.php
+ *                         PHPBoostCaptchaScheduledJobs.class.php
  *                            -------------------
- *   begin                : February 27, 2012
- *   copyright            : (C) 2013 Kévin MASSY
+ *   begin                : February 27, 2013
+ *   copyright            : (C) 2013 Kevin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -25,26 +25,11 @@
  *
  ###################################################*/
 
-class PHPBoostCaptchaExtensionPointProvider extends ExtensionPointProvider
+class PHPBoostCaptchaScheduledJobs extends AbstractScheduledJobExtensionPoint
 {
-	public function __construct()
+	public function on_changeday(Date $yesterday, Date $today)
 	{
-		parent::__construct('PHPBoostCaptcha');
-	}
-	
-	public function captcha()
-	{
-		return new PHPBoostCaptcha();
-	}
-	
-	public function scheduled_jobs()
-	{
-		return new PHPBoostCaptchaScheduledJobs();
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/PHPBoostCaptcha/index.php')));
+		PersistenceContext::get_querier()->delete(PHPBoostCaptchaSetup::$verif_code_table, 'WHERE timestamp < :timestamp', array('timestamp' => $yesterday->get_timestamp()));
 	}
 }
 ?>

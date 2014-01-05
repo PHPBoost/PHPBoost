@@ -359,8 +359,6 @@ class Environment
 
 		self::remove_old_unactivated_member_accounts();
 
-		self::remove_captcha_entries();
-
 		self::check_updates();
 	}
 
@@ -458,12 +456,6 @@ class Environment
 				" WHERE timestamp < :timestamp AND user_aprob = 0",
 			array('timestamp' => (time() - $delay_unactiv_max)));
 		}
-	}
-
-	private static function remove_captcha_entries()
-	{
-		PersistenceContext::get_querier()->inject("DELETE FROM " . DB_TABLE_VERIF_CODE .
-			" WHERE timestamp < :timestamp", array('timestamp' => self::get_yesterday_timestamp()));
 	}
 
 	private static function check_updates()
