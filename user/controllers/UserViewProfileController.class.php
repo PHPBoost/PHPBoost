@@ -83,7 +83,7 @@ class UserViewProfileController extends AbstractController
 		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->rel() . '">'. $this->lang['messages'] .'</a>'));
 		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], gmdate_format('date_format_short', $this->user_informations['last_connect'])));
 		
-		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), AUTH_READ_MEMBERS) && $this->user_informations['user_show_mail'])
+		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_informations['user_show_mail'])
 		{
 			$link_email = '<a href="mailto:'. $this->user_informations['user_mail'] .'" class="basic-button smaller">Mail</a>';
 			$fieldset->add_field(new FormFieldFree('email', $this->lang['email'], $link_email));

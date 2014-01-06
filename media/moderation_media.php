@@ -113,7 +113,7 @@ if (!empty($_POST['submit']))
 		Feed::clear_cache('media');
 		$media_categories->recount_media_per_cat();
 
-		redirect_confirm(url('moderation_media.php'), $MEDIA_LANG['moderation_success'], TIME_REDIRECT);
+		AppContext::get_response()->redirect(url('moderation_media.php'));
 	}
 	else
 	{
@@ -127,7 +127,7 @@ elseif (!empty($_GET['recount']))
 	Feed::clear_cache('media');
 	$media_categories->recount_media_per_cat();
 	
-	redirect_confirm(url('moderation_media.php'), $MEDIA_LANG['recount_success'], TIME_REDIRECT);	
+	AppContext::get_response()->redirect(url('moderation_media.php'));	
 }
 else
 {

@@ -34,6 +34,7 @@ class FileUploadConfig extends AbstractConfigData
 	const MAXIMUM_SIZE_UPLOAD = 'maximum_size_upload';
 	const ENABLE_BANDWIDTH_PROTECTION = 'enable_bandwidth_protect';
 	const AUTHORIZED_EXTENSIONS = 'authorized_extensions';
+	const AUTH_FILES_BIT = 0x01;
 	
 	public function get_authorization_enable_interface_files()
 	{
