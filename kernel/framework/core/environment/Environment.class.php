@@ -323,6 +323,8 @@ class Environment
 		$current_date = new Date();
 		$current_date->set_hours(0);
 		$current_date->set_minutes(0);
+		$current_date->set_seconds(0);
+		
 		if ($last_use_date->is_anterior_to($current_date))
 		{
 			$last_use_config->set_last_use_date(new Date());

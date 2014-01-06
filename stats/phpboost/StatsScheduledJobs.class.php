@@ -78,5 +78,11 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 		addslashes(serialize($pages_displayed)) . "' WHERE id = '" . $last_stats . "'",
 		__LINE__, __FILE__);
 	}
+	
+	public function on_changepage()
+	{
+		StatsSaver::update_pages_displayed('pages');
+		StatsSaver::compute_referer();
+	}
 }
 ?>

@@ -115,7 +115,7 @@ ORDER BY s.session_time DESC", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
 	//On vérifie que la session ne correspond pas à un robot.
-	$robot = StatsSaver::check_bot($row['session_ip']);
+	$robot = Robots::get_robot_by_ip($row['session_ip']);
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		

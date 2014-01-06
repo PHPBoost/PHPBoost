@@ -288,9 +288,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'JAVASCRIPT' => new FileTemplate('javascript_footer.tpl')
 		));
 
-		//We add a page to the page displayed counter
-		StatsSaver::update_pages_displayed('pages');
-
 		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
 		{
 			$template->put_all(array(
