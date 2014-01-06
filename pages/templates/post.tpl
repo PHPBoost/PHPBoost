@@ -34,7 +34,7 @@
 		-->
 		</script>
 
-		<script type="text/javascript" src="{PICTURES_DATA_PATH}/js/pages.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/pages/templates/js/pages.js"></script>
 	
 		# INCLUDE message_helper #
 		
