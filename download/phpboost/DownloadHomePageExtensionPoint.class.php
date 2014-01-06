@@ -227,7 +227,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 					'NOTE' => NotationService::display_static_image($notation),
 					'SIZE' => ($row['size'] >= 1) ? NumberHelper::round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : (NumberHelper::round($row['size'], 1) * 1024) . ' ' . $LANG['unit_kilobytes'],
 					'C_IMG' => !empty($row['image']),
-					'IMG' => $row['image'],
+					'IMG' => Url::to_absolute($row['image']),
 					'U_DOWNLOAD_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 					'U_ADMIN_EDIT_FILE' => url(PATH_TO_ROOT . '/download/management.php?edit=' . $row['id']),
 					'U_ADMIN_DELETE_FILE' => url(PATH_TO_ROOT . '/download/management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
