@@ -95,6 +95,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Name of the property containing the authorization read member all
 	 */
 	const AUTH_READ_MEMBERS = 'auth_read_members';
+	const AUTH_READ_MEMBERS_BIT = 1;
 	
 	const DEFAULT_LANG = 'default_lang';
 	

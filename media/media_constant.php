@@ -56,8 +56,6 @@ define('MEDIA_DL_DESC', 1024); // Affiche au niveau de la liste des vidéos l'aff
 define('MEDIA_DV_DESC', 2048); // Affiche au niveau de la vidéo l'affichage de la date de la description de la vidéo.
 define('MEDIA_NBR', 4096); // Affiche le nombre de fichier dans la catégorie lors du listage des catégories.
 
-// Paramètre de redirection en seconde.
-define('TIME_REDIRECT', 5);
 // Nombre de fichiers par page dans le panneau de modération.
 define('NUM_MODO_MEDIA', 25);
 

@@ -90,7 +90,7 @@ if (!$User->check_level(User::MEMBER_LEVEL)) //Visiteurs interdits!
 $files_upload_config = FileUploadConfig::load();
 
 //Droit d'accès?.
-if (!$User->check_auth($files_upload_config->get_authorization_enable_interface_files(), AUTH_FILES))
+if (!$User->check_auth($files_upload_config->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT))
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);

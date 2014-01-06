@@ -379,29 +379,6 @@ function strtodate($str, $date_format)
 
 /**
  * @deprecated
- * @desc Displays a confirmation message during a defined delay and then redirects the user.
- * @param string $url_error Url at which you want to redirect him.
- * @param string $l_error The message to show him
- * @param int $delay_redirect Number of seconds after which you want him to be redirected.
- */
-function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
-{
-	global $LANG;
-
-	$template = new FileTemplate('framework/confirm.tpl');
-
-	$template->put_all(array(
-		'URL_ERROR' => !empty($url_error) ? $url_error : Environment::get_home_page(),
-		'DELAY_REDIRECT' => $delay_redirect,
-		'L_ERROR' => $l_error,
-		'L_REDIRECT' => $LANG['redirect']
-	));
-
-	$template->display();
-}
-
-/**
- * @deprecated
  * @desc Returns the current user's theme.
  * @return string The theme identifier (name of its folder).
  */

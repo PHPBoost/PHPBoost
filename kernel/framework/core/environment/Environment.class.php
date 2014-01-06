@@ -197,11 +197,9 @@ class Environment
 		define('HTML_UNPROTECT', 	false);
 
 		### Authorizations ###
-		define('AUTH_FILES', 		0x01);
 		define('AUTH_FLOOD', 		'auth_flood');
 		define('PM_GROUP_LIMIT', 	'pm_group_limit');
 		define('DATA_GROUP_LIMIT', 	'data_group_limit');
-		define('AUTH_READ_MEMBERS', 1);
 
 		### Variable types ###
 		define('GET', 		1);

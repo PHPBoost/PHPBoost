@@ -76,7 +76,7 @@ if ($unvisible > 0)
 
 	$media_categories->recount_media_per_cat($media['idcat']);
 
-	redirect_confirm('media' . url('.php?cat=' . $media['idcat'], '-0-' . $media['idcat'] . '.php'), $MEDIA_LANG['action_success'], TIME_REDIRECT);
+	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['idcat'], '-0-' . $media['idcat'] . '.php'));
 }
 // Suppression d'un fichier.
 elseif ($delete > 0)
@@ -114,7 +114,7 @@ elseif ($delete > 0)
 	define('TITLE', $MEDIA_LANG['delete_media']);
 	require_once('../kernel/header.php');
 
-	redirect_confirm('media' . url('.php?cat=' . $media['idcat'], '-' . $media['idcat'] . '.php'), $MEDIA_LANG['deleted_success'], TIME_REDIRECT);
+	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['idcat'], '-' . $media['idcat'] . '.php'));
 }
 // Formulaire d'ajout ou d'édition.
 elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
@@ -374,7 +374,7 @@ elseif (!empty($_POST['submit']))
 		
 		Feed::clear_cache('media');
 
-		redirect_confirm('media' . url('.php?id=' . $media['idedit']), $MEDIA_LANG['edit_success'], TIME_REDIRECT);
+		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
 	}
 	// Ajout
 	elseif (!$media['idedit'] && (($auth_write = $User->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || $User->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
@@ -404,7 +404,7 @@ elseif (!empty($_POST['submit']))
 		}
 		else
 		{
-			redirect_confirm('media' . url('.php?id=' . $new_id_media), $MEDIA_LANG['add_success'], TIME_REDIRECT);
+			AppContext::get_response()->redirect('media' . url('.php?id=' . $new_id_media));
 		}
 	}
 	else

@@ -63,7 +63,7 @@ class TinyMCEEditor extends ContentEditor
 
         $template->put_all(array(
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
-			'C_UPLOAD_MANAGEMENT' => AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES),
+			'C_UPLOAD_MANAGEMENT' => AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT),
         	'C_NOT_JS_INCLUDED' => self::$js_included,
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
