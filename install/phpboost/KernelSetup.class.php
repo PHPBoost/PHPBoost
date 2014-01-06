@@ -81,8 +81,6 @@ class KernelSetup
 		self::$pm_topic_table = PREFIX . 'pm_topic';
 		self::$sessions_table = PREFIX . 'sessions';
 		self::$smileys_table = PREFIX . 'smileys';
-		self::$stats_table = PREFIX . 'stats';
-		self::$stats_referer_table = PREFIX . 'stats_referer';
 		self::$upload_table = PREFIX . 'upload';
 		self::$upload_cat_table = PREFIX . 'upload_cat';
 	}
@@ -116,8 +114,6 @@ class KernelSetup
 			self::$pm_topic_table,
 			self::$sessions_table,
 			self::$smileys_table,
-			self::$stats_table,
-			self::$stats_referer_table,
 			self::$upload_table,
 			self::$upload_cat_table
 		));
@@ -144,8 +140,6 @@ class KernelSetup
 		$this->create_pm_topic_table();
 		$this->create_sessions_table();
 		$this->create_smileys_table();
-		$this->create_stats_table();
-		$this->create_stats_referer_table();
 		$this->create_upload_table();
 		$this->create_upload_cat_table();
 	}
@@ -508,48 +502,6 @@ class KernelSetup
 			'primary' => array('idsmiley')
 		);
 		self::$db_utils->create_table(self::$smileys_table, $fields, $options);
-	}
-
-	private function create_stats_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'stats_year' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'stats_month' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'stats_day' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'nbr' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'pages' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'pages_detail' => array('type' => 'text', 'length' => 65000)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'stats_day' => array('type' => 'unique', 'fields' => array('stats_day', 'stats_month', 'stats_year'))
-			)
-		);
-		self::$db_utils->create_table(self::$stats_table, $fields, $options);
-	}
-
-	private function create_stats_referer_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'url' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'relative_url' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'total_visit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'today_visit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'yesterday_visit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'nbr_day' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'last_update' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'type' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'url' => array('type' => 'key', 'fields' => array('url', 'relative_url'))
-			)
-		);
-		self::$db_utils->create_table(self::$stats_referer_table, $fields, $options);
 	}
 
 	private function create_upload_table()

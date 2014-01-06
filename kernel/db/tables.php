@@ -23,8 +23,6 @@ define('DB_TABLE_PM_MSG', PREFIX . 'pm_msg');
 define('DB_TABLE_PM_TOPIC', PREFIX . 'pm_topic');
 define('DB_TABLE_SESSIONS', PREFIX . 'sessions');
 define('DB_TABLE_SMILEYS', PREFIX . 'smileys');
-define('DB_TABLE_STATS', PREFIX . 'stats');
-define('DB_TABLE_STATS_REFERER', PREFIX . 'stats_referer');
 define('DB_TABLE_UPLOAD', PREFIX . 'upload');
 define('DB_TABLE_UPLOAD_CAT', PREFIX . 'upload_cat');
 ?>
