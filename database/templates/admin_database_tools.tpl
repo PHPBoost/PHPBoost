@@ -49,34 +49,18 @@
 			
 			# IF C_DATABASE_TABLE_STRUCTURE #
 			<table>
+				<caption>{TABLE_NAME}</caption>
 				<thead>
 					<tr class="center">
-						<th colspan="6">
-							{TABLE_NAME}
-						</th>
+						<th>{L_TABLE_FIELD}</th>
+						<th>{L_TABLE_TYPE}</th>
+						<th>{L_TABLE_ATTRIBUTE}</th>
+						<th>{L_TABLE_NULL}</th>
+						<th>{L_TABLE_DEFAULT}</th>
+						<th>{L_TABLE_EXTRA}</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="center">
-						<td>
-							<span class="text-strong">{L_TABLE_FIELD}</span>
-						</td>
-						<td>
-							<span class="text-strong">{L_TABLE_TYPE}</span>
-						</td>
-						<td>
-							<span class="text-strong">{L_TABLE_ATTRIBUTE}</span>
-						</td>
-						<td>
-							<span class="text-strong">{L_TABLE_NULL}</span>
-						</td>
-						<td>
-							<span class="text-strong">{L_TABLE_DEFAULT}</span>
-						</td>
-						<td>
-							<span class="text-strong">{L_TABLE_EXTRA}</span>
-						</td>
-					</tr>
 					# START field #
 					<tr>
 						<td>
@@ -104,25 +88,15 @@
 			
 			<div style="width:95%;margin:auto;">
 				<table style="float:left;width:100px;margin-right:15px">
+					<caption>{L_TABLE_INDEX}</caption>
 					<thead>
 						<tr class="center">
-							<th colspan="3">
-								{L_TABLE_INDEX}
-							</th>
+							<th>{L_INDEX_NAME}</th>
+							<th>{L_TABLE_TYPE}</th>
+							<th>{L_TABLE_FIELD}</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="center">
-							<td style="min-width:80px;">
-								<span class="text-strong">{L_INDEX_NAME}</span>
-							</td>
-							<td>
-								<span class="text-strong">{L_TABLE_TYPE}</span>
-							</td>
-							<td>
-								<span class="text-strong">{L_TABLE_FIELD}</span>
-							</td>
-						</tr>
 						# START index #
 						<tr>
 							<td>
@@ -140,10 +114,11 @@
 				</table>
 				
 				<table style="float:left;width:170px;margin-right:15px">
+					<caption>{L_SIZE}</caption>
 					<thead>
 						<tr class="center">
 							<th colspan="2">
-								{L_SIZE}
+								{TABLE_NAME}
 							</th>
 						</tr>
 					</thead>
@@ -191,10 +166,11 @@
 				</table>
 				
 				<table style="float:left;width:300px;">
+					<caption>{L_STATISTICS}</caption>
 					<thead>
 						<tr class="center">
 							<th colspan="2">
-								{L_STATISTICS}
+								{TABLE_NAME}
 							</th>
 						</tr>
 					</thead>

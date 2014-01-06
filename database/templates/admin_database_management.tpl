@@ -244,18 +244,17 @@
 				</script>
 				
 				<table>
+					<caption>{L_BACKUP_DATABASE}</caption>
 					<thead>
 						<tr>
 							<th colspan="2" style="text-align:center;">
-								{L_BACKUP_DATABASE}
+								{L_SELECTION}
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr class="center">
 							<td>
-								{L_SELECTION}
-								<br /><br />
 								<select name="table_list[]" size="8" multiple="multiple">
 								# START table_list #
 									<option value="{table_list.NAME}" name="table_{table_list.NAME}" id="{table_list.I}" {table_list.SELECTED}>{table_list.NAME}</option>
@@ -265,8 +264,7 @@
 								<a class="small" href="javascript:check_select_all_tables(true);">{SELECT_ALL}</a> / <a class="small" href="javascript:check_select_all_tables(false);">{SELECT_NONE}</a>
 							</td>
 							<td>
-								{L_EXPLAIN_BACKUP}
-								<br /><br />
+								{L_EXPLAIN_BACKUP}<br />
 								<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="backup" /><br />
 								<label><input type="radio" name="backup_type" checked="checked" value="all"/> {L_BACKUP_ALL}</label>
 								<label><input type="radio" name="backup_type" value="struct"> {L_BACKUP_STRUCT}</label>
@@ -390,28 +388,24 @@
 
 			# IF C_DATABASE_FILES #
 				<table>
+					<caption>{L_LIST_FILES}</caption>
 					<thead>
-						<tr> 
-							<th colspan="4">
-								{L_LIST_FILES}
+						<tr class="center">
+							<th style="text-align:left;padding-left:20px;">
+								<span class="text-strong">{L_NAME}</span>
+							</th>
+							<th style="width:120px;">
+								<span class="text-strong">{L_WEIGHT}</span>
+							</th>
+							<th style="width:140px;">
+								<span class="text-strong">{L_DATE}</span>
+							</th>
+							<th style="width:120px;">
+								<span class="text-strong">{L_DELETE}</span>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="center">
-							<td style="text-align:left;padding-left:20px;">
-								<span class="text-strong">{L_NAME}</span>
-							</td>
-							<td style="width:120px;">
-								<span class="text-strong">{L_WEIGHT}</span>
-							</td>
-							<td style="width:140px;">
-								<span class="text-strong">{L_DATE}</span>
-							</td>
-							<td style="width:120px;">
-								<span class="text-strong">{L_DELETE}</span>
-							</td>
-						</tr>
 						# START file #
 						<tr class="center">
 							<td style="text-align:left;padding-left:20px;">
