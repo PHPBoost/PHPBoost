@@ -42,8 +42,6 @@ class NewsDisplayCategoryController extends ModuleController
 		$this->init();
 		
 		$this->build_view();
-		
-		Debug::stop(AppContext::get_current_user());
 					
 		return $this->generate_response();
 	}
