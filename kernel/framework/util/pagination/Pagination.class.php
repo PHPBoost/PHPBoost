@@ -31,7 +31,12 @@
 class Pagination
 {
 	const LINKS_NB = 3;
-
+	const PREV_LINK = 'prev-page';
+	const NEXT_LINK = 'next-page';
+	
+	const LIGHT_PAGINATION = 'light';
+	const FULL_PAGINATION = 'full';
+	
 	private $tpl;
 	private $nb_pages;
 	private $current_page;
@@ -40,15 +45,11 @@ class Pagination
 	private $before_links_nb = self::LINKS_NB;
 	private $after_links_nb = self::LINKS_NB;
 
-	public function __construct($nb_pages, $current_page, $tpl_path = '')
+	public function __construct($nb_pages, $current_page, $type = self::FULL_PAGINATION)
 	{
 		$this->nb_pages = $nb_pages;
 		$this->current_page = $current_page;
-		if ($tpl_path === '')
-		{
-			$tpl_path = 'framework/util/pagination.tpl';
-		}
-		$this->tpl = new FileTemplate($tpl_path);
+		$this->init_tpl($type);
 	}
 
 	public function set_url_sprintf_pattern($url_pattern)
@@ -83,12 +84,21 @@ class Pagination
 	{
 		return $this->nb_pages;
 	}
+	
+	private function init_tpl($type)
+	{
+		$this->tpl = new FileTemplate('framework/util/pagination.tpl');
+		$this->tpl->put_all(array(
+			'C_LIGHT' => $type == self::LIGHT_PAGINATION,
+			'C_FULL' => $type == self::FULL_PAGINATION,
+		));
+	}
 
 	private function generate_first_page_pagination()
 	{
 		if ($this->current_page > 1)
 		{
-			$this->add_pagination_page('prev-page', 1);
+			$this->add_pagination_page(self::PREV_LINK, 1);
 		}
 	}
 
@@ -110,7 +120,7 @@ class Pagination
 	{
 		if ($this->current_page < $this->nb_pages)
 		{
-			$this->add_pagination_page('next-page', $this->nb_pages);
+			$this->add_pagination_page(self::NEXT_LINK, $this->nb_pages);
 		}
 	}
 
@@ -118,10 +128,10 @@ class Pagination
 	{
 		$this->tpl->assign_block_vars('page', array(
 			'URL' => $this->get_url($page_number),
-			'NAME' => $name == 'prev-page' || $name == 'next-page' ? '' : $name,
+			'NAME' => $name == self::PREV_LINK || $name == self::NEXT_LINK ? '' : $name,
 			'C_CURRENT_PAGE' => $is_current_page,
-			'C_PREVIOUS' => $name == 'prev-page',
-			'C_NEXT' => $name == 'next-page',
+			'C_PREVIOUS' => $name == self::PREV_LINK,
+			'C_NEXT' => $name == self::NEXT_LINK,
 		));
 	}
 
