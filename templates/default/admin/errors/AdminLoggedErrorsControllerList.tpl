@@ -24,11 +24,11 @@
 				</th>
 			</tr>
 		</thead>
-		# IF C_MORE_ERRORS #
+		# IF C_PAGINATION #
 		<tfoot>
 			<tr>
 				<th colspan="2">
-					<a href="{U_ALL_LOGGED_ERRORS}">{@all_errors}</a>
+					# INCLUDE PAGINATION #
 				</th>
 			</tr>
 		</tfoot>

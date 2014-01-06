@@ -33,6 +33,8 @@ class AdminLoggedErrorsControllerList extends AdminController
 	private $view;
 	private $lang;
 	
+	private $number_errors_per_page = 15;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
@@ -53,9 +55,6 @@ class AdminLoggedErrorsControllerList extends AdminController
 	private function build_view()
 	{
 		$file_path = PATH_TO_ROOT .'/cache/error.log';
-		$nb_errors = 0;
-		
-		$_NB_ELEMENTS_PER_PAGE = 15;
 		
 		if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lecture
 		{
@@ -102,33 +101,54 @@ class AdminLoggedErrorsControllerList extends AdminController
 				
 				//Tri en sens inverse car enregistrement à la suite dans le fichier de log
 				krsort($array_errinfo);
-				$i = 0;
+				
+				$page = AppContext::get_request()->get_getint('page', 1);
+				$pagination = $this->get_pagination($page, count($array_errinfo));
+				
+				$nb_errors = $i = 0;
 				foreach ($array_errinfo as $key => $errinfo)
 				{
-					$this->view->assign_block_vars('errors', array(
-						'DATE' => $errinfo['errdate'],
-						'CLASS' => $errinfo['errclass'],
-						'ERROR_TYPE' => LangLoader::get_message($types[$errinfo['errclass']], 'errors'),
-						'ERROR_MESSAGE' => strip_tags($errinfo['errmsg'], '<br>'),
-						'ERROR_STACKTRACE' => strip_tags($errinfo['errstacktrace'], '<br>')
-					));
+					if ($i >= (($page - 1) * $this->number_errors_per_page) && $i < ($page * $this->number_errors_per_page))
+					{
+						$this->view->assign_block_vars('errors', array(
+							'DATE' => $errinfo['errdate'],
+							'CLASS' => $errinfo['errclass'],
+							'ERROR_TYPE' => LangLoader::get_message($types[$errinfo['errclass']], 'errors'),
+							'ERROR_MESSAGE' => strip_tags($errinfo['errmsg'], '<br>'),
+							'ERROR_STACKTRACE' => strip_tags($errinfo['errstacktrace'], '<br>')
+						));
+						$nb_errors++;
+					}
 					$i++;
 					
-					if ($i > $_NB_ELEMENTS_PER_PAGE && !Url::is_current_url('/all'))
+					if ($nb_errors == $this->number_errors_per_page)
 					{
 						break;
 					}
 				}
-				$nb_errors = $i;
+				
+				$this->view->put_all(array(
+					'C_ERRORS' => $nb_errors,
+					'C_PAGINATION' => $pagination->has_several_pages(),
+					'PAGINATION' => $pagination->display(),
+					'U_CLEAR_LOGGED_ERRORS' => AdminErrorsUrlBuilder::clear_logged_errors()->rel()
+				));
 			}
 		}
+	}
+	
+	private function get_pagination($page, $errors_number)
+	{
+		$pagination = new ModulePagination($page, $errors_number, $this->number_errors_per_page);
+		$pagination->set_url(AdminErrorsUrlBuilder::logged_errors('%d'));
 		
-		$this->view->put_all(array(
-			'C_ERRORS' => $nb_errors,
-			'C_MORE_ERRORS' => $nb_errors > $_NB_ELEMENTS_PER_PAGE,
-			'U_ALL_LOGGED_ERRORS' => AdminErrorsUrlBuilder::all_logged_errors()->rel(),
-			'U_CLEAR_LOGGED_ERRORS' => AdminErrorsUrlBuilder::clear_logged_errors()->rel()
-		));
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		return $pagination;
 	}
 }
 ?>
