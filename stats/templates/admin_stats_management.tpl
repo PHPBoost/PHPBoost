@@ -2,7 +2,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="5">
+					<th colspan="5" style="width: 20%;">
 						{L_STATS}
 					</th>
 				</tr>
