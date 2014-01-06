@@ -24,6 +24,7 @@
 [*] Création d'une API pour pouvoir intégrer facilement des Captchas alternatifs
 [*] Optimisation du système de notation et refonte graphique
 [*] Création d'un FormFieldUploadFile permettant d'utiliser le gestionnaire d'upload pour attacher un fichier à un élément facilement
+[*] Modification du ScheduledJobs pour intégrer une fonction on_changepage() pour exécuter du code à chaque génération de page à partir des modules
 
 [b]Menus :[/b]
 [*] Améliorations graphique

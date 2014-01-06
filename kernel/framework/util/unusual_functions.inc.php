@@ -24,15 +24,14 @@
  *
  ###################################################*/
 
-/**
-* @package util
-*/
 
 /**
+ * @deprecated
  * @desc Unsets all the variables automatically set by the register_globals option.
  * This function must be called only if the register_globals option is enable, otherwise it is useless.
  * @author PHPBB 3 <http://www.phpbb.com/>
  */
+/* TODO deprecated for php 5.4 */
 function cancel_register_globals_effect()
 {
     $not_unset = array(

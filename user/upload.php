@@ -66,8 +66,8 @@ if (!empty($popup)) //Popup.
 		</fieldset>
 	</body>
 </html>';
-	$popup = '&popup=1&fd=' . $field . '&edt=' . $editor . '&no_path=' . $no_path;
-	$popup_noamp = '&popup=1&fd=' . $field . '&edt=' . $editor . '&no_path=' . $no_path;
+	$popup = '&popup=1&fd=' . $field . '&edt=' . $editor . '&parse='. $parse .'&no_path=' . $no_path;
+	$popup_noamp = '&popup=1&fd=' . $field . '&edt=' . $editor . '&parse='. $parse .'&no_path=' . $no_path;
 }
 else //Affichage de l'interface de gestion.
 {

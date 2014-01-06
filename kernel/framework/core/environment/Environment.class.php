@@ -134,12 +134,14 @@ class Environment
 
 		@ini_set('open_basedir', NULL);
 
+		/* TODO deprecated for php 5.4 */
 		//Disabling magic quotes if possible
 		if (ServerConfiguration::get_phpversion() < '5.3')
 		{
 			@set_magic_quotes_runtime(0);
 		}
 
+		/* TODO deprecated for php 5.4 */
 		//If the register globals option is enabled, we clear the automatically assigned variables
 		if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on')
 		{
@@ -147,6 +149,7 @@ class Environment
 			cancel_register_globals_effect();
 		}
 
+		/* TODO deprecated for php 5.4 */
 		if (get_magic_quotes_gpc())
 		{
 			//If magic_quotes_sybase is enabled
