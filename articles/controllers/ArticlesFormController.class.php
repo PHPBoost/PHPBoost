@@ -343,12 +343,7 @@ class ArticlesFormController extends ModuleController
 		$article->set_author_name_displayed($author_name_displayed);
 		$notation_enabled = $this->form->get_value('notation_enabled') ? $this->form->get_value('notation_enabled') : Articles::NOTATION_DISABLED;
 		$article->set_notation_enabled($notation_enabled);
-
-		$picture = $this->form->get_value('picture');
-		if (!empty($picture))
-		{
-			$article->set_picture(new Url($picture));
-		}
+		$article->set_picture(new Url($this->form->get_value('picture')));
 		
 		$article->set_sources($this->form->get_value('sources'));
 		

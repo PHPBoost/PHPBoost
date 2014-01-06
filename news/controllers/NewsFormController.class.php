@@ -258,10 +258,7 @@ class NewsFormController extends ModuleController
 		$news->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
 		$news->set_contents($this->form->get_value('contents'));
 		$news->set_short_contents(($this->form->get_value('enable_short_contents') ? $this->form->get_value('short_contents') : ''));
-		
-		$picture = $this->form->get_value('picture');
-		if (!empty($picture))
-			$news->set_picture(new Url($picture));
+		$news->set_picture(new Url($this->form->get_value('picture')));
 		
 		$news->set_sources($this->form->get_value('sources'));
 		
