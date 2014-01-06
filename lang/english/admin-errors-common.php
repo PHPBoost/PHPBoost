@@ -36,7 +36,6 @@ $lang = array(
 	'clear_list_explain' => 'This cannot be undone!',
 	'logged_errors_clear_confirmation' => 'Erase all errors?',
 	'no_error' => 'No error',
-	'all_errors' => 'Show all errors',
 	'404_errors' => '404 errors',
 	'404_list' => '404 errors list',
 	'404_error_requested_url' => 'Requested url',

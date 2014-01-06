@@ -36,7 +36,6 @@ $lang = array(
 	'clear_list_explain' => 'Définitif !',
 	'logged_errors_clear_confirmation' => 'Effacer toutes les erreurs ?',
 	'no_error' => 'Aucune erreur',
-	'all_errors' => 'Afficher toutes les erreurs',
 	'404_errors' => 'Erreurs 404',
 	'404_list' => 'Liste des erreurs 404',
 	'404_error_requested_url' => 'Url demandée',

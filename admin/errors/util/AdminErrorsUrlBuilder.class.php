@@ -60,17 +60,9 @@ class AdminErrorsUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function logged_errors()
+	public static function logged_errors($page = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/list/');
-	}
-
-	/**
-	 * @return Url
-	 */
-	public static function all_logged_errors()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/list/all');
+		return DispatchManager::get_url(self::$dispatcher, '/list/' . $page);
 	}
 
 	/**
