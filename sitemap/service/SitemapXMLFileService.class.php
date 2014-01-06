@@ -47,9 +47,9 @@ class SitemapXMLFileService
 	 */
 	public static function get_export_config()
 	{
-		$export_config = new SitemapExportConfig('framework/content/sitemap/sitemap.xml.tpl',
-		 'framework/content/sitemap/module_map.xml.tpl', 'framework/content/sitemap/sitemap_section.xml.tpl',
-		 'framework/content/sitemap/sitemap_link.xml.tpl');
+		$export_config = new SitemapExportConfig('sitemap/export/sitemap.xml.tpl',
+		 'sitemap/export/module_map.xml.tpl', 'sitemap/export/sitemap/sitemap_section.xml.tpl',
+		 'sitemap/export/sitemap_link.xml.tpl');
 		return $export_config;
 	}
 

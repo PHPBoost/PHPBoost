@@ -1,1 +1,0 @@
-<span><b>${escape(NAME)}</b></span> - # INCLUDEFILE framework/content/search/SearchGenericResult.tpl #
