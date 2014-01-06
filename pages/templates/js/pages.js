@@ -96,7 +96,7 @@ function select_cat(id_cat)
 //Fonction d'affichage du contenu d'une catégorie
 function open_cat(id_cat)
 {
-var xhr_object = null;
+	var xhr_object = null;
 	var data = null;
 	var filename = "../pages/xmlhttprequest.php?select_cat=1&display_select_link=0" + (id_cat == 0 ? "&root=1" : "");
 	
