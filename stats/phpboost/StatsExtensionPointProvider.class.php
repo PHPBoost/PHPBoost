@@ -41,5 +41,10 @@ class StatsExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new StatsMenusExtensionPoint();
 	}
+	
+	public function scheduled_jobs()
+	{
+		return new StatsScheduledJobs();
+	}
 }
 ?>

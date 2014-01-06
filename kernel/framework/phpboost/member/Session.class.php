@@ -175,7 +175,7 @@ class Session
 
 		########Insertion dans le compteur si l'ip est inconnue.########
 		$check_ip = $this->sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VISIT_COUNTER . " WHERE ip = '" . AppContext::get_current_user()->get_ip() . "'", __LINE__, __FILE__);
-		$_include_once = empty($check_ip) && (StatsSaver::check_bot() === false);
+		$_include_once = empty($check_ip) && !Robots::is_robot();
 		if ($_include_once)
 		{
 			//Récupération forcée de la valeur du total de visites, car problème de CAST avec postgresql.
@@ -187,12 +187,7 @@ class Session
 			{
 				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			}
-		}
-
-		//On lance les stats.
-		StatsSaver::compute_referer();
-		if ($_include_once)
-		{
+			
 			StatsSaver::compute_users();
 		}
 
