@@ -250,16 +250,16 @@ class InstallationServices
 	{
 		$lang = LangLoader::get('user-common');
 		
-		/*//Sex
+		//Sex
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended-field.field.sex']);
 		$extended_field->set_field_name('user_sex');
 		$extended_field->set_description($lang['extended-field.field.sex-explain']);
 		$extended_field->set_field_type('MemberUserSexExtendedField');
 		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
+		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);*/
+		ExtendedFieldsService::add($extended_field);
 		
 		//Date Birth
 		$extended_field = new ExtendedField();
