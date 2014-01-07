@@ -76,32 +76,11 @@ class ArticlesPrintArticlesController extends ModuleController
 	{
 		$contents = preg_replace('`\[page\](.*)\[/page\]`', '<h2>$1</h2>', $this->article->get_contents());
 		
-		$this->build_view_sources();
-		
 		$this->view->put_all(array(
 			'PAGE_TITLE' => $this->lang['articles.print.article'] . ' - ' . $this->article->get_title() . ' - ' . GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->article->get_title(),
 			'CONTENTS' => FormatingHelper::second_parse($contents)
 		));
-	}
-	
-	private function build_view_sources()
-	{
-		$sources = $this->article->get_sources();
-		
-		$this->view->put('C_SOURCES', !empty($sources));
-		
-		$i = 0;
-		foreach ($sources as $name => $url)
-		{
-			$this->view->assign_block_vars('sources', array(
-				'I' => $i,
-				'NAME' => $name,
-				'URL' => $url,
-				'COMMA' => $i > 0 ? ', ' : ' '
-			));
-			$i++;
-		}
 	}
 	
 	private function check_authorizations()
