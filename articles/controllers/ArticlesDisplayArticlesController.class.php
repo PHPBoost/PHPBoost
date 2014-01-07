@@ -297,7 +297,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	
 	private function get_pagination($nbr_pages, $current_page)
 	{
-		$pagination = new ModulePagination($current_page, $nbr_pages, 1);
+		$pagination = new ModulePagination($current_page, $nbr_pages, 1, Pagination::LIGHT_PAGINATION);
 		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title(), '%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
