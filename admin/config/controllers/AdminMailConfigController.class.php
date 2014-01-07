@@ -33,21 +33,13 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 	 * @var MailServiceConfig
 	 */
 	private $config;
-
+	
+	private $submit_button;
+	
 	public function __construct()
 	{
-		$this->load_lang();
-		parent::__construct(LangLoader::get_message('process.success', 'errors-common'));
-		$this->load_config();
-	}
-
-	private function load_lang()
-	{
 		$this->lang = LangLoader::get('admin-config-common');
-	}
-
-	private function load_config()
-	{
+		parent::__construct(LangLoader::get_message('message.success.config', 'errors-common'));
 		$this->config = MailServiceConfig::load();
 	}
 
@@ -69,16 +61,22 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 		$fieldset = new FormFieldsetHTML('send_configuration', $this->lang['mail-config.send_protocol'], array('description' => $this->lang['mail-config.send_protocol_explain']));
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldCheckbox('use_smtp', $this->lang['mail-config.use_custom_smtp_configuration'], $smtp_enabled,
-		array('events' => array('click' => 'if (HTMLForms.getField("use_smtp").getValue()) { show_smtp_config(); } else { hide_smtp_config(); }'))));
+		array('events' => array('click' => '
+			if (HTMLForms.getField("use_smtp").getValue()) {
+				HTMLForms.getFieldset("smtp_configuration").enable();
+			} else {
+				HTMLForms.getFieldset("smtp_configuration").disable();
+			}'
+		))));
 
 
 		$fieldset = new FormFieldsetHTML('smtp_configuration', $this->lang['mail-config.custom_smtp_configuration'], array('disabled' => !$smtp_enabled));
 
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('smtp_host', $this->lang['mail-config.smtp_host'], $this->config->get_smtp_host(), array('disabled' => !$smtp_enabled), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`i'))));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_host', $this->lang['mail-config.smtp_host'], $this->config->get_smtp_host(), array('disabled' => !$smtp_enabled), array(new FormFieldConstraintRegex('`^[a-z0-9-]+(?:\.[a-z0-9-]+)*$`i'), new FormFieldConstraintNotEmpty())));
 		$fieldset->add_field(new FormFieldTextEditor('smtp_port', $this->lang['mail-config.smtp_port'], $this->config->get_smtp_port(), array('disabled' => !$smtp_enabled), array(new FormFieldConstraintIntegerRange(0, 65535))));
-		$fieldset->add_field(new FormFieldTextEditor('smtp_login', $this->lang['mail-config.smtp_login'], $this->config->get_smtp_login(), array('disabled' => !$smtp_enabled), array(new FormFieldConstraintNotEmpty())));
+		$fieldset->add_field(new FormFieldTextEditor('smtp_login', $this->lang['mail-config.smtp_login'], $this->config->get_smtp_login(), array('disabled' => !$smtp_enabled), array()));
 		$fieldset->add_field(new FormFieldPasswordEditor('smtp_password', $this->lang['mail-config.smtp_password'], $this->config->get_smtp_password(), array('disabled' => !$smtp_enabled)));
 
 		$none_protocol_option = new FormFieldSelectChoiceOption($this->lang['mail-config.smtp_secure_protocol_none'], 'none');
@@ -98,10 +96,10 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 		}
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('smtp_protocol', $this->lang['mail-config.smtp_secure_protocol'], $default_protocol_option, array($none_protocol_option, $tls_protocol_option, $ssl_protocol_option), array('disabled' => !$smtp_enabled)));
 
-		$submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($submit_button);
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$form->add_button($this->submit_button);
 		$this->set_form($form);
-		$this->set_submit_button($submit_button);
+		$this->set_submit_button($this->submit_button);
 	}
 
 	private function get_multi_mail_regex()
@@ -139,22 +137,11 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 
 	protected function generate_response(View $view)
 	{
-		$tpl = new StringTemplate('<script type="text/javascript">
-		<!--
-			function show_smtp_config()
-			{
-				HTMLForms.getFieldset("smtp_configuration").enable();
-			}
-		
-			function hide_smtp_config()
-			{
-				HTMLForms.getFieldset("smtp_configuration").disable();
-			}
-		-->
-		</script>
-		# INCLUDE form #');
-		$tpl->put('form', $view);
-		return new AdminConfigDisplayResponse($tpl, $this->lang['mail-config']);
+		if ($this->submit_button->has_been_submited() && $this->get_form()->validate())
+		{
+			$this->create_form();
+		}
+		return new AdminConfigDisplayResponse($view, $this->lang['mail-config']);
 	}
 }
 ?>

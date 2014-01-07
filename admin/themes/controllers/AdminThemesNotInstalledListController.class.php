@@ -47,6 +47,7 @@ class AdminThemesNotInstalledListController extends AdminController
 					$activated = $request->get_bool('activated-' . $id_theme, false);
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
 					$this->install_theme($id_theme, $authorizations, $activated);
+					$this->execute($request);
 				}
 			} catch (UnexistingHTTPParameterException $e) {
 			}

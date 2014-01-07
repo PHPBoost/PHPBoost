@@ -42,13 +42,14 @@ class AdminMemberConfigController extends AdminController
 		$this->init();
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			AppContext::get_response()->redirect(AdminMembersUrlBuilder::configuration());
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 5));
+			$this->build_form();
 		}
 
 		$tpl->put('FORM', $this->form->display());
