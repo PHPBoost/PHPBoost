@@ -36,7 +36,7 @@ class ClassLoader
 	private static $already_reloaded = false;
 	private static $exclude_paths = array(
 		'/cache', '/images', '/lang', '/upload', '/templates',
-		'/kernel/data', '/kernel/lib/js', '/kernel/framework/content/geshi', 
+		'/kernel/data', '/kernel/lib/js', '/kernel/lib/flash', '/kernel/lib/css', '/kernel/lib/php/geshi', 
 		'/kernel/framework/io/db/dbms/Doctrine', '/test/PHPUnit',
 	);
 
