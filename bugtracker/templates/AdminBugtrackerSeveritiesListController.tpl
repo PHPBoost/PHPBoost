@@ -16,8 +16,8 @@
 	# IF C_SEVERITIES #
 		# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 	<tr>
-		<th colspan="4">
-			<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}">{@bugs.labels.del_default_value}</a>
+		<th colspan="3">
+			<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@bugs.actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@bugs.labels.del_default_value}</a>
 		</th>
 	</tr>
 		# ENDIF #
@@ -39,7 +39,7 @@
 		# END severities #
 		# IF NOT C_SEVERITIES #
 		<tr> 
-			<td colspan="4">
+			<td colspan="3">
 				{@bugs.notice.no_severity}
 			</td>
 		</tr>

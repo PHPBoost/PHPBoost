@@ -79,7 +79,7 @@
 		# START filters #
 		<tr>
 			<td colspan="{FILTERS_NUMBER}">
-				<a href="{filters.LINK_FILTER_DELETE}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_filter}"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				<a href="{filters.LINK_FILTER_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_filter}"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>
 		# END filters #

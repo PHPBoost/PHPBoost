@@ -17,7 +17,7 @@
 			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 		<tr>
 			<th colspan="3">
-				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}">{@bugs.labels.del_default_value}</a>
+				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@bugs.actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@bugs.labels.del_default_value}</a>
 			</th>
 		</tr>
 			# ENDIF #
