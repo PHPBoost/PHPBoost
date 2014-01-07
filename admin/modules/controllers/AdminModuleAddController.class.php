@@ -47,6 +47,7 @@ class AdminModuleAddController extends AdminController
 				{
 					$activate = $request->get_bool('activated-' . $module->get_id(), false);
 					$this->install_module($module->get_id(), $activate);
+					$this->execute($request);
 				}
 			}
 			catch (UnexistingHTTPParameterException $e)	{}
