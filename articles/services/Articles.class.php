@@ -137,13 +137,14 @@ class Articles
 		}
 		else
 		{
+			$clean_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $this->contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 			if (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC)
 			{
-			    return TextHelper::substr_html(@strip_tags($this->contents), 0, self::NBR_CHARACTER_TO_CUT_MOSAIC) . '...';
+			    return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, self::NBR_CHARACTER_TO_CUT_MOSAIC) . '...';
 			}
 			else
 			{
-			    return TextHelper::substr_html(@strip_tags($this->contents), 0, self::NBR_CHARACTER_TO_CUT_LIST) . '...';
+			    return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, self::NBR_CHARACTER_TO_CUT_LIST) . '...';
 			}
 		}
 	}
