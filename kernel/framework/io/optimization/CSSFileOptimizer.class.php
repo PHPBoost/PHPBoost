@@ -34,7 +34,6 @@ class CSSFileOptimizer
 	protected $files = array();
 	protected $scripts = array();
 	protected $content = '';
-	protected $extension_required = '.css';
 	protected $regex_search_files_path = '';
 	protected $replace_value_files_path = '';
 
@@ -59,20 +58,7 @@ class CSSFileOptimizer
 	 */
 	public function add_file($path_file)
 	{
-		if (!file_exists($path_file))
-		{
-			throw new Exception('File '. $path_file .' doesn\'t exist !');
-		}
-
-		$extension = substr($path_file, -4);
-		if (strpos($extension, $this->extension_required) !== false)
-		{
-			$this->files[] = $path_file;
-		}
-		else
-		{
-			throw new Exception('File extension "'. $extension .'" not supported.');
-		}
+		$this->files[] = $path_file;
 	}
 
 	/**
