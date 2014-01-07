@@ -72,7 +72,6 @@
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 - Support mobile et version tablette
 - Refonte du système d'événement et intégration d'un système de notification
-- Possibilité de désactiver l'affichage d'un lien dans les menus
 
 [b]Installateur[/b]
 - Ajout d'une option pour supprimer le dossier à la fin de l'installation
