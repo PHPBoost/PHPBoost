@@ -158,6 +158,9 @@
 [b]Téléchargement[/b]
 [*] Améliorations visuelles
 
+[b]Wiki[/b]
+[*] Ajout du captcha pour les visiteurs
+
 [b]Bac à sable[/b]
 [*] Intégration d'une section regroupant tous les styles que l'on peut trouver dans les différentes pages du projet. Elle permettra de gagner du temps lors de la personnalisation d'un thème
 [*] Page regroupant les alias des icônes de Font-Awesome

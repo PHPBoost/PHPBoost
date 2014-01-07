@@ -61,6 +61,7 @@ require_once('../kernel/header.php');
 //Variable d'erreur
 $error = '';
 
+$captcha = AppContext::get_captcha_service()->get_default_factory();
 if (!empty($contents)) //On enregistre un article
 {
 	include_once('../wiki/wiki_functions.php');	
@@ -133,6 +134,15 @@ if (!empty($contents)) //On enregistre un article
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			} 
+			elseif (!$captcha->is_valid() && !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+			{
+				$error_controller = new UserErrorController(
+					LangLoader::get_message('error', 'errors'),
+					LangLoader::get_message('captcha_validation_error', 'builder-form-Validator'),
+					UserErrorController::NOTICE
+				);
+				DispatchManager::redirect($error_controller);
+			}
 			
 			//On vérifie que le titre n'existe pas
 			$article_exists = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . Url::encode_rewrite($title) . "'", __LINE__, __FILE__);
@@ -292,6 +302,7 @@ $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 
 $Template->put_all(array(
+	'C_VERIF_CODE' => !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),
 	'KERNEL_EDITOR' => $editor->display(),
 	'ID_CAT' => $id_edit > 0 ? $article_infos['id_cat'] : '',
@@ -299,6 +310,7 @@ $Template->put_all(array(
 	'ID_EDIT' => $id_edit,
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
+	'VERIF_CODE' => $captcha->display(),
 	'ARTICLE_TITLE' => !empty($encoded_title) ? $encoded_title : stripslashes($title),'L_TITLE_FIELD' => $LANG['title'],
 	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat&amp;token=' . $Session->get_token() : '?token=' . $Session->get_token())),
 	'L_CONTENTS' => $LANG['wiki_contents'],
@@ -312,7 +324,8 @@ $Template->put_all(array(
 	'L_CURRENT_CAT' => $LANG['wiki_current_cat'],
 	'L_DO_NOT_SELECT_ANY_CAT' => $LANG['wiki_do_not_select_any_cat'],
 	'L_PREVIEWING' => $LANG['wiki_previewing'],
-	'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents']
+	'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
+	'L_VERIF_CODE' => $LANG['verif_code']
 ));
 
 //outils BBcode en javascript
