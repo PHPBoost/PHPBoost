@@ -171,13 +171,5 @@ class CalendarUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $param);
 	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function error($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/error/' . $param);
-	}
 }
 ?>
