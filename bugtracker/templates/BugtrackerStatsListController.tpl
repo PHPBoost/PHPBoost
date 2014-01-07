@@ -26,53 +26,57 @@
 		<h1>{@bugs.labels.fields.status}</h1>
 	</header>
 	<div class="content">
+		<div class="center">
 		# IF C_BUGS #
-		<div class="center">
 			<div id="status_chart"></div>
-		</div>
 		# ELSE #
-		<div class="center">
 			{@bugs.notice.no_bug}
-		</div>
 		# ENDIF #
+		</div>
 	</div>
-</table>
 </section>
 
 <div class="spacer">&nbsp;</div>
 
 # IF C_DISPLAY_VERSIONS #
-<table>
-	<thead>
-		<tr>
-			<th class="column_version">
-				{@bugs.labels.fields.version}
-			</th>
-			<th>
-				{@bugs.labels.number_fixed}
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-		# START fixed_version #
-		<tr> 
-			<td> 
-				{fixed_version.NAME}
-			</td>
-			<td> 
-				<a href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a>
-			</td>
-		</tr>
-		# END fixed_version #
-		# IF NOT C_FIXED_BUGS #
-		<tr> 
-			<td colspan="2">
-				{@bugs.notice.no_bug_solved}
-			</td>
-		</tr>
-		# ENDIF #
-	</tbody>
-</table>
+<section class="block" style="background:#FFF">
+	<header>
+		<h1>{@bugs.labels.fix_bugs_per_version}</h1>
+	</header>
+	<div class="content">
+		<table>
+			<thead>
+				<tr>
+					<th class="column_version">
+						{@bugs.labels.fields.version}
+					</th>
+					<th>
+						{@bugs.labels.number_fixed}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				# START fixed_version #
+				<tr> 
+					<td> 
+						{fixed_version.NAME}
+					</td>
+					<td> 
+						<a href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a>
+					</td>
+				</tr>
+				# END fixed_version #
+				# IF NOT C_FIXED_BUGS #
+				<tr> 
+					<td colspan="2">
+						{@bugs.notice.no_bug_solved}
+					</td>
+				</tr>
+				# ENDIF #
+			</tbody>
+		</table>
+	</div>
+</section>
 
 <div class="spacer">&nbsp;</div>
 # ENDIF #

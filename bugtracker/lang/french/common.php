@@ -29,8 +29,6 @@
 # French                                           #
 ####################################################
 
-$lang = array();
-
 //Titre du module
 $lang['bugs.module_title'] = 'Rapport de bugs';
 
@@ -78,7 +76,7 @@ $lang['bugs.actions.confirm.del_filter'] = 'Etes-vous sûr de vouloir supprimer c
 //Titres
 $lang['bugs.titles.add'] = 'Nouveau bug';
 $lang['bugs.titles.add_version'] = 'Ajout d\'une nouvelle version';
-$lang['bugs.titles.add_type'] = 'Ajout d\'un nouveau type';
+$lang['bugs.titles.add_type'] = 'Ajouter un nouveau type de bug';
 $lang['bugs.titles.add_category'] = 'Ajout d\'une nouvelle catégorie';
 $lang['bugs.titles.add_priority'] = 'Ajout d\'une nouvelle priorité';
 $lang['bugs.titles.add_severity'] = 'Ajout d\'un nouveau niveau';
@@ -152,15 +150,16 @@ $lang['bugs.labels.login'] = 'Pseudo';
 $lang['bugs.labels.default'] = 'Par défaut';
 $lang['bugs.labels.default_value'] = 'Valeur par défaut';
 $lang['bugs.labels.del_default_value'] = 'Supprimer la valeur par défaut';
-$lang['bugs.labels.type_mandatory'] = 'Section "Type" obligatoire ?';
-$lang['bugs.labels.category_mandatory'] = 'Section "Catégorie" obligatoire ?';
-$lang['bugs.labels.severity_mandatory'] = 'Section "Niveau" obligatoire ?';
-$lang['bugs.labels.priority_mandatory'] = 'Section "Priorité" obligatoire ?';
-$lang['bugs.labels.detected_in_mandatory'] = 'Section "Détecté dans la version" obligatoire ?';
+$lang['bugs.labels.type_mandatory'] = 'Section <b>Type</b> obligatoire ?';
+$lang['bugs.labels.category_mandatory'] = 'Section <b>Catégorie</b> obligatoire ?';
+$lang['bugs.labels.severity_mandatory'] = 'Section <b>Niveau</b> obligatoire ?';
+$lang['bugs.labels.priority_mandatory'] = 'Section <b>Priorité</b> obligatoire ?';
+$lang['bugs.labels.detected_in_mandatory'] = 'Section <b>Détecté dans la version</b> obligatoire ?';
 $lang['bugs.labels.date_format'] = 'Format d\'affichage de la date';
 $lang['bugs.labels.date_time'] = 'Date et heure';
 $lang['bugs.labels.detected'] = 'Détecté';
 $lang['bugs.labels.fixed'] = 'Corrigé';
+$lang['bugs.labels.fix_bugs_per_version'] = 'Nombre de bugs corrigés par version';
 $lang['bugs.labels.release_date'] = 'Date de parution';
 $lang['bugs.labels.not_yet_fixed'] = 'Pas encore corrigé';
 $lang['bugs.labels.alert_fix'] = 'Passer l\'alerte en réglé';

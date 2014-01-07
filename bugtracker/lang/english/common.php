@@ -29,8 +29,6 @@
 # English                                          #
 ####################################################
  
-$lang = array();
-
 //Module title
 $lang['bugs.module_title'] = 'Bugtracker';
 
@@ -78,7 +76,7 @@ $lang['bugs.actions.confirm.del_filter'] = 'Delete this filter?';
 //Titles
 $lang['bugs.titles.add'] = 'New bug';
 $lang['bugs.titles.add_version'] = 'Add a new version';
-$lang['bugs.titles.add_type'] = 'Add a new type';
+$lang['bugs.titles.add_type'] = 'Add a new bug type';
 $lang['bugs.titles.add_category'] = 'Add a new category';
 $lang['bugs.titles.add_priority'] = 'Add a new priority';
 $lang['bugs.titles.add_severity'] = 'Add a new severity';
@@ -152,15 +150,16 @@ $lang['bugs.labels.login'] = 'Login';
 $lang['bugs.labels.default'] = 'Default';
 $lang['bugs.labels.default_value'] = 'Default value';
 $lang['bugs.labels.del_default_value'] = 'Delete default value';
-$lang['bugs.labels.type_mandatory'] = 'Section "Type" mandatory?';
-$lang['bugs.labels.category_mandatory'] = 'Section "Category" mandatory?';
-$lang['bugs.labels.severity_mandatory'] = 'Section "Severity" mandatory?';
-$lang['bugs.labels.priority_mandatory'] = 'Section "Priority" mandatory?';
-$lang['bugs.labels.detected_in_mandatory'] = 'Section "Detected in version" mandatory?';
+$lang['bugs.labels.type_mandatory'] = 'Section <b>Type</b> mandatory?';
+$lang['bugs.labels.category_mandatory'] = 'Section <b>Category</b> mandatory?';
+$lang['bugs.labels.severity_mandatory'] = 'Section <b>Severity</b> mandatory?';
+$lang['bugs.labels.priority_mandatory'] = 'Section <b>Priority</b> mandatory?';
+$lang['bugs.labels.detected_in_mandatory'] = 'Section <b>Detected in version</b> mandatory?';
 $lang['bugs.labels.date_format'] = 'Date display format';
 $lang['bugs.labels.date_time'] = 'Date and time';
 $lang['bugs.labels.detected'] = 'Detected';
 $lang['bugs.labels.fixed'] = 'Fixed';
+$lang['bugs.labels.fix_bugs_per_version'] = 'Fixed bugs number per version';
 $lang['bugs.labels.release_date'] = 'Release date';
 $lang['bugs.labels.not_yet_fixed'] = 'Not yet fixed';
 $lang['bugs.labels.alert_fix'] = 'Fix alert';

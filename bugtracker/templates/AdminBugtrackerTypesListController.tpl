@@ -12,17 +12,17 @@
 			</th>
 		</tr>
 	</thead>
+	# IF C_TYPES #
 	<tfoot>
-		# IF C_TYPES #
-			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 		<tr>
-			<th colspan="3">
-				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}">{@bugs.labels.del_default_value}</a>
+			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
+			<th colspan="2" style="text-align:right;">
+				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@bugs.actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@bugs.labels.del_default_value}</a>
 			</th>
-		</tr>
 			# ENDIF #
-		# ENDIF #
+		</tr>
 	</tfoot>
+	# ENDIF #
 	<tbody>
 		# START types #
 		<tr>

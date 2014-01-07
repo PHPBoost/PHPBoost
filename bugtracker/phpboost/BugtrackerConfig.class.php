@@ -769,7 +769,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::PRIORITY_MANDATORY => true,
 			self::DETECTED_IN_VERSION_MANDATORY => false,
 			self::AUTHORIZATIONS => array('r0' => 3, 'r1' => 15),
-			self::STATUS_LIST => array(Bug::NEW_BUG => 10, Bug::ASSIGNED => 50, Bug::IN_PROGRESS => 50, Bug::REJECTED => 0, Bug::REOPEN => 30, Bug::FIXED => 100)
+			self::STATUS_LIST => array(Bug::NEW_BUG => 0, Bug::ASSIGNED => 20, Bug::IN_PROGRESS => 50, Bug::REJECTED => 0, Bug::REOPEN => 30, Bug::FIXED => 100)
 		);
 	}
 	
