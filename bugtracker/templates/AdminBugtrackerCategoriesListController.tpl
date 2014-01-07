@@ -1,3 +1,57 @@
+<script type="text/javascript">
+<!--
+var BugtrackerFormFieldCategories = Class.create({
+	integer : {NEXT_ID},
+	max_input : {MAX_INPUT},
+	add_category : function () {
+		if (this.integer <= this.max_input) {
+			var id = this.integer;
+			
+			var tr = Builder.node('tr', {'id' : 'tr_' + id}, []);
+			
+			var td = Builder.node('td', {'id' : 'td1_' + id}, [
+				Builder.node('input', {type : 'radio', name : 'default_category', value : id}),
+				' ',
+			]);
+			tr.insert(td);
+			
+			var td = Builder.node('td', {'id' : 'td2_' + id}, [
+				Builder.node('input', {type : 'text', id : 'category_' + id, name : 'category_' + id, size : 40, maxlength : 100, placeholder : '${LangLoader::get_message('name', 'main')}'}),
+				' ',
+			]);
+			tr.insert(td);
+			
+			var td = Builder.node('td', {'id' : 'td3_' + id}, [
+				Builder.node('a', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldCategories.delete_category(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'main'))}, className: 'fa fa-delete'}),
+				' ',
+			]);
+			tr.insert(td);
+			
+			$('categories_list').insert(tr);
+			
+			this.integer++;
+		}
+		if (this.integer == this.max_input) {
+			$('add_category').hide();
+		}
+		if (this.integer == 1) {
+			$('no_category').hide();
+		}
+	},
+	delete_type : function (id) {
+		$('tr_' + id).remove();
+		this.integer--;
+		if (this.integer == 1)
+			$('no_category').style.display = "";
+		
+		$('add_category').show();
+	},
+});
+
+var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
+-->
+</script>
+
 <table>
 	<thead>
 		<tr>
@@ -13,17 +67,16 @@
 		</tr>
 	</thead>
 	<tfoot>
-		# IF C_CATEGORIES #
-			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 		<tr>
-			<th colspan="3">
-				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@bugs.actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@bugs.labels.del_default_value}</a>
+			<th>
+				<a href="javascript:BugtrackerFormFieldCategories.add_category();" class="fa fa-plus" title="{@bugs.titles.add_category}" id="add_category"></a>
+			</th>
+			<th colspan="2" style="text-align:right;">
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@bugs.actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@bugs.labels.del_default_value}</a># ENDIF #
 			</th>
 		</tr>
-			# ENDIF #
-		# ENDIF #
 	</tfoot>
-	<tbody>
+	<tbody id="categories_list">
 		# START categories #
 		<tr>
 			<td>
@@ -37,12 +90,10 @@
 			</td>
 		</tr>
 		# END categories #
-		# IF NOT C_CATEGORIES #
-		<tr> 
+		<tr id="no_category"# IF C_CATEGORIES # style="display:none;"# ENDIF #>
 			<td colspan="3">
 				{@bugs.notice.no_category}
 			</td>
 		</tr>
-		# ENDIF #
 	</tbody>
 </table>

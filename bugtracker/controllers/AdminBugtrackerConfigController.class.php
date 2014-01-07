@@ -37,7 +37,9 @@ class AdminBugtrackerConfigController extends AdminModuleController
 	 */
 	private $submit_button;
 	private $config;
-
+	
+	private $max_input = 30;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
@@ -54,6 +56,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		{
 			$this->save();
 			$tpl->put('MSG', MessageHelper::display($this->lang['bugs.success.config'], E_USER_SUCCESS, 5));
+			$this->build_form();
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -223,24 +226,6 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			array('class' => 'text', 'rows' => 8, 'cols' => 47)
 		));
 		
-		$types_table = new FileTemplate('bugtracker/AdminBugtrackerTypesListController.tpl');
-		$types_table->add_lang($this->lang);
-		$types_table->put_all(array(
-			'C_TYPES'							=> !empty($types),
-			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_type(),
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('type')->rel()
-		));
-		
-		foreach ($types as $key => $type)
-		{
-			$types_table->assign_block_vars('types', array(
-				'C_IS_DEFAULT'	=> $this->config->get_default_type() == $key,
-				'ID'			=> $key,
-				'NAME'			=> stripslashes($type),
-				'LINK_DELETE'	=> BugtrackerUrlBuilder::delete_parameter('type', $key)->rel()
-			));
-		}
-		
 		$fieldset = new FormFieldsetHTML('types-fieldset', $this->lang['bugs.titles.types']);
 		$fieldset->set_description($this->lang['bugs.explain.type'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
 		$form->add_fieldset($fieldset);
@@ -252,20 +237,41 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('add_type', $this->lang['bugs.titles.add_type'], '', array(
-			'class' => 'text', 'maxlength' => 100, 'size' => 40)
-		));
+		$types_table = new FileTemplate('bugtracker/AdminBugtrackerTypesListController.tpl');
+		$types_table->add_lang($this->lang);
 		
-		$fieldset->add_field(new FormFieldCheckbox('add_type_default', $this->lang['bugs.labels.default_value'], (int)!count($types)));
+		foreach ($types as $key => $type)
+		{
+			$types_table->assign_block_vars('types', array(
+				'C_IS_DEFAULT'	=> $this->config->get_default_type() == $key,
+				'ID'			=> $key,
+				'NAME'			=> stripslashes($type),
+				'LINK_DELETE'	=> BugtrackerUrlBuilder::delete_parameter('type', $key)->rel()
+			));
+		}
+		
+		$types_table->put_all(array(
+			'C_TYPES'							=> !empty($types),
+			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_type(),
+			'MAX_INPUT'							=> $this->max_input,
+		 	'NEXT_ID'							=> $key + 1,
+			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('type')->rel()
+		));
 		
 		$fieldset->add_field(new FormFieldHTML('types_table', $types_table->render()));
 		
+		$fieldset = new FormFieldsetHTML('categories-fieldset', $this->lang['bugs.titles.categories']);
+		$fieldset->set_description($this->lang['bugs.explain.category'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$form->add_fieldset($fieldset);
+		
 		$categories_table = new FileTemplate('bugtracker/AdminBugtrackerCategoriesListController.tpl');
 		$categories_table->add_lang($this->lang);
-		$categories_table->put_all(array(
-			'C_CATEGORIES'						=> !empty($categories),
-			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_category(),
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('category')->rel()
+		
+		$fieldset->add_field(new FormFieldRadioChoice('category_mandatory', $this->lang['bugs.labels.category_mandatory'], $this->config->is_category_mandatory(),
+			array(
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
+			)
 		));
 		
 		foreach ($categories as $key => $category)
@@ -278,22 +284,13 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			));
 		}
 		
-		$fieldset = new FormFieldsetHTML('categories-fieldset', $this->lang['bugs.titles.categories']);
-		$fieldset->set_description($this->lang['bugs.explain.category'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
-		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldRadioChoice('category_mandatory', $this->lang['bugs.labels.category_mandatory'], $this->config->is_category_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
+		$categories_table->put_all(array(
+			'C_CATEGORIES'						=> !empty($categories),
+			'MAX_INPUT'							=> $this->max_input,
+		 	'NEXT_ID'							=> $key + 1,
+			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_category(),
+			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('category')->rel()
 		));
-		
-		$fieldset->add_field(new FormFieldTextEditor('add_category', $this->lang['bugs.titles.add_category'], '', array(
-			'class' => 'text', 'maxlength' => 100, 'size' => 40)
-		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('add_category_default', $this->lang['bugs.labels.default_value'], (int)!count($categories)));
 		
 		$fieldset->add_field(new FormFieldHTML('categories_table', $categories_table->render()));
 		
@@ -454,12 +451,17 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$types[$key] = (!empty($new_type_name) && $new_type_name != $type) ? $new_type_name : $type;
 		}
 		
-		$new_type = $this->form->get_value('add_type', '');
-		if (!empty($new_type))
+		$nb_types = count($types);
+		for ($i = 1; $i <= $this->max_input; $i++)
 		{
-			$nb_types = count($types);
-			$array_id = empty($nb_types) ? 1 : ($nb_types + 1);
-			$types[$array_id] = $new_type;
+			$type = 'type_' . $i;
+			if ($request->has_postparameter($type) && $request->get_poststring($type))
+			{
+				if (empty($nb_types))
+					$types[1] = addslashes($request->get_poststring($type));
+				else
+					$types[] = addslashes($request->get_poststring($type));
+			}
 		}
 		
 		foreach ($categories as $key => $category)
@@ -468,12 +470,17 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$categories[$key] = (!empty($new_category_name) && $new_category_name != $category) ? $new_category_name : $category;
 		}
 		
-		$new_category = $this->form->get_value('add_category', '');
-		if (!empty($new_category))
+		$nb_categories = count($categories);
+		for ($i = 1; $i <= $this->max_input; $i++)
 		{
-			$nb_categories = count($categories);
-			$array_id = empty($nb_categories) ? 1 : ($nb_categories + 1);
-			$categories[$array_id] = $new_category;
+			$category = 'category_' . $i;
+			if ($request->has_postparameter($category) && $request->get_poststring($category))
+			{
+				if (empty($nb_categories))
+					$categories[1] = addslashes($request->get_poststring($category));
+				else
+					$categories[] = addslashes($request->get_poststring($category));
+			}
 		}
 		
 		foreach ($severities as $key => $severity)
@@ -611,7 +618,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->config->type_not_mandatory();
 		
 		$this->config->set_types($types);
-		$this->config->set_default_type($this->form->get_value('add_type_default') ? count($types) : $request->get_value('default_type', 0));
+		$this->config->set_default_type($request->get_value('default_type', 0));
 		
 		if ($this->form->get_value('category_mandatory')->get_raw_value())
 			$this->config->category_mandatory();
@@ -619,7 +626,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->config->category_not_mandatory();
 		
 		$this->config->set_categories($categories);
-		$this->config->set_default_category($this->form->get_value('add_category_default') ? count($categories) : $request->get_value('default_category', 0));
+		$this->config->set_default_category($request->get_value('default_category', 0));
 		
 		if ($this->form->get_value('severity_mandatory')->get_raw_value())
 			$this->config->severity_mandatory();
