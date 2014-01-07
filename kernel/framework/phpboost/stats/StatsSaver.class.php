@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-include_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/stats.php');
-
 /**
  * @author Viarre Régis crowkait@phpboost.com
  * @desc 
