@@ -29,8 +29,6 @@
 # French                                           #
 ####################################################
 
-$lang = array();
-
 $lang['bug.1.title'] = 'Bug de test 1';
 $lang['bug.1.contents'] = 'Contenu du bug de test 1';
 

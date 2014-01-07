@@ -29,8 +29,6 @@
 # English                                          #
 ####################################################
 
-$lang = array();
-
 //Types
 $lang['bugtracker.config.types.anomaly'] = 'Anomaly';
 $lang['bugtracker.config.types.evolution_demand'] = 'Evolution';

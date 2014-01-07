@@ -29,8 +29,6 @@
 # English                                          #
 ####################################################
 
-$lang = array();
-
 $lang['bug.1.title'] = 'Test bug 1';
 $lang['bug.1.contents'] = 'Test bug 1 content';
 
