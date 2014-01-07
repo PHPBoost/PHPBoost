@@ -51,12 +51,19 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 		}
 		
 		$fieldset->add_field(new FormFieldHTML('exp_css_cache', '<hr><br />' . $this->lang['explain_css_cache_config']));
-		$fieldset->add_field(new FormFieldCheckbox('enable_css_cache', $this->lang['enable_css_cache'], $this->css_cache_config->is_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('enable_css_cache', $this->lang['enable_css_cache'], $this->css_cache_config->is_enabled(), array(
+		'events' => array('click' => '
+			if (HTMLForms.getField("enable_css_cache").getValue()) {
+				HTMLForms.getField("level_css_cache").enable();
+			} else { 
+				HTMLForms.getField("level_css_cache").disable();
+			}'
+		))));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('level_css_cache', $this->lang['level_css_cache'], $this->css_cache_config->get_optimization_level(), array(
 			new FormFieldSelectChoiceOption($this->lang['low_level_css_cache'], CSSFileOptimizer::LOW_OPTIMIZATION),
 			new FormFieldSelectChoiceOption($this->lang['high_level_css_cache'], CSSFileOptimizer::HIGH_OPTIMIZATION)
-		), array('description' => $this->lang['level_css_cache'])));
+		), array('description' => $this->lang['level_css_cache'], 'hidden' => !$this->css_cache_config->is_enabled())));
 
 		$button = new FormButtonDefaultSubmit();
 		$this->set_submit_button($button);
