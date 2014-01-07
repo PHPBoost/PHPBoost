@@ -61,6 +61,16 @@ class CalendarDisplayCategoryController extends ModuleController
 		$year = $request->get_getint('year', date('Y'));
 		$month = $request->get_getint('month', date('n'));
 		$day = $request->get_getint('day', date('j'));
+		
+		if (!checkdate($month,$day,$year))
+		{
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['calendar.error.e_invalid_date'], E_USER_ERROR));
+			
+			$year = date('Y');
+			$month = date('n');
+			$day = date('j');
+		}
+		
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
@@ -164,22 +174,6 @@ class CalendarDisplayCategoryController extends ModuleController
 	
 	private function generate_response()
 	{
-		$request = AppContext::get_request();
-		$error = $request->get_value('error', '');
-		
-		## TODO Afficher directement le message ? Moins de redirection, affichage plus rapide, ...
-		//Gestion des messages
-		switch ($error)
-		{
-			case 'invalid_date':
-				$errstr = $this->lang['calendar.error.e_invalid_date'];
-				break;
-			default:
-				$errstr = '';
-		}
-		if (!empty($errstr))
-			$this->tpl->put('MSG', MessageHelper::display($errstr, E_USER_ERROR));
-		
 		$response = new CalendarDisplayResponse();
 		$response->set_page_title($this->get_category()->get_name());
 		$response->set_page_description($this->get_category()->get_description());
