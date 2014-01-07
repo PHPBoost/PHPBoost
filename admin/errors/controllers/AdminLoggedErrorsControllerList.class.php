@@ -100,30 +100,24 @@ class AdminLoggedErrorsControllerList extends AdminController
 				);
 				
 				//Tri en sens inverse car enregistrement à la suite dans le fichier de log
-				krsort($array_errinfo);
+				$array_errinfo = array_reverse($array_errinfo);
 				
 				$page = AppContext::get_request()->get_getint('page', 1);
 				$pagination = $this->get_pagination($page, count($array_errinfo));
 				
-				$nb_errors = $i = 0;
-				foreach ($array_errinfo as $key => $errinfo)
+				$nb_errors = 0;
+				for ($i = (($page - 1) * $this->number_errors_per_page) ; $i < ($page * $this->number_errors_per_page) ; $i++)
 				{
-					if ($i >= (($page - 1) * $this->number_errors_per_page) && $i < ($page * $this->number_errors_per_page))
+					if (isset($array_errinfo[$i]))
 					{
 						$this->view->assign_block_vars('errors', array(
-							'DATE' => $errinfo['errdate'],
-							'CLASS' => $errinfo['errclass'],
-							'ERROR_TYPE' => LangLoader::get_message($types[$errinfo['errclass']], 'errors'),
-							'ERROR_MESSAGE' => strip_tags($errinfo['errmsg'], '<br>'),
-							'ERROR_STACKTRACE' => strip_tags($errinfo['errstacktrace'], '<br>')
+							'DATE' => $array_errinfo[$i]['errdate'],
+							'CLASS' => $array_errinfo[$i]['errclass'],
+							'ERROR_TYPE' => LangLoader::get_message($types[$array_errinfo[$i]['errclass']], 'errors'),
+							'ERROR_MESSAGE' => strip_tags($array_errinfo[$i]['errmsg'], '<br>'),
+							'ERROR_STACKTRACE' => strip_tags($array_errinfo[$i]['errstacktrace'], '<br>')
 						));
 						$nb_errors++;
-					}
-					$i++;
-					
-					if ($nb_errors == $this->number_errors_per_page)
-					{
-						break;
 					}
 				}
 				
