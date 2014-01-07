@@ -25,21 +25,51 @@
  *
  ###################################################*/
 
-class AdminCacheConfigController extends AbstractAdminFormPageController
+class AdminCacheConfigController extends AdminController
 {
+	/**
+	 * @var HTMLForm
+	 */
+	private $form;
+	/**
+	 * @var FormButtonSubmit
+	 */
+	private $submit_button;
+	
 	private $lang;
 	private $css_cache_config;
-
-	public function __construct()
+	
+	public function execute(HTTPRequestCustom $request)
+	{
+		$this->init();
+		
+		$this->build_form();
+		
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl->add_lang($this->lang);
+		
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		{
+			$this->save();
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 5));
+			$this->build_form();
+		}
+		
+		$tpl->put('FORM', $this->form->display());
+		
+		return new AdminCacheMenuDisplayResponse($tpl, $this->lang['cache_configuration']);
+	}
+	
+	private function init()
 	{
 		$this->lang = LangLoader::get('admin-cache-common');
-		parent::__construct(LangLoader::get_message('process.success', 'errors-common'));
 		$this->css_cache_config = CSSCacheConfig::load();
 	}
-
-	protected function create_form()
+	
+	protected function build_form()
 	{
-		$form = new HTMLForm('cache_config');
+		$form = new HTMLForm(__CLASS__);
+		
 		$fieldset = new FormFieldsetHTML('explain', $this->lang['cache_configuration']);
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldHTML('exp_php_cache', $this->lang['explain_php_cache']));
@@ -64,11 +94,11 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 			new FormFieldSelectChoiceOption($this->lang['low_level_css_cache'], CSSFileOptimizer::LOW_OPTIMIZATION),
 			new FormFieldSelectChoiceOption($this->lang['high_level_css_cache'], CSSFileOptimizer::HIGH_OPTIMIZATION)
 		), array('description' => $this->lang['level_css_cache'], 'hidden' => !$this->css_cache_config->is_enabled())));
-
-		$button = new FormButtonDefaultSubmit();
-		$this->set_submit_button($button);
-		$form->add_button($button);
-		$this->set_form($form);
+		
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$form->add_button($this->submit_button);
+		
+		$this->form = $form;
 	}
 
 	private function is_apc_available()
@@ -81,11 +111,11 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 		return DataStoreFactory::is_apc_enabled();
 	}
 
-	protected function handle_submit()
+	protected function save()
 	{
 		if ($this->is_apc_available())
 		{
-			if ($this->get_form()->get_value('enable_apc'))
+			if ($this->form->get_value('enable_apc'))
 			{
 				DataStoreFactory::set_apc_enabled(true);
 			}
@@ -95,7 +125,7 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 			}
 		}
 		
-		if ($this->get_form()->get_value('enable_css_cache'))
+		if ($this->form->get_value('enable_css_cache'))
 		{
 			$this->css_cache_config->enable();
 		}
@@ -104,14 +134,9 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 			$this->css_cache_config->disable();
 		}
 		
-		$this->css_cache_config->set_optimization_level($this->get_form()->get_value('level_css_cache')->get_raw_value());
+		$this->css_cache_config->set_optimization_level($this->form->get_value('level_css_cache')->get_raw_value());
 		CSSCacheConfig::save();
 		AppContext::get_cache_service()->clear_css_cache();
-	}
-
-	protected function generate_response(View $view)
-	{
-		return new AdminCacheMenuDisplayResponse($view, $this->lang['cache_configuration']);
 	}
 }
 ?>

@@ -118,7 +118,7 @@ class AdminLangsNotInstalledListController extends AdminController
 					}
 					else
 					{
-						AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());
+						$this->execute($request);
 					}
 				}
 			} catch (Exception $e) {

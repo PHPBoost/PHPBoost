@@ -50,7 +50,8 @@ class AdminGeneralConfigController extends AdminController
 		{
 			$this->save();
 			$this->clear_cache();
-			AppContext::get_response()->redirect(AdminConfigUrlBuilder::general_config());
+			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 5));
+			$this->build_form();
 		}
 
 		$this->tpl->put('FORM', $this->form->display());
@@ -60,7 +61,7 @@ class AdminGeneralConfigController extends AdminController
 
 	private function init()
 	{
-		$this->tpl = new StringTemplate('# INCLUDE FORM #');
+		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 
 		$this->load_lang();
 		$this->tpl->add_lang($this->lang);
