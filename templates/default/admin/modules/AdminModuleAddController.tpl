@@ -39,7 +39,7 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="message-helper notice">
+	<div class="message-helper notice message-helper-small">
 		<i class="fa fa-notice"></i>
 		<div class="message-helper-content">{@modules.no_module_to_install}</div>
 	</div>

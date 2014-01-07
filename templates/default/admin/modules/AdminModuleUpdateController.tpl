@@ -1,10 +1,8 @@
 # INCLUDE UPLOAD_FORM #
-
-# INCLUDE MSG #
-
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
+	# INCLUDE MSG #
 	# IF C_UPDATES #
-	<div class="message-helper warning">
+	<div class="message-helper warning message-helper-small">
 		<i class="fa fa-warning"></i>
 		<div class="message-helper-content">{@modules.updates_available}</div>
 	</div>
@@ -43,7 +41,7 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="message-helper success">
+	<div class="message-helper success message-helper-small">
 		<i class="fa fa-success"></i>
 		<div class="message-helper-content">{@modules.no_upgradable_module_available}</div>
 	</div>

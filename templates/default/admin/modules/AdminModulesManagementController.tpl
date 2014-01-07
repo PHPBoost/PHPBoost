@@ -108,7 +108,7 @@
 
 		# ELSE #
 	</table>
-	<div class="message-helper notice">
+	<div class="message-helper notice message-helper-small">
 		<i class="fa fa-notice"></i>
 		<div class="message-helper-content">{@modules.no_deactivated_modules_available}</div>
 	</div>

@@ -634,6 +634,8 @@ div.message-helper {
 	-webkit-border-radius:3px;
 }
 
+div.message-helper-small { width:50%; }
+
 div.message-helper .fa { 
 	display:block; 
 	float:left;

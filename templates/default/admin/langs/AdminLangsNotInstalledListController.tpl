@@ -47,7 +47,7 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="message-helper notice">
+	<div class="message-helper notice message-helper-small">
 		<i class="fa fa-notice"></i>
 		<div class="message-helper-content">{@themes.add.not_lang}</div>
 	</div>
