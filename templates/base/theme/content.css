@@ -791,7 +791,7 @@ h5.sub-title { /* Titre des modules minis */
 }
 
 .message-avatar { width:80px; }
-.message-content { overflow:auto; }
+.message-content {}
 .message-pseudo a {}
 .message-user-infos img{ padding:10px 0px; }
 
