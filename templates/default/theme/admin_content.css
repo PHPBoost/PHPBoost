@@ -331,6 +331,7 @@ table tbody tr td.no-separator{ border-left: none; }
 table tbody tr td.no-separator:first-child{ border-left:1px solid #D1D2D4; }
 
 table tbody td.align-left {	text-align:left; }
+table tbody td.input-radio { min-width: 60px; }
 
 /* Pied */
 table tfoot tr th {
