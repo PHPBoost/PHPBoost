@@ -12,17 +12,15 @@
 			</th>
 		</tr>
 	</thead>
+	# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 	<tfoot>
-	# IF C_SEVERITIES #
-		# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 	<tr>
 		<th colspan="3">
 			<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@bugs.actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@bugs.labels.del_default_value}</a>
 		</th>
 	</tr>
-		# ENDIF #
-	# ENDIF #
 	</tfoot>
+	# ENDIF #
 	<tbody>
 		# START severities #
 		<tr>
@@ -37,12 +35,5 @@
 			</td>
 		</tr>
 		# END severities #
-		# IF NOT C_SEVERITIES #
-		<tr> 
-			<td colspan="3">
-				{@bugs.notice.no_severity}
-			</td>
-		</tr>
-		# ENDIF #
 	</tbody>
 </table>

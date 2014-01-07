@@ -44,8 +44,6 @@ class AdminBugtrackerDeleteParameterController extends AdminController
 			
 			$types = $config->get_types();
 			$categories = $config->get_categories();
-			$severities = $config->get_severities();
-			$priorities = $config->get_priorities();
 			$versions = $config->get_versions();
 			
 			switch ($parameter)

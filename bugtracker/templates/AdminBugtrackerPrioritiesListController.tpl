@@ -9,17 +9,15 @@
 			</th>
 		</tr>
 	</thead>
+	# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 	<tfoot>
-		# IF C_PRIORITIES #
-			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 		<tr>
 			<th colspan="2">
 				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@bugs.actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@bugs.labels.del_default_value}</a>
 			</th>
 		</tr>
-			# ENDIF #
-		# ENDIF #
 	</tfoot>
+	# ENDIF #
 	<tbody>
 		# START priorities #
 		<tr>
@@ -31,12 +29,5 @@
 			</td>
 		</tr>
 		# END priorities #
-		# IF NOT C_PRIORITIES #
-		<tr> 
-			<td colspan="2">
-				{@bugs.notice.no_priority}
-			</td>
-		</tr>
-		# ENDIF #
 	</tbody>
 </table>
