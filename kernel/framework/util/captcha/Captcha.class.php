@@ -33,7 +33,7 @@ abstract class Captcha implements ExtensionPoint
 {
 	const EXTENSION_POINT = 'captcha';
 	
-	private $html_id = '';
+	private $html_id = 'captcha';
 	private $options;
 
 	abstract public function get_name();
