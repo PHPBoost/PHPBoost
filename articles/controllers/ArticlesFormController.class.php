@@ -55,71 +55,10 @@ class ArticlesFormController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'articles');
-		$this->tpl = new StringTemplate($this->get_page_scripts() . ' # INCLUDE MSG # # INCLUDE FORM #');
+		$this->tpl = new FileTemplate('articles/ArticlesFormController.tpl');
 		$this->tpl->add_lang($this->lang);
 	}
 	
-	private function get_page_scripts()
-	{
-		//Mets ça dans un tpl :)
-		$script = '<script type="text/javascript">
-			    <!--
-			    function bbcode_page()
-			    {
-				    var page = prompt("Titre de la nouvelle page");
-
-				    if (page) {
-					    var textarea = $(\'ArticlesFormController_contents\');
-					    var start = textarea.selectionStart;
-					    var end = textarea.selectionEnd;
-
-					    if (start == end) {
-						    var insert_value = \'[page]\' + page + \'[/page]\';
-						    textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
-					    }
-					    else {
-						    var value = textarea.value;
-						    var insert_value = \'[page]\' + value.substring(start, end) + \'[/page]\';
-						    textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
-					    }
-
-					    textarea.selectionStart = start + insert_value.length;
-					    textarea.selectionEnd = start + insert_value.length;
-				    }
-			    }
-			    -->
-			    </script>';
-		
-		if ($this->get_article()->get_id() !== null)
-		{
-			$page_to_edit = AppContext::get_request()->get_getstring('page', '');
-			
-			$script .= '<script type="text/javascript">
-				    <!--
-				    function page_to_edit(page) {
-					    var searchText = page;
-					    var t = $(\'ArticlesFormController_contents\');
-					    var l = t.value.indexOf(searchText);
-
-					    if (l != -1)
-					    {
-						    t.focus();
-						    t.selectionStart = l;
-						    t.selectionEnd = l + searchText.length;
-						    t.scrollTop = t.scrollHeight;
-					    }
-				    }
-
-				    function setPagePosition (page) {
-					      page_to_edit(page);
-				    }
-				    window.onload = function(){setPagePosition("' . $page_to_edit . '")};
-				     -->
-				    </script>';
-		}
-		
-		return $script;
-	}
 	private function build_form($request)
 	{		
 		$common_lang = LangLoader::get('common');
@@ -257,6 +196,11 @@ class ArticlesFormController extends ModuleController
 		$form->add_button(new FormButtonReset());
 		
 		$this->form = $form;
+		
+		if ($this->get_article()->get_id() !== null)
+		{
+		    $this->tpl->put('PAGE', AppContext::get_request()->get_getstring('page', ''));
+		}
 	}
 
 	private function build_contribution_fieldset($form)
