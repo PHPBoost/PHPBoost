@@ -93,12 +93,12 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		));
 
 		$this->display_counter($template);
-
+		
 		$this->display_menus($template);
-
+		
 		//Bread crumb
 		$this->get_breadcrumb()->display($template);
-
+		
 		$template->display();
 	}
 
@@ -125,8 +125,10 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function display_menus(Template $template)
 	{
-		global $MENUS, $Cache;
+		global $MENUS, $Cache, $columns_disabled;
 
+		$columns_disabled = $this->get_columns_disabled();
+		
 		if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
 		{
 			//En cas d'échec, on régénère le cache
@@ -140,14 +142,12 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
                 DispatchManager::redirect($controller);
 			}
 		}
-
-		$columns_disabled = $this->get_columns_disabled();
 		
-		$enable_header_is_activated = !$columns_disabled->header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__HEADER]);
-		$enable_sub_header_is_activated = !$columns_disabled->sub_header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]);
-		$enable_left_column_is_activated = !$columns_disabled->left_columns_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__LEFT]);
-		$enable_right_column_is_activated = !$columns_disabled->right_columns_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__RIGHT]);
-		$enable_top_central_is_activated = !$columns_disabled->top_central_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]);
+		$enable_header_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__HEADER]);
+		$enable_sub_header_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]);
+		$enable_left_column_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__LEFT]);
+		$enable_right_column_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__RIGHT]);
+		$enable_top_central_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]);
 		
 		$header_content = $enable_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__HEADER] : '';
 		$sub_header_content = $enable_sub_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__SUB_HEADER] : '';
