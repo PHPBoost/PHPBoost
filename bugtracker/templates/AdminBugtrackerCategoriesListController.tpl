@@ -34,7 +34,7 @@ var BugtrackerFormFieldCategories = Class.create({
 		if (this.integer == this.max_input) {
 			$('add_category').hide();
 		}
-		if (this.integer == 1) {
+		if (this.integer == 2) {
 			$('no_category').hide();
 		}
 	},

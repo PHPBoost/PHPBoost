@@ -55,7 +55,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['bugs.success.config'], E_USER_SUCCESS, 5));
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 5));
 			$this->build_form();
 		}
 		
@@ -294,13 +294,19 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldHTML('categories_table', $categories_table->render()));
 		
+		$fieldset = new FormFieldsetHTML('severities-fieldset', $this->lang['bugs.titles.severities']);
+		$fieldset->set_description($this->lang['bugs.explain.severity'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldRadioChoice('severity_mandatory', $this->lang['bugs.labels.severity_mandatory'], $this->config->is_severity_mandatory(),
+			array(
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
+			)
+		));
+		
 		$severities_table = new FileTemplate('bugtracker/AdminBugtrackerSeveritiesListController.tpl');
 		$severities_table->add_lang($this->lang);
-		$severities_table->put_all(array(
-			'C_SEVERITIES'						=> !empty($severities),
-			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_severity(),
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('severity')->rel()
-		));
 		
 		foreach ($severities as $key => $severity)
 		{
@@ -314,35 +320,13 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			));
 		}
 		
-		$fieldset = new FormFieldsetHTML('severities-fieldset', $this->lang['bugs.titles.severities']);
-		$fieldset->set_description($this->lang['bugs.explain.severity'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
-		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldRadioChoice('severity_mandatory', $this->lang['bugs.labels.severity_mandatory'], $this->config->is_severity_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
+		$severities_table->put_all(array(
+			'C_SEVERITIES'						=> !empty($severities),
+			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_severity(),
+			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('severity')->rel()
 		));
 		
 		$fieldset->add_field(new FormFieldHTML('severities_table', $severities_table->render()));
-		
-		$priorities_table = new FileTemplate('bugtracker/AdminBugtrackerPrioritiesListController.tpl');
-		$priorities_table->add_lang($this->lang);
-		$priorities_table->put_all(array(
-			'C_PRIORITIES'						=> !empty($priorities),
-			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_priority(),
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('priority')->rel()
-		));
-		
-		foreach ($priorities as $key => $priority)
-		{
-			$priorities_table->assign_block_vars('priorities', array(
-				'C_IS_DEFAULT'	=> $this->config->get_default_priority() == $key,
-				'ID'			=> $key,
-				'NAME'			=> stripslashes($priority)
-			));
-		}
 		
 		$fieldset = new FormFieldsetHTML('priorities-fieldset', $this->lang['bugs.titles.priorities']);
 		$fieldset->set_description($this->lang['bugs.explain.priority'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
@@ -355,15 +339,39 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			)
 		));
 		
+		$priorities_table = new FileTemplate('bugtracker/AdminBugtrackerPrioritiesListController.tpl');
+		$priorities_table->add_lang($this->lang);
+		
+		foreach ($priorities as $key => $priority)
+		{
+			$priorities_table->assign_block_vars('priorities', array(
+				'C_IS_DEFAULT'	=> $this->config->get_default_priority() == $key,
+				'ID'			=> $key,
+				'NAME'			=> stripslashes($priority)
+			));
+		}
+		
+		$priorities_table->put_all(array(
+			'C_PRIORITIES'						=> !empty($priorities),
+			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_priority(),
+			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('priority')->rel()
+		));
+		
 		$fieldset->add_field(new FormFieldHTML('priorities_table', $priorities_table->render()));
+		
+		$fieldset = new FormFieldsetHTML('versions-fieldset', $this->lang['bugs.titles.versions']);
+		$fieldset->set_description($this->lang['bugs.explain.version'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldRadioChoice('detected_in_version_mandatory', $this->lang['bugs.labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory(),
+			array(
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
+			)
+		));
 		
 		$versions_table = new FileTemplate('bugtracker/AdminBugtrackerVersionsListController.tpl');
 		$versions_table->add_lang($this->lang);
-		$versions_table->put_all(array(
-			'C_VERSIONS'						=> !empty($versions),
-			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_version(),
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('version')->rel()
-		));
 		
 		foreach ($versions as $key => $version)
 		{
@@ -378,41 +386,13 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			));
 		}
 		
-		$fieldset = new FormFieldsetHTML('versions-fieldset', $this->lang['bugs.titles.versions']);
-		$fieldset->set_description($this->lang['bugs.explain.version'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
-		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldRadioChoice('detected_in_version_mandatory', $this->lang['bugs.labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
+		$versions_table->put_all(array(
+			'C_VERSIONS'						=> !empty($versions),
+			'MAX_INPUT'							=> $this->max_input,
+		 	'NEXT_ID'							=> $key + 1,
+			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_version(),
+			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('version')->rel()
 		));
-		
-		$fieldset->add_field(new FormFieldTextEditor('add_version', $this->lang['bugs.titles.add_version'], '', array(
-			'class' => 'text', 'maxlength' => 100, 'size' => 40)
-		));
-		
-		$fieldset->add_field(new FormFieldTextEditor('add_version_release_date', $this->lang['bugs.labels.fields.version_release_date'], '00/00/0000', array(
-			'class' => 'text', 'maxlength' => 10, 'size' => 11, 'description' => $this->lang['bugs.labels.fields.version_release_date.explain'], 'events' => array(
-				'click' => 'if (this.value == \'00/00/0000\') this.value = \'\';',
-				'blur' => 'if (this.value == \'\') this.value = \'00/00/0000\';',
-			)),
-			array(new FormFieldConstraintRegex('`^(00|0[1-9]|[12][0-9]|3[01])/(00|0[1-9]|1[012])/(0000|(19|20)[0-9]{2})$`i'))
-		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('add_version_detected_in', $this->lang['bugs.labels.fields.version_detected_in'], (int)!count($versions),
-			array('events' => array('click' => '
-				if (HTMLForms.getField("add_version_detected_in").getValue()) {
-					HTMLForms.getField("add_version_default").enable();
-				} else {
-					HTMLForms.getField("add_version_default").disable();
-				}')
-		)));
-		
-		$fieldset->add_field(new FormFieldCheckbox('add_version_default', $this->lang['bugs.labels.default_value'], (int)!count($versions), array(
-			'hidden' => count($versions) ? true : false
-		)));
 		
 		$fieldset->add_field(new FormFieldHTML('versions_table', $versions_table->render()));
 		
@@ -461,6 +441,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 					$types[1] = addslashes($request->get_poststring($type));
 				else
 					$types[] = addslashes($request->get_poststring($type));
+				$nb_types++;
 			}
 		}
 		
@@ -480,6 +461,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 					$categories[1] = addslashes($request->get_poststring($category));
 				else
 					$categories[] = addslashes($request->get_poststring($category));
+				$nb_categories++;
 			}
 		}
 		
@@ -501,22 +483,26 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		{
 			$new_version_name = $request->get_value('version' . $key, '');
 			$new_version_release_date = $request->get_value('release_date' . $key, '00/00/0000');
-			$new_version_detected_in = $request->get_value('detected_in' . $key, '');
+			$new_version_detected_in = (bool)$request->get_value('detected_in' . $key, '');
 			$versions[$key]['name'] = (!empty($new_version_name) && $new_version_name != $version['name']) ? $new_version_name : $version['name'];
 			$versions[$key]['release_date'] = ($new_version_release_date != $version['release_date']) ? $new_version_release_date : $version['release_date'];
 			$versions[$key]['detected_in'] = ($new_version_detected_in != $version['detected_in']) ? $new_version_detected_in : $version['detected_in'];
 		}
 		
-		$new_version = $this->form->get_value('add_version', '');
-		if (!empty($new_version))
+		$nb_versions = count($versions);
+		for ($i = 1; $i <= $this->max_input; $i++)
 		{
-			$nb_versions = count($versions);
-			$array_id = empty($nb_versions) ? 1 : ($nb_versions + 1);
-			$versions[$array_id] = array(
-				'name'			=> $new_version,
-				'release_date'	=> $this->form->get_value('add_version_release_date'),
-				'detected_in'	=> (bool)$this->form->get_value('add_version_detected_in', false)
-			);
+			$version = 'version_' . $i;
+			if ($request->has_postparameter($version) && $request->get_poststring($version))
+			{
+				$array_id = empty($nb_versions) ? 1 : ($nb_versions + 1);
+				$versions[$array_id] = array(
+					'name'			=> addslashes($request->get_poststring($version)),
+					'release_date'	=> $request->get_poststring('release_date_' . $i, '00/00/0000'),
+					'detected_in'	=> (bool)$request->get_value('detected_in' . $i, '')
+				);
+				$nb_versions++;
+			}
 		}
 		
 		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
@@ -650,7 +636,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->config->detected_in_version_not_mandatory();
 		
 		$this->config->set_versions($versions);
-		$this->config->set_default_version(!$this->form->field_is_disabled('add_version_default') && $this->form->get_value('add_version_default') ? count($versions) : $request->get_value('default_version', 0));
+		$this->config->set_default_version($request->get_value('default_version', 0));
 		
 		BugtrackerConfig::save();
 		
