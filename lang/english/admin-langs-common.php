@@ -38,10 +38,11 @@ $lang['langs.installed'] = 'Installed languages';
 $lang['langs.uninstall'] = 'Remove language';
 $lang['langs.install'] = 'Install';
 
-//Errors
+//Messages
 $lang['langs.already_exist'] = 'This language already exists';
 $lang['langs.not_compatible'] = 'This language is not compliant with your version of PHPBoost';
-$lang['themes.add.not_lang'] = 'No language to add';
+$lang['langs.install_success'] = 'Language successfully installed !';
+$lang['langs.add.not_lang'] = 'No language to add';
 
 //Uninstall
 $lang['langs.uninstall.drop_files'] = 'Delete all the language\'s files';

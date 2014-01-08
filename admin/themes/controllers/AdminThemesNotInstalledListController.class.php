@@ -47,7 +47,6 @@ class AdminThemesNotInstalledListController extends AdminController
 					$activated = $request->get_bool('activated-' . $id_theme, false);
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
 					$this->install_theme($id_theme, $authorizations, $activated);
-					$this->execute($request);
 				}
 			} catch (UnexistingHTTPParameterException $e) {
 			}
@@ -144,7 +143,7 @@ class AdminThemesNotInstalledListController extends AdminController
 		}
 		else
 		{
-			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
+			$this->view->put('MSG', MessageHelper::display($this->lang['themes.install_success'], MessageHelper::SUCCESS, 10));
 		}
 	}
 	
