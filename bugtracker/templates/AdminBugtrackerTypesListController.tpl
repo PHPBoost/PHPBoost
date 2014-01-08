@@ -34,7 +34,7 @@ var BugtrackerFormFieldTypes = Class.create({
 		if (this.integer == this.max_input) {
 			$('add_type').hide();
 		}
-		if (this.integer == 1) {
+		if (this.integer == 2) {
 			$('no_type').hide();
 		}
 	},

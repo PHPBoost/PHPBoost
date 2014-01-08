@@ -264,7 +264,6 @@ $lang['bugs.error.e_already_reopen_bug'] = 'This bug is already reopen';
 $lang['bugs.error.e_unexist_pm_type'] = 'This type of PM does not exist';
 
 //Success
-$lang['bugs.success.config'] = 'The configuration has been modified';
 $lang['bugs.success.add'] = 'The bug #:id has been committed';
 $lang['bugs.success.edit'] = 'The bug #:id has been updated';
 $lang['bugs.success.fixed'] = 'The bug #:id has been fixed';
