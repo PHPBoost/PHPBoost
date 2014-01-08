@@ -32,7 +32,6 @@
 class CSSCacheManager
 {
 	private $css_optimizer;
-	private $files = array();
 	private $cache_file_location = '';
 
 	public function __construct()
@@ -46,7 +45,6 @@ class CSSCacheManager
 		{
 			$this->css_optimizer->add_file(PATH_TO_ROOT . $file);
 		}
-		$this->files = $files;
 	}
 	
 	public function set_cache_file_location($location)
