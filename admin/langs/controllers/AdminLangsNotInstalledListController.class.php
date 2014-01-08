@@ -118,7 +118,7 @@ class AdminLangsNotInstalledListController extends AdminController
 					}
 					else
 					{
-						$this->execute($request);
+						$this->view->put('MSG', MessageHelper::display($this->lang['langs.install_success'], MessageHelper::SUCCESS, 10));
 					}
 				}
 			} catch (Exception $e) {
@@ -136,7 +136,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		}
 		else
 		{
-			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());
+			$this->view->put('MSG', MessageHelper::display($this->lang['langs.install_success'], MessageHelper::SUCCESS, 10));
 		}
 	}
 	

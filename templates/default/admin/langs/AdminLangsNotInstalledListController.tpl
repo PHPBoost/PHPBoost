@@ -15,8 +15,8 @@
 		</thead>
 		<tbody>
 			# START langs_not_installed #
-			<tr> 	
-				<td>					
+			<tr>
+				<td>
 					<span id="lang-{langs_not_installed.ID}"></span>
 					<span class="text-strong">{langs_not_installed.NAME}</span> <em>({langs_not_installed.VERSION})</em>
 				</td>
@@ -49,7 +49,7 @@
 	</table>
 	<div class="message-helper notice message-helper-small">
 		<i class="fa fa-notice"></i>
-		<div class="message-helper-content">{@themes.add.not_lang}</div>
+		<div class="message-helper-content">{@langs.add.not_lang}</div>
 	</div>
 		# ENDIF #
 		
