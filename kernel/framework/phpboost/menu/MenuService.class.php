@@ -322,7 +322,7 @@ class MenuService
 		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__FOOTER] = \'\';';
 		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__LEFT] = \'\';';
 		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__RIGHT] = \'\';';
-		$cache_str .= 'global $User;' . "\n";
+		$cache_str .= 'global $User, $columns_disabled;' . "\n";
 		
 		$menus_map = MenuService::get_menus_map();
 		foreach ($menus_map as $block => $block_menus)
@@ -343,8 +343,10 @@ class MenuService
 						$cache_filter = trim($cache_filter, '|| ');
 						
 						$cache_str .= ($has_filter) ? 'if (' . $cache_filter . '){' . "\n" : '';
+						$cache_str .= 'if (!$columns_disabled->menus_column_is_disabled(' . $menu->get_block() . ')){' . "\n";
 						$cache_str .= '$__menu=\'' . $menu->cache_export() . '\';' . "\n";
 						$cache_str .= '$MENUS[' . $menu->get_block() . '].=$__menu;' . "\n";
+						$cache_str .= '}' . "\n";
 						$cache_str .= ($has_filter) ? '}' . "\n" : '';
 					}
 				}

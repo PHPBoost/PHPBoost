@@ -164,5 +164,37 @@ class ColumnsDisabled
 			}
 		}
 	}
+	
+	public function menus_column_is_disabled($column)
+	{
+		switch ($column)
+		{
+			case Menu::BLOCK_POSITION__HEADER:
+				return $this->disable_header;
+				break;
+			case Menu::BLOCK_POSITION__SUB_HEADER:
+				return $this->disable_sub_header;
+				break;
+			case Menu::BLOCK_POSITION__TOP_CENTRAL:
+				return $this->disable_top_central;
+				break;
+			case Menu::BLOCK_POSITION__BOTTOM_CENTRAL:
+				return $this->disable_bottom_central;
+				break;
+			case Menu::BLOCK_POSITION__TOP_FOOTER:
+				return $this->disable_top_footer;
+				break;
+			case Menu::BLOCK_POSITION__FOOTER:
+				return $this->disable_footer;
+				break;
+			case Menu::BLOCK_POSITION__LEFT:
+				return $this->disable_left_columns;
+				break;
+			case Menu::BLOCK_POSITION__RIGHT:
+				return $this->disable_right_columns;
+				break;
+		}
+		return false;
+	}
 }
 ?>
