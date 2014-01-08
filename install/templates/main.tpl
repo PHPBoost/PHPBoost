@@ -1,11 +1,12 @@
 ${resources('install/install')}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" >
+<!DOCTYPE html>
+<html lang="{L_XML_LANGUAGE}">
 	<head>
 		<title>{@installation.title} - {STEP_TITLE}</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta charset="iso-8859-1" />
 		<meta name="description" content="PHPBoost" />
 		<meta name="robots" content="noindex, follow" />
+		
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
 		<link type="text/css" href="templates/install.css" title="phpboost" rel="stylesheet" />
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>

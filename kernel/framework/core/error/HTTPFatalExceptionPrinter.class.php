@@ -46,12 +46,11 @@ class HTTPFatalExceptionPrinter
 
 	public function render()
 	{
-		$this->output .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+		$this->output .= '<!DOCTYPE html>
+<html lang="en">
 	<head>
 		<title>' . $this->type . ' caught</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<meta http-equiv="Content-Language" content="en" />
+		<meta charset="iso-8859-1" />
 		<style type="text/css">
 			body {background-color:#dddddd;}
 			table {width:100%;}
