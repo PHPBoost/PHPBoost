@@ -41,7 +41,6 @@ class ModuleTreeLinksService
 			$tpl->put('C_DISPLAY', $actions_tree_links->has_visible_links());
 			
 			return self::display($actions_tree_links, $tpl);
-			
 		}
 	}
 	
