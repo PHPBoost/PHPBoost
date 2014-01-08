@@ -81,7 +81,7 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 	
 	public function on_changepage()
 	{
-		StatsSaver::update_pages_displayed('pages');
+		StatsSaver::update_pages_displayed();
 		StatsSaver::compute_referer();
 	}
 }
