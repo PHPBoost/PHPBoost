@@ -65,7 +65,7 @@ class AdminThemesNotInstalledListController extends AdminController
 	private function build_view()
 	{
 		$not_installed_themes = $this->get_not_installed_themes();
-		foreach($not_installed_themes as $name)
+		foreach($not_installed_themes as $key => $name)
 		{
 			try {
 				$configuration = ThemeConfigurationManager::get($name);
@@ -102,10 +102,11 @@ class AdminThemesNotInstalledListController extends AdminController
 					}
 				}
 			} catch (IOException $e) {
+				unset($not_installed_themes[$key]);
 			}
 		}
 		$this->view->put_all(array(
-			'C_THEME_INSTALL' => count($not_installed_themes) > 0 ? true : false,
+			'C_THEME_INSTALL' => count($not_installed_themes) > 0,
 			'L_ADD' => $this->lang['themes.add_theme']
 		));
 	}
