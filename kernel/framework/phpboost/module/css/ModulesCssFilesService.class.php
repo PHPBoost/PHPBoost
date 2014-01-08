@@ -27,84 +27,60 @@
 
 class ModulesCssFilesService
 {
-	private static $css_files_always_displayed = array();
-	private static $css_files_running_module_displayed = array();
-	private static $css_files = array();
-	const CSS_FILES_ALWAYS_DISPLAYED = 'always_displayed';
-	const CSS_FILES_RUNNING_MODULE_DISPLAYED = 'running_module_displayed';
+	private static $modules_css_files = array();
 	
 	public static function __static()
 	{
-		self::$css_files_always_displayed = CssFilesExtensionPointService::get_css_files_always_displayed();
-		self::$css_files_running_module_displayed = CssFilesExtensionPointService::get_css_files_running_module_displayed();
-		self::build_array();
+		$extension_points = AppContext::get_extension_provider_service()->get_extension_point(CssFilesExtensionPoint::EXTENSION_POINT);
+		foreach ($extension_points as $module_id => $provider)
+		{
+			self::$modules_css_files[$module_id] = $provider;
+		}
 	}
 		
-	public static function get_css_files_always_displayed($theme_id)
+	public static function get_css_files_always_displayed()
 	{
-		return self::$css_files[$theme_id][self::CSS_FILES_ALWAYS_DISPLAYED];
+		$theme_id = AppContext::get_current_user()->get_theme();
+		$css_files = array();
+		foreach (self::$modules_css_files as $module_id => $module_css_files)
+		{
+			$module_css_files_always_displayed = $module_css_files->get_css_files_always_displayed();
+			foreach ($module_css_files_always_displayed as $css_file)
+			{
+				$css_files[] = self::get_real_path_css_file($theme_id, $module_id, $css_file);
+			}
+		}
+		return $css_files;
 	}
 	
-	public static function get_css_files_running_module_displayed($theme_id)
+	public static function get_css_files_running_module_displayed()
 	{
-		$css_files = self::$css_files[$theme_id][self::CSS_FILES_RUNNING_MODULE_DISPLAYED];
 		$running_module_id = Environment::get_running_module_name();
 		$module_home_page = GeneralConfig::load()->get_module_home_page();
-
-		if (array_key_exists($running_module_id, $css_files))
+		
+		$module_id = Environment::get_running_module_name();
+		if (!empty($module_home_page))
+			$module_id = $module_home_page;
+		
+		if (array_key_exists($module_id, self::$modules_css_files))
 		{
-			return $css_files[$running_module_id];
-		}
-		else if (array_key_exists($module_home_page, $css_files) && empty($running_module_id))
-		{
-			return $css_files[$module_home_page];
+			$module_css_files = self::$modules_css_files[$module_id];
+			$module_css_files_running_module_displayed = $module_css_files->get_css_files_running_module_displayed();
+			if (!empty($module_css_files_running_module_displayed))
+			{
+				$theme_id = AppContext::get_current_user()->get_theme();
+				$css_files = array();
+				foreach ($module_css_files_running_module_displayed as $css_file)
+				{
+					$css_files[] = self::get_real_path_css_file($theme_id, $module_id, $css_file);
+				}
+				return $css_files;
+			}
+			return array();
 		}
 		return array();
 	}
-	
-	private static function build_array()
-	{
-		$activated_themes = ThemeManager::get_activated_themes_map();
-		foreach ($activated_themes as $theme_id => $theme)
-		{
-			self::$css_files[$theme_id] = array(
-				self::CSS_FILES_ALWAYS_DISPLAYED => self::get_modules_css_files_always_displayed($theme_id),
-				self::CSS_FILES_RUNNING_MODULE_DISPLAYED => self::get_modules_css_files_running_module_displayed($theme_id)
-			);
-		}
-	}
-	
-	private static function get_modules_css_files_always_displayed($theme_id)
-	{
-		$modules_css_files_always_displayed = array();
-		foreach (self::$css_files_always_displayed as $module_id => $css_files)
-		{
-			foreach ($css_files as $css_file)
-			{
-				$modules_css_files_always_displayed[] = self::get_real_path_css_file($theme_id, $module_id, $css_file);
-			}
-		}
-		return $modules_css_files_always_displayed;
-	}
-	
-	private static function get_modules_css_files_running_module_displayed($theme_id)
-	{
-		$modules_css_files_running_module_displayed = array();
-		foreach (self::$css_files_running_module_displayed as $module_id => $css_files)
-		{
-			$module_css_files_running_module_displayed = array();
-			if (!empty($css_files))
-			{
-				foreach ($css_files as $css_file)
-				{
-					$module_css_files_running_module_displayed[] = self::get_real_path_css_file($theme_id, $module_id, $css_file);
-				}
-				$modules_css_files_running_module_displayed[$module_id] = $module_css_files_running_module_displayed;
-			}
-		}
-		return $modules_css_files_running_module_displayed;
-	}
-	
+		
 	private static function get_real_path_css_file($theme_id, $module_id, $css_file)
 	{
 		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/' . $css_file))
