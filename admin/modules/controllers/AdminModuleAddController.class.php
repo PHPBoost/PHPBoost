@@ -194,7 +194,7 @@ class AdminModuleAddController extends AdminController
 						$archive_path = $modules_folder . $upload->get_filename();
 						if ($upload->get_extension() == 'gzip')
 						{
-							import('php/pcl/pcltar', LIB_IMPORT);
+							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pcltar.lib.php');
 							PclTarExtract($upload->get_filename(), $modules_folder);
 							
 							$file = new File($archive_path);
@@ -202,7 +202,7 @@ class AdminModuleAddController extends AdminController
 						}
 						else if ($upload->get_extension() == 'zip')
 						{
-							import('php/pcl/pclzip', LIB_IMPORT);
+							include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
 							$zip = new PclZip($archive_path);
 							$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
 							

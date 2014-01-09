@@ -97,11 +97,12 @@ class ClassLoader
 		{
 			self::$already_reloaded = true;
 			self::$autoload = array();
-			import('io/filesystem/FileSystemElement');
-			import('io/filesystem/Folder');
-			import('io/filesystem/File');
-			import('io/IOException');
-			import('util/Path');
+			
+			include_once(PATH_TO_ROOT . '/kernel/framework/io/filesystem/FileSystemElement.class.php');
+			include_once(PATH_TO_ROOT . '/kernel/framework/io/filesystem/Folder.class.php');
+			include_once(PATH_TO_ROOT . '/kernel/framework/io/filesystem/File.class.php');
+			include_once(PATH_TO_ROOT . '/kernel/framework/io/IOException.class.php');
+			include_once(PATH_TO_ROOT . '/kernel/framework/util/Path.class.php');
 
 			$phpboost_classfile_pattern = '`\.class\.php$`';
 			$paths = array('/', '/kernel/framework/core/lang');

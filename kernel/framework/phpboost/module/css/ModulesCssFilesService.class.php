@@ -55,13 +55,7 @@ class ModulesCssFilesService
 	
 	public static function get_css_files_running_module_displayed()
 	{
-		$running_module_id = Environment::get_running_module_name();
-		$module_home_page = GeneralConfig::load()->get_module_home_page();
-		
 		$module_id = Environment::get_running_module_name();
-		if (!empty($module_home_page))
-			$module_id = $module_home_page;
-		
 		if (array_key_exists($module_id, self::$modules_css_files))
 		{
 			$module_css_files = self::$modules_css_files[$module_id];
@@ -87,10 +81,7 @@ class ModulesCssFilesService
 		{
 			return '/templates/' . $theme_id . '/modules/' . $module_id . '/' . $css_file;
 		}
-		else if (file_exists(PATH_TO_ROOT . '/' . $module_id . '/templates/' . $css_file))
-		{
-			return '/' . $module_id . '/templates/' . $css_file;
-		}
+		return '/' . $module_id . '/templates/' . $css_file;
 	}
 }
 ?>

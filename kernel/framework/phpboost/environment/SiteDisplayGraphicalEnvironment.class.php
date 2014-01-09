@@ -258,12 +258,9 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		global $MENUS;
 		$template = new FileTemplate('footer.tpl');
 
-		$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
-		$columns_disabled = $this->get_columns_disabled();
-		
-		$bottom_top_central_is_activated = !$columns_disabled->bottom_central_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]);
-		$top_footer_is_activated = !$columns_disabled->top_footer_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__TOP_FOOTER]);
-		$footer_is_activated = !$columns_disabled->footer_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__FOOTER]);
+		$bottom_top_central_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]);
+		$top_footer_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__TOP_FOOTER]);
+		$footer_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__FOOTER]);
 	
 		$bottom_top_central_content = $bottom_top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL] : '';
 		$top_footer_content = $top_footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_FOOTER] : '';
@@ -276,14 +273,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'MENUS_TOP_FOOTER_CONTENT' => $top_footer_content,
 			'C_MENUS_FOOTER_CONTENT' => $footer_is_activated,
 			'MENUS_FOOTER_CONTENT' => $footer_content,
-			'C_DISPLAY_AUTHOR_THEME' => GraphicalEnvironmentConfig::load()->get_display_theme_author(),
 			'L_POWERED_BY' => self::$main_lang['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$main_lang['phpboost_right'],
-			'L_THEME' => self::$main_lang['theme'],
-			'L_THEME_NAME' => $theme_configuration->get_name(),
-			'L_BY' => strtolower(self::$main_lang['by']),
-			'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
-			'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
 			'JAVASCRIPT' => new FileTemplate('javascript_footer.tpl')
 		));
@@ -293,8 +284,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			$template->put_all(array(
 				'C_DISPLAY_BENCH' => true,
 				'BENCH' => AppContext::get_bench()->to_string(),
-				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() +
-			PersistenceContext::get_sql()->get_executed_requests_number(),
+				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count(),
 				'MEMORY_USED' => AppContext::get_bench()->get_memory_php_used(),
 				'L_REQ' => self::$main_lang['sql_req'],
 				'L_ACHIEVED' => self::$main_lang['achieved'],
@@ -302,7 +292,18 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			));
 		}
 		
-		$this->display_counter($template);
+		if (GraphicalEnvironmentConfig::load()->get_display_theme_author())
+		{
+			$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
+			$template->put_all(array(
+				'C_DISPLAY_AUTHOR_THEME' => true,
+				'L_THEME' => self::$main_lang['theme'],
+				'L_THEME_NAME' => $theme_configuration->get_name(),
+				'L_BY' => strtolower(self::$main_lang['by']),
+				'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
+				'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
+			));
+		}
 
 		$template->display();
 	}

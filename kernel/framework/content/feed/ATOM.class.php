@@ -54,7 +54,7 @@ class ATOM extends Feed
      */
     public function load_file($url)
     {
-        if (($file = @file_get_contents_emulate($url)) !== false)
+        if (($file = @file_get_contents($url)) !== false)
         {
             $this->data = new FeedData();
             if (preg_match('`<entry>(.*)</entry>`is', $file))

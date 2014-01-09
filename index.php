@@ -27,29 +27,10 @@
 
 define('PATH_TO_ROOT', '.');
 
-if (!file_exists(PATH_TO_ROOT . '/kernel/db/config.php'))
-{
-	header('Location:install/index.php');
-	exit;
-}
-else
-{
-	require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.class.php';
-	
-	try
-	{
-		Environment::load_imports();
-	}
-	catch (IOException $ex)
-	{
-		Debug::fatal($ex);
-	}
-	
-	require_once PATH_TO_ROOT . '/kernel/init.php';
-	
-	$url_controller_mappers = array(
-		new UrlControllerMapper('PHPBoostIndexController', '`^/?$`')
-	);
-	DispatchManager::dispatch($url_controller_mappers);
-}
+require_once PATH_TO_ROOT . '/kernel/init.php';
+
+$url_controller_mappers = array(
+	new UrlControllerMapper('PHPBoostIndexController', '`^/?$`')
+);
+DispatchManager::dispatch($url_controller_mappers);
 ?>
