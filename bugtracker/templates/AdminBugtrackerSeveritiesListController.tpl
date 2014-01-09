@@ -1,12 +1,12 @@
 <script type="text/javascript">
 <!--
-function insert_color(color, field)
+function insert_severity_color(color, field)
 {
 	document.getElementById(field).value = color;
 	document.getElementById(field).style.backgroundColor = color;
 }
 
-function bbcode_color(field)
+function severity_bbcode_color(field)
 {
 	var i;
 	var br;
@@ -23,7 +23,7 @@ function bbcode_color(field)
 	{
 		br = (i+1) % 8;
 		br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-		contents += '<td><a style="background:' + color[i] + ';" onclick="javascript:insert_color(\'' + color[i] + '\', \'' + field + '\');"></a></td>' + br;
+		contents += '<td><a style="background:' + color[i] + ';" onclick="javascript:insert_severity_color(\'' + color[i] + '\', \'' + field + '\');"></a></td>' + br;
 	}
 	document.getElementById(field + '_list').innerHTML = contents + '</tr></table>';
 }
@@ -61,7 +61,7 @@ function bbcode_color(field)
 			</td>
 			<td>
 				<input type="text" size="8" maxlength="7" name="color{severities.ID}" id="color{severities.ID}" value="{severities.COLOR}" style="background-color:{severities.COLOR};" />
-				<a href="javascript:bbcode_color('color{severities.ID}');bb_display_block('color{severities.ID}', '');" onmouseout="bb_hide_block('color{severities.ID}', '', 0);" >
+				<a href="javascript:severity_bbcode_color('color{severities.ID}');bb_display_block('color{severities.ID}', '');" onmouseout="bb_hide_block('color{severities.ID}', '', 0);" >
 					<img src="{PATH_TO_ROOT}/templates/default/images/color.png" alt="" class="valign-middle" />
 				</a>
 				<div class="color-picker" style="display:none;" id="bb-blockcolor{severities.ID}">
