@@ -54,12 +54,12 @@
 	
 	private function get_css_files_always_displayed_html_code()
 	{
-		$theme_id = get_utheme();
 		$css_cache_config = CSSCacheConfig::load();
 		if ($css_cache_config->is_enabled())
 		{
+			$theme_id = get_utheme();
 			$css_cache = new CSSCacheManager();
-			$css_cache->set_files(ModulesCssFilesService::get_css_files_always_displayed($theme_id));
+			$css_cache->set_files(ModulesCssFilesService::get_css_files_always_displayed());
 			$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-modules-' . $theme_id .'.css');
 			$css_cache->execute($css_cache_config->get_optimization_level());
 			$html_code = '<link rel="stylesheet" href="' . Url::to_rel('/cache/css/css-cache-modules-' . $theme_id .'.css') . '" type="text/css" media="screen, print, handheld" />';
@@ -67,7 +67,7 @@
 		else
 		{
 			$html_code = '';
-			foreach (ModulesCssFilesService::get_css_files_always_displayed($theme_id) as $file)
+			foreach (ModulesCssFilesService::get_css_files_always_displayed() as $file)
 			{
 				$html_code .= '<link rel="stylesheet" href="' . Url::to_rel($file) .	'" type="text/css" media="screen, print, handheld" />';
 			}
@@ -78,7 +78,8 @@
 	private function get_css_files_running_module_displayed()
 	{
 		$html_code = '';
-		foreach (ModulesCssFilesService::get_css_files_running_module_displayed(get_utheme()) as $css_file)
+		$css_files = ModulesCssFilesService::get_css_files_running_module_displayed();
+		foreach ($css_files as $css_file)
 		{
 			$html_code .= '<link rel="stylesheet" href="' . Url::to_rel($css_file) . 
 				'" type="text/css" media="screen, print, handheld" />';

@@ -57,12 +57,12 @@ class DBFactory
 
 	public static function load_prefix()
 	{
-		include_file(self::$config_file);
+		include_once(PATH_TO_ROOT . self::$config_file);
 	}
 
 	public static function init_factory($dbms)
 	{
-		require_file('/kernel/db/tables.php');
+		require_once(PATH_TO_ROOT . '/kernel/db/tables.php');
 		switch ($dbms)
 		{
 			case self::PDO_MYSQL:

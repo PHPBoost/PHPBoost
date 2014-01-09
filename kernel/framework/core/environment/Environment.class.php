@@ -47,10 +47,9 @@ class Environment
 	 */
 	public static function load_imports()
 	{
-		require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 		require_once PATH_TO_ROOT . '/kernel/framework/helper/deprecated_helper.inc.php';
 
-		import('core/ClassLoader');
+		include_once(PATH_TO_ROOT . '/kernel/framework/core/ClassLoader.class.php');
 		ClassLoader::init_autoload();
 		AppContext::init_bench();
 	}

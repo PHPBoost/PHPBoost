@@ -100,7 +100,7 @@ class FileTemplateLoader implements TemplateLoader
 
 	private function generate_cache_file()
 	{
-		$real_file_content = @file_get_contents_emulate($this->real_filepath);
+		$real_file_content = @file_get_contents($this->real_filepath);
 		if ($real_file_content === false)
 		{
 			throw new FileTemplateLoadingException($this->filepath, $this->real_filepath);
@@ -127,7 +127,7 @@ class FileTemplateLoader implements TemplateLoader
 
 	private function get_file_cache_content()
 	{
-		return @file_get_contents_emulate($this->cache_filepath);
+		return @file_get_contents($this->cache_filepath);
 	}
 
 	/**

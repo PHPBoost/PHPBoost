@@ -308,17 +308,9 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$tpl = new FileTemplate('admin/admin_footer.tpl');
 		$tpl->add_lang(self::$lang);
 
-		$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
-
 		$tpl->put_all(array(
-			'C_DISPLAY_AUTHOR_THEME' => GraphicalEnvironmentConfig::load()->get_display_theme_author(),
 			'L_POWERED_BY' => self::$lang_admin['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
-			'L_THEME' => self::$lang_admin['theme'],
-			'L_THEME_NAME' => $theme_configuration->get_name(),
-			'L_BY' => strtolower(self::$lang['by']),
-			'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
-			'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 		));
 
@@ -327,13 +319,25 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			$tpl->put_all(array(
 				'C_DISPLAY_BENCH' => true,
 				'BENCH' => AppContext::get_bench()->to_string(), //Fin du benchmark
-				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() +
-			PersistenceContext::get_sql()->get_executed_requests_number(),
+				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count(),
 				'MEMORY_USED' => AppContext::get_bench()->get_memory_php_used(),
 				'L_UNIT_SECOND' => HOST,
 				'L_REQ' => self::$lang['sql_req'],
 				'L_ACHIEVED' => self::$lang['achieved'],
 				'L_UNIT_SECOND' => self::$lang['unit_seconds_short']
+			));
+		}
+		
+		if (GraphicalEnvironmentConfig::load()->get_display_theme_author())
+		{
+			$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
+			$template->put_all(array(
+				'C_DISPLAY_AUTHOR_THEME' => true,
+				'L_THEME' => self::$main_lang['theme'],
+				'L_THEME_NAME' => $theme_configuration->get_name(),
+				'L_BY' => strtolower(self::$main_lang['by']),
+				'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
+				'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
 			));
 		}
 

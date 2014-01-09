@@ -65,7 +65,7 @@ class CachedStringTemplateLoader implements TemplateLoader
 			return $content;
 		}
 
-		return file_get_contents_emulate($this->cache_file_path);
+		return file_get_contents($this->cache_file_path);
 	}
 
 	private function file_cache_exists()

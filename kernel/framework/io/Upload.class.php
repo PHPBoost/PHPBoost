@@ -160,7 +160,7 @@ class Upload
 	 * @param tmp file path
 	 */
 	private function check_file_content($file) {
-		$file_content = file_get_contents_emulate($file);
+		$file_content = file_get_contents($file);
 		
 		if (strpos($file_content, "<?php") === false) {
 			return true;

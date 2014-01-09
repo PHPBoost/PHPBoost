@@ -26,16 +26,6 @@
  ###################################################*/
 
 define('LOW_PRIORITY', 'LOW_PRIORITY');
-define('DB_NO_CONNECT', false);
-define('ERRORS_MANAGEMENT_BY_RETURN', false);
-define('EXPLICIT_ERRORS_MANAGEMENT', true);
-
-//Errors
-define('CONNECTION_FAILED', 1);
-define('UNEXISTING_DATABASE', 2);
-define('CONNECTED_TO_DATABASE', 3);
-
-define('DBTYPE', 'mysql');
 
 /**
  * @deprecated
@@ -55,23 +45,6 @@ define('DBTYPE', 'mysql');
 
 class Sql
 {
-	/**
-	 * @var resource Link with the data base
-	 */
-	private $link;
-	/**
-	 * @var int Number of requests executed by the object.
-	 */
-	private $req = 0;
-	/**
-	 * @var bool true if the object is connected to the data base, false otherwise.
-	 */
-	private $connected = false;
-	/**
-	 * @var string name of the data base at which is connected the object.
-	 */
-	private $base_name = '';
-
 	/**
 	 * @var SelectQueryResult
 	 */
@@ -384,15 +357,6 @@ class Sql
 			}
 			@fclose($handle);
 		}
-	}
-
-	/**
-	 * @desc Returns the number of request executed by this object.
-	 * @return int Number of request executed.
-	 */
-	public function get_executed_requests_number()
-	{
-		return $this->req;
 	}
 
 	/**
