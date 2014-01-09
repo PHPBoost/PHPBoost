@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('/kernel/lib/php/phpmailer/class.phpmailer', PHP_IMPORT);
+include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/class.phpmailer.php';
 
 class MailToPHPMailerConverter
 {
