@@ -16,7 +16,7 @@ var BugtrackerFormFieldCategories = Class.create({
 			tr.insert(td);
 			
 			var td = Builder.node('td', {'id' : 'td2_' + id}, [
-				Builder.node('input', {type : 'text', id : 'category_' + id, name : 'category_' + id, size : 40, maxlength : 100, placeholder : '${LangLoader::get_message('name', 'main')}'}),
+				Builder.node('input', {type : 'text', id : 'category_' + id, name : 'category_' + id, size : 40, maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('name', 'main'))}}),
 				' ',
 			]);
 			tr.insert(td);
@@ -80,10 +80,10 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 		# START categories #
 		<tr>
 			<td>
-				<input type="radio" name="default_category" value="{categories.ID}"# IF categories.C_IS_DEFAULT # checked="checked"# ENDIF #>
+				<input type="radio" name="default_category" value="{categories.ID}"# IF categories.C_IS_DEFAULT # checked="checked"# ENDIF # />
 			</td>
 			<td>
-				<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}">
+				<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}" />
 			</td>
 			<td>
 				<a href="{categories.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_category}"></a>

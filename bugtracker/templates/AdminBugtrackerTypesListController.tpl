@@ -16,7 +16,7 @@ var BugtrackerFormFieldTypes = Class.create({
 			tr.insert(td);
 			
 			var td = Builder.node('td', {'id' : 'td2_' + id}, [
-				Builder.node('input', {type : 'text', id : 'type_' + id, name : 'type_' + id, size : 40, maxlength : 100, placeholder : '${LangLoader::get_message('name', 'main')}'}),
+				Builder.node('input', {type : 'text', id : 'type_' + id, name : 'type_' + id, size : 40, maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('name', 'main'))}}),
 				' ',
 			]);
 			tr.insert(td);
@@ -80,10 +80,10 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 		# START types #
 		<tr>
 			<td>
-				<input type="radio" name="default_type" value="{types.ID}"# IF types.C_IS_DEFAULT # checked="checked"# ENDIF #>
+				<input type="radio" name="default_type" value="{types.ID}"# IF types.C_IS_DEFAULT # checked="checked"# ENDIF # />
 			</td>
 			<td>
-				<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}">
+				<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}" />
 			</td>
 			<td>
 				<a href="{types.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_type}"></a>
