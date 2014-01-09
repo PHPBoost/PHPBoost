@@ -36,10 +36,9 @@ class AdminLangsNotInstalledListController extends AdminController
 	{
 		$this->init();
 		
-		$this->upload_form();
-		
-		$this->build_view();
 		$this->save($request);
+		$this->upload_form();
+		$this->build_view();
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{

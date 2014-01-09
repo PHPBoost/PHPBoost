@@ -35,11 +35,7 @@ class AdminModuleAddController extends AdminController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-	
-		$this->upload_form();
-		
-		$this->build_view();
-		
+
 		foreach ($this->get_modules_not_installed() as $name => $module)
 		{
 			try {
@@ -51,6 +47,9 @@ class AdminModuleAddController extends AdminController
 			}
 			catch (UnexistingHTTPParameterException $e)	{}
 		}
+		
+		$this->upload_form();
+		$this->build_view();
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{

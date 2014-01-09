@@ -53,7 +53,6 @@ class AdminSitemapController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->handle_form();
-			$this->build_form();
 		}
 
 		return $this->build_response($this->form->display());
