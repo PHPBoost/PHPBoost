@@ -51,7 +51,6 @@ class AdminGeneralConfigController extends AdminController
 			$this->save();
 			$this->clear_cache();
 			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 5));
-			$this->build_form();
 		}
 
 		$this->tpl->put('FORM', $this->form->display());

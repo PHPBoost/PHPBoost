@@ -36,9 +36,6 @@ class AdminThemesNotInstalledListController extends AdminController
 	{
 		$this->init();
 		
-		$this->upload_form();
-		$this->build_view();
-		
 		foreach ($this->get_not_installed_themes() as $id_theme)
 		{
 			try {
@@ -51,6 +48,9 @@ class AdminThemesNotInstalledListController extends AdminController
 			} catch (UnexistingHTTPParameterException $e) {
 			}
 		}
+		
+		$this->upload_form();
+		$this->build_view();
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
