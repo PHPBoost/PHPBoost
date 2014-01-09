@@ -38,7 +38,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 	private $submit_button;
 	private $config;
 	
-	private $max_input = 30;
+	private $max_input = 50;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -310,13 +310,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		foreach ($severities as $key => $severity)
 		{
-			$color_field = new FormFieldColorPicker('s_color' . $key, '', $severity['color']);
-			
 			$severities_table->assign_block_vars('severities', array(
 				'C_IS_DEFAULT'	=> $this->config->get_default_severity() == $key,
 				'ID'			=> $key,
 				'NAME'			=> stripslashes($severity['name']),
-				'COLOR'			=> $color_field->display()
+				'COLOR'			=> $severity['color']
 			));
 		}
 		
@@ -377,7 +375,6 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		{
 			$versions_table->assign_block_vars('versions', array(
 				'C_IS_DEFAULT'		=> $this->config->get_default_version() == $key,
-				'C_RELEASE_DATE'	=> isset($version['release_date']),
 				'C_DETECTED_IN'		=> $version['detected_in'],
 				'ID'				=> $key,
 				'NAME'				=> stripslashes($version['name']),
@@ -468,7 +465,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		foreach ($severities as $key => $severity)
 		{
 			$new_severity_name = $request->get_value('severity' . $key, '');
-			$new_severity_color = $request->get_value('_s_color' . $key, '');
+			$new_severity_color = $request->get_value('color' . $key, '');
 			$severities[$key]['name'] = (!empty($new_severity_name) && $new_severity_name != $severity['name']) ? $new_severity_name : $severity['name'];
 			$severities[$key]['color'] = ($new_severity_color != $severity['color']) ? $new_severity_color : $severity['color'];
 		}
@@ -482,7 +479,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		foreach ($versions as $key => $version)
 		{
 			$new_version_name = $request->get_value('version' . $key, '');
-			$new_version_release_date = $request->get_value('release_date' . $key, '00/00/0000');
+			$new_version_release_date = $request->get_value('release_date' . $key, '');
 			$new_version_detected_in = (bool)$request->get_value('detected_in' . $key, '');
 			$versions[$key]['name'] = (!empty($new_version_name) && $new_version_name != $version['name']) ? $new_version_name : $version['name'];
 			$versions[$key]['release_date'] = ($new_version_release_date != $version['release_date']) ? $new_version_release_date : $version['release_date'];
@@ -498,7 +495,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				$array_id = empty($nb_versions) ? 1 : ($nb_versions + 1);
 				$versions[$array_id] = array(
 					'name'			=> addslashes($request->get_poststring($version)),
-					'release_date'	=> $request->get_poststring('release_date_' . $i, '00/00/0000'),
+					'release_date'	=> $request->get_poststring('release_date_' . $i, ''),
 					'detected_in'	=> (bool)$request->get_value('detected_in' . $i, '')
 				);
 				$nb_versions++;

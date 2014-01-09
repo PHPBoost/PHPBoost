@@ -16,13 +16,13 @@ var BugtrackerFormFieldVersions = Class.create({
 			tr.insert(td);
 			
 			var td = Builder.node('td', {'id' : 'td2_' + id}, [
-				Builder.node('input', {type : 'text', id : 'version_' + id, name : 'version_' + id, size : 40, maxlength : 100, placeholder : '${LangLoader::get_message('name', 'main')}'}),
+				Builder.node('input', {type : 'text', id : 'version_' + id, name : 'version_' + id, size : 40, maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('name', 'main'))}}),
 				' ',
 			]);
 			tr.insert(td);
 			
 			var td = Builder.node('td', {'id' : 'td3_' + id}, [
-				Builder.node('input', {type : 'text', id : 'release_date_' + id, name : 'release_date_' + id, size : 11, maxlength : 10, onclick : 'if(this.value == \x2700/00/0000\x27) this.value = \x27\x27;', onblur : 'if(this.value == \x27\x27) this.value = \x2700/00/0000\x27;', value : '00/00/0000'}),
+				Builder.node('input', {type : 'text', id : 'release_date_' + id, name : 'release_date_' + id, size : 11, maxlength : 10, placeholder : ${escapejs(@bugs.labels.fields.version_release_date.explain)}}),
 				' ',
 			]);
 			tr.insert(td);
@@ -108,16 +108,16 @@ function display_default_version_radio(version_id)
 		# START versions #
 		<tr>
 			<td>
-				<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}"# IF versions.C_IS_DEFAULT # checked="checked"# ENDIF ## IF NOT versions.C_DETECTED_IN # style="display:none"# ENDIF #>
+				<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}"# IF versions.C_IS_DEFAULT # checked="checked"# ENDIF ## IF NOT versions.C_DETECTED_IN # style="display:none"# ENDIF # />
 			</td>
 			<td>
-				<input type="text" maxlength="100" size="40" name="version{versions.ID}" value="{versions.NAME}">
+				<input type="text" maxlength="100" size="40" name="version{versions.ID}" value="{versions.NAME}" />
 			</td>
 			<td>
-				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="# IF C_RELEASE_DATE #{versions.RELEASE_DATE}# ELSE #00/00/0000# ENDIF #" onclick="if(this.value == '00/00/0000') this.value = '';" onblur="if(this.value == '') this.value = '00/00/0000';">
+				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" placeholder="{@bugs.labels.fields.version_release_date.explain}" />
 			</td> 
 			<td>
-				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF #>
+				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF # />
 			</td> 
 			<td>
 				<a href="{versions.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_version}"></a>
