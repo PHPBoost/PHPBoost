@@ -32,9 +32,8 @@ class AdminModuleLink extends ModuleLink
 {
 	public function __construct($name, $url)
 	{
-		$this->name = $name;
+		parent::__construct($name, $url);
 		$this->visibility = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
-		$this->set_url($url);
 	}
 }
 ?>
