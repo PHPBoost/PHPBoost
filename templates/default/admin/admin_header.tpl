@@ -62,9 +62,9 @@
 				<nav class="dynamic-menu">
 					# INCLUDE subheader_menu #
 				</nav>
-				<div id="admin_extend_link">
-					<a href="{PATH_TO_ROOT}/admin/admin_extend.php" class="admin_extend_link">
-						<img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png" class="valign-middle" alt="" /> {L_EXTEND_MENU}
+				<div id="admin-extend-link">
+					<a href="{PATH_TO_ROOT}/admin/admin_extend.php">
+						<i class="fa fa-plus"></i> {L_EXTEND_MENU}
 					</a>
 				</div>
 				<div class="spacer"></div>
