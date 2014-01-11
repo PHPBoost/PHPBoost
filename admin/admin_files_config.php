@@ -34,7 +34,7 @@ if (!empty($_POST['valid']) )
 {
 	$file_upload_config = FileUploadConfig::load();
 
-	$file_upload_config->set_authorization_enable_interface_files(Authorizations::build_auth_array_from_form(AUTH_FILES));
+	$file_upload_config->set_authorization_enable_interface_files(Authorizations::build_auth_array_from_form(FileUploadConfig::AUTH_FILES_BIT));
 	$file_upload_config->set_maximum_size_upload(NumberHelper::numeric($_POST['size_limit'], 'float') * 1024);
 	$file_upload_config->set_enable_bandwidth_protect(retrieve(POST, 'bandwidth_protect',false));
 
