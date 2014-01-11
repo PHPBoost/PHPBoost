@@ -744,7 +744,9 @@ div.message-helper .fa {
 }
 div.message-helper .fa:before { font-size: 2em; }
 
-div.message-helper-content{ padding:0px 5px 0px 35px; }
+div.message-helper-content { padding:0px 5px 0px 35px; }
+
+div.message-helper-small { width:50% }
 
 .fa-error:before { content: "\f00d"; }
 .fa-notice:before { content: "\f12a"; }
@@ -766,6 +768,19 @@ div.message-helper-content{ padding:0px 5px 0px 35px; }
 
 .success { background-color:#E0F1D9; border-color:#D7EAC7; }
 .success, .fa-success:before { color:#478948; }
+
+/* Affichage du message de maintenance */
+div#message-maintain {
+	top:5px;
+	width:100%;
+	position:absolute;
+	opacity:0.98;
+	text-align:center;
+}
+
+div#message-maintain message-helper { margin:0px auto;}
+
+div#release { margin-top:20px; }
 
 /* Système d'Upload
 --------------------------------------*/
