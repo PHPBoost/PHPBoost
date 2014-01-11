@@ -65,38 +65,38 @@
 		-->
 		</script>
 
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 			<ul>
-				<li class="title_menu">{L_GALLERY_MANAGEMENT}</li>
+				<li class="title-menu">{L_GALLERY_MANAGEMENT}</li>
 				<li>
 					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery.php" class="quick_link">{L_GALLERY_MANAGEMENT}</a>
+					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_gallery_add.php"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_add.php" class="quick_link">{L_GALLERY_PICS_ADD}</a>
+					<a href="admin_gallery_add.php" class="quick-link">{L_GALLERY_PICS_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_gallery_cat.php"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_cat.php" class="quick_link">{L_GALLERY_CAT_MANAGEMENT}</a>
+					<a href="admin_gallery_cat.php" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_gallery_cat_add.php"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_cat_add.php" class="quick_link">{L_GALLERY_CAT_ADD}</a>
+					<a href="admin_gallery_cat_add.php" class="quick-link">{L_GALLERY_CAT_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_gallery_config.php"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_config.php" class="quick_link">{L_GALLERY_CONFIG}</a>
+					<a href="admin_gallery_config.php" class="quick-link">{L_GALLERY_CONFIG}</a>
 				</li>
 			</ul>
 		</div>
 						 
-		<div id="admin_contents">
+		<div id="admin-contents">
 			<form action="admin_gallery_config.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_CONFIG_CONFIG}</legend>

@@ -1,10 +1,10 @@
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 			<ul>
-				<li class="title_menu">{L_ADMIN_ALERTS}</li>
+				<li class="title-menu">{L_ADMIN_ALERTS}</li>
 				<li>
 					<a href="admin_alerts.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/administrator_alert.png" alt="" /></a>
 					<br />
-					<a href="admin_alerts.php" class="quick_link">{L_ADMINISTRATOR_ALERTS_LIST}</a>
+					<a href="admin_alerts.php" class="quick-link">{L_ADMINISTRATOR_ALERTS_LIST}</a>
 				</li>
 			</ul>
 		</div>
@@ -83,7 +83,7 @@
 		-->
 		</script>
 				
-		<div id="admin_contents">
+		<div id="admin-contents">
 			
 			# IF C_EXISTING_ALERTS #
 			<table>

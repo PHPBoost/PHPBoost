@@ -50,15 +50,15 @@
 	# ENDIF #
 	
 	<div id="global">
-		<header id="header_admin_container">
-			<div id="header_admin">
+		<header id="header-admin-container">
+			<div id="header-admin">
 				<div id="logo"></div>
 				<div id="site-name">
 					<a href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
 					<span id="site-name-desc">{SITE_NAME_DESC}</span>
 				</div>
 			</div>
-			<div id="sub_header_admin">
+			<div id="sub-header-admin">
 				<nav class="dynamic-menu">
 					# INCLUDE subheader_menu #
 				</nav>
@@ -71,5 +71,5 @@
 			</div>
 		</header>
 		
-		<div id="admin_main">
+		<div id="admin-main">
 			

@@ -26,18 +26,18 @@
 		</script>
 
 		
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 			<ul>
-				<li class="title_menu">{L_SHOUTBOX}</li>
+				<li class="title-menu">{L_SHOUTBOX}</li>
 				<li>
 					<a href="admin_shoutbox.php"><img src="shoutbox.png" alt="" /></a>
 					<br />
-					<a href="admin_shoutbox.php" class="quick_link">{L_SHOUTBOX_CONFIG}</a>
+					<a href="admin_shoutbox.php" class="quick-link">{L_SHOUTBOX_CONFIG}</a>
 				</li>
 			</ul>
 		</div>
 		
-		<div id="admin_contents">
+		<div id="admin-contents">
 		
 			<form action="admin_shoutbox.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset-content">
 				<fieldset>

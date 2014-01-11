@@ -6,23 +6,23 @@
 		-->
 		</script>
 
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 				<ul>
-					<li class="title_menu">{L_WIKI_MANAGEMENT}</li>
+					<li class="title-menu">{L_WIKI_MANAGEMENT}</li>
 				<li>
 					<a href="admin_wiki.php"><img src="wiki.png" alt="" /></a>
 					<br />
-					<a href="admin_wiki.php" class="quick_link">{L_CONFIG_WIKI}</a>
+					<a href="admin_wiki.php" class="quick-link">{L_CONFIG_WIKI}</a>
 				</li>
 				<li>
 					<a href="admin_wiki_groups.php"><img src="wiki.png" alt="" /></a>
 					<br />
-					<a href="admin_wiki_groups.php" class="quick_link">{L_WIKI_GROUPS}</a>
+					<a href="admin_wiki_groups.php" class="quick-link">{L_WIKI_GROUPS}</a>
 				</li>
 			</ul>
 		</div>
 
-		<div id="admin_contents">
+		<div id="admin-contents">
 			<form action="admin_wiki_groups.php?token={TOKEN}" method="post">
 				<fieldset>
 					<legend>

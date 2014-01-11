@@ -1,30 +1,30 @@
-<div id="admin_quick_menu">
+<div id="admin-quick-menu">
 	<ul>
-		<li class="title_menu">{L_WEBSITE_UPDATES}</li>
+		<li class="title-menu">{L_WEBSITE_UPDATES}</li>
 		<li>
 			<a href="updates.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="" /></a>
 			<br />
-			<a href="updates.php" class="quick_link">{L_WEBSITE_UPDATES}</a>
+			<a href="updates.php" class="quick-link">{L_WEBSITE_UPDATES}</a>
 		</li>
 		<li>
 			<a href="updates.php?type=kernel"><img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="" /></a>
 			<br />
-			<a href="updates.php?type=kernel" class="quick_link">{L_KERNEL}</a>
+			<a href="updates.php?type=kernel" class="quick-link">{L_KERNEL}</a>
 		</li>
 		<li>
 			<a href="updates.php?type=module"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules.png" alt="" /></a>
 			<br />
-			<a href="updates.php?type=module" class="quick_link">{L_MODULES}</a>
+			<a href="updates.php?type=module" class="quick-link">{L_MODULES}</a>
 		</li>
 		<li>
 			<a href="updates.php?type=template"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes.png" alt="" /></a>
 			<br />
-			<a href="updates.php?type=template" class="quick_link">{L_THEMES}</a>
+			<a href="updates.php?type=template" class="quick-link">{L_THEMES}</a>
 		</li>
 	</ul>
 </div>
 
-<div id="admin_contents">
+<div id="admin-contents">
 	# IF C_INCOMPATIBLE_PHP_VERSION #
 		<div class="message-helper warning message-helper-small">
 			<i class="fa fa-warning"></i>

@@ -168,7 +168,7 @@ function image_preview(input,image)
 }
 -->
 </script>
-<div id="admin_contents">
+<div id="admin-contents">
 	<form action="links.php?action=save" method="post" class="fieldset-content" onsubmit="build_menu_elements_tree();">
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>

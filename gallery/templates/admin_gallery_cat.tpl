@@ -203,47 +203,47 @@
 		-->
 		</script>
 
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 			<ul>
-				<li class="title_menu">{L_GALLERY_MANAGEMENT}</li>
+				<li class="title-menu">{L_GALLERY_MANAGEMENT}</li>
 				<li>
 					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery.php" class="quick_link">{L_GALLERY_MANAGEMENT}</a>
+					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_gallery_add.php"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_add.php" class="quick_link">{L_GALLERY_PICS_ADD}</a>
+					<a href="admin_gallery_add.php" class="quick-link">{L_GALLERY_PICS_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_gallery_cat.php"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_cat.php" class="quick_link">{L_GALLERY_CAT_MANAGEMENT}</a>
+					<a href="admin_gallery_cat.php" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_gallery_cat_add.php"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_cat_add.php" class="quick_link">{L_GALLERY_CAT_ADD}</a>
+					<a href="admin_gallery_cat_add.php" class="quick-link">{L_GALLERY_CAT_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_gallery_config.php"><img src="gallery.png" alt="" /></a>
 					<br />
-					<a href="admin_gallery_config.php" class="quick_link">{L_GALLERY_CONFIG}</a>
+					<a href="admin_gallery_config.php" class="quick-link">{L_GALLERY_CONFIG}</a>
 				</li>
 			</ul>
 		</div>
 
-		<div id="admin_contents">
+		<div id="admin-contents">
 			# INCLUDE message_helper #
 			<fieldset>
 				<legend>{L_GALLERY_CAT_MANAGEMENT}</legend>
 				<style> .sortable-block .sortable-options { width:22px; } </style>
-				<ul id="categories cat_administration" class="sortable-block" style="position:relative;" >
+				<ul id="categories cat-administration" class="sortable-block" style="position:relative;" >
 					<li class="sortable-element" style="cursor:default;">
 						<div class="sortable-title">
 							<i class="fa fa-folder"></i>
-							<a href="gallery.php" class="gallery_link_cat">{L_ROOT}</a>
+							<a href="gallery.php" class="gallery-link-cat">{L_ROOT}</a>
 							<div class="sortable-actions">
 								<div class="sortable-options">
 									<a href="admin_gallery_cat.php?root=1" class="fa fa-edit"></a>
@@ -258,7 +258,7 @@
 						<div class="sortable-title" >
 							<i class="fa fa-folder"></i>
 							{list.LOCK}
-							<a href="gallery{list.U_GALLERY_VARS}" class="gallery_link_cat">{list.NAME}</a>
+							<a href="gallery{list.U_GALLERY_VARS}" class="gallery-link-cat">{list.NAME}</a>
 							<span class="cat_desc"> | {list.DESC}</span>
 							<div class="sortable-actions">
 								<span id="l{list.ID}"></span> 

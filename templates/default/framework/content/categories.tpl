@@ -21,7 +21,7 @@ function ajax_move_cat(id, direction)
 	{
 		//Transfert finished and successful
 		if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-			document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
+			document.getElementById("cat-administration").innerHTML = xhr_object.responseText;
 		else if(  xhr_object.readyState == 4 && xhr_object.responseText == '' ) //Error
 		{
 			document.getElementById('l' + id).innerHTML = "";
@@ -43,7 +43,7 @@ function ajax_change_cat_visibility(id, status)
 	{
 		//Transfert finished and successful
 		if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-			document.getElementById("cat_administration").innerHTML = xhr_object.responseText;
+			document.getElementById("cat-administration").innerHTML = xhr_object.responseText;
 		else if(  xhr_object.readyState == 4 && xhr_object.responseText == '' ) //Error
 		{
 			document.getElementById('l' + id).innerHTML = "";
@@ -55,7 +55,7 @@ function ajax_change_cat_visibility(id, status)
 -->
 </script>
 <style> .sortable-block .sortable-options { width:22px; } </style>
-<ul id="categories cat_administration" class="sortable-block" style="position:relative;" >
+<ul id="categories cat-administration" class="sortable-block" style="position:relative;" >
 # ENDIF #
 
 {NESTED_CATEGORIES}

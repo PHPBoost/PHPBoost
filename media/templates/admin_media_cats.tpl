@@ -1,5 +1,5 @@
 		# INCLUDE admin_media_menu #
-		<div id="admin_contents">
+		<div id="admin-contents">
 			# INCLUDE message_helper #
 
 			# START categories_management #

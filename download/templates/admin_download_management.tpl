@@ -1,6 +1,6 @@
 		# INCLUDE admin_download_menu #
 		
-		<div id="admin_contents">
+		<div id="admin-contents">
 			<table>
 				<thead>
 					<tr>

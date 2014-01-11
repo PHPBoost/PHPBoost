@@ -1,35 +1,35 @@
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 			<ul>
-				<li class="title_menu">{L_FAQ_MANAGEMENT}</li>
+				<li class="title-menu">{L_FAQ_MANAGEMENT}</li>
 				<li>
 					<a href="admin_faq_cats.php"><img src="faq.png" alt="{L_CATS_MANAGEMENT}" /></a>
 					<br />
-					<a href="admin_faq_cats.php" class="quick_link">{L_CATS_MANAGEMENT}</a>
+					<a href="admin_faq_cats.php" class="quick-link">{L_CATS_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_faq_cats.php?new=1"><img src="faq.png" alt="{L_ADD_CAT}" /></a>
 					<br />
-					<a href="admin_faq_cats.php?new=1" class="quick_link">{L_ADD_CAT}</a>
+					<a href="admin_faq_cats.php?new=1" class="quick-link">{L_ADD_CAT}</a>
 				</li>
 				<li>
 					<a href="admin_faq.php?p=1"><img src="faq.png" alt="{L_QUESTIONS_LIST}" /></a>
 					<br />
-					<a href="admin_faq.php?p=1" class="quick_link">{L_QUESTIONS_LIST}</a>
+					<a href="admin_faq.php?p=1" class="quick-link">{L_QUESTIONS_LIST}</a>
 				</li>
 				<li>
 					<a href="management.php?new=1"><img src="faq.png" alt="{L_ADD_QUESTION}" /></a>
 					<br />
-					<a href="management.php?new=1" class="quick_link">{L_ADD_QUESTION}</a>
+					<a href="management.php?new=1" class="quick-link">{L_ADD_QUESTION}</a>
 				</li>
 				<li>
 					<a href="admin_faq.php"><img src="faq.png" alt="{L_CONFIG_MANAGEMENT}" /></a>
 					<br />
-					<a href="admin_faq.php" class="quick_link">{L_CONFIG_MANAGEMENT}</a>
+					<a href="admin_faq.php" class="quick-link">{L_CONFIG_MANAGEMENT}</a>
 				</li>
 			</ul>
 		</div>
 
-		<div id="admin_contents">	
+		<div id="admin-contents">	
 			<table>
 				<thead>
 					<tr>

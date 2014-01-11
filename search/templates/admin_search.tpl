@@ -18,23 +18,23 @@
             }
         -->
         </script>
-        <div id="admin_quick_menu">
+        <div id="admin-quick-menu">
             <ul>
-                <li class="title_menu">{L_SEARCH_MANAGEMENT}</li>
+                <li class="title-menu">{L_SEARCH_MANAGEMENT}</li>
                 <li>
                     <a href="admin_search.php"><img src="search.png" alt="" /></a>
                     <br />
-                    <a href="admin_search.php" class="quick_link">{L_SEARCH_CONFIG}</a>
+                    <a href="admin_search.php" class="quick-link">{L_SEARCH_CONFIG}</a>
                 </li>
                 <li>
                     <a href="admin_search.php?weighting=true"><img src="search.png" alt="" /></a>
                     <br />
-                    <a href="admin_search.php?weighting=true" class="quick_link">{L_SEARCH_CONFIG_WEIGHTING}</a>
+                    <a href="admin_search.php?weighting=true" class="quick-link">{L_SEARCH_CONFIG_WEIGHTING}</a>
                 </li>
             </ul>
         </div>
 
-        <div id="admin_contents">
+        <div id="admin-contents">
             # IF NOT C_WEIGHTING #
             <form action="admin_search.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset-content">
                 <fieldset>

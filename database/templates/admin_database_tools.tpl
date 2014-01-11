@@ -1,20 +1,20 @@
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 				<ul>
-					<li class="title_menu">{L_DATABASE_MANAGEMENT}</li>
+					<li class="title-menu">{L_DATABASE_MANAGEMENT}</li>
 				<li>
 					<a href="admin_database.php"><img src="database.png" alt="" /></a>
 					<br />
-					<a href="admin_database.php" class="quick_link">{L_DB_TOOLS}</a>
+					<a href="admin_database.php" class="quick-link">{L_DB_TOOLS}</a>
 				</li>
 				<li>
 					<a href="admin_database.php?query=1"><img src="database.png" alt="" /></a>
 					<br />
-					<a href="admin_database.php?query=1" class="quick_link">{L_QUERY}</a>
+					<a href="admin_database.php?query=1" class="quick-link">{L_QUERY}</a>
 				</li>
 			</ul>
 		</div>
 		
-		<div id="admin_contents">
+		<div id="admin-contents">
 			<div style="width:95%;margin:auto;">
 				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px">
 					<a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> / <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
