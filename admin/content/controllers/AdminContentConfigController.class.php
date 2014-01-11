@@ -105,7 +105,7 @@ class AdminContentConfigController extends AdminController
 			array(
 				new FormFieldRadioChoiceOption($this->lang['enabled'], '1'),
 				new FormFieldRadioChoiceOption($this->lang['disabled'], '0')
-			), array('description' => $this->lang['content.config.anti-flood-enabled'])
+			), array('description' => $this->lang['content.config.anti-flood-enabled-explain'])
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
