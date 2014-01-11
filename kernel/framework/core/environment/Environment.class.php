@@ -324,7 +324,7 @@ class Environment
 		
 		if ($last_use_date->is_anterior_to($current_date))
 		{
-			$last_use_config->set_last_use_date(new Date());
+			$last_use_config->set_last_use_date($current_date);
 			LastUseDateConfig::save();
 			
 			self::perform_changeday();

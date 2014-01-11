@@ -204,41 +204,39 @@
 			<fieldset>
 				<legend>{L_CONTRIBUTION}</legend>
 				<div class="form-element">
-					
-						{L_ENTITLED}
-					
+					<label>{L_ENTITLED}</label>
 					<div class="form-field">
 						{ENTITLED}
 					</div>
 				</div>
 				<div class="form-element">
-					{L_DESCRIPTION}
+					<label>{L_DESCRIPTION}</label>
 					<div class="form-field">{DESCRIPTION}</div>
 				</div>
 				<div class="form-element">
-					{L_STATUS}
+					<label>{L_STATUS}</label>
 					<div class="form-field">{STATUS}</div>
 				</div>
 				<div class="form-element">
-					{L_CONTRIBUTOR}
+					<label>{L_CONTRIBUTOR}</label>
 					<div class="form-field"><a href="{U_CONTRIBUTOR_PROFILE}" class="{CONTRIBUTOR_LEVEL_CLASS}" # IF C_CONTRIBUTOR_GROUP_COLOR # style="color:{CONTRIBUTOR_GROUP_COLOR}" # ENDIF #>{CONTRIBUTOR}</a></div>
 				</div>
 				<div class="form-element">
-					{L_CREATION_DATE}
+					<label>{L_CREATION_DATE}</label>
 					<div class="form-field">{CREATION_DATE}</div>
 				</div>
 				# IF C_CONTRIBUTION_FIXED #
 				<div class="form-element">
-					{L_FIXER}
+					<label>{L_FIXER}</label>
 					<div class="form-field"><a href="{U_FIXER_PROFILE}" class="{FIXER_LEVEL_CLASS}" # IF C_FIXER_GROUP_COLOR # style="color:{FIXER_GROUP_COLOR}" # ENDIF #>{FIXER}</a></div>
 				</div>
 				<div class="form-element">
-					{L_FIXING_DATE}
+					<label>{L_FIXING_DATE}</label>
 					<div class="form-field">{FIXING_DATE}</div>
 				</div>
 				# ENDIF #
 				<div class="form-element">
-					{L_MODULE}
+					<label>{L_MODULE}</label>
 					<div class="form-field">{MODULE}</div>
 				</div>
 			</fieldset>
@@ -259,9 +257,7 @@
 				<fieldset>
 					<legend>{L_CONTRIBUTION}</legend>
 					<div class="form-element">
-						
-							<label for="entitled">{L_ENTITLED}</label>
-						
+						<label for="entitled">{L_ENTITLED}</label>
 						<div class="form-field">
 							<input type="text" name="entitled" id="entitled" value="{ENTITLED}" size="40">
 						</div>
