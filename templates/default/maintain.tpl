@@ -1,15 +1,14 @@
 # IF C_MAINTAIN_DELAY #
 	# IF C_ALERT_MAINTAIN #
-		<div style="position:absolute;top:5px;width:100%;text-align:center;">
-			<div class="message-helper warning">
-				<i class="fa fa-warning"></i>
-				<div class="message-helper-content">
-					{L_MAINTAIN_DELAY}
-					<br /><br />
-					<div id="release">{L_LOADING}...</div>	
-				</div>
+	<div id="message-maintain">
+		<div class="message-helper warning message-helper-small">
+			<i class="fa fa-warning"></i>
+			<div class="message-helper-content">
+				{L_MAINTAIN_DELAY}
+				<div id="release">{L_LOADING}...</div>	
 			</div>
 		</div>
+	</div>
 	# ENDIF #
 	
 	<script type="text/javascript">
