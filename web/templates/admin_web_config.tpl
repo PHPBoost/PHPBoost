@@ -23,38 +23,38 @@
 		-->
 		</script>
 
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 			<ul>
-				<li class="title_menu">{L_WEB_MANAGEMENT}</li>
+				<li class="title-menu">{L_WEB_MANAGEMENT}</li>
 				<li>
 					<a href="admin_web_cat.php"><img src="web.png" alt="" /></a>
 					<br />
-					<a href="admin_web_cat.php" class="quick_link">{L_WEB_CAT}</a>
+					<a href="admin_web_cat.php" class="quick-link">{L_WEB_CAT}</a>
 				</li>
 				<li>
 					<a href="admin_web_cat.php#add_cat"><img src="web.png" alt="" /></a>
 					<br />
-					<a href="admin_web_cat.php#add_cat" class="quick_link">{L_ADD_CAT}</a>
+					<a href="admin_web_cat.php#add_cat" class="quick-link">{L_ADD_CAT}</a>
 				</li>
 				<li>
 					<a href="admin_web.php"><img src="web.png" alt="" /></a>
 					<br />
-					<a href="admin_web.php" class="quick_link">{L_WEB_MANAGEMENT}</a>
+					<a href="admin_web.php" class="quick-link">{L_WEB_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_web_add.php"><img src="web.png" alt="" /></a>
 					<br />
-					<a href="admin_web_add.php" class="quick_link">{L_WEB_ADD}</a>
+					<a href="admin_web_add.php" class="quick-link">{L_WEB_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_web_config.php"><img src="web.png" alt="" /></a>
 					<br />
-					<a href="admin_web_config.php" class="quick_link">{L_WEB_CONFIG}</a>
+					<a href="admin_web_config.php" class="quick-link">{L_WEB_CONFIG}</a>
 				</li>
 			</ul>
 		</div> 
 		
-		<div id="admin_contents">							
+		<div id="admin-contents">							
 			<form action="admin_web_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_WEB_CONFIG}</legend>

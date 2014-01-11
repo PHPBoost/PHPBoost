@@ -1,30 +1,30 @@
-<div id="admin_quick_menu">
+<div id="admin-quick-menu">
     <ul>
-        <li class="title_menu">{L_WEBSITE_UPDATES}</li>
+        <li class="title-menu">{L_WEBSITE_UPDATES}</li>
         <li>
             <a href="updates.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="" /></a>
             <br />
-            <a href="updates.php" class="quick_link">{L_WEBSITE_UPDATES}</a>
+            <a href="updates.php" class="quick-link">{L_WEBSITE_UPDATES}</a>
         </li>
         <li>
             <a href="updates.php?type=kernel"><img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="" /></a>
             <br />
-            <a href="updates.php?type=kernel" class="quick_link">{L_KERNEL}</a>
+            <a href="updates.php?type=kernel" class="quick-link">{L_KERNEL}</a>
         </li>
         <li>
             <a href="updates.php?type=module"><img src="{PATH_TO_ROOT}/templates/default/images/admin/modules.png" alt="" /></a>
             <br />
-            <a href="updates.php?type=module" class="quick_link">{L_MODULES}</a>
+            <a href="updates.php?type=module" class="quick-link">{L_MODULES}</a>
         </li>
         <li>
             <a href="updates.php?type=template"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes.png" alt="" /></a>
             <br />
-            <a href="updates.php?type=template" class="quick_link">{L_THEMES}</a>
+            <a href="updates.php?type=template" class="quick-link">{L_THEMES}</a>
         </li>
     </ul>
 </div>
 
-<div id="admin_contents">
+<div id="admin-contents">
 	<div style="clear:right;"></div>
     # IF C_UNEXISTING_UPDATE #
         <div class="message-helper warning message-helper-small">
@@ -37,7 +37,7 @@
         	<tbody>
 	            <tr>
 		            <td style="vertical-align:top;padding-right:10px;">
-			            <div class="block_container">
+			            <div class="block-container">
 			                <div class="block_top"><span>{APP_NAME} - {APP_VERSION} ({APP_LANGUAGE})</span></div>
 			                <div class="block_contents">
 								{APP_DESCRIPTION}
@@ -45,7 +45,7 @@
 							</div>
 			            </div>
 			            # IF C_NEW_FEATURES #
-			                <div class="block_container">
+			                <div class="block-container">
 			                    <div class="block_top"><span>{L_NEW_FEATURES}</span></div>
 			                    <div class="block_contents">
 									<ul class="list"># START new_features #<li>{new_features.description}</li># END new_features #</ul>
@@ -53,14 +53,14 @@
 			                </div>
 			            # END IF #
 			            # IF C_IMPROVMENTS #
-			                <div class="block_container">
+			                <div class="block-container">
 			                    <div class="block_top"><span>{L_IMPROVMENTS}</span></div>
 			                    <div class="block_contents">
 									<ul class="list"># START improvments #<li>{improvments.description}</li># END improvments #</ul>
 								</div>
 			                </div>
 			            # END IF #
-			            <div class="block_container">
+			            <div class="block-container">
 			                <div class="block_top"><span class="{PRIORITY_CSS_CLASS}">{L_WARNING} - {APP_WARNING_LEVEL}</span></div>
 			                <div class="block_contents">
 								{APP_WARNING}
@@ -68,7 +68,7 @@
 			            </div>
 			        </td>
 			        <td style="vertical-align:top;min-width:200px;">
-			            <div class="block_container">
+			            <div class="block-container">
 			                <div class="block_top"><span>{L_DOWNLOAD}</span></div>
 			                <div class="block_contents">
 								<ul class="list">
@@ -79,14 +79,14 @@
 								</ul>
 							</div>
 			            </div>
-			            <div class="block_container">
+			            <div class="block-container">
 			                <div class="block_top"><span>{L_AUTHORS}</span></div>
 			                <div class="block_contents">
 								<ul class="list"># START authors #<li><a href="mailto:{authors.email}">{authors.name}</a></li># END authors #</ul>
 							</div>
 			            </div>
 			            # IF C_BUG_CORRECTIONS #
-			                <div class="block_container">
+			                <div class="block-container">
 			                    <div class="block_top"><span>{L_FIXED_BUGS}</span></div>
 			                    <div class="block_contents">
 									<ul class="list"># START bugs #<li>{bugs.description}</li># END bugs #</ul>
@@ -94,7 +94,7 @@
 			                </div>
 			            # END IF #
 			            # IF C_SECURITY_IMPROVMENTS #
-			                <div class="block_container">
+			                <div class="block-container">
 			                    <div class="block_top"><span>{L_SECURITY_IMPROVMENTS}</span></div>
 								<div class="block_contents">
 									<ul class="list"># START security #<li>{security.description}</li># END security #</ul>

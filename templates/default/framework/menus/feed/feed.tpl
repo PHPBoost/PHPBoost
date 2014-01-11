@@ -17,7 +17,7 @@
 	</div>
 </div>
 # ELSE #
-<div class="block_container">
+<div class="block-container">
 	<div class="block_contents">
 		<h5 class="sub-title">
 			<a href="{U_LINK}" class="fa fa-syndication"></a>

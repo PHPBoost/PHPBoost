@@ -1,6 +1,6 @@
 		# INCLUDE admin_download_menu #
 		
-		<div id="admin_contents">
+		<div id="admin-contents">
 			<form action="{U_FORM_TARGET}" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_REMOVING_CATEGORY}</legend>

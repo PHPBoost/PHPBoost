@@ -1,6 +1,6 @@
 		# INCLUDE admin_download_menu #
 		
-		<div id="admin_contents">
+		<div id="admin-contents">
 			# INCLUDE message_helper #
 			<fieldset>
 				<legend>{L_CATS_MANAGEMENT}</legend>

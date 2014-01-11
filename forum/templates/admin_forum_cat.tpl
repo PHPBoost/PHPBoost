@@ -202,43 +202,43 @@
 		-->
 		</script>
 
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 			<ul>
-				<li class="title_menu">{L_FORUM_MANAGEMENT}</li>
+				<li class="title-menu">{L_FORUM_MANAGEMENT}</li>
 				<li>
 					<a href="admin_forum.php"><img src="forum.png" alt="" /></a>
 					<br />
-					<a href="admin_forum.php" class="quick_link">{L_CAT_MANAGEMENT}</a>
+					<a href="admin_forum.php" class="quick-link">{L_CAT_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_forum_add.php"><img src="forum.png" alt="" /></a>
 					<br />
-					<a href="admin_forum_add.php" class="quick_link">{L_ADD_CAT}</a>
+					<a href="admin_forum_add.php" class="quick-link">{L_ADD_CAT}</a>
 				</li>
 				<li>
 					<a href="admin_forum_config.php"><img src="forum.png" alt="" /></a>
 					<br />
-					<a href="admin_forum_config.php" class="quick_link">{L_FORUM_CONFIG}</a>
+					<a href="admin_forum_config.php" class="quick-link">{L_FORUM_CONFIG}</a>
 				</li>
 				<li>
 					<a href="admin_forum_groups.php"><img src="forum.png" alt="" /></a>
 					<br />
-					<a href="admin_forum_groups.php" class="quick_link">{L_FORUM_GROUPS}</a>
+					<a href="admin_forum_groups.php" class="quick-link">{L_FORUM_GROUPS}</a>
 				</li>
 				<li>
 					<a href="admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks.png" alt="" /></a>
 					<br />
-					<a href="admin_ranks.php" class="quick_link">{L_FORUM_RANKS_MANAGEMENT}</a>
+					<a href="admin_ranks.php" class="quick-link">{L_FORUM_RANKS_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_ranks_add.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks.png" alt="" /></a>
 					<br />
-					<a href="admin_ranks_add.php" class="quick_link">{L_FORUM_ADD_RANKS}</a>
+					<a href="admin_ranks_add.php" class="quick-link">{L_FORUM_ADD_RANKS}</a>
 				</li>
 			</ul>
 		</div>
 
-		<div id="admin_contents">
+		<div id="admin-contents">
 			
 			<fieldset>
 				<legend>{L_CAT_MANAGEMENT}</legend>

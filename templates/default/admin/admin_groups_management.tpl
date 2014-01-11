@@ -1,20 +1,20 @@
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 			<ul>
-				<li class="title_menu">{L_GROUPS_MANAGEMENT}</li>
+				<li class="title-menu">{L_GROUPS_MANAGEMENT}</li>
 				<li>
 					<a href="admin_groups.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/groups.png" alt="" /></a>
 					<br />
-					<a href="admin_groups.php" class="quick_link">{L_GROUPS_MANAGEMENT}</a>
+					<a href="admin_groups.php" class="quick-link">{L_GROUPS_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_groups.php?add=1"><img src="{PATH_TO_ROOT}/templates/default/images/admin/groups.png" alt="" /></a>
 					<br />
-					<a href="admin_groups.php?add=1" class="quick_link">{L_ADD_GROUPS}</a>
+					<a href="admin_groups.php?add=1" class="quick-link">{L_ADD_GROUPS}</a>
 				</li>
 			</ul>
 		</div>
 		
-		<div id="admin_contents">
+		<div id="admin-contents">
 			<fieldset class="fieldset-content">
 				<legend>{L_GROUPS_MANAGEMENT}</legend>
 			

@@ -5,18 +5,18 @@
 		</script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 		
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 			<ul>
-				<li class="title_menu">{L_MAINTAIN}</li>
+				<li class="title-menu">{L_MAINTAIN}</li>
 				<li>
 					<a href="admin_maintain.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/maintain.png" alt="" /></a>
 					<br />
-					<a href="admin_maintain.php" class="quick_link">{L_MAINTAIN}</a>
+					<a href="admin_maintain.php" class="quick-link">{L_MAINTAIN}</a>
 				</li>
 			</ul>
 		</div>
 
-		<div id="admin_contents">
+		<div id="admin-contents">
 			<form action="admin_maintain.php" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_SET_MAINTAIN}</legend>

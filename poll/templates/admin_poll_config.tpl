@@ -25,28 +25,28 @@
 			-->
 			</script>
 			
-		<div id="admin_quick_menu">
+		<div id="admin-quick-menu">
 			<ul>
-				<li class="title_menu">{L_POLL_MANAGEMENT}</li>
+				<li class="title-menu">{L_POLL_MANAGEMENT}</li>
 				<li>
 					<a href="admin_poll.php"><img src="poll.png" alt="" /></a>
 					<br />
-					<a href="admin_poll.php" class="quick_link">{L_POLL_MANAGEMENT}</a>
+					<a href="admin_poll.php" class="quick-link">{L_POLL_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_poll_add.php"><img src="poll.png" alt="" /></a>
 					<br />
-					<a href="admin_poll_add.php" class="quick_link">{L_POLL_ADD}</a>
+					<a href="admin_poll_add.php" class="quick-link">{L_POLL_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_poll_config.php"><img src="poll.png" alt="" /></a>
 					<br />
-					<a href="admin_poll_config.php" class="quick_link">{L_POLL_CONFIG}</a>
+					<a href="admin_poll_config.php" class="quick-link">{L_POLL_CONFIG}</a>
 				</li>
 			</ul>
 		</div> 
 		
-		<div id="admin_contents">
+		<div id="admin-contents">
 			<form action="admin_poll_config.php?token={TOKEN}" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_POLL_CONFIG_MINI}</legend>

@@ -1,25 +1,25 @@
-<div id="admin_quick_menu">
+<div id="admin-quick-menu">
 	<ul>
-		<li class="title_menu">{L_QUICK_LINKS}</li>
+		<li class="title-menu">{L_QUICK_LINKS}</li>
 		<li>
 			<a href="{U_INDEX_SITE}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/admin.png" alt="" /></a>
 			<br />
-			<a href="{U_INDEX_SITE}" class="quick_link">{L_SITE}</a>
+			<a href="{U_INDEX_SITE}" class="quick-link">{L_SITE}</a>
 		</li>
 		<li>
 			<a href="{PATH_TO_ROOT}/admin/admin_index.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks.png" alt="" /></a>
 			<br />
-			<a href="{PATH_TO_ROOT}/admin/admin_index.php" class="quick_link">{L_INDEX_ADMIN}</a>
+			<a href="{PATH_TO_ROOT}/admin/admin_index.php" class="quick-link">{L_INDEX_ADMIN}</a>
 		</li>
 		<li>
 			<a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/home.png" alt="" /></a>
 			<br />
-			<a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true&amp;token={TOKEN}" class="quick_link">{L_DISCONNECT}</a>
+			<a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true&amp;token={TOKEN}" class="quick-link">{L_DISCONNECT}</a>
 		</li>
 	</ul>
 </div>
 
-<div id="admin_contents">
+<div id="admin-contents">
 	<table>
 		<thead>
 			<tr>

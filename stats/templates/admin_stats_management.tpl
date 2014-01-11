@@ -1,4 +1,4 @@
-	<div id="admin_contents" style="margin-left:0;padding:10px">
+	<div id="admin-contents" style="margin-left:0;padding:10px">
 		<table>
 			<thead>
 				<tr>
