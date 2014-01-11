@@ -95,13 +95,24 @@ div#sub_header_admin .dynamic-menu > ul > li > ul {
 	-webkit-border-radius:0 4px 4px 4px;
 	border-radius:0 4px 4px 4px;
 }
-	
-div#admin_extend_link{
+
+/* Liens vers les menus étendus */
+div#admin-extend-link {
 	float:right;
 	margin-right:15px;
-	margin-top:-3px;
-    padding:4px 6px;
+	padding:4px 6px;
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
 }
+
+div#admin-extend-link:hover { background:#FFFFFF; }
+
+div#admin-extend-link a {
+    color:#FFFFFF;
+	text-decoration:none;
+}
+div#admin-extend-link:hover a { color:#444444; }
 
 /* Conteneur principal */
 div#admin_main {
@@ -193,12 +204,6 @@ div#admin_quick_menu li a.quick_link {
     height:20px;
     margin-bottom:2px;
     padding:4px 0px;
-}
-
-/* Liens vers les menus étendus */
-a.admin_extend_link {
-    text-decoration:none;
-    color:#FFFFFF;
 }
 
 /* Coloration des moteur de recherche */
