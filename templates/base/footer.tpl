@@ -16,6 +16,7 @@
 		# IF C_MENUS_FOOTER_CONTENT #
 		{MENUS_FOOTER_CONTENT}
 		# ENDIF #
+		<div class="spacer">
 		<span>
 			{L_POWERED_BY} <a href="http://phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
 		</span>	
@@ -30,6 +31,7 @@
 			| {L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a>
 		</span>
 		# ENDIF #
+		
 	</footer>
 	</body>
 	# INCLUDE JAVASCRIPT #
