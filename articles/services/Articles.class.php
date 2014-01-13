@@ -438,8 +438,9 @@ class Articles
 			
 			//Articles
 			'TITLE' => $this->get_title(),
-			'DATE' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
+			'DATE' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
 			'DATE_ISO8601' => $this->get_date_created()->format(Date::FORMAT_ISO8601),
+                        'DATE_SHORT' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'PUBLISHING_START_DATE' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
 			'PUBLISHING_START_DATE_ISO8601' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_ISO8601) : '',
 			'PUBLISHING_END_DATE' => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',

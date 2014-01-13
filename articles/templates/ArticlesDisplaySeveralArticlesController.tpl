@@ -51,7 +51,7 @@
 							# ELSE #
 							&nbsp;
 							# ENDIF #
-							<i class="fa fa-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
+							<i class="fa fa-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE_SHORT}</time>&nbsp;|
 							<i class="fa fa-eye" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
 						</div>
 						<h3 itemprop="name"><a itemprop="url" href="{articles.U_ARTICLE}">{articles.TITLE}</a></h3>
@@ -132,7 +132,7 @@
 								# ELSE #
 								&nbsp;
 								# ENDIF #
-								<i class="fa fa-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
+								<i class="fa fa-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE_SHORT}</time>&nbsp;|
 								<i class="fa fa-eye" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
 							</div>
 							<div class="article_comment">
