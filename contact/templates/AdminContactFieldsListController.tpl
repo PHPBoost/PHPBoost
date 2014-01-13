@@ -159,17 +159,17 @@ Event.observe(window, 'load', function() {
 			# START fields_list #
 				<li class="sortable-element" id="list_{fields_list.ID}">
 					<div class="sortable-title">
-						<i title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></i>
+						<a title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></a>
 						<i class="fa fa-globe"></i>
 						<span class="text-strong">{fields_list.NAME}</span>
 						<div class="sortable-actions">
 							{@field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
-								<a title="{@fields.move_field_up}" id="move_up_{fields_list.ID}"><i class="fa fa-arrow-up"></i></a>
+								<a title="{@fields.move_field_up}" id="move_up_{fields_list.ID}" class="fa fa-arrow-up"></a>
 							</div>
 							<div class="sortable-options">
-								<a title="{@fields.move_field_down}" id="move_down_{fields_list.ID}"><i class="fa fa-arrow-down"></i></a>
+								<a title="{@fields.move_field_down}" id="move_down_{fields_list.ID}" class="fa fa-arrow-down"></a>
 							</div>
 							# ENDIF #
 							<div class="sortable-options">
@@ -179,7 +179,7 @@ Event.observe(window, 'load', function() {
 								# IF fields_list.C_DELETE #<a class="fa fa-delete" data-confirmation="delete-element" title="{@fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
 							</div>
 							<div class="sortable-options">
-							# IF NOT fields_list.C_READONLY #<a><i id="change_display_{fields_list.ID}" class="fa fa-eye"></i></a># ELSE #&nbsp;# ENDIF #
+							# IF NOT fields_list.C_READONLY #<a id="change_display_{fields_list.ID}" class="fa fa-eye"></a># ELSE #&nbsp;# ENDIF #
 							</div>
 						</div>
 					</div>
