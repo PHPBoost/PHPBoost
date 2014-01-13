@@ -3,10 +3,16 @@
 		<!--
 		function check_connect()
 		{
-			return checkForms(new Array(
-				'login', "{L_REQUIRE_PSEUDO}", 
-				'password', "{L_REQUIRE_PASSWORD}"
-			));
+			if( document.getElementById('login').value == "" )
+			{
+				alert("{L_REQUIRE_PSEUDO}");
+				return false;
+		    }
+			if( document.getElementById('password').value == "" )
+			{
+				alert("{L_REQUIRE_PASSWORD}");
+				return false;
+		    }
 		}
 		-->
 		</script>

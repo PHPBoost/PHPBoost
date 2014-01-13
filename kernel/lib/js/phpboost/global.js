@@ -129,18 +129,6 @@ function show_inline(divID)
 	}
 }
 
-//Switch entre deux images.
-function switch_img(id, path, path2)
-{
-	if ($(id))
-	{	
-		if (strpos($(id).src, path.replace(/\.\./g, '')) != false)	
-			$(id).src = path2;
-		else
-			$(id).src = path;
-	}
-}
-
 //Switch entre deux classes CSS.
 function switch_className(id, class1, class2)
 {
@@ -499,18 +487,4 @@ function flowPlayerDisplay(id)
 		    }
 	    }
 	);
-}
-
-/*######### Fonction de vérification de formulaire ##########*/
-function checkForms(arrayChecks)
-{
-	for(var i = 0; i < arrayChecks.length; i += 2)
-	{
-		if ($(arrayChecks[i]).value == '') 
-		{
-			alert(arrayChecks[i+1]);
-			return false;
-		}
-	}
-	return true;
 }
