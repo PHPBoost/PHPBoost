@@ -513,6 +513,22 @@ class BugtrackerConfig extends AbstractConfigData
 	}
 	
 	 /**
+	 * @method Get fix versions
+	 */
+	public function get_versions_fix()
+	{
+		$now = new Date();
+		$versions = $this->get_property(self::VERSIONS);
+		$versions_fix = array();
+		foreach ($versions as $key => $version)
+		{
+			if (empty($version['release_date']) || $version['release_date']->get_timestamp() >= $now->get_timestamp())
+				$versions_fix[$key] = $version;
+		}
+		return $versions_fix;
+	}
+	
+	 /**
 	 * @method Get versions
 	 */
 	public function get_versions()

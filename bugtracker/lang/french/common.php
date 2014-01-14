@@ -130,12 +130,9 @@ $lang['bugs.labels.fields.old_value'] = 'Ancienne valeur';
 $lang['bugs.labels.fields.new_value'] = 'Nouvelle valeur';
 $lang['bugs.labels.fields.change_comment'] = 'Commentaire';
 $lang['bugs.labels.fields.version'] = 'Version';
-$lang['bugs.labels.fields.version_detected_in'] = 'Afficher dans la liste "Détecté dans la version"';
-$lang['bugs.labels.fields.version_fixed_in'] = 'Afficher dans la liste "Corrigé dans la version"';
 $lang['bugs.labels.fields.version_detected'] = 'Version détectée';
 $lang['bugs.labels.fields.version_fixed'] = 'Version corrigée';
 $lang['bugs.labels.fields.version_release_date'] = 'Date de sortie';
-$lang['bugs.labels.fields.version_release_date.explain'] = 'jj/mm/aaaa';
 $lang['bugs.labels.page'] = 'Page';
 $lang['bugs.labels.color'] = 'Couleur';
 $lang['bugs.labels.number'] = 'Nombre de bugs';
@@ -175,7 +172,7 @@ $lang['bugs.status.rejected'] = 'Rejeté';
 
 //Explications
 $lang['bugs.explain.contents'] = 'Détails qui seront utiles pour la résolution du bug';
-$lang['bugs.explain.roadmap'] = 'Permet d\'afficher la liste des bugs corrigés pour chaque version.<br />La feuille de route n\'est affichée que s\'il y a au moins une version dans la liste.';
+$lang['bugs.explain.roadmap'] = 'Permet d\'afficher la liste des bugs corrigés pour chaque version. Affichée s\'il y a au moins une version dans la liste.';
 $lang['bugs.explain.type'] = 'Types des demandes. Exemples : Anomalie, Demande d\'évolution...';
 $lang['bugs.explain.category'] = 'Catégorie des demandes. Exemples : Noyau, Module...';
 $lang['bugs.explain.severity'] = 'Niveau des demandes. Exemples : Mineur, Majeur, Critique...';
@@ -222,8 +219,8 @@ $lang['bugs.search.where.contents'] = 'Description';
 
 //Configuration
 $lang['bugs.config.items_per_page'] = 'Nombre de bugs affichés par page'; 
-$lang['bugs.config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un bug "Rejeté"';
-$lang['bugs.config.fixed_bug_color_label'] = 'Couleur de la ligne d\'un bug "Fermé"';
+$lang['bugs.config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un bug <b>Rejeté</b>';
+$lang['bugs.config.fixed_bug_color_label'] = 'Couleur de la ligne d\'un bug <b>Fermé</b>';
 $lang['bugs.config.activ_com'] = 'Activer les commentaires';
 $lang['bugs.config.activ_roadmap'] = 'Activer la feuille de route';
 $lang['bugs.config.activ_stats'] = 'Activer les statistiques';
@@ -234,8 +231,8 @@ $lang['bugs.config.activ_admin_alerts'] = 'Activer les alertes administrateur';
 $lang['bugs.config.admin_alerts_levels'] = 'Niveau du bug pour déclencher l\'alerte';
 $lang['bugs.config.admin_alerts_fix_action'] = 'Action à la fermeture d\'un bug';
 $lang['bugs.config.activ_cat_in_title'] = 'Afficher la catégorie dans le titre du bug';
-$lang['bugs.config.pm'] = 'MP';
-$lang['bugs.config.activ_pm'] = 'Activer l\'envoi de MP';
+$lang['bugs.config.pm'] = 'Messages Privés';
+$lang['bugs.config.activ_pm'] = 'Activer l\'envoi de Messages Privés (MP)';
 $lang['bugs.config.activ_pm.comment'] = 'Envoyer un MP lors de l\'ajout d\'un nouveau commentaire';
 $lang['bugs.config.activ_pm.assign'] = 'Envoyer un MP lors de l\'assignation d\'un bug';
 $lang['bugs.config.activ_pm.edit'] = 'Envoyer un MP lors de l\'édition d\'un bug';

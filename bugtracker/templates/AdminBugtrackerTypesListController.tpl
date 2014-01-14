@@ -34,7 +34,7 @@ var BugtrackerFormFieldTypes = Class.create({
 		if (this.integer == this.max_input) {
 			$('add_type').hide();
 		}
-		if (this.integer == 2) {
+		if (this.integer) {
 			$('no_type').hide();
 		}
 	},
@@ -77,6 +77,11 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 		</tr>
 	</tfoot>
 	<tbody id="types_list">
+		<tr id="no_type"# IF C_TYPES # style="display:none;"# ENDIF #>
+			<td colspan="3">
+				{@bugs.notice.no_type}
+			</td>
+		</tr>
 		# START types #
 		<tr>
 			<td>
@@ -90,10 +95,5 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 			</td>
 		</tr>
 		# END types #
-		<tr id="no_type"# IF C_TYPES # style="display:none;"# ENDIF #>
-			<td colspan="3">
-				{@bugs.notice.no_type}
-			</td>
-		</tr>
 	</tbody>
 </table>

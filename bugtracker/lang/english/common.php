@@ -130,12 +130,9 @@ $lang['bugs.labels.fields.old_value'] = 'Old value';
 $lang['bugs.labels.fields.new_value'] = 'New value';
 $lang['bugs.labels.fields.change_comment'] = 'Comment';
 $lang['bugs.labels.fields.version'] = 'Version';
-$lang['bugs.labels.fields.version_detected_in'] = 'Display in the list "Detected in version"';
-$lang['bugs.labels.fields.version_fixed_in'] = 'Display in the list "Fixed in version"';
 $lang['bugs.labels.fields.version_detected'] = 'Detected version';
 $lang['bugs.labels.fields.version_fixed'] = 'Fixed version';
 $lang['bugs.labels.fields.version_release_date'] = 'Release date';
-$lang['bugs.labels.fields.version_release_date.explain'] = 'dd/mm/yyyy';
 $lang['bugs.labels.page'] = 'Page';
 $lang['bugs.labels.color'] = 'Color';
 $lang['bugs.labels.number'] = 'Bugs number';
@@ -175,7 +172,7 @@ $lang['bugs.status.rejected'] = 'Rejected';
 
 //Explainations
 $lang['bugs.explain.contents'] = 'Useful details to treat the bug';
-$lang['bugs.explain.roadmap'] = 'Displays the fixed bug list for each version.<br />The roadmap is displayed if there is at least one version int the list.';
+$lang['bugs.explain.roadmap'] = 'Displays the fixed bug list for each version. Displayed if there is at least one version in the list.';
 $lang['bugs.explain.type'] = 'Demands types. Examples : Anomaly, Evolution...';
 $lang['bugs.explain.category'] = 'Demands categories. Examples : Kernel, Module...';
 $lang['bugs.explain.severity'] = 'Demands severities. Examples : Minor, Major, Critical...';
@@ -222,8 +219,8 @@ $lang['bugs.search.where.contents'] = 'Content';
 
 //Configuration
 $lang['bugs.config.items_per_page'] = 'Bugs number displayed per page'; 
-$lang['bugs.config.rejected_bug_color_label'] = 'Rejected bug line color';
-$lang['bugs.config.fixed_bug_color_label'] = 'Fixed bug line color';
+$lang['bugs.config.rejected_bug_color_label'] = '<b>Rejected</b> bug line color';
+$lang['bugs.config.fixed_bug_color_label'] = '<b>Fixed</b> bug line color';
 $lang['bugs.config.activ_com'] = 'Active comments';
 $lang['bugs.config.activ_roadmap'] = 'Active roadmap';
 $lang['bugs.config.activ_stats'] = 'Active statistics';
@@ -234,8 +231,8 @@ $lang['bugs.config.activ_admin_alerts'] = 'Active admin alerts';
 $lang['bugs.config.admin_alerts_levels'] = 'Bug severity to send the alert';
 $lang['bugs.config.admin_alerts_fix_action'] = 'Action when fixing a bug';
 $lang['bugs.config.activ_cat_in_title'] = 'Display category in bug title';
-$lang['bugs.config.pm'] = 'PM';
-$lang['bugs.config.activ_pm'] = 'Active PM send';
+$lang['bugs.config.pm'] = 'Private Messages';
+$lang['bugs.config.activ_pm'] = 'Active Private Messages (PM) send';
 $lang['bugs.config.activ_pm.comment'] = 'Send a PM when a new comment is posted';
 $lang['bugs.config.activ_pm.assign'] = 'Send a PM when a bug is assigned';
 $lang['bugs.config.activ_pm.edit'] = 'Send a PM when a bug is edited';

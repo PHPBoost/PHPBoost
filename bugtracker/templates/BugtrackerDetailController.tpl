@@ -1,34 +1,18 @@
-<script type="text/javascript">
-	<!--
-	# IF C_REOPEN_BUG #
-	function Confirm_reopen() {
-		return confirm("{@bugs.actions.confirm.reopen_bug}");
-	}
-	# ENDIF #
-	
-	# IF C_REJECT_BUG #
-	function Confirm_reject() {
-		return confirm("{@bugs.actions.confirm.reject_bug}");
-	}
-	# ENDIF #
-	-->
-</script>
-
 <fieldset>
 	<legend>
 		{@bugs.titles.bugs_treatment_state}
 		&nbsp;
 		# IF C_REOPEN_BUG #
-			<a href="{U_REOPEN}" onclick="javascript:return Confirm_reopen();" class="fa bugtracker-icon-rejected" title="{@bugs.actions.reopen}"></a>
+			<a href="{U_REOPEN}" class="fa fa-eye" title="{@bugs.actions.reopen}" data-confirmation="{@bugs.actions.confirm.reopen_bug}"></a>
 		# ENDIF #
 		# IF C_REJECT_BUG #
-			<a href="{U_REJECT}" onclick="javascript:return Confirm_reject();" class="fa bugtracker-icon-opened" title="{@bugs.actions.reject}"></a>
+			<a href="{U_REJECT}" class="fa fa-eye-slash" title="{@bugs.actions.reject}" data-confirmation="{@bugs.actions.confirm.reject_bug}"></a>
 		# ENDIF #
 		# IF C_EDIT_BUG #
 			<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 		# ENDIF #
 		# IF C_HISTORY_BUG #
-			<a href="{U_HISTORY}" title="{@bugs.actions.history}" class="fa bugtracker-icon-history"></a>
+			<a href="{U_HISTORY}" title="{@bugs.actions.history}" class="fa fa-info"></a>
 		# ENDIF #
 		# IF C_DELETE_BUG #
 			<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
@@ -114,5 +98,7 @@
 <div class="text_small float-right">
 	{@bugs.labels.fields.author_id} # IF AUTHOR #<a href="{U_AUTHOR_PROFILE}" class="small_link {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #, ${LangLoader::get_message('on', 'main')} # IF C_IS_DATE_FORM_SHORT #{SUBMIT_DATE_SHORT}# ELSE #{SUBMIT_DATE}# ENDIF #
 </div>
+
+<div class="spacer">&nbsp;</div>
 
 # INCLUDE COMMENTS #

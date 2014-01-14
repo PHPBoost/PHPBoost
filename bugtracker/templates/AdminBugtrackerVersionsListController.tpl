@@ -1,3 +1,4 @@
+<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 <script type="text/javascript">
 <!--
 var BugtrackerFormFieldVersions = Class.create({
@@ -22,9 +23,18 @@ var BugtrackerFormFieldVersions = Class.create({
 			tr.insert(td);
 			
 			var td = Builder.node('td', {'id' : 'td3_' + id}, [
-				Builder.node('input', {type : 'text', id : 'release_date_' + id, name : 'release_date_' + id, size : 11, maxlength : 10, placeholder : ${escapejs(@bugs.labels.fields.version_release_date.explain)}}),
+				Builder.node('input', {type : 'text', id : 'release_date_' + id, name : 'release_date_' + id, size : 11, maxlength : 10, placeholder : ${escapejs(LangLoader::get_message('date_format', 'date-common'))}}),
 				' ',
 			]);
+			
+			var div = Builder.node('div', {'id' : 'calendar' + id, style : 'position:absolute;z-index:100;display:none;'}, [
+				Builder.node('div', {id : 'release_date' + id + '_date', className : 'calendar-block', onmouseover : 'hide_calendar(' + id + ', 1);', onmouseout : 'hide_calendar(' + id + ', 0);'}),
+				' ',
+			]);
+			td.insert(div);
+			
+			var a = Builder.node('a', {style : 'cursor:pointer;', className : 'fa fa-calendar', onclick : "xmlhttprequest_calendar('release_date" + id + "_date', '?input_field=release_date_" + id + "&amp;field=release_date" + id + "_date&amp;d={DAY}&amp;m={MONTH}&amp;y={YEAR}');display_calendar(" + id + ");", onmouseover : 'hide_calendar(' + id + ', 1);', onmouseout : 'hide_calendar(' + id + ', 0);'});
+			td.insert(a);
 			tr.insert(td);
 			
 			var td = Builder.node('td', {'id' : 'td4_' + id}, [
@@ -46,7 +56,7 @@ var BugtrackerFormFieldVersions = Class.create({
 		if (this.integer == this.max_input) {
 			$('add_version').hide();
 		}
-		if (this.integer == 2) {
+		if (this.integer) {
 			$('no_version').hide();
 		}
 	},
@@ -74,6 +84,7 @@ function display_default_version_radio(version_id)
 }
 -->
 </script>
+
 <table>
 	<thead>
 		<tr>
@@ -105,6 +116,11 @@ function display_default_version_radio(version_id)
 		</tr>
 	</tfoot>
 	<tbody id="versions_list">
+		<tr id="no_version"# IF C_VERSIONS # style="display:none;"# ENDIF #>
+			<td colspan="5">
+				{@bugs.notice.no_version}
+			</td>
+		</tr>
 		# START versions #
 		<tr>
 			<td>
@@ -114,7 +130,12 @@ function display_default_version_radio(version_id)
 				<input type="text" maxlength="100" size="40" name="version{versions.ID}" value="{versions.NAME}" />
 			</td>
 			<td>
-				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" placeholder="{@bugs.labels.fields.version_release_date.explain}" />
+				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" placeholder="${LangLoader::get_message('date_format', 'date-common')}" />
+				<div style="position:absolute;z-index:100;display:none;" id="calendar{versions.ID}">
+					<div id="release_date{versions.ID}_date" class="calendar-block" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);">
+					</div>
+				</div>
+				<a onclick="xmlhttprequest_calendar('release_date{versions.ID}_date', '?input_field=release_date{versions.ID}&amp;field=release_date{versions.ID}_date&amp;d={versions.DAY}&amp;m={versions.MONTH}&amp;y={versions.YEAR}');display_calendar({versions.ID});" onmouseover="hide_calendar({versions.ID}, 1);" onmouseout="hide_calendar({versions.ID}, 0);" style="cursor:pointer;" class="fa fa-calendar"></a>
 			</td> 
 			<td>
 				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF # />
@@ -124,10 +145,5 @@ function display_default_version_radio(version_id)
 			</td>
 		</tr>
 		# END versions #
-		<tr id="no_version"# IF C_VERSIONS # style="display:none;"# ENDIF #>
-			<td colspan="5">
-				{@bugs.notice.no_version}
-			</td>
-		</tr>
 	</tbody>
 </table>

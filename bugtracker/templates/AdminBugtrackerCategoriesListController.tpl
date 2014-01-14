@@ -34,7 +34,7 @@ var BugtrackerFormFieldCategories = Class.create({
 		if (this.integer == this.max_input) {
 			$('add_category').hide();
 		}
-		if (this.integer == 2) {
+		if (this.integer) {
 			$('no_category').hide();
 		}
 	},
@@ -77,6 +77,11 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 		</tr>
 	</tfoot>
 	<tbody id="categories_list">
+		<tr id="no_category"# IF C_CATEGORIES # style="display:none;"# ENDIF #>
+			<td colspan="3">
+				{@bugs.notice.no_category}
+			</td>
+		</tr>
 		# START categories #
 		<tr>
 			<td>
@@ -90,10 +95,5 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 			</td>
 		</tr>
 		# END categories #
-		<tr id="no_category"# IF C_CATEGORIES # style="display:none;"# ENDIF #>
-			<td colspan="3">
-				{@bugs.notice.no_category}
-			</td>
-		</tr>
 	</tbody>
 </table>

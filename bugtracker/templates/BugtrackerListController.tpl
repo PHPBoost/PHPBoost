@@ -1,17 +1,5 @@
 # INCLUDE FILTER_LIST #
 
-<script type="text/javascript">
-<!--
-function Confirm(action) {
-	if (action == 'reopen') {
-		return confirm("{@bugs.actions.confirm.reopen_bug}");
-	}
-	else if (action == 'reject') {
-		return confirm("{@bugs.actions.confirm.reject_bug}");
-	}
-}
--->
-</script>
 <table>
 	<thead>
 		<tr>
@@ -76,9 +64,9 @@ function Confirm(action) {
 			</td>
 			# IF C_IS_ADMIN #
 			<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
-				<a href="{bug.U_REOPEN_REJECT}" onclick="javascript:return Confirm('# IF C_UNSOLVED #reject# ELSE #reopen# ENDIF #');" # IF C_UNSOLVED #class="fa bugtracker-icon-opened" title="{@bugs.actions.reject}"# ELSE #class="fa bugtracker-icon-rejected" title="{@bugs.actions.reopen}"# ENDIF #></a>
+				<a href="{bug.U_REOPEN_REJECT}" # IF C_UNSOLVED #class="fa fa-eye-slash" title="{@bugs.actions.reject}"# ELSE #class="fa fa-eye" title="{@bugs.actions.reopen}"# ENDIF # data-confirmation="# IF C_UNSOLVED #{@bugs.actions.confirm.reject_bug}# ELSE #{@bugs.actions.confirm.reopen_bug}# ENDIF #"></a>
 				<a href="{bug.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
-				<a href="{bug.U_HISTORY}" class="fa bugtracker-icon-history" title="{@bugs.actions.history}"></a>
+				<a href="{bug.U_HISTORY}" class="fa fa-info" title="{@bugs.actions.history}"></a>
 				<a href="{bug.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</td>
 			# ENDIF #
