@@ -354,10 +354,11 @@ class Date
 		return date('Y', $this->get_adjusted_timestamp($timezone));
 	}
 
-	public function set_year($year)
+	public function set_year($year, $referential_timezone = TIMEZONE_AUTO)
 	{
+		$adjusted_hours = $this->get_hours() - self::compute_server_user_difference($referential_timezone);
 		$this->set_date_from_values($year, $this->get_month(), $this->get_day(),
-		$this->get_hours(), $this->get_minutes(), $this->get_seconds());
+		$adjusted_hours, $this->get_minutes(), $this->get_seconds());
 	}
 
 	/**
@@ -370,10 +371,11 @@ class Date
 		return date('m', $this->get_adjusted_timestamp($timezone));
 	}
 
-	public function set_month($month)
+	public function set_month($month, $referential_timezone = TIMEZONE_AUTO)
 	{
+		$adjusted_hours = $this->get_hours() - self::compute_server_user_difference($referential_timezone);
 		$this->set_date_from_values($this->get_year(), $month, $this->get_day(),
-		$this->get_hours(), $this->get_minutes(), $this->get_seconds());
+		$adjusted_hours, $this->get_minutes(), $this->get_seconds());
 	}
 	
 	/**
@@ -401,10 +403,11 @@ class Date
 		return (int)date('d', $this->get_adjusted_timestamp($timezone));
 	}
 
-	public function set_day($day)
+	public function set_day($day, $referential_timezone = TIMEZONE_AUTO)
 	{
+		$adjusted_hours = $this->get_hours() - self::compute_server_user_difference($referential_timezone);
 		$this->set_date_from_values($this->get_year(), $this->get_month(), $day,
-		$this->get_hours(), $this->get_minutes(), $this->get_seconds());
+		$adjusted_hours, $this->get_minutes(), $this->get_seconds());
 	}
 	
 	/**
@@ -448,10 +451,11 @@ class Date
 		return date('i', $this->timestamp);
 	}
 
-	public function set_minutes($minutes)
+	public function set_minutes($minutes, $referential_timezone = TIMEZONE_AUTO)
 	{
+		$adjusted_hours = $this->get_hours() - self::compute_server_user_difference($referential_timezone);
 		$this->set_date_from_values($this->get_year(), $this->get_month(), $this->get_day(),
-		$this->get_hours(), $minutes, $this->get_seconds());
+		$adjusted_hours, $minutes, $this->get_seconds());
 	}
 
 	/**
@@ -463,10 +467,11 @@ class Date
 		return date('s', $this->timestamp);
 	}
 
-	public function set_seconds($second)
+	public function set_seconds($second, $referential_timezone = TIMEZONE_AUTO)
 	{
+		$adjusted_hours = $this->get_hours() - self::compute_server_user_difference($referential_timezone);
 		$this->set_date_from_values($this->get_year(), $this->get_month(), $this->get_day(),
-		$this->get_hours(), $this->get_minutes(), $second);
+		$adjusted_hours, $this->get_minutes(), $second);
 	}
 
 	/**
