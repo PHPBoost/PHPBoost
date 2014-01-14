@@ -57,16 +57,12 @@ class DBFactory
 
 	public static function load_prefix()
 	{
-		@include PATH_TO_ROOT . self::$config_file;
-		if (!defined('PHPBOOST_INSTALLED'))
-		{
-			throw new PHPBoostNotInstalledException();
-		}
-		require PATH_TO_ROOT . '/kernel/db/tables.php';
+		@include_once(PATH_TO_ROOT . self::$config_file);
 	}
 
 	public static function init_factory($dbms)
 	{
+		require_once(PATH_TO_ROOT . '/kernel/db/tables.php');
 		switch ($dbms)
 		{
 			case self::PDO_MYSQL:
@@ -140,10 +136,13 @@ class DBFactory
 
 	private static function load_config()
 	{
-		include PATH_TO_ROOT . self::$config_file;
-		if (defined('PHPBOOST_INSTALLED'))
+		if (file_exists(PATH_TO_ROOT . self::$config_file))
 		{
-			return $db_connection_data;
+			include PATH_TO_ROOT . self::$config_file;
+			if (defined('PHPBOOST_INSTALLED'))
+			{
+				return $db_connection_data;
+			}
 		}
 		throw new PHPBoostNotInstalledException();
 	}
