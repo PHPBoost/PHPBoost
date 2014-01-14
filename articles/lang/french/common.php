@@ -97,7 +97,7 @@ $lang['articles.sort_mode.desc'] = 'Descendant';
 $lang['admin.articles.sort_field.cat'] = 'Catégories';
 $lang['admin.articles.sort_field.title'] = 'Titre';
 $lang['admin.articles.sort_field.author'] = 'Auteur';
-$lang['admin.articles.sort_field.date'] = 'Date';
+$lang['admin.articles.sort_field.date'] = 'Date de création';
 $lang['admin.articles.sort_field.published'] = 'Publié';
 
 //SEO
