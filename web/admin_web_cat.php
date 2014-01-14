@@ -214,10 +214,8 @@ else
 		$disabled = $row['aprob'] == '0' ? 'checked="checked"' : '';
 		
 		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
-		$top_link = ($min_cat != $row['class']) ? '<a href="admin_web_cat.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" title="">
-		<i class="fa fa-arrow-up"></i></a>' : '';
-		$bottom_link = ($max_cat != $row['class']) ? '<a href="admin_web_cat.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" title="">
-		<i class="fa fa-arrow-down"></i></a>' : '';
+		$top_link = ($min_cat != $row['class']) ? '<a href="admin_web_cat.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" title="" class="fa fa-arrow-up"></a>' : '';
+		$bottom_link = ($max_cat != $row['class']) ? '<a href="admin_web_cat.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" title="" class="fa fa-arrow-down"></a>' : '';
 		
 		$img_direct_path = (strpos($row['icon'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
