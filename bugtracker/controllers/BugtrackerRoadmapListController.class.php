@@ -64,7 +64,7 @@ class BugtrackerRoadmapListController extends ModuleController
 		
 		$r_version = $request->get_value('version', Url::encode_rewrite($versions[key($versions)]['name']));
 		
-		$roadmap_version = key($versions);
+		$roadmap_version = (int)key($versions);
 		foreach ($versions as $id => $version)
 		{
 			if ($r_version == Url::encode_rewrite($versions[$id]['name']))
@@ -178,7 +178,7 @@ class BugtrackerRoadmapListController extends ModuleController
 		$fieldset = new FormFieldsetHorizontal('informations');
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldHTML('informations', ($requested_version['release_date'] != '00/00/0000' ? $this->lang['bugs.labels.fields.version_release_date'] . ' : <b>' . $requested_version['release_date'] . '</b><br />' : '') . ($requested_status == 'in_progress' ? $this->lang['bugs.labels.number_in_progress'] : $this->lang['bugs.labels.number_fixed']) . ' : ' . $nbr_bugs));
+		$fieldset->add_field(new FormFieldHTML('informations', (!empty($requested_version['release_date'])  ? $this->lang['bugs.labels.fields.version_release_date'] . ' : <b>' . $requested_version['release_date']->format(Date::FORMAT_DAY_MONTH_YEAR) . '</b><br />' : '') . ($requested_status == 'in_progress' ? $this->lang['bugs.labels.number_in_progress'] : $this->lang['bugs.labels.number_fixed']) . ' : ' . $nbr_bugs));
 		
 		return $form;
 	}

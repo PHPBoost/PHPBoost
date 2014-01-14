@@ -97,7 +97,7 @@ class BugtrackerEditController extends ModuleController
 	{
 		$types = $this->config->get_types();
 		$categories = $this->config->get_categories();
-		$versions = $this->config->get_versions();
+		$versions = $this->config->get_versions_fix();
 		$severities = $this->config->get_severities();
 		$priorities = $this->config->get_priorities();
 		

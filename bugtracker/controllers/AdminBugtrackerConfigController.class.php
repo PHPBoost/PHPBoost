@@ -377,7 +377,10 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				'C_DETECTED_IN'		=> $version['detected_in'],
 				'ID'				=> $key,
 				'NAME'				=> stripslashes($version['name']),
-				'RELEASE_DATE'		=> $version['release_date'],
+				'RELEASE_DATE'		=> !empty($version['release_date']) ? $version['release_date']->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
+				'DAY'				=> !empty($version['release_date']) ? $version['release_date']->get_day() : date('d'),
+				'MONTH'				=> !empty($version['release_date']) ? $version['release_date']->get_month() : date('n'),
+				'YEAR'				=> !empty($version['release_date']) ? $version['release_date']->get_year() : date('Y'),
 				'LINK_DELETE'		=> BugtrackerUrlBuilder::delete_parameter('version', $key)->rel()
 			));
 		}
@@ -386,6 +389,9 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'C_VERSIONS'						=> !empty($versions),
 			'MAX_INPUT'							=> $this->max_input,
 		 	'NEXT_ID'							=> $key + 1,
+			'DAY'								=> date('d'),
+			'MONTH'								=> date('n'),
+			'YEAR'								=> date('Y'),
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> $this->config->get_default_version(),
 			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('version')->rel()
 		));
@@ -481,7 +487,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$new_version_release_date = $request->get_value('release_date' . $key, '');
 			$new_version_detected_in = (bool)$request->get_value('detected_in' . $key, '');
 			$versions[$key]['name'] = (!empty($new_version_name) && $new_version_name != $version['name']) ? $new_version_name : $version['name'];
-			$versions[$key]['release_date'] = ($new_version_release_date != $version['release_date']) ? $new_version_release_date : $version['release_date'];
+			$versions[$key]['release_date'] = $new_version_release_date ? new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $new_version_release_date, LangLoader::get_message('date_format_day_month_year', 'date-common')) : '';
 			$versions[$key]['detected_in'] = ($new_version_detected_in != $version['detected_in']) ? $new_version_detected_in : $version['detected_in'];
 		}
 		
@@ -492,9 +498,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			if ($request->has_postparameter($version) && $request->get_poststring($version))
 			{
 				$array_id = empty($nb_versions) ? 1 : ($nb_versions + 1);
+				$version_release_date = $request->get_value('release_date_' . $i, '');
+				
 				$versions[$array_id] = array(
 					'name'			=> addslashes($request->get_poststring($version)),
-					'release_date'	=> $request->get_poststring('release_date_' . $i, ''),
+					'release_date'	=> $version_release_date ? new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $version_release_date, LangLoader::get_message('date_format_day_month_year', 'date-common')) : '',
 					'detected_in'	=> (bool)$request->get_value('detected_in' . $i, '')
 				);
 				$nb_versions++;
