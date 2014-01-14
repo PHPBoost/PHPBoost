@@ -52,7 +52,7 @@
 				<a href="{articles.U_AUTHOR}" class="small_link {articles.USER_LEVEL_CLASS}" # IF articles.C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>
 			</td>
 			<td>
-				{articles.DATE}
+				{articles.DATE_SHORT}
 			</td>
 			<td>
 				# IF articles.C_PUBLISHED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #
