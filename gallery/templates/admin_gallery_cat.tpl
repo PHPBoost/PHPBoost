@@ -1,10 +1,6 @@
 		<link href="{PICTURES_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script type="text/javascript">
 		<!--
-		function Confirm() {
-		return confirm("{L_CONFIRM_DEL_ENTRY}");
-		}
-		
 		var list_cats = new Array({LIST_CATS});
 		var array_cats = new Array();
 		{ARRAY_JS}
@@ -253,7 +249,7 @@
 					</li>	
 	
 								
-					# START list #	
+					# START list #
 					<li id="c{list.I}" class="sortable-element" style="cursor:default;margin-left:{list.INDENT}px;">
 						<div class="sortable-title" >
 							<i class="fa fa-folder"></i>
@@ -276,9 +272,9 @@
 								</div>
 							</div>
 						</div>
-					</li>					
+					</li>
 					# END list #
 				</ul>
 			</fieldset>
-		</div>	
+		</div>
 		

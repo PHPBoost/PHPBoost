@@ -1,11 +1,3 @@
-		<script type="text/javascript">
-		<!--
-		function Confirm() {
-		return confirm("{L_DEL_ENTRY}");
-		}
-		-->
-		</script>
-
 		<div id="admin-quick-menu">
 			<ul>
 				<li class="title-menu">{L_WEB_MANAGEMENT}</li>

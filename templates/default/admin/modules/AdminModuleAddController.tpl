@@ -1,6 +1,6 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
-	# INCLUDE MSG #	
+	# INCLUDE MSG #
 	<table>
 		<caption>{@modules.modules_available}</caption>
 		# IF C_MODULES_AVAILABLE #
@@ -12,20 +12,20 @@
 				<th>{@modules.install_module}</th>
 			</tr>
 		</thead>
-		<tbody>		
+		<tbody>
 			# START available #
-			<tr> 	
-				<td>					
+			<tr>
+				<td>
 					<img src="{PATH_TO_ROOT}/{available.ICON}/{available.ICON}.png" alt="" />
 					<span class="text-strong">{available.NAME}</span>
 					<em>({available.VERSION})</em>
 				</td>
-				<td style="text-align:left;">	
+				<td style="text-align:left;">
 					<span class="text-strong">{@modules.author} :</span> {available.AUTHOR} {available.AUTHOR_WEBSITE}<br />
 					<span class="text-strong">{@modules.description} :</span> {available.DESCRIPTION}<br />
 					<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {available.COMPATIBILITY}<br />
 				</td>
-				<td class="input-radio">	
+				<td class="input-radio">
 					<label><input type="radio" name="activated-{available.ID}" value="1" checked="checked"> {@modules.yes}</label>
 					<label><input type="radio" name="activated-{available.ID}" value="0"> {@modules.no}</label>
 				</td>
@@ -33,7 +33,7 @@
 					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" name="add-{available.ID}" value="true">{@modules.install_module}</button>
 				</td>
-			</tr>						
+			</tr>
 			# END available #
 		</tbody>
 	</table>
@@ -43,5 +43,5 @@
 		<i class="fa fa-notice"></i>
 		<div class="message-helper-content">{@modules.no_module_to_install}</div>
 	</div>
-		# ENDIF #		
+		# ENDIF #
 </form>

@@ -1,9 +1,5 @@
 <script type="text/javascript">
 <!--
-function Confirm_menu() {
-	return confirm("{L_CONFIRM_DEL_MENU}");
-}
-
 var delay = 1200; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
 var timeout;
 var displayed = false;
