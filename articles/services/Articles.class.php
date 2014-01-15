@@ -394,7 +394,7 @@ class Articles
 	{
 		$this->id_category = Category::ROOT_CATEGORY;
 		$this->author_name_displayed = self::AUTHOR_NAME_DISPLAYED;
-		$this->publishing_state = self::PUBLISHED_NOW;
+		$this->published = self::PUBLISHED_NOW;
 		$this->publishing_start_date = new Date();
 		$this->publishing_end_date = new Date();
 		$this->date_created = new Date();
