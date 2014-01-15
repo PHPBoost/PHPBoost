@@ -1,12 +1,3 @@
-<style>
-<!--
-.fieldset-content {
-	margin-left: auto;
-	margin-right: auto;
-	width: 400px;
-}
--->
-</style>
 # INCLUDE ERROR_MESSAGE #
 # INCLUDE LOGIN_FORM #
 <div style="text-align:center;">
