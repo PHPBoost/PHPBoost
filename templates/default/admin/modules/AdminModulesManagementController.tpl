@@ -18,7 +18,7 @@
 			$(this.id).fade({duration: 0.3});
 			this.change_picture_more();
 		},
-		change_status : function ()	{
+		change_status : function () {
 			if (this.already_click == true) {
 				this.close();
 			}
@@ -50,9 +50,6 @@
 				<th>{@modules.name}</th>
 				<th>{@modules.description}</th>
 				<th>{@modules.activated_module}</th>
-				<!-- <th>
-							{@modules.authorization}
-				</th> -->
 				<th>{@modules.delete}</th>
 			</tr>
 		</thead>
