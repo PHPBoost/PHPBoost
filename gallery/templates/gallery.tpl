@@ -206,13 +206,13 @@
 		var incr_pics_displayed = 0;
 		function increment_view(idpics)
 		{
-			if ({DISPLAY_MODE} == 1 && incr_pics_displayed == idpics)
+			if ('{DISPLAY_MODE}' == 'resize' && incr_pics_displayed == idpics)
 				incr_pics_displayed = 0;
 			else
 			{
 				if (document.getElementById('gv' + idpics))
 				{	
-					if (already_view && ({DISPLAY_MODE} == 3 || {DISPLAY_MODE} == 1))
+					if (already_view && ('{DISPLAY_MODE}' == 'full_screen' || '{DISPLAY_MODE}' == 'resize'))
 					{
 						data = '';
 						var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&id=' + idpics + '&cat={CAT_ID}&increment_view=1');
@@ -314,11 +314,11 @@
 				<article class="block">
 					<header><h1>{GALLERY}</h1></header>
 					<div class="content">
-						# IF C_PAGINATION #
 						<p class="center" id="pics_max">
-							# INCLUDE PAGINATION #
+							# IF C_PAGINATION #
+								# INCLUDE PAGINATION #
+							# ENDIF #
 						</p>
-						# ENDIF #
 						
 						# IF C_GALLERY_PICS_MAX #
 							<div class="options">
