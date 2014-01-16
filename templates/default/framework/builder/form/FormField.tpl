@@ -13,11 +13,9 @@
 		# START fieldelements #
 			{fieldelements.ELEMENT}
 		# END fieldelements #
-		# IF C_HAS_CONSTRAINTS #
 			&nbsp;
 			<i class="fa picture-status-constraint" id="onblurContainerResponse${escape(ID)}"></i>
 			<div class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(ID)}"></div>
-		# ENDIF #
 	</div>
 </div>
 # INCLUDE ADD_FIELD_JS #

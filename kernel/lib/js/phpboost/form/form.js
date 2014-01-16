@@ -104,15 +104,22 @@ var HTMLForm = Class.create({
 	},
 	validate : function() {
 		var validated = true;
+		var validation = '';
 		var form = this;
 		this.getFields().each(function(field) {
-			var validation = field.validate();
-			if (validation != "") {
-				form.displayValidationError(validation);
+			var field_validation = field.validate();
+			
+			if (field_validation != "") {
+				validation = validation + '\n\n' + field_validation;
 				validated = false;
-				throw $break;
 			}
 		});
+		
+		if (validated == false) {
+			form.displayValidationError(validation);
+			Effect.ScrollTo(this.id);
+		}
+		
 		this.registerDisabledFields();
 		return validated;
 	},
@@ -273,9 +280,9 @@ var FormField = Class.create({
 			return;
 		}
 		
-		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId()))
-		{
-			$(this.getHTMLId() + '_field').addClassName('constraint-status-right');
+		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
+			
+			$(this.getHTMLId() + '_field').removeClassName('constraint-status-right');
 			$(this.getHTMLId() + '_field').addClassName('constraint-status-error');
 			$('onblurMessageResponse' + this.getHTMLId()).innerHTML = message;
 			Effect.Appear('onblurMessageResponse' + this.getHTMLId(),
@@ -289,8 +296,8 @@ var FormField = Class.create({
 			return;
 		}
 		
-		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId()))
-		{
+		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
+			
 			$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
 			$(this.getHTMLId() + '_field').addClassName('constraint-status-right');
 			Effect.Fade('onblurMessageResponse' + this.getHTMLId(), {
@@ -299,8 +306,8 @@ var FormField = Class.create({
 		}
 	},
 	clearErrorMessage : function() {
-		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId()))
-		{
+		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
+			
 			$(this.getHTMLId() + '_field').removeClassName('constraint-status-right');
 			$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
 			$('onblurMessageResponse' + this.getHTMLId()).innerHTML = '';
@@ -321,7 +328,12 @@ var FormField = Class.create({
 	},
 	validate : function() {
 		if (!this.isDisabled()) {
-			return this.doValidate();
+			var errorMessage = this.doValidate();
+			if (errorMessage != "") {
+				this.enableValidationMessage();
+				this.displayErrorMessage(errorMessage);
+			} 
+			return errorMessage;
 		}
 		return "";
 	},
