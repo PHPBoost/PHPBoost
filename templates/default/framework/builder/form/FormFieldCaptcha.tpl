@@ -3,8 +3,8 @@
 		<label for="${escape(ID)}">* {LABEL} # IF DESCRIPTION #<span class="field-description">{DESCRIPTION}</span> # ENDIF #</label>
 		<div class="form-field">
 			{CAPTCHA}
-			<span id="onblurContainerResponse{ID}"></span>
-			<span style="font-weight:bold;display:none" id="onblurMessageResponse{ID}"></span>
+			<i class="fa picture-status-constraint" id="onblurContainerResponse${escape(ID)}"></i>
+			<div class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(ID)}"></div>
 		</div>
 	</div>
 	# INCLUDE ADD_FIELD_JS #

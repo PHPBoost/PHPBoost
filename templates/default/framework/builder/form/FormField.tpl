@@ -15,8 +15,8 @@
 		# END fieldelements #
 		# IF C_HAS_CONSTRAINTS #
 			&nbsp;
-			<span style="display:none" id="onblurContainerResponse${escape(ID)}"></span>
-			<div style="font-weight:bold;display:none" id="onblurMessageResponse${escape(ID)}"></div>
+			<i class="fa picture-status-constraint" id="onblurContainerResponse${escape(ID)}"></i>
+			<div class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(ID)}"></div>
 		# ENDIF #
 	</div>
 </div>
