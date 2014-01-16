@@ -58,14 +58,6 @@ class FormFieldFree extends AbstractFormField
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
 	}
- 
-	protected function get_js_specialization_code()
-	{
-		return 'field.validate = function() { return true; };' .
-			'field.disable = function() { }; field.enable = function() { };' .
-			'field.isDisabled = function() { return false; };' . 
-			'field.getValue = function() { return ""; };';
-	}
 }
 
 ?>

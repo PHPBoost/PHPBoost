@@ -3,11 +3,9 @@
 		# IF C_REQUIRED # * # ENDIF #
 		{LABEL}
 		# IF C_DESCRIPTION #<span class="field-description">{DESCRIPTION}</span># ENDIF #
-		# IF C_HAS_CONSTRAINTS #
 		&nbsp;
 		<i class="fa picture-status-constraint" id="onblurContainerResponse${escape(ID)}"></i>
 		<div class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(ID)}"></div>
-		# ENDIF #
 	</label>
 	<div class="form-field">
 		# START fieldelements #
