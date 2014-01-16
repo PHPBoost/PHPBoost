@@ -291,7 +291,7 @@ table caption {
 	border-bottom:1px solid #D1D2D5;
 }
 
-table thead th{
+table thead th {
 	padding:8px;
 	background-color:#4D4C50;
 	color:#E5E6E6;
@@ -326,12 +326,12 @@ table tbody td {
 }
 
 table tbody tr:nth-child(even) td {	background-color:#FFFFFF; }
-table tbody tr:last-child td{ border-bottom:1px solid #D1D2D4; }
-table tbody tr td:last-child{ border-right:1px solid #D1D2D4; }
+table tbody tr:last-child td { border-bottom:1px solid #D1D2D4; }
+table tbody tr td:last-child { border-right:1px solid #D1D2D4; }
 
-table tbody tr.no-separator td{ border-top: none; }
-table tbody tr td.no-separator{ border-left: none; }
-table tbody tr td.no-separator:first-child{ border-left:1px solid #D1D2D4; }
+table tbody tr.no-separator td { border-top: none; }
+table tbody tr td.no-separator { border-left: none; }
+table tbody tr td.no-separator:first-child { border-left:1px solid #D1D2D4; }
 
 table tbody td.align-left {	text-align:left; }
 
@@ -440,7 +440,6 @@ button.small, .button-small {
 	padding: 2px 6px;
 }
 
-/*
 button[name=submit] { 
 	color:#FEFEFE;
 	background-color:#3B6B9F;
@@ -449,9 +448,7 @@ button[name=submit] {
 button[name=submit]:hover{ 
 	background-color:#366393;
 	border-color:#315A86;
-}*/
-
-button[type=reset] { }
+}
 
 /* Bouton basic */
 .basic-button {
@@ -570,7 +567,7 @@ input.field-xlarge { width:300px; }
 	margin: 0px 15px 10px 15px;
 }
 
-.fieldset-description { margin: 0px 15px 10px 15px;}
+.fieldset-description { margin: 0px 15px 10px 15px; }
 
 .form-field {
 	display:inline-block;
@@ -703,11 +700,6 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 	border-spacing:1px;
 	padding:5px;
 	clear:both;
-}
-
-.module-mini-container .form-field {
-	display:block;
-	width:100%;
 }
 
 .module-mini-top {
