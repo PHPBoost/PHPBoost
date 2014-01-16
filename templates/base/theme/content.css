@@ -583,7 +583,7 @@ input.field-xlarge { width:300px; }
 	display: block;
 }
 
-/* Label pour les inputs [for] et pour les élements sans associations*/
+/* Label pour les inputs [for] et pour les élements sans associations */
 .form-element > label {
 	display:inline-block;
 	width: 40%;
@@ -626,25 +626,25 @@ textarea {
 }
 
 /* Verification des contraintes */
-.constraint-check-error input {
+form .constraint-status-error input {
 	border-color: rgba(196, 60, 43, 0.3);
-	outline: 0;
 	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.1);
 	-moz-box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
 	color:#C43C35;
 }
-.constraint-check-error input:hover, .field.input-error input:focus {
+
+form .constraint-status-error input:hover, .constraint-status-error input:focus {
 	border-color: rgba(196, 60, 43, 0.5);
-	outline: 0;
 	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.3);
 	-moz-box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
 	color:#C43C35;
 }
 
-.constraint-check-right i:before { content: "\f00c"; color:#57A957; }
-.constraint-check-error i:before { content: "\f00d"; color:#C43C35; }
+form .constraint-status-right i.picture-status-constraint:before { content: "\f00c"; color:#57A957; }
+form .constraint-status-error i.picture-status-constraint:before { content: "\f056"; color:#C43C35; }
+form .text-status-constraint { font-weight:bold; }
 
 /* Auto-complétion */
 div.form-autocompleter-container { position: relative;}

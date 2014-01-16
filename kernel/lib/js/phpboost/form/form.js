@@ -272,15 +272,12 @@ var FormField = Class.create({
 		if (!this.validationMessageEnabled) {
 			return;
 		}
-		if ($('onblurContainerResponse' + this.getHTMLId())
-				&& $('onblurMessageResponse' + this.getHTMLId())) {
-			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<i class="fa fa-forbidden"></i>';
+		
+		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId()))
+		{
+			$(this.getHTMLId() + '_field').addClassName('constraint-status-right');
+			$(this.getHTMLId() + '_field').addClassName('constraint-status-error');
 			$('onblurMessageResponse' + this.getHTMLId()).innerHTML = message;
-
-			Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
-			{
-				duration : 0.5
-			});
 			Effect.Appear('onblurMessageResponse' + this.getHTMLId(),
 			{
 				duration : 0.5
@@ -291,27 +288,22 @@ var FormField = Class.create({
 		if (!this.validationMessageEnabled) {
 			return;
 		}
-		if ($('onblurContainerResponse' + this.getHTMLId())) {
-			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<i class="fa fa-success"></i>';
-			Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
-			{
-				duration : 0.2
-			});
-
+		
+		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId()))
+		{
+			$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
+			$(this.getHTMLId() + '_field').addClassName('constraint-status-right');
 			Effect.Fade('onblurMessageResponse' + this.getHTMLId(), {
 				duration : 0.2
 			});
 		}
 	},
 	clearErrorMessage : function() {
-		if ($('onblurContainerResponse' + this.getHTMLId())) {
-			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '';
-
-			Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
-			{
-				duration : 0.2
-			});
-
+		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId()))
+		{
+			$(this.getHTMLId() + '_field').removeClassName('constraint-status-right');
+			$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
+			$('onblurMessageResponse' + this.getHTMLId()).innerHTML = '';
 			Effect.Fade('onblurMessageResponse' + this.getHTMLId(), {
 				duration : 0.2
 			});

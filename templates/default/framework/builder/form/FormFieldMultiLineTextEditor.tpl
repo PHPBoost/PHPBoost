@@ -4,8 +4,8 @@
 		{LABEL}
 		# IF C_DESCRIPTION #<span class="field-description">{DESCRIPTION}</span># ENDIF #
 	</label>
-	<span id="onblurContainerResponse${escape(ID)}"></span>
-	<span style="font-weight:bold;display:none" id="onblurMessageResponse${escape(ID)}"></span>
+	<i class="fa picture-status-constraint" id="onblurContainerResponse${escape(ID)}"></i>
+	<div class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(ID)}"></div>
 	# IF C_EDITOR_ENABLED #
 		{EDITOR}
 	# ENDIF #
