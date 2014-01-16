@@ -133,6 +133,7 @@
 
 [b]Multimedia[/b]
 [*] Ajout de la balise enclosure dans les flux RSS pour pouvoir diffuser le media
+[*] Ajout du support du format MP4
 
 [b]Forum[/b]
 [*] Déplacement de la gestion des rangs dans le module forum
