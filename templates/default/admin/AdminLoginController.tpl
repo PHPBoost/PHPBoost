@@ -40,7 +40,7 @@
 		-->
 		</script>
 		
-		<form action="{PATH_TO_ROOT}/admin/admin_index.php?token={TOKEN}" method="post" onsubmit="return check_connect();" class="fieldset-content" style="width:550px;margin:auto;margin-top:10%">
+		<form action="{PATH_TO_ROOT}/admin/admin_index.php?token={TOKEN}" method="post" onsubmit="return check_connect();" class="fieldset-content" style="width:550px;margin:auto;margin-top:180px;">
 			<fieldset>
 				<legend>{@admin}</legend>
 				<div class="form-element">
