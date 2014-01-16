@@ -623,7 +623,7 @@ textarea {
 }
 
 /* Verification des contraintes */
-form .constraint-status-error input, form .constraint-status-error textarea {
+.constraint-status-error input, form .constraint-status-error textarea {
 	border-color: rgba(196, 60, 43, 0.3);
 	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.1);
 	-moz-box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
@@ -631,8 +631,8 @@ form .constraint-status-error input, form .constraint-status-error textarea {
 	color:#C43C35;
 }
 
-form .constraint-status-error input:hover, .constraint-status-error input:focus, 
-form .constraint-status-error textarea:hover, form .constraint-status-error textarea:focus {
+.constraint-status-error input:hover, .constraint-status-error input:focus, 
+.constraint-status-error textarea:hover, form .constraint-status-error textarea:focus {
 	border-color: rgba(196, 60, 43, 0.5);
 	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.3);
 	-moz-box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
@@ -640,9 +640,10 @@ form .constraint-status-error textarea:hover, form .constraint-status-error text
 	color:#C43C35;
 }
 
-form .constraint-status-right i.picture-status-constraint:before { content: "\f00c"; color:#57A957; }
-form .constraint-status-error i.picture-status-constraint:before { content: "\f056"; color:#C43C35; }
-form .text-status-constraint { font-weight:bold; }
+.constraint-status-right i.picture-status-constraint:before { content: "\f00c"; color:#57A957; }
+.constraint-status-error i.picture-status-constraint:before { content: "\f056"; color:#C43C35; }
+.text-status-constraint { font-weight:bold; }
+.form-element-textarea .text-status-constraint { display: inline-block; margin-bottom: 5px; }
 
 /* Auto-complétion */
 div.form-autocompleter-container { position: relative;}
