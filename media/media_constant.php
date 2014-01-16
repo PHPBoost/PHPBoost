@@ -66,13 +66,15 @@ $mime_type = array(
 	),
 	'video' => array(
 		'flv' => 'video/x-flv',
-		'swf' => 'application/x-shockwave-flash'
+		'mp4' => 'video/mp4',
+		'swf' => 'application/x-shockwave-flash',
 	)
 );
 
 // Fichier en fonction du mime type.
 $mime_type_tpl = array(
 	'video/x-flv' => 'format/media_flv.tpl',
+	'video/mp4' => 'format/media_flv.tpl',
 	'application/x-shockwave-flash' => 'format/media_swf.tpl',
 	'audio/mpeg' => 'format/media_mp3.tpl'
 );
