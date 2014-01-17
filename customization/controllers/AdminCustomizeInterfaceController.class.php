@@ -48,7 +48,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		
 		if ($theme !== 'all' && !ThemeManager::get_theme_existed($theme))
 		{
-			AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->rel());
+			AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface());
 		}
 		
 		$this->build_form($theme);
