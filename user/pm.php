@@ -825,7 +825,23 @@ else //Liste des conversation, dans la boite du membre.
 		$participants = ($row['login_dest'] != $User->get_attribute('login')) ? $row['login_dest'] : $author;
 		$user_id_dest = $row['user_id_dest'] != $User->get_attribute('user_id') ? $row['user_id_dest'] : $row['user_id'];
 		$participants_group_color = ($participants != $LANG['admin'] && $participants != '<strike>' . $LANG['guest'] . '</strike>') ? User::get_group_color($row['dest_groups'], $row['dest_level']) : '';
-		$participants = !empty($participants) ? '<a href="' . UserUrlBuilder::profile($user_id_dest)->rel() . '" class="'.UserService::get_level_class($row['dest_level']).'"' . (!empty($participants_group_color) ? ' style="color:' . $participants_group_color . '"' : '') . '>' . $participants . '</a>' : '<strike>' . $LANG['admin']. '</strike>';
+		
+		switch ($author)
+		{
+			case $LANG['admin']:
+				$participants_level_class = UserService::get_level_class(User::ADMIN_LEVEL);
+				break;
+			
+			case '<strike>' . $LANG['guest'] . '</strike>':
+				$participants_level_class = '';
+				break;
+			
+			default:
+				$participants_level_class = UserService::get_level_class($row['dest_level']);
+				break;
+		}
+		
+		$participants = !empty($participants) ? '<a href="' . UserUrlBuilder::profile($user_id_dest)->rel() . '" class="' . $participants_level_class . '"' . (!empty($participants_group_color) ? ' style="color:' . $participants_group_color . '"' : '') . '>' . $participants . '</a>' : '<strike>' . $LANG['admin']. '</strike>';
 		
 		//Affichage du dernier message posté.
 		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
