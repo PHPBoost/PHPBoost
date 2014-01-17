@@ -279,8 +279,8 @@ class ArticlesFormController extends ModuleController
 		$article = $this->get_article();
 		
 		$article->set_title($this->form->get_value('title'));
+                $article->set_id_category($this->form->get_value('id_category')->get_raw_value());
 		$article->set_description(($this->form->get_value('enable_description') ? $this->form->get_value('description') : ''));
-		$article->set_description($this->form->get_value('description'));
 		$article->set_contents($this->form->get_value('contents'));
 		
 		$author_name_displayed = $this->form->get_value('author_name_displayed') ? $this->form->get_value('author_name_displayed') : Articles::AUTHOR_NAME_NOTDISPLAYED;
