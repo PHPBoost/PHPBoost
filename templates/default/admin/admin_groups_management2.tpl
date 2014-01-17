@@ -191,7 +191,7 @@
 						<div class="form-field">
 							<input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr"> 
 							<span id="loading_groups"></span>
-							<button onclick="XMLHttpRequest_search();" type="submit">{L_SEARCH}</button>
+							<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>
 							<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 						</div>
 					</div>
