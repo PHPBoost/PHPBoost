@@ -331,7 +331,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		if (GraphicalEnvironmentConfig::load()->get_display_theme_author())
 		{
 			$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
-			$template->put_all(array(
+			$tpl->put_all(array(
 				'C_DISPLAY_AUTHOR_THEME' => true,
 				'L_THEME' => self::$main_lang['theme'],
 				'L_THEME_NAME' => $theme_configuration->get_name(),
