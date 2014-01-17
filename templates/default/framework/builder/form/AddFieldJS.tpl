@@ -4,6 +4,7 @@ Event.observe(window, 'load', function() {
 	var field = new FormField("${escape(ID)}");
 	var fieldset = HTMLForms.getFieldset("${escape(FIELDSET_ID)}");
 	fieldset.addField(field);
+	# IF C_HAS_CONSTRAINTS #field.hasConstraints = true;# ENDIF #
 	field.doValidate = function() {
 		var result = "";
 		# START constraint #

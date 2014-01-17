@@ -426,6 +426,7 @@ abstract class AbstractFormField implements FormField
 
 		$js_tpl->put_all(array(
 			'C_DISABLED' => $this->is_disabled(),
+			'C_HAS_CONSTRAINTS' => $this->has_constraints(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'JS_SPECIALIZATION_CODE' => $this->get_js_specialization_code(),

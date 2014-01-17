@@ -218,6 +218,7 @@ var FormFieldset = Class.create({
 var FormField = Class.create({
 	id : 0,
 	validationMessageEnabled : false,
+	hasConstraints : false,
 	formId : "",
 	initialize : function(id) {
 		this.id = id;
@@ -317,7 +318,7 @@ var FormField = Class.create({
 		}
 	},
 	liveValidate : function() {
-		if (!this.isDisabled()) {
+		if (!this.isDisabled() && this.hasConstraints) {
 			var errorMessage = this.doValidate();
 			if (errorMessage != "") {
 				this.displayErrorMessage(errorMessage);
@@ -327,7 +328,7 @@ var FormField = Class.create({
 		}
 	},
 	validate : function() {
-		if (!this.isDisabled()) {
+		if (!this.isDisabled() && this.hasConstraints) {
 			var errorMessage = this.doValidate();
 			if (errorMessage != "") {
 				this.enableValidationMessage();
