@@ -133,7 +133,11 @@ class AdminCacheConfigController extends AdminController
 			$this->css_cache_config->disable();
 		}
 		
-		$this->css_cache_config->set_optimization_level($this->form->get_value('level_css_cache')->get_raw_value());
+		if (!$this->form->field_is_disabled('level_css_cache'))
+		{
+			$this->css_cache_config->set_optimization_level($this->form->get_value('level_css_cache')->get_raw_value());
+		}
+		
 		CSSCacheConfig::save();
 		AppContext::get_cache_service()->clear_css_cache();
 	}
