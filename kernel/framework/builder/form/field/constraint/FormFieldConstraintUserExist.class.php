@@ -45,7 +45,7 @@ class FormFieldConstraintUserExist extends AbstractFormFieldConstraint
  
 	public function validate(FormField $field)
 	{
-		return $this->user_exists($field);
+		return $field->get_value() ? $this->user_exists($field) : true;
 	}
  
 	public function user_exists(FormField $field)
