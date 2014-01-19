@@ -143,6 +143,36 @@ function MailExistValidator(field_id, message, user_id)
     return '';
 }
 
+function UserExistValidator(field_id, message)
+{
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = field.getValue();
+		var error = '';
+		new Ajax.Request(
+			PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
+			{
+				method: 'post',
+				asynchronous: false,
+				parameters: {login : value, token : TOKEN},
+				onSuccess: function(transport) {
+					if (transport.responseText == '1')
+					{
+						error = '';
+					}
+					else
+					{
+						error = message;
+					}
+				},
+			}
+		);
+		return error;
+	}
+	return '';
+}
+
 /* #### Multiple Field Constraints #### */
 function equalityFormFieldValidator(field_id, field_id2, message)
 {
