@@ -9,7 +9,7 @@ html, body { margin: 0;	padding: 0; }
 img { border:none; overflow:scroll; vertical-align: middle; }
 img, table, td, blockquote, code, pre, textarea, input, video {	max-width: 100%; }
 input, button, label, select, textarea, legend { font-family: inherit; font-size: inherit; vertical-align: middle; }
-optgroup, select, label, button, .notation .star { cursor:pointer; }
+optgroup, select, label, button, input[type=radio], input[type=checkbox], .notation .star { cursor:pointer; }
 input[type=checkbox] { border:none; background:none; }
 button::-moz-focus-inner, .button::-moz-focus-inner{ border:0; padding:0; }
 
