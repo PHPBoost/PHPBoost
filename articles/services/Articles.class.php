@@ -371,6 +371,7 @@ class Articles
 		$this->set_publishing_state($properties['published']);
 		$this->publishing_start_date = !empty($properties['publishing_start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['publishing_start_date']) : null;
 		$this->publishing_end_date = !empty($properties['publishing_end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['publishing_end_date']) : null;
+		$this->end_date_enabled = !empty($properties['publishing_end_date']);
 		$this->set_date_created(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['date_created']));
 		$this->date_updated = !empty($properties['date_updated']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['date_updated']) : null;
 		$this->set_notation_enabled($properties['notation_enabled']);
