@@ -146,12 +146,12 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		if ($check_answer) //Enregistrement vote du sondage
 		{
 			$Sql->query_inject("UPDATE " . PREFIX . "poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'", __LINE__, __FILE__);
-			
-			//Tout s'est bien déroulé, on redirige vers la page des resultats.
-			AppContext::get_response()->redirect(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'));
-			
+						
 			if (in_array($poll['id'], $config_displayed_in_mini_module_list) ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
 				$Cache->Generate_module_file('poll');
+				
+			//Tout s'est bien déroulé, on redirige vers la page des resultats.
+			AppContext::get_response()->redirect(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'));
 		}	
 		else //Vote blanc
 			AppContext::get_response()->redirect(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'));
