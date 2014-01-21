@@ -31,5 +31,6 @@ if (defined('PHPBOOST') !== true)
 }
 $env = new SiteNodisplayGraphicalEnvironment();
 Environment::set_graphical_environment($env);
-Environment::display_header();
+
+ob_start();
 ?>

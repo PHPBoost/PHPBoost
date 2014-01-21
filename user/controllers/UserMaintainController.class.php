@@ -333,8 +333,7 @@ class UserMaintainController extends AbstractController
 	
 	private function build_reponse()
 	{
-		$response = new SiteNodisplayResponse($this->tpl);
-		return $response;
+		return new SiteDisplayFrameResponse($this->tpl);
 	}
 	
 	public function get_right_controller_regarding_authorizations()
