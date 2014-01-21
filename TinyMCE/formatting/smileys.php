@@ -35,7 +35,6 @@
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 define('TITLE', $LANG['all_smiley']);
-require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $tpl_smileys = new FileTemplate('TinyMCE/smileys.tpl');
 
@@ -47,11 +46,8 @@ $smile_by_line = 4;
 
 $field = retrieve(GET, 'field', 'contents');
 $tpl_smileys->put_all(array(
-	'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-	'TITLE' => stripslashes(TITLE),
 	'FIELD' => $field ,
 	'COLSPAN' => $smile_by_line + 1,
-	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'L_SMILEY' => $LANG['smiley'],
 	'L_CLOSE' => $LANG['close'],
 	'L_REQUIRE_TEXT' => $LANG['require_text']
@@ -95,5 +91,7 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
     }
 }
 
-$tpl_smileys->display();
+Environment::set_graphical_environment(new SiteDisplayFrameGraphicalEnvironment());
+Environment::display($tpl_smileys->render());
+Environment::destroy();
 ?>
