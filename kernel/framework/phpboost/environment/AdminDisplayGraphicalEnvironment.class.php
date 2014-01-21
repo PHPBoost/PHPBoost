@@ -50,7 +50,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		self::$lang = LangLoader::get('main');
 		self::$lang_admin = LangLoader::get('admin');
 	}
-
+	
 	private function check_admin_auth()
 	{
 		//Module de connexion
@@ -176,43 +176,82 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		}
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display_header()
+	public function display($content)
 	{
 		self::set_page_localization($this->get_page_title());
 
-		$header_tpl = new FileTemplate('admin/admin_header.tpl');
-		$header_tpl->add_lang(self::$lang);
+		$template = new FileTemplate('admin/body.tpl');
+		$template->add_lang(self::$lang);
 
 		$theme = ThemeManager::get_theme(get_utheme());
 		$customize_interface = $theme->get_customize_interface();
 		$header_logo_path = $customize_interface->get_header_logo_path();
 		
+		$template->put_all(array(
+			'C_HEADER_LOGO' => !empty($header_logo_path),
+			'HEADER_LOGO' => Url::to_rel($header_logo_path),
+			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
+			'CONTENT' => $content,
+			'L_EXTEND_MENU' => self::$lang_admin['extend_menu'],
+			'L_POWERED_BY' => self::$lang_admin['powered_by'],
+			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
+		));
+	
+		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
+		{
+			$template->put_all(array(
+				'C_DISPLAY_BENCH' => true,
+				'BENCH' => AppContext::get_bench()->to_string(), //Fin du benchmark
+				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count(),
+				'MEMORY_USED' => AppContext::get_bench()->get_memory_php_used(),
+				'L_UNIT_SECOND' => HOST,
+				'L_REQ' => self::$lang['sql_req'],
+				'L_ACHIEVED' => self::$lang['achieved'],
+				'L_UNIT_SECOND' => self::$lang['unit_seconds_short']
+			));
+		}
+		
+		if (GraphicalEnvironmentConfig::load()->get_display_theme_author())
+		{
+			$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
+			$template->put_all(array(
+				'C_DISPLAY_AUTHOR_THEME' => true,
+				'L_THEME' => self::$main_lang['theme'],
+				'L_THEME_NAME' => $theme_configuration->get_name(),
+				'L_BY' => strtolower(self::$main_lang['by']),
+				'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
+				'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
+			));
+		}
+
+		$template->put('subheader_menu', self::get_subheader_tpl());
+
+		$this->display_page($template);
+	}
+	
+	private function display_page(View $body_template)
+	{
+		$template = new FileTemplate('admin/frame.tpl');
+		
 		$customization_config = CustomizationConfig::load();
 		
-		$header_tpl->put_all(array(
+		$template->put_all(array(
 			'C_FAVICON' => $customization_config->favicon_exists(),
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
-			'C_HEADER_LOGO' => !empty($header_logo_path),
-			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'SITE_NAME_DESC' => 'Le CMS tout en un !',
 			'TITLE' => $this->get_seo_meta_data()->get_full_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'L_XML_LANGUAGE' => self::$lang['xml_lang'],
-			'L_EXTEND_MENU' => self::$lang_admin['extend_menu'],
+			'BODY' => $body_template
 		));
-
-		$header_tpl->put('subheader_menu', self::get_subheader_tpl());
-
-		$header_tpl->display();
+		
+		$template->display();
 	}
-
+	
 	private static function get_subheader_tpl()
 	{
 		$subheader_lang = LangLoader::get('admin-links-common');
@@ -299,50 +338,5 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		return $subheader_tpl;
 	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display_footer()
-	{
-		$tpl = new FileTemplate('admin/admin_footer.tpl');
-		$tpl->add_lang(self::$lang);
-
-		$tpl->put_all(array(
-			'L_POWERED_BY' => self::$lang_admin['powered_by'],
-			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
-		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
-		));
-
-		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
-		{
-			$tpl->put_all(array(
-				'C_DISPLAY_BENCH' => true,
-				'BENCH' => AppContext::get_bench()->to_string(), //Fin du benchmark
-				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count(),
-				'MEMORY_USED' => AppContext::get_bench()->get_memory_php_used(),
-				'L_UNIT_SECOND' => HOST,
-				'L_REQ' => self::$lang['sql_req'],
-				'L_ACHIEVED' => self::$lang['achieved'],
-				'L_UNIT_SECOND' => self::$lang['unit_seconds_short']
-			));
-		}
-		
-		if (GraphicalEnvironmentConfig::load()->get_display_theme_author())
-		{
-			$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
-			$tpl->put_all(array(
-				'C_DISPLAY_AUTHOR_THEME' => true,
-				'L_THEME' => self::$main_lang['theme'],
-				'L_THEME_NAME' => $theme_configuration->get_name(),
-				'L_BY' => strtolower(self::$main_lang['by']),
-				'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
-				'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
-			));
-		}
-
-		$tpl->display();
-	}
 }
-
 ?>

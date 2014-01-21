@@ -31,15 +31,10 @@
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
 interface GraphicalEnvironment
-{
+{	
 	/**
-	 * Displays the top of the environment.
+	 * Displays the environment with content of the page.
 	 */
-	function display_header();
-	
-	/**
-	 * Displays the bottom of the environment.
-	 */
-	function display_footer();
+	function display($content);
 }
 ?>

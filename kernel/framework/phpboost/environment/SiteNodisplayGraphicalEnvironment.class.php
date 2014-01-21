@@ -40,19 +40,13 @@ class SiteNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 	/**
 	 * {@inheritdoc}
 	 */
-	function display_header()
+	function display($content)
 	{
 		self::set_page_localization('');
 
 		$this->process_site_maintenance();
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	function display_footer()
-	{
 		
+		echo $content;
 	}
 }
 ?>

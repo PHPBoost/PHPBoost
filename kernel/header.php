@@ -52,5 +52,5 @@ if (defined('NO_RIGHT_COLUMN') && NO_RIGHT_COLUMN)
 
 $env->set_page_title(TITLE);
 
-Environment::display_header();
+ob_start();
 ?>

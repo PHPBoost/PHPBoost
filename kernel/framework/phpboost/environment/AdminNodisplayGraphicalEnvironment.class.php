@@ -42,12 +42,14 @@ class AdminNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 	/**
 	 * {@inheritdoc}
 	 */
-	function display_header()
+	function display($content)
 	{
 		self::set_page_localization('');
 
 		$this->process_site_maintenance();
-//		$this->check_admin_auth();
+		$this->check_admin_auth();
+				
+		echo $content;
 	}
 
 	private function check_admin_auth()
@@ -56,14 +58,6 @@ class AdminNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 		{
 			exit;
 		}
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	function display_footer()
-	{
-
 	}
 }
 ?>

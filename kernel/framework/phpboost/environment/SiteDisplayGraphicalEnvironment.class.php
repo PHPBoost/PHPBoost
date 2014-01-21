@@ -59,15 +59,63 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	/**
 	 * {@inheritdoc}
 	 */
-	function display_header()
+	public function display($content)
 	{
 		self::set_page_localization($this->get_page_title());
 
-		$template = new FileTemplate('header.tpl');
+		$template = new FileTemplate('body.tpl');
 		
 		$theme = ThemeManager::get_theme(get_utheme());
 		$customize_interface = $theme->get_customize_interface();
 		$header_logo_path = $customize_interface->get_header_logo_path();
+		
+		$template->put_all(array(
+			'MAINTAIN' => $this->display_site_maintenance(),
+			'C_HEADER_LOGO' => !empty($header_logo_path),
+			'HEADER_LOGO' => Url::to_rel($header_logo_path),
+		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
+			'CONTENT' => $content,
+			'ACTIONS_MENU' => ModuleTreeLinksService::display_actions_menu(),
+			'L_POWERED_BY' => self::$main_lang['powered_by'],
+			'L_PHPBOOST_RIGHT' => self::$main_lang['phpboost_right'],
+		));
+		
+		$this->display_counter($template);
+		$this->display_menus($template);
+		$this->get_breadcrumb()->display($template);
+
+		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
+		{
+			$template->put_all(array(
+				'C_DISPLAY_BENCH' => true,
+				'BENCH' => AppContext::get_bench()->to_string(),
+				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count(),
+				'MEMORY_USED' => AppContext::get_bench()->get_memory_php_used(),
+				'L_REQ' => self::$main_lang['sql_req'],
+				'L_ACHIEVED' => self::$main_lang['achieved'],
+				'L_UNIT_SECOND' => self::$main_lang['unit_seconds_short']
+			));
+		}
+		
+		if (GraphicalEnvironmentConfig::load()->get_display_theme_author())
+		{
+			$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
+			$template->put_all(array(
+				'C_DISPLAY_AUTHOR_THEME' => true,
+				'L_THEME' => self::$main_lang['theme'],
+				'L_THEME_NAME' => $theme_configuration->get_name(),
+				'L_BY' => strtolower(self::$main_lang['by']),
+				'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
+				'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
+			));
+		}
+		
+		$this->display_page($template);
+	}
+	
+	function display_page(View $body_template)
+	{
+		$template = new FileTemplate('frame.tpl');
 
 		$customization_config = CustomizationConfig::load();
 		
@@ -75,29 +123,19 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'SITE_NAME_DESC' => 'Le CMS tout en un !',
-			'MAINTAIN' => $this->display_site_maintenance(),
-			'C_COMPTEUR' => false,
 			'C_FAVICON' => $customization_config->favicon_exists(),
 			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
-			'C_HEADER_LOGO' => !empty($header_logo_path),
-			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 			'TITLE' => $this->get_seo_meta_data()->get_full_title(),
 			'SITE_DESCRIPTION' => $this->get_seo_meta_data()->get_full_description(),
 			'SITE_KEYWORD' => $this->get_seo_meta_data()->get_keywords(),
-			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'L_XML_LANGUAGE' => self::$main_lang['xml_lang'],
 			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
-			'JAVASCRIPT' => new FileTemplate('javascript_header.tpl'),
-			'ACTIONS_MENU' => ModuleTreeLinksService::display_actions_menu()
+			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
+			'HEAD_JAVASCRIPT' => new FileTemplate('javascript_header.tpl'),
+			'FOOT_JAVASCRIPT' => new FileTemplate('javascript_footer.tpl'),
+			'BODY' => $body_template
 		));
-
-		$this->display_counter($template);
-		
-		$this->display_menus($template);
-		
-		//Bread crumb
-		$this->get_breadcrumb()->display($template);
 		
 		$template->display();
 	}
@@ -143,29 +181,41 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			}
 		}
 		
-		$enable_header_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__HEADER]);
-		$enable_sub_header_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]);
-		$enable_left_column_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__LEFT]);
-		$enable_right_column_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__RIGHT]);
-		$enable_top_central_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]);
+		$header_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__HEADER]);
+		$sub_header_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]);
+		$left_column_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__LEFT]);
+		$right_column_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__RIGHT]);
+		$top_central_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]);
+		$bottom_top_central_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]);
+		$top_footer_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__TOP_FOOTER]);
+		$footer_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__FOOTER]);
 		
-		$header_content = $enable_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__HEADER] : '';
-		$sub_header_content = $enable_sub_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__SUB_HEADER] : '';
-		$left_content = $enable_left_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__LEFT] : '';
-		$right_content = $enable_right_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__RIGHT] : '';
-		$top_central_content = $enable_top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL] : '';
+		$header_content = $header_is_activated ? $MENUS[Menu::BLOCK_POSITION__HEADER] : '';
+		$sub_header_content = $sub_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__SUB_HEADER] : '';
+		$left_content = $left_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__LEFT] : '';
+		$right_content = $right_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__RIGHT] : '';
+		$top_central_content = $top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL] : '';
+		$bottom_top_central_content = $bottom_top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL] : '';
+		$top_footer_content = $top_footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_FOOTER] : '';
+		$footer_content = $footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__FOOTER] : '';
 		
 		$template->put_all(array(
-			'C_MENUS_HEADER_CONTENT' => $enable_header_is_activated,
+			'C_MENUS_HEADER_CONTENT' => $header_is_activated,
 		    'MENUS_HEADER_CONTENT' => $header_content,
-			'C_MENUS_SUB_HEADER_CONTENT' => $enable_sub_header_is_activated,
+			'C_MENUS_SUB_HEADER_CONTENT' => $sub_header_is_activated,
 			'MENUS_SUB_HEADER_CONTENT' => $sub_header_content,
-			'C_MENUS_LEFT_CONTENT' => $enable_left_column_is_activated,
+			'C_MENUS_LEFT_CONTENT' => $left_column_is_activated,
 			'MENUS_LEFT_CONTENT' => $left_content,
-			'C_MENUS_RIGHT_CONTENT' => $enable_right_column_is_activated,
+			'C_MENUS_RIGHT_CONTENT' => $right_column_is_activated,
 			'MENUS_RIGHT_CONTENT' => $right_content,
-			'C_MENUS_TOPCENTRAL_CONTENT' => $enable_top_central_is_activated,
-			'MENUS_TOPCENTRAL_CONTENT' => $top_central_content
+			'C_MENUS_TOPCENTRAL_CONTENT' => $top_central_is_activated,
+			'MENUS_TOPCENTRAL_CONTENT' => $top_central_content,
+			'C_MENUS_BOTTOM_CENTRAL_CONTENT' => $bottom_top_central_is_activated,
+			'MENUS_BOTTOMCENTRAL_CONTENT' => $bottom_top_central_content,
+			'C_MENUS_TOP_FOOTER_CONTENT' => $top_footer_is_activated,
+			'MENUS_TOP_FOOTER_CONTENT' => $top_footer_content,
+			'C_MENUS_FOOTER_CONTENT' => $footer_is_activated,
+			'MENUS_FOOTER_CONTENT' => $footer_content,
 		));
 	}
 
@@ -248,64 +298,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			));
 		}
 		return $template;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	function display_footer()
-	{
-		global $MENUS;
-		$template = new FileTemplate('footer.tpl');
-
-		$bottom_top_central_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]);
-		$top_footer_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__TOP_FOOTER]);
-		$footer_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__FOOTER]);
-	
-		$bottom_top_central_content = $bottom_top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL] : '';
-		$top_footer_content = $top_footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_FOOTER] : '';
-		$footer_content = $footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__FOOTER] : '';
-		
-		$template->put_all(array(
-			'C_MENUS_BOTTOM_CENTRAL_CONTENT' => $bottom_top_central_is_activated,
-			'MENUS_BOTTOMCENTRAL_CONTENT' => $bottom_top_central_content,
-			'C_MENUS_TOP_FOOTER_CONTENT' => $top_footer_is_activated,
-			'MENUS_TOP_FOOTER_CONTENT' => $top_footer_content,
-			'C_MENUS_FOOTER_CONTENT' => $footer_is_activated,
-			'MENUS_FOOTER_CONTENT' => $footer_content,
-			'L_POWERED_BY' => self::$main_lang['powered_by'],
-			'L_PHPBOOST_RIGHT' => self::$main_lang['phpboost_right'],
-		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
-			'JAVASCRIPT' => new FileTemplate('javascript_footer.tpl')
-		));
-
-		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled())
-		{
-			$template->put_all(array(
-				'C_DISPLAY_BENCH' => true,
-				'BENCH' => AppContext::get_bench()->to_string(),
-				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count(),
-				'MEMORY_USED' => AppContext::get_bench()->get_memory_php_used(),
-				'L_REQ' => self::$main_lang['sql_req'],
-				'L_ACHIEVED' => self::$main_lang['achieved'],
-				'L_UNIT_SECOND' => self::$main_lang['unit_seconds_short']
-			));
-		}
-		
-		if (GraphicalEnvironmentConfig::load()->get_display_theme_author())
-		{
-			$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
-			$template->put_all(array(
-				'C_DISPLAY_AUTHOR_THEME' => true,
-				'L_THEME' => self::$main_lang['theme'],
-				'L_THEME_NAME' => $theme_configuration->get_name(),
-				'L_BY' => strtolower(self::$main_lang['by']),
-				'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
-				'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
-			));
-		}
-
-		$template->display();
 	}
 
 	/**

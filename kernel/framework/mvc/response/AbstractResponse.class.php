@@ -57,9 +57,7 @@ abstract class AbstractResponse implements Response
 
 	public function send()
 	{
-		$this->graphical_environment->display_header();
-		echo $this->view->render();
-		$this->graphical_environment->display_footer();
+		$this->graphical_environment->display($this->view->render());
 	}
 }
 ?>

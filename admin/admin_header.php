@@ -39,5 +39,5 @@ if (!defined('TITLE'))
 
 $env->set_page_title(TITLE);
 
-Environment::display_header();
+ob_start();
 ?>

@@ -301,9 +301,9 @@ class Environment
 		if (ServerEnvironmentConfig::load()->is_output_gziping_enabled())
 		{
 			AppContext::get_response()->clean_output();
-			$contents = AppContext::get_response()->get_previous_ob_content();
+			$content = AppContext::get_response()->get_previous_ob_content();
 			ob_start('ob_gzhandler');
-			echo $contents;
+			echo $content;
 		}
 	}
 
@@ -482,21 +482,13 @@ class Environment
 	}
 
 	/**
-	 * Displays the top of the page.
+	 * Displays the environment with content of the page.
 	 */
-	public static function display_header()
+	public static function display($content)
 	{
-		self::get_graphical_environment()->display_header();
+		self::get_graphical_environment()->display($content);
 	}
-
-	/**
-	 * Displays the bottom of the page.
-	 */
-	public static function display_footer()
-	{
-		self::get_graphical_environment()->display_footer();
-	}
-
+	
 	public static function set_graphical_environment(GraphicalEnvironment $env)
 	{
 		self::$graphical_environment = $env;

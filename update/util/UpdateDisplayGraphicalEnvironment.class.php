@@ -32,8 +32,9 @@ class UpdateDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironm
 		parent::__construct();
 	}
 
-	public function display_header() {}
-	
-	public function display_footer() {}
+	public function display($content) 
+	{		
+		echo $content;
+	}
 }
 ?>
