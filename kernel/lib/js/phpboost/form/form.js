@@ -239,14 +239,14 @@ var FormField = Class.create({
 		if (this.HTMLFieldExists()) {
 			Field.enable(this.getHTMLId());
 		}
-		Effect.Appear(this.getHTMLId() + "_field");
+		Effect.Appear(this.getHTMLId() + "_field", {duration : 0.3});
 		this.liveValidate();
 	},
 	disable : function() {
 		if (this.HTMLFieldExists()) {
 			Field.disable(this.getHTMLId());
 		}
-		Effect.Fade(this.getHTMLId() + "_field");
+		Effect.Fade(this.getHTMLId() + "_field", {duration : 0.3});
 		this.clearErrorMessage();
 	},
 	isDisabled : function() {
