@@ -288,7 +288,7 @@ table caption {
 	border-bottom:1px solid #D1D2D5;
 }
 
-table thead th{
+table thead th {
 	padding:8px;
 	background-color:#4D4C50;
 	color:#E5E6E6;
@@ -297,18 +297,8 @@ table thead th{
 	font-weight:normal;
 }
 
-table thead th:first-child {
-	border-top-left-radius:3px;
-	-moz-border-radius-topleft:3px;
-	-webkit-border-top-left-radius:3px;
-}
-
-table thead th:last-child {
-	border-top-right-radius:3px;
-	-moz-border-radius-topright:3px;
-	-webkit-border-top-right-radius:3px;
-}
-
+table thead th:first-child { border-top-left-radius:3px; }
+table thead th:last-child {	border-top-right-radius:3px; }
 table thead th a { color:#E5E6E6; }
 table thead th a:hover { color:#FFFFFF; }
 
@@ -323,15 +313,14 @@ table tbody td {
 }
 
 table tbody tr:nth-child(even) td {	background-color:#FFFFFF; }
-table tbody tr:last-child td{ border-bottom:1px solid #D1D2D4; }
-table tbody tr td:last-child{ border-right:1px solid #D1D2D4; }
+table tbody tr:last-child td { border-bottom:1px solid #D1D2D4; }
+table tbody tr td:last-child { border-right:1px solid #D1D2D4; }
 
-table tbody tr.no-separator td{ border-top: none; }
-table tbody tr td.no-separator{ border-left: none; }
-table tbody tr td.no-separator:first-child{ border-left:1px solid #D1D2D4; }
+table tbody tr.no-separator td { border-top: none; }
+table tbody tr td.no-separator { border-left: none; }
+table tbody tr td.no-separator:first-child { border-left:1px solid #D1D2D4; }
 
 table tbody td.align-left {	text-align:left; }
-table tbody td.input-radio { min-width: 60px; }
 
 /* Pied */
 table tfoot tr th {
@@ -341,20 +330,8 @@ table tfoot tr th {
 	border-bottom:1px solid #D1D2D4;
 }
 
-table tfoot tr th:first-child {
-	border-left:1px solid #D1D2D4;
-	border-bottom-left-radius:3px;
-	-moz-border-radius-bottomleft:3px;
-	-webkit-border-bottom-left-radius:3px;
-}
-
-table tfoot tr th:last-child {
-	border-right:1px solid #D1D2D4;
-	border-bottom-right-radius:3px;
-	-moz-border-radius-bottomright:3px;
-	-webkit-border-bottom-right-radius:3px;
-}
-
+table tfoot tr th:first-child { border-left:1px solid #D1D2D4; border-bottom-left-radius:3px; }
+table tfoot tr th:last-child { border-right:1px solid #D1D2D4; border-bottom-right-radius:3px; }
 table tfoot tr th:only-child { text-align:right; }
 
 table tfoot tr th * { vertical-align:middle; }
@@ -373,14 +350,14 @@ table.mini th a, table.mini td a {
 
 /* Pagination footer tableaux */
 table tfoot nav.pagination a{
-	color:#8b8d90;
+	color:#8B8D90;
 	text-decoration:none;
 	padding:3px 3px;
 	
 }
 
 table tfoot nav.pagination a span.current-page {
-	color:#ced0d0;
+	color:#CED0D0;
 	text-decoration:none;
 }
 

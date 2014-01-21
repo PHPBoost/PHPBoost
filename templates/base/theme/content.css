@@ -300,18 +300,8 @@ table thead th {
 	font-weight:normal;
 }
 
-table thead th:first-child {
-	border-top-left-radius:3px;
-	-moz-border-radius-topleft:3px;
-	-webkit-border-top-left-radius:3px;
-}
-
-table thead th:last-child {
-	border-top-right-radius:3px;
-	-moz-border-radius-topright:3px;
-	-webkit-border-top-right-radius:3px;
-}
-
+table thead th:first-child { border-top-left-radius:3px; }
+table thead th:last-child {	border-top-right-radius:3px; }
 table thead th a { color:#E5E6E6; }
 table thead th a:hover { color:#FFFFFF; }
 
@@ -343,20 +333,8 @@ table tfoot tr th {
 	border-bottom:1px solid #D1D2D4;
 }
 
-table tfoot tr th:first-child {
-	border-left:1px solid #D1D2D4;
-	border-bottom-left-radius:3px;
-	-moz-border-radius-bottomleft:3px;
-	-webkit-border-bottom-left-radius:3px;
-}
-
-table tfoot tr th:last-child {
-	border-right:1px solid #D1D2D4;
-	border-bottom-right-radius:3px;
-	-moz-border-radius-bottomright:3px;
-	-webkit-border-bottom-right-radius:3px;
-}
-
+table tfoot tr th:first-child { border-left:1px solid #D1D2D4; border-bottom-left-radius:3px; }
+table tfoot tr th:last-child { border-right:1px solid #D1D2D4; border-bottom-right-radius:3px; }
 table tfoot tr th:only-child { text-align:right; }
 
 table tfoot tr th * { vertical-align:middle; }
