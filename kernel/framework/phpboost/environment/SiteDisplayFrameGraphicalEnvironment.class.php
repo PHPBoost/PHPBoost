@@ -53,8 +53,6 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 		$lang = LangLoader::get('main');
 		$template->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
-			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
-			'SITE_NAME_DESC' => 'Le CMS tout en un !',
 			'C_FAVICON' => $customization_config->favicon_exists(),
 			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),

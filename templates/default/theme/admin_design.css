@@ -25,7 +25,7 @@ header#header-admin-container {
 	height:170px;
 }
 
-div#logo {
+div#site-logo {
 	float: left;
 	margin: 20px 20px 0px 35px;
 	background: url('images/logo.png') no-repeat;
@@ -51,7 +51,7 @@ div#site-name a {
 	text-decoration:none;
 }
 
-span#site-name-desc {
+span#site-slogan {
 	color:#FFFFFF;
 	font-size:12px;
 	padding-left:4px;

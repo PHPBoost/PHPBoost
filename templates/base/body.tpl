@@ -1,10 +1,10 @@
 	# INCLUDE MAINTAIN #
 	<div id="global">
 		<header id="header">
-			<div id="logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
+			<div id="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
 			<div id="site-name">
 				<a href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
-				<span id="site-name-desc">{SITE_NAME_DESC}</span>
+				<span id="site-slogan">{SITE_SLOGAN}</span>
 			</div>
 			<div id="top-header">
 				# IF C_MENUS_HEADER_CONTENT #
@@ -69,7 +69,7 @@
 					</ol>
 				</nav>
 				
-				{CONTENT}
+				# INCLUDE CONTENT #
 			</div>
 			# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
 	        <div id="bottom-contents">

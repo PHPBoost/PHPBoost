@@ -33,6 +33,7 @@ class GeneralConfig extends AbstractConfigData
 	const SITE_URL = 'site_url';
 	const SITE_PATH = 'site_path';
 	const SITE_NAME = 'site_name';
+	const SITE_SLOGAN = 'site_slogan';
 	const SITE_DESCRIPTION = 'site_description';
 	const SITE_KEYWORDS = 'site_keywords';
 	const MODULE_HOME_PAGE = 'module_home_page';
@@ -113,6 +114,7 @@ class GeneralConfig extends AbstractConfigData
 			self::SITE_URL => $site_url,
 			self::SITE_PATH => $site_path,
 			self::SITE_NAME => '',
+			self::SITE_SLOGAN => '',
 			self::SITE_DESCRIPTION => '',
 			self::SITE_KEYWORDS => '',
 			self::MODULE_HOME_PAGE => '',
@@ -164,6 +166,16 @@ class GeneralConfig extends AbstractConfigData
 	public function set_site_name($site_name)
 	{
 		$this->set_property(self::SITE_NAME, $site_name);
+	}
+	
+	public function get_site_slogan()
+	{
+		return $this->get_property(self::SITE_SLOGAN);
+	}
+
+	public function set_site_slogan($site_slogan)
+	{
+		$this->set_property(self::SITE_SLOGAN, $site_slogan);
 	}
 
 	public function get_site_description()
