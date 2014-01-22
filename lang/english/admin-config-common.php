@@ -58,6 +58,7 @@ $lang = array(
 	//General config
 	'general-config' => 'General configuration',
 	'general-config.site_name' => 'Site name',
+	'general-config.site_slogan' => 'Site slogan',
 	'general-config.site_description' => 'Site description',
 	'general-config.site_description-explain' => 'Description of your site in search engines',
 	'general-config.site_keywords' => 'Site keywords',

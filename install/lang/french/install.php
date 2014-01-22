@@ -149,6 +149,7 @@ $lang = array(
 	'website.path' => 'Chemin de PHPBoost :',
 	'website.path.explanation' => 'Vide si votre site est à la racine du serveur, de la forme /dossier sinon',
 	'website.name' => 'Nom du site',
+	'website.slogan' => 'Slogan du site',
     'website.description' => 'Description du site',
     'website.description.explanation' => '(facultatif) Utile pour le référencement dans les moteurs de recherche',
     'website.metaKeywords' => 'Mots clés du site',

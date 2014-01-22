@@ -70,6 +70,8 @@ class InstallWebsiteConfigController extends InstallController
 		$fieldset->add_field($path);
 		$name = new FormFieldTextEditor('name', $this->lang['website.name'], '', array('required' => $this->lang['website.name.required']));
 		$fieldset->add_field($name);
+		$slogan = new FormFieldTextEditor('slogan', $this->lang['website.slogan'], '');
+		$fieldset->add_field($slogan);
 		$description = new FormFieldMultiLineTextEditor('description', $this->lang['website.description'], '',
 		array('description' => $this->lang['website.description.explanation']));
 		$fieldset->add_field($description);
@@ -93,7 +95,7 @@ class InstallWebsiteConfigController extends InstallController
 		$installation_services = new InstallationServices();
 		$installation_services->configure_website(
 		$this->form->get_value('host'), $this->form->get_value('path'),
-		$this->form->get_value('name'), $this->form->get_value('description'),
+		$this->form->get_value('name'), $this->form->get_value('slogan'), $this->form->get_value('description'),
 		$this->form->get_value('metaKeywords'), $this->form->get_value('timezone')->get_raw_value());
 		AppContext::get_response()->redirect(InstallUrlBuilder::admin());
 	}

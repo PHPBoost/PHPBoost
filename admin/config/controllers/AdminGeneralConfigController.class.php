@@ -90,6 +90,8 @@ class AdminGeneralConfigController extends AdminController
 		$fieldset->add_field(new FormFieldTextEditor('site_name', $this->lang['general-config.site_name'], $this->general_config->get_site_name(),
 			array('class' => 'text', 'required' => true)
 		));
+		
+		$fieldset->add_field(new FormFieldTextEditor('site_slogan', $this->lang['general-config.site_slogan'], $this->general_config->get_site_slogan()));
 
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('site_description', $this->lang['general-config.site_description'], $this->general_config->get_site_description(),
 			array('rows' => 4, 'description' => $this->lang['general-config.site_description-explain'])
@@ -152,6 +154,7 @@ class AdminGeneralConfigController extends AdminController
 	private function save()
 	{
 		$this->general_config->set_site_name($this->form->get_value('site_name'));
+		$this->general_config->set_site_slogan($this->form->get_value('site_slogan'));
 		$this->general_config->set_site_description($this->form->get_value('site_description'));
 		$this->general_config->set_site_keywords($this->form->get_value('site_keywords'));
 

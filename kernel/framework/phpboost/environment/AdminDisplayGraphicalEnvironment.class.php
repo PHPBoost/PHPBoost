@@ -188,10 +188,12 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$header_logo_path = $customize_interface->get_header_logo_path();
 		
 		$template->put_all(array(
+			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
+			'SITE_SLOGAN' => GeneralConfig::load()->get_site_slogan(),
 			'C_HEADER_LOGO' => !empty($header_logo_path),
 			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
-			'CONTENT' => $content,
+			'CONTENT' => new StringTemplate($content),
 			'L_EXTEND_MENU' => self::$lang_admin['extend_menu'],
 			'L_POWERED_BY' => self::$lang_admin['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
@@ -240,8 +242,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
-			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
-			'SITE_NAME_DESC' => 'Le CMS tout en un !',
 			'TITLE' => $this->get_seo_meta_data()->get_full_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),

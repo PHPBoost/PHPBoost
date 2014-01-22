@@ -71,10 +71,12 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		
 		$template->put_all(array(
 			'MAINTAIN' => $this->display_site_maintenance(),
+			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
+			'SITE_SLOGAN' => GeneralConfig::load()->get_site_slogan(),
 			'C_HEADER_LOGO' => !empty($header_logo_path),
 			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
-			'CONTENT' => $content,
+			'CONTENT' => new StringTemplate($content),
 			'ACTIONS_MENU' => ModuleTreeLinksService::display_actions_menu(),
 			'L_POWERED_BY' => self::$main_lang['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$main_lang['phpboost_right'],
@@ -121,8 +123,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		
 		$template->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
-			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
-			'SITE_NAME_DESC' => 'Le CMS tout en un !',
 			'C_FAVICON' => $customization_config->favicon_exists(),
 			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),

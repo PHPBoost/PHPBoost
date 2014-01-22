@@ -148,6 +148,7 @@ $lang = array(
 	'website.path' => 'PHPBoost path :',
 	'website.path.explanation' => 'The path where PHPBoost is located relative to the domain name, e.g. /PHPBoost.',
 	'website.name' => 'Website name',
+	'website.slogan' => 'Site slogan',
 	'website.timezone' => 'System timezone',
 	'website.timezone.explanation' => 'The default value is the server one. You will be able to change this value later in the administration panel.',
 	'website.description' => 'Website description',
