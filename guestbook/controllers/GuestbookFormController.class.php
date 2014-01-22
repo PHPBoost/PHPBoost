@@ -101,7 +101,7 @@ class GuestbookFormController extends ModuleController
 		if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
 			$fieldset->add_field(new FormFieldTextEditor('pseudo', $main_lang['pseudo'], $this->get_message()->get_login(), array(
-				'class' => 'text', 'required' => true, 'maxlength' => 25)
+				'required' => true, 'maxlength' => 25)
 			));
 		}
 		

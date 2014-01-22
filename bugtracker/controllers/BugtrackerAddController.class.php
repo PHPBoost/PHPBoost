@@ -108,7 +108,7 @@ class BugtrackerAddController extends ModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['bugs.labels.fields.title'], '', array(
-			'class' => 'text', 'maxlength' => 200, 'size' => 50, 'required' => true)
+			'maxlength' => 200, 'size' => 50, 'required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['bugs.labels.fields.contents'], FormatingHelper::unparse($this->config->get_contents_value()), array(

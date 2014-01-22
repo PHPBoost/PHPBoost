@@ -69,12 +69,12 @@ class AdminNewsletterConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset_config);
 		
 		$fieldset_config->add_field(new FormFieldTextEditor('mail_sender', $this->lang['admin.mail-sender'], $newsletter_config->get_mail_sender(), array(
-			'class' => 'text', 'description' => $this->lang['admin.mail-sender-explain']),
+			'description' => $this->lang['admin.mail-sender-explain']),
 			array(new FormFieldConstraintMailAddress())
 		));
 		
 		$fieldset_config->add_field(new FormFieldTextEditor('newsletter_name', $this->lang['admin.newsletter-name'], $newsletter_config->get_newsletter_name(), array(
-			'class' => 'text', 'description' => $this->lang['admin.newsletter-name-explain'])
+			'description' => $this->lang['admin.newsletter-name-explain'])
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['admin.newsletter-authorizations']);

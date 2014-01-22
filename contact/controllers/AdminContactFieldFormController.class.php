@@ -125,7 +125,7 @@ class AdminContactFieldFormController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->admin_user_common_lang['field.name'], $field->get_name(), array(
-			'class' => 'text', 'required' => true),
+			'required' => true),
 			array(new ContactConstraintFieldExist($this->id))
 		));
 		
@@ -151,7 +151,7 @@ class AdminContactFieldFormController extends AdminController
 			));
 			
 			$fieldset->add_field(new FormFieldTextEditor('regex', $this->admin_user_common_lang['regex.personnal-regex'], $regex, array(
-				'class' => 'text', 'maxlength' => 25, 'disabled' => $field->is_readonly())
+				'maxlength' => 25, 'disabled' => $field->is_readonly())
 			));
 		}
 		
@@ -186,7 +186,7 @@ class AdminContactFieldFormController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value_medium', $this->admin_user_common_lang['field.default-value'], $field->get_default_value(), array(
-			'class' => 'text', 'rows' => 4, 'cols' => 47)
+			'rows' => 4, 'cols' => 47)
 		));
 		
 		$fieldset->add_field(new FormFieldRadioChoice('display', $this->admin_user_common_lang['field.display'], (int)$field->is_displayed(),

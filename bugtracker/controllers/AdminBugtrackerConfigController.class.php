@@ -93,7 +93,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->lang['bugs.config.items_per_page'], (int)$this->config->get_items_per_page(), array(
-			'class' => 'text', 'maxlength' => 2, 'size' => 3, 'required' => true),
+			'maxlength' => 2, 'size' => 3, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
@@ -167,7 +167,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('stats_top_posters_number', $this->lang['bugs.config.stats_top_posters_number'], (int)$this->config->get_stats_top_posters_number(), array(
-			'class' => 'text', 'maxlength' => 3, 'size' => 3, 'hidden' => !$this->config->are_stats_top_posters_enabled()),
+			'maxlength' => 3, 'size' => 3, 'hidden' => !$this->config->are_stats_top_posters_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
@@ -222,7 +222,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents_value', $this->lang['bugs.titles.contents_value'], $this->config->get_contents_value(), 
-			array('class' => 'text', 'rows' => 8, 'cols' => 47)
+			array('rows' => 8, 'cols' => 47)
 		));
 		
 		$fieldset = new FormFieldsetHTML('types-fieldset', $this->lang['bugs.titles.types']);

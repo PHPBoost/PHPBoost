@@ -69,7 +69,7 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['streams.name'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'required' => true)
+			'maxlength' => 25, 'required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['streams.description'], '',

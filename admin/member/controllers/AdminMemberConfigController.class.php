@@ -88,7 +88,7 @@ class AdminMemberConfigController extends AdminController
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('unactivated_accounts_timeout', $this->lang['members.config.unactivated-accounts-timeout'], (string)$user_account_config->get_unactivated_accounts_timeout(), array(
-			'class' => 'text', 'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.unactivated-accounts-timeout-explain']),
+			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.unactivated-accounts-timeout-explain']),
 		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
@@ -102,17 +102,17 @@ class AdminMemberConfigController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('maximal_width_avatar', $this->lang['members.config.maximal-width-avatar'], $user_account_config->get_max_avatar_width(), array(
-			'class' => 'text', 'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-width-avatar-explain']),
+			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-width-avatar-explain']),
 		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('maximal_height_avatar', $this->lang['members.config.maximal-height-avatar'], $user_account_config->get_max_avatar_height(), array(
-			'class' => 'text', 'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-height-avatar-explain']),
+			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-height-avatar-explain']),
 		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('maximal_weight_avatar', $this->lang['members.config.maximal-weight-avatar'], $user_account_config->get_max_avatar_weight(), array(
-			'class' => 'text', 'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-weight-avatar-explain']),
+			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-weight-avatar-explain']),
 		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
@@ -122,7 +122,7 @@ class AdminMemberConfigController extends AdminController
 		
 		$default_avatar_link = $user_account_config->get_default_avatar_name();
 		$fieldset->add_field(new FormFieldTextEditor('default_avatar_link', $this->lang['members.config.default-avatar-link'], $default_avatar_link, array(
-			'class' => 'text', 'description' => $this->lang['members.default-avatar-link-explain'], 'events' => array('change' => '$(\'img_avatar\').src = "' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme() .'/images/" + HTMLForms.getField("default_avatar_link").getValue()'))
+			'description' => $this->lang['members.default-avatar-link-explain'], 'events' => array('change' => '$(\'img_avatar\').src = "' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme() .'/images/" + HTMLForms.getField("default_avatar_link").getValue()'))
 		));
 		
 		$fieldset->add_field(new FormFieldFree('preview', LangLoader::get_message('preview', 'main'), '<img id="img_avatar" src="' . Url::to_rel('/templates/'. get_utheme() .'/images/'. $default_avatar_link) .'" alt="" style="vertical-align:top" />'));
@@ -139,7 +139,7 @@ class AdminMemberConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('welcome_message_contents', $this->lang['members.config.welcome-message-content'], $user_account_config->get_welcome_message(), array(
-			'class' => 'text', 'rows' => 8, 'cols' => 47)
+			'rows' => 8, 'cols' => 47)
 		));
 		
 		$fieldset = new FormFieldsetHTML('members_rules', $this->lang['members.rules']);
@@ -148,7 +148,7 @@ class AdminMemberConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('registration_agreement', $this->lang['members.rules.registration-agreement'], 
 			UserAccountsConfig::load()->get_registration_agreement(), 
-			array('class' => 'text', 'rows' => 8, 'cols' => 47)
+			array('rows' => 8, 'cols' => 47)
 		));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
