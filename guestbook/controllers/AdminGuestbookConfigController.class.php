@@ -80,7 +80,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->lang['admin.config.items_per_page'], (int)$this->config->get_items_per_page(), array(
-			'class' => 'text', 'maxlength' => 2, 'size' => 3, 'required' => true),
+			'maxlength' => 2, 'size' => 3, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
@@ -89,7 +89,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('max_link', $this->lang['admin.config.max_links'], $this->config->get_maximum_links_message(), array(
-			'class' => 'text', 'description' => $this->lang['admin.config.max_links_explain'], 'maxlength' => 3, 'size' => 3, 'required' => true),
+			'description' => $this->lang['admin.config.max_links_explain'], 'maxlength' => 3, 'size' => 3, 'required' => true),
 			array(new FormFieldConstraintRegex('`^([-]?[0-9]+)$`i', '`^([-]?[0-9]+)$`i', $this->lang['admin.config.error.number-required']))
 		));
 		

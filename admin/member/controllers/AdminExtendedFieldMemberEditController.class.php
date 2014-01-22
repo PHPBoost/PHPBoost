@@ -106,7 +106,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['field.name'], $extended_field_cache['name'], array(
-			'class' => 'text', 'required' => true)
+			'required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], $extended_field_cache['description'],
@@ -138,7 +138,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['regex.personnal-regex'], $regex, array(
-			'class' => 'text', 'maxlength' => 25)
+			'maxlength' => 25)
 		));
 		
 		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->lang['field.required'], (int)$extended_field_cache['required'],
@@ -151,7 +151,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['field.possible-values'], $extended_field_cache['possible_values']));
 		
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value', $this->lang['field.default-value'], $extended_field_cache['default_value'], array(
-			'class' => 'text', 'width' => 60, 'rows' => 4)
+			'width' => 60, 'rows' => 4)
 		));
 		
 		$fieldset->add_field(new FormFieldRadioChoice('display', $this->lang['field.display'], (int)$extended_field_cache['display'],

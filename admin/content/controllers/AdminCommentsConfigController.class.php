@@ -73,12 +73,12 @@ class AdminCommentsConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_comments_display', $this->lang['comments.config.number-comments-display'], $this->configuration->get_number_comments_display(), array(
-			'class' => 'text', 'maxlength' => 4, 'size' => 4, 'required' => true),
+			'maxlength' => 4, 'size' => 4, 'required' => true),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('max_links_comment', $this->lang['comments.config.max-links-comment'], $this->configuration->get_max_links_comment(), array(
-			'class' => 'text', 'maxlength' => 4, 'size' => 4, 'required' => true),
+			'maxlength' => 4, 'size' => 4, 'required' => true),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
 		));
 		

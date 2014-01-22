@@ -73,7 +73,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['subscribe.mail'], $email, array(
-			'class' => 'text', 'required' => true),
+			'required' => true),
 			array(new FormFieldConstraintMailAddress())
 		));
 		

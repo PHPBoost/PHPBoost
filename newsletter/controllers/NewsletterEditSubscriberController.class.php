@@ -86,7 +86,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['subscribe.mail'], $row['mail'], array(
-			'class' => 'text', 'required' => true),
+			'required' => true),
 			array(new FormFieldConstraintMailAddress())
 		));
 

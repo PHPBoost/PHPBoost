@@ -70,7 +70,7 @@ class UserLostPasswordController extends AbstractController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('information', $this->lang['pseudo'] .' / '.$this->lang['email'], '', array(
-			'class' => 'text', 'required' => true)
+			'required' => true)
 		));
 			
 		$this->submit_button = new FormButtonDefaultSubmit();

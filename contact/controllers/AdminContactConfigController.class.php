@@ -77,7 +77,7 @@ class AdminContactConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['admin.config.title'], $this->config->get_title(), array(
-			'class' => 'text', 'size' => 40, 'required' => true)
+			'size' => 40, 'required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('enable_informations', $this->lang['admin.config.display_informations_bloc'], $this->config->are_informations_enabled(),
@@ -103,7 +103,7 @@ class AdminContactConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('informations', $this->lang['admin.config.informations_content'], 
 			FormatingHelper::unparse($this->config->get_informations()), 
-			array('class' => 'text', 'rows' => 8, 'cols' => 47, 'hidden' => !$this->config->are_informations_enabled())
+			array('rows' => 8, 'cols' => 47, 'hidden' => !$this->config->are_informations_enabled())
 		));
 		
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));

@@ -97,7 +97,7 @@ class AdminContentConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('max_pm_number', $this->lang['content.config.max-pm-number'], $this->user_accounts_config->get_max_private_messages_number(), array(
-			'class' => 'text', 'maxlength' => 4, 'size' => 4, 'description' => $this->lang['content.config.max-pm-number-explain']),
+			'maxlength' => 4, 'size' => 4, 'description' => $this->lang['content.config.max-pm-number-explain']),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
 		));
 		
@@ -109,7 +109,7 @@ class AdminContentConfigController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
-			'class' => 'text', 'maxlength' => 4, 'size' => 4, 'description' => $this->lang['content.config.delay-flood-explain']),
+			'maxlength' => 4, 'size' => 4, 'description' => $this->lang['content.config.delay-flood-explain']),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
 		));
 		

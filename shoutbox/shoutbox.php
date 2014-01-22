@@ -115,7 +115,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			if ($row['user_id'] == -1) //Visiteur
 			{
 				$fieldset->add_field(new FormFieldTextEditor('shoutbox_pseudo', $LANG['pseudo'], $row['login'], array(
-					'class' => 'text', 'required' => true, 'maxlength' => 25)
+					'required' => true, 'maxlength' => 25)
 				));
 			}
 			else

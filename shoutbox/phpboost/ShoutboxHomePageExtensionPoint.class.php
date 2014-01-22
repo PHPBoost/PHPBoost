@@ -80,7 +80,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		if (!$User->check_level(User::MEMBER_LEVEL)) //Visiteur
 		{
 			$fieldset->add_field(new FormFieldTextEditor('shoutbox_pseudo', $LANG['pseudo'], $LANG['guest'], array(
-				'class' => 'text', 'maxlength' => 25, 'required' => true)
+				'maxlength' => 25, 'required' => true)
 			));
 		}
 		$fieldset->add_field(new FormFieldRichTextEditor('shoutbox_contents', $LANG['message'], '', array(

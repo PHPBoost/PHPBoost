@@ -74,19 +74,19 @@ class UserRegistrationController extends AbstractController
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['pseudo.explain'], 'required' => true),
+			'maxlength' => 25, 'description' => $this->lang['pseudo.explain'], 'required' => true),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
 		));		
 		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], '', array(
-			'class' => 'text', 'maxlength' => 255, 'description' => LangLoader::get_message('valid', 'main'), 'required' => true),
+			'maxlength' => 255, 'description' => LangLoader::get_message('valid', 'main'), 'required' => true),
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist())
 		));
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['password.explain'], 'required' => true),
+			'maxlength' => 25, 'description' => $this->lang['password.explain'], 'required' => true),
 			array(new FormFieldConstraintLengthRange(6, 12))
 		));
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'required' => true),
+			'maxlength' => 25, 'required' => true),
 			array(new FormFieldConstraintLengthRange(6, 12))
 		));
 		

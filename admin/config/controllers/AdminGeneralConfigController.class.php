@@ -88,7 +88,7 @@ class AdminGeneralConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('site_name', $this->lang['general-config.site_name'], $this->general_config->get_site_name(),
-			array('class' => 'text', 'required' => true)
+			array('required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('site_slogan', $this->lang['general-config.site_slogan'], $this->general_config->get_site_slogan()));
@@ -131,7 +131,7 @@ class AdminGeneralConfigController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('other_start_page', $this->lang['general-config.other_start_page'], $this->general_config->get_other_home_page(),
-			array('class' => 'text', 'required' => false, 'hidden' => $this->general_config->get_module_home_page() != 'other')
+			array('required' => false, 'hidden' => $this->general_config->get_module_home_page() != 'other')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('visit_counter', $this->lang['general-config.visit_counter'], $this->graphical_environment_config->is_visit_counter_enabled()));
