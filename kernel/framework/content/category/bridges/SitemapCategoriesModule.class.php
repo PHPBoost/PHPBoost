@@ -84,14 +84,28 @@ abstract class SitemapCategoriesModule implements SitemapExtensionPoint
 
 		$section = new SitemapSection($this_category);
 	
+		$i = 0;
 		foreach ($categories as $id => $category)
 		{
-			if ($id != Category::ROOT_CATEGORY && $category->get_id_parent() == $id_cat)
+			if ($auth_mode == Sitemap::AUTH_PUBLIC)
+			{
+				$this_auth = Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $category->get_authorizations(), Category::READ_AUTHORIZATIONS);
+			}
+			else
+			{
+				$this_auth = AppContext::get_current_user()->check_auth($category->get_authorizations(), Category::READ_AUTHORIZATIONS);
+			}
+			
+			if ($this_auth && $id != Category::ROOT_CATEGORY && $category->get_id_parent() == $id_cat)
 			{
 				$section->add($this->create_module_map_sections($categories, $id, $auth_mode));
+				$i++;
 			}
 		}
 		
+		if ($i == 0	)
+			$section = $this_category;
+			
 		return $section;
 	}
 	
