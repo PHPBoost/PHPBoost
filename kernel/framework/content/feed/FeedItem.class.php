@@ -82,7 +82,7 @@ class FeedItem
         {
             $value = new Url($value);
         }
-        $this->link = $value->rel();
+        $this->link = $value->absolute();
     }
     /**
      * @desc Sets the feed item guid
@@ -92,7 +92,7 @@ class FeedItem
     {
         if ($value instanceof Url)
         {
-            $this->guid = $value->rel();
+            $this->guid = $value->absolute();
         }
         else
         {
