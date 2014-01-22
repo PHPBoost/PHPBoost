@@ -71,7 +71,7 @@ class NewsFeedProvider implements FeedProvider
 		foreach ($results as $row)
 		{
 			$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
-			$link = NewsUrlBuilder::display_news($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_name'])->rel();
+			$link = NewsUrlBuilder::display_news($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_name']);
 			
 			$item = new FeedItem();
 			$item->set_title($row['name']);
