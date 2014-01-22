@@ -53,7 +53,8 @@ class FormFieldsetHTML extends AbstractFormFieldset
         $template = $this->get_template_to_use();
 
         $template->put_all(array(
-			'L_FORMTITLE' => $this->title
+        	'C_TITLE' => !empty($this->title),
+			'L_TITLE' => $this->title
         ));
 
         $this->assign_template_fields($template);
