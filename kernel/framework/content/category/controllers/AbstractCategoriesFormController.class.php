@@ -136,7 +136,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	protected function set_properties()
 	{
 		$this->get_category()->set_name($this->form->get_value('name'));
-		$rewrited_name = $this->form->get_value('rewrited_name');
+		$rewrited_name = $this->form->get_value('rewrited_name', '');
 		$rewrited_name = $this->form->get_value('personalize_rewrited_name') && !empty($rewrited_name) ? $rewrited_name : Url::encode_rewrite($this->get_category()->get_name());
 		$this->get_category()->set_rewrited_name($rewrited_name);
 		$this->get_category()->set_id_parent($this->form->get_value('id_parent')->get_raw_value());
