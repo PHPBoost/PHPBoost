@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 abstract class BusinessObject implements PropertiesMapInterface
 {
     public function populate($properties_map)
