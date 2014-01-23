@@ -100,7 +100,7 @@ class FeedData
         {
             $value = new Url($value);
         }
-        $this->link = $value->rel();
+        $this->link = $value->absolute();
     }
     
     public function add_item($item) { array_push($this->items, $item); }
