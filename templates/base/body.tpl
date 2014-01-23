@@ -68,7 +68,6 @@
 						# END link_bread_crumb #
 					</ol>
 				</nav>
-				
 				# INCLUDE CONTENT #
 			</div>
 			# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
