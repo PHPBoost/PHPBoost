@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class SelectQueryResultMapper implements SelectQueryResult
 {
 	/**

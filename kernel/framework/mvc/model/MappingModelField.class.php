@@ -25,7 +25,6 @@
  *
  ###################################################*/
 
-
 class MappingModelField
 {
 	const DEFAULT_PROPERTY_NAME = 0x01;
