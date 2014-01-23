@@ -253,17 +253,24 @@ var FormField = Class.create({
 		if (this.HTMLFieldExists()) {
 			var element = $(this.getHTMLId());
 			var disabled = element.disabled != "disabled" && element.disabled != false;
-			
 			if (disabled == false) {
-				var display = element.style;
-				if (display != null) {
-					return display == "none";
+				if ($(this.getHTMLId() + '_field')) {
+					var display = $(this.getHTMLId() + '_field').style.display;
+					if (display != null) {
+						return display == "none";
+					} else {
+						return false;
+					}
 				} else {
-					return false;
+					var display = element.style.display;
+					if (display != null) {
+						return display == "none";
+					} else {
+						return false;
+					}
 				}
 			}
-		
-			return disabled;
+			return true;
 		}
 		return false;
 	},

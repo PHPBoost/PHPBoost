@@ -301,7 +301,7 @@ class ArticlesFormController extends ModuleController
 		else
 		{
 			$article->set_date_created($this->form->get_value('date_created'));
-			$rewrited_title = $this->form->get_value('rewrited_title');
+			$rewrited_title = $this->form->get_value('rewrited_title', '');
 			$rewrited_title = $this->form->get_value('personalize_rewrited_title') && !empty($rewrited_title) ? $rewrited_title : Url::encode_rewrite($article->get_title());
 			$article->set_rewrited_title($rewrited_title);
 
