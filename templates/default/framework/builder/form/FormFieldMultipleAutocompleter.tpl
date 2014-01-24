@@ -18,7 +18,7 @@ var FormFieldMultipleAutocompleter = Class.create({
 
 			this.load_autocompleter('field_' + id);
 			
-			var delete_input = new Element('a', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'class' : 'fa-delete'});
+			var delete_input = new Element('a', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'class' : 'fa fa-delete'});
 			$(id).insert('&nbsp;');
 			$(id).insert(delete_input);
 		
