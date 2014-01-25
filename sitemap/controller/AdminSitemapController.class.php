@@ -53,6 +53,7 @@ class AdminSitemapController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->handle_form();
+			$this->form->get_field_by_id('file_life_time')->set_hidden(!SitemapXMLFileService::is_xml_file_generation_enabled());
 		}
 
 		return $this->build_response($this->form->display());
