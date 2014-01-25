@@ -96,10 +96,16 @@
 [*] [color=red]Nouveauté :[/color] Statut d'avancement sous forme de %
 [*] [color=red]Nouveauté :[/color] Ajout d'une date de parution pour les versions (utilisée dans la roadmap)
 [*] [color=red]Nouveauté :[/color] Nouvel état : "En cours", lorsque la version de correction d'un bug est choisie mais qu'il n'est pas encore corrigé
+[*] [color=red]Nouveauté :[/color] Sitemap avec bugs résolus, non résolus, feuille de route (si activée) et statistiques
+[*] [color=red]Nouveauté :[/color] Flux RSS pour les bugs non-résolus et résolus
+[*] [color=red]Nouveauté :[/color] Nouveau bouton pour corriger un bug directement depuis la liste des bugs/le détail d'un bug pour les utilisateurs autorisés (on est maintenant plus obligé de choisir la version quand on passe à l'état corrigé)
+[*] [color=red]Nouveauté :[/color] Nouveau bouton pour assigner un bug directement depuis la liste des bugs/le détail d'un bug pour les utilisateurs autorisés
+[*] [color=red]Nouveauté :[/color] Possibilité de mettre un commentaire directement quand on assigne, corrige, rejete, réouvre et supprime un bug
 [*] L'ajout et la suppression de niveaux et priorités n'est plus possible pour être cohérent avec les alertes administrateur. Par contre il est toujours possible de changer leur nom et la couleur des niveaux
 [*] L'envoi de MP peut être activé de manière plus affinée
 [*] Changement de mise en forme des tableaux pour plus de lisibilité
 [*] Amélioration de l'affichage Corrigé/En cours dans la roadmap
+[*] Suppression de l'option pour désactiver les commentaires (dorénavant ils sont toujours activés)
 [*] Refonte de l'affichage général du module
 
 [b]Calendrier[/b]
