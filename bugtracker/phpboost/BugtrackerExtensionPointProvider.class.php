@@ -51,6 +51,14 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	}
 	
 	 /**
+	 * @method Get feeds
+	 */
+	public function feeds()
+	{
+		return new BugtrackerFeedProvider();
+	}
+	
+	 /**
 	 * @method Get home page
 	 */
 	public function home_page()
@@ -64,6 +72,14 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	public function search()
 	{
 		return new BugtrackerSearchable();
+	}
+	
+	 /**
+	 * @method Get sitemap
+	 */
+	public function sitemap()
+	{
+		return new BugtrackerSitemapExtensionPoint();
 	}
 	
 	 /**

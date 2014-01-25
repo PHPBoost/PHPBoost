@@ -27,64 +27,74 @@
 
 class BugtrackerDeleteBugController extends ModuleController
 {
+	private $lang;
+	/**
+	 * @var HTMLForm
+	 */
+	private $form;
+	private $view;
+	/**
+	 * @var FormButtonDefaultSubmit
+	 */
+	private $submit_button;
+	private $bug;
+	private $config;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
 		
+		$this->init($request);
+		
 		$this->check_authorizations();
 		
-		$config = BugtrackerConfig::load();
+		$this->build_form();
 		
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		{
+			$this->save();
+			
+			$back_page = $request->get_value('back_page', '');
+			$page = $request->get_int('page', 1);
+			$back_filter = $request->get_value('back_filter', '');
+			$filter_id = $request->get_int('filter_id', 0);
+			
+			switch ($back_page)
+			{
+				case 'detail' :
+					$redirect = BugtrackerUrlBuilder::detail_success('delete/'. $this->bug->get_id());
+					break;
+				case 'solved' :
+					$redirect = BugtrackerUrlBuilder::solved_success('delete/'. $this->bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+					break;
+				default :
+					$redirect = BugtrackerUrlBuilder::unsolved_success('delete/'. $this->bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+					break;
+			}
+			
+			AppContext::get_response()->redirect($redirect);
+		}
+		
+		$this->view->put('FORM', $this->form->display());
+		return $this->build_response($this->view);
+	}
+	
+	private function init(HTTPRequestCustom $request)
+	{
 		$id = $request->get_int('id', 0);
-		$page = $request->get_int('page', 1);
-		$back_page = $request->get_value('back_page', '');
-		$back_filter = $request->get_value('back_filter', '');
-		$filter_id = $request->get_value('filter_id', '');
+		
+		$this->lang = LangLoader::get('common', 'bugtracker');
 		
 		try {
-			$bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
+			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_bug', 'common', 'bugtracker'));
-			DispatchManager::redirect($controller);
+			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['bugs.error.e_unexist_bug']);
+			DispatchManager::redirect($error_controller);
 		}
 		
-		//Send PM to updaters if the option is enabled
-		if ($config->are_pm_enabled() && $config->are_pm_delete_enabled())
-			BugtrackerPMService::send_PM_to_updaters('delete', $id);
-		
-		//Delete bug
-		BugtrackerService::delete("WHERE id=:id", array('id' => $id));
-		
-		//Delete bug history
-		BugtrackerService::delete_history("WHERE bug_id=:id", array('id' => $id));
-		
-		//Delete comments
-		CommentsService::delete_comments_topic_module('bugtracker', $id);
-		
-		//Delete admin alert
-		if ($config->are_admin_alerts_enabled())
-		{
-			$alerts = AdministratorAlertService::find_by_criteria($id, 'bugtracker');
-			if (!empty($alerts))
-				AdministratorAlertService::delete_alert($alerts[0]);
-		}
-		
-		BugtrackerStatsCache::invalidate();
-		
-		switch ($back_page)
-		{
-			case 'detail' :
-				$redirect = BugtrackerUrlBuilder::detail_success('delete/'. $id);
-				break;
-			case 'solved' :
-				$redirect = BugtrackerUrlBuilder::solved_success('delete/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-				break;
-			default :
-				$redirect = BugtrackerUrlBuilder::unsolved_success('delete/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-				break;
-		}
-		
-		AppContext::get_response()->redirect($redirect);
+		$this->view = new StringTemplate('# INCLUDE FORM #');
+		$this->view->add_lang($this->lang);
+		$this->config = BugtrackerConfig::load();
 	}
 	
 	private function check_authorizations()
@@ -99,6 +109,86 @@ class BugtrackerDeleteBugController extends ModuleController
 			$controller = PHPBoostErrors::user_in_read_only();
 			DispatchManager::redirect($controller);
 		}
+	}
+	
+	private function build_form()
+	{
+		$form = new HTMLForm(__CLASS__);
+		
+		$fieldset = new FormFieldsetHTML('delete_bug');
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(
+			'description' => $this->lang['bugs.explain.delete_comment'], 'hidden' => !$this->config->are_pm_enabled() || !$this->config->are_pm_delete_enabled()
+		)));
+		
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonLink(LangLoader::get_message('back', 'main'), 'javascript:history.back(1);'));
+		
+		$this->form = $form;
+	}
+	
+	private function save()
+	{
+		$now = new Date();
+		$current_user = AppContext::get_current_user();
+		
+		if ($this->config->are_pm_enabled() && $this->config->are_pm_delete_enabled())
+		{
+			//Add comment if needed
+			$comment = !$this->form->field_is_disabled('comments_message') ? $this->form->get_value('comments_message', '') : '';
+			if (!empty($comment))
+			{
+				//Send PM with comment to updaters if the option is enabled
+				BugtrackerPMService::send_PM_to_updaters('delete_with_comment', $this->bug->get_id(), stripslashes(FormatingHelper::strparse($comment)));
+			}
+			else
+			{
+				//Send PM to updaters if the option is enabled
+				BugtrackerPMService::send_PM_to_updaters('delete', $this->bug->get_id());
+			}
+		}
+		
+		//Delete bug
+		BugtrackerService::delete("WHERE id=:id", array('id' => $this->bug->get_id()));
+		
+		//Delete bug history
+		BugtrackerService::delete_history("WHERE bug_id=:id", array('id' => $this->bug->get_id()));
+		
+		//Delete comments
+		CommentsService::delete_comments_topic_module('bugtracker', $this->bug->get_id());
+		
+		//Delete admin alert
+		if ($this->config->are_admin_alerts_enabled())
+		{
+			$alerts = AdministratorAlertService::find_by_criteria($this->bug->get_id(), 'bugtracker');
+			if (!empty($alerts))
+				AdministratorAlertService::delete_alert($alerts[0]);
+		}
+		
+		BugtrackerStatsCache::invalidate();
+		
+		Feed::clear_cache('bugtracker');
+	}
+	
+	private function build_response(View $view)
+	{
+		$request = AppContext::get_request();
+		
+		$back_page = $request->get_value('back_page', '');
+		$page = $request->get_int('page', 1);
+		$back_filter = $request->get_value('back_filter', '');
+		$filter_id = $request->get_value('filter_id', '');
+		
+		$body_view = BugtrackerViews::build_body_view($view, 'delete', $this->bug->get_id());
+		
+		$response = new BugtrackerDisplayResponse();
+		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['bugs.titles.delete'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::delete($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		$response->set_page_title($this->lang['bugs.titles.delete'] . ' #' . $this->bug->get_id());
+		
+		return $response->display($body_view);
 	}
 }
 ?>

@@ -21,6 +21,8 @@
   }
 </script>
 
+<div class="spacer">&nbsp;</div>
+
 <section class="block" style="background:#FFF">
 	<header>
 		<h1>{@bugs.labels.fields.status}</h1>

@@ -1,22 +1,30 @@
+<menu class="dynamic-menu group center">
+	<ul>
+		# IF C_FIX_BUG #
+			<li><a href="{U_FIX}" title="{@bugs.actions.fix}"><i class="fa fa-wrench"></i> {@bugs.actions.fix}</a></li>
+		# ENDIF #
+		# IF C_ASSIGN_BUG #
+			<li><a href="{U_ASSIGN}" title="{@bugs.actions.assign}"><i class="fa fa-user"></i> {@bugs.actions.assign}</a></li>
+		# ENDIF #
+		# IF C_REOPEN_BUG #
+			<li><a href="{U_REOPEN}" title="{@bugs.actions.reopen}"><i class="fa fa-eye"></i> {@bugs.actions.reopen}</a></li>
+		# ENDIF #
+		# IF C_REJECT_BUG #
+			<li><a href="{U_REJECT}" title="{@bugs.actions.reject}"><i class="fa fa-eye-slash"></i> {@bugs.actions.reject}</a></li>
+		# ENDIF #
+			<li><a href="{U_HISTORY}" title="{@bugs.actions.history}"><i class="fa fa-info"></i> {@bugs.actions.history}</a></li>
+		# IF C_EDIT_BUG #
+			<li><a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}"><i class="fa fa-edit"></i></a></li>
+		# ENDIF #
+		# IF C_DELETE_BUG #
+			<li><a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}"><i class="fa fa-delete"></i></a></li>
+		# ENDIF #
+	</ul>
+</menu>
+
 <fieldset>
 	<legend>
 		{@bugs.titles.bugs_treatment_state}
-		&nbsp;
-		# IF C_REOPEN_BUG #
-			<a href="{U_REOPEN}" class="fa fa-eye" title="{@bugs.actions.reopen}" data-confirmation="{@bugs.actions.confirm.reopen_bug}"></a>
-		# ENDIF #
-		# IF C_REJECT_BUG #
-			<a href="{U_REJECT}" class="fa fa-eye-slash" title="{@bugs.actions.reject}" data-confirmation="{@bugs.actions.confirm.reject_bug}"></a>
-		# ENDIF #
-		# IF C_EDIT_BUG #
-			<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
-		# ENDIF #
-		# IF C_HISTORY_BUG #
-			<a href="{U_HISTORY}" title="{@bugs.actions.history}" class="fa fa-info"></a>
-		# ENDIF #
-		# IF C_DELETE_BUG #
-			<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
-		# ENDIF #
 	</legend>
 	# IF C_PROGRESS #
 	<div class="form-element">

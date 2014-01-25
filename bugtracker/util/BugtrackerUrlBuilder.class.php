@@ -92,33 +92,9 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function add_error($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/add/error/' . $param);
-	}
-	
-	/**
-	 * @return Url
-	 */
 	public static function edit($param = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/edit/' . $param);
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function edit_error($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/edit/error/' . $param);
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function edit_success($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/edit/success/' . $param);
 	}
 	
 	/**
@@ -180,9 +156,9 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function delete($id = '', $page = 1, $back_page = '', $back_filter = '', $filter_id = 0)
+	public static function delete($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $id . '/' . $page . '/' . $back_page . '/' . $back_filter . '/' . $filter_id . '/?token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : '') . '/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
@@ -204,17 +180,33 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function reject($id = '', $page = 1, $back_page = '', $back_filter = '', $filter_id = 0)
+	public static function reject($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/reject/' . $id . '/' . $page . '/' . $back_page . '/' . $back_filter . '/' . $filter_id . '/?token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/reject/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function reopen($id = '', $page = 1, $back_page = '', $back_filter = '', $filter_id = 0)
+	public static function reopen($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/reopen/' . $id . '/' . $page . '/' . $back_page . '/' . $back_filter . '/' . $filter_id . '/?token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/reopen/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function assign($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/assign/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function fix($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/fix/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
 	}
 	
 	/**

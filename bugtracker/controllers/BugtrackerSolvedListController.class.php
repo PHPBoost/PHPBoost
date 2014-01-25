@@ -45,15 +45,6 @@ class BugtrackerSolvedListController extends ModuleController
 	{
 		//Configuration load
 		$config = BugtrackerConfig::load();
-		$types = $config->get_types();
-		$categories = $config->get_categories();
-		$severities = $config->get_severities();
-		$versions = $config->get_versions();
-		
-		$display_types = count($types) > 1;
-		$display_categories = count($categories) > 1;
-		$display_severities = count($severities) > 1;
-		$display_versions = count($versions) > 1;
 		
 		$field = $request->get_value('field', 'date');
 		$sort = $request->get_value('sort', 'desc');
@@ -132,7 +123,6 @@ class BugtrackerSolvedListController extends ModuleController
 		$this->view->put_all(array(
 			'C_IS_ADMIN'				=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
 			'C_BUGS' 					=> $result->get_rows_count() > 0,
-			'C_COMMENTS'				=> $config->are_comments_enabled(),
 			'C_IS_DATE_FORM_SHORT'		=> $config->is_date_form_short(),
 			'C_PAGINATION'				=> $pagination->has_several_pages(),
 			'PAGINATION' 				=> $pagination->display(),

@@ -48,27 +48,21 @@ class BugtrackerViews
 		$body_view = new FileTemplate('bugtracker/BugtrackerBody.tpl');
 		$body_view->add_lang($lang);
 		$body_view->put_all(array(
-			'TEMPLATE'				=> $view,
-			'C_ROADMAP_ACTIVATED' 	=> $config->is_roadmap_enabled() && !empty($nbr_versions),
-			'C_STATS_ACTIVATED' 	=> $config->are_stats_enabled(),
-			'C_DETAIL_PAGE'			=> $current_page == 'detail',
-			'C_HISTORY_PAGE'		=> $current_page == 'history',
-			'C_ADD_PAGE'			=> $current_page == 'add',
-			'C_EDIT_PAGE'			=> $current_page == 'edit',
-			'CLASS_BUG_UNSOLVED'	=> $current_page == 'unsolved' ? 'current' : '',
-			'CLASS_BUG_SOLVED'		=> $current_page == 'solved' ? 'current' : '',
-			'CLASS_BUG_ROADMAP'		=> $current_page == 'roadmap' ? 'current' : '',
-			'CLASS_BUG_STATS'		=> $current_page == 'stats' ? 'current' : '',
-			'LINK_BUG_UNSOLVED'		=> BugtrackerUrlBuilder::unsolved()->rel(),
-			'LINK_BUG_SOLVED'		=> BugtrackerUrlBuilder::solved()->rel(),
-			'LINK_BUG_ROADMAP'		=> BugtrackerUrlBuilder::roadmap()->rel(),
-			'LINK_BUG_STATS'		=> BugtrackerUrlBuilder::stats()->rel(),
-			'LINK_BUG_DETAIL'		=> $current_page == 'detail' ? BugtrackerUrlBuilder::detail($bug_id)->rel() : '',
-			'LINK_BUG_HISTORY'		=> $current_page == 'history' ? BugtrackerUrlBuilder::history($bug_id)->rel() : '',
-			'LINK_BUG_ADD'			=> BugtrackerUrlBuilder::add((in_array($current_page, array('add', 'edit')) ? (!empty($back_page) ? $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : '') : (!in_array($current_page, array('detail', 'history')) ? $current_page : '')) . (in_array($current_page, array('unsolved', 'solved', 'roadmap')) ? '/' . $page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : '') : ''))->rel(),
-			'LINK_BUG_EDIT'			=> $current_page == 'edit' ? BugtrackerUrlBuilder::edit(!empty($back_page) ? $bug_id . '/' . $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : $bug_id)->rel() : '',
-			'BUG_ID'				=> $bug_id,
-			'TITLE'					=> $lang['bugs.titles.' . $current_page] . (in_array($current_page, array('history', 'detail', 'edit')) ? ' #' . $bug_id : '')
+			'TEMPLATE'					=> $view,
+			'C_ROADMAP_ACTIVATED' 		=> $config->is_roadmap_enabled() && !empty($nbr_versions),
+			'C_STATS_ACTIVATED' 		=> $config->are_stats_enabled(),
+			'C_HIDE'					=> in_array($current_page, array('fix', 'assign', 'history', 'detail', 'add', 'edit', 'reject', 'reopen')),
+			'CLASS_BUG_UNSOLVED'		=> $current_page == 'unsolved' ? 'current' : '',
+			'CLASS_BUG_SOLVED'			=> $current_page == 'solved' ? 'current' : '',
+			'CLASS_BUG_ROADMAP'			=> $current_page == 'roadmap' ? 'current' : '',
+			'CLASS_BUG_STATS'			=> $current_page == 'stats' ? 'current' : '',
+			'TITLE'						=> $lang['bugs.titles.' . $current_page] . (in_array($current_page, array('fix', 'assign', 'history', 'detail', 'edit', 'reject', 'reopen')) ? ' #' . $bug_id : ''),
+			'LINK_BUG_UNSOLVED'			=> BugtrackerUrlBuilder::unsolved()->rel(),
+			'LINK_BUG_SOLVED'			=> BugtrackerUrlBuilder::solved()->rel(),
+			'LINK_BUG_ROADMAP'			=> BugtrackerUrlBuilder::roadmap()->rel(),
+			'LINK_BUG_STATS'			=> BugtrackerUrlBuilder::stats()->rel(),
+			'LINK_SYNDICATION_UNSOLVED'	=> SyndicationUrlBuilder::rss('bugtracker', 0)->rel(),
+			'LINK_SYNDICATION_SOLVED'	=> SyndicationUrlBuilder::rss('bugtracker', 1)->rel()
 		));
 		
 		return $body_view;

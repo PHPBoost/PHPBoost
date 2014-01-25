@@ -110,6 +110,8 @@ class AdminBugtrackerDeleteParameterController extends AdminController
 						//Delete history lines containing this version
 						BugtrackerService::delete_history("WHERE updated_field='detected_in' AND (old_value=:id OR new_value=:id)", array('id' => $id));
 						BugtrackerService::delete_history("WHERE updated_field='fixed_in' AND (old_value=:id OR new_value=:id)", array('id' => $id));
+						
+						BugtrackerStatsCache::invalidate();
 					}
 					else
 					{

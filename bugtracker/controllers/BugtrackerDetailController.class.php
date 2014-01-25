@@ -49,10 +49,9 @@ class BugtrackerDetailController extends ModuleController
 		$config = BugtrackerConfig::load();
 		$types = $config->get_types();
 		$categories = $config->get_categories();
-		$display_categories = count($categories) > 1;
 		$severities = $config->get_severities();
 		$priorities = $config->get_priorities();
-		$versions = $config->get_versions();
+		$versions = $config->get_versions_detected();
 		
 		switch ($this->bug->get_status())
 		{
@@ -72,19 +71,32 @@ class BugtrackerDetailController extends ModuleController
 				$c_reject = true;
 		}
 		
-		if (BugtrackerAuthorizationsService::check_authorizations()->moderation() || ($this->current_user->get_id() == $this->bug->get_author_user()->get_id() && $this->bug->get_author_user()->get_id() != User::VISITOR_LEVEL) || ($this->bug->get_assigned_to_id() && $this->current_user->get_id() == $this->bug->get_assigned_to_id()))
+		if ($this->current_user->get_id() == $this->bug->get_author_user()->get_id() && $this->bug->get_author_user()->get_id() != User::VISITOR_LEVEL)
 		{
 			$this->view->put_all(array(
-				'C_EDIT_BUG'=> true
+				'C_EDIT_BUG' => true
+			));
+		}
+		
+		if ($this->current_user->get_id() == $this->bug->get_assigned_to_id())
+		{
+			$this->view->put_all(array(
+				'C_FIX_BUG'		=> !$c_reopen,
+				'C_ASSIGN_BUG'	=> !$c_reopen,
+				'C_REOPEN_BUG'	=> $c_reopen,
+				'C_REJECT_BUG'	=> $c_reject,
+				'C_EDIT_BUG'	=> true
 			));
 		}
 		
 		if (BugtrackerAuthorizationsService::check_authorizations()->moderation())
 		{
 			$this->view->put_all(array(
+				'C_FIX_BUG'		=> !$c_reopen,
+				'C_ASSIGN_BUG'	=> !$c_reopen,
 				'C_REOPEN_BUG'	=> $c_reopen,
 				'C_REJECT_BUG'	=> $c_reject,
-				'C_HISTORY_BUG'	=> true,
+				'C_EDIT_BUG'	=> true,
 				'C_DELETE_BUG'	=> true
 			));
 		}
@@ -100,33 +112,30 @@ class BugtrackerDetailController extends ModuleController
 			'C_SEVERITIES' 					=> $severities,
 			'C_PRIORITIES' 					=> $priorities,
 			'C_VERSIONS' 					=> $versions,
-			'C_COMMENT_BUG'					=> $config->are_comments_enabled(),
 			'C_USER_ASSIGNED_GROUP_COLOR'	=> !empty($user_assigned_group_color),
 			'C_IS_DATE_FORM_SHORT'			=> $config->is_date_form_short(),
 			'TYPE'							=> (isset($types[$this->bug->get_type()])) ? stripslashes($types[$this->bug->get_type()]) : $this->lang['bugs.notice.none'],
 			'CATEGORY'						=> (isset($categories[$this->bug->get_category()])) ? stripslashes($categories[$this->bug->get_category()]) : $this->lang['bugs.notice.none_e'],
-			'PRIORITY'						=> (isset($priorities[$this->bug->get_priority()])) ? stripslashes($priorities[$this->bug->get_priority()]) : $this->lang['bugs.notice.none_e'],
 			'SEVERITY'						=> (isset($severities[$this->bug->get_severity()])) ? stripslashes($severities[$this->bug->get_severity()]['name']) : $this->lang['bugs.notice.none'],
+			'PRIORITY'						=> (isset($priorities[$this->bug->get_priority()])) ? stripslashes($priorities[$this->bug->get_priority()]) : $this->lang['bugs.notice.none_e'],
 			'DETECTED_IN' 					=> (isset($versions[$this->bug->get_detected_in()])) ? stripslashes($versions[$this->bug->get_detected_in()]['name']) : $this->lang['bugs.notice.not_defined'],
 			'FIXED_IN'						=> (isset($versions[$this->bug->get_fixed_in()])) ? stripslashes($versions[$this->bug->get_fixed_in()]['name']) : $this->lang['bugs.notice.not_defined'],
 			'USER_ASSIGNED'					=> $user_assigned,
 			'USER_ASSIGNED'					=> $user_assigned ? $user_assigned->get_pseudo() : '',
 			'USER_ASSIGNED_LEVEL_CLASS'		=> $user_assigned ? UserService::get_level_class($user_assigned->get_level()) : '',
 			'USER_ASSIGNED_GROUP_COLOR'		=> $user_assigned_group_color,
+			'U_FIX'							=> BugtrackerUrlBuilder::fix($this->bug->get_id(), 'detail')->rel(),
+			'U_ASSIGN'						=> BugtrackerUrlBuilder::assign($this->bug->get_id(), 'detail')->rel(),
 			'U_REJECT'						=> BugtrackerUrlBuilder::reject($this->bug->get_id(), 'detail')->rel(),
 			'U_REOPEN'						=> BugtrackerUrlBuilder::reopen($this->bug->get_id(), 'detail')->rel(),
 			'U_EDIT'						=> BugtrackerUrlBuilder::edit($this->bug->get_id() . '/detail')->rel(),
 			'U_DELETE'						=> BugtrackerUrlBuilder::delete($this->bug->get_id(), 'unsolved')->rel(),
 		));
 		
-		//Comments display
-		if ($config->are_comments_enabled() && is_numeric($this->bug->get_id()))
-		{
-			$comments_topic = new BugtrackerCommentsTopic();
-			$comments_topic->set_id_in_module($this->bug->get_id());
-			$comments_topic->set_url(BugtrackerUrlBuilder::detail($this->bug->get_id()));
-			$this->view->put('COMMENTS', $comments_topic->display());
-		}
+		$comments_topic = new BugtrackerCommentsTopic();
+		$comments_topic->set_id_in_module($this->bug->get_id());
+		$comments_topic->set_url(BugtrackerUrlBuilder::detail($this->bug->get_id()));
+		$this->view->put('COMMENTS', $comments_topic->display());
 	}
 	
 	private function init()
@@ -184,6 +193,9 @@ class BugtrackerDetailController extends ModuleController
 				break;
 			case 'reopen':
 				$errstr = StringVars::replace_vars($this->lang['bugs.success.reopen'], array('id' => $this->bug->get_id()));
+				break;
+			case 'assign':
+				$errstr = StringVars::replace_vars($this->lang['bugs.success.assigned'], array('id' => $bug_id));
 				break;
 			default:
 				$errstr = '';

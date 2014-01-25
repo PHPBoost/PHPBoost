@@ -45,15 +45,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 	{
 		//Configuration load
 		$config = BugtrackerConfig::load();
-		$types = $config->get_types();
-		$categories = $config->get_categories();
 		$severities = $config->get_severities();
-		$versions = $config->get_versions_detected();
-		
-		$display_types = count($types) > 1;
-		$display_categories = count($categories) > 1;
-		$display_severities = count($severities) > 1;
-		$display_versions = count($versions) > 1;
 		
 		$field = $request->get_value('field', 'date');
 		$sort = $request->get_value('sort', 'desc');
@@ -123,6 +115,8 @@ class BugtrackerUnsolvedListController extends ModuleController
 			$this->view->assign_block_vars('bug', array_merge($bug->get_array_tpl_vars(), array(
 				'C_LINE_COLOR'		=> $bug->get_severity() && isset($severities[$bug->get_severity()]),
 				'LINE_COLOR' 		=> stripslashes($severities[$bug->get_severity()]['color']),
+				'U_FIX'				=> BugtrackerUrlBuilder::fix($bug->get_id(), 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
+				'U_ASSIGN'			=> BugtrackerUrlBuilder::assign($bug->get_id(), 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
 				'U_REOPEN_REJECT'	=> BugtrackerUrlBuilder::reject($bug->get_id(), 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
 				'U_EDIT'			=> BugtrackerUrlBuilder::edit($bug->get_id() . '/unsolved/' . $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
 				'U_DELETE'			=> BugtrackerUrlBuilder::delete($bug->get_id(), 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
@@ -131,7 +125,6 @@ class BugtrackerUnsolvedListController extends ModuleController
 		
 		$this->view->put_all(array(
 			'C_IS_ADMIN'				=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
-			'C_COMMENTS'				=> $config->are_comments_enabled(),
 			'C_UNSOLVED' 				=> true,
 			'C_BUGS' 					=> $result->get_rows_count() > 0,
 			'C_DISPLAY_AUTHOR'			=> true,
@@ -219,6 +212,9 @@ class BugtrackerUnsolvedListController extends ModuleController
 				break;
 			case 'reject':
 				$errstr = StringVars::replace_vars($this->lang['bugs.success.reject'], array('id' => $bug_id));
+				break;
+			case 'assign':
+				$errstr = StringVars::replace_vars($this->lang['bugs.success.assigned'], array('id' => $bug_id));
 				break;
 			default:
 				$errstr = '';

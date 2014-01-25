@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                      BugtrackerRejectBugController.class.php
+ *                      BugtrackerAssignBugController.class.php
  *                            -------------------
- *   begin                : November 09, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
+ *   begin                : January 18, 2014
+ *   copyright            : (C) 2014 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
  *
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class BugtrackerRejectBugController extends ModuleController
+class BugtrackerAssignBugController extends ModuleController
 {
 	private $lang;
 	/**
@@ -40,6 +40,8 @@ class BugtrackerRejectBugController extends ModuleController
 	private $bug;
 	private $config;
 	private $current_user;
+	
+	private $assign = false;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -61,10 +63,10 @@ class BugtrackerRejectBugController extends ModuleController
 			switch ($back_page)
 			{
 				case 'detail' :
-					$redirect = BugtrackerUrlBuilder::detail_success('reject/'. $this->bug->get_id());
+					$redirect = ($this->assign ? BugtrackerUrlBuilder::detail_success('assign/' . $this->bug->get_id()) : BugtrackerUrlBuilder::detail($this->bug->get_id()));
 					break;
 				default :
-					$redirect = BugtrackerUrlBuilder::unsolved_success('reject/'. $this->bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+					$redirect = ($this->assign ? BugtrackerUrlBuilder::unsolved_success('assign/' . $this->bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '')) : BugtrackerUrlBuilder::unsolved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '')));
 					break;
 			}
 			
@@ -112,11 +114,21 @@ class BugtrackerRejectBugController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('reject_bug');
+		$fieldset = new FormFieldsetHTML('assign_bug');
 		$form->add_fieldset($fieldset);
 		
+		$user_assigned = '';
+		if (UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())))
+			$user_assigned = UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id()));
+		
+		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('assigned_to', $this->lang['bugs.labels.fields.assigned_to_id'], !empty($user_assigned) ? $user_assigned->get_pseudo() : '', array(
+			'maxlength' => 25, 'class' => 'field-large'), array(
+			new FormFieldConstraintLengthRange(3, 25), 
+			new FormFieldConstraintUserExist())
+		));
+		
 		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(
-			'description' => $this->lang['bugs.explain.reject_comment']
+			'description' => $this->lang['bugs.explain.assign_comment'], 'hidden' => !$this->config->are_pm_enabled() || !$this->config->are_pm_assign_enabled()
 		)));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -131,79 +143,59 @@ class BugtrackerRejectBugController extends ModuleController
 		$now = new Date();
 		$status_list = $this->config->get_status_list();
 		
-		if (!$this->bug->is_rejected())
+		$assigned_to = $this->form->get_value('assigned_to');
+		
+		$old_assigned_to_id = $this->bug->get_assigned_to_id();
+		$old_user_assigned = $old_assigned_to_id ? UserService::get_user("WHERE user_aprob = 1 AND user_id=:id", array('id' => $old_assigned_to_id)) : 0;
+		$new_user_assigned = !empty($assigned_to) ? UserService::get_user("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)) : 0;
+		
+		if ($new_user_assigned != $old_user_assigned)
 		{
+			$this->assign = !empty($assigned_to);
+			
 			//Bug history update
 			BugtrackerService::add_history(array(
 				'bug_id'		=> $this->bug->get_id(),
 				'updater_id'	=> $this->current_user->get_id(),
 				'update_date'	=> $now->get_timestamp(),
-				'updated_field'	=> 'status',
-				'old_value'		=> $this->bug->get_status(),
-				'new_value'		=> Bug::REJECTED
+				'updated_field'	=> 'assigned_to_id',
+				'old_value'		=> !empty($old_user_assigned) ? '<a href="' . UserUrlBuilder::profile($old_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($old_user_assigned->get_level()) . '">' . $old_user_assigned->get_pseudo() . '</a>' : $this->lang['bugs.notice.no_one'],
+				'new_value'		=> !empty($new_user_assigned) ? '<a href="' . UserUrlBuilder::profile($new_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($new_user_assigned->get_level()) . '">' . $new_user_assigned->get_pseudo() . '</a>' : $this->lang['bugs.notice.no_one']
 			));
 			
 			//Bug update
-			$this->bug->set_status(Bug::REJECTED);
-			$this->bug->set_progress($status_list[Bug::REJECTED]);
-			$this->bug->set_fix_date($now);
-			$this->bug->set_fixed_in(0);
+			$this->bug->set_assigned_to_id($new_user_assigned ? $new_user_assigned->get_id() : 0);
+			
+			if ($new_user_assigned && ($this->bug->get_status() != Bug::FIXED) && ($this->bug->get_status() != Bug::REJECTED))
+			{
+				$this->bug->set_status(Bug::ASSIGNED);
+				$this->bug->set_progress($status_list[Bug::ASSIGNED]);
+			}
+			else if ($old_user_assigned && !$new_user_assigned)
+			{
+				$this->bug->set_status(Bug::IN_PROGRESS);
+				$this->bug->set_progress($status_list[Bug::IN_PROGRESS]);
+			}
 			
 			BugtrackerService::update($this->bug);
 			
 			Feed::clear_cache('bugtracker');
 			
-			//Add comment if needed
-			$comment = $this->form->get_value('comments_message', '');
-			if (!empty($comment))
+			if ($this->config->are_pm_enabled() && $this->config->are_pm_assign_enabled() && $this->bug->get_assigned_to_id() && ($old_assigned_to_id != $this->bug->get_assigned_to_id()) && ($this->current_user->get_id() != $this->bug->get_assigned_to_id()))
 			{
-				$comments_topic = new BugtrackerCommentsTopic();
-				$comments_topic->set_id_in_module($this->bug->get_id());
-				$comments_topic->set_url(BugtrackerUrlBuilder::detail($this->bug->get_id()));
-				CommentsManager::add_comment($comments_topic->get_module_id(), $comments_topic->get_id_in_module(), $comments_topic->get_topic_identifier(), $comments_topic->get_path(), $comment);
-				
-				//New line in the bug history
-				BugtrackerService::add_history(array(
-					'bug_id' => $this->bug->get_id(),
-					'updater_id' => $this->current_user->get_id(),
-					'update_date' => $now->get_timestamp(),
-					'change_comment' => $this->lang['bugs.notice.new_comment'],
-				));
-				
-				//Send PM with comment to updaters if the option is enabled
-				if ($this->config->are_pm_enabled() && $this->config->are_pm_reject_enabled())
-					BugtrackerPMService::send_PM_to_updaters('reject_with_comment', $this->bug->get_id(), stripslashes(FormatingHelper::strparse($comment)));
-			}
-			else
-			{
-				//Send PM to updaters if the option is enabled
-				if ($this->config->are_pm_enabled() && $this->config->are_pm_reject_enabled())
-					BugtrackerPMService::send_PM_to_updaters('reject', $this->bug->get_id());
-			}
-			
-			//Fix or delete admin alert
-			if ($this->config->are_admin_alerts_enabled() && in_array($this->bug->get_severity(), $this->config->get_admin_alerts_levels()))
-			{
-				$alerts = AdministratorAlertService::find_by_criteria($this->bug->get_id(), 'bugtracker');
-				if (!empty($alerts))
+				//Add comment if needed
+				$comment = !$this->form->field_is_disabled('comments_message') ? $this->form->get_value('comments_message', '') : '';
+				if (!empty($comment))
 				{
-					$alert = $alerts[0];
-					if ($this->config->is_admin_alerts_fix_action_fix())
-					{
-						$alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
-						AdministratorAlertService::save_alert($alert);
-					}
-					else
-						AdministratorAlertService::delete_alert($alert);
+					//Send PM with comment to updaters if the option is enabled
+					BugtrackerPMService::send_PM_to_updaters('assigned_with_comment', $this->bug->get_id(), stripslashes(FormatingHelper::strparse($comment)));
+				}
+				else
+				{
+					//Send PM to updaters if the option is enabled
+					BugtrackerPMService::send_PM_to_updaters('assigned', $this->bug->get_id());
 				}
 			}
-			
-			BugtrackerStatsCache::invalidate();
-		}
-		else
-		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_already_rejected_bug', 'common', 'bugtracker'));
-			DispatchManager::redirect($controller);
 		}
 	}
 	
@@ -216,12 +208,12 @@ class BugtrackerRejectBugController extends ModuleController
 		$back_filter = $request->get_value('back_filter', '');
 		$filter_id = $request->get_value('filter_id', '');
 		
-		$body_view = BugtrackerViews::build_body_view($view, 'reject', $this->bug->get_id());
+		$body_view = BugtrackerViews::build_body_view($view, 'assign', $this->bug->get_id());
 		
 		$response = new BugtrackerDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.reject'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::reject($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
-		$response->set_page_title($this->lang['bugs.titles.reject'] . ' #' . $this->bug->get_id());
+		$response->add_breadcrumb_link($this->lang['bugs.titles.assign'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::assign($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		$response->set_page_title($this->lang['bugs.titles.assign'] . ' #' . $this->bug->get_id());
 		
 		return $response->display($body_view);
 	}

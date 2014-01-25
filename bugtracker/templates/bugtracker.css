@@ -7,7 +7,7 @@
 }
 
 .column_id{ width: 62px; }
-.column_admin{ width: 95px; }
+.column_admin{ width: 111px; }
 .column_history{ width: 70px; }
 .column_severity{ width: 100px; }
 .column_informations{ width: 125px; }
@@ -16,6 +16,6 @@
 .column_version_detected{ width: 96px; }
 .column_default{ width: 60px; }
 .column_delete{ width: 50px; }
-.column_color{ width: 106px; }
+.column_color{ width: 120px; }
 
 #status_chart { width: 90%; }

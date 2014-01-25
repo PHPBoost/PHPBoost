@@ -42,6 +42,7 @@ $lang['bugs.notice.no_bug_fixed'] = 'Aucun bug n\'a été corrigé dans cette versi
 $lang['bugs.notice.no_bug_in_progress'] = 'Aucun bug n\'est en cours de correction dans cette version';
 $lang['bugs.notice.no_bug_matching_filter'] = 'Aucun bug ne correspond au filtre sélectionné';
 $lang['bugs.notice.no_bug_matching_filters'] = 'Aucun bug ne correspond aux filtres sélectionnés';
+$lang['bugs.notice.no_version_roadmap'] = 'Veuillez ajouter au moins une version dans la configuration pour afficher la feuille de route.';
 $lang['bugs.notice.no_version'] = 'Aucune version existante';
 $lang['bugs.notice.no_type'] = 'Aucun type existant';
 $lang['bugs.notice.no_category'] = 'Aucune catégorie existante';
@@ -51,18 +52,15 @@ $lang['bugs.notice.new_comment'] = 'Nouveau commentaire';
 $lang['bugs.notice.reproduction_method_update'] = 'Mise à jour de la méthode de reproduction';
 $lang['bugs.notice.not_defined'] = 'Non défini';
 $lang['bugs.notice.not_defined_e_date'] = 'Date non définie';
-$lang['bugs.notice.joker'] = 'Utilisez * pour joker';
 
 //Actions
 $lang['bugs.actions'] = 'Actions';
 $lang['bugs.actions.add'] = 'Nouveau bug';
-$lang['bugs.actions.delete'] = 'Supprimer le bug';
-$lang['bugs.actions.edit'] = 'Editer le bug';
-$lang['bugs.actions.history'] = 'Historique du bug';
-$lang['bugs.actions.reject'] = 'Rejeter le bug';
-$lang['bugs.actions.reopen'] = 'Ré-ouvrir le bug';
-$lang['bugs.actions.confirm.reopen_bug'] = 'Etes-vous sûr de vouloir ré-ouvrir ce bug ?';
-$lang['bugs.actions.confirm.reject_bug'] = 'Etes-vous sûr de vouloir rejeter ce bug ?';
+$lang['bugs.actions.history'] = 'Historique';
+$lang['bugs.actions.reject'] = 'Rejeter';
+$lang['bugs.actions.reopen'] = 'Ré-ouvrir';
+$lang['bugs.actions.assign'] = 'Assigner';
+$lang['bugs.actions.fix'] = 'Corriger';
 $lang['bugs.actions.confirm.del_version'] = 'Etes-vous sûr de vouloir supprimer cette version ?';
 $lang['bugs.actions.confirm.del_type'] = 'Etes-vous sûr de vouloir supprimer ce type ?';
 $lang['bugs.actions.confirm.del_category'] = 'Etes-vous sûr de vouloir supprimer cette catégorie ?';
@@ -77,12 +75,16 @@ $lang['bugs.titles.add_version'] = 'Ajout d\'une nouvelle version';
 $lang['bugs.titles.add_type'] = 'Ajouter un nouveau type de bug';
 $lang['bugs.titles.add_category'] = 'Ajouter une nouvelle catégorie';
 $lang['bugs.titles.edit'] = 'Edition du bug';
+$lang['bugs.titles.reject'] = 'Rejet du bug';
+$lang['bugs.titles.reopen'] = 'Ré-ouverture du bug';
+$lang['bugs.titles.fix'] = 'Correction du bug';
+$lang['bugs.titles.delete'] = 'Suppression du bug';
+$lang['bugs.titles.assign'] = 'Assignation du bug';
 $lang['bugs.titles.history'] = 'Historique';
 $lang['bugs.titles.detail'] = 'Bug';
 $lang['bugs.titles.roadmap'] = 'Feuille de route';
 $lang['bugs.titles.bugs_infos'] = 'Informations sur le bug';
 $lang['bugs.titles.stats'] = 'Statistiques';
-$lang['bugs.titles.bugs_treatment'] = 'Traitement du bug';
 $lang['bugs.titles.bugs_treatment_state'] = 'Etat du traitement du bug';
 $lang['bugs.titles.versions'] = 'Versions';
 $lang['bugs.titles.types'] = 'Types';
@@ -182,35 +184,81 @@ $lang['bugs.explain.remarks'] = 'Remarques : <br />
 - Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
 - Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
 $lang['bugs.explain.contents_value'] = 'Entrez ci-dessous la description par défaut à afficher lors de l\'ouverture d\'un nouveau bug. Laissez vide pour que la description ne soit pas pré-remplie.';
+$lang['bugs.explain.reopen_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs ré-ouverts.';
+$lang['bugs.explain.reject_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs rejetés.';
+$lang['bugs.explain.fix_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs corrigés.';
+$lang['bugs.explain.delete_comment'] = 'Facultatif. Permet d\'ajouter un commentaire dans le Message Privé de suppression du bug.';
+$lang['bugs.explain.assign_comment'] = 'Facultatif. Permet d\'ajouter un commentaire dans le Message Privé à la personne assignée.';
 
 //MP
 $lang['bugs.pm.assigned.title'] = '[Rapport de bugs] Le bug #:id vous a été assigné par :author';
-$lang['bugs.pm.assigned.contents'] = 'Cliquez ici pour afficher le détail du bug :
-:link';
+$lang['bugs.pm.assigned.contents'] = ':author vous a assigné le bug #:id.
+
+Lien vers le bug :
+<a href=":link">:link_label</a>';
+$lang['bugs.pm.assigned.contents_with_comment'] = ':author vous a assigné le bug #:id.
+
+Commentaire :
+:comment
+
+Lien vers le bug :
+<a href=":link">:link_label</a>';
 $lang['bugs.pm.comment.title'] = '[Rapport de bugs] Le bug #:id a été commenté par :author';
 $lang['bugs.pm.comment.contents'] = ':author a ajouté le commentaire suivant au bug #:id :
 
 :comment
 
 Lien vers le bug :
-:link';
+<a href=":link">:link_label</a>';
 $lang['bugs.pm.edit.title'] = '[Rapport de bugs] Le bug #:id a été modifié par :author';
 $lang['bugs.pm.edit.contents'] = ':author a modifié les champs suivants dans le bug #:id :
 
 :fields
 
 Lien vers le bug :
-:link';
+<a href=":link">:link_label</a>';
+$lang['bugs.pm.fixed.title'] = '[Rapport de bugs] Le bug #:id a été corrigé par :author';
+$lang['bugs.pm.fixed.contents'] = ':author a corrigé le bug #:id.
+Lien vers le bug :
+
+<a href=":link">:link_label</a>';
+$lang['bugs.pm.fixed.contents_with_comment'] = ':author a corrigé le bug #:id.
+
+Commentaire :
+:comment
+
+Lien vers le bug :
+<a href=":link">:link_label</a>';
 $lang['bugs.pm.reopen.title'] = '[Rapport de bugs] Le bug #:id a été ré-ouvert par :author';
 $lang['bugs.pm.reopen.contents'] = ':author a ré-ouvert le bug #:id.
 Lien vers le bug :
-:link';
+
+<a href=":link">:link_label</a>';
+$lang['bugs.pm.reopen.contents_with_comment'] = ':author a ré-ouvert le bug #:id.
+
+Commentaire :
+:comment
+
+Lien vers le bug :
+<a href=":link">:link_label</a>';
 $lang['bugs.pm.reject.title'] = '[Rapport de bugs] Le bug #:id a été rejeté par :author';
 $lang['bugs.pm.reject.contents'] = ':author a rejeté le bug #:id.
+
 Lien vers le bug :
-:link';
+<a href=":link">:link_label</a>';
+$lang['bugs.pm.reject.contents_with_comment'] = ':author a rejeté le bug #:id.
+
+Commentaire :
+:comment
+
+Lien vers le bug :
+<a href=":link">:link_label</a>';
 $lang['bugs.pm.delete.title'] = '[Rapport de bugs] Le bug #:id a été supprimé par :author';
 $lang['bugs.pm.delete.contents'] = ':author a supprimé le bug #:id.';
+$lang['bugs.pm.delete.contents_with_comment'] = ':author a supprimé le bug #:id.
+
+Commentaire :
+:comment';
 
 //Recherche
 $lang['bugs.search.where'] = 'Où ?';
@@ -221,12 +269,12 @@ $lang['bugs.search.where.contents'] = 'Description';
 $lang['bugs.config.items_per_page'] = 'Nombre de bugs affichés par page'; 
 $lang['bugs.config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un bug <b>Rejeté</b>';
 $lang['bugs.config.fixed_bug_color_label'] = 'Couleur de la ligne d\'un bug <b>Fermé</b>';
-$lang['bugs.config.activ_com'] = 'Activer les commentaires';
 $lang['bugs.config.activ_roadmap'] = 'Activer la feuille de route';
 $lang['bugs.config.activ_stats'] = 'Activer les statistiques';
 $lang['bugs.config.activ_stats_top_posters'] = 'Afficher la liste des membres qui ont posté le plus de bugs';
 $lang['bugs.config.stats_top_posters_number'] = 'Nombre d\'utilisateurs affichés';
 $lang['bugs.config.activ_progress_bar'] = 'Afficher la barre de progression des bugs';
+$lang['bugs.config.admin_alerts'] = 'Alertes administrateur';
 $lang['bugs.config.activ_admin_alerts'] = 'Activer les alertes administrateur';
 $lang['bugs.config.admin_alerts_levels'] = 'Niveau du bug pour déclencher l\'alerte';
 $lang['bugs.config.admin_alerts_fix_action'] = 'Action à la fermeture d\'un bug';
@@ -234,6 +282,7 @@ $lang['bugs.config.activ_cat_in_title'] = 'Afficher la catégorie dans le titre d
 $lang['bugs.config.pm'] = 'Messages Privés';
 $lang['bugs.config.activ_pm'] = 'Activer l\'envoi de Messages Privés (MP)';
 $lang['bugs.config.activ_pm.comment'] = 'Envoyer un MP lors de l\'ajout d\'un nouveau commentaire';
+$lang['bugs.config.activ_pm.fix'] = 'Envoyer un MP lors de la correction d\'un bug';
 $lang['bugs.config.activ_pm.assign'] = 'Envoyer un MP lors de l\'assignation d\'un bug';
 $lang['bugs.config.activ_pm.edit'] = 'Envoyer un MP lors de l\'édition d\'un bug';
 $lang['bugs.config.activ_pm.reject'] = 'Envoyer un MP lors du rejet d\'un bug';
@@ -248,7 +297,7 @@ $lang['bugs.config.auth.create_advanced_explain'] = 'Permet de choisir le niveau
 $lang['bugs.config.auth.moderate'] = 'Autorisation de modération des bugs';
 
 //Erreurs
-$lang['bugs.error.e_no_fixed_version'] = 'Veuillez sélectionner la version de correction avant de passer à l\'état "' . $lang['bugs.status.fixed'] . '"';
+$lang['bugs.error.e_no_fixed_version'] = 'N\'oubliez pas de sélectionner une version pour que le bug soit présent dans la feuille de route.';
 $lang['bugs.error.e_unexist_bug'] = 'Ce bug n\'existe pas';
 $lang['bugs.error.e_unexist_parameter'] = 'Ce paramètre n\'existe pas';
 $lang['bugs.error.e_unexist_type'] = 'Ce type n\'existe pas';
@@ -258,7 +307,7 @@ $lang['bugs.error.e_unexist_priority'] = 'Cette priorité n\'existe pas';
 $lang['bugs.error.e_unexist_version'] = 'Cette version n\'existe pas';
 $lang['bugs.error.e_already_rejected_bug'] = 'Ce bug est déjà rejeté';
 $lang['bugs.error.e_already_reopen_bug'] = 'Ce bug est déjà ré-ouvert';
-$lang['bugs.error.e_unexist_pm_type'] = 'Ce type de MP n\'existe pas';
+$lang['bugs.error.e_already_fixed_bug'] = 'Ce bug est déjà corrigé';
 
 //Succès
 $lang['bugs.success.add'] = 'Le bug #:id a été ajouté';
@@ -267,4 +316,5 @@ $lang['bugs.success.fixed'] = 'Le bug #:id a été corrigé';
 $lang['bugs.success.delete'] = 'Le bug #:id a été supprimé';
 $lang['bugs.success.reject'] = 'Le bug #:id a été rejeté';
 $lang['bugs.success.reopen'] = 'Le bug #:id a été ré-ouvert';
+$lang['bugs.success.assigned'] = 'Le bug #:id a été assigné';
 ?>

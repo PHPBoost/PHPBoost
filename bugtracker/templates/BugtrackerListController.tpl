@@ -49,25 +49,33 @@
 				{bug.TITLE}
 			</td>
 			<td class="align-left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
+				<span>{@bugs.labels.fields.status} : {bug.STATUS}</span>
+				<div class="spacer"></div>
 				# IF bug.C_PROGRESS #
 				{bug.PROGRESS}%
 				<div class="progressbar-container">
 					<div class="progressbar" style="width:{bug.PROGRESS}%"></div>
 				</div>
 				# ENDIF #
-				<span>{@bugs.labels.fields.status} : {bug.STATUS}</span>
-				# IF C_COMMENTS #<br /><a href="{bug.U_COMMENTS}">{bug.NUMBER_COMMENTS} # IF bug.C_MORE_THAN_ONE_COMMENT #${LangLoader::get_message('comments', 'comments-common')}# ELSE #${LangLoader::get_message('comment', 'comments-common')}# ENDIF #</a># ENDIF #
+				<a href="{bug.U_COMMENTS}">{bug.NUMBER_COMMENTS} # IF bug.C_MORE_THAN_ONE_COMMENT #${LangLoader::get_message('comments', 'comments-common')}# ELSE #${LangLoader::get_message('comment', 'comments-common')}# ENDIF #</a>
 			</td>
 			<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
-				# IF C_UNSOLVED #${LangLoader::get_message('on', 'main')} # IF C_IS_DATE_FORM_SHORT #{bug.SUBMIT_DATE_SHORT}# ELSE #{bug.SUBMIT_DATE}# ENDIF ## ELSE ## IF bug.C_FIX_DATE ## IF C_IS_DATE_FORM_SHORT #{bug.FIX_DATE_SHORT}# ELSE #{bug.FIX_DATE}# ENDIF ## ELSE #{@bugs.labels.not_yet_fixed}# ENDIF ## ENDIF #<br />
+				# IF C_UNSOLVED #${LangLoader::get_message('on', 'main')} # IF C_IS_DATE_FORM_SHORT #{bug.SUBMIT_DATE_SHORT}# ELSE #{bug.SUBMIT_DATE}# ENDIF ## ELSE ## IF bug.C_FIX_DATE ## IF C_IS_DATE_FORM_SHORT #{bug.FIX_DATE_SHORT}# ELSE #{bug.FIX_DATE}# ENDIF ## ELSE #{@bugs.labels.not_yet_fixed}# ENDIF ## ENDIF #
+				<div class="spacer"></div>
 				# IF C_DISPLAY_AUTHOR #${LangLoader::get_message('by', 'main')}: # IF bug.AUTHOR #<a href="{bug.U_AUTHOR_PROFILE}" class="small {bug.AUTHOR_LEVEL_CLASS}" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF ## ENDIF #
 			</td>
 			# IF C_IS_ADMIN #
-			<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
-				<a href="{bug.U_REOPEN_REJECT}" # IF C_UNSOLVED #class="fa fa-eye-slash" title="{@bugs.actions.reject}"# ELSE #class="fa fa-eye" title="{@bugs.actions.reopen}"# ENDIF # data-confirmation="# IF C_UNSOLVED #{@bugs.actions.confirm.reject_bug}# ELSE #{@bugs.actions.confirm.reopen_bug}# ENDIF #"></a>
-				<a href="{bug.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+			<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+				# IF C_UNSOLVED #
+				<a href="{bug.U_FIX}" class="fa fa-wrench" title="{@bugs.actions.fix}"></a>
+				<a href="{bug.U_ASSIGN}" class="fa fa-user" title="{@bugs.actions.assign}"></a>
+				<a href="{bug.U_REOPEN_REJECT}" class="fa fa-eye-slash" title="{@bugs.actions.reject}"></a>
+				# ELSE #
+				<a href="{bug.U_REOPEN_REJECT}" class="fa fa-eye" title="{@bugs.actions.reopen}"></a>
+				# ENDIF #
 				<a href="{bug.U_HISTORY}" class="fa fa-info" title="{@bugs.actions.history}"></a>
-				<a href="{bug.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+				<a href="{bug.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+				<a href="{bug.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete"></a>
 			</td>
 			# ENDIF #
 		</tr>

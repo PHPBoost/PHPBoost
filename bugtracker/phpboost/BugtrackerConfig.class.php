@@ -35,7 +35,6 @@ class BugtrackerConfig extends AbstractConfigData
 	const REJECTED_BUG_COLOR = 'rejected_bug_color';
 	const FIXED_BUG_COLOR = 'fixed_bug_color';
 	const DATE_FORM = 'date_form';
-	const COMMENTS_ENABLED = 'comments_enabled';
 	const CAT_IN_TITLE_ENABLED = 'cat_in_title_enabled';
 	const ROADMAP_ENABLED = 'roadmap_enabled';
 	const STATS_ENABLED = 'stats_enabled';
@@ -47,6 +46,7 @@ class BugtrackerConfig extends AbstractConfigData
 	const ADMIN_ALERTS_FIX_ACTION = 'admin_alerts_fix_action';
 	const PM_ENABLED = 'pm_enabled';
 	const PM_COMMENT_ENABLED = 'pm_comment_enabled';
+	const PM_FIX_ENABLED = 'pm_fix_enabled';
 	const PM_ASSIGN_ENABLED = 'pm_assign_enabled';
 	const PM_EDIT_ENABLED = 'pm_edit_enabled';
 	const PM_REJECT_ENABLED = 'pm_reject_enabled';
@@ -147,22 +147,7 @@ class BugtrackerConfig extends AbstractConfigData
 	
 	public function is_date_form_short()
 	{
-		return self::get_date_form() == Date::FORMAT_DAY_MONTH_YEAR;
-	}
-	
-	public function enable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, true);
-	}
-	
-	public function disable_comments()
-	{
-		$this->set_property(self::COMMENTS_ENABLED, false);
-	}
-	
-	public function are_comments_enabled()
-	{
-		return $this->get_property(self::COMMENTS_ENABLED);
+		return self::DATE_FORM == Date::FORMAT_DAY_MONTH_YEAR;
 	}
 	
 	public function display_cat_in_title()
@@ -335,6 +320,21 @@ class BugtrackerConfig extends AbstractConfigData
 	public function are_pm_comment_enabled()
 	{
 		return $this->get_property(self::PM_COMMENT_ENABLED);
+	}
+	
+	public function enable_pm_fix()
+	{
+		$this->set_property(self::PM_FIX_ENABLED, true);
+	}
+	
+	public function disable_pm_fix()
+	{
+		$this->set_property(self::PM_FIX_ENABLED, false);
+	}
+	
+	public function are_pm_fix_enabled()
+	{
+		return $this->get_property(self::PM_FIX_ENABLED);
 	}
 	
 	public function enable_pm_assign()
@@ -751,7 +751,6 @@ class BugtrackerConfig extends AbstractConfigData
 			self::REJECTED_BUG_COLOR => '#f8465e',
 			self::FIXED_BUG_COLOR => '#afffa2',
 			self::DATE_FORM => Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE,
-			self::COMMENTS_ENABLED => true,
 			self::CAT_IN_TITLE_ENABLED => false,
 			self::ROADMAP_ENABLED => false,
 			self::STATS_ENABLED => true,
@@ -763,6 +762,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::ADMIN_ALERTS_FIX_ACTION => self::FIX,
 			self::PM_ENABLED => true,
 			self::PM_COMMENT_ENABLED => true,
+			self::PM_FIX_ENABLED => true,
 			self::PM_ASSIGN_ENABLED => true,
 			self::PM_EDIT_ENABLED => true,
 			self::PM_REJECT_ENABLED => true,

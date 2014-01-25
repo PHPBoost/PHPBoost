@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                      BugtrackerRejectBugController.class.php
+ *                      BugtrackerFixBugController.class.php
  *                            -------------------
- *   begin                : November 09, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
+ *   begin                : January 20, 2014
+ *   copyright            : (C) 2014 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
  *
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class BugtrackerRejectBugController extends ModuleController
+class BugtrackerFixBugController extends ModuleController
 {
 	private $lang;
 	/**
@@ -61,10 +61,10 @@ class BugtrackerRejectBugController extends ModuleController
 			switch ($back_page)
 			{
 				case 'detail' :
-					$redirect = BugtrackerUrlBuilder::detail_success('reject/'. $this->bug->get_id());
+					$redirect = BugtrackerUrlBuilder::detail_success('fixed/' . $this->bug->get_id());
 					break;
 				default :
-					$redirect = BugtrackerUrlBuilder::unsolved_success('reject/'. $this->bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+					$redirect = BugtrackerUrlBuilder::unsolved_success('fixed/' . $this->bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
 					break;
 			}
 			
@@ -110,13 +110,47 @@ class BugtrackerRejectBugController extends ModuleController
 	
 	private function build_form()
 	{
+		$versions = array_reverse($this->config->get_versions_fix(), true);
+		$display_versions = count($versions) > 1;
+		
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('reject_bug');
+		$fieldset = new FormFieldsetHTML('fix_bug');
 		$form->add_fieldset($fieldset);
 		
+		//Fix versions
+		if (count($versions))
+		{
+			$array_versions = array();
+			$array_versions[] = new FormFieldSelectChoiceOption('', 0);
+			foreach ($versions as $key => $version)
+			{
+				if ($key >= $this->bug->get_detected_in())
+					$array_versions[] = new FormFieldSelectChoiceOption(stripslashes($version['name']), $key);
+			}
+			
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('fixed_in', $this->lang['bugs.labels.fields.fixed_in'], $this->bug->get_fixed_in(), $array_versions,
+				array('events' => $this->config->is_roadmap_enabled() ? array('change' => '
+				if (HTMLForms.getField("fixed_in").getValue() > 0) {
+					HTMLForms.getField("no_selected_version").disable();
+				} else {
+					HTMLForms.getField("no_selected_version").enable();
+				}') : array()
+			)));
+			
+			if ($this->config->is_roadmap_enabled())
+			{
+				$fieldset->add_field(new FormFieldFree('no_selected_version', '',
+					'<div class="message-helper notice" style="margin:5px auto 0px auto;">
+						<i class="fa fa-notice"></i>
+						<div class="message-helper-content">'. $this->lang['bugs.error.e_no_fixed_version'] .'</div>
+					</div>'
+				));
+			}
+		}
+		
 		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(
-			'description' => $this->lang['bugs.explain.reject_comment']
+			'description' => $this->lang['bugs.explain.fix_comment']
 		)));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -131,8 +165,31 @@ class BugtrackerRejectBugController extends ModuleController
 		$now = new Date();
 		$status_list = $this->config->get_status_list();
 		
-		if (!$this->bug->is_rejected())
+		$versions = array_reverse($this->config->get_versions_fix(), true);
+		$display_versions = count($versions) > 1;
+		
+		if (!$this->bug->is_fixed())
 		{
+			if (count($versions))
+			{
+				if (!$this->form->field_is_disabled('fixed_in'))
+				{
+					$fixed_in = $this->form->get_value('fixed_in')->get_raw_value() ? $this->form->get_value('fixed_in')->get_raw_value() : 0;
+					
+					//Bug history update
+					BugtrackerService::add_history(array(
+						'bug_id'		=> $this->bug->get_id(),
+						'updater_id'	=> $this->current_user->get_id(),
+						'update_date'	=> $now->get_timestamp(),
+						'updated_field'	=> 'fixed_in',
+						'old_value'		=> $this->bug->get_fixed_in(),
+						'new_value'		=> $fixed_in
+					));
+					
+					$this->bug->set_fixed_in($fixed_in);
+				}
+			}
+			
 			//Bug history update
 			BugtrackerService::add_history(array(
 				'bug_id'		=> $this->bug->get_id(),
@@ -140,21 +197,20 @@ class BugtrackerRejectBugController extends ModuleController
 				'update_date'	=> $now->get_timestamp(),
 				'updated_field'	=> 'status',
 				'old_value'		=> $this->bug->get_status(),
-				'new_value'		=> Bug::REJECTED
+				'new_value'		=> Bug::FIXED
 			));
 			
 			//Bug update
-			$this->bug->set_status(Bug::REJECTED);
-			$this->bug->set_progress($status_list[Bug::REJECTED]);
+			$this->bug->set_status(Bug::FIXED);
+			$this->bug->set_progress($status_list[Bug::FIXED]);
 			$this->bug->set_fix_date($now);
-			$this->bug->set_fixed_in(0);
 			
 			BugtrackerService::update($this->bug);
 			
 			Feed::clear_cache('bugtracker');
 			
 			//Add comment if needed
-			$comment = $this->form->get_value('comments_message', '');
+			$comment = !$this->form->field_is_disabled('comments_message') ? $this->form->get_value('comments_message', '') : '';
 			if (!empty($comment))
 			{
 				$comments_topic = new BugtrackerCommentsTopic();
@@ -171,38 +227,21 @@ class BugtrackerRejectBugController extends ModuleController
 				));
 				
 				//Send PM with comment to updaters if the option is enabled
-				if ($this->config->are_pm_enabled() && $this->config->are_pm_reject_enabled())
-					BugtrackerPMService::send_PM_to_updaters('reject_with_comment', $this->bug->get_id(), stripslashes(FormatingHelper::strparse($comment)));
+				if ($this->config->are_pm_enabled() && $this->config->are_pm_fix_enabled())
+					BugtrackerPMService::send_PM_to_updaters('fixed_with_comment', $this->bug->get_id(), stripslashes(FormatingHelper::strparse($comment)));
 			}
 			else
 			{
 				//Send PM to updaters if the option is enabled
-				if ($this->config->are_pm_enabled() && $this->config->are_pm_reject_enabled())
-					BugtrackerPMService::send_PM_to_updaters('reject', $this->bug->get_id());
-			}
-			
-			//Fix or delete admin alert
-			if ($this->config->are_admin_alerts_enabled() && in_array($this->bug->get_severity(), $this->config->get_admin_alerts_levels()))
-			{
-				$alerts = AdministratorAlertService::find_by_criteria($this->bug->get_id(), 'bugtracker');
-				if (!empty($alerts))
-				{
-					$alert = $alerts[0];
-					if ($this->config->is_admin_alerts_fix_action_fix())
-					{
-						$alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
-						AdministratorAlertService::save_alert($alert);
-					}
-					else
-						AdministratorAlertService::delete_alert($alert);
-				}
+				if ($this->config->are_pm_enabled() && $this->config->are_pm_fix_enabled())
+					BugtrackerPMService::send_PM_to_updaters('fixed', $this->bug->get_id());
 			}
 			
 			BugtrackerStatsCache::invalidate();
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_already_rejected_bug', 'common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_already_fixed_bug', 'common', 'bugtracker'));
 			DispatchManager::redirect($controller);
 		}
 	}
@@ -216,12 +255,12 @@ class BugtrackerRejectBugController extends ModuleController
 		$back_filter = $request->get_value('back_filter', '');
 		$filter_id = $request->get_value('filter_id', '');
 		
-		$body_view = BugtrackerViews::build_body_view($view, 'reject', $this->bug->get_id());
+		$body_view = BugtrackerViews::build_body_view($view, 'fix', $this->bug->get_id());
 		
 		$response = new BugtrackerDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.reject'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::reject($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
-		$response->set_page_title($this->lang['bugs.titles.reject'] . ' #' . $this->bug->get_id());
+		$response->add_breadcrumb_link($this->lang['bugs.titles.fix'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::fix($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		$response->set_page_title($this->lang['bugs.titles.fix'] . ' #' . $this->bug->get_id());
 		
 		return $response->display($body_view);
 	}

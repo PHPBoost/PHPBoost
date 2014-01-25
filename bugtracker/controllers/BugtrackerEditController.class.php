@@ -43,7 +43,7 @@ class BugtrackerEditController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
+		$this->init($request);
 		
 		$this->check_authorizations();
 		
@@ -58,10 +58,8 @@ class BugtrackerEditController extends ModuleController
 		return $this->build_response($this->view);
 	}
 	
-	private function init()
+	private function init(HTTPRequestCustom $request)
 	{
-		$request = AppContext::get_request();
-		
 		$id = $request->get_int('id', 0);
 		
 		$this->current_user = AppContext::get_current_user();
@@ -97,20 +95,14 @@ class BugtrackerEditController extends ModuleController
 	{
 		$types = $this->config->get_types();
 		$categories = $this->config->get_categories();
-		$versions = $this->config->get_versions_fix();
 		$severities = $this->config->get_severities();
 		$priorities = $this->config->get_priorities();
-		
-		$versions = array_reverse($versions, true);
-		
-		$versions_detected_in = $this->config->get_versions_detected();
-		$versions_detected_in = array_reverse($versions_detected_in, true);
+		$versions_detected_in = array_reverse($this->config->get_versions_detected(), true);
 		
 		$display_types = count($types) > 1;
 		$display_categories = count($categories) > 1;
 		$display_priorities = count($priorities) > 1;
 		$display_severities = count($severities) > 1;
-		$display_versions = count($versions) > 1;
 		$display_versions_detected_in = count($versions_detected_in) > 1;
 		
 		$default_type = $this->config->get_default_type();
@@ -120,36 +112,6 @@ class BugtrackerEditController extends ModuleController
 		$default_version = $this->config->get_default_version();
 		
 		$form = new HTMLForm(__CLASS__);
-		
-		if (BugtrackerAuthorizationsService::check_authorizations()->moderation() || ($this->current_user->get_id() == $this->bug->get_assigned_to_id()))
-		{
-			$fieldset = new FormFieldsetHTML('bug_treatment', $this->lang['bugs.titles.bugs_treatment']);
-			$form->add_fieldset($fieldset);
-			
-			$fieldset->add_field(new FormFieldCheckbox('fixed', $this->lang['bugs.labels.fixed'], $this->bug->is_fixed() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED));
-			
-			$user_assigned = '';
-			if (UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())))
-				$user_assigned = UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id()));
-			
-			$fieldset->add_field(new FormFieldAjaxUserAutoComplete('assigned_to', $this->lang['bugs.labels.fields.assigned_to_id'], !empty($user_assigned) ? $user_assigned->get_pseudo() : '', array(
-				'maxlength' => 25, 'size' => 25)
-			));
-			
-			//Fix versions
-			if (count($versions))
-			{
-				$array_versions = array();
-				$array_versions[] = new FormFieldSelectChoiceOption('', 0);
-				foreach ($versions as $key => $version)
-				{
-					if ($key >= $this->bug->get_detected_in())
-						$array_versions[] = new FormFieldSelectChoiceOption(stripslashes($version['name']), $key);
-				}
-				
-				$fieldset->add_field(new FormFieldSimpleSelectChoice('fixed_in', $this->lang['bugs.labels.fields.fixed_in'], $this->bug->get_fixed_in(), $array_versions));
-			}
-		}
 		
 		$fieldset = new FormFieldsetHTML('bug_infos', $this->lang['bugs.titles.bugs_infos']);
 		$form->add_fieldset($fieldset);
@@ -265,7 +227,7 @@ class BugtrackerEditController extends ModuleController
 		)));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('reproduction_method', $this->lang['bugs.labels.fields.reproduction_method'], FormatingHelper::unparse($this->bug->get_reproduction_method()), array(
-			'rows' => 15, 'hidden' => !$this->bug->is_reproductible() ? true : false)
+			'rows' => 15, 'hidden' => !$this->bug->is_reproductible())
 		));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -279,36 +241,12 @@ class BugtrackerEditController extends ModuleController
 	{
 		$request = AppContext::get_request();
 		
-		$error_lang = LangLoader::get('errors');
-		
-		$error = $request->get_value('error', '');
 		$back_page = $request->get_value('back_page', '');
 		$page = $request->get_int('page', 1);
 		$back_filter = $request->get_value('back_filter', '');
 		$filter_id = $request->get_value('filter_id', '');
 		
 		$body_view = BugtrackerViews::build_body_view($view, 'edit', $this->bug->get_id());
-		
-		//error messages
-		switch ($error)
-		{
-			case 'no_fixed_version':
-				$errstr = $this->lang['bugs.error.e_no_fixed_version'];
-				$errtyp = E_USER_ERROR;
-				break;
-			case 'unexist_user':
-				$errstr = $error_lang['e_unexist_user'];
-				$errtyp = E_USER_ERROR;
-				break;
-			case 'incomplete':
-				$errstr = $error_lang['e_incomplete'];
-				$errtyp = E_USER_NOTICE;
-				break;
-			default:
-				$errstr = $errtyp = '';
-		}
-		if (!empty($errstr))
-			$body_view->put('MSG', MessageHelper::display($errstr, $errtyp));
 		
 		$response = new BugtrackerDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
@@ -329,10 +267,8 @@ class BugtrackerEditController extends ModuleController
 		$back_filter = $request->get_value('back_filter', '');
 		$filter_id = $request->get_value('filter_id', '');
 		
-		$bug = $this->bug;
-		$old_values = new Bug();
-		$old_values->set_properties($bug->get_properties());
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$old_values = $bug = $this->bug;
+		$now = new Date();
 		$status_list = $this->config->get_status_list();
 		
 		$types = $this->config->get_types();
@@ -340,7 +276,7 @@ class BugtrackerEditController extends ModuleController
 		$severities = $this->config->get_severities();
 		$priorities = $this->config->get_priorities();
 		$versions = $this->config->get_versions();
-		$display_versions = count($versions) > 1 ? true : false;
+		$display_versions = count($versions) > 1;
 		
 		$bug->set_title($this->form->get_value('title', $old_values->get_title()));
 		$bug->set_contents($this->form->get_value('contents', $old_values->get_contents()));
@@ -350,224 +286,152 @@ class BugtrackerEditController extends ModuleController
 		$bug->set_priority($this->form->get_value('priority') ? $this->form->get_value('priority')->get_raw_value() : $old_values->get_priority());
 		$bug->set_detected_in($this->form->get_value('detected_in') ? $this->form->get_value('detected_in')->get_raw_value() : $old_values->get_detected_in());
 		
-		$something_is_missing = ($this->config->get_types() && $this->config->is_type_mandatory() && !$bug->get_type() || $this->config->get_categories() && $this->config->is_category_mandatory() && !$bug->get_category() || $this->config->get_severities() && $this->config->is_severity_mandatory() && !$bug->get_severity() || $this->config->get_priorities() && $this->config->is_priority_mandatory() && !$bug->get_priority() || $this->config->get_versions() && $this->config->is_detected_in_version_mandatory() && !$bug->get_detected_in());
+		$bug->set_reproductible($this->form->get_value('reproductible') ? true : 0);
 		
-		if ($bug->get_title() && $bug->get_contents() && !$something_is_missing)
+		if ($bug->is_reproductible())
 		{
-			$bug->set_reproductible($this->form->get_value('reproductible') ? true : 0);
-			
-			if ($bug->is_reproductible())
+			$bug->set_reproduction_method($this->form->get_value('reproduction_method', $old_values->get_reproduction_method()));
+		}
+		
+		$pm_comment = '';
+		$modification = false;
+		
+		$fields = array('title', 'contents', 'type', 'category', 'severity', 'priority', 'detected_in', 'reproductible', 'reproduction_method');
+		
+		$n_values = $bug->get_properties();
+		$o_values = $old_values->get_properties();
+		foreach ($fields as $field)
+		{
+			if ($o_values[$field] != $n_values[$field])
 			{
-				$bug->set_reproduction_method($this->form->get_value('reproduction_method', $old_values->get_reproduction_method()));
-			}
-			
-			$pm_comment = '';
-			$modification = false;
-			
-			if (BugtrackerAuthorizationsService::check_authorizations()->moderation() || ($this->current_user->get_id() == $old_values->get_assigned_to_id()))
-			{
-				$versions = $this->config->get_versions();
-				$display_versions = count($versions) > 1 ? true : false;
-				
-				$assigned_to = $this->form->get_value('assigned_to');
-				
-				//Error if the selected user does not exist
-				if (!empty($assigned_to) && !UserService::user_exists("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)))
-					AppContext::get_response()->redirect(BugtrackerUrlBuilder::edit_error(!empty($back_page) ? 'unexist_user/' . $this->bug->get_id() . '/' . $back_page . '/' . $page : 'unexist_user/' . $this->bug->get_id()));
-				
-				$user_assigned = !empty($assigned_to) ? UserService::get_user("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)) : 0;
-				
-				$bug->set_assigned_to_id($user_assigned ? $user_assigned->get_id() : 0);
-				
-				if (count($versions))
+				$modification = true;
+				$comment = '';
+				switch ($field)
 				{
-					if (!$this->form->field_is_disabled('fixed_in'))
-					{
-						$bug->set_fixed_in($this->form->get_value('fixed_in')->get_raw_value() ? $this->form->get_value('fixed_in')->get_raw_value() : 0);
-					}
-				}
-				
-				$status = $bug->get_status();
-				if (!$old_values->is_fixed() && $this->form->get_value('fixed'))
-					$status = Bug::FIXED;
-				if ($old_values->is_fixed() && !$this->form->get_value('fixed'))
-					$status = Bug::REOPEN;
-				if (!$bug->get_assigned_to_id() && $old_values->get_assigned_to_id())
-					$status = Bug::NEW_BUG;
-				if ($bug->get_assigned_to_id() && ($status != Bug::FIXED) && ($status != Bug::REJECTED))
-					$status = Bug::ASSIGNED;
-				if ($bug->get_fixed_in() && ($status != Bug::FIXED) && !$bug->get_assigned_to_id())
-					$status = Bug::IN_PROGRESS;
+					case 'title': 
+						$new_value = stripslashes($n_values[$field]);
+						$o_values[$field] = addslashes($o_values[$field]);
+						$comment = '';
+						break;
+						
+					case 'contents' :
+							$o_values[$field] = '';
+							$n_values[$field] = '';
+							$comment = $this->lang['bugs.notice.contents_update'];
+							break;
 					
-				$bug->set_status($status);
-				
-				//Error if the status is fixed and no version is selected if the roadmap is enabled
-				if ($display_versions && $this->config->is_roadmap_enabled() && $bug->is_fixed() && !$bug->get_fixed_in())
-					AppContext::get_response()->redirect(BugtrackerUrlBuilder::edit_error(!empty($back_page) ? 'no_fixed_version/' . $this->bug->get_id() . '/' . $back_page . '/' . $page : 'no_fixed_version/' . $this->bug->get_id()));
-				
-				$fields = array('title', 'contents', 'type', 'category', 'severity', 'priority', 'detected_in', 'reproductible', 'reproduction_method', 'status', 'fixed_in', 'assigned_to_id');
-			}
-			else
-			{
-				$fields = array('title', 'contents', 'type', 'category', 'severity', 'priority', 'detected_in', 'reproductible', 'reproduction_method');
-			}
-			
-			$n_values = $bug->get_properties();
-			$o_values = $old_values->get_properties();
-			foreach ($fields as $field)
-			{
-				if ($o_values[$field] != $n_values[$field])
-				{
-					$modification = true;
-					$comment = '';
-					switch ($field)
-					{
-						case 'title': 
-							$new_value = stripslashes($n_values[$field]);
-							$o_values[$field] = addslashes($o_values[$field]);
-							$comment = '';
+					case 'reproduction_method' :
+							$o_values[$field] = '';
+							$n_values[$field] = '';
+							$comment = $this->lang['bugs.notice.reproduction_method_update'];
 							break;
-							
-						case 'contents' :
-								$o_values[$field] = '';
-								$n_values[$field] = '';
-								$comment = $this->lang['bugs.notice.contents_update'];
-								break;
-						
-						case 'reproduction_method' :
-								$o_values[$field] = '';
-								$n_values[$field] = '';
-								$comment = $this->lang['bugs.notice.reproduction_method_update'];
-								break;
-						
-						case 'type': 
-							$new_value = !empty($n_values[$field]) ? stripslashes($types[$n_values[$field]]) : $this->lang['bugs.notice.none'];
-							break;
-						
-						case 'category': 
-							$new_value = !empty($n_values[$field]) ? stripslashes($categories[$n_values[$field]]) : $this->lang['bugs.notice.none_e'];
-							break;
-						
-						case 'priority': 
-							$new_value = !empty($n_values[$field]) ? stripslashes($priorities[$n_values[$field]]) : $this->lang['bugs.notice.none_e'];
-							break;
-						
-						case 'severity': 
-							$new_value = !empty($n_values[$field]) ? stripslashes($severities[$n_values[$field]]['name']) : $this->lang['bugs.notice.none'];
-							break;
-						
-						case 'detected_in': 
-						case 'fixed_in': 
-							$new_value = !empty($n_values[$field]) ? stripslashes($versions[$n_values[$field]]['name']) : $this->lang['bugs.notice.none_e'];
-							break;
-						
-						case 'status': 
-							$new_value = $this->lang['bugs.status.' . $n_values[$field]];
-							break;
-						
-						case 'reproductible': 
-							$new_value = $new_values[$field] ? $main_lang['yes'] : $main_lang['no'];
-							break;
-						
-						case 'assigned_to_id': 
-							$new_value = !empty($user_assigned) ? '<a href="' . UserUrlBuilder::profile($user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($user_assigned->get_level()) . '">' . $user_assigned->get_pseudo() . '</a>' : $this->lang['bugs.notice.no_one'];
-							break;
-						
-						default:
-							$new_value = $n_values[$field];
-							$comment = '';
-					}
-					$pm_comment .= ($field != 'contents' && $field != 'reproduction_method' && $field != 'assigned_to_id') ? $this->lang['bugs.labels.fields.' . $field] . ' : ' . stripslashes($new_value) . '
+					
+					case 'type': 
+						$new_value = !empty($n_values[$field]) ? stripslashes($types[$n_values[$field]]) : $this->lang['bugs.notice.none'];
+						break;
+					
+					case 'category': 
+						$new_value = !empty($n_values[$field]) ? stripslashes($categories[$n_values[$field]]) : $this->lang['bugs.notice.none_e'];
+						break;
+					
+					case 'priority': 
+						$new_value = !empty($n_values[$field]) ? stripslashes($priorities[$n_values[$field]]) : $this->lang['bugs.notice.none_e'];
+						break;
+					
+					case 'severity': 
+						$new_value = !empty($n_values[$field]) ? stripslashes($severities[$n_values[$field]]['name']) : $this->lang['bugs.notice.none'];
+						break;
+					
+					case 'detected_in': 
+						$new_value = !empty($n_values[$field]) ? stripslashes($versions[$n_values[$field]]['name']) : $this->lang['bugs.notice.none_e'];
+						break;
+					
+					case 'status': 
+						$new_value = $this->lang['bugs.status.' . $n_values[$field]];
+						break;
+					
+					case 'reproductible': 
+						$new_value = $new_values[$field] ? $main_lang['yes'] : $main_lang['no'];
+						break;
+					
+					default:
+						$new_value = $n_values[$field];
+						$comment = '';
+				}
+				$pm_comment .= ($field != 'contents' && $field != 'reproduction_method') ? $this->lang['bugs.labels.fields.' . $field] . ' : ' . stripslashes($new_value) . '
 ' : '';
-					//Bug history update
-					BugtrackerService::add_history(array(
-						'bug_id'		=> $bug->get_id(),
-						'updater_id'	=> $this->current_user->get_id(),
-						'update_date'	=> $now->get_timestamp(),
-						'updated_field'	=> $field,
-						'old_value'		=> $o_values[$field],
-						'new_value'		=> $n_values[$field],
-						'change_comment'=> $comment
-					));
-				}
+				//Bug history update
+				BugtrackerService::add_history(array(
+					'bug_id'		=> $bug->get_id(),
+					'updater_id'	=> $this->current_user->get_id(),
+					'update_date'	=> $now->get_timestamp(),
+					'updated_field'	=> $field,
+					'old_value'		=> $o_values[$field],
+					'new_value'		=> $n_values[$field],
+					'change_comment'=> $comment
+				));
 			}
+		}
+		
+		if ($modification)
+		{
+			//Bug update
+			BugtrackerService::update($bug);
 			
-			if ($modification)
+			Feed::clear_cache('bugtracker');
+			
+			//Send PM to updaters if the option is enabled
+			if ($this->config->are_pm_enabled() && $this->config->are_pm_edit_enabled() && !empty($pm_comment))
+				BugtrackerPMService::send_PM_to_updaters('edit', $bug->get_id(), $pm_comment);
+			
+			if ($this->config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $this->config->get_admin_alerts_levels()))
 			{
-				if (BugtrackerAuthorizationsService::check_authorizations()->moderation() || ($this->current_user->get_id() == $bug->get_assigned_to_id()))
+				$alerts = AdministratorAlertService::find_by_criteria($bug->get_id(), 'bugtracker');
+				if (!empty($alerts))
 				{
-					//Bug update
-					$bug->set_progress($bug->is_fixed() ? $status_list[Bug::FIXED] : ($bug->is_assigned() || $bug->is_in_progress() ? $status_list[Bug::IN_PROGRESS] : ($bug->is_new() ? $status_list[Bug::NEW_BUG] : $bug->get_progress())));
-					$bug->set_fix_date($bug->is_fixed() ? $now : 0);
-					
-					//Send PM to the assigned user if the option is enabled
-					if ($this->config->are_pm_enabled() && $this->config->are_pm_assign_enabled() && $bug->get_assigned_to_id() && ($old_values->get_assigned_to_id() != $bug->get_assigned_to_id()) && ($this->current_user->get_id() != $bug->get_assigned_to_id()))
-						BugtrackerPMService::send_PM('assigned', $bug->get_assigned_to_id(), $bug->get_id(), $pm_comment);
-				}
-				//Bug update
-				BugtrackerService::update($bug);
-				
-				//Send PM to updaters if the option is enabled
-				if ($this->config->are_pm_enabled() && $this->config->are_pm_edit_enabled() && !empty($pm_comment))
-					BugtrackerPMService::send_PM_to_updaters('edit', $bug->get_id(), $pm_comment);
-				
-				if ($this->config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $this->config->get_admin_alerts_levels()))
-				{
-					$alerts = AdministratorAlertService::find_by_criteria($bug->get_id(), 'bugtracker');
-					if (!empty($alerts))
+					$alert = $alerts[0];
+					if ($this->config->is_admin_alerts_fix_action_fix())
 					{
-						$alert = $alerts[0];
-						if ($this->config->is_admin_alerts_fix_action_fix())
-						{
-							$alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
-							AdministratorAlertService::save_alert($alert);
-						}
-						else
-							AdministratorAlertService::delete_alert($alert);
+						$alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
+						AdministratorAlertService::save_alert($alert);
 					}
-				}
-				
-				BugtrackerStatsCache::invalidate();
-				
-				switch ($back_page)
-				{
-					case 'detail' :
-						$redirect = BugtrackerUrlBuilder::detail_success('edit/' . $bug->get_id());
-						break;
-					case 'solved' :
-						$redirect = BugtrackerUrlBuilder::solved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-						break;
-					case 'unsolved' :
-						$redirect = BugtrackerUrlBuilder::unsolved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-						break;
-					default :
-						$redirect = BugtrackerUrlBuilder::edit_success('edit/' . $bug->get_id());
-						break;
-				}
-			}
-			else
-			{
-				switch ($back_page)
-				{
-					case 'detail' :
-						$redirect = BugtrackerUrlBuilder::detail($bug->get_id());
-						break;
-					case 'solved' :
-						$redirect = BugtrackerUrlBuilder::solved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-						break;
-					case 'unsolved' :
-						$redirect = BugtrackerUrlBuilder::unsolved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-						break;
-					default :
-						$redirect = BugtrackerUrlBuilder::edit($bug->get_id());
-						break;
+					else
+						AdministratorAlertService::delete_alert($alert);
 				}
 			}
 			
-			AppContext::get_response()->redirect($redirect);
+			BugtrackerStatsCache::invalidate();
+			
+			switch ($back_page)
+			{
+				case 'detail' :
+					$redirect = BugtrackerUrlBuilder::detail_success('edit/' . $bug->get_id());
+					break;
+				case 'solved' :
+					$redirect = BugtrackerUrlBuilder::solved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+					break;
+				default :
+					$redirect = BugtrackerUrlBuilder::unsolved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+					break;
+			}
 		}
 		else
-			AppContext::get_response()->redirect(BugtrackerUrlBuilder::edit_error(!empty($back_page) ? 'incomplete/' . $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : 'incomplete'));
+		{
+			switch ($back_page)
+			{
+				case 'detail' :
+					$redirect = BugtrackerUrlBuilder::detail($bug->get_id());
+					break;
+				case 'solved' :
+					$redirect = BugtrackerUrlBuilder::solved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+					break;
+				default :
+					$redirect = BugtrackerUrlBuilder::unsolved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+					break;
+			}
+		}
+		
+		AppContext::get_response()->redirect($redirect);
 	}
 }
 ?>
