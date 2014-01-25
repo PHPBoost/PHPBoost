@@ -55,6 +55,22 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->form->get_field_by_id('admin_alerts_levels')->set_hidden(!$this->config->are_admin_alerts_enabled());
+			$this->form->get_field_by_id('admin_alerts_fix_action')->set_hidden(!$this->config->are_admin_alerts_enabled());
+			$this->form->get_field_by_id('stats_top_posters_enabled')->set_hidden(!$this->config->are_stats_enabled());
+			$this->form->get_field_by_id('stats_top_posters_number')->set_hidden(!$this->config->are_stats_top_posters_enabled());
+			$this->form->get_field_by_id('pm_comment_enabled')->set_hidden(!$this->config->are_pm_enabled());
+			$this->form->get_field_by_id('pm_fix_enabled')->set_hidden(!$this->config->are_pm_enabled());
+			$this->form->get_field_by_id('pm_assign_enabled')->set_hidden(!$this->config->are_pm_enabled());
+			$this->form->get_field_by_id('pm_edit_enabled')->set_hidden(!$this->config->are_pm_enabled());
+			$this->form->get_field_by_id('pm_reject_enabled')->set_hidden(!$this->config->are_pm_enabled());
+			$this->form->get_field_by_id('pm_reopen_enabled')->set_hidden(!$this->config->are_pm_enabled());
+			$this->form->get_field_by_id('pm_delete_enabled')->set_hidden(!$this->config->are_pm_enabled());
+			$this->form->get_field_by_id('types_table')->set_value($this->build_types_table()->render());
+			$this->form->get_field_by_id('categories_table')->set_value($this->build_categories_table()->render());
+			$this->form->get_field_by_id('severities_table')->set_value($this->build_severities_table()->render());
+			$this->form->get_field_by_id('priorities_table')->set_value($this->build_priorities_table()->render());
+			$this->form->get_field_by_id('versions_table')->set_value($this->build_versions_table()->render());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 5));
 		}
 		
@@ -81,7 +97,6 @@ class AdminBugtrackerConfigController extends AdminModuleController
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		$types = $this->config->get_types();
 		$categories = $this->config->get_categories();
 		$severities = $this->config->get_severities();
 		$priorities = $this->config->get_priorities();
@@ -243,6 +258,83 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			)
 		));
 		
+		$fieldset->add_field(new FormFieldHTML('types_table', $this->build_types_table()->render()));
+		
+		$fieldset = new FormFieldsetHTML('categories-fieldset', $this->lang['bugs.titles.categories']);
+		$fieldset->set_description($this->lang['bugs.explain.category'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldRadioChoice('category_mandatory', $this->lang['bugs.labels.category_mandatory'], $this->config->is_category_mandatory(),
+			array(
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldHTML('categories_table', $this->build_categories_table()->render()));
+		
+		$fieldset = new FormFieldsetHTML('severities-fieldset', $this->lang['bugs.titles.severities']);
+		$fieldset->set_description($this->lang['bugs.explain.severity'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldRadioChoice('severity_mandatory', $this->lang['bugs.labels.severity_mandatory'], $this->config->is_severity_mandatory(),
+			array(
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldHTML('severities_table', $this->build_severities_table()->render()));
+		
+		$fieldset = new FormFieldsetHTML('priorities-fieldset', $this->lang['bugs.titles.priorities']);
+		$fieldset->set_description($this->lang['bugs.explain.priority'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldRadioChoice('priority_mandatory', $this->lang['bugs.labels.priority_mandatory'], $this->config->is_priority_mandatory(),
+			array(
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldHTML('priorities_table', $this->build_priorities_table()->render()));
+		
+		$fieldset = new FormFieldsetHTML('versions-fieldset', $this->lang['bugs.titles.versions']);
+		$fieldset->set_description($this->lang['bugs.explain.version'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldRadioChoice('detected_in_version_mandatory', $this->lang['bugs.labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory(),
+			array(
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldHTML('versions_table', $this->build_versions_table()->render()));
+		
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonReset());
+		
+		$this->form = $form;
+	}
+	
+	private function build_admin_alerts_levels($severities)
+	{
+		$list = array();
+		
+		foreach ($severities as $key => $severity)
+		{
+			$list[] = new FormFieldMultipleCheckboxOption($key, stripslashes($severity['name']));
+		}
+		
+		return $list;
+	}
+	
+	private function build_types_table()
+	{
+		$types = $this->config->get_types();
+		
 		$types_table = new FileTemplate('bugtracker/AdminBugtrackerTypesListController.tpl');
 		$types_table->add_lang($this->lang);
 		
@@ -264,21 +356,15 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('type')->rel()
 		));
 		
-		$fieldset->add_field(new FormFieldHTML('types_table', $types_table->render()));
-		
-		$fieldset = new FormFieldsetHTML('categories-fieldset', $this->lang['bugs.titles.categories']);
-		$fieldset->set_description($this->lang['bugs.explain.category'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
-		$form->add_fieldset($fieldset);
+		return $types_table;
+	}
+	
+	private function build_categories_table()
+	{
+		$categories = $this->config->get_categories();
 		
 		$categories_table = new FileTemplate('bugtracker/AdminBugtrackerCategoriesListController.tpl');
 		$categories_table->add_lang($this->lang);
-		
-		$fieldset->add_field(new FormFieldRadioChoice('category_mandatory', $this->lang['bugs.labels.category_mandatory'], $this->config->is_category_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
 		
 		foreach ($categories as $key => $category)
 		{
@@ -298,18 +384,12 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('category')->rel()
 		));
 		
-		$fieldset->add_field(new FormFieldHTML('categories_table', $categories_table->render()));
-		
-		$fieldset = new FormFieldsetHTML('severities-fieldset', $this->lang['bugs.titles.severities']);
-		$fieldset->set_description($this->lang['bugs.explain.severity'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
-		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldRadioChoice('severity_mandatory', $this->lang['bugs.labels.severity_mandatory'], $this->config->is_severity_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		return $categories_table;
+	}
+	
+	private function build_severities_table()
+	{
+		$severities = $this->config->get_severities();
 		
 		$severities_table = new FileTemplate('bugtracker/AdminBugtrackerSeveritiesListController.tpl');
 		$severities_table->add_lang($this->lang);
@@ -330,18 +410,12 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('severity')->rel()
 		));
 		
-		$fieldset->add_field(new FormFieldHTML('severities_table', $severities_table->render()));
-		
-		$fieldset = new FormFieldsetHTML('priorities-fieldset', $this->lang['bugs.titles.priorities']);
-		$fieldset->set_description($this->lang['bugs.explain.priority'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
-		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldRadioChoice('priority_mandatory', $this->lang['bugs.labels.priority_mandatory'], $this->config->is_priority_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		return $severities_table;
+	}
+	
+	private function build_priorities_table()
+	{
+		$priorities = $this->config->get_priorities();
 		
 		$priorities_table = new FileTemplate('bugtracker/AdminBugtrackerPrioritiesListController.tpl');
 		$priorities_table->add_lang($this->lang);
@@ -361,18 +435,12 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('priority')->rel()
 		));
 		
-		$fieldset->add_field(new FormFieldHTML('priorities_table', $priorities_table->render()));
-		
-		$fieldset = new FormFieldsetHTML('versions-fieldset', $this->lang['bugs.titles.versions']);
-		$fieldset->set_description($this->lang['bugs.explain.version'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
-		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldRadioChoice('detected_in_version_mandatory', $this->lang['bugs.labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		return $priorities_table;
+	}
+	
+	private function build_versions_table()
+	{
+		$versions = $this->config->get_versions();
 		
 		$versions_table = new FileTemplate('bugtracker/AdminBugtrackerVersionsListController.tpl');
 		$versions_table->add_lang($this->lang);
@@ -403,25 +471,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('version')->rel()
 		));
 		
-		$fieldset->add_field(new FormFieldHTML('versions_table', $versions_table->render()));
-		
-		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
-		$form->add_button(new FormButtonReset());
-		
-		$this->form = $form;
-	}
-	
-	private function build_admin_alerts_levels($severities)
-	{
-		$list = array();
-		
-		foreach ($severities as $key => $severity)
-		{
-			$list[] = new FormFieldMultipleCheckboxOption($key, stripslashes($severity['name']));
-		}
-		
-		return $list;
+		return $versions_table;
 	}
 	
 	private function save()
