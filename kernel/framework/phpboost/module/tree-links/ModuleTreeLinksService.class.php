@@ -80,7 +80,8 @@ class ModuleTreeLinksService
 		$has_links = $tree_links->has_links();
 		if ($has_links)
 		{
-			foreach ($tree_links->get_links() as $element)
+			$links = $tree_links->get_links();
+			foreach ($links as $element)
 			{
 				if ($element->is_visible())
 				{
