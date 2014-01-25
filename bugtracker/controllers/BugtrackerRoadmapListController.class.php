@@ -123,7 +123,7 @@ class BugtrackerRoadmapListController extends ModuleController
 			FROM " . BugtrackerSetup::$bugtracker_table . " b
 			LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id AND member.user_aprob = 1
 			WHERE fixed_in = " . $roadmap_version . "
-			" . ($roadmap_status != 'all' ? ($roadmap_status == 'in_progress' ? "AND (b.status = 'in_progress' OR b.status = 'reopen')" : "AND b.status = 'fixed'") : "") . "
+			" . ($roadmap_status != 'all' ? ($roadmap_status == Bug::IN_PROGRESS ? "AND (b.status = '" . Bug::IN_PROGRESS . "' OR b.status = '" . Bug::REOPEN . "')" : "AND b.status = '" . Bug::FIXED . "'") : "") . "
 			ORDER BY " . $field_bdd . " " . $mode . "
 			LIMIT :number_items_per_page OFFSET :display_from",
 				array(
@@ -150,7 +150,7 @@ class BugtrackerRoadmapListController extends ModuleController
 			$this->view->put_all(array(
 				'C_VERSIONS_AVAILABLE'		=> true,
 				'C_BUGS'					=> $bugs_number[$roadmap_status],
-				'C_STATUS_IN_PROGRESS'		=> $roadmap_status == 'in_progress',
+				'C_STATUS_IN_PROGRESS'		=> $roadmap_status == Bug::IN_PROGRESS,
 				'C_IS_DATE_FORM_SHORT'		=> $this->config->is_date_form_short(),
 				'C_PAGINATION'				=> $pagination->has_several_pages(),
 				'PAGINATION' 				=> $pagination->display(),
@@ -190,7 +190,7 @@ class BugtrackerRoadmapListController extends ModuleController
 		$fieldset = new FormFieldsetHorizontal('informations');
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldHTML('informations', (!empty($requested_version['release_date'])  ? $this->lang['bugs.labels.fields.version_release_date'] . ' : <b>' . $requested_version['release_date']->format(Date::FORMAT_DAY_MONTH_YEAR) . '</b><br />' : '') . ($requested_status == 'in_progress' ? $this->lang['bugs.labels.number_in_progress'] : $this->lang['bugs.labels.number_fixed']) . ' : ' . $nbr_bugs));
+		$fieldset->add_field(new FormFieldHTML('informations', (!empty($requested_version['release_date'])  ? $this->lang['bugs.labels.fields.version_release_date'] . ' : <b>' . $requested_version['release_date']->format(Date::FORMAT_DAY_MONTH_YEAR) . '</b><br />' : '') . ($requested_status == Bug::IN_PROGRESS ? $this->lang['bugs.labels.number_in_progress'] : $this->lang['bugs.labels.number_fixed']) . ' : ' . $nbr_bugs));
 		
 		return $form;
 	}

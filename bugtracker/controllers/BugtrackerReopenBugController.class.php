@@ -129,7 +129,6 @@ class BugtrackerReopenBugController extends ModuleController
 	private function save()
 	{
 		$now = new Date();
-		$status_list = $this->config->get_status_list();
 		
 		if (!$this->bug->is_reopen())
 		{
@@ -153,7 +152,6 @@ class BugtrackerReopenBugController extends ModuleController
 				$status = Bug::REOPEN;
 			
 			$this->bug->set_status($status);
-			$this->bug->set_progress($status_list[$status]);
 			$this->bug->set_fix_date(0);
 			
 			BugtrackerService::update($this->bug);

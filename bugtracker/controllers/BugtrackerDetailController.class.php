@@ -55,14 +55,14 @@ class BugtrackerDetailController extends ModuleController
 		
 		switch ($this->bug->get_status())
 		{
-			case 'new' :
-			case 'assigned' :
-			case 'reopen' :
+			case Bug::NEW_BUG :
+			case Bug::ASSIGNED :
+			case Bug::REOPEN :
 				$c_reopen = false;
 				$c_reject = true;
 				break;
-			case 'fixed' :
-			case 'rejected' :
+			case Bug::FIXED :
+			case Bug::REJECTED :
 				$c_reopen = true;
 				$c_reject = false;
 				break;

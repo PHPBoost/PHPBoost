@@ -55,9 +55,9 @@ class BugtrackerStatsCache implements CacheData
 		
 		$result = $db_querier->select("SELECT b1.fixed_in, COUNT(b1.id) as bugs_number, COUNT(b2.id) as fixed_bugs_number, COUNT(b3.id) + COUNT(b4.id) as in_progress_bugs_number
 		FROM " . BugtrackerSetup::$bugtracker_table . " b1
-		LEFT JOIN " . BugtrackerSetup::$bugtracker_table . " b2 ON b1.fixed_in = b2.fixed_in AND b2.status = 'fixed'
-		LEFT JOIN " . BugtrackerSetup::$bugtracker_table . " b3 ON b1.fixed_in = b3.fixed_in AND b3.status = 'in_progress'
-		LEFT JOIN " . BugtrackerSetup::$bugtracker_table . " b4 ON b1.fixed_in = b4.fixed_in AND b4.status = 'reopen'
+		LEFT JOIN " . BugtrackerSetup::$bugtracker_table . " b2 ON b1.fixed_in = b2.fixed_in AND b2.status = '" . Bug::FIXED . "'
+		LEFT JOIN " . BugtrackerSetup::$bugtracker_table . " b3 ON b1.fixed_in = b3.fixed_in AND b3.status = '" . Bug::IN_PROGRESS . "'
+		LEFT JOIN " . BugtrackerSetup::$bugtracker_table . " b4 ON b1.fixed_in = b4.fixed_in AND b4.status = '" . Bug::REOPEN . "'
 		GROUP BY b1.fixed_in
 		ORDER BY b1.fixed_in ASC");
 		
@@ -74,7 +74,7 @@ class BugtrackerStatsCache implements CacheData
 		$result = $db_querier->select("SELECT member.*, COUNT(*) as bugs_number
 		FROM " . BugtrackerSetup::$bugtracker_table . " bugtracker
 		JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = bugtracker.author_id
-		WHERE status <> 'rejected'
+		WHERE status <> '" . Bug::REJECTED . "'
 		GROUP BY author_id
 		ORDER BY bugs_number DESC
 		LIMIT " . $config->get_stats_top_posters_number());

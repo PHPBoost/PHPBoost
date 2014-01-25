@@ -73,7 +73,7 @@ class BugtrackerFeedProvider implements FeedProvider
 		$results = $querier->select("SELECT bugtracker.*, author.*
 		FROM " . BugtrackerSetup::$bugtracker_table . " bugtracker
 		LEFT JOIN " . DB_TABLE_MEMBER . " author ON author.user_id = bugtracker.author_id
-		WHERE " . ($idcat == 1 ? "(status = 'fixed' OR status = 'rejected')" : "status <> 'fixed' AND status <> 'rejected'")
+		WHERE " . ($idcat == 1 ? "(status = '" . Bug::FIXED . "' OR status = '" . Bug::REJECTED . "')" : "status <> '" . Bug::FIXED . "' AND status <> '" . Bug::REJECTED . "'")
 		);
 		
 		foreach ($results as $row)
