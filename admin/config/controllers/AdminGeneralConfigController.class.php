@@ -49,6 +49,7 @@ class AdminGeneralConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->form->get_field_by_id('other_start_page')->set_hidden($this->general_config->get_module_home_page() != 'other');
 			$this->clear_cache();
 			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 5));
 		}

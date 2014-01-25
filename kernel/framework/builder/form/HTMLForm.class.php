@@ -198,7 +198,7 @@ class HTMLForm
 		return true;
 	}
 	
-	private function get_field_by_id($field_id)
+	public function get_field_by_id($field_id)
 	{
 		foreach ($this->fieldsets as $fieldset)
 		{
