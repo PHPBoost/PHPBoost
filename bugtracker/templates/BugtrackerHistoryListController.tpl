@@ -1,3 +1,5 @@
+<div class="spacer">&nbsp;</div>
+
 <table>
 	<thead>
 		<tr>

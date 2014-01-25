@@ -108,8 +108,6 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['bugs.config.activ_com'], $this->config->are_comments_enabled()));
-		
 		$fieldset->add_field(new FormFieldCheckbox('cat_in_title_displayed', $this->lang['bugs.config.activ_cat_in_title'], $this->config->is_cat_in_title_displayed()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('roadmap_enabled', $this->lang['bugs.config.activ_roadmap'], $this->config->is_roadmap_enabled(),
@@ -117,6 +115,9 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('progress_bar_displayed', $this->lang['bugs.config.activ_progress_bar'], $this->config->is_progress_bar_displayed()));
+		
+		$fieldset = new FormFieldsetHTML('admin_alerts', $this->lang['bugs.config.admin_alerts']);
+		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldCheckbox('admin_alerts_enabled', $this->lang['bugs.config.activ_admin_alerts'], $this->config->are_admin_alerts_enabled(),
 			array('events' => array('click' => '
@@ -178,6 +179,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			array('events' => array('click' => '
 				if (HTMLForms.getField("pm_enabled").getValue()) {
 					HTMLForms.getField("pm_comment_enabled").enable();
+					HTMLForms.getField("pm_fix_enabled").enable();
 					HTMLForms.getField("pm_assign_enabled").enable();
 					HTMLForms.getField("pm_edit_enabled").enable();
 					HTMLForms.getField("pm_reject_enabled").enable();
@@ -185,6 +187,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 					HTMLForms.getField("pm_delete_enabled").enable();
 				} else {
 					HTMLForms.getField("pm_comment_enabled").disable();
+					HTMLForms.getField("pm_fix_enabled").disable();
 					HTMLForms.getField("pm_assign_enabled").disable();
 					HTMLForms.getField("pm_edit_enabled").disable();
 					HTMLForms.getField("pm_reject_enabled").disable();
@@ -194,6 +197,10 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		)));
 		
 		$fieldset->add_field(new FormFieldCheckbox('pm_comment_enabled', $this->lang['bugs.config.activ_pm.comment'], $this->config->are_pm_comment_enabled(), array(
+			'hidden' => !$this->config->are_pm_enabled())
+		));
+		
+		$fieldset->add_field(new FormFieldCheckbox('pm_fix_enabled', $this->lang['bugs.config.activ_pm.fix'], $this->config->are_pm_fix_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
@@ -514,11 +521,6 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$this->config->set_fixed_bug_color($this->form->get_value('fixed_bug_color'));
 		$this->config->set_date_form($this->form->get_value('date_form')->get_raw_value());
 		
-		if ($this->form->get_value('comments_enabled'))
-			$this->config->enable_comments();
-		else
-			$this->config->disable_comments();
-		
 		if ($this->form->get_value('cat_in_title_displayed'))
 			$this->config->display_cat_in_title();
 		else
@@ -571,6 +573,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				$this->config->enable_pm_comment();
 			else
 				$this->config->disable_pm_comment();
+			
+			if ($this->form->get_value('pm_fix_enabled'))
+				$this->config->enable_pm_fix();
+			else
+				$this->config->disable_pm_fix();
 			
 			if ($this->form->get_value('pm_assign_enabled'))
 				$this->config->enable_pm_assign();

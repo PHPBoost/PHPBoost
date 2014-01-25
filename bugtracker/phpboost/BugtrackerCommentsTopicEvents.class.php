@@ -41,7 +41,7 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 		//Retrieve the id of the bug
 		$bug_id = $this->comments_topic->get_id_in_module();
 		
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$now = new Date();
 		
 		//New line in the bug history
 		BugtrackerService::add_history(array(

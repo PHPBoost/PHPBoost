@@ -114,7 +114,7 @@ class BugtrackerHistoryListController extends ModuleController
 					break;
 				
 				case 'reproductible': 
-					$old_value = ($row['old_value'] == true) ? $main_lang['yes'] : $main_lang['no'];
+					$old_value = ($row['old_value'] ) ? $main_lang['yes'] : $main_lang['no'];
 					$new_value = ($row['new_value'] == true) ? $main_lang['yes'] : $main_lang['no'];
 					break;
 				

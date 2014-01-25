@@ -1,3 +1,6 @@
+<div class="spacer">&nbsp;</div>
+
+# IF C_VERSIONS_AVAILABLE #
 <section class="block">
 	<div class="content">
 		# INCLUDE SELECT_VERSION #
@@ -33,7 +36,7 @@
 	# IF C_PAGINATION #
 	<tfoot>
 		<tr>
-			<th colspan="{BUGS_COLSPAN}">
+			<th colspan="4">
 				# INCLUDE PAGINATION #
 			</th>
 		</tr>
@@ -49,14 +52,15 @@
 				{bug.TITLE}
 			</td>
 			<td class="align-left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
+				<span>{@bugs.labels.fields.status} : {bug.STATUS}</span>
+				<div class="spacer"></div>
 				# IF bug.C_PROGRESS #
 				{bug.PROGRESS}% 
 				<div class="progressbar-container">
 					<div class="progressbar" style="width:{bug.PROGRESS}%"></div>
 				</div>
 				# ENDIF #
-				<span>{@bugs.labels.fields.status} : {bug.STATUS}</span>
-				# IF C_COMMENTS #<br /><a href="{bug.U_COMMENTS}">{bug.NUMBER_COMMENTS} # IF bug.C_MORE_THAN_ONE_COMMENT #${LangLoader::get_message('comments', 'comments-common')}# ELSE #${LangLoader::get_message('comment', 'comments-common')}# ENDIF #</a># ENDIF #
+				<a href="{bug.U_COMMENTS}">{bug.NUMBER_COMMENTS} # IF bug.C_MORE_THAN_ONE_COMMENT #${LangLoader::get_message('comments', 'comments-common')}# ELSE #${LangLoader::get_message('comment', 'comments-common')}# ENDIF #</a>
 			</td>
 			<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 				# IF bug.C_FIX_DATE ## IF C_IS_DATE_FORM_SHORT #{bug.FIX_DATE_SHORT}# ELSE #{bug.FIX_DATE}# ENDIF ## ELSE #{@bugs.labels.not_yet_fixed}# ENDIF #
@@ -65,7 +69,7 @@
 		# END bug #
 		# IF NOT C_BUGS #
 		<tr> 
-			<td colspan="{BUGS_COLSPAN}">
+			<td colspan="4">
 				# IF C_STATUS_IN_PROGRESS #{@bugs.notice.no_bug_in_progress}# ELSE #{@bugs.notice.no_bug_fixed}# ENDIF #
 			</td>
 		</tr>
@@ -74,3 +78,10 @@
 </table>
 
 # INCLUDE LEGEND #
+
+# ELSE #
+<div class="message-helper notice">
+<i class="fa fa-notice"></i>
+<div class="message-helper-content">{@bugs.notice.no_version_roadmap}</div>
+</div>
+# ENDIF #

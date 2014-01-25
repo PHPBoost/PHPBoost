@@ -234,25 +234,12 @@ class BugtrackerAddController extends ModuleController
 	{
 		$request = AppContext::get_request();
 		
-		$error = $request->get_value('error', '');
 		$back_page = $request->get_value('back_page', '');
 		$page = $request->get_int('page', 1);
 		$back_filter = $request->get_value('back_filter', '');
 		$filter_id = $request->get_value('filter_id', '');
 		
 		$body_view = BugtrackerViews::build_body_view($view, 'add');
-		
-		//Error messages
-		switch ($error)
-		{
-			case 'incomplete':
-				$errstr = LangLoader::get_message('e_incomplete', 'errors');
-				break;
-			default:
-				$errstr = '';
-		}
-		if (!empty($errstr))
-			$body_view->put('MSG', MessageHelper::display($errstr, E_USER_NOTICE));
 		
 		$response = new BugtrackerDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
@@ -293,156 +280,151 @@ class BugtrackerAddController extends ModuleController
 		if ($bug->is_reproductible())
 			$bug->set_reproduction_method($this->form->get_value('reproduction_method'));
 		
-		$something_is_missing = ($this->config->get_types() && $this->config->is_type_mandatory() && !$bug->get_type() || $this->config->get_categories() && $this->config->is_category_mandatory() && !$bug->get_category() || $this->config->get_severities() && $this->config->is_severity_mandatory() && !$bug->get_severity() || $this->config->get_priorities() && $this->config->is_priority_mandatory() && !$bug->get_priority() || $this->config->get_versions() && $this->config->is_detected_in_version_mandatory() && !$bug->get_detected_in());
+		//Bug creation
+		$id = BugtrackerService::add($bug);
 		
-		if ($bug->get_title() && $bug->get_contents() && !$something_is_missing)
+		Feed::clear_cache('bugtracker');
+		
+		if ($this->config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $this->config->get_admin_alerts_levels()))
 		{
-			//Bug creation
-			$id = BugtrackerService::add($bug);
+			$alert = new AdministratorAlert();
+			$alert->set_entitled('[' . $this->lang['bugs.module_title'] . '] ' . $bug->get_title());
+			$alert->set_fixing_url(BugtrackerUrlBuilder::detail($id)->relative());
 			
-			if ($this->config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $this->config->get_admin_alerts_levels()))
+			switch ($bug->get_priority())
 			{
-				$alert = new AdministratorAlert();
-				$alert->set_entitled('[' . $this->lang['bugs.module_title'] . '] ' . $bug->get_title());
-				$alert->set_fixing_url(BugtrackerUrlBuilder::detail($id)->relative());
-				
-				switch ($bug->get_priority())
-				{
-					case 1 :
-						switch ($bug->get_severity())
-						{
-							case 1 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY;
-								break;
-							
-							case 2 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY;
-								break;
-							
-							default :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
-								break;
-						}
-						break;
+				case 1 :
+					switch ($bug->get_severity())
+					{
+						case 1 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY;
+							break;
+						
+						case 2 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY;
+							break;
+						
+						default :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
+							break;
+					}
+					break;
 
-					case 2 :
-						switch ($bug->get_severity())
-						{
-							case 1 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY;
-								break;
-							
-							default :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
-								break;
-						}
-						break;
-					
-					case 3 :
-						switch ($bug->get_severity())
-						{
-							case 1 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY;
-								break;
-							
-							case 2 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
-								break;
-							
-							case 3 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY;
-								break;
-							
-							default :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
-								break;
-						}
-						break;
-					
-					case 4 :
-						switch ($bug->get_severity())
-						{
-							case 2 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
-								break;
-							
-							case 3 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY;
-								break;
-							
-							default :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY;
-								break;
-						}
-						break;
-					
-					case 5 :
-						switch ($bug->get_severity())
-						{
-							case 2 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY;
-								break;
-							
-							case 3 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY;
-								break;
-							
-							default :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
-								break;
-						}
-						break;
-					
-					default :
-						switch ($bug->get_severity())
-						{
-							case 1 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY;
-								break;
-							
-							case 2 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
-								break;
-							
-							case 3 :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY;
-								break;
-							
-							default :
-								$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
-								break;
-						}
-						break;
-				}
+				case 2 :
+					switch ($bug->get_severity())
+					{
+						case 1 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY;
+							break;
+						
+						default :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
+							break;
+					}
+					break;
 				
-				$alert->set_priority($alert_priority);
-				$alert->set_id_in_module($id);
-				$alert->set_type('bugtracker');
-				AdministratorAlertService::save_alert($alert);
-			}
-			
-			BugtrackerStatsCache::invalidate();
-			
-			switch ($back_page)
-			{
-				case 'roadmap' :
-					$redirect = BugtrackerUrlBuilder::roadmap_success('add/'. $id . '/' . $page);
+				case 3 :
+					switch ($bug->get_severity())
+					{
+						case 1 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY;
+							break;
+						
+						case 2 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
+							break;
+						
+						case 3 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY;
+							break;
+						
+						default :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
+							break;
+					}
 					break;
-				case 'stats' :
-					$redirect = BugtrackerUrlBuilder::stats_success('add/'. $id);
+				
+				case 4 :
+					switch ($bug->get_severity())
+					{
+						case 2 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
+							break;
+						
+						case 3 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY;
+							break;
+						
+						default :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY;
+							break;
+					}
 					break;
-				case 'solved' :
-					$redirect = BugtrackerUrlBuilder::solved_success('add/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+				
+				case 5 :
+					switch ($bug->get_severity())
+					{
+						case 2 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY;
+							break;
+						
+						case 3 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY;
+							break;
+						
+						default :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
+							break;
+					}
 					break;
+				
 				default :
-					$redirect = BugtrackerUrlBuilder::unsolved_success('add/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+					switch ($bug->get_severity())
+					{
+						case 1 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY;
+							break;
+						
+						case 2 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
+							break;
+						
+						case 3 :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY;
+							break;
+						
+						default :
+							$alert_priority = AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY;
+							break;
+					}
 					break;
 			}
 			
-			AppContext::get_response()->redirect($redirect);
+			$alert->set_priority($alert_priority);
+			$alert->set_id_in_module($id);
+			$alert->set_type('bugtracker');
+			AdministratorAlertService::save_alert($alert);
 		}
-		else
-			AppContext::get_response()->redirect(BugtrackerUrlBuilder::add_error(!empty($back_page) ? 'incomplete/' . $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : 'incomplete'));
+		
+		BugtrackerStatsCache::invalidate();
+		
+		switch ($back_page)
+		{
+			case 'roadmap' :
+				$redirect = BugtrackerUrlBuilder::roadmap_success('add/'. $id . '/' . $page);
+				break;
+			case 'stats' :
+				$redirect = BugtrackerUrlBuilder::stats_success('add/'. $id);
+				break;
+			case 'solved' :
+				$redirect = BugtrackerUrlBuilder::solved_success('add/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+				break;
+			default :
+				$redirect = BugtrackerUrlBuilder::unsolved_success('add/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+				break;
+		}
+		
+		AppContext::get_response()->redirect($redirect);
 	}
 }
 ?>
