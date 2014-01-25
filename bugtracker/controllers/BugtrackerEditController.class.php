@@ -293,6 +293,9 @@ class BugtrackerEditController extends ModuleController
 			$bug->set_reproduction_method($this->form->get_value('reproduction_method', $old_values->get_reproduction_method()));
 		}
 		
+		//Bug update
+		BugtrackerService::update($bug);
+		
 		$pm_comment = '';
 		$modification = false;
 		
@@ -375,9 +378,6 @@ class BugtrackerEditController extends ModuleController
 		
 		if ($modification)
 		{
-			//Bug update
-			BugtrackerService::update($bug);
-			
 			Feed::clear_cache('bugtracker');
 			
 			//Send PM to updaters if the option is enabled
