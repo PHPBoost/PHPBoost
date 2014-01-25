@@ -257,7 +257,9 @@ class CalendarFormController extends ModuleController
 			$event_content->unauthorize_registration();
 		
 		$event_content->set_repeat_type($this->form->get_value('repeat_type')->get_raw_value());
-		$event_content->set_repeat_number($this->form->get_value('repeat_number'));
+		
+		if ($event_content->get_repeat_type() != CalendarEventContent::NEVER)
+			$event_content->set_repeat_number($this->form->get_value('repeat_number'));
 		
 		$event->set_start_date($this->form->get_value('start_date'));
 		$event->set_end_date($this->form->get_value('end_date'));
