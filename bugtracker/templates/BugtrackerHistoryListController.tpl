@@ -1,5 +1,4 @@
-<div class="spacer">&nbsp;</div>
-
+# IF C_HISTORY #
 <table>
 	<thead>
 		<tr>
@@ -53,12 +52,11 @@
 			</td>
 		</tr>
 		# END history #
-		# IF NOT C_HISTORY #
-		<tr> 
-			<td colspan="6">
-				{@bugs.notice.no_history}
-			</td>
-		</tr>
-		# ENDIF #
 	</tbody>
 </table>
+# ELSE #
+<div class="message-helper notice">
+<i class="fa fa-notice"></i>
+<div class="message-helper-content">{@bugs.notice.no_history}</div>
+</div>
+# ENDIF #

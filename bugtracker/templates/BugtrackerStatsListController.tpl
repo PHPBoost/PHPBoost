@@ -32,7 +32,10 @@
 		# IF C_BUGS #
 			<div id="status_chart"></div>
 		# ELSE #
-			{@bugs.notice.no_bug}
+			<div class="message-helper notice">
+			<i class="fa fa-notice"></i>
+			<div class="message-helper-content">{@bugs.notice.no_bug}</div>
+			</div>
 		# ENDIF #
 		</div>
 	</div>
@@ -46,6 +49,7 @@
 		<h1>{@bugs.labels.fix_bugs_per_version}</h1>
 	</header>
 	<div class="content">
+		# IF C_FIXED_BUGS #
 		<table>
 			<thead>
 				<tr>
@@ -68,15 +72,14 @@
 					</td>
 				</tr>
 				# END fixed_version #
-				# IF NOT C_FIXED_BUGS #
-				<tr> 
-					<td colspan="2">
-						{@bugs.notice.no_bug_solved}
-					</td>
-				</tr>
-				# ENDIF #
 			</tbody>
 		</table>
+		# ELSE #
+		<div class="message-helper notice">
+		<i class="fa fa-notice"></i>
+		<div class="message-helper-content">{@bugs.notice.no_bug_solved}</div>
+		</div>
+		# ENDIF #
 	</div>
 </section>
 
@@ -90,6 +93,7 @@
 	<header>
 	<div class="spacer">&nbsp;</div>
 	<div class="content">
+		# IF C_POSTERS #
 		<table>
 			<thead>
 				<tr>
@@ -118,15 +122,14 @@
 					</td>
 				</tr>
 				# END top_poster #
-				# IF NOT C_POSTERS #
-				<tr> 
-					<td colspan="3">
-						{@bugs.notice.no_bug}
-					</td>
-				</tr>
-				# ENDIF #
 			</tbody>
 		</table>
+		# ELSE #
+		<div class="message-helper notice">
+		<i class="fa fa-notice"></i>
+		<div class="message-helper-content">{@bugs.notice.no_bug}</div>
+		</div>
+		# ENDIF #
 	</div>
 </section>
 # ENDIF #
