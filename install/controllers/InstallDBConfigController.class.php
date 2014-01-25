@@ -61,7 +61,6 @@ class InstallDBConfigController extends InstallController
 			$login = $this->form->get_value('login');
 			$password = $this->form->get_value('password');
 			$schema = $this->form->get_value('schema');
-			$schema = str_replace(array('/', '\\', '.', ' ', '"', '\''), '_', $schema);
 			$tables_prefix = $this->form->get_value('tablesPrefix');
 			$this->handle_form($host, $port, $login, $password, $schema, $tables_prefix);
 		}
@@ -93,11 +92,13 @@ class InstallDBConfigController extends InstallController
 		$this->form->add_fieldset($fieldset_schema);
 
 		$schema = new FormFieldTextEditor('schema', $this->lang['schema'], '',
-		array('description' => $this->lang['schema.explanation'], 'required' => $this->lang['db.required.schema']));
+		array('description' => $this->lang['schema.explanation'], 'required' => $this->lang['db.required.schema']),
+		array(new FormFieldConstraintRegex('`^[a-z0-9_-]+$`i')));
 		$schema->add_event('change', '$FFS(\'overwriteFieldset\').disable()');
 		$fieldset_schema->add_field($schema);
 		$tables_prefix = new FormFieldTextEditor('tablesPrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
-		array('description' => $this->lang['schema.tablePrefix.explanation'], 'required' => true));
+		array('description' => $this->lang['schema.tablePrefix.explanation'], 'required' => true),
+		array(new FormFieldConstraintRegex('`^[a-z0-9_-]+$`i')));
 		$fieldset_schema->add_field($tables_prefix);
 
 		$this->overwrite_fieldset = new FormFieldsetHTML('overwriteFieldset', $this->lang['phpboost.alreadyInstalled']);
