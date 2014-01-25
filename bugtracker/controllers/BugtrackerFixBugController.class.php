@@ -163,7 +163,6 @@ class BugtrackerFixBugController extends ModuleController
 	private function save()
 	{
 		$now = new Date();
-		$status_list = $this->config->get_status_list();
 		
 		$versions = array_reverse($this->config->get_versions_fix(), true);
 		$display_versions = count($versions) > 1;
@@ -202,7 +201,6 @@ class BugtrackerFixBugController extends ModuleController
 			
 			//Bug update
 			$this->bug->set_status(Bug::FIXED);
-			$this->bug->set_progress($status_list[Bug::FIXED]);
 			$this->bug->set_fix_date($now);
 			
 			BugtrackerService::update($this->bug);

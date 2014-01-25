@@ -129,7 +129,6 @@ class BugtrackerRejectBugController extends ModuleController
 	private function save()
 	{
 		$now = new Date();
-		$status_list = $this->config->get_status_list();
 		
 		if (!$this->bug->is_rejected())
 		{
@@ -145,7 +144,6 @@ class BugtrackerRejectBugController extends ModuleController
 			
 			//Bug update
 			$this->bug->set_status(Bug::REJECTED);
-			$this->bug->set_progress($status_list[Bug::REJECTED]);
 			$this->bug->set_fix_date($now);
 			$this->bug->set_fixed_in(0);
 			

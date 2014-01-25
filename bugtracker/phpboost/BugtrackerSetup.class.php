@@ -59,13 +59,6 @@ class BugtrackerSetup extends DefaultModuleSetup
 		if (isset($columns['progess']))
 		{
 			PersistenceContext::get_dbms_utils()->drop_column(self::$bugtracker_table, 'progess');
-			PersistenceContext::get_dbms_utils()->add_column(self::$bugtracker_table, 'progress', array('type' => 'integer', 'length' => 11, 'default' => 0));
-			
-			PersistenceContext::get_querier()->update(self::$bugtracker_table, array('progress' => $status_list[Bug::NEW_BUG]), "WHERE status='" . Bug::NEW_BUG . "'");
-			PersistenceContext::get_querier()->update(self::$bugtracker_table, array('progress' => $status_list[Bug::ASSIGNED]), "WHERE status='" . Bug::ASSIGNED . "'");
-			PersistenceContext::get_querier()->update(self::$bugtracker_table, array('progress' => $status_list[Bug::IN_PROGRESS]), "WHERE status='" . Bug::IN_PROGRESS . "'");
-			PersistenceContext::get_querier()->update(self::$bugtracker_table, array('progress' => $status_list[Bug::REOPEN]), "WHERE status='" . Bug::REOPEN . "'");
-			PersistenceContext::get_querier()->update(self::$bugtracker_table, array('progress' => $status_list[Bug::FIXED]), "WHERE status='" . Bug::FIXED . "'");
 		}
 		
 		//New table
@@ -114,7 +107,6 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'reproduction_method' => array('type' => 'text', 'length' => 65000),
 			'detected_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'fixed_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'progress' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'assigned_to_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
@@ -182,7 +174,6 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'reproduction_method' => '',
 			'detected_in' => 0,
 			'fixed_in' => 0,
-			'progress' => 10,
 			'assigned_to_id' => 0
 		));
 		
@@ -202,7 +193,6 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'reproduction_method' => '',
 			'detected_in' => 0,
 			'fixed_in' => 0,
-			'progress' => 100,
 			'assigned_to_id' => 0
 		));
 		
@@ -222,7 +212,6 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'reproduction_method' => '',
 			'detected_in' => 0,
 			'fixed_in' => 0,
-			'progress' => 30,
 			'assigned_to_id' => 0
 		));
 	}

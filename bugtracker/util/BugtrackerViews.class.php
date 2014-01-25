@@ -358,7 +358,7 @@ class BugtrackerViews
 		$array_status[] = new FormFieldSelectChoiceOption('', '');
 		foreach ($status_list as $status => $progress)
 		{
-			if (($current_page == 'unsolved' && !in_array($status, array('fixed', 'rejected'))) || ($current_page == 'solved' && in_array($status, array('fixed', 'rejected'))))
+			if (($current_page == 'unsolved' && !in_array($status, array(Bug::FIXED, Bug::REJECTED))) || ($current_page == 'solved' && in_array($status, array(Bug::FIXED, Bug::REJECTED))))
 				$array_status[] = new FormFieldSelectChoiceOption($lang['bugs.status.' . $status], $status);
 		}
 		return $array_status;

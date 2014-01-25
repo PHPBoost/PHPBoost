@@ -48,7 +48,6 @@ class Bug
 	private $detected_in;
 	private $fixed_in;
 	
-	private $progress;
 	private $assigned_to_id;
 	private $assigned_user;
 	
@@ -244,16 +243,6 @@ class Bug
 		return $this->fixed_in;
 	}
 	
-	public function set_progress($progress)
-	{
-		$this->progress = $progress;
-	}
-	
-	public function get_progress()
-	{
-		return $this->progress;
-	}
-	
 	public function set_assigned_to_id($assigned_to_id)
 	{
 		$this->assigned_to_id = $assigned_to_id;
@@ -287,7 +276,6 @@ class Bug
 			'reproduction_method' => $this->get_reproduction_method(),
 			'detected_in' => $this->get_detected_in(),
 			'fixed_in' => $this->get_fixed_in(),
-			'progress' => $this->get_progress(),
 			'assigned_to_id' => $this->get_assigned_to_id(),
 		);
 	}
@@ -308,7 +296,6 @@ class Bug
 		$this->reproduction_method = $properties['reproduction_method'];
 		$this->detected_in = $properties['detected_in'];
 		$this->fixed_in = $properties['fixed_in'];
-		$this->progress = $properties['progress'];
 		$this->assigned_to_id = $properties['assigned_to_id'];
 		
 		$user = new User();
@@ -319,13 +306,11 @@ class Bug
 	public function init_default_properties()
 	{
 		$config = BugtrackerConfig::load();
-		$status_list = $config->get_status_list();
 		
 		$this->submit_date = new Date();
 		$this->fix_date = new Date();
 		$this->status = Bug::NEW_BUG;
 		$this->author_user = AppContext::get_current_user();
-		$this->progress = $status_list[Bug::NEW_BUG];
 		$this->fixed_in = 0;
 		$this->assigned_to_id = 0;
 	}
@@ -339,12 +324,13 @@ class Bug
 	{
 		$config = BugtrackerConfig::load();
 		$categories = $config->get_categories();
+		$status_list = $config->get_status_list();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$number_comments = CommentsService::get_number_comments('bugtracker', $this->id);
 		
 		return array(
-			'C_PROGRESS' => $config->is_progress_bar_displayed() && $this->progress,
+			'C_PROGRESS' => $config->is_progress_bar_displayed(),
 			'C_FIX_DATE' => $this->fix_date != null,
 			'C_FIXED_IN' => $this->detected_in,
 			'C_FIXED' => $this->is_fixed(),
@@ -361,7 +347,7 @@ class Bug
 			'SUBMIT_DATE' => $this->submit_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'FIX_DATE_SHORT' => $this->fix_date !== null ? $this->fix_date->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'FIX_DATE' => $this->fix_date !== null ? $this->fix_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
-			'PROGRESS' => $this->progress,
+			'PROGRESS' => $status_list[$this->status],
 			'STATUS' => LangLoader::get_message('bugs.status.' . $this->status, 'common', 'bugtracker'),
 			'REPRODUCTION_METHOD' => FormatingHelper::second_parse($this->reproduction_method),
 			'AUTHOR' => $user->get_pseudo(),

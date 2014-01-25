@@ -169,12 +169,10 @@ class BugtrackerAssignBugController extends ModuleController
 			if ($new_user_assigned && ($this->bug->get_status() != Bug::FIXED) && ($this->bug->get_status() != Bug::REJECTED))
 			{
 				$this->bug->set_status(Bug::ASSIGNED);
-				$this->bug->set_progress($status_list[Bug::ASSIGNED]);
 			}
 			else if ($old_user_assigned && !$new_user_assigned)
 			{
 				$this->bug->set_status(Bug::IN_PROGRESS);
-				$this->bug->set_progress($status_list[Bug::IN_PROGRESS]);
 			}
 			
 			BugtrackerService::update($this->bug);

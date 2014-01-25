@@ -57,6 +57,12 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->save();
 			$this->form->get_field_by_id('admin_alerts_levels')->set_hidden(!$this->config->are_admin_alerts_enabled());
 			$this->form->get_field_by_id('admin_alerts_fix_action')->set_hidden(!$this->config->are_admin_alerts_enabled());
+			
+			foreach ($this->config->get_status_list() as $key => $value)
+			{
+				$this->form->get_field_by_id($key)->set_hidden(!$this->config->is_progress_bar_displayed());
+			}
+			
 			$this->form->get_field_by_id('stats_top_posters_enabled')->set_hidden(!$this->config->are_stats_enabled());
 			$this->form->get_field_by_id('stats_top_posters_number')->set_hidden(!$this->config->are_stats_top_posters_enabled());
 			$this->form->get_field_by_id('pm_comment_enabled')->set_hidden(!$this->config->are_pm_enabled());
@@ -97,11 +103,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		$categories = $this->config->get_categories();
-		$severities = $this->config->get_severities();
-		$priorities = $this->config->get_priorities();
-		$versions = $this->config->get_versions();
 		
+		$severities = $this->config->get_severities();
 		$main_lang = LangLoader::get('main');
 		
 		$fieldset = new FormFieldsetHTML('config', $this->lang['bugs.titles.admin.config']);
@@ -129,7 +132,36 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			array('description' => $this->lang['bugs.explain.roadmap'])
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('progress_bar_displayed', $this->lang['bugs.config.activ_progress_bar'], $this->config->is_progress_bar_displayed()));
+		$fieldset = new FormFieldsetHTML('progress_bar', $this->lang['bugs.config.progress_bar']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldCheckbox('progress_bar_displayed', $this->lang['bugs.config.activ_progress_bar'], $this->config->is_progress_bar_displayed(),
+			array('events' => array('click' => '
+				if (HTMLForms.getField("progress_bar_displayed").getValue()) {
+					HTMLForms.getField("' . Bug::NEW_BUG . '").enable();
+					HTMLForms.getField("' . Bug::ASSIGNED . '").enable();
+					HTMLForms.getField("' . Bug::IN_PROGRESS . '").enable();
+					HTMLForms.getField("' . Bug::REJECTED . '").enable();
+					HTMLForms.getField("' . Bug::REOPEN . '").enable();
+					HTMLForms.getField("' . Bug::FIXED . '").enable();
+				} else {
+					HTMLForms.getField("' . Bug::NEW_BUG . '").disable();
+					HTMLForms.getField("' . Bug::ASSIGNED . '").disable();
+					HTMLForms.getField("' . Bug::IN_PROGRESS . '").disable();
+					HTMLForms.getField("' . Bug::REJECTED . '").disable();
+					HTMLForms.getField("' . Bug::REOPEN . '").disable();
+					HTMLForms.getField("' . Bug::FIXED . '").disable();
+				}')
+			)
+		));
+		
+		foreach ($this->config->get_status_list() as $key => $value)
+		{
+			$fieldset->add_field(new FormFieldTextEditor($key, $this->lang['bugs.config.status.' . $key], $value, array(
+				'maxlength' => 3, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_progress_bar_displayed()),
+				array(new FormFieldConstraintIntegerRange(0, 100))
+			));
+		}
 		
 		$fieldset = new FormFieldsetHTML('admin_alerts', $this->lang['bugs.config.admin_alerts']);
 		$form->add_fieldset($fieldset);
@@ -582,23 +614,18 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->config->disable_roadmap();
 		
 		if ($this->form->get_value('progress_bar_displayed'))
-			$this->config->display_progress_bar();
-		else
-			$this->config->hide_progress_bar();
-		
-		if ($this->form->get_value('stats_enabled'))
 		{
-			$this->config->enable_stats();
-			if ($this->form->get_value('stats_top_posters_enabled'))
+			$this->config->display_progress_bar();
+			
+			$status_list = array();
+			foreach ($this->config->get_status_list() as $key => $value)
 			{
-				$this->config->enable_stats_top_posters();
-				$this->config->set_stats_top_posters_number($this->form->get_value('stats_top_posters_number'));
+				$status_list[$key] = $this->form->get_value($key);
 			}
-			else
-				$this->config->disable_stats_top_posters();
+			$this->config->set_status_list($status_list);
 		}
 		else
-			$this->config->disable_stats();
+			$this->config->hide_progress_bar();
 		
 		if ($this->form->get_value('admin_alerts_enabled'))
 		{
@@ -614,6 +641,20 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		}
 		else
 			$this->config->disable_admin_alerts();
+		
+		if ($this->form->get_value('stats_enabled'))
+		{
+			$this->config->enable_stats();
+			if ($this->form->get_value('stats_top_posters_enabled'))
+			{
+				$this->config->enable_stats_top_posters();
+				$this->config->set_stats_top_posters_number($this->form->get_value('stats_top_posters_number'));
+			}
+			else
+				$this->config->disable_stats_top_posters();
+		}
+		else
+			$this->config->disable_stats();
 		
 		if ($this->form->get_value('pm_enabled'))
 		{
