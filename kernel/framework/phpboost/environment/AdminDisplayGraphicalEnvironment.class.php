@@ -218,9 +218,9 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
 			$template->put_all(array(
 				'C_DISPLAY_AUTHOR_THEME' => true,
-				'L_THEME' => self::$main_lang['theme'],
+				'L_THEME' => self::$lang['theme'],
 				'L_THEME_NAME' => $theme_configuration->get_name(),
-				'L_BY' => strtolower(self::$main_lang['by']),
+				'L_BY' => strtolower(self::$lang['by']),
 				'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
 				'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
 			));
