@@ -7,7 +7,7 @@
 		</h1>
 	</header>
 	<div class="content">
-		# IF C_DISPLAY #
+		# IF C_DISPLAY_MENU #
 		<menu class="dynamic-menu group center">
 			<ul>
 				<li# IF C_UNSOLVED # class="current"# ENDIF #>
