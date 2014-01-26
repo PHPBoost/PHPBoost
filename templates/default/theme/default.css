@@ -77,6 +77,8 @@ div.horizontal-fieldset .form-element label {
 }
 
 /* Imite l'affichage fieldset / legend */
+.module-mini-contents .fieldset-content { width:100%; }
+
 .fieldset-content {
     width:95%;
     margin:auto;
