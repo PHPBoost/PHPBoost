@@ -67,6 +67,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->form->get_field_by_id('stats_top_posters_number')->set_hidden(!$this->config->are_stats_top_posters_enabled());
 			$this->form->get_field_by_id('pm_comment_enabled')->set_hidden(!$this->config->are_pm_enabled());
 			$this->form->get_field_by_id('pm_fix_enabled')->set_hidden(!$this->config->are_pm_enabled());
+			$this->form->get_field_by_id('pm_pending_enabled')->set_hidden(!$this->config->are_pm_enabled());
 			$this->form->get_field_by_id('pm_assign_enabled')->set_hidden(!$this->config->are_pm_enabled());
 			$this->form->get_field_by_id('pm_edit_enabled')->set_hidden(!$this->config->are_pm_enabled());
 			$this->form->get_field_by_id('pm_reject_enabled')->set_hidden(!$this->config->are_pm_enabled());
@@ -139,6 +140,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			array('events' => array('click' => '
 				if (HTMLForms.getField("progress_bar_displayed").getValue()) {
 					HTMLForms.getField("' . Bug::NEW_BUG . '").enable();
+					HTMLForms.getField("' . Bug::PENDING . '").enable();
 					HTMLForms.getField("' . Bug::ASSIGNED . '").enable();
 					HTMLForms.getField("' . Bug::IN_PROGRESS . '").enable();
 					HTMLForms.getField("' . Bug::REJECTED . '").enable();
@@ -146,6 +148,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 					HTMLForms.getField("' . Bug::FIXED . '").enable();
 				} else {
 					HTMLForms.getField("' . Bug::NEW_BUG . '").disable();
+					HTMLForms.getField("' . Bug::PENDING . '").disable();
 					HTMLForms.getField("' . Bug::ASSIGNED . '").disable();
 					HTMLForms.getField("' . Bug::IN_PROGRESS . '").disable();
 					HTMLForms.getField("' . Bug::REJECTED . '").disable();
@@ -227,6 +230,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				if (HTMLForms.getField("pm_enabled").getValue()) {
 					HTMLForms.getField("pm_comment_enabled").enable();
 					HTMLForms.getField("pm_fix_enabled").enable();
+					HTMLForms.getField("pm_pending_enabled").enable();
 					HTMLForms.getField("pm_assign_enabled").enable();
 					HTMLForms.getField("pm_edit_enabled").enable();
 					HTMLForms.getField("pm_reject_enabled").enable();
@@ -235,6 +239,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				} else {
 					HTMLForms.getField("pm_comment_enabled").disable();
 					HTMLForms.getField("pm_fix_enabled").disable();
+					HTMLForms.getField("pm_pending_enabled").disable();
 					HTMLForms.getField("pm_assign_enabled").disable();
 					HTMLForms.getField("pm_edit_enabled").disable();
 					HTMLForms.getField("pm_reject_enabled").disable();
@@ -248,6 +253,10 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('pm_fix_enabled', $this->lang['bugs.config.activ_pm.fix'], $this->config->are_pm_fix_enabled(), array(
+			'hidden' => !$this->config->are_pm_enabled())
+		));
+		
+		$fieldset->add_field(new FormFieldCheckbox('pm_pending_enabled', $this->lang['bugs.config.activ_pm.pending'], $this->config->are_pm_pending_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
@@ -370,6 +379,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$types_table = new FileTemplate('bugtracker/AdminBugtrackerTypesListController.tpl');
 		$types_table->add_lang($this->lang);
 		
+		$key = 0;
 		foreach ($types as $key => $type)
 		{
 			$types_table->assign_block_vars('types', array(
@@ -398,6 +408,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$categories_table = new FileTemplate('bugtracker/AdminBugtrackerCategoriesListController.tpl');
 		$categories_table->add_lang($this->lang);
 		
+		$key = 0;
 		foreach ($categories as $key => $category)
 		{
 			$categories_table->assign_block_vars('categories', array(
@@ -426,6 +437,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$severities_table = new FileTemplate('bugtracker/AdminBugtrackerSeveritiesListController.tpl');
 		$severities_table->add_lang($this->lang);
 		
+		$key = 0;
 		foreach ($severities as $key => $severity)
 		{
 			$severities_table->assign_block_vars('severities', array(
@@ -452,6 +464,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$priorities_table = new FileTemplate('bugtracker/AdminBugtrackerPrioritiesListController.tpl');
 		$priorities_table->add_lang($this->lang);
 		
+		$key = 0;
 		foreach ($priorities as $key => $priority)
 		{
 			$priorities_table->assign_block_vars('priorities', array(
@@ -477,6 +490,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$versions_table = new FileTemplate('bugtracker/AdminBugtrackerVersionsListController.tpl');
 		$versions_table->add_lang($this->lang);
 		
+		$key = 0;
 		foreach ($versions as $key => $version)
 		{
 			$versions_table->assign_block_vars('versions', array(
@@ -669,6 +683,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				$this->config->enable_pm_fix();
 			else
 				$this->config->disable_pm_fix();
+			
+			if ($this->form->get_value('pm_pending_enabled'))
+				$this->config->enable_pm_pending();
+			else
+				$this->config->disable_pm_pending();
 			
 			if ($this->form->get_value('pm_assign_enabled'))
 				$this->config->enable_pm_assign();

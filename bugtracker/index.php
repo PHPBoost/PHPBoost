@@ -68,6 +68,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('BugtrackerReopenBugController', '`^/reopen/([0-9]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('id', 'back_page', 'page', 'back_filter', 'filter_id')),
 	new UrlControllerMapper('BugtrackerAssignBugController', '`^/assign/([0-9]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('id', 'back_page', 'page', 'back_filter', 'filter_id')),
 	new UrlControllerMapper('BugtrackerFixBugController', '`^/fix/([0-9]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('id', 'back_page', 'page', 'back_filter', 'filter_id')),
+	new UrlControllerMapper('BugtrackerPendingBugController', '`^/pending/([0-9]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('id', 'back_page', 'page', 'back_filter', 'filter_id')),
 	
 	//Filters
 	new UrlControllerMapper('BugtrackerAddFilterController', '`^/add_filter/([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('back_page', 'page', 'back_filter', 'filter_id')),

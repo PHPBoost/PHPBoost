@@ -49,7 +49,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 	{
 		//Config
 		$config = BugtrackerConfig::load();
-		$status_list = array(Bug::NEW_BUG => 0, Bug::ASSIGNED => 20, Bug::IN_PROGRESS => 50, Bug::REJECTED => 0, Bug::REOPEN => 30, Bug::FIXED => 100);
+		$status_list = array(Bug::NEW_BUG => 0, Bug::PENDING => 0, Bug::ASSIGNED => 20, Bug::IN_PROGRESS => 50, Bug::REJECTED => 0, Bug::REOPEN => 30, Bug::FIXED => 100);
 		$config->set_status_list($status_list);
 		
 		BugtrackerConfig::save();

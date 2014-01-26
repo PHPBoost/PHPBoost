@@ -69,6 +69,7 @@
 				<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 					# IF C_UNSOLVED #
 					<a href="{bug.U_FIX}" class="fa fa-wrench" title="{@bugs.actions.fix}"></a>
+					# IF NOT bug.C_PENDING #<a href="{bug.U_PENDING}" class="fa fa-clock-o" title="{@bugs.actions.pending}"></a># ENDIF #
 					<a href="{bug.U_ASSIGN}" class="fa fa-user" title="{@bugs.actions.assign}"></a>
 					<a href="{bug.U_REOPEN_REJECT}" class="fa fa-eye-slash" title="{@bugs.actions.reject}"></a>
 					# ELSE #

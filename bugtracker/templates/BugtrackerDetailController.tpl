@@ -3,6 +3,9 @@
 		# IF C_FIX_BUG #
 			<li><a href="{U_FIX}" title="{@bugs.actions.fix}"><i class="fa fa-wrench"></i> {@bugs.actions.fix}</a></li>
 		# ENDIF #
+		# IF C_PENDING_BUG #
+			<li><a href="{U_PENDING}" title="{@bugs.actions.pending}"><i class="fa fa-clock-o"></i> {@bugs.actions.pending}</a></li>
+		# ENDIF #
 		# IF C_ASSIGN_BUG #
 			<li><a href="{U_ASSIGN}" title="{@bugs.actions.assign}"><i class="fa fa-user"></i> {@bugs.actions.assign}</a></li>
 		# ENDIF #

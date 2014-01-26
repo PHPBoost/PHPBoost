@@ -58,6 +58,7 @@ class BugtrackerDetailController extends ModuleController
 			case Bug::NEW_BUG :
 			case Bug::ASSIGNED :
 			case Bug::REOPEN :
+			case Bug::PENDING :
 				$c_reopen = false;
 				$c_reject = true;
 				break;
@@ -82,6 +83,7 @@ class BugtrackerDetailController extends ModuleController
 		{
 			$this->view->put_all(array(
 				'C_FIX_BUG'		=> !$c_reopen,
+				'C_PENDING_BUG'	=> !$this->bug->is_pending(),
 				'C_ASSIGN_BUG'	=> !$c_reopen,
 				'C_REOPEN_BUG'	=> $c_reopen,
 				'C_REJECT_BUG'	=> $c_reject,
@@ -93,6 +95,7 @@ class BugtrackerDetailController extends ModuleController
 		{
 			$this->view->put_all(array(
 				'C_FIX_BUG'		=> !$c_reopen,
+				'C_PENDING_BUG'	=> !$this->bug->is_pending(),
 				'C_ASSIGN_BUG'	=> !$c_reopen,
 				'C_REOPEN_BUG'	=> $c_reopen,
 				'C_REJECT_BUG'	=> $c_reject,
@@ -125,6 +128,7 @@ class BugtrackerDetailController extends ModuleController
 			'USER_ASSIGNED_LEVEL_CLASS'		=> $user_assigned ? UserService::get_level_class($user_assigned->get_level()) : '',
 			'USER_ASSIGNED_GROUP_COLOR'		=> $user_assigned_group_color,
 			'U_FIX'							=> BugtrackerUrlBuilder::fix($this->bug->get_id(), 'detail')->rel(),
+			'U_PENDING'						=> BugtrackerUrlBuilder::pending($this->bug->get_id(), 'detail')->rel(),
 			'U_ASSIGN'						=> BugtrackerUrlBuilder::assign($this->bug->get_id(), 'detail')->rel(),
 			'U_REJECT'						=> BugtrackerUrlBuilder::reject($this->bug->get_id(), 'detail')->rel(),
 			'U_REOPEN'						=> BugtrackerUrlBuilder::reopen($this->bug->get_id(), 'detail')->rel(),
@@ -184,6 +188,9 @@ class BugtrackerDetailController extends ModuleController
 				break;
 			case 'fixed':
 				$errstr = StringVars::replace_vars($this->lang['bugs.success.fixed'], array('id' => $this->bug->get_id()));
+				break;
+			case 'pending':
+				$errstr = StringVars::replace_vars($this->lang['bugs.success.pending'], array('id' => $this->bug->get_id()));
 				break;
 			case 'delete':
 				$errstr = StringVars::replace_vars($this->lang['bugs.success.delete'], array('id' => $this->bug->get_id()));

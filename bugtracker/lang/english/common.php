@@ -61,6 +61,7 @@ $lang['bugs.actions.reject'] = 'Reject';
 $lang['bugs.actions.reopen'] = 'Reopen';
 $lang['bugs.actions.assign'] = 'Assign';
 $lang['bugs.actions.fix'] = 'Fix';
+$lang['bugs.actions.pending'] = 'Pending';
 $lang['bugs.actions.confirm.del_version'] = 'Delete this version?';
 $lang['bugs.actions.confirm.del_type'] = 'Delete this type?';
 $lang['bugs.actions.confirm.del_category'] = 'Delete this category?';
@@ -78,6 +79,7 @@ $lang['bugs.titles.edit'] = 'Bug edition';
 $lang['bugs.titles.reject'] = 'Bug reject';
 $lang['bugs.titles.reopen'] = 'Bug reopen';
 $lang['bugs.titles.fix'] = 'Bug fixing';
+$lang['bugs.titles.pending'] = 'Bug standby';
 $lang['bugs.titles.delete'] = 'Bug suppression';
 $lang['bugs.titles.assign'] = 'Bug assignment';
 $lang['bugs.titles.history'] = 'History';
@@ -166,6 +168,7 @@ $lang['bugs.labels.version_name'] = 'Version name';
 
 //Status
 $lang['bugs.status.new'] = 'New';
+$lang['bugs.status.pending'] = 'Pending';
 $lang['bugs.status.assigned'] = 'Assigned';
 $lang['bugs.status.in_progress'] = 'In progress';
 $lang['bugs.status.fixed'] = 'Fixed';
@@ -189,6 +192,7 @@ $lang['bugs.explain.reject_comment'] = 'Optional. Permits to comment the bug and
 $lang['bugs.explain.fix_comment'] = 'Optional. Permits to comment the bug and add it in the Private Message if sending is enabled for fixed bugs.';
 $lang['bugs.explain.delete_comment'] = 'Optional. Permits to add a comment in the Private Message of bug deleting.';
 $lang['bugs.explain.assign_comment'] = 'Optional. Permits to add a comment in the Private Message to the assigned person.';
+$lang['bugs.explain.pending_comment'] = 'Optional. Permits to comment the bug and add it in the Private Message if sending is enabled for pending bugs.';
 
 //PM
 $lang['bugs.pm.assigned.title'] = '[Bugtracker] The bug #:id has been assigned to you by :author';
@@ -253,6 +257,18 @@ Comment:
 
 Bug link :
 <a href=":link">:link_label</a>';
+$lang['bugs.pm.pending.title'] = '[Bugtracker] The bug #:id has been put on hold by :author';
+$lang['bugs.pm.pending.contents'] = ':author has put on hold the bug #:id.
+
+Bug link :
+<a href=":link">:link_label</a>';
+$lang['bugs.pm.pending.contents_with_comment'] = ':author has put on hold the bug #:id.
+
+Comment:
+:comment
+
+Bug link :
+<a href=":link">:link_label</a>';
 $lang['bugs.pm.delete.title'] = '[Bugtracker] The bug #:id has been deleted by :author';
 $lang['bugs.pm.delete.contents'] = ':author delete the bug #:id.';
 $lang['bugs.pm.delete.contents_with_comment'] = ':author delete the bug #:id.
@@ -275,12 +291,13 @@ $lang['bugs.config.activ_stats_top_posters'] = 'Display top posters list';
 $lang['bugs.config.stats_top_posters_number'] = 'Number user displayed';
 $lang['bugs.config.progress_bar'] = 'Progress bar';
 $lang['bugs.config.activ_progress_bar'] = 'Active progress bar';
-$lang['bugs.config.status.new'] = 'Pourcent of a <b>New</b> bug';
-$lang['bugs.config.status.assigned'] = 'Pourcent of an <b>Assigned</b> bug';
-$lang['bugs.config.status.in_progress'] = 'Pourcent of a bug <b>In progress</b>';
-$lang['bugs.config.status.fixed'] = 'Pourcent of a bug <b>Fixed</b>';
-$lang['bugs.config.status.reopen'] = 'Pourcent of a bug <b>Reopen</b>';
-$lang['bugs.config.status.rejected'] = 'Pourcent of a bug <b>Rejected</b>';
+$lang['bugs.config.status.new'] = 'Percent of a <b>New</b> bug';
+$lang['bugs.config.status.pending'] = 'Percent of a <b>Pending</b> bug';
+$lang['bugs.config.status.assigned'] = 'Percent of an <b>Assigned</b> bug';
+$lang['bugs.config.status.in_progress'] = 'Percent of a bug <b>In progress</b>';
+$lang['bugs.config.status.fixed'] = 'Percent of a bug <b>Fixed</b>';
+$lang['bugs.config.status.reopen'] = 'Percent of a bug <b>Reopen</b>';
+$lang['bugs.config.status.rejected'] = 'Percent of a bug <b>Rejected</b>';
 $lang['bugs.config.admin_alerts'] = 'Admin alerts';
 $lang['bugs.config.activ_admin_alerts'] = 'Active admin alerts';
 $lang['bugs.config.admin_alerts_levels'] = 'Bug severity to send the alert';
@@ -290,6 +307,7 @@ $lang['bugs.config.pm'] = 'Private Messages';
 $lang['bugs.config.activ_pm'] = 'Active Private Messages (PM) send';
 $lang['bugs.config.activ_pm.comment'] = 'Send a PM when a new comment is posted';
 $lang['bugs.config.activ_pm.fix'] = 'Send a PM when a bug is fixed';
+$lang['bugs.config.activ_pm.pending'] = 'Send a PM when a bug is pending';
 $lang['bugs.config.activ_pm.assign'] = 'Send a PM when a bug is assigned';
 $lang['bugs.config.activ_pm.edit'] = 'Send a PM when a bug is edited';
 $lang['bugs.config.activ_pm.reject'] = 'Send a PM when a bug is rejected';
@@ -315,6 +333,7 @@ $lang['bugs.error.e_unexist_version'] = 'This version does not exist';
 $lang['bugs.error.e_already_rejected_bug'] = 'This bug is already rejected';
 $lang['bugs.error.e_already_reopen_bug'] = 'This bug is already reopen';
 $lang['bugs.error.e_already_fixed_bug'] = 'This bug is already fixed';
+$lang['bugs.error.e_already_pending_bug'] = 'This bug is already pending';
 
 //Success
 $lang['bugs.success.add'] = 'The bug #:id has been committed';
@@ -324,4 +343,5 @@ $lang['bugs.success.delete'] = 'The bug #:id has been deleted';
 $lang['bugs.success.reject'] = 'The bug #:id has been rejected';
 $lang['bugs.success.reopen'] = 'The bug #:id has been reopen';
 $lang['bugs.success.assigned'] = 'The bug #:id has been assigned';
+$lang['bugs.success.pending'] = 'The bug #:id has been put on hold';
 ?>

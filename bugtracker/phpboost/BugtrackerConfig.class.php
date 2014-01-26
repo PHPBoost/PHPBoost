@@ -47,6 +47,7 @@ class BugtrackerConfig extends AbstractConfigData
 	const PM_ENABLED = 'pm_enabled';
 	const PM_COMMENT_ENABLED = 'pm_comment_enabled';
 	const PM_FIX_ENABLED = 'pm_fix_enabled';
+	const PM_PENDING_ENABLED = 'pm_pending_enabled';
 	const PM_ASSIGN_ENABLED = 'pm_assign_enabled';
 	const PM_EDIT_ENABLED = 'pm_edit_enabled';
 	const PM_REJECT_ENABLED = 'pm_reject_enabled';
@@ -335,6 +336,21 @@ class BugtrackerConfig extends AbstractConfigData
 	public function are_pm_fix_enabled()
 	{
 		return $this->get_property(self::PM_FIX_ENABLED);
+	}
+	
+	public function enable_pm_pending()
+	{
+		$this->set_property(self::PM_PENDING_ENABLED, true);
+	}
+	
+	public function disable_pm_pending()
+	{
+		$this->set_property(self::PM_PENDING_ENABLED, false);
+	}
+	
+	public function are_pm_pending_enabled()
+	{
+		return $this->get_property(self::PM_PENDING_ENABLED);
 	}
 	
 	public function enable_pm_assign()
@@ -763,6 +779,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::PM_ENABLED => true,
 			self::PM_COMMENT_ENABLED => true,
 			self::PM_FIX_ENABLED => true,
+			self::PM_PENDING_ENABLED => true,
 			self::PM_ASSIGN_ENABLED => true,
 			self::PM_EDIT_ENABLED => true,
 			self::PM_REJECT_ENABLED => true,
@@ -785,7 +802,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::PRIORITY_MANDATORY => true,
 			self::DETECTED_IN_VERSION_MANDATORY => false,
 			self::AUTHORIZATIONS => array('r0' => 3, 'r1' => 15),
-			self::STATUS_LIST => array(Bug::NEW_BUG => 0, Bug::ASSIGNED => 20, Bug::IN_PROGRESS => 50, Bug::REJECTED => 0, Bug::REOPEN => 30, Bug::FIXED => 100)
+			self::STATUS_LIST => array(Bug::NEW_BUG => 0, Bug::PENDING => 0, Bug::ASSIGNED => 20, Bug::IN_PROGRESS => 50, Bug::REJECTED => 0, Bug::REOPEN => 30, Bug::FIXED => 100)
 		);
 	}
 	
