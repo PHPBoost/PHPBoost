@@ -63,7 +63,7 @@
 				<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 					# IF C_UNSOLVED #${LangLoader::get_message('on', 'main')} # IF C_IS_DATE_FORM_SHORT #{bug.SUBMIT_DATE_SHORT}# ELSE #{bug.SUBMIT_DATE}# ENDIF ## ELSE ## IF bug.C_FIX_DATE ## IF C_IS_DATE_FORM_SHORT #{bug.FIX_DATE_SHORT}# ELSE #{bug.FIX_DATE}# ENDIF ## ELSE #{@bugs.labels.not_yet_fixed}# ENDIF ## ENDIF #
 					<div class="spacer"></div>
-					# IF C_DISPLAY_AUTHOR #${LangLoader::get_message('by', 'main')}: # IF bug.AUTHOR #<a href="{bug.U_AUTHOR_PROFILE}" class="small {bug.AUTHOR_LEVEL_CLASS}" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF ## ENDIF #
+					# IF C_DISPLAY_AUTHOR #${LangLoader::get_message('by', 'main')} # IF bug.AUTHOR #<a href="{bug.U_AUTHOR_PROFILE}" class="small {bug.AUTHOR_LEVEL_CLASS}" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF ## ENDIF #
 				</td>
 				# IF C_IS_ADMIN #
 				<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>

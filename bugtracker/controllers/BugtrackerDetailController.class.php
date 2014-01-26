@@ -83,7 +83,7 @@ class BugtrackerDetailController extends ModuleController
 		{
 			$this->view->put_all(array(
 				'C_FIX_BUG'		=> !$c_reopen,
-				'C_PENDING_BUG'	=> !$this->bug->is_pending(),
+				'C_PENDING_BUG'	=> !$this->bug->is_pending() && !$c_reopen,
 				'C_ASSIGN_BUG'	=> !$c_reopen,
 				'C_REOPEN_BUG'	=> $c_reopen,
 				'C_REJECT_BUG'	=> $c_reject,
@@ -95,7 +95,7 @@ class BugtrackerDetailController extends ModuleController
 		{
 			$this->view->put_all(array(
 				'C_FIX_BUG'		=> !$c_reopen,
-				'C_PENDING_BUG'	=> !$this->bug->is_pending(),
+				'C_PENDING_BUG'	=> !$this->bug->is_pending() && !$c_reopen,
 				'C_ASSIGN_BUG'	=> !$c_reopen,
 				'C_REOPEN_BUG'	=> $c_reopen,
 				'C_REJECT_BUG'	=> $c_reject,

@@ -50,7 +50,7 @@ class BugtrackerViews
 		$body_view->put_all(array(
 			'C_ROADMAP_ENABLED'			=> $config->is_roadmap_enabled() && !empty($nbr_versions),
 			'C_STATS_ENABLED'			=> $config->are_stats_enabled(),
-			'C_DISPLAY'					=> in_array($current_page, array('unsolved', 'solved', 'roadmap', 'stats')),
+			'C_DISPLAY_MENU'			=> in_array($current_page, array('unsolved', 'solved', 'roadmap', 'stats')),
 			'C_SYNDICATION'				=> $current_page == 'unsolved' || $current_page == 'solved',
 			'C_UNSOLVED'				=> $current_page == 'unsolved',
 			'C_SOLVED'					=> $current_page == 'solved',
