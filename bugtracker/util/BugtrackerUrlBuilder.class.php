@@ -212,6 +212,14 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function pending($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
+	}
+	
+	/**
+	 * @return Url
+	 */
     public static function unsolved($param = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/unsolved/' . $param);

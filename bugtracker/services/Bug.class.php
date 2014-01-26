@@ -52,6 +52,7 @@ class Bug
 	private $assigned_user;
 	
 	const NEW_BUG = 'new';
+	const PENDING = 'pending';
 	const ASSIGNED = 'assigned';
 	const IN_PROGRESS = 'in_progress';
 	const REJECTED = 'rejected';
@@ -131,6 +132,11 @@ class Bug
 	public function is_new()
 	{
 		return $this->status == Bug::NEW_BUG;
+	}
+	
+	public function is_pending()
+	{
+		return $this->status == Bug::PENDING;
 	}
 	
 	public function is_assigned()

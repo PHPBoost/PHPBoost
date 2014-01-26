@@ -33,7 +33,7 @@ class BugtrackerPMService
 {
 	/**
 	 * @desc Send a PM to a member.
-	 * @param string $pm_type Type of PM ('assigned', 'comment', 'delete', 'edit', 'fixed', 'reject', 'reopen')
+	 * @param string $pm_type Type of PM ('assigned', 'comment', 'pending', 'delete', 'edit', 'fixed', 'reject', 'reopen')
 	 * @param int $recipient_id ID of the PM's recipient
 	 * @param int $bug_id ID of the bug which is concerned
 	 * @param string $message (optional) Message to include in the PM
@@ -61,6 +61,14 @@ class BugtrackerPMService
 				case 'assigned_with_comment':
 					$pm_title = StringVars::replace_vars($lang['bugs.pm.assigned.title'], array('id' => $bug_id, 'author' => $author));
 					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.assigned.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
+					break;
+				case 'pending':
+					$pm_title = StringVars::replace_vars($lang['bugs.pm.pending.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.pending.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
+					break;
+				case 'pending_with_comment':
+					$pm_title = StringVars::replace_vars($lang['bugs.pm.pending.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.pending.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
 					break;
 				case 'comment':
 					$pm_title = StringVars::replace_vars($lang['bugs.pm.comment.title'], array('id' => $bug_id, 'author' => $author));
@@ -117,7 +125,7 @@ class BugtrackerPMService
 	
 	 /**
 	 * @desc Send a PM to a list of members.
-	 * @param string $pm_type Type of PM ('assigned', 'comment', 'delete', 'edit', 'fixed', 'reject', 'reopen')
+	 * @param string $pm_type Type of PM ('assigned', 'pending', 'comment', 'delete', 'edit', 'fixed', 'reject', 'reopen')
 	 * @param int $bug_id ID of the bug which is concerned
 	 * @param string $message (optional) Message to include in the PM
 	 */
@@ -137,6 +145,10 @@ class BugtrackerPMService
 			case 'assigned':
 			case 'assigned_with_comment':
 				$pm_type_enabled = $config->are_pm_assign_enabled();
+				break;
+			case 'pending':
+			case 'pending_with_comment':
+				$pm_type_enabled = $config->are_pm_pending_enabled();
 				break;
 			case 'comment':
 				$pm_type_enabled = $config->are_pm_comment_enabled();
