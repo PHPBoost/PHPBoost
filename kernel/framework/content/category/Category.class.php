@@ -108,8 +108,7 @@ class Category
 	
 	public function auth_is_equals(Array $auth)
 	{
-		$diff = array_diff($this->auth, $auth);
-		return empty($diff);
+		return $this->auth === $auth;
 	}
 	
 	public function get_id_parent()
