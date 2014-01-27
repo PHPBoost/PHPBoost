@@ -33,18 +33,16 @@
 $lang['cat.name'] = 'Test';
 $lang['cat.description'] = 'Catégorie de test';
 $lang['news.title'] = 'Votre site sous PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version();
-$lang['news.content'] = 'Votre site boosté par PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' est bien installé. Afin de vous aider à le prendre en main, <br />
+$lang['news.content'] = 'Votre site boosté par PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' est bien installé. Afin de vous aider à le prendre en main, 
 l\'accueil de chaque module contient un message pour vous guider vos premiers pas. Voici également quelques recommandations supplémentaires que nous vous proposons de lire avec attention : <br />
 <br />
 <h4 class="stitle1">N\'oubliez pas de supprimer le répertoire "install"</h4><br />
 <br />
-Supprimez le répertoire /install à la racine de votre site pour des raisons <br />
-de sécurité afin que personne ne puisse recommencer l\'installation.<br />
+Supprimez le répertoire /install à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.<br />
 <br />
 <h4 class="stitle1">Administrez votre site</h4><br />
 <br />
-Accédez au <a href="/admin/admin_index.php">panneau d\'administration de votre site</a> afin de le paramétrer <br />
-comme vous le souhaitez!  Pour cela : <br />
+Accédez au <a href="/admin/admin_index.php">panneau d\'administration de votre site</a> afin de le paramétrer comme vous le souhaitez!  Pour cela : <br />
 <br />
 <ul class="bb_ul">
 <li class="bb_li"><a href="/admin/admin_maintain.php">Mettez votre site en maintenance</a> en attendant que vous le configuriez à votre guise.

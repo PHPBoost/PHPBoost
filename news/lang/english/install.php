@@ -33,17 +33,17 @@
 $lang['cat.name'] = 'Test';
 $lang['cat.description'] = 'Test category';
 $lang['news.title'] = 'Your site within PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version();
-$lang['news.content'] = 'Your PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' website is now installed and running. To help you build your website, <br />
+$lang['news.content'] = 'Your PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' website is now installed and running. To help you build your website, 
 each module home has a message to guide you through its configuration. We strongly recommand to do the followings :  <br />
 <br />
 <h4 class="stitle1">Delete the "install" folder</h4><br />
 <br />
-For security reasons, you must delete the entire "install" folder located in the PHPBoost root directory.<br />
+For security reasons, you must delete the entire "install" folder located in the PHPBoost root directory.
 Otherwise, some people may try to re-install the software and in that case you may lose datas.
 <br />
 <h4 class="stitle1">Manage your website</h4><br />
 <br />
-Access the <a href="/admin/admin_index.php">Administration Panel</a> to set up your website as you wish.<br />
+Access the <a href="/admin/admin_index.php">Administration Panel</a> to set up your website as you wish.
 To do so : <br />
 <br />
 <ul class="bb_ul">

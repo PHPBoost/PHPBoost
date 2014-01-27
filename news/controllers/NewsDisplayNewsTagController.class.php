@@ -40,6 +40,8 @@ class NewsDisplayNewsTagController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
+		
 		$this->init();
 		
 		$this->build_view();
@@ -150,6 +152,15 @@ class NewsDisplayNewsTagController extends ModuleController
         }
         
 		return $pagination;
+	}
+	
+	private function check_authorizations()
+	{
+		if (!NewsAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+	   		DispatchManager::redirect($error_controller);
+		}
 	}
 	
 	private function generate_response()
