@@ -32,17 +32,12 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 {
 	public function get_home_page()
 	{
-		return new DefaultHomePage($this->get_title(), $this->get_view());
+		return new DefaultHomePage($this->get_title(), ArticlesDisplayCategoryController::get_view());
 	}
 
 	private function get_title()
 	{
 		return LangLoader::get_message('articles', 'common', 'articles');
-	}
-
-	private function get_view()
-	{
-		return ArticlesModuleHomePage::get_view();
 	}
 }
 ?>

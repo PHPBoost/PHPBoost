@@ -33,6 +33,8 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
+		
 		$this->init();
 		
 		$this->build_view($request);
@@ -170,6 +172,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 		
 		$form = new HTMLForm(__CLASS__);
+		$form->set_css_class('options');
 		
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['articles.sort_filter_title']));
 		$form->add_fieldset($fieldset);
@@ -218,6 +221,15 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		}
 	
 		return $pagination;
+	}
+	
+	private function check_authorizations()
+	{
+		if (!(ArticlesAuthorizationsService::check_authorizations()->read()))
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 	
 	private function generate_response()

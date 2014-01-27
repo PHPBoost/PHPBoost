@@ -60,11 +60,15 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['articles.sort_filter_title']));
 		$form->add_fieldset($fieldset);
-		
-		$sort_fields = $this->list_sort_fields();
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, array(
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date'),
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.title'], 'title'),
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.views'], 'view'),
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.com'], 'com'),
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note'),
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author')
+			), array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -206,20 +210,6 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-	}
-	
-	private function list_sort_fields()
-	{
-		$options = array();
-
-		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date');
-		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.title'], 'title');
-		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.views'], 'view');
-		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.com'], 'com');
-		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note');
-		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author');
-
-		return $options;
 	}
 	
 	private function get_pagination(Date $now, $authorized_categories, $field, $mode)
