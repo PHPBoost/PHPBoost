@@ -9,7 +9,7 @@ html, body { margin: 0;	padding: 0; }
 img { border:none; overflow:scroll; vertical-align: middle; }
 img, table, td, blockquote, code, pre, textarea, input, video {	max-width: 100%; }
 input, button, label, select, textarea, legend { font-family: inherit; font-size: inherit; vertical-align: middle; }
-optgroup, select, label, button, input[type=radio], input[type=checkbox], .notation .star { cursor:pointer; }
+optgroup, select, label, button, input[type=radio], input[type=checkbox], .button, .notation .star { cursor:pointer; }
 input[type=checkbox] { border:none; background:none; }
 button::-moz-focus-inner, .button::-moz-focus-inner{ border:0; padding:0; }
 
@@ -32,24 +32,24 @@ p {
 pre { white-space:pre-wrap; }
 
 /* Alignements */
-.inline { display:inline; }
+.inline { display:inline !important; }
 
-.center { text-align:center; }
-.left { text-align:left; }
-.right { text-align:right; }
+.center { text-align:center !important; }
+.left { text-align:left !important; }
+.right { text-align:right !important; }
 
-.float-left, img.left { float:left; }
-.float-right, img.right { float:right; }
+.float-left, img.left { float:left !important; }
+.float-right, img.right { float:right !important; }
 img.left, img.right { margin:6px; }
 
 /* Classes textes */
-.text-strong { font-weight:bold; }
-.text-justify { text-align:justify; }
-.text-italic { font-style:italic; }
+.text-strong { font-weight:bold !important; }
+.text-justify { text-align:justify !important; }
+.text-italic { font-style:italic !important; }
 
-.valign-top { vertical-align:top; }
-.valign-middle { vertical-align:middle; }
-.valign-bottom { vertical-align:bottom; }
+.valign-top { vertical-align:top !important; }
+.valign-middle { vertical-align:middle !important; }
+.valign-bottom { vertical-align:bottom !important; }
 
 .spacer { clear:both; }
 
@@ -77,16 +77,13 @@ div.horizontal-fieldset .form-element label {
 }
 
 /* Imite l'affichage fieldset / legend */
-.module-mini-contents .fieldset-content { width:100%; }
-
 .fieldset-content {
     width:95%;
     margin:auto;
     margin-top:20px;
 }
 
-/* Boutons */
-.button { cursor:pointer; }
+.module-mini-contents .fieldset-content { width:100%; }
 
 /* Opacité */
 .low-opacity { filter:alpha(opacity=40); opacity: 0.40; -moz-opacity:0.40; }
