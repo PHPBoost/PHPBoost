@@ -95,7 +95,7 @@ class GuestbookFormController extends ModuleController
 		
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('message', $main_lang['add_msg']);
+		$fieldset = new FormFieldsetHTML('message', $this->message === null ? $this->lang['guestbook.add'] : $this->lang['guestbook.edit']);
 		$form->add_fieldset($fieldset);
 		
 		if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
