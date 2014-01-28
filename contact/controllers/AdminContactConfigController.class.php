@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminContactConfigController extends AdminController
+class AdminContactConfigController extends AdminModuleController
 {
 	/**
 	 * @var HTMLForm

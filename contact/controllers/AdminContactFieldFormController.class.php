@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminContactFieldFormController extends AdminController
+class AdminContactFieldFormController extends AdminModuleController
 {
 	private $tpl;
 	
