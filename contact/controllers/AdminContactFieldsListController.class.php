@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminContactFieldsListController extends AdminController
+class AdminContactFieldsListController extends AdminModuleController
 {
 	private $lang;
 	private $view;
