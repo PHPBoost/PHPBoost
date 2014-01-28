@@ -19,10 +19,10 @@ Event.observe(window, 'load', function() {
 		# IF C_DESCRIPTION #<span class="cat_desc"> | {DESCRIPTION}</span># ENDIF #
 		<div class="sortable-actions">
 			<div class="sortable-options">
-				<a title="{@category.move_up}" id="move_up_{ID}" class="fa fa-arrow-up"></a>
+				<a href="#" title="{@category.move_up}" id="move_up_{ID}" class="fa fa-arrow-up"></a>
 			</div>
 			<div class="sortable-options">
-				<a title="{@category.move_down}" id="move_down_{ID}" class="fa fa-arrow-down"></a>
+				<a href="#" title="{@category.move_down}" id="move_down_{ID}" class="fa fa-arrow-down"></a>
 			</div>
 			<div class="sortable-options">
 				<a href="{U_EDIT}" title="${LangLoader::get_message('update', 'main')}" class="fa fa-edit"></a>

@@ -129,17 +129,19 @@ var ContactField = Class.create({
 		this.change_display_picture();
 	},
 	change_display_picture : function() {
-		if (this.is_not_displayed == false) {
-			$('change_display_' + this.id).className = "fa fa-eye";
-			$('change_display_' + this.id).title = "{@field.display}";
-			$('change_display_' + this.id).alt = "{@field.display}";
-			this.is_not_displayed = true;
-		}
-		else {
-			$('change_display_' + this.id).className = "fa fa-eye-slash";
-			$('change_display_' + this.id).title = "{@field.not_display}";
-			$('change_display_' + this.id).alt = "{@field.not_display}";
-			this.is_not_displayed = false;
+		if ($('change_display_' + this.id)) {
+			if (this.is_not_displayed == false) {
+				$('change_display_' + this.id).className = "fa fa-eye";
+				$('change_display_' + this.id).title = "{@field.display}";
+				$('change_display_' + this.id).alt = "{@field.display}";
+				this.is_not_displayed = true;
+			}
+			else {
+				$('change_display_' + this.id).className = "fa fa-eye-slash";
+				$('change_display_' + this.id).title = "{@field.not_display}";
+				$('change_display_' + this.id).alt = "{@field.not_display}";
+				this.is_not_displayed = false;
+			}
 		}
 	},
 });
@@ -166,10 +168,10 @@ Event.observe(window, 'load', function() {
 							{@field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
-								<a title="{@fields.move_field_up}" id="move_up_{fields_list.ID}" class="fa fa-arrow-up"></a>
+								<a href="#" title="{@fields.move_field_up}" id="move_up_{fields_list.ID}" class="fa fa-arrow-up"></a>
 							</div>
 							<div class="sortable-options">
-								<a title="{@fields.move_field_down}" id="move_down_{fields_list.ID}" class="fa fa-arrow-down"></a>
+								<a href="#" title="{@fields.move_field_down}" id="move_down_{fields_list.ID}" class="fa fa-arrow-down"></a>
 							</div>
 							# ENDIF #
 							<div class="sortable-options">
