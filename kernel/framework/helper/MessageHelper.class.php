@@ -76,6 +76,7 @@ class MessageHelper
 		}
 		
 		$tpl->put_all(array(
+			'ID' => KeyGenerator::generate_key(4),
 			'MESSAGE_CSS_CLASS' => $css_class,
 			'MESSAGE_IMG' => $image,
 			'MESSAGE_CONTENT' => $content,

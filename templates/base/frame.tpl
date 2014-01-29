@@ -31,6 +31,6 @@
 
 	<body itemscope="itemscope" itemtype="http://schema.org/WebPage">
 		# INCLUDE BODY #
+		# INCLUDE FOOT_JAVASCRIPT #
 	</body>
-	# INCLUDE FOOT_JAVASCRIPT #
 </html>

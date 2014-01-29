@@ -87,7 +87,7 @@
 		# IF C_MENUS_FOOTER_CONTENT #
 		{MENUS_FOOTER_CONTENT}
 		# ENDIF #
-		<div class="spacer">
+		<div class="spacer"></div>
 		<span>
 			{L_POWERED_BY} <a href="http://phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
 		</span>	
