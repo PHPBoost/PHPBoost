@@ -1,24 +1,25 @@
 	# INCLUDE MAINTAIN #
+	
+	<header id="header">
+		<div id="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
+		<div id="site-name">
+			<a href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
+			<span id="site-slogan">{SITE_SLOGAN}</span>
+		</div>
+		<div id="top-header">
+			# IF C_MENUS_HEADER_CONTENT #
+			{MENUS_HEADER_CONTENT}
+			# ENDIF #
+		</div>
+		<div id="sub-header">
+			# IF C_MENUS_SUB_HEADER_CONTENT #
+			{MENUS_SUB_HEADER_CONTENT}
+			# ENDIF #
+		</div>
+		<div class="spacer"></div>
+	</header>
+	
 	<div id="global">
-		<header id="header">
-			<div id="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
-			<div id="site-name">
-				<a href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
-				<span id="site-slogan">{SITE_SLOGAN}</span>
-			</div>
-			<div id="top-header">
-				# IF C_MENUS_HEADER_CONTENT #
-				{MENUS_HEADER_CONTENT}
-				# ENDIF #
-			</div>
-			<div id="sub-header">
-				# IF C_MENUS_SUB_HEADER_CONTENT #
-				{MENUS_SUB_HEADER_CONTENT}
-				# ENDIF #
-			</div>
-			<div class="spacer"></div>
-		</header>
-		
 		# IF C_COMPTEUR #
 		<div id="compteur">
 			<span class="text-strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
@@ -41,7 +42,7 @@
 		
 		<div id="main" role="main">
 			# IF C_MENUS_TOPCENTRAL_CONTENT #
-			<div id="top-contents">
+			<div id="top-content">
 				{MENUS_TOPCENTRAL_CONTENT}
 			</div>
 			<div class="spacer"></div>
@@ -71,7 +72,7 @@
 				# INCLUDE CONTENT #
 			</div>
 			# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
-	        <div id="bottom-contents">
+	        <div id="bottom-content">
 				{MENUS_BOTTOMCENTRAL_CONTENT}
 			</div>
 			# ENDIF #
@@ -84,22 +85,25 @@
 		# ENDIF #
 	</div>
 	<footer id="footer">
-		# IF C_MENUS_FOOTER_CONTENT #
-		{MENUS_FOOTER_CONTENT}
-		# ENDIF #
-		<div class="spacer"></div>
-		<span>
-			{L_POWERED_BY} <a href="http://phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
-		</span>	
-		# IF C_DISPLAY_BENCH #
-		<span>
-			&nbsp;|&nbsp;		
-			{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ} - {MEMORY_USED}
-		</span>	
-		# ENDIF #
-		# IF C_DISPLAY_AUTHOR_THEME #
-		<span>
-			| {L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a>
-		</span>
-		# ENDIF #
+		<div class="footer-content">
+			# IF C_MENUS_FOOTER_CONTENT #
+			{MENUS_FOOTER_CONTENT}
+			# ENDIF #
+		</div>
+		<div class="footer-info">
+			<span>
+				{L_POWERED_BY} <a href="http://phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
+			</span>	
+			# IF C_DISPLAY_BENCH #
+			<span>
+				&nbsp;|&nbsp;		
+				{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ} - {MEMORY_USED}
+			</span>	
+			# ENDIF #
+			# IF C_DISPLAY_AUTHOR_THEME #
+			<span>
+				| {L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a>
+			</span>
+			# ENDIF #
+		</div>
 	</footer>
