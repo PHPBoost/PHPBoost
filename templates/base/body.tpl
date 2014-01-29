@@ -1,9 +1,9 @@
 	# INCLUDE MAINTAIN #
 	
 	<header id="header">
-		<div id="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
-		<div id="site-name">
-			<a href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
+		<div id="site-infos">
+			<div id="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
+			<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
 			<span id="site-slogan">{SITE_SLOGAN}</span>
 		</div>
 		<div id="top-header">
@@ -90,7 +90,7 @@
 			{MENUS_FOOTER_CONTENT}
 			# ENDIF #
 		</div>
-		<div class="footer-info">
+		<div class="footer-infos">
 			<span>
 				{L_POWERED_BY} <a href="http://phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
 			</span>	
