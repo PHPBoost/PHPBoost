@@ -74,7 +74,8 @@ $lang['themes.already_exist'] = 'This theme already exists';
 $lang['themes.upload.invalid_format'] = 'The format of the archive is not valid';
 $lang['themes.upload.error'] = 'Error with the upload file';
 $lang['themes.not_compatible'] = 'The theme is apparently incompatible with your current version of PHPBoost, he was anyhow installed. If a problem comes please contact the author of the theme.';
-$lang['langs.install_success'] = 'Theme successfully installed !';
+$lang['themes.old_version'] = 'The theme is incompatible with your current version of PHPBoost, it has not been installed.';
+$lang['themes.install_success'] = 'Theme successfully installed !';
 
 //Delete theme
 $lang['themes.delete.drop_files'] = 'Delete all the theme\'s files';

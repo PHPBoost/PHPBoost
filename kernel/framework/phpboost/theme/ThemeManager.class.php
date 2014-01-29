@@ -90,7 +90,13 @@ class ThemeManager
 	
 	public static function install($theme_id, $authorizations = array(), $enable_theme = true)
 	{
-		if (!empty($theme_id) && !self::get_theme_existed($theme_id))
+		if (!file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/config.ini'))
+		{
+			self::$error = LangLoader::get_message('themes.old_version', 'admin-themes-common');
+			$folder = new Folder(PATH_TO_ROOT . '/templates/' . $theme_id);
+			$folder->delete();
+		}
+		else if (!empty($theme_id) && !self::get_theme_existed($theme_id))
 		{
 			$theme = new Theme($theme_id, $authorizations, $enable_theme);
 			$configuration = $theme->get_configuration();

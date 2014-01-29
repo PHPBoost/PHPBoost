@@ -74,6 +74,7 @@ $lang['themes.already_exist'] = 'Le thème existe déjà';
 $lang['themes.upload.invalid_format'] = 'Le format de l\'archive n\'est pas valide';
 $lang['themes.upload.error'] = 'Erreur avec l\'upload du fichier';
 $lang['themes.not_compatible'] = 'Le thème est apparemment incompatible avec votre version actuelle de PHPBoost, il a tout de même été installé. Si un problème subvient veuillez contacter l\'auteur du thème.';
+$lang['themes.old_version'] = 'Le thème est incompatible avec votre version actuelle de PHPBoost, il n\'a pas été installé.';
 $lang['themes.install_success'] = 'Thème installé avec succès !';
 
 //Delete theme
