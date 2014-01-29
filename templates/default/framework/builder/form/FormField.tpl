@@ -1,4 +1,4 @@
-<div id="${escape(ID)}_field"# IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element" # IF C_HAS_FIELD_CLASS #class="{FIELD_CLASS}"# ENDIF #>
+<div id="${escape(ID)}_field"# IF C_HIDDEN # style="display:none;" # ENDIF # class="form-element # IF C_HAS_FIELD_CLASS #{FIELD_CLASS}# ENDIF #">
 	# IF C_HAS_LABEL #
 		<label for="${escape(ID)}">
 			# IF C_REQUIRED # * # ENDIF #
