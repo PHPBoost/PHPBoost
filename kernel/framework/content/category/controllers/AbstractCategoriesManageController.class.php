@@ -68,16 +68,20 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 		{
 			if ($category->get_id_parent() == $id_parent && $id != Category::ROOT_CATEGORY)
 			{
+				$description = '';
+				if (method_exists($category, 'get_description'))
+					$description = $category->get_description();
+					
 				$description_exists = method_exists($category, 'get_description');
 				$category_view = new FileTemplate('default/framework/content/categories/category.tpl');
 				$category_view->add_lang($this->lang);
 				$category_view->put_all(array(
-					'C_DESCRIPTION' => $description_exists,
+					'C_DESCRIPTION' => !empty($description),
 					'U_EDIT' => $this->get_edit_category_url($category)->rel(),
 					'U_DELETE' => $this->get_delete_category_url($category)->rel(),
 					'ID' => $id,
 					'NAME' => $category->get_name(),
-					'DESCRIPTION' => $description_exists ? $category->get_description() : ''
+					'DESCRIPTION' => $description
 				));
 				
 				$this->build_children_view($category_view, $categories, $id);
