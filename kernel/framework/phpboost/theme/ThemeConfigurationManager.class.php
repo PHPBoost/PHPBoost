@@ -71,18 +71,7 @@ class ThemeConfigurationManager
 		{
 			return $desc_ini_file;
 		}
-
-		$folder = new Folder($desc_ini_folder);
-		$folders = $folder->get_folders();
-		foreach ($folders as $lang_folder)
-		{
-			$desc_ini_file = $lang_folder->get_path() . '/config.ini';
-			if (file_exists($desc_ini_file))
-			{
-				return $desc_ini_file;
-			}
-		}
-		throw new IOException('Theme "' . $theme_id . '" config.ini not found in' .
+		throw new IOException('Theme "' . $theme_id . '" desc.ini not found in' .
 			    '/' . $theme_id . '/lang/');
 	}
 }
