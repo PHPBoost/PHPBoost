@@ -1,4 +1,3 @@
-<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/bbcode.js"></script>
 <script type="text/javascript">
 <!--		
 function ${escape(NAME)}insert_color(color, field)
