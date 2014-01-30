@@ -46,7 +46,7 @@ class BugtrackerSitemapExtensionPoint implements SitemapExtensionPoint
 		$config = BugtrackerConfig::load();
 		$current_user = AppContext::get_current_user();
 		
-		$link = new SitemapLink($lang['bugs.module_title'], BugtrackerUrlBuilder::home(), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
+		$link = new SitemapLink($lang['module_title'], BugtrackerUrlBuilder::home(), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
 		$module_map = new ModuleMap($link, 'bugtracker');
 		
 		if ($auth_mode == Sitemap::AUTH_PUBLIC)
@@ -63,13 +63,13 @@ class BugtrackerSitemapExtensionPoint implements SitemapExtensionPoint
 		
 		if ($this_auth)
 		{
-			$module_map->add(new SitemapLink($lang['bugs.titles.unsolved'], BugtrackerUrlBuilder::unsolved()));
-			$module_map->add(new SitemapLink($lang['bugs.titles.solved'], BugtrackerUrlBuilder::solved()));
+			$module_map->add(new SitemapLink($lang['titles.unsolved'], BugtrackerUrlBuilder::unsolved()));
+			$module_map->add(new SitemapLink($lang['titles.solved'], BugtrackerUrlBuilder::solved()));
 			
 			if ($config->is_roadmap_enabled() && $config->get_versions())
-				$module_map->add(new SitemapLink($lang['bugs.titles.roadmap'], BugtrackerUrlBuilder::roadmap()));
+				$module_map->add(new SitemapLink($lang['titles.roadmap'], BugtrackerUrlBuilder::roadmap()));
 			
-			$module_map->add(new SitemapLink($lang['bugs.titles.stats'], BugtrackerUrlBuilder::stats()));
+			$module_map->add(new SitemapLink($lang['titles.stats'], BugtrackerUrlBuilder::stats()));
 		}
 		
 		return $module_map;

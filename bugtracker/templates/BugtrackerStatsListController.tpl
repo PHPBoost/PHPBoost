@@ -4,7 +4,7 @@
   google.setOnLoadCallback(drawChart);
   function drawChart() {
 	var status_chart_data = google.visualization.arrayToDataTable([
-	  ['{@bugs.labels.fields.status}', '{@bugs.labels.number}'],
+	  ['{@labels.fields.status}', '{@labels.number}'],
 	  # START status #
 	  ['{status.NAME}',     {status.NUMBER}],
 	  # END status #
@@ -25,7 +25,7 @@
 
 <section class="block" style="background:#FFF">
 	<header>
-		<h1>{@bugs.labels.fields.status}</h1>
+		<h1>{@labels.fields.status}</h1>
 	</header>
 	<div class="content">
 		<div class="center">
@@ -34,7 +34,7 @@
 		# ELSE #
 			<div class="message-helper notice">
 			<i class="fa fa-notice"></i>
-			<div class="message-helper-content">{@bugs.notice.no_bug}</div>
+			<div class="message-helper-content">{@notice.no_bug}</div>
 			</div>
 		# ENDIF #
 		</div>
@@ -46,7 +46,7 @@
 # IF C_DISPLAY_VERSIONS #
 <section class="block" style="background:#FFF">
 	<header>
-		<h1>{@bugs.labels.fix_bugs_per_version}</h1>
+		<h1>{@labels.fix_bugs_per_version}</h1>
 	</header>
 	<div class="content">
 		# IF C_FIXED_BUGS #
@@ -54,10 +54,10 @@
 			<thead>
 				<tr>
 					<th class="column_version">
-						{@bugs.labels.fields.version}
+						{@labels.fields.version}
 					</th>
 					<th>
-						{@bugs.labels.number_fixed}
+						{@labels.number_fixed}
 					</th>
 				</tr>
 			</thead>
@@ -77,7 +77,7 @@
 		# ELSE #
 		<div class="message-helper notice">
 		<i class="fa fa-notice"></i>
-		<div class="message-helper-content">{@bugs.notice.no_bug_solved}</div>
+		<div class="message-helper-content">{@notice.no_bug_solved}</div>
 		</div>
 		# ENDIF #
 	</div>
@@ -89,7 +89,7 @@
 # IF C_DISPLAY_TOP_POSTERS #
 <section class="block" style="background:#FFF">
 	<header>
-		<h1>{@bugs.labels.top_posters}</h1>
+		<h1>{@labels.top_posters}</h1>
 	<header>
 	<div class="spacer">&nbsp;</div>
 	<div class="content">
@@ -101,10 +101,10 @@
 						N&deg;
 					</th>
 					<th>
-						{@bugs.labels.login}
+						{@labels.login}
 					</th>
 					<th>
-						{@bugs.labels.number}
+						{@labels.number}
 					</th>
 				</tr>
 			</thead>
@@ -127,7 +127,7 @@
 		# ELSE #
 		<div class="message-helper notice">
 		<i class="fa fa-notice"></i>
-		<div class="message-helper-content">{@bugs.notice.no_bug}</div>
+		<div class="message-helper-content">{@notice.no_bug}</div>
 		</div>
 		# ENDIF #
 	</div>

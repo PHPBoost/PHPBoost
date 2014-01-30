@@ -66,7 +66,7 @@ class BugtrackerStatsListController extends ModuleController
 		{
 			if ($status != 'total')
 				$this->view->assign_block_vars('status', array(
-					'NAME'	=> $this->lang['bugs.status.' . $status],
+					'NAME'	=> $this->lang['status.' . $status],
 					'NUMBER'=> $bugs_number
 				));
 		}
@@ -137,7 +137,7 @@ class BugtrackerStatsListController extends ModuleController
 		switch ($success)
 		{
 			case 'add':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.add'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.add'], array('id' => $bug_id));
 				break;
 			default:
 				$errstr = '';
@@ -146,9 +146,9 @@ class BugtrackerStatsListController extends ModuleController
 			$body_view->put('MSG', MessageHelper::display($errstr, E_USER_SUCCESS, 5));
 		
 		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.stats'], BugtrackerUrlBuilder::stats());
-		$response->set_page_title($this->lang['bugs.titles.stats']);
+		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['titles.stats'], BugtrackerUrlBuilder::stats());
+		$response->set_page_title($this->lang['titles.stats']);
 		
 		return $response->display($body_view);
 	}

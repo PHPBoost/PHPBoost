@@ -89,16 +89,16 @@ function display_default_version_radio(version_id)
 	<thead>
 		<tr>
 			<th class="column_default">
-				{@bugs.labels.default}
+				{@labels.default}
 			</th>
 			<th>
-				{@bugs.labels.version_name}
+				{@labels.version_name}
 			</th>
 			<th>
-				{@bugs.labels.fields.version_release_date}
+				{@labels.fields.version_release_date}
 			</th>
 			<th class="column_version_detected">
-				{@bugs.labels.fields.version_detected}
+				{@labels.fields.version_detected}
 			</th>
 			<th class="column_delete">
 				${LangLoader::get_message('delete', 'main')}
@@ -108,17 +108,17 @@ function display_default_version_radio(version_id)
 	<tfoot>
 		<tr>
 			<th>
-				<a href="javascript:BugtrackerFormFieldVersions.add_version();" class="fa fa-plus" title="{@bugs.titles.add_version}" id="add_version"></a>
+				<a href="javascript:BugtrackerFormFieldVersions.add_version();" class="fa fa-plus" title="{@titles.add_version}" id="add_version"></a>
 			</th>
 			<th colspan="4" style="text-align:right;">
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@bugs.actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@bugs.labels.del_default_value}</a># ENDIF #
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@labels.del_default_value}</a># ENDIF #
 			</th>
 		</tr>
 	</tfoot>
 	<tbody id="versions_list">
 		<tr id="no_version"# IF C_VERSIONS # style="display:none;"# ENDIF #>
 			<td colspan="5">
-				{@bugs.notice.no_version}
+				{@notice.no_version}
 			</td>
 		</tr>
 		# START versions #
@@ -141,7 +141,7 @@ function display_default_version_radio(version_id)
 				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF # />
 			</td> 
 			<td>
-				<a href="{versions.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_version}"></a>
+				<a href="{versions.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_version}"></a>
 			</td>
 		</tr>
 		# END versions #

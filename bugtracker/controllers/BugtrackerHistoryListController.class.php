@@ -61,7 +61,6 @@ class BugtrackerHistoryListController extends ModuleController
 		$this->view->put_all(array(
 			'C_PAGINATION'			=> $pagination->has_several_pages(),
 			'C_HISTORY'				=> $history_lines_number,
-			'C_IS_DATE_FORM_SHORT'	=> $config->is_date_form_short(),
 			'PAGINATION'			=> $pagination->display()
 		));
 		
@@ -83,34 +82,34 @@ class BugtrackerHistoryListController extends ModuleController
 			switch ($row['updated_field'])
 			{
 				case 'type': 
-					$old_value = !empty($row['old_value']) ? stripslashes($types[$row['old_value']]) : $this->lang['bugs.notice.none'];
-					$new_value = !empty($row['new_value']) ? stripslashes($types[$row['new_value']]) : $this->lang['bugs.notice.none'];
+					$old_value = !empty($row['old_value']) ? stripslashes($types[$row['old_value']]) : $this->lang['notice.none'];
+					$new_value = !empty($row['new_value']) ? stripslashes($types[$row['new_value']]) : $this->lang['notice.none'];
 					break;
 				
 				case 'category': 
-					$old_value = !empty($row['old_value']) ? stripslashes($categories[$row['old_value']]) : $this->lang['bugs.notice.none_e'];
-					$new_value = !empty($row['new_value']) ? stripslashes($categories[$row['new_value']]) : $this->lang['bugs.notice.none_e'];
+					$old_value = !empty($row['old_value']) ? stripslashes($categories[$row['old_value']]) : $this->lang['notice.none_e'];
+					$new_value = !empty($row['new_value']) ? stripslashes($categories[$row['new_value']]) : $this->lang['notice.none_e'];
 					break;
 				
 				case 'severity': 
-					$old_value = !empty($row['old_value']) ? stripslashes($severities[$row['old_value']]['name']) : $this->lang['bugs.notice.none'];
-					$new_value = !empty($row['new_value']) ? stripslashes($severities[$row['new_value']]['name']) : $this->lang['bugs.notice.none'];
+					$old_value = !empty($row['old_value']) ? stripslashes($severities[$row['old_value']]['name']) : $this->lang['notice.none'];
+					$new_value = !empty($row['new_value']) ? stripslashes($severities[$row['new_value']]['name']) : $this->lang['notice.none'];
 					break;
 				
 				case 'priority': 
-					$old_value = !empty($row['old_value']) ? stripslashes($priorities[$row['old_value']]) : $this->lang['bugs.notice.none_e'];
-					$new_value = !empty($row['new_value']) ? stripslashes($priorities[$row['new_value']]) : $this->lang['bugs.notice.none_e'];
+					$old_value = !empty($row['old_value']) ? stripslashes($priorities[$row['old_value']]) : $this->lang['notice.none_e'];
+					$new_value = !empty($row['new_value']) ? stripslashes($priorities[$row['new_value']]) : $this->lang['notice.none_e'];
 					break;
 				
 				case 'detected_in': 
 				case 'fixed_in': 
-					$old_value = !empty($row['old_value']) ? stripslashes($versions[$row['old_value']]['name']) : $this->lang['bugs.notice.none_e'];
-					$new_value = !empty($row['new_value']) ? stripslashes($versions[$row['new_value']]['name']) : $this->lang['bugs.notice.none_e'];
+					$old_value = !empty($row['old_value']) ? stripslashes($versions[$row['old_value']]['name']) : $this->lang['notice.none_e'];
+					$new_value = !empty($row['new_value']) ? stripslashes($versions[$row['new_value']]['name']) : $this->lang['notice.none_e'];
 					break;
 				
 				case 'status': 
-					$old_value = $this->lang['bugs.status.' . $row['old_value']];
-					$new_value = $this->lang['bugs.status.' . $row['new_value']];
+					$old_value = $this->lang['status.' . $row['old_value']];
+					$new_value = $this->lang['status.' . $row['new_value']];
 					break;
 				
 				case 'reproductible': 
@@ -121,8 +120,8 @@ class BugtrackerHistoryListController extends ModuleController
 				case 'assigned_to_id': 
 					$old_user = !empty($row['old_value']) && UserService::user_exists("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['old_value'])) ? UserService::get_user("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['old_value'])) : '';
 					$new_user = !empty($row['new_value']) && UserService::user_exists("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['new_value'])) ? UserService::get_user("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['new_value'])) : '';
-					$old_value = !empty($old_user) ? '<a href="' . UserUrlBuilder::profile($row['old_value'])->rel() . '" class="' . UserService::get_level_class($old_user->get_level()) . '">' . $old_user->get_pseudo() . '</a>' : $this->lang['bugs.notice.no_one'];
-					$new_value = !empty($new_user) ? '<a href="' . UserUrlBuilder::profile($row['new_value'])->rel() . '" class="' . UserService::get_level_class($new_user->get_level()) . '">' . $new_user->get_pseudo() . '</a>' : $this->lang['bugs.notice.no_one'];
+					$old_value = !empty($old_user) ? '<a href="' . UserUrlBuilder::profile($row['old_value'])->rel() . '" class="' . UserService::get_level_class($old_user->get_level()) . '">' . $old_user->get_pseudo() . '</a>' : $this->lang['notice.no_one'];
+					$new_value = !empty($new_user) ? '<a href="' . UserUrlBuilder::profile($row['new_value'])->rel() . '" class="' . UserService::get_level_class($new_user->get_level()) . '">' . $new_user->get_pseudo() . '</a>' : $this->lang['notice.no_one'];
 					break;
 				
 				default:
@@ -138,7 +137,7 @@ class BugtrackerHistoryListController extends ModuleController
 			
 			$this->view->assign_block_vars('history', array(
 				'C_UPDATER_GROUP_COLOR'	=> !empty($user_group_color),
-				'UPDATED_FIELD'			=> (!empty($row['updated_field']) ? $this->lang['bugs.labels.fields.' . $row['updated_field']] : $this->lang['bugs.notice.none']),
+				'UPDATED_FIELD'			=> (!empty($row['updated_field']) ? $this->lang['labels.fields.' . $row['updated_field']] : $this->lang['notice.none']),
 				'OLD_VALUE'				=> stripslashes($old_value),
 				'NEW_VALUE'				=> stripslashes($new_value),
 				'COMMENT'				=> $row['change_comment'],
@@ -160,7 +159,7 @@ class BugtrackerHistoryListController extends ModuleController
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['bugs.error.e_unexist_bug']);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($controller);
 		}
 		
@@ -203,7 +202,7 @@ class BugtrackerHistoryListController extends ModuleController
 		switch ($success)
 		{
 			case 'add':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.add'], array('id' => $this->bug->get_id()));
+				$errstr = StringVars::replace_vars($this->lang['success.add'], array('id' => $this->bug->get_id()));
 				break;
 			default:
 				$errstr = '';
@@ -212,10 +211,10 @@ class BugtrackerHistoryListController extends ModuleController
 			$body_view->put('MSG', MessageHelper::display($errstr, E_USER_SUCCESS, 5));
 		
 		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.detail'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::detail($this->bug->get_id()));
-		$response->add_breadcrumb_link($this->lang['bugs.titles.history'], BugtrackerUrlBuilder::history($this->bug->get_id()));
-		$response->set_page_title($this->lang['bugs.titles.history'] . ' #' . $this->bug->get_id());
+		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['titles.detail'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::detail($this->bug->get_id()));
+		$response->add_breadcrumb_link($this->lang['titles.history'], BugtrackerUrlBuilder::history($this->bug->get_id()));
+		$response->set_page_title($this->lang['titles.history'] . ' #' . $this->bug->get_id());
 		
 		return $response->display($body_view);
 	}

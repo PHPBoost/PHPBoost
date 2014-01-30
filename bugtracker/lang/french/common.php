@@ -30,318 +30,330 @@
 ####################################################
 
 //Titre du module
-$lang['bugs.module_title'] = 'Rapport de bugs';
+$lang['module_title'] = 'Rapport de bugs';
 
 //Messages divers
-$lang['bugs.notice.no_one'] = 'Personne';
-$lang['bugs.notice.none'] = 'Aucun';
-$lang['bugs.notice.none_e'] = 'Aucune';
-$lang['bugs.notice.no_bug'] = 'Aucun bug n\'a été déclaré';
-$lang['bugs.notice.no_bug_solved'] = 'Aucun bug n\'a été corrigé';
-$lang['bugs.notice.no_bug_fixed'] = 'Aucun bug n\'a été corrigé dans cette version';
-$lang['bugs.notice.no_bug_in_progress'] = 'Aucun bug n\'est en cours de correction dans cette version';
-$lang['bugs.notice.no_bug_matching_filter'] = 'Aucun bug ne correspond au filtre sélectionné';
-$lang['bugs.notice.no_bug_matching_filters'] = 'Aucun bug ne correspond aux filtres sélectionnés';
-$lang['bugs.notice.no_version_roadmap'] = 'Veuillez ajouter au moins une version dans la configuration pour afficher la feuille de route.';
-$lang['bugs.notice.no_version'] = 'Aucune version existante';
-$lang['bugs.notice.no_type'] = 'Aucun type existant';
-$lang['bugs.notice.no_category'] = 'Aucune catégorie existante';
-$lang['bugs.notice.no_history'] = 'Ce bug n\'a aucun historique';
-$lang['bugs.notice.contents_update'] = 'Mise à jour du contenu';
-$lang['bugs.notice.new_comment'] = 'Nouveau commentaire';
-$lang['bugs.notice.reproduction_method_update'] = 'Mise à jour de la méthode de reproduction';
-$lang['bugs.notice.not_defined'] = 'Non défini';
-$lang['bugs.notice.not_defined_e_date'] = 'Date non définie';
+$lang['notice.no_one'] = 'Personne';
+$lang['notice.none'] = 'Aucun';
+$lang['notice.none_e'] = 'Aucune';
+$lang['notice.no_bug'] = 'Aucun bug n\'a été déclaré';
+$lang['notice.no_bug_solved'] = 'Aucun bug n\'a été corrigé';
+$lang['notice.no_bug_fixed'] = 'Aucun bug n\'a été corrigé dans cette version';
+$lang['notice.no_bug_in_progress'] = 'Aucun bug n\'est en cours de correction dans cette version';
+$lang['notice.no_bug_matching_filter'] = 'Aucun bug ne correspond au filtre sélectionné';
+$lang['notice.no_bug_matching_filters'] = 'Aucun bug ne correspond aux filtres sélectionnés';
+$lang['notice.no_version_roadmap'] = 'Veuillez ajouter au moins une version dans la configuration pour afficher la feuille de route.';
+$lang['notice.no_version'] = 'Aucune version existante';
+$lang['notice.no_type'] = 'Aucun type existant';
+$lang['notice.no_category'] = 'Aucune catégorie existante';
+$lang['notice.no_history'] = 'Ce bug n\'a aucun historique';
+$lang['notice.contents_update'] = 'Mise à jour du contenu';
+$lang['notice.new_comment'] = 'Nouveau commentaire';
+$lang['notice.reproduction_method_update'] = 'Mise à jour de la méthode de reproduction';
+$lang['notice.not_defined'] = 'Non défini';
+$lang['notice.not_defined_e_date'] = 'Date non définie';
 
 //Actions
-$lang['bugs.actions'] = 'Actions';
-$lang['bugs.actions.add'] = 'Nouveau bug';
-$lang['bugs.actions.history'] = 'Historique';
-$lang['bugs.actions.reject'] = 'Rejeter';
-$lang['bugs.actions.reopen'] = 'Ré-ouvrir';
-$lang['bugs.actions.assign'] = 'Assigner';
-$lang['bugs.actions.fix'] = 'Corriger';
-$lang['bugs.actions.pending'] = 'En attente';
-$lang['bugs.actions.confirm.del_version'] = 'Etes-vous sûr de vouloir supprimer cette version ?';
-$lang['bugs.actions.confirm.del_type'] = 'Etes-vous sûr de vouloir supprimer ce type ?';
-$lang['bugs.actions.confirm.del_category'] = 'Etes-vous sûr de vouloir supprimer cette catégorie ?';
-$lang['bugs.actions.confirm.del_priority'] = 'Etes-vous sûr de vouloir supprimer cette priorité ?';
-$lang['bugs.actions.confirm.del_severity'] = 'Etes-vous sûr de vouloir supprimer ce niveau ?';
-$lang['bugs.actions.confirm.del_default_value'] = 'Etes-vous sûr de vouloir la valeur par défaut ?';
-$lang['bugs.actions.confirm.del_filter'] = 'Etes-vous sûr de vouloir supprimer ce filtre ?';
+$lang['actions'] = 'Actions';
+$lang['actions.add'] = 'Nouveau bug';
+$lang['actions.history'] = 'Historique';
+$lang['actions.reject'] = 'Rejeter';
+$lang['actions.reopen'] = 'Ré-ouvrir';
+$lang['actions.assign'] = 'Assigner';
+$lang['actions.fix'] = 'Corriger';
+$lang['actions.pending'] = 'En attente';
+$lang['actions.confirm.del_version'] = 'Etes-vous sûr de vouloir supprimer cette version ?';
+$lang['actions.confirm.del_type'] = 'Etes-vous sûr de vouloir supprimer ce type ?';
+$lang['actions.confirm.del_category'] = 'Etes-vous sûr de vouloir supprimer cette catégorie ?';
+$lang['actions.confirm.del_priority'] = 'Etes-vous sûr de vouloir supprimer cette priorité ?';
+$lang['actions.confirm.del_severity'] = 'Etes-vous sûr de vouloir supprimer ce niveau ?';
+$lang['actions.confirm.del_default_value'] = 'Etes-vous sûr de vouloir la valeur par défaut ?';
+$lang['actions.confirm.del_filter'] = 'Etes-vous sûr de vouloir supprimer ce filtre ?';
 
 //Titres
-$lang['bugs.titles.add'] = 'Nouveau bug';
-$lang['bugs.titles.add_version'] = 'Ajout d\'une nouvelle version';
-$lang['bugs.titles.add_type'] = 'Ajouter un nouveau type de bug';
-$lang['bugs.titles.add_category'] = 'Ajouter une nouvelle catégorie';
-$lang['bugs.titles.edit'] = 'Edition du bug';
-$lang['bugs.titles.reject'] = 'Rejet du bug';
-$lang['bugs.titles.reopen'] = 'Ré-ouverture du bug';
-$lang['bugs.titles.fix'] = 'Correction du bug';
-$lang['bugs.titles.delete'] = 'Suppression du bug';
-$lang['bugs.titles.pending'] = 'Mise en attente du bug';
-$lang['bugs.titles.assign'] = 'Assignation du bug';
-$lang['bugs.titles.history'] = 'Historique';
-$lang['bugs.titles.detail'] = 'Bug';
-$lang['bugs.titles.roadmap'] = 'Feuille de route';
-$lang['bugs.titles.bugs_infos'] = 'Informations sur le bug';
-$lang['bugs.titles.stats'] = 'Statistiques';
-$lang['bugs.titles.bugs_treatment_state'] = 'Etat du traitement du bug';
-$lang['bugs.titles.versions'] = 'Versions';
-$lang['bugs.titles.types'] = 'Types';
-$lang['bugs.titles.categories'] = 'Catégories';
-$lang['bugs.titles.priorities'] = 'Priorités';
-$lang['bugs.titles.severities'] = 'Niveaux';
-$lang['bugs.titles.admin.config'] = 'Configuration';
-$lang['bugs.titles.admin.authorizations'] = 'Autorisations';
-$lang['bugs.titles.admin.authorizations.manage'] = 'Gérer les autorisations';
-$lang['bugs.titles.admin.module_config'] = 'Configuration du module bugtracker';
-$lang['bugs.titles.admin.module_authorizations'] = 'Configuration des autorisations du module bugtracker';
-$lang['bugs.titles.choose_version'] = 'Version à afficher';
-$lang['bugs.titles.solved'] = 'Bugs résolus';
-$lang['bugs.titles.unsolved'] = 'Bugs non-résolus';
-$lang['bugs.titles.contents_value_title'] = 'Description par défaut d\'un bug';
-$lang['bugs.titles.contents_value'] = 'Description par défaut';
-$lang['bugs.titles.filter'] = 'Filtre';
-$lang['bugs.titles.filters'] = 'Filtres';
-$lang['bugs.titles.legend'] = 'Légende';
-$lang['bugs.titles.informations'] = 'Informations';
-$lang['bugs.titles.version_informations'] = 'Informations sur la version';
+$lang['titles.add'] = 'Nouveau bug';
+$lang['titles.add_version'] = 'Ajout d\'une nouvelle version';
+$lang['titles.add_type'] = 'Ajouter un nouveau type de bug';
+$lang['titles.add_category'] = 'Ajouter une nouvelle catégorie';
+$lang['titles.edit'] = 'Edition du bug';
+$lang['titles.reject'] = 'Rejet du bug';
+$lang['titles.reopen'] = 'Ré-ouverture du bug';
+$lang['titles.fix'] = 'Correction du bug';
+$lang['titles.delete'] = 'Suppression du bug';
+$lang['titles.pending'] = 'Mise en attente du bug';
+$lang['titles.assign'] = 'Assignation du bug';
+$lang['titles.history'] = 'Historique';
+$lang['titles.detail'] = 'Bug';
+$lang['titles.roadmap'] = 'Feuille de route';
+$lang['titles.bugs_infos'] = 'Informations sur le bug';
+$lang['titles.stats'] = 'Statistiques';
+$lang['titles.bugs_treatment_state'] = 'Etat du traitement du bug';
+$lang['titles.versions'] = 'Versions';
+$lang['titles.types'] = 'Types';
+$lang['titles.categories'] = 'Catégories';
+$lang['titles.priorities'] = 'Priorités';
+$lang['titles.severities'] = 'Niveaux';
+$lang['titles.admin.config'] = 'Configuration';
+$lang['titles.admin.authorizations'] = 'Autorisations';
+$lang['titles.admin.authorizations.manage'] = 'Gérer les autorisations';
+$lang['titles.admin.module_config'] = 'Configuration du module bugtracker';
+$lang['titles.admin.module_authorizations'] = 'Configuration des autorisations du module bugtracker';
+$lang['titles.choose_version'] = 'Version à afficher';
+$lang['titles.solved'] = 'Bugs résolus';
+$lang['titles.unsolved'] = 'Bugs non-résolus';
+$lang['titles.contents_value_title'] = 'Description par défaut d\'un bug';
+$lang['titles.contents_value'] = 'Description par défaut';
+$lang['titles.filter'] = 'Filtre';
+$lang['titles.filters'] = 'Filtres';
+$lang['titles.legend'] = 'Légende';
+$lang['titles.informations'] = 'Informations';
+$lang['titles.version_informations'] = 'Informations sur la version';
 
 //Libellés
-$lang['bugs.labels.fields.id'] = 'ID';
-$lang['bugs.labels.fields.title'] = 'Titre';
-$lang['bugs.labels.fields.contents'] = 'Description';
-$lang['bugs.labels.fields.author_id'] = 'Détecté par';
-$lang['bugs.labels.fields.submit_date'] = 'Détecté le';
-$lang['bugs.labels.fields.fix_date'] = 'Corrigé le';
-$lang['bugs.labels.fields.status'] = 'Etat';
-$lang['bugs.labels.fields.type'] = 'Type';
-$lang['bugs.labels.fields.category'] = 'Catégorie';
-$lang['bugs.labels.fields.reproductible'] = 'Reproductible';
-$lang['bugs.labels.fields.reproduction_method'] = 'Méthode de reproduction';
-$lang['bugs.labels.fields.severity'] = 'Niveau';
-$lang['bugs.labels.fields.priority'] = 'Priorité';
-$lang['bugs.labels.fields.progress'] = 'Avancement';
-$lang['bugs.labels.fields.detected_in'] = 'Détecté dans la version';
-$lang['bugs.labels.fields.fixed_in'] = 'Corrigé dans la version';
-$lang['bugs.labels.fields.assigned_to_id'] = 'Assigné à';
-$lang['bugs.labels.fields.updater_id'] = 'Modifié par';
-$lang['bugs.labels.fields.update_date'] = 'Modifié le';
-$lang['bugs.labels.fields.updated_field'] = 'Champ modifié';
-$lang['bugs.labels.fields.old_value'] = 'Ancienne valeur';
-$lang['bugs.labels.fields.new_value'] = 'Nouvelle valeur';
-$lang['bugs.labels.fields.change_comment'] = 'Commentaire';
-$lang['bugs.labels.fields.version'] = 'Version';
-$lang['bugs.labels.fields.version_detected'] = 'Version détectée';
-$lang['bugs.labels.fields.version_fixed'] = 'Version corrigée';
-$lang['bugs.labels.fields.version_release_date'] = 'Date de sortie';
-$lang['bugs.labels.page'] = 'Page';
-$lang['bugs.labels.color'] = 'Couleur';
-$lang['bugs.labels.number'] = 'Nombre de bugs';
-$lang['bugs.labels.number_fixed'] = 'Nombre de bugs corrigés';
-$lang['bugs.labels.number_in_progress'] = 'Nombre de bugs en cours de correction';
-$lang['bugs.labels.top_posters'] = 'Top posteurs';
-$lang['bugs.labels.login'] = 'Pseudo';
-$lang['bugs.labels.default'] = 'Par défaut';
-$lang['bugs.labels.default_value'] = 'Valeur par défaut';
-$lang['bugs.labels.del_default_value'] = 'Supprimer la valeur par défaut';
-$lang['bugs.labels.type_mandatory'] = 'Section <b>Type</b> obligatoire ?';
-$lang['bugs.labels.category_mandatory'] = 'Section <b>Catégorie</b> obligatoire ?';
-$lang['bugs.labels.severity_mandatory'] = 'Section <b>Niveau</b> obligatoire ?';
-$lang['bugs.labels.priority_mandatory'] = 'Section <b>Priorité</b> obligatoire ?';
-$lang['bugs.labels.detected_in_mandatory'] = 'Section <b>Détecté dans la version</b> obligatoire ?';
-$lang['bugs.labels.date_format'] = 'Format d\'affichage de la date';
-$lang['bugs.labels.date_time'] = 'Date et heure';
-$lang['bugs.labels.detected'] = 'Détecté';
-$lang['bugs.labels.fixed'] = 'Corrigé';
-$lang['bugs.labels.fix_bugs_per_version'] = 'Nombre de bugs corrigés par version';
-$lang['bugs.labels.release_date'] = 'Date de parution';
-$lang['bugs.labels.not_yet_fixed'] = 'Pas encore corrigé';
-$lang['bugs.labels.alert_fix'] = 'Passer l\'alerte en réglé';
-$lang['bugs.labels.alert_delete'] = 'Supprimer l\'alerte';
-$lang['bugs.labels.matching_selected_filter'] = 'correspondants au filtre sélectionné';
-$lang['bugs.labels.matching_selected_filters'] = 'correspondants aux filtres sélectionnés';
-$lang['bugs.labels.save_filters'] = 'Sauvegarder les filtres';
-$lang['bugs.labels.version_name'] = 'Nom de la version';
+$lang['labels.fields.id'] = 'ID';
+$lang['labels.fields.title'] = 'Titre';
+$lang['labels.fields.contents'] = 'Description';
+$lang['labels.fields.author_id'] = 'Détecté par';
+$lang['labels.fields.submit_date'] = 'Détecté le';
+$lang['labels.fields.fix_date'] = 'Corrigé le';
+$lang['labels.fields.status'] = 'Etat';
+$lang['labels.fields.type'] = 'Type';
+$lang['labels.fields.category'] = 'Catégorie';
+$lang['labels.fields.reproductible'] = 'Reproductible';
+$lang['labels.fields.reproduction_method'] = 'Méthode de reproduction';
+$lang['labels.fields.severity'] = 'Niveau';
+$lang['labels.fields.priority'] = 'Priorité';
+$lang['labels.fields.progress'] = 'Avancement';
+$lang['labels.fields.detected_in'] = 'Détecté dans la version';
+$lang['labels.fields.fixed_in'] = 'Corrigé dans la version';
+$lang['labels.fields.assigned_to_id'] = 'Assigné à';
+$lang['labels.fields.updater_id'] = 'Modifié par';
+$lang['labels.fields.update_date'] = 'Modifié le';
+$lang['labels.fields.updated_field'] = 'Champ modifié';
+$lang['labels.fields.old_value'] = 'Ancienne valeur';
+$lang['labels.fields.new_value'] = 'Nouvelle valeur';
+$lang['labels.fields.change_comment'] = 'Commentaire';
+$lang['labels.fields.version'] = 'Version';
+$lang['labels.fields.version_detected'] = 'Version détectée';
+$lang['labels.fields.version_fixed'] = 'Version corrigée';
+$lang['labels.fields.version_release_date'] = 'Date de sortie';
+$lang['labels.page'] = 'Page';
+$lang['labels.color'] = 'Couleur';
+$lang['labels.number'] = 'Nombre de bugs';
+$lang['labels.number_fixed'] = 'Nombre de bugs corrigés';
+$lang['labels.number_in_progress'] = 'Nombre de bugs en cours de correction';
+$lang['labels.top_posters'] = 'Top posteurs';
+$lang['labels.login'] = 'Pseudo';
+$lang['labels.default'] = 'Par défaut';
+$lang['labels.default_value'] = 'Valeur par défaut';
+$lang['labels.del_default_value'] = 'Supprimer la valeur par défaut';
+$lang['labels.type_mandatory'] = 'Section <b>Type</b> obligatoire ?';
+$lang['labels.category_mandatory'] = 'Section <b>Catégorie</b> obligatoire ?';
+$lang['labels.severity_mandatory'] = 'Section <b>Niveau</b> obligatoire ?';
+$lang['labels.priority_mandatory'] = 'Section <b>Priorité</b> obligatoire ?';
+$lang['labels.detected_in_mandatory'] = 'Section <b>Détecté dans la version</b> obligatoire ?';
+$lang['labels.detected'] = 'Détecté';
+$lang['labels.detected_in'] = 'Détecté dans';
+$lang['labels.fixed'] = 'Corrigé';
+$lang['labels.fix_bugs_per_version'] = 'Nombre de bugs corrigés par version';
+$lang['labels.release_date'] = 'Date de parution';
+$lang['labels.not_yet_fixed'] = 'Pas encore corrigé';
+$lang['labels.alert_fix'] = 'Passer l\'alerte en réglé';
+$lang['labels.alert_delete'] = 'Supprimer l\'alerte';
+$lang['labels.matching_selected_filter'] = 'correspondants au filtre sélectionné';
+$lang['labels.matching_selected_filters'] = 'correspondants aux filtres sélectionnés';
+$lang['labels.save_filters'] = 'Sauvegarder les filtres';
+$lang['labels.version_name'] = 'Nom de la version';
 
 //Etats
-$lang['bugs.status.new'] = 'Nouveau';
-$lang['bugs.status.pending'] = 'En attente';
-$lang['bugs.status.assigned'] = 'Assigné';
-$lang['bugs.status.in_progress'] = 'En cours';
-$lang['bugs.status.fixed'] = 'Corrigé';
-$lang['bugs.status.reopen'] = 'Réouvert';
-$lang['bugs.status.rejected'] = 'Rejeté';
+$lang['status.new'] = 'Nouveau';
+$lang['status.pending'] = 'En attente';
+$lang['status.assigned'] = 'Assigné';
+$lang['status.in_progress'] = 'En cours';
+$lang['status.fixed'] = 'Corrigé';
+$lang['status.reopen'] = 'Réouvert';
+$lang['status.rejected'] = 'Rejeté';
 
 //Explications
-$lang['bugs.explain.contents'] = 'Détails qui seront utiles pour la résolution du bug';
-$lang['bugs.explain.roadmap'] = 'Permet d\'afficher la liste des bugs corrigés pour chaque version. Affichée s\'il y a au moins une version dans la liste.';
-$lang['bugs.explain.type'] = 'Types des demandes. Exemples : Anomalie, Demande d\'évolution...';
-$lang['bugs.explain.category'] = 'Catégorie des demandes. Exemples : Noyau, Module...';
-$lang['bugs.explain.severity'] = 'Niveau des demandes. Exemples : Mineur, Majeur, Critique...';
-$lang['bugs.explain.priority'] = 'Priorité des demandes. Exemples : Basse, Normale, Elevée...';
-$lang['bugs.explain.version'] = 'Liste des versions du produit.';
-$lang['bugs.explain.remarks'] = 'Remarques : <br />
+$lang['explain.contents'] = 'Détails qui seront utiles pour la résolution du bug';
+$lang['explain.roadmap'] = 'Permet d\'afficher la liste des bugs corrigés pour chaque version. Affichée s\'il y a au moins une version dans la liste.';
+$lang['explain.type'] = 'Types des demandes. Exemples : Anomalie, Demande d\'évolution...';
+$lang['explain.category'] = 'Catégorie des demandes. Exemples : Noyau, Module...';
+$lang['explain.severity'] = 'Niveau des demandes. Exemples : Mineur, Majeur, Critique...';
+$lang['explain.priority'] = 'Priorité des demandes. Exemples : Basse, Normale, Elevée...';
+$lang['explain.version'] = 'Liste des versions du produit.';
+$lang['explain.remarks'] = 'Remarques : <br />
 - Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
 - Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
-$lang['bugs.explain.contents_value'] = 'Entrez ci-dessous la description par défaut à afficher lors de l\'ouverture d\'un nouveau bug. Laissez vide pour que la description ne soit pas pré-remplie.';
-$lang['bugs.explain.reopen_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs ré-ouverts.';
-$lang['bugs.explain.reject_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs rejetés.';
-$lang['bugs.explain.fix_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs corrigés.';
-$lang['bugs.explain.delete_comment'] = 'Facultatif. Permet d\'ajouter un commentaire dans le Message Privé de suppression du bug.';
-$lang['bugs.explain.assign_comment'] = 'Facultatif. Permet d\'ajouter un commentaire dans le Message Privé à la personne assignée.';
-$lang['bugs.explain.pending_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs en attente.';
+$lang['explain.contents_value'] = 'Entrez ci-dessous la description par défaut à afficher lors de l\'ouverture d\'un nouveau bug. Laissez vide pour que la description ne soit pas pré-remplie.';
+$lang['explain.reopen_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs ré-ouverts.';
+$lang['explain.reject_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs rejetés.';
+$lang['explain.fix_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs corrigés.';
+$lang['explain.delete_comment'] = 'Facultatif. Permet d\'ajouter un commentaire dans le Message Privé de suppression du bug.';
+$lang['explain.assign_comment'] = 'Facultatif. Permet d\'ajouter un commentaire dans le Message Privé à la personne assignée.';
+$lang['explain.pending_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs en attente.';
 
 //MP
-$lang['bugs.pm.assigned.title'] = '[Rapport de bugs] Le bug #:id vous a été assigné par :author';
-$lang['bugs.pm.assigned.contents'] = ':author vous a assigné le bug #:id.
+$lang['pm.assigned.title'] = '[Rapport de bugs] Le bug #:id vous a été assigné par :author';
+$lang['pm.assigned.contents'] = ':author vous a assigné le bug #:id.
 
 Lien vers le bug :
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.assigned.contents_with_comment'] = ':author vous a assigné le bug #:id.
+$lang['pm.assigned.contents_with_comment'] = ':author vous a assigné le bug #:id.
 
 Commentaire :
 :comment
 
 Lien vers le bug :
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.comment.title'] = '[Rapport de bugs] Le bug #:id a été commenté par :author';
-$lang['bugs.pm.comment.contents'] = ':author a ajouté le commentaire suivant au bug #:id :
+$lang['pm.comment.title'] = '[Rapport de bugs] Le bug #:id a été commenté par :author';
+$lang['pm.comment.contents'] = ':author a ajouté le commentaire suivant au bug #:id :
 
 :comment
 
 Lien vers le bug :
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.edit.title'] = '[Rapport de bugs] Le bug #:id a été modifié par :author';
-$lang['bugs.pm.edit.contents'] = ':author a modifié les champs suivants dans le bug #:id :
+$lang['pm.edit.title'] = '[Rapport de bugs] Le bug #:id a été modifié par :author';
+$lang['pm.edit.contents'] = ':author a modifié les champs suivants dans le bug #:id :
 
 :fields
 
 Lien vers le bug :
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.fixed.title'] = '[Rapport de bugs] Le bug #:id a été corrigé par :author';
-$lang['bugs.pm.fixed.contents'] = ':author a corrigé le bug #:id.
+$lang['pm.fixed.title'] = '[Rapport de bugs] Le bug #:id a été corrigé par :author';
+$lang['pm.fixed.contents'] = ':author a corrigé le bug #:id.
 Lien vers le bug :
 
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.fixed.contents_with_comment'] = ':author a corrigé le bug #:id.
+$lang['pm.fixed.contents_with_comment'] = ':author a corrigé le bug #:id.
 
 Commentaire :
 :comment
 
 Lien vers le bug :
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.reopen.title'] = '[Rapport de bugs] Le bug #:id a été ré-ouvert par :author';
-$lang['bugs.pm.reopen.contents'] = ':author a ré-ouvert le bug #:id.
+$lang['pm.reopen.title'] = '[Rapport de bugs] Le bug #:id a été ré-ouvert par :author';
+$lang['pm.reopen.contents'] = ':author a ré-ouvert le bug #:id.
 Lien vers le bug :
 
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.reopen.contents_with_comment'] = ':author a ré-ouvert le bug #:id.
+$lang['pm.reopen.contents_with_comment'] = ':author a ré-ouvert le bug #:id.
 
 Commentaire :
 :comment
 
 Lien vers le bug :
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.reject.title'] = '[Rapport de bugs] Le bug #:id a été rejeté par :author';
-$lang['bugs.pm.reject.contents'] = ':author a rejeté le bug #:id.
+$lang['pm.reject.title'] = '[Rapport de bugs] Le bug #:id a été rejeté par :author';
+$lang['pm.reject.contents'] = ':author a rejeté le bug #:id.
 
 Lien vers le bug :
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.reject.contents_with_comment'] = ':author a rejeté le bug #:id.
+$lang['pm.reject.contents_with_comment'] = ':author a rejeté le bug #:id.
 
 Commentaire :
 :comment
 
 Lien vers le bug :
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.pending.title'] = '[Rapport de bugs] Le bug #:id a été mis en attente par :author';
-$lang['bugs.pm.pending.contents'] = ':author a mis en attente le bug #:id.
+$lang['pm.pending.title'] = '[Rapport de bugs] Le bug #:id a été mis en attente par :author';
+$lang['pm.pending.contents'] = ':author a mis en attente le bug #:id.
 
 Lien vers le bug :
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.pending.contents_with_comment'] = ':author a mis en attente le bug #:id.
+$lang['pm.pending.contents_with_comment'] = ':author a mis en attente le bug #:id.
 
 Commentaire :
 :comment
 
 Lien vers le bug :
 <a href=":link">:link_label</a>';
-$lang['bugs.pm.delete.title'] = '[Rapport de bugs] Le bug #:id a été supprimé par :author';
-$lang['bugs.pm.delete.contents'] = ':author a supprimé le bug #:id.';
-$lang['bugs.pm.delete.contents_with_comment'] = ':author a supprimé le bug #:id.
+$lang['pm.delete.title'] = '[Rapport de bugs] Le bug #:id a été supprimé par :author';
+$lang['pm.delete.contents'] = ':author a supprimé le bug #:id.';
+$lang['pm.delete.contents_with_comment'] = ':author a supprimé le bug #:id.
 
 Commentaire :
 :comment';
 
 //Recherche
-$lang['bugs.search.where'] = 'Où ?';
-$lang['bugs.search.where.title'] = 'Titre';
-$lang['bugs.search.where.contents'] = 'Description';
+$lang['search.where'] = 'Où ?';
+$lang['search.where.title'] = 'Titre';
+$lang['search.where.contents'] = 'Description';
 
 //Configuration
-$lang['bugs.config.items_per_page'] = 'Nombre de bugs affichés par page'; 
-$lang['bugs.config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un bug <b>Rejeté</b>';
-$lang['bugs.config.fixed_bug_color_label'] = 'Couleur de la ligne d\'un bug <b>Fermé</b>';
-$lang['bugs.config.activ_roadmap'] = 'Activer la feuille de route';
-$lang['bugs.config.activ_stats'] = 'Activer les statistiques';
-$lang['bugs.config.activ_stats_top_posters'] = 'Afficher la liste des membres qui ont posté le plus de bugs';
-$lang['bugs.config.stats_top_posters_number'] = 'Nombre d\'utilisateurs affichés';
-$lang['bugs.config.progress_bar'] = 'Barre de progression';
-$lang['bugs.config.activ_progress_bar'] = 'Afficher la barre de progression des bugs';
-$lang['bugs.config.status.new'] = 'Pourcentage d\'un <b>Nouveau</b> bug';
-$lang['bugs.config.status.pending'] = 'Pourcentage d\'un bug <b>En attente</b>';
-$lang['bugs.config.status.assigned'] = 'Pourcentage d\'un bug <b>Assigné</b>';
-$lang['bugs.config.status.in_progress'] = 'Pourcentage d\'un bug <b>En cours</b>';
-$lang['bugs.config.status.fixed'] = 'Pourcentage d\'un bug <b>Corrigé</b>';
-$lang['bugs.config.status.reopen'] = 'Pourcentage d\'un bug <b>Réouvert</b>';
-$lang['bugs.config.status.rejected'] = 'Pourcentage d\'un bug <b>Rejeté</b>';
-$lang['bugs.config.admin_alerts'] = 'Alertes administrateur';
-$lang['bugs.config.activ_admin_alerts'] = 'Activer les alertes administrateur';
-$lang['bugs.config.admin_alerts_levels'] = 'Niveau du bug pour déclencher l\'alerte';
-$lang['bugs.config.admin_alerts_fix_action'] = 'Action à la fermeture d\'un bug';
-$lang['bugs.config.activ_cat_in_title'] = 'Afficher la catégorie dans le titre du bug';
-$lang['bugs.config.pm'] = 'Messages Privés';
-$lang['bugs.config.activ_pm'] = 'Activer l\'envoi de Messages Privés (MP)';
-$lang['bugs.config.activ_pm.comment'] = 'Envoyer un MP lors de l\'ajout d\'un nouveau commentaire';
-$lang['bugs.config.activ_pm.fix'] = 'Envoyer un MP lors de la correction d\'un bug';
-$lang['bugs.config.activ_pm.pending'] = 'Envoyer un MP lors de la mise en attente d\'un bug';
-$lang['bugs.config.activ_pm.assign'] = 'Envoyer un MP lors de l\'assignation d\'un bug';
-$lang['bugs.config.activ_pm.edit'] = 'Envoyer un MP lors de l\'édition d\'un bug';
-$lang['bugs.config.activ_pm.reject'] = 'Envoyer un MP lors du rejet d\'un bug';
-$lang['bugs.config.activ_pm.reopen'] = 'Envoyer un MP lors de la réouverture d\'un bug';
-$lang['bugs.config.activ_pm.delete'] = 'Envoyer un MP lors de la suppression d\'un bug';
+$lang['config.items_per_page'] = 'Nombre de bugs affichés par page'; 
+$lang['config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un bug <b>Rejeté</b>';
+$lang['config.fixed_bug_color_label'] = 'Couleur de la ligne d\'un bug <b>Fermé</b>';
+$lang['config.activ_roadmap'] = 'Activer la feuille de route';
+$lang['config.activ_stats'] = 'Activer les statistiques';
+$lang['config.activ_stats_top_posters'] = 'Afficher la liste des membres qui ont posté le plus de bugs';
+$lang['config.stats_top_posters_number'] = 'Nombre d\'utilisateurs affichés';
+$lang['config.progress_bar'] = 'Barre de progression';
+$lang['config.activ_progress_bar'] = 'Afficher la barre de progression des bugs';
+$lang['config.status.new'] = 'Pourcentage d\'un <b>Nouveau</b> bug';
+$lang['config.status.pending'] = 'Pourcentage d\'un bug <b>En attente</b>';
+$lang['config.status.assigned'] = 'Pourcentage d\'un bug <b>Assigné</b>';
+$lang['config.status.in_progress'] = 'Pourcentage d\'un bug <b>En cours</b>';
+$lang['config.status.fixed'] = 'Pourcentage d\'un bug <b>Corrigé</b>';
+$lang['config.status.reopen'] = 'Pourcentage d\'un bug <b>Réouvert</b>';
+$lang['config.status.rejected'] = 'Pourcentage d\'un bug <b>Rejeté</b>';
+$lang['config.admin_alerts'] = 'Alertes administrateur';
+$lang['config.activ_admin_alerts'] = 'Activer les alertes administrateur';
+$lang['config.admin_alerts_levels'] = 'Niveau du bug pour déclencher l\'alerte';
+$lang['config.admin_alerts_fix_action'] = 'Action à la fermeture d\'un bug';
+$lang['config.pm'] = 'Messages Privés';
+$lang['config.activ_pm'] = 'Activer l\'envoi de Messages Privés (MP)';
+$lang['config.activ_pm.comment'] = 'Envoyer un MP lors de l\'ajout d\'un nouveau commentaire';
+$lang['config.activ_pm.fix'] = 'Envoyer un MP lors de la correction d\'un bug';
+$lang['config.activ_pm.pending'] = 'Envoyer un MP lors de la mise en attente d\'un bug';
+$lang['config.activ_pm.assign'] = 'Envoyer un MP lors de l\'assignation d\'un bug';
+$lang['config.activ_pm.edit'] = 'Envoyer un MP lors de l\'édition d\'un bug';
+$lang['config.activ_pm.reject'] = 'Envoyer un MP lors du rejet d\'un bug';
+$lang['config.activ_pm.reopen'] = 'Envoyer un MP lors de la réouverture d\'un bug';
+$lang['config.activ_pm.delete'] = 'Envoyer un MP lors de la suppression d\'un bug';
+$lang['config.delete_parameter.type'] = 'Suppression d\'un type';
+$lang['config.delete_parameter.category'] = 'Suppression d\'une catégorie';
+$lang['config.delete_parameter.version'] = 'Suppression d\'une version';
+$lang['config.delete_parameter.description.type'] = 'Vous êtes sur le point de supprimer un type de bug. Deux solutions s\'offrent à vous. Vous pouvez soit affecter un autre type à l\'ensemble des bugs associés à ce type, soit supprimer l\'ensemble des bugs associés à ce type. Si aucune action n\'est choisie sur cette page, le type de bug sera supprimé et les bugs conservés (en supprimant leur type). <strong>Attention, cette action est irréversible !</strong>';
+$lang['config.delete_parameter.description.category'] = 'Vous êtes sur le point de supprimer une catégorie de bug. Deux solutions s\'offrent à vous. Vous pouvez soit affecter une autre catégorie à l\'ensemble des bugs associés à cette catégorie, soit supprimer l\'ensemble des bugs associés à cette catégorie. Si aucune action n\'est choisie sur cette page, la catégorie sera supprimée et les bugs conservés (en supprimant leur catégorie). <strong>Attention, cette action est irréversible !</strong>';
+$lang['config.delete_parameter.description.version'] = 'Vous êtes sur le point de supprimer une version. Deux solutions s\'offrent à vous. Vous pouvez soit affecter une autre version à l\'ensemble des bugs associés à cette version, soit supprimer l\'ensemble des bugs associés à cette version. Si aucune action n\'est choisie sur cette page, la version sera supprimée et les bugs conservés (en supprimant leur version). <strong>Attention, cette action est irréversible !</strong>';
+$lang['config.delete_parameter.move_into_another'] = 'Déplacer les bugs associés dans :';
+$lang['config.delete_parameter.parameter_and_content.type'] = 'Supprimer le type de bug et tous les bugs associés';
+$lang['config.delete_parameter.parameter_and_content.category'] = 'Supprimer la catégorie et tous les bugs associés';
+$lang['config.delete_parameter.parameter_and_content.version'] = 'Supprimer la version et tous les bugs associés';
+$lang['config.display_type_column'] = 'Afficher la colonne <b>Type</b> dans les tableaux';
+$lang['config.display_category_column'] = 'Afficher la colonne <b>Catégorie</b> dans les tableaux';
+$lang['config.display_priority_column'] = 'Afficher la colonne <b>Priorité</b> dans les tableaux';
+$lang['config.display_detected_in_column'] = 'Afficher la colonne <b>Détecté dans</b> dans les tableaux';
 
 //Autorisations
-$lang['bugs.config.auth.read'] = 'Autorisation d\'afficher la liste des bugs';
-$lang['bugs.config.auth.create'] = 'Autorisation de signaler un bug';
-$lang['bugs.config.auth.create_advanced'] = 'Autorisation avancée pour signaler un bug';
-$lang['bugs.config.auth.create_advanced_explain'] = 'Permet de choisir le niveau et la priorité du bug';
-$lang['bugs.config.auth.moderate'] = 'Autorisation de modération des bugs';
+$lang['config.auth.read'] = 'Autorisation d\'afficher la liste des bugs';
+$lang['config.auth.create'] = 'Autorisation de signaler un bug';
+$lang['config.auth.create_advanced'] = 'Autorisation avancée pour signaler un bug';
+$lang['config.auth.create_advanced_explain'] = 'Permet de choisir le niveau et la priorité du bug';
+$lang['config.auth.moderate'] = 'Autorisation de modération des bugs';
 
 //Erreurs
-$lang['bugs.error.e_no_fixed_version'] = 'N\'oubliez pas de sélectionner une version pour que le bug soit présent dans la feuille de route.';
-$lang['bugs.error.e_unexist_bug'] = 'Ce bug n\'existe pas';
-$lang['bugs.error.e_unexist_parameter'] = 'Ce paramètre n\'existe pas';
-$lang['bugs.error.e_unexist_type'] = 'Ce type n\'existe pas';
-$lang['bugs.error.e_unexist_category'] = 'Cette catégorie n\'existe pas';
-$lang['bugs.error.e_unexist_severity'] = 'Ce niveau n\'existe pas';
-$lang['bugs.error.e_unexist_priority'] = 'Cette priorité n\'existe pas';
-$lang['bugs.error.e_unexist_version'] = 'Cette version n\'existe pas';
-$lang['bugs.error.e_already_rejected_bug'] = 'Ce bug est déjà rejeté';
-$lang['bugs.error.e_already_reopen_bug'] = 'Ce bug est déjà ré-ouvert';
-$lang['bugs.error.e_already_fixed_bug'] = 'Ce bug est déjà corrigé';
-$lang['bugs.error.e_already_pending_bug'] = 'Ce bug est déjà en attente';
+$lang['error.e_no_fixed_version'] = 'N\'oubliez pas de sélectionner une version pour que le bug soit présent dans la feuille de route.';
+$lang['error.e_unexist_bug'] = 'Ce bug n\'existe pas';
+$lang['error.e_unexist_parameter'] = 'Ce paramètre n\'existe pas';
+$lang['error.e_unexist_type'] = 'Ce type n\'existe pas';
+$lang['error.e_unexist_category'] = 'Cette catégorie n\'existe pas';
+$lang['error.e_unexist_severity'] = 'Ce niveau n\'existe pas';
+$lang['error.e_unexist_priority'] = 'Cette priorité n\'existe pas';
+$lang['error.e_unexist_version'] = 'Cette version n\'existe pas';
+$lang['error.e_already_rejected_bug'] = 'Ce bug est déjà rejeté';
+$lang['error.e_already_reopen_bug'] = 'Ce bug est déjà ré-ouvert';
+$lang['error.e_already_fixed_bug'] = 'Ce bug est déjà corrigé';
+$lang['error.e_already_pending_bug'] = 'Ce bug est déjà en attente';
 
 //Succès
-$lang['bugs.success.add'] = 'Le bug #:id a été ajouté';
-$lang['bugs.success.edit'] = 'Le bug #:id a été modifié';
-$lang['bugs.success.fixed'] = 'Le bug #:id a été corrigé';
-$lang['bugs.success.delete'] = 'Le bug #:id a été supprimé';
-$lang['bugs.success.reject'] = 'Le bug #:id a été rejeté';
-$lang['bugs.success.reopen'] = 'Le bug #:id a été ré-ouvert';
-$lang['bugs.success.assigned'] = 'Le bug #:id a été assigné';
-$lang['bugs.success.pending'] = 'Le bug #:id a été mis en attente';
+$lang['success.add'] = 'Le bug #:id a été ajouté';
+$lang['success.edit'] = 'Le bug #:id a été modifié';
+$lang['success.fixed'] = 'Le bug #:id a été corrigé';
+$lang['success.delete'] = 'Le bug #:id a été supprimé';
+$lang['success.reject'] = 'Le bug #:id a été rejeté';
+$lang['success.reopen'] = 'Le bug #:id a été ré-ouvert';
+$lang['success.assigned'] = 'Le bug #:id a été assigné';
+$lang['success.pending'] = 'Le bug #:id a été mis en attente';
 ?>

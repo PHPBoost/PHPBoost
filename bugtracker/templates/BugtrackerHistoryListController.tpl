@@ -3,22 +3,22 @@
 	<thead>
 		<tr>
 			<th>
-				{@bugs.labels.fields.updater_id}
+				{@labels.fields.updater_id}
 			</th>
 			<th>
-				{@bugs.labels.fields.updated_field}
+				{@labels.fields.updated_field}
 			</th>
 			<th>
-				{@bugs.labels.fields.old_value}
+				{@labels.fields.old_value}
 			</th>
 			<th>
-				{@bugs.labels.fields.new_value}
+				{@labels.fields.new_value}
 			</th>
 			<th>
-				{@bugs.labels.fields.update_date}
+				{@labels.fields.update_date}
 			</th>
 			<th>
-				{@bugs.labels.fields.change_comment}
+				{@labels.fields.change_comment}
 			</th>
 		</tr>
 	</thead>
@@ -45,7 +45,7 @@
 				{history.NEW_VALUE}
 			</td>
 			<td>
-				# IF C_IS_DATE_FORM_SHORT #{history.UPDATE_DATE_SHORT}# ELSE #{history.UPDATE_DATE}# ENDIF #
+				{history.UPDATE_DATE}
 			</td>
 			<td>
 				{history.COMMENT}
@@ -57,6 +57,6 @@
 # ELSE #
 <div class="message-helper notice">
 <i class="fa fa-notice"></i>
-<div class="message-helper-content">{@bugs.notice.no_history}</div>
+<div class="message-helper-content">{@notice.no_history}</div>
 </div>
 # ENDIF #

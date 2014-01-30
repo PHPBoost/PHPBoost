@@ -30,33 +30,24 @@
 ####################################################
 
 //Types
-$lang['bugtracker.config.types.anomaly'] = 'Anomalie';
-$lang['bugtracker.config.types.evolution_demand'] = 'Evolution';
+$lang['types.anomaly'] = 'Anomalie';
+$lang['types.evolution'] = 'Evolution';
 
 //Catégories
-$lang['bugtracker.config.categories.kernel'] = 'Noyau';
-$lang['bugtracker.config.categories.module'] = 'Module';
-$lang['bugtracker.config.categories.graphism'] = 'Graphisme';
-$lang['bugtracker.config.categories.installation'] = 'Installation';
+$lang['categories.kernel'] = 'Noyau';
+$lang['categories.module'] = 'Module';
+$lang['categories.graphism'] = 'Graphisme';
+$lang['categories.installation'] = 'Installation';
 
 //Importance
-$lang['bugtracker.config.severities.minor'] = 'Mineur';
-$lang['bugtracker.config.severities.major'] = 'Majeur';
-$lang['bugtracker.config.severities.critical'] = 'Bloquant';
+$lang['severities.minor'] = 'Mineur';
+$lang['severities.major'] = 'Majeur';
+$lang['severities.critical'] = 'Bloquant';
 
 //Priorités
-$lang['bugtracker.config.priorities.very_low'] = 'Très basse';
-$lang['bugtracker.config.priorities.low'] = 'Basse';
-$lang['bugtracker.config.priorities.normal'] = 'Normale';
-$lang['bugtracker.config.priorities.high'] = 'Elevée';
-$lang['bugtracker.config.priorities.urgent'] = 'Urgente';
-
-//Message de contenu par défaut
-$lang['bugtracker.config.contents_value'] = '
-- Navigateur Web :<br />
-- Version de PHPBoost :<br />
-- Lien du site :<br />
-- Thème utilisé :<br />
-----------------------------------------------------------------------<br />
-';
+$lang['priorities.very_low'] = 'Très basse';
+$lang['priorities.low'] = 'Basse';
+$lang['priorities.normal'] = 'Normale';
+$lang['priorities.high'] = 'Elevée';
+$lang['priorities.urgent'] = 'Urgente';
 ?>

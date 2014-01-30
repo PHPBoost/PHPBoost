@@ -48,7 +48,7 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 			'bug_id' => $bug_id,
 			'updater_id' => AppContext::get_current_user()->get_id(),
 			'update_date' => $now->get_timestamp(),
-			'change_comment' => $lang['bugs.notice.new_comment'],
+			'change_comment' => $lang['notice.new_comment'],
 		));
 		
 		//Send a PM to the list of members who updated the bug if the send of PM is enabled

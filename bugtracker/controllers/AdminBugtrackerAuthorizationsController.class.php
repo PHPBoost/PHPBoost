@@ -41,8 +41,6 @@ class AdminBugtrackerAuthorizationsController extends AdminModuleController
 	{
 		$this->init();
 		
-		$this->check_authorizations();
-		
 		//Form building
 		$this->build_form();
 		
@@ -61,7 +59,7 @@ class AdminBugtrackerAuthorizationsController extends AdminModuleController
 		$tpl->put('FORM', $this->form->display());
 		
 		//Display the generated page
-		return new AdminBugtrackerDisplayResponse($tpl, $this->lang['bugs.titles.admin.module_authorizations']);
+		return new AdminBugtrackerDisplayResponse($tpl, $this->lang['titles.admin.module_authorizations']);
 	}
 	
 	private function init()
@@ -70,30 +68,21 @@ class AdminBugtrackerAuthorizationsController extends AdminModuleController
 		$this->lang = LangLoader::get('common', 'bugtracker');
 	}
 	
-	private function check_authorizations()
-	{
-		if (!BugtrackerAuthorizationsService::check_authorizations()->moderation())
-		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-			DispatchManager::redirect($error_controller);
-		}
-	}
-	
 	private function build_form()
 	{
 		//Creation of a new form
 		$form = new HTMLForm(__CLASS__);
 		
 		//Add a fieldset
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['bugs.titles.admin.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['titles.admin.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
 		//Authorizations list
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['bugs.config.auth.read'], BugtrackerAuthorizationsService::READ_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['bugs.config.auth.create'], BugtrackerAuthorizationsService::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['bugs.config.auth.create_advanced'], BugtrackerAuthorizationsService::ADVANCED_WRITE_AUTHORIZATIONS, $this->lang['bugs.config.auth.create_advanced_explain']),
-			new ActionAuthorization($this->lang['bugs.config.auth.moderate'], BugtrackerAuthorizationsService::MODERATION_AUTHORIZATIONS)
+			new ActionAuthorization($this->lang['config.auth.read'], BugtrackerAuthorizationsService::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['config.auth.create'], BugtrackerAuthorizationsService::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['config.auth.create_advanced'], BugtrackerAuthorizationsService::ADVANCED_WRITE_AUTHORIZATIONS, $this->lang['config.auth.create_advanced_explain']),
+			new ActionAuthorization($this->lang['config.auth.moderate'], BugtrackerAuthorizationsService::MODERATION_AUTHORIZATIONS)
 		));
 		
 		//Load the authorizations in the configuration

@@ -100,6 +100,16 @@ class BugtrackerService
 	}
 	
 	 /**
+	 * @desc Update a history line of a bug.
+	 * @param string $condition Restriction to apply to the list
+	 * @param string[] $parameters Parameters of the condition
+	 */
+	public static function update_history(array $columns, $condition, array $parameters)
+	{
+		self::$db_querier->update(BugtrackerSetup::$bugtracker_history_table, $columns, $condition, $parameters);
+	}
+	
+	 /**
 	 * @desc Update a bug.
 	 * @param string[] $bug Bug to update
 	 */

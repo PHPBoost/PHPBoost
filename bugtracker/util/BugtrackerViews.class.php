@@ -56,7 +56,7 @@ class BugtrackerViews
 			'C_SOLVED'					=> $current_page == 'solved',
 			'C_ROADMAP'					=> $current_page == 'roadmap',
 			'C_STATS'					=> $current_page == 'stats',
-			'TITLE'						=> $lang['bugs.titles.' . $current_page] . (in_array($current_page, array('fix', 'assign', 'history', 'detail', 'edit', 'reject', 'reopen')) ? ' #' . $bug_id : ''),
+			'TITLE'						=> $lang['titles.' . $current_page] . (in_array($current_page, array('fix', 'assign', 'history', 'detail', 'edit', 'reject', 'reopen')) ? ' #' . $bug_id : ''),
 			'TEMPLATE'					=> $view,
 			'U_SYNDICATION_UNSOLVED'	=> SyndicationUrlBuilder::rss('bugtracker', 0)->rel(),
 			'U_SYNDICATION_SOLVED'		=> SyndicationUrlBuilder::rss('bugtracker', 1)->rel()
@@ -92,16 +92,17 @@ class BugtrackerViews
 		$versions = $config->get_versions_detected();
 		$all_versions = $config->get_versions();
 		
-		$display_types = count($types) > 1;
-		$display_categories = count($categories) > 1;
-		$display_severities = count($severities) > 1;
-		$display_versions = count($versions) > 1;
+		$display_types = count($types);
+		$display_categories = count($categories);
+		$display_severities = count($severities);
+		$display_versions = count($versions);
+		$display_all_versions = count($all_versions);
 		
 		$filters_number = 1;
-		if ($display_types == true) $filters_number = $filters_number + 1;
-		if ($display_categories == true) $filters_number = $filters_number + 1;
-		if ($display_severities == true) $filters_number = $filters_number + 1;
-		if ($display_versions == true) $filters_number = $filters_number + 1;
+		if ($display_types) $filters_number = $filters_number + 1;
+		if ($display_categories) $filters_number = $filters_number + 1;
+		if ($display_severities) $filters_number = $filters_number + 1;
+		if ($display_versions || $display_all_versions) $filters_number = $filters_number + 1;
 		if (!empty($filters)) $filters_number = $filters_number + 1;
 		
 		$filters_view = new FileTemplate('bugtracker/BugtrackerFilter.tpl');
@@ -133,7 +134,7 @@ class BugtrackerViews
 			
 			$filters_view->assign_block_vars('filters', array(
 				'ID'					=> $row['id'],
-				'FILTER'				=> '|	' . (in_array('type', $row_filters) && $row_filters_ids[array_search('type', $row_filters)] ? $types[$row_filters_ids[array_search('type', $row_filters)]] : $filter_not_saved_value) . '	|	' . (in_array('category', $row_filters) && $row_filters_ids[array_search('category', $row_filters)] ? $categories[$row_filters_ids[array_search('category', $row_filters)]] : $filter_not_saved_value) . '	|	' . (in_array('severity', $row_filters) && $row_filters_ids[array_search('severity', $row_filters)] ? $severities[$row_filters_ids[array_search('severity', $row_filters)]]['name'] : $filter_not_saved_value) . '	|	' . (in_array('status', $row_filters) && $row_filters_ids[array_search('status', $row_filters)] ? $lang['bugs.status.' . $row_filters_ids[array_search('status', $row_filters)]] : $filter_not_saved_value) . '	|	' . ($current_page == 'unsolved' ? (in_array('detected_in', $row_filters) && $row_filters_ids[array_search('detected_in', $row_filters)] ? $versions[$row_filters_ids[array_search('detected_in', $row_filters)]]['name'] : $filter_not_saved_value) : (in_array('fixed_in', $row_filters) && $row_filters_ids[array_search('fixed_in', $row_filters)] ? $all_versions[$row_filters_ids[array_search('fixed_in', $row_filters)]]['name'] : $filter_not_saved_value)) . '	|',
+				'FILTER'				=> '|	' . (in_array('type', $row_filters) && $row_filters_ids[array_search('type', $row_filters)] ? $types[$row_filters_ids[array_search('type', $row_filters)]] : $filter_not_saved_value) . '	|	' . (in_array('category', $row_filters) && $row_filters_ids[array_search('category', $row_filters)] ? $categories[$row_filters_ids[array_search('category', $row_filters)]] : $filter_not_saved_value) . '	|	' . (in_array('severity', $row_filters) && $row_filters_ids[array_search('severity', $row_filters)] ? $severities[$row_filters_ids[array_search('severity', $row_filters)]]['name'] : $filter_not_saved_value) . '	|	' . (in_array('status', $row_filters) && $row_filters_ids[array_search('status', $row_filters)] ? $lang['status.' . $row_filters_ids[array_search('status', $row_filters)]] : $filter_not_saved_value) . '	|	' . ($current_page == 'unsolved' ? (in_array('detected_in', $row_filters) && $row_filters_ids[array_search('detected_in', $row_filters)] ? $versions[$row_filters_ids[array_search('detected_in', $row_filters)]]['name'] : $filter_not_saved_value) : (in_array('fixed_in', $row_filters) && $row_filters_ids[array_search('fixed_in', $row_filters)] ? $all_versions[$row_filters_ids[array_search('fixed_in', $row_filters)]]['name'] : $filter_not_saved_value)) . '	|',
 				'LINK_FILTER'			=> ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . $row['filters'] . '/' . $row['filters_ids'])->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . $row['filters'] . '/' . $row['filters_ids'])->rel()),
 				'LINK_FILTER_DELETE'	=> BugtrackerUrlBuilder::delete_filter($row['id'] . '/' . $current_page . '/' . $page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel()
 			));
@@ -141,13 +142,13 @@ class BugtrackerViews
 		}
 		
 		$filters_view->put_all(array(
-			'L_FILTERS'				=> $filters_number > 1 ? $lang['bugs.titles.filters'] : $lang['bugs.titles.filter'],
+			'L_FILTERS'				=> $filters_number > 1 ? $lang['titles.filters'] : $lang['titles.filter'],
 			'C_FILTER'				=> count($filters) == 1,
 			'C_FILTERS'				=> count($filters) > 1,
 			'C_DISPLAY_TYPES'		=> $display_types,
 			'C_DISPLAY_CATEGORIES'	=> $display_categories,
 			'C_DISPLAY_SEVERITIES'	=> $display_severities,
-			'C_DISPLAY_VERSIONS'	=> $display_versions,
+			'C_DISPLAY_VERSIONS'	=> $current_page == 'solved' ? $display_all_versions : $display_versions,
 			'C_DISPLAY_SAVE_BUTTON'	=> $display_save_button,
 			'C_SAVED_FILTERS'		=> $saved_filters,
 			'C_HAS_SELECTED_FILTERS'=> $filters,
@@ -182,7 +183,7 @@ class BugtrackerViews
 			{
 				$legend_view->assign_block_vars('legend', array(
 					'COLOR'	=> $current_page == 'solved' ? ($element == 'fixed' ? $config->get_fixed_bug_color() : $config->get_rejected_bug_color()) : stripslashes($severities[$element]['color']),
-					'NAME'	=> $current_page == 'solved' ? $lang['bugs.status.' . $element] : stripslashes($severities[$element]['name'])
+					'NAME'	=> $current_page == 'solved' ? $lang['status.' . $element] : stripslashes($severities[$element]['name'])
 				));
 				
 				$legend_colspan = $legend_colspan + 3;
@@ -356,7 +357,7 @@ class BugtrackerViews
 		foreach ($status_list as $status => $progress)
 		{
 			if (($current_page == 'unsolved' && !in_array($status, array(Bug::FIXED, Bug::REJECTED))) || ($current_page == 'solved' && in_array($status, array(Bug::FIXED, Bug::REJECTED))))
-				$array_status[] = new FormFieldSelectChoiceOption($lang['bugs.status.' . $status], $status);
+				$array_status[] = new FormFieldSelectChoiceOption($lang['status.' . $status], $status);
 		}
 		return $array_status;
 	}

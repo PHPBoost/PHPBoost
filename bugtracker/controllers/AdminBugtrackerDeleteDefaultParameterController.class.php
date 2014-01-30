@@ -25,13 +25,11 @@
  *
  ###################################################*/
 
-class AdminBugtrackerDeleteDefaultParameterController extends AdminController
+class AdminBugtrackerDeleteDefaultParameterController extends AdminModuleController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
-		
-		$this->check_authorizations();
 		
 		$config = BugtrackerConfig::load();
 		
@@ -63,18 +61,9 @@ class AdminBugtrackerDeleteDefaultParameterController extends AdminController
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_parameter', 'common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('error.e_unexist_parameter', 'common', 'bugtracker'));
 			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
-		}
-	}
-	
-	private function check_authorizations()
-	{
-		if (!BugtrackerAuthorizationsService::check_authorizations()->moderation())
-		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-			DispatchManager::redirect($error_controller);
 		}
 	}
 }

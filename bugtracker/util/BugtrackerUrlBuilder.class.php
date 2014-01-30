@@ -54,7 +54,7 @@ class BugtrackerUrlBuilder
 	 */
 	public static function delete_parameter($parameter, $id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/delete/' . $parameter . '/' . $id . '/?token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/admin/delete/' . $parameter . '/' . $id);
 	}
 	
 	/**
