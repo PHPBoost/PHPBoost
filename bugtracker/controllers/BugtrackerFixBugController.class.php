@@ -84,7 +84,7 @@ class BugtrackerFixBugController extends ModuleController
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['bugs.error.e_unexist_bug']);
+			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
 		}
 		
@@ -111,7 +111,6 @@ class BugtrackerFixBugController extends ModuleController
 	private function build_form()
 	{
 		$versions = array_reverse($this->config->get_versions_fix(), true);
-		$display_versions = count($versions) > 1;
 		
 		$form = new HTMLForm(__CLASS__);
 		
@@ -129,7 +128,7 @@ class BugtrackerFixBugController extends ModuleController
 					$array_versions[] = new FormFieldSelectChoiceOption(stripslashes($version['name']), $key);
 			}
 			
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('fixed_in', $this->lang['bugs.labels.fields.fixed_in'], $this->bug->get_fixed_in(), $array_versions,
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('fixed_in', $this->lang['labels.fields.fixed_in'], $this->bug->get_fixed_in(), $array_versions,
 				array('events' => $this->config->is_roadmap_enabled() ? array('change' => '
 				if (HTMLForms.getField("fixed_in").getValue() > 0) {
 					HTMLForms.getField("no_selected_version").disable();
@@ -143,14 +142,14 @@ class BugtrackerFixBugController extends ModuleController
 				$fieldset->add_field(new FormFieldFree('no_selected_version', '',
 					'<div class="message-helper notice" style="margin:5px auto 0px auto;">
 						<i class="fa fa-notice"></i>
-						<div class="message-helper-content">'. $this->lang['bugs.error.e_no_fixed_version'] .'</div>
+						<div class="message-helper-content">'. $this->lang['error.e_no_fixed_version'] .'</div>
 					</div>'
 				));
 			}
 		}
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(
-			'description' => $this->lang['bugs.explain.fix_comment']
+			'description' => $this->lang['explain.fix_comment']
 		)));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -165,7 +164,6 @@ class BugtrackerFixBugController extends ModuleController
 		$now = new Date();
 		
 		$versions = array_reverse($this->config->get_versions_fix(), true);
-		$display_versions = count($versions) > 1;
 		
 		if (!$this->bug->is_fixed())
 		{
@@ -221,7 +219,7 @@ class BugtrackerFixBugController extends ModuleController
 					'bug_id' => $this->bug->get_id(),
 					'updater_id' => $this->current_user->get_id(),
 					'update_date' => $now->get_timestamp(),
-					'change_comment' => $this->lang['bugs.notice.new_comment'],
+					'change_comment' => $this->lang['notice.new_comment'],
 				));
 				
 				//Send PM with comment to updaters if the option is enabled
@@ -235,11 +233,27 @@ class BugtrackerFixBugController extends ModuleController
 					BugtrackerPMService::send_PM_to_updaters('fixed', $this->bug->get_id());
 			}
 			
+			if ($this->config->are_admin_alerts_enabled() && in_array($this->bug->get_severity(), $this->config->get_admin_alerts_levels()))
+			{
+				$alerts = AdministratorAlertService::find_by_criteria($this->bug->get_id(), 'bugtracker');
+				if (!empty($alerts))
+				{
+					$alert = $alerts[0];
+					if ($this->config->is_admin_alerts_fix_action_fix())
+					{
+						$alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
+						AdministratorAlertService::save_alert($alert);
+					}
+					else
+						AdministratorAlertService::delete_alert($alert);
+				}
+			}
+			
 			BugtrackerStatsCache::invalidate();
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_already_fixed_bug', 'common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('error.e_already_fixed_bug', 'common', 'bugtracker'));
 			DispatchManager::redirect($controller);
 		}
 	}
@@ -256,9 +270,9 @@ class BugtrackerFixBugController extends ModuleController
 		$body_view = BugtrackerViews::build_body_view($view, 'fix', $this->bug->get_id());
 		
 		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.fix'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::fix($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
-		$response->set_page_title($this->lang['bugs.titles.fix'] . ' #' . $this->bug->get_id());
+		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['titles.fix'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::fix($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		$response->set_page_title($this->lang['titles.fix'] . ' #' . $this->bug->get_id());
 		
 		return $response->display($body_view);
 	}

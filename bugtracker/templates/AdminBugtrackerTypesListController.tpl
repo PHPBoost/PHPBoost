@@ -56,7 +56,7 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 	<thead>
 		<tr>
 			<th class="column_default">
-				{@bugs.labels.default}
+				{@labels.default}
 			</th>
 			<th>
 				${LangLoader::get_message('name', 'main')}
@@ -69,17 +69,17 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 	<tfoot>
 		<tr>
 			<th>
-				<a href="javascript:BugtrackerFormFieldTypes.add_type();" class="fa fa-plus" title="{@bugs.titles.add_type}" id="add_type"></a>
+				<a href="javascript:BugtrackerFormFieldTypes.add_type();" class="fa fa-plus" title="{@titles.add_type}" id="add_type"></a>
 			</th>
 			<th colspan="2" style="text-align:right;">
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@bugs.actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@bugs.labels.del_default_value}</a># ENDIF #
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@labels.del_default_value}</a># ENDIF #
 			</th>
 		</tr>
 	</tfoot>
 	<tbody id="types_list">
 		<tr id="no_type"# IF C_TYPES # style="display:none;"# ENDIF #>
 			<td colspan="3">
-				{@bugs.notice.no_type}
+				{@notice.no_type}
 			</td>
 		</tr>
 		# START types #
@@ -91,7 +91,7 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 				<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}" />
 			</td>
 			<td>
-				<a href="{types.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@bugs.actions.confirm.del_type}"></a>
+				<a href="{types.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_type}"></a>
 			</td>
 		</tr>
 		# END types #

@@ -57,10 +57,10 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('BugtrackerDetailController', '`^/detail/([0-9]+)?/?([0-9A-Za-z_-]+)?/?$`', array('id', 'msg')),
 	
 	//New bug
-	new UrlControllerMapper('BugtrackerAddController', '`^/add?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('back_page', 'page', 'back_filter', 'filter_id')),
+	new UrlControllerMapper('BugtrackerFormController', '`^/add?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('back_page', 'page', 'back_filter', 'filter_id')),
 	
 	//Bug edition
-	new UrlControllerMapper('BugtrackerEditController', '`^/edit/([0-9]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('id', 'back_page', 'page', 'back_filter', 'filter_id')),
+	new UrlControllerMapper('BugtrackerFormController', '`^/edit/([0-9]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('id', 'back_page', 'page', 'back_filter', 'filter_id')),
 	
 	//Actions
 	new UrlControllerMapper('BugtrackerDeleteBugController', '`^/delete/([0-9]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('id', 'back_page', 'page', 'back_filter', 'filter_id')),

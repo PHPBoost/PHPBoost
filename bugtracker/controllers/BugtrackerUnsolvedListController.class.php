@@ -114,7 +114,6 @@ class BugtrackerUnsolvedListController extends ModuleController
 			
 			$this->view->assign_block_vars('bug', array_merge($bug->get_array_tpl_vars(), array(
 				'C_LINE_COLOR'		=> $bug->get_severity() && isset($severities[$bug->get_severity()]),
-				'C_PENDING'			=> $bug->is_pending(),
 				'LINE_COLOR' 		=> stripslashes($severities[$bug->get_severity()]['color']),
 				'U_FIX'				=> BugtrackerUrlBuilder::fix($bug->get_id(), 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
 				'U_PENDING'			=> BugtrackerUrlBuilder::pending($bug->get_id(), 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
@@ -126,25 +125,28 @@ class BugtrackerUnsolvedListController extends ModuleController
 		}
 		
 		$this->view->put_all(array(
-			'C_IS_ADMIN'				=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
-			'C_UNSOLVED' 				=> true,
-			'C_BUGS' 					=> $result->get_rows_count() > 0,
-			'C_DISPLAY_AUTHOR'			=> true,
-			'C_IS_DATE_FORM_SHORT'		=> $config->is_date_form_short(),
-			'C_PAGINATION'				=> $pagination->has_several_pages(),
-			'PAGINATION' 				=> $pagination->display(),
-			'BUGS_COLSPAN' 				=> BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4,
-			'L_NO_BUG' 					=> empty($filters) ? $this->lang['bugs.notice.no_bug'] : (count($filters) > 1 ? $this->lang['bugs.notice.no_bug_matching_filters'] : $this->lang['bugs.notice.no_bug_matching_filter']),
-			'FILTER_LIST'				=> BugtrackerViews::build_filters('unsolved', $bugs_number),
-			'LEGEND'					=> BugtrackerViews::build_legend($displayed_severities, 'unsolved'),
-			'LINK_BUG_ID_TOP' 			=> BugtrackerUrlBuilder::unsolved('id/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_ID_BOTTOM' 		=> BugtrackerUrlBuilder::unsolved('id/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_TITLE_TOP' 		=> BugtrackerUrlBuilder::unsolved('title/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_TITLE_BOTTOM' 	=> BugtrackerUrlBuilder::unsolved('title/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_STATUS_TOP'		=> BugtrackerUrlBuilder::unsolved('status/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_STATUS_BOTTOM'	=> BugtrackerUrlBuilder::unsolved('status/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_DATE_TOP' 		=> BugtrackerUrlBuilder::unsolved('date/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_DATE_BOTTOM' 		=> BugtrackerUrlBuilder::unsolved('date/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel()
+			'C_IS_ADMIN'					=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
+			'C_UNSOLVED' 					=> true,
+			'C_BUGS' 						=> $result->get_rows_count() > 0,
+			'C_DISPLAY_AUTHOR'				=> true,
+			'C_DISPLAY_TYPE_COLUMN'			=> $config->is_type_column_displayed(),
+			'C_DISPLAY_CATEGORY_COLUMN'		=> $config->is_category_column_displayed(),
+			'C_DISPLAY_PRIORITY_COLUMN'		=> $config->is_priority_column_displayed(),
+			'C_DISPLAY_DETECTED_IN_COLUMN'	=> $config->is_detected_in_column_displayed(),
+			'C_PAGINATION'					=> $pagination->has_several_pages(),
+			'PAGINATION' 					=> $pagination->display(),
+			'BUGS_COLSPAN' 					=> BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4,
+			'L_NO_BUG' 						=> empty($filters) ? $this->lang['notice.no_bug'] : (count($filters) > 1 ? $this->lang['notice.no_bug_matching_filters'] : $this->lang['notice.no_bug_matching_filter']),
+			'FILTER_LIST'					=> BugtrackerViews::build_filters('unsolved', $bugs_number),
+			'LEGEND'						=> BugtrackerViews::build_legend($displayed_severities, 'unsolved'),
+			'LINK_BUG_ID_TOP' 				=> BugtrackerUrlBuilder::unsolved('id/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_ID_BOTTOM' 			=> BugtrackerUrlBuilder::unsolved('id/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_TITLE_TOP' 			=> BugtrackerUrlBuilder::unsolved('title/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_TITLE_BOTTOM' 		=> BugtrackerUrlBuilder::unsolved('title/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_STATUS_TOP'			=> BugtrackerUrlBuilder::unsolved('status/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_STATUS_BOTTOM'		=> BugtrackerUrlBuilder::unsolved('status/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_DATE_TOP' 			=> BugtrackerUrlBuilder::unsolved('date/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_DATE_BOTTOM' 			=> BugtrackerUrlBuilder::unsolved('date/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel()
 		));
 		
 		return $this->view;
@@ -201,25 +203,25 @@ class BugtrackerUnsolvedListController extends ModuleController
 		switch ($success)
 		{
 			case 'add':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.add'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.add'], array('id' => $bug_id));
 				break;
 			case 'edit':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.edit'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.edit'], array('id' => $bug_id));
 				break;
 			case 'fixed':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.fixed'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.fixed'], array('id' => $bug_id));
 				break;
 			case 'pending':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.pending'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.pending'], array('id' => $bug_id));
 				break;
 			case 'delete':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.delete'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.delete'], array('id' => $bug_id));
 				break;
 			case 'reject':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.reject'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.reject'], array('id' => $bug_id));
 				break;
 			case 'assign':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.assigned'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.assigned'], array('id' => $bug_id));
 				break;
 			default:
 				$errstr = '';
@@ -228,9 +230,9 @@ class BugtrackerUnsolvedListController extends ModuleController
 			$body_view->put('MSG', MessageHelper::display($errstr, E_USER_SUCCESS, 5));
 		
 		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.unsolved'], BugtrackerUrlBuilder::unsolved());
-		$response->set_page_title($this->lang['bugs.titles.unsolved']);
+		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['titles.unsolved'], BugtrackerUrlBuilder::unsolved());
+		$response->set_page_title($this->lang['titles.unsolved']);
 		
 		return $response->display($body_view);
 	}

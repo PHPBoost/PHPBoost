@@ -11,19 +11,19 @@
 		<menu class="dynamic-menu group center">
 			<ul>
 				<li# IF C_UNSOLVED # class="current"# ENDIF #>
-					<a href="${relative_url(BugtrackerUrlBuilder::unsolved())}" style="display:inline-block;">{@bugs.titles.unsolved}</a> 
+					<a href="${relative_url(BugtrackerUrlBuilder::unsolved())}" style="display:inline-block;">{@titles.unsolved}</a> 
 				</li>
 				<li# IF C_SOLVED # class="current"# ENDIF #>
-					<a href="${relative_url(BugtrackerUrlBuilder::solved())}" style="display:inline-block;">{@bugs.titles.solved}</a>
+					<a href="${relative_url(BugtrackerUrlBuilder::solved())}" style="display:inline-block;">{@titles.solved}</a>
 				</li>
 				# IF C_ROADMAP_ENABLED #
 				<li# IF C_ROADMAP # class="current"# ENDIF #>
-					<a href="${relative_url(BugtrackerUrlBuilder::roadmap())}">{@bugs.titles.roadmap}</a>
+					<a href="${relative_url(BugtrackerUrlBuilder::roadmap())}">{@titles.roadmap}</a>
 				</li>
 				# ENDIF #
 				# IF C_STATS_ENABLED #
 				<li# IF C_STATS # class="current"# ENDIF #>
-					<a href="${relative_url(BugtrackerUrlBuilder::stats())}">{@bugs.titles.stats}</a>
+					<a href="${relative_url(BugtrackerUrlBuilder::stats())}">{@titles.stats}</a>
 				</li>
 				# ENDIF #
 			</ul>

@@ -35,11 +35,11 @@ class BugtrackerFeedProvider implements FeedProvider
 		$list = new FeedsList();
 		
 		//unsolved bugs list
-		$unsolved = new FeedsCat('bugtracker', 0, LangLoader::get_message('bugs.titles.unsolved', 'common', 'bugtracker'));
+		$unsolved = new FeedsCat('bugtracker', 0, LangLoader::get_message('titles.unsolved', 'common', 'bugtracker'));
 		$list->add_feed($unsolved, Feed::DEFAULT_FEED_NAME);
 		
 		//solved bugs list
-		$solved = new FeedsCat('bugtracker', 1, LangLoader::get_message('bugs.titles.solved', 'common', 'bugtracker'));
+		$solved = new FeedsCat('bugtracker', 1, LangLoader::get_message('titles.solved', 'common', 'bugtracker'));
 		$list->add_feed($solved, Feed::DEFAULT_FEED_NAME);
 		
 		return $list;
@@ -59,7 +59,7 @@ class BugtrackerFeedProvider implements FeedProvider
 		$versions = $config->get_versions_detected();
 		
 		$site_name = GeneralConfig::load()->get_site_name();
-		$feed_module_name = $idcat == 1 ? $lang['bugs.titles.solved'] : $lang['bugs.titles.unsolved'];
+		$feed_module_name = $idcat == 1 ? $lang['titles.solved'] : $lang['titles.unsolved'];
 		
 		$data = new FeedData();
 		$data->set_title($feed_module_name . ' - ' . $site_name);
@@ -84,18 +84,18 @@ class BugtrackerFeedProvider implements FeedProvider
 			$link = BugtrackerUrlBuilder::detail($bug->get_id() . '/' . Url::encode_rewrite($bug->get_title()));
 			
 			$description = FormatingHelper::second_parse($bug->get_contents());
-			$description .= '<br /><br />' . $lang['bugs.labels.fields.reproductible'] . ' : ' . ($bug->is_reproductible() ? LangLoader::get_message('yes', 'main') : LangLoader::get_message('no', 'main'));
+			$description .= '<br /><br />' . $lang['labels.fields.reproductible'] . ' : ' . ($bug->is_reproductible() ? LangLoader::get_message('yes', 'main') : LangLoader::get_message('no', 'main'));
 			
 			if ($types)
-				$description .= '<br />' . $lang['bugs.labels.fields.type'] . ' : ' . (isset($types[$bug->get_type()]) ? stripslashes($types[$bug->get_type()]) : $lang['bugs.notice.none']);
+				$description .= '<br />' . $lang['labels.fields.type'] . ' : ' . (isset($types[$bug->get_type()]) ? stripslashes($types[$bug->get_type()]) : $lang['notice.none']);
 			if ($categories)
-				$description .= '<br />' . $lang['bugs.labels.fields.category'] . ' : ' . (isset($categories[$bug->get_category()]) ? stripslashes($categories[$bug->get_category()]) : $lang['bugs.notice.none_e']);
+				$description .= '<br />' . $lang['labels.fields.category'] . ' : ' . (isset($categories[$bug->get_category()]) ? stripslashes($categories[$bug->get_category()]) : $lang['notice.none_e']);
 			if ($severities)
-				$description .= '<br />' . $lang['bugs.labels.fields.severity'] . ' : ' . (isset($severities[$bug->get_severity()]) ? stripslashes($severities[$bug->get_severity()]['name']) : $lang['bugs.notice.none']);
+				$description .= '<br />' . $lang['labels.fields.severity'] . ' : ' . (isset($severities[$bug->get_severity()]) ? stripslashes($severities[$bug->get_severity()]['name']) : $lang['notice.none']);
 			if ($priorities)
-				$description .= '<br />' . $lang['bugs.labels.fields.priority'] . ' : ' . (isset($priorities[$bug->get_priority()]) ? stripslashes($priorities[$bug->get_priority()]) : $lang['bugs.notice.none_e']);
+				$description .= '<br />' . $lang['labels.fields.priority'] . ' : ' . (isset($priorities[$bug->get_priority()]) ? stripslashes($priorities[$bug->get_priority()]) : $lang['notice.none_e']);
 			if ($versions)
-				$description .= '<br />' . $lang['bugs.labels.fields.detected_in'] . ' : ' . (isset($versions[$bug->get_detected_in()]) ? stripslashes($versions[$bug->get_detected_in()]['name']) : $lang['bugs.notice.not_defined']);
+				$description .= '<br />' . $lang['labels.fields.detected_in'] . ' : ' . (isset($versions[$bug->get_detected_in()]) ? stripslashes($versions[$bug->get_detected_in()]['name']) : $lang['notice.not_defined']);
 			
 			$item = new FeedItem();
 			$item->set_title($bug->get_title());

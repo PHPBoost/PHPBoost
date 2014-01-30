@@ -4,7 +4,7 @@
 	<thead>
 		<tr>
 			<th colspan="{LEGEND_COLSPAN}">
-				{@bugs.titles.legend}
+				{@titles.legend}
 			</th>
 		</tr>
 	</thead>

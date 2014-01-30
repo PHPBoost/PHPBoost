@@ -86,7 +86,7 @@ class BugtrackerAssignBugController extends ModuleController
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['bugs.error.e_unexist_bug']);
+			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
 		}
 		
@@ -121,14 +121,14 @@ class BugtrackerAssignBugController extends ModuleController
 		if (UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())))
 			$user_assigned = UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id()));
 		
-		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('assigned_to', $this->lang['bugs.labels.fields.assigned_to_id'], !empty($user_assigned) ? $user_assigned->get_pseudo() : '', array(
+		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('assigned_to', $this->lang['labels.fields.assigned_to_id'], !empty($user_assigned) ? $user_assigned->get_pseudo() : '', array(
 			'maxlength' => 25, 'class' => 'field-large'), array(
 			new FormFieldConstraintLengthRange(3, 25), 
 			new FormFieldConstraintUserExist())
 		));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(
-			'description' => $this->lang['bugs.explain.assign_comment'], 'hidden' => !$this->config->are_pm_enabled() || !$this->config->are_pm_assign_enabled()
+			'description' => $this->lang['explain.assign_comment'], 'hidden' => !$this->config->are_pm_enabled() || !$this->config->are_pm_assign_enabled()
 		)));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -159,8 +159,8 @@ class BugtrackerAssignBugController extends ModuleController
 				'updater_id'	=> $this->current_user->get_id(),
 				'update_date'	=> $now->get_timestamp(),
 				'updated_field'	=> 'assigned_to_id',
-				'old_value'		=> !empty($old_user_assigned) ? '<a href="' . UserUrlBuilder::profile($old_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($old_user_assigned->get_level()) . '">' . $old_user_assigned->get_pseudo() . '</a>' : $this->lang['bugs.notice.no_one'],
-				'new_value'		=> !empty($new_user_assigned) ? '<a href="' . UserUrlBuilder::profile($new_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($new_user_assigned->get_level()) . '">' . $new_user_assigned->get_pseudo() . '</a>' : $this->lang['bugs.notice.no_one']
+				'old_value'		=> !empty($old_user_assigned) ? '<a href="' . UserUrlBuilder::profile($old_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($old_user_assigned->get_level()) . '">' . $old_user_assigned->get_pseudo() . '</a>' : $this->lang['notice.no_one'],
+				'new_value'		=> !empty($new_user_assigned) ? '<a href="' . UserUrlBuilder::profile($new_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($new_user_assigned->get_level()) . '">' . $new_user_assigned->get_pseudo() . '</a>' : $this->lang['notice.no_one']
 			));
 			
 			//Bug update
@@ -209,9 +209,9 @@ class BugtrackerAssignBugController extends ModuleController
 		$body_view = BugtrackerViews::build_body_view($view, 'assign', $this->bug->get_id());
 		
 		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.assign'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::assign($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
-		$response->set_page_title($this->lang['bugs.titles.assign'] . ' #' . $this->bug->get_id());
+		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['titles.assign'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::assign($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		$response->set_page_title($this->lang['titles.assign'] . ' #' . $this->bug->get_id());
 		
 		return $response->display($body_view);
 	}

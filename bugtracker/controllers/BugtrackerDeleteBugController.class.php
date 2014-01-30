@@ -88,7 +88,7 @@ class BugtrackerDeleteBugController extends ModuleController
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['bugs.error.e_unexist_bug']);
+			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
 		}
 		
@@ -119,7 +119,7 @@ class BugtrackerDeleteBugController extends ModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(
-			'description' => $this->lang['bugs.explain.delete_comment'], 'hidden' => !$this->config->are_pm_enabled() || !$this->config->are_pm_delete_enabled()
+			'description' => $this->lang['explain.delete_comment'], 'hidden' => !$this->config->are_pm_enabled() || !$this->config->are_pm_delete_enabled()
 		)));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -184,9 +184,9 @@ class BugtrackerDeleteBugController extends ModuleController
 		$body_view = BugtrackerViews::build_body_view($view, 'delete', $this->bug->get_id());
 		
 		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.delete'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::delete($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
-		$response->set_page_title($this->lang['bugs.titles.delete'] . ' #' . $this->bug->get_id());
+		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['titles.delete'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::delete($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		$response->set_page_title($this->lang['titles.delete'] . ' #' . $this->bug->get_id());
 		
 		return $response->display($body_view);
 	}

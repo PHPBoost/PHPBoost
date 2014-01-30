@@ -264,6 +264,16 @@ class Bug
 		return $this->assigned_user;
 	}
 	
+	public function is_authorized_to_add()
+	{
+		return BugtrackerAuthorizationsService::check_authorizations()->write();
+	}
+	
+	public function is_authorized_to_edit()
+	{
+		return BugtrackerAuthorizationsService::check_authorizations()->moderation() || (BugtrackerAuthorizationsService::check_authorizations()->write() && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+	}
+	
 	public function get_properties()
 	{
 		return array(
@@ -319,6 +329,7 @@ class Bug
 		$this->author_user = AppContext::get_current_user();
 		$this->fixed_in = 0;
 		$this->assigned_to_id = 0;
+		$this->reproductible = true;
 	}
 	
 	public function clean_fix_date()
@@ -329,8 +340,15 @@ class Bug
 	public function get_array_tpl_vars()
 	{
 		$config = BugtrackerConfig::load();
+		$types = $config->get_types();
 		$categories = $config->get_categories();
+		$severities = $config->get_severities();
+		$priorities = $config->get_priorities();
+		$versions = $config->get_versions();
 		$status_list = $config->get_status_list();
+		
+		$lang = LangLoader::get('common', 'bugtracker');
+		
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$number_comments = CommentsService::get_number_comments('bugtracker', $this->id);
@@ -340,6 +358,7 @@ class Bug
 			'C_FIX_DATE' => $this->fix_date != null,
 			'C_FIXED_IN' => $this->detected_in,
 			'C_FIXED' => $this->is_fixed(),
+			'C_PENDING' => $this->is_pending(),
 			'C_REPRODUCTIBLE' => $this->is_reproductible(),
 			'C_REPRODUCTION_METHOD' => $this->reproduction_method,
 			'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
@@ -347,14 +366,20 @@ class Bug
 			
 			//Bug
 			'ID' => $this->id,
-			'TITLE' => ($config->is_cat_in_title_displayed() && $categories) ? '[' . $categories[$this->category] . '] ' . $this->title : $this->title,
+			'TITLE' => $this->title,
 			'CONTENTS' => FormatingHelper::second_parse($this->contents),
 			'SUBMIT_DATE_SHORT' => $this->submit_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'SUBMIT_DATE' => $this->submit_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'FIX_DATE_SHORT' => $this->fix_date !== null ? $this->fix_date->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'FIX_DATE' => $this->fix_date !== null ? $this->fix_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
+			'TYPE' => (isset($types[$this->type])) ? stripslashes($types[$this->type]) : $lang['notice.none'],
+			'CATEGORY' => (isset($categories[$this->category])) ? stripslashes($categories[$this->category]) : $lang['notice.none_e'],
+			'SEVERITY' => (isset($severities[$this->severity])) ? stripslashes($severities[$this->severity]['name']) : $lang['notice.none'],
+			'PRIORITY' => (isset($priorities[$this->priority])) ? stripslashes($priorities[$this->priority]) : $lang['notice.none_e'],
+			'DETECTED_IN' => (isset($versions[$this->detected_in])) ? stripslashes($versions[$this->detected_in]['name']) : $lang['notice.not_defined'],
+			'FIXED_IN' => (isset($versions[$this->fixed_in])) ? stripslashes($versions[$this->fixed_in]['name']) : $lang['notice.not_defined'],
 			'PROGRESS' => $status_list[$this->status],
-			'STATUS' => LangLoader::get_message('bugs.status.' . $this->status, 'common', 'bugtracker'),
+			'STATUS' => LangLoader::get_message('status.' . $this->status, 'common', 'bugtracker'),
 			'REPRODUCTION_METHOD' => FormatingHelper::second_parse($this->reproduction_method),
 			'AUTHOR' => $user->get_pseudo(),
 			'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),

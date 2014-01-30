@@ -84,7 +84,7 @@ class BugtrackerReopenBugController extends ModuleController
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['bugs.error.e_unexist_bug']);
+			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
 		}
 		
@@ -116,7 +116,7 @@ class BugtrackerReopenBugController extends ModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(
-			'description' => $this->lang['bugs.explain.reopen_comment']
+			'description' => $this->lang['explain.reopen_comment']
 		)));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -172,7 +172,7 @@ class BugtrackerReopenBugController extends ModuleController
 					'bug_id' => $this->bug->get_id(),
 					'updater_id' => $this->current_user->get_id(),
 					'update_date' => $now->get_timestamp(),
-					'change_comment' => $this->lang['bugs.notice.new_comment'],
+					'change_comment' => $this->lang['notice.new_comment'],
 				));
 				
 				//Send PM with comment to updaters if the option is enabled
@@ -202,7 +202,7 @@ class BugtrackerReopenBugController extends ModuleController
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_already_reopen_bug', 'common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('error.e_already_reopen_bug', 'common', 'bugtracker'));
 			DispatchManager::redirect($controller);
 		}
 	}
@@ -219,9 +219,9 @@ class BugtrackerReopenBugController extends ModuleController
 		$body_view = BugtrackerViews::build_body_view($view, 'reopen', $this->bug->get_id());
 		
 		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.reopen'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::reopen($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
-		$response->set_page_title($this->lang['bugs.titles.reopen'] . ' #' . $this->bug->get_id());
+		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['titles.reopen'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::reopen($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		$response->set_page_title($this->lang['titles.reopen'] . ' #' . $this->bug->get_id());
 		
 		return $response->display($body_view);
 	}

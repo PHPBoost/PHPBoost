@@ -34,8 +34,6 @@ class BugtrackerConfig extends AbstractConfigData
 	const ITEMS_PER_PAGE = 'items_per_page';
 	const REJECTED_BUG_COLOR = 'rejected_bug_color';
 	const FIXED_BUG_COLOR = 'fixed_bug_color';
-	const DATE_FORM = 'date_form';
-	const CAT_IN_TITLE_ENABLED = 'cat_in_title_enabled';
 	const ROADMAP_ENABLED = 'roadmap_enabled';
 	const STATS_ENABLED = 'stats_enabled';
 	const STATS_TOP_POSTERS_ENABLED = 'stats_top_posters_enabled';
@@ -69,6 +67,10 @@ class BugtrackerConfig extends AbstractConfigData
 	const PRIORITY_MANDATORY = 'priority_mandatory';
 	const SEVERITY_MANDATORY = 'severity_mandatory';
 	const DETECTED_IN_VERSION_MANDATORY = 'detected_in_version_mandatory';
+	const DISPLAY_TYPE_COLUMN = 'display_type_column';
+	const DISPLAY_CATEGORY_COLUMN = 'display_category_column';
+	const DISPLAY_PRIORITY_COLUMN = 'display_priority_column';
+	const DISPLAY_DETECTED_IN_COLUMN = 'display_detected_in_column';
 	const AUTHORIZATIONS = 'authorizations';
 	const STATUS_LIST = 'status_list';
 	
@@ -127,43 +129,6 @@ class BugtrackerConfig extends AbstractConfigData
 	public function set_fixed_bug_color($value) 
 	{
 		$this->set_property(self::FIXED_BUG_COLOR, $value);
-	}
-	
-	 /**
-	 * @method Get the date format to display
-	 */
-	public function get_date_form()
-	{
-		return $this->get_property(self::DATE_FORM);
-	}
-	
-	 /**
-	 * @method Set the date format to display
-	 * @params string $value Date format
-	 */
-	public function set_date_form($value) 
-	{
-		$this->set_property(self::DATE_FORM, $value);
-	}
-	
-	public function is_date_form_short()
-	{
-		return self::DATE_FORM == Date::FORMAT_DAY_MONTH_YEAR;
-	}
-	
-	public function display_cat_in_title()
-	{
-		$this->set_property(self::CAT_IN_TITLE_ENABLED, true);
-	}
-	
-	public function hide_cat_in_title()
-	{
-		$this->set_property(self::CAT_IN_TITLE_ENABLED, false);
-	}
-	
-	public function is_cat_in_title_displayed()
-	{
-		return $this->get_property(self::CAT_IN_TITLE_ENABLED);
 	}
 	
 	public function enable_roadmap()
@@ -721,6 +686,66 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::DETECTED_IN_VERSION_MANDATORY);
 	}
 	
+	public function display_type_column()
+	{
+		$this->set_property(self::DISPLAY_TYPE_COLUMN, true);
+	}
+	
+	public function hide_type_column()
+	{
+		$this->set_property(self::DISPLAY_TYPE_COLUMN, false);
+	}
+	
+	public function is_type_column_displayed()
+	{
+		return $this->get_property(self::DISPLAY_TYPE_COLUMN);
+	}
+	
+	public function display_category_column()
+	{
+		$this->set_property(self::DISPLAY_CATEGORY_COLUMN, true);
+	}
+	
+	public function hide_category_column()
+	{
+		$this->set_property(self::DISPLAY_CATEGORY_COLUMN, false);
+	}
+	
+	public function is_category_column_displayed()
+	{
+		return $this->get_property(self::DISPLAY_CATEGORY_COLUMN);
+	}
+	
+	public function display_priority_column()
+	{
+		$this->set_property(self::DISPLAY_PRIORITY_COLUMN, true);
+	}
+	
+	public function hide_priority_column()
+	{
+		$this->set_property(self::DISPLAY_PRIORITY_COLUMN, false);
+	}
+	
+	public function is_priority_column_displayed()
+	{
+		return $this->get_property(self::DISPLAY_PRIORITY_COLUMN);
+	}
+	
+	public function display_detected_in_column()
+	{
+		$this->set_property(self::DISPLAY_DETECTED_IN_COLUMN, true);
+	}
+	
+	public function hide_detected_in_column()
+	{
+		$this->set_property(self::DISPLAY_DETECTED_IN_COLUMN, false);
+	}
+	
+	public function is_detected_in_column_displayed()
+	{
+		return $this->get_property(self::DISPLAY_DETECTED_IN_COLUMN);
+	}
+	
 	 /**
 	 * @method Get authorizations
 	 */
@@ -766,8 +791,6 @@ class BugtrackerConfig extends AbstractConfigData
 			self::ITEMS_PER_PAGE => 20,
 			self::REJECTED_BUG_COLOR => '#f8465e',
 			self::FIXED_BUG_COLOR => '#afffa2',
-			self::DATE_FORM => Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE,
-			self::CAT_IN_TITLE_ENABLED => false,
 			self::ROADMAP_ENABLED => false,
 			self::STATS_ENABLED => true,
 			self::STATS_TOP_POSTERS_ENABLED => true,
@@ -785,11 +808,11 @@ class BugtrackerConfig extends AbstractConfigData
 			self::PM_REJECT_ENABLED => true,
 			self::PM_REOPEN_ENABLED => true,
 			self::PM_DELETE_ENABLED => true,
-			self::CONTENTS_VALUE => $lang['bugtracker.config.contents_value'],
-			self::TYPES => array(1 => $lang['bugtracker.config.types.anomaly'], $lang['bugtracker.config.types.evolution_demand']),
-			self::CATEGORIES => array(1 => $lang['bugtracker.config.categories.kernel'], $lang['bugtracker.config.categories.module'], $lang['bugtracker.config.categories.graphism'], $lang['bugtracker.config.categories.installation']),
-			self::SEVERITIES => array(1 => array('name' => $lang['bugtracker.config.severities.minor'], 'color' => '#e8ffa2'), array('name' => $lang['bugtracker.config.severities.major'], 'color' => '#feebbc'), array('name' => $lang['bugtracker.config.severities.critical'], 'color' => '#fdbbbb')),
-			self::PRIORITIES => array(1 => $lang['bugtracker.config.priorities.very_low'], $lang['bugtracker.config.priorities.low'], $lang['bugtracker.config.priorities.normal'], $lang['bugtracker.config.priorities.high'], $lang['bugtracker.config.priorities.urgent']),
+			self::CONTENTS_VALUE => '',
+			self::TYPES => array(1 => $lang['types.anomaly'], $lang['types.evolution']),
+			self::CATEGORIES => array(1 => $lang['categories.kernel'], $lang['categories.module'], $lang['categories.graphism'], $lang['categories.installation']),
+			self::SEVERITIES => array(1 => array('name' => $lang['severities.minor'], 'color' => '#e8ffa2'), array('name' => $lang['severities.major'], 'color' => '#feebbc'), array('name' => $lang['severities.critical'], 'color' => '#fdbbbb')),
+			self::PRIORITIES => array(1 => $lang['priorities.very_low'], $lang['priorities.low'], $lang['priorities.normal'], $lang['priorities.high'], $lang['priorities.urgent']),
 			self::VERSIONS => array(),
 			self::DEFAULT_TYPE => 1,
 			self::DEFAULT_CATEGORY => 0,
@@ -801,6 +824,10 @@ class BugtrackerConfig extends AbstractConfigData
 			self::SEVERITY_MANDATORY => false,
 			self::PRIORITY_MANDATORY => true,
 			self::DETECTED_IN_VERSION_MANDATORY => false,
+			self::DISPLAY_TYPE_COLUMN => false,
+			self::DISPLAY_CATEGORY_COLUMN => false,
+			self::DISPLAY_PRIORITY_COLUMN => false,
+			self::DISPLAY_DETECTED_IN_COLUMN => false,
 			self::AUTHORIZATIONS => array('r0' => 3, 'r1' => 15),
 			self::STATUS_LIST => array(Bug::NEW_BUG => 0, Bug::PENDING => 0, Bug::ASSIGNED => 20, Bug::IN_PROGRESS => 50, Bug::REJECTED => 0, Bug::REOPEN => 30, Bug::FIXED => 100)
 		);

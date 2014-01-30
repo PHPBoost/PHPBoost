@@ -121,23 +121,26 @@ class BugtrackerSolvedListController extends ModuleController
 		}
 		
 		$this->view->put_all(array(
-			'C_IS_ADMIN'				=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
-			'C_BUGS' 					=> $result->get_rows_count() > 0,
-			'C_IS_DATE_FORM_SHORT'		=> $config->is_date_form_short(),
-			'C_PAGINATION'				=> $pagination->has_several_pages(),
-			'PAGINATION' 				=> $pagination->display(),
-			'BUGS_COLSPAN' 				=> BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4,
-			'L_NO_BUG' 					=> empty($filters) ? $this->lang['bugs.notice.no_bug_solved'] : (count($filters) > 1 ? $this->lang['bugs.notice.no_bug_matching_filters'] : $this->lang['bugs.notice.no_bug_matching_filter']),
-			'FILTER_LIST'				=> BugtrackerViews::build_filters('solved', $bugs_number),
-			'LEGEND'					=> BugtrackerViews::build_legend($displayed_status, 'solved'),
-			'LINK_BUG_ID_TOP' 			=> BugtrackerUrlBuilder::solved('id/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_ID_BOTTOM' 		=> BugtrackerUrlBuilder::solved('id/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_TITLE_TOP' 		=> BugtrackerUrlBuilder::solved('title/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_TITLE_BOTTOM' 	=> BugtrackerUrlBuilder::solved('title/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_STATUS_TOP'		=> BugtrackerUrlBuilder::solved('status/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_STATUS_BOTTOM'	=> BugtrackerUrlBuilder::solved('status/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_DATE_TOP' 		=> BugtrackerUrlBuilder::solved('date/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_DATE_BOTTOM' 		=> BugtrackerUrlBuilder::solved('date/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel()
+			'C_IS_ADMIN'					=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
+			'C_BUGS' 						=> $result->get_rows_count() > 0,
+			'C_DISPLAY_TYPE_COLUMN'			=> $config->is_type_column_displayed(),
+			'C_DISPLAY_CATEGORY_COLUMN'		=> $config->is_category_column_displayed(),
+			'C_DISPLAY_PRIORITY_COLUMN'		=> $config->is_priority_column_displayed(),
+			'C_DISPLAY_DETECTED_IN_COLUMN'	=> $config->is_detected_in_column_displayed(),
+			'C_PAGINATION'					=> $pagination->has_several_pages(),
+			'PAGINATION' 					=> $pagination->display(),
+			'BUGS_COLSPAN' 					=> BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4,
+			'L_NO_BUG' 						=> empty($filters) ? $this->lang['notice.no_bug_solved'] : (count($filters) > 1 ? $this->lang['notice.no_bug_matching_filters'] : $this->lang['notice.no_bug_matching_filter']),
+			'FILTER_LIST'					=> BugtrackerViews::build_filters('solved', $bugs_number),
+			'LEGEND'						=> BugtrackerViews::build_legend($displayed_status, 'solved'),
+			'LINK_BUG_ID_TOP' 				=> BugtrackerUrlBuilder::solved('id/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_ID_BOTTOM' 			=> BugtrackerUrlBuilder::solved('id/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_TITLE_TOP' 			=> BugtrackerUrlBuilder::solved('title/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_TITLE_BOTTOM' 		=> BugtrackerUrlBuilder::solved('title/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_STATUS_TOP'			=> BugtrackerUrlBuilder::solved('status/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_STATUS_BOTTOM'		=> BugtrackerUrlBuilder::solved('status/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_DATE_TOP' 			=> BugtrackerUrlBuilder::solved('date/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_DATE_BOTTOM' 			=> BugtrackerUrlBuilder::solved('date/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel()
 		));
 		
 		return $this->view;
@@ -185,19 +188,19 @@ class BugtrackerSolvedListController extends ModuleController
 		switch ($success)
 		{
 			case 'add':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.add'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.add'], array('id' => $bug_id));
 				break;
 			case 'edit':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.edit'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.edit'], array('id' => $bug_id));
 				break;
 			case 'fixed':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.fixed'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.fixed'], array('id' => $bug_id));
 				break;
 			case 'delete':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.delete'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.delete'], array('id' => $bug_id));
 				break;
 			case 'reopen':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.reopen'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.reopen'], array('id' => $bug_id));
 				break;
 			default:
 				$errstr = '';
@@ -206,9 +209,9 @@ class BugtrackerSolvedListController extends ModuleController
 			$body_view->put('MSG', MessageHelper::display($errstr, E_USER_SUCCESS, 5));
 		
 		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.solved'], BugtrackerUrlBuilder::solved());
-		$response->set_page_title($this->lang['bugs.titles.solved']);
+		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['titles.solved'], BugtrackerUrlBuilder::solved());
+		$response->set_page_title($this->lang['titles.solved']);
 		
 		return $response->display($body_view);
 	}

@@ -116,13 +116,6 @@ class BugtrackerDetailController extends ModuleController
 			'C_PRIORITIES' 					=> $priorities,
 			'C_VERSIONS' 					=> $versions,
 			'C_USER_ASSIGNED_GROUP_COLOR'	=> !empty($user_assigned_group_color),
-			'C_IS_DATE_FORM_SHORT'			=> $config->is_date_form_short(),
-			'TYPE'							=> (isset($types[$this->bug->get_type()])) ? stripslashes($types[$this->bug->get_type()]) : $this->lang['bugs.notice.none'],
-			'CATEGORY'						=> (isset($categories[$this->bug->get_category()])) ? stripslashes($categories[$this->bug->get_category()]) : $this->lang['bugs.notice.none_e'],
-			'SEVERITY'						=> (isset($severities[$this->bug->get_severity()])) ? stripslashes($severities[$this->bug->get_severity()]['name']) : $this->lang['bugs.notice.none'],
-			'PRIORITY'						=> (isset($priorities[$this->bug->get_priority()])) ? stripslashes($priorities[$this->bug->get_priority()]) : $this->lang['bugs.notice.none_e'],
-			'DETECTED_IN' 					=> (isset($versions[$this->bug->get_detected_in()])) ? stripslashes($versions[$this->bug->get_detected_in()]['name']) : $this->lang['bugs.notice.not_defined'],
-			'FIXED_IN'						=> (isset($versions[$this->bug->get_fixed_in()])) ? stripslashes($versions[$this->bug->get_fixed_in()]['name']) : $this->lang['bugs.notice.not_defined'],
 			'USER_ASSIGNED'					=> $user_assigned,
 			'USER_ASSIGNED'					=> $user_assigned ? $user_assigned->get_pseudo() : '',
 			'USER_ASSIGNED_LEVEL_CLASS'		=> $user_assigned ? UserService::get_level_class($user_assigned->get_level()) : '',
@@ -153,7 +146,7 @@ class BugtrackerDetailController extends ModuleController
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['bugs.error.e_unexist_bug']);
+			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
 		}
 		
@@ -181,28 +174,28 @@ class BugtrackerDetailController extends ModuleController
 		switch ($success)
 		{
 			case 'add':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.add'], array('id' => $this->bug->get_id()));
+				$errstr = StringVars::replace_vars($this->lang['success.add'], array('id' => $this->bug->get_id()));
 				break;
 			case 'edit':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.edit'], array('id' => $this->bug->get_id()));
+				$errstr = StringVars::replace_vars($this->lang['success.edit'], array('id' => $this->bug->get_id()));
 				break;
 			case 'fixed':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.fixed'], array('id' => $this->bug->get_id()));
+				$errstr = StringVars::replace_vars($this->lang['success.fixed'], array('id' => $this->bug->get_id()));
 				break;
 			case 'pending':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.pending'], array('id' => $this->bug->get_id()));
+				$errstr = StringVars::replace_vars($this->lang['success.pending'], array('id' => $this->bug->get_id()));
 				break;
 			case 'delete':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.delete'], array('id' => $this->bug->get_id()));
+				$errstr = StringVars::replace_vars($this->lang['success.delete'], array('id' => $this->bug->get_id()));
 				break;
 			case 'reject':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.reject'], array('id' => $this->bug->get_id()));
+				$errstr = StringVars::replace_vars($this->lang['success.reject'], array('id' => $this->bug->get_id()));
 				break;
 			case 'reopen':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.reopen'], array('id' => $this->bug->get_id()));
+				$errstr = StringVars::replace_vars($this->lang['success.reopen'], array('id' => $this->bug->get_id()));
 				break;
 			case 'assign':
-				$errstr = StringVars::replace_vars($this->lang['bugs.success.assigned'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.assigned'], array('id' => $bug_id));
 				break;
 			default:
 				$errstr = '';
@@ -211,9 +204,9 @@ class BugtrackerDetailController extends ModuleController
 			$body_view->put('MSG', MessageHelper::display($errstr, E_USER_SUCCESS, 5));
 		
 		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.detail'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::detail($this->bug->get_id()));
-		$response->set_page_title($this->lang['bugs.titles.detail'] . ' #' . $this->bug->get_id());
+		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['titles.detail'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::detail($this->bug->get_id()));
+		$response->set_page_title($this->lang['titles.detail'] . ' #' . $this->bug->get_id());
 		
 		return $response->display($body_view);
 	}

@@ -44,8 +44,6 @@ class AdminBugtrackerConfigController extends AdminModuleController
 	{
 		$this->init();
 		
-		$this->check_authorizations();
-		
 		$this->build_form();
 		
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
@@ -83,22 +81,13 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$tpl->put('FORM', $this->form->display());
 		
-		return new AdminBugtrackerDisplayResponse($tpl, $this->lang['bugs.titles.admin.module_config']);
+		return new AdminBugtrackerDisplayResponse($tpl, $this->lang['titles.admin.module_config']);
 	}
 	
 	private function init()
 	{
 		$this->config = BugtrackerConfig::load();
 		$this->lang = LangLoader::get('common', 'bugtracker');
-	}
-	
-	private function check_authorizations()
-	{
-		if (!BugtrackerAuthorizationsService::check_authorizations()->moderation())
-		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-			DispatchManager::redirect($error_controller);
-		}
 	}
 	
 	private function build_form()
@@ -108,35 +97,26 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$severities = $this->config->get_severities();
 		$main_lang = LangLoader::get('main');
 		
-		$fieldset = new FormFieldsetHTML('config', $this->lang['bugs.titles.admin.config']);
+		$fieldset = new FormFieldsetHTML('config', $this->lang['titles.admin.config']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->lang['bugs.config.items_per_page'], (int)$this->config->get_items_per_page(), array(
+		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->lang['config.items_per_page'], (int)$this->config->get_items_per_page(), array(
 			'maxlength' => 2, 'size' => 3, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldColorPicker('fixed_bug_color', $this->lang['bugs.config.fixed_bug_color_label'], $this->config->get_fixed_bug_color()));
+		$fieldset->add_field(new FormFieldColorPicker('fixed_bug_color', $this->lang['config.fixed_bug_color_label'], $this->config->get_fixed_bug_color()));
 		
-		$fieldset->add_field(new FormFieldColorPicker('rejected_bug_color', $this->lang['bugs.config.rejected_bug_color_label'], $this->config->get_rejected_bug_color()));
+		$fieldset->add_field(new FormFieldColorPicker('rejected_bug_color', $this->lang['config.rejected_bug_color_label'], $this->config->get_rejected_bug_color()));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('date_form', $this->lang['bugs.labels.date_format'], $this->config->get_date_form(),
-			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('date', 'date-common'), Date::FORMAT_DAY_MONTH_YEAR),
-				new FormFieldRadioChoiceOption($this->lang['bugs.labels.date_time'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)
-			)
+		$fieldset->add_field(new FormFieldCheckbox('roadmap_enabled', $this->lang['config.activ_roadmap'], $this->config->is_roadmap_enabled(),
+			array('description' => $this->lang['explain.roadmap'])
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('cat_in_title_displayed', $this->lang['bugs.config.activ_cat_in_title'], $this->config->is_cat_in_title_displayed()));
-		
-		$fieldset->add_field(new FormFieldCheckbox('roadmap_enabled', $this->lang['bugs.config.activ_roadmap'], $this->config->is_roadmap_enabled(),
-			array('description' => $this->lang['bugs.explain.roadmap'])
-		));
-		
-		$fieldset = new FormFieldsetHTML('progress_bar', $this->lang['bugs.config.progress_bar']);
+		$fieldset = new FormFieldsetHTML('progress_bar', $this->lang['config.progress_bar']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('progress_bar_displayed', $this->lang['bugs.config.activ_progress_bar'], $this->config->is_progress_bar_displayed(),
+		$fieldset->add_field(new FormFieldCheckbox('progress_bar_displayed', $this->lang['config.activ_progress_bar'], $this->config->is_progress_bar_displayed(),
 			array('events' => array('click' => '
 				if (HTMLForms.getField("progress_bar_displayed").getValue()) {
 					HTMLForms.getField("' . Bug::NEW_BUG . '").enable();
@@ -160,16 +140,16 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		foreach ($this->config->get_status_list() as $key => $value)
 		{
-			$fieldset->add_field(new FormFieldTextEditor($key, $this->lang['bugs.config.status.' . $key], $value, array(
+			$fieldset->add_field(new FormFieldTextEditor($key, $this->lang['config.status.' . $key], $value, array(
 				'maxlength' => 3, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_progress_bar_displayed()),
 				array(new FormFieldConstraintIntegerRange(0, 100))
 			));
 		}
 		
-		$fieldset = new FormFieldsetHTML('admin_alerts', $this->lang['bugs.config.admin_alerts']);
+		$fieldset = new FormFieldsetHTML('admin_alerts', $this->lang['config.admin_alerts']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('admin_alerts_enabled', $this->lang['bugs.config.activ_admin_alerts'], $this->config->are_admin_alerts_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('admin_alerts_enabled', $this->lang['config.activ_admin_alerts'], $this->config->are_admin_alerts_enabled(),
 			array('events' => array('click' => '
 				if (HTMLForms.getField("admin_alerts_enabled").getValue()) {
 					HTMLForms.getField("admin_alerts_fix_action").enable();
@@ -181,22 +161,22 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldMultipleCheckbox('admin_alerts_levels', $this->lang['bugs.config.admin_alerts_levels'], $this->config->get_admin_alerts_levels(), $this->build_admin_alerts_levels($severities),
+		$fieldset->add_field(new FormFieldMultipleCheckbox('admin_alerts_levels', $this->lang['config.admin_alerts_levels'], $this->config->get_admin_alerts_levels(), $this->build_admin_alerts_levels($severities),
 			array('hidden' => !$this->config->are_admin_alerts_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('admin_alerts_fix_action', $this->lang['bugs.config.admin_alerts_fix_action'], $this->config->get_admin_alerts_fix_action(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('admin_alerts_fix_action', $this->lang['config.admin_alerts_fix_action'], $this->config->get_admin_alerts_fix_action(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['bugs.labels.alert_fix'], BugtrackerConfig::FIX),
-				new FormFieldSelectChoiceOption($this->lang['bugs.labels.alert_delete'], BugtrackerConfig::DELETE)
+				new FormFieldSelectChoiceOption($this->lang['labels.alert_fix'], BugtrackerConfig::FIX),
+				new FormFieldSelectChoiceOption($this->lang['labels.alert_delete'], BugtrackerConfig::DELETE)
 			),
 			array('hidden' => !$this->config->are_admin_alerts_enabled())
 		));
 		
-		$fieldset = new FormFieldsetHTML('stats', $this->lang['bugs.titles.stats']);
+		$fieldset = new FormFieldsetHTML('stats', $this->lang['titles.stats']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('stats_enabled', $this->lang['bugs.config.activ_stats'], $this->config->are_stats_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('stats_enabled', $this->lang['config.activ_stats'], $this->config->are_stats_enabled(),
 			array('events' => array('click' => '
 				if (HTMLForms.getField("stats_enabled").getValue()) {
 					HTMLForms.getField("stats_top_posters_enabled").enable();
@@ -208,7 +188,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('stats_top_posters_enabled', $this->lang['bugs.config.activ_stats_top_posters'], $this->config->are_stats_top_posters_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('stats_top_posters_enabled', $this->lang['config.activ_stats_top_posters'], $this->config->are_stats_top_posters_enabled(),
 			array('hidden' => !$this->config->are_stats_enabled(), 'events' => array('click' => '
 				if (HTMLForms.getField("stats_top_posters_enabled").getValue()) {
 					HTMLForms.getField("stats_top_posters_number").enable();
@@ -217,15 +197,15 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				}')
 		)));
 		
-		$fieldset->add_field(new FormFieldTextEditor('stats_top_posters_number', $this->lang['bugs.config.stats_top_posters_number'], (int)$this->config->get_stats_top_posters_number(), array(
+		$fieldset->add_field(new FormFieldTextEditor('stats_top_posters_number', $this->lang['config.stats_top_posters_number'], (int)$this->config->get_stats_top_posters_number(), array(
 			'maxlength' => 3, 'size' => 3, 'hidden' => !$this->config->are_stats_top_posters_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset = new FormFieldsetHTML('pm', $this->lang['bugs.config.pm']);
+		$fieldset = new FormFieldsetHTML('pm', $this->lang['config.pm']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_enabled', $this->lang['bugs.config.activ_pm'], $this->config->are_pm_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
+		$fieldset->add_field(new FormFieldCheckbox('pm_enabled', $this->lang['config.activ_pm'], $this->config->are_pm_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
 			array('events' => array('click' => '
 				if (HTMLForms.getField("pm_enabled").getValue()) {
 					HTMLForms.getField("pm_comment_enabled").enable();
@@ -248,51 +228,58 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				}')
 		)));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_comment_enabled', $this->lang['bugs.config.activ_pm.comment'], $this->config->are_pm_comment_enabled(), array(
+		$fieldset->add_field(new FormFieldCheckbox('pm_comment_enabled', $this->lang['config.activ_pm.comment'], $this->config->are_pm_comment_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_fix_enabled', $this->lang['bugs.config.activ_pm.fix'], $this->config->are_pm_fix_enabled(), array(
+		$fieldset->add_field(new FormFieldCheckbox('pm_fix_enabled', $this->lang['config.activ_pm.fix'], $this->config->are_pm_fix_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_pending_enabled', $this->lang['bugs.config.activ_pm.pending'], $this->config->are_pm_pending_enabled(), array(
+		$fieldset->add_field(new FormFieldCheckbox('pm_pending_enabled', $this->lang['config.activ_pm.pending'], $this->config->are_pm_pending_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_assign_enabled', $this->lang['bugs.config.activ_pm.assign'], $this->config->are_pm_assign_enabled(), array(
+		$fieldset->add_field(new FormFieldCheckbox('pm_assign_enabled', $this->lang['config.activ_pm.assign'], $this->config->are_pm_assign_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_edit_enabled', $this->lang['bugs.config.activ_pm.edit'], $this->config->are_pm_edit_enabled(), array(
+		$fieldset->add_field(new FormFieldCheckbox('pm_edit_enabled', $this->lang['config.activ_pm.edit'], $this->config->are_pm_edit_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_reject_enabled', $this->lang['bugs.config.activ_pm.reject'], $this->config->are_pm_reject_enabled(), array(
+		$fieldset->add_field(new FormFieldCheckbox('pm_reject_enabled', $this->lang['config.activ_pm.reject'], $this->config->are_pm_reject_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_reopen_enabled', $this->lang['bugs.config.activ_pm.reopen'], $this->config->are_pm_reopen_enabled(), array(
+		$fieldset->add_field(new FormFieldCheckbox('pm_reopen_enabled', $this->lang['config.activ_pm.reopen'], $this->config->are_pm_reopen_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_delete_enabled', $this->lang['bugs.config.activ_pm.delete'], $this->config->are_pm_delete_enabled(), array(
+		$fieldset->add_field(new FormFieldCheckbox('pm_delete_enabled', $this->lang['config.activ_pm.delete'], $this->config->are_pm_delete_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset = new FormFieldsetHTML('contents-value', $this->lang['bugs.titles.contents_value_title']);
-		$fieldset->set_description($this->lang['bugs.explain.contents_value']);
+		$fieldset = new FormFieldsetHTML('contents-value', $this->lang['titles.contents_value_title']);
+		$fieldset->set_description($this->lang['explain.contents_value']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('contents_value', $this->lang['bugs.titles.contents_value'], $this->config->get_contents_value(), 
+		$fieldset->add_field(new FormFieldRichTextEditor('contents_value', $this->lang['titles.contents_value'], $this->config->get_contents_value(), 
 			array('rows' => 8, 'cols' => 47)
 		));
 		
-		$fieldset = new FormFieldsetHTML('types-fieldset', $this->lang['bugs.titles.types']);
-		$fieldset->set_description($this->lang['bugs.explain.type'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$fieldset = new FormFieldsetHTML('types-fieldset', $this->lang['titles.types']);
+		$fieldset->set_description($this->lang['explain.type'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('type_mandatory', $this->lang['bugs.labels.type_mandatory'], $this->config->is_type_mandatory(),
+		$fieldset->add_field(new FormFieldRadioChoice('type_mandatory', $this->lang['labels.type_mandatory'], $this->config->is_type_mandatory(),
+			array(
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldRadioChoice('display_type_column', $this->lang['config.display_type_column'], $this->config->is_type_column_displayed(),
 			array(
 				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
 				new FormFieldRadioChoiceOption($main_lang['no'], 0)
@@ -301,11 +288,18 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldHTML('types_table', $this->build_types_table()->render()));
 		
-		$fieldset = new FormFieldsetHTML('categories-fieldset', $this->lang['bugs.titles.categories']);
-		$fieldset->set_description($this->lang['bugs.explain.category'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$fieldset = new FormFieldsetHTML('categories-fieldset', $this->lang['titles.categories']);
+		$fieldset->set_description($this->lang['explain.category'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('category_mandatory', $this->lang['bugs.labels.category_mandatory'], $this->config->is_category_mandatory(),
+		$fieldset->add_field(new FormFieldRadioChoice('category_mandatory', $this->lang['labels.category_mandatory'], $this->config->is_category_mandatory(),
+			array(
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldRadioChoice('display_category_column', $this->lang['config.display_category_column'], $this->config->is_category_column_displayed(),
 			array(
 				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
 				new FormFieldRadioChoiceOption($main_lang['no'], 0)
@@ -314,11 +308,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldHTML('categories_table', $this->build_categories_table()->render()));
 		
-		$fieldset = new FormFieldsetHTML('severities-fieldset', $this->lang['bugs.titles.severities']);
-		$fieldset->set_description($this->lang['bugs.explain.severity'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$fieldset = new FormFieldsetHTML('severities-fieldset', $this->lang['titles.severities']);
+		$fieldset->set_description($this->lang['explain.severity'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('severity_mandatory', $this->lang['bugs.labels.severity_mandatory'], $this->config->is_severity_mandatory(),
+		$fieldset->add_field(new FormFieldRadioChoice('severity_mandatory', $this->lang['labels.severity_mandatory'], $this->config->is_severity_mandatory(),
 			array(
 				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
 				new FormFieldRadioChoiceOption($main_lang['no'], 0)
@@ -327,11 +321,18 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldHTML('severities_table', $this->build_severities_table()->render()));
 		
-		$fieldset = new FormFieldsetHTML('priorities-fieldset', $this->lang['bugs.titles.priorities']);
-		$fieldset->set_description($this->lang['bugs.explain.priority'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$fieldset = new FormFieldsetHTML('priorities-fieldset', $this->lang['titles.priorities']);
+		$fieldset->set_description($this->lang['explain.priority'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('priority_mandatory', $this->lang['bugs.labels.priority_mandatory'], $this->config->is_priority_mandatory(),
+		$fieldset->add_field(new FormFieldRadioChoice('priority_mandatory', $this->lang['labels.priority_mandatory'], $this->config->is_priority_mandatory(),
+			array(
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldRadioChoice('display_priority_column', $this->lang['config.display_priority_column'], $this->config->is_priority_column_displayed(),
 			array(
 				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
 				new FormFieldRadioChoiceOption($main_lang['no'], 0)
@@ -340,11 +341,18 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldHTML('priorities_table', $this->build_priorities_table()->render()));
 		
-		$fieldset = new FormFieldsetHTML('versions-fieldset', $this->lang['bugs.titles.versions']);
-		$fieldset->set_description($this->lang['bugs.explain.version'] . '<br /><br />' . $this->lang['bugs.explain.remarks']);
+		$fieldset = new FormFieldsetHTML('versions-fieldset', $this->lang['titles.versions']);
+		$fieldset->set_description($this->lang['explain.version'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('detected_in_version_mandatory', $this->lang['bugs.labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory(),
+		$fieldset->add_field(new FormFieldRadioChoice('detected_in_version_mandatory', $this->lang['labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory(),
+			array(
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldRadioChoice('display_detected_in_column', $this->lang['config.display_detected_in_column'], $this->config->is_detected_in_column_displayed(),
 			array(
 				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
 				new FormFieldRadioChoiceOption($main_lang['no'], 0)
@@ -615,12 +623,6 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
 		$this->config->set_rejected_bug_color($this->form->get_value('rejected_bug_color'));
 		$this->config->set_fixed_bug_color($this->form->get_value('fixed_bug_color'));
-		$this->config->set_date_form($this->form->get_value('date_form')->get_raw_value());
-		
-		if ($this->form->get_value('cat_in_title_displayed'))
-			$this->config->display_cat_in_title();
-		else
-			$this->config->hide_cat_in_title();
 		
 		if ($this->form->get_value('roadmap_enabled'))
 			$this->config->enable_roadmap();
@@ -724,6 +726,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		else
 			$this->config->type_not_mandatory();
 		
+		if ($this->form->get_value('display_type_column')->get_raw_value())
+			$this->config->display_type_column();
+		else
+			$this->config->hide_type_column();
+		
 		$this->config->set_types($types);
 		$this->config->set_default_type($request->get_value('default_type', 0));
 		
@@ -731,6 +738,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->config->category_mandatory();
 		else
 			$this->config->category_not_mandatory();
+		
+		if ($this->form->get_value('display_category_column')->get_raw_value())
+			$this->config->display_category_column();
+		else
+			$this->config->hide_category_column();
 		
 		$this->config->set_categories($categories);
 		$this->config->set_default_category($request->get_value('default_category', 0));
@@ -748,6 +760,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		else
 			$this->config->priority_not_mandatory();
 		
+		if ($this->form->get_value('display_priority_column')->get_raw_value())
+			$this->config->display_priority_column();
+		else
+			$this->config->hide_priority_column();
+		
 		$this->config->set_priorities($priorities);
 		$this->config->set_default_priority($request->get_value('default_priority', 0));
 		
@@ -755,6 +772,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->config->detected_in_version_mandatory();
 		else
 			$this->config->detected_in_version_not_mandatory();
+		
+		if ($this->form->get_value('display_detected_in_column')->get_raw_value())
+			$this->config->display_detected_in_column();
+		else
+			$this->config->hide_detected_in_column();
 		
 		$this->config->set_versions($versions);
 		$this->config->set_default_version($request->get_value('default_version', 0));

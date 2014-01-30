@@ -55,60 +55,60 @@ class BugtrackerPMService
 			switch ($pm_type)
 			{
 				case 'assigned':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.assigned.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.assigned.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
+					$pm_title = StringVars::replace_vars($lang['pm.assigned.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.assigned.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
 					break;
 				case 'assigned_with_comment':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.assigned.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.assigned.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
+					$pm_title = StringVars::replace_vars($lang['pm.assigned.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.assigned.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
 					break;
 				case 'pending':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.pending.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.pending.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
+					$pm_title = StringVars::replace_vars($lang['pm.pending.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.pending.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
 					break;
 				case 'pending_with_comment':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.pending.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.pending.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
+					$pm_title = StringVars::replace_vars($lang['pm.pending.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.pending.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
 					break;
 				case 'comment':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.comment.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.comment.contents'], array('author' => $author, 'id' => $bug_id, 'comment' => $message, 'link' => BugtrackerUrlBuilder::detail($bug_id . '/#comments_list')->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id . '/#comments_list')->rel())));
+					$pm_title = StringVars::replace_vars($lang['pm.comment.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.comment.contents'], array('author' => $author, 'id' => $bug_id, 'comment' => $message, 'link' => BugtrackerUrlBuilder::detail($bug_id . '/#comments_list')->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id . '/#comments_list')->rel())));
 					break;
 				case 'delete':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.delete.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.delete.contents'], array('author' => $author, 'id' => $bug_id)));
+					$pm_title = StringVars::replace_vars($lang['pm.delete.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.delete.contents'], array('author' => $author, 'id' => $bug_id)));
 					break;
 				case 'delete_with_comment':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.delete.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.delete.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'comment' => $message)));
+					$pm_title = StringVars::replace_vars($lang['pm.delete.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.delete.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'comment' => $message)));
 					break;
 				case 'edit':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.edit.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.edit.contents'], array('author' => $author, 'id' => $bug_id, 'fields' => $message, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
+					$pm_title = StringVars::replace_vars($lang['pm.edit.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.edit.contents'], array('author' => $author, 'id' => $bug_id, 'fields' => $message, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
 					break;
 				case 'fixed':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.fixed.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.fixed.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
+					$pm_title = StringVars::replace_vars($lang['pm.fixed.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.fixed.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
 					break;
 				case 'fixed_with_comment':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.fixed.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.fixed.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
+					$pm_title = StringVars::replace_vars($lang['pm.fixed.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.fixed.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
 					break;
 				case 'reject':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.reject.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.reject.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
+					$pm_title = StringVars::replace_vars($lang['pm.reject.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.reject.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
 					break;
 				case 'reject_with_comment':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.reject.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.reject.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
+					$pm_title = StringVars::replace_vars($lang['pm.reject.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.reject.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
 					break;
 				case 'reopen':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.reopen.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.reopen.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
+					$pm_title = StringVars::replace_vars($lang['pm.reopen.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.reopen.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
 					break;
 				case 'reopen_with_comment':
-					$pm_title = StringVars::replace_vars($lang['bugs.pm.reopen.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.reopen.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
+					$pm_title = StringVars::replace_vars($lang['pm.reopen.title'], array('id' => $bug_id, 'author' => $author));
+					$pm_content = nl2br(StringVars::replace_vars($lang['pm.reopen.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
 					break;
 			}
 			
