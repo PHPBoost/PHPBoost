@@ -138,6 +138,8 @@ class ThemeManager
 					$folder = new Folder(PATH_TO_ROOT . '/templates/' . $theme_id);
 					$folder->delete();
 				}
+				
+				AppContext::get_cache_service()->clear_css_cache();
 			}
 		}
 	}
