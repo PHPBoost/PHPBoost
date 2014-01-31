@@ -197,7 +197,7 @@
 
 .content_list article .box {
     width: 100%;
-    height: 259px;
+    min-height: 259px;
     overflow: hidden;
 }
 
@@ -207,10 +207,9 @@
 }
 
 .title_description {
-    padding: 30px 40px 50px 35px;
-    overflow: hidden;
+    padding: 30px 40px 20px 35px;
     position: relative;
-    height: 214px;
+    min-height: 214px;
     box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;

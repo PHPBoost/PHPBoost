@@ -105,6 +105,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$this->view->put_all(array(
 			'C_MODERATE' => ArticlesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY)->moderation(),
 			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+                        'C_BLOCK' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_BLOCK,
 			'C_PENDING_ARTICLES' => false,
 			'C_PUBLISHED_ARTICLES' => true,
 			'C_ARTICLES_CAT' => false,

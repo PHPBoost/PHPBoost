@@ -92,12 +92,14 @@
 				# START articles #
 				<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 					<div class="box">
-						<figure>
+						# IF NOT C_BLOCK #
+                                                <figure>
 							
 							# IF articles.C_HAS_PICTURE #
 							<a itemprop="url" href="{articles.U_ARTICLE}"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" width="261" height="214" alt="{articles.TITLE}" /></a>
 							# ENDIF #
 						</figure>
+                                                # ENDIF #
 						<div class="title_description">
 							<div class="article_tools">
 								# IF articles.C_EDIT #

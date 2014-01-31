@@ -131,21 +131,42 @@ class Articles
 	
 	public function get_real_description()
 	{
-		if ($this->get_description_enabled())
+		$display_type = ArticlesConfig::load()->get_display_type();
+                if ($this->get_description_enabled())
 		{
-			return TextHelper::substr_html(@strip_tags($this->description), 0);
+                    switch ($display_type) 
+                    {
+                            case ArticlesConfig::DISPLAY_MOSAIC:
+                                return TextHelper::substr_html(@strip_tags($this->description), 0, self::NBR_CHARACTER_TO_CUT_MOSAIC) . '...';
+                                break;
+
+                            case ArticlesConfig::DISPLAY_LIST:
+                                return TextHelper::substr_html(@strip_tags($this->description), 0, self::NBR_CHARACTER_TO_CUT_LIST) . '...';
+                                break;
+
+                            default:
+                                return TextHelper::substr_html(@strip_tags($this->description), 0, ArticlesConfig::load()->get_number_character_to_cut_block_display());
+                                break;
+                    }
 		}
 		else
 		{
 			$clean_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $this->contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-			if (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC)
-			{
-			    return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, self::NBR_CHARACTER_TO_CUT_MOSAIC) . '...';
-			}
-			else
-			{
-			    return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, self::NBR_CHARACTER_TO_CUT_LIST) . '...';
-			}
+			
+                        switch ($display_type) 
+                        {
+                                case ArticlesConfig::DISPLAY_MOSAIC:
+                                    return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, self::NBR_CHARACTER_TO_CUT_MOSAIC) . '...';
+                                    break;
+
+                                case ArticlesConfig::DISPLAY_LIST:
+                                    return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, self::NBR_CHARACTER_TO_CUT_LIST) . '...';
+                                    break;
+
+                                default:
+                                    return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, ArticlesConfig::load()->get_number_character_to_cut_block_display());
+                                    break;
+                        }
 		}
 	}
 	

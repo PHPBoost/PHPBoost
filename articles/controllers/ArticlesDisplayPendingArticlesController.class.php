@@ -138,7 +138,9 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->build_form($field, $mode);
 		
 		$this->view->put_all(array(
-			'C_PENDING_ARTICLES' => true,
+			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+                        'C_BLOCK' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_BLOCK,
+                        'C_PENDING_ARTICLES' => true,
 			'C_PUBLISHED_ARTICLES' => true,
 			'C_ARTICLES_CAT' => false,
 			'C_NO_ARTICLE_AVAILABLE' => $nbr_articles_pending == 0,
