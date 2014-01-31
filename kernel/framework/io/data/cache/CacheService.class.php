@@ -27,7 +27,7 @@
 
 class CacheService
 {
-	private static $all_files_regex_with_extensions = '`^\.|.*\.log|apc.php|debug.php`i';
+	private static $all_files_regex_without_extensions = '`^\.|.*\.log|apc.php|debug.php`i';
 
 	private static $cache_folder;
 	private static $tpl_cache_folder;
@@ -53,22 +53,22 @@ class CacheService
 	public function clear_phpboost_cache()
 	{
 		CacheManager::clear();
-		$this->delete_files(self::$cache_folder, self::$all_files_regex_with_extensions);
+		$this->delete_files(self::$cache_folder, self::$all_files_regex_without_extensions);
 	}
 
 	public function clear_template_cache()
 	{
-		$this->delete_files(self::$tpl_cache_folder, self::$all_files_regex_with_extensions);
+		$this->delete_files(self::$tpl_cache_folder, self::$all_files_regex_without_extensions);
 	}
 
 	public function clear_css_cache()
 	{
-		$this->delete_files(self::$css_cache_folder, self::$all_files_regex_with_extensions);
+		$this->delete_files(self::$css_cache_folder, self::$all_files_regex_without_extensions);
 	}
 
 	public function clear_syndication_cache()
 	{
-		$this->delete_files(self::$syndication_cache_folder, self::$all_files_regex_with_extensions);
+		$this->delete_files(self::$syndication_cache_folder, self::$all_files_regex_without_extensions);
 	}
 
 	private function delete_files(Folder $folder, $regex = '')

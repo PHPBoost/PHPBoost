@@ -90,8 +90,6 @@ class AdminThemeDeleteController extends AdminController
 	private function delete_theme($drop_files)
 	{
 		ThemeManager::uninstall($this->theme_id, $drop_files);
-		
-		$this->delete_css_cache();
 	}
 	
 	private function theme_exist()
@@ -101,23 +99,6 @@ class AdminThemeDeleteController extends AdminController
 			return false;
 		}
 		return ThemeManager::get_theme_existed($this->theme_id);
-	}
-	
-	private function delete_css_cache()
-	{
-		$modules_cache = PATH_TO_ROOT .'/cache/css/css-cache-modules-'. $this->theme_id .'.css';
-		$theme_cache = PATH_TO_ROOT .'/cache/css/css-cache-theme-'. $this->theme_id .'.css';
-		
-		if (file_exists($theme_cache))
-		{
-			$file = new File($theme_cache);
-			$file->delete();
-		}
-		if (file_exists($modules_cache))
-		{
-			$file = new File($modules_cache);
-			$file->delete();
-		}
 	}
 }
 ?>
