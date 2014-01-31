@@ -39,6 +39,31 @@ class CSSCacheManager
 		$this->css_optimizer = new CSSFileOptimizer();
 	}
 	
+	/* This function return address is stored in the file where the css sent to the function */
+	public static function get_css_path($files)
+	{
+		if (!empty($files))
+		{
+			if (is_array($files))
+			{
+				$cache_file_location = '/cache/css/css-cache-'. md5(implode(';', $files)) .'.css';
+			}
+			else
+			{
+				$files = str_replace('{THEME}', get_utheme(), $files);
+				$cache_file_location = '/cache/css/css-cache-'. md5($files) .'.css';
+				$files = explode(';', $files);
+			}
+			
+			$css_cache = new CSSCacheManager();
+			$css_cache->set_files($files);
+			$css_cache->set_cache_file_location(PATH_TO_ROOT . $cache_file_location);
+			$css_cache->execute(CSSCacheConfig::load()->get_optimization_level());
+
+			return TPL_PATH_TO_ROOT . $cache_file_location;
+		}
+	}
+	
 	public function set_files(Array $files)
 	{
 		foreach ($files as $file)
