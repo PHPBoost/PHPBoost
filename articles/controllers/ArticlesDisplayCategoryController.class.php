@@ -115,6 +115,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		
 		$this->view->put_all(array(
 			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+                        'C_BLOCK' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_BLOCK,
 			'C_MODERATE' =>  ArticlesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_COMMENTS_ENABLED' => ArticlesConfig::load()->are_comments_enabled(),
 			'C_ARTICLES_FILTERS' => true,

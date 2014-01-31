@@ -32,12 +32,18 @@ class ArticlesConfig extends AbstractConfigData
 {    
 	const NUMBER_ARTICLES_PER_PAGE = 'number_articles_per_page';
 	const NUMBER_CATEGORIES_PER_PAGE = 'number_categories_per_page';
-	const NOTATION_SCALE = 'notation_scale';
+        const NUMBER_CHARACTER_TO_CUT_BLOCK_DISPLAY = 'number_character_to_cut_block_display';
+
+
+        const NOTATION_SCALE = 'notation_scale';
 	const COMMENTS_ENABLED = 'comments_enable'; 
 	const DATE_UPDATED_DISPLAYED = 'date_updated_displayed';
+        
 	const DISPLAY_TYPE = 'display_type';
 	const DISPLAY_MOSAIC = 'mosaic';
 	const DISPLAY_LIST = 'list';
+        const DISPLAY_BLOCK = 'block';
+        
 	const AUTHORIZATIONS = 'authorizations';
 	
 	public function get_number_articles_per_page()
@@ -58,6 +64,16 @@ class ArticlesConfig extends AbstractConfigData
 	public function set_number_categories_per_page($number) 
 	{
 		$this->set_property(self::NUMBER_CATEGORIES_PER_PAGE, $number);
+	}
+        
+        public function get_number_character_to_cut_block_display()
+	{
+		return $this->get_property(self::NUMBER_CHARACTER_TO_CUT_BLOCK_DISPLAY);
+	}
+
+	public function set_number_character_to_cut_block_display($number)
+	{
+		$this->set_property(self::NUMBER_CHARACTER_TO_CUT_BLOCK_DISPLAY, $number);
 	}
 	
 	public function get_display_type()
@@ -120,6 +136,7 @@ class ArticlesConfig extends AbstractConfigData
 		return array(
 			self::NUMBER_ARTICLES_PER_PAGE => 10,
 			self::NUMBER_CATEGORIES_PER_PAGE => 10,
+                        self::NUMBER_CHARACTER_TO_CUT_BLOCK_DISPLAY => 250,
 			self::COMMENTS_ENABLED => true,
 			self::DATE_UPDATED_DISPLAYED => false,
 			self::NOTATION_SCALE => 5,

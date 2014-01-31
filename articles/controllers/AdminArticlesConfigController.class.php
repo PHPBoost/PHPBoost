@@ -98,8 +98,22 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(
 				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.mosaic'], ArticlesConfig::DISPLAY_MOSAIC),
 				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.list'], ArticlesConfig::DISPLAY_LIST),
-			)
+                                new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.block'], ArticlesConfig::DISPLAY_BLOCK)
+			), 
+                        array('events' => array('change' => 
+                                                    'if (HTMLForms.getField("display_type").getValue() == "block") {
+                                                            HTMLForms.getField("number_character_to_cut_block_display").enable();
+                                                    } else { 
+                                                            HTMLForms.getField("number_character_to_cut_block_display").disable();
+                                                    }'
+                                            )
+                        )
 		));
+                
+                $fieldset->add_field(new FormFieldTextEditor('number_character_to_cut_block_display', $this->lang['articles_configuration.number_character_to_cut_block_display'], $this->config->get_number_character_to_cut_block_display(), 
+			array('hidden' => $this->config->get_display_type() != ArticlesConfig::DISPLAY_BLOCK, 'size' => 6), 
+			array(new FormFieldConstraintIntegerRange(20, 1000)
+		)));
 		
 		$common_lang = LangLoader::get('common');
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $common_lang['authorizations'],
@@ -130,16 +144,23 @@ class AdminArticlesConfigController extends AdminModuleController
 	{
 		$this->config->set_number_articles_per_page($this->form->get_value('number_articles_per_page'));
 		$this->config->set_number_categories_per_page($this->form->get_value('number_categories_per_page'));
+                $this->config->set_number_character_to_cut_block_display($this->form->get_value('number_character_to_cut_block_display', $this->config->get_number_character_to_cut_block_display()));
 		
 		if ($this->form->get_value('notation_scale') != $this->config->get_notation_scale())
+                {
 			NotationService::update_notation_scale('articles', $this->config->get_notation_scale(), $this->form->get_value('notation_scale'));
-		
+                }
+                
 		$this->config->set_notation_scale($this->form->get_value('notation_scale'));
 		
 		if ($this->form->get_value('comments_enabled'))
+                {
 			$this->config->enable_comments();
+                }
 		else
+                {
 			$this->config->disable_comments();
+                }
 		
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());

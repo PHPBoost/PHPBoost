@@ -60,9 +60,11 @@ $lang['articles.date_updated'] = 'Dernière modification : ';
 //Articles configuration
 $lang['articles_configuration.number_articles_per_page'] = 'Nombre maximum d\'articles affichés par page';
 $lang['articles_configuration.number_categories_per_page'] = 'Nombre de catégories maximum affichées par page';
+$lang['articles_configuration.number_character_to_cut_block_display'] = 'Nombre de caractères pour la description de l\'article';
 $lang['articles_configuration.display_type'] = 'Type d\'affichage des articles';
 $lang['articles_configuration.display_type.mosaic'] = 'Mosaïque';
 $lang['articles_configuration.display_type.list'] = 'Liste';
+$lang['articles_configuration.display_type.block'] = 'Liste sans image';
 $lang['articles_configuration.authorizations.explain'] = 'Vous définissez ici les permissions globales du module. Vous pourrez changer ces permissions localement sur chaque catégorie';
 
 //Form
