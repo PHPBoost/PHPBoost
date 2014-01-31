@@ -57,12 +57,7 @@
 		$css_cache_config = CSSCacheConfig::load();
 		if ($css_cache_config->is_enabled())
 		{
-			$theme_id = get_utheme();
-			$css_cache = new CSSCacheManager();
-			$css_cache->set_files(ModulesCssFilesService::get_css_files_always_displayed());
-			$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-modules-' . $theme_id .'.css');
-			$css_cache->execute($css_cache_config->get_optimization_level());
-			$html_code = '<link rel="stylesheet" href="' . Url::to_rel('/cache/css/css-cache-modules-' . $theme_id .'.css') . '" type="text/css" media="screen, print, handheld" />';
+			$html_code = '<link rel="stylesheet" href="' . CSSCacheManager::get_css_path(ModulesCssFilesService::get_css_files_always_displayed()) . '" type="text/css" media="screen, print, handheld" />';
 		}
 		else
 		{
