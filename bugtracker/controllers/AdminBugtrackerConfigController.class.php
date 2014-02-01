@@ -76,7 +76,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->form->get_field_by_id('severities_table')->set_value($this->build_severities_table()->render());
 			$this->form->get_field_by_id('priorities_table')->set_value($this->build_priorities_table()->render());
 			$this->form->get_field_by_id('versions_table')->set_value($this->build_versions_table()->render());
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 5));
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), E_USER_SUCCESS, 5));
 		}
 		
 		$tpl->put('FORM', $this->form->display());

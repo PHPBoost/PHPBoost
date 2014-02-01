@@ -116,7 +116,7 @@ class AdminModuleDeleteController extends AdminController
 					AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules());
 					break;
 				default: 
-					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'errors-common'), MessageHelper::WARNING, 10));
+					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::WARNING, 10));
 			}
 		}
 		else

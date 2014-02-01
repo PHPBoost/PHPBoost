@@ -84,7 +84,7 @@ class BugtrackerRejectBugController extends ModuleController
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error.e_unexist_bug']);
+			$error_controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
 		}
 		
@@ -200,7 +200,7 @@ class BugtrackerRejectBugController extends ModuleController
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('error.e_already_rejected_bug', 'common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error.e_already_rejected_bug', 'common', 'bugtracker'));
 			DispatchManager::redirect($controller);
 		}
 	}

@@ -88,7 +88,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 		
 		if (!in_array($this->parameter, array('type', 'category', 'version')) || empty($this->id))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error.e_unexist_parameter']);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_parameter']);
 			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
 		}
@@ -103,7 +103,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				if (!isset($types[$this->id]))
 				{
 					//Error : unexist type
-					$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error.e_unexist_type']);
+					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_type']);
 					$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 					DispatchManager::redirect($controller);
 				}
@@ -112,7 +112,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				if (!isset($categories[$this->id]))
 				{
 					//Error : unexist category
-					$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error.e_unexist_category']);
+					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_category']);
 					$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 					DispatchManager::redirect($controller);
 				}
@@ -121,7 +121,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 				if (!isset($versions[$this->id]))
 				{
 					//Error : unexist version
-					$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error.e_unexist_version']);
+					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['error.e_unexist_version']);
 					$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 					DispatchManager::redirect($controller);
 				}

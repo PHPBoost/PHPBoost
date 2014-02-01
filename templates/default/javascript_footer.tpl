@@ -9,7 +9,7 @@
 				var data_confirmation = a.readAttribute('data-confirmation');
 				
 				if (data_confirmation == 'delete-element')
-					var message = ${escapejs(LangLoader::get_message('confirm.delete', 'errors-common'))};
+					var message = ${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))};
 				else
 					var message = data_confirmation;
 

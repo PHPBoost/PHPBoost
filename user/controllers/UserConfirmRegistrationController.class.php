@@ -59,7 +59,7 @@ class UserConfirmRegistrationController extends AbstractController
 		}
 		else
 		{
-			$controller = new UserErrorController($this->lang['profile'], LangLoader::get_message('process.error', 'errors-common'), UserErrorController::WARNING);
+			$controller = new UserErrorController($this->lang['profile'], LangLoader::get_message('process.error', 'status-messages-common'), UserErrorController::WARNING);
 			DispatchManager::redirect($controller);
 		}
 	}
