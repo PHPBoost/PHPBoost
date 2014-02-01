@@ -70,7 +70,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 				}
 				else
 				{
-					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'errors-common'), E_USER_ERROR, 4));
+					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), E_USER_ERROR, 4));
 				}
 			}
 			elseif ($this->form->get_value('use_default_logo'))
@@ -80,7 +80,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 			}
 			else
 			{
-				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'errors-common'), E_USER_ERROR, 4));
+				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), E_USER_ERROR, 4));
 			}
 		}
 

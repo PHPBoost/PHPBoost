@@ -209,7 +209,7 @@ class AdminLangsNotInstalledListController extends AdminController
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'errors-common'), MessageHelper::NOTICE, 4));
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::NOTICE, 4));
 			}
 		}
 	}

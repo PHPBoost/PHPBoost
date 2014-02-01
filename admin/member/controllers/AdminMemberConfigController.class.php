@@ -49,7 +49,7 @@ class AdminMemberConfigController extends AdminController
 		{
 			$this->save();
 			$this->form->get_field_by_id('type_activation_members')->set_hidden(!$user_account_config->is_registration_enabled());
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 5));
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), E_USER_SUCCESS, 5));
 		}
 
 		$tpl->put('FORM', $this->form->display());

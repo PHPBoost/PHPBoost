@@ -57,7 +57,7 @@ class AdminContactConfigController extends AdminModuleController
 			$this->save();
 			$this->form->get_field_by_id('informations_position')->set_hidden(!$this->config->are_informations_enabled());
 			$this->form->get_field_by_id('informations')->set_hidden(!$this->config->are_informations_enabled());
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'errors-common'), E_USER_SUCCESS, 5));
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), E_USER_SUCCESS, 5));
 		}
 		
 		$tpl->put('FORM', $this->form->display());

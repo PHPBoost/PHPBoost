@@ -77,7 +77,7 @@ class CalendarSuscribeController extends ModuleController
 		}
 		if (time() > $this->event->get_start_date()->get_timestamp())
 		{
-			$error_controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('calendar.notice.suscribe.event_date_expired', 'common', 'calendar'));
+			$error_controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('calendar.notice.suscribe.event_date_expired', 'common', 'calendar'));
 			DispatchManager::redirect($error_controller);
 		}
 		if (AppContext::get_current_user()->is_readonly())

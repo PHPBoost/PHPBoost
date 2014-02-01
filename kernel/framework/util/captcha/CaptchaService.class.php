@@ -114,10 +114,10 @@ class CaptchaService
 			}
 			else
 			{
-				return LangLoader::get_message('captcha.is_default', 'errors-common');
+				return LangLoader::get_message('captcha.is_default', 'status-messages-common');
 			}
 		}
-		return LangLoader::get_message('captcha.last_installed', 'errors-common');
+		return LangLoader::get_message('captcha.last_installed', 'status-messages-common');
     }
 }
 ?>

@@ -61,7 +61,7 @@ class AdminBugtrackerDeleteDefaultParameterController extends AdminModuleControl
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('error.e_unexist_parameter', 'common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error.e_unexist_parameter', 'common', 'bugtracker'));
 			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
 		}

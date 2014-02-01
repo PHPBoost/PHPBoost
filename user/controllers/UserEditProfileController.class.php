@@ -192,7 +192,7 @@ class UserEditProfileController extends AbstractController
 			{
 				UserService::change_password(KeyGenerator::string_hash($new_password), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 				$redirect = false;
-				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 6));
+				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 6));
 			}
 			else
 			{

@@ -31,7 +31,7 @@ class AdminMemberDeleteController extends AdminController
 	{
 		$user_id = $request->get_int('id', null);
 		
-		$lang = LangLoader::get('errors-common');
+		$lang = LangLoader::get('status-messages-common');
 		try
 		{
 			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
