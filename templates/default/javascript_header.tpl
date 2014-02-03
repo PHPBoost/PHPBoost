@@ -6,5 +6,5 @@
 			var LANG = "{LANG}";
 		-->
 		</script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>
+		<script type="text/javascript" async src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
+		<script type="text/javascript" async src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>
