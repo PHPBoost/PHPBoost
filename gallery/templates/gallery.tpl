@@ -190,12 +190,12 @@
 					var key_right = start_thumb + j;
 					if( direction == 'left' && array_pics[key_left] )
 					{	
-						document.getElementById('thumb' + i).innerHTML = '<a href="{PATH_TO_ROOT}/gallery/gallery' + array_pics[key_left]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="" /></a>';
+						document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_left]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="" /></a>';
 						j++;
 					}
 					else if( direction == 'right' && array_pics[key_right] ) 
 					{
-						document.getElementById('thumb' + i).innerHTML = '<a href="{PATH_TO_ROOT}/gallery/gallery' + array_pics[key_right]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="" /></a>';				
+						document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_right]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="" /></a>';				
 						j++;
 					}
 				}
@@ -271,12 +271,6 @@
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{L_GALLERY} {U_GALLERY_CAT_LINKS}
-					
-					# IF C_PAGINATION #
-					<span class="actions">
-						# INCLUDE PAGINATION #
-					</span>
-					# ENDIF #
 				</h1>
 			</header>
 			<div class="content">
@@ -314,11 +308,7 @@
 				<article class="block">
 					<header><h1>{GALLERY}</h1></header>
 					<div class="content">
-						<p class="center" id="pics_max">
-							# IF C_PAGINATION #
-								# INCLUDE PAGINATION #
-							# ENDIF #
-						</p>
+						<p class="center" id="pics_max"></p>
 						
 						# IF C_GALLERY_PICS_MAX #
 							<div class="options">
@@ -444,10 +434,5 @@
 				<p style="text-align:center;padding-top:15px;" class="smaller">{L_TOTAL_IMG}</p>
 			</div>
 			<footer>
-				# IF C_PAGINATION #
-				<div style="float:right">
-					# INCLUDE PAGINATION #
-				</div>
-				# ENDIF #
 			</footer>
 		</section>
