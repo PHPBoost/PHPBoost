@@ -15,11 +15,7 @@
 	border: 1px solid #CCCCCC;  
 	padding:2px;
 	margin:2px 0px 0px 0px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 }
 
@@ -32,11 +28,7 @@
 	bottom:0;
 	left:100px;
 	z-index:100;
-	-moz-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
 	color:#656766;
 }
@@ -56,8 +48,6 @@
 .calendar-block .date-picker select,
 .calendar-block .date-picker select:focus{
 	box-shadow:none;
-	-moz-box-shadow:none;
-	-webkit-box-shadow:none;
 }
 
 .calendar-block .date-picker th {
@@ -90,16 +80,12 @@
 	background: #f5f5f5;
 	margin:4px 0 10px;
 	border-radius:3px;
-	-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .progressbar{
 	border-top-left-radius:3px;
 	border-bottom-left-radius:3px;
-	-webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 .progressbar[style*="width:100"]{
@@ -110,9 +96,6 @@
 .progressbar-container .progressbar {
 	background-color: #8ecf67;
 	height: 10px;
-	-webkit-transition: width .6s ease;
-	-moz-transition: width .6s ease;
-	-o-transition: width .6s ease;
 	transition: width .6s ease;
 }
 
@@ -248,11 +231,7 @@ ul, ol {
 	bottom:2px; 
 	z-index:100;
 	background: #F3F3F3;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
-	-moz-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	border:1px solid #AAA;
 }
@@ -314,8 +293,6 @@ ul, ol {
 	max-height:500px;
 	background:#FAFAFA;
 	border:1px solid #DDD;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
 	border-radius:3px;
 	color:#444;
 	padding:8px;
@@ -385,29 +362,19 @@ a.wikipedia-link { border-bottom:1px dotted; }
 }
 
 .dynamic-menu.group > ul > li {
-	-moz-border-radius:0;
-	-webkit-border-radius:0;
 	border-radius:0;
 	border-right:1px solid #F9F9F9;
 	border-left:1px solid #BBB;
 }
 
 .dynamic-menu.group > ul > li:first-child {
-	-moz-border-radius-topleft: 4px;
-	-webkit-border-top-left-radius: 4px;
 	border-top-left-radius: 4px;
-	-moz-border-radius-bottomleft: 4px;
-	-webkit-border-bottom-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 	border-left:1px solid rgba(0, 0, 0, 0.1)
 }
 
 .dynamic-menu.group > ul > li:last-child {
-	-moz-border-radius-topright: 4px;
-	-webkit-border-top-right-radius: 4px;
 	border-top-right-radius: 4px;
-	-moz-border-radius-bottomright: 4px;
-	-webkit-border-bottom-right-radius: 4px;
 	border-bottom-right-radius: 4px;
 	border-right:1px solid rgba(0, 0, 0, 0.1)
 }
@@ -418,19 +385,12 @@ a.wikipedia-link { border-bottom:1px dotted; }
 	top:-99999em;
 	opacity:0;
 	margin:0 !important;
-	-webkit-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
-	-moz-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
-	-o-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s; 
 	transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
 	padding:5px 0;
 	color:#333;
 	font-size:11px;
 	background: #FFF;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
-	-moz-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	border:1px solid #AAA;
 	z-index:102;
@@ -439,9 +399,6 @@ a.wikipedia-link { border-bottom:1px dotted; }
 .dynamic-menu li:hover > ul {
 	opacity:1;
 	top:100%;
-	-webkit-transition:opacity .2s ease-in-out,top 0s ease-in 0s;  
-	-moz-transition:opacity .2s ease-in-out,top 0s ease-in 0s; 
-	-o-transition:opacity .2s ease-in-out,top 0s ease-in 0s; 
 	transition:opacity .2s ease-in-out,top 0s ease-in 0s;
 }
 
@@ -545,18 +502,11 @@ menu.dynamic-menu > ul > li {
 	display:inline;
 	padding:0;
 	color:#444444;
-	background-image:-moz-linear-gradient(top,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.18) 100%);
-	background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.18)));
-	background-image:-webkit-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
-	background-image:-o-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
-	background-image:-ms-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
 	background-image:linear-gradient(to bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
 	background-color:#FFFFFF;
 	border:1px solid #999999;
 	border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 	border-bottom-color:#B3B3B3;
-	-moz-border-radius:4px;
-	-webkit-border-radius:4px;
 	border-radius:4px;
 	cursor:pointer;
 	text-align:center;
@@ -567,11 +517,6 @@ menu.dynamic-menu > ul > li:hover {
 }
 
 menu.dynamic-menu > ul > li.current {
-	background-image: -moz-linear-gradient(bottom,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.18) 100%);
-	background-image: -webkit-gradient(linear, left bottom, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.18)));
-	background-image: -webkit-linear-gradient(bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
-	background-image: -o-linear-gradient(bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
-	background-image: -ms-linear-gradient(bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
 	background-image: linear-gradient(to top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
 	background-color:#F0F0F0;
 	border-top-color:#B3B3B3;
@@ -727,8 +672,6 @@ div.message-helper {
 	border-width:1px;
 	border-style:solid;
 	border-radius:3px;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
 }
 
 div.message-helper .fa { 
@@ -782,8 +725,6 @@ div#release { margin-top:20px; }
 .upload-address-bar {
 	background: #FAFAFA;
 	border: 1px solid #DDDDDD;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
 	color: #444444;
 	margin: 0px 25px; 

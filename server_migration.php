@@ -82,18 +82,12 @@ textarea {
 	display:block;
 	width:94%;
 	margin:auto;
-	-moz-border-radius:5px;
-	-khtml-border-radius:5px;
-	-webkit-border-radius:5px;
 }
 div {
 	text-align:center;
 }
 input.text{
 	padding:2px;	
-	-moz-border-radius:3px;
-	-khtml-border-radius:3px;
-	-webkit-border-radius:3px;
 	width:400px;
 	margin-top:5px;
 }
@@ -112,9 +106,6 @@ input.submit, button.submit{
 	color:#515C68;
 	font-weight:bold;
 	font-size:10px;
-	-moz-border-radius:5px;
-	-khtml-border-radius:5px;
-	-webkit-border-radius:5px;
 	border-radius:5px;
 	cursor:pointer;
 	margin:7px auto;
@@ -128,16 +119,10 @@ fieldset{
 	color:#445766;
 	background:#eceeef;
 	position:relative;
-	-moz-border-radius:5px;
-	-khtml-border-radius:5px;
-	-webkit-border-radius:5px;
 }
 legend {
 	background:#7191AA;
 	color:#FFF;
-	-moz-border-radius:5px;
-	-khtml-border-radius:5px;
-	-webkit-border-radius:5px;
 	border-radius:5px;
 	padding:3px 5px;
 	border: 1px solid #CCC;

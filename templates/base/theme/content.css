@@ -115,40 +115,24 @@ ul.pagination-block li a {
 ul.pagination-block li a {
 	color:#333333;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
-	background-image: -moz-linear-gradient(top,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.10) 100%);
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.10)));
-	background-image: -webkit-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
-	background-image: -o-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
-	background-image: -ms-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
 	background-image: linear-gradient(to bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
 	background-color:#F9F9F9;
 	border:1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
 	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
-	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
-	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
 
 ul.pagination-block li a:hover {
 	background-color:#FDFDFD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
-	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
 	transition: all 0.1s linear;
-	-o-transition: all 0.1s linear;
-	-moz-transition: all 0.1s linear;
-	-webkit-transition: all 0.1s linear;
 }
 
 ul.pagination-block li a:active { 
 	background-color:#F1F1F1;
 	border:1px solid #DDDDDD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
-	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
-	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
 
 ul.pagination-block li a.current-page { 
@@ -196,8 +180,6 @@ ul.pagination-block-bis li a.next-page:hover { text-decoration:underline; }
 .explorer .content {
 	border:1px solid #DDD;
 	padding:5px 0;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
 	min-height:120px;
 }
@@ -262,8 +244,6 @@ ul.pagination-block-bis li a.next-page:hover { text-decoration:underline; }
 	padding:6px 12px;
 	background:#EEE;
 	border:1px solid #DDD;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
 	float:right;
 }
@@ -377,39 +357,23 @@ button, .button {
 	color:#333333;
 	text-align:center;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
-	background-image: -moz-linear-gradient(top,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.10) 100%);
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.10)));
-	background-image: -webkit-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
-	background-image: -o-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
-	background-image: -ms-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
 	background-image: linear-gradient(to bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.10) 100%);
 	background-color:#F9F9F9;
 	border:1px solid #CCCCCC;
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
-	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
-	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
 
 button:hover, .button-hover {
 	background-color:#FDFDFD;
-	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
-	-webkit-transition: all 0.1s linear;
-	-moz-transition: all 0.1s linear;
-	-o-transition: all 0.1s linear;
 	transition: all 0.1s linear;
 }
 
 button:active, .button-active { 
 	background-color:#F1F1F1;
 	border:1px solid #DDDDDD;
-	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
-	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
 
@@ -512,11 +476,7 @@ input[type=text], input[type=password], textarea, input[type=file], select {
 	color: #555555;
 	background-color: #FFFFFF;
 	border: 1px solid #CCCCCC;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 }
 
@@ -530,8 +490,6 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=f
 	color: #222222;
 	border-color: #BBBBBB;
 	outline: 0;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -603,8 +561,6 @@ textarea {
 /* Verification des contraintes */
 .constraint-status-error input, form .constraint-status-error textarea {
 	border-color: rgba(196, 60, 43, 0.3);
-	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.1);
-	-moz-box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
 	color:#C43C35;
 }
@@ -612,8 +568,6 @@ textarea {
 .constraint-status-error input:hover, .constraint-status-error input:focus, 
 .constraint-status-error textarea:hover, form .constraint-status-error textarea:focus {
 	border-color: rgba(196, 60, 43, 0.5);
-	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.3);
-	-moz-box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
 	color:#C43C35;
 }
@@ -633,11 +587,7 @@ div.form-autocompleter {
 	color:#333;
 	font-size:11px;
 	background: #FFF;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
-	-moz-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	border:1px solid #AAA;
 	z-index:102;
@@ -654,16 +604,12 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 }
 
 .field-button input {
-	-webkit-border-radius: 4px 0 0 4px;
-	-moz-border-radius: 4px 0 0 4px;
 	border-radius: 4px 0 0 4px;
 }
 
 .field-button button {
 	font-size:11px;
 	margin-left:-1px;
-	-webkit-border-radius: 0 4px 4px 0;
-	-moz-border-radius:  0 4px 4px 0;
 	border-radius: 0 4px 4px 0;
 	padding: 4px 8px;
 }
@@ -734,8 +680,6 @@ h5.sub-title { /* Titre des modules minis */
 	color: #333;
 	background:#ECEFFA;
 	min-height: 80px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
 
