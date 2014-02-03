@@ -16,6 +16,9 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen" />
 		# ENDIF #
 		
+		<!-- Modules CSS -->
+		{MODULES_CSS}
+		
 		# IF C_FAVICON #
 		<link rel="shortcut icon" href="{FAVICON}" type="{FAVICON_TYPE}" />
 		# ENDIF #
