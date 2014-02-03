@@ -85,11 +85,11 @@
 		# ENDIF #
 	</div>
 	<footer id="footer">
+		# IF C_MENUS_FOOTER_CONTENT #
 		<div class="footer-content">
-			# IF C_MENUS_FOOTER_CONTENT #
 			{MENUS_FOOTER_CONTENT}
-			# ENDIF #
 		</div>
+		# ENDIF #
 		<div class="footer-infos">
 			<span>
 				{L_POWERED_BY} <a href="http://phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
