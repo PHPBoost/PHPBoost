@@ -9,11 +9,11 @@ ${resources('install/install')}
 		
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
 		<link type="text/css" href="templates/install.css" title="phpboost" rel="stylesheet" />
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
-		<script type="text/javascript" src="templates/global.js"></script>
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
+		<script src="templates/global.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
-        <script type="text/javascript">
+        <script>
         <!--
         var PATH_TO_ROOT = "{PATH_TO_ROOT}";
         var TOKEN = "{TOKEN}";
@@ -47,7 +47,7 @@ ${resources('install/install')}
 							<p id="button_change_lang">
 								<button type="submit" value="true">{@change}</button>
 							</p>
-							<script type="text/javascript">
+							<script>
 							<!--
 								document.getElementById('button_change_lang').style.display = 'none';
 							-->

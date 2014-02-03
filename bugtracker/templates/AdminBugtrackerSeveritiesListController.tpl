@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 function insert_severity_color(color, field)
 {

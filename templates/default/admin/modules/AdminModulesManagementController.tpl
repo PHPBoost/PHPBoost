@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 	var OpenCloseDiv = Class.create({
 		id : '',
@@ -76,7 +76,7 @@
 					</div>
 					<div style="text-align: center;cursor: pointer;"><i class="fa fa-plus" id="picture_desc{modules_not_activated.ID}"></i></div>
 				</td>
-				<script type="text/javascript">
+				<script>
 				<!--
 					Event.observe(window, 'load', function() {
 						var OpenCloseDivDesc = new OpenCloseDiv('desc_explain{modules_not_activated.ID}', 'picture_desc{modules_not_activated.ID}');
@@ -139,7 +139,7 @@
 					</div>
 					<div style="text-align: center;cursor: pointer;"><i class="fa fa-plus" id="picture_desc{modules_activated.ID}"></i></div>
 				</td>
-				<script type="text/javascript">
+				<script>
 				<!--
 					Event.observe(window, 'load', function() {
 						var OpenCloseDivDesc = new OpenCloseDiv('desc_explain{modules_activated.ID}', 'picture_desc{modules_activated.ID}');

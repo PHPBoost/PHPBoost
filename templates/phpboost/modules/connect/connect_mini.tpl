@@ -2,7 +2,7 @@
 	
 # ELSE #
 	# IF C_USER_NOTCONNECTED #	
-	<script type="text/javascript">
+	<script>
 	<!--
 	function check_connect(){
 		if(document.getElementById('login').value == "") {

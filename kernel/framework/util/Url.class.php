@@ -483,8 +483,8 @@ class Url
 				$a_regex .= '[^"]+)(")`isU';
 				$regex[] = $a_regex;
 			}
-			//'`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")(/[^"]+)(".*</script>)`sU';
-			$a_regex = '`(<script type="text/javascript"><!--\s*insert(?:Sound|Movie|Swf)Player\\(")(';
+			//'`(<script>.*insert(?:Sound|Movie|Swf)Player\(")(/[^"]+)(".*</script>)`sU';
+			$a_regex = '`(<script><!--\s*insert(?:Sound|Movie|Swf)Player\\(")(';
 			if ($only_match_relative)
 			{
 				$a_regex .= '/';

@@ -10,8 +10,8 @@
 							<a href="{pics_mini.U_PICS}#pics_max"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}px" height="{pics_mini.HEIGHT}px" /></a>
 							# END pics_mini #
 						# ELSE #
-						<script src="{PATH_TO_ROOT}/gallery/templates/js/marquee.js" type="text/javascript"></script>
-						<script type="text/javascript">
+						<script src="{PATH_TO_ROOT}/gallery/templates/js/marquee.js"></script>
+						<script>
 						<!--
 							new Marquee({
 							element: "scrolling_images",

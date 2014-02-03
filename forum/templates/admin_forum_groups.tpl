@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 		function Confirm() {
 		return confirm("{L_CONFIRM_DEL_ENTRY}");

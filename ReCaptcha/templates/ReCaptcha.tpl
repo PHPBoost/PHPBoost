@@ -16,11 +16,11 @@
 	
 </div>
 
-<script type="text/javascript">
+<script>
 var RecaptchaOptions = {
 	theme : 'custom',
 	lang : '{LANG}',
 	custom_theme_widget: 'recaptcha_widget'
 };
 </script>
-<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k={PUBLIC_KEY}"></script>
+<script src="http://www.google.com/recaptcha/api/challenge?k={PUBLIC_KEY}"></script>

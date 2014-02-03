@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 function check_msg(){
     if(document.getElementById('name').value == "") {

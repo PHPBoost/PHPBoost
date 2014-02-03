@@ -6,7 +6,7 @@
 # ENDIF #
 
 # IF C_AJAX_MODE #
-<script type="text/javascript">
+<script>
 <!--
 
 // Moving a category with AJAX technology

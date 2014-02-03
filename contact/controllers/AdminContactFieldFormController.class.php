@@ -52,7 +52,7 @@ class AdminContactFieldFormController extends AdminModuleController
 		$this->build_form();
 		
 		$this->tpl = new StringTemplate('# INCLUDE FORM #
-			<script type="text/javascript">
+			<script>
 			<!--
 				Event.observe(window, \'load\', function() {
 					' . $this->get_readonly_fields() . '

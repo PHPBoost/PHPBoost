@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 	function show_answer(id_question)
 	{
@@ -65,7 +65,7 @@
 								<i id="faq_i{questions.faq.ID_QUESTION}" class="fa fa-caret-right fa-2x"></i>
 							</a>
 							<a id="faq_l{questions.faq.ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>
-							<script type="text/javascript">
+							<script>
 							<!--
 								document.getElementById("faq_l{questions.faq.ID_QUESTION}").href = 'javascript:show_answer({questions.faq.ID_QUESTION});';
 								
@@ -93,13 +93,13 @@
 						<div>{questions.faq.ANSWER}</div>
 					</div>
 					# IF questions.faq.C_HIDE_ANSWER #
-					<script type="text/javascript">
+					<script>
 						document.getElementById("a{questions.faq.ID_QUESTION}").style.display = "none";
 						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="fa fa-caret-right fa-2x";
 					</script>
 					# ENDIF #
 					# IF questions.faq.C_SHOW_ANSWER #
-					<script type="text/javascript">
+					<script>
 						document.getElementById("faq_i{questions.faq.ID_QUESTION}").className="fa fa-caret-down fa-2x";
 					</script>
 					# ENDIF #		

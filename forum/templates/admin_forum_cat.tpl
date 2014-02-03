@@ -1,5 +1,5 @@
 		<link href="{PICTURES_DATA_PATH}/forum.css" rel="stylesheet" type="text/css" media="screen, handheld">
-		<script type="text/javascript">
+		<script>
 		<!--
 		function Confirm() {
 		return confirm("{L_CONFIRM_DEL_ENTRY}");

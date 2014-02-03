@@ -218,7 +218,7 @@
 			# IF C_FILES #
 				
 				<div style="float:right;" class="row3" id="form">
-					<script type="text/javascript">
+					<script>
 					<!--
 					function change_order()
 					{

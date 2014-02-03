@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 		function change_upload_level( level ) 
 		{

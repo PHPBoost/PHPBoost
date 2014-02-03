@@ -97,7 +97,7 @@
 							<select name="root_cat" id="root_cat" class="valign-middle">
 								{CATEGORIES}
 							</select>
-							<script type="text/javascript">
+							<script>
 							$('root_cat').observe('change', function() {
 								root_value = $('root_cat').value;
 								# START list #

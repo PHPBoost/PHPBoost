@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 var ContactFields = Class.create({
 	id : '',
@@ -187,7 +187,7 @@ Event.observe(window, 'load', function() {
 					</div>
 					<div class="spacer"></div>
 				</li>
-				<script type="text/javascript">
+				<script>
 				<!--
 				Event.observe(window, 'load', function() {
 					var contact_field = new ContactField({fields_list.ID}, '{fields_list.C_DISPLAY}', ContactFields);

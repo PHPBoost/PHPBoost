@@ -39,7 +39,7 @@ class GooglePlusOneShare extends AbstractShare
 	public function __construct()
 	{
 		$this->set_template(new StringTemplate('
-			<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+			<script src="https://apis.google.com/js/plusone.js">
 			  {lang: \'{LANG_SHARE}\'}
 			</script>
 			<g:plusone size="{SIZE}" # IF C_MANUAL_URL # href="{MANUAL_URL}" # ENDIF #></g:plusone>

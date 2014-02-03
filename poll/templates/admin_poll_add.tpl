@@ -1,10 +1,10 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 			var theme = '{THEME}';
 		-->
 		</script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
-		<script type="text/javascript">
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
+		<script>
 		<!--
 		function check_form(){
 			if(document.getElementById('question').value == "") {

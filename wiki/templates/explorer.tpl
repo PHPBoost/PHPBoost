@@ -1,10 +1,10 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {SELECTED_CAT};
 		-->
 		</script>
-		<script type="text/javascript" src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
+		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 <div class="explorer">
 	<div class="cats">

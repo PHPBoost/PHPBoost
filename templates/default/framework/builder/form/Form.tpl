@@ -12,11 +12,11 @@
 # ENDIF #
 
 # IF C_JS_NOT_ALREADY_INCLUDED # 
-<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/form/validator.js"></script>
-<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/form/form.js"></script>  
+<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/form/validator.js"></script>
+<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/form/form.js"></script>  
 # ENDIF #
 
-<script type="text/javascript">
+<script>
 <!--
 Event.observe(window, 'load', function() {
 	var form = new HTMLForm("${escape(HTML_ID)}");

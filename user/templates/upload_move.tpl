@@ -1,5 +1,5 @@
 	{HEADER}
-	<script type="text/javascript">
+	<script>
 	<!--
 	function close_popup()
 	{
@@ -42,8 +42,8 @@
 						<i class="fa fa-arrow-right fa-2x"></i>
 					</div>
 					<div style="float:left;width:33%;text-align:center;">
-							<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>
-							<script type="text/javascript">
+							<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/upload.js"></script>
+							<script>
 							<!--
 								var path = '{PATH_TO_ROOT}/templates/{THEME}';
 								var selected_cat = {SELECTED_CAT};

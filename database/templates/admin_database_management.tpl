@@ -179,7 +179,7 @@
 					<footer></footer>
 				</section>
 				
-				<script type="text/javascript">
+				<script>
 				<!--
 				function check_all(status, id)
 				{
@@ -230,7 +230,7 @@
 			# ENDIF #
 			
 			<form action="admin_database.php?action=backup&amp;token={TOKEN}" method="post" name="table_list">
-				<script type="text/javascript">
+				<script>
 					<!--
 						function check_select_all_tables(status)
 						{
@@ -280,7 +280,7 @@
 
 			
 			# IF C_DATABASE_QUERY #
-				<script type="text/javascript">
+				<script>
 				<!--
 				function check_form(){
 					var query = document.getElementById('query').value;

@@ -3,7 +3,7 @@
 			<div class="message-helper-content">{MESSAGE_CONTENT}</div>
 		</div>
 		# IF C_TIMEOUT #
-		<script type="text/javascript">
+		<script>
 		<!--
 			//Javascript timeout to hide this message
 			setTimeout('Effect.Fade("msg-helper-{ID}");', {TIMEOUT});

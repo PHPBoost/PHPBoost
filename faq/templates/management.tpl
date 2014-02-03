@@ -8,7 +8,7 @@
 					<a href="{U_GO_BACK_TO_CAT}">{L_GO_BACK_TO_CAT}</a>
 				</p>
 				
-				<script type="text/javascript">
+				<script>
 				<!--
 					var global_auth = {JS_GLOBAL};
 					function change_status_global_auth()
@@ -172,7 +172,7 @@
 		# END category #
 
 		# START edit_question #
-		<script type="text/javascript">
+		<script>
 		<!--
 		function check_form_faq()
 		{

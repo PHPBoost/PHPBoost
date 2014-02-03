@@ -51,7 +51,7 @@ abstract class AbstractAdminFormPageController extends AdminController
 			<div class="message-helper-content">{SUCCESS_MESSAGE}</div>
 		</div>
 		# ENDIF #
-		<script type="text/javascript"><!--
+		<script><!--
 		window.setTimeout(function() { Effect.Fade("success_message"); }, 5000);
 		--></script>
 		# INCLUDE form #');

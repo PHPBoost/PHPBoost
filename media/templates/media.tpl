@@ -38,7 +38,7 @@
 	
 					# IF C_FILES #
 						<div class="options" id="form">
-							<script type="text/javascript">
+							<script>
 							<!--
 							function change_order()
 							{

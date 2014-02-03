@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 var delay = 1200; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
 var timeout;
@@ -138,7 +138,7 @@ function createSortableMenu()
 						# END mod_header #
 						
 						# IF C_HEADER_COLUMN #
-							<script type="text/javascript">
+							<script>
 							<!--
 							$('mod_header').style.opacity = 0.5;
 							$('mod_header').style.filter='alpha(opacity=50)';
@@ -178,7 +178,7 @@ function createSortableMenu()
 						# END mod_subheader #
 						
 						# IF C_SUB_HEADER_COLUMN #
-							<script type="text/javascript">
+							<script>
 							<!--
 							$('mod_subheader').style.opacity = 0.5;
 							$('mod_subheader').style.filter='alpha(opacity=50)';
@@ -219,7 +219,7 @@ function createSortableMenu()
 						# END mod_left #
 						
 						# IF C_LEFT_COLUMN #
-							<script type="text/javascript">
+							<script>
 							<!--
 							$('mod_left').style.opacity = 0.5;
 							$('mod_left').style.filter='alpha(opacity=50)';
@@ -260,7 +260,7 @@ function createSortableMenu()
 									# END mod_topcentral #
 										
 									# IF C_TOP_CENTRAL_COLUMN #
-										<script type="text/javascript">
+										<script>
 										<!--
 										$('mod_topcentral').style.opacity = 0.5;
 										$('mod_topcentral').style.filter='alpha(opacity=50)';
@@ -319,7 +319,7 @@ function createSortableMenu()
 									# END mod_bottomcentral #
 									
 									# IF C_BOTTOM_CENTRAL_COLUMN #
-										<script type="text/javascript">
+										<script>
 										<!--
 										$('mod_bottomcentral').style.opacity = 0.5;
 										$('mod_bottomcentral').style.filter='alpha(opacity=50)';
@@ -361,7 +361,7 @@ function createSortableMenu()
 						# END mod_right #
 						
 						# IF C_RIGHT_COLUMN #
-							<script type="text/javascript">
+							<script>
 							<!--
 							$('mod_right').style.opacity = 0.5;
 							$('mod_right').style.filter='alpha(opacity=50)';
@@ -401,7 +401,7 @@ function createSortableMenu()
 						# END mod_topfooter #
 						
 						# IF C_TOP_FOOTER_COLUMN #
-							<script type="text/javascript">
+							<script>
 							<!--
 							$('mod_topfooter').style.opacity = 0.5;
 							$('mod_topfooter').style.filter='alpha(opacity=50)';
@@ -440,7 +440,7 @@ function createSortableMenu()
 							{mod_footer.MENU}
 						# END mod_footer #
 						# IF C_FOOTER_COLUMN #
-							<script type="text/javascript">
+							<script>
 							<!--
 							$('mod_footer').style.opacity = 0.5;
 							$('mod_footer').style.filter='alpha(opacity=50)';
@@ -453,7 +453,7 @@ function createSortableMenu()
 			</tr>
 		</table>
 		
-		<script type="text/javascript">
+		<script>
 		<!--
 		Event.observe(window, 'load', function() {
 			createSortableMenu();

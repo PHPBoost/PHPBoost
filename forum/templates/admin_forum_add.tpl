@@ -1,5 +1,5 @@
 		<link href="{PICTURES_DATA_PATH}/forum.css" rel="stylesheet" type="text/css" media="screen, handheld">
-		<script type="text/javascript">
+		<script>
 		<!--
 			function change_type(value)
 			{			
@@ -138,7 +138,7 @@
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>
-			<script type="text/javascript">
+			<script>
 			<!--
 				change_type(1);
 			-->

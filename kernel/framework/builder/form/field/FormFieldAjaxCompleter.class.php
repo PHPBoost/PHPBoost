@@ -38,7 +38,7 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
 	private $name_parameter = 'value';
 	private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(ID)}" value="${escape(VALUE)}"
 	class="${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # autocomplete="off" onfocus="javascript:load_autocompleter_{ID}();" /><div id="${escape(ID)}_completer" class="form-autocompleter"></div>
-	<script type="text/javascript">function load_autocompleter_{ID}() { new Ajax.Autocompleter(${escapejs(ID)}, "${escape(ID)}_completer", ${escapejs(FILE)}, { method: ${escapejs(METHOD)}, paramName: ${escapejs(NAME_PARAMETER)}});}</script>';	
+	<script>function load_autocompleter_{ID}() { new Ajax.Autocompleter(${escapejs(ID)}, "${escape(ID)}_completer", ${escapejs(FILE)}, { method: ${escapejs(METHOD)}, paramName: ${escapejs(NAME_PARAMETER)}});}</script>';	
 
 	
     /**

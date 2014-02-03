@@ -1,9 +1,9 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 			var theme = '{THEME}';
 		-->
 		</script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 		
 		<div id="admin-quick-menu">
 			<ul>

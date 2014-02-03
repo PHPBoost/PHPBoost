@@ -89,7 +89,7 @@
 					<span id="forum_change_statut">
 						<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
 					</span>
-					<script type="text/javascript">
+					<script>
 					<!--
 					document.getElementById('forum_change_statut').style.display = 'none';
 					document.write('<a href="javascript:XMLHttpRequest_change_statut()" class="small" id="forum_change_img">{ICON_DISPLAY_MSG}</a> <a href="javascript:XMLHttpRequest_change_statut()" class="small"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
@@ -101,7 +101,7 @@
 					<span id="forum_track">
 						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" class="small">{L_TRACK_DEFAULT}</a>
 					</span>
-					<script type="text/javascript">
+					<script>
 					<!--
 					document.getElementById('forum_track').style.display = 'none';
 					document.write('<a href="javascript:XMLHttpRequest_track()" class="small" id="forum_track_img">{ICON_TRACK}</a> <a href="javascript:XMLHttpRequest_track()" class="small"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>');
@@ -111,7 +111,7 @@
 					<span id="forum_track_pm">
 						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom" class="small">{L_SUSCRIBE_PM_DEFAULT}</a>
 					</span>
-					<script type="text/javascript">
+					<script>
 					<!--
 					document.getElementById('forum_track_pm').style.display = 'none';
 					document.write('<a href="javascript:XMLHttpRequest_track_pm()" class="small" id="forum_track_pm_img">{ICON_SUSCRIBE_PM}</a> <a href="javascript:XMLHttpRequest_track_pm()" class="small"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>');
@@ -121,7 +121,7 @@
 					<span id="forum_track_mail">
 						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom">{ICON_SUSCRIBE}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom" class="small">{L_SUSCRIBE_DEFAULT}</a>
 					</span>
-					<script type="text/javascript">
+					<script>
 					<!--
 					document.getElementById('forum_track_mail').style.display = 'none';
 					document.write('<a href="javascript:XMLHttpRequest_track_mail()" class="small" id="forum_track_mail_img">{ICON_SUSCRIBE}</a> <a href="javascript:XMLHttpRequest_track_mail()" class="small"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>');

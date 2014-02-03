@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 		function popup_upload(path, width, height, scrollbars)
 		{

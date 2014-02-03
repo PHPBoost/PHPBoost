@@ -192,7 +192,7 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 		if ($key != 0)
 			$opened_cats_list .= 'cat_status[' . $key . '] = 1;' . "\n";
 	}
-	return '<script type="text/javascript">
+	return '<script>
 	<!--
 ' . $opened_cats_list . '
 	-->

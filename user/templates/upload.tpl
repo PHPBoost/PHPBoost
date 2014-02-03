@@ -1,5 +1,5 @@
 	{HEADER}
-	<script type="text/javascript">
+	<script>
 	<!--
 	function insert_popup(code) 
 	{

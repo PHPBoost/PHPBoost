@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
 			var TOKEN = "{TOKEN}";
@@ -6,4 +6,4 @@
 			var LANG = "{LANG}";
 		-->
 		</script>
-		<script type="text/javascript" async src="{PATH_TO_ROOT}/kernel/lib/js/top.js"></script>
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/top.js"></script>

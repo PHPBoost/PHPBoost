@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 var ContactFormFieldPossibleValues = Class.create({
 	integer : {NBR_FIELDS},

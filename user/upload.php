@@ -50,13 +50,13 @@ if (!empty($popup)) //Popup.
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/global.css" type="text/css" media="screen, print, handheld" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/content.css" type="text/css" media="screen, print, handheld" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
-<script type="text/javascript">
+<script>
 <!--
 	var PATH_TO_ROOT = "' . PATH_TO_ROOT . '";
 	var TOKEN = "' . $Session->get_token() . '";
 -->
 </script>
-<script type="text/javascript" src="' . PATH_TO_ROOT . '/kernel/lib/js/phpboost/global.js"></script>
+<script src="' . PATH_TO_ROOT . '/kernel/lib/js/phpboost/global.js"></script>
 </head>
 
 <body style="background:#FAFAFA;">';

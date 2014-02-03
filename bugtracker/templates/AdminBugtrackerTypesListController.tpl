@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 var BugtrackerFormFieldTypes = Class.create({
 	integer : {NEXT_ID},

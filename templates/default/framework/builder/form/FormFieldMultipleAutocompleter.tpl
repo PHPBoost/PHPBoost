@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 var FormFieldMultipleAutocompleter = Class.create({
 	integer : {NBR_FIELDS},

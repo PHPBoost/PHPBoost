@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 		var pics_displayed = 0;
 		function display_pics(id, path)
