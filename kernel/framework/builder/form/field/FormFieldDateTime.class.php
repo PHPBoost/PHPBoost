@@ -31,7 +31,7 @@
  */
 class FormFieldDateTime extends FormFieldDate
 {
-    public function __construct($id, $label, Date $value, $field_options = array(), array $constraints = array())
+    public function __construct($id, $label, Date $value = null, $field_options = array(), array $constraints = array())
     {
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
@@ -47,8 +47,8 @@ class FormFieldDateTime extends FormFieldDate
 
         $template->put_all(array(
 			'C_HOUR' => true,
-			'HOURS' => $this->get_value()->get_hours(),
-			'MINUTES' => $this->get_value()->get_minutes(),
+			'HOURS' => $this->get_value() ? $this->get_value()->get_hours() : '',
+			'MINUTES' => $this->get_value() ? $this->get_value()->get_minutes() : '',
 			'L_AT' => $LANG['at'],
 			'L_H' => $LANG['unit_hour']
         ));
