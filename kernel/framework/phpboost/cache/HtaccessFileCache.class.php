@@ -86,7 +86,6 @@ class HtaccessFileCache implements CacheData
 	private function enable_rewrite_rules()
 	{
 		$this->add_section('Rewrite rules');
-		$this->add_line('Options +FollowSymlinks');
 		$this->add_line('RewriteEngine on');
 	}
 
