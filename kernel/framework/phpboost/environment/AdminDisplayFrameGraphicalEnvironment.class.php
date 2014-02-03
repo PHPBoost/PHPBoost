@@ -51,7 +51,7 @@ class AdminDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvi
 			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
 			'TITLE' => $this->get_seo_meta_data()->get_full_title(),
-			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
+			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'JS_TOP' => new FileTemplate('js_top.tpl'),
 			'JS_BOTTOM' => new FileTemplate('js_bottom.tpl'),
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
