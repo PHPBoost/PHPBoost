@@ -26,11 +26,11 @@
 		<link rel="shortcut icon" href="{FAVICON}" type="{FAVICON_TYPE}" />
 		# ENDIF #
 		
-		# INCLUDE HEAD_JAVASCRIPT #
+		# INCLUDE JS_TOP #
 	</head>
 
 	<body itemscope="itemscope" itemtype="http://schema.org/WebPage">
 		# INCLUDE BODY #
-		# INCLUDE FOOT_JAVASCRIPT #
+		# INCLUDE JS_BOTTOM #
 	</body>
 </html>

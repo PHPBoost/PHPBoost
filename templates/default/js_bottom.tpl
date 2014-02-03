@@ -1,5 +1,4 @@
-		<script type="text/javascript" async src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
-		<script type="text/javascript" async src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
+		<script type="text/javascript" async src="{PATH_TO_ROOT}/kernel/lib/js/bottom.js"></script>
 		<!--[if lt IE 9]>
 		<script type="text/javascript" async src="{PATH_TO_ROOT}/kernel/lib/js/html5shiv/html5shiv.js"></script>
 		<![endif]-->
