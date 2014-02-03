@@ -4,7 +4,7 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
 --------------------------------------*/
 
 /* Reset */
-* { margin:0; padding:0; font-size:100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+* { margin:0; padding:0; font-size:100%; -moz-box-sizing: border-box; box-sizing: border-box; }
 html, body { margin: 0;	padding: 0; }
 img { border:none; overflow:scroll; vertical-align: middle; }
 img, table, td, blockquote, code, pre, textarea, input, video {	max-width: 100%; }

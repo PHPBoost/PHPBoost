@@ -30,23 +30,11 @@
 
 .bbcode-more { border-top:none; }
 
-.bbcode-container{
-	-webkit-border-radius:3px;
-	-moz-border-radius:3px;
-	border-radius:3px;
-}
+.bbcode-container{ border-radius:3px; }
 
-.expand .bbcode-container:first-child{
-	-webkit-border-radius:3px 3px 0 0;
-	-moz-border-radius:3px 3px 0 0;
-	border-radius:3px 3px 0 0;
-}
+.expand .bbcode-container:first-child { border-radius:3px 3px 0 0; }
 
-.expand .bbcode-container:last-child{
-	-webkit-border-radius:0 0 3px 3px;
-	-moz-border-radius:0 0 3px 3px;
-	border-radius:0 0 3px 3px;
-}
+.expand .bbcode-container:last-child { border-radius:0 0 3px 3px; }
 
 .bbcode-upload { 
 	float:right;

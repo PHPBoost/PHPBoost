@@ -71,7 +71,7 @@
 					<tbody>
 						<tr> 
 							<td>
-								<div style="height:140px;width:358px;overflow:auto;margin:auto;">
+								<div style="height:140px;width:352px;overflow:auto;margin:auto;">
 									# START comments_list #	
 									<div style="margin-bottom:10px;">
 										<a href="{comments_list.U_LINK}"><i class="fa fa-hand-o-right"></i></a> <span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span>
