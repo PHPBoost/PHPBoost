@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 		function check_form(){
 			if(document.getElementById('name').value == "") {

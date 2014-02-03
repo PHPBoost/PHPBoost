@@ -1,5 +1,5 @@
 		<link href="{PICTURES_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
-		<script type="text/javascript">
+		<script>
 		<!--
 		var list_cats = new Array({LIST_CATS});
 		var array_cats = new Array();

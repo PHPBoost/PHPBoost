@@ -1,5 +1,5 @@
 		# IF C_ADD_MEDIA #
-		<script type="text/javascript">
+		<script>
 		<!--
 		function check_form ()
 		{

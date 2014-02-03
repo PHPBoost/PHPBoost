@@ -11,19 +11,19 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen" />
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 		
-		<script type="text/javascript">
+		<script>
 		<!--
 			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
 			var TOKEN = "{TOKEN}";
 		-->
 		</script>
 		
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>	
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>	
 	</head>
 	<body>
-		<script type="text/javascript">
+		<script>
 		<!--
 		function check_connect(){
 			if(document.getElementById('login').value == "") {

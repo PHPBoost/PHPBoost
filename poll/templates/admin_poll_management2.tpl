@@ -1,10 +1,10 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 			var theme = '{THEME}';
 		-->
 		</script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
-		<script type="text/javascript">
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
+		<script>
 		<!--
 		function check_form(){
 			if(document.getElementById('question').value == "") {
@@ -113,7 +113,7 @@
 									</tr>
 									<tr>
 										<td colspan="2">
-											<script type="text/javascript">
+											<script>
 											<!--
 												if( {MAX_ID} < 19 )
 													document.write('<span id="s{MAX_ID}"><a href="javascript:add_field({MAX_ID}, 19)"><i class="fa fa-plus"></i></a></span>');

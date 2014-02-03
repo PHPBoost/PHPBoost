@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {SELECTED_CAT};
@@ -34,7 +34,7 @@
 		-->
 		</script>
 
-		<script type="text/javascript" src="{PATH_TO_ROOT}/pages/templates/js/pages.js"></script>
+		<script src="{PATH_TO_ROOT}/pages/templates/js/pages.js"></script>
 	
 		# INCLUDE message_helper #
 		

@@ -34,7 +34,7 @@
 				</table>
 				
 				# IF C_MODO_PANEL_USER_LIST #
-				<script type="text/javascript">
+				<script>
 				<!--
 					function XMLHttpRequest_search()
 					{
@@ -120,7 +120,7 @@
 				
 
 				# IF C_MODO_PANEL_USER_INFO #
-				<script type="text/javascript">
+				<script>
 				<!--
 				function change_textarea_level(replace_value, regex)
 				{

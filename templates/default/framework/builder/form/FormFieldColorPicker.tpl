@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--		
 function ${escape(NAME)}insert_color(color, field)
 {

@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 var displayed = new Array();
 displayed[${escapejs(FIELD)}] = false;
@@ -56,7 +56,7 @@ function XMLHttpRequest_preview(field)
 <div style="display:none;" class="xmlhttprequest-preview" id="xmlhttprequest-preview{FIELD}"></div>
 
 # IF C_EDITOR_NOT_ALREADY_INCLUDED #
-	<script type="text/javascript" src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
+	<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
 # ENDIF #
 
 <div class="bbcode expand">
@@ -309,7 +309,7 @@ function XMLHttpRequest_preview(field)
 </div>
 	
 
-<script type="text/javascript">
+<script>
 <!--
 set_bbcode_preference('bbcode_more{FIELD}');
 -->

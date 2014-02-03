@@ -215,7 +215,7 @@
 							<button type="submit" name="post_topic" value="true">{L_SUBMIT}</button>
 							&nbsp;&nbsp;
 							<input value="{L_PREVIEW}" type="submit" name="prw_t" id="previs_topic">
-							<script type="text/javascript">
+							<script>
 							<!--
 							document.getElementById('previs_topic').style.display = 'none';
 							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button">');
@@ -229,7 +229,7 @@
 							<span id="forum_change_statut">
 								<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
 							</span>
-							<script type="text/javascript">
+							<script>
 							<!--
 							document.getElementById('forum_change_statut').style.display = 'none';
 							document.write('<a href="javascript:XMLHttpRequest_change_statut()">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');

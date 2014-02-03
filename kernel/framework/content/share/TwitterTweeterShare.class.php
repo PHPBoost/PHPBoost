@@ -42,7 +42,7 @@ class TwitterTweeterShare extends AbstractShare
 			<a href="http://twitter.com/share" class="twitter-share-button" # IF C_MANUAL_URL # data-url="{MANUAL_URL}" # ENDIF # 
 			# IF C_MANUAL_CONTENT_TWEET # data-text="{MANUAL_CONTENT_TWEET}" # ENDIF # data-count="{LAYOUT}" data-lang="{LANG_SHARE}">
 			</a>
-			<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+			<script src="http://platform.twitter.com/widgets.js"></script> 
 		'));
 		
 		$this->assign_vars();

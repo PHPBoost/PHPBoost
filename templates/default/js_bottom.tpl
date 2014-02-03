@@ -1,8 +1,8 @@
-		<script type="text/javascript" async src="{PATH_TO_ROOT}/kernel/lib/js/bottom.js"></script>
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/bottom.js"></script>
 		<!--[if lt IE 9]>
-		<script type="text/javascript" async src="{PATH_TO_ROOT}/kernel/lib/js/html5shiv/html5shiv.js"></script>
+		<script async src="{PATH_TO_ROOT}/kernel/lib/js/html5shiv/html5shiv.js"></script>
 		<![endif]-->
-		<script type="text/javascript">
+		<script>
 		<!-- 
 			$$('[data-confirmation]').each(function(a) {
 				var data_confirmation = a.readAttribute('data-confirmation');

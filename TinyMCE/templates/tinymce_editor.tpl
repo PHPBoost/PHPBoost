@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 var displayed = new Array();
 displayed[${escapejs(FIELD)}] = false;
@@ -58,10 +58,10 @@ function insertTinyMceContent(textAreaId, content)
 <div style="display:none;" class="xmlhttprequest-preview" id="xmlhttprequest-preview{FIELD}"></div>
 
 # IF NOT C_NOT_JS_INCLUDED #
-	<script type="text/javascript" src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tiny_mce.js"></script>
+	<script src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tiny_mce.js"></script>
 # ENDIF #
 	
-<script type="text/javascript">
+<script>
 <!--
 tinyMCE.init({
 	mode : "exact",

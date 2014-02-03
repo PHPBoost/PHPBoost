@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 var idMax = {ID_MAX};
 
@@ -233,7 +233,7 @@ function image_preview(input,image)
 		<fieldset>
 			<legend>* {L_CONTENT}</legend>
 			{MENU_TREE}
-		    <script type="text/javascript">
+		    <script>
 		    <!--
 		    Event.observe(window, 'load', function() {
 		    	createSortableMenu();

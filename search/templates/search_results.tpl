@@ -1,4 +1,4 @@
-        <script type="text/javascript"><!--
+        <script><!--
         
             const RESULTS = 'results_';
             const RESULTS_TITLE = 'results_title_';
@@ -167,7 +167,7 @@
             </div>
             <footer>{L_HITS}</footer>
         </section>
-        <script type="text/javascript">
+        <script>
         <!--
             ChangePagination(0, Math.ceil(nbResults['{SEARCH_IN}'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + '{SEARCH_IN}', 'results_{SEARCH_IN}');
             show_div(RESULTS + '{SEARCH_IN}_0');

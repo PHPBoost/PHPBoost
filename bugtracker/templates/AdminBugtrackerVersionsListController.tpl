@@ -1,5 +1,5 @@
-<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
-<script type="text/javascript">
+<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
+<script>
 <!--
 var BugtrackerFormFieldVersions = Class.create({
 	integer : {NEXT_ID},

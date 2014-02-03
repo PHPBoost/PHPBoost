@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 			var enter_text = "{L_PLEASE_ENTER_A_TITLE}";
 			var title_link = "{L_TITLE_LINK}";
@@ -7,7 +7,7 @@
 		-->
 		</script>
 
-		<script type="text/javascript" src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
+		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 		<table class="bbcode" style="margin:4px auto; width:410px;">
 			<tr>

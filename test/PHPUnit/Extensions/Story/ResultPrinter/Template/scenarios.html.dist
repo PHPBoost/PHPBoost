@@ -11,7 +11,7 @@
   .scenarioStepsTable { margin-left: 10px; display: none; }
   .stepName { }
   </style>
-  <script type="text/javascript">
+  <script>
   function showHide(nodeId, linkObj)
   {
     var subObj = document.getElementById('stepContainer' + nodeId);

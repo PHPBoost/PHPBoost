@@ -12,7 +12,7 @@
 						# END themes #
 					</select>
 					<input style="display: none;" value="{L_SUBMIT}" name="valid" id="switchtheme_valid" type="submit">
-					<script type="text/javascript">
+					<script>
 					<!--
 					document.getElementById('switchtheme_valid').style.display = 'none';
 					-->
@@ -33,7 +33,7 @@
 					# END themes #
 				</select>
 				<input style="display: none;" value="{L_SUBMIT}" name="valid" id="switchtheme_valid" type="submit">
-				<script type="text/javascript">
+				<script>
 				<!--
 				document.getElementById('switchtheme_valid').style.display = 'none';
 				-->

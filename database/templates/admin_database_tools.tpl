@@ -294,7 +294,7 @@
 			
 			
 			# IF C_DATABASE_TABLE_QUERY #
-			<script type="text/javascript">
+			<script>
 			<!--
 			function check_form(){
 				var query = document.getElementById('query').value;

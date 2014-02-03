@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 Event.observe(window, 'load', function() {
 	$('move_up_{ID}').observe('click',function(){

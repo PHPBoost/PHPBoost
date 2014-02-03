@@ -6,8 +6,8 @@
     <title>{title}</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="container.css">
-    <script type="text/javascript" src="yahoo-dom-event.js"></script>
-    <script type="text/javascript" src="container-min.js"></script>
+    <script src="yahoo-dom-event.js"></script>
+    <script src="container-min.js"></script>
   </head>
 
   <body class="yui-skin-sam">
@@ -79,7 +79,7 @@
 
     <br />
 
-    <script type="text/javascript">
+    <script>
       //<![CDATA[
       $E = YAHOO.util.Event;
       YAHOO.namespace("phpunit.container");

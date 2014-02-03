@@ -498,7 +498,7 @@
 		
 
 		# IF C_STATS_REFERER #
-		<script type="text/javascript">
+		<script>
 		<!--
 		function XMLHttpRequest_referer(divid)
 		{
@@ -612,7 +612,7 @@
 		
 		
 		# IF C_STATS_KEYWORD #
-		<script type="text/javascript">
+		<script>
 		<!--
 		function XMLHttpRequest_referer(divid)
 		{

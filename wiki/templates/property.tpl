@@ -62,7 +62,7 @@
 
 		
 		# START status #
-		<script type="text/javascript">
+		<script>
 		<!--
 			status = new Array();
 			# START status.status_array #
@@ -148,13 +148,13 @@
 		
 		# START move #
 
-		<script type="text/javascript">
+		<script>
 		<!--
 			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {move.SELECTED_CAT};
 		-->
 		</script>
-		<script type="text/javascript" src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
+		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 		# INCLUDE message_helper #
 		
@@ -188,7 +188,7 @@
 
 		
 		# START rename #
-		<script type="text/javascript">
+		<script>
 		<!--
 			function check_form_post(){
 				if(document.getElementById('new_title').value == "") {
@@ -271,7 +271,7 @@
 
 		
 		# START create #
-		<script type="text/javascript">
+		<script>
 		<!--
 			function check_form_post(){
 				if(document.getElementById('title').value == "") {
@@ -302,13 +302,13 @@
 		# END create #
 
 		# START remove #
-		<script type="text/javascript">
+		<script>
 		<!--
 			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {remove.SELECTED_CAT};
 		-->
 		</script>
-		<script type="text/javascript" src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
+		<script src="{PICTURES_DATA_PATH}/js/wiki.js"></script>
 
 		# INCLUDE message_helper #
 				

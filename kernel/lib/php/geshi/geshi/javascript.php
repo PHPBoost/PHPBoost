@@ -135,7 +135,7 @@ $language_data = array (
     'STRICT_MODE_APPLIES' => GESHI_MAYBE,
     'SCRIPT_DELIMITERS' => array(
         0 => array(
-            '<script type="text/javascript">' => '</script>'
+            '<script>' => '</script>'
             ),
         1 => array(
             '<script language="javascript">' => '</script>'

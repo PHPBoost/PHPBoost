@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 var ArticlesFormFieldSelectSources = Class.create({
 	integer : ${escapejs(NBR_FIELDS)},

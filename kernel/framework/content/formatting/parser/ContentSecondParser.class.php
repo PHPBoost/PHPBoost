@@ -89,7 +89,7 @@ class ContentSecondParser extends AbstractParser
 	public static function export_html_text($html_content)
 	{
 		//Balise vidéo
-		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="movie_[0-9]+"></a><br /><script type="text/javascript"><!--\s*insertMoviePlayer\(\'movie_[0-9]+\'\);\s*--></script>`isU',
+		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="movie_[0-9]+"></a><br /><script><!--\s*insertMoviePlayer\(\'movie_[0-9]+\'\);\s*--></script>`isU',
             '<object type="application/x-shockwave-flash" data="/kernel/lib/flash/movieplayer.swf" width="$2" height="$3">
             	<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
             	<param name="allowScriptAccess" value="never" />
@@ -265,7 +265,7 @@ class ContentSecondParser extends AbstractParser
 	{
 		$id = 'movie_' . AppContext::get_uid();
 		return '<a href="' . $matches[1] . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
-			'<script type="text/javascript"><!--' . "\n" .
+			'<script><!--' . "\n" .
 			'insertMoviePlayer(\'' . $id . '\');' .
 			"\n" . '--></script>';
 	}

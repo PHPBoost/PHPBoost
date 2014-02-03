@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
  var MultipleFilePicker = Class.create({
 	integer : 2,
 	id_input : ${escapejs(ID)},
@@ -29,7 +29,7 @@ var MultipleFilePicker = new MultipleFilePicker();
 	<input name="max_file_size" value="{MAX_FILE_SIZE}" type="hidden">
 </div>
 <a href="javascript:MultipleFilePicker.add_file_input();" class="fa fa-plus" id="add_${escape(ID)}"></a>
-<script type="text/javascript">
+<script>
 <!--
 $("${escape(ID)}_1").form.enctype = "multipart/form-data";
 </script>

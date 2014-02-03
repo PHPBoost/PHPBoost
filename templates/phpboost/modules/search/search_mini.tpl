@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 	function check_search_mini_form_post()
 	{

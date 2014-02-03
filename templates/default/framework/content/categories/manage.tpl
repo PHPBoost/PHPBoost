@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 Event.observe(window, 'load', function() {
 	Sortable.destroy('categories'); 

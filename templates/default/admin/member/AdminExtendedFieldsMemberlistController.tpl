@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 var ExtendedFields = Class.create({
 	id : '',
@@ -188,7 +188,7 @@ Event.observe(window, 'load', function() {
 					</div>
 					<div class="spacer"></div>
 				</li>
-				<script type="text/javascript">
+				<script>
 				<!--
 				Event.observe(window, 'load', function() {
 					var extended_field = new ExtendedField({list_extended_fields.ID}, '{list_extended_fields.C_DISPLAY}', ExtendedFields);

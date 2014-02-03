@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 		function Confirm_read_topics() {
 			return confirm("{L_CONFIRM_READ_TOPICS}");

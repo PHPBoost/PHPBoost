@@ -2,7 +2,7 @@
 		
 		# INCLUDE forum_top #
 		
-		<script type="text/javascript">
+		<script>
 		<!--
 		function check_form_msg(){
 			# IF C_BBCODE_TINYMCE_MODE #
@@ -241,7 +241,7 @@
 						# IF msg.C_FORUM_MSG_DEL_MSG #
 					<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" id="dimgnojs{msg.ID}" class="fa fa-delete"></a>
 					<a style="cursor:pointer;display:none" onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" title="{L_DELETE}" class="fa fa-delete"></a> 
-					<script type="text/javascript">
+					<script>
 					<!--
 						document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
 						document.getElementById('dimg{msg.ID}').style.display = 'inline';

@@ -15,7 +15,7 @@
 						<a href="{categories.ACTION_GO_UP}" class="fa fa-arrow-up"></a>
 					</div>
 					# IF C_AJAX_MODE #
-						<script type="text/javascript">
+						<script>
 						<!--document.getElementById("up_{categories.ID}").href = "javascript:ajax_move_cat({categories.ID}, 'up');";-->
 						</script>
 					# ENDIF #
@@ -26,7 +26,7 @@
 						<a href="{categories.ACTION_GO_DOWN}" class="fa fa-arrow-down"></a>
 					</div>
 					# IF C_AJAX_MODE #
-						<script type="text/javascript">
+						<script>
 							<!--document.getElementById("down_{categories.ID}").href = "javascript:ajax_move_cat({categories.ID}, 'down');";-->
 						</script>
 					# ENDIF #
@@ -37,7 +37,7 @@
 						<a href="{categories.ACTION_HIDE}" title="{L_MANAGEMENT_HIDE_CAT}" id="visibility_{categories.ID}" class="fa fa-eye"></a>
 					</div>
 					# IF C_AJAX_MODE #
-						<script type="text/javascript">
+						<script>
 							<!--document.getElementById("visibility_{categories.ID}").href = "javascript:ajax_change_cat_visibility({categories.ID}, 'hide');";-->
 						</script>
 					# ENDIF #
@@ -46,7 +46,7 @@
 						<a href="{categories.ACTION_SHOW}" title="{L_MANAGEMENT_SHOW_CAT}" id="visibility_{categories.ID}" class="fa fa-eye-slash"></a>&nbsp;
 					</div>
 					# IF C_AJAX_MODE #
-						<script type="text/javascript">
+						<script>
 							<!--document.getElementById("visibility_{categories.ID}").href = "javascript:ajax_change_cat_visibility({categories.ID}, 'show');";-->
 						</script>
 					# ENDIF #

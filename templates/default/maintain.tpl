@@ -11,7 +11,7 @@
 	</div>
 	# ENDIF #
 	
-	<script type="text/javascript">
+	<script>
 	<!--
 		var release_timeout_seconds = 0;
 		function release(year, month, day, hour, minute, second)

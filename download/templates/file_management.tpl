@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 		function check_form()
 		{
@@ -42,7 +42,7 @@
 			</header>
 			<div class="content">
 			
-			<script type="text/javascript">
+			<script>
 			<!--
 				var enabled = {BOOL_IGNORE_RELEASE_DATE};
 				function show_hide_release_date()

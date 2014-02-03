@@ -47,7 +47,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$this->tpl = new StringTemplate('
 				# INCLUDE MSG #
 				# INCLUDE FORM #
-				<script type="text/javascript">
+				<script>
 				<!--
 					Event.observe(window, \'load\', function() {
 						'. $this->get_events_select_type() .'

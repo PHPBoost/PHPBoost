@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 		function check_form_convers(){
 			# IF C_BBCODE_TINYMCE_MODE #
@@ -34,7 +34,7 @@
 
 		
 		# START convers #
-		<script type="text/javascript">
+		<script>
 		<!--
 			function check_convers(status, id)
 			{

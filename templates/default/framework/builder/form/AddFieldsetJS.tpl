@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 Event.observe(window, 'load', function() {
 	var form = HTMLForms.get("${escape(FORM_ID)}");

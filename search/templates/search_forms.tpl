@@ -1,4 +1,4 @@
-        <script type="text/javascript">
+        <script>
         <!--
             const FORM = 'form_';
             const SPECIALIZED_FORM_LINK = 'specialize_form_link_';
@@ -84,7 +84,7 @@
             </div>
              <footer></footer>
         </section>
-        <script type="text/javascript">
+        <script>
         <!--
             ChangeForm('{SEARCH_MODE_MODULE}');
         -->

@@ -73,7 +73,7 @@ class HTTPFatalExceptionPrinter
 			div#whyISeeThisPage {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 			div#httpContext {background-color:#eeeeee;border:1px #aaaaaa solid;padding:10px;}
 		</style>
-		<script type="text/javascript">
+		<script>
 		<!--
 		function toggleDisplay(link, eltId) {
 			var elt = document.getElementById(eltId);

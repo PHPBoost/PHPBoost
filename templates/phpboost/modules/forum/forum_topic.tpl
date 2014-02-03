@@ -2,7 +2,7 @@
 		
 		# INCLUDE forum_top #
 		
-		<script type="text/javascript">
+		<script>
 		<!--
 		function check_form_msg(){
 			# IF C_BBCODE_TINYMCE_MODE #
@@ -241,7 +241,7 @@
 						# IF msg.C_FORUM_MSG_DEL_MSG #
 					<a href="action{msg.U_FORUM_MSG_DEL}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimgnojs{msg.ID}" /></a>
 					<img style="cursor:pointer;display:none" onclick="del_msg('{msg.ID}');" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimg{msg.ID}" /> 
-					<script type="text/javascript">
+					<script>
 					<!--
 						document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
 						document.getElementById('dimg{msg.ID}').style.display = 'inline';
@@ -343,7 +343,7 @@
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 						&nbsp;&nbsp;
-						<script type="text/javascript">
+						<script>
 						<!--				
 						document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button">');
 						-->

@@ -1,4 +1,4 @@
-		<script type="text/javascript">
+		<script>
 		<!--
 			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {SELECTED_CAT};

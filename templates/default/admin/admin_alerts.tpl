@@ -9,7 +9,7 @@
 			</ul>
 		</div>
 		
-		<script type="text/javascript">
+		<script>
 		<!--
 		function change_alert_status(id, status)
 		{

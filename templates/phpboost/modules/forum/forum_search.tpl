@@ -1,6 +1,6 @@
 		# INCLUDE forum_top #
 		
-		<script type="text/javascript">
+		<script>
 		<!--
 		function check_form(){
 			if(document.getElementById('search').value == "") {

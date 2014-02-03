@@ -1,7 +1,7 @@
 		# INCLUDE admin_download_menu #
 		
 		<div id="admin-contents">
-			<script type="text/javascript">
+			<script>
 			<!--
 				function check_form(){
 					if(document.getElementById('name').value == "")

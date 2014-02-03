@@ -134,13 +134,13 @@
 
 
 # START remove #
-<script type="text/javascript">
+<script>
 <!--
 	var path = '{PICTURES_DATA_PATH}';
 	var selected_cat = {remove.SELECTED_CAT};
 -->
 </script>
-<script type="text/javascript" src="{PATH_TO_ROOT}/pages/templates/js/pages.js"></script>
+<script src="{PATH_TO_ROOT}/pages/templates/js/pages.js"></script>
 
 # INCLUDE message_helper #
 <form action="action.php?token={TOKEN}" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset-content">

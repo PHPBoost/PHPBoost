@@ -35,7 +35,7 @@
 			# END removing_interface #
 
 			# START edition_interface #
-			<script type="text/javascript">
+			<script>
 			<!--
 			function check_form(){
 				# IF C_BBCODE_TINYMCE_MODE #

@@ -13,7 +13,7 @@
 	# ENDIF #
 # ELSE #
 	# IF C_JS_NOT_ALREADY_INCLUDED #
-		<script type="text/javascript">
+		<script>
 		<!--
 			var NOTATION_LANG_AUTH = ${escapejs(L_AUTH_ERROR)};
 			var NOTATION_LANG_ALREADY_VOTE = ${escapejs(L_ALREADY_NOTE)};
@@ -22,10 +22,10 @@
 			var NOTATION_USER_CONNECTED = ${escapejs(IS_USER_CONNECTED)};
 		-->
 		</script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/notation.js"></script>
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/notation.js"></script>
 	# ENDIF #
 	
-	<script type="text/javascript">
+	<script>
 	<!--
 		Event.observe(window, 'load', function() { new Note('{ID_IN_MODULE}', '{NOTATION_SCALE}', '{AVERAGE_NOTES}', '{ALREADY_NOTE}'); });
 	-->

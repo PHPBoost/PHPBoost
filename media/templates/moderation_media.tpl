@@ -22,7 +22,7 @@
 			</fieldset>
 		</form>
 
-		<script type="text/javascript">
+		<script>
 			<!--
 			function check_all (type)
 			{
