@@ -132,8 +132,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'L_XML_LANGUAGE' => self::$main_lang['xml_lang'],
 			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
-			'HEAD_JAVASCRIPT' => new FileTemplate('javascript_header.tpl'),
-			'FOOT_JAVASCRIPT' => new FileTemplate('javascript_footer.tpl'),
+			'JS_TOP' => new FileTemplate('js_top.tpl'),
+			'JS_BOTTOM' => new FileTemplate('js_bottom.tpl'),
 			'BODY' => $body_template
 		));
 		
