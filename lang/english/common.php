@@ -53,6 +53,8 @@ $lang['form.sources'] = 'Sources';
 $lang['form.source.name'] = 'Source name';
 $lang['form.source.url'] = 'Source address';
 
+$lang['suggestions'] = 'Suggestions';
+
 //Administration
 $lang['authorizations'] = 'Permissions';
 $lang['authorizations.read'] = 'Read permission';

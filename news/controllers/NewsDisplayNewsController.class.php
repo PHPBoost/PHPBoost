@@ -92,7 +92,7 @@ class NewsDisplayNewsController extends ModuleController
 		}
 		$this->build_sources_view($news);
 		$this->build_keywords_view($news);
-		
+		$this->build_suggested_news($news);
 		$this->build_navigation_links($news);
 	}
 	
@@ -129,6 +129,30 @@ class NewsDisplayNewsController extends ModuleController
 				'URL' => NewsUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
 			));
 			$i++;
+		}
+	}
+	
+	
+	private function build_suggested_news(News $news)
+	{
+		$result = PersistenceContext::get_querier()->select('
+		SELECT id, name, id_category, rewrited_name, 
+		(2 * FT_SEARCH_RELEVANCE(name, :search_content) + FT_SEARCH_RELEVANCE(contents, :search_content) / 3) AS relevance
+		FROM '. NewsSetup::$news_table .'
+		WHERE (FT_SEARCH(name, :search_content) OR	FT_SEARCH(contents, :search_content)) AND id <> :excluded_id
+		ORDER BY relevance DESC LIMIT 0, 10', array(
+			'excluded_id' => $news->get_id(),
+			'search_content' => $news->get_name() .','. $news->get_contents(),
+		));
+		
+		$this->tpl->put('C_SUGGESTED_NEWS', ($result->get_rows_count() > 0 && NewsConfig::load()->get_news_suggestions_enabled()));
+		
+		while ($row = $result->fetch())
+		{
+			$this->tpl->assign_block_vars('suggested', array(
+				'NAME' => $row['name'],
+				'URL' => NewsUrlBuilder::display_news($row['id_category'], NewsService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel()
+			));
 		}
 	}
 	
