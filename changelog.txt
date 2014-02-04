@@ -11,10 +11,6 @@
 [*] Modification de la classe Date :
 	[*] Refonte des constantes de formatage
 	[*] Ajout d'un formatage relatif (ex : Il y a 9 heures)
-[+] Optmisation du CMS :
-	[*] Optimisation des requêtes du système de notation
-	- Optimisation des requêtes du système de commentaires
-	[*] Optimisation du code
 [*] Installation : Ajout de la possibilité de modifier la description du site dans l'installation en CLI
 [*] Création d'un système permettant de gérer facilement des mots clés dans les modules
 [*] Passage de l'extension mysql à mysqli pour assurer la compatibilité à long terme de PHPBoost sur tous les serveurs
@@ -25,6 +21,7 @@
 [*] Optimisation du système de notation et refonte graphique
 [*] Création d'un FormFieldUploadFile permettant d'utiliser le gestionnaire d'upload pour attacher un fichier à un élément facilement
 [*] Modification du ScheduledJobs pour intégrer une fonction on_changepage() pour exécuter du code à chaque génération de page à partir des modules
+[*] Ajout de l'url dans le stacktrace du gestionnaire d'erreur pour mieux suivre les erreurs levées
 
 [b]Menus :[/b]
 [*] Améliorations graphique
@@ -44,7 +41,8 @@
 [*] Nettoyage du fichier default.css (gain de 30%)
 [*] Refonte de l'affichage de l'upload
 [*] Nettoyage des principaux fichiers TPL et CSS
-- Possibilité d'ajouter un texte de présentation du site en dessous du nom
+[*] Possibilité d'ajouter un texte de présentation du site en dessous du nom
+[*] Suppression des header.tpl et footer.tpl et création de deux fichiers frame.tpl et body.tpl pour les remplacer. La personnalisation en sera plus aisée. Il y a également un gain de performance.
 
 [b]Référencement :[/b]
 [*] Le nom du site est affiché à la fin dans la balise title (sauf pour la page d'accueil ou il est au début)
@@ -65,6 +63,20 @@
 [b]Divers :[/b]
 [*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
 [*] Ajout de l'affichage de la taille de la mémoire utilisée par PHP
+[*] Meilleure gestion des contraintes des formulaires :
+	[*] Toutes les erreurs sont listées dans une seule et même boite de dialogue
+	[*] Les champs qui ne sont pas remplis correctement sont affichés en rouge
+	[*] La page est automatiquement remontée vers le haut du formulaire si il y a des erreurs pour faciliter la vérification et la correction des champs
+
+[b]Optimisations :[/b]
+[*] Optimisation du chargement de l'environnment de PHPBoost
+[*] Optimisation du chargement de l'environnment graphique de PHPBoost
+[*] Optimisation du chargement du cache CSS
+[*] Optimisation du système de notation
+[*] Nettoyage dans les fichiers CSS
+[*] Réduction du poids des images utilisées dans le projet
+[*] Utilisation par défaut du cache du navigateur pour stocker les fichiers statiques
+[*] Création de deux fichiers JS (js_top.js et js_bottom.js) pour stocker les scripts Javascript à charger dans le haut ou le bas de la page (gain de chargement)
 
 =================================== Modules =====================================
 
