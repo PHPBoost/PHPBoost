@@ -38,12 +38,13 @@ class AdminLangsNotInstalledListController extends AdminController
 		
 		$this->save($request);
 		$this->upload_form();
-		$this->build_view();
-		
+	
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->upload();
 		}
+		
+		$this->build_view();
 		
 		$this->view->put('UPLOAD_FORM', $this->form->display());
 
@@ -168,10 +169,10 @@ class AdminLangsNotInstalledListController extends AdminController
         
 		if ($is_writable)
 		{
-			$file = $this->form->get_value('file');
-			if ($file !== null)
+			$uploaded_file = $this->form->get_value('file');
+			if ($uploaded_file !== null)
 			{
-				if (!LangManager::get_lang_existed($file->get_name_without_extension()))
+				if (!LangManager::get_lang_existed($uploaded_file->get_name_without_extension()))
 				{
 					$upload = new Upload($folder_phpboost_langs);
 					if ($upload->file('upload_lang_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
@@ -195,7 +196,7 @@ class AdminLangsNotInstalledListController extends AdminController
 							$file->delete();
 						}
 						
-						$this->install_lang($file->get_name_without_extension(), array('r-1' => 1, 'r0' => 1, 'r1' => 1));
+						$this->install_lang($uploaded_file->get_name_without_extension(), array('r-1' => 1, 'r0' => 1, 'r1' => 1));
 					}
 					else
 					{

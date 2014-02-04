@@ -50,12 +50,13 @@ class AdminThemesNotInstalledListController extends AdminController
 		}
 		
 		$this->upload_form();
-		$this->build_view();
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->upload_theme();
 		}
+		
+		$this->build_view();
 		
 		$this->view->put('UPLOAD_FORM', $this->form->display());
 
@@ -178,10 +179,10 @@ class AdminThemesNotInstalledListController extends AdminController
         
 		if ($is_writable)
 		{
-			$file = $this->form->get_value('file');
-			if ($file !== null)
+			$uploaded_file = $this->form->get_value('file');
+			if ($uploaded_file !== null)
 			{
-				if (!ThemeManager::get_theme_existed($file->get_name_without_extension()))
+				if (!ThemeManager::get_theme_existed($uploaded_file->get_name_without_extension()))
 				{
 					$upload = new Upload($folder_phpboost_themes);
 					if ($upload->file('upload_theme_file', '`([A-Za-z0-9-_]+)\.(gzip|zip)+$`i'))
@@ -205,7 +206,7 @@ class AdminThemesNotInstalledListController extends AdminController
 							$uploaded_file = new File($archive);
 							$uploaded_file->delete();
 						}
-						$this->install_theme($file->get_name_without_extension(), array('r-1' => 1, 'r0' => 1, 'r1' => 1));
+						$this->install_theme($uploaded_file->get_name_without_extension(), array('r-1' => 1, 'r0' => 1, 'r1' => 1));
 					}
 					else
 					{
