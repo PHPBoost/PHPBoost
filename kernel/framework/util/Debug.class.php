@@ -233,6 +233,8 @@ class Debug
 			$string_stacktrace .= '[' . ($i - $start_trace_index) . '] ' . ExceptionUtils::get_file($trace) .
 				':' . ExceptionUtils::get_line($trace) . ' - ' . ExceptionUtils::get_method_prototype($trace) . "\n";
 		}
+		
+		$string_stacktrace .= '[URL] ' . REWRITED_SCRIPT;
 
 		if (self::is_output_html())
 		{
