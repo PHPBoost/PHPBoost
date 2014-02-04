@@ -49,12 +49,13 @@ class AdminModuleAddController extends AdminController
 		}
 		
 		$this->upload_form();
-		$this->build_view();
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->upload_module();
 		}
+		
+		$this->build_view();
 		
 		$this->view->put('UPLOAD_FORM', $this->form->display());
 		
@@ -181,10 +182,10 @@ class AdminModuleAddController extends AdminController
 		
 		if ($is_writable)
 		{
-			$file = $this->form->get_value('file');
-			if ($file !== null)
+			$uploaded_file = $this->form->get_value('file');
+			if ($uploaded_file !== null)
 			{
-				if (!ModulesManager::is_module_installed($file->get_name_without_extension()))
+				if (!ModulesManager::is_module_installed($uploaded_file->get_name_without_extension()))
 				{
 					$upload = new Upload($modules_folder);
 					$upload->disableContentCheck();
@@ -208,7 +209,7 @@ class AdminModuleAddController extends AdminController
 							$file = new File($archive_path);
 							$file->delete();
 						}
-						$this->install_module($file->get_name_without_extension(), true);
+						$this->install_module($uploaded_file->get_name_without_extension(), true);
 					}
 					else
 					{
