@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        CalendarRichCategory.class.php
+ *                        CalendarCategory.class.php
  *                            -------------------
  *   begin                : February 25, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class CalendarRichCategory extends RichCategory
+class CalendarCategory extends Category
 {
 	private $color;
 	
@@ -56,10 +56,8 @@ class CalendarRichCategory extends RichCategory
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-			'description' => array('type' => 'text', 'length' => 65000),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000),
-			'image' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'color' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 		);

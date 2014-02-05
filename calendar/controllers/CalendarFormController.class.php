@@ -120,9 +120,11 @@ class CalendarFormController extends ModuleController
 			'events' => array('click' => '
 			if (HTMLForms.getField("registration_authorized").getValue()) {
 				HTMLForms.getField("max_registered_members").enable();
+				HTMLForms.getField("last_registration_date").enable();
 				$("' . __CLASS__ . '_register_authorizations").show();
 			} else {
 				HTMLForms.getField("max_registered_members").disable();
+				HTMLForms.getField("last_registration_date").disable();
 				$("' . __CLASS__ . '_register_authorizations").hide();
 			}'
 		))));
@@ -130,6 +132,10 @@ class CalendarFormController extends ModuleController
 		$fieldset->add_field(new FormFieldTextEditor('max_registered_members', $this->lang['calendar.labels.max_registered_members'], $event_content->get_max_registered_members(), array(
 			'description' => $this->lang['calendar.labels.max_registered_members.explain'], 'maxlength' => 5, 'size' => 5, 'hidden' => !$event_content->is_registration_authorized()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+		));
+		
+		$fieldset->add_field(new FormFieldDateTime('last_registration_date', $this->lang['calendar.labels.last_registration_date'], $event_content->get_last_registration_date(), array(
+			'hidden' => !$event_content->is_registration_authorized())
 		));
 		
 		$auth_settings = new AuthorizationsSettings(array(
@@ -251,6 +257,7 @@ class CalendarFormController extends ModuleController
 		{
 			$event_content->authorize_registration();
 			$event_content->set_max_registered_members($this->form->get_value('max_registered_members'));
+			$event_content->set_last_registration_date($this->form->get_value('last_registration_date'));
 			$event_content->set_register_authorizations($this->form->get_value('register_authorizations', $event_content->get_register_authorizations())->build_auth_array());
 		}
 		else

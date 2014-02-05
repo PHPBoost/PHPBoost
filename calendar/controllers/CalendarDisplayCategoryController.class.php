@@ -120,7 +120,7 @@ class CalendarDisplayCategoryController extends ModuleController
 			{
 				$participant = new CalendarEventParticipant();
 				$participant->set_properties($row);
-				$participants[$row['event_id']][] = $participant;
+				$participants[$row['event_id']][$participant->get_user_id()] = $participant;
 			}
 			
 			foreach ($events_list as $event)
@@ -176,7 +176,6 @@ class CalendarDisplayCategoryController extends ModuleController
 	{
 		$response = new CalendarDisplayResponse();
 		$response->set_page_title($this->get_category()->get_name());
-		$response->set_page_description($this->get_category()->get_description());
 		
 		$response->add_breadcrumb_link($this->lang['module_title'], CalendarUrlBuilder::home());
 		

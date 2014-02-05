@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class CalendarCategoriesFormController extends AbstractRichCategoriesFormController
+class CalendarCategoriesFormController extends AbstractCategoriesFormController
 {
 	protected function generate_response(View $view)
 	{

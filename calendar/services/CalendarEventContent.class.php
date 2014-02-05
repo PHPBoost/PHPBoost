@@ -42,6 +42,7 @@ class CalendarEventContent
 	
 	private $registration_authorized;
 	private $max_registered_members;
+	private $last_registration_date;
 	private $register_authorizations;
 	
 	private $repeat_number;
@@ -176,6 +177,16 @@ class CalendarEventContent
 		return $this->max_registered_members;
 	}
 	
+	public function set_last_registration_date(Date $last_registration_date)
+	{
+		$this->last_registration_date = $last_registration_date;
+	}
+	
+	public function get_last_registration_date()
+	{
+		return $this->last_registration_date;
+	}
+	
 	public function set_register_authorizations(array $authorizations)
 	{
 		$this->register_authorizations = $authorizations;
@@ -235,6 +246,7 @@ class CalendarEventContent
 			'author_id' => $this->get_author_user()->get_id(),
 			'registration_authorized' => (int)$this->is_registration_authorized(),
 			'max_registered_members' => $this->get_max_registered_members(),
+			'last_registration_date' => $this->get_last_registration_date() !== null ? $this->get_last_registration_date()->get_timestamp() : '',
 			'register_authorizations' => serialize($this->get_register_authorizations()),
 			'repeat_number' => $this->get_repeat_number(),
 			'repeat_type' => $this->get_repeat_type()
@@ -261,6 +273,7 @@ class CalendarEventContent
 			$this->unauthorize_registration();
 		
 		$this->max_registered_members = $properties['max_registered_members'];
+		$this->last_registration_date = !empty($properties['last_registration_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['last_registration_date']) : null;
 		$this->register_authorizations = unserialize($properties['register_authorizations']);
 		
 		$this->creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']);

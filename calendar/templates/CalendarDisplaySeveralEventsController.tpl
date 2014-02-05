@@ -60,27 +60,42 @@
 					</div>
 					# ENDIF #
 					# IF event.C_PARTICIPATION_ENABLED #
-					<div class="spacer">&nbsp;</div>
-					# IF event.C_DISPLAY_PARTICIPANTS #
-					<div>
-						<span class="text-strong">{@calendar.labels.participants}</span> :
-						<span>
-							# IF event.C_PARTICIPANTS #
-								# START event.participant #
-									<a href="{event.participant.U_PROFILE}" class="small_link {event.participant.LEVEL_CLASS}" # IF event.participant.C_GROUP_COLOR # style="color:{event.participant.GROUP_COLOR}" # ENDIF #>{event.participant.LOGIN}</a>
-								# END event.participant #
-							# ELSE #
-								{@calendar.labels.no_one}
+						<div class="spacer">&nbsp;</div>
+						# IF event.C_DISPLAY_PARTICIPANTS #
+						<div>
+							<span class="text-strong">{@calendar.labels.participants}</span> :
+							<span>
+								# IF event.C_PARTICIPANTS #
+									# START event.participant #
+										<a href="{event.participant.U_PROFILE}" class="{event.participant.LEVEL_CLASS}" # IF event.participant.C_GROUP_COLOR # style="color:{event.participant.GROUP_COLOR}" # ENDIF #>{event.participant.LOGIN}</a>
+									# END event.participant #
+								# ELSE #
+									{@calendar.labels.no_one}
+								# ENDIF #
+							</span>
+						</div>
+						# ENDIF #
+						# IF event.C_PARTICIPATE #
+						<a href="{event.U_SUSCRIBE}" class="basic-button">{@calendar.labels.suscribe}</a>
+							# IF event.C_MISSNG_PARTICIPANTS #
+							<span class="small text-italic">({event.L_MISSNG_PARTICIPANTS})</span>
 							# ENDIF #
-						</span>
-					</div>
-					# ENDIF #
-					# IF event.C_PARTICIPATE ## IF event.C_IS_PARTICIPANT #<a href="{event.U_UNSUSCRIBE}" class="basic-button">{@calendar.labels.unsuscribe}</a># ELSE #<a href="{event.U_SUSCRIBE}" class="basic-button">{@calendar.labels.suscribe}</a># ENDIF ## ENDIF #
+							# IF event.C_REGISTRATION_DAYS_LEFT #
+							<div class="spacer"></div>
+							<span class="small text-italic">{event.L_REGISTRATION_DAYS_LEFT}</span>
+							# ENDIF #
+						# ENDIF #
+						# IF event.C_IS_PARTICIPANT #
+						<a href="{event.U_UNSUSCRIBE}" class="basic-button">{@calendar.labels.unsuscribe}</a>
+						# ELSE #
+							# IF event.C_MAX_PARTICIPANTS_REACHED #<span class="small text-italic">{@calendar.labels.max_participants_reached}</span># ENDIF #
+						# ENDIF #
+						# IF event.C_REGISTRATION_CLOSED #<span class="small text-italic">{@calendar.labels.registration_closed}</span># ENDIF #
 					# ENDIF #
 					
 					<div class="spacer">&nbsp;</div>
 					<div class="event-display-author" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
-						{@calendar.labels.created_by} : # IF event.AUTHOR #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="small_link {event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
+						{@calendar.labels.created_by} : # IF event.AUTHOR #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="small {event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 					</div>
 					<div class="event-display-dates">
 						{@calendar.labels.start_date} : <span class="float-right"><time datetime="{event.START_DATE_ISO8601}" itemprop="startDate">{event.START_DATE}</time></span>
