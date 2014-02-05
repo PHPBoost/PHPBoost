@@ -47,7 +47,7 @@
 					<a href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
 				</td>
 				<td>
-					<a href="{news.U_AUTHOR_PROFILE}" class="small_link {news.USER_LEVEL_CLASS}" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}"# ENDIF #>{news.PSEUDO}</a>
+					<a href="{news.U_AUTHOR_PROFILE}" class="small {news.USER_LEVEL_CLASS}" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}"# ENDIF #>{news.PSEUDO}</a>
 				</td>
 				<td>
 					{news.DATE}

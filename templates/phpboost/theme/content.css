@@ -427,7 +427,7 @@ a.msg_link_pseudo:hover {
     overflow:visible;
     height:1%;
 }
-.msg_top_row span.text-strong a.small_link{ color: #F2FBFF; }
+.msg_top_row span.text-strong a.small{ color: #F2FBFF; }
 
 .msg_info_mbr { /* Case des informations du membre */
     background:#f0f3ff;

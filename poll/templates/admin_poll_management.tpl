@@ -70,7 +70,7 @@
 							{questions.QUESTIONS}
 						</td>
 						<td> 
-							# IF questions.PSEUDO #<a href="{questions.U_AUTHOR_PROFILE}" class="small_link {questions.USER_LEVEL_CLASS}" # IF questions.C_USER_GROUP_COLOR # style="color:{questions.USER_GROUP_COLOR}" # ENDIF #>{questions.PSEUDO}</a># ELSE #{L_GUEST}# ENDIF # 
+							# IF questions.PSEUDO #<a href="{questions.U_AUTHOR_PROFILE}" class="small {questions.USER_LEVEL_CLASS}" # IF questions.C_USER_GROUP_COLOR # style="color:{questions.USER_GROUP_COLOR}" # ENDIF #>{questions.PSEUDO}</a># ELSE #{L_GUEST}# ENDIF # 
 						</td>
 						<td>
 							{questions.DATE}

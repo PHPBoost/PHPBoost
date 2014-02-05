@@ -46,7 +46,7 @@
 	</div>
 	<div class="form-element">
 		<label>{@labels.fields.assigned_to_id}</label>
-		<div class="form-field"># IF USER_ASSIGNED #<a href="{LINK_USER_ASSIGNED_PROFILE}" class="small_link {USER_ASSIGNED_LEVEL_CLASS}" # IF C_USER_ASSIGNED_GROUP_COLOR # style="color:{USER_ASSIGNED_GROUP_COLOR}" # ENDIF #>{USER_ASSIGNED}</a># ELSE #{@notice.no_one}# ENDIF #</div>
+		<div class="form-field"># IF USER_ASSIGNED #<a href="{LINK_USER_ASSIGNED_PROFILE}" class="small {USER_ASSIGNED_LEVEL_CLASS}" # IF C_USER_ASSIGNED_GROUP_COLOR # style="color:{USER_ASSIGNED_GROUP_COLOR}" # ENDIF #>{USER_ASSIGNED}</a># ELSE #{@notice.no_one}# ENDIF #</div>
 	</div>
 	# IF C_FIXED_IN #
 	<div class="form-element">
@@ -107,7 +107,7 @@
 # ENDIF #
 
 <div class="text_small float-right">
-	{@labels.fields.author_id} # IF AUTHOR #<a href="{U_AUTHOR_PROFILE}" class="small_link {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #, ${TextHelper::lowercase_first(LangLoader::get_message('on', 'main'))} {SUBMIT_DATE}
+	{@labels.fields.author_id} # IF AUTHOR #<a href="{U_AUTHOR_PROFILE}" class="small {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #, ${TextHelper::lowercase_first(LangLoader::get_message('on', 'main'))} {SUBMIT_DATE}
 </div>
 
 <div class="spacer">&nbsp;</div>
