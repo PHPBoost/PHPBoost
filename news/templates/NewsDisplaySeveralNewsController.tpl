@@ -29,7 +29,7 @@
 					<div class="more">
 						${LangLoader::get_message('by', 'common')}
 						# IF news.PSEUDO #
-						<a itemprop="author" class="small_link {news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}" style="font-size: 12px;" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, 
+						<a itemprop="author" class="small {news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}" style="font-size: 12px;" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, 
 						# ENDIF # 
 						${TextHelper::lowercase_first(LangLoader::get_message('the', 'common'))} <time datetime="{news.DATE_ISO8601}" itemprop="datePublished">{news.DATE}</time> 
 						${TextHelper::lowercase_first(LangLoader::get_message('in', 'common'))} <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>

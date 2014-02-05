@@ -49,7 +49,7 @@
 				<a href="{articles.U_CATEGORY}">{articles.CATEGORY_NAME}</a>
 			</td>
 			<td> 
-				<a href="{articles.U_AUTHOR}" class="small_link {articles.USER_LEVEL_CLASS}" # IF articles.C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>
+				<a href="{articles.U_AUTHOR}" class="small {articles.USER_LEVEL_CLASS}" # IF articles.C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>
 			</td>
 			<td>
 				{articles.DATE_SHORT}

@@ -96,11 +96,11 @@ a:hover {
 
 
 /* Liens petite taille */
-a.small_link {
+a.small {
     font-size:11px;
 }
 
-a.small_link:hover {
+a.small:hover {
     font-size:11px;
 }
 
