@@ -38,7 +38,7 @@ class CalendarCategoriesCache extends CategoriesCache
 	
 	public function get_category_class()
 	{
-		return 'CalendarRichCategory';
+		return 'CalendarCategory';
 	}
 	
 	public function get_module_identifier()
@@ -48,11 +48,9 @@ class CalendarCategoriesCache extends CategoriesCache
 	
 	public function get_root_category()
 	{
-		$root = new RichRootCategory();
+		$root = new RootCategory();
 		$root->set_authorizations(CalendarConfig::load()->get_authorizations());
-		$root->set_description(
-			StringVars::replace_vars(LangLoader::get_message('calendar.seo.description.root', 'common', 'calendar'), array('site' => GeneralConfig::load()->get_site_name()))
-		);
+		
 		return $root;
 	}
 }

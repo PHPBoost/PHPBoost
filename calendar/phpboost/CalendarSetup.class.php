@@ -98,6 +98,7 @@ class CalendarSetup extends DefaultModuleSetup
 			'approved' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'registration_authorized' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
 			'max_registered_members' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1),
+			'last_registration_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'register_authorizations' => array('type' => 'text', 'length' => 65000),
 			'repeat_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'repeat_type' => array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => '\'' . CalendarEventContent::NEVER . '\'')
@@ -115,7 +116,7 @@ class CalendarSetup extends DefaultModuleSetup
 	
 	private function create_calendar_cats_table()
 	{
-		CalendarRichCategory::create_categories_table(self::$calendar_cats_table);
+		CalendarCategory::create_categories_table(self::$calendar_cats_table);
 	}
 	
 	private function create_calendar_users_relation_table()

@@ -158,9 +158,15 @@ class CalendarEvent
 	
 	public function get_array_tpl_vars()
 	{
+		$lang = LangLoader::get('common', 'calendar');
+		
 		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($this->content->get_category_id());
 		$author = $this->content->get_author_user();
 		$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
+		
+		$missing_participants_number = $this->content->get_max_registered_members() > 0 && $this->get_registered_members_number() < $this->content->get_max_registered_members() ? ($this->content->get_max_registered_members() - $this->get_registered_members_number()) : 0;
+		
+		$registration_days_left = $this->content->get_last_registration_date() && time() < $this->content->get_last_registration_date()->get_timestamp() ? (int)(($this->content->get_last_registration_date()->get_timestamp() - time()) /3600 /24) : 0;
 		
 		return array(
 			'C_APPROVED' => $this->content->is_approved(),
@@ -171,8 +177,12 @@ class CalendarEvent
 			'C_PARTICIPATION_ENABLED' => $this->content->is_registration_authorized(),
 			'C_DISPLAY_PARTICIPANTS' => $this->content->is_authorized_to_display_registered_users(),
 			'C_PARTICIPANTS' => !empty($this->participants),
-			'C_PARTICIPATE' => $this->content->is_registration_authorized() && $this->content->is_authorized_to_register() && time() < $this->start_date->get_timestamp() && (!$this->content->get_max_registered_members() || ($this->content->get_max_registered_members() > 0 && $this->get_registered_members_number() < $this->content->get_max_registered_members())),
+			'C_PARTICIPATE' => $this->content->is_registration_authorized() && $this->content->is_authorized_to_register() && time() < $this->start_date->get_timestamp() && (!$this->content->get_max_registered_members() || ($this->content->get_max_registered_members() > 0 && $this->get_registered_members_number() < $this->content->get_max_registered_members())) && (!$this->content->get_last_registration_date() || time() < $this->content->get_last_registration_date()->get_timestamp()) && !in_array(AppContext::get_current_user()->get_id(), array_keys($this->participants)),
 			'C_IS_PARTICIPANT' => in_array(AppContext::get_current_user()->get_id(), array_keys($this->participants)),
+			'C_REGISTRATION_CLOSED' => $this->content->get_last_registration_date() && time() > $this->content->get_last_registration_date()->get_timestamp(),
+			'C_MAX_PARTICIPANTS_REACHED' => $this->content->get_max_registered_members() > 0 && $this->get_registered_members_number() == $this->content->get_max_registered_members(),
+			'C_MISSNG_PARTICIPANTS' => !empty($missing_participants_number) && $missing_participants_number <= 5,
+			'C_REGISTRATION_DAYS_LEFT' => !empty($registration_days_left) && $registration_days_left <= 5,
 			'C_AUTHOR_GROUP_COLOR' => !empty($author_group_color),
 			
 			//Event
@@ -187,17 +197,17 @@ class CalendarEvent
 			'END_DATE_ISO8601' => $this->end_date->format(Date::FORMAT_ISO8601),
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('calendar', $this->id),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('calendar', $this->id),
-			'REPEAT_TYPE' => LangLoader::get_message('calendar.labels.repeat.' . $this->content->get_repeat_type(), 'common', 'calendar'),
+			'REPEAT_TYPE' => $lang['calendar.labels.repeat.' . $this->content->get_repeat_type()],
 			'REPEAT_NUMBER' => $this->content->get_repeat_number(),
 			'AUTHOR' => $author->get_pseudo(),
 			'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($author->get_level()),
 			'AUTHOR_GROUP_COLOR' => $author_group_color,
+			'L_MISSNG_PARTICIPANTS' => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.labels.remaining_place'],
+			'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_days'], array('days_left' => $registration_days_left)) : $lang['calendar.labels.remaining_day'],
 			
 			//Category
 			'CATEGORY_ID' => $category->get_id(),
 			'CATEGORY_NAME' => $category->get_name(),
-			'CATEGORY_DESCRIPTION' => $category->get_description(),
-			'CATEGORY_IMAGE' => $category->get_image(),
 			'CATEGORY_COLOR' => $category->get_id() != Category::ROOT_CATEGORY ? $category->get_color() : '',
 			
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),

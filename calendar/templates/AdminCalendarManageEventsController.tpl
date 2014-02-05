@@ -50,7 +50,7 @@
 				<a href="{event.U_CATEGORY}"# IF event.CATEGORY_COLOR # style="color:{event.CATEGORY_COLOR}"# ENDIF #>{event.CATEGORY_NAME}</a>
 			</td>
 			<td> 
-				<a href="{event.U_AUTHOR_PROFILE}" class="small_link {event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}"# ENDIF #>{event.AUTHOR}</a>
+				<a href="{event.U_AUTHOR_PROFILE}" class="{event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}"# ENDIF #>{event.AUTHOR}</a>
 			</td>
 			<td>
 				${LangLoader::get_message('from_date', 'main')} {event.START_DATE}<br />
