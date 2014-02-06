@@ -100,11 +100,14 @@ class CalendarDisplayCategoryController extends ModuleController
 			$events_list[$event->get_id()] = $event;
 		}
 		
+		$events_number = $result->get_rows_count();
+		
 		$this->tpl->put_all(array(
 			'C_COMMENTS_ENABLED' => CalendarConfig::load()->are_comments_enabled(),
-			'C_EVENTS' => $result->get_rows_count() > 0,
+			'C_EVENTS' => $events_number > 0,
 			'CALENDAR' => CalendarAjaxCalendarController::get_view(),
-			'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year
+			'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
+			'L_EVENTS_NUMBER' => $events_number > 1 ? StringVars::replace_vars($this->lang['calendar.labels.events_number'], array('events_number' => $events_number)) : $this->lang['calendar.labels.one_event'],
 		));
 		
 		if (!empty($events_list))

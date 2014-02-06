@@ -119,7 +119,8 @@ class CalendarAjaxCalendarController extends AbstractController
 				{
 					$title = isset($array_events[$j]['title']) ? $array_events[$j]['title']: '';
 					$array_events[$j] = array(
-						'title' => $title . ($event['type'] != 'BIRTHDAY' ? ($j == $start_date->get_day() ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : $this->lang['calendar.labels.birthday_title'] . ' ') . $event['title'],
+						'title' => $title . (!empty($title) ? '
+' : '') . ($event['type'] != 'BIRTHDAY' ? ($j == $start_date->get_day() ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : $this->lang['calendar.labels.birthday_title'] . ' ') . $event['title'],
 						'type' => $event['type'],
 						'color' => !empty($event['id_category']) ? $categories[$event['id_category']]->get_color() : '',
 						'id_category' => $event['id_category'],
