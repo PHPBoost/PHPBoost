@@ -169,7 +169,7 @@ class CalendarFormController extends ModuleController
 		if ($this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
-			$fieldset->set_description(MessageHelper::display(LangLoader::get_message('contribution.explain', 'user-common') . ' ' . $this->lang['calendar.labels.contribution.explain'], MessageHelper::WARNING)->render());
+			$fieldset->set_description(MessageHelper::display($this->lang['calendar.labels.contribution.explain'] . ' ' . LangLoader::get_message('contribution.explain', 'user-common'), MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 			
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', LangLoader::get_message('contribution.description', 'user-common'), '', array('description' => LangLoader::get_message('contribution.description.explain', 'user-common'))));

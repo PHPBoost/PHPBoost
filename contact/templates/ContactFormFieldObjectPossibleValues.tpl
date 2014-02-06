@@ -8,23 +8,21 @@ var ContactFormFieldObjectPossibleValues = Class.create({
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
 			
+			var select = new Element('select', {'id' : 'field_recipient_' + id, 'name' : 'field_recipient_' + id});
+			# START recipients_list #
+			select.appendChild(new Option(${escapejs(recipients_list.NAME)}, ${escapejs(recipients_list.ID)}));
+			# END recipients_list #
+			
 			var div = Builder.node('div', {'id' : id}, [
 				Builder.node('input', {type : 'checkbox', id : 'field_is_default_' + id, name : 'field_is_default_' + id, value : '1', 'class' : 'per_default'}),
 				' ',
 				Builder.node('input', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}),
 				' ',
+				select,
+				' ',
+				Builder.node('a', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete', title : "${LangLoader::get_message('delete', 'main')}"
 			]);
 			$('input_fields_' + this.id_input).insert(div);
-			
-			var select = new Element('select', {'id' : 'field_recipient_' + id, 'name' : 'field_recipient_' + id});
-			# START recipients_list #
-			select.appendChild(new Option(${escapejs(recipients_list.NAME)}, ${escapejs(recipients_list.ID)}));
-			# END recipients_list #
-			$(div).insert(select);
-			
-			var delete_input = new Element('a', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'main')}", 'class' : 'fa-delete'});
-			$(div).insert('&nbsp;');
-			$(div).insert(delete_input);
 			
 			this.integer++;
 		}
