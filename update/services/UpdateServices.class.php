@@ -176,9 +176,59 @@ class UpdateServices
 	public function execute()
 	{
 		$this->get_update_token();
+		
+		$general_config = GeneralConfig::load();
+		$general_config->set_site_path('/trunk');
+		GeneralConfig::save();
+		
+		$user_accounts_config = UserAccountsConfig::load();
+		$user_accounts_config->set_default_theme('base');
+		UserAccountsConfig::save();
+		
+		ThemeManager::uninstall('phpboost');
+		ThemeManager::install('base');
+		
+		$server_environment_config = ServerEnvironmentConfig::load();
+		$server_environment_config->set_url_rewriting_enabled(false);
+		ServerEnvironmentConfig::save();
+		
+		ModulesManager::install_module('PHPBoostCaptcha');
+		ModulesManager::install_module('ReCaptcha');
+		
+		$content_management_config = ContentManagementConfig::load();
+		$content_management_config->set_used_captcha_module('ReCaptcha');
+		ContentManagementConfig::save();
+		
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
+		);
+		$options = array(
+			'primary' => array('id'),
+			'indexes' => array(
+				'name' => array('type' => 'unique', 'fields' => 'name',
+				'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
+		)));
+		PersistenceContext::get_dbms_utils()->create_table(PREFIX . 'keywords', $fields, $options);
+		
+		$fields = array(
+			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'module_id' => array('type' => 'string', 'length' => 25, 'default' => "''"),
+			'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+		);
+		PersistenceContext::get_dbms_utils()->create_table(PREFIX . 'keywords_relations', $fields);
+		
+		PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST .' CHANGE default_values default_value TEXT');
+		
+		PersistenceContext::get_querier()->inject('RENAME TABLE '. PREFIX .'ranks' .' TO '. PREFIX .'forum_ranks');
+		
+		ModulesManager::uninstall_module('HomeCustom');
+		
 		$this->update_kernel();
 		$this->update_configurations();
 		$this->update_modules();
+		
 		$this->delete_update_token();
 		$this->generate_cache();
 	}
