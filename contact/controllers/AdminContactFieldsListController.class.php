@@ -33,9 +33,6 @@ class AdminContactFieldsListController extends AdminModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		if ($request->get_value('add_field', false))
-			AppContext::get_response()->redirect(ContactUrlBuilder::add_field());
-		
 		$this->init();
 		
 		$this->update_fields($request);

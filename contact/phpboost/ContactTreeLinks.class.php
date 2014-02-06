@@ -34,7 +34,11 @@ class ContactTreeLinks implements ModuleTreeLinksExtensionPoint
 	{
 		$tree = new ModuleTreeLinks();
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('admin.fields.manage', 'common', 'contact'), ContactUrlBuilder::manage_fields()));
+		$manage_fields_link = new AdminModuleLink(LangLoader::get_message('admin.fields.manage', 'common', 'contact'), ContactUrlBuilder::manage_fields());
+		$manage_fields_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('admin.fields.manage', 'common', 'contact'), ContactUrlBuilder::manage_fields()));
+		$manage_fields_link->add_sub_link(new AdminModuleLink(LangLoader::get_message('fields.action.add_field', 'admin-user-common'), ContactUrlBuilder::add_field()));
+		$tree->add_link($manage_fields_link);
+		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), ContactUrlBuilder::configuration()));
 		
 		return $tree;

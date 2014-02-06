@@ -60,25 +60,16 @@ var ContactField = Class.create({
 		# ENDIF #
 	},
 	delete_fields : function() {
-		if (confirm(${escapejs(@fields.delete_field.confirm)}))
-		{
-			new Ajax.Request('${relative_url(ContactUrlBuilder::delete_field())}', {
-				method:'post',
-				asynchronous: false,
-				parameters: {'id' : this.id, 'token' : '{TOKEN}'},
-				onSuccess: function(transport) {
-					if (transport.responseText == 0)
-					{
-						$('no_field').style.display = "";
-					}
-				}
-			});
-			
-			var elementToDelete = $('list_' + this.id);
-			elementToDelete.parentNode.removeChild(elementToDelete);
-			ContactFields.destroy_sortable();
-			ContactFields.create_sortable();
-		}
+		new Ajax.Request('${relative_url(ContactUrlBuilder::delete_field())}', {
+			method:'post',
+			asynchronous: false,
+			parameters: {'id' : this.id, 'token' : '{TOKEN}'}
+		});
+		
+		var elementToDelete = $('list_' + this.id);
+		elementToDelete.parentNode.removeChild(elementToDelete);
+		ContactFields.destroy_sortable();
+		ContactFields.create_sortable();
 	},
 	move_up : function() {
 		var sequence = ContactFields.get_sortable_sequence();
@@ -178,7 +169,7 @@ Event.observe(window, 'load', function() {
 								<a href="{fields_list.U_EDIT}" title="{@fields.action.edit_field}" class="fa fa-edit"></a>
 							</div>
 							<div class="sortable-options">
-								# IF fields_list.C_DELETE #<a class="fa fa-delete" data-confirmation="delete-element" title="{@fields.action.delete_field}" id="delete_{fields_list.ID}"></a># ELSE #&nbsp;# ENDIF #
+								# IF fields_list.C_DELETE #<a title="{@fields.action.delete_field}" id="delete_{fields_list.ID}" class="fa fa-delete" data-confirmation="${@fields.delete_field.confirm}"></a># ELSE #&nbsp;# ENDIF #
 							</div>
 							<div class="sortable-options">
 							# IF NOT fields_list.C_READONLY #<a id="change_display_{fields_list.ID}" class="fa fa-eye"></a># ELSE #&nbsp;# ENDIF #
@@ -222,14 +213,12 @@ Event.observe(window, 'load', function() {
 				</script>
 			# END fields_list #
 		</ul>
-		<div id="no_field" class="center"# IF C_FIELDS # style="display:none;"# ENDIF #>{@fields.no_field}</div>
 	</fieldset>
+	# IF C_MORE_THAN_ONE_FIELD #
 	<fieldset class="fieldset-submit">
-		# IF C_MORE_THAN_ONE_FIELD #
 		<button type="submit" name="submit" value="true">{@fields.update_fields_position}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="position" id="position" value="">
-		# ENDIF #
-		<button type="submit" name="add_field" value="true">{@fields.action.add_field}</button>
 	</fieldset>
+	# ENDIF #
 </form>
