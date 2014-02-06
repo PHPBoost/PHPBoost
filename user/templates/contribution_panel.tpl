@@ -170,13 +170,15 @@
 	# IF C_CONSULT_CONTRIBUTION #
 	<section>			
 		<header>
-			<h1>{ENTITLED}</h1>
+			<h1>
+			{ENTITLED}
 			# IF C_WRITE_AUTH #
-			<span style="float:right;">
+			<span class="actions">
 				<a href="{U_UPDATE}" title="{L_UPDATE}" class="fa fa-edit"></a>
 				<a href="{U_DELETE}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</span>
 			# ENDIF #
+			</h1>
 		</header>
 		<div class="content">
 			# IF C_WRITE_AUTH #

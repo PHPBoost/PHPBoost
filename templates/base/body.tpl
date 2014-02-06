@@ -69,7 +69,7 @@
 						# END link_bread_crumb #
 					</ol>
 				</nav>
-				# INCLUDE CONTENT #
+				{CONTENT}
 			</div>
 			# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
 	        <div id="bottom-content">

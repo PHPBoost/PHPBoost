@@ -22,7 +22,7 @@
 	<div class="module-mini-container">
 		<div class="module-mini-top"><h5 class="sub-title">{SEARCH}</h5></div>
 		<div class="module-mini-contents">
-			<div class="input-element-button">
+			<div id="mini_search_form" class="input-element-button">
 				<input type="text" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" class="search_entry" placeholder="{L_SEARCH}...">
 				<input type="hidden" name="token" value="{TOKEN}">
 				<button type="submit" name="search_submit" ><i class="fa fa-search"></i></button>

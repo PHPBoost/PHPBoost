@@ -21,7 +21,7 @@
 		</header>
 		
 		<div id="admin-main">
-			# INCLUDE CONTENT #
+			{CONTENT}
 		</div>
 	</div>
     <footer id="footer">

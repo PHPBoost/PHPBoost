@@ -6,7 +6,7 @@ function show_cat_contents(id_cat, display_select_link)
 {
 	var xhr_object = null;
 	var data = null;
-	var filename = "../pages/xmlhttprequest.php" + (display_select_link != 0 ? "?display_select_link=1" : "");
+	var filename = "../pages/xmlhttprequest.php" + (display_select_link != 0 ? "?display_select_link=1&token=" + TOKEN : "?token=" + TOKEN);
 	
 	if(window.XMLHttpRequest) // Firefox
 	   xhr_object = new XMLHttpRequest();
@@ -61,7 +61,7 @@ function select_cat(id_cat)
 {
 	var xhr_object = null;
 	var data = null;
-	var filename = "../pages/xmlhttprequest.php?select_cat=1";
+	var filename = "../pages/xmlhttprequest.php?select_cat=1&token=" + TOKEN;
 	
 	if(window.XMLHttpRequest) // Firefox
 	   xhr_object = new XMLHttpRequest();
@@ -98,7 +98,7 @@ function open_cat(id_cat)
 {
 	var xhr_object = null;
 	var data = null;
-	var filename = "../pages/xmlhttprequest.php?select_cat=1&display_select_link=0" + (id_cat == 0 ? "&root=1" : "");
+	var filename = "../pages/xmlhttprequest.php?select_cat=1&display_select_link=0" + (id_cat == 0 ? "&root=1" : "") + "&token=" + TOKEN;
 	
 	if(window.XMLHttpRequest) // Firefox
 	   xhr_object = new XMLHttpRequest();

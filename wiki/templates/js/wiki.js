@@ -6,7 +6,7 @@
 		{
 			var xhr_object = null;
 			var data = null;
-			var filename = "../wiki/xmlhttprequest.php" + (display_select_link != 0 ? "?display_select_link=1" : "");
+			var filename = "../wiki/xmlhttprequest.php" + (display_select_link != 0 ? "?display_select_link=1&token=" + TOKEN : "?token=" + TOKEN);
 			
 			if(window.XMLHttpRequest) // Firefox
 			   xhr_object = new XMLHttpRequest();
@@ -61,7 +61,7 @@
 		{
 			var xhr_object = null;
 			var data = null;
-			var filename = "../wiki/xmlhttprequest.php?select_cat=1";
+			var filename = "../wiki/xmlhttprequest.php?select_cat=1&token=" + TOKEN;
 			
 			if(window.XMLHttpRequest) // Firefox
 			   xhr_object = new XMLHttpRequest();
@@ -234,7 +234,7 @@
 		{
 			var xhr_object = null;
 			var data = null;
-			var filename = "../wiki/xmlhttprequest.php?select_cat=1&display_select_link=0" + (id_cat == 0 ? "&root=1" : "");
+			var filename = "../wiki/xmlhttprequest.php?select_cat=1&display_select_link=0" + (id_cat == 0 ? "&root=1" : "") + "&token=" + TOKEN;
 			
 			if(window.XMLHttpRequest) // Firefox
 			   xhr_object = new XMLHttpRequest();

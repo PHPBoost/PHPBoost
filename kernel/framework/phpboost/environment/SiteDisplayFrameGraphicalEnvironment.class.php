@@ -64,7 +64,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'JS_TOP' => new FileTemplate('js_top.tpl'),
 			'JS_BOTTOM' => new FileTemplate('js_bottom.tpl'),
-			'BODY' => new StringTemplate($content)
+			'BODY' => $content
 		));
 		
 		$template->display();

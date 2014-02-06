@@ -163,11 +163,9 @@
 							{BEGINING_CALENDAR}
 							&nbsp;{L_TO_DATE}&nbsp;
 							{END_CALENDAR}
-							<br />
 							<label>
 								<input type="radio" value="1" name="visibility" {VISIBLE_ENABLED} id="release_date"> {L_NOW}
 							</label>
-							<br />
 							<label>
 								<input type="radio" value="0" name="visibility" {VISIBLE_HIDDEN}> {L_HIDDEN}
 							</label>
