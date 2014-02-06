@@ -103,7 +103,6 @@ select.list_modules {
 
 div.resultsChoices {
     position:relative;
-   	float:right;
     top:5px;
     width:100%;
     text-align:right;
@@ -112,10 +111,6 @@ div.resultsChoices {
 div.resultsChoices span {
     position:relative;
     top:2px;
-}
-
-div.resultsChoices select {
-    height:18px;
 }
 
 div.results {

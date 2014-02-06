@@ -76,7 +76,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'C_HEADER_LOGO' => !empty($header_logo_path),
 			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
-			'CONTENT' => new StringTemplate($content),
+			'CONTENT' => $content,
 			'ACTIONS_MENU' => ModuleTreeLinksService::display_actions_menu(),
 			'L_POWERED_BY' => self::$main_lang['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$main_lang['phpboost_right'],

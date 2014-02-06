@@ -49,7 +49,7 @@ class FormFieldAjaxUserAutoComplete extends FormFieldAjaxCompleter
      */
     public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
     {
-    	$field_options['file'] = PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/users_autocomplete';
+    	$field_options['file'] = PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/users_autocomplete&token='. AppContext::get_session()->get_token()';
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
 }
