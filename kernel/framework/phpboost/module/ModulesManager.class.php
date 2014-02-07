@@ -255,10 +255,8 @@ class ModulesManager
 	 * 	<li>NOT_INSTALLED_MODULE: the module to uninstall doesn't exist!</li>
 	 * </ul>
 	 */
-	public static function uninstall_module($module_id, $drop_files)
+	public static function uninstall_module($module_id, $drop_files = false)
 	{
-		global $Cache;
-
 		if (!empty($module_id))
 		{
 			$error = self::execute_module_uninstallation($module_id);
@@ -267,9 +265,6 @@ class ModulesManager
 				// @deprecated
 				//Récupération des infos de config.
 				$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_id . '/lang/', get_ulang());
-	
-				//Suppression du fichier cache
-				$Cache->delete_file($module_id);
 	
 				ContributionService::delete_contribution_module($module_id);
 	
@@ -307,7 +302,6 @@ class ModulesManager
 	
 				MenuService::delete_mini_module($module_id);
 				MenuService::delete_module_feeds_menus($module_id);
-				MenuService::generate_cache();
 	
 				ModulesConfig::load()->remove_module_by_id($module_id);
 				ModulesConfig::save();

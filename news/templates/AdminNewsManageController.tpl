@@ -1,6 +1,7 @@
 <table>
 	<thead>
-		<tr> 
+		<tr>
+			<th></th>
 			<th class="column_title">
 				<a href="{U_SORT_NAME_ASC}" class="fa fa-table-sort-up"></a>
 				{@news.form.name}
@@ -24,8 +25,6 @@
 			<th>
 				${LangLoader::get_message('form.approbation', 'common')}
 			</th>
-			<th>
-			</th>
 		</tr>
 	</thead>
 	# IF C_PAGINATION #
@@ -40,6 +39,10 @@
 	<tbody>
 		# START news #
 			<tr>
+				<td class="text_left">
+					<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+					<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+				</td>
 				<td>
 					<a href="{news.U_LINK}">{news.NAME}</a>
 				</td>
@@ -54,10 +57,6 @@
 				</td>
 				<td>
 					{news.STATUS}
-				</td>
-				<td class="text_left">
-					<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
-					<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				</td>
 			</tr>
 		# END news #
