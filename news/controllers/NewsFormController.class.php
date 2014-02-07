@@ -119,9 +119,12 @@ class NewsFormController extends ModuleController
 		$form->add_fieldset($other_fieldset);
 
 		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 'function(response){
+		$(\'loading-news-picture\').remove();
 		if (response.responseJSON.image_url) {
-			$(\'loading-news-picture\').remove();
 			$(\'preview_picture\').src = response.responseJSON.image_url;
+			$(\'preview_picture\').style.display = "inline";
+		} else {
+			$(\'preview_picture\').style.display = "none";
 		}}');
 		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-news-picture" class="fa fa-spinner fa-spin"></i>\'}); }');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');

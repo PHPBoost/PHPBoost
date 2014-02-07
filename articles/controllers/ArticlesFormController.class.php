@@ -130,11 +130,13 @@ class ArticlesFormController extends ModuleController
 
 		$other_fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->lang['articles.form.notation_enabled'], $this->get_article()->get_notation_enabled()));
 
-		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 
-			'function(response){
-				if (response.responseJSON.image_url) {
-					$(\'loading-article-picture\').remove();
-					$(\'preview_picture\').src = response.responseJSON.image_url;
+		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 'function(response){
+		$(\'loading-article-picture\').remove();
+		if (response.responseJSON.image_url) {
+			$(\'preview_picture\').src = response.responseJSON.image_url;
+			$(\'preview_picture\').style.display = "inline";
+		} else {
+			$(\'preview_picture\').style.display = "none";
 		}}');
 		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-article-picture" class="fa fa-spinner fa-spin"></i>\'}); }');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');

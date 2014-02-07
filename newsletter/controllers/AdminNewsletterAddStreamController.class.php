@@ -76,10 +76,13 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 		array('rows' => 4, 'cols' => 47)
 		));
 		
-		$image_preview_request = new AjaxRequest(NewsletterUrlBuilder::image_preview(), 'function(response){
+		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 'function(response){
+		$(\'loading-stream-picture\').remove();
 		if (response.responseJSON.image_url) {
-			$(\'loading-stream-picture\').remove();
 			$(\'preview_picture\').src = response.responseJSON.image_url;
+			$(\'preview_picture\').style.display = "inline";
+		} else {
+			$(\'preview_picture\').style.display = "none";
 		}}');
 		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-stream-picture" class="fa fa-spinner fa-spin"></i>\'}); }');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
