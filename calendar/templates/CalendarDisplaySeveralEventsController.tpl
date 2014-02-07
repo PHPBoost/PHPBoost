@@ -20,7 +20,7 @@
 	
 	<section id="events" class="event_container">
 		<header>
-			<h2 class="center"># IF C_PENDING_PAGE #{@calendar.pending}# ELSE #{@calendar.titles.events_of} {DATE}# IF C_EVENTS # ({L_EVENTS_NUMBER})# ENDIF ## ENDIF #</h2>
+			<h2 class="center"># IF C_PENDING_PAGE #{@calendar.pending}# ELSE #{@calendar.titles.events_of} {DATE}# ENDIF #</h2>
 		</header>
 		
 		# IF C_EVENTS #
@@ -49,7 +49,9 @@
 					</div>
 				</header>
 				<div class="content">
-					<span itemprop="text">{event.CONTENTS}</span>
+					<div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+						<span itemprop="text">{event.CONTENTS}</span>
+					</div>
 					# IF event.C_LOCATION #
 					<div class="spacer">&nbsp;</div>
 					<div itemscope="itemscope" itemtype="http://schema.org/Place">
