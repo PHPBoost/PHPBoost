@@ -43,7 +43,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function update_bugtracker_table()
 	{
-		$columns = $this->db_utils->desc_table(self::$bugtracker_table);
+		$columns = $this->db_utils->desc_table(PREFIX . 'bugtracker');
 		if (isset($columns['progess']))
 		{
 			$this->db_utils->drop_column(PREFIX . 'bugtracker', 'progess');
