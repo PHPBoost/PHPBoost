@@ -225,7 +225,7 @@ class UpdateServices
 		
 		ModulesManager::uninstall_module('HomeCustom');
 		
-		$this->update_kernel();
+		//$this->update_kernel();
 		$this->update_configurations();
 		$this->update_modules();
 		
