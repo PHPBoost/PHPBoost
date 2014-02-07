@@ -45,32 +45,6 @@ class BugtrackerSetup extends DefaultModuleSetup
 		$this->insert_data();
 	}
 	
-	public function upgrade($installed_version)
-	{
-		//Config
-		$config = BugtrackerConfig::load();
-		$status_list = array(Bug::NEW_BUG => 0, Bug::PENDING => 0, Bug::ASSIGNED => 20, Bug::IN_PROGRESS => 50, Bug::REJECTED => 0, Bug::REOPEN => 30, Bug::FIXED => 100);
-		$config->set_status_list($status_list);
-		
-		BugtrackerConfig::save();
-		
-		//Table columns
-		$columns = PersistenceContext::get_dbms_utils()->desc_table(self::$bugtracker_table);
-		if (isset($columns['progess']))
-		{
-			PersistenceContext::get_dbms_utils()->drop_column(self::$bugtracker_table, 'progess');
-		}
-		
-		//New table
-		$tables = PersistenceContext::get_dbms_utils()->list_tables(true);
-		if (!isset($tables[self::$bugtracker_users_filters_table]))
-		{
-			$this->create_bugtracker_users_filters_table();
-		}
-		
-		return '4.1';
-	}
-	
 	public function uninstall()
 	{
 		$this->drop_tables();
@@ -103,7 +77,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'priority' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'type' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'category' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'reproductible' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 1),
+			'reproductible' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 1),
 			'reproduction_method' => array('type' => 'text', 'length' => 65000),
 			'detected_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'fixed_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
