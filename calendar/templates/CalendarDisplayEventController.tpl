@@ -21,7 +21,9 @@
 		</div>
 	</header>
 	<div class="content">
-		<span itemprop="text">{CONTENTS}</span>
+		<div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+			<span itemprop="text">{CONTENTS}</span>
+		</div>
 		# IF C_LOCATION #
 		<div class="spacer">&nbsp;</div>
 		<div itemprop="location" itemscope itemtype="http://schema.org/Place">

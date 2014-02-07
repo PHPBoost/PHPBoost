@@ -110,7 +110,7 @@ class CalendarEvent
 	
 	public function is_authorized_to_add()
 	{
-		return CalendarAuthorizationsService::check_authorizations()->write() || CalendarAuthorizationsService::check_authorizations()->contribution();
+		return CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution();
 	}
 	
 	public function is_authorized_to_edit()
