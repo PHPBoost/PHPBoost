@@ -53,14 +53,14 @@ class BugtrackerStatsCache implements CacheData
 			$this->bugs_number['total'] += $row['bugs_number'];
 		}
 		
-		$result = $db_querier->select("SELECT b1.fixed_in, COUNT(b1.id) as bugs_number, COUNT(b2.id) as fixed_bugs_number, COUNT(b3.id) + COUNT(b4.id) as in_progress_bugs_number
-		FROM " . BugtrackerSetup::$bugtracker_table . " b1
-		LEFT JOIN " . BugtrackerSetup::$bugtracker_table . " b2 ON b1.fixed_in = b2.fixed_in AND b2.status = '" . Bug::FIXED . "'
-		LEFT JOIN " . BugtrackerSetup::$bugtracker_table . " b3 ON b1.fixed_in = b3.fixed_in AND b3.status = '" . Bug::IN_PROGRESS . "'
-		LEFT JOIN " . BugtrackerSetup::$bugtracker_table . " b4 ON b1.fixed_in = b4.fixed_in AND b4.status = '" . Bug::REOPEN . "'
-		GROUP BY b1.fixed_in
-		ORDER BY b1.fixed_in ASC");
-		
+		$result = $db_querier->select("SELECT @fixed_in:=fixed_in AS fixed_in, 
+		COUNT(*) as bugs_number, 
+		(SELECT COUNT(*) FROM " . BugtrackerSetup::$bugtracker_table . " WHERE fixed_in = @fixed_in AND status = '" . Bug::FIXED . "') as fixed_bugs_number, 
+		(SELECT COUNT(*) FROM " . BugtrackerSetup::$bugtracker_table . " WHERE fixed_in = @fixed_in AND (status = '" . Bug::IN_PROGRESS . "' OR status = '" . Bug::REOPEN . "')) as in_progress_bugs_number
+		FROM " . BugtrackerSetup::$bugtracker_table . "
+		GROUP BY fixed_in
+		ORDER BY fixed_in ASC");
+
 		foreach ($result as $row)
 		{
 			if (!empty($row['fixed_in']) && isset($versions[$row['fixed_in']]))
