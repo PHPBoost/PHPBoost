@@ -1,8 +1,7 @@
 <table>
 	<thead>
 		<tr>
-			<th>
-			</th>
+			<th></th>
 			<th>
 				<a href="{SORT_NAME_TOP}" class="fa fa-table-sort-up"></a>
 				{@streams.name} 
@@ -31,12 +30,12 @@
 	<tbody>
 	# IF C_STREAMS_EXIST #
 		# START streams_list #
-		<tr style="text-align:center;">
+		<tr>
 			<td> 
 				<a href="{streams_list.EDIT_LINK}" class="fa fa-edit"></a>
 				<a href="{streams_list.DELETE_LINK}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</td>
-			<td>
+			<td class="left">
 				{streams_list.NAME}
 			</td>
 			<td>

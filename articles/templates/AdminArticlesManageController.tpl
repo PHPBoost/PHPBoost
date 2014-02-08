@@ -1,6 +1,7 @@
 <table>
 	<thead>
 		<tr>
+			<th></th>
 			<th class="column_title">
 				<a href="{U_SORT_TITLE_ASC}" class="fa fa-table-sort-up"></a>
 				${LangLoader::get_message('form.title', 'common')}
@@ -26,8 +27,6 @@
 				{@admin.articles.sort_field.published}
 				<a href="{U_SORT_PUBLISHED_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
-			<th>
-			</th>
 		</tr>
 	</thead>
 	# IF C_PAGINATION #
@@ -41,8 +40,12 @@
 	# ENDIF #
 	<tbody>
 		# START articles #
-		<tr> 
-			<td class="text_left">
+		<tr>
+			<td> 
+				<a href="{articles.U_EDIT_ARTICLE}" title="{@articles.edit}" class="fa fa-edit"></a>
+				<a href="{articles.U_DELETE_ARTICLE}" title="{@articles.delete}" class="fa fa-delete" data-confirmation="delete-element"></a>
+			</td>
+			<td class="left">
 				<a href="{articles.U_ARTICLE}">{articles.TITLE}</a>
 			</td>
 			<td> 
@@ -71,10 +74,6 @@
 					# ENDIF #
 				# ENDIF #
 				</span>
-			</td>
-			<td> 
-				<a href="{articles.U_EDIT_ARTICLE}" title="{@articles.edit}" class="fa fa-edit"></a>
-				<a href="{articles.U_DELETE_ARTICLE}" title="{@articles.delete}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</td>
 		</tr>
 		# END articles #
