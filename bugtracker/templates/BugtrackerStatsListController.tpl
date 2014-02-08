@@ -68,7 +68,7 @@
 						{fixed_version.NAME}
 					</td>
 					<td> 
-						<a href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a>
+						# IF C_ROADMAP_ENABLED #<a href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a># ELSE #{fixed_version.NUMBER}# ENDIF #
 					</td>
 				</tr>
 				# END fixed_version #
@@ -115,7 +115,7 @@
 						{top_poster.ID}
 					</td>
 					<td>
-						# IF top_poster.AUTHOR #<a href="{top_poster.LINK_AUTHOR_PROFILE}" class="small {top_poster.AUTHOR_LEVEL_CLASS}" # IF top_poster.C_AUTHOR_GROUP_COLOR # style="color:{top_poster.AUTHOR_GROUP_COLOR}" # ENDIF #>{top_poster.AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #
+						# IF top_poster.AUTHOR #<a href="{top_poster.LINK_AUTHOR_PROFILE}" class="small {top_poster.AUTHOR_LEVEL_CLASS}" # IF top_poster.C_AUTHOR_GROUP_COLOR # style="color:{top_poster.AUTHOR_GROUP_COLOR}" # ENDIF #>{top_poster.AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 					</td>
 					<td>
 						{top_poster.USER_BUGS}

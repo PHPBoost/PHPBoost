@@ -59,7 +59,7 @@ class BugtrackerStatsListController extends ModuleController
 			'C_POSTERS'				=> !empty($top_posters),
 			'C_DISPLAY_VERSIONS'	=> $display_versions,
 			'C_DISPLAY_TOP_POSTERS'	=> $config->are_stats_top_posters_enabled(),
-			'L_GUEST'				=> LangLoader::get_message('guest', 'main')
+			'C_ROADMAP_ENABLED'		=> $config->is_roadmap_enabled()
 		));
 		
 		foreach ($stats_cache->get_bugs_number_list() as $status => $bugs_number)
