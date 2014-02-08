@@ -113,7 +113,6 @@ $lang['titles.version_informations'] = 'Informations sur la version';
 $lang['labels.fields.id'] = 'ID';
 $lang['labels.fields.title'] = 'Titre';
 $lang['labels.fields.contents'] = 'Description';
-$lang['labels.fields.author_id'] = 'Détecté par';
 $lang['labels.fields.submit_date'] = 'Détecté le';
 $lang['labels.fields.fix_date'] = 'Corrigé le';
 $lang['labels.fields.status'] = 'Etat';

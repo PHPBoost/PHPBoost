@@ -33,10 +33,10 @@ function severity_bbcode_color(field)
 <table>
 	<thead>
 		<tr>
-			<th class="column_default">
+			<th class="small_column">
 				{@labels.default}
 			</th>
-			<th class="column_color">
+			<th class="medium_column">
 				{@labels.color}
 			</th>
 			<th>

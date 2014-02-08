@@ -55,13 +55,13 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 <table>
 	<thead>
 		<tr>
-			<th class="column_default">
+			<th class="small_column">
 				{@labels.default}
 			</th>
 			<th>
 				${LangLoader::get_message('name', 'main')}
 			</th>
-			<th class="column_delete">
+			<th class="small_column">
 				${LangLoader::get_message('delete', 'main')}
 			</th>
 		</tr>

@@ -53,7 +53,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th class="column_version">
+					<th>
 						{@labels.fields.version}
 					</th>
 					<th>
