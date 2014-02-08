@@ -89,7 +89,7 @@
 	# ENDIF #
 	# IF NOT C_EMPTY_VERSIONS #
 	<div class="form-element">
-		<label>{@labels.fields.detected_in}</label>
+		<label>{@labels.fields.version}</label>
 		<div class="form-field">{DETECTED_IN}</div>
 	</div>
 	# ENDIF #
@@ -106,8 +106,8 @@
 </fieldset>
 # ENDIF #
 
-<div class="text_small float-right">
-	{@labels.fields.author_id} # IF AUTHOR #<a href="{U_AUTHOR_PROFILE}" class="small {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #, ${TextHelper::lowercase_first(LangLoader::get_message('on', 'main'))} {SUBMIT_DATE}
+<div class="float-right">
+	${LangLoader::get_message('by', 'main')} # IF AUTHOR #<a href="{U_AUTHOR_PROFILE}" class="small {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #, ${TextHelper::lowercase_first(LangLoader::get_message('on', 'main'))} {SUBMIT_DATE}
 </div>
 
 <div class="spacer">&nbsp;</div>

@@ -95,7 +95,7 @@ class BugtrackerFeedProvider implements FeedProvider
 			if ($priorities)
 				$description .= '<br />' . $lang['labels.fields.priority'] . ' : ' . (isset($priorities[$bug->get_priority()]) ? stripslashes($priorities[$bug->get_priority()]) : $lang['notice.none_e']);
 			if ($versions)
-				$description .= '<br />' . $lang['labels.fields.detected_in'] . ' : ' . (isset($versions[$bug->get_detected_in()]) ? stripslashes($versions[$bug->get_detected_in()]['name']) : $lang['notice.not_defined']);
+				$description .= '<br />' . $lang['labels.fields.version'] . ' : ' . (isset($versions[$bug->get_detected_in()]) ? stripslashes($versions[$bug->get_detected_in()]['name']) : $lang['notice.not_defined']);
 			
 			$item = new FeedItem();
 			$item->set_title($bug->get_title());

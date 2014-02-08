@@ -1,7 +1,7 @@
 <table>
 	<thead>
 		<tr>
-			<th class="column_default">
+			<th class="small_column">
 				{@labels.default}
 			</th>
 			<th>

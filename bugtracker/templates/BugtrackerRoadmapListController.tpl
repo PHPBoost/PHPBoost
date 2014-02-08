@@ -12,12 +12,12 @@
 	<table>
 		<thead>
 			<tr>
-				<th class="column_id">
+				<th>
 					<a href="{LINK_BUG_ID_TOP}" class="fa fa-table-sort-up"></a>
 					{@labels.fields.id}
 					<a href="{LINK_BUG_ID_BOTTOM}" class="fa fa-table-sort-down"></a>
 				</th>
-				<th>
+				<th class="title_column">
 					<a href="{LINK_BUG_TITLE_TOP}" class="fa fa-table-sort-up"></a>
 					{@labels.fields.title}
 					<a href="{LINK_BUG_TITLE_BOTTOM}" class="fa fa-table-sort-down"></a>
@@ -42,12 +42,12 @@
 					{@labels.detected_in}
 				</th>
 				# ENDIF #
-				<th class="column_informations">
+				<th>
 					<a href="{LINK_BUG_STATUS_TOP}" class="fa fa-table-sort-up"></a>
 					{@titles.informations}
 					<a href="{LINK_BUG_STATUS_BOTTOM}" class="fa fa-table-sort-down"></a>
 				</th>
-				<th class="column_date">
+				<th>
 					<a href="{LINK_BUG_DATE_TOP}" class="fa fa-table-sort-up"></a>
 					{@labels.fields.fix_date}
 					<a href="{LINK_BUG_DATE_BOTTOM}" class="fa fa-table-sort-down"></a>
@@ -69,7 +69,7 @@
 				<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 					<a href="{bug.U_LINK}" title="{bug.STATUS}"># IF bug.C_FIXED #<s>\#{bug.ID}</s># ELSE #\#{bug.ID}# ENDIF #</a>
 				</td>
-				<td class="align-left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+				<td class="left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 					{bug.TITLE}
 				</td>
 				# IF C_DISPLAY_TYPE_COLUMN #
@@ -92,7 +92,7 @@
 					{bug.DETECTED_IN}
 				</td>
 				# ENDIF #
-				<td class="align-left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
+				<td class="left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
 					<span>{@labels.fields.status} : {bug.STATUS}</span>
 					<div class="spacer"></div>
 					# IF bug.C_PROGRESS #

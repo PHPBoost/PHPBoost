@@ -88,7 +88,7 @@ function display_default_version_radio(version_id)
 <table>
 	<thead>
 		<tr>
-			<th class="column_default">
+			<th class="small_column">
 				{@labels.default}
 			</th>
 			<th>
@@ -97,10 +97,10 @@ function display_default_version_radio(version_id)
 			<th>
 				{@labels.fields.version_release_date}
 			</th>
-			<th class="column_version_detected">
+			<th class="small_column">
 				{@labels.fields.version_detected}
 			</th>
-			<th class="column_delete">
+			<th class="small_column">
 				${LangLoader::get_message('delete', 'main')}
 			</th>
 		</tr>
