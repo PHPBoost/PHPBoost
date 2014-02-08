@@ -25,6 +25,7 @@
 			<table>
 				<thead>
 					<tr>
+						<th></th>
 						<th>
 							{L_POLLS}
 						</th>
@@ -43,18 +44,12 @@
 						<th>
 							{L_APROB}
 						</th>
-						<th>
-							{L_UPDATE}
-						</th>
-						<th>
-							{L_DELETE}
-						</th>
 					</tr>
 				</thead>
 				# IF C_PAGINATION #
 				<tfoot>
 					<tr>
-						<th colspan="8">
+						<th colspan="7">
 							# INCLUDE PAGINATION #
 						</th>
 					</tr>
@@ -63,10 +58,14 @@
 				<tbody>
 					# START questions #
 					<tr> 
+						<td> 
+							<a href="admin_poll.php?id={questions.IDPOLL}" title="{L_UPDATE}" class="fa fa-edit"></a>
+							<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+						</td>
 						<td>
 							<a href="../poll/poll.php?id={questions.IDPOLL}">{L_SHOW}</a>
 						</td>
-						<td> 
+						<td class="left"> 
 							{questions.QUESTIONS}
 						</td>
 						<td> 
@@ -82,12 +81,6 @@
 							{questions.APROBATION} 
 							<br />
 							<span class="smaller">{questions.VISIBLE}</span>
-						</td>
-						<td> 
-							<a href="admin_poll.php?id={questions.IDPOLL}" title="{L_UPDATE}" class="fa fa-edit"></a>
-						</td>
-						<td>
-							<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>
 					# END questions #

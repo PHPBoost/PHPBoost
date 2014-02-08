@@ -29,10 +29,11 @@
 			</ul>
 		</div>
 
-		<div id="admin-contents">	
+		<div id="admin-contents">
 			<table>
 				<thead>
 					<tr>
+						<th></th>
 						<th>
 							{L_QUESTION}
 						</th>
@@ -42,18 +43,12 @@
 						<th>
 							{L_DATE}
 						</th>
-						<th>
-							{L_EDIT}
-						</th>
-						<th>
-							{L_DELETE}
-						</th>
 					</tr>
 				</thead>
 				# IF C_PAGINATION #
 				<tfoot>
 					<tr>
-						<th colspan="5">
+						<th colspan="4">
 							# INCLUDE PAGINATION #
 						</th>
 					</tr>
@@ -61,8 +56,12 @@
 				# ENDIF #
 				<tbody>
 					# START question #
-						<tr> 
-							<td> 
+						<tr>
+							<td>
+								<a href="{question.U_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
+								<a href="{question.U_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+							</td>
+							<td class="left"> 
 								<a href="{question.U_QUESTION}">{question.QUESTION}</a>
 							</td>
 							<td> 
@@ -70,12 +69,6 @@
 							</td>
 							<td>
 								{question.DATE}
-							</td>
-							<td>
-								<a href="{question.U_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
-							</td>
-							<td>
-								<a href="{question.U_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 							</td>
 						</tr>
 					# END question #

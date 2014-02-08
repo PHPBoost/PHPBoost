@@ -1,6 +1,7 @@
 <table>
 	<thead>
 		<tr>
+			<th></th>
 			<th class="column-title">
 				<a href="{U_SORT_TITLE_ASC}" class="fa fa-table-sort-up"></a>
 				${LangLoader::get_message('form.title', 'common')}
@@ -27,8 +28,6 @@
 			<th>
 				{@calendar.labels.approved}
 			</th>
-			<th>
-			</th>
 		</tr>
 	</thead>
 	# IF C_PAGINATION #
@@ -43,6 +42,10 @@
 	<tbody>
 		# START event #
 		<tr> 
+			<td> 
+				<a href="{event.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+				<a href="{event.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete"# IF NOT event.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
+			</td>
 			<td class="left">
 				<a href="{event.U_LINK}">{event.TITLE}</a>
 			</td>
@@ -61,10 +64,6 @@
 			</td>
 			<td>
 				# IF event.C_APPROVED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #
-			</td>
-			<td> 
-				<a href="{event.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
-				<a href="{event.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete"# IF NOT event.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
 			</td>
 		</tr>
 		# END event #

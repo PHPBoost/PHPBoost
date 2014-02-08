@@ -31,22 +31,20 @@
 		
 		<div id="admin-contents">
 			<table>
-				<caption>{L_LISTE}</caption>
 				<thead>
-					<tr> 
+					<tr>
+						<th></th>
 						<th>{L_NAME}</th>
 						<th>{L_CATEGORY}</th>
 						<th>{L_VIEW}</th>
 						<th>{L_DATE}</th>
 						<th>{L_APROB}</th>
-						<th>{L_UPDATE}</th>
-						<th>{L_DELETE}</th>
 					</tr>
 				</thead>
 				# IF C_PAGINATION #
 				<tfoot>
 					<tr>
-						<th colspan="7">
+						<th colspan="6">
 							# INCLUDE PAGINATION #
 						</th>
 					</tr>
@@ -56,6 +54,10 @@
 					# START web #
 					<tr>
 						<td>
+							<a href="admin_web.php?id={web.IDWEB}" title="{L_UPDATE}" class="fa fa-edit"></a>
+							<a href="admin_web.php?delete=true&amp;id={web.IDWEB}&amp;token={TOKEN}" class="fa fa-delete" data-confirmation="delete-element"></a>
+						</td>
+						<td class="left">
 							<a href="{PATH_TO_ROOT}/web/web.php?cat={web.IDCAT}&amp;id={web.IDWEB}">{web.NAME}</a>
 						</td>
 						<td>
@@ -69,12 +71,6 @@
 						</td>
 						<td>
 							{web.APROBATION}
-						</td>
-						<td>
-							<a href="admin_web.php?id={web.IDWEB}" title="{L_UPDATE}" class="fa fa-edit"></a>
-						</td>
-						<td>
-							<a href="admin_web.php?delete=true&amp;id={web.IDWEB}&amp;token={TOKEN}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>
 					# END web #

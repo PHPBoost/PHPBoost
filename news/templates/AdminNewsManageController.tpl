@@ -39,11 +39,11 @@
 	<tbody>
 		# START news #
 			<tr>
-				<td class="text_left">
+				<td>
 					<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 					<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				</td>
-				<td>
+				<td class="left">
 					<a href="{news.U_LINK}">{news.NAME}</a>
 				</td>
 				<td>
