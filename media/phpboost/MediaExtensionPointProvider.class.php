@@ -79,6 +79,13 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		return $string;
 	}
 	
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('media.css');
+		return $module_css_files;
+	}
+	
 	public function comments()
 	{
 		return new CommentsTopics(array(new MediaCommentsTopic()));

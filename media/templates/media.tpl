@@ -78,10 +78,9 @@
 								<div class="content">
 									# IF A_DESC #
 									# IF file.C_DESCRIPTION #
-										<p style="margin-top:10px">
+										<div class="media-desc" style="margin-top:10px">
 										{file.DESCRIPTION}
-										<br />
-										</p>
+										</div>
 									# ENDIF #
 									# ELSE #
 										<br />
@@ -144,18 +143,9 @@
 				</h1>
 			</header>
 			<div class="content">
-				
-				# IF A_DESC #
-				<p class="text-justify" style="margin-top:15px">
-					{CONTENTS}
-				</p>
-				# ENDIF #
-				<p class="center" style="margin-top:25px;margin-bottom:25px;">
-					# INCLUDE media_format #
-				</p>
-				
+			
 				# IF C_DISPLAY #
-				<div class="options">
+				<div class="options infos">
 					<h6>{L_MEDIA_INFOS}</h6>
 					# IF A_DATE #
 						<span class="text-strong">{L_DATE} : </span><span>{DATE}</span><br/>
@@ -172,9 +162,18 @@
 					</div>
 					# ENDIF #
 				</div>
-
 				# ENDIF #
 				
+				# IF A_DESC #
+				<div class="media-desc">
+					{CONTENTS}
+				</div>
+				# ENDIF #
+				
+				<div class="media-content">
+					# INCLUDE media_format #
+				</div>
+
 				{COMMENTS}
 			</div>
 			<footer></footer>
