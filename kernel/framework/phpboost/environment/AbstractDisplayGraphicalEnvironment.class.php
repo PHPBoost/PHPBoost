@@ -49,35 +49,19 @@
 	
 	protected function get_modules_css_files_html_code()
 	{
-		return $this->get_css_files_always_displayed_html_code() . "\n" . $this->get_css_files_running_module_displayed();
-	}
-	
-	private function get_css_files_always_displayed_html_code()
-	{
 		$css_cache_config = CSSCacheConfig::load();
+		$css_files = array_merge(ModulesCssFilesService::get_css_files_always_displayed(), ModulesCssFilesService::get_css_files_running_module_displayed());
 		if ($css_cache_config->is_enabled())
 		{
-			$html_code = '<link rel="stylesheet" href="' . CSSCacheManager::get_css_path(ModulesCssFilesService::get_css_files_always_displayed()) . '" type="text/css" media="screen, print, handheld" />';
+			$html_code = '<link rel="stylesheet" href="' . CSSCacheManager::get_css_path($css_files) . '" type="text/css" media="screen, print, handheld" />';
 		}
 		else
 		{
 			$html_code = '';
-			foreach (ModulesCssFilesService::get_css_files_always_displayed() as $file)
+			foreach ($css_files as $file)
 			{
 				$html_code .= '<link rel="stylesheet" href="' . Url::to_rel($file) .	'" type="text/css" media="screen, print, handheld" />';
 			}
-		}
-		return $html_code;
-	}
-	
-	private function get_css_files_running_module_displayed()
-	{
-		$html_code = '';
-		$css_files = ModulesCssFilesService::get_css_files_running_module_displayed();
-		foreach ($css_files as $css_file)
-		{
-			$html_code .= '<link rel="stylesheet" href="' . Url::to_rel($css_file) . 
-				'" type="text/css" media="screen, print, handheld" />';
 		}
 		return $html_code;
 	}
