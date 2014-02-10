@@ -179,6 +179,7 @@ class UpdateServices
 		
 		$general_config = GeneralConfig::load();
 		$general_config->set_site_path('/trunk');
+		$general_config->set_phpboost_major_version('4.1');
 		GeneralConfig::save();
 		
 		$user_accounts_config = UserAccountsConfig::load();
