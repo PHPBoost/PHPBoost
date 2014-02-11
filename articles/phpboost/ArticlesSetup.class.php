@@ -82,7 +82,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'author_name_displayed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'published' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+			'published' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'date_created' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
