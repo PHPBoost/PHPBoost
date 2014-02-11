@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       NewsModuleUpdateVersion.class.php
+ *                       BugtrackerModuleUpdateVersion.class.php
  *                            -------------------
  *   begin                : February 7, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
