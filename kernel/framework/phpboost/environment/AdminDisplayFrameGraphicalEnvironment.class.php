@@ -55,7 +55,7 @@ class AdminDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvi
 			'JS_TOP' => new FileTemplate('js_top.tpl'),
 			'JS_BOTTOM' => new FileTemplate('js_bottom.tpl'),
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
-			'BODY' => $content
+			'BODY' => new StringTemplate($content)
 		));
 		
 		$template->display();
