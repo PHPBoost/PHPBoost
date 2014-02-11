@@ -451,7 +451,7 @@ class Articles
 			'C_DELETE' => $this->is_authorized_delete(),
 			'C_HAS_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			'C_PUBLISHED' => $this->get_publishing_state(),
+			'C_PUBLISHED' => $this->is_published(),
 			'C_PUBLISHING_START_AND_END_DATE' => $this->publishing_start_date != null && $this->publishing_end_date != null,
 			'C_PUBLISHING_START_DATE' => $this->publishing_start_date != null,
 			'C_PUBLISHING_END_DATE' => $this->publishing_end_date != null,

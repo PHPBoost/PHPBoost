@@ -113,9 +113,6 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				$sort_field = 'date_created';
 				break;
 		}
-		
-		$current_page = $request->get_getint('page', 1);
-		$nbr_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
 
 		$pagination = $this->get_pagination($now, $authorized_categories, $field, $mode);
 		
@@ -124,7 +121,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
-		WHERE articles.published = 0 OR (articles.published = 2 AND (articles.publishing_start_date > :timestamp_now OR articles.publishing_end_date < :timestamp_now)) AND articles.id_category IN :authorized_categories
+		WHERE articles.published = 0 OR (articles.published = 2 AND ((articles.publishing_start_date > :timestamp_now OR articles.publishing_end_date < :timestamp_now) 
+		AND articles.publishing_end_date <> 0)) AND articles.id_category IN :authorized_categories
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'timestamp_now' => $now->get_timestamp(),
@@ -151,7 +149,6 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		if ($nbr_articles_pending > 0)
 		{
-			$add_auth = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
 			$auth_moderation = ArticlesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY)->moderation();
 			$comments_enabled = ArticlesConfig::load()->are_comments_enabled();
 			
