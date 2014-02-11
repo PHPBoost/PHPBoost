@@ -54,7 +54,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('CalendarDisplayPendingEventsController', '`^/pending/?$`'),
 	
 	//Display calendar
-	new UrlControllerMapper('CalendarAjaxCalendarController', '`^/ajax_month_calendar/([0-9]+)?/?([0-9]+)?/?(\d{0,1})?/?$`', array('year', 'month', 'mini')),
+	new UrlControllerMapper('CalendarAjaxCalendarController', '`^/ajax_month_calendar/([0-9]+)?/?([0-9]+)?/?(\d{0,1})?/?$`', array('calendar_ajax_year', 'calendar_ajax_month', 'calendar_mini')),
 	new UrlControllerMapper('CalendarDisplayCategoryController', '`^/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?(?:/([0-9]+)-([a-z0-9-_]+))?/?$`', array('year', 'month', 'day', 'id_category', 'rewrited_name')),
 );
 DispatchManager::dispatch($url_controller_mappers);

@@ -54,8 +54,8 @@ class CalendarAjaxCalendarController extends AbstractController
 		$categories = CalendarService::get_categories_manager()->get_categories_cache()->get_categories();
 		$date_lang = LangLoader::get('date-common');
 		
-		$year = $request->get_int('year', date('Y'));
-		$month = $request->get_int('month', date('n'));
+		$year = $request->get_int('calendar_ajax_year', date('Y'));
+		$month = $request->get_int('calendar_ajax_month', date('n'));
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
@@ -202,7 +202,7 @@ class CalendarAjaxCalendarController extends AbstractController
 		$this->view = new FileTemplate('calendar/CalendarAjaxCalendarController.tpl');
 		$this->view->add_lang($this->lang);
 		
-		if (in_array('mini', array_keys($_GET)) && $_GET['mini'] == 1)
+		if (in_array('calendar_mini', array_keys($_GET)) && $_GET['calendar_mini'] == 1)
 			$this->set_mini_calendar();
 	}
 	
