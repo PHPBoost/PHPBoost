@@ -61,6 +61,8 @@ class HtaccessFileCache implements CacheData
 		$this->add_hide_directory_listings();
 		
 		$this->add_expires_headers();
+		
+		$this->disable_file_etags();
 
 		$this->add_manual_content();
 
@@ -189,7 +191,7 @@ class HtaccessFileCache implements CacheData
 	private function add_expires_headers()
 	{
 		$this->add_empty_line();
-		$this->add_line('# Expires Headers #');		
+		$this->add_line('# Expires Headers #');
 		$this->add_line('<IfModule mod_expires.c>');
 	    $this->add_line('ExpiresActive On');
 	    $this->add_line('ExpiresDefault "access plus 1 week"');
@@ -207,6 +209,13 @@ class HtaccessFileCache implements CacheData
 	    $this->add_line('ExpiresByType application/x-javascript      "access plus 1 week"');
 	    $this->add_line('ExpiresByType application/x-shockwave-flash "access plus 1 week"');
 		$this->add_line('</IfModule>');
+	}
+	
+	private function disable_file_etags()
+	{
+		$this->add_empty_line();
+		$this->add_line('# Disable file etags #');
+		$this->add_line('FileETag none');
 	}
 
 	private function add_manual_content()
