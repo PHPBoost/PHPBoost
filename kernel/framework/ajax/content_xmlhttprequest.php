@@ -37,7 +37,7 @@ $page_path = retrieve(REQUEST, 'page_path', '');
 //Quel éditeur utiliser ? Si ce n'est pas précisé on prend celui par défaut de l'utilisateur
 $editor = retrieve(REQUEST, 'editor', ContentFormattingConfig::load()->get_default_editor());
 
-$contents = stripslashes(html_entity_decode(utf8_decode(htmlentities(retrieve(POST, 'contents', ''), ENT_COMPAT, "UTF-8"))));
+$contents = utf8_decode(stripslashes(retrieve(POST, 'contents', '')));
 
 $ftags = retrieve(POST, 'ftags', TSTRING_UNCHANGE);
 $forbidden_tags = explode(',', $ftags);
