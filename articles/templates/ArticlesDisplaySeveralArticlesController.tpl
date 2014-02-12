@@ -4,6 +4,7 @@
 			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			${i18n('articles')}
 		</h1>
+		# IF C_ARTICLES_CAT #
 		<div class="cat">
 			<div style="margin-bottom:36px;">
 			${i18n('articles.sub_categories')} :
@@ -17,6 +18,7 @@
 		</div>
 		<div class="spacer">&nbsp;</div>
 		<hr />
+		# ENDIF #
 	</header>
 	# IF C_NO_ARTICLE_AVAILABLE #
 	<div class="center">

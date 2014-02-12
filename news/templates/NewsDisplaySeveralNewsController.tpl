@@ -2,7 +2,7 @@
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('news'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
-			{L_NEWS_TITLE}
+			# IF C_PENDING_NEWS #{@news.pending}# ELSE #{@news}# ENDIF #
 		</h1>
 	</header>
 	<div class="content">

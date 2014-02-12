@@ -61,8 +61,8 @@ class NewsDisplayPendingNewsController extends ModuleController
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		WHERE news.approbation_type = 0 OR (news.approbation_type = 2 AND ((news.start_date > :timestamp_now OR end_date < :timestamp_now)
-		AND news.end_date <> 0)) AND news.id_category IN :authorized_categories
+		WHERE news.approbation_type = 0 OR (news.approbation_type = 2 AND (news.start_date > :timestamp_now OR end_date < :timestamp_now)
+		AND news.end_date <> 0) AND news.id_category IN :authorized_categories
 		ORDER BY top_list_enabled DESC, news.creation_date DESC
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'timestamp_now' => $now->get_timestamp(),
@@ -77,10 +77,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 			$news = new News();
 			$news->set_properties($row);
 						
-			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
-				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
-				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0
-			)));
+			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars());
 		}
 		
 		$number_columns_display_news = $news_config->get_number_columns_display_news();
@@ -90,15 +87,12 @@ class NewsDisplayPendingNewsController extends ModuleController
 			'C_DISPLAY_CONDENSED_CONTENT' => $news_config->get_display_condensed_enabled(),
 		
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
-			'C_ADD' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution(),
-			'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation(),
+			'C_PENDING_NEWS' => true,
 			'C_PAGINATION' => $pagination->has_several_pages(),
 		
 			'PAGINATION' => $pagination->display(),
 			'C_SEVERAL_COLUMNS' => $number_columns_display_news > 1,
-			'NUMBER_COLUMNS' => $number_columns_display_news,
-
-			'L_NEWS_TITLE' => $this->lang['news.pending'],
+			'NUMBER_COLUMNS' => $number_columns_display_news
 		));
 	}
 	
@@ -106,7 +100,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 	{
 		$number_news = PersistenceContext::get_querier()->count(
 			NewsSetup::$news_table, 
-			'WHERE approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR end_date < :timestamp_now)) AND id_category IN :authorized_categories', 
+			'WHERE approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR end_date < :timestamp_now) AND end_date <> 0) AND id_category IN :authorized_categories', 
 			array(
 				'timestamp_now' => $now->get_timestamp(),
 				'authorized_categories' => $authorized_categories
@@ -127,7 +121,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		if (!NewsAuthorizationsService::check_authorizations()->read())
+		if (!(NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 	   		DispatchManager::redirect($error_controller);
