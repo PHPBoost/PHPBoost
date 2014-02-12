@@ -186,7 +186,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		if (!(ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->moderation()))
+		if (!(ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution() || ArticlesAuthorizationsService::check_authorizations()->moderation()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

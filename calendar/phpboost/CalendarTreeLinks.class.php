@@ -57,7 +57,7 @@ class CalendarTreeLinks implements ModuleTreeLinksExtensionPoint
 			$tree->add_link(new ModuleLink($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event($year . '/' . $month . '/' . $day), CalendarAuthorizationsService::check_authorizations()->write() || CalendarAuthorizationsService::check_authorizations()->contribution()));
 		}
 		
-		$tree->add_link(new ModuleLink($lang['calendar.pending'], CalendarUrlBuilder::display_pending_events(), CalendarAuthorizationsService::check_authorizations()->write() || CalendarAuthorizationsService::check_authorizations()->moderation()));
+		$tree->add_link(new ModuleLink($lang['calendar.pending'], CalendarUrlBuilder::display_pending_events(), CalendarAuthorizationsService::check_authorizations()->write() || CalendarAuthorizationsService::check_authorizations()->contribution() || CalendarAuthorizationsService::check_authorizations()->moderation()));
 		
 		return $tree;
 	}

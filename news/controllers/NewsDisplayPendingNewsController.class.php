@@ -121,7 +121,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		if (!(NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation()))
+		if (!(NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution() || NewsAuthorizationsService::check_authorizations()->moderation()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 	   		DispatchManager::redirect($error_controller);
