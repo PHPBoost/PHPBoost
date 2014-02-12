@@ -52,7 +52,7 @@ class NewsTreeLinks implements ModuleTreeLinksExtensionPoint
 			$tree->add_link(new ModuleLink($lang['news.add'], NewsUrlBuilder::add_news(), NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution()));	
 		}
 
-		$tree->add_link(new ModuleLink($lang['news.pending'], NewsUrlBuilder::display_pending_news(), NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation()));
+		$tree->add_link(new ModuleLink($lang['news.pending'], NewsUrlBuilder::display_pending_news(), NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution() || NewsAuthorizationsService::check_authorizations()->moderation()));
 	
 		return $tree;
 	}
