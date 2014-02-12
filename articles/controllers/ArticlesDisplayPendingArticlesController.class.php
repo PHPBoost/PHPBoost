@@ -86,6 +86,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	{
 		$now = new Date();
 		$authorized_categories = ArticlesService::get_authorized_categories(Category::ROOT_CATEGORY);
+		$config = ArticlesConfig::load();
 		
 		$mode = $request->get_getstring('sort', 'desc');
 		$field = $request->get_getstring('field', 'date');
@@ -121,8 +122,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
-		WHERE articles.published = 0 OR (articles.published = 2 AND ((articles.publishing_start_date > :timestamp_now OR articles.publishing_end_date < :timestamp_now) 
-		AND articles.publishing_end_date <> 0)) AND articles.id_category IN :authorized_categories
+		WHERE articles.published = 0 OR (articles.published = 2 AND (articles.publishing_start_date > :timestamp_now OR articles.publishing_end_date < :timestamp_now) 
+		AND articles.publishing_end_date <> 0) AND articles.id_category IN :authorized_categories
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'timestamp_now' => $now->get_timestamp(),
@@ -136,26 +137,17 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->build_form($field, $mode);
 		
 		$this->view->put_all(array(
-			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
-                        'C_BLOCK' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_BLOCK,
-                        'C_PENDING_ARTICLES' => true,
-			'C_PUBLISHED_ARTICLES' => true,
-			'C_ARTICLES_CAT' => false,
-			'C_NO_ARTICLE_AVAILABLE' => $nbr_articles_pending == 0,
-			'L_TOTAL_PENDING_ARTICLE' => $nbr_articles_pending > 0 ? StringVars::replace_vars($this->lang['articles.nbr_articles.pending'], array('number' => $nbr_articles_pending)) : '', 
-			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->rel(),
-			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()
+			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+			'C_BLOCK' => $config->get_display_type() == ArticlesConfig::DISPLAY_BLOCK,
+			'C_PENDING_ARTICLES' => true,
+			'C_NO_ARTICLE_AVAILABLE' => $nbr_articles_pending == 0
 		));
 		
 		if ($nbr_articles_pending > 0)
 		{
-			$auth_moderation = ArticlesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY)->moderation();
-			$comments_enabled = ArticlesConfig::load()->are_comments_enabled();
-			
 			$this->view->put_all(array(
-				'C_MODERATE' => $auth_moderation,
 				'C_ARTICLES_FILTERS' => true,
-				'C_COMMENTS_ENABLED' => $comments_enabled,
+				'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 				'C_PAGINATION' => $pagination->has_several_pages(),
 				'PAGINATION' => $pagination->display()
 			));
@@ -167,20 +159,10 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				
 				$this->build_keywords_view($article);
 				
-				$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
-				
-				$this->view->assign_block_vars('articles',  array_merge($article->get_tpl_vars()), array(
-					'L_CAT_NAME' => $category->get_name(),
-					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
-				));
+				$this->view->assign_block_vars('articles', $article->get_tpl_vars());
 			}
 		}
-		else 
-		{
-			$this->view->put_all(array(
-				'L_NO_PENDING_ARTICLE' => $this->lang['articles.no_pending_article']
-			));
-		}
+		
 		$this->view->put('FORM', $this->form->display());
 	}
 	
@@ -204,7 +186,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		if (!(ArticlesAuthorizationsService::check_authorizations()->read()))
+		if (!(ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->moderation()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -215,7 +197,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	{
 		$number_articles = PersistenceContext::get_querier()->count(
 			ArticlesSetup::$articles_table, 
-			'WHERE published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now AND publishing_end_date < :timestamp_now)) AND id_category IN :authorized_categories', 
+			'WHERE published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now AND publishing_end_date < :timestamp_now) AND publishing_end_date <> 0) AND id_category IN :authorized_categories', 
 			array(
 				'timestamp_now' => $now->get_timestamp(),
 				'authorized_categories' => $authorized_categories

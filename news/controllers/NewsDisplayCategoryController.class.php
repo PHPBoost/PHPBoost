@@ -60,10 +60,9 @@ class NewsDisplayCategoryController extends ModuleController
 		$news_config = NewsConfig::load();
 		$pagination = $this->get_pagination($now, $authorized_categories);
 
-		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*, com.number_comments
+		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = news.id AND com.module_id = \'news\'
 		WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now OR news.end_date = 0))) AND news.id_category IN :authorized_categories
 		ORDER BY top_list_enabled DESC, news.creation_date DESC
 		LIMIT :number_items_per_page OFFSET :display_from', array(
@@ -78,10 +77,7 @@ class NewsDisplayCategoryController extends ModuleController
 			$news = new News();
 			$news->set_properties($row);
 						
-			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
-				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
-				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0
-			)));
+			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars());
 		}
 		
 		$number_columns_display_news = $news_config->get_number_columns_display_news();
@@ -91,15 +87,11 @@ class NewsDisplayCategoryController extends ModuleController
 			'C_DISPLAY_CONDENSED_CONTENT' => $news_config->get_display_condensed_enabled(),
 		
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
-			'C_ADD' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->contribution(),
-			'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 		
 			'PAGINATION' => $pagination->display(),
 			'C_SEVERAL_COLUMNS' => $number_columns_display_news > 1,
-			'NUMBER_COLUMNS' => $number_columns_display_news,
-
-			'L_NEWS_TITLE' => $this->lang['news'],
+			'NUMBER_COLUMNS' => $number_columns_display_news
 		));
 	}
 		
