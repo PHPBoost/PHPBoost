@@ -39,9 +39,12 @@ if (!empty($_POST['valid']))
 {
 	$config->set_max_files_number_per_page(retrieve(POST, 'max_files_number_per_page', 10));
 	$config->set_columns_number(retrieve(POST, 'columns_number', 2));
-	if (retrieve(POST, 'notation_scale', 5) != $config->get_notation_scale())
-		NotationService::update_notation_scale('download', $config->get_notation_scale(), retrieve(POST, 'notation_scale', 5));
-	$config->set_notation_scale(max(1, retrieve(POST, 'notation_scale', 5)));
+	
+	$notation_scale = retrieve(POST, 'notation_scale', 5);
+	if ($notation_scale != $config->get_notation_scale())
+		NotationService::update_notation_scale('download', $config->get_notation_scale(), $notation_scale);
+	$config->set_notation_scale($notation_scale);
+	
 	$config->set_root_contents(stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE)));
 	$config->set_authorizations(Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT));
 	
