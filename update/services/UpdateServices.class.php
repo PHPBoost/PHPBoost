@@ -226,6 +226,17 @@ class UpdateServices
 		
 		ModulesManager::uninstall_module('HomeCustom');
 		
+		$modules_config = ModulesConfig::load();
+		foreach (ModulesManager::get_installed_modules_map() as $module)
+		{
+			if (ModulesManager::module_is_upgradable($module->get_id()))
+			{
+				$module->set_installed_version($version_upgrading);
+				$modules_config->update($module);
+			}
+		}
+		ModulesConfig::save();
+		
 		//$this->update_kernel();
 		$this->update_configurations();
 		$this->update_modules();

@@ -60,7 +60,7 @@ foreach ($CAT_FORUM as $idcat => $array_info_cat)
 		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? url('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . Url::encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . Url::encode_rewrite($array_info_cat['name']) . '.php'));
 }
 if (!empty($CAT_FORUM[$id_get]['name'])) //Nom de la catégorie courante.
-	$Bread_crumb->add($CAT_FORUM[$id_get]['name'], '');
+	$Bread_crumb->add($CAT_FORUM[$id_get]['name'], $CAT_FORUM[$id_get]['url']);
 if (!empty($id_get))
 	define('TITLE', $LANG['title_forum'] . ' - ' . $CAT_FORUM[$id_get]['name']);
 else
