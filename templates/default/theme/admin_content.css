@@ -729,7 +729,7 @@ div.form-autocompleter ul li { list-style-type:none; display: block; margin: 0; 
 
 .sortable-block .sortable-actions{
 	float:right;
-	padding:0px 10px;
+	padding: 3px 3px;
 }
 
 .sortable-block .sortable-options{
