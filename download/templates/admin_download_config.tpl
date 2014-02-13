@@ -40,7 +40,7 @@
 					<div class="form-element">
 						<label for="notation_scale">* {L_NOTATION_SCALE}</label>
 						<div class="form-field">
-							<input type="text" size="2" maxlength="2" id="notation_scale" name="note_max" value="{NOTATION_SCALE}">
+							<input type="text" size="2" maxlength="2" id="notation_scale" name="notation_scale" value="{NOTATION_SCALE}">
 						</div>
 					</div>
 					<div class="form-element-textarea">
