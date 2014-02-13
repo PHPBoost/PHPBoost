@@ -9,8 +9,7 @@ ${resources('install/install')}
 		
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
 		<link type="text/css" href="templates/install.css" title="phpboost" rel="stylesheet" />
-		<script src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
-		<script src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/top.js"></script>
 		<script src="templates/global.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
         <script>
@@ -132,5 +131,6 @@ ${resources('install/install')}
 			{@poweredBy} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {@phpboost.rights}
 		</span>
 	</div>
+	<script src="{PATH_TO_ROOT}/kernel/lib/js/bottom.js"></script>
 	</body>
 </html>

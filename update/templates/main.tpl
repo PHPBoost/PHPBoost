@@ -7,8 +7,7 @@ ${resources('update/update')}
 		<meta name="description" content="PHPBoost" />
 		<meta name="robots" content="noindex, follow" />
 		<link type="text/css" href="templates/update.css" title="phpboost" rel="stylesheet" />
-		<script src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
-		<script src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
+		<script src="{PATH_TO_ROOT}/kernel/lib/js/top.js"></script>
 		<script src="templates/global.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
         <script>
@@ -107,5 +106,6 @@ ${resources('update/update')}
 			{@poweredBy} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {@phpboost.rights}
 		</span>
 	</div>
+	<script src="{PATH_TO_ROOT}/kernel/lib/js/bottom.js"></script>
 	</body>
 </html>
