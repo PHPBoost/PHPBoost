@@ -237,6 +237,8 @@ class CalendarService
 	 */
 	public static function get_all_current_month_events($month, $year, $month_days, $id_category = Category::ROOT_CATEGORY)
 	{
+		$authorized_categories = CalendarService::get_authorized_categories($id_category);
+		
 		return self::$db_querier->select((CalendarConfig::load()->is_members_birthday_enabled() ? "
 		(SELECT user_born AS start_date, user_born AS end_date, login AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarEventContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
 		FROM " . DB_TABLE_MEMBER . " member
@@ -246,11 +248,14 @@ class CalendarService
 		" : "") . "(SELECT start_date, end_date, title, 'EVENT' AS type, id_category, repeat_type, repeat_number
 		FROM " . CalendarSetup::$calendar_events_table . " event
 		LEFT JOIN " . CalendarSetup::$calendar_events_content_table . " event_content ON event_content.id = event.content_id
-		WHERE start_date BETWEEN :first_month_day AND :last_month_day)
-		ORDER BY start_date", array(
+		WHERE approved = 1 AND ((start_date BETWEEN :first_month_day AND :last_month_day)
+		OR (end_date BETWEEN :first_month_day AND :last_month_day)
+		OR (:first_month_day BETWEEN start_date AND end_date)) AND id_category IN :authorized_categories)
+		ORDER BY start_date ASC", array(
 			'month' => $month,
 			'first_month_day' => mktime(0, 0, 0, $month, 1, $year),
-			'last_month_day' => mktime(23, 59, 59, $month, $month_days, $year)
+			'last_month_day' => mktime(23, 59, 59, $month, $month_days, $year),
+			'authorized_categories' => $authorized_categories
 		));
 	}
 	
