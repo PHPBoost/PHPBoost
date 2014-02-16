@@ -65,6 +65,7 @@ class File extends FileSystemElement
 	{
 		$this->close();
 	}
+	
 	/**
 	 * @desc Returns the element name without extension.
 	 * @return string The element name without extension.
@@ -74,7 +75,17 @@ class File extends FileSystemElement
 		$name = $this->get_name();
 		return substr($name, 0, strpos($name, '.'));
 	}
-
+	
+	/**
+	 * @desc Returns the extension of the element.
+	 * @return string Element extension.
+	 */
+	public function get_extension()
+	{
+		$name = $this->get_name();
+		return substr(strrchr($name,'.'), 1);
+	}
+	
 	/**
 	 * @desc Returns the content of the file.
 	 * @param int $start Byte from which you want to start. 0 if you want to read the file from its begening, 1 to start with the second etc.
