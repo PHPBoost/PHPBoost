@@ -212,7 +212,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		return $this->category;
 	}
 	
-	private function build_keywords_view(Articles $article)
+	private function build_keywords_view(Article $article)
 	{
 		$keywords = $article->get_keywords();
 		$nbr_keywords = count($keywords);
