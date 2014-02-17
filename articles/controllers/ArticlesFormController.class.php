@@ -247,7 +247,7 @@ class ArticlesFormController extends ModuleController
 			}
 			else
 			{
-				$this->article = new Articles();
+				$this->article = new Article();
 				$this->article->init_default_properties();
 			}
 		}

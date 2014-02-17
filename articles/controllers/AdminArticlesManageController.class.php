@@ -92,7 +92,7 @@ class AdminArticlesManageController extends AdminModuleController
 		
 		while($row = $result->fetch())
 		{
-			$article = new Articles();
+			$article = new Article();
 			$article->set_properties($row);
 			
 			$this->view->assign_block_vars('articles', $article->get_tpl_vars());

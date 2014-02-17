@@ -64,7 +64,7 @@ class ArticlesService
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
 		' . $condition, $parameters);
 		
-		$article = new Articles();
+		$article = new Article();
 		$article->set_properties($row);
 		return $article;
 	}

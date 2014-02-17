@@ -141,7 +141,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		
 		while ($row = $result->fetch())
 		{
-			$article = new Articles();
+			$article = new Article();
 			$article->set_properties($row);
 			
 			$this->build_keywords_view($article);
