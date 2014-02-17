@@ -84,7 +84,7 @@ class GuestbookMessagesCache implements CacheData
 	 */
 	public static function load()
 	{
-		return CacheManager::load(__CLASS__, 'module', 'guestbook-messages');
+		return CacheManager::load(__CLASS__, 'guestbook', 'messages');
 	}
 	
 	/**
@@ -92,7 +92,7 @@ class GuestbookMessagesCache implements CacheData
 	 */
 	public static function invalidate()
 	{
-		CacheManager::invalidate('module', 'guestbook-messages');
+		CacheManager::invalidate('guestbook', 'messages');
 	}
 }
 ?>
