@@ -58,6 +58,7 @@
 			else
 				alert("{L_ALERT_INCOMPLETE}");
 		}
+		
 		function XMLHttpRequest_shoutdelmsg(idmsg)
 		{
 			document.getElementById('shoutimg').className = 'fa fa-spinner fa-spin';
@@ -101,10 +102,7 @@
 			}
 			return true;
 		}
-		function Confirm_del_shout(idmsg) {
-			if( confirm("{L_DELETE_MSG}") )
-				XMLHttpRequest_shoutdelmsg(idmsg);
-		}
+		
 		if( {SHOUT_REFRESH_DELAY} > 0 )
 			setTimeout('XMLHttpRequest_shoutrefresh()', {SHOUT_REFRESH_DELAY});
 		-->
@@ -118,15 +116,15 @@
 					<h5 class="sub-title">{L_SHOUTBOX}</h5>
 				</div>
 				<div class="module-mini-contents">
-					<div id="shout_container">					
+					<div id="shout_container">
 						# START shout #
 						<p id="shout_container_{shout.IDMSG}">{shout.PSEUDO}<span class="smaller"> : {shout.CONTENTS}</span></p>
-						# END shout #					
+						# END shout #
 					</div>
 					# IF C_VISIBLE_SHOUT #
 					<label for="shout_pseudo"><span class="smaller">{L_PSEUDO}</span></label>
 					<input size="16" maxlength="25" type="text" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
-					# ENDIF #					
+					# ENDIF #
 					# IF C_HIDDEN_SHOUT #
 					<input size="16" maxlength="25" type="hidden" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 					# ENDIF #
