@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        Articles.class.php
+ *                        Article.class.php
  *                            -------------------
  *   begin                : February 27, 2013
  *   copyright            : (C) 2013 Patrick DUBEAU
@@ -28,7 +28,7 @@
 /**
  * @author Patrick DUBEAU <daaxwizeman@gmail.com>
  */
-class Articles
+class Article
 {
 	private $id;
 	private $id_category;

@@ -71,7 +71,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 				}
 			}
 			else
-				$this->article = new Articles();
+				$this->article = new Article();
 		}
 		return $this->article;
 	}
