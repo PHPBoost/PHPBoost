@@ -195,7 +195,7 @@ class BugtrackerDetailController extends ModuleController
 				$errstr = StringVars::replace_vars($this->lang['success.reopen'], array('id' => $this->bug->get_id()));
 				break;
 			case 'assign':
-				$errstr = StringVars::replace_vars($this->lang['success.assigned'], array('id' => $bug_id));
+				$errstr = StringVars::replace_vars($this->lang['success.assigned'], array('id' => $this->bug->get_id()));
 				break;
 			default:
 				$errstr = '';
