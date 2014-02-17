@@ -44,12 +44,15 @@ if ($add)
 		echo -6;
 		exit;
 	}
-		
+	
 	$shout_pseudo = !empty($_POST['pseudo']) ? TextHelper::strprotect(utf8_decode($_POST['pseudo'])) : $LANG['guest'];
-	$shout_contents = !empty($_POST['contents']) ? addslashes(trim(utf8_decode(htmlentities($_POST['contents'], ENT_COMPAT, "UTF-8")))) : '';
+	
+	$shout_contents = htmlentities(retrieve(POST, 'contents', ''), ENT_COMPAT, 'UTF-8');
+	$shout_contents = stripslashes(html_entity_decode($shout_contents, ENT_COMPAT, 'ISO-8859-1'));
+	
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{
-		//Accès pour poster.		
+		//Accès pour poster.
 		if (ShoutboxAuthorizationsService::check_authorizations()->write())
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
@@ -64,7 +67,7 @@ if ($add)
 			}
 			
 			//Vérifie que le message ne contient pas du flood de lien.
-			$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());		
+			$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());
 			if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
 			{	
 				echo -3;
@@ -87,13 +90,13 @@ if ($add)
 			{
 				$group_color = User::get_group_color($User->get_groups(), $User->get_level(), true);
 				$style = $group_color ? 'style="font-size:10px;color:'.$group_color.'"' : 'style="font-size:10px;"';
-				$shout_pseudo = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><i class="fa fa-remove"></i></a> <a class="' . UserService::get_level_class($User->get_level()) . '" '.$style.' href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->rel() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . ' </a>';
+				$shout_pseudo = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . '<a href="javascript:XMLHttpRequest_shoutdelmsg(' . $last_msg_id . ');" title="' . $LANG['delete'] . '" data-confirmation="' . $LANG['alert_delete_msg'] . '"><i class="fa fa-remove"></i></a> <a class="' . UserService::get_level_class($User->get_level()) . '" '.$style.' href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->rel() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . ' </a>';
 			}
 			else
 				$shout_pseudo = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . '<span class="smaller" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . ' </span>';
 			
 			echo "array_shout[0] = '" . $shout_pseudo . "';";
-			echo "array_shout[1] = '" . FormatingHelper::second_parse(str_replace(array("\n", "\r"), array('', ''), ucfirst(stripslashes($shout_contents)))) . "';";
+			echo "array_shout[1] = '" . FormatingHelper::second_parse($shout_contents) . "';";
 			echo "array_shout[2] = '" . $last_msg_id . "';";
 		}
 		else //utilisateur non autorisé!
@@ -112,9 +115,9 @@ elseif ($refresh)
 	" . $Sql->limit(0, 25), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$row['user_id'] = (int)$row['user_id'];		
+		$row['user_id'] = (int)$row['user_id'];
 		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
-			$del = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><i class="fa fa-remove"></i></a>';
+			$del = '<a href="javascript:XMLHttpRequest_shoutdelmsg(' . $row['id'] . ');" title="' . $LANG['delete'] . '" data-confirmation="' . $LANG['alert_delete_msg'] . '"><i class="fa fa-remove"></i></a>';
 		else
 			$del = '';
 			
@@ -130,7 +133,7 @@ elseif ($refresh)
 		else
 			$row['login'] = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . $del . ' <span class="smaller" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . ' </span>';
 		
-		echo '<p id="shout_container_' . $row['id'] . '">' . $row['login'] . '<span class="smaller">: ' . str_replace(array("\n", "\r"), array('', ''), ucfirst(FormatingHelper::second_parse(stripslashes($row['contents'])))) . '</span></p>' . "\n";
+		echo '<p id="shout_container_' . $row['id'] . '">' . $row['login'] . '<span class="smaller">: ' . FormatingHelper::second_parse($row['contents']) . '</span></p>' . "\n";
 	}
 	$Sql->query_close($result);
 }
