@@ -68,7 +68,7 @@ div#forms_selection a{
 }
 
 div#forms_selection a:hover{
-	background:#DDD;
+	background:#DDDDDD;
 }
 
 div.SpecializedForm {
@@ -77,7 +77,7 @@ div.SpecializedForm {
 
 div#forms_selection a.SFL_current {
     background:#DFDFDF;
-    font-size:12px;
+    color:#333333;
 }
 
 fieldset.fieldset-submit {
