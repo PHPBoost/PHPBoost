@@ -35,37 +35,16 @@ $no_path = retrieve(GET, 'no_path', '');
 
 if (!empty($popup)) //Popup.
 {
-	require_once('../kernel/header_no_display.php');
+	$env = new SiteDisplayFrameGraphicalEnvironment();
+	Environment::set_graphical_environment($env);
+	
 	$field = retrieve(GET, 'fd', '');
 	
-	$header = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $LANG['xml_lang'] . '" >
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"  />
-<meta http-equiv="Content-Style-Type" content="text/css" />
-
-<title>' . $LANG['files_management'] . '</title>
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/kernel/lib/css/font-awesome/css/font-awesome.css" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/design.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/global.css" type="text/css" media="screen, print, handheld" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/content.css" type="text/css" media="screen, print, handheld" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
-<script>
-<!--
-	var PATH_TO_ROOT = "' . PATH_TO_ROOT . '";
-	var TOKEN = "' . $Session->get_token() . '";
--->
-</script>
-<script src="' . PATH_TO_ROOT . '/kernel/lib/js/phpboost/global.js"></script>
-</head>
-
-<body style="background:#FAFAFA;">';
+	$header = '<style type="text/css">body {background:#FAFAFA;}</style>';
 	$footer = '<fieldset class="fieldset-submit" style="width:96%;margin:auto;">
 			<legend>' . $LANG['close'] . '</legend>
 			<button type="reset" onclick="javascript:close_popup()" value="true">' . $LANG['close'] . '</button>
-		</fieldset>
-	</body>
-</html>';
+		</fieldset>';
 	$popup = '&popup=1&fd=' . $field . '&edt=' . $editor . '&parse='. $parse .'&no_path=' . $no_path;
 	$popup_noamp = '&popup=1&fd=' . $field . '&edt=' . $editor . '&parse='. $parse .'&no_path=' . $no_path;
 }
