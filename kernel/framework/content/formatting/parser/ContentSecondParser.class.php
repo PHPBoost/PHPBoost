@@ -278,10 +278,10 @@ class ContentSecondParser extends AbstractParser
 	private static function process_sound_tag($matches)
 	{
 		//Balise son
-		return '<object type="application/x-shockwave-flash" data="' . PATH_TO_ROOT . '/kernel/lib/flash/dewplayer.swf?son=' . $matches[1] . '" width="200" height="20">
+		return '<object type="application/x-shockwave-flash" data="' . TPL_PATH_TO_ROOT . '/kernel/lib/flash/dewplayer.swf?son=' . $matches[1] . '" width="200" height="20">
          		<param name="allowScriptAccess" value="never" />
                 <param name="play" value="true" />
-                <param name="movie" value="' . PATH_TO_ROOT . '/kernel/lib/flash/dewplayer.swf?son=' . $matches[1] . '" />
+                <param name="movie" value="' . TPL_PATH_TO_ROOT . '/kernel/lib/flash/dewplayer.swf?son=' . $matches[1] . '" />
                 <param name="menu" value="false" />
                 <param name="quality" value="high" />
                 <param name="scalemode" value="noborder" />
