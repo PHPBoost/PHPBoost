@@ -51,13 +51,12 @@ class ModuleTreeLinks
 	{
 		if (!empty($this->links))
 		{
-			$visible_links = false;
 			foreach ($this->links as $link)
 			{
 				if ($link->is_visible())
-					$visible_links = true;
+					return true;
 			}
-			return $visible_links;
+			return false;
 		}
 		else
 			return false;
