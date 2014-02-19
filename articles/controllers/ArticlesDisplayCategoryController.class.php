@@ -123,7 +123,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
 			'PAGINATION' => $pagination->display(),
-			'ID_CAT' => $this->category->get_name()
+			'ID_CAT' => $this->category->get_id()
 		));
 	}
 	
