@@ -112,26 +112,6 @@
 			}
 			xmlhttprequest_sender(xhr_object, null);
 		}
-		function del_msg(idmsg)
-		{
-			if( confirm('{L_DELETE_MESSAGE}') )
-				XMLHttpRequest_del(idmsg);
-		}
-		function Confirm_del_topic() {
-			return confirm("{L_ALERT_DELETE_TOPIC}");
-		}		
-		function Confirm_lock_topic() {
-			return confirm("{L_ALERT_LOCK_TOPIC}");
-		}		
-		function Confirm_unlock_topic() {
-			return confirm("{L_ALERT_UNLOCK_TOPIC}");
-		}		
-		function Confirm_move_topic() {
-			return confirm("{L_ALERT_MOVE_TOPIC}");
-		}
-		function Confirm_cut_topic() {
-			return confirm("{L_ALERT_CUT_TOPIC}");
-		}
 		-->
 		</script>
 
@@ -147,12 +127,12 @@
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-ban"></a>
+					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}"></a>
 						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-unban"></a>
+					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"></a>
 						# ENDIF #
 					
-					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}" class="fa fa-move"></a>
+					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
 					# ENDIF #
 				</span>
 			</div>
@@ -240,7 +220,7 @@
 					&nbsp;
 						# IF msg.C_FORUM_MSG_DEL_MSG #
 					<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" id="dimgnojs{msg.ID}" class="fa fa-delete"></a>
-					<a style="cursor:pointer;display:none" onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" title="{L_DELETE}" class="fa fa-delete"></a> 
+					<a style="cursor:pointer;display:none" onclick="XMLHttpRequest_del('{msg.ID}');" id="dimg{msg.ID}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="{L_DELETE_MESSAGE}"></a> 
 					<script>
 					<!--
 						document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
@@ -248,11 +228,11 @@
 					-->
 					</script>
 						# ELSE #
-					<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" onclick="javascript:return Confirm_del_topic();" class="fa fa-delete"></a> 
+					<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="{L_ALERT_DELETE_TOPIC}"></a> 
 						# ENDIF #
 					# ENDIF #
 					
-					# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" onclick="javascript:return Confirm_cut_topic();"><i class="fa fa-cut"></i></a> # ENDIF #
+					# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" class="fa fa-cut" data-confirmation="{L_ALERT_CUT_TOPIC}"></a> # ENDIF #
 					
 					<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><i class="fa fa-arrow-up"></i></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><i class="fa fa-arrow-down"></i></a></span>
 				</div>
@@ -316,12 +296,12 @@
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-ban"></a>
+					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}"></a>
 						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-unban"></a>
+					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"></a>
 						# ENDIF #
 						
-					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}" class="fa fa-move"></a>
+					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
 					# ENDIF #
 				</span>&nbsp;
 			</div>
