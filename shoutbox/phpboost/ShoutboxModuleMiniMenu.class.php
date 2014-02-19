@@ -116,6 +116,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    		'L_ALERT_LINK_PSEUDO' => $LANG['e_link_pseudo'],
 	    		'L_ALERT_INCOMPLETE' => $LANG['e_incomplete'],
 	    		'L_ALERT_READONLY' => $LANG['e_readonly'],
+				'L_DELETE_MSG' => $LANG['alert_delete_msg'],
 	    		'L_SHOUTBOX' => $LANG['title_shoutbox'],
 	    		'L_MESSAGE' => $LANG['message'],
 	    		'L_PSEUDO' => $LANG['pseudo'],
@@ -134,7 +135,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    	{
 	    		$row['user_id'] = (int)$row['user_id'];
 	    		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
-	    			$del_message = '<a href="javascript:XMLHttpRequest_shoutdelmsg(' . $row['id'] . ');" title="' . $LANG['delete'] . '" data-confirmation="' . $LANG['alert_delete_msg'] . '"><i class="fa fa-remove"></i></a>';
+	    			$del_message = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><i class="fa fa-remove"></i></a>';
 	    		else
 	    			$del_message = '';
 	
