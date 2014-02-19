@@ -103,6 +103,11 @@
 			return true;
 		}
 		
+		function Confirm_del_shout(idmsg) {
+			if( confirm("{L_DELETE_MSG}") )
+				XMLHttpRequest_shoutdelmsg(idmsg);
+		}
+		
 		if( {SHOUT_REFRESH_DELAY} > 0 )
 			setTimeout('XMLHttpRequest_shoutrefresh()', {SHOUT_REFRESH_DELAY});
 		-->
