@@ -139,13 +139,13 @@ class ArticlesSetup extends DefaultModuleSetup
 			'contents' => $this->messages['default.article.contents'],
 			'number_view' => 0,
 			'author_user_id' => 1,
-			'author_name_displayed' => Articles::AUTHOR_NAME_DISPLAYED,
-			'published' => Articles::PUBLISHED_NOW,
+			'author_name_displayed' => Article::AUTHOR_NAME_DISPLAYED,
+			'published' => Article::PUBLISHED_NOW,
 			'publishing_start_date' => 0,
 			'publishing_end_date' => 0,
 			'date_created' => time(),
 			'date_updated' => 0,
-			'notation_enabled' => Articles::NOTATION_ENABLED,
+			'notation_enabled' => Article::NOTATION_ENABLED,
 			'sources' => serialize(array())
 		));
 	}
