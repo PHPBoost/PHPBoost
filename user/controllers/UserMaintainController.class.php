@@ -70,7 +70,7 @@ class UserMaintainController extends AbstractController
 	{
 		$general_config = GeneralConfig::load();
 		
-		$theme = ThemeManager::get_theme(get_utheme());
+		$theme = ThemesManager::get_theme(get_utheme());
 		$customize_interface = $theme->get_customize_interface();
 		$header_logo_path = $customize_interface->get_header_logo_path();
 
