@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             LangManager.class.php
+ *                             LangsManager.class.php
  *                            -------------------
  *   begin                : January 19, 2012
  *   copyright            : (C) 2012 Kevin MASSY
@@ -30,7 +30,7 @@
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
-class LangManager
+class LangsManager
 {
 	private static $error = null;
 	

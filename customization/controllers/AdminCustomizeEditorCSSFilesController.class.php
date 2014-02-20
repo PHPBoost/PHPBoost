@@ -128,7 +128,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 	{
 		$choices_list = array();
 		$choices_list[] = new FormFieldSelectChoiceOption('--', '');
-		foreach (ThemeManager::get_activated_themes_map() as $id => $value) 
+		foreach (ThemesManager::get_activated_themes_map() as $id => $value) 
 		{
 			$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
 		}

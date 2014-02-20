@@ -45,7 +45,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
     	$theme_id = AppContext::get_request()->get_string('switchtheme', '');
         if (!empty($theme_id))
         {
-	        $theme = ThemeManager::get_theme($theme_id);
+	        $theme = ThemesManager::get_theme($theme_id);
 			if ($theme !== null)
 			{
 				if ($theme->is_activated() && $theme->check_auth())
@@ -61,7 +61,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 	
 	    MenuService::assign_positions_conditions($tpl, $this->get_block());
 	
-	    foreach (ThemeManager::get_activated_and_authorized_themes_map() as $id => $theme)
+	    foreach (ThemesManager::get_activated_and_authorized_themes_map() as $id => $theme)
 		{
 			$selected = ($user->get_theme() == $id) ? ' selected="selected"' : '';
     		$tpl->assign_block_vars('themes', array(

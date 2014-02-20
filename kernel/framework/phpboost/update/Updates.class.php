@@ -82,7 +82,7 @@ class Updates
             if ($checks & CHECK_THEMES)
             {
                 // Add Themes
-               $activated_themes = ThemeManager::get_activated_themes_map();
+               $activated_themes = ThemesManager::get_activated_themes_map();
                 foreach ($activated_themes as $id => $value)
                 {
 					$repository = $value->get_configuration()->get_repository();

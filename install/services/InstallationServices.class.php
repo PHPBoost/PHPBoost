@@ -218,12 +218,12 @@ class InstallationServices
 
 	private function install_locale($locale)
 	{
-		LangManager::install($locale);
+		LangsManager::install($locale);
 	}
 
 	private function configure_theme($theme)
 	{
-		ThemeManager::install($theme);
+		ThemesManager::install($theme);
 	}
 
 	private function install_modules(array $modules_to_install)
