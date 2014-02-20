@@ -32,7 +32,7 @@ class ArticlesCommentsTopic extends CommentsTopic
 {
 	private $article;
 	
-	public function __construct(Articles $article = null)
+	public function __construct(Article $article = null)
 	{
 		parent::__construct('articles');
 		$this->article = $article;

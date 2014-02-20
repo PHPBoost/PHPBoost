@@ -91,21 +91,21 @@ class ArticlesPrintArticlesController extends ModuleController
 		
 		switch ($article->get_publishing_state()) 
 		{
-			case Articles::PUBLISHED_NOW:
+			case Article::PUBLISHED_NOW:
 				if (!ArticlesAuthorizationsService::check_authorizations()->read() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case Articles::NOT_PUBLISHED:
+			case Article::NOT_PUBLISHED:
 				if ($not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
 				}
 			break;
-			case Articles::PUBLISHED_DATE:
+			case Article::PUBLISHED_DATE:
 				if (!$article->is_published() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();

@@ -101,7 +101,7 @@ class ArticlesFormController extends ModuleController
 		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.form.description_enabled'], $this->get_article()->get_description_enabled(), 
 			array('description' => StringVars::replace_vars($this->lang['articles.form.description_enabled.description'], 
                                 array('number' => (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_BLOCK) ? ArticlesConfig::load()->get_number_character_to_cut_block_display() : 
-                                (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC) ? Articles::NBR_CHARACTER_TO_CUT_MOSAIC : Articles::NBR_CHARACTER_TO_CUT_LIST)), 
+                                (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC) ? Article::NBR_CHARACTER_TO_CUT_MOSAIC : Article::NBR_CHARACTER_TO_CUT_LIST)), 
                               'events' => array('click' => '
                                                             if (HTMLForms.getField("enable_description").getValue()) {
                                                                     HTMLForms.getField("description").enable();
@@ -112,7 +112,7 @@ class ArticlesFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('description', StringVars::replace_vars($this->lang['articles.form.description'],
                         array('number' =>(ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_BLOCK) ? ArticlesConfig::load()->get_number_character_to_cut_block_display() : 
-                                (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC) ? Articles::NBR_CHARACTER_TO_CUT_MOSAIC : Articles::NBR_CHARACTER_TO_CUT_LIST)), $this->get_article()->get_description(),
+                                (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC) ? Article::NBR_CHARACTER_TO_CUT_MOSAIC : Article::NBR_CHARACTER_TO_CUT_LIST)), $this->get_article()->get_description(),
 			array('rows' => 3, 'hidden' => !$this->get_article()->get_description_enabled())
 		));
 		
@@ -160,9 +160,9 @@ class ArticlesFormController extends ModuleController
 
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('publishing_state', $common_lang['form.approbation'], $this->get_article()->get_publishing_state(),
 				array(
-					new FormFieldSelectChoiceOption($common_lang['form.approbation.not'], Articles::NOT_PUBLISHED),
-					new FormFieldSelectChoiceOption($common_lang['form.approbation.now'], Articles::PUBLISHED_NOW),
-					new FormFieldSelectChoiceOption($common_lang['form.approbation.date'], Articles::PUBLISHED_DATE),
+					new FormFieldSelectChoiceOption($common_lang['form.approbation.not'], Article::NOT_PUBLISHED),
+					new FormFieldSelectChoiceOption($common_lang['form.approbation.now'], Article::PUBLISHED_NOW),
+					new FormFieldSelectChoiceOption($common_lang['form.approbation.date'], Article::PUBLISHED_DATE),
 				),
 				array('events' => array('change' => '
 				if (HTMLForms.getField("publishing_state").getValue() == 2) {
@@ -176,11 +176,11 @@ class ArticlesFormController extends ModuleController
 
 			$publication_fieldset->add_field(new FormFieldDateTime('publishing_start_date', $common_lang['form.date.start'], 
 				($this->get_article()->get_publishing_start_date() === null ? new Date() : $this->get_article()->get_publishing_start_date()), 
-				array('hidden' => ($this->get_article()->get_publishing_state() != Articles::PUBLISHED_DATE))
+				array('hidden' => ($this->get_article()->get_publishing_state() != Article::PUBLISHED_DATE))
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $common_lang['form.date.end.enable'], $this->get_article()->end_date_enabled(), 
-				array('hidden' => ($this->get_article()->get_publishing_state() != Articles::PUBLISHED_DATE),
+				array('hidden' => ($this->get_article()->get_publishing_state() != Article::PUBLISHED_DATE),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enable").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();
@@ -290,9 +290,9 @@ class ArticlesFormController extends ModuleController
 		$article->set_description(($this->form->get_value('enable_description') ? $this->form->get_value('description') : ''));
 		$article->set_contents($this->form->get_value('contents'));
 		
-		$author_name_displayed = $this->form->get_value('author_name_displayed') ? $this->form->get_value('author_name_displayed') : Articles::AUTHOR_NAME_NOTDISPLAYED;
+		$author_name_displayed = $this->form->get_value('author_name_displayed') ? $this->form->get_value('author_name_displayed') : Article::AUTHOR_NAME_NOTDISPLAYED;
 		$article->set_author_name_displayed($author_name_displayed);
-		$notation_enabled = $this->form->get_value('notation_enabled') ? $this->form->get_value('notation_enabled') : Articles::NOTATION_DISABLED;
+		$notation_enabled = $this->form->get_value('notation_enabled') ? $this->form->get_value('notation_enabled') : Article::NOTATION_DISABLED;
 		$article->set_notation_enabled($notation_enabled);
 		$article->set_picture(new Url($this->form->get_value('picture')));
 		
@@ -301,7 +301,7 @@ class ArticlesFormController extends ModuleController
 		if ($this->is_contributor_member())
 		{
 			$article->set_rewrited_title(Url::encode_rewrite($article->get_title()));
-			$article->set_publishing_state(Articles::NOT_PUBLISHED);
+			$article->set_publishing_state(Article::NOT_PUBLISHED);
 			$article->set_date_created(new Date());
 			$article->clean_publishing_start_and_end_date();
 		}
@@ -313,7 +313,7 @@ class ArticlesFormController extends ModuleController
 			$article->set_rewrited_title($rewrited_title);
 
 			$article->set_publishing_state($this->form->get_value('publishing_state')->get_raw_value());
-			if ($article->get_publishing_state() == Articles::PUBLISHED_DATE)
+			if ($article->get_publishing_state() == Article::PUBLISHED_DATE)
 			{
 				$article->set_publishing_start_date($this->form->get_value('publishing_start_date'));
 
@@ -352,7 +352,7 @@ class ArticlesFormController extends ModuleController
 		Feed::clear_cache('articles');
 	}
 
-	private function contribution_actions(Articles $article, $id_article)
+	private function contribution_actions(Article $article, $id_article)
 	{
 		if ($article->get_id() === null)
 		{

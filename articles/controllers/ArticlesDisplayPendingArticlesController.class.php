@@ -166,7 +166,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->view->put('FORM', $this->form->display());
 	}
 	
-	private function build_keywords_view(Articles $article)
+	private function build_keywords_view(Article $article)
 	{
 		$keywords = $article->get_keywords();
 		$nbr_keywords = count($keywords);

@@ -39,13 +39,13 @@ class ArticlesService
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 	
-	public static function add(Articles $article)
+	public static function add(Article $article)
 	{
 		$result = self::$db_querier->insert(ArticlesSetup::$articles_table, $article->get_properties());
 		return $result->get_last_inserted_id();
 	}
 	
-	public static function update(Articles $article)
+	public static function update(Article $article)
 	{
 		self::$db_querier->update(ArticlesSetup::$articles_table, $article->get_properties(), 'WHERE id=:id', array('id', $article->get_id()));
 	}
@@ -69,7 +69,7 @@ class ArticlesService
 		return $article;
 	}
 	
-	public static function update_number_view(Articles $article)
+	public static function update_number_view(Article $article)
 	{
 		self::$db_querier->update(ArticlesSetup::$articles_table, array('number_view' => $article->get_number_view()), 'WHERE id=:id', array('id' => $article->get_id()));
 	}
