@@ -152,6 +152,21 @@ class News
 		return $this->get_approbation_type() == News::APPROVAL_NOW || ($this->get_approbation_type() == News::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true));
 	}
 	
+	public function get_status()
+	{
+		switch ($this->approbation_type) {
+			case self::APPROVAL_NOW:
+				return LangLoader::get_message('news.form.approved.now', 'common', 'news');
+			break;
+			case self::APPROVAL_DATE:
+				return LangLoader::get_message('news.form.approved.date', 'common', 'news');
+			break;
+			case self::NOT_APPROVAL:
+				return LangLoader::get_message('news.form.approved.not', 'common', 'news');
+			break;
+		}
+	}
+	
 	public function set_start_date(Date $start_date)
 	{
 		$this->start_date = $start_date;
@@ -357,19 +372,7 @@ class News
 		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($this->id_cat);
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-		
-		switch ($this->approbation_type) {
-			case self::APPROVAL_NOW:
-				$status = LangLoader::get_message('news.form.approved.now', 'common', 'news');
-			break;
-			case self::APPROVAL_DATE:
-				$status = LangLoader::get_message('news.form.approved.date', 'common', 'news');
-			break;
-			case self::NOT_APPROVAL:
-				$status = LangLoader::get_message('news.form.approved.not', 'common', 'news');
-			break;
-		}
-		
+	
 		return array(
 			'C_EDIT' => $this->is_authorized_edit(),
 			'C_DELETE' => $this->is_authorized_delete(),
@@ -383,7 +386,7 @@ class News
 			'DESCRIPTION' => $this->get_real_short_contents(),
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
-			'STATUS' => $status,
+			'STATUS' => $this->get_status(),
 			'PSEUDO' => $user->get_pseudo(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
