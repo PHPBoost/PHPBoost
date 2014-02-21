@@ -89,7 +89,7 @@ class AdminThemeDeleteController extends AdminController
 	
 	private function delete_theme($drop_files)
 	{
-		ThemeManager::uninstall($this->theme_id, $drop_files);
+		ThemesManager::uninstall($this->theme_id, $drop_files);
 	}
 	
 	private function theme_exist()
@@ -98,7 +98,7 @@ class AdminThemeDeleteController extends AdminController
 		{
 			return false;
 		}
-		return ThemeManager::get_theme_existed($this->theme_id);
+		return ThemesManager::get_theme_existed($this->theme_id);
 	}
 }
 ?>

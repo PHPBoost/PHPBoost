@@ -197,7 +197,7 @@ if ($action == 'save') //Save menus positions.
 	$columns_disabled->set_disable_footer(AppContext::get_request()->get_bool('footer_enabled', true));
 	$columns_disabled->set_disable_left_columns(AppContext::get_request()->get_bool('left_column_enabled', true));
 	$columns_disabled->set_disable_right_columns(AppContext::get_request()->get_bool('right_column_enabled', true));
-	ThemeManager::change_columns_disabled($theme_post, $columns_disabled);
+	ThemesManager::change_columns_disabled($theme_post, $columns_disabled);
 	
 	MenuService::generate_cache();
 	
@@ -274,7 +274,7 @@ foreach ($menus_blocks as $block_id => $menus)
     }
 }
 
-foreach(ThemeManager::get_activated_themes_map() as $theme => $properties)
+foreach(ThemesManager::get_activated_themes_map() as $theme => $properties)
 {
 	$configuration = $properties->get_configuration();
 	$selected = (empty($name_theme) ? get_utheme() == $theme : $name_theme == $theme) ? ' selected="selected"' : '';
@@ -285,7 +285,7 @@ foreach(ThemeManager::get_activated_themes_map() as $theme => $properties)
 	));
 }
 	
-$columns_disable = ThemeManager::get_theme($name_theme)->get_columns_disabled();
+$columns_disable = ThemesManager::get_theme($name_theme)->get_columns_disabled();
 
 $tpl->put_all(array(
 	'NAME_THEME' => $name_theme,

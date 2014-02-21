@@ -45,7 +45,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
         $lang_id = AppContext::get_request()->get_string('switchlang', '');
         if (!empty($lang_id))
         {
-	        $lang = LangManager::get_lang($lang_id);
+	        $lang = LangsManager::get_lang($lang_id);
 			if ($lang !== null)
 			{
 				if ($lang->is_activated() && $lang->check_auth())
@@ -61,7 +61,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 	
 	    MenuService::assign_positions_conditions($tpl, $this->get_block());
 
-	    foreach(LangManager::get_activated_and_authorized_langs_map() as $id => $lang)
+	    foreach(LangsManager::get_activated_and_authorized_langs_map() as $id => $lang)
 	    {
 			$selected = ($user->get_locale() == $id) ? ' selected="selected"' : '';
     		$tpl->assign_block_vars('langs', array(

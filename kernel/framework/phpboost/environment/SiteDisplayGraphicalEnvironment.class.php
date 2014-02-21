@@ -48,7 +48,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		parent::__construct();
 		$this->load_langs();
 		$this->set_breadcrumb(new BreadCrumb());
-		$this->set_columns_disabled(ThemeManager::get_theme(get_utheme())->get_columns_disabled());
+		$this->set_columns_disabled(ThemesManager::get_theme(get_utheme())->get_columns_disabled());
 	}
 	
 	private function load_langs()
@@ -65,7 +65,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		$template = new FileTemplate('body.tpl');
 		
-		$theme = ThemeManager::get_theme(get_utheme());
+		$theme = ThemesManager::get_theme(get_utheme());
 		$customize_interface = $theme->get_customize_interface();
 		$header_logo_path = $customize_interface->get_header_logo_path();
 		
@@ -101,7 +101,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		
 		if (GraphicalEnvironmentConfig::load()->get_display_theme_author())
 		{
-			$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
+			$theme_configuration = ThemesManager::get_theme(get_utheme())->get_configuration();
 			$template->put_all(array(
 				'C_DISPLAY_AUTHOR_THEME' => true,
 				'L_THEME' => self::$main_lang['theme'],

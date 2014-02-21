@@ -126,7 +126,7 @@ class AdminThemesNotInstalledListController extends AdminController
 		foreach($folder_containing_phpboost_themes->get_folders() as $theme)
 		{
 			$name = $theme->get_name();
-			if ($name !== 'default' && !ThemeManager::get_theme_existed($name))
+			if ($name !== 'default' && !ThemesManager::get_theme_existed($name))
 			{
 				$themes_not_installed[] = $name;
 			}
@@ -137,8 +137,8 @@ class AdminThemesNotInstalledListController extends AdminController
 
 	private function install_theme($id_theme, $authorizations = array(), $activate = true)
 	{
-		ThemeManager::install($id_theme, $authorizations, $activate);
-		$error = ThemeManager::get_error();
+		ThemesManager::install($id_theme, $authorizations, $activate);
+		$error = ThemesManager::get_error();
 		if ($error !== null)
 		{
 			$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
@@ -182,7 +182,7 @@ class AdminThemesNotInstalledListController extends AdminController
 			$uploaded_file = $this->form->get_value('file');
 			if ($uploaded_file !== null)
 			{
-				if (!ThemeManager::get_theme_existed($uploaded_file->get_name_without_extension()))
+				if (!ThemesManager::get_theme_existed($uploaded_file->get_name_without_extension()))
 				{
 					$upload = new Upload($folder_phpboost_themes);
 					if ($upload->file('upload_theme_file', '`([A-Za-z0-9-_]+)\.(gzip|zip)+$`i'))

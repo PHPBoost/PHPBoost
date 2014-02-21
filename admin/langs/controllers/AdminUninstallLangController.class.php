@@ -88,7 +88,7 @@ class AdminUninstallLangController extends AdminController
 	
 	private function uninstall($drop_files)
 	{
-		LangManager::uninstall($this->id, $drop_files);
+		LangsManager::uninstall($this->id, $drop_files);
 	}
 	
 	private function exists()
@@ -97,7 +97,7 @@ class AdminUninstallLangController extends AdminController
 		{
 			return false;
 		}
-		return LangManager::get_lang_existed($this->id);
+		return LangsManager::get_lang_existed($this->id);
 	}
 }
 

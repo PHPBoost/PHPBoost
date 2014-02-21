@@ -45,7 +45,7 @@ class ReCaptcha extends Captcha
 		
 	public function is_available()
 	{
-		return true;
+		return @fsockopen(RECAPTCHA_VERIFY_SERVER);
 	}
 	
 	public function is_valid()

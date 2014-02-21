@@ -113,7 +113,7 @@ class UserEditProfileController extends AbstractController
 			$this->user->get_timezone(), array('description' => $this->lang['timezone.choice.explain'])
 		));
 		
-		if (count(ThemeManager::get_activated_and_authorized_themes_map()) > 1)
+		if (count(ThemesManager::get_activated_and_authorized_themes_map()) > 1)
 		{
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user->get_theme(),
 				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
@@ -221,7 +221,7 @@ class UserEditProfileController extends AbstractController
 	private function build_javascript_picture_themes()
 	{
 		$text = 'var theme = new Array;' . "\n";
-		foreach (ThemeManager::get_activated_themes_map() as $theme)
+		foreach (ThemesManager::get_activated_themes_map() as $theme)
 		{
 			$picture = $theme->get_configuration()->get_first_picture();
 			$text .= 'theme["' . $theme->get_id() . '"] = "' . TPL_PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $picture . '";' . "\n";
@@ -232,7 +232,7 @@ class UserEditProfileController extends AbstractController
 	
 	private function get_picture_theme($user_theme)
 	{
-		$picture = ThemeManager::get_theme($user_theme)->get_configuration()->get_first_picture();
+		$picture = ThemesManager::get_theme($user_theme)->get_configuration()->get_first_picture();
 		return TPL_PATH_TO_ROOT .'/templates/' . $user_theme . '/' . $picture;
 	}
 }

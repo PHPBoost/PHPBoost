@@ -122,7 +122,7 @@ else
 		));
 
 		$stats_array = array();
-		foreach (ThemeManager::get_activated_themes_map() as $theme)
+		foreach (ThemesManager::get_activated_themes_map() as $theme)
 		{
 			$stats_array[$theme->get_id()] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_theme = '" . $theme->get_id() . "'");
 		}

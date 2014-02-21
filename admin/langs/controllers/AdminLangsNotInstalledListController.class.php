@@ -92,7 +92,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		foreach($folder_containing_phpboost_langs->get_folders() as $lang)
 		{
 			$name = $lang->get_name();
-			if (!LangManager::get_lang_existed($name))
+			if (!LangsManager::get_lang_existed($name))
 			{
 				$langs_not_installed[] = $name;
 			}
@@ -110,8 +110,8 @@ class AdminLangsNotInstalledListController extends AdminController
 				{
 					$activated = $request->get_bool('activated-' . $id, false);
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $id);
-					LangManager::install($id, $authorizations, $activated);
-					$error = LangManager::get_error();
+					LangsManager::install($id, $authorizations, $activated);
+					$error = LangsManager::get_error();
 					if ($error !== null)
 					{
 						$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
@@ -128,8 +128,8 @@ class AdminLangsNotInstalledListController extends AdminController
 	
 	private function install_lang($id_lang, $authorizations = array(), $activate = true)
 	{
-		LangManager::install($id_theme, $authorizations, $activate);
-		$error = LangManager::get_error();
+		LangsManager::install($id_theme, $authorizations, $activate);
+		$error = LangsManager::get_error();
 		if ($error !== null)
 		{
 			$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
@@ -172,7 +172,7 @@ class AdminLangsNotInstalledListController extends AdminController
 			$uploaded_file = $this->form->get_value('file');
 			if ($uploaded_file !== null)
 			{
-				if (!LangManager::get_lang_existed($uploaded_file->get_name_without_extension()))
+				if (!LangsManager::get_lang_existed($uploaded_file->get_name_without_extension()))
 				{
 					$upload = new Upload($folder_phpboost_langs);
 					if ($upload->file('upload_lang_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))

@@ -261,7 +261,7 @@ class Environment
 		$current_user = AppContext::get_current_user();
 		$user_accounts_config = UserAccountsConfig::load();
 		
-		$user_theme = ThemeManager::get_theme($current_user->get_theme());
+		$user_theme = ThemesManager::get_theme($current_user->get_theme());
 		$default_theme = $user_accounts_config->get_default_theme();
 		
 		if ($user_theme !== null)
@@ -276,7 +276,7 @@ class Environment
 			AppContext::get_current_user()->update_theme($default_theme);
 		}
 		
-		$user_lang = LangManager::get_lang($current_user->get_locale());
+		$user_lang = LangsManager::get_lang($current_user->get_locale());
 		$default_lang = $user_accounts_config->get_default_lang();
 		if ($user_lang !== null)
 		{

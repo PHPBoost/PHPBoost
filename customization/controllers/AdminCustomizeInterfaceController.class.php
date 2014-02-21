@@ -46,7 +46,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		
 		$theme = $request->get_value('theme', 'all');
 		
-		if ($theme !== 'all' && !ThemeManager::get_theme_existed($theme))
+		if ($theme !== 'all' && !ThemesManager::get_theme_existed($theme))
 		{
 			AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface());
 		}
@@ -158,10 +158,10 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		
 		if ($theme_selected !== 'all')
 		{
-			$theme = ThemeManager::get_theme($theme_selected);
+			$theme = ThemesManager::get_theme($theme_selected);
 			$customize_interface = $theme->get_customize_interface();
 			$customize_interface->set_header_logo_path($save_destination->get_path_from_root());
-			ThemeManager::change_customize_interface($theme_selected, $customize_interface);
+			ThemesManager::change_customize_interface($theme_selected, $customize_interface);
 			
 			if ($this->config->get_header_logo_path_all_themes() !== null)
 			{
@@ -170,11 +170,11 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		}
 		else
 		{
-			foreach (ThemeManager::get_activated_themes_map() as $id => $theme) 
+			foreach (ThemesManager::get_activated_themes_map() as $id => $theme) 
 			{
 				$customize_interface = $theme->get_customize_interface();
 				$customize_interface->set_header_logo_path($save_destination->get_path_from_root());
-				ThemeManager::change_customize_interface($id, $customize_interface);
+				ThemesManager::change_customize_interface($id, $customize_interface);
 			}
 					
 			$this->config->set_header_logo_path_all_themes($save_destination->get_path_from_root());
@@ -188,18 +188,18 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		
 		if ($theme_selected !== 'all')
 		{
-			$theme = ThemeManager::get_theme($theme_selected);
+			$theme = ThemesManager::get_theme($theme_selected);
 			$customize_interface = $theme->get_customize_interface();
 			$customize_interface->remove_header_logo_path();
-			ThemeManager::change_customize_interface($theme_selected, $customize_interface);
+			ThemesManager::change_customize_interface($theme_selected, $customize_interface);
 		}
 		else
 		{
-			foreach (ThemeManager::get_activated_themes_map() as $id => $theme) 
+			foreach (ThemesManager::get_activated_themes_map() as $id => $theme) 
 			{
 				$customize_interface = $theme->get_customize_interface();
 				$customize_interface->remove_header_logo_path();
-				ThemeManager::change_customize_interface($id, $customize_interface);
+				ThemesManager::change_customize_interface($id, $customize_interface);
 			}
 			
 			$this->config->remove_header_logo_path_all_themes();
@@ -211,7 +211,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 	{
 		$choices_list = array();
 		$choices_list[] = new FormFieldSelectChoiceOption($this->lang['customization.interface.all-themes'], 'all');
-		foreach (ThemeManager::get_activated_themes_map() as $id => $value) 
+		foreach (ThemesManager::get_activated_themes_map() as $id => $value) 
 		{
 			$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
 		}
@@ -226,7 +226,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		}
 		else
 		{
-			$theme = ThemeManager::get_theme($theme);
+			$theme = ThemesManager::get_theme($theme);
 			$customize_interface = $theme->get_customize_interface();
 			return $customize_interface->get_header_logo_path();
 		}
