@@ -41,12 +41,12 @@ class AdminThemesInstalledListController extends AdminController
 	
 	private function build_view()
 	{
-		$installed_themes = ThemeManager::get_installed_themes_map();
+		$installed_themes = ThemesManager::get_installed_themes_map();
 		foreach($installed_themes as $theme)
 		{
 			$configuration = $theme->get_configuration();
 			$authorizations = $theme->get_authorizations();
-			$default_theme = ThemeManager::get_default_theme();
+			$default_theme = ThemesManager::get_default_theme();
 			$pictures = $configuration->get_pictures();
 			
 			$this->view->assign_block_vars('themes_installed', array(
@@ -91,7 +91,7 @@ class AdminThemesInstalledListController extends AdminController
 	
 	public function save(HTTPRequestCustom $request)
 	{
-		$installed_themes = ThemeManager::get_installed_themes_map();
+		$installed_themes = ThemesManager::get_installed_themes_map();
 		
 		foreach ($installed_themes as $theme)
 		{
@@ -105,12 +105,12 @@ class AdminThemesInstalledListController extends AdminController
 		{
 			foreach ($installed_themes as $theme)
 			{
-				if ($theme->get_id() !== ThemeManager::get_default_theme())
+				if ($theme->get_id() !== ThemesManager::get_default_theme())
 				{
 					$id_theme = $theme->get_id();
 					$activated = $request->get_bool('activated-' . $id_theme, false);
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
-					ThemeManager::change_informations($id_theme, $activated, $authorizations);
+					ThemesManager::change_informations($id_theme, $activated, $authorizations);
 				}
 			}
 			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());

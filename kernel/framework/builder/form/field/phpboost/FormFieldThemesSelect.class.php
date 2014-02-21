@@ -49,7 +49,7 @@ class FormFieldThemesSelect extends FormFieldSimpleSelectChoice
     private function generate_options()
 	{
 		$options = array();
-		foreach (ThemeManager::get_activated_themes_map() as $theme)
+		foreach (ThemesManager::get_activated_themes_map() as $theme)
 		{
 			if ($this->check_authorizations)
 			{

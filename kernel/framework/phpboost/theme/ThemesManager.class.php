@@ -1,7 +1,7 @@
 <?php
 /*##################################################
 /**
- *                         ThemeManager.class.php
+ *                         ThemesManager.class.php
  *                            -------------------
  *   begin                : April 10, 2011
  *   copyright            : (C) 2011 Kevin MASSY
@@ -31,7 +31,7 @@
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
-class ThemeManager
+class ThemesManager
 {
 	private static $error = null;
 	

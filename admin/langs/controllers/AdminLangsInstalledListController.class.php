@@ -41,12 +41,12 @@ class AdminLangsInstalledListController extends AdminController
 	
 	private function build_view()
 	{
-		$installed_langs = LangManager::get_installed_langs_map();
+		$installed_langs = LangsManager::get_installed_langs_map();
 		foreach($installed_langs as $lang)
 		{
 			$configuration = $lang->get_configuration();
 			$authorizations = $lang->get_authorizations();
-			$default_lang = LangManager::get_default_lang();
+			$default_lang = LangsManager::get_default_lang();
 
 			$this->view->assign_block_vars('langs_installed', array(
 				'C_IS_DEFAULT_LANG' => $lang->get_id() == $default_lang,
@@ -71,7 +71,7 @@ class AdminLangsInstalledListController extends AdminController
 	
 	public function save(HTTPRequestCustom $request)
 	{
-		$installed_langs = LangManager::get_installed_langs_map();
+		$installed_langs = LangsManager::get_installed_langs_map();
 		
 		foreach($installed_langs as $lang)
 		{
@@ -85,12 +85,12 @@ class AdminLangsInstalledListController extends AdminController
 		{
 			foreach ($installed_langs as $lang)
 			{
-				if ($lang->get_id() !== LangManager::get_default_lang())
+				if ($lang->get_id() !== LangsManager::get_default_lang())
 				{
 					$id = $lang->get_id();
 					$activated = $request->get_bool('activated-' . $id, false);
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $id);
-					LangManager::change_informations($id, $activated, $authorizations);
+					LangsManager::change_informations($id, $activated, $authorizations);
 				}
 			}
 			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());

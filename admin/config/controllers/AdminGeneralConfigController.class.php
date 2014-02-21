@@ -181,7 +181,7 @@ class AdminGeneralConfigController extends AdminController
 	private function construct_javascript_picture_theme()
     {
     	$text = 'var theme = new Array;' . "\n";
-    	$activated_themes = ThemeManager::get_activated_themes_map();
+    	$activated_themes = ThemesManager::get_activated_themes_map();
     	foreach ($activated_themes as $theme)
     	{
    			$text .= 'theme["' . $theme->get_id() . '"] = "' . $this->get_picture_theme($theme->get_id()) . '";' . "\n";
@@ -192,7 +192,7 @@ class AdminGeneralConfigController extends AdminController
 	private function get_picture_theme($theme_id = null)
     {
         $theme_id = $theme_id !== null ? $theme_id : $this->user_accounts_config->get_default_theme();
-        $picture = ThemeManager::get_theme($theme_id)->get_configuration()->get_first_picture();
+        $picture = ThemesManager::get_theme($theme_id)->get_configuration()->get_first_picture();
     	return Url::to_rel('/templates/' . $theme_id . '/' . $picture);
     }
 
