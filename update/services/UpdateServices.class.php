@@ -176,22 +176,35 @@ class UpdateServices
 	public function execute()
 	{
 		$this->get_update_token();
-		
+
 		$general_config = GeneralConfig::load();
 		$general_config->set_site_path('/trunk');
 		$general_config->set_phpboost_major_version('4.1');
 		GeneralConfig::save();
 		
-		$user_accounts_config = UserAccountsConfig::load();
-		$user_accounts_config->set_default_theme('base');
-		UserAccountsConfig::save();
+		//On désinstalle les thèmes non compatible
+		$has_compatible_themes = false;
+		foreach (ThemesManager::get_activated_themes_map() as $id => $theme)
+		{
+			$compatibility = $theme->get_configuration()->get_compatibility();
+			if ($id !== 'base' && version_compare($compatibility, '4.1', '<'))
+			{
+				ThemesManager::uninstall($id);
+			}
+			else
+			{
+				$has_compatible_themes = true;
+			}
+		}
 		
-		ThemeManager::uninstall('phpboost');
-		ThemeManager::install('base');
-		
-		$server_environment_config = ServerEnvironmentConfig::load();
-		$server_environment_config->set_url_rewriting_enabled(false);
-		ServerEnvironmentConfig::save();
+		if (!$has_compatible_themes)
+		{
+			ThemesManager::install('base');
+			
+			$user_accounts_config = UserAccountsConfig::load();
+			$user_accounts_config->set_default_theme('base');
+			UserAccountsConfig::save();
+		}
 		
 		ModulesManager::install_module('PHPBoostCaptcha');
 		ModulesManager::install_module('ReCaptcha');
@@ -227,73 +240,22 @@ class UpdateServices
 		ModulesManager::uninstall_module('HomeCustom');
 		
 		$modules_config = ModulesConfig::load();
-		foreach (ModulesManager::get_installed_modules_map() as $module)
+		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
 		{
-			if (ModulesManager::module_is_upgradable($module->get_id()))
+			if (ModulesManager::module_is_upgradable($id))
 			{
-				$module->set_installed_version($version_upgrading);
+				$module->set_installed_version('4.1');
 				$modules_config->update($module);
 			}
 		}
 		ModulesConfig::save();
-		
-		//$this->update_kernel();
-		$this->update_configurations();
+
 		$this->update_modules();
 		
 		$this->delete_update_token();
 		$this->generate_cache();
 	}
-	
-	public function update_kernel()
-	{
-		$update_kernel_class = array(
-			'CommentsKernelUpdateVersion',
-			'Errors404KernelUpdateVersion',
-			'ExtendedFieldsKernelUpdateVersion',
-			'LangsConfigurationKernelUpdateVersion',
-			'MembersKernelUpdateVersion',
-			'MenusKernelUpdateVersion',
-			'ModulesKernelUpdateVersion',
-			'NotationsKernelUpdateVersion',
-			'ThemesConfigurationKernelUpdateVersion',
-		);
-		foreach ($update_kernel_class as $class_name)
-		{
-			try {
-				$object = new $class_name();
-				$object->execute();
-				$success = true;
-				$message = '';
-			} catch (Exception $e) {
-				$success = false;
-				$message = $e->getMessage();
-			}
-			$this->add_error_to_file($object->get_part_name() . '_kernel', $success, $message);
-		}
-	}
-	
-	public function update_configurations()
-	{
-		$configs_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern);
-		$configs_kernel_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern);
 		
-		$configs_class = array_merge($configs_module_class, $configs_kernel_class);
-		foreach ($configs_class as $class_name)
-		{
-			try {
-				$object = new $class_name();
-				$object->execute();
-				$success = true;
-				$message = '';
-			} catch (Exception $e) {
-				$success = false;
-				$message = $e->getMessage();
-			}
-			$this->add_error_to_file($object->get_config_name() . '_config', $success, $message);
-		}
-	}
-	
 	public function update_modules()
 	{
 		$update_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern);
@@ -326,6 +288,8 @@ class UpdateServices
 	private function generate_cache()
 	{
 		AppContext::get_cache_service()->clear_cache();
+		AppContext::init_extension_provider_service();
+		HtaccessFileCache::regenerate();
 	}
 	
 	private function add_error_to_file($step_name, $success, $message)
