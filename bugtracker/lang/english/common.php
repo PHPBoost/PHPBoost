@@ -57,11 +57,7 @@ $lang['notice.not_defined_e_date'] = 'Date not defined';
 $lang['actions'] = 'Actions';
 $lang['actions.add'] = 'New bug';
 $lang['actions.history'] = 'History';
-$lang['actions.reject'] = 'Reject';
-$lang['actions.reopen'] = 'Reopen';
-$lang['actions.assign'] = 'Assign';
-$lang['actions.fix'] = 'Fix';
-$lang['actions.pending'] = 'Pending';
+$lang['actions.change_status'] = 'Change bug status';
 $lang['actions.confirm.del_version'] = 'Delete this version?';
 $lang['actions.confirm.del_type'] = 'Delete this type?';
 $lang['actions.confirm.del_category'] = 'Delete this category?';
@@ -76,12 +72,8 @@ $lang['titles.add_version'] = 'Add a new version';
 $lang['titles.add_type'] = 'Add a new bug type';
 $lang['titles.add_category'] = 'Add a new category';
 $lang['titles.edit'] = 'Bug edition';
-$lang['titles.reject'] = 'Bug reject';
-$lang['titles.reopen'] = 'Bug reopen';
-$lang['titles.fix'] = 'Bug fixing';
-$lang['titles.pending'] = 'Bug standby';
+$lang['titles.change_status'] = 'Status modification of bug';
 $lang['titles.delete'] = 'Bug suppression';
-$lang['titles.assign'] = 'Bug assignment';
 $lang['titles.history'] = 'History';
 $lang['titles.detail'] = 'Bug';
 $lang['titles.roadmap'] = 'Roadmap';
@@ -185,94 +177,47 @@ $lang['explain.remarks'] = 'Remarks : <br />
 - If the table is empty, this option will not be visible on the post bug page<br />
 - If the table contains only one value, this option will not be visible too and will automatically be assigned to the bug<br /><br />';
 $lang['explain.contents_value'] = 'Enter the default description to display for a new bug below. Leave empty if you don\'t want to fill the description.';
-$lang['explain.reopen_comment'] = 'Optional. Permits to comment the bug and add it in the Private Message if sending is enabled for reopened bugs.';
-$lang['explain.reject_comment'] = 'Optional. Permits to comment the bug and add it in the Private Message if sending is enabled for rejected bugs.';
-$lang['explain.fix_comment'] = 'Optional. Permits to comment the bug and add it in the Private Message if sending is enabled for fixed bugs.';
 $lang['explain.delete_comment'] = 'Optional. Permits to add a comment in the Private Message of bug deleting.';
-$lang['explain.assign_comment'] = 'Optional. Permits to add a comment in the Private Message to the assigned person.';
-$lang['explain.pending_comment'] = 'Optional. Permits to comment the bug and add it in the Private Message if sending is enabled for pending bugs.';
+$lang['explain.change_status_comments_message'] = 'Optional. Permits to comment the bug and add it in the Private Message if sending is enabled.';
 
 //PM
-$lang['pm.assigned.title'] = '[Bugtracker] The bug #:id has been assigned to you by :author';
-$lang['pm.assigned.contents'] = ':author assigned you the bug #:id.
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.assigned.contents_with_comment'] = ':author assigned you the bug #:id.
-
-Comment:
-:comment
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.comment.title'] = '[Bugtracker] A new comment has been posted for the bug #:id by :author';
-$lang['pm.comment.contents'] = ':author add the following comment to the bug #:id:
-
-:comment
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.edit.title'] = '[Bugtracker] The bug #:id has been updated by :author';
-$lang['pm.edit.contents'] = ':author has updated the following fields in the bug #:id :
-
-:fields
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.fixed.title'] = '[Bugtracker] The bug #:id has been fixed by :author';
-$lang['pm.fixed.contents'] = ':author has fixed the bug #:id.
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.fixed.contents_with_comment'] = ':author has fixed the bug #:id.
-
-Comment:
-:comment
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.reopen.title'] = '[Bugtracker] The bug #:id has been reopen by :author';
-$lang['pm.reopen.contents'] = ':author has reopened the bug #:id.
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.reopen.contents_with_comment'] = ':author has reopened the bug #:id.
-
-Comment:
-:comment
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.reject.title'] = '[Bugtracker] The bug #:id has been rejected by :author';
-$lang['pm.reject.contents'] = ':author has rejected the bug #:id.
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.reject.contents_with_comment'] = ':author has rejected the bug #:id.
-
-Comment:
-:comment
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.pending.title'] = '[Bugtracker] The bug #:id has been put on hold by :author';
-$lang['pm.pending.contents'] = ':author has put on hold the bug #:id.
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.pending.contents_with_comment'] = ':author has put on hold the bug #:id.
-
-Comment:
-:comment
-
-Bug link :
-<a href=":link">:link_label</a>';
-$lang['pm.delete.title'] = '[Bugtracker] The bug #:id has been deleted by :author';
-$lang['pm.delete.contents'] = ':author delete the bug #:id.';
-$lang['pm.delete.contents_with_comment'] = ':author delete the bug #:id.
+$lang['pm.with_comment'] = '
 
 Comment:
 :comment';
+$lang['pm.edit_fields'] = '
+
+:fields';
+$lang['pm.bug_link'] = '
+
+<a href=":link">Bug link</a>';
+
+$lang['pm.assigned.title'] = '[Bugtracker] The bug #:id has been assigned to you';
+$lang['pm.assigned.contents'] = ':author assigned you the bug #:id.';
+
+$lang['pm.comment.title'] = '[Bugtracker] A new comment has been posted for the bug #:id';
+$lang['pm.comment.contents'] = ':author add a comment to the bug #:id.';
+
+$lang['pm.edit.title'] = '[Bugtracker] The bug #:id has been updated';
+$lang['pm.edit.contents'] = ':author has updated the following fields in the bug #:id :';
+
+$lang['pm.fixed.title'] = '[Bugtracker] The bug #:id has been fixed';
+$lang['pm.fixed.contents'] = ':author has fixed the bug #:id.';
+
+$lang['pm.reopen.title'] = '[Bugtracker] The bug #:id has been reopen';
+$lang['pm.reopen.contents'] = ':author has reopened the bug #:id.';
+
+$lang['pm.rejected.title'] = '[Bugtracker] The bug #:id has been rejected';
+$lang['pm.rejected.contents'] = ':author has rejected the bug #:id.';
+
+$lang['pm.pending.title'] = '[Bugtracker] The bug #:id has been put on hold';
+$lang['pm.pending.contents'] = ':author has put on hold the bug #:id.';
+
+$lang['pm.in_progress.title'] = '[Bugtracker] The bug #:id is in progress';
+$lang['pm.in_progress.contents'] = ':author has put the bug #:id in progress.';
+
+$lang['pm.delete.title'] = '[Bugtracker] The bug #:id has been deleted';
+$lang['pm.delete.contents'] = ':author delete the bug #:id.';
 
 //Search
 $lang['search.where'] = 'Where?';
@@ -303,6 +248,7 @@ $lang['config.admin_alerts_fix_action'] = 'Action when fixing a bug';
 $lang['config.pm'] = 'Private Messages';
 $lang['config.activ_pm'] = 'Active Private Messages (PM) send';
 $lang['config.activ_pm.comment'] = 'Send a PM when a new comment is posted';
+$lang['config.activ_pm.in_progress'] = 'Send a PM when the status become <b>In progress</b>';
 $lang['config.activ_pm.fix'] = 'Send a PM when a bug is fixed';
 $lang['config.activ_pm.pending'] = 'Send a PM when a bug is pending';
 $lang['config.activ_pm.assign'] = 'Send a PM when a bug is assigned';
@@ -345,11 +291,14 @@ $lang['error.e_already_rejected_bug'] = 'This bug is already rejected';
 $lang['error.e_already_reopen_bug'] = 'This bug is already reopen';
 $lang['error.e_already_fixed_bug'] = 'This bug is already fixed';
 $lang['error.e_already_pending_bug'] = 'This bug is already pending';
+$lang['error.e_status_not_changed'] = 'The bug status has not changed';
 
 //Success
 $lang['success.add'] = 'The bug #:id has been committed';
 $lang['success.edit'] = 'The bug #:id has been updated';
+$lang['success.new'] = 'The bug #:id has been set to <b>New</b>';
 $lang['success.fixed'] = 'The bug #:id has been fixed';
+$lang['success.in_progress'] = 'The bug #:id resolution is in progress';
 $lang['success.delete'] = 'The bug #:id has been deleted';
 $lang['success.reject'] = 'The bug #:id has been rejected';
 $lang['success.reopen'] = 'The bug #:id has been reopen';

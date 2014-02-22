@@ -56,7 +56,7 @@ class BugtrackerViews
 			'C_SOLVED'					=> $current_page == 'solved',
 			'C_ROADMAP'					=> $current_page == 'roadmap',
 			'C_STATS'					=> $current_page == 'stats',
-			'TITLE'						=> $lang['titles.' . $current_page] . (in_array($current_page, array('fix', 'assign', 'history', 'detail', 'edit', 'reject', 'reopen')) ? ' #' . $bug_id : ''),
+			'TITLE'						=> $lang['titles.' . $current_page] . (in_array($current_page, array('change_status', 'history', 'detail', 'edit')) ? ' #' . $bug_id : ''),
 			'TEMPLATE'					=> $view,
 			'U_SYNDICATION_UNSOLVED'	=> SyndicationUrlBuilder::rss('bugtracker', 0)->rel(),
 			'U_SYNDICATION_SOLVED'		=> SyndicationUrlBuilder::rss('bugtracker', 1)->rel()

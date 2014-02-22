@@ -1,19 +1,7 @@
 <menu class="dynamic-menu group center">
 	<ul>
-		# IF C_FIX_BUG #
-			<li><a href="{U_FIX}" title="{@actions.fix}"><i class="fa fa-wrench"></i> {@actions.fix}</a></li>
-		# ENDIF #
-		# IF C_PENDING_BUG #
-			<li><a href="{U_PENDING}" title="{@actions.pending}"><i class="fa fa-clock-o"></i> {@actions.pending}</a></li>
-		# ENDIF #
-		# IF C_ASSIGN_BUG #
-			<li><a href="{U_ASSIGN}" title="{@actions.assign}"><i class="fa fa-user"></i> {@actions.assign}</a></li>
-		# ENDIF #
-		# IF C_REOPEN_BUG #
-			<li><a href="{U_REOPEN}" title="{@actions.reopen}"><i class="fa fa-eye"></i> {@actions.reopen}</a></li>
-		# ENDIF #
-		# IF C_REJECT_BUG #
-			<li><a href="{U_REJECT}" title="{@actions.reject}"><i class="fa fa-eye-slash"></i> {@actions.reject}</a></li>
+		# IF C_CHANGE_STATUS #
+			<li><a href="{U_CHANGE_STATUS}" title="{@actions.change_status}"><i class="fa fa-gears"></i> {@actions.change_status}</a></li>
 		# ENDIF #
 			<li><a href="{U_HISTORY}" title="{@actions.history}"><i class="fa fa-info"></i> {@actions.history}</a></li>
 		# IF C_EDIT_BUG #

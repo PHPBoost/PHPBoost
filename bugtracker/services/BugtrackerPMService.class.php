@@ -33,7 +33,7 @@ class BugtrackerPMService
 {
 	/**
 	 * @desc Send a PM to a member.
-	 * @param string $pm_type Type of PM ('assigned', 'comment', 'pending', 'delete', 'edit', 'fixed', 'reject', 'reopen')
+	 * @param string $pm_type Type of PM ('assigned', 'comment', 'pending', 'in_progress', 'delete', 'edit', 'fixed', 'rejected', 'reopen')
 	 * @param int $recipient_id ID of the PM's recipient
 	 * @param int $bug_id ID of the bug which is concerned
 	 * @param string $message (optional) Message to include in the PM
@@ -51,71 +51,12 @@ class BugtrackerPMService
 			
 			$author = $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main');
 			
-			//Define the title and the content of the PM according to the PM type
-			switch ($pm_type)
-			{
-				case 'assigned':
-					$pm_title = StringVars::replace_vars($lang['pm.assigned.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.assigned.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
-					break;
-				case 'assigned_with_comment':
-					$pm_title = StringVars::replace_vars($lang['pm.assigned.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.assigned.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
-					break;
-				case 'pending':
-					$pm_title = StringVars::replace_vars($lang['pm.pending.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.pending.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
-					break;
-				case 'pending_with_comment':
-					$pm_title = StringVars::replace_vars($lang['pm.pending.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.pending.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
-					break;
-				case 'comment':
-					$pm_title = StringVars::replace_vars($lang['pm.comment.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.comment.contents'], array('author' => $author, 'id' => $bug_id, 'comment' => $message, 'link' => BugtrackerUrlBuilder::detail($bug_id . '/#comments_list')->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id . '/#comments_list')->rel())));
-					break;
-				case 'delete':
-					$pm_title = StringVars::replace_vars($lang['pm.delete.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.delete.contents'], array('author' => $author, 'id' => $bug_id)));
-					break;
-				case 'delete_with_comment':
-					$pm_title = StringVars::replace_vars($lang['pm.delete.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.delete.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'comment' => $message)));
-					break;
-				case 'edit':
-					$pm_title = StringVars::replace_vars($lang['pm.edit.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.edit.contents'], array('author' => $author, 'id' => $bug_id, 'fields' => $message, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
-					break;
-				case 'fixed':
-					$pm_title = StringVars::replace_vars($lang['pm.fixed.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.fixed.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
-					break;
-				case 'fixed_with_comment':
-					$pm_title = StringVars::replace_vars($lang['pm.fixed.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.fixed.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
-					break;
-				case 'reject':
-					$pm_title = StringVars::replace_vars($lang['pm.reject.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.reject.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
-					break;
-				case 'reject_with_comment':
-					$pm_title = StringVars::replace_vars($lang['pm.reject.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.reject.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
-					break;
-				case 'reopen':
-					$pm_title = StringVars::replace_vars($lang['pm.reopen.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.reopen.contents'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel())));
-					break;
-				case 'reopen_with_comment':
-					$pm_title = StringVars::replace_vars($lang['pm.reopen.title'], array('id' => $bug_id, 'author' => $author));
-					$pm_content = nl2br(StringVars::replace_vars($lang['pm.reopen.contents_with_comment'], array('author' => $author, 'id' => $bug_id, 'link' => BugtrackerUrlBuilder::detail($bug_id)->relative(), 'link_label' => BugtrackerUrlBuilder::detail($bug_id)->rel(), 'comment' => $message)));
-					break;
-			}
+			$pm_content = nl2br(StringVars::replace_vars($lang['pm.' . $pm_type . '.contents'], array('author' => $author, 'id' => $bug_id)) . (!empty($message) ? ($pm_type != 'edit' ? StringVars::replace_vars($lang['pm.with_comment'], array('comment' => $message)) : StringVars::replace_vars($lang['pm.edit_fields'], array('fields' => $message))) : '') . ($pm_type != 'delete' ? StringVars::replace_vars($lang['pm.bug_link'], array('link' => BugtrackerUrlBuilder::detail($bug_id)->relative())) : ''));
 			
 			//Send the PM
 			PrivateMsg::start_conversation(
 				$recipient_id, 
-				$pm_title, 
+				StringVars::replace_vars($lang['pm.' . $pm_type . '.title'], array('id' => $bug_id)), 
 				$pm_content, 
 				-1, 
 				PrivateMsg::SYSTEM_PM
@@ -125,7 +66,7 @@ class BugtrackerPMService
 	
 	 /**
 	 * @desc Send a PM to a list of members.
-	 * @param string $pm_type Type of PM ('assigned', 'pending', 'comment', 'delete', 'edit', 'fixed', 'reject', 'reopen')
+	 * @param string $pm_type Type of PM ('assigned', 'pending', 'in_progress', 'comment', 'delete', 'edit', 'fixed', 'rejected', 'reopen')
 	 * @param int $bug_id ID of the bug which is concerned
 	 * @param string $message (optional) Message to include in the PM
 	 */
@@ -143,33 +84,30 @@ class BugtrackerPMService
 		switch ($pm_type)
 		{
 			case 'assigned':
-			case 'assigned_with_comment':
 				$pm_type_enabled = $config->are_pm_assign_enabled();
 				break;
 			case 'pending':
-			case 'pending_with_comment':
 				$pm_type_enabled = $config->are_pm_pending_enabled();
+				break;
+			case 'in_progress':
+				$pm_type_enabled = $config->are_pm_in_progress_enabled();
 				break;
 			case 'comment':
 				$pm_type_enabled = $config->are_pm_comment_enabled();
 				break;
 			case 'delete':
-			case 'delete_with_comment':
 				$pm_type_enabled = $config->are_pm_delete_enabled();
 				break;
 			case 'edit':
 				$pm_type_enabled = $config->are_pm_edit_enabled();
 				break;
 			case 'fixed':
-			case 'fixed_with_comment':
 				$pm_type_enabled = $config->are_pm_fix_enabled();
 				break;
-			case 'reject':
-			case 'reject_with_comment':
+			case 'rejected':
 				$pm_type_enabled = $config->are_pm_reject_enabled();
 				break;
 			case 'reopen':
-			case 'reopen_with_comment':
 				$pm_type_enabled = $config->are_pm_reopen_enabled();
 				break;
 		}

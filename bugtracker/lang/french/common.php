@@ -57,11 +57,7 @@ $lang['notice.not_defined_e_date'] = 'Date non définie';
 $lang['actions'] = 'Actions';
 $lang['actions.add'] = 'Nouveau bug';
 $lang['actions.history'] = 'Historique';
-$lang['actions.reject'] = 'Rejeter';
-$lang['actions.reopen'] = 'Ré-ouvrir';
-$lang['actions.assign'] = 'Assigner';
-$lang['actions.fix'] = 'Corriger';
-$lang['actions.pending'] = 'En attente';
+$lang['actions.change_status'] = 'Changer l\'état du bug';
 $lang['actions.confirm.del_version'] = 'Etes-vous sûr de vouloir supprimer cette version ?';
 $lang['actions.confirm.del_type'] = 'Etes-vous sûr de vouloir supprimer ce type ?';
 $lang['actions.confirm.del_category'] = 'Etes-vous sûr de vouloir supprimer cette catégorie ?';
@@ -76,12 +72,8 @@ $lang['titles.add_version'] = 'Ajout d\'une nouvelle version';
 $lang['titles.add_type'] = 'Ajouter un nouveau type de bug';
 $lang['titles.add_category'] = 'Ajouter une nouvelle catégorie';
 $lang['titles.edit'] = 'Edition du bug';
-$lang['titles.reject'] = 'Rejet du bug';
-$lang['titles.reopen'] = 'Ré-ouverture du bug';
-$lang['titles.fix'] = 'Correction du bug';
+$lang['titles.change_status'] = 'Changement d\'état du bug';
 $lang['titles.delete'] = 'Suppression du bug';
-$lang['titles.pending'] = 'Mise en attente du bug';
-$lang['titles.assign'] = 'Assignation du bug';
 $lang['titles.history'] = 'Historique';
 $lang['titles.detail'] = 'Bug';
 $lang['titles.roadmap'] = 'Feuille de route';
@@ -185,94 +177,47 @@ $lang['explain.remarks'] = 'Remarques : <br />
 - Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
 - Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
 $lang['explain.contents_value'] = 'Entrez ci-dessous la description par défaut à afficher lors de l\'ouverture d\'un nouveau bug. Laissez vide pour que la description ne soit pas pré-remplie.';
-$lang['explain.reopen_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs ré-ouverts.';
-$lang['explain.reject_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs rejetés.';
-$lang['explain.fix_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs corrigés.';
 $lang['explain.delete_comment'] = 'Facultatif. Permet d\'ajouter un commentaire dans le Message Privé de suppression du bug.';
-$lang['explain.assign_comment'] = 'Facultatif. Permet d\'ajouter un commentaire dans le Message Privé à la personne assignée.';
-$lang['explain.pending_comment'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé pour les bugs en attente.';
+$lang['explain.change_status_comments_message'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé.';
 
 //MP
-$lang['pm.assigned.title'] = '[Rapport de bugs] Le bug #:id vous a été assigné par :author';
-$lang['pm.assigned.contents'] = ':author vous a assigné le bug #:id.
-
-Lien vers le bug :
-<a href=":link">:link_label</a>';
-$lang['pm.assigned.contents_with_comment'] = ':author vous a assigné le bug #:id.
-
-Commentaire :
-:comment
-
-Lien vers le bug :
-<a href=":link">:link_label</a>';
-$lang['pm.comment.title'] = '[Rapport de bugs] Le bug #:id a été commenté par :author';
-$lang['pm.comment.contents'] = ':author a ajouté le commentaire suivant au bug #:id :
-
-:comment
-
-Lien vers le bug :
-<a href=":link">:link_label</a>';
-$lang['pm.edit.title'] = '[Rapport de bugs] Le bug #:id a été modifié par :author';
-$lang['pm.edit.contents'] = ':author a modifié les champs suivants dans le bug #:id :
-
-:fields
-
-Lien vers le bug :
-<a href=":link">:link_label</a>';
-$lang['pm.fixed.title'] = '[Rapport de bugs] Le bug #:id a été corrigé par :author';
-$lang['pm.fixed.contents'] = ':author a corrigé le bug #:id.
-Lien vers le bug :
-
-<a href=":link">:link_label</a>';
-$lang['pm.fixed.contents_with_comment'] = ':author a corrigé le bug #:id.
-
-Commentaire :
-:comment
-
-Lien vers le bug :
-<a href=":link">:link_label</a>';
-$lang['pm.reopen.title'] = '[Rapport de bugs] Le bug #:id a été ré-ouvert par :author';
-$lang['pm.reopen.contents'] = ':author a ré-ouvert le bug #:id.
-Lien vers le bug :
-
-<a href=":link">:link_label</a>';
-$lang['pm.reopen.contents_with_comment'] = ':author a ré-ouvert le bug #:id.
-
-Commentaire :
-:comment
-
-Lien vers le bug :
-<a href=":link">:link_label</a>';
-$lang['pm.reject.title'] = '[Rapport de bugs] Le bug #:id a été rejeté par :author';
-$lang['pm.reject.contents'] = ':author a rejeté le bug #:id.
-
-Lien vers le bug :
-<a href=":link">:link_label</a>';
-$lang['pm.reject.contents_with_comment'] = ':author a rejeté le bug #:id.
-
-Commentaire :
-:comment
-
-Lien vers le bug :
-<a href=":link">:link_label</a>';
-$lang['pm.pending.title'] = '[Rapport de bugs] Le bug #:id a été mis en attente par :author';
-$lang['pm.pending.contents'] = ':author a mis en attente le bug #:id.
-
-Lien vers le bug :
-<a href=":link">:link_label</a>';
-$lang['pm.pending.contents_with_comment'] = ':author a mis en attente le bug #:id.
-
-Commentaire :
-:comment
-
-Lien vers le bug :
-<a href=":link">:link_label</a>';
-$lang['pm.delete.title'] = '[Rapport de bugs] Le bug #:id a été supprimé par :author';
-$lang['pm.delete.contents'] = ':author a supprimé le bug #:id.';
-$lang['pm.delete.contents_with_comment'] = ':author a supprimé le bug #:id.
+$lang['pm.with_comment'] = '
 
 Commentaire :
 :comment';
+$lang['pm.edit_fields'] = '
+
+:fields';
+$lang['pm.bug_link'] = '
+
+<a href=":link">Lien vers le bug</a>';
+
+$lang['pm.assigned.title'] = '[Rapport de bugs] Le bug #:id vous a été assigné';
+$lang['pm.assigned.contents'] = ':author vous a assigné le bug #:id.';
+
+$lang['pm.comment.title'] = '[Rapport de bugs] Le bug #:id a été commenté';
+$lang['pm.comment.contents'] = ':author a ajouté un commentaire au bug #:id.';
+
+$lang['pm.edit.title'] = '[Rapport de bugs] Le bug #:id a été modifié';
+$lang['pm.edit.contents'] = ':author a modifié les champs suivants dans le bug #:id :';
+
+$lang['pm.fixed.title'] = '[Rapport de bugs] Le bug #:id a été corrigé';
+$lang['pm.fixed.contents'] = ':author a corrigé le bug #:id.';
+
+$lang['pm.reopen.title'] = '[Rapport de bugs] Le bug #:id a été ré-ouvert';
+$lang['pm.reopen.contents'] = ':author a ré-ouvert le bug #:id.';
+
+$lang['pm.rejected.title'] = '[Rapport de bugs] Le bug #:id a été rejeté';
+$lang['pm.rejected.contents'] = ':author a rejeté le bug #:id.';
+
+$lang['pm.pending.title'] = '[Rapport de bugs] Le bug #:id a été mis en attente';
+$lang['pm.pending.contents'] = ':author a mis en attente le bug #:id.';
+
+$lang['pm.in_progress.title'] = '[Rapport de bugs] Le bug #:id est en cours de correction';
+$lang['pm.in_progress.contents'] = ':author a mis le bug #:id en cours de correction.';
+
+$lang['pm.delete.title'] = '[Rapport de bugs] Le bug #:id a été supprimé';
+$lang['pm.delete.contents'] = ':author a supprimé le bug #:id.';
 
 //Recherche
 $lang['search.where'] = 'Où ?';
@@ -303,6 +248,7 @@ $lang['config.admin_alerts_fix_action'] = 'Action à la fermeture d\'un bug';
 $lang['config.pm'] = 'Messages Privés';
 $lang['config.activ_pm'] = 'Activer l\'envoi de Messages Privés (MP)';
 $lang['config.activ_pm.comment'] = 'Envoyer un MP lors de l\'ajout d\'un nouveau commentaire';
+$lang['config.activ_pm.in_progress'] = 'Envoyer un MP lors du passage à l\'état <b>En cours</b>';
 $lang['config.activ_pm.fix'] = 'Envoyer un MP lors de la correction d\'un bug';
 $lang['config.activ_pm.pending'] = 'Envoyer un MP lors de la mise en attente d\'un bug';
 $lang['config.activ_pm.assign'] = 'Envoyer un MP lors de l\'assignation d\'un bug';
@@ -345,11 +291,14 @@ $lang['error.e_already_rejected_bug'] = 'Ce bug est déjà rejeté';
 $lang['error.e_already_reopen_bug'] = 'Ce bug est déjà ré-ouvert';
 $lang['error.e_already_fixed_bug'] = 'Ce bug est déjà corrigé';
 $lang['error.e_already_pending_bug'] = 'Ce bug est déjà en attente';
+$lang['error.e_status_not_changed'] = 'Veuillez changer l\'état du bug';
 
 //Succès
 $lang['success.add'] = 'Le bug #:id a été ajouté';
 $lang['success.edit'] = 'Le bug #:id a été modifié';
+$lang['success.new'] = 'Le bug #:id a été passé à l\'état <b>Nouveau</b>';
 $lang['success.fixed'] = 'Le bug #:id a été corrigé';
+$lang['success.in_progress'] = 'Le bug #:id est en cours de résolution';
 $lang['success.delete'] = 'Le bug #:id a été supprimé';
 $lang['success.reject'] = 'Le bug #:id a été rejeté';
 $lang['success.reopen'] = 'Le bug #:id a été ré-ouvert';
