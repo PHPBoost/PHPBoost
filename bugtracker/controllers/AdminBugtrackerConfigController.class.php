@@ -63,14 +63,15 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			
 			$this->form->get_field_by_id('stats_top_posters_enabled')->set_hidden(!$this->config->are_stats_enabled());
 			$this->form->get_field_by_id('stats_top_posters_number')->set_hidden(!$this->config->are_stats_top_posters_enabled());
+			$this->form->get_field_by_id('pm_edit_enabled')->set_hidden(!$this->config->are_pm_enabled());
+			$this->form->get_field_by_id('pm_delete_enabled')->set_hidden(!$this->config->are_pm_enabled());
 			$this->form->get_field_by_id('pm_comment_enabled')->set_hidden(!$this->config->are_pm_enabled());
-			$this->form->get_field_by_id('pm_fix_enabled')->set_hidden(!$this->config->are_pm_enabled());
+			$this->form->get_field_by_id('pm_in_progress_enabled')->set_hidden(!$this->config->are_pm_enabled());
 			$this->form->get_field_by_id('pm_pending_enabled')->set_hidden(!$this->config->are_pm_enabled());
 			$this->form->get_field_by_id('pm_assign_enabled')->set_hidden(!$this->config->are_pm_enabled());
-			$this->form->get_field_by_id('pm_edit_enabled')->set_hidden(!$this->config->are_pm_enabled());
+			$this->form->get_field_by_id('pm_fix_enabled')->set_hidden(!$this->config->are_pm_enabled());
 			$this->form->get_field_by_id('pm_reject_enabled')->set_hidden(!$this->config->are_pm_enabled());
 			$this->form->get_field_by_id('pm_reopen_enabled')->set_hidden(!$this->config->are_pm_enabled());
-			$this->form->get_field_by_id('pm_delete_enabled')->set_hidden(!$this->config->are_pm_enabled());
 			$this->form->get_field_by_id('types_table')->set_value($this->build_types_table()->render());
 			$this->form->get_field_by_id('categories_table')->set_value($this->build_categories_table()->render());
 			$this->form->get_field_by_id('severities_table')->set_value($this->build_severities_table()->render());
@@ -208,31 +209,41 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldCheckbox('pm_enabled', $this->lang['config.activ_pm'], $this->config->are_pm_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
 			array('events' => array('click' => '
 				if (HTMLForms.getField("pm_enabled").getValue()) {
+					HTMLForms.getField("pm_edit_enabled").enable();
+					HTMLForms.getField("pm_delete_enabled").enable();
 					HTMLForms.getField("pm_comment_enabled").enable();
-					HTMLForms.getField("pm_fix_enabled").enable();
+					HTMLForms.getField("pm_in_progress_enabled").enable();
 					HTMLForms.getField("pm_pending_enabled").enable();
 					HTMLForms.getField("pm_assign_enabled").enable();
-					HTMLForms.getField("pm_edit_enabled").enable();
+					HTMLForms.getField("pm_fix_enabled").enable();
 					HTMLForms.getField("pm_reject_enabled").enable();
 					HTMLForms.getField("pm_reopen_enabled").enable();
-					HTMLForms.getField("pm_delete_enabled").enable();
 				} else {
+					HTMLForms.getField("pm_edit_enabled").disable();
+					HTMLForms.getField("pm_delete_enabled").disable();
 					HTMLForms.getField("pm_comment_enabled").disable();
-					HTMLForms.getField("pm_fix_enabled").disable();
+					HTMLForms.getField("pm_in_progress_enabled").disable();
 					HTMLForms.getField("pm_pending_enabled").disable();
 					HTMLForms.getField("pm_assign_enabled").disable();
-					HTMLForms.getField("pm_edit_enabled").disable();
+					HTMLForms.getField("pm_fix_enabled").disable();
 					HTMLForms.getField("pm_reject_enabled").disable();
 					HTMLForms.getField("pm_reopen_enabled").disable();
-					HTMLForms.getField("pm_delete_enabled").disable();
 				}')
 		)));
+		
+		$fieldset->add_field(new FormFieldCheckbox('pm_edit_enabled', $this->lang['config.activ_pm.edit'], $this->config->are_pm_edit_enabled(), array(
+			'hidden' => !$this->config->are_pm_enabled())
+		));
+		
+		$fieldset->add_field(new FormFieldCheckbox('pm_delete_enabled', $this->lang['config.activ_pm.delete'], $this->config->are_pm_delete_enabled(), array(
+			'hidden' => !$this->config->are_pm_enabled())
+		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('pm_comment_enabled', $this->lang['config.activ_pm.comment'], $this->config->are_pm_comment_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_fix_enabled', $this->lang['config.activ_pm.fix'], $this->config->are_pm_fix_enabled(), array(
+		$fieldset->add_field(new FormFieldCheckbox('pm_in_progress_enabled', $this->lang['config.activ_pm.in_progress'], $this->config->are_pm_in_progress_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
@@ -244,7 +255,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_edit_enabled', $this->lang['config.activ_pm.edit'], $this->config->are_pm_edit_enabled(), array(
+		$fieldset->add_field(new FormFieldCheckbox('pm_fix_enabled', $this->lang['config.activ_pm.fix'], $this->config->are_pm_fix_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
@@ -253,10 +264,6 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('pm_reopen_enabled', $this->lang['config.activ_pm.reopen'], $this->config->are_pm_reopen_enabled(), array(
-			'hidden' => !$this->config->are_pm_enabled())
-		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('pm_delete_enabled', $this->lang['config.activ_pm.delete'], $this->config->are_pm_delete_enabled(), array(
 			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
@@ -680,6 +687,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				$this->config->enable_pm_comment();
 			else
 				$this->config->disable_pm_comment();
+			
+			if ($this->form->get_value('pm_in_progress_enabled'))
+				$this->config->enable_pm_in_progress();
+			else
+				$this->config->disable_pm_in_progress();
 			
 			if ($this->form->get_value('pm_fix_enabled'))
 				$this->config->enable_pm_fix();

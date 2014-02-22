@@ -107,14 +107,7 @@
 				</td>
 				# IF C_IS_ADMIN #
 				<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
-					# IF C_UNSOLVED #
-					<a href="{bug.U_FIX}" class="fa fa-wrench" title="{@actions.fix}"></a>
-					# IF NOT bug.C_PENDING #<a href="{bug.U_PENDING}" class="fa fa-clock-o" title="{@actions.pending}"></a># ENDIF #
-					<a href="{bug.U_ASSIGN}" class="fa fa-user" title="{@actions.assign}"></a>
-					<a href="{bug.U_REOPEN_REJECT}" class="fa fa-eye-slash" title="{@actions.reject}"></a>
-					# ELSE #
-					<a href="{bug.U_REOPEN_REJECT}" class="fa fa-eye" title="{@actions.reopen}"></a>
-					# ENDIF #
+					<a href="{bug.U_CHANGE_STATUS}" class="fa fa-gears" title="{@actions.change_status}"></a>
 					<a href="{bug.U_HISTORY}" class="fa fa-info" title="{@actions.history}"></a>
 					<a href="{bug.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 					<a href="{bug.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete"></a>

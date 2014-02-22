@@ -180,41 +180,17 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function reject($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
+	public static function change_status($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/reject/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
+		return DispatchManager::get_url(self::$dispatcher, '/change_status/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function reopen($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
+	public static function check_status_changed()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/reopen/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function assign($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/assign/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function fix($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/fix/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function pending($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
+		return DispatchManager::get_url(self::$dispatcher, '/check_status_changed/');
 	}
 	
 	/**

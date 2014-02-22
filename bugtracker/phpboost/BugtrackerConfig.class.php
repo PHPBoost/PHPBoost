@@ -44,6 +44,7 @@ class BugtrackerConfig extends AbstractConfigData
 	const ADMIN_ALERTS_FIX_ACTION = 'admin_alerts_fix_action';
 	const PM_ENABLED = 'pm_enabled';
 	const PM_COMMENT_ENABLED = 'pm_comment_enabled';
+	const PM_IN_PROGRESS_ENABLED = 'pm_in_progress_enabled';
 	const PM_FIX_ENABLED = 'pm_fix_enabled';
 	const PM_PENDING_ENABLED = 'pm_pending_enabled';
 	const PM_ASSIGN_ENABLED = 'pm_assign_enabled';
@@ -301,6 +302,21 @@ class BugtrackerConfig extends AbstractConfigData
 	public function are_pm_fix_enabled()
 	{
 		return $this->get_property(self::PM_FIX_ENABLED);
+	}
+	
+	public function enable_pm_in_progress()
+	{
+		$this->set_property(self::PM_IN_PROGRESS_ENABLED, true);
+	}
+	
+	public function disable_pm_in_progress()
+	{
+		$this->set_property(self::PM_IN_PROGRESS_ENABLED, false);
+	}
+	
+	public function are_pm_in_progress_enabled()
+	{
+		return $this->get_property(self::PM_IN_PROGRESS_ENABLED);
 	}
 	
 	public function enable_pm_pending()
@@ -801,6 +817,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::ADMIN_ALERTS_FIX_ACTION => self::FIX,
 			self::PM_ENABLED => true,
 			self::PM_COMMENT_ENABLED => true,
+			self::PM_IN_PROGRESS_ENABLED => true,
 			self::PM_FIX_ENABLED => true,
 			self::PM_PENDING_ENABLED => true,
 			self::PM_ASSIGN_ENABLED => true,

@@ -138,16 +138,9 @@ class BugtrackerDeleteBugController extends ModuleController
 		{
 			//Add comment if needed
 			$comment = !$this->form->field_is_disabled('comments_message') ? $this->form->get_value('comments_message', '') : '';
-			if (!empty($comment))
-			{
-				//Send PM with comment to updaters if the option is enabled
-				BugtrackerPMService::send_PM_to_updaters('delete_with_comment', $this->bug->get_id(), stripslashes(FormatingHelper::strparse($comment)));
-			}
-			else
-			{
-				//Send PM to updaters if the option is enabled
-				BugtrackerPMService::send_PM_to_updaters('delete', $this->bug->get_id());
-			}
+
+			//Send PM with comment to updaters if the option is enabled
+			BugtrackerPMService::send_PM_to_updaters('delete', $this->bug->get_id(), $comment);
 		}
 		
 		//Delete bug

@@ -53,57 +53,6 @@ class BugtrackerDetailController extends ModuleController
 		$priorities = $config->get_priorities();
 		$versions = $config->get_versions_detected();
 		
-		switch ($this->bug->get_status())
-		{
-			case Bug::NEW_BUG :
-			case Bug::ASSIGNED :
-			case Bug::REOPEN :
-			case Bug::PENDING :
-				$c_reopen = false;
-				$c_reject = true;
-				break;
-			case Bug::FIXED :
-			case Bug::REJECTED :
-				$c_reopen = true;
-				$c_reject = false;
-				break;
-			default :
-				$c_reopen = false;
-				$c_reject = true;
-		}
-		
-		if ($this->current_user->get_id() == $this->bug->get_author_user()->get_id() && $this->bug->get_author_user()->get_id() != User::VISITOR_LEVEL)
-		{
-			$this->view->put_all(array(
-				'C_EDIT_BUG' => true
-			));
-		}
-		
-		if ($this->current_user->get_id() == $this->bug->get_assigned_to_id())
-		{
-			$this->view->put_all(array(
-				'C_FIX_BUG'		=> !$c_reopen,
-				'C_PENDING_BUG'	=> !$this->bug->is_pending() && !$c_reopen,
-				'C_ASSIGN_BUG'	=> !$c_reopen,
-				'C_REOPEN_BUG'	=> $c_reopen,
-				'C_REJECT_BUG'	=> $c_reject,
-				'C_EDIT_BUG'	=> true
-			));
-		}
-		
-		if (BugtrackerAuthorizationsService::check_authorizations()->moderation())
-		{
-			$this->view->put_all(array(
-				'C_FIX_BUG'		=> !$c_reopen,
-				'C_PENDING_BUG'	=> !$this->bug->is_pending() && !$c_reopen,
-				'C_ASSIGN_BUG'	=> !$c_reopen,
-				'C_REOPEN_BUG'	=> $c_reopen,
-				'C_REJECT_BUG'	=> $c_reject,
-				'C_EDIT_BUG'	=> true,
-				'C_DELETE_BUG'	=> true
-			));
-		}
-		
 		$user_assigned = $this->bug->get_assigned_to_id() ? UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) : '';
 		$user_assigned_group_color = $this->bug->get_assigned_to_id() ? User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true) : '';
 		
@@ -115,16 +64,15 @@ class BugtrackerDetailController extends ModuleController
 			'C_SEVERITIES' 					=> $severities,
 			'C_PRIORITIES' 					=> $priorities,
 			'C_VERSIONS' 					=> $versions,
+			'C_EDIT_BUG'					=> BugtrackerAuthorizationsService::check_authorizations()->moderation() || $this->current_user->get_id() == $this->bug->get_assigned_to_id() || ($this->current_user->get_id() == $this->bug->get_author_user()->get_id() && $this->bug->get_author_user()->get_id() != User::VISITOR_LEVEL),
+			'C_DELETE_BUG'					=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
+			'C_CHANGE_STATUS'				=> BugtrackerAuthorizationsService::check_authorizations()->moderation() || $this->current_user->get_id() == $this->bug->get_assigned_to_id(),
 			'C_USER_ASSIGNED_GROUP_COLOR'	=> !empty($user_assigned_group_color),
 			'USER_ASSIGNED'					=> $user_assigned,
 			'USER_ASSIGNED'					=> $user_assigned ? $user_assigned->get_pseudo() : '',
 			'USER_ASSIGNED_LEVEL_CLASS'		=> $user_assigned ? UserService::get_level_class($user_assigned->get_level()) : '',
 			'USER_ASSIGNED_GROUP_COLOR'		=> $user_assigned_group_color,
-			'U_FIX'							=> BugtrackerUrlBuilder::fix($this->bug->get_id(), 'detail')->rel(),
-			'U_PENDING'						=> BugtrackerUrlBuilder::pending($this->bug->get_id(), 'detail')->rel(),
-			'U_ASSIGN'						=> BugtrackerUrlBuilder::assign($this->bug->get_id(), 'detail')->rel(),
-			'U_REJECT'						=> BugtrackerUrlBuilder::reject($this->bug->get_id(), 'detail')->rel(),
-			'U_REOPEN'						=> BugtrackerUrlBuilder::reopen($this->bug->get_id(), 'detail')->rel(),
+			'U_CHANGE_STATUS'				=> BugtrackerUrlBuilder::change_status($this->bug->get_id(), 'detail')->rel(),
 			'U_EDIT'						=> BugtrackerUrlBuilder::edit($this->bug->get_id() . '/detail')->rel(),
 			'U_DELETE'						=> BugtrackerUrlBuilder::delete($this->bug->get_id(), 'unsolved')->rel(),
 		));
@@ -179,22 +127,28 @@ class BugtrackerDetailController extends ModuleController
 			case 'edit':
 				$errstr = StringVars::replace_vars($this->lang['success.edit'], array('id' => $this->bug->get_id()));
 				break;
+			case 'new':
+				$errstr = StringVars::replace_vars($this->lang['success.new'], array('id' => $this->bug->get_id()));
+				break;
 			case 'fixed':
 				$errstr = StringVars::replace_vars($this->lang['success.fixed'], array('id' => $this->bug->get_id()));
 				break;
 			case 'pending':
 				$errstr = StringVars::replace_vars($this->lang['success.pending'], array('id' => $this->bug->get_id()));
 				break;
+			case 'in_progress':
+				$errstr = StringVars::replace_vars($this->lang['success.in_progress'], array('id' => $this->bug->get_id()));
+				break;
 			case 'delete':
 				$errstr = StringVars::replace_vars($this->lang['success.delete'], array('id' => $this->bug->get_id()));
 				break;
-			case 'reject':
+			case 'rejected':
 				$errstr = StringVars::replace_vars($this->lang['success.reject'], array('id' => $this->bug->get_id()));
 				break;
 			case 'reopen':
 				$errstr = StringVars::replace_vars($this->lang['success.reopen'], array('id' => $this->bug->get_id()));
 				break;
-			case 'assign':
+			case 'assigned':
 				$errstr = StringVars::replace_vars($this->lang['success.assigned'], array('id' => $this->bug->get_id()));
 				break;
 			default:
