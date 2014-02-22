@@ -167,10 +167,10 @@ Event.observe(window, 'load', function() {
 							{@field.required} : <span class="text-strong"># IF list_extended_fields.C_REQUIRED #{@field.yes}# ELSE #{@field.no}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
-								<a href="#" title="{@fields.move_field_up}" id="move_up_{list_extended_fields.ID}" class="fa fa-arrow-up"></a>
+								<a href="" title="{@fields.move_field_up}" id="move_up_{list_extended_fields.ID}" class="fa fa-arrow-up"></a>
 							</div>
 							<div class="sortable-options">
-								<a href="#" title="{@fields.move_field_down}" id="move_down_{list_extended_fields.ID}" class="fa fa-arrow-down"></a>
+								<a href="" title="{@fields.move_field_down}" id="move_down_{list_extended_fields.ID}" class="fa fa-arrow-down"></a>
 							</div>
 							# ENDIF #
 							<div class="sortable-options">
