@@ -40,7 +40,7 @@ $lang['contact.form.message'] = 'Message';
 //Admin
 $lang['admin.config.title'] = 'Form title';
 $lang['admin.config.informations_bloc'] = 'Informations bloc';
-$lang['admin.config.display_informations_bloc'] = 'Display the informations bloc';
+$lang['admin.config.informations_enabled'] = 'Display the informations bloc';
 $lang['admin.config.informations_content'] = 'Informations bloc content';
 $lang['admin.config.informations.explain'] = 'This bloc permits to display informations (i.e. a contact phone number) on the left, top, right or bottom the contact form.';
 $lang['admin.config.informations_position'] = 'Informations bloc position';
@@ -48,6 +48,8 @@ $lang['admin.config.informations.position_left'] = 'Left';
 $lang['admin.config.informations.position_top'] = 'Top';
 $lang['admin.config.informations.position_right'] = 'Right';
 $lang['admin.config.informations.position_bottom'] = 'Bottom';
+$lang['admin.config.tracking_number_enabled'] = 'Generate a tracking number for each email sent';
+$lang['admin.config.sender_acknowledgment_enabled'] = 'Send an acknowledgment';
 $lang['admin.authorizations.read']  = 'Permission to display the contact form';
 $lang['admin.authorizations.display_field']  = 'Permission to display the field';
 

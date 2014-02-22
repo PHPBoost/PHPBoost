@@ -82,9 +82,9 @@ class AdminContactConfigController extends AdminModuleController
 			'size' => 40, 'required' => true)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('enable_informations', $this->lang['admin.config.display_informations_bloc'], $this->config->are_informations_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('informations_enabled', $this->lang['admin.config.informations_enabled'], $this->config->are_informations_enabled(),
 			array('description' => $this->lang['admin.config.informations.explain'], 'events' => array('click' => '
-				if (HTMLForms.getField("enable_informations").getValue()) {
+				if (HTMLForms.getField("informations_enabled").getValue()) {
 					HTMLForms.getField("informations_position").enable();
 					HTMLForms.getField("informations").enable();
 				} else {
@@ -108,6 +108,10 @@ class AdminContactConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47, 'hidden' => !$this->config->are_informations_enabled())
 		));
 		
+		$fieldset->add_field(new FormFieldCheckbox('tracking_number_enabled', $this->lang['admin.config.tracking_number_enabled'], $this->config->is_tracking_number_enabled()));
+		
+		$fieldset->add_field(new FormFieldCheckbox('sender_acknowledgment_enabled', $this->lang['admin.config.sender_acknowledgment_enabled'], $this->config->is_sender_acknowledgment_enabled()));
+		
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
 		$form->add_fieldset($fieldset_authorizations);
 		
@@ -129,7 +133,7 @@ class AdminContactConfigController extends AdminModuleController
 	{
 		$this->config->set_title($this->form->get_value('title'));
 		
-		if ($this->form->get_value('enable_informations'))
+		if ($this->form->get_value('informations_enabled'))
 		{
 			$this->config->enable_informations();
 			$this->config->set_informations($this->form->get_value('informations'));
@@ -137,6 +141,16 @@ class AdminContactConfigController extends AdminModuleController
 		}
 		else
 			$this->config->disable_informations();
+		
+		if ($this->form->get_value('tracking_number_enabled'))
+			$this->config->enable_tracking_number();
+		else
+			$this->config->disable_tracking_number();
+		
+		if ($this->form->get_value('sender_acknowledgment_enabled'))
+			$this->config->enable_sender_acknowledgment();
+		else
+			$this->config->disable_sender_acknowledgment();
 		
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
