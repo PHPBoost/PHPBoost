@@ -25,8 +25,8 @@
 				<img src="{PATH_TO_ROOT}/{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
 			<div class="sortable-actions">
-				<i class="fa fa-plus" title="More..." id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
-				<i class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
+				<a href="" class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></a>
+				<a href="" class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></a>
 			</div>
 		</div>
 		<div class="spacer"></div>
@@ -62,8 +62,8 @@
 				<img src="{PATH_TO_ROOT}/{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
 			<div class="sortable-actions">
-				<i class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></i>
-				<i class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></i>
+				<a href="" class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></a>
+				<a href="" class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></a>
 			</div>
 		</div>
 		<div class="spacer"></div>
