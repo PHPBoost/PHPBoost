@@ -40,7 +40,7 @@ $lang['contact.form.message'] = 'Message';
 //Admin
 $lang['admin.config.title'] = 'Titre du formulaire';
 $lang['admin.config.informations_bloc'] = 'Zone d\'informations';
-$lang['admin.config.display_informations_bloc'] = 'Afficher la zone d\'informations';
+$lang['admin.config.informations_enabled'] = 'Afficher la zone d\'informations';
 $lang['admin.config.informations_content'] = 'Contenu de la zone d\'informations';
 $lang['admin.config.informations.explain'] = 'Cette zone permet d\'afficher des informations (exemple un numéro de téléphone, etc.) à gauche, en haut, à droite ou en dessous du formulaire de contact.';
 $lang['admin.config.informations_position'] = 'Position de la zone d\'informations';
@@ -48,6 +48,8 @@ $lang['admin.config.informations.position_left'] = 'Gauche';
 $lang['admin.config.informations.position_top'] = 'Haut';
 $lang['admin.config.informations.position_right'] = 'Droite';
 $lang['admin.config.informations.position_bottom'] = 'Bas';
+$lang['admin.config.tracking_number_enabled'] = 'Générer un numéro de suivi pour chaque mail envoyé';
+$lang['admin.config.sender_acknowledgment_enabled'] = 'Envoyer un accusé de réception';
 $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le formulaire de contact';
 $lang['admin.authorizations.display_field']  = 'Autorisation d\'afficher le champ';
 
