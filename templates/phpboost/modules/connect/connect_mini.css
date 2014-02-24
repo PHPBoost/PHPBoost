@@ -50,8 +50,16 @@
 	height:44px;
 }
 
-#connect-menu div.horizontal-fieldset > ul > li.connect-login { background: url('images/green.png') repeat-x; }
-#connect-menu div.horizontal-fieldset > ul > li.connect-alert { background: url('images/red.png') repeat-x; }
+#connect-menu div.horizontal-fieldset > ul > li.connect-login { 
+	background:#2A6730;
+	background:linear-gradient(to bottom, #2A6730 0%,#337435 37%,#337435 61%,#245933 100%);
+	background:-ms-linear-gradient(top, #2A6730 0%,#337435 37%,#337435 61%,#245933 100%);
+}
+#connect-menu div.horizontal-fieldset > ul > li.connect-alert { 
+	background:#702822;
+	background:linear-gradient(to bottom, #702822 0%,#7e2f2f 37%,#7e2f2f 61%,#602b1b 100%);
+	background:-ms-linear-gradient(top, #702822 0%,#7e2f2f 37%,#7e2f2f 61%,#602b1b 100%);
+}
 
 #connect-menu div.horizontal-fieldset li:hover > ul { 
 	opacity:1;
@@ -69,7 +77,7 @@
 	width:170px;
 	z-index:25;
 	padding-top:10px;
-	border-top:3px solid #2e5c35;
+	border-top:3px solid #2E5C35;
 	border-bottom:2px solid #99B1CB;
 	visibility:hidden;
 	opacity:0;
@@ -117,14 +125,14 @@ div.connect-welcome a:hover { color:#BBBABA; }
 
 li.connect-subscribe,
 li.connect-disconnect { 
-	border-bottom:2px solid #353535;
+	border-bottom:3px solid #353535;
 	transition: border 1s ease-out;
     -webkit-transition: border 1s ease-out;
 }
 
 li.connect-subscribe:hover,
 li.connect-disconnect:hover {
-	border-bottom:2px solid #336397;
+	border-bottom:3px solid #336397;
 	transition: border 0.3s ease-out;
     -webkit-transition: border 0.3s ease-out;
 }
