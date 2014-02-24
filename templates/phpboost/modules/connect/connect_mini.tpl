@@ -23,18 +23,18 @@
 	<div id="connect-menu">
 		<div class="horizontal-fieldset">
 			<ul>
-				<li class="submenu connect"><a href='/user/?url=/connect'>{L_CONNECT}</a>
+				<li class="connect-login"><a href='/user/?url=/connect'>{L_CONNECT}</a>
 					<ul>
 						<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
-							<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25">
-							<input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
+							<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect-form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25">
+							<input type="password" id="password" name="password" class="connect-form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
 							<input checked="checked" type="checkbox" name="auto">
 							<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
 							<button type="submit" name="connect" value="true">{L_CONNECT}</button>
 						</form>
 					</ul>
 				</li>
-				<li class="subscribe">
+				<li class="connect-subscribe">
 					<a href='${relative_url(UserUrlBuilder::registration())}'>{L_REGISTER}</a>
 				</li>
 			</ul>
@@ -43,13 +43,13 @@
 	# ELSE #
 	<div id="connect-menu">
 		<div class="horizontal-fieldset">
-			<ul class="connect-content">
+			<ul>
 				# IF U_ALERT #	
-				<li class="submenu submenu_alert"><a href="${relative_url(UserUrlBuilder::home_profile())}" class="small">{L_PRIVATE_PROFIL}</a><span style="font-size:10px;vertical-align:top;">({NUMBER_TOTAL_ALERT})</span> 
+				<li class="connect-login connect-alert"><a href="${relative_url(UserUrlBuilder::home_profile())}">{L_PRIVATE_PROFIL}</a><span style="font-size:10px;vertical-align:top;">({NUMBER_TOTAL_ALERT})</span> 
 				# ELSE #
-				<li class="submenu"><a href="${relative_url(UserUrlBuilder::home_profile())}" class="small">{L_PRIVATE_PROFIL}</a>
+				<li class="connect-login"><a href="${relative_url(UserUrlBuilder::home_profile())}">{L_PRIVATE_PROFIL}</a>
 				# ENDIF #
-					<ul>
+					<ul class="connect-connected">
 						<img src="{U_AVATAR_IMG}" alt="avatar" title="Avatar" width="90px" class="connect-avatar"/>
 						<li>
 							<i class="fa fa-user"></i> 
@@ -75,18 +75,16 @@
 							<i class="fa fa-file-text# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # blink# ENDIF #"></i>
 							<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small"> {L_CONTRIBUTION_PANEL}# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # ({NUMBER_UNREAD_CONTRIBUTIONS})# ENDIF #</a>
 						</li>
-
+	
 					</ul>
 				</li>
-				<li class="disconnect">
-					<i class="fa fa-sign-out"></i>
-					<a href="${relative_url(UserUrlBuilder::disconnect())}" class="small"> {L_DISCONNECT}</a>
+				<li class="connect-disconnect">
+					<a href="${relative_url(UserUrlBuilder::disconnect())}" class="small"><i class="fa fa-sign-out"></i> {L_DISCONNECT}</a>
 				</li>
 			</ul>
 		</div>
-		
 	</div>
-	<div class="welcome" >Bienvenue, <a href='{U_HOME_PROFILE}'>{PSEUDO}</a></div>
+	<div class="connect-welcome" >Bienvenue, <a href='{U_HOME_PROFILE}' # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a></div>
 	# ENDIF #
 # ENDIF #
 <!-- 
