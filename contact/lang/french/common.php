@@ -36,6 +36,11 @@ $lang['module_config_title'] = 'Configuration du module contact';
 
 //Contact form
 $lang['contact.form.message'] = 'Message';
+$lang['contact.tracking_number'] = 'Numéro de suivi';
+$lang['contact.acknowledgment_title'] = 'Confirmation';
+$lang['contact.acknowledgment'] = 'Votre message a été envoyé correctement.
+
+';
 
 //Admin
 $lang['admin.config.title'] = 'Titre du formulaire';
@@ -49,6 +54,8 @@ $lang['admin.config.informations.position_top'] = 'Haut';
 $lang['admin.config.informations.position_right'] = 'Droite';
 $lang['admin.config.informations.position_bottom'] = 'Bas';
 $lang['admin.config.tracking_number_enabled'] = 'Générer un numéro de suivi pour chaque mail envoyé';
+$lang['admin.config.date_in_date_in_tracking_number_enabled'] = 'Afficher la date du jour dans le numéro de suivi';
+$lang['admin.config.date_in_date_in_tracking_number_enabled.explain'] = 'Permet de générer un numéro de suivi de la forme <b>aaaammjj-numéro</b>';
 $lang['admin.config.sender_acknowledgment_enabled'] = 'Envoyer un accusé de réception';
 $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le formulaire de contact';
 $lang['admin.authorizations.display_field']  = 'Autorisation d\'afficher le champ';
@@ -69,6 +76,7 @@ $lang['field.possible_values.recipient.explain'] = 'Le mail sera envoyé au(x) de
 
 //Messages
 $lang['message.field_name_already_used'] = 'Le nom du champ entré est déjà utilisé !';
-$lang['message.success_mail'] = 'Votre message a été envoyé avec succès';
-$lang['message.error_mail'] = 'Désolé, votre mail n\'a pas pu être envoyé pour des raisons techniques';
+$lang['message.success_mail'] = 'Votre message a été envoyé avec succès.';
+$lang['message.acknowledgment'] = 'Un message de confirmation vous a été envoyé par mail.';
+$lang['message.error_mail'] = 'Désolé, votre mail n\'a pas pu être envoyé pour des raisons techniques.';
 ?>

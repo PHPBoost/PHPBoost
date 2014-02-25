@@ -37,7 +37,9 @@ class ContactConfig extends AbstractConfigData
 	const INFORMATIONS = 'informations';
 	const INFORMATIONS_POSITION = 'informations_position';
 	const TRACKING_NUMBER_ENABLED = 'tracking_number_enabled';
+	const DATE_IN_TRACKING_NUMBER_ENABLED = 'date_in_tracking_number_enabled';
 	const SENDER_ACKNOWLEDGMENT_ENABLED = 'sender_acknowledgment_enabled';
+	const LAST_TRACKING_NUMBER = 'last_tracking_number';
 	const FIELDS = 'fields';
 	const AUTHORIZATIONS = 'authorizations';
 	
@@ -126,6 +128,21 @@ class ContactConfig extends AbstractConfigData
 		return $this->get_property(self::TRACKING_NUMBER_ENABLED);
 	}
 	
+	public function enable_date_in_tracking_number()
+	{
+		$this->set_property(self::DATE_IN_TRACKING_NUMBER_ENABLED, true);
+	}
+	
+	public function disable_date_in_tracking_number()
+	{
+		$this->set_property(self::DATE_IN_TRACKING_NUMBER_ENABLED, false);
+	}
+	
+	public function is_date_in_tracking_number_enabled()
+	{
+		return $this->get_property(self::DATE_IN_TRACKING_NUMBER_ENABLED);
+	}
+	
 	public function enable_sender_acknowledgment()
 	{
 		$this->set_property(self::SENDER_ACKNOWLEDGMENT_ENABLED, true);
@@ -139,6 +156,16 @@ class ContactConfig extends AbstractConfigData
 	public function is_sender_acknowledgment_enabled()
 	{
 		return $this->get_property(self::SENDER_ACKNOWLEDGMENT_ENABLED);
+	}
+	
+	public function get_last_tracking_number()
+	{
+		return $this->get_property(self::LAST_TRACKING_NUMBER);
+	}
+	
+	public function set_last_tracking_number($value)
+	{
+		$this->set_property(self::LAST_TRACKING_NUMBER, $value);
 	}
 	
 	public function get_fields()
@@ -238,7 +265,9 @@ class ContactConfig extends AbstractConfigData
 			self::INFORMATIONS => '',
 			self::INFORMATIONS_POSITION => self::TOP,
 			self::TRACKING_NUMBER_ENABLED => false,
+			self::DATE_IN_TRACKING_NUMBER_ENABLED => true,
 			self::SENDER_ACKNOWLEDGMENT_ENABLED => false,
+			self::LAST_TRACKING_NUMBER => 0,
 			self::FIELDS => self::init_fields_array(),
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
 		);
