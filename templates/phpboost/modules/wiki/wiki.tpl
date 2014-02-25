@@ -1,8 +1,11 @@
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">{TITLE}</div>
-			<div class="module_contents">
+		<article>					
+			<header>
+				<h1>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'main')}" class="fa fa-syndication"></a>
+					{TITLE}
+				</h1>
+			</header>
+			<div class="content">
 				# INCLUDE wiki_tools #
 				
 				# START warning #
@@ -94,10 +97,7 @@
 				# END cat #
 				<div class="spacer" style="margin-top:30px;">&nbsp;</div>
 			</div>
-			
-			<hr style="margin:5px 0px;" />
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom" style="text-align:center;margin-top:8px;margin-bottom:10px;">{HITS}</div>
-		</div>
-		
+			<footer>
+				<div style="text-align:center;margin-top:8px;margin-bottom:10px;">{HITS}</div>
+			</footer>
+		</article>

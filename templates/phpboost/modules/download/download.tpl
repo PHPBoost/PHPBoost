@@ -1,28 +1,17 @@
 # IF C_ROOT_AND_EXPLORE #
-	<div class="module_position">			
-		<div class="module_top_l"></div>		
-		<div class="module_top_r">
-			# IF C_ADD_FILE #
-				<div style="float:right;padding-top:5px;">
-					<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" />
-					</a>
-				</div>
-			# ENDIF #
-			# IF C_ADMIN #
-				<div style="float:right;padding-right:5px;">
-					<a href="{U_ADMIN_CAT}">
-						<img class="valign-middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
-					</a>
-				</div>
-			# ENDIF #
-		</div>
-		<div class="module_top">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
-			{TITLE}
-		</div>
-		<div class="module_contents">
-
+	<section>
+		<header>
+			<h1>
+				<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+				{TITLE}
+				# IF C_ADMIN #
+				<span class="actions">
+					<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+				</span>
+				# END IF #
+			</h1>
+		</header>
+		<div class="content">
 			# IF C_DESCRIPTION #
 				<!-- {DESCRIPTION} -->
 			# ENDIF #
@@ -36,22 +25,21 @@
 			<hr style="margin:25px 0px;" />
 			Vous trouverez sur cette page :
 			<br /><br />
-			<ul class="bb_ul">
-				<li class="bb_li">La dernière version stable : PHPBoost 4.0 Sirocco et 4.0 Sirocco PDK (Version destinée aux développeurs)</li>
-				<li class="bb_li">PHPBoost 3.0 Tornade</li>
-				<li class="bb_li">Mise à jour des versions 3.0 et 4.0</li>
-				<li class="bb_li">Migration de PHPBoost 3.0 à PHPBoost 4.0</li>
+			<ul>
+				<li>La dernière version stable : PHPBoost 4.0 Sirocco et 4.0 Sirocco PDK (Version destinée aux développeurs)</li>
+				<li>PHPBoost 3.0 Tornade</li>
+				<li>Mise à jour des versions 3.0 et 4.0</li>
+				<li>Migration de PHPBoost 3.0 à PHPBoost 4.0</li>
 			</ul>
 			<hr style="margin:25px auto 25px auto;" />
 			
-			<div class="pbt-container block_container">
-				
-				<div class="pbt_content">
-					<p class="pbt-title">Télécharger PHPBoost 4.0 - Sirocco</p>
+			<article class="block">
+				<header>
+					<h1>Télécharger PHPBoost 4.0 - Sirocco</h1>
 					<p class="pbt_desc">
 						La version stable de PHPBoost. A utiliser pour bénéficier de toutes les dernières fonctionnalités implantées.
 					</p>
-				</div>
+				</header>
 					
 				<div class="pbt-button-container">
 					<div class="pbt-button pbt-button-blue">
@@ -95,16 +83,16 @@
 						
 						<div class="spacer"></div>
 					</div>										
-				</div>
+				</article>
 														
-				<div class="pbt-container block_container">
+				<article class="block">
 				
-					<div class="pbt_content">
-						<p class="pbt-title">Télécharger PHPBoost 3.0 - Tornade</p>
+					<header>
+						<h1>Télécharger PHPBoost 3.0 - Tornade</h1>
 						<p class="pbt_desc">
 							Pour les nostalgiques, ou pour les personnes ayant besoin de réparer une version 3.0 encore en production.
 						</p>
-					</div>
+					</header>
 					
 					<div class="pbt-button-container">
 						<div class="pbt-button pbt-button-blue">
@@ -149,252 +137,191 @@
 						
 						<div class="spacer"></div>
 					</div>										
-				</div>
+				</article>
 				
 				<hr style="margin:20px auto 30px auto;" />
 				
 				<div style="text-align:center;">	
-					<div class="pbt-button pbt-button-gray">
-						<a href="{PATH_TO_ROOT}/download/download.php?explore=1" class="pbt-button-a">
-							<p class="pbt-button-title">Parcourir l'arborescence</p>
-						</a>
-					</div>
+					<a href="{PATH_TO_ROOT}/download/download.php?explore=1" class="pbt-button-a">
+						<button class="big">Parcourir l'arborescence</button>
+					</a>
 				</div>
 		</div>
-	</div>
+		<footer># IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #</footer>
+	</section>
 # ELSE #
-	# IF C_DOWNLOAD_CAT #
-	<div class="module_position">			
-		<div class="module_top_l"></div>		
-		<div class="module_top_r"></div>
-		<div class="module_top">
-			<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
-			{TITLE}
-			# IF C_ADMIN #
-			<a href="{U_ADMIN_CAT}">
-				<img class="valign-middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
-			</a>
-			# END IF #
-		</div>
-		<div class="module_contents">
-			# IF C_ADD_FILE #
-				<div style="text-align:center;">
-					<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" />
-					</a>
-				</div>
-				<hr style="margin-top:25px; margin-bottom:25px;" />
-			# ENDIF #
-			# IF C_DESCRIPTION #
-				{DESCRIPTION}
-				<hr style="margin-top:25px;" />
-			# ENDIF #
-			
-			# IF C_SUB_CATS #
-				# START row #
-					# START row.list_cats #
-						<div style="float:left;width:{row.list_cats.WIDTH}%;text-align:center;margin:20px 0px;">
-							# IF row.list_cats.C_CAT_IMG #
-								<a href="{row.list_cats.U_CAT}" title="{row.list_cats.IMG_NAME}"><img src="{row.list_cats.SRC}" alt="{row.list_cats.IMG_NAME}" /></a>
-								<br />
-							# ENDIF #
-							<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
-							
-							# IF C_ADMIN #
-							<a href="{row.list_cats.U_ADMIN_CAT}">
-								<img class="valign-middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
-							</a>
-							# ENDIF #
-							<div class="smaller">
-								{row.list_cats.NUM_FILES}
-							</div>
-						</div>
-					# END row.list_cats #
-					<div class="spacer">&nbsp;</div>
-				# END row #
-				<hr style="margin-bottom:25px;" />
-			# ENDIF #
-			
-			# IF C_FILES #
-				
-				<div style="float:right;" class="row3" id="form">
-					<script>
-					<!--
-					function change_order()
-					{
-						window.location = "{TARGET_ON_CHANGE_ORDER}sort=" + document.getElementById("sort").value + "&mode=" + document.getElementById("mode").value;
-					}
-					-->
-					</script>
-					{L_ORDER_BY}
-					<select name="sort" id="sort" class="nav" onchange="change_order()">
-						<option value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
-						<option value="size"{SELECTED_SIZE}>{L_SIZE}</option>
-						<option value="date"{SELECTED_DATE}>{L_DATE}</option>
-						<option value="hits"{SELECTED_HITS}>{L_POPULARITY}</option>
-						<option value="note"{SELECTED_NOTE}>{L_NOTE}</option>
-					</select>
-					<select name="mode" id="mode" class="nav" onchange="change_order()">
-						<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
-						<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
-					</select>
-				</div>
-				<div class="spacer">&nbsp;</div>
-				
-				# START file #
-					<div class="block_container" style="margin-bottom:20px;vertical-align:top;">
-						<div class="block_contents">
-							# IF file.C_IMG #
-								<div class="float-right">
-									<a href="{file.U_DOWNLOAD_LINK}">
-										<img src="{file.IMG}" alt="{file.IMG_NAME}" />
-									</a>
-								</div>
-							# ENDIF #
-							<p style="margin-bottom:10px">
-								<a href="{file.U_DOWNLOAD_LINK}" class="big">{file.NAME}</a>
-								# IF C_ADMIN #
-									<a href="{file.U_ADMIN_EDIT_FILE}">
-										<img class="valign-middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
-									</a>
-									<a href="{file.U_ADMIN_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-										<img class="valign-middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
-									</a>
-								# ENDIF #
-							</p>
-							# IF file.C_DESCRIPTION #
-								<p>
-								{file.DESCRIPTION}
-								</p>
-							# ENDIF #
-							<div class="smaller">
-								{file.DATE}
-								<br />
-								{file.COUNT_DL}
-								<br />
-								{file.U_COM_LINK}
-								<br />
-								{L_NOTE} {file.NOTE}
-							</div>
-							<div class="spacer"></div>								
-						</div>
-					</div>						
-				# END file #
-				<div style="text-align:center;">{PAGINATION}</div>
-			# ENDIF #
-			
-			# IF C_NO_FILE #
-				<div class="notice">
-					{L_NO_FILE_THIS_CATEGORY}
-				</div>
-			# ENDIF #
-			<div class="spacer"></div>
-		</div>
-		<div class="module_bottom_l"></div>		
-		<div class="module_bottom_r"></div>
-		<div class="module_bottom"></div>
-	</div>
-	# ENDIF #
-	
-	# IF C_DISPLAY_DOWNLOAD #			
-	<div class="module_position">					
-		<div class="module_top_l"></div>		
-		<div class="module_top_r"></div>
-		<div class="module_top">
-			<div style="float:left">
-				{NAME}
-			</div>
-			<div style="float:right">
-				{U_COM}
-				# IF C_EDIT_AUTH #
-					<a href="{U_EDIT_FILE}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign-middle" alt="{L_EDIT_FILE}" />
-					</a>
-					<a href="{U_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign-middle" alt="{L_DELETE_FILE}" />
-					</a>
+		# IF C_DOWNLOAD_CAT #
+		<section>
+			<header>
+				<h1>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					{TITLE}
+					# IF C_ADMIN #
+					<span class="actions">
+						<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+					</span>
+					# END IF #
+				</h1>
+			</header>
+			<div class="content">
+				# IF C_DESCRIPTION #
+					{DESCRIPTION}
+					<hr style="margin-top:25px;" />
 				# ENDIF #
+				
+				# IF C_SUB_CATS #
+					# START row #
+						# START row.list_cats #
+							<div style="float:left;width:{row.list_cats.WIDTH}%;text-align:center;margin:20px 0px;">
+								# IF row.list_cats.C_CAT_IMG #
+									<a href="{row.list_cats.U_CAT}" title="{row.list_cats.IMG_NAME}"><img src="{row.list_cats.SRC}" alt="{row.list_cats.IMG_NAME}" /></a>
+									<br />
+								# ENDIF #
+								<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
+								
+								# IF C_ADMIN #
+								<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+								# ENDIF #
+								<div class="smaller">
+									{row.list_cats.NUM_FILES}
+								</div>
+							</div>
+						# END row.list_cats #
+						<div class="spacer">&nbsp;</div>
+					# END row #
+					<hr style="margin-bottom:25px;" />
+				# ENDIF #
+				
+				# IF C_FILES #
+					
+					<div class="options" id="form">
+						<script>
+						<!--
+						function change_order()
+						{
+							window.location = "{TARGET_ON_CHANGE_ORDER}sort=" + document.getElementById("sort").value + "&mode=" + document.getElementById("mode").value;
+						}
+						-->
+						</script>
+						{L_ORDER_BY}
+						<select name="sort" id="sort" class="nav" onchange="change_order()">
+							<option value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
+							<option value="size"{SELECTED_SIZE}>{L_SIZE}</option>
+							<option value="date"{SELECTED_DATE}>{L_DATE}</option>
+							<option value="hits"{SELECTED_HITS}>{L_POPULARITY}</option>
+							<option value="note"{SELECTED_NOTE}>{L_NOTE}</option>
+						</select>
+						<select name="mode" id="mode" class="nav" onchange="change_order()">
+							<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
+							<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
+						</select>
+					</div>
+					<div class="spacer">&nbsp;</div>
+					
+					# START file #
+						<article class="block" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+							<header>
+								<h1>
+									<a href="{file.U_DOWNLOAD_LINK}" itemprop="name">{file.NAME}</a>
+									# IF C_ADMIN #
+									<span class="actions">
+										<a href="{file.U_ADMIN_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+										<a href="{file.U_ADMIN_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+									</span>
+									# ENDIF #
+								</h1>
+							</header>
+							<div class="content">
+								# IF file.C_IMG #
+									<div class="float-right">
+										<a href="{file.U_DOWNLOAD_LINK}">
+											<img src="{file.IMG}" alt="{file.IMG_NAME}" itemprop="image" />
+										</a>
+									</div>
+								# ENDIF #
+								# IF file.C_DESCRIPTION #
+									<p itemprop="text">
+									{file.DESCRIPTION}
+									</p>
+								# ENDIF #
+								<div class="smaller">
+									<span itemprop="dateCreated"> 
+										{file.DATE} 
+									<span> 
+									<br />
+									{file.COUNT_DL}
+									<br />
+									{file.U_COM_LINK}
+									<br />
+									{L_NOTE} {file.NOTE}
+								</div>
+								<div class="spacer"></div>
+							</div>
+							<footer></footer>
+						</article>
+					# END file #
+				# ENDIF #
+				
+				# IF C_NO_FILE #
+					<div class="message-helper notice">
+						<i class="fa fa-notice"></i>
+						<div class="message-helper-content">{L_NO_FILE_THIS_CATEGORY}</div>
+					</div>
+				# ENDIF #
+				<div class="spacer"></div>
 			</div>
-		</div>
-		<div class="module_contents">
-			<table>
-				<tr>
-					<td style="text-align:center;padding-right:20px;vertical-align:top;">
+			<footer># IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #</footer>
+		</section>
+		# ENDIF #
+		
+		# IF C_DISPLAY_DOWNLOAD #
+		<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+			<header>
+				<h1 itemprop="name">
+					{NAME}
+					<span class="actions">
+						{U_COM}
+						# IF C_EDIT_AUTH #
+							<a href="{U_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+							<a href="{U_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+						# ENDIF #
+					</span>
+				</h1>
+				
+			</header>
+			<div class="content">
+				<div class="options infos">
+					<div class="center">
 						# IF C_IMG #
-							<img src="{U_IMG}" alt="{IMAGE_ALT}" />
+							<img src="{U_IMG}" alt="{IMAGE_ALT}" itemprop="image"/>
 							<br /><br />
 						# ENDIF #
-						<a href="{U_DOWNLOAD_FILE}">
-							<img src="{PICTURES_DATA_PATH}/images/download_file.png" alt="" />
+						<a href="{U_DOWNLOAD_FILE}" class="basic-button">
+							<i class="fa fa-download"></i> {L_DOWNLOAD_FILE}
 						</a>
-						<p><a href="{U_DOWNLOAD_FILE}">{L_DOWNLOAD_FILE}</a></p>
 						# IF IS_USER_CONNECTED #
-						<a href="{U_DEADLINK}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/notice.png" alt="" />
+						<a href="{U_DEADLINK}" class="basic-button alt" title="{L_DEADLINK}">
+							<i class="fa fa-unlink"></i>
 						</a>
-						<p><a href="{U_DEADLINK}">{L_DEADLINK}</a></p>
 						# ENDIF #
-					</td>
-					<td>
-						{CONTENTS}
-					</td>
-				</tr>
-			</table>
-			<br />
-			<table style="width:430px;margin-right:0;" class="module-table text_small">
-				<tr>
-					<th colspan="2">
-						{L_FILE_INFOS}
-					</th>
-				</tr>
-				<tr>
-					<td class="row1" style="padding:3px">
-						{L_SIZE}
-					</td>
-					<td style="padding:3px">
-						{SIZE}
-					</td>
-				</tr>
-				<tr>
-					<td class="row1" style="padding:3px">
-						{L_INSERTION_DATE}
-					</td>
-					<td style="padding:3px">
-						{CREATION_DATE}
-					</td>
-				</tr>
-				<tr>
-					<td class="row1" style="padding:3px">
-						{L_RELEASE_DATE}
-					</td>
-					<td style="padding:3px">
-						{RELEASE_DATE}
-					</td>
-				</tr>
-				<tr>
-					<td class="row1" style="padding:3px">
-						{L_DOWNLOADED}
-					</td>
-					<td style="padding:3px">
-						{HITS}
-					</td>
-				</tr>
-				<tr>
-					<td class="row1" style="padding:3px">
-						{L_NOTE} <em><span id="nbrnote{ID_FILE}">({NUM_NOTES})</span></em>
-					</td>
-					<td style="padding:1px">
-						{KERNEL_NOTATION}
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="module_bottom_l"></div>		
-		<div class="module_bottom_r"></div>
-		<div class="module_bottom">
-		</div>
-	</div>		
-	<br /><br />
-	{COMMENTS}
-	# ENDIF #
+					</div>
+					<h6>{L_FILE_INFOS}</h6>
+					<span class="text-strong">{L_SIZE} : </span><span>{SIZE}</span><br/>
+					<span class="text-strong">{L_INSERTION_DATE} : </span><span itemprop="dateCreated">{CREATION_DATE}</span><br/>
+					<span class="text-strong">{L_RELEASE_DATE} : </span><span itemprop="dateModified">{RELEASE_DATE}</span><br/>
+					<span class="text-strong">{L_DOWNLOADED} : </span><span>{HITS}</span><br/>
+					<div class="center">
+						<span class="text-strong">{KERNEL_NOTATION}</span>
+					</div>
+					
+				</div>
+				<span itemprop="text">
+					{CONTENTS}
+				</span>
+				<br />
+				{COMMENTS}
+			</div>
+			<footer></footer>
+		</article>
+		# ENDIF #
 # ENDIF #
