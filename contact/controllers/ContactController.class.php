@@ -57,7 +57,7 @@ class ContactController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			if ($this->send_mail())
-				$this->view->put('MSG', MessageHelper::display($this->lang['message.success_mail'], E_USER_SUCCESS, 5));
+				$this->view->put('MSG', MessageHelper::display($this->lang['message.success_mail'] . ($this->config->is_sender_acknowledgment_enabled() ? ' ' . $this->lang['message.acknowledgment'] : ''), E_USER_SUCCESS, 5));
 			else
 				$this->view->put('MSG', MessageHelper::display($this->lang['message.error_mail'], E_USER_ERROR, 5));
 		}
@@ -127,6 +127,21 @@ class ContactController extends ModuleController
 			$subject = $this->form->get_value('f_subject')->get_raw_value();
 		
 		$display_message_title = false;
+		if ($this->config->is_tracking_number_enabled())
+		{
+			$now = new Date();
+			
+			$tracking_number = $this->config->get_last_tracking_number();
+			$tracking_number++;
+			$message .= $this->lang['contact.tracking_number'] . ' : ' . ($this->config->is_date_in_tracking_number_enabled() ? $now->get_year() . $now->get_month() . $now->get_day() . '-' : '') . $tracking_number . '
+
+';
+			$this->config->set_last_tracking_number($tracking_number);
+			ContactConfig::save();
+			
+			$display_message_title = true;
+		}
+		
 		foreach($this->config->get_fields() as $id => $field)
 		{
 			if ($field->is_displayed() && $field->is_authorized() && $field->is_deletable())
@@ -134,6 +149,7 @@ class ContactController extends ModuleController
 				try{
 					$value = ContactFieldsFactory::return_value($this->form, $field);
 						$message .= $field->get_name() . ': ' . $value . '
+
 ';
 				} catch(Exception $e) {
 					throw new Exception($e->getMessage());
@@ -144,8 +160,7 @@ class ContactController extends ModuleController
 		}
 		
 		if ($display_message_title)
-			$message .= '
-' . $this->lang['contact.form.message'] . ':
+			$message .= $this->lang['contact.form.message'] . ':
 ';
 		
 		$message .= $this->form->get_value('f_message');
@@ -196,7 +211,20 @@ class ContactController extends ModuleController
 			}
 		}
 		
-		return AppContext::get_mail_service()->try_to_send($mail);
+		$mail_service = AppContext::get_mail_service();
+		
+		if ($this->config->is_sender_acknowledgment_enabled())
+		{
+			$acknowledgment = new Mail();
+			$acknowledgment->set_sender($recipients['admins']['email'], Mail::SENDER_ADMIN);
+			$acknowledgment->set_subject('[' . $this->lang['contact.acknowledgment_title'] . '] ' . $subject);
+			$acknowledgment->set_content($this->lang['contact.acknowledgment'] . $message);
+			$acknowledgment->add_recipient($this->form->get_value('f_sender_mail'));
+			
+			return $mail_service->try_to_send($mail) && $mail_service->try_to_send($acknowledgment);
+		}
+		
+		return $mail_service->try_to_send($mail);
 	}
 	
 	private function check_authorizations()

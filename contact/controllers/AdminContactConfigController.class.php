@@ -57,6 +57,7 @@ class AdminContactConfigController extends AdminModuleController
 			$this->save();
 			$this->form->get_field_by_id('informations_position')->set_hidden(!$this->config->are_informations_enabled());
 			$this->form->get_field_by_id('informations')->set_hidden(!$this->config->are_informations_enabled());
+			$this->form->get_field_by_id('date_in_tracking_number_enabled')->set_hidden(!$this->config->is_tracking_number_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), E_USER_SUCCESS, 5));
 		}
 		
@@ -108,9 +109,18 @@ class AdminContactConfigController extends AdminModuleController
 			array('rows' => 8, 'cols' => 47, 'hidden' => !$this->config->are_informations_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('tracking_number_enabled', $this->lang['admin.config.tracking_number_enabled'], $this->config->is_tracking_number_enabled(), array('hidden' => true)));
+		$fieldset->add_field(new FormFieldCheckbox('tracking_number_enabled', $this->lang['admin.config.tracking_number_enabled'], $this->config->is_tracking_number_enabled(),
+			array('events' => array('click' => '
+				if (HTMLForms.getField("tracking_number_enabled").getValue()) {
+					HTMLForms.getField("date_in_tracking_number_enabled").enable();
+				} else {
+					HTMLForms.getField("date_in_tracking_number_enabled").disable();
+				}'))
+		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('sender_acknowledgment_enabled', $this->lang['admin.config.sender_acknowledgment_enabled'], $this->config->is_sender_acknowledgment_enabled(), array('hidden' => true)));
+		$fieldset->add_field(new FormFieldCheckbox('date_in_tracking_number_enabled', $this->lang['admin.config.date_in_date_in_tracking_number_enabled'], $this->config->is_date_in_tracking_number_enabled(), array('description' => $this->lang['admin.config.date_in_date_in_tracking_number_enabled.explain'], 'hidden' => !$this->config->is_tracking_number_enabled())));
+		
+		$fieldset->add_field(new FormFieldCheckbox('sender_acknowledgment_enabled', $this->lang['admin.config.sender_acknowledgment_enabled'], $this->config->is_sender_acknowledgment_enabled()));
 		
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
 		$form->add_fieldset($fieldset_authorizations);
@@ -146,6 +156,11 @@ class AdminContactConfigController extends AdminModuleController
 			$this->config->enable_tracking_number();
 		else
 			$this->config->disable_tracking_number();
+		
+		if ($this->form->get_value('date_in_tracking_number_enabled'))
+			$this->config->enable_date_in_tracking_number();
+		else
+			$this->config->disable_date_in_tracking_number();
 		
 		if ($this->form->get_value('sender_acknowledgment_enabled'))
 			$this->config->enable_sender_acknowledgment();

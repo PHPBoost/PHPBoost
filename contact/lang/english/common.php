@@ -36,6 +36,11 @@ $lang['module_config_title'] = 'Contact module configuration';
 
 //Contact form
 $lang['contact.form.message'] = 'Message';
+$lang['contact.tracking_number'] = 'tracking number';
+$lang['contact.acknowledgment_title'] = 'Confirmation';
+$lang['contact.acknowledgment'] = 'Your message has been successfully sent.
+
+';
 
 //Admin
 $lang['admin.config.title'] = 'Form title';
@@ -49,6 +54,8 @@ $lang['admin.config.informations.position_top'] = 'Top';
 $lang['admin.config.informations.position_right'] = 'Right';
 $lang['admin.config.informations.position_bottom'] = 'Bottom';
 $lang['admin.config.tracking_number_enabled'] = 'Generate a tracking number for each email sent';
+$lang['admin.config.date_in_date_in_tracking_number_enabled'] = 'Display day date in the tracking number';
+$lang['admin.config.date_in_date_in_tracking_number_enabled.explain'] = 'Allows to generate a tracking number like <b>yyyymmdd-number</b>';
 $lang['admin.config.sender_acknowledgment_enabled'] = 'Send an acknowledgment';
 $lang['admin.authorizations.read']  = 'Permission to display the contact form';
 $lang['admin.authorizations.display_field']  = 'Permission to display the field';
@@ -69,7 +76,7 @@ $lang['field.possible_values.recipient.explain'] = 'The mail will ve sent to the
 
 //Messages
 $lang['message.field_name_already_used'] = 'The entered field name is already used!';
-$lang['message.success_saving_config'] = 'The configuration has been saved successfully';
-$lang['message.success_mail'] = 'Thank you, your e-mail has been sent successfully';
-$lang['message.error_mail'] = 'Sorry, your e-mail couldn\'t be sent';
+$lang['message.success_mail'] = 'Thank you, your e-mail has been sent successfully.';
+$lang['message.acknowledgment'] = 'You should receive a confirmation email in a few minutes.';
+$lang['message.error_mail'] = 'Sorry, your e-mail couldn\'t be sent.';
 ?>
