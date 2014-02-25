@@ -45,14 +45,14 @@
 				# START cat #
 					
 					# IF cat.list_cats #
-					<div class="pbt-container block_container">
-						<div class="pbt_content">
+					<div class="pbt-container block-container">
+						<div class="pbt-content">
 							<p class="pbt-title">Catégories :</p>
 						</div>
 						
-						<ul class="bb_ul no-list">
+						<ul class="bb-ul no-list">
 							# START cat.list_cats #
-							<li class="bb_li">
+							<li class="bb-li">
 								<img src="{PICTURES_DATA_PATH}/images/cat.png" class="valign-middle" alt="" />
 								&nbsp;
 								<a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
@@ -61,23 +61,21 @@
 						</ul>
 					# ELSE #
 					# IF cat.list_art #
-					<div class="pbt-container block_container">
+					<div class="pbt-container block-container">
 					# END IF #
 					# END IF #
 
 					# IF cat.list_art #
-						<div class="pbt_content">
+						<div class="pbt-content">
 							<p class="pbt-title">
 								<p class="pbt-title"><a href=${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))} title="Flux RSS">Articles</a></p>
 							</p>
 						</div>
 		
-						<ul class="bb_ul no-list">
+						<ul class="bb-ul no-list">
 							# START cat.list_art #
-							<li class="bb_li">
-								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign-middle" alt="" />
-								&nbsp;
-								<a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
+							<li class="bb-li">
+								<i class="fa fa-file-text"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
 							</li>
 							# END cat.list_art #
 						</ul>
@@ -89,7 +87,7 @@
 					# END IF #
 
 				# START cat.no_sub_article #
-				<div class="no_article">
+				<div class="no-article">
 					{cat.no_sub_article.NO_SUB_ARTICLE}
 				</div>
 				# END cat.no_sub_article #

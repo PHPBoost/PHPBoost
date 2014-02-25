@@ -17,9 +17,9 @@
 			# ENDIF #
 			<div class="pbt-entete">
 				<img class="pbt-entete-img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
-				<div class="pbt_content">
+				<div class="pbt-content">
 					<p class="pbt-title">Télécharger PHPBoost</p>
-					<span class="pbt_desc">Bienvenue sur la page de téléchargement de PHPBoost.</span>
+					<span class="pbt-desc">Bienvenue sur la page de téléchargement de PHPBoost.</span>
 				</div>
 			</div>
 			<hr style="margin:25px 0px;" />
@@ -36,7 +36,7 @@
 			<article class="block">
 				<header>
 					<h1>Télécharger PHPBoost 4.0 - Sirocco</h1>
-					<p class="pbt_desc">
+					<p class="pbt-desc">
 						La version stable de PHPBoost. A utiliser pour bénéficier de toutes les dernières fonctionnalités implantées.
 					</p>
 				</header>
@@ -57,8 +57,8 @@
 							</a>
 						</div>
 					</div>
-					<div class="pbt_dev_container">
-						<a href="{PATH_TO_ROOT}/download/download-232+phpboost-4-0-pdk.php" class="pbt_dev">Télécharger la version pour développeurs (PDK)</a>
+					<div class="pbt-dev_container">
+						<a href="{PATH_TO_ROOT}/download/download-232+phpboost-4-0-pdk.php" class="pbt-dev">Télécharger la version pour développeurs (PDK)</a>
 					</div>
 					
 					<hr style="margin:10px auto 0px auto;" />
@@ -89,7 +89,7 @@
 				
 					<header>
 						<h1>Télécharger PHPBoost 3.0 - Tornade</h1>
-						<p class="pbt_desc">
+						<p class="pbt-desc">
 							Pour les nostalgiques, ou pour les personnes ayant besoin de réparer une version 3.0 encore en production.
 						</p>
 					</header>
@@ -143,7 +143,7 @@
 				
 				<div style="text-align:center;">	
 					<a href="{PATH_TO_ROOT}/download/download.php?explore=1" class="pbt-button-a">
-						<button class="big">Parcourir l'arborescence</button>
+						<button class="big"><i class="fa fa-folder"></i> Parcourir l'arborescence</button>
 					</a>
 				</div>
 		</div>
