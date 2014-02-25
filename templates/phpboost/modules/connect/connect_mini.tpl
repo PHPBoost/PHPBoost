@@ -84,7 +84,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="connect-welcome" >Bienvenue, <a href='{U_HOME_PROFILE}' # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a></div>
+	<div class="connect-welcome" >Bienvenue, <a href="{U_USER_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a></div>
 	# ENDIF #
 # ENDIF #
 <!-- 
