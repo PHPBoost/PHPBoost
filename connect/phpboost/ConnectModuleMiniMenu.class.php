@@ -89,6 +89,9 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 			}
 			
 			$total_alert = $user->get_attribute('user_pm') + $contribution_number + ($user->check_level(User::ADMIN_LEVEL) ? AdministratorAlertService::get_number_unread_alerts() : 0);
+			
+			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+			
 	    	$tpl->put_all(array(
 	    		'C_ADMIN_AUTH' => $user->check_level(User::ADMIN_LEVEL),
 	    		'C_MODERATOR_AUTH' => $user->check_level(User::MODERATOR_LEVEL),
@@ -96,11 +99,15 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
 	    		'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	    		'C_HAS_PM' => $user->get_attribute('user_pm') > 0,
+				'C_USER_GROUP_COLOR' => !empty($user_group_color),
 				'NUMBER_UNREAD_CONTRIBUTIONS' => $contribution_number,
 	    		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
 				'NUMBER_PM' => $user->get_attribute('user_pm'),
 	    		'NUMBER_TOTAL_ALERT' => $total_alert,
 	    		'PSEUDO' => $user->get_pseudo(),
+				'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+				'USER_GROUP_COLOR' => $user_group_color,
+				'U_USER_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 	    		'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_attribute('user_id'))->rel(),
 	    		'U_AVATAR_IMG' => TPL_PATH_TO_ROOT . $user_avatar,
 	    		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_attribute('user_pm') . ' ' . (($user->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
