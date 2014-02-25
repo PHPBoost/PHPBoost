@@ -87,27 +87,3 @@
 	<div class="connect-welcome" >Bienvenue, <a href="{U_USER_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a></div>
 	# ENDIF #
 # ENDIF #
-<!-- 
-	<div class="connect_align">
-		<ul>
-			<li class="submenu connect"><a href='/user/?url=/connect'>{L_CONNECT}</a>
-				<ul>
-					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="connect_align">
-						<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25">
-						<br /><input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
-						<br />
-						<p class="auto_connect">{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto"> </p>
-						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
-						<button type="submit" name="connect" value="true">{L_CONNECT}</button>
-					</form>
-				</ul>
-			</li>
-			<li class="subscribe">
-				<a href='{U_REGISTER}'>{L_REGISTER}</a>
-			</li>
-		</ul>
-
-	</div>
-
-
- -->

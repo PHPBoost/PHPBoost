@@ -109,19 +109,17 @@ div.connect-welcome {
 	overflow:hidden;
 	float:right;
 	text-align:right;
-	color:#BBBABA;
+	color:#BBBBBB;
 	font-size:12px;
 	font-style:Italic;
 	padding:13px 10px 0px 0px;
 }
 div.connect-welcome a,
 div.connect-welcome a:hover {
-	color:#969595;
 	font-style:normal;
 	font-weight:bold;
 	text-transform:capitalize;
 }
-div.connect-welcome a:hover { color:#BBBABA; }
 
 li.connect-subscribe,
 li.connect-disconnect { 
