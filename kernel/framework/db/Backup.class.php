@@ -53,7 +53,7 @@ class Backup
 		$this->list_db_tables(); //Liste toutes les tables de PHPBoost.
 		//On modifie le temps d'exécution maximal si le serveur le permet
 		//parce que les opérations sont longues
-		@set_time_limit(600);
+		Environment::try_to_increase_max_execution_time();
 		
 		$this->sql_querier = PersistenceContext::get_sql();
 	}
