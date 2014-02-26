@@ -1,7 +1,7 @@
         <script>
         <!--
-            const FORM = 'form_';
-            const SPECIALIZED_FORM_LINK = 'specialize_form_link_';
+            const FORM = 'form-';
+            const SPECIALIZED_FORM_LINK = 'specialize-form-link-';
             var LastSpecializedFormUsed = '{SEARCH_MODE_MODULE}';
             
             function ChangeForm(module)
@@ -14,9 +14,9 @@
                 document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).className = '';
 
                 LastSpecializedFormUsed = module;
-                document.getElementById('search_in').value = module;
+                document.getElementById('search-in').value = module;
                 
-                document.getElementById(SPECIALIZED_FORM_LINK + module).className = 'SFL_current';
+                document.getElementById(SPECIALIZED_FORM_LINK + module).className = 'SFL-current';
             }
             
             function check_search_form_post()
@@ -44,15 +44,15 @@
             <div class="content">
                 <div class="spacer">&nbsp;</div>
                 <form action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
-                    <div class="search_field"><input type="text" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="field-xlarge" placeholder="{L_SEARCH}..."></div>
+                    <div class="search-field"><input type="text" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="field-xlarge" placeholder="{L_SEARCH}..."></div>
                     <div class="spacer">&nbsp;</div>
-					<div id="forms_selection" class="options">
-						<a id="specialize_form_link_all" href="javascript:ChangeForm('all');" # IF C_SIMPLE_SEARCH # class="SFL_current" # ENDIF #>{L_SEARCH_ALL}</a>
+					<div id="forms-selection" class="options">
+						<a id="specialize-form-link-all" href="javascript:ChangeForm('all');" # IF C_SIMPLE_SEARCH # class="SFL-current" # ENDIF #>{L_SEARCH_ALL}</a>
 						# START forms #
-							<a id="specialize_form_link_{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" # IF forms.C_SELECTED # class="SFL_current" # ENDIF #>{forms.L_MODULE_NAME}</a>
+							<a id="specialize-form-link-{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" # IF forms.C_SELECTED # class="SFL-current" # ENDIF #>{forms.L_MODULE_NAME}</a>
 						# END forms #
 					</div>
-                    <div id="form_all" class="SpecializedForm" # IF NOT C_SIMPLE_SEARCH # style="display:none" # ENDIF #>
+                    <div id="form-all" class="SpecializedForm" # IF NOT C_SIMPLE_SEARCH # style="display:none" # ENDIF #>
                         <fieldset class="searchFieldset">
                             <div class="form-element">
                                 <label>{L_SEARCH_IN_MODULES}<br /><span>{L_SEARCH_IN_MODULES_EXPLAIN}</span></label>
@@ -67,7 +67,7 @@
                         </fieldset>
                     </div>
                     # START forms #
-                    <div id="form_{forms.MODULE_NAME}" class="SpecializedForm" # IF NOT forms.C_SELECTED # style="display:none" # ENDIF #>
+                    <div id="form-{forms.MODULE_NAME}" class="SpecializedForm" # IF NOT forms.C_SELECTED # style="display:none" # ENDIF #>
                         <fieldset class="searchFieldset">
                         # IF forms.C_SEARCH_FORM #{forms.SEARCH_FORM}# ELSE #<p class="center">{forms.SEARCH_FORM}</p># ENDIF #
                         </fieldset>
