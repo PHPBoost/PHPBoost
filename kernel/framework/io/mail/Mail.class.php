@@ -86,13 +86,13 @@ class Mail
 	 */
 	public function set_sender($sender, $sender_name = self::SENDER_ADMIN)
 	{
-		global $LANG;
 		$site_name = GeneralConfig::load()->get_site_name();
 		
 		if ($sender_name == self::SENDER_ADMIN || $sender_name == self::SENDER_USER)
 		{
-			$sender_name = $sender_name == self::SENDER_ADMIN ? $LANG['admin'] : $LANG['user'];
+			$sender_name = $sender_name == self::SENDER_ADMIN ? LangLoader::get_message('admin', 'user-common') : LangLoader::get_message('user', 'user-common');
 		}
+		
 		$this->sender_name = str_replace('"', '', $site_name . ' - ' . $sender_name);
 
 		$this->sender_mail = $sender;
