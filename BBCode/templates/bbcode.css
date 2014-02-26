@@ -3,7 +3,7 @@
 
 .bbcode {
 	margin: auto;
-	width: 475px;
+	display: table;
 }
 
 .bbcode-containers { margin-right:30px; }
