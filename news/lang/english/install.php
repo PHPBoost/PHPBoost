@@ -46,7 +46,7 @@ Otherwise, some people may try to re-install the software and in that case you m
 Access the <a href="/admin/admin_index.php">Administration Panel</a> to set up your website as you wish.
 To do so : <br />
 <br />
-<ul class="bb_ul">
+<ul class="bb-ul">
 <li class="bb_li"><a href="/admin/admin_maintain.php">Put your website under maintenance</a> and you won\'t be disturbed while you\'re working on it.
 </li><li class="bb_li">Now\'s the time to setup the <a href="/admin/config/?url=/general/">main configurations</a> of the website.
 </li><li class="bb_li"><a href="/admin/modules/?url=/installed/">Configure the installed modules</a> and give them access rights (If you have not installed the complete package, all modules are available on the <a href="http://www.phpboost.org/download/download.php"PHPBoost website</a> in the resources section.

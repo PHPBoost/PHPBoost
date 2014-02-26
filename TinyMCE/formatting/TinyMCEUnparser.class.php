@@ -66,7 +66,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"\t", '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '€', '‚', 'ƒ',
 			'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
 			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
-			'›', 'œ', 'ž', 'Ÿ', '<li class="bb_li">', '</table>', '<tr class="bb_table_row">'
+			'›', 'œ', 'ž', 'Ÿ', '<li class="bb-li">', '</table>', '<tr class="bb-table-row">'
 			);
 
 			$array_str_replace = array(
@@ -170,14 +170,14 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			}
 
 			//Listes
-			while (preg_match('`<ul( style="[^"]+")? class="bb_ul">`i', $this->content))
+			while (preg_match('`<ul( style="[^"]+")? class="bb-ul">`i', $this->content))
 			{
-				$this->content = preg_replace('`<ul( style="[^"]+")? class="bb_ul">`i', "<ul$1>", $this->content);
-				$this->content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">`i', "<ol$1>", $this->content);
+				$this->content = preg_replace('`<ul( style="[^"]+")? class="bb-ul">`i', "<ul$1>", $this->content);
+				$this->content = preg_replace('`<ol( style="[^"]+")? class="bb-ol">`i', "<ol$1>", $this->content);
 			}
 
 			//Trait horizontal
-			$this->content = str_replace('<hr class="bb_hr" />', '<hr />', $this->content);
+			$this->content = str_replace('<hr class="bb-hr" />', '<hr />', $this->content);
 
 			//Balise size
 			$this->content = preg_replace_callback('`<span style="font-size: ([0-9-]+)px;">(.+)</span>`isU', array($this, 'unparse_size_tag'), $this->content);

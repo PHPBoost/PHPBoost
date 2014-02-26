@@ -31,7 +31,7 @@ class SandboxStringTemplateController extends ModuleController
 	private $lang;
 	
 	private $test = 'This is a list of {CONTENT}
-<ul class="bb_ul">
+<ul class="bb-ul">
 # START elements #
 <li>{elements.NAME}</li>
 # END elements #

@@ -65,7 +65,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		}
 
 		//Unparsage de la balise table.
-		if (strpos($this->content, '<li class="bb_li"') !== false)
+		if (strpos($this->content, '<li class="bb-li"') !== false)
 		{
 			$this->unparse_list();
 		}
@@ -221,13 +221,13 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		{
 			$this->content = preg_replace('`<table class="bb-table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
 		}
-		while (strpos($this->content, '<tr class="bb_table_row"') !== false)
+		while (strpos($this->content, '<tr class="bb-table-row"') !== false)
 		{
-			$this->content = preg_replace('`<tr class="bb_table_row"([^>]*)>(.*)</tr>`sU', '[row$1]$2[/row]', $this->content);
+			$this->content = preg_replace('`<tr class="bb-table-row"([^>]*)>(.*)</tr>`sU', '[row$1]$2[/row]', $this->content);
 		}
-		while (strpos($this->content, '<th class="bb_table_head"') !== false)
+		while (strpos($this->content, '<th class="bb-table-head"') !== false)
 		{
-			$this->content = preg_replace('`<th class="bb_table_head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
+			$this->content = preg_replace('`<th class="bb-table-head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
 		}
 		while (strpos($this->content, '<td class="bb-table-col"') !== false)
 		{
@@ -241,17 +241,17 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_list()
 	{
 		//On boucle tant qu'il y a de l'imbrication
-		while (strpos($this->content, '<ul class="bb_ul">') !== false)
+		while (strpos($this->content, '<ul class="bb-ul">') !== false)
 		{
-			$this->content = preg_replace('`<ul( style="[^"]+")? class="bb_ul">(.+)</ul>`sU', '[list$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<ul( style="[^"]+")? class="bb-ul">(.+)</ul>`sU', '[list$1]$2[/list]', $this->content);
 		}
-		while (strpos($this->content, '<ol class="bb_ol">') !== false)
+		while (strpos($this->content, '<ol class="bb-ol">') !== false)
 		{
-			$this->content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">(.+)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<ol( style="[^"]+")? class="bb-ol">(.+)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
 		}
-		while (strpos($this->content, '<li class="bb_li">') !== false)
+		while (strpos($this->content, '<li class="bb-li">') !== false)
 		{
-			$this->content = preg_replace('`<li class="bb_li">(.+)</li>`isU', '[*]$1', $this->content);
+			$this->content = preg_replace('`<li class="bb-li">(.+)</li>`isU', '[*]$1', $this->content);
 		}
 	}
 

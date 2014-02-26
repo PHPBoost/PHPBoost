@@ -108,7 +108,7 @@
 		# END questions #
 		
 		# START questions_block #		
-			<ol class="bb_ol">
+			<ol class="bb-ol">
 			# START questions_block.header #
 				<li>
 					<a href="#q{questions_block.header.ID}">{questions_block.header.QUESTION}</a>

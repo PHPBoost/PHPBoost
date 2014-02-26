@@ -222,7 +222,7 @@ class TinyMCEParser extends ContentFormattingParser
 			$col_style = ' style="' . $col_style . '"';
 		}
 
-		return '<tr class="bb_table_row"' . $col_new_properties . $col_style . '>' . $matches[2] . '</tr>';
+		return '<tr class="bb-table-row"' . $col_new_properties . $col_style . '>' . $matches[2] . '</tr>';
 	}
 
 	/**
@@ -268,7 +268,7 @@ class TinyMCEParser extends ContentFormattingParser
 			$col_style = ' style="' . $col_style . '"';
 		}
 
-		return '<' . $tag . ' class="bb_table_' . $bbcode_tag . '"' . $col_new_properties . $col_style . '>' . $matches[3] . '</' . $tag . '>';
+		return '<' . $tag . ' class="bb-table-' . $bbcode_tag . '"' . $col_new_properties . $col_style . '>' . $matches[3] . '</' . $tag . '>';
 	}
 
 	/**
@@ -427,9 +427,9 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			while (preg_match('`&lt;o|ul&gt;(.+)&lt;/o|ul&gt;`isU', $this->content))
 			{
-				$this->content = preg_replace('`&lt;ul&gt;(.+)&lt;/ul&gt;`isU', '<ul class="bb_ul">' . "\n" .'$1</ul>', $this->content);
-				$this->content = preg_replace('`&lt;ol&gt;(.+)&lt;/ol&gt;`isU', '<ol class="bb_ol">' . "\n" .'$1</ol>', $this->content);
-				$this->content = preg_replace('`&lt;li&gt;(.*)&lt;/li&gt;`isU', '<li class="bb_li">$1</li>' . "\n", $this->content);
+				$this->content = preg_replace('`&lt;ul&gt;(.+)&lt;/ul&gt;`isU', '<ul class="bb-ul">' . "\n" .'$1</ul>', $this->content);
+				$this->content = preg_replace('`&lt;ol&gt;(.+)&lt;/ol&gt;`isU', '<ol class="bb-ol">' . "\n" .'$1</ol>', $this->content);
+				$this->content = preg_replace('`&lt;li&gt;(.*)&lt;/li&gt;`isU', '<li class="bb-li">$1</li>' . "\n", $this->content);
 			}
 		}
 
@@ -468,7 +468,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Line tag
 		if (!in_array('line', $this->forbidden_tags))
 		{
-			$this->content = str_replace('&lt;hr /&gt;', '<hr class="bb_hr" />', $this->content);
+			$this->content = str_replace('&lt;hr /&gt;', '<hr class="bb-hr" />', $this->content);
 		}
 
 		//Quote tag

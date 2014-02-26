@@ -35,7 +35,7 @@ $lang = array();
 $lang['faq.config.faq_name'] = 'FAQ PHPBoost';
 $lang['faq.config.root_cat_description'] = 'Welcome on the FAQ!<br /><br /> Two categories and some questions were created to show you how this module works. Here are some tips to get started on this module.
 <br /><br /> 
-<ul class="bb_ul"><li class="bb_li">To configure your module, go into the <a href="/faq/admin_faq.php">module administration</a> 
+<ul class="bb-ul"><li class="bb_li">To configure your module, go into the <a href="/faq/admin_faq.php">module administration</a> 
 </li><li class="bb_li">To create categories, <a href="/faq/admin_faq_cats.php?new=1">clic here</a> 
 </li><li class="bb_li">To create questions, go in the desired category and click on \'Category management\' then \'Add\'</li></ul>
 <br /><br />To customize this module homepage, <a href="/faq/management.php">clic here</a>
