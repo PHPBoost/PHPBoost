@@ -298,7 +298,7 @@ function bbcode_color(field)
 	document.getElementById("bbcolor" + field).innerHTML = contents + '</tr></table>';
 }
 
-function bbcode_table(field)
+function bbcode_table(field, head_name)
 {
 	var cols = document.getElementById('bb-cols' + field).value;
 	var lines = document.getElementById('bb-lines' + field).value;
@@ -309,7 +309,7 @@ function bbcode_table(field)
 	{
 		var colspan = cols > 1 ? ' colspan="' + cols + '"' : '';
 		var pointor = head ? (59 + colspan.length) : 22;
-		code = head ? '[table]\n\t[row]\n\t\t[head' + colspan + ']{L_TABLE_HEAD}[/head]\n\t[/row]\n' : '[table]\n';
+		code = head ? '[table]\n\t[row]\n\t\t[head' + colspan + ']'+ head_name +'[/head]\n\t[/row]\n' : '[table]\n';
 		
 		for(var i = 0; i < lines; i++)
 		{

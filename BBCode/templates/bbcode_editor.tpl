@@ -237,7 +237,7 @@ function XMLHttpRequest_preview(field)
 							</div>
 						</div>
 						<div class="bbcode-form-element-text">
-							<a class="small" href="javascript:{DISABLED_TABLE}bbcode_table('{FIELD}');">
+							<a class="small" href="javascript:{DISABLED_TABLE}bbcode_table('{FIELD}', '{L_TABLE_HEAD}');">
 								<i class="fa bbcode-icon-table" title="{L_BB_TABLE}"></i> {L_INSERT_TABLE}
 							</a>
 						</div>
