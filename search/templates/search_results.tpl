@@ -43,7 +43,7 @@
                 // Reconstitution d'une chaine "POSTABLE" à partir des formulaires
                 {
                     var dataString = "";
-                    var form = document.getElementById('mini_search_form');
+                    var form = document.getElementById('mini-search-form');
                     var elements = form.elements;
                     
                     for (var i = 0; i < form.length; i++)
