@@ -1,4 +1,4 @@
-#search_form{
+#search-form {
 	float:none;
 	display: inline-block;
 	margin: 10px 0 10px 0;
@@ -7,7 +7,7 @@
 	vertical-align: middle;
 }
 
-div.search_mini input {
+div.search-mini input {
     width:120px;
     margin:2px;
 }
@@ -56,18 +56,18 @@ select#FormsChoice {
     width:300px;
 }
 
-div#forms_selection{
+div#forms-selection{
 	padding:5px 0;
 }
 
-div#forms_selection a{
+div#forms-selection a{
 	padding:2px 8px;
 	display:block;
 	text-decoration:none;
 	color:#666;
 }
 
-div#forms_selection a:hover{
+div#forms-selection a:hover{
 	background:#DDDDDD;
 }
 
@@ -75,7 +75,7 @@ div.SpecializedForm {
     padding:0px 5px;
 }
 
-div#forms_selection a.SFL_current {
+div#forms-selection a.SFL_current {
     background:#DFDFDF;
     color:#333333;
 }
@@ -85,15 +85,15 @@ fieldset.fieldset-submit {
 	margin-top:0;
 }
 
-div.search_field {
+div.search-field {
 	text-align:center;
 }
 
-#forms_selection a{
+#forms-selection a{
 	outline:none;
 }
 
-select.search_field {
+select.search-field {
     width:300px;
 }
 
@@ -114,18 +114,12 @@ div.resultsChoices span {
 }
 
 div.results {
-/*     background-color: #bfd9ef; */
-/*     border: 1px solid #2c5169; */
     margin-top:30px;
     min-height:50px;
     vertical-align:middle;
 }
 
 div.results span.title {
-   /* background:#526F8E;
-    color:#FFFFFF;*/
-    font-family:'Verdana', 'Bitstream Vera Sans', 'Times', 'serif';
-    font-size:1.0em;
     font-weight:bold;
     text-align:center;
     text-transform:uppercase;
@@ -136,16 +130,15 @@ div.results span.title {
 div.results div.infosResults {
     width:90%;
     padding-left:10px;
-    font-family:'Verdana', 'Bitstream Vera Sans', 'Times', 'serif';
     font-size:0.75em;
     font-weight:bold;
 }
 
-ul.search_results {
+ul.search-results {
     margin-left:30px;
     padding:10px;
 }
-ul.search_results li {
+ul.search-results li {
     padding:5px;
 }
 

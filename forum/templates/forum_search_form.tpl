@@ -1,7 +1,7 @@
 <div class="form-element">
     <label for="ForumTime">{L_DATE}</label>
     <div class="form-field">
-        <select id="ForumTime" name="ForumTime" class="search_field">
+        <select id="ForumTime" name="ForumTime" class="search-field">
             <option value="30000" {IS_SELECTED_30000}>Tout</option>
             <option value="1" {IS_SELECTED_1}>1 {L_DAY}</option>
             <option value="7" {IS_SELECTED_7}>7 {L_DAYS}</option>
@@ -15,7 +15,7 @@
 <div class="form-element">
     <label for="ForumIdcat">{L_CATEGORY}</label>
     <div class="form-field"><label>
-        <select name="ForumIdcat" id="ForumIdcat" class="search_field">
+        <select name="ForumIdcat" id="ForumIdcat" class="search-field">
             <option value="-1" {IS_ALL_CATS_SELECTED}>{L_ALL_CATS}</option>
             # START cats #
                 <option value="{cats.ID}" {cats.IS_SELECTED}>{cats.MARGIN} {cats.L_NAME}</option>
