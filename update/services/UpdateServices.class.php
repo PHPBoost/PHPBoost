@@ -290,7 +290,7 @@ class UpdateServices
 		AND COLUMN_NAME	IN :column_name
 		AND DATA_TYPE IN :data_type', array(
 			'table_name' => $db_connection_data['database'],
-			'column_name' => array('description', 'content', 'contents'),
+			'column_name' => array('description', 'content', 'contents', 'message'),
 			'data_type' => array('mediumtext','text')
 		));
 		
@@ -302,7 +302,7 @@ class UpdateServices
 			
 			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
 			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
-			replace(replace(replace(replace(
+			replace(replace(replace(replace(replace(replace(replace(replace(
 			
 			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
 			replace(
@@ -312,14 +312,17 @@ class UpdateServices
 			\'/images/smileys/waw.gif\', \'/images/smileys/straight.png\'), 
 			\'/images/smileys/siffle.gif\', \'/images/smileys/whistle.png\'), 
 			\'/images/smileys/sourire.gif\', \'/images/smileys/smile.png\'),
-			\'/images/smileys/rire.gif\', \'/images/smileys/laugh.png\'),
+			\'/images/smileys/lol.gif\', \'/images/smileys/laugh.png\'),
 			\'/images/smileys/tirelangue.gif\', \'/images/smileys/tongue.png\'),
 			\'/images/smileys/malheureux.gif\', \'/images/smileys/sad.png\'),
 			\'/images/smileys/clindoeil.gif\', \'/images/smileys/wink.png\'),
 			\'/images/smileys/heink.gif\', \'/images/smileys/what.png\'),
 			\'/images/smileys/heureux.gif\', \'/images/smileys/grin.png\'),
+			\'/images/smileys/incertain.gif\', \'/images/smileys/straight.png\'),
+			\'/images/smileys/content.gif\', \'/images/smileys/happy.png\'),
 			\'/images/smileys/pinch.gif\', \'/images/smileys/gne.png\'),
 			\'/images/smileys/top.gif\', \'/images/smileys/top.png\'),
+			\'/images/smileys/clap.gif\', \'/images/smileys/top.png\'),
 			\'/images/smileys/hehe.gif\', \'/images/smileys/devil.png\'),
 			\'/images/smileys/angry.gif\', \'/images/smileys/angry.png\'),
 			\'/images/smileys/snif.gif\', \'/images/smileys/cry.png\'),
@@ -332,6 +335,7 @@ class UpdateServices
 			\'/images/smileys/doute.gif\', \'/images/smileys/confused.png\'),
 			\'/images/smileys/mat.gif\', \'/images/smileys/drooling.png\'),
 			\'/images/smileys/miam.gif\', \'/images/smileys/cake.png\'),
+			\'/images/smileys/plus1.gif\', \'/images/smileys/top.png\'),
 			\'/images/smileys/lu.gif\', \'/images/smileys/hello.png\'),
 			
 			\'class="bb_table"\', \'class="bb-table"\'),
