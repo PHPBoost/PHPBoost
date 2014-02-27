@@ -143,14 +143,13 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 		if (!$is_admin || $flood)
 		{
+			$env = new AdminDisplayFrameGraphicalEnvironment();
+			Environment::set_graphical_environment($env);
+			
 			$template = new FileTemplate('admin/AdminLoginController.tpl');
 			$template->add_lang(self::$lang);
 
 			$template->put_all(array(
-				'L_XML_LANGUAGE' => self::$lang['xml_lang'],
-				'SITE_NAME' => GeneralConfig::load()->get_site_name(),
-				'SITE_NAME_DESC' => 'Le CMS tout en un !',
-				'TITLE' => TITLE,
 				'L_REQUIRE_PSEUDO' => self::$lang['require_pseudo'],
 				'L_REQUIRE_PASSWORD' => self::$lang['require_password'],
 				'L_CONNECT' => self::$lang['connect'],
@@ -169,8 +168,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 					'C_UNLOCK' => true
 				));
 			}
-
-			$template->display();
+			
+			Environment::display($template->render());
 			Environment::destroy();
 			exit;
 		}
