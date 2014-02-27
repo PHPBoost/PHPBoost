@@ -197,7 +197,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			{
 				$Template->assign_block_vars('cat.list_cats', array(
 					'NAME' => $value['name'],
-					'U_CAT' => url('wiki.php?title=' . Url::encode_rewrite($value['name']), Url::encode_rewrite($value['name']))
+					'U_CAT' => url('wiki.php?title=' . $value['encoded_title'], $value['encoded_title'])
 				));
 				$i++;
 			}

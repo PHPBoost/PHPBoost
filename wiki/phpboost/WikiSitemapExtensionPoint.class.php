@@ -69,7 +69,7 @@ class WikiSitemapExtensionPoint implements SitemapExtensionPoint
 	{
 		global $_WIKI_CATS, $LANG, $User;
 		
-		$this_category = new SitemapLink($_WIKI_CATS[$id_cat]['name'], new Url('/wiki/' . url('wiki.php?title='.Url::encode_rewrite($_WIKI_CATS[$id_cat]['name']), Url::encode_rewrite($_WIKI_CATS[$id_cat]['name']))));
+		$this_category = new SitemapLink($_WIKI_CATS[$id_cat]['name'], new Url('/wiki/' . url('wiki.php?title='.$_WIKI_CATS[$id_cat]['encoded_title'], $_WIKI_CATS[$id_cat]['encoded_title'])));
 			
 		$category = new SitemapSection($this_category);
 		
