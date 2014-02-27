@@ -237,6 +237,10 @@ class UpdateServices
 		
 		PersistenceContext::get_querier()->inject('RENAME TABLE '. PREFIX .'ranks' .' TO '. PREFIX .'forum_ranks');
 		
+		PersistenceContext::get_dbms_utils()->truncate(PREFIX .'smileys');
+		
+		$this->insert_smileys_data();
+		
 		ModulesManager::uninstall_module('HomeCustom');
 		
 		$modules_config = ModulesConfig::load();
@@ -345,6 +349,251 @@ class UpdateServices
 			
 			');
 		}
+	}
+	
+	private function insert_smileys_data()
+	{
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 1,
+			'code_smiley' => ':o',
+			'url_smiley' => 'wow.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 2,
+			'code_smiley' => ':whistle',
+			'url_smiley' => 'whistle.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 3,
+			'code_smiley' => ':)',
+			'url_smiley' => 'smile.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 4,
+			'code_smiley' => ':lol',
+			'url_smiley' => 'laugh.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 5,
+			'code_smiley' => ':p',
+			'url_smiley' => 'tongue.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 6,
+			'code_smiley' => ':(',
+			'url_smiley' => 'sad.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 7,
+			'code_smiley' => ';)',
+			'url_smiley' => 'wink.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 8,
+			'code_smiley' => ':?',
+			'url_smiley' => 'what.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 9,
+			'code_smiley' => ':D',
+			'url_smiley' => 'grin.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 10,
+			'code_smiley' => '^^',
+			'url_smiley' => 'happy.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 11,
+			'code_smiley' => ':|',
+			'url_smiley' => 'straight.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 12,
+			'code_smiley' => 'x|',
+			'url_smiley' => 'gne.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 13,
+			'code_smiley' => ':top',
+			'url_smiley' => 'top.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 14,
+			'code_smiley' => ':party',
+			'url_smiley' => 'party.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 15,
+			'code_smiley' => '3:)',
+			'url_smiley' => 'devil.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 16,
+			'code_smiley' => ':@',
+			'url_smiley' => 'angry.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 17,
+			'code_smiley' => ':\'(',
+			'url_smiley' => 'cry.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 18,
+			'code_smiley' => ':crazy',
+			'url_smiley' => 'crazy.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 19,
+			'code_smiley' => '8-)',
+			'url_smiley' => 'cool.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 20,
+			'code_smiley' => '|-)',
+			'url_smiley' => 'night.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 21,
+			'code_smiley' => ':vomit',
+			'url_smiley' => 'vomit.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 22,
+			'code_smiley' => '>:)',
+			'url_smiley' => 'unhappy.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 23,
+			'code_smiley' => ':love',
+			'url_smiley' => 'love.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 24,
+			'code_smiley' => ':hum',
+			'url_smiley' => 'confused.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 25,
+			'code_smiley' => ':drool',
+			'url_smiley' => 'drooling.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 26,
+			'code_smiley' => ':cold',
+			'url_smiley' => 'cold.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 27,
+			'code_smiley' => ':hot',
+			'url_smiley' => 'hot.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 28,
+			'code_smiley' => ':hi',
+			'url_smiley' => 'hello.png'
+		));
+
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 29,
+			'code_smiley' => ':bal',
+			'url_smiley' => 'balloon.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 30,
+			'code_smiley' => ':bomb',
+			'url_smiley' => 'bomb.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 31,
+			'code_smiley' => ':/L',
+			'url_smiley' => 'brokenheart.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 32,
+			'code_smiley' => ':cake',
+			'url_smiley' => 'cake.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 33,
+			'code_smiley' => ':dead',
+			'url_smiley' => 'dead.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 34,
+			'code_smiley' => ':drink',
+			'url_smiley' => 'drink.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 35,
+			'code_smiley' => ':flower',
+			'url_smiley' => 'flower.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 36,
+			'code_smiley' => ':ghost',
+			'url_smiley' => 'ghost.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 37,
+			'code_smiley' => ':gift',
+			'url_smiley' => 'gift.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 38,
+			'code_smiley' => ':girly',
+			'url_smiley' => 'girly.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 39,
+			'code_smiley' => ':L',
+			'url_smiley' => 'heart.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 40,
+			'code_smiley' => ':hug',
+			'url_smiley' => 'hug.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 41,
+			'code_smiley' => ':idea',
+			'url_smiley' => 'idea.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 42,
+			'code_smiley' => ':kiss',
+			'url_smiley' => 'kiss.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 43,
+			'code_smiley' => ':mail',
+			'url_smiley' => 'mail.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 44,
+			'code_smiley' => ':x',
+			'url_smiley' => 'mute.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 46,
+			'code_smiley' => ':nerd',
+			'url_smiley' => 'nerd.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 47,
+			'code_smiley' => ':sick',
+			'url_smiley' => 'sick.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 48,
+			'code_smiley' => ':boring',
+			'url_smiley' => 'boring.png'
+		));
+		PersistenceContext::get_querier()->insert(PREFIX .'smileys', array(
+			'idsmiley' => 49,
+			'code_smiley' => ':zombie',
+			'url_smiley' => 'zombie.png'
+		));
 	}
 	
 	private function get_class($directory, $pattern)
