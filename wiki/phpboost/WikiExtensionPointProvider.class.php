@@ -40,13 +40,13 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 		//Catégories du wiki
 		$config = 'global $_WIKI_CATS;' . "\n";
 		$config .= '$_WIKI_CATS = array();' . "\n";
-		$result = $this->sql_querier->query_while("SELECT c.id, c.id_parent, c.article_id, a.title
+		$result = $this->sql_querier->query_while("SELECT c.id, c.id_parent, c.article_id, a.title, a.encoded_title
 			FROM " . PREFIX . "wiki_cats c
 			LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
 			ORDER BY a.title", __LINE__, __FILE__);
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
-			$config .= '$_WIKI_CATS[\'' . $row['id'] . '\'] = array(\'id_parent\' => ' . ( !empty($row['id_parent']) ? $row['id_parent'] : '0') . ', \'name\' => ' . var_export($row['title'], true) . ');' . "\n";
+			$config .= '$_WIKI_CATS[\'' . $row['id'] . '\'] = array(\'id_parent\' => ' . ( !empty($row['id_parent']) ? $row['id_parent'] : '0') . ', \'name\' => ' . var_export($row['title'], true) . ', \'encoded_title\' => ' . var_export($row['encoded_title'], true) . ');' . "\n";
 		}
 		
 		return $config;

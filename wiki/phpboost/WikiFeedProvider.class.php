@@ -96,7 +96,7 @@ class WikiFeedProvider implements FeedProvider
 			$item = new FeedItem();
 
 			$item->set_title($row['title']);
-			$link = new Url('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($row['title']), Url::encode_rewrite($row['title'])));
+			$link = new Url('/wiki/' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']));
 			$item->set_link($link);
 			$item->set_guid($link);
 			$item->set_desc(FormatingHelper::second_parse($row['content']));

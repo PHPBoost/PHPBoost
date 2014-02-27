@@ -110,7 +110,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 				{
 					$Template->assign_block_vars('cat_list.list', array(
 						'CAT' => $infos['name'],
-						'U_CAT' => url('wiki.php?title=' . Url::encode_rewrite($infos['name']), Url::encode_rewrite($infos['name']))
+						'U_CAT' => url('wiki.php?title=' . $infos['encoded_title'], $infos['encoded_title'])
 					));
 					$i++;
 				}
