@@ -85,9 +85,11 @@
 				
 		<div id="admin-contents">
 			
-			# IF C_EXISTING_ALERTS #
+			
 			<table>
 				<caption>{L_ADMIN_ALERTS}</caption>
+				
+				# IF C_EXISTING_ALERTS #
 				<thead>
 					<tr> 
 						<th>
@@ -157,11 +159,12 @@
 					</tr>
 					# END alerts #
 				</tbody>
+				# ENDIF #	
 			</table>
-			# ELSE #
-				<div class="message-helper question">
-					<i class="fa fa-question"></i>
-					<div class="message-helper-content">{L_NO_ALERT}</div>
-				</div>
-			# ENDIF #
+			# IF NOT C_EXISTING_ALERTS #
+			<div class="message-helper question message-helper-small">
+				<i class="fa fa-question"></i>
+				<div class="message-helper-content">{L_NO_ALERT}</div>
+			</div>
+			# ENDIF #			
 		</div>
