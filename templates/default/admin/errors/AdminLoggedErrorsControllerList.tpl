@@ -51,11 +51,11 @@
 			</tr>
 			# END errors #
 		</tbody>
-		# ELSE #
-		<tbody>
-			<tr>
-				<td>{@no_error}</td>
-			</tr>
-		</tbody>
 		# ENDIF #
 	</table>
+	# IF NOT C_ERRORS #
+	<div class="message-helper success message-helper-small">
+		<i class="fa fa-success"></i>
+		<div class="message-helper-content">{@no_error}</div>
+	</div>
+	# ENDIF #
