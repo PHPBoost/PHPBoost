@@ -252,6 +252,8 @@ class UpdateServices
 
 		$this->update_modules();
 		
+		$this->update_content();
+		
 		$this->delete_update_token();
 		$this->generate_cache();
 	}
@@ -271,6 +273,77 @@ class UpdateServices
 				$message = $e->getMessage();
 			}
 			$this->add_error_to_file($object->get_module_id() . '_module', $success, $message);
+		}
+	}
+	
+	public function update_content()
+	{
+		include PATH_TO_ROOT . '/kernel/db/config.php';
+		
+		$result = PersistenceContext::get_querier()->select('SELECT TABLE_NAME, COLUMN_NAME FROM information_schema.COLUMNS WHERE
+		TABLE_SCHEMA = :table_name
+		AND TABLE_NAME LIKE \'%'. PREFIX .'%\'
+		AND COLUMN_NAME	IN :column_name
+		AND DATA_TYPE IN :data_type', array(
+			'table_name' => $db_connection_data['database'],
+			'column_name' => array('description', 'content', 'contents'),
+			'data_type' => array('mediumtext','text')
+		));
+		
+		foreach ($result as $row)
+		{
+			PersistenceContext::get_querier()->select('
+			UPDATE '. $row['TABLE_NAME'] .' SET 
+			'. $row['COLUMN_NAME'] .' = 
+			
+			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
+			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
+			replace(replace(replace(replace(
+			
+			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
+			replace(
+			
+			'. $row['COLUMN_NAME'] .', 
+		
+			\'/images/smileys/waw.gif\', \'/images/smileys/straight.png\'), 
+			\'/images/smileys/siffle.gif\', \'/images/smileys/whistle.png\'), 
+			\'/images/smileys/sourire.gif\', \'/images/smileys/smile.png\'),
+			\'/images/smileys/rire.gif\', \'/images/smileys/laugh.png\'),
+			\'/images/smileys/tirelangue.gif\', \'/images/smileys/tongue.png\'),
+			\'/images/smileys/malheureux.gif\', \'/images/smileys/sad.png\'),
+			\'/images/smileys/clindoeil.gif\', \'/images/smileys/wink.png\'),
+			\'/images/smileys/heink.gif\', \'/images/smileys/what.png\'),
+			\'/images/smileys/heureux.gif\', \'/images/smileys/grin.png\'),
+			\'/images/smileys/pinch.gif\', \'/images/smileys/gne.png\'),
+			\'/images/smileys/top.gif\', \'/images/smileys/top.png\'),
+			\'/images/smileys/hehe.gif\', \'/images/smileys/devil.png\'),
+			\'/images/smileys/angry.gif\', \'/images/smileys/angry.png\'),
+			\'/images/smileys/snif.gif\', \'/images/smileys/cry.png\'),
+			\'/images/smileys/nex.gif\', \'/images/smileys/crazy.png\'),
+			\'/images/smileys/star.gif\', \'/images/smileys/cool.png\'),
+			\'/images/smileys/nuit.gif\', \'/images/smileys/night.png\'),
+			\'/images/smileys/berk.gif\', \'/images/smileys/vomit.png\'),
+			\'/images/smileys/colere.gif\', \'/images/smileys/unhappy.png\'),
+			\'/images/smileys/love.gif\', \'/images/smileys/love.png\'),
+			\'/images/smileys/doute.gif\', \'/images/smileys/confused.png\'),
+			\'/images/smileys/mat.gif\', \'/images/smileys/drooling.png\'),
+			\'/images/smileys/miam.gif\', \'/images/smileys/cake.png\'),
+			\'/images/smileys/lu.gif\', \'/images/smileys/hello.png\'),
+			
+			\'class="bb_table"\', \'class="bb-table"\'),
+			\'class="bb_table_row"\', \'class="bb-table-row"\'),
+			\'class="bb_table_head"\', \'class="bb-table-head"\'),
+			\'class="bb_table_col"\', \'class="bb-table-col"\'),
+			\'class="bb_li"\', \'class="bb-li"\'),
+			\'class="bb_ul"\', \'class="bb-ul"\'),
+			\'class="bb_ol"\', \'class="bb-ol"\'),
+			
+			\'class="text_blockquote"\', \'class="text-blockquote"\'),
+			\'class="text_hide"\', \'class="text-hide"\'),
+			\'class="bb_block"\', \'class="bb-block"\'),
+			\'class="bb_fieldset"\', \'class="bb-fieldset"\')
+			
+			');
 		}
 	}
 	
