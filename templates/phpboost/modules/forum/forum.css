@@ -1,3 +1,7 @@
+table {
+	margin:0;
+}
+	
 .forum_table {
 	width:100%;
 	border:none;
@@ -167,7 +171,6 @@ a.forum_link_cat{
 	border-bottom:none;
 }
 .forum_cat_title{
-	float:left;
 	padding:0px 5px;
 }
 .forum_cat_title a{
