@@ -6,14 +6,25 @@
 		</h1>
 		# IF C_ARTICLES_CAT #
 		<div class="cat">
-			<div style="margin-bottom:36px;">
+                        <div class="subcat">
 			${i18n('articles.sub_categories')} :
 			<br /><br />
-			<ul style="list-style:none;">
+			# IF C_DISPLAY_CATS_ICON #
+                                # START cat_list #
+                                <div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
+                                        <a itemprop="about" href="{cat_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="../{cat_list.CATEGORY_IMAGE}" alt="{cat_list.CATEGORY_NAME}" /></a><br />
+                                        <a itemprop="about" href="{cat_list.U_CATEGORY}">{cat_list.CATEGORY_NAME} ({cat_list.NBR_ARTICLES})</a>
+                                        <br />
+                                        <span class="small">{cat_list.CATEGORY_DESCRIPTION}</span>
+                                </div>
+                                # END cat_list #
+                        # ELSE #
+                        <ul>
 				# START cat_list #
-				<li style="float:left;margin:0 5px 0 5px"><a itemprop="about" style="display:inline-block;" class="button_cat" href="{cat_list.U_CATEGORY}" title="{cat_list.CATEGORY_DESCRIPTION}">{cat_list.CATEGORY_NAME} ({cat_list.NBR_ARTICLES})</a></li>
+				<li><a itemprop="about" class="button_cat" href="{cat_list.U_CATEGORY}" title="{cat_list.CATEGORY_DESCRIPTION}">{cat_list.CATEGORY_NAME} ({cat_list.NBR_ARTICLES})</a></li>
 				# END cat_list #
 			</ul>
+                        # ENDIF #
 			</div>
 		</div>
 		<div class="spacer">&nbsp;</div>
@@ -44,7 +55,7 @@
 								# ENDIF #
 							</div>
 							# IF articles.C_HAS_PICTURE #
-							<a itemprop="url" href="{articles.U_ARTICLE}"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" width="261" height="214" alt="{articles.TITLE}" /></a>
+							<a itemprop="url" href="{articles.U_ARTICLE}"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" /></a>
 							# ENDIF #
 						</figure>
 						<div class="article_details">
@@ -59,11 +70,11 @@
 						<h3 itemprop="name"><a itemprop="url" href="{articles.U_ARTICLE}">{articles.TITLE}</a></h3>
 						<p itemprop="description" class="description">{articles.DESCRIPTION}</p>
 						# IF C_KEYWORDS #
-							# START keywords #
 							<div class="tags">
+                                                                # START keywords #
 								<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #&nbsp;# ENDIF #
+                                                                # END keywords #
 							</div>
-							# END keywords #
 						# ENDIF #	
 						<meta itemprop="url" content="{articles.U_ARTICLE}">
 						<meta itemprop="description" content="{articles.DESCRIPTION}">
@@ -94,14 +105,12 @@
 				# START articles #
 				<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 					<div class="box">
-						# IF NOT C_BLOCK #
                                                 <figure>
 							
 							# IF articles.C_HAS_PICTURE #
-							<a itemprop="url" href="{articles.U_ARTICLE}"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" width="261" height="214" alt="{articles.TITLE}" /></a>
+							<a itemprop="url" href="{articles.U_ARTICLE}"><img itemprop="thumbnailUrl" src="{articles.PICTURE}" alt="{articles.TITLE}" /></a>
 							# ENDIF #
 						</figure>
-                                                # ENDIF #
 						<div class="title_description">
 							<div class="article_tools">
 								# IF articles.C_EDIT #
@@ -114,14 +123,15 @@
 							<header>
 								<h3 itemprop="name"><a itemprop="url" href="{articles.U_ARTICLE}">{articles.TITLE}</a></h3>
 								<p itemprop="description" class="description">{articles.DESCRIPTION}</p>
-							</header>
-							# IF C_KEYWORDS #
-								# START keywords #
+                                                                
+                                                                # IF C_KEYWORDS #	
 								<div class="tags">
+                                                                        # START keywords #
 									<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #&nbsp;# ENDIF #
+                                                                        # END keywords #
 								</div>
-								# END keywords #
-							# ENDIF #
+                                                                # ENDIF #
+							</header>	
 						</div>
 						<meta itemprop="url" content="{articles.U_ARTICLE}">
 						<meta itemprop="description" content="{articles.DESCRIPTION}">

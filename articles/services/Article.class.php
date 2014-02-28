@@ -65,9 +65,6 @@ class Article
 	const AUTHOR_NAME_DISPLAYED = 1;
         
 	const DEFAULT_PICTURE = '/articles/templates/images/default.png';
-	
-	const NBR_CHARACTER_TO_CUT_MOSAIC = 128;
-	const NBR_CHARACTER_TO_CUT_LIST = 245;
 
 	public function set_id($id)
 	{
@@ -131,42 +128,14 @@ class Article
 	
 	public function get_real_description()
 	{
-		$display_type = ArticlesConfig::load()->get_display_type();
                 if ($this->get_description_enabled())
 		{
-                    switch ($display_type) 
-                    {
-                            case ArticlesConfig::DISPLAY_MOSAIC:
-                                return TextHelper::substr_html(@strip_tags($this->description), 0, self::NBR_CHARACTER_TO_CUT_MOSAIC) . '...';
-                                break;
-
-                            case ArticlesConfig::DISPLAY_LIST:
-                                return TextHelper::substr_html(@strip_tags($this->description), 0, self::NBR_CHARACTER_TO_CUT_LIST) . '...';
-                                break;
-
-                            default:
-                                return TextHelper::substr_html(@strip_tags($this->description), 0, ArticlesConfig::load()->get_number_character_to_cut_block_display());
-                                break;
-                    }
+                        return TextHelper::substr_html(@strip_tags($this->description), 0, ArticlesConfig::load()->get_number_character_to_cut());
 		}
 		else
 		{
 			$clean_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $this->contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-			
-                        switch ($display_type) 
-                        {
-                                case ArticlesConfig::DISPLAY_MOSAIC:
-                                    return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, self::NBR_CHARACTER_TO_CUT_MOSAIC) . '...';
-                                    break;
-
-                                case ArticlesConfig::DISPLAY_LIST:
-                                    return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, self::NBR_CHARACTER_TO_CUT_LIST) . '...';
-                                    break;
-
-                                default:
-                                    return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, ArticlesConfig::load()->get_number_character_to_cut_block_display());
-                                    break;
-                        }
+                        return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, ArticlesConfig::load()->get_number_character_to_cut());
 		}
 	}
 	
