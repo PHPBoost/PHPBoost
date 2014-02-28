@@ -11,6 +11,11 @@ section, article {
 	vertical-align:top;
 }
 
+aside#menu-left + aside#menu-right + div#main section article { width:100% }
+aside#menu-left + aside#menu-right + div#main section .content { padding:0px 5px; }
+aside#menu-left + aside#menu-right + div#main section .form-element,
+aside#menu-left + aside#menu-right + div#main section .form-element-textarea { margin:0px; }
+
 section header, article header { margin:0 0 20px 0; }
 
 /* Titre d'une page ou d'un element d'un module */
@@ -54,9 +59,8 @@ span.actions a { font-size: 12px; }
 
 /* Contenu */
 .content {
-	margin: 0 15px;
-	word-wrap: break-word;
-	overflow: hidden;
+	padding:0 15px;
+	overflow:hidden;
 }
 
 section footer, article footer { margin-bottom: 15px; }
@@ -459,6 +463,8 @@ option { padding:0px 3px; }
 	color:#2E3B5F;
 	padding:0px 2px;
 }
+
+.xmlhttprequest-preview img { max-width: 600px; }
 
 legend {
 	display:block;

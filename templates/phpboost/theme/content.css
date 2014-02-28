@@ -460,6 +460,8 @@ option { padding:0px 3px; }
 	padding:0px 2px;
 }
 
+.xmlhttprequest-preview img { max-width: 600px; }
+
 legend {
 	display:block;
 	margin:0px 0px 15px 0px;
