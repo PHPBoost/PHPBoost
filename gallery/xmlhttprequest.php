@@ -26,8 +26,8 @@
  *
  ###################################################*/
 
-define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans la session.
 require_once('../kernel/begin.php');
+AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
 include_once('../gallery/gallery_begin.php');
 require_once('../kernel/header_no_display.php');
 
