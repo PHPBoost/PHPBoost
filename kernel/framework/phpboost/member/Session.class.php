@@ -41,6 +41,8 @@ class Session
 	private $data = array(); //Tableau contenant les informations de session.
 	private $session_mod = 0; //Variable contenant le mode de session à utiliser pour récupérer les infos.
 	private $autoconnect = array(); //Vérification de la session pour l'autoconnexion.
+	private $no_session_location = false;
+	
 	/**
 	*
 	* @var Sql
@@ -348,7 +350,7 @@ class Session
 			}
 
 			//Localisation du membre.
-			if (!defined('NO_SESSION_LOCATION'))
+			if (!$this->no_session_location)
 			{
 				$location = " session_script = '" . addslashes($session_script) . "', session_script_get = '', session_script_title = '" . addslashes($session_script_title) . "', ";
 			}
@@ -376,7 +378,7 @@ class Session
 		else //Visiteur
 		{
 			//Localisation du visiteur.
-			if (!defined('NO_SESSION_LOCATION'))
+			if (!$this->no_session_location)
 			{
 				$location = " session_script = '" . addslashes($session_script) . "', session_script_get = '', session_script_title = '" . addslashes($session_script_title) . "', ";
 			}
@@ -622,6 +624,14 @@ class Session
 		FROM " . DB_TABLE_SESSIONS . "
 		WHERE session_time < '" . (time() - $sessions_config->get_session_duration()) . "'
 		OR (session_time < '" . (time() - $sessions_config->get_active_session_duration()) . "' AND user_id = -1)", __LINE__, __FILE__);
+	}
+	
+	/**
+	 * @desc Lets not update the location of the user in the session
+	 */
+	public function no_session_location()
+	{
+		$this->no_session_location = true;
 	}
 
 	/**

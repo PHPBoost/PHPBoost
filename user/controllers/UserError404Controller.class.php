@@ -37,6 +37,7 @@ class UserError404Controller extends UserErrorController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
+		AppContext::get_session()->no_session_location();
 		AdminError404Service::register_404();
 		return parent::execute($request);
 	}
