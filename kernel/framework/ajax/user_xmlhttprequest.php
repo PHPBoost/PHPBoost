@@ -26,9 +26,9 @@
  ###################################################*/
 
 define('PATH_TO_ROOT', '../../..');
-define('NO_SESSION_LOCATION', true);
 
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
+AppContext::get_session()->no_session_location();
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $login = substr(retrieve(POST, 'login', ''), 0, 25);
