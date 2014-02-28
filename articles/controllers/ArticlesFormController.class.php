@@ -100,8 +100,7 @@ class ArticlesFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.form.description_enabled'], $this->get_article()->get_description_enabled(), 
 			array('description' => StringVars::replace_vars($this->lang['articles.form.description_enabled.description'], 
-                                array('number' => (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_BLOCK) ? ArticlesConfig::load()->get_number_character_to_cut_block_display() : 
-                                (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC) ? Article::NBR_CHARACTER_TO_CUT_MOSAIC : Article::NBR_CHARACTER_TO_CUT_LIST)), 
+                                array('number' => ArticlesConfig::load()->get_number_character_to_cut())), 
                               'events' => array('click' => '
                                                             if (HTMLForms.getField("enable_description").getValue()) {
                                                                     HTMLForms.getField("description").enable();
@@ -111,8 +110,7 @@ class ArticlesFormController extends ModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('description', StringVars::replace_vars($this->lang['articles.form.description'],
-                        array('number' =>(ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_BLOCK) ? ArticlesConfig::load()->get_number_character_to_cut_block_display() : 
-                                (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC) ? Article::NBR_CHARACTER_TO_CUT_MOSAIC : Article::NBR_CHARACTER_TO_CUT_LIST)), $this->get_article()->get_description(),
+                        array('number' =>ArticlesConfig::load()->get_number_character_to_cut())), $this->get_article()->get_description(),
 			array('rows' => 3, 'hidden' => !$this->get_article()->get_description_enabled())
 		));
 		

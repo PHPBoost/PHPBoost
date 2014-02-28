@@ -86,6 +86,20 @@ class AdminArticlesConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldTextEditor('number_categories_per_page', $this->lang['articles_configuration.number_categories_per_page'], $this->config->get_number_categories_per_page(),
 			array('maxlength' => 3, 'size' => 4, 'required' => true), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
+                
+                $fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles_configuration.display_icon_cats'], $this->config->are_cats_icon_enabled(), array(
+		'events' => array('click' => '
+			if (HTMLForms.getField("display_icon_cats").getValue()) {
+				HTMLForms.getField("number_cols_display_cats").enable();
+			} else { 
+				HTMLForms.getField("number_cols_display_cats").disable();
+			}'
+		))));
+		
+		$fieldset->add_field(new FormFieldTextEditor('number_cols_display_cats', $this->lang['articles_configuration.number_cols_display_cats'], $this->config->get_number_cols_display_cats(), 
+			array('hidden' => !$this->config->are_cats_icon_enabled(), 'size' => 6), 
+			array(new FormFieldConstraintIntegerRange(1, 10)
+		)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('notation_scale', LangLoader::get_message('config.notation_scale', 'admin-common'), $this->config->get_notation_scale(),
 			array('maxlength' => 2, 'size' => 4),
@@ -97,22 +111,13 @@ class AdminArticlesConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles_configuration.display_type'], $this->config->get_display_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.mosaic'], ArticlesConfig::DISPLAY_MOSAIC),
-				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.list'], ArticlesConfig::DISPLAY_LIST),
-                                new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.block'], ArticlesConfig::DISPLAY_BLOCK)
-			), 
-                        array('events' => array('change' => 
-                                                    'if (HTMLForms.getField("display_type").getValue() == "block") {
-                                                            HTMLForms.getField("number_character_to_cut_block_display").enable();
-                                                    } else { 
-                                                            HTMLForms.getField("number_character_to_cut_block_display").disable();
-                                                    }'
-                                            )
-                        )
+				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.list'], ArticlesConfig::DISPLAY_LIST)
+			)
 		));
                 
-                $fieldset->add_field(new FormFieldTextEditor('number_character_to_cut_block_display', $this->lang['articles_configuration.number_character_to_cut_block_display'], $this->config->get_number_character_to_cut_block_display(), 
-			array('hidden' => $this->config->get_display_type() != ArticlesConfig::DISPLAY_BLOCK, 'size' => 6), 
-			array(new FormFieldConstraintIntegerRange(20, 1000)
+                $fieldset->add_field(new FormFieldTextEditor('number_character_to_cut', $this->lang['articles_configuration.number_character_to_cut'], $this->config->get_number_character_to_cut(),  
+			array('size' => 6),
+                        array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 		
 		$common_lang = LangLoader::get('common');
@@ -143,8 +148,19 @@ class AdminArticlesConfigController extends AdminModuleController
 	private function save()
 	{
 		$this->config->set_number_articles_per_page($this->form->get_value('number_articles_per_page'));
+                
+                if ($this->form->get_value('display_icon_cats'))
+                {
+			$this->config->enable_cats_icon();
+                }
+		else
+                {
+			$this->config->disable_cats_icon();
+                }
+                
+                $this->config->set_number_cols_display_cats($this->form->get_value('number_cols_display_cats', $this->config->get_number_cols_display_cats()));
 		$this->config->set_number_categories_per_page($this->form->get_value('number_categories_per_page'));
-                $this->config->set_number_character_to_cut_block_display($this->form->get_value('number_character_to_cut_block_display', $this->config->get_number_character_to_cut_block_display()));
+                $this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
 		
 		if ($this->form->get_value('notation_scale') != $this->config->get_notation_scale())
                 {
