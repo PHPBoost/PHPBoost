@@ -59,6 +59,7 @@
 	[*] Mises à jours dans Administration
 	[*] Maintenance dans Administration
 [*] Ajout d'une option dans la configuration avancée pour pouvoir afficher la liste des requêtes SQL et afficher le stacktrace pour pouvoir les tracer
+[*] Suppression des extensions de programmation dans la configuration des fichiers (pouvait entrainer l'upload de fichier "critique" sur le serveur avec la configuration de base)
 	
 [b]Divers :[/b]
 [*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
