@@ -1,4 +1,4 @@
-		<div id="forum_bottom" class="options">
+		<div id="forum_bottom">
 			<div class="forum_links">
 				<div style="float:left;">
 					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 

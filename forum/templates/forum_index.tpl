@@ -13,7 +13,7 @@
 		<div class="module_position">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
-			<div class="module_top options">
+			<div class="module_top">
 				<span class="forum_cat_title">
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',forums_list.cats.IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum_link_cat">{forums_list.cats.NAME}</a>
