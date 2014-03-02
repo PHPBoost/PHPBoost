@@ -30,6 +30,8 @@ class CalendarAjaxCalendarController extends AbstractController
 	private $lang;
 	private $view;
 	private $mini_calendar = false;
+	private $year;
+	private $month;
 	
 	public function set_mini_calendar()
 	{
@@ -39,6 +41,16 @@ class CalendarAjaxCalendarController extends AbstractController
 	public function is_mini_calendar()
 	{
 		return $this->mini_calendar;
+	}
+	
+	public function set_year($year)
+	{
+		$this->year = $year;
+	}
+	
+	public function set_month($month)
+	{
+		$this->month = $month;
 	}
 	
 	public function execute(HTTPRequestCustom $request)
@@ -54,8 +66,8 @@ class CalendarAjaxCalendarController extends AbstractController
 		$categories = CalendarService::get_categories_manager()->get_categories_cache()->get_categories();
 		$date_lang = LangLoader::get('date-common');
 		
-		$year = $request->get_int('calendar_ajax_year', date('Y'));
-		$month = $request->get_int('calendar_ajax_month', date('n'));
+		$year = $this->year ? $this->year : $request->get_int('calendar_ajax_year', date('Y'));
+		$month = $this->month ? $this->month : $request->get_int('calendar_ajax_month', date('n'));
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
@@ -206,12 +218,16 @@ class CalendarAjaxCalendarController extends AbstractController
 			$this->set_mini_calendar();
 	}
 	
-	public static function get_view($is_mini = false)
+	public static function get_view($is_mini = false, $year = 0, $month = 0)
 	{
 		$object = new self();
 		$object->init();
 		if ($is_mini)
 			$object->set_mini_calendar();
+		if ($year)
+			$object->set_year($year);
+		if ($month)
+			$object->set_month($month);
 		$object->build_view(AppContext::get_request());
 		return $object->view;
 	}
