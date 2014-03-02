@@ -13,6 +13,15 @@ optgroup, select, label, button, input[type=radio], input[type=checkbox], .butto
 input[type=checkbox] { border:none; background:none; }
 button::-moz-focus-inner, .button::-moz-focus-inner{ border:0; padding:0; }
 
+div,  textarea, table, td, th, code, pre, samp {
+	word-wrap:break-word;
+	word-break:break-word;
+	hyphens:auto;
+	-ms-hyphens:auto;
+	-moz-hyphens:auto;
+	-webkit-hyphens:auto;
+}
+
 hr {
     background:#C4CED6;
     border:none;
@@ -30,6 +39,8 @@ p {
 }
 
 pre { white-space:pre-wrap; }
+
+
 
 /* Alignements */
 .inline { display:inline !important; }

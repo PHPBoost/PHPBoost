@@ -11,7 +11,6 @@ section, article {
 	vertical-align:top;
 }
 
-aside#menu-left + aside#menu-right + div#main section article { width:100% }
 aside#menu-left + aside#menu-right + div#main section .content { padding:0px 5px; }
 aside#menu-left + aside#menu-right + div#main section .form-element,
 aside#menu-left + aside#menu-right + div#main section .form-element-textarea { margin:0px; }
