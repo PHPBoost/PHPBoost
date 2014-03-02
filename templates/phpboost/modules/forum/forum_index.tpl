@@ -22,7 +22,7 @@
 					&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum_link_cat">{forums_list.cats.NAME}</a>
 				</span>
 				<span style="float:right;margin-right:5px;">
-					<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" /></a>
+					<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
 				</span>
 			</div>
 		</div>
@@ -47,7 +47,7 @@
 						</td>
 						# ELSE #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
-							<img src="{PICTURES_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" alt="" />
+							<img src="{PICTURES_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" alt="" style="max-width:25px;"/>
 						</td>
 						<td class="forum_sous_cat" style="min-width:150px;">
 							<a href="{forums_list.subcats.U_FORUM_VARS}">{forums_list.subcats.NAME}</a>
@@ -56,12 +56,7 @@
 							<span class="smaller">{forums_list.subcats.SUBFORUMS}</span>
 						</td>
 						<td class="forum_sous_cat_compteur_nbr forum_sous_cat_compteur" >
-							{forums_list.subcats.NBR_TOPIC}<BR />{forums_list.subcats.NBR_MSG}
-						</td>
-						<td class="forum_sous_cat_compteur_text forum_sous_cat_compteur" >
-							{L_TOPIC}
-							<BR />
-							{L_MESSAGE}
+							{forums_list.subcats.NBR_TOPIC} {L_TOPIC}<BR />{forums_list.subcats.NBR_MSG} {L_MESSAGE}
 						</td>
 						<td class="forum_sous_cat_last">
 							{forums_list.subcats.U_LAST_TOPIC}

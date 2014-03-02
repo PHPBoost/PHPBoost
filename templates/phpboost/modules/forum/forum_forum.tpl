@@ -46,10 +46,7 @@
 								<span class="smaller">{subcats.SUBFORUMS}</span>
 							</td>
 							<td class="forum_sous_cat_compteur_nbr forum_sous_cat_compteur">
-								{subcats.NBR_TOPIC}<BR />{subcats.NBR_MSG}
-							</td>
-							<td class="forum_sous_cat_compteur_text forum_sous_cat_compteur">
-								{L_TOPIC}<BR />{L_MESSAGE}
+								{subcats.NBR_TOPIC} {L_TOPIC}<BR />{subcats.NBR_MSG} {L_MESSAGE}
 							</td>
 							<td class="forum_sous_cat_last">
 								{subcats.U_LAST_TOPIC}
@@ -91,7 +88,7 @@
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
 				<span style="float:right;">
 					# IF IDCAT #
-					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign-middle" /></a>
+					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
 					# ENDIF #
 					{PAGINATION}
 				</span>
