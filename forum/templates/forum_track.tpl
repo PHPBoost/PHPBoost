@@ -15,7 +15,7 @@
 				<div class="module_top_l"></div>
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					<span style="float:left;">
+					<span>
 						&bull; {U_FORUM_CAT}
 					</span>
 					# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
@@ -25,7 +25,7 @@
 					<table class="module-table forum_table">
 						<thead>
 							<tr class="forum_text_column">
-								<th>{L_TOPIC}</td>
+								<th style="width:120px;">{L_TOPIC}</td>
 								<th style="width:100px;">{L_AUTHOR}</td>
 								<th style="width:60px;">{L_MESSAGE}</td>
 								<th style="width:60px;">{L_VIEW}</td>

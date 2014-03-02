@@ -80,7 +80,7 @@
 		-->
 		</script>
 		
-		<div id="forum_top" class="options">
+		<div id="forum_top">
 			<div class="forum_title_l"></div>
 			<div class="forum_title_r"></div>
 			<div class="forum_title">

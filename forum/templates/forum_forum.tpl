@@ -10,7 +10,7 @@
 			<div class="module_position">
 				<div class="module_top_l"></div>
 				<div class="module_top_r"></div>
-				<div class="module_top options">
+				<div class="module_top">
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
 				</div>
@@ -73,7 +73,7 @@
 		<div class="module_position">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
-			<div class="module_top options">
+			<div class="module_top">
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
 				# IF C_POST_NEW_SUBJECT #
 					&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>

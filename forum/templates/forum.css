@@ -19,15 +19,17 @@ a.forum_link_pseudo:hover {
 }
 /* Barre du titre du forum */
 #forum_top {
-	float:none;
-	padding:15px;
-	margin-bottom:20px;
+	margin:5px 0px 15px 0px;
+	background:#EEEEEE;
+	border:1px solid #DDDDDD;
+	border-radius:3px;
 }
 
 #forum_bottom {
-	float:none;
-	padding:15px;
-	margin-top:16px;
+	margin:15px 0px 5px 0px;
+	background:#EEEEEE;
+	border:1px solid #DDDDDD;
+	border-radius:3px;
 }
 
 .forum_title_l{
@@ -39,7 +41,7 @@ a.forum_link_pseudo:hover {
 	width:5px;
 }
 .forum_title{
-	margin:auto;
+	margin:10px;
 }
 .forum_title h2{ /* Titre du forum */
 	font-size:14px;
@@ -57,12 +59,12 @@ a.forum_link_pseudo:hover {
 }
 
 #forum_top .forum_links{
-	margin-top:8px;
+	margin:9px;
 	border-top:1px solid #CCC;
 }
 
 #forum_bottom .forum_links{
-	margin-bottom:8px;
+	margin:9px;
 	border-bottom:1px solid #CCC;
 }
 .forum_notread{ /* Message non lus */
@@ -163,7 +165,7 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 
 /* Module */
 .module_position {
-    width:96%;
+    width:98%;
     margin:auto;
 	float:none;
 }
@@ -175,8 +177,9 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 }
 .module_top{
 	padding:8px;
-	float:none;
-	margin:0;
+	background:#EEEEEE;
+	border:1px solid #DDDDDD;
+	border-radius:3px;
 }
 .module_top a:not(.*button) {
 	color:#334455;
@@ -194,7 +197,7 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 	min-height:20px;
 	height:auto;
 	padding:10px 5px 10px 5px;
-	background:#ECEFFA;
+	background:#EEEEEE;
 	border:1px solid #D1D4DF;
 	color:#334455;
 	font-weight:normal;
@@ -225,7 +228,7 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
     width:96%;
     margin:5px auto;
     background:#f0f3ff;
-    border: 1px solid #D1D4DF;
+	border:1px solid #D1D4DF;
 }
 
 /* Case contenant l'ensemble du message */
@@ -268,7 +271,6 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
 /* Pseudo du membre */
 .msg_pseudo_mbr {
     width:127px;
-    background:#366393;
     padding:2px 4px;
     float:left;
     margin-right:0px !important;
@@ -280,12 +282,11 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
 .msg_top_row {
 	height:auto;
     min-height:26px;
-    background:#366393;
+    background:#4D4C50;
     font-size:11px;
     color:#e8eaeb;
-    border-top:1px solid #325889;
-    border-bottom:1px solid #325889;
-    padding:4px 0px 0px 127px;
+    border:1px solid #444444;
+    padding:4px 5px 0px 130px;
     overflow:hidden !important;
 }
 
