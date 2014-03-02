@@ -105,7 +105,7 @@ a.forum_link_pseudo:hover {
 	color:#000000;
 	text-align:center; 
 }
-.forum_sous_cat_compteur_nbr{ text-align:right; }
+.forum_sous_cat_compteur_nbr{ text-align:right; width:100px; }
 .forum_sous_cat_compteur_text{ text-align:left; padding-left:4px; }
 
 /* Case compteur dernier topic/dernier message */
@@ -274,18 +274,6 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 	height:4px;
 }
 
-.forum_title input#search{
-	background:#5e8ab6 url('images/search.png') 5% 50% no-repeat;
-	-moz-border-radius:4px;
-	-khtml-border-radius:4px;
-	-webkit-border-radius:4px;
-	border-radius:4px;
-	border:1px solid #2c4866;
-	border-bottom-color:#6d97c0;
-	border-right-color:#6d97c0;
-	padding:3px 0px 0px 25px;	
-	color:#F8F8F8;
-}
 .forum_nbr_post{ text-align:center; }
 
 span.forum_nbr{
@@ -357,3 +345,41 @@ a.pbt-button-add{
 .forum_sous_cat_pbt{
 	border-bottom: 1px solid #e0e6e9;
 }
+
+.fa-announce:before,
+.fa-announce-new:before { content: "\f075"; }
+
+.fa-announce-hot:before
+.fa-announce-new-hot:before { content: "\f086"; }
+
+.fa-announce-lock:before,
+.fa-announce-new-lock:before { content: "\f023"; }
+
+.fa-announce-post:before,
+.fa-announce-new-post:before { content: "\f071"; }
+
+.fa-announce-top:before,
+.fa-announce-new-top:before { content: "\f06a"; }
+
+.fa-announce:before,
+.fa-announce-hot:before { color:#D1D2D4; }
+
+.fa-announce-new:before,
+.fa-announce-new-hot:before { color:#676A74; }
+
+.fa-msg-display:before { content: "\f00c"; color:#478948; }
+.fa-msg-not-display:before { content: "\f00d"; color:#BA4B49; }
+
+.fa-msg-track:before { content: "\f004"; color:#BA4B49; }
+.fa-msg-not-track:before { content: "\f004"; color:#000000; }
+
+.fa-pm-track:before { content: "\f0e0"; color:#4372AA; }
+.fa-pm-not-track:before { content: "\f0e0"; color:#000000; }
+
+.fa-mail-track:before { content: "\f003"; color:#4372aa; }
+.fa-mail-not-track:before { content: "\f003"; color:#000000; }
+
+.fa-lastview:before { content: "\f017"; color:#334455; }
+.fa-notread:before { content: "\f0f6"; color:#DEDEDE; }
+
+.fa-syndication:before { font-weight:normal; font-size:16px; }
