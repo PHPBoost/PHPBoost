@@ -115,5 +115,5 @@
 		</section>
 	</div>
 	
-	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
+	<footer></footer>
 </section>
