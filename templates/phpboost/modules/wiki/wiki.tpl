@@ -53,7 +53,7 @@
 						
 						<ul class="bb-ul no-list">
 							# START cat.list_cats #
-							<li class="bb-li">
+							<li>
 								<i class="fa fa-folder"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
 							</li>
 							# END cat.list_cats #
@@ -73,7 +73,7 @@
 		
 						<ul class="bb-ul no-list">
 							# START cat.list_art #
-							<li class="bb-li">
+							<li>
 								<i class="fa fa-file-text"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
 							</li>
 							# END cat.list_art #

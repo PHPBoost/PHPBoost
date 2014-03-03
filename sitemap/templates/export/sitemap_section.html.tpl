@@ -1,5 +1,5 @@
 	# INCLUDE LINK #
-	<ul class="bb-ul">
+	<ul>
 		# START element #
 		<li># INCLUDE element.ELEMENT #</li>
 		# END element #
