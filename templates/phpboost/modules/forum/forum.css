@@ -7,6 +7,8 @@ table {
 	border:none;
 	background:#F9F9F9;
 }
+
+table.forum_table tbody, table.forum_table tbody tr, table.forum_table tbody tr td { border:none; }
  
 /* Classe du lien du pseudo sur forum */
 a.forum_link_pseudo{
@@ -25,19 +27,9 @@ a.forum_link_pseudo:hover {
 .forum_title{
 	color:#334455;
 	background-color:#336397;
-	background-image:-webkit-linear-gradient(bottom,#336397,#3e79af);
-	background-image:-moz-linear-gradient(bottom,#336397,#3e79af);
-	background-image:-ms-linear-gradient(bottom,#336397,#3e79af);
-	background-image:-o-linear-gradient(bottom,#336397,#3e79af);
-	background-image:linear-gradient(bottom,#336397,#3e79af);
+	background-image:linear-gradient(to top,#336397 0%,#3e79af 100%);
 	border:1px solid #284565;
 	border-bottom:1px solid #353535;
-	-moz-border-radius-topleft: 4px;
-	-khtml-border-radius-topleft: 4px;
-	-webkit-border-top-left-radius: 4px;
-	-moz-border-radius-topright: 4px;
-	-khtml-border-radius-topright: 4px;
-	-webkit-border-top-right-radius: 4px;
 	border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
 	padding:14px;
@@ -97,11 +89,12 @@ a.forum_link_pseudo:hover {
 /* Case des liens sous-catégories */
 .forum_sous_cat{
 	padding:6px;
+	text-align:left;
 }
 
 /* Case compteur message/topic */
 .forum_sous_cat_compteur{	
-	width:60px;
+	width:70px;
 	color:#000000;
 	text-align:center; 
 }
@@ -346,6 +339,161 @@ a.pbt-button-add{
 	border-bottom: 1px solid #e0e6e9;
 }
 
+/* Messages postés par les membres 
+--------------------------------------*/
+/* Classe du lien du pseudo des messages */
+a.msg_link_pseudo {
+	font-size:11px;
+    color:#e8eaeb;
+    font-weight:bold;
+}
+
+a.msg_link_pseudo:hover { color:#f2fbff; }
+
+/* Conteneur des messages */
+.msg_position { 
+    width:98%;
+    margin:5px auto;
+    background:#f0f3ff;
+}
+
+/* Case contenant l'ensemble du message */
+.msg_container, .msg_container2 {
+    background: #FCFCFD;
+    overflow:hidden !important;
+    height:auto !important;
+    clear:both;
+}
+
+/*  Case contenant l'ensemble du message => Couleur alternative */
+.msg_container2 { background: #FCFCFD; }
+
+/* Barre superieur des messages */
+.msg_top_l{
+	margin-right:0px !important;
+	height:34px;
+	width:29px;
+	background:#ECEFFA;
+	float:left;
+}
+
+.msg_top_r{
+	margin-left:0px !important;
+	height:34px;
+	width:21px;
+	background:#ECEFFA;
+	float:right;
+}
+
+.msg_top {
+	height:25px;
+	background:#ECEFFA;
+	padding:9px 0px 0px 6px;
+	margin:0px 15px 0px 20px;
+}
+
+.msg_top a { color:#3F5164; }
+
+/* Pseudo du membre */
+.msg_pseudo_mbr {
+	width: 127px;
+	float: left;
+	margin-left: -134px !important;
+}
+
+/* Case au dessus du message, indique la date et les boutons d'administration */
+.msg_top_row {
+	height:auto;
+    min-height:26px;
+    font-size:12px;
+	background-color:#336397;
+	background-image:linear-gradient(to top,#336397 0%,#3e79af 100%);
+    color:#e8eaeb;
+    border-bottom:1px solid #D1D4DF;
+    padding:3px 6px 0px 140px;
+    overflow:hidden !important;
+}
+
+.msg_top_row a {
+	color:#e8eaeb;
+}
+
+.msg_info_mbr { /* Case des informations du membre */
+    background:#f0f3ff;
+    width:136px;
+    padding:4px;
+    float:left;
+    font-size:10px;
+    border-right:1px dotted #C4CED6;
+}
+
+.msg_info_mbr img {	max-width: 120px; }
+
+/* Case contenant l'ensemble du message, infos membre + contenu */
+.msg_contents_container {
+	background:#F0F3FF; 
+
+}
+.msg_contents_container_test {
+		border-left:1px solid #D1D4DF;
+	border-right:1px solid #D1D4DF;
+	}
+
+/* Case du message */
+.msg_contents, .msg_contents2 { 
+    margin-left:135px;
+    background: #FCFCFD;
+    padding:0px 5px;
+    border-left:1px dotted #C4CED6;
+}
+
+/* Case du message => Couleur alternative */
+.msg_contents2 { background: #FCFCFD; }
+
+/* Case du contents du message, évite que les images trop grandes soient déformées */
+.msg_contents_overflow {
+    width:99%;
+    height:auto;
+    min-height:80px;
+    overflow:auto;
+    padding:10px 0px;
+    word-wrap:break-word;
+}
+
+.msg_sign_container {
+	background:#F0F3FF;
+	border:1px solid #D1D4DF;
+	border-top:none;
+}
+
+/* Signature du membre */
+.msg_sign, .msg_sign2 { 
+   	background: #FCFCFD;
+    padding:4px;
+    font-size:11px;
+    margin-left:135px;
+    border-left:1px dotted #C4CED6;
+}
+
+/* Signature du membre => Couleur alternative */
+.msg_sign2 { background: #FCFCFD; }
+
+/* Signature du membre, fixe la hauteur maximale */
+.msg_sign_overflow { 
+    height:auto !important;
+    width:99%;
+    max-height:80px;
+    max-width:99%;
+    overflow:hidden;
+}
+
+.msg_bottom {
+    height:23px;
+    padding:6px 6px 0px 6px;
+    border:none;
+    background:none;
+}
+
 .fa-announce:before,
 .fa-announce-new:before { content: "\f075"; }
 
@@ -380,6 +528,6 @@ a.pbt-button-add{
 .fa-mail-not-track:before { content: "\f003"; color:#000000; }
 
 .fa-lastview:before { content: "\f017"; color:#334455; }
-.fa-notread:before { content: "\f0f6"; color:#DEDEDE; }
+.fa-notread:before { content: "\f0f6"; color:#363636; }
 
 .fa-syndication:before { font-weight:normal; font-size:16px; }

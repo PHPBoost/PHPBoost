@@ -56,7 +56,12 @@
 							<span class="smaller">{forums_list.subcats.SUBFORUMS}</span>
 						</td>
 						<td class="forum_sous_cat_compteur_nbr forum_sous_cat_compteur" >
-							{forums_list.subcats.NBR_TOPIC} {L_TOPIC}<BR />{forums_list.subcats.NBR_MSG} {L_MESSAGE}
+							{forums_list.subcats.NBR_TOPIC}<BR />{forums_list.subcats.NBR_MSG}
+						</td>
+						<td class="forum_sous_cat_compteur_text forum_sous_cat_compteur" >
+							{L_TOPIC}
+							<BR />
+							{L_MESSAGE}
 						</td>
 						<td class="forum_sous_cat_last">
 							{forums_list.subcats.U_LAST_TOPIC}
