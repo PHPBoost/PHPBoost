@@ -9,16 +9,17 @@
 				# INCLUDE wiki_tools #
 				
 				# START warning #
-					<br /><br />
-					<div class="row3">{warning.UPDATED_ARTICLE}</div>
-					<br />
+				<div id="id-message-helper" class="message-helper warning">
+					<i class="fa fa-warning"></i>
+					<div class="message-helper-content">{warning.UPDATED_ARTICLE}</div>
+				</div>
 				# END warning #
 						
 				# START redirect #
 					<div style="width:30%;">
 					{redirect.REDIRECTED}
 						# START redirect.remove_redirection #
-							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" onclick="javascript: return confirm('{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}');"><img src="{PICTURES_DATA_PATH}/images/delete.png" alt="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="valign-middle" /></a>
+							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="fa fa-delete" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}"></a>
 						# END redirect.remove_redirection #
 					</div>
 					<br />
@@ -26,12 +27,12 @@
 				
 				# START status #
 					<br /><br />
-					<div class="row3">{status.ARTICLE_STATUS}</div>
+					<div class="blockquote">{status.ARTICLE_STATUS}</div>
 					<br />
 				# END status #
 				
 				# START menu #
-					<div class="row3" style="width:50%">
+					<div class="options" style="float:none;width:50%">
 						<div style="text-align:center;"><strong>{L_TABLE_OF_CONTENTS}</strong></div>
 						{menu.MENU}
 					</div>
@@ -53,9 +54,7 @@
 						<ul class="bb-ul no-list">
 							# START cat.list_cats #
 							<li class="bb-li">
-								<img src="{PICTURES_DATA_PATH}/images/cat.png" class="valign-middle" alt="" />
-								&nbsp;
-								<a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
+								<i class="fa fa-folder"></i> <a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
 							</li>
 							# END cat.list_cats #
 						</ul>
