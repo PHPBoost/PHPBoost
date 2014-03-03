@@ -6,7 +6,7 @@
 			{
 				for(i = 0; i < {NBR_TOPICS}; i++)
 					document.getElementById(id + i).checked = status;
-			}	 
+			}
 		-->
 		</script>
 		
@@ -25,19 +25,19 @@
 					<table class="module-table forum_table">
 						<thead>
 							<tr class="forum_text_column">
-								<th style="width:120px;">{L_TOPIC}</td>
-								<th style="width:100px;">{L_AUTHOR}</td>
-								<th style="width:60px;">{L_MESSAGE}</td>
-								<th style="width:60px;">{L_VIEW}</td>
-								<th style="width:40px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> {L_PM}</td>
-								<th style="width:50px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> {L_MAIL}</td>
-								<th style="width:85px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> {L_DELETE}</td>
-								<th style="width:150px;">{L_LAST_MESSAGE}</td>
+								<th style="width:120px;">{L_TOPIC}</th>
+								<th style="width:100px;">{L_AUTHOR}</th>
+								<th style="width:60px;">{L_MESSAGE}</th>
+								<th style="width:60px;">{L_VIEW}</th>
+								<th style="width:40px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> {L_PM}</th>
+								<th style="width:50px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> {L_MAIL}</th>
+								<th style="width:85px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> {L_DELETE}</th>
+								<th style="width:150px;">{L_LAST_MESSAGE}</th>
 							</tr>
 						</thead>
 					</table>
-				</div>			
-			</div>	
+				</div>
+			</div>
 			<div class="module_position">
 				<div class="module_contents forum_contents">
 					<table class="module-table forum_table">
@@ -47,10 +47,10 @@
 								<td colspan="8" class="forum_sous_cat" style="text-align:center;">
 									<strong>{L_NO_TRACKED_TOPICS}</strong>
 								</td>
-							</tr>	
+							</tr>
 							# ENDIF #
 	
-							# START topics #		
+							# START topics #
 							<tr>
 								<td class="forum_sous_cat" style="width:25px;text-align:center;">
 									# IF NOT topics.C_HOT_TOPIC # 

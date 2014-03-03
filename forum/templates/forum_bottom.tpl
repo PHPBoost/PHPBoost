@@ -31,8 +31,8 @@
 						&nbsp;| <label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked"></label>
 						&nbsp;| <button type="submit" name="connect" value="true">{L_CONNECT}</button></p>
 					</form>
-					# ENDIF #	
-				# ENDIF #	
+					# ENDIF #
+				# ENDIF #
 					
 				# IF USERS_ONLINE #
 				<span style="float:left;">
@@ -43,28 +43,28 @@
 				<div class="forum_online_select_cat">
 					# IF SELECT_CAT #
 					<form action="{U_CHANGE_CAT}" method="post">
-                        <div>
-                            <select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 4) == '----') document.location = 'forum{U_ONCHANGE}'; else document.location = '{U_ONCHANGE_CAT}';" class="forum_online_select">
-                                {SELECT_CAT}
-                            </select>
-                        </div>
+						<div>
+							<select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 4) == '----') document.location = 'forum{U_ONCHANGE}'; else document.location = '{U_ONCHANGE_CAT}';" class="forum_online_select">
+								{SELECT_CAT}
+							</select>
+						</div>
 					</form>
 					# ENDIF #
 						
 					# IF C_MASS_MODO_CHECK #
 					<form action="action.php?token={TOKEN}">
-                        <div>
-                            {L_FOR_SELECTION}: 
-                            <select name="massive_action_type">
-                                <option value="change">{L_CHANGE_STATUT_TO}</option>
-                                <option value="changebis">{L_CHANGE_STATUT_TO_DEFAULT}</option>
-                                <option value="move">{L_MOVE_TO}</option>
-                                <option value="lock">{L_LOCK}</option>
-                                <option value="unlock">{L_UNLOCK}</option>
-                                <option value="del">{L_DELETE}</option>
-                            </select>
-                            <button type="submit" value="true" name="valid">{L_GO}</button>
-                        </div>
+						<div>
+							{L_FOR_SELECTION}: 
+							<select name="massive_action_type">
+								<option value="change">{L_CHANGE_STATUT_TO}</option>
+								<option value="changebis">{L_CHANGE_STATUT_TO_DEFAULT}</option>
+								<option value="move">{L_MOVE_TO}</option>
+								<option value="lock">{L_LOCK}</option>
+								<option value="unlock">{L_UNLOCK}</option>
+								<option value="del">{L_DELETE}</option>
+							</select>
+							<button type="submit" value="true" name="valid">{L_GO}</button>
+						</div>
 					</form>
 					# ENDIF #
 				</div>
@@ -101,6 +101,7 @@
 					<span id="forum_track">
 						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" class="small">{L_TRACK_DEFAULT}</a>
 					</span>
+					&bull;
 					<script>
 					<!--
 					document.getElementById('forum_track').style.display = 'none';

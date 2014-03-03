@@ -1,4 +1,4 @@
-		<span id="go_top"></span>	
+		<span id="go_top"></span>
 		
 		# INCLUDE forum_top #
 		
@@ -81,7 +81,7 @@
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
-				{	
+				{
 					if( document.getElementById('forum_track_pm_img') )
 						document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-pm-not-track"></i>' : '<i class="fa fa-pm-track"></i>';
 					if( document.getElementById('forum_track_pm_msg') )
@@ -102,7 +102,7 @@
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
-				{	
+				{
 					if( document.getElementById('forum_track_mail_img') )
 						document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-mail-not-track"></i>' : '<i class="fa fa-mail-track"></i>';
 					if( document.getElementById('forum_track_mail_msg') )
@@ -249,7 +249,7 @@
 						<p style="text-align:center;">{msg.USER_AVATAR}</p>
 						<p style="text-align:center;">{msg.USER_GROUP}</p>	
 						{msg.USER_DATE}<br />
-						{msg.USER_MSG}<br />	
+						{msg.USER_MSG}<br />
 					</div>
 					<div class="msg_contents{msg.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
@@ -322,7 +322,7 @@
 				<div>
 					<div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
 					{KERNEL_EDITOR}
-					<textarea rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
+					<label><textarea rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 					<fieldset class="fieldset-submit" style="padding-top:17px;margin-bottom:0px;">
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
