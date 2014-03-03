@@ -1,4 +1,4 @@
-		<span id="go_top"></span>	
+		<span id="go_top"></span>
 		
 		# INCLUDE forum_top #
 		
@@ -7,7 +7,7 @@
 		function check_form_msg(){
 			# IF C_BBCODE_TINYMCE_MODE #
 				tinyMCE.triggerSave();
-			# ENDIF #	
+			# ENDIF #
 			
 			if(document.getElementById('contents').value == "") {
 				alert("{L_REQUIRE_MESSAGE}");
@@ -17,9 +17,6 @@
 		}
 		function XMLHttpRequest_del(idmsg)
 		{
-			if( document.getElementById('dimg' + idmsg) )
-				document.getElementById('dimg' + idmsg).src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
-			
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&del=1&idm=' + idmsg + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
@@ -28,19 +25,14 @@
 					if( document.getElementById('d' + idmsg) )
 						document.getElementById('d' + idmsg).style.display = 'none';
 				}
-				else if( xhr_object.readyState == 4 && xhr_object.responseText == '-1' )
-				{	
-					if( document.getElementById('dimg' + idmsg) )
-						document.getElementById('dimg' + idmsg).src = '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png';
-				}
 			}
 			xmlhttprequest_sender(xhr_object, null);
 		}
 		function XMLHttpRequest_change_statut()
 		{
-			var idtopic = {IDTOPIC};			
+			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_change_img') )
-				document.getElementById('forum_change_img').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
+				document.getElementById('forum_change_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 			
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?msg_d=' + idtopic + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
@@ -50,7 +42,7 @@
 					document.getElementById('display_msg_title').innerHTML = xhr_object.responseText == '1' ? "{L_DISPLAY_MSG}" + ' ' : '';
 					document.getElementById('display_msg_title2').innerHTML = xhr_object.responseText == '1' ? "{L_DISPLAY_MSG}" + ' ' : '';
 					if( document.getElementById('forum_change_img') )
-						document.getElementById('forum_change_img').src = xhr_object.responseText == '1' ? '{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png' : '{PATH_TO_ROOT}/templates/{THEME}/images/processed_mini.png';
+						document.getElementById('forum_change_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-msg-not-display"></i>' : '<i class="fa fa-msg-display"></i>';
 					if( document.getElementById('forum_change_msg') )
 						document.getElementById('forum_change_msg').innerHTML = xhr_object.responseText == '1' ? "{L_EXPLAIN_DISPLAY_MSG_BIS}" : "{L_EXPLAIN_DISPLAY_MSG}";
 				}
@@ -62,7 +54,7 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_track_img') )
-				document.getElementById('forum_track_img').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
+				document.getElementById('forum_track_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 			
 			xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&' + (is_track ? 'ut' : 't') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
@@ -70,7 +62,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
 				{	
 					if( document.getElementById('forum_track_img') )
-						document.getElementById('forum_track_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/untrack_mini.png' : '{PICTURES_DATA_PATH}/images/track_mini.png';
+						document.getElementById('forum_track_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-msg-not-track"></i>' : '<i class="fa fa-msg-track"></i>';
 					if( document.getElementById('forum_track_msg') )
 						document.getElementById('forum_track_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNTRACK}" : "{L_TRACK}";
 					is_track = xhr_object.responseText == '1' ? true : false;
@@ -83,15 +75,15 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_track_pm_img') )
-				document.getElementById('forum_track_pm_img').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
+				document.getElementById('forum_track_pm_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 			
 			xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&' + (is_track_pm ? 'utp' : 'tp') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
-				{	
+				{
 					if( document.getElementById('forum_track_pm_img') )
-						document.getElementById('forum_track_pm_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/untrack_pm_mini.png' : '{PICTURES_DATA_PATH}/images/track_pm_mini.png';
+						document.getElementById('forum_track_pm_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-pm-not-track"></i>' : '<i class="fa fa-pm-track"></i>';
 					if( document.getElementById('forum_track_pm_msg') )
 						document.getElementById('forum_track_pm_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE_PM}" : "{L_SUSCRIBE_PM}";
 					is_track_pm = xhr_object.responseText == '1' ? true : false;
@@ -104,15 +96,15 @@
 		{
 			var idtopic = {IDTOPIC};
 			if( document.getElementById('forum_track_mail_img') )
-				document.getElementById('forum_track_mail_img').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
+				document.getElementById('forum_track_mail_img').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 			
 			xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&' + (is_track_mail ? 'utm' : 'tm') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
-				{	
+				{
 					if( document.getElementById('forum_track_mail_img') )
-						document.getElementById('forum_track_mail_img').src = xhr_object.responseText == '1' ? '{PICTURES_DATA_PATH}/images/untrack_mail_mini.png' : '{PICTURES_DATA_PATH}/images/track_mail_mini.png';
+						document.getElementById('forum_track_mail_img').innerHTML = xhr_object.responseText == '1' ? '<i class="fa fa-mail-not-track"></i>' : '<i class="fa fa-mail-track"></i>';
 					if( document.getElementById('forum_track_mail_msg') )
 						document.getElementById('forum_track_mail_msg').innerHTML = xhr_object.responseText == '1' ? "{L_UNSUSCRIBE}" : "{L_SUSCRIBE}";
 					is_track_mail = xhr_object.responseText == '1' ? true : false;
@@ -120,25 +112,11 @@
 			}
 			xmlhttprequest_sender(xhr_object, null);
 		}
+		
 		function del_msg(idmsg)
 		{
 			if( confirm('{L_DELETE_MESSAGE}') )
 				XMLHttpRequest_del(idmsg);
-		}
-		function Confirm_del_topic() {
-			return confirm("{L_ALERT_DELETE_TOPIC}");
-		}		
-		function Confirm_lock_topic() {
-			return confirm("{L_ALERT_LOCK_TOPIC}");
-		}		
-		function Confirm_unlock_topic() {
-			return confirm("{L_ALERT_UNLOCK_TOPIC}");
-		}		
-		function Confirm_move_topic() {
-			return confirm("{L_ALERT_MOVE_TOPIC}");
-		}
-		function Confirm_cut_topic() {
-			return confirm("{L_ALERT_CUT_TOPIC}");
 		}
 		-->
 		</script>
@@ -151,16 +129,16 @@
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				
 				<span style="float:right;">
-					{PAGINATION} 
+					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-ban"></a>
+					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}"></a>
 						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-unban"></a>
+					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"></a>
 						# ENDIF #
 					
-					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{PICTURES_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign-middle" /></a>
+					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
 					# ENDIF #
 				</span>
 			</div>
@@ -170,38 +148,47 @@
 		<div class="module_position">
 			<div class="module_contents">
 				<form method="post" action="action{U_POLL_ACTION}">
-					<table class="module-table" style="width:75%">
-						<tr>
-							<th>{L_POLL}: {QUESTION}</th>
-						</tr>
-						# START poll_radio #
-						<tr>
-							<td style="font-size:10px;">
-								<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}"> {poll_radio.ANSWERS}</label>
-							</td>
-						</tr>
-						# END poll_radio #
-						# START poll_checkbox #
-						<tr>
-							<td>
-								<label><input type="{poll_checkbox.TYPE}" name="{poll_checkbox.NAME}" value="{poll_checkbox.NAME}"> {poll_checkbox.ANSWERS}</label>
-							</td>
-						</tr>
-						# END poll_checkbox #
-						# START poll_result #
-						<tr>
-							<td style="font-size:10px;">
-								{poll_result.ANSWERS}
-								<table width="95%">
-									<tr>
-										<td>
-											<img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll_left.png" height="8px" width="" alt="{poll_result.PERCENT}%" title="{poll_result.PERCENT}%" /><img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll.png" height="8px" width="{poll_result.WIDTH}" alt="{poll_result.PERCENT}%" title="{poll_result.PERCENT}%" /><img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll_right.png" height="8px" width="" alt="{poll_result.PERCENT}%" title="{poll_result.PERCENT}%" /> {poll_result.PERCENT}% [{poll_result.NBRVOTE} {L_VOTE}]
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-						# END poll_result #
+					<table style="width:75%;">
+						<thead>
+							<tr>
+								<th>{L_POLL}: {QUESTION}</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START poll_radio #
+							<tr>
+								<td style="font-size:10px;">
+									<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}"> {poll_radio.ANSWERS}</label>
+								</td>
+							</tr>
+							# END poll_radio #
+							# START poll_checkbox #
+							<tr>
+								<td>
+									<label><input type="{poll_checkbox.TYPE}" name="{poll_checkbox.NAME}" value="{poll_checkbox.NAME}"> {poll_checkbox.ANSWERS}</label>
+								</td>
+							</tr>
+							# END poll_checkbox #
+							# START poll_result #
+							<tr>
+								<td style="font-size:10px;">
+									{poll_result.ANSWERS}
+									<table width="95%">
+										<tr>
+											<td>
+												<div class="progressbar-container" title="{poll_result.PERCENT}%">
+													<span class="progressbar-infos">
+														{poll_result.PERCENT}% [{poll_result.NBRVOTE} {L_VOTE}]
+													</span>
+													<div class="progressbar" style="width:{poll_result.PERCENT}%"></div>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							# END poll_result #
+						</tbody>
 					</table>
 					<br />
 					
@@ -224,23 +211,22 @@
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
 						# IF msg.C_FORUM_USER_LOGIN # 
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{msg.FORUM_ONLINE_STATUT_USER}.png" alt="" class="valign-middle" />
-							<a class="msg_link_pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
+							<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a class="msg_link_pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
 						# ELSE # 
 							<em>{L_GUEST}</em>
 						# ENDIF #
 					</div>
-					<span style="float:left;">&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> {msg.FORUM_MSG_DATE}</span>
-					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" /></a>
+					<span style="float:left;"><a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}</span>
+					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a>
 					# IF msg.C_FORUM_MSG_EDIT # 
-					&nbsp;&nbsp;<a href="post{msg.U_FORUM_MSG_EDIT}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" /></a>
+					<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
 					# ENDIF #
 					
 					# IF msg.C_FORUM_MSG_DEL #
 					&nbsp;
 						# IF msg.C_FORUM_MSG_DEL_MSG #
-					<a href="action{msg.U_FORUM_MSG_DEL}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimgnojs{msg.ID}" /></a>
-					<img style="cursor:pointer;display:none" onclick="del_msg('{msg.ID}');" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimg{msg.ID}" /> 
+					<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" id="dimgnojs{msg.ID}" class="fa fa-delete"></a>
+					<a style="cursor:pointer;display:none" onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" title="{L_DELETE}" class="fa fa-delete"></a> 
 					<script>
 					<!--
 						document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
@@ -248,13 +234,13 @@
 					-->
 					</script>
 						# ELSE #
-					<a href="action{msg.U_FORUM_MSG_DEL}" title="" onclick="javascript:return Confirm_del_topic();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a> 
+					<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="{L_ALERT_DELETE_TOPIC}"></a> 
 						# ENDIF #
 					# ENDIF #
 					
-					# IF msg.C_FORUM_MSG_CUT # &nbsp;&nbsp;<a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" onclick="javascript:return Confirm_cut_topic();"><img src="{PICTURES_DATA_PATH}/images/cut.png" alt="{L_CUT_TOPIC}" /></a> # ENDIF #
+					# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" class="fa fa-cut" data-confirmation="{L_ALERT_CUT_TOPIC}"></a> # ENDIF #
 					
-					&nbsp;&nbsp;<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>&nbsp;&nbsp;</span>
+					<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><i class="fa fa-arrow-up"></i></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><i class="fa fa-arrow-down"></i></a></span>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">
@@ -265,7 +251,7 @@
 						{msg.USER_SEX}
 						{msg.USER_DATE}<br />
 						{msg.USER_MSG}<br />
-						{msg.USER_LOCAL}		
+						{msg.USER_LOCAL}
 					</div>
 					<div class="msg_contents{msg.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
@@ -299,7 +285,7 @@
 					&nbsp;
 					# IF msg.C_FORUM_MODERATOR # 
 					{msg.USER_WARNING}%
-					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/important.png" alt="{L_WARNING_MANAGEMENT}" class="valign-middle" /></a>
+					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}" class="fa fa-warning"></a>
 					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}" class="fa fa-lock"></a>
 					# ENDIF #
 				</span>&nbsp;
@@ -314,16 +300,16 @@
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				
 				<span style="float:right;">
-					{PAGINATION}
+					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-ban"></a>
+					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}"></a>
 						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}" class="fa fa-unban"></a>
+					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"></a>
 						# ENDIF #
 						
-					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{PICTURES_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign-middle" /></a>
+					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
 					# ENDIF #
 				</span>&nbsp;
 			</div>
@@ -342,14 +328,7 @@
 					<fieldset class="fieldset-submit" style="padding-top:17px;margin-bottom:0px;">
 						<legend>{L_SUBMIT}</legend>
 						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
-						&nbsp;&nbsp;
-						<script>
-						<!--				
-						document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button">');
-						-->
-						</script>
-						<noscript><div><input value="{L_PREVIEW}" type="submit" name="prw"></div></noscript>
-						&nbsp;&nbsp;
+						<button type="button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 						<button type="reset" value="true">{L_RESET}</button>
 					</fieldset>
 				</div>

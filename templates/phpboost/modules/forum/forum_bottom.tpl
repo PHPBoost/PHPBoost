@@ -1,3 +1,4 @@
+
 		
 		<div class="module_position">
 		# IF C_TOTAL_POST #
@@ -43,8 +44,8 @@
 						&nbsp;| <label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked"></label>
 						&nbsp;| <button type="submit" name="connect" value="true">{L_CONNECT}</button></p>
 					</form>
-					# ENDIF #	
-				# ENDIF #	
+					# ENDIF #
+				# ENDIF #
 					
 				# IF USERS_ONLINE #
 				<span style="float:left;">
@@ -55,31 +56,28 @@
 				<div class="forum_online_select_cat">
 					# IF SELECT_CAT #
 					<form action="{U_CHANGE_CAT}" method="post">
-                        <div>
-                            <select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 4) == '----') document.location = 'forum{U_ONCHANGE}'; else document.location = '{U_ONCHANGE_CAT}';" class="forum_online_select">
-                                {SELECT_CAT}
-                            </select>
-                            <noscript>
-                                <div><button type="submit" name="valid_change_cat" value="true">Go</button></div>
-                            </noscript>
-                        </div>
+						<div>
+							<select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 4) == '----') document.location = 'forum{U_ONCHANGE}'; else document.location = '{U_ONCHANGE_CAT}';" class="forum_online_select">
+								{SELECT_CAT}
+							</select>
+						</div>
 					</form>
 					# ENDIF #
 						
 					# IF C_MASS_MODO_CHECK #
 					<form action="action.php?token={TOKEN}">
-                        <div>
-                            {L_FOR_SELECTION}: 
-                            <select name="massive_action_type">
-                                <option value="change">{L_CHANGE_STATUT_TO}</option>
-                                <option value="changebis">{L_CHANGE_STATUT_TO_DEFAULT}</option>
-                                <option value="move">{L_MOVE_TO}</option>
-                                <option value="lock">{L_LOCK}</option>
-                                <option value="unlock">{L_UNLOCK}</option>
-                                <option value="del">{L_DELETE}</option>
-                            </select>
-                            <input type="submit" value="{L_GO}" name="valid">
-                        </div>
+						<div>
+							{L_FOR_SELECTION}: 
+							<select name="massive_action_type">
+								<option value="change">{L_CHANGE_STATUT_TO}</option>
+								<option value="changebis">{L_CHANGE_STATUT_TO_DEFAULT}</option>
+								<option value="move">{L_MOVE_TO}</option>
+								<option value="lock">{L_LOCK}</option>
+								<option value="unlock">{L_UNLOCK}</option>
+								<option value="del">{L_DELETE}</option>
+							</select>
+							<button type="submit" value="true" name="valid">{L_GO}</button>
+						</div>
 					</form>
 					# ENDIF #
 				</div>
@@ -105,21 +103,22 @@
 						<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
 					</span>
 					<script>
-					<!--				
+					<!--
 					document.getElementById('forum_change_statut').style.display = 'none';
-					document.write('<a href="javascript:XMLHttpRequest_change_statut()" class="small">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()" class="small"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
+					document.write('<a href="javascript:XMLHttpRequest_change_statut()" class="small" id="forum_change_img">{ICON_DISPLAY_MSG}</a> <a href="javascript:XMLHttpRequest_change_statut()" class="small"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
 					-->
 					</script>
 					&bull;
 					# ENDIF #
-					<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" class="fa fa-warning"></a> <a href="alert{U_ALERT}#go_bottom" class="small">{L_ALERT}</a>
+					<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" class="fa fa-warning"></a></a> <a href="alert{U_ALERT}#go_bottom" class="small">{L_ALERT}</a>
 					<span id="forum_track">
 						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" class="small">{L_TRACK_DEFAULT}</a>
 					</span>
+					&bull;
 					<script>
-					<!--				
+					<!--
 					document.getElementById('forum_track').style.display = 'none';
-					document.write('<a href="javascript:XMLHttpRequest_track()" class="small">{ICON_TRACK2}</a> <a href="javascript:XMLHttpRequest_track()" class="small"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>');
+					document.write('<a href="javascript:XMLHttpRequest_track()" class="small" id="forum_track_img">{ICON_TRACK}</a> <a href="javascript:XMLHttpRequest_track()" class="small"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>');
 					-->
 					</script>
 					&bull;
@@ -127,9 +126,9 @@
 						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom" class="small">{L_SUSCRIBE_PM_DEFAULT}</a>
 					</span>
 					<script>
-					<!--				
+					<!--
 					document.getElementById('forum_track_pm').style.display = 'none';
-					document.write('<a href="javascript:XMLHttpRequest_track_pm()" class="small">{ICON_SUSCRIBE_PM2}</a> <a href="javascript:XMLHttpRequest_track_pm()" class="small"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>');
+					document.write('<a href="javascript:XMLHttpRequest_track_pm()" class="small" id="forum_track_pm_img">{ICON_SUSCRIBE_PM}</a> <a href="javascript:XMLHttpRequest_track_pm()" class="small"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>');
 					-->
 					</script>
 					&bull;
@@ -137,9 +136,9 @@
 						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom">{ICON_SUSCRIBE}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom" class="small">{L_SUSCRIBE_DEFAULT}</a>
 					</span>
 					<script>
-					<!--				
+					<!--
 					document.getElementById('forum_track_mail').style.display = 'none';
-					document.write('<a href="javascript:XMLHttpRequest_track_mail()" class="small">{ICON_SUSCRIBE2}</a> <a href="javascript:XMLHttpRequest_track_mail()" class="small"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
+					document.write('<a href="javascript:XMLHttpRequest_track_mail()" class="small" id="forum_track_mail_img">{ICON_SUSCRIBE}</a> <a href="javascript:XMLHttpRequest_track_mail()" class="small"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
 					-->
 					</script>
 				</div>

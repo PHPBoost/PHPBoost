@@ -6,13 +6,13 @@
 			if(document.getElementById('search').value == "") {
 				alert("{L_REQUIRE_TEXT}");
 				return false;
-		    }
+			}
 			return true;
 		}
 		-->
 		</script>
-		<div class="module_position forum_position_cat">					
-			<div class="module_top_l"></div>		
+		<div class="module_position forum_position_cat">
+			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top forum_top_cat">
 				&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
@@ -67,12 +67,12 @@
 											<label><input type="checkbox" name="colorate_result" id="colorate_result" value="1" {COLORATE_RESULT}></label>
 										</div>
 									</div>
-								</fieldset>			
+								</fieldset>
 								<fieldset class="fieldset-submit" style="margin-bottom:0px;">
 									<legend>{L_SEARCH}</legend>
-									<button type="submit" name="valid_search" value="true">{L_SEARCH}</button>			
+									<button type="submit" name="valid_search" value="true">{L_SEARCH}</button>
 								</fieldset>
-							</div>	
+							</div>
 						</div>
 						
 						<div class="forum_position_subcat">
@@ -90,7 +90,7 @@
 						</div>
 						# ENDIF #
 						# START list #
-						<div class="msg_position" style="width:100%;">					
+						<div class="msg_position" style="width:100%;">
 							<div class="msg_container">
 								<div class="msg_top_row">
 									<div class="msg_pseudo_mbr">
@@ -105,24 +105,23 @@
 									<div class="msg_contents">
 										<div class="msg_contents_overflow">
 											{list.CONTENTS}
-										</div>									
+										</div>
 									</div>
 								</div>
 							</div>	
-							<div class="msg_bottom_l"></div>		
+							<div class="msg_bottom_l"></div>
 							<div class="msg_bottom_r"></div>
 							<div class="msg_bottom"><span class="smaller">{L_RELEVANCE}: {list.RELEVANCE}%</span></div>
 						</div>
 						# END list #
-					</form>			
+					</form>
 
-			<div class="module_bottom_l"></div>		
+			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom forum_top_cat">
 				<span style="float:left;">
 					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
 				</span>
-				<span style="float:right;">{PAGINATION}</span>&nbsp;
 			</div>
 		</div>
 		
