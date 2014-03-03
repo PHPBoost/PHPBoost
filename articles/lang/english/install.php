@@ -38,11 +38,11 @@ $lang['default.article.name'] = 'Items begin with the module';
 $lang['default.article.description'] = '';
 $lang['default.article.contents'] = 'This brief article will give you some simple tips to take control of this module.<br /> 
 <br /> 
-<ul> 
+<ul class="bb-ul"> 
 <li>To configure your module, <a href="/articles/index.php?url=/admin/config/">click here</a> 
 </li><li>To add categories :<a href="/articles/index.php?url=/admin/categories/add/">click here</a> (categories and subcategories are infinitely)
 </li><li>To add an item, you have two solutions (the two arrive at the same link)<br /> 
-<ul> 
+</ul><ul class="bb-ul"> 
 <li>In the desired category, click \'Add\' 
 </li><li><a href="/articles/index.php?url=/add/">Click here</a> to add it via the admin panel of the module.<br /> 
 </li></ul> 
