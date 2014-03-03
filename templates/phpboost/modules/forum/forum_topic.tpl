@@ -124,7 +124,7 @@
 		<div class="module_position">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
-			<div class="module_top forum_breadcrumb_topic">
+			<div class="module_top">
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				
@@ -242,16 +242,15 @@
 					
 					<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><i class="fa fa-arrow-up"></i></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><i class="fa fa-arrow-down"></i></a></span>
 				</div>
+				<div class="msg_contents_container_test">
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">
 						<p style="text-align:center;">{msg.USER_RANK}</p>
 						<p style="text-align:center;">{msg.USER_IMG_ASSOC}</p>
 						<p style="text-align:center;">{msg.USER_AVATAR}</p>
 						<p style="text-align:center;">{msg.USER_GROUP}</p>	
-						{msg.USER_SEX}
 						{msg.USER_DATE}<br />
 						{msg.USER_MSG}<br />
-						{msg.USER_LOCAL}
 					</div>
 					<div class="msg_contents{msg.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
@@ -271,6 +270,7 @@
 							# ENDIF #
 						</div>
 					</div>
+				</div><div class="spacer"></div>
 				</div>
 			</div>	
 			<div class="msg_sign{msg.CLASS_COLOR}">				
@@ -295,7 +295,7 @@
 		<div class="module_position">
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
-			<div class="module_bottom forum_breadcrumb_topic">
+			<div class="module_bottom">
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				

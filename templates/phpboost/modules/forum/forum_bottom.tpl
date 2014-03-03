@@ -90,7 +90,7 @@
 						{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 					</span>
 					<span style="float:right;">
-						<a href="{PATH_TO_ROOT}/forum/stats.php{SID}">{L_STATS}</a> <a href="{PATH_TO_ROOT}/forum/stats.php{SID}"><img src="{PICTURES_DATA_PATH}/images/stats.png" alt="" class="valign-middle" /></a>
+						<a href="{PATH_TO_ROOT}/forum/stats.php{SID}"><i class="fa fa-bar-chart-o"></i> {L_STATS}</a>
 					</span>
 					<div class="spacer"></div>
 				</div>
