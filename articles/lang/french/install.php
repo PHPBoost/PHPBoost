@@ -38,15 +38,15 @@ $lang['default.article.title'] = 'Débuter avec le module Articles';
 $lang['default.article.description'] = '';
 $lang['default.article.contents'] = 'Ce bref article va vous donner quelques conseils simples pour prendre en main ce module.<br /> 
 <br /> 
-<ul> 
-<li class="bb_li">Pour configurer votre module, <a href="/articles/index.php?url=/admin/config/">cliquez ici</a> 
-</li><li class="bb_li">Pour ajouter des catégories : <a href="/articles/index.php?url=/admin/categories/add/">cliquez ici</a> (les catégories et sous catégories sont à l\'infini) 
-</li><li class="bb_li">Pour ajouter un article, vous avez 2 solutions (les 2 arrivent au même lien)<br /> 
-<ul> 
-<li class="bb_li">Dans la catégorie souhaitée, cliquez sur le bouton \'Ajout\' 
-</li><li class="bb_li"><a href="/articles/index.php?url=/add/">Cliquez ici</a> pour l\'ajouter via le panneau d\'administration du module.<br /> 
+<ul class="bb-ul">
+<li class="bb-li">Pour configurer votre module, <a href="/articles/index.php?url=/admin/config/">cliquez ici</a> 
+</li><li class="bb-li">Pour ajouter des catégories : <a href="/articles/index.php?url=/admin/categories/add/">cliquez ici</a> (les catégories et sous catégories sont à l\'infini) 
+</li><li class="bb-li">Pour ajouter un article, vous avez 2 solutions (les 2 arrivent au même lien)<br /> 
+</ul><ul class="bb-ul"> 
+<li class="bb-li">Dans la catégorie souhaitée, cliquez sur le bouton \'Ajout\' 
+</li><li class="bb-li"><a href="/articles/index.php?url=/add/">Cliquez ici</a> pour l\'ajouter via le panneau d\'administration du module.<br /> 
 </li></ul> 
-</li><li class="bb_li">Pour mettre en page vos articles, vous pouvez utiliser le langage bbcode ou l\'éditeur WYSIWYG (cf cet <a href="http://www.phpboost.com/articles/articles-6-61+mise-en-page-du-contenu.php">article</a>)<br /> 
+</li><li class="bb-li">Pour mettre en page vos articles, vous pouvez utiliser le langage bbcode ou l\'éditeur WYSIWYG (cf cet <a href="http://www.phpboost.com/articles/articles-6-61+mise-en-page-du-contenu.php">article</a>)<br /> 
 </li></ul><br /> 
 <br /> 
 Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a href="http://www.phpboost.com">PHPBoost</a>.<br /> 
