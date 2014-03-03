@@ -1,5 +1,5 @@
-		# INCLUDE forum_top #
-			
+	# INCLUDE forum_top #
+		
 	# START forums_list #
 		# START forums_list.endcats #
 					</tbody>

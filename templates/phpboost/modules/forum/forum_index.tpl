@@ -1,20 +1,20 @@
 	# INCLUDE forum_top #
 		
-	# START forums_list #	
+	# START forums_list #
 		# START forums_list.endcats #
 		<div class="module_position forum_position_subcat">
 			<div class="forum_position_subcat-bottom"></div>
 		</div>
 		<div class="module_position">
-			<div class="module_bottom_l"></div>		
+			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom"></div>
 		</div>
-		# END forums_list.endcats #	
+		# END forums_list.endcats #
 			
-		# START forums_list.cats #		
-		<div class="module_position forum_position_cat">					
-			<div class="module_top_l"></div>		
+		# START forums_list.cats #
+		<div class="module_position forum_position_cat">
+			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top forum_top_cat">
 				<span class="forum_cat_title">
@@ -31,14 +31,14 @@
 		</div>
 		# END forums_list.cats #
 		
-		# START forums_list.subcats #		
-		<div class="module_position forum_position_subcat">	
+		# START forums_list.subcats #
+		<div class="module_position forum_position_subcat">
 			<div class="module_contents forum_contents_subcat">
 				<table class="module-table forum_table">
 					<tr>
 						# IF forums_list.subcats.U_FORUM_URL #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
-							<img src="{PICTURES_DATA_PATH}/images/weblink.png" alt="" />
+							<i class="fa fa-globe"></i>
 						</td>
 						<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 							<a href="{forums_list.subcats.U_FORUM_URL}">{forums_list.subcats.NAME}</a>
