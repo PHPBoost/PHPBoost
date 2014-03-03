@@ -33,7 +33,7 @@
 $lang['wiki_name'] = 'Wiki PHPBoost';
 $lang['index_text'] = 'Welcome on the wiki module!<br /><br />
 Here are some tips for a good start with this module :<br /><br />
-<ul class="bb-ul">
+<ul>
 <li class="bb_li">To configure your module, go to the <a href="/wiki/admin_wiki.php">administration module</a></li>
 <li class="bb_li">To create categories, <a href="/wiki/post.php?type=cat">click here</a></li>
 <li class="bb_li">To create articles, <a href="/wiki/post.php">click here</a></li>

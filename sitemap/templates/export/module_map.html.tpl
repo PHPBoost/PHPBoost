@@ -7,7 +7,7 @@
 	</a>
 </h1>
 <p>{MODULE_DESCRIPTION}</p>
-<ul class="bb-ul">
+<ul>
 	# START element #
 	<li># INCLUDE element.ELEMENT #</li>
 	# END element #

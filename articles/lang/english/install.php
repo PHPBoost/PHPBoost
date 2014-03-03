@@ -38,15 +38,15 @@ $lang['default.article.name'] = 'Items begin with the module';
 $lang['default.article.description'] = '';
 $lang['default.article.contents'] = 'This brief article will give you some simple tips to take control of this module.<br /> 
 <br /> 
-<ul class="bb-ul"> 
-<li class="bb-li">To configure your module, <a href="/articles/index.php?url=/admin/config/">click here</a> 
-</li><li class="bb-li">To add categories :<a href="/articles/index.php?url=/admin/categories/add/">click here</a> (categories and subcategories are infinitely)
-</li><li class="bb-li">To add an item, you have two solutions (the two arrive at the same link)<br /> 
-<ul class="bb-ul"> 
-<li class="bb-li">In the desired category, click \'Add\' 
-</li><li class="bb-li"><a href="/articles/index.php?url=/add/">Click here</a> to add it via the admin panel of the module.<br /> 
+<ul> 
+<li>To configure your module, <a href="/articles/index.php?url=/admin/config/">click here</a> 
+</li><li>To add categories :<a href="/articles/index.php?url=/admin/categories/add/">click here</a> (categories and subcategories are infinitely)
+</li><li>To add an item, you have two solutions (the two arrive at the same link)<br /> 
+<ul> 
+<li>In the desired category, click \'Add\' 
+</li><li><a href="/articles/index.php?url=/add/">Click here</a> to add it via the admin panel of the module.<br /> 
 </li></ul> 
-</li><li class="bb-li">To format your articles, you can use bbcode language or the WYSIWYG editor (cf this (cf cet <a href="http://www.phpboost.com/articles/articles-6-61+mise-en-page-du-contenu.php">article</a>)<br /> 
+</li><li>To format your articles, you can use bbcode language or the WYSIWYG editor (cf this (cf cet <a href="http://www.phpboost.com/articles/articles-6-61+mise-en-page-du-contenu.php">article</a>)<br /> 
 </li></ul><br /> 
 <br /> 
 For more information, please see the module documentation on the site <a href="http://www.phpboost.com">PHPBoost</a>.<br /> 

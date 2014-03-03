@@ -44,7 +44,7 @@ Supprimez le répertoire /install à la racine de votre site pour des raisons de s
 <br />
 Accédez au <a href="/admin/admin_index.php">panneau d\'administration de votre site</a> afin de le paramétrer comme vous le souhaitez!  Pour cela : <br />
 <br />
-<ul class="bb-ul">
+<ul>
 <li class="bb_li"><a href="/admin/admin_maintain.php">Mettez votre site en maintenance</a> en attendant que vous le configuriez à votre guise.
 </li><li class="bb_li">Rendez vous à la <a href="/admin/config/?url=/general/">Configuration générale du site</a>.
 </li><li class="bb_li"><a href="/admin/modules/?url=/installed/">Configurez les modules</a> disponibles et donnez leur les droits d\'accès (si vous n\'avez pas installé le pack complet, tous les modules sont disponibles sur le site de <a href="http://www.phpboost.com">phpboost.com</a> dans la section téléchargement).

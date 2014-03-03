@@ -38,11 +38,11 @@ $lang['default.article.title'] = 'Débuter avec le module Articles';
 $lang['default.article.description'] = '';
 $lang['default.article.contents'] = 'Ce bref article va vous donner quelques conseils simples pour prendre en main ce module.<br /> 
 <br /> 
-<ul class="bb-ul"> 
+<ul> 
 <li class="bb_li">Pour configurer votre module, <a href="/articles/index.php?url=/admin/config/">cliquez ici</a> 
 </li><li class="bb_li">Pour ajouter des catégories : <a href="/articles/index.php?url=/admin/categories/add/">cliquez ici</a> (les catégories et sous catégories sont à l\'infini) 
 </li><li class="bb_li">Pour ajouter un article, vous avez 2 solutions (les 2 arrivent au même lien)<br /> 
-<ul class="bb-ul"> 
+<ul> 
 <li class="bb_li">Dans la catégorie souhaitée, cliquez sur le bouton \'Ajout\' 
 </li><li class="bb_li"><a href="/articles/index.php?url=/add/">Cliquez ici</a> pour l\'ajouter via le panneau d\'administration du module.<br /> 
 </li></ul> 

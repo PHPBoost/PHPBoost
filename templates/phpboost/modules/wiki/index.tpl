@@ -24,38 +24,38 @@
 					</header>
 					<div class="content">
 						<ul class="no-list">
-							<li class="bb-li">
+							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
 							</li>
-							<li class="bb-li">
+							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/download/">Télécharger PHPBoost</a>
 							</li>
-							<li class="bb-li">
+							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/installation-de-phpboost">Installation de PHPBoost</a>
 							</li>
-							<li class="bb-li">
+							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/migrer-son-site-vers-une-nouvelle-version">Comment migrer vers une nouvelle version</a>
 							</li>
 						</ul>
 						
 						<ul class="no-list">
-							<li class="bb-li">
+							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/forum/">Forum</a>
 							</li>
-							<li class="bb-li">
+							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/bugtracker/">Rapporter un bug</a>
 							</li>
-							<li class="bb-li">
+							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un thème</a>
 							</li>
-							<li class="bb-li">
+							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/creer-un-module">Créer un module</a>
 							</li>
