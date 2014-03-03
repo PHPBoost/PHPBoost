@@ -8,7 +8,7 @@
 		function XMLHttpRequest_unread_topics(divID)
 		{
 			if( document.getElementById('refresh_unread' + divID) )
-				document.getElementById('refresh_unread' + divID).src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
+				document.getElementById('refresh_unread' + divID).className = 'fa fa-spinner fa-spin';
 				
 			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&refresh_unread=1');
 			xhr_object.onreadystatechange = function() 
@@ -16,7 +16,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 				{	
 					if( document.getElementById('refresh_unread' + divID) )
-						document.getElementById('refresh_unread' + divID).src = '{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png';
+						document.getElementById('refresh_unread' + divID).className = 'fa fa-refresh';
 					
 					var array_unread_topics = new Array('', '');
 					eval(xhr_object.responseText);
@@ -33,7 +33,7 @@
 				{	
 					alert("{L_AUTH_ERROR}");
 					if( document.getElementById('refresh_unread' + divID) )
-						document.getElementById('refresh_unread' + divID).src = '{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png';
+						document.getElementById('refresh_unread' + divID).className = 'fa fa-refresh';
 				}
 			}
 			xmlhttprequest_sender(xhr_object, null);

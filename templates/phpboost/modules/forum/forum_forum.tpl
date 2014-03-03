@@ -28,7 +28,7 @@
 						<tr>
 							# IF subcats.U_FORUM_URL #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{PICTURES_DATA_PATH}/images/weblink.png" alt="" />
+								<i class="fa fa-globe"></i>
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 								<a href="{subcats.U_FORUM_URL}">{subcats.NAME}</a>
@@ -125,9 +125,9 @@
 							# ENDIF #
 						</td>
 						<td class="forum_sous_cat forum_sous_cat_pbt" style="width:35px;text-align:center;">
-							# IF topics.C_DISPLAY_MSG # <img src="{PICTURES_DATA_PATH}/images/msg_display_mini.png" alt="" class="valign-middle" /> # ENDIF #
+							# IF topics.C_DISPLAY_MSG #<i class="fa fa-msg-display"></i># ENDIF #
 							# IF topics.C_IMG_POLL # <img src="{PICTURES_DATA_PATH}/images/poll_mini.png" class="valign-middle" alt="" /> # ENDIF #
-							# IF topics.C_IMG_TRACK # <img src="{PICTURES_DATA_PATH}/images/track_mini.png" class="valign-middle" alt="" /> # ENDIF #
+							# IF topics.C_IMG_TRACK #<i class="fa fa-msg-track"></i># ENDIF #
 						</td>
 						<td class="forum_sous_cat forum_sous_cat_pbt" style="min-width:115px;">
 							{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
