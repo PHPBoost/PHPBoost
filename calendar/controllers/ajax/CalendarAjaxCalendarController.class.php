@@ -112,9 +112,13 @@ class CalendarAjaxCalendarController extends AbstractController
 			'DATE' => $array_l_month[$month - 1] . ' ' . $year,
 			'MINI_MODULE' => (int)$this->is_mini_calendar(),
 			'PREVIOUS_MONTH_TITLE' => ($month == 1) ? $array_l_month[11] . ' ' . ($year - 1) : $array_l_month[$month - 2] . ' ' . $year,
+			'PREVIOUS_YEAR' => $previous_year,
+			'PREVIOUS_MONTH' => $previous_month,
 			'NEXT_MONTH_TITLE' => ($month == 12) ? $array_l_month[0] . ' ' . ($year + 1) : $array_l_month[$month] . ' ' . $year,
-			'U_PREVIOUS_MONTH' => CalendarUrlBuilder::ajax_month_calendar($previous_year . '/' . $previous_month . '/' . (int)$this->is_mini_calendar())->rel(),
-			'U_NEXT_MONTH' => CalendarUrlBuilder::ajax_month_calendar($next_year . '/' . $next_month . '/' . (int)$this->is_mini_calendar())->rel()
+			'NEXT_YEAR' => $next_year,
+			'NEXT_MONTH' => $next_month,
+			'U_AJAX_CALENDAR' => CalendarUrlBuilder::ajax_month_calendar()->rel(),
+			'U_AJAX_EVENTS' => CalendarUrlBuilder::ajax_month_events()->rel()
 		));
 		
 		//Retrieve all the events of the selected month
@@ -203,7 +207,7 @@ class CalendarAjaxCalendarController extends AbstractController
 				'COLOR' => !empty($color) ? $color : $config->get_birthday_color(),
 				'CLASS' => $class,
 				'CHANGE_LINE' => (($i % 8) == 0 && $i != 56),
-				'U_DAY_EVENTS' => CalendarUrlBuilder::home($year . '/' . $month . '/' . $today . (!empty($array_events[$today]) ? '/' . $categories[$array_events[$today]['id_category']]->get_id() . '-' . $categories[$array_events[$today]['id_category']]->get_rewrited_name() : '') . '#events')->rel()
+				'U_DAY_EVENTS' => CalendarUrlBuilder::home($year . '/' . $month . '/' . $today . '#events')->rel()
 			));
 		}
 	}

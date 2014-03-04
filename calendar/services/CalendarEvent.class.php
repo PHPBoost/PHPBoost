@@ -217,7 +217,6 @@ class CalendarEvent
 			'U_DELETE' => CalendarUrlBuilder::delete_event($this->id)->rel(),
 			'U_SUSCRIBE' => CalendarUrlBuilder::suscribe_event($this->id)->rel(),
 			'U_UNSUSCRIBE' => CalendarUrlBuilder::unsuscribe_event($this->id)->rel(),
-			'U_CATEGORY' => CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel()
 		);
 	}

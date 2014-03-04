@@ -50,7 +50,7 @@
 				<a href="{event.U_LINK}">{event.TITLE}</a>
 			</td>
 			<td> 
-				<a href="{event.U_CATEGORY}"# IF event.CATEGORY_COLOR # style="color:{event.CATEGORY_COLOR}"# ENDIF #>{event.CATEGORY_NAME}</a>
+				<span# IF event.CATEGORY_COLOR # style="color:{event.CATEGORY_COLOR}"# ENDIF #>{event.CATEGORY_NAME}</span>
 			</td>
 			<td> 
 				<a href="{event.U_AUTHOR_PROFILE}" class="{event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}"# ENDIF #>{event.AUTHOR}</a>

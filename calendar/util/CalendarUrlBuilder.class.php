@@ -102,14 +102,6 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_category($id, $rewrited_name)
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/category/' . $id . '-' . $rewrited_name .'/');
-	}
-	
-	/**
-	 * @return Url
-	 */
 	public static function display_pending_events($page = null)
 	{
 		$page = $page !== null ? $page . '/' : '';
@@ -162,6 +154,14 @@ class CalendarUrlBuilder
 	public static function ajax_month_calendar($param = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/ajax_month_calendar/' . $param);
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function ajax_month_events($param = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/ajax_month_events/' . $param);
 	}
 	
 	/**

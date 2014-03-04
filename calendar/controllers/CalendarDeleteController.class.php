@@ -181,11 +181,7 @@ class CalendarDeleteController extends ModuleController
 		
 		$event_content = $this->event->get_content();
 		$categories = array_reverse(CalendarService::get_categories_manager()->get_parents($event_content->get_category_id(), true));
-		foreach ($categories as $id => $category)
-		{
-			if ($id != Category::ROOT_CATEGORY)
-				$response->add_breadcrumb_link($category->get_name(), CalendarUrlBuilder::display_category($id, $category->get_rewrited_name()));
-		}
+		
 		$category = $categories[$event_content->get_category_id()];
 		$response->add_breadcrumb_link($event_content->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_content->get_id(), $event_content->get_rewrited_title()));
 		
