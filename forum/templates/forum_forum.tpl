@@ -133,7 +133,7 @@
 						</td>
 						<td class="forum_sous_cat" style="width:35px;text-align:center;">
 							# IF topics.C_DISPLAY_MSG #<i class="fa fa-msg-display"></i># ENDIF #
-							# IF topics.C_IMG_POLL # <img src="{PICTURES_DATA_PATH}/images/poll_mini.png" class="valign-middle" alt="" /> # ENDIF #
+							# IF topics.C_IMG_POLL #<i class="fa fa-tasks" title="{L_POLL}"></i># ENDIF #
 							# IF topics.C_IMG_TRACK #<i class="fa fa-msg-track"></i># ENDIF #
 						</td>
 						<td class="forum_sous_cat" style="min-width:115px;">

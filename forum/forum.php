@@ -181,7 +181,7 @@ if (!empty($id_get))
 			}
 			$img_announce .= ($row['status'] == '0') ? '-lock' : '';
 			
-			$Template->assign_block_vars('subcats', array(					
+			$Template->assign_block_vars('subcats', array(
 				'IMG_ANNOUNCE' => $img_announce,
 				'NAME' => $row['name'],
 				'DESC' => $row['subname'],
@@ -190,7 +190,7 @@ if (!empty($id_get))
 				'NBR_MSG' => $row['nbr_msg'],
 				'U_FORUM_URL' => $row['url'],
 				'U_FORUM_VARS' => url('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
-				'U_LAST_TOPIC' => $last					
+				'U_LAST_TOPIC' => $last
 			));
 		}
 		$Sql->query_close($result);
@@ -263,6 +263,7 @@ if (!empty($id_get))
 		'L_TOPIC' => $LANG['topic_s'],
 		'L_ANSWERS' => $LANG['replies'],
 		'L_MESSAGE' => $LANG['message_s'],
+		'L_POLL' => $LANG['poll'],
 		'L_VIEW' => $LANG['views'],
 		'L_LAST_MESSAGE' => $LANG['last_messages'],
 		'L_POST_NEW_SUBJECT' => $LANG['post_new_subject'],
