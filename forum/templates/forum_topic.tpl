@@ -146,9 +146,9 @@
 
 		# IF C_POLL_EXIST #
 		<div class="module_position">
-			<div class="module_contents">
+			<div class="center">
 				<form method="post" action="action{U_POLL_ACTION}">
-					<table style="width:75%;">
+					<table style="width:80%;margin : 10px auto auto auto;">
 						<thead>
 							<tr>
 								<th>{L_POLL}: {QUESTION}</th>
@@ -190,12 +190,11 @@
 							# END poll_result #
 						</tbody>
 					</table>
-					<br />
 					
 					# IF C_POLL_QUESTION #
 					<fieldset class="fieldset-submit">
 						<legend>{L_VOTE}</legend>
-						<input name="valid_forum_poll" type="submit" value="{L_VOTE}" /><br>
+						<button type="submit" name="valid_forum_poll" value="true">{L_VOTE}</button><br />
 						<a class="small" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
 					</fieldset>
 					# ENDIF #
@@ -204,7 +203,7 @@
 		</div>
 		# ENDIF #
 
-		# START msg #		
+		# START msg #
 		<div class="msg_position" id="d{msg.ID}">
 			<div class="msg_container{msg.CLASS_COLOR}">
 				<span id="m{msg.ID}" />
