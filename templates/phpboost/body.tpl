@@ -3,8 +3,10 @@
 	<header id="header">
 		<div id="site-infos">
 			<div id="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
-			<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
-			<span id="site-slogan">{SITE_SLOGAN}</span>
+			<div id="site-name-container">
+				<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
+				<span id="site-slogan">{SITE_SLOGAN}</span>
+			</div>
 		</div>
 		<div id="top-header">
 			# IF C_MENUS_HEADER_CONTENT #
