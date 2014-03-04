@@ -116,11 +116,11 @@
 					# START topics #
 					<tr>
 						# IF C_MASS_MODO_CHECK #
-						<td class="forum_sous_cat forum_sous_cat_pbt" style="width:25px;text-align:center;">
+						<td class="forum_sous_cat forum_sous_cat_pbt" style="width:40px;text-align:center;">
 							<input type="checkbox" name="ck{topics.ID}">
 						</td>
 						# ENDIF #
-						<td class="forum_sous_cat forum_sous_cat_pbt" style="width:25px;text-align:center;">
+						<td class="forum_sous_cat forum_sous_cat_pbt" style="width:40px;text-align:center;">
 							# IF NOT topics.C_HOT_TOPIC #
 							<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
 							# ELSE #
@@ -162,6 +162,9 @@
 					</tr>
 					# ENDIF #
 				</table>
+			</div>
+			<div class="module_position forum_position_subcat">
+				<div class="forum_position_subcat-bottom"></div>
 			</div>
 		</div>
 		

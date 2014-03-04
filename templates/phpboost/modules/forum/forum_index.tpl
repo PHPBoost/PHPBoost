@@ -37,7 +37,7 @@
 				<table class="module-table forum_table">
 					<tr>
 						# IF forums_list.subcats.U_FORUM_URL #
-						<td class="forum_sous_cat" style="width:25px;text-align:center;">
+						<td class="forum_sous_cat" style="width:40px;text-align:center;">
 							<i class="fa fa-globe"></i>
 						</td>
 						<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">

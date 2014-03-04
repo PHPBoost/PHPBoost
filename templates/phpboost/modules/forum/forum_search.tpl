@@ -17,7 +17,9 @@
 			<div class="module_top forum_top_cat">
 				&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
 			</div>
-
+			<div class="module_position forum_position_subcat">
+				<div class="forum_position_subcat-top"></div>
+			</div>
 					<form action="search.php?token={TOKEN}#search_forum" method="post" onsubmit="return check_form();" >
 						<div class="forum_position_subcat">
 							<div class="module_contents forum_contents forum_contents_subcat" style="background: #F9F9F9;">
@@ -119,9 +121,7 @@
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom forum_top_cat">
-				<span style="float:left;">
-					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
-				</span>
+				<span>&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}</span>
 			</div>
 		</div>
 		

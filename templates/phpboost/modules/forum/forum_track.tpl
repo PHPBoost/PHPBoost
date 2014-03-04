@@ -15,25 +15,24 @@
 				<div class="module_top_l"></div>
 				<div class="module_top_r"></div>
 				<div class="module_top forum_top_cat">
-					<span style="float:left;">
-						{U_FORUM_CAT}
-					</span>
+					<span style="float:left;"><i class="fa fa-msg-track"></i> {U_FORUM_CAT}</span>
 					# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
+					<div class="spacer"></div>
 				</div>
 				<div class="forum_position_subcat">
+					<div class="small center">{L_EXPLAIN_TRACK}</div>
 					<div class="module_contents forum_contents forum_contents_subcat">
-						<div class="text_small">{L_EXPLAIN_TRACK}</div>
+						
 						<table class="module-table forum_table">
 							<thead>
 								<tr class="forum_text_column">
-									<th style="width:120px;">{L_TOPIC}</th>
+									<th style="width:390px;">{L_TOPIC}</th>
 									<th style="width:100px;">{L_AUTHOR}</th>
-									<th style="width:60px;">{L_MESSAGE}</th>
-									<th style="width:60px;">{L_VIEW}</th>
+									<th style="width:170px;text-align:right;">{L_MESSAGE}/{L_VIEW}</th>
 									<th style="width:40px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> {L_PM}</th>
-									<th style="width:50px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> {L_MAIL}</th>
-									<th style="width:85px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> {L_DELETE}</th>
-									<th style="width:150px;">{L_LAST_MESSAGE}</th>
+									<th style="width:40px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> {L_MAIL}</th>
+									<th style="width:70px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> {L_DELETE}</th>
+									<th style="width:130px;">{L_LAST_MESSAGE}</th>
 								</tr>
 							</thead>
 						</table>
@@ -54,7 +53,7 @@
 	
 							# START topics #
 							<tr>
-								<td class="forum_sous_cat forum_sous_cat_pbt" style="width:25px;text-align:center;">
+								<td class="forum_sous_cat forum_sous_cat_pbt" style="width:40px;text-align:center;">
 									# IF NOT topics.C_HOT_TOPIC # 
 									<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
 									# ELSE #
@@ -83,13 +82,13 @@
 								<td class="forum_sous_cat_compteur forum_sous_cat_pbt" style="width:40px;text-align:center;">
 									<input type="checkbox" id="p{topics.INCR}" name="p{topics.ID}" {topics.CHECKED_PM}>
 								</td>
-								<td class="forum_sous_cat_compteur forum_sous_cat_pbt" style="width:50px;text-align:center;">
+								<td class="forum_sous_cat_compteur forum_sous_cat_pbt" style="width:40px;text-align:center;">
 									<input type="checkbox" id="m{topics.INCR}" name="m{topics.ID}" {topics.CHECKED_MAIL}>
 								</td>
-								<td class="forum_sous_cat_compteur forum_sous_cat_pbt" style="width:85px;text-align:center;">
+								<td class="forum_sous_cat_compteur forum_sous_cat_pbt" style="width:70px;text-align:center;">
 									<input type="checkbox" id="d{topics.INCR}" name="d{topics.ID}">
 								</td>
-								<td class="forum_sous_cat_last forum_sous_cat_pbt">
+								<td class="forum_sous_cat_last forum_sous_cat_pbt" style="width:140px;">
 									{topics.U_LAST_MSG}
 								</td>
 							</tr>
@@ -97,6 +96,9 @@
 						</tbody>
 					</table>
 				</div>
+			</div>
+			<div class="module_position forum_position_subcat">
+				<div class="forum_position_subcat-bottom"></div>
 			</div>
 			<div style="text-align:center;margin-top:10px;">
 				<button type="submit" name="valid" value="true">{L_SUBMIT}</button>

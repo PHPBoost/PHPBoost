@@ -124,21 +124,21 @@
 		<div class="module_position">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
-			<div class="module_top">
+			<div class="module_top forum_breadcrumb_topic">
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				
-				<span style="float:right;">
+				<span style="float:right;font-size:12px;">
 					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}"></a>
+					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}" style="font-size:12px;"></a>
 						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"></a>
+					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}" style="font-size:12px;"></a>
 						# ENDIF #
 					
-					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
+					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}" style="font-size:12px;"></a>
 					# ENDIF #
 				</span>
 			</div>
@@ -241,60 +241,64 @@
 					
 					<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><i class="fa fa-arrow-up"></i></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><i class="fa fa-arrow-down"></i></a></span>
 				</div>
-				<div class="msg_contents_container_test">
-				<div class="msg_contents_container">
-					<div class="msg_info_mbr">
-						<p style="text-align:center;">{msg.USER_RANK}</p>
-						<p style="text-align:center;">{msg.USER_IMG_ASSOC}</p>
-						<p style="text-align:center;">{msg.USER_AVATAR}</p>
-						<p style="text-align:center;">{msg.USER_GROUP}</p>	
-						{msg.USER_DATE}<br />
-						{msg.USER_MSG}<br />
-					</div>
-					<div class="msg_contents{msg.CLASS_COLOR}">
-						<div class="msg_contents_overflow">
-							# IF msg.L_FORUM_QUOTE_LAST_MSG # <span class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</span><br /><br /> # ENDIF #
-							
-							{msg.FORUM_MSG_CONTENTS}
-							
-							# IF msg.C_FORUM_USER_EDITOR # 
-							<br /><br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">
-							{L_EDIT_BY}
-								# IF msg.C_FORUM_USER_EDITOR_LOGIN # 
-							<a class="small" href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
-								# ELSE #
-							<em>{L_GUEST}</em>
+				<div class="msg_contents_global_container">
+					<div class="msg_contents_container">
+						<div class="msg_info_mbr">
+							<p style="text-align:center;">{msg.USER_RANK}</p>
+							<p style="text-align:center;">{msg.USER_IMG_ASSOC}</p>
+							<p style="text-align:center;">{msg.USER_AVATAR}</p>
+							<p style="text-align:center;">{msg.USER_GROUP}</p>	
+							{msg.USER_DATE}<br />
+							{msg.USER_MSG}<br />
+						</div>
+						<div class="msg_contents{msg.CLASS_COLOR}">
+							<div class="msg_contents_overflow">
+								# IF msg.L_FORUM_QUOTE_LAST_MSG # <span class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</span><br /><br /> # ENDIF #
+								
+								{msg.FORUM_MSG_CONTENTS}
+								
+								# IF msg.C_FORUM_USER_EDITOR # 
+								<br /><br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">
+								{L_EDIT_BY}
+									# IF msg.C_FORUM_USER_EDITOR_LOGIN # 
+								<a class="small" href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
+									# ELSE #
+								<em>{L_GUEST}</em>
+									# ENDIF #
+								{L_ON} {msg.FORUM_USER_EDITOR_DATE}</span>
 								# ENDIF #
-							{L_ON} {msg.FORUM_USER_EDITOR_DATE}</span>
-							# ENDIF #
+							</div>
 						</div>
 					</div>
-				</div><div class="spacer"></div>
+					<div class="spacer"></div>
+					
+					<div class="msg-sign-container">
+						<div class="msg_sign{msg.CLASS_COLOR}">				
+							<div class="msg_sign_overflow">
+								{msg.USER_SIGN}
+							</div>			
+							<hr />
+							<span style="float:left;">
+								{msg.USER_PM} {msg.USER_MAIL} {msg.USER_MSN} {msg.USER_YAHOO} {msg.USER_WEB}
+							</span>
+							<span style="float:right;font-size:10px;">
+								&nbsp;
+								# IF msg.C_FORUM_MODERATOR # 
+								{msg.USER_WARNING}%
+								<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}" class="fa fa-warning"></a>
+								<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}" class="fa fa-lock"></a>
+								# ENDIF #
+							</span>&nbsp;
+						</div>
+					</div>
 				</div>
-			</div>	
-			<div class="msg_sign{msg.CLASS_COLOR}">				
-				<div class="msg_sign_overflow">
-					{msg.USER_SIGN}
-				</div>			
-				<hr />
-				<span style="float:left;">
-					{msg.USER_PM} {msg.USER_MAIL} {msg.USER_MSN} {msg.USER_YAHOO} {msg.USER_WEB}
-				</span>
-				<span style="float:right;font-size:10px;">
-					&nbsp;
-					# IF msg.C_FORUM_MODERATOR # 
-					{msg.USER_WARNING}%
-					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}" class="fa fa-warning"></a>
-					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}" class="fa fa-lock"></a>
-					# ENDIF #
-				</span>&nbsp;
 			</div>	
 		</div>	
 		# END msg #
 		<div class="module_position">
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
+			<div class="module_bottom forum_breadcrumb_topic">
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				
@@ -303,12 +307,12 @@
 					
 					# IF C_FORUM_MODERATOR #
 						# IF C_FORUM_LOCK_TOPIC #
-					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}"></a>
+					<a href="action{U_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="fa fa-ban" data-confirmation="{L_ALERT_LOCK_TOPIC}" style="font-size:12px;"></a>
 						# ELSE #
-					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}"></a>
+					<a href="action{U_TOPIC_UNLOCK}" title="{L_TOPIC_LOCK}" class="fa fa-unban" data-confirmation="{L_ALERT_UNLOCK_TOPIC}" style="font-size:12px;"></a>
 						# ENDIF #
 						
-					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
+					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}" style="font-size:12px;"></a>
 					# ENDIF #
 				</span>&nbsp;
 			</div>
