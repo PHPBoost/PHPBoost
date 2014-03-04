@@ -26,11 +26,18 @@ header#header-admin-container {
 }
 
 div#site-logo {
-	float: left;
-	margin: 20px 20px 0px 35px;
-	background: url('images/logo.png') no-repeat;
+	float:left;
+	margin-right:20px;
+	background:url('images/logo.png') no-repeat;
+	height:90px;
+	width:90px;
+}
+
+div#site-infos {
+	float:left;
+	max-width:690px;
 	height: 90px;
-	width: 90px;
+	margin: 20px 20px 0px 20px;
 }
 
 div#site-name {
@@ -40,9 +47,13 @@ div#site-name {
 	font-family:"Trebuchet MS";
 }
 
-div#site-name a {
-	display:block;
-	color:#f9fcff;
+div#site-name-container {
+	float:left;
+	margin-top:10px;
+}
+
+a#site-name {
+	color:#F9FCFF;
 	font-size:50px;
 	font-weight:bold;
 	line-height:1em;
@@ -52,6 +63,7 @@ div#site-name a {
 }
 
 span#site-slogan {
+	display:block;
 	color:#FFFFFF;
 	font-size:12px;
 	padding-left:4px;

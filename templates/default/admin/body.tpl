@@ -1,11 +1,13 @@
 	<div id="global">
 		<header id="header-admin-container">
 			<div id="header-admin">
-				<div id="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
-			<div id="site-name">
-				<a href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
-				<span id="site-slogan">{SITE_SLOGAN}</span>
-			</div>
+				<div id="site-infos">
+					<div id="site-logo" # IF C_HEADER_LOGO #style="background: url('{HEADER_LOGO}') no-repeat;"# ENDIF #></div>
+					<div id="site-name-container">
+						<a id="site-name" href="{PATH_TO_ROOT}/">{SITE_NAME}</a>
+						<span id="site-slogan">{SITE_SLOGAN}</span>
+					</div>
+				</div>
 			</div>
 			<div id="sub-header-admin">
 				<nav class="dynamic-menu">
