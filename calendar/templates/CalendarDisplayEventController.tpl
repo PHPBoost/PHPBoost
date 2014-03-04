@@ -39,7 +39,7 @@
 				<span>
 					# IF C_PARTICIPANTS #
 						# START participant #
-							<a href="{participant.U_PROFILE}" class="{participant.LEVEL_CLASS}" # IF participant.C_GROUP_COLOR # style="color:{participant.GROUP_COLOR}" # ENDIF #>{participant.LOGIN}</a>
+							<a href="{participant.U_PROFILE}" class="{participant.LEVEL_CLASS}" # IF participant.C_GROUP_COLOR # style="color:{participant.GROUP_COLOR}" # ENDIF #>{participant.LOGIN}</a># IF NOT participant.C_LAST_PARTICIPANT #,# ENDIF #
 						# END participant #
 					# ELSE #
 						{@calendar.labels.no_one}
