@@ -34,7 +34,7 @@ class CalendarSitemapExtensionPoint extends SitemapCategoriesModule
 	
 	protected function get_category_url(Category $category)
 	{
-		return CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name());
+		return CalendarUrlBuilder::home();
 	}
 }
 ?>

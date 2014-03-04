@@ -41,7 +41,6 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminCalendarConfigController', '`^/admin(?:/config)?/?$`'),
 	
 	//Display events
-	new UrlControllerMapper('CalendarDisplayCategoryController', '`^/category/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name')),
 	new UrlControllerMapper('CalendarDisplayEventController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 	
 	//Manage events
@@ -55,7 +54,8 @@ $url_controller_mappers = array(
 	
 	//Display calendar
 	new UrlControllerMapper('CalendarAjaxCalendarController', '`^/ajax_month_calendar/([0-9]+)?/?([0-9]+)?/?(\d{0,1})?/?$`', array('calendar_ajax_year', 'calendar_ajax_month', 'calendar_mini')),
-	new UrlControllerMapper('CalendarDisplayCategoryController', '`^/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?(?:/([0-9]+)-([a-z0-9-_]+))?/?$`', array('year', 'month', 'day', 'id_category', 'rewrited_name')),
+	new UrlControllerMapper('CalendarAjaxEventsController', '`^/ajax_month_events/([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('calendar_ajax_year', 'calendar_ajax_month', 'calendar_ajax_day')),
+	new UrlControllerMapper('CalendarDisplayCategoryController', '`^/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('year', 'month', 'day')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

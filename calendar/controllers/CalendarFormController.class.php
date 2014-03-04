@@ -457,6 +457,10 @@ class CalendarFormController extends ModuleController
 		{
 			AppContext::get_response()->redirect(CalendarUrlBuilder::home($event->get_start_date()->get_year() . '/' . $event->get_start_date()->get_month() . '/' . $event->get_start_date()->get_day() . '/' . $category->get_id() . '-' . $category->get_rewrited_name() . '#events'));
 		}
+		elseif (!$event->get_content()->is_approved())
+		{
+			AppContext::get_response()->redirect(CalendarUrlBuilder::display_pending_events());
+		}
 		else
 		{
 			AppContext::get_response()->redirect(CalendarUrlBuilder::home());
@@ -478,11 +482,8 @@ class CalendarFormController extends ModuleController
 		else
 		{
 			$categories = array_reverse(CalendarService::get_categories_manager()->get_parents($event->get_content()->get_category_id(), true));
-			foreach ($categories as $id => $category)
-			{
-				if ($category->get_id() != Category::ROOT_CATEGORY)
-					$response->add_breadcrumb_link($category->get_name(), CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
-			}
+			
+			$category = $categories[$event->get_content()->get_category_id()];
 			$response->add_breadcrumb_link($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 			
 			$response->add_breadcrumb_link($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id()));

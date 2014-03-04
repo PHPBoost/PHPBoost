@@ -31,6 +31,7 @@
 class CalendarDisplayPendingEventsController extends ModuleController
 {
 	private $tpl;
+	private $events_view;
 	private $lang;
 	
 	public function execute(HTTPRequestCustom $request)
@@ -49,6 +50,8 @@ class CalendarDisplayPendingEventsController extends ModuleController
 		$this->lang = LangLoader::get('common', 'calendar');
 		$this->tpl = new FileTemplate('calendar/CalendarDisplaySeveralEventsController.tpl');
 		$this->tpl->add_lang($this->lang);
+		$this->events_view = new FileTemplate('calendar/CalendarAjaxEventsController.tpl');
+		$this->events_view->add_lang($this->lang);
 	}
 	
 	public function build_view(HTTPRequestCustom $request)
@@ -74,14 +77,19 @@ class CalendarDisplayPendingEventsController extends ModuleController
 			$event = new CalendarEvent();
 			$event->set_properties($row);
 			
-			$this->tpl->assign_block_vars('event', $event->get_array_tpl_vars());
+			$this->events_view->assign_block_vars('event', $event->get_array_tpl_vars());
 		}
 		
-		$this->tpl->put_all(array(
+		$this->events_view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_EVENTS' => $result->get_rows_count() > 0,
 			'C_PENDING_PAGE' => true,
 			'PAGINATION' => $pagination->display()
+		));
+		
+		$this->tpl->put_all(array(
+			'EVENTS' => $this->events_view,
+			'C_PENDING_PAGE' => true
 		));
 		
 		return $this->tpl;
