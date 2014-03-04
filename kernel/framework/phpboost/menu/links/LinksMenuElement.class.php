@@ -161,7 +161,7 @@ abstract class LinksMenuElement extends Menu
 		$url = new Url($string_url);
 		if ($compute_relative_url)
 		{
-			return $url->relative();
+			return $url->rel();
 		}
 		else
 		{
