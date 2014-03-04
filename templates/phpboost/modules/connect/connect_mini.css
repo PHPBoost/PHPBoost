@@ -120,6 +120,7 @@ div.connect-welcome a:hover {
 	font-weight:bold;
 	text-transform:capitalize;
 }
+div.connect-welcome a.member { color:#EFEFEF; }
 
 li.connect-subscribe,
 li.connect-disconnect { 
