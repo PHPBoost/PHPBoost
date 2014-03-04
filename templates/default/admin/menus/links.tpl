@@ -67,9 +67,9 @@ function addSubElement(menu_element_id) {
 			]),
         
 			Builder.node('div', {className: 'sortable-actions'}, [
-				Builder.node('a', {href: '', className: 'fa fa-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
+				Builder.node('a', {href: '', className: 'fa fa-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');return false;'}),
 				' ',
-				Builder.node('a', {href: '', className: 'fa fa-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
+				Builder.node('a', {href: '', className: 'fa fa-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'})
 			]),
 		]),
         Builder.node('div', {className: 'spacer'}),

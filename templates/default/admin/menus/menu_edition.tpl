@@ -22,11 +22,11 @@
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
 			<div class="sortable-options preview">
-				<img src="{PATH_TO_ROOT}/{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
+				<img src="{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
 			<div class="sortable-actions">
-				<a href="" class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></a>
-				<a href="" class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></a>
+				<a href="" class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"></a>
+				<a href="" class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;"></a>
 			</div>
 		</div>
 		<div class="spacer"></div>
@@ -59,11 +59,11 @@
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
 			<div class="sortable-options preview">
-				<img src="{PATH_TO_ROOT}/{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
+				<img src="{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
 			<div class="sortable-actions">
-				<a href="" class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});"></a>
-				<a href="" class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');"></a>
+				<a href="" class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"></a>
+				<a href="" class="fa fa-delete" title="{L_DELETE}" id="menu_element_{ID}_delete_image" style="cursor:pointer;" onclick="deleteElement('menu_element_{ID}');return false;"></a>
 			</div>
 		</div>
 		<div class="spacer"></div>
