@@ -61,9 +61,11 @@
 									</a></li>
 								# ENDIF #
 							# ENDIF #
+							# IF C_INDEX_PAGE #
 								<li><a href="{U_RANDOM}" title="{L_RANDOM}">
 									<i class="fa fa-random"></i> {L_RANDOM}
 								</a></li>
+							# ENDIF #
 							# IF NOT C_INDEX_PAGE #
 								<li><a href="{U_PRINT}" title="{L_PRINT}">
 									<i class="fa fa-print"></i> {L_PRINT}
