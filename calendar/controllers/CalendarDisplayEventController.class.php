@@ -80,9 +80,14 @@ class CalendarDisplayEventController extends ModuleController
 		
 		$this->tpl->put_all($event->get_array_tpl_vars());
 		
+		$participants_number = count($event->get_participants());
+		$i = 0;
 		foreach ($event->get_participants() as $participant)
 		{
-			$this->tpl->assign_block_vars('participant', $participant->get_array_tpl_vars());
+			$i++;
+			$this->tpl->assign_block_vars('participant', array_merge($participant->get_array_tpl_vars(), array(
+				'C_LAST_PARTICIPANT' => $i == $participants_number
+			)));
 		}
 		
 		if (CalendarConfig::load()->are_comments_enabled())

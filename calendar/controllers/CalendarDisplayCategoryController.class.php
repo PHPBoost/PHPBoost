@@ -133,9 +133,14 @@ class CalendarDisplayCategoryController extends ModuleController
 				
 				$this->tpl->assign_block_vars('event', $event->get_array_tpl_vars());
 				
+				$participants_number = count($event->get_participants());
+				$i = 0;
 				foreach ($event->get_participants() as $participant)
 				{
-					$this->tpl->assign_block_vars('event.participant', $participant->get_array_tpl_vars());
+					$i++;
+					$this->tpl->assign_block_vars('event.participant', array_merge($participant->get_array_tpl_vars(), array(
+						'C_LAST_PARTICIPANT' => $i == $participants_number
+					)));
 				}
 			}
 		}
