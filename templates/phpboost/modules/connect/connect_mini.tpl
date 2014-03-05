@@ -44,7 +44,7 @@
 	<div id="connect-menu">
 		<div class="horizontal-fieldset">
 			<ul>
-				# IF U_ALERT #	
+				# IF NUMBER_TOTAL_ALERT #	
 				<li class="connect-login connect-alert"><a href="${relative_url(UserUrlBuilder::home_profile())}">{L_PRIVATE_PROFIL}</a><span style="font-size:10px;vertical-align:top;">({NUMBER_TOTAL_ALERT})</span> 
 				# ELSE #
 				<li class="connect-login"><a href="${relative_url(UserUrlBuilder::home_profile())}">{L_PRIVATE_PROFIL}</a>
