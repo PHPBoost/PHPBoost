@@ -57,7 +57,7 @@
 		# IF C_PAGINATION #
 		<tfoot>
 			<tr>
-				<th colspan="4">
+				<th colspan="{BUGS_COLSPAN}">
 					# INCLUDE PAGINATION #
 				</th>
 			</tr>
