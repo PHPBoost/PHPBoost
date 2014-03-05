@@ -37,12 +37,9 @@
 			# START errors #
 			<tr>
 				<td> 
-					<div class="message-helper {errors.CLASS}">
-						<i class="fa fa-{errors.CLASS}"></i>
-						<div class="message-helper-content">
-							<strong>{errors.ERROR_TYPE} : </strong>{errors.ERROR_MESSAGE}<br /><br /><br />
-							<em>{errors.ERROR_STACKTRACE}</em>
-						</div>
+					<div class="{errors.CLASS}">
+						<strong>{errors.ERROR_TYPE} : </strong>{errors.ERROR_MESSAGE}<br /><br /><br />
+						<em>{errors.ERROR_STACKTRACE}</em>
 					</div>
 				</td>
 				<td>
@@ -54,8 +51,5 @@
 		# ENDIF #
 	</table>
 	# IF NOT C_ERRORS #
-	<div class="message-helper success message-helper-small">
-		<i class="fa fa-success"></i>
-		<div class="message-helper-content">{@no_error}</div>
-	</div>
+	<div class="success message-helper-small">{@no_error}</div>
 	# ENDIF #

@@ -621,50 +621,50 @@ menu.dynamic-menu ul li.extend > a:after, menu.dynamic-menu ul li.extend > span:
 
 /* Erreurs
 --------------------------------------*/
-div.message-helper {
-	height:auto;
-	padding:10px;
-	margin:5px auto 15px auto;
-	line-height:20px;
-	border-width:1px;
-	border-style:solid;
-	border-radius:3px;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-}
-
 div.message-helper-small { width:50%; }
 
-div.message-helper .fa { 
-	display:block; 
-	float:left;
-	width:25px;
+.error, .notice, .warning, .success, .question { 
+	height:auto;
+	padding:10px 10px 10px 40px;
+	margin:5px auto 15px auto;
+	line-height:20px;
+	border:1px solid #FFFFFF;
+	border-radius:4px;
+	position:relative;
+}
+			
+.error:before, .notice:before, .warning:before, .success:before, .question:before { 
+	display:inline-block;
+	font-family:FontAwesome;
+	font-style:normal;
+	font-weight:normal;
+	line-height:1;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
+	font-size:2em;
+	position:absolute;
+	left:6px;
+	top:7px;
+	width:28px;
 	text-align:center;
 }
-div.message-helper .fa:before { font-size: 2em; }
-
-div.message-helper-content{ padding:0px 5px 0px 35px; }
-
-.fa-error:before { content: "\f00d"; }
-.fa-notice:before { content: "\f12a"; }
-.fa-warning:before { content: "\f071"; }
-.fa-success:before { content: "\f00c"; }
-.fa-question:before { content: "\f128"; }
-
+			
+.error:before { content:"\f00d"; }
+.error, .error:before { color:#BA4B49; }
+.notice:before { content:"\f12a"; }
+.notice, .notice:before { color:#888888; }
+.warning:before { content:"\f071"; }
+.warning, .warning:before { color:#C19954; }
+.success:before { content:"\f00c"; }
+.success, .success:before { color:#478948; }
+.question:before { content:"\f128"; }
+.question, .question:before { color:#3B88AE; }
+			
 .question { background-color:#DAEEF8; border-color:#BDE9F2; }
-.question, .fa-question:before { color:#3B88AE; }
-
-.notice { background-color:#F0F0F0; border-color:#E2E2E2; }
-.notice, .fa-notice:before { color:#888888; }
-
+.notice { background-color:#F0F0F0; border-color:#E2E2E2; }		
 .warning { background-color:#FDF9E4; border-color:#FBECCD; }
-.warning, .fa-warning:before { color:#C19954; }
-
 .error { background-color:#F3DFDF; border-color:#ECCDD2; }
-.error, .fa-error:before { color:#BA4B49; }
-
 .success { background-color:#E0F1D9; border-color:#D7EAC7; }
-.success, .fa-success:before { color:#478948; }
 
 /* Système d'Upload
 --------------------------------------*/

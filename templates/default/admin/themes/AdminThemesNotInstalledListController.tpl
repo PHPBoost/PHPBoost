@@ -65,10 +65,7 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="message-helper notice message-helper-small">
-		<i class="fa fa-notice"></i>
-		<div class="message-helper-content">{@themes.add.not_theme}</div>
-	</div>
+	<div class="notice message-helper-small">{@themes.add.not_theme}</div>
 		# ENDIF #
 		
 	<fieldset class="fieldset-submit">

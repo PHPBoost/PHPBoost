@@ -1,8 +1,5 @@
 # IF C_NO_CATEGORY #
-<div class="message-helper notice">
-	<i class="fa fa-notice"></i>
-	<div class="message-helper-content">{L_NO_EXISTING_CATEGORY}</div>
-</div>
+<div class="notice">{L_NO_EXISTING_CATEGORY}</div>
 # ENDIF #
 
 # IF C_AJAX_MODE #

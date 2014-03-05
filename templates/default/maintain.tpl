@@ -1,12 +1,9 @@
 # IF C_MAINTAIN_DELAY #
 	# IF C_ALERT_MAINTAIN #
 	<div id="message-maintain">
-		<div class="message-helper warning message-helper-small">
-			<i class="fa fa-warning"></i>
-			<div class="message-helper-content">
-				{L_MAINTAIN_DELAY}
-				<div id="release">{L_LOADING}...</div>	
-			</div>
+		<div class="warning message-helper-small">
+			{L_MAINTAIN_DELAY}
+			<div id="release">{L_LOADING}...</div>	
 		</div>
 	</div>
 	# ENDIF #

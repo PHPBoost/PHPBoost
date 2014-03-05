@@ -209,10 +209,8 @@ class BugtrackerChangeBugStatusController extends ModuleController
 			if ($this->config->is_roadmap_enabled())
 			{
 				$fieldset->add_field(new FormFieldFree('no_selected_version', '',
-					'<div class="message-helper notice" style="margin:5px auto 0px auto;">
-						<i class="fa fa-notice"></i>
-						<div class="message-helper-content">'. $this->lang['error.e_no_fixed_version'] .'</div>
-					</div>', array('hidden' => !$this->bug->is_fixed())
+					'<div class="notice" style="margin:5px auto 0px auto;">'. $this->lang['error.e_no_fixed_version'] .'</div>
+					', array('hidden' => !$this->bug->is_fixed())
 				));
 			}
 		}

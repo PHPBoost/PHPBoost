@@ -31,10 +31,7 @@
 					<fieldset>
 						<legend>{L_ALERT}</legend>
 						
-						<div id="id-message-helper" class="message-helper notice" style="width:80%;">
-							<i class="fa fa-notice"></i>
-							<div class="message-helper-content">{L_ALERT_EXPLAIN}: <a href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
-						</div>
+						<div id="id-message-helper" class="notice" style="width:80%;">{L_ALERT_EXPLAIN}: <a href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
 						<div class="form-element">
 							<label for="">{L_ALERT_TITLE}</label>
 							<div class="form-field">

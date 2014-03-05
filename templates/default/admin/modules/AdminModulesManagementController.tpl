@@ -105,10 +105,7 @@
 
 		# ELSE #
 	</table>
-	<div class="message-helper notice message-helper-small">
-		<i class="fa fa-notice"></i>
-		<div class="message-helper-content">{@modules.no_deactivated_modules_available}</div>
-	</div>
+	<div class="notice message-helper-small">{@modules.no_deactivated_modules_available}</div>
 		# ENDIF #
 		
 	<table>
@@ -168,10 +165,7 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="message-helper notice">
-		<i class="fa fa-notice"></i>
-		<div class="message-helper-content">{@modules.modules_available}</div>
-	</div>
+	<div class="notice">{@modules.modules_available}</div>
 		# ENDIF #
 		
 	<fieldset class="fieldset-submit">

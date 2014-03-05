@@ -164,11 +164,9 @@ class ErrorHandler
 
 	protected function display_debug()
 	{
-		echo '<div id="error-handler" class="message-helper ' . $this->errclass . '">
-		        <i class="fa fa-' . $this->errclass . '"></i>
-		        <div class="message-helper-content">
+		echo '<div id="error-handler" class="' . $this->errclass . '">
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
-                <em>' . $this->get_stackstrace_as_string(6) . '</em></div></div>';
+                <em>' . $this->get_stackstrace_as_string(6) . '</em></div>';
 	}
 
 	protected function display_fatal()

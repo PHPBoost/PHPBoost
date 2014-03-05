@@ -298,10 +298,7 @@
 			<div class="upload-elements-container" id="new-folder">
 			
 				# IF C_EMPTY_FOLDER #
-					<div id="empty-folder" class="message-helper notice">
-						<i class="fa fa-notice"></i>
-						<div class="message-helper-content">{L_EMPTY_FOLDER}</div>
-					</div>
+					<div id="empty-folder" class="notice">{L_EMPTY_FOLDER}</div>
 				# ELSE #
 					# START folder #
 						<div class="upload-elements-repertory">

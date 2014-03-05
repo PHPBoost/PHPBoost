@@ -46,10 +46,7 @@ abstract class AbstractAdminFormPageController extends AdminController
 	{
 		$template = new StringTemplate('
 		# IF C_SUCCESS #
-		<div id="success_message" class="message-helper success">
-			<i class="fa fa-success"></i>
-			<div class="message-helper-content">{SUCCESS_MESSAGE}</div>
-		</div>
+		<div id="success_message" class="success">{SUCCESS_MESSAGE}</div>
 		# ENDIF #
 		<script><!--
 		window.setTimeout(function() { Effect.Fade("success_message"); }, 5000);

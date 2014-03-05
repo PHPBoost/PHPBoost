@@ -3,7 +3,7 @@
 		<h1>{@css.typography}</h1>
 	</header>
 	<div class="content">
-	
+
 		<h5>{@css.titles}</h5><br />
 		<div class="content">
 			<h1>h1. {@css.title} 1</h1>

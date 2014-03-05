@@ -1,7 +1,4 @@
-		<div id="msg-helper-{ID}" class="message-helper {MESSAGE_CSS_CLASS}">
-			<i class="fa fa-{MESSAGE_CSS_CLASS}"></i>
-			<div class="message-helper-content">{MESSAGE_CONTENT}</div>
-		</div>
+		<div id="msg-helper-{ID}" class="{MESSAGE_CSS_CLASS}">{MESSAGE_CONTENT}</div>
 		# IF C_TIMEOUT #
 		<script>
 		<!--

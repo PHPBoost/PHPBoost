@@ -1,13 +1,7 @@
 # IF C_GOT_ERROR #
-<div class="message-helper warning">
-	<i class="fa fa-warning"></i>
-	<div class="message-helper-content">${i18nraw('generation_failed')}</div>
-</div>
+<div class="warning">${i18nraw('generation_failed')}</div>
 # ELSE #
-<div class="message-helper success">
-	<i class="fa fa-success"></i>
-	<div class="message-helper-content">${i18nraw('generation_succeeded')}</div>
-</div>
+<div class="success">${i18nraw('generation_succeeded')}</div>
 # ENDIF #
 <br />
 <div style="text-align:center;">

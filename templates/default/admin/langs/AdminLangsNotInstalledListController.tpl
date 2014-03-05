@@ -47,10 +47,7 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="message-helper notice message-helper-small">
-		<i class="fa fa-notice"></i>
-		<div class="message-helper-content">{@langs.add.not_lang}</div>
-	</div>
+	<div class="notice message-helper-small">{@langs.add.not_lang}</div>
 		# ENDIF #
 		
 	<fieldset class="fieldset-submit">

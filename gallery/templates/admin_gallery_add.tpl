@@ -86,10 +86,7 @@
 				<fieldset>
 					<legend>{L_IMG_DISPO_GALLERY}</legend>
 					
-					<div class="message-helper notice">
-						<i class="fa fa-notice"></i>
-						<div class="message-helper-content">{L_REQUIRE}<br />{L_SELECT_IMG_ADD}</div>
-					</div>
+					<div class="notice">{L_REQUIRE}<br />{L_SELECT_IMG_ADD}</div>
 
 					<div class="form-element">
 						<label for="category" style="text-align:right;vertical-align: middle;">{L_CAT}</label>
@@ -166,10 +163,7 @@
 					# END list #
 														
 					# START no_img #						
-					<div class="message-helper notice">
-						<i class="fa fa-notice"></i>
-						<div class="message-helper-content">{no_img.L_NO_IMG}</div>
-					</div>
+					<div class="notice">{no_img.L_NO_IMG}</div>
 					# END no_img #
 				
 				</fieldset>

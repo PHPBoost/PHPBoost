@@ -4,10 +4,7 @@
 <section>
 	<header><h1>${escape(TITLE)}</h1></header>
 	<div class="content">
-		<div class="message-helper {ERROR_TYPE}">
-      <i class="fa fa-{ERROR_TYPE}"></i>
-			<div class="message-helper-content">{MESSAGE}</div>
-		</div>
+		<div class="{ERROR_TYPE}">{MESSAGE}</div>
 	    # IF HAS_LINK #
 		<div style="padding:30px;text-align:center;">
 			<strong><a href="{U_LINK}" title="${escape(LINK_NAME)}">${escape(LINK_NAME)}</a></strong>

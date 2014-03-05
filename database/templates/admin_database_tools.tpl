@@ -335,10 +335,7 @@
 							<header></header>
 							<div class="content">
 								<span id="errorh"></span>
-								<div class="message-helper warning">
-									<i class="fa fa-warning"></i>
-									<div class="message-helper-content">{L_EXPLAIN_QUERY}</div>
-								</div>
+								<div class="warning">{L_EXPLAIN_QUERY}</div>
 								<fieldset>
 									<label for="query">* {L_EXECUTED_QUERY}</label>
 									<textarea rows="12" id="query" name="query">{QUERY}</textarea>
