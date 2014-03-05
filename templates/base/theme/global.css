@@ -695,7 +695,7 @@ div#message-maintain {
 	text-align:center;
 }
 
-div#message-maintain > message-helper { margin:0px auto;}
+div#message-maintain > div { margin:0px auto;}
 
 div#release { margin-top:20px; }
 
