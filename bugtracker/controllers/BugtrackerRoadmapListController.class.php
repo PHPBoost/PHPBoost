@@ -147,6 +147,12 @@ class BugtrackerRoadmapListController extends ModuleController
 				)));
 			}
 			
+			$bugs_colspan = 4;
+			if ($config->is_type_column_displayed()) $bugs_colspan++;
+			if ($config->is_category_column_displayed()) $bugs_colspan++;
+			if ($config->is_priority_column_displayed()) $bugs_colspan++;
+			if ($config->is_detected_in_column_displayed()) $bugs_colspan++;
+			
 			$this->view->put_all(array(
 				'C_VERSIONS_AVAILABLE'			=> true,
 				'C_BUGS'						=> $bugs_number[$roadmap_status],
@@ -157,6 +163,7 @@ class BugtrackerRoadmapListController extends ModuleController
 				'C_DISPLAY_DETECTED_IN_COLUMN'	=> $this->config->is_detected_in_column_displayed(),
 				'C_PAGINATION'					=> $pagination->has_several_pages(),
 				'PAGINATION' 					=> $pagination->display(),
+				'BUGS_COLSPAN' 					=> $bugs_colspan,
 				'SELECT_VERSION'				=> $this->build_form($versions[$roadmap_version], $roadmap_status, (int)$bugs_number[$roadmap_status])->display(),
 				'LEGEND'						=> BugtrackerViews::build_legend($displayed_severities, 'roadmap'),
 				'LINK_BUG_ID_TOP' 				=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/id/top/'. $current_page)->rel(),

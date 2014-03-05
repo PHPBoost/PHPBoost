@@ -120,6 +120,12 @@ class BugtrackerSolvedListController extends ModuleController
 			)));
 		}
 		
+		$bugs_colspan = BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4;
+		if ($config->is_type_column_displayed()) $bugs_colspan++;
+		if ($config->is_category_column_displayed()) $bugs_colspan++;
+		if ($config->is_priority_column_displayed()) $bugs_colspan++;
+		if ($config->is_detected_in_column_displayed()) $bugs_colspan++;
+		
 		$this->view->put_all(array(
 			'C_IS_ADMIN'					=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
 			'C_BUGS' 						=> $result->get_rows_count() > 0,
@@ -129,7 +135,7 @@ class BugtrackerSolvedListController extends ModuleController
 			'C_DISPLAY_DETECTED_IN_COLUMN'	=> $config->is_detected_in_column_displayed(),
 			'C_PAGINATION'					=> $pagination->has_several_pages(),
 			'PAGINATION' 					=> $pagination->display(),
-			'BUGS_COLSPAN' 					=> BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4,
+			'BUGS_COLSPAN' 					=> $bugs_colspan,
 			'L_NO_BUG' 						=> empty($filters) ? $this->lang['notice.no_bug_solved'] : (count($filters) > 1 ? $this->lang['notice.no_bug_matching_filters'] : $this->lang['notice.no_bug_matching_filter']),
 			'FILTER_LIST'					=> BugtrackerViews::build_filters('solved', $bugs_number),
 			'LEGEND'						=> BugtrackerViews::build_legend($displayed_status, 'solved'),
