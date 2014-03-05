@@ -33,7 +33,7 @@
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">
 			<legend>{L_PROPERTIES}</legend>
 			<div class="form-element">
-				{L_AUTHORIZATIONS}
+				<label>{L_AUTHORIZATIONS}</label>
 				<div class="form-field">{AUTH_FORM}</div>
 			</div>
 		</fieldset>
@@ -70,7 +70,7 @@
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">
 			<legend>{L_PROPERTIES}</legend>
 			<div class="form-element">
-				{L_AUTHORIZATIONS}
+				<label>{L_AUTHORIZATIONS}</label>
 				<div class="form-field">{AUTH_FORM}</div>
 			</div>
 		</fieldset>
