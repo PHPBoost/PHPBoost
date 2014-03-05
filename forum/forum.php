@@ -217,7 +217,7 @@ if (!empty($id_get))
 	
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
-	$pagination = new ModulePagination($page, $nbr_topic, $CONFIG_FORUM['pagination_topic']);
+	$pagination = new ModulePagination($page, $nbr_topic, $CONFIG_FORUM['pagination_topic'], Pagination::LIGHT_PAGINATION);
 	$pagination->set_url(new Url('/forum/forum.php?id=' . $id_get . '&amp;p=%d'));
 
 	if ($pagination->current_page_is_empty() && $page > 1)
@@ -337,7 +337,7 @@ if (!empty($id_get))
 		
 		//On crée une pagination (si activé) si le nombre de topics est trop important.
 		$page = AppContext::get_request()->get_getint('pt', 1);
-		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $CONFIG_FORUM['pagination_msg']);
+		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $CONFIG_FORUM['pagination_msg'], Pagination::LIGHT_PAGINATION);
 		$topic_pagination->set_url(new Url('/forum/topic.php?id=' . $row['id'] . '&amp;pt=%d'));
 		
 		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);

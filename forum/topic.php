@@ -140,7 +140,7 @@ if (!empty($idm))
 
 //On crée une pagination si le nombre de msg est trop important.
 $page = AppContext::get_request()->get_getint('pt', 1);
-$pagination = new ModulePagination($page, $topic['nbr_msg'], $CONFIG_FORUM['pagination_msg']);
+$pagination = new ModulePagination($page, $topic['nbr_msg'], $CONFIG_FORUM['pagination_msg'], Pagination::LIGHT_PAGINATION);
 $pagination->set_url(new Url('/forum/topic.php?id=' . $id_get . '&amp;pt=%d'));
 
 if ($pagination->current_page_is_empty() && $page > 1)

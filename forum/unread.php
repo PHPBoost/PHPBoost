@@ -76,7 +76,7 @@ WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last
 $cat_filter = !empty($idcat_unread) ? '&amp;cat=' . $idcat_unread : '';
 
 $page = AppContext::get_request()->get_getint('p', 1);
-$pagination = new ModulePagination($page, $nbr_topics, $CONFIG_FORUM['pagination_topic']);
+$pagination = new ModulePagination($page, $nbr_topics, $CONFIG_FORUM['pagination_topic'], Pagination::LIGHT_PAGINATION);
 $pagination->set_url(new Url('/forum/unread.php?p=%d' . $cat_filter));
 
 if ($pagination->current_page_is_empty() && $page > 1)
@@ -133,7 +133,7 @@ while ($row = $Sql->fetch_assoc($result))
 	
 	//On crée une pagination (si activé) si le nombre de topics est trop important.
 	$page = AppContext::get_request()->get_getint('pt', 1);
-	$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $CONFIG_FORUM['pagination_msg']);
+	$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $CONFIG_FORUM['pagination_msg'], Pagination::LIGHT_PAGINATION);
 	$topic_pagination->set_url(new Url('/forum/topic.php?id=' . $row['id'] . '&amp;pt=%d'));
 	
 	$group_color = User::get_group_color($row['user_groups'], $row['user_level']);

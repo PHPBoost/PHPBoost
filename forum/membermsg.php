@@ -59,7 +59,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	WHERE msg.user_id = '" . $view_msg . "'", __LINE__, __FILE__);
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
-	$pagination = new ModulePagination($page, $nbr_msg, $_NBR_ELEMENTS_PER_PAGE);
+	$pagination = new ModulePagination($page, $nbr_msg, $_NBR_ELEMENTS_PER_PAGE, Pagination::LIGHT_PAGINATION);
 	$pagination->set_url(new Url('/forum/membermsg.php?id=' . $view_msg . '&amp;p=%d'));
 
 	if ($pagination->current_page_is_empty() && $page > 1)
