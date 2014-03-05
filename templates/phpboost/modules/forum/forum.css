@@ -1,5 +1,10 @@
 table { margin:0; }
 	
+.module_position {
+width: 96%;
+margin: auto;
+}
+
 .forum_table {
 	width:100%;
 	border:none;
@@ -216,12 +221,17 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 	padding:10px 10px;
 	color:#F8F8F8;
 }
+
 .forum_top_cat a {
-    color: #F8F8F8;
+	color: #F8F8F8;
+}
+
+.forum_top_cat .fa-syndication + a {
     font-size: 18px;
     font-weight: bold;
 }
-.forum_top_cat a:hover {
+
+.forum_top_cat .fa-syndication + a:hover {
     color: #CCCCCC;
     font-size: 18px;
     font-weight: bold;
@@ -306,6 +316,8 @@ span.forum_nbr {
 a.pbt-button-add{ width:auto; }
 
 .forum_sous_cat_pbt { border-bottom: 1px solid #E0E6E9; }
+
+.pagination { display:inline; }
 
 /* Messages postés par les membres 
 --------------------------------------*/
@@ -491,6 +503,6 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
 .fa-mail-not-track:before { content: "\f003"; color:#000000; }
 
 .fa-lastview:before { content: "\f017"; color:#334455; }
-.fa-notread:before { content: "\f0f6"; color:#363636; }
+.fa-notread:before { content: "\f0f6"; color:#F8F8F8; }
 
 .fa-syndication:before { font-weight:normal; font-size:16px; }

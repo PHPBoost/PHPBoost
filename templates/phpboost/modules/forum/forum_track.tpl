@@ -57,7 +57,7 @@
 									# IF NOT topics.C_HOT_TOPIC # 
 									<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
 									# ELSE #
-									<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}_hot.gif" alt="" /> 
+									<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}-hot.gif" alt="" /> 
 									# ENDIF #
 								</td>
 								<td class="forum_sous_cat forum_sous_cat_pbt" style="width:35px;text-align:center;">
