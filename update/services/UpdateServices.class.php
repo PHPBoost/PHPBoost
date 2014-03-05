@@ -176,6 +176,8 @@ class UpdateServices
 	public function execute()
 	{
 		$this->get_update_token();
+		
+		Environment::try_to_increase_max_execution_time();
 
 		$general_config = GeneralConfig::load();
 		$general_config->set_site_path('/trunk');
