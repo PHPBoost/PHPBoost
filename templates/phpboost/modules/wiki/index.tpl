@@ -23,7 +23,7 @@
 						<h1>A propos de PHPBoost</h1>
 					</header>
 					<div class="content">
-						<ul class="no-list">
+						<ul class="no-list pbt-content-about">
 							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
@@ -42,7 +42,7 @@
 							</li>
 						</ul>
 						
-						<ul class="no-list">
+						<ul class="no-list pbt-content-about">
 							<li>
 								<i class="fa fa-file-text"></i>
 								<a href="{PATH_TO_ROOT}/forum/">Forum</a>
