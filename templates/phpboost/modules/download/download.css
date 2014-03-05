@@ -1,0 +1,30 @@
+
+div.pbt-container{
+	text-align:center;	
+}
+
+div.pbt-dev-container{ 
+	width: 480px;
+	text-align:left;
+	padding-top:5px;
+	margin:auto;
+}
+
+p.pbt-custom-desc{
+	text-align:left;
+	padding-left:56px;
+}
+p.pbt-custom-desc, a.pbt-dev{
+	font-style:italic;
+	color:#3F5164;
+	font-weight:normal;	
+}
+a.pbt-dev:hover{ color:#25466C; text-decoration:none;}
+
+.pbt-custom-content{ margin:20px auto 20px auto; }
+
+img.left{ float:left; }
+
+div.pbt-button-blue a.pbt-button-a{ width:330px; }
+div.pbt-button-green a.pbt-button-a{ width:220px; }
+div.pbt-button-gray a.pbt-button-a{ width:175px; }
