@@ -22,7 +22,7 @@
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
 			<div class="sortable-options preview">
-				<img src="{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
+				<img src="{REL_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
 			<div class="sortable-actions">
 				<a href="" class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"></a>
@@ -59,7 +59,7 @@
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)">
 			<div class="sortable-options preview">
-				<img src="{RELATIVE_IMG}" id="menu_element_{ID}_image_preview"/>
+				<img src="{REL_IMG}" id="menu_element_{ID}_image_preview"/>
 			</div>
 			<div class="sortable-actions">
 				<a href="" class="fa fa-plus" title="{L_MORE}" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;"></a>
