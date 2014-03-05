@@ -619,6 +619,10 @@ menu.dynamic-menu ul li.extend > a:after, menu.dynamic-menu ul li.extend > span:
 	height:1px;
 }
 
+ul.menu_vertical li {
+	list-style: none;
+}
+
 /* Erreurs
 --------------------------------------*/
 div.message-helper-small { width:50%; }

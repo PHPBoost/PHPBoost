@@ -220,9 +220,7 @@
 					# IF msg.C_FORUM_MSG_EDIT # 
 					<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
 					# ENDIF #
-					
 					# IF msg.C_FORUM_MSG_DEL #
-					&nbsp;
 						# IF msg.C_FORUM_MSG_DEL_MSG #
 					<a href="action{msg.U_FORUM_MSG_DEL}" title="{L_DELETE}" id="dimgnojs{msg.ID}" class="fa fa-delete"></a>
 					<a style="cursor:pointer;display:none" onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" title="{L_DELETE}" class="fa fa-delete"></a> 
