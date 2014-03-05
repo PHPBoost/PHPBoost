@@ -503,6 +503,7 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
 .fa-mail-not-track:before { content: "\f003"; color:#000000; }
 
 .fa-lastview:before { content: "\f017"; color:#334455; }
-.fa-notread:before { content: "\f0f6"; color:#F8F8F8; }
+.forum_top_cat .fa-notread:before { color:#F8F8F8; }
+.fa-notread:before { content: "\f0f6"; color:#363636; }
 
 .fa-syndication:before { font-weight:normal; font-size:16px; }
