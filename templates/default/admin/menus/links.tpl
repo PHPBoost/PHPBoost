@@ -75,11 +75,9 @@ function addSubElement(menu_element_id) {
         Builder.node('div', {className: 'spacer'}),
         Builder.node('fieldset', {id: 'menu_element_' + id + '_properties', style: 'display:none;'}, [
             Builder.node('legend', {JL_PROPERTIES}),
-            Builder.node('dl', [
-                Builder.node('dt', [
-                    Builder.node('label', {htmlFor: 'menu_element_' + id + '_auth'}, {JL_AUTHORIZATIONS})
-                ]),
-                Builder.node('dd', getAuthForm(id)),
+            Builder.node('div', {className: 'form-element'}, [
+				Builder.node('label', {JL_AUTHORIZATIONS}),
+                Builder.node('div', {className: 'form-field'}, getAuthForm(id))
             ]),
         ])
     ]);
