@@ -32,10 +32,7 @@
 		# IF C_BUGS #
 			<div id="status_chart"></div>
 		# ELSE #
-			<div class="message-helper notice">
-			<i class="fa fa-notice"></i>
-			<div class="message-helper-content">{@notice.no_bug}</div>
-			</div>
+			<div class="notice">{@notice.no_bug}</div>
 		# ENDIF #
 		</div>
 	</div>
@@ -75,10 +72,7 @@
 			</tbody>
 		</table>
 		# ELSE #
-		<div class="message-helper notice">
-		<i class="fa fa-notice"></i>
-		<div class="message-helper-content">{@notice.no_bug_solved}</div>
-		</div>
+		<div class="notice">{@notice.no_bug_solved}</div>
 		# ENDIF #
 	</div>
 </section>
@@ -125,10 +119,7 @@
 			</tbody>
 		</table>
 		# ELSE #
-		<div class="message-helper notice">
-		<i class="fa fa-notice"></i>
-		<div class="message-helper-content">{@notice.no_bug}</div>
-		</div>
+		<div class="notice">{@notice.no_bug}</div>
 		# ENDIF #
 	</div>
 </section>

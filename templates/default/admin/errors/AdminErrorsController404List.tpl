@@ -38,8 +38,5 @@
 	</table>
 	
 	# IF NOT C_ERRORS #
-	<div class="message-helper success message-helper-small">
-		<i class="fa fa-success"></i>
-		<div class="message-helper-content">{@404_no_error}</div>
-	</div>
+	<div class="success message-helper-small">{@404_no_error}</div>
 	# ENDIF #

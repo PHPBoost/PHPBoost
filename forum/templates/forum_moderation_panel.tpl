@@ -385,10 +385,7 @@
 							</tr>
 							<tr>
 								<td colspan="2">
-									<div class="message-helper question">
-										<i class="fa fa-question"></i>
-										<div class="message-helper-content">{L_ALTERNATIVE_PM}</div>
-									</div>
+									<div class="question">{L_ALTERNATIVE_PM}</div>
 									{KERNEL_EDITOR}
 									<textarea name="action_contents" id="action_contents" rows="12" cols="15">{ALTERNATIVE_PM}</textarea>
 								</td>

@@ -43,15 +43,9 @@
 						<tr> 
 							<td>
 								# IF C_UNREAD_ALERTS #
-									<div class="message-helper warning" style="width:auto;">
-										<i class="fa fa-warning"></i>
-										<div class="message-helper-content">{L_UNREAD_ALERT}</div>
-									</div>
+									<div class="warning" style="width:auto;">{L_UNREAD_ALERT}</div>
 								# ELSE #
-									<div class="message-helper success" style="width:auto;">
-										<i class="fa fa-success"></i>
-										<div class="message-helper-content">{L_NO_UNREAD_ALERT}</div>
-									</div>
+									<div class="success" style="width:auto;">{L_NO_UNREAD_ALERT}</div>
 								# ENDIF #
 								<div style="text-align:center;">
 									<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>

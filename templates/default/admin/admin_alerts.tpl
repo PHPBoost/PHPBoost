@@ -162,9 +162,6 @@
 				# ENDIF #	
 			</table>
 			# IF NOT C_EXISTING_ALERTS #
-			<div class="message-helper question message-helper-small">
-				<i class="fa fa-question"></i>
-				<div class="message-helper-content">{L_NO_ALERT}</div>
-			</div>
+			<div class="question message-helper-small">{L_NO_ALERT}</div>
 			# ENDIF #			
 		</div>

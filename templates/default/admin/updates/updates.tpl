@@ -26,18 +26,12 @@
 
 <div id="admin-contents">
 	# IF C_INCOMPATIBLE_PHP_VERSION #
-		<div class="message-helper warning message-helper-small">
-			<i class="fa fa-warning"></i>
-			<div class="message-helper-content">{L_INCOMPATIBLE_PHP_VERSION}</div>
-		</div>
+		<div class="warning message-helper-small">{L_INCOMPATIBLE_PHP_VERSION}</div>
 	# ELSE #		
 		<table>
 			<caption>{L_WEBSITE_UPDATES}</caption>
 		# IF C_UPDATES #
- 			<div class="message-helper warning message-helper-small">
-				<i class="fa fa-warning"></i>
-				<div class="message-helper-content">{L_UPDATES_ARE_AVAILABLE}</div>
-			</div>
+ 			<div class="warning message-helper-small">{L_UPDATES_ARE_AVAILABLE}</div>
 			<thead>
 				<tr>
 					# IF C_ALL #
@@ -73,10 +67,7 @@
 		</table>
 		# ELSE #
 		</table>
-			<div class="message-helper success message-helper-small">
-				<i class="fa fa-success"></i>
-				<div class="message-helper-content">{L_NO_AVAILABLES_UPDATES}</div>
-			</div>
+			<div class="success message-helper-small">{L_NO_AVAILABLES_UPDATES}</div>
 		# ENDIF #
 		<p class="center" style="margin-top:100px;">
 			<a href="{U_CHECK}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="" /></a>

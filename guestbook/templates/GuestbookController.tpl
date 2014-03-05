@@ -10,10 +10,7 @@
 			<div class="spacer">&nbsp;</div>
 		# ENDIF #
 		# IF C_NO_MESSAGE #
-			<div class="message-helper notice message-helper-small center">
-				<i class="fa fa-notice"></i>
-				<div class="message-helper-content">{@guestbook.titles.no_message}</div>
-			</div>
+			<div class="notice message-helper-small center">{@guestbook.titles.no_message}</div>
 		# ENDIF #
 		# START messages #
 			<article id="m{messages.ID}" class="message">

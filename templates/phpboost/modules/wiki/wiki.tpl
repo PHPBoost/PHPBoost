@@ -9,10 +9,7 @@
 				# INCLUDE wiki_tools #
 				
 				# START warning #
-				<div id="id-message-helper" class="message-helper warning">
-					<i class="fa fa-warning"></i>
-					<div class="message-helper-content">{warning.UPDATED_ARTICLE}</div>
-				</div>
+				<div id="id-message-helper" class="warning">{warning.UPDATED_ARTICLE}</div>
 				# END warning #
 						
 				# START redirect #

@@ -55,8 +55,5 @@
 	</tbody>
 </table>
 # ELSE #
-<div class="message-helper notice">
-<i class="fa fa-notice"></i>
-<div class="message-helper-content">{@notice.no_history}</div>
-</div>
+<div class="notice">{@notice.no_history}</div>
 # ENDIF #

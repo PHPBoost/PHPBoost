@@ -5,15 +5,9 @@
 	<div class="content">
 		# IF C_MAIL_SENT # 
 			# IF C_SUCCESS # 
-				<div class="message-helper success">
-					<i class="fa fa-success"></i>
-					<div class="message-helper-content">{@mail.success}</div>
-				</div>
+				<div class="success">{@mail.success}</div>
 			# ELSE # 
-				<div class="message-helper error">
-					<i class="fa fa-error"></i>
-					<div class="message-helper-content">{ERROR}</div>
-				</div> 
+				<div class="error">{ERROR}</div>
 			# ENDIF #
 		# ENDIF #
 		

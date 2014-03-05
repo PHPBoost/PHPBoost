@@ -7,10 +7,7 @@
 			<h1>{L_CONTRIBUTION_LIST}</h1>
 			<br />
 			# IF C_NO_CONTRIBUTION #
-			<div class="message-helper warning">
-				<i class="fa fa-warning"></i>
-				<div class="message-helper-content">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
-			</div>
+			<div class="warning">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
 			# ELSE #
 			<table>
 				<thead>
@@ -157,10 +154,7 @@
 						<div class="spacer">&nbsp;</div>
 					# END row #
 				# ELSE #
-					<div class="message-helper warning">
-						<i class="fa fa-warning"></i>
-						<div class="message-helper-content">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
-					</div>
+					<div class="warning">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
 				# ENDIF #
 			</div>
 		<footer></footer>

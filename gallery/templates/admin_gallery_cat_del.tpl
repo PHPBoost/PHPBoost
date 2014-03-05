@@ -53,10 +53,7 @@
 				# START subgalleries #
 				<fieldset>
 					<legend>{subgalleries.L_KEEP}</legend>
-					<div class="message-helper warning">
-						<i class="fa fa-notice"></i>
-						<div class="message-helper-content">{subgalleries.L_EXPLAIN_CAT}</div>
-					</div>
+					<div class="warning">{subgalleries.L_EXPLAIN_CAT}</div>
 
 					<div class="form-element">
 						<label for="f_to">{subgalleries.L_MOVE_GALLERIES}</label>
