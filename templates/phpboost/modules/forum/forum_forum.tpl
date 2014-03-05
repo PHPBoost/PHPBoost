@@ -76,8 +76,7 @@
 		<div class="module_position forum_position_cat">
 			<div class="pbt-button pbt-button-gray">
 				<a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" class="pbt-button-a pbt-button-add">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt-button-img valign-middle" />
-					Créer un nouveau sujet
+					<i class="fa fa-plus"></i> Créer un nouveau sujet
 				</a>
 			</div>
 		</div>
@@ -180,8 +179,7 @@
 		<div class="module_position forum_position_cat">
 			<div class="pbt-button pbt-button-gray">
 				<a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" class="pbt-button-a pbt-button-add">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt-button-img valign-middle" />
-					Créer un nouveau sujet
+					<i class="fa fa-plus"></i> Créer un nouveau sujet
 				</a>
 			</div>
 		</div>
