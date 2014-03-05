@@ -237,10 +237,10 @@ class CalendarEventContent
 		return array(
 			'id' => $this->get_id(),
 			'id_category' => $this->get_category_id(),
-			'title' => $this->get_title(),
-			'rewrited_title' => $this->get_rewrited_title(),
+			'title' => TextHelper::htmlspecialchars($this->get_title()),
+			'rewrited_title' => TextHelper::htmlspecialchars($this->get_rewrited_title()),
 			'contents' => $this->get_contents(),
-			'location' => $this->get_location(),
+			'location' => TextHelper::htmlspecialchars($this->get_location()),
 			'approved' => (int)$this->is_approved(),
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'author_id' => $this->get_author_user()->get_id(),
