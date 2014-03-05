@@ -116,19 +116,17 @@ function addSubMenu(menu_element_id) {
 			]),
 		
 			Builder.node('div', {className: 'sortable-actions'}, [
-				Builder.node('i', {className: 'fa fa-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');'}),
+				Builder.node('a', {href: '', className: 'fa fa-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', onclick: 'toggleProperties(' + id + ');return false;'}),
 				' ',
-				Builder.node('i', {className: 'fa fa-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
+				Builder.node('a', {href: '', className: 'fa fa-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', onclick: 'deleteElement(\'menu_element_' + id + '\');return false;'})
 			]),
 		]),
         Builder.node('div', {className: 'spacer'}),
         Builder.node('fieldset', {id: 'menu_element_' + id + '_properties', style: 'display:none;'}, [
             Builder.node('legend', {JL_PROPERTIES}),
-            Builder.node('dl', [
-                Builder.node('dt', [
-                  Builder.node('label', {htmlFor: 'menu_element_' + id + '_auth'}, {JL_AUTHORIZATIONS})
-                ]),
-                Builder.node('dd', getAuthForm(id)),
+            Builder.node('div', {className: 'form-element'}, [
+				Builder.node('label', {JL_AUTHORIZATIONS}),
+                Builder.node('div', {className: 'form-field'}, getAuthForm(id))
             ]),
         ]),
         Builder.node('hr'),
