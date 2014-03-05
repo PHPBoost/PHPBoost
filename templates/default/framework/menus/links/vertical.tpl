@@ -4,10 +4,10 @@
 			<div class="module-mini-top">
 				<h3 class="menu-vertical-{DEPTH} menu_vertical">
 					# IF RELATIVE_URL #
-						<a href="{RELATIVE_URL}" title="{TITLE}">
-						# IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}</a>
+						<a href="{REL_URL}" title="{TITLE}">
+						# IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}</a>
 					# ELSE #
-						# IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}
+						# IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}
 					# ENDIF #
 				</h3>
 			</div>
@@ -22,11 +22,11 @@
 		<li>
 			<h3 class="menu-vertical-{DEPTH} menu_vertical">
 			# IF RELATIVE_URL #
-				<a href="{RELATIVE_URL}" title="{TITLE}">
-				# IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /># ENDIF #
+				<a href="{REL_URL}" title="{TITLE}">
+				# IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #
 				{TITLE}</a>
 			# ELSE #
-				<span># IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}</span>
+				<span># IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}</span>
 			# ENDIF #
 			</h3>
 			# IF C_HAS_CHILD #<ul class="menu-vertical-{DEPTH} menu_vertical"># START elements #{elements.DISPLAY}# END elements #</ul># ENDIF #
@@ -34,6 +34,6 @@
 	# ENDIF #
 # ELSE # <!-- Simple Menu Link -->
 	<li>
-		<a href="{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}</a>
+		<a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}</a>
 	</li>
 # ENDIF #

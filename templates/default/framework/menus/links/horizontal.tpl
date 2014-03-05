@@ -4,9 +4,9 @@
             <ul>
                 <li>
                     # IF RELATIVE_URL #
-		                <a href="{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}</a>
+		                <a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}</a>
 					# ELSE #
-		                <span># IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}</span>
+		                <span># IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}</span>
 		            # ENDIF #
                 </li>
                 # START elements #{elements.DISPLAY}# END elements #
@@ -16,12 +16,12 @@
     # IF C_NEXT_MENU # <!-- Children -->
         <li>
             # IF RELATIVE_URL #
-				<a href="{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{RELATIVE_IMG}" alt="{TITLE}" /> # ENDIF #{TITLE}</a>
+				<a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" /> # ENDIF #{TITLE}</a>
 			# ELSE #
-				<span># IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}</span>
+				<span># IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}</span>
 			# ENDIF #
         </li>
         # START elements #{elements.DISPLAY}# END elements #
     # ENDIF #
 # ELSE # <!-- Simple Menu Link -->
-    <li><a href="{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}</a></li># ENDIF #
+    <li><a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}" alt="" /># ENDIF #{TITLE}</a></li># ENDIF #

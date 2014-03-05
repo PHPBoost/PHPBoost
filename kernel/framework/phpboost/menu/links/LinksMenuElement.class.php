@@ -134,10 +134,12 @@ abstract class LinksMenuElement extends Menu
             'PARENT_DEPTH' => $this->depth - 1,
             'C_URL' => !empty($this->url),
             'C_IMG' => !empty($this->image),
-            'ABSOLUTE_URL' => $this->get_url(false),
-            'ABSOLUTE_IMG' => $this->get_image(false),
-            'RELATIVE_URL' => $this->get_url(true),
-            'RELATIVE_IMG' => $this->get_image(true),
+            'ABSOLUTE_URL' => Url::to_absolute($this->url),
+            'ABSOLUTE_IMG' => Url::to_absolute($this->image),
+            'RELATIVE_URL' => Url::to_relative($this->url),
+			'REL_URL' => Url::to_rel($this->url),
+            'RELATIVE_IMG' => Url::to_relative($this->image),
+			'REL_IMG' => Url::to_rel($this->image),
             'ID' => $this->get_uid(),
             'ID_VAR' => $this->get_uid()
 		));
@@ -161,7 +163,7 @@ abstract class LinksMenuElement extends Menu
 		$url = new Url($string_url);
 		if ($compute_relative_url)
 		{
-			return $url->rel();
+			return $url->relative();
 		}
 		else
 		{
