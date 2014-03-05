@@ -130,8 +130,8 @@ class Category
 	{
 		return array(
 			'id' => $this->get_id(),
-			'name' => $this->get_name(),
-			'rewrited_name' => $this->get_rewrited_name(),
+			'name' => TextHelper::htmlspecialchars($this->get_name()),
+			'rewrited_name' => TextHelper::htmlspecialchars($this->get_rewrited_name()),
 			'c_order' => $this->get_order(),
 			'auth' => !$this->auth_is_empty() ? serialize($this->get_authorizations()) : '',
 			'id_parent' => $this->get_id_parent()

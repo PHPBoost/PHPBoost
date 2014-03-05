@@ -55,7 +55,7 @@ class RichCategory extends Category
 	
 	public function get_properties()
 	{
-		return array_merge(parent::get_properties(), array('description' => $this->get_description(), 'image' => $this->get_image()->relative()));
+		return array_merge(parent::get_properties(), array('description' => TextHelper::htmlspecialchars($this->get_description()), 'image' => TextHelper::htmlspecialchars($this->get_image()->relative())));
 	}
 	
 	public function set_properties(array $properties)

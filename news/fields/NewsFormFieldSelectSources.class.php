@@ -102,7 +102,7 @@ class NewsFormFieldSelectSources extends AbstractFormField
 				$field_value = $request->get_poststring($field_value_id);
 				
 				if (!empty($field_name) && !empty($field_value))
-					$values[$field_name] = $field_value;
+					$values[TextHelper::htmlspecialchars($field_name)] = TextHelper::htmlspecialchars($field_value);
 			}
 		}
 		$this->set_value($values);
