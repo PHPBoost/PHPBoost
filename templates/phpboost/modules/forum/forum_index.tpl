@@ -47,7 +47,7 @@
 						</td>
 						# ELSE #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
-							<img src="{PICTURES_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" # IF forums_list.subcats.C_BLINK #class="blink" # ENDIF #alt="" style="max-width:25px;"/>
+							<img src="{PICTURES_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" alt="" style="max-width:25px;"/>
 						</td>
 						<td class="forum_sous_cat" style="min-width:150px;">
 							<a href="{forums_list.subcats.U_FORUM_VARS}">{forums_list.subcats.NAME}</a>
