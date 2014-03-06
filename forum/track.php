@@ -112,13 +112,14 @@ elseif ($User->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non l
 		//Vérifications des topics Lu/non Lus.
 		$img_announce = 'fa-announce';
 		$new_msg = false;
+		$blink = false;
 		if (!$is_guest) //Non visible aux invités.
 		{
-			$new_msg = false;
 			if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
-			{	
-				$img_announce =  'blink ' .$img_announce . '-new'; //Image affiché aux visiteurs.
+			{
+				$img_announce = $img_announce . '-new'; //Image affiché aux visiteurs.
 				$new_msg = true;
+				$blink = true;
 			}
 		}
 		$img_announce .= ($row['type'] == '1') ? '-post' : '';
@@ -161,6 +162,7 @@ elseif ($User->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non l
 		$Template->assign_block_vars('topics', array(
 			'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg'])),
 			'C_POLL' => !empty($row['question']),
+			'C_BLINK' => $blink,
 			'ID' => $row['id'],
 			'INCR' => $nbr_topics_compt,
 			'CHECKED_PM' => ($row['pm'] == 1) ? 'checked="checked"' : '',

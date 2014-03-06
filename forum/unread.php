@@ -101,7 +101,7 @@ while ($row = $Sql->fetch_assoc($result))
 	//On définit un array pour l'appelation correspondant au type de champ
 	$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
 		
-	$img_announce = 'blink fa-announce-new'; //Forcement non lu.
+	$img_announce = 'fa-announce-new'; //Forcement non lu.
 	$img_announce .= ($row['type'] == '1') ? '-post' : '';
 	$img_announce .= ($row['type'] == '2') ? '-top' : '';
 	$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '-lock' : '';
@@ -144,6 +144,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'C_IMG_TRACK' => !empty($row['idtrack']),
 		'C_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']),
 		'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg'])),
+		'C_BLINK' => true,
 		'IMG_ANNOUNCE' => $img_announce,
 		'ANCRE' => $new_ancre,
 		'TYPE' => $type[$row['type']],
