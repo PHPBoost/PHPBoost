@@ -148,10 +148,10 @@ class BugtrackerRoadmapListController extends ModuleController
 			}
 			
 			$bugs_colspan = 4;
-			if ($config->is_type_column_displayed()) $bugs_colspan++;
-			if ($config->is_category_column_displayed()) $bugs_colspan++;
-			if ($config->is_priority_column_displayed()) $bugs_colspan++;
-			if ($config->is_detected_in_column_displayed()) $bugs_colspan++;
+			if ($this->config->is_type_column_displayed()) $bugs_colspan++;
+			if ($this->config->is_category_column_displayed()) $bugs_colspan++;
+			if ($this->config->is_priority_column_displayed()) $bugs_colspan++;
+			if ($this->config->is_detected_in_column_displayed()) $bugs_colspan++;
 			
 			$this->view->put_all(array(
 				'C_VERSIONS_AVAILABLE'			=> true,
