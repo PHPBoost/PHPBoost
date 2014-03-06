@@ -1,8 +1,8 @@
 table { margin:0; }
 	
 .module_position {
-width: 96%;
-margin: auto;
+	width:98%;
+	margin:auto;
 }
 
 .forum_table {
@@ -12,6 +12,8 @@ margin: auto;
 }
 
 table.forum_table tbody, table.forum_table tbody tr, table.forum_table tbody tr td { border:none; }
+table tbody td { background-color: #FEFEFE; }
+table tbody tr:nth-child(even) td { background-color: #F9F9F9; }
  
 /* Classe du lien du pseudo sur forum */
 a.forum_link_pseudo {
@@ -239,7 +241,7 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 }
 
 .forum_position_subcat {
-	background-color:#ECEFFA;	
+	background-color:#ECEFFA;
 }
 
 .forum_contents_subcat {
@@ -507,3 +509,5 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
 .fa-notread:before { content: "\f0f6"; color:#363636; }
 
 .fa-syndication:before { font-weight:normal; font-size:16px; }
+
+.fa-warning:before { color:#C19954; }

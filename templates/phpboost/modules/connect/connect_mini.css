@@ -38,7 +38,7 @@
 #connect-menu li { position: relative; }
 
 #connect-menu div.horizontal-fieldset > ul > li > a {
-	display:block;
+	display:inline-block;
 	height:32px;
 	padding:12px 12px 0px 12px;
 	text-decoration:none;
@@ -96,7 +96,12 @@ ul.connect-connected i {
 	width:15px;
 }
 
-li.connect-alert > ul { border-top:3px solid #602B1B; }
+#connect-menu div.horizontal-fieldset > ul > li.connect-alert > ul { border-top:3px solid #602B1B; }
+#connect-menu div.horizontal-fieldset > ul > li.connect-alert > a { padding-right:0px; }
+#connect-menu div.horizontal-fieldset > ul > li.connect-alert > span { 
+	margin-right:12px;
+	font-size:12px; 
+}
 
 #connect-menu div.horizontal-fieldset ul li ul li { padding-left:100px; }
 
