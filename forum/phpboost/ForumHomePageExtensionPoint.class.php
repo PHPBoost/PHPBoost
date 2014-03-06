@@ -223,10 +223,14 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 	
 					//Vérifications des topics Lu/non Lus.
 					$img_announce = 'fa-announce';
+					$blink = false;
 					if (!$is_guest)
 					{
 						if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
-							$img_announce =  'blink ' . $img_announce . '-new'; //Image affiché aux visiteurs.
+						{
+							$img_announce = $img_announce . '-new'; //Image affiché aux visiteurs.
+							$blink = true;
+						}
 					}
 					$img_announce .= ($row['status'] == '0') ? '-lock' : '';
 	
@@ -235,6 +239,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 					
 	
 					$tpl->assign_block_vars('forums_list.subcats', array(
+						'C_BLINK' => $blink,
 						'IMG_ANNOUNCE' => $img_announce,
 						'NAME' => $row['name'],
 						'DESC' => FormatingHelper::second_parse($row['subname']),

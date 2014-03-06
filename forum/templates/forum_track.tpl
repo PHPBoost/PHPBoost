@@ -56,7 +56,7 @@
 									# IF NOT topics.C_HOT_TOPIC # 
 									<i class="fa {topics.IMG_ANNOUNCE}"></i>
 									# ELSE #
-									<i class="fa {topics.IMG_ANNOUNCE}-hot"></i>
+									<i class="fa # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot"></i>
 									# ENDIF #
 								</td>
 								<td class="forum_sous_cat" style="width:35px;text-align:center;">

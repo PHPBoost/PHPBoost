@@ -173,15 +173,20 @@ if (!empty($id_get))
 			}
 			
 			//Vérifications des topics Lu/non Lus.
-			$img_announce = 'fa-announce';		
+			$img_announce = 'fa-announce';
+			$blink = false;
 			if (!$is_guest)
 			{
 				if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
-					$img_announce =  'blink ' . $img_announce . '-new'; //Image affiché aux visiteurs.
+				{
+					$img_announce =  $img_announce . '-new'; //Image affiché aux visiteurs.
+					$blink = true;
+				}
 			}
 			$img_announce .= ($row['status'] == '0') ? '-lock' : '';
 			
 			$Template->assign_block_vars('subcats', array(
+				'C_BLINK' => $blink,
 				'IMG_ANNOUNCE' => $img_announce,
 				'NAME' => $row['name'],
 				'DESC' => $row['subname'],
@@ -294,15 +299,16 @@ if (!empty($id_get))
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
 		
 		//Vérifications des topics Lu/non Lus.
-		$img_announce = 'fa-announce';		
+		$img_announce = 'fa-announce';
 		$new_msg = false;
+		$blink = false;
 		if (!$is_guest) //Non visible aux invités.
 		{
-			$new_msg = false;
 			if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
-			{	
-				$img_announce =  'blink ' . $img_announce . '-new'; //Image affiché aux visiteurs.
+			{
+				$img_announce =  $img_announce . '-new'; //Image affiché aux visiteurs.
 				$new_msg = true;
+				$blink = true;
 			}
 		}
 		$img_announce .= ($row['type'] == '1') ? '-post' : '';
@@ -348,6 +354,7 @@ if (!empty($id_get))
 			'C_IMG_TRACK' => !empty($row['idtrack']),
 			'C_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']),
 			'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg'])),
+			'C_BLINK' => $blink,
 			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
 			'TYPE' => $type[$row['type']],
