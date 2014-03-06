@@ -90,7 +90,7 @@ class Mail
 		
 		if ($sender_name == self::SENDER_ADMIN || $sender_name == self::SENDER_USER)
 		{
-			$sender_name = $sender_name == self::SENDER_ADMIN ? LangLoader::get_message('admin', 'user-common') : LangLoader::get_message('user', 'user-common');
+			$sender_name = $sender_name == self::SENDER_ADMIN ? LangLoader::get_message('administrator', 'user-common') : LangLoader::get_message('user', 'user-common');
 		}
 		
 		$this->sender_name = str_replace('"', '', $site_name . ' - ' . $sender_name);
