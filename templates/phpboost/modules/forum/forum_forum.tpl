@@ -162,7 +162,7 @@
 					# ENDIF #
 				</table>
 			</div>
-			<div class="module_position forum_position_subcat">
+			<div class="forum_position_subcat">
 				<div class="forum_position_subcat-bottom"></div>
 			</div>
 		</div>
