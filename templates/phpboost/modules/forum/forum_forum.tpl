@@ -37,7 +37,7 @@
 							</td>
 							# ELSE #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{PICTURES_DATA_PATH}/images/{subcats.IMG_ANNOUNCE}.png" # IF subcats.C_BLINK #class="blink" # ENDIF #alt="" />
+								<img src="{PICTURES_DATA_PATH}/images/{subcats.IMG_ANNOUNCE}.png" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;">
 								<a href="forum{subcats.U_FORUM_VARS}">{subcats.NAME}</a>
@@ -123,7 +123,7 @@
 							# IF NOT topics.C_HOT_TOPIC #
 							<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
 							# ELSE #
-							<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}-hot.gif" # IF topics.C_BLINK #class="blink" # ENDIF #alt="" />
+							<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}-hot.gif" alt="" />
 							# ENDIF #
 						</td>
 						<td class="forum_sous_cat forum_sous_cat_pbt" style="width:35px;text-align:center;">
