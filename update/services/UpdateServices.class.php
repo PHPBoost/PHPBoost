@@ -180,7 +180,7 @@ class UpdateServices
 		Environment::try_to_increase_max_execution_time();
 
 		$general_config = GeneralConfig::load();
-		$general_config->set_site_path('/trunk');
+		//$general_config->set_site_path('/trunk');
 		$general_config->set_phpboost_major_version('4.1');
 		GeneralConfig::save();
 		
@@ -243,7 +243,7 @@ class UpdateServices
 		
 		$this->insert_smileys_data();
 		
-		ModulesManager::uninstall_module('HomeCustom');
+		//ModulesManager::uninstall_module('HomeCustom');
 		
 		$modules_config = ModulesConfig::load();
 		foreach (ModulesManager::get_installed_modules_map() as $id => $module)

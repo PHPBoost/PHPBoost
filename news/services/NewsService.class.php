@@ -57,7 +57,7 @@ class NewsService
 		self::$db_querier->delete(NewsSetup::$news_table, $condition, $parameters);
 	}
 
-	public static function get_news($condition, array $parameters)
+	public static function get_news($condition, array $parameters = array())
 	{
 		$row = self::$db_querier->select_single_row_query('SELECT news.*, member.*
 		FROM ' . NewsSetup::$news_table . ' news 
