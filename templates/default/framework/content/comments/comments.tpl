@@ -11,13 +11,14 @@ function refresh_comments()
 	})
 }
 
+# IF C_DISPLAY_VIEW_ALL_COMMENTS #
 Event.observe(window, 'load', function() {
-	# IF C_DISPLAY_VIEW_ALL_COMMENTS #
+	
 	$('refresh_comments').observe('click', function() {
 		refresh_comments();
 	});
-	# ENDIF #
 });
+# ENDIF #
 
 # IF C_REFRESH_ALL #
 	refresh_comments();

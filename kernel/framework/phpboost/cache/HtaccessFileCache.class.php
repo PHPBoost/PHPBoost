@@ -195,19 +195,19 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('<IfModule mod_expires.c>');
 	    $this->add_line('ExpiresActive On');
 	    $this->add_line('ExpiresDefault "access plus 1 week"');
-	    $this->add_line('ExpiresByType image/jpg                     "access plus 1 week"');
-	    $this->add_line('ExpiresByType image/jpeg                    "access plus 1 week"');
-	    $this->add_line('ExpiresByType image/png                     "access plus 1 week"');
-	    $this->add_line('ExpiresByType image/gif                     "access plus 1 week"');
+	    $this->add_line('ExpiresByType image/jpg                     "access plus 1 month"');
+	    $this->add_line('ExpiresByType image/jpeg                    "access plus 1 month"');
+	    $this->add_line('ExpiresByType image/png                     "access plus 1 month"');
+	    $this->add_line('ExpiresByType image/gif                     "access plus 1 month"');
 	    $this->add_line('AddType image/x-icon .ico');
-	    $this->add_line('ExpiresByType image/ico                     "access plus 1 week"');
-	    $this->add_line('ExpiresByType image/icon                    "access plus 1 week"');
-	    $this->add_line('ExpiresByType image/x-icon                  "access plus 1 week"');
-	    $this->add_line('ExpiresByType text/css                      "access plus 1 week"');
-	    $this->add_line('ExpiresByType text/javascript               "access plus 1 week"');
-	    $this->add_line('ExpiresByType application/javascript        "access plus 1 week"');
-	    $this->add_line('ExpiresByType application/x-javascript      "access plus 1 week"');
-	    $this->add_line('ExpiresByType application/x-shockwave-flash "access plus 1 week"');
+	    $this->add_line('ExpiresByType image/ico                     "access plus 1 month"');
+	    $this->add_line('ExpiresByType image/icon                    "access plus 1 month"');
+	    $this->add_line('ExpiresByType image/x-icon                  "access plus 1 month"');
+	    $this->add_line('ExpiresByType text/css                      "access plus 1 month"');
+	    $this->add_line('ExpiresByType text/javascript               "access plus 1 month"');
+	    $this->add_line('ExpiresByType application/javascript        "access plus 1 month"');
+	    $this->add_line('ExpiresByType application/x-javascript      "access plus 1 month"');
+	    $this->add_line('ExpiresByType application/x-shockwave-flash "access plus 1 month"');
 		$this->add_line('</IfModule>');
 	}
 	
