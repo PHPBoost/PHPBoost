@@ -278,9 +278,11 @@ class BugtrackerChangeBugStatusController extends ModuleController
 			
 			$old_assigned_to_id = $this->bug->get_assigned_to_id();
 			$old_user_assigned = $old_assigned_to_id ? UserService::get_user("WHERE user_aprob = 1 AND user_id=:id", array('id' => $old_assigned_to_id)) : 0;
-			$new_user_assigned = !empty($assigned_to) ? UserService::get_user("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)) : 0;
 			
-			if ($new_user_assigned != $old_user_assigned)
+			$new_user_assigned = !empty($assigned_to) ? UserService::get_user("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)) : 0;
+			$new_assigned_to_id = !empty($new_user_assigned) ? $new_user_assigned->get_id() : 0;
+			
+			if ($new_assigned_to_id != $old_assigned_to_id)
 			{
 				//Bug history update
 				BugtrackerService::add_history(array(
@@ -288,8 +290,8 @@ class BugtrackerChangeBugStatusController extends ModuleController
 					'updater_id'	=> $this->current_user->get_id(),
 					'update_date'	=> $now->get_timestamp(),
 					'updated_field'	=> 'assigned_to_id',
-					'old_value'		=> !empty($old_user_assigned) ? '<a href="' . UserUrlBuilder::profile($old_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($old_user_assigned->get_level()) . '">' . $old_user_assigned->get_pseudo() . '</a>' : $this->lang['notice.no_one'],
-					'new_value'		=> !empty($new_user_assigned) ? '<a href="' . UserUrlBuilder::profile($new_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($new_user_assigned->get_level()) . '">' . $new_user_assigned->get_pseudo() . '</a>' : $this->lang['notice.no_one']
+					'old_value'		=> $old_user_assigned ? '<a href="' . UserUrlBuilder::profile($old_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($old_user_assigned->get_level()) . '">' . $old_user_assigned->get_pseudo() . '</a>' : $this->lang['notice.no_one'],
+					'new_value'		=> $new_user_assigned ? '<a href="' . UserUrlBuilder::profile($new_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($new_user_assigned->get_level()) . '">' . $new_user_assigned->get_pseudo() . '</a>' : $this->lang['notice.no_one']
 				));
 				
 				//Bug update

@@ -418,6 +418,7 @@ class BugtrackerFormController extends ModuleController
 		{
 			$old_values = new Bug();
 			$old_values->set_properties($bug->get_properties());
+			$old_values->set_author_user($bug->get_author_user());
 			
 			$now = new Date();
 			
