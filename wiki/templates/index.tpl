@@ -32,15 +32,17 @@
 				<table>
 					<thead>
 						<tr> 
-							<th colspan="2"><strong><em>{last_articles.L_ARTICLES}</em></strong> {last_articles.RSS}</th>
+							<th colspan="2">
+								# IF last_articles.C_ARTICLES #<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> # ENDIF #<strong><em>{last_articles.L_ARTICLES}</em></strong>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							# START last_articles.list #
 							{last_articles.list.TR}
-								<td style="width:50%">
-									<i class="fa fa-file"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}">{last_articles.list.ARTICLE}</a>
+								<td class="left" style="width:50%">
+									<i class="fa fa-file-text"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}">{last_articles.list.ARTICLE}</a>
 								</td>
 							# END last_articles.list #
 							{L_NO_ARTICLE}
