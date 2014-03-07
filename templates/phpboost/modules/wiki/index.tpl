@@ -267,12 +267,12 @@
 						
 					</div>
 					<footer></footer>
-				</section>	
+				</section>
 
 				<hr style="margin:5px 0px 25px 0px;" />
 				
 				# IF IS_MODERATOR #
-					<div style="text-align:center;">	
+					<div class="center">
 						<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" class="pbt-button-a">
 							<button class="big">
 								<i class="fa fa-folder-open"></i> {L_EXPLORER}
@@ -281,27 +281,31 @@
 					</div>
 					
 					<br />
-					# START last_articles #	
-					<hr style="margin:0px 0px 25px 0px;" />			
+					# START last_articles #
+					<hr style="margin:0px 0px 25px 0px;" />
 					<br />
-					<table class="module-table">
-						<tr>
-							<th colspan="2">
-								<strong><em>{last_articles.L_ARTICLES}</em></strong> {last_articles.RSS}
-							</th>
-						</tr>
-						<tr>
-							# START last_articles.list #
-							{last_articles.list.TR}
-								<td style="width:50%">
-									<img src="{PICTURES_DATA_PATH}/images/article.png" class="valign-middle" alt="" />&nbsp;<a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}">{last_articles.list.ARTICLE}</a>
-								</td>
-							# END last_articles.list #
-							{L_NO_ARTICLE}
-						</tr>
+					<table>
+						<thead>
+							<tr>
+								<th colspan="2">
+									# IF last_articles.C_ARTICLES #<a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> # ENDIF #<strong><em>{last_articles.L_ARTICLES}</em></strong>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								# START last_articles.list #
+								{last_articles.list.TR}
+									<td class="left" style="width:50%">
+										<i class="fa fa-file-text"></i> <a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}">{last_articles.list.ARTICLE}</a>
+									</td>
+								# END last_articles.list #
+								{L_NO_ARTICLE}
+							</tr>
+						</tbody>
 					</table>
 					# END last_articles #
 				# ENDIF #
 			</div>
 			<footer></footer>
-		</section>		
+		</section>

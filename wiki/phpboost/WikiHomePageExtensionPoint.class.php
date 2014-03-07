@@ -75,6 +75,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			$articles_number = $this->sql_querier->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 
 			$Template->assign_block_vars('last_articles', array(
+				'C_ARTICLES' => $articles_number,
 				'L_ARTICLES' => $LANG['wiki_last_articles_list'],
 			));
 
@@ -89,10 +90,10 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 				$i++;
 			}
 
-			if ($articles_number == 0)
+			if ($i == 0)
 			{
 				$Template->put_all(array(
-					'L_NO_ARTICLE' => '<td style="text-align:center;">' . $LANG['wiki_no_article'] . '</td>',
+					'L_NO_ARTICLE' => '<td class="center" colspan="2">' . $LANG['wiki_no_article'] . '</td>',
 				));
 			}
 		}
