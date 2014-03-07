@@ -98,20 +98,20 @@
 		<div id="footer-columns-container">
 			<div class="footer-columns">
 				<div class="footer-columns-title">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_partners.png" align="center" />
+					<div class="footer-columns-title-picture footer-columns-title-partners"></div>
 					Les partenaires
 				</div>
 				<div class="footer-columns-partners">
 					<a href="http://www.nuxit.com/" style="text-decoration:none;" title="Nuxit">
 						<p style="font-size:9px;color:#dfa959;line-height:0px;margin-bottom: 0px;font-weight:bold;">Hébergement de site web</p>
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/nuxit.png" align="center" alt="Nuxit"/>
+						<div class="footer-columns-title-partners-nuxit"></div>
 						<p style="font-size:9px;font-style:italic;color:#8bb9ff;">Qualité, fiabilité, Support</p>
 					</a>
 				</div>
 			</div>
 			<div class="footer-columns">
-				<div class="footer-columns-title"> 
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_phpboost.png" align="center" />
+				<div class="footer-columns-title">
+					<div class="footer-columns-title-picture footer-columns-title-phpboost"></div>
 					Le projet PHPBoost
 				</div>
 				<ul>
@@ -123,7 +123,7 @@
 			</div>	
 			<div class="footer-columns">
 				<div class="footer-columns-title">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_community.png" align="center" />
+					<div class="footer-columns-title-picture footer-columns-title-community"></div>
 					Contribuer au Projet
 				</div>
 				<ul>
@@ -136,7 +136,7 @@
 			</div>	
 			<div class="footer-columns footer-columns-last">
 				<div class="footer-columns-title">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_support.png" align="center" />
+					<div class="footer-columns-title-picture footer-columns-title-support"></div>
 					Support PHPBoost
 				</div>
 				<ul>
