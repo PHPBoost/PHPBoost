@@ -44,14 +44,14 @@
 				<div class="pbt-button-container">
 					<div class="pbt-button pbt-button-blue">
 							<a href="{PATH_TO_ROOT}/download/file-229+phpboost-4-0.php" class="pbt-button-a">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="valign-middle pbt-custom-img left"/>
+								<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
 								<p class="pbt-button-title">Télécharger PHPBoost 4.0</p>
 								<p class="pbt-button-com">Rev : 4.0.4 | Req : PHP 5.1.2 | .zip </p>
 							</a>
 						</div>
 						<div class="pbt-button pbt-button-green">
 							<a href="{PATH_TO_ROOT}/download/category-36+mises-jour.php" class="pbt-button-a">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="valign-middle pbt-custom-img left" />
+								<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
 								<p class="pbt-button-title">Mises à jour</p>
 								<p class="pbt-button-com pbt-button-com_green">Mise à jour et migration</p>
 							</a>
@@ -66,14 +66,14 @@
 					<div class="pbt-custom-content">
 						<div style="width: 90%;margin:auto;">
 							<div style="float:left; width: 47%;padding-right:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign-middle pbt-custom-img left" />
+								<div class="pbt-custom-img pbt-custom-img-modules"></div>
 								<h2 class="title pbt-custom-subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-38+modules.php">Modules compatibles</a>
 								</h2>
 								<p class="pbt-custom-desc">Donnez de nouvelles fonctionnalités à votre site.</p>
 							</div>
 							<div style="float:left; width: 47%;padding-left:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign-middle pbt-custom-img left" />
+								<div class="pbt-custom-img pbt-custom-img-themes"></div>
 								<h2 class="title pbt-custom-subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-37+themes.php">Thèmes compatibles</a>
 								</h2>
@@ -97,14 +97,14 @@
 					<div class="pbt-button-container">
 						<div class="pbt-button pbt-button-blue">
 							<a href="{PATH_TO_ROOT}/download/file-111+phpboost-3-0-complete.php" class="pbt-button-a">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="pbt-button-img left" />
+								<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
 								<p class="pbt-button-title">Télécharger PHPBoost 3.0</p>
 								<p class="pbt-button-com">Rev : 3.0.11 | Req : PHP 4.0.1 | .zip </p>
 							</a>
 						</div>
 						<div class="pbt-button pbt-button-green">
 							<a href="{PATH_TO_ROOT}/download/category-39+mises-jour.php" class="pbt-button-a">
-								<img  src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="pbt-button-img left" />
+								<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
 								<p class="pbt-button-title">Mises à jour</p>
 								<p class="pbt-button-com pbt-button-com_green">Mise à jour et migration</p>
 							</a>
@@ -116,7 +116,7 @@
 					<div class="pbt-custom-content">
 						<div style="width: 90%;margin:auto;">
 							<div style="float:left; width: 47%;padding-right:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign-middle pbt-custom-img left" />
+								<div class="pbt-custom-img pbt-custom-img-modules"></div>
 								<h2 class="title pbt-custom-subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-29+modules.php">Modules compatibles</a>
 								</h2>
@@ -125,7 +125,7 @@
 								</p>
 							</div>
 							<div style="float:left; width: 47%;padding-left:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign-middle pbt-custom-img left" />
+								<div class="pbt-custom-img pbt-custom-img-themes"></div>
 								<h2 class="title pbt-custom-subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-30+themes.php">Thèmes compatibles</a>
 								</h2>
