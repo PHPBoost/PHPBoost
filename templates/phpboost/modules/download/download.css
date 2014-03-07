@@ -32,6 +32,6 @@ div.pbt-button-gray a.pbt-button-a { width:175px; }
 	float:left;
 }
 
-.pbt-custom-img-phpboost { background:url('../../theme/images/sprite-phpboost.png') -51px -41px; }
-.pbt-custom-img-modules { background:url('../../theme/images/sprite-phpboost.png') -1px -41px; }
-.pbt-custom-img-themes { background:url('../../theme/images/sprite-phpboost.png') -101px -41px; }
+.pbt-custom-img-phpboost { background:url('../../theme/images/sprite-phpboost.png') -51px -28px; }
+.pbt-custom-img-modules { background:url('../../theme/images/sprite-phpboost.png') -1px -28px; }
+.pbt-custom-img-themes { background:url('../../theme/images/sprite-phpboost.png') -101px -28px; }
