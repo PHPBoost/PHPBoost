@@ -314,12 +314,9 @@ class Bug
 		$this->fixed_in = $properties['fixed_in'];
 		$this->assigned_to_id = $properties['assigned_to_id'];
 		
-		if (isset($properties['login']))
-		{
-			$user = new User();
-			$user->set_properties($properties);
-			$this->set_author_user($user);
-		}
+		$user = new User();
+		$user->set_properties($properties);
+		$this->set_author_user($user);
 	}
 	
 	public function init_default_properties()
