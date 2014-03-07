@@ -126,7 +126,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	$auth = ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE));
 	$Template->put_all(array(
 		'C_TOOLS_AUTH' => $auth,
-		'C_PRINT' => $User->check_auth($config_authorizations, READ_PAGE) && ($page_infos['display_print_link'] || $auth),
+		'C_PRINT' => $page_infos['display_print_link'],
 	
 		'L_EDIT' => $LANG['pages_edit'],
 		'L_RENAME' => $LANG['pages_rename'],
