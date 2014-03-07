@@ -173,7 +173,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 				' . ($this->config->is_roadmap_enabled() ? 'HTMLForms.getField("no_selected_version").disable();
 				' : '') : '') . 'HTMLForms.getField("assigned_to").disable();
 			}')),
-			array(new BugtrackerConstraintStatusChanged($this->bug->get_id(), $this->bug->get_status()))
+			!$this->bug->is_fixed() ? array(new BugtrackerConstraintStatusChanged($this->bug->get_id(), $this->bug->get_status())) : array()
 		));
 		
 		$user_assigned = '';
@@ -210,7 +210,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 			{
 				$fieldset->add_field(new FormFieldFree('no_selected_version', '',
 					'<div class="notice" style="margin:5px auto 0px auto;">'. $this->lang['error.e_no_fixed_version'] .'</div>
-					', array('hidden' => !$this->bug->is_fixed())
+					', array('hidden' => !$this->bug->is_fixed() || $this->bug->get_fixed_in() > 0)
 				));
 			}
 		}
