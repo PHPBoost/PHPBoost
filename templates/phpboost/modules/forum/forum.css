@@ -509,5 +509,3 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
 .fa-notread:before { content: "\f0f6"; color:#363636; }
 
 .fa-syndication:before { font-weight:normal; font-size:16px; }
-
-.fa-warning:before { color:#C19954; }
