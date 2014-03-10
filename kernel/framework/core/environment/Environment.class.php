@@ -75,6 +75,7 @@ class Environment
 		self::fit_to_php_configuration();
 		self::init_services();
 		self::load_static_constants();
+		DBFactory::load_prefix();
 
 		// TODO Suppress uses of $Sql in the framework
 		global $Sql;
@@ -224,8 +225,6 @@ class Environment
 		define('TNONE', 			'none');
 
 		define('USE_DEFAULT_IF_EMPTY', 1);
-
-		DBFactory::load_prefix();
 	}
 
 	public static function load_dynamic_constants()
