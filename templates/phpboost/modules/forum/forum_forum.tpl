@@ -27,8 +27,8 @@
 					<table class="module-table forum_table">
 						<tr>
 							# IF subcats.U_FORUM_URL #
-							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<i class="fa fa-globe"></i>
+							<td class="forum_sous_cat" style="width:40px;text-align:center;">
+								<i class="fa fa-globe fa-2x"></i>
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 								<a href="{subcats.U_FORUM_URL}">{subcats.NAME}</a>
@@ -36,7 +36,7 @@
 								<span class="smaller">{subcats.DESC}</span>
 							</td>
 							# ELSE #
-							<td class="forum_sous_cat" style="width:25px;text-align:center;">
+							<td class="forum_sous_cat" style="width:40px;text-align:center;">
 								<img src="{PICTURES_DATA_PATH}/images/{subcats.IMG_ANNOUNCE}.png" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;">

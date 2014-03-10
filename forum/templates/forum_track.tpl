@@ -52,7 +52,7 @@
 	
 							# START topics #
 							<tr>
-								<td class="forum_sous_cat" style="width:25px;text-align:center;">
+								<td class="forum_sous_cat" style="width:40px;text-align:center;">
 									# IF NOT topics.C_HOT_TOPIC # 
 									<i class="fa {topics.IMG_ANNOUNCE}"></i>
 									# ELSE #

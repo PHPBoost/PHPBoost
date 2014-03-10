@@ -38,7 +38,7 @@
 					<tr>
 						# IF forums_list.subcats.U_FORUM_URL #
 						<td class="forum_sous_cat" style="width:40px;text-align:center;">
-							<i class="fa fa-globe"></i>
+							<i class="fa fa-globe fa-2x"></i>
 						</td>
 						<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 							<a href="{forums_list.subcats.U_FORUM_URL}">{forums_list.subcats.NAME}</a>
@@ -46,7 +46,7 @@
 							<span class="smaller">{forums_list.subcats.DESC}</span>
 						</td>
 						# ELSE #
-						<td class="forum_sous_cat" style="width:25px;text-align:center;">
+						<td class="forum_sous_cat" style="width:40px;text-align:center;">
 							<img src="{PICTURES_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" alt="" style="max-width:25px;"/>
 						</td>
 						<td class="forum_sous_cat" style="min-width:150px;">
