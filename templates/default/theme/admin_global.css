@@ -138,6 +138,7 @@ a.member { color:#000000; }
 ------------------------------------ */
 .fa-syndication:before { color:#f57900; }
 .fa-forbidden:before { color:#BA4B49; }
+.fa-warning:before { color:#C19954; }
 .fa-ban:before { color:#BA4B49; }
 .fa-unban:before { color:#478948; }
 .fa-male:before { color:#8DC3E9; }
