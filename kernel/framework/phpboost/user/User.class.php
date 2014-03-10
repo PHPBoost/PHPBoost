@@ -289,5 +289,19 @@ class User
 		$this->pseudo = $properties['login'];
 		$this->set_groups($properties['user_groups']);
 	}
+	
+	public function init_visitor_user()
+	{
+		$this->id = -1;
+		$this->level = self::VISITOR_LEVEL;
+		$this->pseudo = LangLoader::get_message('visitor', 'user-common');
+		
+		$this->approbation = true;
+		$this->delay_banned = 0;
+		$this->delay_readonly = 0;
+		$this->warning_percentage = 0;
+		
+		$this->groups = array();
+	}
 }
 ?>

@@ -58,7 +58,7 @@
 						<div class="more">
 							${LangLoader::get_message('by', 'common')}
 							# IF articles.C_AUTHOR_DISPLAYED #
-							<a itemprop="author" href="{articles.U_AUTHOR}" class="small {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>, 
+								# IF articles.C_AUTHOR_EXIST #<a itemprop="author" href="{articles.U_AUTHOR}" class="{articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a># ELSE #{articles.PSEUDO}# ENDIF #,
 							# ENDIF # 
 							${TextHelper::lowercase_first(LangLoader::get_message('the', 'common'))} <time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE}</time> 
 							${TextHelper::lowercase_first(LangLoader::get_message('in', 'common'))} <a itemprop="about" href="{articles.U_CATEGORY}">{articles.CATEGORY_NAME}</a>
