@@ -34,8 +34,8 @@
 				# START subcats #
 							<tr>
 								# IF subcats.U_FORUM_URL #
-								<td class="forum_sous_cat" style="width:25px;text-align:center;">
-									<i class="fa fa-globe"></i>
+								<td class="forum_sous_cat" style="width:40px;text-align:center;">
+									<i class="fa fa-globe fa-2x"></i>
 								</td>
 								<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 									<a href="{subcats.U_FORUM_URL}">{subcats.NAME}</a>
@@ -43,7 +43,7 @@
 									<span class="smaller">{subcats.DESC}</span>
 								</td>
 								# ELSE #
-								<td class="forum_sous_cat" style="width:25px;text-align:center;">
+								<td class="forum_sous_cat" style="width:40px;text-align:center;">
 									<i class="fa # IF subcats.C_BLINK #blink # ENDIF #{subcats.IMG_ANNOUNCE}"></i>
 								</td>
 								<td class="forum_sous_cat" style="min-width:150px;">
@@ -124,7 +124,7 @@
 							<input type="checkbox" name="ck{topics.ID}">
 						</td>
 						# ENDIF #
-						<td class="forum_sous_cat" style="width:25px;text-align:center;">
+						<td class="forum_sous_cat" style="width:40px;text-align:center;">
 							# IF NOT topics.C_HOT_TOPIC #
 							<i class="fa {topics.IMG_ANNOUNCE}"></i>
 							# ELSE #
