@@ -86,6 +86,8 @@
 		$this->get_seo_meta_data()->set_title($title);
 			
 		defined('TITLE') or define('TITLE', $title);
+		
+		self::set_page_localization($this->get_page_title());
 	}
 }
 ?>

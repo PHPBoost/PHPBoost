@@ -269,10 +269,10 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		else
 		{
-			$where = "AND s.session_script LIKE '". $site_path ."/forum/%'";
+			$where = "AND s.session_script LIKE '%". $site_path ."/forum/%'";
 			if (!empty($id_get))
 			{
-				$where = "AND s.session_script LIKE '". $site_path . url('/forum/index.php?id=' . $id_get, '/forum/cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php') ."'";
+				$where = "AND s.session_script LIKE '%". $site_path . url('/forum/index.php?id=' . $id_get, '/forum/cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php') ."'";
 			}
 			list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online($where);
 		}
