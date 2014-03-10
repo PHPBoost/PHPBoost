@@ -61,8 +61,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 */
 	public function display($content)
 	{
-		self::set_page_localization($this->get_page_title());
-
 		$template = new FileTemplate('body.tpl');
 		
 		$theme = ThemesManager::get_theme(get_utheme());

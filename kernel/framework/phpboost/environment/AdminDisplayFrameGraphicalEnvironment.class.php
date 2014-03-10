@@ -39,8 +39,6 @@ class AdminDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvi
 	
 	public function display($content)
 	{
-		self::set_page_localization($this->get_page_title());
-		
 		$template = new FileTemplate('admin/frame.tpl');
 		
 		$customization_config = CustomizationConfig::load();
