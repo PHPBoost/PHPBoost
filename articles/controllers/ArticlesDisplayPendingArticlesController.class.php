@@ -54,9 +54,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	
 	private function build_form($field, $mode)
 	{
-		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
-		
 		$form = new HTMLForm(__CLASS__);
+		$form->set_css_class('options');
 		
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['articles.sort_filter_title']));
 		$form->add_fieldset($fieldset);
@@ -68,7 +67,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.com'], 'com'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author')
-			), array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			), array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_pending_articles()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -76,7 +75,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
 			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_pending_articles()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$this->form = $form;
@@ -117,7 +116,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 
 		$pagination = $this->get_pagination($now, $authorized_categories, $field, $mode);
 		
-		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, notes.number_notes, notes.average_notes, note.note 
+		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note 
 		FROM '. ArticlesSetup::$articles_table .' articles
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
