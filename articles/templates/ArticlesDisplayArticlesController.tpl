@@ -51,6 +51,7 @@
 		<span itemprop="text">{CONTENTS}</span>
 		<div class="spacer" style="margin-top:35px;">&nbsp;</div>
 		<hr />
+		<div class="spacer">&nbsp;</div>
 		# IF C_PAGINATION #
 			<div class="pages_pagination right">
 				# IF C_NEXT_PAGE #

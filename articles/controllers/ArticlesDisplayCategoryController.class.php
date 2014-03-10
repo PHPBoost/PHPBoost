@@ -118,8 +118,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'C_MODERATE' =>  ArticlesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_COMMENTS_ENABLED' => ArticlesConfig::load()->are_comments_enabled(),
 			'C_ARTICLES_FILTERS' => true,
-			'C_ARTICLES_CAT' => true,
-                        'C_DISPLAY_CATS_ICON' => ArticlesConfig::load()->are_cats_icon_enabled(),
+			'C_DISPLAY_CATS_ICON' => ArticlesConfig::load()->are_cats_icon_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
 			'PAGINATION' => $pagination->display(),
@@ -141,29 +140,29 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'id_category' => $this->category->get_id()
 		));
 		
-                $nbr_cat_displayed = 0;
+		$nbr_cat_displayed = 0;
 		while ($row = $result->fetch())
 		{	
 			$this->view->assign_block_vars('cat_list', array(
 				'ID_CATEGORY' => $row['id'],
 				'CATEGORY_NAME' => $row['name'],
-                                'CATEGORY_IMAGE' => $row['image'],
+				'CATEGORY_IMAGE' => $row['image'],
 				'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 				'NBR_ARTICLES' => $row['nbr_articles'],
 				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
 			));
                         
-                        if (!empty($row['id']))
-                        {
-                                $nbr_cat_displayed++;
-                        }
+			if (!empty($row['id']))
+			{
+				$nbr_cat_displayed++;
+			}
 		}
                 
-                $nbr_column_cats = ($nbr_cat_displayed > ArticlesConfig::load()->get_number_cols_display_cats()) ? ArticlesConfig::load()->get_number_cols_display_cats() : $nbr_cat_displayed;
-                $nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
-                $column_width_cats = floor(100/$nbr_column_cats);
-
-                $this->view->put_all(array('COLUMN_WIDTH_CAT' => $column_width_cats));
+		$nbr_column_cats = ($nbr_cat_displayed > ArticlesConfig::load()->get_number_cols_display_cats()) ? ArticlesConfig::load()->get_number_cols_display_cats() : $nbr_cat_displayed;
+		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
+		$column_width_cats = floor(100/$nbr_column_cats);
+		
+		$this->view->put_all(array('C_ARTICLES_CAT' => $nbr_cat_displayed > 0, 'COLUMN_WIDTH_CAT' => $column_width_cats));
 	}
 	
 	private function build_sorting_form($field, $mode)
