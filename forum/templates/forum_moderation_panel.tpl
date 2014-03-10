@@ -19,7 +19,7 @@
 								<a href="moderation_forum.php?action=punish" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
 							</td>
 							<td style="text-align:center;width:33%">
-								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><i class="fa fa-notice fa-2x"></i></a>
+								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}"><i class="fa fa-forbidden fa-2x"></i></a>
 								<br />
 								<a href="moderation_forum.php?action=alert" title="{L_ALERT_MANAGEMENT}">{L_ALERT_MANAGEMENT}</a>
 							</td>
