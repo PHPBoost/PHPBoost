@@ -90,7 +90,7 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 			'last_registration_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'register_authorizations' => array('type' => 'text', 'length' => 65000),
 			'repeat_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'repeat_type' => array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => '\'' . CalendarEventContent::NEVER . '\'')
+			'repeat_type' => array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => 'never')
 		);
 		$options = array(
 			'primary' => array('id'),
