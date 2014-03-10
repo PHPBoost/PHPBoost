@@ -46,6 +46,7 @@ $lang['default.article.contents'] = 'This brief article will give you some simpl
 <li>In the desired category, click \'Add\' 
 </li><li><a href="/articles/index.php?url=/add/">Click here</a> to add it via the admin panel of the module.<br /> 
 </li></ul> 
+<ul class="bb-ul">
 </li><li>To format your articles, you can use bbcode language or the WYSIWYG editor (cf this (cf cet <a href="http://www.phpboost.com/articles/articles-6-61+mise-en-page-du-contenu.php">article</a>)<br /> 
 </li></ul><br /> 
 <br /> 
