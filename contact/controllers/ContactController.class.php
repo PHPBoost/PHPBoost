@@ -216,7 +216,7 @@ class ContactController extends ModuleController
 		if ($this->config->is_sender_acknowledgment_enabled())
 		{
 			$acknowledgment = new Mail();
-			$acknowledgment->set_sender($recipients['admins']['email'], Mail::SENDER_ADMIN);
+			$acknowledgment->set_sender(MailServiceConfig::load()->get_default_mail_sender(), Mail::SENDER_ADMIN);
 			$acknowledgment->set_subject('[' . $this->lang['contact.acknowledgment_title'] . '] ' . $subject);
 			$acknowledgment->set_content($this->lang['contact.acknowledgment'] . $message);
 			$acknowledgment->add_recipient($this->form->get_value('f_sender_mail'));
