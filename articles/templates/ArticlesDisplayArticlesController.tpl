@@ -17,7 +17,8 @@
 		
 		<div class="more">
 			# IF C_AUTHOR_DISPLAYED #
-			<i class="fa fa-user" title="{@articles.sort_field.author}"></i><a itemprop="author" href="{U_AUTHOR}" class="small {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a>|&nbsp;
+			<i class="fa fa-user" title="{@articles.sort_field.author}"></i>
+			# IF C_AUTHOR_EXIST #<a itemprop="author" href="{U_AUTHOR}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a># ELSE #{PSEUDO}# ENDIF #|&nbsp;
 			# ENDIF #
 			<i class="fa fa-calendar" title="{@articles.sort_field.date}"></i>&nbsp;<time datetime="{DATE}" itemprop="datePublished">{DATE}</time>&nbsp;|
 			&nbsp;<i class="fa fa-eye" title="{@articles.sort_field.views}"></i>&nbsp;{NUMBER_VIEW}

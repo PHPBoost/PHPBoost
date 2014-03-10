@@ -336,9 +336,13 @@ class News
 		$this->updated_date = !empty($properties['updated_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['updated_date']) : null;
 		$this->picture_url = new Url($properties['picture_url']);
 		$this->sources = !empty($properties['sources']) ? unserialize($properties['sources']) : array();
-		
+
 		$user = new User();
-		$user->set_properties($properties);
+		if (!empty($properties['user_id']))
+			$user->set_properties($properties);
+		else
+			$user->init_visitor_user();
+			
 		$this->set_author_user($user);
 	}
 	
@@ -387,6 +391,7 @@ class News
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
 			'STATUS' => $this->get_status(),
+			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO' => $user->get_pseudo(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,

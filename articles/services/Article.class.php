@@ -368,7 +368,11 @@ class Article
 		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
 		
 		$user = new User();
-		$user->set_properties($properties);
+		if (!empty($properties['user_id']))
+			$user->set_properties($properties);
+		else
+			$user->init_visitor_user();
+			
 		$this->set_author_user($user);
 		
 		$notation = new Notation();
@@ -431,7 +435,7 @@ class Article
 			'TITLE' => $this->get_title(),
 			'DATE' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
 			'DATE_ISO8601' => $this->get_date_created()->format(Date::FORMAT_ISO8601),
-                        'DATE_SHORT' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
+			'DATE_SHORT' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'PUBLISHING_START_DATE' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
 			'PUBLISHING_START_DATE_ISO8601' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_ISO8601) : '',
 			'PUBLISHING_END_DATE' => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
@@ -440,6 +444,7 @@ class Article
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->get_id()),
 			'NUMBER_VIEW' => $this->get_number_view(),
 			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
+			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO' => $user->get_pseudo(),
 			'DESCRIPTION' => $this->get_real_description(),
 			'PICTURE' => $this->get_picture()->rel(),
