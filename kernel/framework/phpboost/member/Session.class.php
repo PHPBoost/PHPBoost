@@ -283,12 +283,12 @@ class Session
 		if ($this->data['user_id'] > 0 && !empty($this->data['session_id']))
 		{
 			//Récupère également les champs membres supplémentaires
-			$result = $this->sql->query_while("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_readonly, m.user_ban, m.user_warning, s.modules_parameters, s.token AS token, me.*
+			$result = PersistenceContext::get_querier()->select("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_readonly, m.user_ban, m.user_warning, s.modules_parameters, s.token AS token, me.*
 			FROM " . DB_TABLE_MEMBER . " m
             JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = '" . $this->data['user_id'] . "' AND s.session_id = '" . $this->data['session_id'] . "'
 			LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " me ON me.user_id = '" . $this->data['user_id'] . "'
-			WHERE m.user_id = '" . $this->data['user_id'] . "'", __LINE__, __FILE__);
-			$userdata = $this->sql->fetch_assoc($result);
+			WHERE m.user_id = '" . $this->data['user_id'] . "'");
+			$userdata = $result->fetch();
 
 			if (!empty($userdata)) //Succès.
 			{
@@ -303,10 +303,10 @@ class Session
 		else
 		{
 			//Récupère également les champs membres supplémentaires
-			$result = $this->sql->query_while("SELECT modules_parameters, user_theme, user_lang
+			$result = PersistenceContext::get_querier()->select("SELECT modules_parameters, user_theme, user_lang
 			FROM " . DB_TABLE_SESSIONS . "
-			WHERE user_id = '-1' AND session_id = '" . $this->data['session_id'] . "'", __LINE__, __FILE__);
-			$userdata = $this->sql->fetch_assoc($result);
+			WHERE user_id = '-1' AND session_id = '" . $this->data['session_id'] . "'");
+			$userdata = $result->fetch();
 
 			if (!empty($userdata)) //Succès.
 			{
