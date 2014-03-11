@@ -181,9 +181,10 @@ class CalendarEvent
 			'C_IS_PARTICIPANT' => in_array(AppContext::get_current_user()->get_id(), array_keys($this->participants)),
 			'C_REGISTRATION_CLOSED' => $this->content->get_last_registration_date() && time() > $this->content->get_last_registration_date()->get_timestamp(),
 			'C_MAX_PARTICIPANTS_REACHED' => $this->content->get_max_registered_members() > 0 && $this->get_registered_members_number() == $this->content->get_max_registered_members(),
-			'C_MISSNG_PARTICIPANTS' => !empty($missing_participants_number) && $missing_participants_number <= 5,
+			'C_MISSING_PARTICIPANTS' => !empty($missing_participants_number) && $missing_participants_number <= 5,
 			'C_REGISTRATION_DAYS_LEFT' => !empty($registration_days_left) && $registration_days_left <= 5,
 			'C_AUTHOR_GROUP_COLOR' => !empty($author_group_color),
+			'C_AUTHOR_EXIST' => $author->get_id() !== User::VISITOR_LEVEL,
 			
 			//Event
 			'ID' => $this->id,
@@ -202,7 +203,7 @@ class CalendarEvent
 			'AUTHOR' => $author->get_pseudo(),
 			'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($author->get_level()),
 			'AUTHOR_GROUP_COLOR' => $author_group_color,
-			'L_MISSNG_PARTICIPANTS' => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.labels.remaining_place'],
+			'L_MISSING_PARTICIPANTS' => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.labels.remaining_place'],
 			'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_days'], array('days_left' => $registration_days_left)) : $lang['calendar.labels.remaining_day'],
 			
 			//Category

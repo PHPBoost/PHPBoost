@@ -195,9 +195,12 @@ class CalendarService
 		
 		while($row = $result->fetch())
 		{
-			$participant = new CalendarEventParticipant();
-			$participant->set_properties($row);
-			$participants[$participant->get_user_id()] = $participant;
+			if (!empty($row['login']))
+			{
+				$participant = new CalendarEventParticipant();
+				$participant->set_properties($row);
+				$participants[$participant->get_user_id()] = $participant;
+			}
 		}
 		
 		return $participants;

@@ -59,8 +59,8 @@
 								# ENDIF #
 								# IF event.C_PARTICIPATE #
 								<a href="{event.U_SUSCRIBE}" class="basic-button">{@calendar.labels.suscribe}</a>
-									# IF event.C_MISSNG_PARTICIPANTS #
-									<span class="small text-italic">({event.L_MISSNG_PARTICIPANTS})</span>
+									# IF event.C_MISSING_PARTICIPANTS #
+									<span class="small text-italic">({event.L_MISSING_PARTICIPANTS})</span>
 									# ENDIF #
 									# IF event.C_REGISTRATION_DAYS_LEFT #
 									<div class="spacer"></div>
@@ -77,7 +77,7 @@
 							
 							<div class="spacer">&nbsp;</div>
 							<div class="event-display-author" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
-								{@calendar.labels.created_by} : # IF event.AUTHOR #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="small {event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
+								{@calendar.labels.created_by} : # IF event.C_AUTHOR_EXIST #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="{event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #{event.AUTHOR}# ENDIF #
 							</div>
 							<div class="event-display-dates">
 								{@calendar.labels.start_date} : <span class="float-right"><time datetime="{event.START_DATE_ISO8601}" itemprop="startDate">{event.START_DATE}</time></span>

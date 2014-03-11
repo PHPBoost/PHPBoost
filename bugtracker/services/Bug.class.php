@@ -315,7 +315,11 @@ class Bug
 		$this->assigned_to_id = $properties['assigned_to_id'];
 		
 		$user = new User();
-		$user->set_properties($properties);
+		if (!empty($properties['user_id']))
+			$user->set_properties($properties);
+		else
+			$user->init_visitor_user();
+		
 		$this->set_author_user($user);
 	}
 	
@@ -362,6 +366,7 @@ class Bug
 			'C_REPRODUCTIBLE' => $this->is_reproductible(),
 			'C_REPRODUCTION_METHOD' => $this->reproduction_method,
 			'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
+			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
 			'C_MORE_THAN_ONE_COMMENT'=> $number_comments > 1,
 			
 			//Bug

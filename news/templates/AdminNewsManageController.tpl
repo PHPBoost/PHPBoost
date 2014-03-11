@@ -50,7 +50,7 @@
 					<a href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
 				</td>
 				<td>
-					<a href="{news.U_AUTHOR_PROFILE}" class="small {news.USER_LEVEL_CLASS}" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}"# ENDIF #>{news.PSEUDO}</a>
+					# IF news.C_AUTHOR_EXIST #<a href="{news.U_AUTHOR_PROFILE}" class="{news.USER_LEVEL_CLASS}" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}"# ENDIF #>{news.PSEUDO}</a># ELSE #{news.PSEUDO}# ENDIF #
 				</td>
 				<td>
 					{news.DATE}

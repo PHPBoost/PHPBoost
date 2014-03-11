@@ -282,7 +282,11 @@ class CalendarEventContent
 		$this->repeat_type = $properties['repeat_type'];
 		
 		$user = new User();
-		$user->set_properties($properties);
+		if (!empty($properties['user_id']))
+			$user->set_properties($properties);
+		else
+			$user->init_visitor_user();
+		
 		$this->set_author_user($user);
 	}
 	

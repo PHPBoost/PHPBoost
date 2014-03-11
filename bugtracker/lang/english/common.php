@@ -178,6 +178,7 @@ $lang['explain.remarks'] = 'Remarks : <br />
 - If the table contains only one value, this option will not be visible too and will automatically be assigned to the bug<br /><br />';
 $lang['explain.contents_value'] = 'Enter the default description to display for a new bug below. Leave empty if you don\'t want to fill the description.';
 $lang['explain.delete_comment'] = 'Optional. Permits to add a comment in the Private Message of bug deleting.';
+$lang['explain.change_status_select_fix_version'] = 'You can select a version to put the bug in the roadmap.';
 $lang['explain.change_status_comments_message'] = 'Optional. Permits to comment the bug and add it in the Private Message if sending is enabled.';
 
 //PM
@@ -279,7 +280,6 @@ $lang['config.auth.create_advanced_explain'] = 'Permits to choose the severity a
 $lang['config.auth.moderate'] = 'Permission to moderate the Bugtracker';
 
 //Errors
-$lang['error.e_no_fixed_version'] = 'Do not forget to select a version to put the bug in the roadmap.';
 $lang['error.e_unexist_bug'] = 'This bug does not exist';
 $lang['error.e_unexist_parameter'] = 'This parameter does not exist';
 $lang['error.e_unexist_type'] = 'This type does not exist';

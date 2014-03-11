@@ -54,7 +54,7 @@ class BugtrackerDetailController extends ModuleController
 		$versions = $config->get_versions_detected();
 		
 		$user_assigned = $this->bug->get_assigned_to_id() ? UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) : '';
-		$user_assigned_group_color = $this->bug->get_assigned_to_id() ? User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true) : '';
+		$user_assigned_group_color = $user_assigned ? User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true) : '';
 		
 		$this->view->put_all($this->bug->get_array_tpl_vars());
 		
@@ -68,7 +68,7 @@ class BugtrackerDetailController extends ModuleController
 			'C_DELETE_BUG'					=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
 			'C_CHANGE_STATUS'				=> BugtrackerAuthorizationsService::check_authorizations()->moderation() || $this->current_user->get_id() == $this->bug->get_assigned_to_id(),
 			'C_USER_ASSIGNED_GROUP_COLOR'	=> !empty($user_assigned_group_color),
-			'USER_ASSIGNED'					=> $user_assigned,
+			'C_USER_ASSIGNED'				=> $user_assigned,
 			'USER_ASSIGNED'					=> $user_assigned ? $user_assigned->get_pseudo() : '',
 			'USER_ASSIGNED_LEVEL_CLASS'		=> $user_assigned ? UserService::get_level_class($user_assigned->get_level()) : '',
 			'USER_ASSIGNED_GROUP_COLOR'		=> $user_assigned_group_color,
