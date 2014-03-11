@@ -538,7 +538,7 @@ class Session
 				AppContext::get_response()->redirect(HOST . $query_string);
 			}
 			
-			$session_data = unserialize(AppContext::get_request()->get_cookie($sessions_config->get_cookie_name() . '_data'));
+			$session_data = @unserialize(AppContext::get_request()->get_cookie($sessions_config->get_cookie_name() . '_data'));
 			if ($session_data === false)
 			{
 				$session_data = array();
