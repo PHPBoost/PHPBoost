@@ -102,17 +102,13 @@ class ArticlesDisplayArticlesController extends ModuleController
 		{
 			$article_contents = '[page]&nbsp;[/page]' . $article_contents;
 		}
-		else
-		{
-			$article_contents = ' ' . $article_contents;
-		}
 		
 		//Removing [page] bbcode
 		$article_contents_clean = preg_split('`\[page\].+\[/page\](.*)`Us', $article_contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 		
 		//Retrieving pages 
 		preg_match_all('`\[page\]([^[]+)\[/page\]`U', $article_contents, $array_page);
-		
+
 		$nbr_pages = count($array_page[1]);
 		
 		$this->build_form($array_page, $current_page);
