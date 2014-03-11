@@ -416,7 +416,7 @@ class BugtrackerFormController extends ModuleController
 		}
 		else
 		{
-			$old_values = clone Bug();
+			$old_values = clone $bug;
 			
 			$now = new Date();
 			
