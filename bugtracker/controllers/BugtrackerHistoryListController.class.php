@@ -120,8 +120,8 @@ class BugtrackerHistoryListController extends ModuleController
 				case 'assigned_to_id': 
 					$old_user = !empty($row['old_value']) && UserService::user_exists("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['old_value'])) ? UserService::get_user("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['old_value'])) : '';
 					$new_user = !empty($row['new_value']) && UserService::user_exists("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['new_value'])) ? UserService::get_user("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['new_value'])) : '';
-					$old_value = !empty($old_user) ? '<a href="' . UserUrlBuilder::profile($row['old_value'])->rel() . '" class="' . UserService::get_level_class($old_user->get_level()) . '">' . $old_user->get_pseudo() . '</a>' : $this->lang['notice.no_one'];
-					$new_value = !empty($new_user) ? '<a href="' . UserUrlBuilder::profile($row['new_value'])->rel() . '" class="' . UserService::get_level_class($new_user->get_level()) . '">' . $new_user->get_pseudo() . '</a>' : $this->lang['notice.no_one'];
+					$old_value = !empty($old_user) ? '<a href="' . UserUrlBuilder::profile($row['old_value'])->rel() . '" class="' . UserService::get_level_class($old_user->get_level()) . '">' . $old_user->get_pseudo() . '</a>' : (!empty($row['old_value']) ? LangLoader::get_message('visitor', 'user-common') : $this->lang['notice.no_one']);
+					$new_value = !empty($new_user) ? '<a href="' . UserUrlBuilder::profile($row['new_value'])->rel() . '" class="' . UserService::get_level_class($new_user->get_level()) . '">' . $new_user->get_pseudo() . '</a>' : (!empty($row['new_value']) ? LangLoader::get_message('visitor', 'user-common') : $this->lang['notice.no_one']);
 					break;
 				
 				default:
