@@ -84,7 +84,7 @@ class BugtrackerStatsCache implements CacheData
 		{
 			$author = new User();
 			if (!empty($row['login']))
-				$author->set_properties($properties);
+				$author->set_properties($row);
 			else
 				$author->init_visitor_user();
 			
