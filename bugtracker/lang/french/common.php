@@ -178,6 +178,7 @@ $lang['explain.remarks'] = 'Remarques : <br />
 - Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
 $lang['explain.contents_value'] = 'Entrez ci-dessous la description par défaut à afficher lors de l\'ouverture d\'un nouveau bug. Laissez vide pour que la description ne soit pas pré-remplie.';
 $lang['explain.delete_comment'] = 'Facultatif. Permet d\'ajouter un commentaire dans le Message Privé de suppression du bug.';
+$lang['explain.change_status_select_fix_version'] = 'Vous pouvez sélectionner une version pour que le bug soit présent dans la feuille de route.';
 $lang['explain.change_status_comments_message'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé.';
 
 //MP
@@ -279,7 +280,6 @@ $lang['config.auth.create_advanced_explain'] = 'Permet de choisir le niveau et l
 $lang['config.auth.moderate'] = 'Autorisation de modération des bugs';
 
 //Erreurs
-$lang['error.e_no_fixed_version'] = 'N\'oubliez pas de sélectionner une version pour que le bug soit présent dans la feuille de route.';
 $lang['error.e_unexist_bug'] = 'Ce bug n\'existe pas';
 $lang['error.e_unexist_parameter'] = 'Ce paramètre n\'existe pas';
 $lang['error.e_unexist_type'] = 'Ce type n\'existe pas';

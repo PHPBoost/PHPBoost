@@ -111,9 +111,12 @@ class CalendarAjaxEventsController extends AbstractController
 			
 			while($row = $result->fetch())
 			{
-				$participant = new CalendarEventParticipant();
-				$participant->set_properties($row);
-				$participants[$row['event_id']][$participant->get_user_id()] = $participant;
+				if (!empty($row['login']))
+				{
+					$participant = new CalendarEventParticipant();
+					$participant->set_properties($row);
+					$participants[$row['event_id']][$participant->get_user_id()] = $participant;
+				}
 			}
 			
 			foreach ($events_list as $event)

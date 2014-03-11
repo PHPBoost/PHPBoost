@@ -198,21 +198,8 @@ class BugtrackerChangeBugStatusController extends ModuleController
 			}
 			
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('fixed_in', $this->lang['labels.fields.fixed_in'], $this->bug->get_fixed_in(), $array_versions,
-				array('hidden' => !$this->bug->is_fixed() && !$this->bug->is_in_progress(), 'events' => $this->config->is_roadmap_enabled() ? array('change' => '
-				if (HTMLForms.getField("fixed_in").getValue() > 0) {
-					HTMLForms.getField("no_selected_version").disable();
-				} else {
-					HTMLForms.getField("no_selected_version").enable();
-				}') : array()
+				array('description' => $this->lang['explain.change_status_select_fix_version'], 'hidden' => !$this->bug->is_fixed() && !$this->bug->is_in_progress()
 			)));
-			
-			if ($this->config->is_roadmap_enabled())
-			{
-				$fieldset->add_field(new FormFieldFree('no_selected_version', '',
-					'<div class="notice" style="margin:5px auto 0px auto;">'. $this->lang['error.e_no_fixed_version'] .'</div>
-					', array('hidden' => !$this->bug->is_fixed() || $this->bug->get_fixed_in() > 0)
-				));
-			}
 		}
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', LangLoader::get_message('comment', 'comments-common'), '', array(

@@ -53,7 +53,7 @@
 				<span# IF event.CATEGORY_COLOR # style="color:{event.CATEGORY_COLOR}"# ENDIF #>{event.CATEGORY_NAME}</span>
 			</td>
 			<td> 
-				<a href="{event.U_AUTHOR_PROFILE}" class="{event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}"# ENDIF #>{event.AUTHOR}</a>
+				# IF event.C_AUTHOR_EXIST #<a href="{event.U_AUTHOR_PROFILE}" class="{event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}"# ENDIF #>{event.AUTHOR}</a># ELSE #{event.AUTHOR}# ENDIF #
 			</td>
 			<td>
 				${LangLoader::get_message('from_date', 'main')} {event.START_DATE}<br />

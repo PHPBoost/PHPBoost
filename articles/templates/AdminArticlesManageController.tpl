@@ -52,7 +52,7 @@
 				<a href="{articles.U_CATEGORY}">{articles.CATEGORY_NAME}</a>
 			</td>
 			<td> 
-				<a href="{articles.U_AUTHOR}" class="small {articles.USER_LEVEL_CLASS}" # IF articles.C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>
+				# IF articles.C_AUTHOR_EXIST #<a href="{articles.U_AUTHOR}" class="{articles.USER_LEVEL_CLASS}" # IF articles.C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a># ELSE #{articles.PSEUDO}# ENDIF #
 			</td>
 			<td>
 				{articles.DATE_SHORT}

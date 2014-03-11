@@ -33,7 +33,7 @@
 		# START history #
 		<tr> 
 			<td> 
-				# IF history.UPDATER #<a href="{history.U_UPDATER_PROFILE}" class="small {history.UPDATER_LEVEL_CLASS}" # IF history.C_UPDATER_GROUP_COLOR # style="color:{history.UPDATER_GROUP_COLOR}" # ENDIF #>{history.UPDATER}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
+				# IF history.C_UPDATER_EXIST #<a href="{history.U_UPDATER_PROFILE}" class="{history.UPDATER_LEVEL_CLASS}" # IF history.C_UPDATER_GROUP_COLOR # style="color:{history.UPDATER_GROUP_COLOR}" # ENDIF #>{history.UPDATER}</a># ELSE #{history.UPDATER}# ENDIF #
 			</td>
 			<td> 
 				{history.UPDATED_FIELD}

@@ -132,11 +132,16 @@ class BugtrackerHistoryListController extends ModuleController
 			$update_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['update_date']);
 			
 			$user = new User();
-			$user->set_properties($row);
+			if (!empty($row['user_id']))
+				$user->set_properties($row);
+			else
+				$user->init_visitor_user();
+			
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			
 			$this->view->assign_block_vars('history', array(
 				'C_UPDATER_GROUP_COLOR'	=> !empty($user_group_color),
+				'C_UPDATER_EXIST'		=> $user->get_id() !== User::VISITOR_LEVEL,
 				'UPDATED_FIELD'			=> (!empty($row['updated_field']) ? $this->lang['labels.fields.' . $row['updated_field']] : $this->lang['notice.none']),
 				'OLD_VALUE'				=> stripslashes($old_value),
 				'NEW_VALUE'				=> stripslashes($new_value),

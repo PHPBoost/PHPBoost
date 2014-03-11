@@ -83,7 +83,10 @@ class BugtrackerStatsCache implements CacheData
 		foreach ($result as $row)
 		{
 			$author = new User();
-			$author->set_properties($row);
+			if (!empty($row['login']))
+				$author->set_properties($properties);
+			else
+				$author->init_visitor_user();
 			
 			$this->top_posters[$i] = array(
 				'user'			=> $author,
