@@ -160,25 +160,18 @@ class BugtrackerChangeBugStatusController extends ModuleController
 			array('events' => array('change' => ($versions_number ? '
 			if (HTMLForms.getField("status").getValue() == "' . Bug::FIXED . '" || HTMLForms.getField("status").getValue() == "' . Bug::IN_PROGRESS . '") {
 				HTMLForms.getField("fixed_in").enable();
-				' . ($this->config->is_roadmap_enabled() ? 'if (HTMLForms.getField("fixed_in").getValue() == 0) {
-					HTMLForms.getField("no_selected_version").enable();
-				}
-				' : '') . 'HTMLForms.getField("assigned_to").disable();
+				HTMLForms.getField("assigned_to").disable();
 			} else ' : '') . 'if (HTMLForms.getField("status").getValue() == "' . Bug::ASSIGNED . '") {
 				HTMLForms.getField("assigned_to").enable();
 				' . ($versions_number ? 'HTMLForms.getField("fixed_in").disable();
-				' . ($this->config->is_roadmap_enabled() ? 'HTMLForms.getField("no_selected_version").disable();
-			' : '') : '') . '} else {
+				' : '') . '} else {
 				' . ($versions_number ? 'HTMLForms.getField("fixed_in").disable();
-				' . ($this->config->is_roadmap_enabled() ? 'HTMLForms.getField("no_selected_version").disable();
-				' : '') : '') . 'HTMLForms.getField("assigned_to").disable();
+				' : '') . 'HTMLForms.getField("assigned_to").disable();
 			}')),
-			!$this->bug->is_fixed() ? array(new BugtrackerConstraintStatusChanged($this->bug->get_id(), $this->bug->get_status())) : array()
+			!$this->bug->is_fixed() && !$this->bug->is_assigned() && !$this->bug->is_in_progress() ? array(new BugtrackerConstraintStatusChanged($this->bug->get_id(), $this->bug->get_status())) : array()
 		));
 		
-		$user_assigned = '';
-		if (UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())))
-			$user_assigned = UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id()));
+		$user_assigned = UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) : '';
 		
 		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('assigned_to', $this->lang['labels.fields.assigned_to_id'], !empty($user_assigned) ? $user_assigned->get_pseudo() : '', array(
 			'maxlength' => 25, 'class' => 'field-large', 'required' => true, 'hidden' => !$this->bug->is_assigned()), array(
@@ -262,14 +255,10 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		if (!$this->form->field_is_disabled('assigned_to'))
 		{
 			$assigned_to = $this->form->get_value('assigned_to');
-			
-			$old_assigned_to_id = $this->bug->get_assigned_to_id();
-			$old_user_assigned = $old_assigned_to_id  && UserService::user_exists("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $old_assigned_to_id)) ? UserService::get_user("WHERE user_aprob = 1 AND user_id=:id", array('id' => $old_assigned_to_id)) : 0;
-			
-			$new_user_assigned = !empty($assigned_to) && UserService::user_exists("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $assigned_to)) ? UserService::get_user("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)) : 0;
+			$new_user_assigned = !empty($assigned_to) && UserService::user_exists("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)) ? UserService::get_user("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)) : 0;
 			$new_assigned_to_id = !empty($new_user_assigned) ? $new_user_assigned->get_id() : 0;
 			
-			if ($new_assigned_to_id != $old_assigned_to_id)
+			if ($new_assigned_to_id != $this->bug->get_assigned_to_id())
 			{
 				//Bug history update
 				BugtrackerService::add_history(array(
@@ -277,8 +266,8 @@ class BugtrackerChangeBugStatusController extends ModuleController
 					'updater_id'	=> $this->current_user->get_id(),
 					'update_date'	=> $now->get_timestamp(),
 					'updated_field'	=> 'assigned_to_id',
-					'old_value'		=> $old_user_assigned ? '<a href="' . UserUrlBuilder::profile($old_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($old_user_assigned->get_level()) . '">' . $old_user_assigned->get_pseudo() . '</a>' : $this->lang['notice.no_one'],
-					'new_value'		=> $new_user_assigned ? '<a href="' . UserUrlBuilder::profile($new_user_assigned->get_id())->rel() . '" class="' . UserService::get_level_class($new_user_assigned->get_level()) . '">' . $new_user_assigned->get_pseudo() . '</a>' : $this->lang['notice.no_one']
+					'old_value'		=> $this->bug->get_assigned_to_id(),
+					'new_value'		=> $new_assigned_to_id
 				));
 				
 				//Bug update

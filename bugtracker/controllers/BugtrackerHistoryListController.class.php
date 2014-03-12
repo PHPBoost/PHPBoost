@@ -59,9 +59,9 @@ class BugtrackerHistoryListController extends ModuleController
 		$main_lang = LangLoader::get('main');
 		
 		$this->view->put_all(array(
-			'C_PAGINATION'			=> $pagination->has_several_pages(),
-			'C_HISTORY'				=> $history_lines_number,
-			'PAGINATION'			=> $pagination->display()
+			'C_PAGINATION'	=> $pagination->has_several_pages(),
+			'C_HISTORY'		=> $history_lines_number,
+			'PAGINATION'	=> $pagination->display()
 		));
 		
 		$result = PersistenceContext::get_querier()->select("SELECT *
