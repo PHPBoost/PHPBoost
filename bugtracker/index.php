@@ -37,7 +37,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminBugtrackerDeleteDefaultParameterController', '`^/admin/delete/default/([a-z]+)?/?$`', array('parameter')),
 	
 	//Lists
-	new UrlControllerMapper('BugtrackerUnsolvedListController', '`^/unsolved/success/([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9_-]+)?/?$`', array('success', 'id', 'page', 'filter', 'filter_id')),
+	new UrlControllerMapper('BugtrackerUnsolvedListController', '`^/unsolved/success/([a-z_-]+)?/?([0-9]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9_-]+)?/?$`', array('success', 'id', 'page', 'filter', 'filter_id')),
 	new UrlControllerMapper('BugtrackerUnsolvedListController', '`^/unsolved?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9_-]+)?/?$`', array('field', 'sort', 'page', 'filter', 'filter_id')),
 	new UrlControllerMapper('BugtrackerSolvedListController', '`^/solved/success/([a-z_-]+)?/?([0-9]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9_-]+)?/?$`', array('success', 'id', 'page', 'filter', 'filter_id')),
 	new UrlControllerMapper('BugtrackerSolvedListController', '`^/solved(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9_-]+)?/?$`', array('field', 'sort', 'page', 'filter', 'filter_id')),
