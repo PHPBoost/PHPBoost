@@ -128,7 +128,7 @@ class News
 		{
 			return $this->short_contents;
 		}
-		return TextHelper::substr_html(@strip_tags($this->contents), 0, NewsConfig::load()->get_number_character_to_cut());
+		return substr(@strip_tags($this->contents, '<br>'), 0, NewsConfig::load()->get_number_character_to_cut());
 	}
 		
 	public function get_short_contents_enabled()
