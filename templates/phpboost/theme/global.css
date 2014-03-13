@@ -198,26 +198,22 @@ h3.title1, h3.title2 {
 	
 /* Titre 1 */
 h3.title1 {
-	font-size:2em;
 }
 
 /* Titre 2 */
 h3.title2 {
-	font-size:1.7em;
 	display:inline-block;
 	margin-left:20px;
 }
 
 /* Sous titre 1 */
 h4.stitle1 {
-	font-size:1.5em;
 	color:#366393;
 	margin:0px 0px 10px 40px;
 }
 
 /* Sous titre 2 */
 h4.stitle2 {
-	font-size:1.3em;
 	margin:0px 0px 10px 60px;
 }
 
