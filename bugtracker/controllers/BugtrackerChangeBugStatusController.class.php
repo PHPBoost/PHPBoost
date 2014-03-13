@@ -255,6 +255,9 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		if (!$this->form->field_is_disabled('assigned_to'))
 		{
 			$assigned_to = $this->form->get_value('assigned_to');
+			
+			$old_user_assigned = $this->bug->get_assigned_to_id()  && UserService::user_exists("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user("WHERE user_aprob = 1 AND user_id=:id", array('id' => $this->bug->get_assigned_to_id())) : 0;
+			
 			$new_user_assigned = !empty($assigned_to) && UserService::user_exists("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)) ? UserService::get_user("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)) : 0;
 			$new_assigned_to_id = !empty($new_user_assigned) ? $new_user_assigned->get_id() : 0;
 			
@@ -266,12 +269,12 @@ class BugtrackerChangeBugStatusController extends ModuleController
 					'updater_id'	=> $this->current_user->get_id(),
 					'update_date'	=> $now->get_timestamp(),
 					'updated_field'	=> 'assigned_to_id',
-					'old_value'		=> $this->bug->get_assigned_to_id(),
-					'new_value'		=> $new_assigned_to_id
+					'old_value'		=> $old_user_assigned ? $old_user_assigned->get_pseudo() : $this->lang['notice.no_one'],
+					'new_value'		=> $new_user_assigned ? $new_user_assigned->get_pseudo() : $this->lang['notice.no_one']
 				));
 				
 				//Bug update
-				$this->bug->set_assigned_to_id($new_user_assigned ? $new_user_assigned->get_id() : 0);
+				$this->bug->set_assigned_to_id($new_assigned_to_id);
 			}
 		}
 		
