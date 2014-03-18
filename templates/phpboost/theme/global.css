@@ -177,45 +177,27 @@ li.small-block .fa-stack { height: 2.34em; }
 .biggest { font-size:20px; }
 
 /* Titres */
-h1 { font-size:23px; }
-h2 { font-size:20px; }
-h3 { font-size:19px; }
-h4 { font-size:18px; }
+h1 { font-size:21px; }
+h2 { font-size:19px; }
+h3 { font-size:18px; }
+h4 { font-size:17px; }
 h5 { font-size:16px; }
-h6 { font-size:14px; }
+h6 { font-size:15px; }
 
 /* BBCode */
 
 /* Titres */
 h3.title1, h3.title2, h4.stitle1, h4.stitle2 { display: inline; }
-
-h3.title1, h3.title2 {
-	border-bottom:1px solid #366393;
-	font-weight:bold;
-	padding:0px 0px 0px 3px;
-	margin-bottom:15px;
-}
+h3.title1, h3.title2 {border-bottom:1px solid #366393; }
 	
 /* Titre 1 */
-h3.title1 {
-}
-
+h3.title1 { }
 /* Titre 2 */
-h3.title2 {
-	display:inline-block;
-	margin-left:20px;
-}
-
+h3.title2 {	margin-left:20px; }
 /* Sous titre 1 */
-h4.stitle1 {
-	color:#366393;
-	margin:0px 0px 10px 40px;
-}
-
+h4.stitle1 { margin-left:40px; }
 /* Sous titre 2 */
-h4.stitle2 {
-	margin:0px 0px 10px 60px;
-}
+h4.stitle2 { margin-left:60px; }
 
 /* Mise en forme du contenu
 --------------------------------------------------------------------  */
