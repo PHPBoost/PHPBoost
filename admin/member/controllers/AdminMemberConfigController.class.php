@@ -36,7 +36,9 @@ class AdminMemberConfigController extends AdminController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-
+	
+	private $user_account_config;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
@@ -48,7 +50,7 @@ class AdminMemberConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->form->get_field_by_id('type_activation_members')->set_hidden(!$user_account_config->is_registration_enabled());
+			$this->form->get_field_by_id('type_activation_members')->set_hidden(!$this->user_account_config->is_registration_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), E_USER_SUCCESS, 5));
 		}
 
@@ -60,18 +62,19 @@ class AdminMemberConfigController extends AdminController
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-user-common');
+		$this->user_account_config = UserAccountsConfig::load();
 	}
 
 	private function build_form()
 	{
-		$user_account_config = UserAccountsConfig::load();
+		
 		
 		$form = new HTMLForm('members-config');
 		
 		$fieldset = new FormFieldsetHTML('members_config', $this->lang['members.config-members']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('members_activation', $this->lang['members.config.registration-activation'], $user_account_config->is_registration_enabled(), 
+		$fieldset->add_field(new FormFieldCheckbox('members_activation', $this->lang['members.config.registration-activation'], $this->user_account_config->is_registration_enabled(), 
 		array('events' => array('change' => '
 				if (HTMLForms.getField("members_activation").getValue()) { 
 					HTMLForms.getField("type_activation_members").enable(); 
@@ -80,15 +83,15 @@ class AdminMemberConfigController extends AdminController
 				}'
 		))));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('type_activation_members', $this->lang['members.config.type-activation'], (string)$user_account_config->get_member_accounts_validation_method(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('type_activation_members', $this->lang['members.config.type-activation'], (string)$this->user_account_config->get_member_accounts_validation_method(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.auto'], UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION),
 				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.mail'], UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION),
 				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.admin'], UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
-			), array('hidden' => !$user_account_config->is_registration_enabled())
+			), array('hidden' => !$this->user_account_config->is_registration_enabled())
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('unactivated_accounts_timeout', $this->lang['members.config.unactivated-accounts-timeout'], (string)$user_account_config->get_unactivated_accounts_timeout(), array(
+		$fieldset->add_field(new FormFieldTextEditor('unactivated_accounts_timeout', $this->lang['members.config.unactivated-accounts-timeout'], (string)$this->user_account_config->get_unactivated_accounts_timeout(), array(
 			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.unactivated-accounts-timeout-explain']),
 		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
@@ -96,32 +99,32 @@ class AdminMemberConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
 		$form->add_fieldset($fieldset);
 				
-		$fieldset->add_field(new FormFieldCheckbox('upload_avatar_server', $this->lang['members.config.upload-avatar-server-authorization'], $user_account_config->is_avatar_upload_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('upload_avatar_server', $this->lang['members.config.upload-avatar-server-authorization'], $this->user_account_config->is_avatar_upload_enabled()));
 		
-		$fieldset->add_field(new FormFieldCheckbox('activation_resize_avatar', $this->lang['members.config.activation-resize-avatar'], $user_account_config->is_avatar_auto_resizing_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('activation_resize_avatar', $this->lang['members.config.activation-resize-avatar'], $this->user_account_config->is_avatar_auto_resizing_enabled(),
 			array('description' => $this->lang['members.activation-resize-avatar-explain'])
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('maximal_width_avatar', $this->lang['members.config.maximal-width-avatar'], $user_account_config->get_max_avatar_width(), array(
+		$fieldset->add_field(new FormFieldTextEditor('maximal_width_avatar', $this->lang['members.config.maximal-width-avatar'], $this->user_account_config->get_max_avatar_width(), array(
 			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-width-avatar-explain']),
 		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('maximal_height_avatar', $this->lang['members.config.maximal-height-avatar'], $user_account_config->get_max_avatar_height(), array(
+		$fieldset->add_field(new FormFieldTextEditor('maximal_height_avatar', $this->lang['members.config.maximal-height-avatar'], $this->user_account_config->get_max_avatar_height(), array(
 			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-height-avatar-explain']),
 		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('maximal_weight_avatar', $this->lang['members.config.maximal-weight-avatar'], $user_account_config->get_max_avatar_weight(), array(
+		$fieldset->add_field(new FormFieldTextEditor('maximal_weight_avatar', $this->lang['members.config.maximal-weight-avatar'], $this->user_account_config->get_max_avatar_weight(), array(
 			'maxlength' => 4, 'size' => 4,'description' => $this->lang['members.config.maximal-weight-avatar-explain']),
 		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('default_avatar_activation', $this->lang['members.config.default-avatar-activation'], $user_account_config->is_default_avatar_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('default_avatar_activation', $this->lang['members.config.default-avatar-activation'], $this->user_account_config->is_default_avatar_enabled(),
 			array('description' => $this->lang['members.config.default-avatar-activation-explain'])
 		));
 		
-		$default_avatar_link = $user_account_config->get_default_avatar_name();
+		$default_avatar_link = $this->user_account_config->get_default_avatar_name();
 		$fieldset->add_field(new FormFieldTextEditor('default_avatar_link', $this->lang['members.config.default-avatar-link'], $default_avatar_link, array(
 			'description' => $this->lang['members.default-avatar-link-explain'], 'events' => array('change' => '$(\'img_avatar\').src = "' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme() .'/images/" + HTMLForms.getField("default_avatar_link").getValue()'))
 		));
@@ -132,14 +135,14 @@ class AdminMemberConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['members.config.authorization-read-member-profile'], UserAccountsConfig::AUTH_READ_MEMBERS_BIT)));
-		$auth_settings->build_from_auth_array($user_account_config->get_auth_read_members());
+		$auth_settings->build_from_auth_array($this->user_account_config->get_auth_read_members());
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
 		
 		$fieldset = new FormFieldsetHTML('welcome_message', $this->lang['members.config.welcome-message']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('welcome_message_contents', $this->lang['members.config.welcome-message-content'], $user_account_config->get_welcome_message(), array(
+		$fieldset->add_field(new FormFieldRichTextEditor('welcome_message_contents', $this->lang['members.config.welcome-message-content'], $this->user_account_config->get_welcome_message(), array(
 			'rows' => 8, 'cols' => 47)
 		));
 		
@@ -161,25 +164,24 @@ class AdminMemberConfigController extends AdminController
 
 	private function save()
 	{
-		$user_account_config = UserAccountsConfig::load();
-		$user_account_config->set_registration_enabled($this->form->get_value('members_activation'));
+		$this->user_account_config->set_registration_enabled($this->form->get_value('members_activation'));
 		
 		if (!$this->form->field_is_disabled('type_activation_members'))
 		{
-			$user_account_config->set_member_accounts_validation_method($this->form->get_value('type_activation_members')->get_raw_value());
+			$this->user_account_config->set_member_accounts_validation_method($this->form->get_value('type_activation_members')->get_raw_value());
 		}
 		
-		$user_account_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));
-		$user_account_config->set_unactivated_accounts_timeout($this->form->get_value('unactivated_accounts_timeout'));
-		$user_account_config->set_default_avatar_name_enabled($this->form->get_value('default_avatar_activation'));
-		$user_account_config->set_avatar_auto_resizing_enabled($this->form->get_value('activation_resize_avatar'));
-		$user_account_config->set_default_avatar_name($this->form->get_value('default_avatar_link'));
-		$user_account_config->set_max_avatar_width($this->form->get_value('maximal_width_avatar'));
-		$user_account_config->set_max_avatar_height($this->form->get_value('maximal_height_avatar'));
-		$user_account_config->set_max_avatar_weight($this->form->get_value('maximal_weight_avatar'));
-		$user_account_config->set_auth_read_members($this->form->get_value('authorizations')->build_auth_array());
-		$user_account_config->set_welcome_message($this->form->get_value('welcome_message_contents'));
-		$user_account_config->set_registration_agreement($this->form->get_value('registration_agreement'));
+		$this->user_account_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));
+		$this->user_account_config->set_unactivated_accounts_timeout($this->form->get_value('unactivated_accounts_timeout'));
+		$this->user_account_config->set_default_avatar_name_enabled($this->form->get_value('default_avatar_activation'));
+		$this->user_account_config->set_avatar_auto_resizing_enabled($this->form->get_value('activation_resize_avatar'));
+		$this->user_account_config->set_default_avatar_name($this->form->get_value('default_avatar_link'));
+		$this->user_account_config->set_max_avatar_width($this->form->get_value('maximal_width_avatar'));
+		$this->user_account_config->set_max_avatar_height($this->form->get_value('maximal_height_avatar'));
+		$this->user_account_config->set_max_avatar_weight($this->form->get_value('maximal_weight_avatar'));
+		$this->user_account_config->set_auth_read_members($this->form->get_value('authorizations')->build_auth_array());
+		$this->user_account_config->set_welcome_message($this->form->get_value('welcome_message_contents'));
+		$this->user_account_config->set_registration_agreement($this->form->get_value('registration_agreement'));
 		UserAccountsConfig::save();
 	}
 }
