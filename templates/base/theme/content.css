@@ -22,29 +22,14 @@ section header h1, article header h1 {
 	border-bottom: 1px solid #336397;
 }
 
-section header h1, article header h1 {
-	font-size: 18px;
-	font-weight: bold;
-}
-
 section header h2, article header h2 {
 	border-bottom: 1px solid #336397;
-	margin-left: 16px;
-}
-
-section header h2, article header h2 {
-	font-size: 16px;
-	font-weight: bold;
+	margin-left: 15px;
 }
 
 section header h3, article header h3 {
 	border-bottom: 1px solid #336397;
-	margin-left: 16px;
-}
-
-section header h3, article header h3 {
-	font-size: 15px;
-	font-weight: bold;
+	margin-left: 15px;
 }
 
 /* Icones avec les actions (edition, suppression, etc) */
