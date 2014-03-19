@@ -26,9 +26,9 @@
 						<table class="module-table forum_table">
 							<thead>
 								<tr class="forum_text_column">
-									<th style="width:390px;">{L_TOPIC}</th>
+									<th style="width:390px;" colspan="3">{L_TOPIC}</th>
 									<th style="width:100px;">{L_AUTHOR}</th>
-									<th style="width:170px;text-align:right;">{L_MESSAGE}/{L_VIEW}</th>
+									<th style="width:170px;text-align:right;" colspan="2">{L_MESSAGE}/{L_VIEW}</th>
 									<th style="width:40px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'p');"> {L_PM}</th>
 									<th style="width:40px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'm');"> {L_MAIL}</th>
 									<th style="width:72px;"><input type="checkbox" class="valign-middle" onclick="check_convers(this.checked, 'd');"> {L_DELETE}</th>
@@ -61,7 +61,7 @@
 										<br />
 										<span class="smaller">{topics.DESC}</span># IF topics.C_PAGINATION # &nbsp;<span class="pagin_forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
 									</td>
-									<td class="forum_sous_cat_compteur forum_sous_cat_pbt" style="width:100px;">
+									<td class="forum_sous_cat_compteur forum_sous_cat_pbt"  syle="text-align:left;width:100px;">
 										<span class="smaller">Par </span>{topics.AUTHOR}
 									</td>
 									<td class="forum_sous_cat_compteur_nbr forum_sous_cat_compteur forum_sous_cat_pbt">
