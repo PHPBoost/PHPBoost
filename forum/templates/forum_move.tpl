@@ -41,7 +41,7 @@
 					<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 						<input type="hidden" name="id" value="{ID}">
-						<button type="submit" name="" value="true">{L_SUBMIT}</button>			
+						<button type="submit" name="submit" value="true">{L_SUBMIT}</button>			
 					</fieldset>	
 				</form>
 			</div>

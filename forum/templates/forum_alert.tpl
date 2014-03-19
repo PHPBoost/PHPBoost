@@ -47,7 +47,7 @@
 					</fieldset>
 
 					<fieldset class="fieldset-submit">
-							<button type="submit" name="edit_msg" value="true">{L_SUBMIT}</button>
+							<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
 							<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
 							<button type="reset" value="true">{L_RESET}</button>								
 					</fieldset>

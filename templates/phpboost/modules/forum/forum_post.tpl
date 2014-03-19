@@ -212,7 +212,7 @@
 						<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 							<input type="hidden" name="idm" value="{IDM}">
-							<button type="submit" name="post_topic" value="true">{L_SUBMIT}</button>
+							<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
 							&nbsp;&nbsp;
 							<input value="{L_PREVIEW}" type="submit" name="prw_t" id="previs_topic">
 							<script>

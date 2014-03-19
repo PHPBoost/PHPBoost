@@ -194,14 +194,10 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 .module_bottom_r{
 }
 .module_bottom{
-	min-height:20px;
-	height:auto;
-	padding:10px 5px 10px 5px;
+	padding:8px;
 	background:#EEEEEE;
-	border:1px solid #D1D4DF;
-	color:#334455;
-	font-weight:normal;
-	text-indent:0px;
+	border:1px solid #DDDDDD;
+	border-radius:3px;
 }
 .module_bottom a:not(.*button) {
 	color:#334455;
