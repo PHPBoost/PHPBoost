@@ -414,6 +414,16 @@ button.small, .button-small {
 	padding: 2px 6px;
 }
 
+button[name=submit] { 
+	color:#FEFEFE;
+	background-color:#3B6B9F;
+	border-color:#366393;
+}
+button[name=submit]:hover{ 
+	background-color:#366393;
+	border-color:#315A86;
+}
+
 button[type=reset]{
 	font-weight:bold;
 }
