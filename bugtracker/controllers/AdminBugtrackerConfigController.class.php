@@ -615,14 +615,21 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$version = 'version_' . $i;
 			if ($request->has_postparameter($version) && $request->get_poststring($version))
 			{
-				$array_id = empty($nb_versions) ? 1 : ($nb_versions + 1);
 				$version_release_date = $request->get_value('release_date_' . $i, '');
+				$release_date = $version_release_date ? new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $version_release_date, LangLoader::get_message('date_format_day_month_year', 'date-common')) : '';
 				
-				$versions[$array_id] = array(
-					'name'			=> addslashes($request->get_poststring($version)),
-					'release_date'	=> $version_release_date ? new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $version_release_date, LangLoader::get_message('date_format_day_month_year', 'date-common')) : '',
-					'detected_in'	=> (bool)$request->get_value('detected_in' . $i, '')
-				);
+				if (empty($nb_versions))
+					$versions[1] = array(
+						'name'			=> addslashes($request->get_poststring($version)),
+						'release_date'	=> $release_date,
+						'detected_in'	=> (bool)$request->get_value('detected_in' . $i, '')
+					);
+				else
+					$versions[] = array(
+						'name'			=> addslashes($request->get_poststring($version)),
+						'release_date'	=> $release_date,
+						'detected_in'	=> (bool)$request->get_value('detected_in' . $i, '')
+					);
 				$nb_versions++;
 			}
 		}
