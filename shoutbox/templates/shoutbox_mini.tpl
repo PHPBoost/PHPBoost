@@ -23,7 +23,7 @@
 					{	
 						var array_shout = new Array('', '');
 						eval(xhr_object.responseText);
-						document.getElementById('shout_container').innerHTML = '<p id="shout_container_' + array_shout[2] + '">' + array_shout[0] + '<span class="smaller">: ' + array_shout[1] + '</span></p>' + document.getElementById('shout_container').innerHTML;
+						document.getElementById('shout_container').innerHTML = '<p id="shout_container_' + array_shout[2] + '">' + array_shout[0] + '<span class="small">: ' + array_shout[1] + '</span></p>' + document.getElementById('shout_container').innerHTML;
 						document.getElementById('shout_contents').value = '';
 						document.getElementById('shoutimg').className = 'fa fa-refresh';
 					}
@@ -123,18 +123,18 @@
 				<div class="module-mini-contents">
 					<div id="shout_container">
 						# START shout #
-						<p id="shout_container_{shout.IDMSG}">{shout.PSEUDO}<span class="smaller"> : {shout.CONTENTS}</span></p>
+						<p id="shout_container_{shout.IDMSG}">{shout.PSEUDO}<span class="small"> : {shout.CONTENTS}</span></p>
 						# END shout #
 					</div>
 					# IF C_VISIBLE_SHOUT #
-					<label for="shout_pseudo"><span class="smaller">{L_PSEUDO}</span></label>
+					<label for="shout_pseudo"><span class="small">{L_PSEUDO}</span></label>
 					<input size="16" maxlength="25" type="text" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 					# ENDIF #
 					# IF C_HIDDEN_SHOUT #
 					<input size="16" maxlength="25" type="hidden" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 					# ENDIF #
 					<br />
-					<label for="shout_contents"><span class="smaller">{L_MESSAGE}</span></label>
+					<label for="shout_contents"><span class="small">{L_MESSAGE}</span></label>
 					<textarea id="shout_contents" name="shout_contents" rows="4" cols="16"></textarea>
 					
 					<p class="shout_spacing">
@@ -154,11 +154,11 @@
 					<div class="shout_horizontal">
 						<div id="shout_container">
 							# START shout #
-							<p id="shout_container_{shout.IDMSG}">{shout.DEL_MSG}<span class="smaller"> {shout.DATE} : </span>{shout.PSEUDO}<span class="smaller"> : {shout.CONTENTS}</span></p>
+							<p id="shout_container_{shout.IDMSG}">{shout.DEL_MSG}<span class="small"> {shout.DATE} : </span>{shout.PSEUDO}<span class="small"> : {shout.CONTENTS}</span></p>
 							# END shout #
 						</div>
 						# IF C_VISIBLE_SHOUT #
-							<label for="shout_pseudo"><span class="smaller">{L_PSEUDO}</span></label>
+							<label for="shout_pseudo"><span class="small">{L_PSEUDO}</span></label>
 							<input size="16" maxlength="25" type="text" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 						# ENDIF #
 						# IF C_HIDDEN_SHOUT #
