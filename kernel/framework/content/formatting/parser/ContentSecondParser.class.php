@@ -264,7 +264,7 @@ class ContentSecondParser extends AbstractParser
 	private static function process_movie_tag($matches)
 	{
 		$id = 'movie_' . AppContext::get_uid();
-		return '<a href="' . $matches[1] . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
+		return '<a class="video-player" href="' . $matches[1] . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
 			'<script><!--' . "\n" .
 			'insertMoviePlayer(\'' . $id . '\');' .
 			"\n" . '--></script>';
