@@ -79,7 +79,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
     			return $option;
     		}
     	}
-    	throw new FormBuilderException('option ' . $identifier . ' not found');
+    	return null;
     }
 
     /**
