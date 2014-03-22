@@ -147,7 +147,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->assign_block_vars('forums_list.cats', array(
 					'IDCAT' => $row['cid'],
 					'NAME' => $row['name'],
-					'U_FORUM_VARS' => url(PATH_TO_ROOT . '/forum/index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php')
+					'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php')
 				));
 				$display_sub_cats = (bool)$row['status'];
 			}
@@ -160,7 +160,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 						$tpl->assign_block_vars('forums_list.cats', array(
 							'IDCAT' => $id_get,
 							'NAME' => $CAT_FORUM[$id_get]['name'],
-							'U_FORUM_VARS' => url(PATH_TO_ROOT . '/forum/index.php?id=' . $id_get, 'cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
+							'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
 						));
 						$display_cat = false;
 					}
@@ -247,7 +247,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 						'NBR_TOPIC' => $row['nbr_topic'],
 						'NBR_MSG' => $row['nbr_msg'],
 						'U_FORUM_URL' => $row['url'],
-						'U_FORUM_VARS' => url(PATH_TO_ROOT .'/forum/forum.php?id=' . $row['cid'], 'forum-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
+						'U_FORUM_VARS' => PATH_TO_ROOT .'/forum/' . url('forum.php?id=' . $row['cid'], 'forum-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
 						'U_LAST_TOPIC' => $last
 					));
 				}
@@ -289,8 +289,8 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			'GUEST' => $total_visit,
 			'SELECT_CAT' => !empty($id_get) ? forum_list_cat($id_get, 0) : '', //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 			'C_TOTAL_POST' => true,
-			'U_ONCHANGE' => url(PATH_TO_ROOT ."/forum/index.php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
-			'U_ONCHANGE_CAT' => url(PATH_TO_ROOT ."/forum/index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
+			'U_ONCHANGE' => PATH_TO_ROOT ."/forum/" . url("index.php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
+			'U_ONCHANGE_CAT' => PATH_TO_ROOT ."/forum/" . url("/index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 			'L_SEARCH' => $LANG['search'],
 			'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 			'L_FORUM_INDEX' => $LANG['forum_index'],
