@@ -511,5 +511,8 @@ else
 if (empty($popup))
 	require_once('../kernel/footer.php');
 else
-	require_once('../kernel/footer_no_display.php');
+{
+	Environment::display($Template->render());
+	Environment::destroy();
+}
 ?>
