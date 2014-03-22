@@ -128,14 +128,14 @@ class Article
 	
 	public function get_real_description()
 	{
-                if ($this->get_description_enabled())
+		if ($this->get_description_enabled())
 		{
-                        return TextHelper::substr_html(@strip_tags($this->description), 0, ArticlesConfig::load()->get_number_character_to_cut());
+			return substr(@strip_tags($this->description, '<br>'), 0, ArticlesConfig::load()->get_number_character_to_cut());
 		}
 		else
 		{
 			$clean_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $this->contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-                        return TextHelper::substr_html(@strip_tags($clean_contents[0]), 0, ArticlesConfig::load()->get_number_character_to_cut());
+			return substr(@strip_tags($clean_contents[0], '<br>'), 0, ArticlesConfig::load()->get_number_character_to_cut());
 		}
 	}
 	
