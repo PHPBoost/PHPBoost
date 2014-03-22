@@ -39,7 +39,6 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 		
 		$options = array();
-		$i = 0;
 		$default = '';
 		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
@@ -48,7 +47,6 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 			{
 				$default = $name;
 			}
-			$i++;
 		}
 		
 		if (empty($default))
@@ -65,22 +63,10 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 		
 		$options = array();
-		$i = 0;
-		$default = '';
+		$default = $member_extended_field->get_value();
 		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
 			$options[] = new FormFieldSelectChoiceOption(stripslashes($parameters['title']), $name);
-			if ($parameters['is_default'])
-			{
-				$default = $name;
-			}
-			$i++;
-		}
-		
-		if (empty($default))
-		{
-			$options = array_merge(array(new FormFieldSelectChoiceOption('', '')), $options);
-			$default = '';
 		}
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $options, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
