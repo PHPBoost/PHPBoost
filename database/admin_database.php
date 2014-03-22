@@ -243,7 +243,7 @@ elseif ($action == 'restore')
 		switch ($_GET['error'])
 		{
 			case 'success' :
-				$Template->put('message_helper', MessageHelper::display($LANG['db_restore_success'], E_USER_NOTICE));
+				$Template->put('message_helper', MessageHelper::display($LANG['db_restore_success'], E_USER_SUCCESS));
 				break;
 			case 'failure' :
 				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
