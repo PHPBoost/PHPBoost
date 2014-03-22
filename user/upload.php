@@ -37,7 +37,7 @@ if (!empty($popup)) //Popup.
 {
 	$env = new SiteDisplayFrameGraphicalEnvironment();
 	Environment::set_graphical_environment($env);
-	
+	ob_start();
 	$field = retrieve(GET, 'fd', '');
 	
 	$header = '<style type="text/css">body {background:#FAFAFA;}</style>';
@@ -511,8 +511,5 @@ else
 if (empty($popup))
 	require_once('../kernel/footer.php');
 else
-{
-	Environment::display($Template->render());
-	Environment::destroy();
-}
+	require_once('../kernel/footer_no_display.php');
 ?>
