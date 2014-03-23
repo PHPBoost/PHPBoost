@@ -145,7 +145,8 @@ class HTTPResponseCustom
 	 */
 	public function clean_output()
 	{
-		$this->last_ob_content_before_clean = @ob_get_clean();
+		$this->last_ob_content_before_clean = ob_get_contents();
+		ob_end_clean();
 	}
 
 	/**
