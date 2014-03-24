@@ -112,17 +112,17 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 		case TSTRING_UNCHANGE:
 			if (MAGIC_QUOTES)
 			{
-				$var = trim(stripslashes($var));
+				$var = trim(stripslashes((string)$var));
 			}
 			else
 			{
-				$var = trim($var);
+				$var = trim((string)$var);
 			}
-			return (string)$var; //Chaine non protégée.
+			return $var; //Chaine non protégée.
 		case TSTRING_PARSE:
 			if (MAGIC_QUOTES)
 			{
-				$var = stripslashes($var);
+				$var = stripslashes((string)$var);
 			}
 			return FormatingHelper::strparse($var); //Chaine parsée.
 		case TBOOL:
