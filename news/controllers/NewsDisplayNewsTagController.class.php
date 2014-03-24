@@ -165,14 +165,17 @@ class NewsDisplayNewsTagController extends ModuleController
 	
 	private function generate_response()
 	{
-		$response = new NewsDisplayResponse();
-		$response->set_page_title($this->get_keyword()->get_name());
-		$response->set_page_description(StringVars::replace_vars($this->lang['news.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())));
+		$response = new SiteDisplayResponse($this->tpl);
 		
-		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
-		$response->add_breadcrumb_link($this->get_keyword()->get_name(), NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name()));
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->get_keyword()->get_name());
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['news.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())));
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
+		$breadcrumb->add($this->get_keyword()->get_name(), NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name()));
 	
-		return $response->display($this->tpl);
+		return $response;
 	}
 }
 ?>
