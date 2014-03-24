@@ -377,10 +377,7 @@ class NewsFormController extends ModuleController
 		$news = $this->get_news();
 		
 		$response = new SiteDisplayResponse($tpl);
-		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['news.add']);
-		$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.seo.description.pending']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
@@ -390,11 +387,13 @@ class NewsFormController extends ModuleController
 			$graphical_environment->set_page_title($this->lang['news.add']);
 			$breadcrumb->add($this->lang['news.add'], NewsUrlBuilder::add_news());
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.add']);
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::add_news());
 		}
 		else
 		{
 			$graphical_environment->set_page_title($this->lang['news.edit']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.edit']);
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::edit_news($news->get_id()));
 			
 			$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));
 			foreach ($categories as $id => $category)
@@ -402,6 +401,7 @@ class NewsFormController extends ModuleController
 				if ($category->get_id() != Category::ROOT_CATEGORY)
 					$breadcrumb->add($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
+			$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
 			$breadcrumb->add($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
 			$breadcrumb->add($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id()));
 		}
