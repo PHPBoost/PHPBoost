@@ -157,7 +157,8 @@ class NewsDisplayCategoryController extends ModuleController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_category()->get_name());
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
-		
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
+	
 		$breadcrumb = $graphical_environment->get_breadcrumb();	
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
 		
@@ -167,7 +168,7 @@ class NewsDisplayCategoryController extends ModuleController
 			if ($category->get_id() != Category::ROOT_CATEGORY)
 				$breadcrumb->add($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-	
+				
 		return $response;
 	}
 	

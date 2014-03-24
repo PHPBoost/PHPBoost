@@ -78,21 +78,21 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/#comments_list');
 	}
 	
-	public static function display_category($id, $rewrited_name, $page = null)
+	public static function display_category($id, $rewrited_name, $page = 1)
 	{
-		$page = $page !== null ? $page . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name .'/' . $page);
 	}
 	
-	public static function display_tag($rewrited_name, $page = null)
+	public static function display_tag($rewrited_name, $page = 1)
 	{
-		$page = $page !== null ? $page . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name .'/' . $page);
 	}
 	
-	public static function display_pending_news($page = null)
+	public static function display_pending_news($page = 1)
 	{
-		$page = $page !== null ? $page . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $page);
 	}
 	
