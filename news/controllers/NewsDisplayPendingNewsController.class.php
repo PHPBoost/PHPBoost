@@ -130,14 +130,17 @@ class NewsDisplayPendingNewsController extends ModuleController
 		
 	private function generate_response()
 	{
-		$response = new NewsDisplayResponse();
-		$response->set_page_title($this->lang['news.pending']);
-		$response->set_page_description($this->lang['news.seo.description.pending']);
+		$response = new SiteDisplayResponse($this->tpl);
 		
-		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['news.pending'], NewsUrlBuilder::display_pending_news());
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['news.pending']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.seo.description.pending']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
+		$breadcrumb->add($this->lang['news.pending'], NewsUrlBuilder::display_pending_news());
 	
-		return $response->display($this->tpl);
+		return $response;
 	}
 }
 ?>

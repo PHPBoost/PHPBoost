@@ -376,29 +376,37 @@ class NewsFormController extends ModuleController
 	{
 		$news = $this->get_news();
 		
-		$response = new NewsDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
+		$response = new SiteDisplayResponse($tpl);
+		
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['news.add']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.seo.description.pending']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
 			
 		if ($this->get_news()->get_id() === null)
 		{
-			$response->add_breadcrumb_link($this->lang['news.add'], NewsUrlBuilder::add_news());
-			$response->set_page_title($this->lang['news.add']);
+			$graphical_environment->set_page_title($this->lang['news.add']);
+			$breadcrumb->add($this->lang['news.add'], NewsUrlBuilder::add_news());
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.add']);
 		}
 		else
 		{
+			$graphical_environment->set_page_title($this->lang['news.edit']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.edit']);
+			
 			$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)
-					$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
+					$breadcrumb->add($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 			}
-			$response->add_breadcrumb_link($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
-			
-			$response->add_breadcrumb_link($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id()));
-			$response->set_page_title($this->lang['news.edit']);
+			$breadcrumb->add($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
+			$breadcrumb->add($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id()));
 		}
 		
-		return $response->display($tpl);
+		return $response;
 	}
 }
 ?>

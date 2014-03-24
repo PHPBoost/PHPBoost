@@ -223,21 +223,25 @@ class NewsDisplayNewsController extends ModuleController
 	
 	private function generate_response()
 	{
-		$response = new NewsDisplayResponse();
-		$response->set_page_title($this->get_news()->get_name());
-		$response->set_page_description($this->get_news()->get_real_short_contents());
-		$response->set_page_keywords($this->get_news()->get_keywords_name());
-		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
+		$response = new SiteDisplayResponse($this->tpl);
+		
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->get_news()->get_name());
+		$graphical_environment->get_seo_meta_data()->set_description($this->get_news()->get_real_short_contents());
+		$graphical_environment->get_seo_meta_data()->set_keywords($this->get_news()->get_keywords_name());
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
 		
 		$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
-				$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
+				$breadcrumb->add($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-		$response->add_breadcrumb_link($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
+		$breadcrumb->add($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
 		
-		return $response->display($this->tpl);
+		return $response;
 	}
 }
 ?>
