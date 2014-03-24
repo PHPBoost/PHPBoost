@@ -34,7 +34,8 @@ class SEOMetaData
 {
 	private $title;
 	private $description;
-	private $keywords;
+	private $keywords = array();
+	private $canonical_url;
 	
 	public function __construct($description, $keywords)
 	{
@@ -100,12 +101,38 @@ class SEOMetaData
 	
 	public function add_keyword($keyword)
 	{
-		$this->keywords = $this->keywords . ', ' . $keyword;
+		$this->keywords[] = $keyword;
 	}
 	
 	public function get_keywords()
 	{
-		return $this->keywords;
+		if (!empty($this->keywords))
+		{
+			$keywords = '';
+			foreach ($this->keywords as $keyword)
+			{
+				$keywords .= ', ' . $keyword;
+			}
+			return $keywords;
+		}
+	}
+	
+	public function set_canonical_url(Url $canonical_url)
+	{
+		$this->canonical_url = $canonical_url;	
+	}
+	
+	public function canonical_link_exists()
+	{
+		return $this->canonical_url instanceof Url;
+	}
+	
+	public function get_canonical_link()
+	{
+		if ($this->canonical_url instanceof Url)
+		{
+			return $this->canonical_url->absolute();
+		}
 	}
 }
 ?>
