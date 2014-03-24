@@ -7,6 +7,10 @@
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta name="generator" content="PHPBoost {PHPBOOST_VERSION}" />
 		
+		# IF C_CANONICAL_URL #
+			<link rel="canonical" href="{U_CANONICAL}"/>
+		# ENDIF #
+		
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
 		<link rel="stylesheet" href="${CSSCacheManager::get_css_path('/templates/default/theme/default.css;/kernel/lib/css/font-awesome/css/font-awesome.css;/templates/{THEME}/theme/design.css;/templates/{THEME}/theme/global.css;/templates/{THEME}/theme/content.css')}" type="text/css" media="screen, print, handheld" />

@@ -60,7 +60,8 @@
 	[*] Maintenance dans Administration
 [*] Ajout d'une option dans la configuration avancée pour pouvoir afficher la liste des requêtes SQL et afficher le stacktrace pour pouvoir les tracer
 [*] Suppression des extensions de programmation dans la configuration des fichiers (pouvait entrainer l'upload de fichier "critique" sur le serveur avec la configuration de base)
-	
+[*] Ajout de l'url canonique. Elle permet de définir une url favorite pour accéder à une page et évite ainsi la duplication de contenu.
+
 [b]Divers :[/b]
 [*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
 [*] Ajout de l'affichage de la taille de la mémoire utilisée par PHP

@@ -53,7 +53,8 @@ class BreadCrumb
     {
         if (!empty($text))
         {
-            $this->array_links[] = array($text, $target);
+        	$url = $target instanceof Url ? $target->rel() : $target;
+            $this->array_links[] = array($text, $url);
             return true;
         }
         else
