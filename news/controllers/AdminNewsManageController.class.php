@@ -27,6 +27,8 @@
 
 class AdminNewsManageController extends AdminModuleController
 {
+	const NUMBER_ITEMS_PER_PAGE = 20;
+	
 	private $lang;
 	private $view;
 	
@@ -111,7 +113,7 @@ class AdminNewsManageController extends AdminModuleController
 	{
 		$news_number = PersistenceContext::get_querier()->count(NewsSetup::$news_table);
 		
-		$pagination = new ModulePagination($page, $news_number, (int)NewsConfig::load()->get_number_news_per_page());
+		$pagination = new ModulePagination($page, $news_number, self::NUMBER_ITEMS_PER_PAGE);
 		$pagination->set_url(NewsUrlBuilder::manage_news($sort_field, $sort_mode, '%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
