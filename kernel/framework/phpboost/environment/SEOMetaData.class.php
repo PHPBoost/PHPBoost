@@ -36,13 +36,7 @@ class SEOMetaData
 	private $description;
 	private $keywords = array();
 	private $canonical_url;
-	
-	public function __construct($description, $keywords)
-	{
-		$this->description = $description;
-		$this->keywords = $keywords;
-	}
-	
+		
 	public function set_title($title)
 	{
 		$this->title = $title;
@@ -55,7 +49,7 @@ class SEOMetaData
 	
 	public function get_full_title()
 	{
-		if (Environment::get_running_module_name())
+		if (!Environment::home_page_running())
 		{
 			return $this->title . ' - ' . GeneralConfig::load()->get_site_name();
 		}
@@ -83,15 +77,12 @@ class SEOMetaData
 	
 	public function get_full_description()
 	{
-		if (Environment::get_running_module_name())
-		{
-			return $this->description . ' ' . $this->get_title();
-		}
+		if (Environment::home_page_running())
+			return GeneralConfig::load()->get_site_description();
+		else if (empty($this->description))
+			return GeneralConfig::load()->get_site_description()  . ' ' .  $this->title;
 		else
-		{
-			// HomePage
 			return $this->description;
-		}
 	}
 	
 	public function set_keywords($keywords)
@@ -111,10 +102,11 @@ class SEOMetaData
 			$keywords = '';
 			foreach ($this->keywords as $keyword)
 			{
-				$keywords .= ', ' . $keyword;
+				$keywords .= (!empty($keywords) ? ',' : '') . $keyword;
 			}
-			return $keywords;
+			return GeneralConfig::load()->get_site_keywords() . ',' . $keywords;
 		}
+		return GeneralConfig::load()->get_site_keywords();
 	}
 	
 	public function set_canonical_url(Url $canonical_url)
@@ -124,12 +116,12 @@ class SEOMetaData
 	
 	public function canonical_link_exists()
 	{
-		return $this->canonical_url instanceof Url;
+		return $this->canonical_url !== null;
 	}
 	
 	public function get_canonical_link()
 	{
-		if ($this->canonical_url instanceof Url)
+		if ($this->canonical_url !== null)
 		{
 			return $this->canonical_url->absolute();
 		}

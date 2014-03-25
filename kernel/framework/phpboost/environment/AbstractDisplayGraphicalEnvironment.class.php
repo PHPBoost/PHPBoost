@@ -40,11 +40,7 @@
 	public function __construct()
 	{
 		parent::__construct();
-		$general_config = GeneralConfig::load();
-		$this->seo_meta_data = new SEOMetaData(
-			$general_config->get_site_description(),
-			$general_config->get_site_keywords()
-		);
+		$this->seo_meta_data = new SEOMetaData();
 	}
 	
 	protected function get_modules_css_files_html_code()
