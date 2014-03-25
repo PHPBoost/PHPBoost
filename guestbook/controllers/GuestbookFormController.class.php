@@ -221,19 +221,22 @@ class GuestbookFormController extends ModuleController
 		$message = $this->get_message();
 		$page = AppContext::get_request()->get_getint('page', 1);
 		
-		$response = new GuestbookDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['module_title'], GuestbookUrlBuilder::home($page));
-		$response->set_page_title($this->lang['module_title']);
+		$response = new SiteDisplayResponse($tpl);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['module_title']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], GuestbookUrlBuilder::home($page));
 		
 		if ($message->get_id() === null)
 		{
-			$response->add_breadcrumb_link($this->lang['guestbook.add'], GuestbookUrlBuilder::add($page));
-			$response->set_page_title($this->lang['guestbook.add']);
+			$graphical_environment->set_page_title($this->lang['guestbook.add']);
+			$breadcrumb->add($this->lang['guestbook.add'], GuestbookUrlBuilder::add($page));
 		}
 		else
 		{
-			$response->add_breadcrumb_link($this->lang['guestbook.edit'], GuestbookUrlBuilder::edit($message->get_id(), $page));
-			$response->set_page_title($this->lang['guestbook.edit']);
+			$graphical_environment->set_page_title($this->lang['guestbook.edit']);
+			$breadcrumb->add($this->lang['guestbook.edit'], GuestbookUrlBuilder::edit($message->get_id(), $page));
 		}
 		
 		return $response->display($tpl);
