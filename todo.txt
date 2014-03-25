@@ -72,6 +72,9 @@
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 - Support mobile et version tablette
 - Refonte du système d'événement et intégration d'un système de notification
+- Suppression de l'ancienne classe SQL
+- Refonte de la gestion des liens : suppression des types de menu de liens et création d'un menu de lien qui s'adapte automatiquement à l'emplacement
+- 
 
 [b]Installateur[/b]
 - Ajout d'une option pour supprimer le dossier à la fin de l'installation

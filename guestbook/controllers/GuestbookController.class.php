@@ -39,9 +39,14 @@ class GuestbookController extends ModuleController
 	{
 		$lang = LangLoader::get('common', 'guestbook');
 		
-		$response = new GuestbookDisplayResponse();
-		$response->add_breadcrumb_link($lang['module_title'], GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1)));
-		$response->set_page_title($lang['module_title']);
+		$response = new SiteDisplayResponse($view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($lang['module_title']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($lang['module_title'], GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1)));
+		
 		return $response->display($view);
 	}
 }
