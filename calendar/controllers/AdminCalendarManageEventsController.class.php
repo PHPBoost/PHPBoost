@@ -30,6 +30,8 @@
  */
 class AdminCalendarManageEventsController extends AdminModuleController
 {
+	const NUMBER_ITEMS_PER_PAGE = 20;
+	
 	private $lang;
 	private $view;
 	
@@ -115,7 +117,7 @@ class AdminCalendarManageEventsController extends AdminModuleController
 	{
 		$events_number = PersistenceContext::get_querier()->count(CalendarSetup::$calendar_events_table);
 		
-		$pagination = new ModulePagination($page, $events_number, (int)CalendarConfig::load()->get_items_number_per_page());
+		$pagination = new ModulePagination($page, $events_number, self::NUMBER_ITEMS_PER_PAGE);
 		$pagination->set_url(CalendarUrlBuilder::manage_events($sort_field, $sort_mode, '%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)

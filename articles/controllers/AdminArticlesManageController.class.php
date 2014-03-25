@@ -30,6 +30,8 @@
  */
 class AdminArticlesManageController extends AdminModuleController
 {
+	const NUMBER_ITEMS_PER_PAGE = 20;
+	
 	private $lang;
 	private $view;
 	
@@ -119,7 +121,7 @@ class AdminArticlesManageController extends AdminModuleController
 	{
 		$articles_number = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table);
 		
-		$pagination = new ModulePagination($page, $articles_number, (int)ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination = new ModulePagination($page, $articles_number, self::NUMBER_ITEMS_PER_PAGE);
 		$pagination->set_url(ArticlesUrlBuilder::manage_articles($sort_field, $sort_mode, '%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
