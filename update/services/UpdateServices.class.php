@@ -307,7 +307,7 @@ class UpdateServices
 			replace(replace(replace(replace(replace(replace(replace(replace(
 			
 			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
-			replace(
+			replace(replace(replace(
 			
 			'. $row['COLUMN_NAME'] .', 
 		
@@ -351,8 +351,9 @@ class UpdateServices
 			\'class="text_blockquote"\', \'class="text-blockquote"\'),
 			\'class="text_hide"\', \'class="text-hide"\'),
 			\'class="bb_block"\', \'class="bb-block"\'),
-			\'class="bb_fieldset"\', \'class="bb-fieldset"\')
-			
+			\'class="bb_fieldset"\', \'class="bb-fieldset"\'),
+			\'class="wikipedia_link"\', \'class="wikipedia-link"\'),
+			\'class="float_\', \'class="float-\')
 			');
 		}
 	}
