@@ -187,17 +187,17 @@ h6 { font-size:15px; }
 /* BBCode */
 
 /* Titres */
-h3.title1, h3.title2, h4.stitle1, h4.stitle2 { display: inline; }
-h3.title1, h3.title2 {border-bottom:1px solid #366393; }
+.bb-title { display: inline; }
+h3.bb-title, h4.bb-title { border-bottom:1px solid #366393; }
 	
 /* Titre 1 */
-h3.title1 { }
+h1.bb-title { }
 /* Titre 2 */
-h3.title2 {	margin-left:20px; }
+h2.bb-title {	margin-left:20px; }
 /* Sous titre 1 */
-h4.stitle1 { margin-left:40px; }
+h3.bb-title { margin-left:40px; }
 /* Sous titre 2 */
-h4.stitle2 { margin-left:60px; }
+h4.bb-title { margin-left:60px; }
 
 /* Mise en forme du contenu
 --------------------------------------------------------------------  */

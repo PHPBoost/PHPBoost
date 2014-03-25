@@ -457,10 +457,10 @@
 	</header>
 	<br />
 	<div class="content">
-		<h3 class="title1">{@css.title} 1</h3>
-		<h3 class="title2">{@css.title} 2</h3>
-		<h4 class="stitle1">{@css.title} 3</h4>
-		<h4 class="stitle2">{@css.title} 4</h4>
+		<h1 class="bb-title">{@css.title} 1</h1><br />
+		<h2 class="bb-title">{@css.title} 2</h2><br />
+		<h3 class="bb-title">{@css.title} 3</h3><br />
+		<h4 class="bb-title">{@css.title} 4</h4>
 	</div>
 	<footer></footer>
 </section>

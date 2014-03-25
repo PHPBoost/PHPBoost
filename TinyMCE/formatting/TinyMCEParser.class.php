@@ -401,16 +401,16 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			//Title 1
 			array_push($array_preg, '`&lt;h1[^&]*&gt;(.+)&lt;/h1&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<h3 class="title1">$1</h3>' . "\n<br />");
+			array_push($array_preg_replace, "\n" . '<h1 class="bb-title">$1</h1>' . "\n<br />");
 			//Title 2
 			array_push($array_preg, '`&lt;h2[^&]*&gt;(.+)&lt;/h2&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<h3 class="title2">$1</h3>' . "\n<br />");
+			array_push($array_preg_replace, "\n" . '<h2 class="bb-title">$1</h2>' . "\n<br />");
 			//Title 3
 			array_push($array_preg, '`&lt;h3[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<br /><h4 class="stitle1">$1</h4><br />' . "\n<br />");
+			array_push($array_preg_replace, "\n" . '<br /><h3 class="bb-title">$1</h3><br />' . "\n<br />");
 			//Title 4
 			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<br /><h4 class="stitle2">$1</h4><br />' . "\n<br />");
+			array_push($array_preg_replace, "\n" . '<br /><h4 class="bb-title">$1</h4><br />' . "\n<br />");
 		}
 		//Flash tag
 		if (!in_array('swf', $this->forbidden_tags))

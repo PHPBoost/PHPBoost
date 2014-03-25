@@ -460,10 +460,20 @@ class BBCodeParser extends ContentFormattingParser
 	protected function parse_title($matches)
 	{
 		$level = (int)$matches[1];
-		if ($level <= 2)
-		return '<h3 class="title' . $level . '">' . $matches[2] . '</h3>';
-		else
-		return '<h4 class="stitle' . ($level - 2) . '">' . $matches[2] . '</h4>';
+		switch ($level) {
+			case 1:
+				return '<h1 class="bb-title">' . $matches[2] . '</h1>';
+			break;
+			case 2:
+				return '<h2 class="bb-title">' . $matches[2] . '</h2>';
+			break;
+			case 3:
+				return '<h3 class="bb-title">' . $matches[2] . '</h3>';
+			break;
+			case 4:
+				return '<h4 class="bb-title">' . $matches[2] . '</h4>';
+			break;
+		}
 	}
 
 

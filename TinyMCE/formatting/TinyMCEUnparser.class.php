@@ -139,10 +139,10 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		$array_preg = array(
 			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
-			"`<h3 class=\"title1\">(.*)</h3>(?:[\s]*<br />){0,}`isU",
-			"`<h3 class=\"title2\">(.*)</h3>(?:[\s]*<br />){0,}`isU",
-			"`<br /><h4 class=\"stitle1\">(.*)</h4><br />\s*`isU",
-			"`<br /><h4 class=\"stitle2\">(.*)</h4><br />\s*`isU",
+			"`<h1 class=\"bb-title\">(.*)</h1>(?:[\s]*<br />){0,}`isU",
+			"`<h2 class=\"bb-title\">(.*)</h2>(?:[\s]*<br />){0,}`isU",
+			"`<br /><h3 class=\"bb-title\">(.*)</h3><br />\s*`isU",
+			"`<br /><h4 class=\"bb-title\">(.*)</h4><br />\s*`isU",
 			'`<span style="color:([^;]+);">(.+)</span>`isU',
 			'`<span style="background-color:([^;]+);">(.+)</span>`isU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU'
