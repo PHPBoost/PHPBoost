@@ -36,6 +36,7 @@
 class Environment
 {
 	private static $running_module_name = '';
+	private static $home_page_running;
 
 	/**
 	 * @var GraphicalEnvironment
@@ -408,9 +409,12 @@ class Environment
 		{
         	$module_name = explode('/', $path);
         	self::$running_module_name = $module_name[0];
+        	self::$home_page_running = false;
 		}
 		else
 		{
+			self::$home_page_running = true;
+			
 			$general_config = GeneralConfig::load();
 			$other_home_page = $general_config->get_other_home_page();
 			$module_home_page = $general_config->get_module_home_page();
@@ -431,6 +435,11 @@ class Environment
 	public static function get_running_module_name()
 	{
 		return self::$running_module_name;
+	}
+	
+	public static function home_page_running()
+	{
+		return self::$home_page_running;
 	}
 
 	public static function csrf_protect_post_requests()
