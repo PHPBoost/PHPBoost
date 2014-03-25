@@ -45,6 +45,7 @@ class GuestbookController extends ModuleController
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($lang['module_title'], GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1)));
 		
 		return $response->display($view);
 	}
