@@ -471,26 +471,32 @@ class CalendarFormController extends ModuleController
 	{
 		$event = $this->get_event();
 		
-		$response = new CalendarDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['module_title'], CalendarUrlBuilder::home());
+		$response = new SiteDisplayResponse($tpl);
+		$graphical_environment = $response->get_graphical_environment();
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());
 		
 		if ($event->get_id() === null)
 		{
-			$response->add_breadcrumb_link($this->lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event());
-			$response->set_page_title($this->lang['calendar.titles.add_event']);
+			$graphical_environment->set_page_title($this->lang['calendar.titles.add_event']);
+			$breadcrumb->add($this->lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event());
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::add_event());
 		}
 		else
 		{
+			$graphical_environment->set_page_title($this->lang['calendar.titles.event_edition']);
+			
 			$categories = array_reverse(CalendarService::get_categories_manager()->get_parents($event->get_content()->get_category_id(), true));
 			
 			$category = $categories[$event->get_content()->get_category_id()];
-			$response->add_breadcrumb_link($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
+			$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 			
-			$response->add_breadcrumb_link($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id()));
-			$response->set_page_title($this->lang['calendar.titles.event_edition']);
+			$breadcrumb->add($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::edit_event($event->get_id()));
 		}
 		
-		return $response->display($tpl);
+		return $response;
 	}
 }
 ?>

@@ -176,19 +176,23 @@ class CalendarDeleteController extends ModuleController
 	
 	private function generate_response(View $tpl)
 	{
-		$response = new CalendarDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['module_title'], CalendarUrlBuilder::home());
+		$response = new SiteDisplayResponse($tpl);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['calendar.titles.event_removal']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());
 		
 		$event_content = $this->event->get_content();
 		$categories = array_reverse(CalendarService::get_categories_manager()->get_parents($event_content->get_category_id(), true));
 		
 		$category = $categories[$event_content->get_category_id()];
-		$response->add_breadcrumb_link($event_content->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_content->get_id(), $event_content->get_rewrited_title()));
+		$breadcrumb->add($event_content->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event_content->get_id(), $event_content->get_rewrited_title()));
 		
-		$response->add_breadcrumb_link($this->lang['calendar.titles.event_removal'], CalendarUrlBuilder::delete_event($this->event->get_id()));
-		$response->set_page_title($this->lang['calendar.titles.event_removal']);
+		$breadcrumb->add($this->lang['calendar.titles.event_removal'], CalendarUrlBuilder::delete_event($this->event->get_id()));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::delete_event($this->event->get_id()));
 		
-		return $response->display($tpl);
+		return $response;
 	}
 }
 ?>
