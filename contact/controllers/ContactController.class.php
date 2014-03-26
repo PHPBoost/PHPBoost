@@ -239,7 +239,12 @@ class ContactController extends ModuleController
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->view);
-		$response->get_graphical_environment()->set_page_title($this->lang['module_title']);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['module_title']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], ContactUrlBuilder::home());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ContactUrlBuilder::home());
 		
 		return $response;
 	}

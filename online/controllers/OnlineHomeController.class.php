@@ -35,10 +35,15 @@ class OnlineHomeController extends ModuleController
 	private function build_response(View $view)
 	{
 		$lang = LangLoader::get('common', 'online');
+		
 		$response = new SiteDisplayResponse($view);
-		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($lang['online']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($lang['online'], OnlineUrlBuilder::home()->rel());
-		$response->get_graphical_environment()->set_page_title($lang['online']);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(OnlineUrlBuilder::home()->rel());
+		
 		return $response;
 	}
 }
