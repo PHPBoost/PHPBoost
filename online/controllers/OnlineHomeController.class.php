@@ -41,8 +41,8 @@ class OnlineHomeController extends ModuleController
 		$graphical_environment->set_page_title($lang['online']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($lang['online'], OnlineUrlBuilder::home()->rel());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(OnlineUrlBuilder::home()->rel());
+		$breadcrumb->add($lang['online'], OnlineUrlBuilder::home());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(OnlineUrlBuilder::home());
 		
 		return $response;
 	}
