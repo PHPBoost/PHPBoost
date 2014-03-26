@@ -241,7 +241,7 @@ class GuestbookFormController extends ModuleController
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::edit($message->get_id(), $page));
 		}
 		
-		return $response->display($tpl);
+		return $response;
 	}
 }
 ?>
