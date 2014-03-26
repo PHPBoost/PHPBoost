@@ -107,12 +107,15 @@ class CalendarDisplayCategoryController extends ModuleController
 	
 	private function generate_response()
 	{
-		$response = new CalendarDisplayResponse();
-		$response->set_page_title($this->get_category()->get_name());
+		$response = new SiteDisplayResponse($this->tpl);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->get_category()->get_name());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::home());
 		
-		$response->add_breadcrumb_link($this->lang['module_title'], CalendarUrlBuilder::home());
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());
 		
-		return $response->display($this->tpl);
+		return $response;
 	}
 	
 	public static function get_view()
