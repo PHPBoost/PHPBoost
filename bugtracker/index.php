@@ -54,7 +54,7 @@ $url_controller_mappers = array(
 	
 	//Bug detail
 	new UrlControllerMapper('BugtrackerDetailController', '`^/detail/success/([a-z_-]+)?/?([0-9]+)?/?$`', array('success', 'id')),
-	new UrlControllerMapper('BugtrackerDetailController', '`^/detail/([0-9]+)?/?([0-9A-Za-z_-]+)?/?$`', array('id', 'msg')),
+	new UrlControllerMapper('BugtrackerDetailController', '`^/detail/([0-9]+)?-?([0-9A-Za-z_-]+)?/?$`', array('id', 'rewrited_title')),
 	
 	//New bug
 	new UrlControllerMapper('BugtrackerFormController', '`^/add?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('back_page', 'page', 'back_filter', 'filter_id')),

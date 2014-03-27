@@ -79,7 +79,7 @@ class BugtrackerDetailController extends ModuleController
 		
 		$comments_topic = new BugtrackerCommentsTopic();
 		$comments_topic->set_id_in_module($this->bug->get_id());
-		$comments_topic->set_url(BugtrackerUrlBuilder::detail($this->bug->get_id()));
+		$comments_topic->set_url(BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
 		$this->view->put('COMMENTS', $comments_topic->display());
 	}
 	
@@ -157,12 +157,16 @@ class BugtrackerDetailController extends ModuleController
 		if (!empty($errstr))
 			$body_view->put('MSG', MessageHelper::display($errstr, E_USER_SUCCESS, 5));
 		
-		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['titles.detail'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::detail($this->bug->get_id()));
-		$response->set_page_title($this->lang['titles.detail'] . ' #' . $this->bug->get_id());
+		$response = new SiteDisplayResponse($body_view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['titles.detail'] . ' #' . $this->bug->get_id());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
 		
-		return $response->display($body_view);
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$breadcrumb->add($this->lang['titles.detail'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
+		
+		return $response;
 	}
 }
 ?>
