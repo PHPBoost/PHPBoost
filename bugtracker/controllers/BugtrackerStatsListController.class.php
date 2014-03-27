@@ -145,12 +145,16 @@ class BugtrackerStatsListController extends ModuleController
 		if (!empty($errstr))
 			$body_view->put('MSG', MessageHelper::display($errstr, E_USER_SUCCESS, 5));
 		
-		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['titles.stats'], BugtrackerUrlBuilder::stats());
-		$response->set_page_title($this->lang['titles.stats']);
+		$response = new SiteDisplayResponse($body_view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['titles.stats']);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::stats());
 		
-		return $response->display($body_view);
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$breadcrumb->add($this->lang['titles.stats'], BugtrackerUrlBuilder::stats());
+		
+		return $response;
 	}
 }
 ?>

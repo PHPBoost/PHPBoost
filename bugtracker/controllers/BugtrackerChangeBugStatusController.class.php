@@ -333,7 +333,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		{
 			$comments_topic = new BugtrackerCommentsTopic();
 			$comments_topic->set_id_in_module($this->bug->get_id());
-			$comments_topic->set_url(BugtrackerUrlBuilder::detail($this->bug->get_id()));
+			$comments_topic->set_url(BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
 			CommentsManager::add_comment($comments_topic->get_module_id(), $comments_topic->get_id_in_module(), $comments_topic->get_topic_identifier(), $comments_topic->get_path(), $comment);
 			
 			//New line in the bug history
@@ -387,12 +387,16 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		
 		$body_view = BugtrackerViews::build_body_view($view, 'change_status', $this->bug->get_id());
 		
-		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['titles.change_status'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::change_status($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
-		$response->set_page_title($this->lang['titles.change_status'] . ' #' . $this->bug->get_id());
+		$response = new SiteDisplayResponse($body_view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['titles.change_status'] . ' #' . $this->bug->get_id());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::change_status($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
 		
-		return $response->display($body_view);
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$breadcrumb->add($this->lang['titles.change_status'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::change_status($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		
+		return $response;
 	}
 }
 ?>

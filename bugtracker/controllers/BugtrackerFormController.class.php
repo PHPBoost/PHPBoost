@@ -278,7 +278,10 @@ class BugtrackerFormController extends ModuleController
 		
 		if ($bug->get_id() === null)
 		{
-			$bug->set_title($this->form->get_value('title'));
+			$title = $this->form->get_value('title');
+			
+			$bug->set_title($title);
+			$bug->set_rewrited_title(Url::encode_rewrite($title));
 			$bug->set_contents($this->form->get_value('contents'));
 			$bug->set_type($this->form->get_value('type') ? $this->form->get_value('type')->get_raw_value() : $this->config->get_default_type());
 			$bug->set_category($this->form->get_value('category') ? $this->form->get_value('category')->get_raw_value() : $this->config->get_default_category());
@@ -297,7 +300,7 @@ class BugtrackerFormController extends ModuleController
 			{
 				$alert = new AdministratorAlert();
 				$alert->set_entitled('[' . $this->lang['module_title'] . '] ' . $bug->get_title());
-				$alert->set_fixing_url(BugtrackerUrlBuilder::detail($id)->relative());
+				$alert->set_fixing_url(BugtrackerUrlBuilder::detail($id . '-' . $bug->get_rewrited_title())->relative());
 				
 				switch ($bug->get_priority())
 				{
@@ -430,7 +433,10 @@ class BugtrackerFormController extends ModuleController
 			
 			$main_lang = LangLoader::get('main');
 			
-			$bug->set_title($this->form->get_value('title', $old_values->get_title()));
+			$title = $this->form->get_value('title', $old_values->get_title());
+			
+			$bug->set_title($title);
+			$bug->set_rewrited_title(Url::encode_rewrite($title));
 			$bug->set_contents($this->form->get_value('contents', $old_values->get_contents()));
 			$bug->set_type($this->form->get_value('type') ? $this->form->get_value('type')->get_raw_value() : $old_values->get_type());
 			$bug->set_category($this->form->get_value('category') ? $this->form->get_value('category')->get_raw_value() : $old_values->get_category());
@@ -586,7 +592,7 @@ class BugtrackerFormController extends ModuleController
 				switch ($back_page)
 				{
 					case 'detail' :
-						$redirect = BugtrackerUrlBuilder::detail($bug->get_id());
+						$redirect = BugtrackerUrlBuilder::detail($bug->get_id() . '-' . $bug->get_rewrited_title());
 						break;
 					case 'solved' :
 						$redirect = BugtrackerUrlBuilder::solved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
@@ -611,25 +617,34 @@ class BugtrackerFormController extends ModuleController
 		$back_filter = $request->get_value('back_filter', '');
 		$filter_id = $request->get_value('filter_id', '');
 		
-		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		
 		if ($bug->get_id() === null)
 		{
 			$body_view = BugtrackerViews::build_body_view($tpl, 'add');
 			
-			$response->add_breadcrumb_link($this->lang['titles.add'], BugtrackerUrlBuilder::add(!empty($back_page) ? $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : ''));
-			$response->set_page_title($this->lang['titles.add']);
+			$response = new SiteDisplayResponse($body_view);
+			$graphical_environment = $response->get_graphical_environment();
+			$graphical_environment->set_page_title($this->lang['titles.add']);
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::add(!empty($back_page) ? $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : ''));
+			
+			$breadcrumb = $graphical_environment->get_breadcrumb();
+			$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+			$breadcrumb->add($this->lang['titles.add'], BugtrackerUrlBuilder::add(!empty($back_page) ? $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : ''));
 		}
 		else
 		{
 			$body_view = BugtrackerViews::build_body_view($tpl, 'edit', $bug->get_id());
 			
-			$response->add_breadcrumb_link($this->lang['titles.edit'] . ' #' . $bug->get_id(), BugtrackerUrlBuilder::edit(!empty($back_page) ? $bug->get_id() . '/' . $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : $bug->get_id()));
-			$response->set_page_title($this->lang['titles.edit'] . ' #' . $bug->get_id());
+			$response = new SiteDisplayResponse($body_view);
+			$graphical_environment = $response->get_graphical_environment();
+			$graphical_environment->set_page_title($this->lang['titles.edit'] . ' #' . $bug->get_id());
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::edit(!empty($back_page) ? $bug->get_id() . '/' . $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : $bug->get_id()));
+			
+			$breadcrumb = $graphical_environment->get_breadcrumb();
+			$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+			$breadcrumb->add($this->lang['titles.edit'] . ' #' . $bug->get_id(), BugtrackerUrlBuilder::edit(!empty($back_page) ? $bug->get_id() . '/' . $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : $bug->get_id()));
 		}
 		
-		return $response->display($body_view);
+		return $response;
 	}
 }
 ?>

@@ -29,6 +29,7 @@ class Bug
 {
 	private $id;
 	private $title;
+	private $rewrited_title;
 	private $contents;
 	
 	private $author_user;
@@ -77,6 +78,16 @@ class Bug
 	public function get_title()
 	{
 		return $this->title;
+	}
+	
+	public function set_rewrited_title($rewrited_title)
+	{
+		$this->rewrited_title = $rewrited_title;
+	}
+	
+	public function get_rewrited_title()
+	{
+		return $this->rewrited_title;
 	}
 	
 	public function set_contents($contents)
@@ -300,6 +311,7 @@ class Bug
 	{
 		$this->id = $properties['id'];
 		$this->title = $properties['title'];
+		$this->rewrited_title = Url::encode_rewrite($properties['title']);
 		$this->contents = $properties['contents'];
 		$this->submit_date = !empty($properties['submit_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['submit_date']) : null;
 		$this->fix_date = !empty($properties['fix_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['fix_date']) : null;
@@ -392,9 +404,9 @@ class Bug
 			'NUMBER_COMMENTS' => $number_comments,
 			
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
-			'U_LINK' => BugtrackerUrlBuilder::detail($this->id . '/' . Url::encode_rewrite($this->title))->rel(),
+			'U_LINK' => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title)->rel(),
 			'U_HISTORY' => BugtrackerUrlBuilder::history($this->id)->rel(),
-			'U_COMMENTS' => BugtrackerUrlBuilder::detail($this->id . '/#comments_list')->rel()
+			'U_COMMENTS' => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title . '#comments_list')->rel()
 		);
 	}
 }

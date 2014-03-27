@@ -176,12 +176,16 @@ class BugtrackerDeleteBugController extends ModuleController
 		
 		$body_view = BugtrackerViews::build_body_view($view, 'delete', $this->bug->get_id());
 		
-		$response = new BugtrackerDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['titles.delete'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::delete($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
-		$response->set_page_title($this->lang['titles.delete'] . ' #' . $this->bug->get_id());
+		$response = new SiteDisplayResponse($body_view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['titles.delete'] . ' #' . $this->bug->get_id());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::delete($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
 		
-		return $response->display($body_view);
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
+		$breadcrumb->add($this->lang['titles.delete'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::delete($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		
+		return $response;
 	}
 }
 ?>

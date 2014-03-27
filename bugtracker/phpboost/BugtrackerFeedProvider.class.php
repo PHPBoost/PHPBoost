@@ -81,7 +81,7 @@ class BugtrackerFeedProvider implements FeedProvider
 			$bug = new Bug();
 			$bug->set_properties($row);
 			
-			$link = BugtrackerUrlBuilder::detail($bug->get_id() . '/' . Url::encode_rewrite($bug->get_title()));
+			$link = BugtrackerUrlBuilder::detail($bug->get_id() . '-' . $bug->get_rewrited_title());
 			
 			$description = FormatingHelper::second_parse($bug->get_contents());
 			$description .= '<br /><br />' . $lang['labels.fields.reproductible'] . ' : ' . ($bug->is_reproductible() ? LangLoader::get_message('yes', 'main') : LangLoader::get_message('no', 'main'));
