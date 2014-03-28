@@ -276,20 +276,24 @@ class ArticlesDisplayCategoryController extends ModuleController
 	
 	private function generate_response()
 	{	
-		$response = new ArticlesDisplayResponse();
-		$response->set_page_title($this->category->get_name());
-		$response->set_page_description($this->category->get_description());
-		
-		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
+		$response = new SiteDisplayResponse($this->view);
+                
+                $graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->category->get_name());
+		$graphical_environment->get_seo_meta_data()->set_description($this->category->get_description());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
+	
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
 		
 		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->category->get_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
-				$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
+				$breadcrumb->add($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
 		}
 		
-		return $response->display($this->view);
+		return $response;
 	}
 	
 	public static function get_view()

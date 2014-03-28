@@ -218,14 +218,18 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	
 	private function generate_response()
 	{
-		$response = new ArticlesDisplayResponse();
-		$response->set_page_title($this->lang['articles.pending_articles']);
-		$response->set_page_description($this->lang['articles.seo.description.pending']);
+		$response = new SiteDisplayResponse($this->view);
+                
+                $graphical_environment = $response->get_graphical_environment();
+                $graphical_environment->set_page_title($this->lang['articles.pending_articles']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.seo.description.pending']);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_pending_articles(AppContext::get_request()->get_getint('page', 1)));
 		
-		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles());
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
+		$breadcrumb->add($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles(AppContext::get_request()->get_getint('page', 1)));
 	
-		return $response->display($this->view);
+		return $response;
 	}
 }
 ?>

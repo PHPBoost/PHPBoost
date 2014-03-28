@@ -307,21 +307,26 @@ class ArticlesDisplayArticlesController extends ModuleController
 	
 	private function generate_response()
 	{
-		$response = new ArticlesDisplayResponse();
-		$response->set_page_title($this->article->get_title());
-		$response->set_page_description($this->article->get_real_description());
-		$response->set_page_keywords($this->article->get_keywords_name());
-		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
+		$response = new SiteDisplayResponse($this->tpl);
+                
+                $graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->article->get_title());
+		$graphical_environment->get_seo_meta_data()->set_description($this->article->get_real_description());
+                $graphical_environment->get_seo_meta_data()->set_keywords($this->article->get_keywords_name());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
+	
+                $breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
 		
 		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->article->get_id_category(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
-				$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
+				$breadcrumb->add($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-		$response->add_breadcrumb_link($this->article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
+		$breadcrumb->add($this->article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
 		
-		return $response->display($this->tpl);
+		return $response;
 	}
 }
 ?>
