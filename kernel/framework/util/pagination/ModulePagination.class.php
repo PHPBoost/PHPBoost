@@ -39,7 +39,7 @@ class ModulePagination
 	{
 		$this->current_page = $current_page;
 		$this->number_elements = $number_elements;
-		$this->number_items_per_page = $number_items_per_page;
+		$this->number_items_per_page = (int)$number_items_per_page;
 		$this->pagination = new Pagination($this->get_number_pages(), $this->current_page, $type);
 	}
 	
