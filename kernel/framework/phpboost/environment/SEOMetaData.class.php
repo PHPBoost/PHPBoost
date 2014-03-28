@@ -79,8 +79,6 @@ class SEOMetaData
 	{
 		if (Environment::home_page_running())
 			return GeneralConfig::load()->get_site_description();
-		else if (empty($this->description))
-			return GeneralConfig::load()->get_site_description()  . ' ' .  $this->title;
 		else
 			return $this->description;
 	}

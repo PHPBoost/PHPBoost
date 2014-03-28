@@ -3,9 +3,10 @@
 	<head>
 		<title>{TITLE}</title>
 		<meta charset="iso-8859-1" />
-		<meta name="description" content="${escape(SITE_DESCRIPTION)}" />
+		# IF C_DESCRIPTION #<meta name="description" content="{SITE_DESCRIPTION}" /># ENDIF #
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta name="generator" content="PHPBoost {PHPBOOST_VERSION}" />
+		# IF C_CANONICAL_URL #<link rel="canonical" href="{U_CANONICAL}"/># ENDIF #
 		
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
