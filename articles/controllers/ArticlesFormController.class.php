@@ -100,17 +100,17 @@ class ArticlesFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.form.description_enabled'], $this->get_article()->get_description_enabled(), 
 			array('description' => StringVars::replace_vars($this->lang['articles.form.description_enabled.description'], 
-                                array('number' => ArticlesConfig::load()->get_number_character_to_cut())), 
-                              'events' => array('click' => '
-                                                            if (HTMLForms.getField("enable_description").getValue()) {
-                                                                    HTMLForms.getField("description").enable();
-                                                            } else { 
-                                                                    HTMLForms.getField("description").disable();
-                                                            }'))
-		));
+			array('number' => ArticlesConfig::load()->get_number_character_to_cut())), 
+				'events' => array('click' => '
+					if (HTMLForms.getField("enable_description").getValue()) {
+						HTMLForms.getField("description").enable();
+					} else { 
+						HTMLForms.getField("description").disable();
+					}'
+		))));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('description', StringVars::replace_vars($this->lang['articles.form.description'],
-                        array('number' =>ArticlesConfig::load()->get_number_character_to_cut())), $this->get_article()->get_description(),
+			array('number' =>ArticlesConfig::load()->get_number_character_to_cut())), $this->get_article()->get_description(),
 			array('rows' => 3, 'hidden' => !$this->get_article()->get_description_enabled())
 		));
 		

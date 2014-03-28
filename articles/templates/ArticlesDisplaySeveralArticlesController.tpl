@@ -33,7 +33,7 @@
 	</header>
 	# IF C_NO_ARTICLE_AVAILABLE #
 	<div class="center">
-		# IF C_PENDING_ARTICLES #{@articles.no_pending_article}# ELSE #{@articles.no_article.category}# ENDIF #
+		{@articles.message.no_items}
 	</div>
 	# ELSE #
 		# IF C_ARTICLES_FILTERS #
