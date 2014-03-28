@@ -128,6 +128,7 @@ class News
 		{
 			return $this->short_contents;
 		}
+		//return substr(@strip_tags(preg_replace('`<h[0-9] [^>]*>[^>]*</h[0-9]>(?:[\s]*<br />)`Usi', '', $this->contents), ''), 0, NewsConfig::load()->get_number_character_to_cut());
 		return substr(@strip_tags($this->contents, '<br>'), 0, NewsConfig::load()->get_number_character_to_cut());
 	}
 		
