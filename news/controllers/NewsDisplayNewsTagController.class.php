@@ -95,15 +95,11 @@ class NewsDisplayNewsTagController extends ModuleController
 			'C_DISPLAY_CONDENSED_CONTENT' => $news_config->get_display_condensed_enabled(),
 		
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
-			'C_ADD' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution(),
-			'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 		
 			'PAGINATION' => $pagination->display(),
 			'C_SEVERAL_COLUMNS' => $number_columns_display_news > 1,
 			'NUMBER_COLUMNS' => $number_columns_display_news,
-
-			'L_NEWS_TITLE' => $this->lang['news'],
 		));
 	}
 	
