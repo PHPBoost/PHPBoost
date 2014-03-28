@@ -103,39 +103,40 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		}
 		
 		$this->view->put_all(array(
-			'C_MODERATE' => ArticlesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY)->moderation(),
 			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
-			'C_PENDING_ARTICLES' => false,
-			'C_PUBLISHED_ARTICLES' => true,
 			'C_ARTICLES_CAT' => false,
 			'C_COMMENTS_ENABLED' => ArticlesConfig::load()->are_comments_enabled(),
 			'C_ARTICLES_FILTERS' => true,
-			'L_TAG' => $this->lang['articles.tags'] . ' : ' . $this->get_keyword()->get_name(),
-			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->rel(),
-			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()
 		));
-						
+	
 		$authorized_categories = ArticlesService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$pagination = $this->get_pagination($now, $authorized_categories, $field, $mode);
 		
-		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, 
-		notes.number_notes, notes.average_notes, note.note FROM ' . ArticlesSetup::$articles_table . ' articles
+		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note 
+		FROM ' . ArticlesSetup::$articles_table . ' articles
 		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' relation ON relation.module_id = \'articles\' AND relation.id_in_module = articles.id 
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
+		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = \'articles\'
+		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
 		WHERE relation.id_keyword = :id_keyword AND (articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
 		AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0))) 
-		ORDER BY ' .$sort_field . ' ' . $sort_mode . ' LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from(), array(
+		AND articles.id_category IN :authorized_categories
+		ORDER BY ' .$sort_field . ' ' . $sort_mode . ' 
+		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'id_keyword' => $this->keyword->get_id(),
-			'timestamp_now' => $now->get_timestamp()
+			'timestamp_now' => $now->get_timestamp(),
+			'authorized_categories' => $authorized_categories,
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
 		));
 
 		$this->build_sorting_form($field, $mode);
 		
 		$this->view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'PAGINATION' => $pagination->display()
+			'PAGINATION' => $pagination->display(),
+			'C_NO_ARTICLE_AVAILABLE' => $result->get_rows_count() == 0,
 		));
 		
 		while ($row = $result->fetch())
@@ -185,7 +186,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author')
 			),
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_pending_articles()->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -193,7 +194,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
 			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_pending_articles()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$this->view->put('FORM', $form->display());
@@ -235,15 +236,15 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->view);
-                
-                $graphical_environment = $response->get_graphical_environment();
-                $graphical_environment->set_page_title($this->get_keyword()->get_name());
+
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->get_keyword()->get_name());
 		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['articles.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())));
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'),AppContext::get_request()->get_getint('page', 1)));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
-		$breadcrumb->add($this->get_keyword()->get_name(), ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
+		$breadcrumb->add($this->get_keyword()->get_name(), ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'),AppContext::get_request()->get_getint('page', 1)));
 		
 		return $response;
 	}

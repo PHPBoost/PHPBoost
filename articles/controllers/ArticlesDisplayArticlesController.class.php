@@ -308,14 +308,14 @@ class ArticlesDisplayArticlesController extends ModuleController
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->tpl);
-                
-                $graphical_environment = $response->get_graphical_environment();
+
+		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->article->get_title());
-		$graphical_environment->get_seo_meta_data()->set_description($this->article->get_real_description());
-                $graphical_environment->get_seo_meta_data()->set_keywords($this->article->get_keywords_name());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
+		$graphical_environment->get_seo_meta_data()->set_description($this->article->get_description());
+		$graphical_environment->get_seo_meta_data()->set_keywords($this->article->get_keywords_name());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1)));
 	
-                $breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
 		
 		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->article->get_id_category(), true));

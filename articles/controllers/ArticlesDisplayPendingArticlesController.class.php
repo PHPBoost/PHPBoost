@@ -138,7 +138,6 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		$this->view->put_all(array(
 			'C_MOSAIC' => $config->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
-			'C_PENDING_ARTICLES' => true,
 			'C_NO_ARTICLE_AVAILABLE' => $nbr_articles_pending == 0
 		));
 		
@@ -219,15 +218,15 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->view);
-                
-                $graphical_environment = $response->get_graphical_environment();
-                $graphical_environment->set_page_title($this->lang['articles.pending_articles']);
+
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['articles.pending_articles']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.seo.description.pending']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_pending_articles(AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_pending_articles(AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'), AppContext::get_request()->get_getint('page', 1)));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
-		$breadcrumb->add($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles(AppContext::get_request()->get_getint('page', 1)));
+		$breadcrumb->add($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles(AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'), AppContext::get_request()->get_getint('page', 1)));
 	
 		return $response;
 	}

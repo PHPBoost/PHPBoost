@@ -30,6 +30,9 @@
  */
 class ArticlesUrlBuilder
 {
+	const DEFAULT_SORT_FIELD = 'date';
+	const DEFAULT_SORT_MODE = 'desc';
+	
 	private static $dispatcher = '/articles';
 	
 	public static function manage_categories()
@@ -56,18 +59,20 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/delete/');
 	}
 	
-	public static function display_category($id, $rewrited_name, $sort_field = null, $sort_mode = null, $page = 1)
+	public static function display_category($id, $rewrited_name, $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
 		$page = $page !== 1 ? $page . '/': '';
-		$sort = $sort_field !== null ? $sort_field . '/' . $sort_mode . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name . '/' . $sort . $page);
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name . '/' . $sort_field . $sort_mode . $page);
 	}
 	
-	public static function manage_articles($sort_field = null, $sort_mode = null, $page = 1)
+	public static function manage_articles($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
 		$page = $page !== 1 ? $page . '/': '';
-		$sort = $sort_field !== null ? $sort_field . '/' . $sort_mode . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/admin/articles/' . $sort . $page);
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/admin/articles/' . $sort_field . $sort_mode . $page);
 	}
 	
 	public static function print_article($id_article, $rewrited_title)
@@ -108,18 +113,20 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' . $rewrited_title . '/#comments_list');
 	}
 	
-	public static function display_pending_articles($sort_field = null, $sort_mode = null, $page = 1)
+	public static function display_pending_articles($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
 		$page = $page !== 1 ? $page . '/': '';
-		$sort = $sort_field !== null ? $sort_field . '/' . $sort_mode . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $sort . $page);
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $sort_field . $sort_mode . $page);
 	}
 	
-	public static function display_tag($rewrited_name, $sort_field = null, $sort_mode = null, $page = 1)
+	public static function display_tag($rewrited_name, $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
 		$page = $page !== 1 ? $page . '/' : '';
-		$sort = $sort_field !== null ? $sort_field . '/' . $sort_mode . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name . '/' . $sort . $page);
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name . '/' . $sort_field . $sort_mode . $page);
 	}
 	
 	public static function home()

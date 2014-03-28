@@ -55,8 +55,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 	{
 		$now = new Date();
 		$request = AppContext::get_request();
-		$mode = $request->get_getstring('sort', 'desc');
-		$field = $request->get_getstring('field', 'date');
+		$mode = $request->get_getstring('sort', ArticlesUrlBuilder::DEFAULT_SORT_MODE);
+		$field = $request->get_getstring('field', ArticlesUrlBuilder::DEFAULT_SORT_FIELD);
 		
 		$this->build_categories_listing_view($now);
 		$this->build_articles_listing_view($now, $field, $mode);
@@ -93,9 +93,9 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM ' . ArticlesSetup::$articles_table . ' articles
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id
-		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = "articles"
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
+		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = \'articles\'
+		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
 		WHERE articles.id_category = :id_category AND (articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
 		AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0))) 
 		ORDER BY ' .$sort_field . ' ' . $sort_mode . ' LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from(), array(
@@ -115,7 +115,6 @@ class ArticlesDisplayCategoryController extends ModuleController
 		
 		$this->view->put_all(array(
 			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
-			'C_MODERATE' =>  ArticlesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_COMMENTS_ENABLED' => ArticlesConfig::load()->are_comments_enabled(),
 			'C_ARTICLES_FILTERS' => true,
 			'C_DISPLAY_CATS_ICON' => ArticlesConfig::load()->are_cats_icon_enabled(),
@@ -277,11 +276,11 @@ class ArticlesDisplayCategoryController extends ModuleController
 	private function generate_response()
 	{	
 		$response = new SiteDisplayResponse($this->view);
-                
-                $graphical_environment = $response->get_graphical_environment();
+
+		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->category->get_name());
 		$graphical_environment->get_seo_meta_data()->set_description($this->category->get_description());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'), AppContext::get_request()->get_getint('page', 1)));
 	
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
@@ -290,7 +289,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)
-				$breadcrumb->add($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
+				$breadcrumb->add($category->get_name(), ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'), AppContext::get_request()->get_getint('page', 1)));
 		}
 		
 		return $response;

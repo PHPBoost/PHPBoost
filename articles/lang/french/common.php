@@ -37,7 +37,6 @@ $lang['articles.add'] = 'Ajouter un article';
 $lang['articles.edit'] = 'Modifier un article';
 $lang['articles.delete'] = 'Supprimer un article';
 $lang['articles.visitor'] = 'Visiteur';
-$lang['articles.no_article.category'] = 'Aucun article dans cette catégorie';
 $lang['articles.no_article'] = 'Aucun article disponible';
 $lang['articles.no_notes'] = 'Aucun avis';
 $lang['articles.nbr_articles_category'] = ':number article(s) dans la catégorie';
@@ -46,7 +45,6 @@ $lang['articles.category'] = 'Catégorie';
 $lang['articles.feed_name'] = 'Derniers articles';
 $lang['articles.pending_articles'] = 'Articles en attente';
 $lang['articles.nbr_articles.pending'] = ':number article(s) en attente';
-$lang['articles.no_pending_article'] = 'Aucune article en attente pour le moment';
 $lang['articles.published_articles'] = 'Articles publiés';
 $lang['articles.select_page'] = 'Sélectionnez une page';
 $lang['articles.sources'] = 'Source(s)';
@@ -56,6 +54,8 @@ $lang['articles.print.article'] = 'Impression d\'un article';
 $lang['articles.tags'] = 'Mots clés';
 $lang['articles.read_more'] = 'Lire plus...';
 $lang['articles.date_updated'] = 'Dernière modification : ';
+
+$lang['articles.message.no_items'] = 'Aucun article n\'est disponible pour le moment';
 
 //Articles configuration
 $lang['articles_configuration.number_articles_per_page'] = 'Nombre maximum d\'articles affichés par page';
