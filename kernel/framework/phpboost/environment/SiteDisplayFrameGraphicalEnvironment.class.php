@@ -49,14 +49,16 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 		$customization_config = CustomizationConfig::load();
 		
 		$lang = LangLoader::get('main');
+		$description = $this->get_seo_meta_data()->get_full_description();
 		$template->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'C_FAVICON' => $customization_config->favicon_exists(),
 			'C_CANONICAL_URL' => $this->get_seo_meta_data()->canonical_link_exists(),
+			'C_DESCRIPTION' => !empty($description),
 			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
 			'TITLE' => $this->get_seo_meta_data()->get_full_title(),
-			'SITE_DESCRIPTION' => $this->get_seo_meta_data()->get_full_description(),
+			'SITE_DESCRIPTION' => $description,
 			'SITE_KEYWORD' => $this->get_seo_meta_data()->get_keywords(),
 			'U_CANONICAL' => $this->get_seo_meta_data()->get_canonical_link(),
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),

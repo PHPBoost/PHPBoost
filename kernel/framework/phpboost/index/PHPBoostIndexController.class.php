@@ -64,6 +64,7 @@ class PHPBoostIndexController extends AbstractController
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($title);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(new Url(Url::get_absolute_root()));
 		return $response;
 	}
 }
