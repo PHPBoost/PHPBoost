@@ -234,14 +234,18 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	
 	private function generate_response()
 	{
-		$response = new ArticlesDisplayResponse();
-		$response->set_page_title($this->get_keyword()->get_name());
-		$response->set_page_description(StringVars::replace_vars($this->lang['articles.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())));
+		$response = new SiteDisplayResponse($this->view);
+                
+                $graphical_environment = $response->get_graphical_environment();
+                $graphical_environment->set_page_title($this->get_keyword()->get_name());
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['articles.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
 		
-		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
-		$response->add_breadcrumb_link($this->get_keyword()->get_name(), ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name()));
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['articles'], ArticlesUrlBuilder::home());
+		$breadcrumb->add($this->get_keyword()->get_name(), ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
 		
-		return $response->display($this->view);
+		return $response;
 	}
 }
 ?>
