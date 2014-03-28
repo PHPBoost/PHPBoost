@@ -78,7 +78,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 				$sort_field = 'number_comments';
 				break;
 			case 'note':
-				$sort_field = 'number_notes';
+				$sort_field = 'average_notes';
 				break;
 			case 'author':
 				$sort_field = 'author_user_id';
@@ -98,7 +98,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
 		WHERE articles.id_category = :id_category AND (articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
 		AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0))) 
-		ORDER BY ' .$sort_field . ' ' . $sort_mode . ' LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from(), array(
+		ORDER BY ' .$sort_field . ' ' . $sort_mode . ' 
+		LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from(), array(
 			'id_category' => $this->category->get_id(),
 			'timestamp_now' => $now->get_timestamp()
 		));

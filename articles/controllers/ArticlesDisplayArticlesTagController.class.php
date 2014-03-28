@@ -92,7 +92,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 				$sort_field = 'number_comments';
 				break;
 			case 'note':
-				$sort_field = 'number_notes';
+				$sort_field = 'average_notes';
 				break;
 			case 'author':
 				$sort_field = 'author_user_id';
