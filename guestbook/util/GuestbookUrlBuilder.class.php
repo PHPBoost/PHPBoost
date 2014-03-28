@@ -43,9 +43,9 @@ class GuestbookUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function home($page = null, $id = null)
+	public static function home($page = 1, $id = null)
 	{
-		$page = $page !== null ? $page : '';
+		$page = $page !== 1 ? $page : '';
 		$id = $id !== null ? '#m' . $id : '';
 		return DispatchManager::get_url(self::$dispatcher, '/' . $page . $id);
 	}
@@ -53,27 +53,27 @@ class GuestbookUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function add($page = null)
+	public static function add($page = 1)
 	{
-		$page = $page !== null ? $page . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $page);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function edit($id, $page = null)
+	public static function edit($id, $page = 1)
 	{
-		$page = $page !== null ? $page . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $page);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function delete($id, $page = null)
+	public static function delete($id, $page = 1)
 	{
-		$page = $page !== null ? $page . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/' . $page . '?token=' . AppContext::get_session()->get_token());
 	}
 }
