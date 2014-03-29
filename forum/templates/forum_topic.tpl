@@ -194,7 +194,7 @@
 					# IF C_POLL_QUESTION #
 					<fieldset class="fieldset-submit">
 						<legend>{L_VOTE}</legend>
-						<button type="submit" name="submit" value="true">{L_VOTE}</button><br />
+						<button type="submit" name="valid_forum_poll" value="true">{L_VOTE}</button><br />
 						<a class="small" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
 					</fieldset>
 					# ENDIF #
@@ -324,7 +324,7 @@
 					<label><textarea rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 					<fieldset class="fieldset-submit" style="padding-top:17px;margin-bottom:0px;">
 						<legend>{L_SUBMIT}</legend>
-						<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
+						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
 						<button type="button" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 						<button type="reset" value="true">{L_RESET}</button>
 					</fieldset>
