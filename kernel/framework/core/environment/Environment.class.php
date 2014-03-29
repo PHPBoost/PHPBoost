@@ -338,6 +338,8 @@ class Environment
 		self::clear_all_temporary_cache_files();
 
 		self::execute_modules_changedays_tasks();
+		
+		self::update_visit_counter_table();
 
 		self::remove_old_unactivated_member_accounts();
 
@@ -371,6 +373,22 @@ class Environment
 		{
 			$job->on_changeday($yesterday, $today);
 		}
+	}
+	
+	private static function update_visit_counter_table()
+	{
+		//We truncate the table containing the visitors of today
+		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER . " WHERE id <> 1", __LINE__, __FILE__);
+		
+		//We update the last changeday date
+		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
+			" SET time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) .
+				"', total = 1 WHERE id = 1", __LINE__, __FILE__);
+		
+		//We insert this visitor as a today visitor
+		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
+			" (ip, time, total) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . gmdate_format('Y-m-d', time(),
+		TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__);
 	}
 
 	private static function remove_old_unactivated_member_accounts()
