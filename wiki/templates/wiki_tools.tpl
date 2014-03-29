@@ -3,7 +3,7 @@
 				<ul>
 				# IF C_ACTIV_COM #
 					<li>
-						<a href="{U_COM}" ><i class="fa fa-comments-o"></i> {L_COM}</a>
+						<a href="{U_COM}"><i class="fa fa-comments-o"></i> {L_COM}</a>
 					</li>
 				# ENDIF #
 					<li>

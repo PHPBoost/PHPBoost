@@ -42,7 +42,7 @@
 						# ENDIF #
 					</td>
 					# IF NOT langs_installed.C_IS_DEFAULT_LANG #
-					<td class="input-radio# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #" >
+					<td class="input-radio# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #">
 						<label><input type="radio" name="activated-{langs_installed.ID}" value="1" # IF langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@langs.yes}</label>
 						<label><input type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@langs.no}</label>
 					</td>

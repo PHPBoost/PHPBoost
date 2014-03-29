@@ -23,7 +23,7 @@
 						<legend>{L_SEARCH_FORUM}</legend>
 						<div class="form-element">
 							<label for="search_forum_form">{L_KEYWORDS}</label>
-							<div class="form-field"><label><input type="text" size="35" id="search_forum_form" name="search" value="{SEARCH}" ></label></div>
+							<div class="form-field"><label><input type="text" size="35" id="search_forum_form" name="search" value="{SEARCH}"></label></div>
 						</div>
 						<div class="form-element">
 							<label for="time">{L_DATE}</label>

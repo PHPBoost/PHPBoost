@@ -13,7 +13,7 @@
 	<tfoot>
 		<tr>
 			<th colspan="2">
-				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@labels.del_default_value}</a>
+				<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a>
 			</th>
 		</tr>
 	</tfoot>

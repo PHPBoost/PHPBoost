@@ -243,10 +243,10 @@
 			<fieldset>
 				<legend>{L_CAT_MANAGEMENT}</legend>
 				<style> .sortable-block .sortable-options { width:22px; } </style>
-				<ul id="categories forum-administration" class="sortable-block" style="position:relative;" >
+				<ul id="categories forum-administration" class="sortable-block" style="position:relative;">
 					# START list #	
 					<li id="c{list.I}" class="sortable-element" style="cursor:default;margin-left:{list.INDENT}px;">
-						<div class="sortable-title" >
+						<div class="sortable-title">
 							<i class="fa fa-folder"></i> 
 							{list.LOCK} 
 							{list.URL}

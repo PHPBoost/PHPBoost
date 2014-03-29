@@ -162,7 +162,7 @@ Event.observe(window, 'load', function() {
 					<div class="sortable-title">
 						<a title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></a>
 						<i class="fa fa-globe"></i>
-						<span class="text-strong" >{list_extended_fields.NAME}</span>
+						<span class="text-strong">{list_extended_fields.NAME}</span>
 						<div class="sortable-actions">
 							{@field.required} : <span class="text-strong"># IF list_extended_fields.C_REQUIRED #{@field.yes}# ELSE #{@field.no}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #

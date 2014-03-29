@@ -31,7 +31,7 @@ function ${escape(NAME)}bbcode_color(field)
 </script>
 
 <input type="text" size="8" maxlength="7" name="${escape(NAME)}" id="${escape(ID)}" value="${escape(VALUE)}" style="background-color:${escape(VALUE)};" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_HIDDEN # style="display:none;" # ENDIF #>
-<a href="javascript:${escape(NAME)}bbcode_color('${escape(ID)}');bb_display_block('${escape(ID)}', '');" onmouseout="bb_hide_block('${escape(ID)}', '', 0);" >
+<a href="javascript:${escape(NAME)}bbcode_color('${escape(ID)}');bb_display_block('${escape(ID)}', '');" onmouseout="bb_hide_block('${escape(ID)}', '', 0);">
 	<img src="{PATH_TO_ROOT}/templates/default/images/color.png" alt="" class="valign-middle" />
 </a>
 <div class="color-picker" style="display:none;" id="bb-block${escape(ID)}">

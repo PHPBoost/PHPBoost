@@ -1,6 +1,6 @@
 # IF C_VALIDATION_ERROR #
 <div class="error">
-	<span class="text-strong" >{TITLE_VALIDATION_ERROR_MESSAGE} : </span> <br /><br />
+	<span class="text-strong">{TITLE_VALIDATION_ERROR_MESSAGE} : </span> <br /><br />
 	# START validation_error_messages #
 		- {validation_error_messages.ERROR_MESSAGE}<br />
 	# END validation_error_messages #
@@ -32,7 +32,7 @@ Event.observe(window, 'load', function() {
 		# INCLUDE fieldsets.FIELDSET #
 	# END fieldsets #
 	
-	<input type="hidden" id="token" name="token" value="{TOKEN}">
+	<input type="hidden" id="${HTML_ID}_token" name="token" value="{TOKEN}">
 	<input type="hidden" id="${HTML_ID}_disabled_fields" name="${HTML_ID}_disabled_fields" value="">
 	<input type="hidden" id="${HTML_ID}_disabled_fieldsets" name="${HTML_ID}_disabled_fieldsets" value="">
 </form>

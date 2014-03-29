@@ -61,7 +61,7 @@
 				<div id="q{questions.faq.ID_QUESTION}">
 					<div>
 						<span style="float:left;">
-							<a href="javascript:show_answer({questions.faq.ID_QUESTION});" >
+							<a href="javascript:show_answer({questions.faq.ID_QUESTION});">
 								<i id="faq_i{questions.faq.ID_QUESTION}" class="fa fa-caret-right fa-2x"></i>
 							</a>
 							<a id="faq_l{questions.faq.ID_QUESTION}" href="{questions.faq.U_QUESTION}">{questions.faq.QUESTION}</a>

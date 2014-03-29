@@ -48,7 +48,7 @@ function severity_bbcode_color(field)
 	<tfoot>
 	<tr>
 		<th colspan="3">
-			<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@labels.del_default_value}</a>
+			<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a>
 		</th>
 	</tr>
 	</tfoot>
@@ -61,7 +61,7 @@ function severity_bbcode_color(field)
 			</td>
 			<td>
 				<input type="text" size="8" maxlength="7" name="color{severities.ID}" id="color{severities.ID}" value="{severities.COLOR}" style="background-color:{severities.COLOR};" />
-				<a href="javascript:severity_bbcode_color('color{severities.ID}');bb_display_block('color{severities.ID}', '');" onmouseout="bb_hide_block('color{severities.ID}', '', 0);" >
+				<a href="javascript:severity_bbcode_color('color{severities.ID}');bb_display_block('color{severities.ID}', '');" onmouseout="bb_hide_block('color{severities.ID}', '', 0);">
 					<img src="{PATH_TO_ROOT}/templates/default/images/color.png" alt="" class="valign-middle" />
 				</a>
 				<div class="color-picker" style="display:none;" id="bb-blockcolor{severities.ID}">

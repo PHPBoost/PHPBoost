@@ -52,7 +52,7 @@ function ajax_change_cat_visibility(id, status)
 -->
 </script>
 <style> .sortable-block .sortable-options { width:22px; } </style>
-<ul id="categories cat-administration" class="sortable-block" style="position:relative;" >
+<ul id="categories cat-administration" class="sortable-block" style="position:relative;">
 # ENDIF #
 
 {NESTED_CATEGORIES}
