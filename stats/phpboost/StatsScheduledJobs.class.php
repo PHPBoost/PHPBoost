@@ -59,19 +59,6 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 		$total_visit = PersistenceContext::get_sql()->query("SELECT total FROM " . DB_TABLE_VISIT_COUNTER .
 			" WHERE id = 1", __LINE__, __FILE__);
 		
-		//We truncate the table containing the visitors of today
-		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER . " WHERE id <> 1", __LINE__, __FILE__);
-		
-		//We update the last changeday date
-		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
-			" SET time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) .
-				"', total = 1 WHERE id = 1", __LINE__, __FILE__);
-		
-		//We insert this visitor as a today visitor
-		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
-			" (ip, time, total) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . gmdate_format('Y-m-d', time(),
-		TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__);
-
 		//We update the stats table: the number of visits today
 		PersistenceContext::get_sql()->query_inject("UPDATE " . StatsSetup::$stats_table . " SET nbr = '" . $total_visit .
 		"', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" .
