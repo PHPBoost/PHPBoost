@@ -44,9 +44,9 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function manage_events($sort_field = null, $sort_mode = null, $page = null)
+	public static function manage_events($sort_field = null, $sort_mode = null, $page = 1)
 	{
-		$page = $page !== null ? $page . '/': '';
+		$page = $page !== 1 ? $page . '/': '';
 		$sort = $sort_field !== null ? $sort_field . '/' . $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/' . $sort . $page);
 	}
@@ -102,9 +102,9 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_pending_events($page = null)
+	public static function display_pending_events($page = 1)
 	{
-		$page = $page !== null ? $page . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $page);
 	}
 	
