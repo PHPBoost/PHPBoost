@@ -188,7 +188,7 @@
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
 					</div>
 					<div style="float:left;width:50%">
-						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}" class="fa fa-success fa-2x"></a>
+						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}"><i class="fa fa-check fa-2x"></i></a>
 						<br />
 						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}">{L_UPDATE} {L_STATUS}</a>
 					</div>
