@@ -80,7 +80,7 @@ class SEOMetaData
 		if (Environment::home_page_running())
 			return GeneralConfig::load()->get_site_description();
 		else
-			return $this->description;
+			return strip_tags($this->description);
 	}
 	
 	public function set_keywords($keywords)
