@@ -6,7 +6,7 @@
 		# ENDIF #
 		
 		# IF page.NAME #
-		<a href="{page.URL}" title="" class="# IF page.C_CURRENT_PAGE #current-page# ENDIF #" >{page.NAME}</a>
+		<a href="{page.URL}" title="" class="# IF page.C_CURRENT_PAGE #current-page# ENDIF #">{page.NAME}</a>
 		# ENDIF #
 		
 		# IF page.C_NEXT #

@@ -20,14 +20,14 @@
 			<div class="module_position forum_position_subcat">
 				<div class="forum_position_subcat-top"></div>
 			</div>
-					<form action="search.php?token={TOKEN}#search_forum" method="post" onsubmit="return check_form();" >
+					<form action="search.php?token={TOKEN}#search_forum" method="post" onsubmit="return check_form();">
 						<div class="forum_position_subcat">
 							<div class="module_contents forum_contents forum_contents_subcat" style="background: #F9F9F9;">
 								<fieldset style="margin:10px 20px;">
 									<legend>{L_SEARCH_FORUM}</legend>
 									<div class="form-element">
 										<label for="search_forum_form">{L_KEYWORDS}</label>
-										<div class="form-field"><label><input type="text" size="35" id="search_forum_form" name="search" value="{SEARCH}" ></label></div>
+										<div class="form-field"><label><input type="text" size="35" id="search_forum_form" name="search" value="{SEARCH}"></label></div>
 									</div>
 									<div class="form-element">
 										<label for="time">{L_DATE}</label>

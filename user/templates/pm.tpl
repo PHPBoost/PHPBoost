@@ -273,7 +273,7 @@
 									<label>
 										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}">
 										<span id="search_img"></span>
-										<button type="button" value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" >{L_SEARCH}</button>							
+										<button type="button" value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');">{L_SEARCH}</button>							
 									</label>
 									<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 									# START post_convers.user_id_dest.search #

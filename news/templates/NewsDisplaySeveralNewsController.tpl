@@ -15,7 +15,7 @@
 			<article # IF C_DISPLAY_BLOCK_TYPE # class="block" # ENDIF # # IF C_SEVERAL_COLUMNS # style="display:inline-block;width:calc(98% / {NUMBER_COLUMNS})" # ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 				<header>
 					<h1>
-						<a href="{news.U_LINK}"><span id="name" itemprop="name">{news.NAME}</span></a>
+						<a href="{news.U_LINK}"><span itemprop="name">{news.NAME}</span></a>
 						<span class="actions">
 							# IF news.C_EDIT #
 								<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>

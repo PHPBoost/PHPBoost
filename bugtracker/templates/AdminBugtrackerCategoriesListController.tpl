@@ -72,7 +72,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 				<a href="javascript:BugtrackerFormFieldCategories.add_category();" class="fa fa-plus" title="{@titles.add_category}" id="add_category"></a>
 			</th>
 			<th colspan="2" style="text-align:right;">
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete" ></i> {@labels.del_default_value}</a># ENDIF #
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
 			</th>
 		</tr>
 	</tfoot>

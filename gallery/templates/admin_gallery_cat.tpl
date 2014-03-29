@@ -235,7 +235,7 @@
 			<fieldset>
 				<legend>{L_GALLERY_CAT_MANAGEMENT}</legend>
 				<style> .sortable-block .sortable-options { width:22px; } </style>
-				<ul id="categories cat-administration" class="sortable-block" style="position:relative;" >
+				<ul id="categories cat-administration" class="sortable-block" style="position:relative;">
 					<li class="sortable-element" style="cursor:default;">
 						<div class="sortable-title">
 							<i class="fa fa-folder"></i>
@@ -251,7 +251,7 @@
 								
 					# START list #
 					<li id="c{list.I}" class="sortable-element" style="cursor:default;margin-left:{list.INDENT}px;">
-						<div class="sortable-title" >
+						<div class="sortable-title">
 							<i class="fa fa-folder"></i>
 							{list.LOCK}
 							<a href="gallery{list.U_GALLERY_VARS}" class="gallery-link-cat">{list.NAME}</a>

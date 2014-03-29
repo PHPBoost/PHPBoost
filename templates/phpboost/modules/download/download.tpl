@@ -67,14 +67,14 @@
 						<div style="width: 90%;margin:auto;">
 							<div style="float:left; width: 47%;padding-right:15px;">
 								<div class="pbt-custom-img pbt-custom-img-modules"></div>
-								<h2 class="title pbt-custom-subtitle" >
+								<h2 class="title pbt-custom-subtitle">
 									<a href="{PATH_TO_ROOT}/download/category-38+modules.php">Modules compatibles</a>
 								</h2>
 								<p class="pbt-custom-desc">Donnez de nouvelles fonctionnalités à votre site.</p>
 							</div>
 							<div style="float:left; width: 47%;padding-left:15px;">
 								<div class="pbt-custom-img pbt-custom-img-themes"></div>
-								<h2 class="title pbt-custom-subtitle" >
+								<h2 class="title pbt-custom-subtitle">
 									<a href="{PATH_TO_ROOT}/download/category-37+themes.php">Thèmes compatibles</a>
 								</h2>
 								<p class="pbt-custom-desc">Trouvez la bonne entité graphique pour votre site.</p>
@@ -117,7 +117,7 @@
 						<div style="width: 90%;margin:auto;">
 							<div style="float:left; width: 47%;padding-right:15px;">
 								<div class="pbt-custom-img pbt-custom-img-modules"></div>
-								<h2 class="title pbt-custom-subtitle" >
+								<h2 class="title pbt-custom-subtitle">
 									<a href="{PATH_TO_ROOT}/download/category-29+modules.php">Modules compatibles</a>
 								</h2>
 								<p class="pbt-custom-desc">
@@ -126,7 +126,7 @@
 							</div>
 							<div style="float:left; width: 47%;padding-left:15px;">
 								<div class="pbt-custom-img pbt-custom-img-themes"></div>
-								<h2 class="title pbt-custom-subtitle" >
+								<h2 class="title pbt-custom-subtitle">
 									<a href="{PATH_TO_ROOT}/download/category-30+themes.php">Thèmes compatibles</a>
 								</h2>
 								<p class="pbt-custom-desc">
