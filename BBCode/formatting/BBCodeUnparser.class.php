@@ -245,15 +245,15 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		//On boucle tant qu'il y a de l'imbrication
 		while (strpos($this->content, '<ul class="bb-ul">') !== false)
 		{
-			$this->content = preg_replace('`<ul( style="[^"]+")? class="bb-ul">(.+)</ul>`sU', '[list$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<ul( style="[^"]+")? class="bb-ul">(.*)</ul>`sU', '[list$1]$2[/list]', $this->content);
 		}
 		while (strpos($this->content, '<ol class="bb-ol">') !== false)
 		{
-			$this->content = preg_replace('`<ol( style="[^"]+")? class="bb-ol">(.+)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<ol( style="[^"]+")? class="bb-ol">(.*)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
 		}
 		while (strpos($this->content, '<li class="bb-li">') !== false)
 		{
-			$this->content = preg_replace('`<li class="bb-li">(.+)</li>`isU', '[*]$1', $this->content);
+			$this->content = preg_replace('`<li class="bb-li">(.*)</li>`isU', '[*]$1', $this->content);
 		}
 	}
 
