@@ -109,7 +109,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				'USER_GROUP_COLOR' => $user_group_color,
 				'U_USER_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 	    		'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_attribute('user_id'))->rel(),
-	    		'U_AVATAR_IMG' => TPL_PATH_TO_ROOT . $user_avatar,
+	    		'U_AVATAR_IMG' => Url::to_rel($user_avatar),
 	    		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_attribute('user_pm') . ' ' . (($user->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
 	    		'L_PROFIL' => $LANG['profile'],
 	    		'L_MY_PROFIL' => $LANG['my_private_profile'],
