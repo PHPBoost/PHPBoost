@@ -2,7 +2,7 @@
 	<header>
 		<h1>
 			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="fa fa-syndication"></a>
-			<span id="name" itemprop="name">{TITLE}</span>
+			<span itemprop="name">{TITLE}</span>
 			<span class="actions">
 				# IF C_EDIT #
 					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
