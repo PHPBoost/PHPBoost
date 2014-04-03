@@ -36,6 +36,7 @@ $lang['module_config_title'] = 'Configuration du module contact';
 
 //Contact form
 $lang['contact.form.message'] = 'Message';
+$lang['contact.send_another_mail'] = 'Envoyer un autre email';
 $lang['contact.tracking_number'] = 'Numéro de suivi';
 $lang['contact.acknowledgment_title'] = 'Confirmation';
 $lang['contact.acknowledgment'] = 'Votre message a été envoyé correctement.
