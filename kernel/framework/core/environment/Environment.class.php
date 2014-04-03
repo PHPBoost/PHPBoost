@@ -421,7 +421,7 @@ class Environment
 
 	public static function compute_running_module_name()
 	{
-		$path = str_replace(DIR, '', SCRIPT);
+		$path = substr(SCRIPT, strlen(DIR));
 		$path = trim($path, '/');
 		if (strpos($path, '/'))
 		{
