@@ -57,7 +57,10 @@ class ContactController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			if ($this->send_mail())
-				$this->view->put('MSG', MessageHelper::display($this->lang['message.success_mail'] . ($this->config->is_sender_acknowledgment_enabled() ? ' ' . $this->lang['message.acknowledgment'] : ''), E_USER_SUCCESS, 5));
+			{
+				$this->view->put('MSG', MessageHelper::display($this->lang['message.success_mail'] . ($this->config->is_sender_acknowledgment_enabled() ? ' ' . $this->lang['message.acknowledgment'] : ''), E_USER_SUCCESS));
+				$this->view->put('C_MAIL_SENT', true);
+			}
 			else
 				$this->view->put('MSG', MessageHelper::display($this->lang['message.error_mail'], E_USER_ERROR, 5));
 		}
