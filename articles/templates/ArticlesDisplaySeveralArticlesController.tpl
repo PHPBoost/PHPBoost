@@ -44,7 +44,7 @@
 				<article # IF C_MOSAIC #class="small-block"# ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 					<header>
 						<h1>
-							<a itemprop="url" href="{articles.U_ARTICLE}"><span id="name" itemprop="name">{articles.TITLE}</span></a>
+							<a itemprop="url" href="{articles.U_ARTICLE}"><span itemprop="name">{articles.TITLE}</span></a>
 							<span class="actions">
 								# IF articles.C_EDIT #
 									<a href="{articles.U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="fa fa-edit"></a>

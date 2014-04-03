@@ -9,7 +9,7 @@
 						<header>
 							<h2>
 								<a href="{event.U_SYNDICATION}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
-								<a href="{event.U_LINK}"><span id="name" itemprop="name">{event.TITLE}</span></a>
+								<a href="{event.U_LINK}"><span itemprop="name">{event.TITLE}</span></a>
 								<span class="actions">
 									# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><i class="fa fa-comments-o"></i> {event.L_COMMENTS}</a># ENDIF #
 									# IF event.C_EDIT #
