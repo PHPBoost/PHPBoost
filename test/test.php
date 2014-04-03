@@ -35,7 +35,7 @@ define('TITLE', $LANG['test_title']);
 
 require_once PATH_TO_ROOT . '/kernel/header.php';
 
-import('/test/util/phpboost_unit_tests', INC_IMPORT);
+include_once(PATH_TO_ROOT . '/test/util/phpboost_unit_tests.inc.php');
 
 $params = TextHelper::htmlentities(!empty($_REQUEST['params']) ? $_REQUEST['params'] : '');
 
