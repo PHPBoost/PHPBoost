@@ -214,6 +214,8 @@ class BugtrackerFormController extends ModuleController
 			'rows' => 15, 'hidden' => !$bug->is_reproductible())
 		));
 		
+		$fieldset->add_field(new FormFieldCaptcha('captcha'));
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());

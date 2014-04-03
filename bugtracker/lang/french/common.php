@@ -55,7 +55,7 @@ $lang['notice.not_defined_e_date'] = 'Date non définie';
 
 //Actions
 $lang['actions'] = 'Actions';
-$lang['actions.add'] = 'Nouveau bug';
+$lang['actions.add'] = 'Déclarer un bug';
 $lang['actions.history'] = 'Historique';
 $lang['actions.change_status'] = 'Changer l\'état du bug';
 $lang['actions.confirm.del_version'] = 'Etes-vous sûr de vouloir supprimer cette version ?';
@@ -67,7 +67,7 @@ $lang['actions.confirm.del_default_value'] = 'Etes-vous sûr de vouloir la valeur
 $lang['actions.confirm.del_filter'] = 'Etes-vous sûr de vouloir supprimer ce filtre ?';
 
 //Titres
-$lang['titles.add'] = 'Nouveau bug';
+$lang['titles.add'] = 'Déclaration d\'un bug';
 $lang['titles.add_version'] = 'Ajout d\'une nouvelle version';
 $lang['titles.add_type'] = 'Ajouter un nouveau type de bug';
 $lang['titles.add_category'] = 'Ajouter une nouvelle catégorie';
