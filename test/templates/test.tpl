@@ -13,9 +13,8 @@
 	<div class="form-field"><input type="checkbox" name="is_html" id="is_html"></div>
 </div>
 </fieldset>
-<fieldset class="fieldset-submit"><input type="button"
-	name="run" value="run command" class="run-button"
-	onclick="self.frames['phpunit'].location='run.php?is_html=' + (document.getElementById('is_html').checked ? '1' : '0') + '&amp;params=' + document.getElementById('params').value;" />
+<fieldset class="fieldset-submit">
+	<button name="run" value="true" onclick="self.frames['phpunit'].location='run.php?is_html=' + (document.getElementById('is_html').checked ? '1' : '0') + '&amp;params=' + document.getElementById('params').value;">run command</button>
 </fieldset>
 <fieldset><legend>Unit tests</legend>
 <div class="form-element">
@@ -27,9 +26,8 @@
     </select></div>
 </div>
 </fieldset>
-<fieldset class="fieldset-submit"><input type="button"
-    name="run_tu" value="run unit test" class="run-button"
-    onclick="self.frames['phpunit'].location='run.php?is_html=0' + '&amp;params=' + document.getElementById('tus').value;" />
+<fieldset class="fieldset-submit">
+	<button name="run_tu" value="true" onclick="self.frames['phpunit'].location='run.php?is_html=0' + '&amp;params=' + document.getElementById('tus').value;">run unit test</button>
 </fieldset>
 <fieldset><legend>Tests suite</legend>
 <div class="form-element">
@@ -41,9 +39,8 @@
     </select></div>
 </div>
 </fieldset>
-<fieldset class="fieldset-submit"><input type="button"
-    name="run_ts" value="run test suite" class="run-button"
-    onclick="self.frames['phpunit'].location='run.php?is_html=0' + '&amp;params=' + document.getElementById('ts').value;" />
+<fieldset class="fieldset-submit">
+	<button name="run_ts" value="true" onclick="self.frames['phpunit'].location='run.php?is_html=0' + '&amp;params=' + document.getElementById('ts').value;">run test suite</button>
 </fieldset>
 </form>
 
