@@ -5,7 +5,7 @@ require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 require_once PATH_TO_ROOT . '/kernel/framework/core/ClassLoader.class.php';
 ClassLoader::init_autoload();
 
-import('/test/util/phpboost_unit_tests', INC_IMPORT);
+include_once(PATH_TO_ROOT . '/test/util/phpboost_unit_tests.inc.php');
 
 ?>
 <html>
