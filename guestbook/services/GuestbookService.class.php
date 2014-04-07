@@ -61,7 +61,7 @@ class GuestbookService
 	
 	public static function get_message($condition, array $parameters)
 	{
-		$row = self::$db_querier->select_single_row_query('SELECT member.*, guestbook.*
+		$row = self::$db_querier->select_single_row_query('SELECT member.*, guestbook.*, guestbook.login as glogin
 		FROM ' . GuestbookSetup::$guestbook_table . ' guestbook 
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = guestbook.user_id
 		' . $condition, $parameters);
