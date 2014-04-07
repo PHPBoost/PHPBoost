@@ -41,8 +41,8 @@ class RunUnitTestCommand implements CLICommand
 			CLIOutput::err('No test to run');
 			return;
 		}
-		import('/test/PHPUnit/TextUI/TestRunner', '.php');
-		import('/test/PHPUnit/Framework/TestCase', '.php');
+		include_once(PATH_TO_ROOT . '/test/PHPUnit/TextUI/TestRunner.php');
+		include_once(PATH_TO_ROOT . '/test/PHPUnit/TextUI/TestCase.php');
 		foreach ($args as $class_to_test)
 		{
 			try
@@ -86,7 +86,7 @@ class RunUnitTestCommand implements CLICommand
 	{
 		if ($this->tests === null)
 		{
-			import('/test/util/phpboost_unit_tests', INC_IMPORT);
+			include_once(PATH_TO_ROOT . '/test/util/phpboost_unit_tests.inc.php');
 			$this->tests = list_tu(PATH_TO_ROOT . '/test/kernel');
 		}
 		return $this->tests;

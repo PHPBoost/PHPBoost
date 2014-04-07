@@ -43,7 +43,7 @@ class ListUnitTestsCommand implements CLICommand
 	
 	private function get_tests()
 	{
-		import('/test/util/phpboost_unit_tests', INC_IMPORT);
+		include_once(PATH_TO_ROOT . '/test/util/phpboost_unit_tests.inc.php');
 		$tests = list_tu(PATH_TO_ROOT . '/test/kernel');
 		return $this->extract_tests_names($tests);
 	}
