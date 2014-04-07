@@ -34,7 +34,7 @@ class GuestbookMessage
 	private $contents;
 	private $login;
 	private $user_id;
-	private $timestamp;
+	private $creation_date;
 	
 	public function set_id($id)
 	{
@@ -76,14 +76,14 @@ class GuestbookMessage
 		return $this->user_id;
 	}
 	
-	public function set_timestamp($value)
+	public function set_creation_date(Date $creation_date)
 	{
-		$this->timestamp = $value;
+		$this->creation_date = $creation_date;
 	}
 	
-	public function get_timestamp()
+	public function get_creation_date()
 	{
-		return $this->timestamp;
+		return $this->creation_date;
 	}
 	
 	public function set_author_user(User $user)
@@ -96,6 +96,16 @@ class GuestbookMessage
 		return $this->author_user;
 	}
 	
+	public function is_authorized_edit()
+	{
+		return GuestbookAuthorizationsService::check_authorizations()->moderation() || (GuestbookAuthorizationsService::check_authorizations()->write() && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== User::VISITOR_LEVEL);
+	}
+	
+	public function is_authorized_delete()
+	{
+		return GuestbookAuthorizationsService::check_authorizations()->moderation() || (GuestbookAuthorizationsService::check_authorizations()->write() && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== User::VISITOR_LEVEL);
+	}
+	
 	public function get_properties()
 	{
 		return array(
@@ -103,19 +113,22 @@ class GuestbookMessage
 			'contents' => $this->get_contents(),
 			'login' => $this->get_login(),
 			'user_id' => $this->get_author_user()->get_id(),
-			'timestamp' => $this->get_timestamp()
+			'timestamp' => $this->get_creation_date()->get_timestamp()
 		);
 	}
 	
 	public function set_properties(array $properties)
 	{
-		$this->set_id($properties['id']);
-		$this->set_contents($properties['contents']);
-		$this->set_login($properties['login']);
-		$this->set_timestamp($properties['timestamp']);
+		$this->id = $properties['id'];
+		$this->contents = $properties['contents'];
+		$this->login = $properties['glogin'];
+		$this->creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['timestamp']);
 		
 		$user = new User();
-		$user->set_properties($properties);
+		if (!empty($properties['user_id']))
+			$user->set_properties($properties);
+		else
+			$user->init_visitor_user();
 		$this->set_author_user($user);
 	}
 	
@@ -123,11 +136,39 @@ class GuestbookMessage
 	{
 		$current_user = AppContext::get_current_user();
 		$this->set_author_user($current_user);
-		$this->set_timestamp(time());
+		$this->creation_date = new Date();
+		
 		if (!$current_user->check_level(User::MEMBER_LEVEL))
-			$this->set_login(LangLoader::get_message('guest', 'main'));
+			$this->login = LangLoader::get_message('guest', 'main');
 		else
-			$this->set_login($current_user->get_pseudo());
+			$this->login = $current_user->get_pseudo();
+	}
+	
+	public function get_array_tpl_vars($page = 1)
+	{
+		$user = $this->get_author_user();
+		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+		
+		return array(
+			'C_EDIT' => $this->is_authorized_edit(),
+			'C_DELETE' => $this->is_authorized_delete(),
+			'C_AUTHOR_EXIST' => $user->get_id() != User::VISITOR_LEVEL,
+			'C_USER_GROUP_COLOR' => !empty($user_group_color),
+			
+			//Message
+			'ID' => $this->id,
+			'CONTENTS' => FormatingHelper::second_parse($this->contents),
+			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
+			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
+			'PSEUDO' => $this->login ? $this->login : $user->get_pseudo(),
+			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+			'USER_GROUP_COLOR' => $user_group_color,
+			
+			'U_ANCHOR' => GuestbookUrlBuilder::home($page, $this->id)->rel(),
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
+			'U_EDIT' => GuestbookUrlBuilder::edit($this->id, $page)->rel(),
+			'U_DELETE' => GuestbookUrlBuilder::delete($this->id, $page)->rel()
+		);
 	}
 }
 ?>
