@@ -47,6 +47,7 @@
 [b]Référencement :[/b]
 [*] Le nom du site est affiché à la fin dans la balise title (sauf pour la page d'accueil ou il est au début)
 [*] Modification de la balise description (elle contient la description de la page ou celle du site sur la page d'accueil)
+[*] Ajout de l'url canonique qui permet d'éviter le contenu dupliqué dans les moteurs de recherche
 [*] Ajout des microdonnées : 
 	[*] Modification du système de notation
 	[*] Modification du système de commentaire
