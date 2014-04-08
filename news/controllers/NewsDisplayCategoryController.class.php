@@ -159,7 +159,7 @@ class NewsDisplayCategoryController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
 	
-		$breadcrumb = $graphical_environment->get_breadcrumb();	
+		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
 		
 		$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
