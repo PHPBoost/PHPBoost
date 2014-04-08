@@ -115,12 +115,12 @@ class CalendarEvent
 	
 	public function is_authorized_to_edit()
 	{
-		return CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution() && $this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+		return CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution() && $this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 	
 	public function is_authorized_to_delete()
 	{
-		return CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution() && $this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+		return CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->moderation() || ((CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->write() || (CalendarAuthorizationsService::check_authorizations($this->content->get_category_id())->contribution() && $this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 	
 	public function get_properties()
