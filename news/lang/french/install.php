@@ -36,11 +36,11 @@ $lang['news.title'] = 'Votre site sous PHPBoost ' . GeneralConfig::load()->get_p
 $lang['news.content'] = 'Votre site boosté par PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' est bien installé. Afin de vous aider à le prendre en main, 
 l\'accueil de chaque module contient un message pour vous guider vos premiers pas. Voici également quelques recommandations supplémentaires que nous vous proposons de lire avec attention : <br />
 <br />
-<h4 class="stitle1">N\'oubliez pas de supprimer le répertoire "install"</h4><br />
+<h2 class="bb-title">N\'oubliez pas de supprimer le répertoire "install"</h2><br />
 <br />
 Supprimez le répertoire /install à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.<br />
 <br />
-<h4 class="stitle1">Administrez votre site</h4><br />
+<h2 class="bb-title">Administrez votre site</h2><br />
 <br />
 Accédez au <a href="/admin/admin_index.php">panneau d\'administration de votre site</a> afin de le paramétrer comme vous le souhaitez!  Pour cela : <br />
 <br />
@@ -55,7 +55,7 @@ Accédez au <a href="/admin/admin_index.php">panneau d\'administration de votre s
 </li><li class="bb-li">Enfin <a href="/admin/admin_maintain.php">désactivez la maintenance</a> de votre site afin qu\'il soit visible par vos visiteurs.<br />
 </li></ul><br />
 <br />
-<h4 class="stitle1">Que faire si vous rencontrez un problème ?</h4><br />
+<h2 class="bb-title">Que faire si vous rencontrez un problème ?</h2><br />
 <br />
 N\'hésitez pas à consulter <a href="http://www.phpboost.com/wiki/wiki.php">la documentation de PHPBoost</a> ou à poser vos question sur le <a href="http://www.phpboost.com/forum/index.php">forum d\'entraide</a>.<br /> <br />
 <br />
