@@ -4,7 +4,7 @@
 			# START star #
 				<a class="fa star # IF star.STAR_EMPTY #fa-star-o# ENDIF ## IF star.STAR_HALF #fa-star-half-o# ENDIF ## IF star.STAR_FULL #fa-star# ENDIF #"></a>
 			# END star #
-			<meta itemprop="reviewCount" content="{NUMBER_NOTES}">
+			<meta itemprop="ratingCount" content="{NUMBER_NOTES}">
 			<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
 			<meta itemprop="bestRating" content="{NOTATION_SCALE}">
 		</div>
@@ -38,7 +38,7 @@
 			# END star #
 		</span>
 		<span class="notes">
-			<span class="number-notes" itemprop="reviewCount">{NUMBER_NOTES}</span>
+			<span class="number-notes" itemprop="ratingCount">{NUMBER_NOTES}</span>
 			# IF C_MORE_1_NOTES #
 				<span>{L_NOTES}</span>
 			# ELSE #

@@ -122,8 +122,8 @@
 		# IF C_DISPLAY_DOWNLOAD #
 		<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			<header>
-				<h1 itemprop="name">
-					{NAME}
+				<h1>
+					<span itemprop="name">{NAME}</span>
 					<span class="actions">
 						{U_COM}
 						# IF C_EDIT_AUTH #
