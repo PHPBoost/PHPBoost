@@ -128,7 +128,6 @@ class News
 		{
 			return $this->short_contents;
 		}
-		//return substr(@strip_tags(preg_replace('`<h[0-9] [^>]*>[^>]*</h[0-9]>(?:[\s]*<br />)`Usi', '', $this->contents), ''), 0, NewsConfig::load()->get_number_character_to_cut());
 		return substr(@strip_tags($this->contents, '<br>'), 0, NewsConfig::load()->get_number_character_to_cut());
 	}
 		
@@ -291,12 +290,12 @@ class News
 	
 	public function is_authorized_edit()
 	{
-		return NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (NewsAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+		return NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (NewsAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 	
 	public function is_authorized_delete()
 	{
-		return NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (NewsAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+		return NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (NewsAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 	
 	public function get_properties()

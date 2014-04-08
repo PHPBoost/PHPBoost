@@ -316,12 +316,12 @@ class Article
 	
 	public function is_authorized_edit()
 	{
-		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 	
 	public function is_authorized_delete()
 	{
-		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
 	public function get_properties()
