@@ -56,7 +56,7 @@ class AdminArticlesManageController extends AdminModuleController
 		$mode = $request->get_getvalue('sort', 'desc');
 		$field = $request->get_getvalue('field', 'date');
 		
-		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
+		$sort_mode = ($mode == 'asc') ? 'asc' : 'desc';
 		
 		switch ($field)
 		{
@@ -104,16 +104,16 @@ class AdminArticlesManageController extends AdminModuleController
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_ARTICLES' => $result->get_rows_count() > 0,
 			'PAGINATION' => $pagination->display(),
-			'U_SORT_TITLE_ASC' => ArticlesUrlBuilder::manage_articles('title', 'ASC', $page)->rel(),
-			'U_SORT_TITLE_DESC' => ArticlesUrlBuilder::manage_articles('title', 'DESC', $page)->rel(),
-			'U_SORT_CATEGORY_ASC' => ArticlesUrlBuilder::manage_articles('cat', 'ASC', $page)->rel(),
-			'U_SORT_CATEGORY_DESC' => ArticlesUrlBuilder::manage_articles('cat', 'DESC', $page)->rel(),
-			'U_SORT_AUTHOR_ASC' => ArticlesUrlBuilder::manage_articles('author', 'ASC', $page)->rel(),
-			'U_SORT_AUTHOR_DESC' => ArticlesUrlBuilder::manage_articles('author', 'DESC', $page)->rel(),
-			'U_SORT_DATE_ASC' => ArticlesUrlBuilder::manage_articles('date', 'ASC', $page)->rel(),
-			'U_SORT_DATE_DESC' => ArticlesUrlBuilder::manage_articles('date', 'DESC', $page)->rel(),
-			'U_SORT_PUBLISHED_ASC' => ArticlesUrlBuilder::manage_articles('published', 'ASC', $page)->rel(),
-			'U_SORT_PUBLISHED_DESC' => ArticlesUrlBuilder::manage_articles('published', 'DESC', $page)->rel()
+			'U_SORT_TITLE_ASC' => ArticlesUrlBuilder::manage_articles('title', 'asc', $page)->rel(),
+			'U_SORT_TITLE_DESC' => ArticlesUrlBuilder::manage_articles('title', 'desc', $page)->rel(),
+			'U_SORT_CATEGORY_ASC' => ArticlesUrlBuilder::manage_articles('cat', 'asc', $page)->rel(),
+			'U_SORT_CATEGORY_DESC' => ArticlesUrlBuilder::manage_articles('cat', 'desc', $page)->rel(),
+			'U_SORT_AUTHOR_ASC' => ArticlesUrlBuilder::manage_articles('author', 'asc', $page)->rel(),
+			'U_SORT_AUTHOR_DESC' => ArticlesUrlBuilder::manage_articles('author', 'desc', $page)->rel(),
+			'U_SORT_DATE_ASC' => ArticlesUrlBuilder::manage_articles('date', 'asc', $page)->rel(),
+			'U_SORT_DATE_DESC' => ArticlesUrlBuilder::manage_articles('date', 'desc', $page)->rel(),
+			'U_SORT_PUBLISHED_ASC' => ArticlesUrlBuilder::manage_articles('published', 'asc', $page)->rel(),
+			'U_SORT_PUBLISHED_DESC' => ArticlesUrlBuilder::manage_articles('published', 'desc', $page)->rel()
 		));
 	}
 	

@@ -23,7 +23,7 @@
 				<a href="{U_SORT_DATE_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{U_SORT_PUBLISHED_DESC}" class="fa fa-table-sort-up"></a>
+				<a href="{U_SORT_PUBLISHED_ASC}" class="fa fa-table-sort-up"></a>
 				{@admin.articles.sort_field.published}
 				<a href="{U_SORT_PUBLISHED_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
