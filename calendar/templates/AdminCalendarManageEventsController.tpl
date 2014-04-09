@@ -69,7 +69,7 @@
 		# END event #
 		# IF NOT C_EVENTS #
 		<tr> 
-			<td colspan="6">
+			<td colspan="7">
 				{@calendar.notice.no_event}
 			</td>
 		</tr>
