@@ -344,11 +344,11 @@ class Bug
 		$this->status = Bug::NEW_BUG;
 		$this->author_user = AppContext::get_current_user();
 		$this->contents = $config->get_contents_value();
-		$this->type = $config->get_default_priority();
-		$this->category = $config->get_default_priority();
-		$this->severity = $config->get_default_priority();
+		$this->type = $config->get_default_type();
+		$this->category = $config->get_default_category();
+		$this->severity = $config->get_default_severity();
 		$this->priority = $config->get_default_priority();
-		$this->detected_in = $config->get_default_priority();
+		$this->detected_in = $config->get_default_version();
 		$this->fixed_in = 0;
 		$this->assigned_to_id = 0;
 		$this->reproductible = true;
