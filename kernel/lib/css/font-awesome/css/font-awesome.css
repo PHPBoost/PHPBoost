@@ -12,6 +12,9 @@
 .fa-move:before { /* copie share */
 	content: "\f064";	
 }
+.fa-success:before { /* copie check */
+	content: "\f00c";	
+}
 .fa-error:before,
 .fa-remove:before { /* copie times */
 	content: "\f00d";
