@@ -119,10 +119,14 @@ class InstallationServices
 
 	private function create_database($database)
 	{
-		$database = PersistenceContext::get_dbms_utils()->create_database($database);
-		$databases_list = PersistenceContext::get_dbms_utils()->list_databases();
-		PersistenceContext::close_db_connection();
-		return in_array($database, $databases_list);
+		try {
+			$database = PersistenceContext::get_dbms_utils()->create_database($database);
+			$databases_list = PersistenceContext::get_dbms_utils()->list_databases();
+			PersistenceContext::close_db_connection();
+			return in_array($database, $databases_list);
+		} catch (SQLQuerierException $e) {
+			return false;
+		}
 	}
 
 	public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix)
@@ -272,29 +276,6 @@ class InstallationServices
 		$extended_field->set_display(false);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		
-		/*//Location
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.location']);
-		$extended_field->set_field_name('user_location');
-		$extended_field->set_description($lang['extended-field.field.location-explain']);
-		$extended_field->set_field_type('MemberShortTextExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(false);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-		
-		//Job
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['extended-field.field.job']);
-		$extended_field->set_field_name('user_job');
-		$extended_field->set_description($lang['extended-field.field.job-explain']);
-		$extended_field->set_field_type('MemberShortTextExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(false);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-		*/
 		
 		//Avatar
 		$extended_field = new ExtendedField();
