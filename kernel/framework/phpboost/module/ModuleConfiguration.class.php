@@ -152,7 +152,7 @@ class ModuleConfiguration
 		$this->version = $config['version'];
 		$this->date = $config['date'];
 		$this->compatibility = $config['compatibility'];
-		$this->php_version = !empty($config['php_version']) ? $config['php_version'] : '5.1.2';
+		$this->php_version = !empty($config['php_version']) ? $config['php_version'] : '5.3';
 		$this->repository = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 		$this->admin_main_page = !empty($config['admin_main_page']) ? $config['admin_main_page'] : '';
 		$this->admin_menu = !empty($config['admin_menu']) ? $config['admin_menu'] : '';

@@ -25,11 +25,11 @@
  *
  ###################################################*/
 
-if (version_compare(phpversion(), '5.1.2', '<') == -1)
+if (version_compare(phpversion(), '5.3', '<') == -1)
 {
 	// Version is not retrieved from the ServerConfiguration::MIN_PHP_VERSION constant because
 	// it would imply that bootstraping will work and that PHP version is at least 5.0 (static keyword)
-	die('<h1>Impossible to install PHPBoost</h1><p>At least PHP 5.1.2 is needed but your current PHP version is ' . phpversion() . '</p>');
+	die('<h1>Impossible to install PHPBoost</h1><p>At least PHP 5.3 is needed but your current PHP version is ' . phpversion() . '</p>');
 }
 
 define('PATH_TO_ROOT', '..');
