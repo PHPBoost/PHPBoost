@@ -208,6 +208,8 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 	font-size: 10px;
 }
 
+.module_top ul.pagination { display: inline; }
+
 /* Messages postés par les membres 
 --------------------------------------*/
 /* Classe du lien du pseudo des messages */
