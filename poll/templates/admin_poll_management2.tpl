@@ -154,7 +154,6 @@
 								</label>
 							</div>
 							<label><input type="radio" value="1" name="visible" {VISIBLE_ENABLED} id="release_date"> {L_IMMEDIATE}</label>
-							<br />
 							<label><input type="radio" value="0" name="visible" {VISIBLE_UNAPROB}> {L_UNAPROB}</label>
 						</div>
 					</div>
@@ -167,7 +166,6 @@
 								</div>
 							</div>
 							<a onclick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;" class="fa fa-calendar"></a>
-							
 							{L_AT}
 							<input type="text" size="2" maxlength="2" name="hour" value="{HOUR}" /> h <input type="text" size="2" maxlength="2" name="min" value="{MIN}">
 						</label></div>
