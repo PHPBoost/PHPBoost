@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-if (version_compare(phpversion(), '5.1.2', '<') == -1)
+if (version_compare(phpversion(), '5.3', '<') == -1)
 {
-	die('<h1>Impossible to update PHPBoost</h1><p>At least PHP 5.1.2 is needed but your current PHP version is ' . phpversion() . '</p>');
+	die('<h1>Impossible to update PHPBoost</h1><p>At least PHP 5.3 is needed but your current PHP version is ' . phpversion() . '</p>');
 }
 
 define('PATH_TO_ROOT', '..');
