@@ -304,7 +304,7 @@ class UpdateServices
 			
 			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
 			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
-			replace(replace(replace(replace(replace(replace(replace(replace(
+			replace(replace(replace(replace(replace(replace(replace(replace(replace(
 			
 			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
 			replace(replace(replace(replace(replace(replace(replace(
@@ -315,6 +315,7 @@ class UpdateServices
 			\'/images/smileys/siffle.gif\', \'/images/smileys/whistle.png\'), 
 			\'/images/smileys/sourire.gif\', \'/images/smileys/smile.png\'),
 			\'/images/smileys/lol.gif\', \'/images/smileys/laugh.png\'),
+			\'/images/smileys/rire.gif\', \'/images/smileys/laugh.png\'),
 			\'/images/smileys/tirelangue.gif\', \'/images/smileys/tongue.png\'),
 			\'/images/smileys/malheureux.gif\', \'/images/smileys/sad.png\'),
 			\'/images/smileys/clindoeil.gif\', \'/images/smileys/wink.png\'),
