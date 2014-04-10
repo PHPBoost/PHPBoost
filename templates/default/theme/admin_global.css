@@ -137,6 +137,7 @@ a.member { color:#000000; }
 /* Icônes spécifique PHPBoost
 ------------------------------------ */
 .fa-syndication:before { color:#f57900; }
+.fa-success:before { color:#478948; }
 .fa-forbidden:before { color:#BA4B49; }
 .fa-error:before { color:#BA4B49; }
 .fa-warning:before { color:#C19954; }
