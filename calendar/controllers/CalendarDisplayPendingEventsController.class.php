@@ -128,15 +128,17 @@ class CalendarDisplayPendingEventsController extends ModuleController
 	
 	private function generate_response()
 	{
+		$page = AppContext::get_request()->get_getint('page', 1);
+		
 		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['calendar.pending']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.seo.description.pending']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_pending_events());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_pending_events($page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());
-		$breadcrumb->add($this->lang['calendar.pending'], CalendarUrlBuilder::display_pending_events());
+		$breadcrumb->add($this->lang['calendar.pending'], CalendarUrlBuilder::display_pending_events($page));
 		
 		return $response;
 	}
