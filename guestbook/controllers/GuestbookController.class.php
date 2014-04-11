@@ -154,7 +154,7 @@ class GuestbookController extends ModuleController
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::home($page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], GuestbookUrlBuilder::home($page);
+		$breadcrumb->add($this->lang['module_title'], GuestbookUrlBuilder::home($page));
 		
 		return $response;
 	}
