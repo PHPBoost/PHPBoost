@@ -39,7 +39,7 @@ class NewsletterHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		return NewsletterModuleHomePage::get_view();
+		return NewsletterHomeController::get_view();
 	}
 }
 ?>
