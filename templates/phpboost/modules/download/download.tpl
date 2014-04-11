@@ -141,10 +141,12 @@
 				
 				<hr style="margin:20px auto 30px auto;" />
 				
-				<div style="text-align:center;">	
-					<a href="{PATH_TO_ROOT}/download/download.php?explore=1" class="pbt-button-a">
-						<button class="big"><i class="fa fa-folder"></i> Parcourir l'arborescence</button>
-					</a>
+				<div class="center">
+					<button class="big">
+						<a href="{PATH_TO_ROOT}/download/download.php?explore=1" class="pbt-button-a">
+							<i class="fa fa-folder"></i> Parcourir l'arborescence
+						</a>
+					</button>
 				</div>
 		</div>
 		<footer># IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #</footer>
