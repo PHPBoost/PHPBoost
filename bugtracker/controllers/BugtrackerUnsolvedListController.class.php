@@ -203,7 +203,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 		$field = $request->get_value('field', 'date');
 		$sort = $request->get_value('sort', 'desc');
 		$page = $request->get_int('page', 1);
-		$back_filter = $request->get_value('back_filter', '');
+		$filter = $request->get_value('filter', '');
 		$filter_id = $request->get_value('filter_id', '');
 		
 		$body_view = BugtrackerViews::build_body_view($view, 'unsolved');
