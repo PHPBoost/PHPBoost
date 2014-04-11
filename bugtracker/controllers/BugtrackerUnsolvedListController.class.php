@@ -200,6 +200,12 @@ class BugtrackerUnsolvedListController extends ModuleController
 		$success = $request->get_value('success', '');
 		$bug_id = $request->get_int('id', 0);
 		
+		$field = $request->get_value('field', 'date');
+		$sort = $request->get_value('sort', 'desc');
+		$page = $request->get_int('page', 1);
+		$back_filter = $request->get_value('back_filter', '');
+		$filter_id = $request->get_value('filter_id', '');
+		
 		$body_view = BugtrackerViews::build_body_view($view, 'unsolved');
 		
 		//Success messages
@@ -244,11 +250,11 @@ class BugtrackerUnsolvedListController extends ModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.unsolved']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::unsolved());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::unsolved($field . '/' . $sort . '/' . $page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : '')));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$breadcrumb->add($this->lang['titles.unsolved'], BugtrackerUrlBuilder::unsolved());
+		$breadcrumb->add($this->lang['titles.unsolved'], BugtrackerUrlBuilder::unsolved($field . '/' . $sort . '/' . $page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : '')));
 		
 		return $response;
 	}
