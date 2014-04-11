@@ -146,13 +146,15 @@ class GuestbookController extends ModuleController
 	
 	private function generate_response()
 	{
+		$page = AppContext::get_request()->get_getint('page', 1));
+		
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['module_title']);
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::home($page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['module_title'], GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1)));
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1)));
+		$breadcrumb->add($this->lang['module_title'], GuestbookUrlBuilder::home($page);
 		
 		return $response;
 	}
