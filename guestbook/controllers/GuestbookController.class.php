@@ -146,7 +146,7 @@ class GuestbookController extends ModuleController
 	
 	private function generate_response()
 	{
-		$page = AppContext::get_request()->get_getint('page', 1));
+		$page = AppContext::get_request()->get_getint('page', 1);
 		
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
@@ -165,7 +165,7 @@ class GuestbookController extends ModuleController
 		$object->init();
 		$object->check_authorizations();
 		$object->build_view();
-		return $object->tpl;
+		return $object->view;
 	}
 }
 ?>
