@@ -180,10 +180,8 @@
 				<div style="text-align:center;margin:auto;width:300px">
 					<div style="float:left;width:50%">
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">
-						<span class="fa fa-stack fa-lg">
-							<i class="fa fa-wrench fa-flip-horizontal fa-stack-1x"></i>
-							<i class="fa fa-file-o fa-stack-2x"></i>
-						</span>
+							<i class="fa fa-wrench fa-2x"></i>
+						</a>
 						<br />
 						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
 					</div>
