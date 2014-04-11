@@ -243,9 +243,17 @@ class BugtrackerRoadmapListController extends ModuleController
 	
 	private function build_response(View $view)
 	{
+		$versions = array_reverse($this->config->get_versions(), true);
+		
 		$request = AppContext::get_request();
 		$success = $request->get_value('success', '');
 		$bug_id = $request->get_int('id', 0);
+		$roadmap_version = $request->get_value('version', Url::encode_rewrite($versions[key($versions)]['name']));
+		$roadmap_status = $request->get_value('status', 'all');
+		
+		$field = $request->get_value('field', 'date');
+		$sort = $request->get_value('sort', 'desc');
+		$page = $request->get_int('page', 1);
 		
 		$body_view = BugtrackerViews::build_body_view($view, 'roadmap');
 		
@@ -264,11 +272,11 @@ class BugtrackerRoadmapListController extends ModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.roadmap']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::roadmap());
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::roadmap($roadmap_version . '/' . $roadmap_status . '/' . $field . '/' . $sort . '/' . $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$breadcrumb->add($this->lang['titles.roadmap'], BugtrackerUrlBuilder::roadmap());
+		$breadcrumb->add($this->lang['titles.roadmap'], BugtrackerUrlBuilder::roadmap($roadmap_version . '/' . $roadmap_status . '/' . $field . '/' . $sort . '/' . $page));
 		
 		return $response;
 	}
