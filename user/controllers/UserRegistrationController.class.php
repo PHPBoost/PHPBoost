@@ -171,12 +171,7 @@ class UserRegistrationController extends AbstractController
 		$user->set_editor($this->form->get_value('text-editor')->get_raw_value());
 		$user->set_approbation($user_aprobation);
 		$user->set_approbation_pass($activation_key);
-		
-		$timezone = $this->form->get_value('timezone')->get_raw_value();
-		if ($timezone !== GeneralConfig::load()->get_site_timezone())
-			$user->set_timezone($timezone);
-		else
-			$user->set_timezone('');
+		$user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 			
 		$user_id = UserService::create($user_authentification, $user);
 		
