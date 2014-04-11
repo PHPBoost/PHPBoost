@@ -29,21 +29,40 @@ class ViewSitemapController extends ModuleController
 {
 	private $lang = array();
 	
-	public function __construct()
+	public function execute(HTTPRequestCustom $request)
+	{
+		$this->init();
+		
+		$tpl = $this->build_view();
+		
+		$response = new SiteDisplayResponse($tpl);
+		$response->get_graphical_environment()->set_page_title($this->lang['sitemap']);
+		return $response;
+	}
+	
+	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'sitemap');
 	}
 	
-	public function execute(HTTPRequestCustom $request)
+	private function build_view()
 	{
-		return $this->build_response(SitemapModuleHomePage::get_view());
+		$config_html = new SitemapExportConfig('sitemap/export/sitemap.html.tpl',
+			'sitemap/export/module_map.html.tpl', 'sitemap/export/sitemap_section.html.tpl', 'sitemap/export/sitemap_link.html.tpl');
+
+		$sitemap = SitemapService::get_personal_sitemap();
+		
+		$tpl = new FileTemplate('sitemap/ViewSitemapController.tpl');
+		$tpl->add_lang($this->lang);
+		$tpl->put('SITEMAP', $sitemap->export($config_html));
+		return $tpl;
 	}
 	
-	private function build_response(View $view)
+	public static function get_view()
 	{
-		$response = new SiteDisplayResponse($view);
-		$response->get_graphical_environment()->set_page_title(LangLoader::get_message('sitemap', 'common', 'sitemap'));
-		return $response;
+		$object = new self();
+		$object->init();
+		return $object->build_view();
 	}
 }
 ?>

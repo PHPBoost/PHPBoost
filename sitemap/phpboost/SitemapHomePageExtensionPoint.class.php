@@ -39,7 +39,7 @@ class SitemapHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		return SitemapModuleHomePage::get_view();
+		return ViewSitemapController::get_view();
 	}
 }
 ?>
