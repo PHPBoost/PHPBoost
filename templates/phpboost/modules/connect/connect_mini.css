@@ -22,6 +22,7 @@
 #connect-menu div.horizontal-fieldset form input.connect-form { 
 	display:block;
 	margin-bottom:5px;	
+	margin:3px auto;
 }
 #connect-menu div.horizontal-fieldset form > button { margin-top:5px; }
 
@@ -61,14 +62,16 @@
 	background:-ms-linear-gradient(top, #702822 0%,#7e2f2f 37%,#7e2f2f 61%,#602b1b 100%);
 }
 
-#connect-menu div.horizontal-fieldset li:hover > ul { 
+#connect-menu div.horizontal-fieldset li:hover > ul,
+#connect-menu div.horizontal-fieldset li:hover > .sub-menu { 
 	opacity:1;
 	visibility:visible;
 	transition:visibility 0s ease-out, opacity 0.3s ease-out ;
 	-webkit-transition:visibility 0s ease-out, opacity 0.3s ease-out ;
 }
 
-#connect-menu div.horizontal-fieldset li > ul {
+#connect-menu div.horizontal-fieldset li > ul,
+#connect-menu div.horizontal-fieldset li > .sub-menu {
 	position:absolute;
 	background:#353535;
 	top:43px;
