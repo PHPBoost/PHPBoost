@@ -620,6 +620,13 @@ ul.menu-vertical-3 li a,ul.menu-vertical-3 li span {
 	font-size:80%;
 }
 
+/* menu de flux */
+.feed-list {
+	list-style:none;
+	text-align:left;
+	margin:5px 0px;
+}
+
 /* Erreurs
 --------------------------------------*/
 div.message-helper-small { width:50% }

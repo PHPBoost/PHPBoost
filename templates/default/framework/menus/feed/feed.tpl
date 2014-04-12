@@ -7,7 +7,7 @@
 		</h5>
 	</div>
 	<div class="module-mini-contents">
-		<ul class="list">
+		<ul class="feed-list">
 			# START item #
 			<li><span class="smaller">{item.DATE}</span> <a href="{item.U_LINK} ">{item.TITLE} </a></li>
 			# END item #
@@ -18,17 +18,16 @@
 </div>
 # ELSE #
 <div class="block-container">
-	<div class="block_contents">
+	<div class="block-contents">
 		<h5 class="sub-title">
 			<a href="{U_LINK}" class="fa fa-syndication"></a>
 			# IF C_NAME #{NAME}# ELSE #{TITLE}# ENDIF #
 		</h5>
 		<ul class="list" style="margin-top:8px;">
 			# START item #
-			<li><span class="smaller">{item.DATE}</span> <a href="{item.U_LINK} ">{item.TITLE} </a></li>
+			<li><span class="smaller">{item.DATE}</span> <a href="{item.U_LINK} ">{item.TITLE}</a></li>
 			# END item #
 		</ul>
-		&nbsp;
 	</div>
 </div>
 # ENDIF #
