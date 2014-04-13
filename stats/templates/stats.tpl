@@ -59,7 +59,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="3">
+					<th>
 						{L_SITE}
 					</th>
 				</tr>
