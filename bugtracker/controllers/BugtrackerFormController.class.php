@@ -114,7 +114,7 @@ class BugtrackerFormController extends ModuleController
 			$array_types = array();
 			if (empty($default_type))
 			{
-				$array_types[] = new FormFieldSelectChoiceOption('', '');
+				$array_types[] = new FormFieldSelectChoiceOption(' ', '');
 			}
 			foreach ($types as $key => $type)
 			{
@@ -132,7 +132,7 @@ class BugtrackerFormController extends ModuleController
 			$array_categories = array();
 			if (empty($default_category))
 			{
-				$array_categories[] = new FormFieldSelectChoiceOption('', '');
+				$array_categories[] = new FormFieldSelectChoiceOption(' ', '');
 			}
 			foreach ($categories as $key => $category)
 			{
@@ -152,7 +152,7 @@ class BugtrackerFormController extends ModuleController
 				$array_severities = array();
 				if (empty($default_severity))
 				{
-					$array_severities[] = new FormFieldSelectChoiceOption('', '');
+					$array_severities[] = new FormFieldSelectChoiceOption(' ', '');
 				}
 				foreach ($severities as $key => $severity)
 				{
@@ -170,7 +170,7 @@ class BugtrackerFormController extends ModuleController
 				$array_priorities = array();
 				if (empty($default_priority))
 				{
-					$array_priorities[] = new FormFieldSelectChoiceOption('', '');
+					$array_priorities[] = new FormFieldSelectChoiceOption(' ', '');
 				}
 				foreach ($priorities as $key => $priority)
 				{
@@ -189,7 +189,7 @@ class BugtrackerFormController extends ModuleController
 			$array_versions = array();
 			if (empty($default_version))
 			{
-				$array_versions[] = new FormFieldSelectChoiceOption('', '');
+				$array_versions[] = new FormFieldSelectChoiceOption(' ', '');
 			}
 			foreach ($versions_detected_in as $key => $version)
 			{
