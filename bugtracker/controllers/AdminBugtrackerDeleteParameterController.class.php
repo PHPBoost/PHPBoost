@@ -156,7 +156,7 @@ class AdminBugtrackerDeleteParameterController extends AdminModuleController
 	private function get_move_into_another_options()
 	{
 		$other = array();
-		$other[] = new FormFieldSelectChoiceOption('', 0);
+		$other[] = new FormFieldSelectChoiceOption(' ', 0);
 		
 		$types = $this->config->get_types();
 		$categories = $this->config->get_categories();

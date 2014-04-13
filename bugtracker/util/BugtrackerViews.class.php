@@ -230,7 +230,7 @@ class BugtrackerViews
 		$types = BugtrackerConfig::load()->get_types();
 		
 		$array_types = array();
-		$array_types[] = new FormFieldSelectChoiceOption('', 0);
+		$array_types[] = new FormFieldSelectChoiceOption(' ', 0);
 		foreach ($types as $key => $type)
 		{
 			$array_types[] = new FormFieldSelectChoiceOption(stripslashes($type), $key);
@@ -271,7 +271,7 @@ class BugtrackerViews
 		$categories = BugtrackerConfig::load()->get_categories();
 		
 		$array_categories = array();
-		$array_categories[] = new FormFieldSelectChoiceOption('', 0);
+		$array_categories[] = new FormFieldSelectChoiceOption(' ', 0);
 		foreach ($categories as $key => $category)
 		{
 			$array_categories[] = new FormFieldSelectChoiceOption(stripslashes($category), $key);
@@ -312,7 +312,7 @@ class BugtrackerViews
 		$severities = BugtrackerConfig::load()->get_severities();
 		
 		$array_categories = array();
-		$array_severities[] = new FormFieldSelectChoiceOption('', 0);
+		$array_severities[] = new FormFieldSelectChoiceOption(' ', 0);
 		foreach ($severities as $key => $severity)
 		{
 			$array_severities[] = new FormFieldSelectChoiceOption(stripslashes($severity['name']), $key);
@@ -353,7 +353,7 @@ class BugtrackerViews
 		$status_list = BugtrackerConfig::load()->get_status_list();
 		
 		$array_status = array();
-		$array_status[] = new FormFieldSelectChoiceOption('', '');
+		$array_status[] = new FormFieldSelectChoiceOption(' ', '');
 		foreach ($status_list as $status => $progress)
 		{
 			if (($current_page == 'unsolved' && !in_array($status, array(Bug::FIXED, Bug::REJECTED))) || ($current_page == 'solved' && in_array($status, array(Bug::FIXED, Bug::REJECTED))))
@@ -398,7 +398,7 @@ class BugtrackerViews
 		$versions = array_reverse($versions, true);
 		
 		$array_versions = array();
-		$array_versions[] = new FormFieldSelectChoiceOption('', '');
+		$array_versions[] = new FormFieldSelectChoiceOption(' ', '');
 		foreach ($versions as $key => $version)
 		{
 			$array_versions[] = new FormFieldSelectChoiceOption(stripslashes($version['name']), $key);
