@@ -27,7 +27,7 @@
     <label for="ForumWhere">{L_OPTIONS}</label>
     <div class="form-field">
         <label><input type="radio" id="ForumWhere" name="ForumWhere" value="title" {IS_TITLE_CHECKED}/> {L_TITLE}</label>
-        <label><input type="radio" name="ForumWhere" id="where" value="contents" {IS_CONTENTS_CHECKED}/> {L_CONTENTS}</label>
+        <label><input type="radio" name="ForumWhere" value="contents" {IS_CONTENTS_CHECKED}/> {L_CONTENTS}</label>
         <label><input type="radio" name="ForumWhere" value="all" {IS_ALL_CHECKED}/> {L_TITLE} / {L_CONTENTS}</label>
     </div>
 </div>
