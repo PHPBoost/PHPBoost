@@ -206,7 +206,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 				'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
 			));
 	
-			$result = $this->sql_querier->query_while("SELECT d.id, d.title, d.timestamp, d.size, d.count, d.image, d.short_contents, notes.average_notes
+			$result = $this->sql_querier->query_while("SELECT d.id, d.title, d.timestamp, d.size, d.count, d.image, d.short_contents, notes.average_notes, notes.number_notes
 			FROM " . PREFIX . "download d
 			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module AND module_name = 'download'
 			WHERE approved = 1 AND idcat = '" . $category_id . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))
@@ -216,6 +216,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			{
 				$notation->set_id_in_module($row['id']);
 				$notation->set_average_notes($row['average_notes']);
+				$notation->set_number_notes($row['number_notes']);
 				
 				$tpl->assign_block_vars('file', array(			
 					'NAME' => $row['title'],
