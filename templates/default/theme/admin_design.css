@@ -71,12 +71,12 @@ span#site-slogan {
 }
 
 div#header-admin { height:139px; }
-div#sub-header-admin { height: 32px; margin-top: 6px; }
+div#sub-header-admin { height:32px; margin-top:6px; }
 
 div#sub-header-admin .dynamic-menu {
 	width:auto;
 	height:35px;
-	margin-top:-3px;
+	margin-top:-2px;
 	padding-left:15px;
 	float:left;
 }
@@ -87,8 +87,6 @@ div#sub-header-admin .dynamic-menu h5 {
 	background:transparent;
 	border:none;
 	font-weight:normal;
-	-moz-border-radius:4px 4px 0 0;
-	-webkit-border-radius:4px 4px 0 0;
 	border-radius:4px 4px 0 0;
 	margin-right:0;
 }
@@ -98,24 +96,19 @@ div#sub-header-admin .dynamic-menu > ul > li:hover {
 }
 
 div#sub-header-admin .dynamic-menu > ul > li:hover h5 {
-	color:#444;
-	background:#FFF;
+	color:#444444;
+	background:#FFFFFF;
 }
 
-div#sub-header-admin .dynamic-menu > ul > li > ul {
-	-moz-border-radius:0 4px 4px 4px;
-	-webkit-border-radius:0 4px 4px 4px;
-	border-radius:0 4px 4px 4px;
-}
+div#sub-header-admin .dynamic-menu > ul > li > ul {	border-radius:0 4px 4px 4px; }
 
 /* Liens vers les menus étendus */
 div#admin-extend-link {
 	float:right;
-	margin-right:15px;
+	margin:-2px 15px 0px 0px;
 	padding:4px 6px;
 	border-radius:4px;
-	-moz-border-radius:4px;
-	-webkit-border-radius:4px;
+	font-size:12px;
 }
 
 div#admin-extend-link:hover { background:#FFFFFF; }
@@ -206,18 +199,6 @@ div#admin-quick-menu li a.quick-link {
     margin-top:15px;
 }
 
-.error-handler-position { /* Non utilisé à priori A supprimer ? */
-    margin-top:15px;
-}
-
-/* Fond des catégories dans l'administration */
-.management-cat-admin { /* Non utilisé à priori A supprimer ? */
-    width:100%;
-    height:20px;
-    margin-bottom:2px;
-    padding:4px 0px;
-}
-
 /* Coloration des moteur de recherche */
 .robot {
     color:#FF6600;
@@ -236,4 +217,4 @@ footer#footer {
 	min-width:1000px;
 }
 
-footer#footer span { color:#FFF; font-size:10px; }
+footer#footer span { color:#FFFFFF; font-size:10px; }
