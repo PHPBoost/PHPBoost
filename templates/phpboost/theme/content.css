@@ -61,7 +61,7 @@ section footer, article footer { margin-bottom: 15px; }
 .block header {	margin-bottom: 10px; }
 .block footer {	margin: 0; }
 
-.medium-block, .small-block { display: inline-block; margin: 0.5%; }
+.medium-block, .small-block { display:inline-block; margin:1% 0.5%; }
 
 /* Fix to the spaces between the blocks */
 .medium-block, .small-block { margin-right:-0.29em; }
