@@ -22,7 +22,12 @@
 						<i class="fa fa-envelope-o fa-stack-2x"></i>
 					</span><br/>
 					# ELSE #
-					<i class="fa fa-envelope-o fa-2x"></i><br/>
+					<span class="fa fa-stack">
+						<i class="fa fa-circle blink fa-circle-alert">
+							<span>1</span>
+						</i>
+						<i class="fa fa-envelope-o fa-stack-2x"></i>
+					</span><br/>
 					# END IF #
 					${LangLoader::get_message('private_message', 'main')}
 				</a>
@@ -45,7 +50,12 @@
 						<i class="fa fa-file-text-o fa-stack-2x"></i>
 					</span><br/>
 					# ELSE #
-					<i class="fa fa-file-text-o fa-2x"></i><br />
+					<span class="fa fa-stack">
+						<i class="fa fa-circle blink fa-circle-alert">
+							<span>2</span>
+						</i>
+						<i class="fa fa-envelope-o fa-stack-2x"></i>
+					</span><br/>
 					# ENDIF #
 					${LangLoader::get_message('contribution_panel', 'main')}
 				</a>
