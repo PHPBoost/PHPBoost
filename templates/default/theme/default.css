@@ -4,14 +4,14 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
 --------------------------------------*/
 
 /* Reset */
-* { margin:0; padding:0; font-size:100%; -moz-box-sizing: border-box; box-sizing: border-box; }
+* { margin: 0; padding: 0; font-size: 100%; -moz-box-sizing: border-box; box-sizing: border-box; }
 html, body { margin: 0;	padding: 0; }
-img { border:none; overflow:scroll; vertical-align: middle; }
+img { border: none; overflow: scroll; vertical-align: middle; }
 img, table, td, blockquote, code, pre, textarea, input, video, object, .video-player {	max-width: 100%; }
 input, button, label, select, textarea, legend { font-family: inherit; font-size: inherit; vertical-align: middle; }
-optgroup, select, label, button, input[type=radio], input[type=checkbox], .button, .notation .star { cursor:pointer; }
-input[type=checkbox] { border:none; background:none; }
-button::-moz-focus-inner, .button::-moz-focus-inner{ border:0; padding:0; }
+optgroup, select, label, button, input[type=radio], input[type=checkbox], .button, .notation .star { cursor: pointer; }
+input[type=checkbox] { border: none; background: none; }
+button::-moz-focus-inner, .button::-moz-focus-inner{ border: 0; padding: 0; }
 
 div, textarea, table, td, th, code, pre, samp {
 	word-wrap: break-word;
@@ -23,178 +23,174 @@ div, textarea, table, td, th, code, pre, samp {
 }
 
 hr {
-    background:#C4CED6;
-    border:none;
-    margin:1px auto;
-    height:1px;
-    width:99%;
+    background: #C4CED6;
+    border: none;
+    margin: 1px auto;
+    height: 1px;
+    width: 99%;
 }
 
-ul, ol { line-height:normal; }
+ul, ol { line-height: normal; margin-left: 20px; margin-bottom: 10px; }
 
 p {
-    margin-bottom:0.7em;
-    line-height:normal;
-    font-size:1em;
+	margin-bottom: 0.7em;
+    line-height: normal;
+    font-size: 1em;
 }
 
-pre { white-space:pre-wrap; }
-
-
+pre { white-space: pre-wrap; }
 
 /* Alignements */
-.inline { display:inline !important; }
+.inline { display: inline !important; }
 
-.center { text-align:center !important; }
-.left { text-align:left !important; }
-.right { text-align:right !important; }
+.center { text-align: center !important; }
+.left { text-align: left !important; }
+.right { text-align: right !important; }
 
-.float-left, img.left { float:left !important; }
-.float-right, img.right { float:right !important; }
-img.left, img.right { margin:6px; }
+.float-left, img.left { float: left !important; }
+.float-right, img.right { float: right !important; }
+img.left, img.right { margin: 6px; }
 
 /* Classes textes */
-.text-strong { font-weight:bold !important; }
-.text-justify { text-align:justify !important; }
-.text-italic { font-style:italic !important; }
+.text-strong { font-weight: bold !important; }
+.text-justify { text-align: justify !important; }
+.text-italic { font-style: italic !important; }
 
-.valign-top { vertical-align:top !important; }
-.valign-middle { vertical-align:middle !important; }
-.valign-bottom { vertical-align:bottom !important; }
+.valign-top { vertical-align: top !important; }
+.valign-middle { vertical-align: middle !important; }
+.valign-bottom { vertical-align: bottom !important; }
 
-.spacer { clear:both; }
+.spacer { clear: both; }
 
 /* Image */
-.img-link, .img-link:hover { text-decoration:none; }
+.img-link, .img-link:hover { text-decoration: none; }
 
 /* Affichage des smiley */
-.smiley { vertical-align:middle; }
+.smiley { vertical-align: middle; }
 
 /* Fieldsets */
 div.vertical-fieldset,
-div.horizontal-fieldset { margin:20px 0; }
+div.horizontal-fieldset { margin: 20px 0; }
 
 div.vertical-fieldset .form-element,
 div.horizontal-fieldset .form-element { margin: 0px 5px 0px 5px; }
 
 div.horizontal-fieldset .form-element label { display: inline; }
-div.horizontal-fieldset .form-field { display:block;width:100%; }
+div.horizontal-fieldset .form-field { display: block; width: 100%; }
 
 div.vertical-fieldset .form-element label,
 div.horizontal-fieldset .form-element label { 
 	width: auto;
 	vertical-align: middle;
-	font-weight:bold;
+	font-weight: bold;
 }
 
 /* Imite l'affichage fieldset / legend */
 .fieldset-content {
-    width:95%;
-    margin:auto;
-    margin-top:20px;
+    width: 95%;
+    margin: auto;
+    margin-top: 20px;
 }
 
-.module-mini-contents .fieldset-content { width:100%; }
+.module-mini-contents .fieldset-content { width: 100%; }
 
 /* Opacité */
-.low-opacity { filter:alpha(opacity=40); opacity: 0.40; -moz-opacity:0.40; }
+.low-opacity { opacity: 0.40; }
 
 /* Liens pagination */
-ul.pagination li { display:inline; }
-ul.pagination .current-page { text-decoration:underline; }
+ul.pagination li { display: inline; }
+ul.pagination .current-page { text-decoration: underline; }
 
 /* Debug */
 .pbt-debug { background: orange !important; outline: 3px solid orangered !important; }
 
 #error-handler {
-	width:auto;
-	max-width:750px;
-	margin:15px auto;
+	width: auto;
+	max-width: 750px;
+	margin: 15px auto;
 }
 
 /* Prévisualisation AJAX. */
 .xmlhttprequest-preview {
-	overflow:auto;
-	height:220px;
-	width:94%;
-	font-size:11px;
-	margin:4px auto 3px auto;		
-	padding:1px 2px 1px 2px;
-	border-radius:4px;
-    -moz-border-radius:4px;
-    -khtml-border-radius:4px;
-    -webkit-border-radius:4px;
+	overflow: auto;
+	height: 220px;
+	width: 94%;
+	font-size: 11px;
+	margin: 4px auto 3px auto;		
+	padding: 1px 2px 1px 2px;
+	border-radius: 4px;
 }
 
 /* Syndications */
 div.syndication-choices {
-    position:absolute;
-    width:0px;
-    height:0px;
-    visibility:hidden;
-    overflow:visible;
-    margin-top:2px 0px 0px -20px;
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    visibility: hidden;
+    overflow: visible;
+    margin-top: 2px 0px 0px -20px;
 }
 
 div.syndication-choices ul {
-    width:90px;
-    list-style-type:none;
-	line-height:18px;
+    width: 90px;
+    list-style-type: none;
+	line-height: 18px;
 }
 div.syndication-choices ul li {
-	height:18px;
-    margin-bottom:1px;
+	height: 18px;
+    margin-bottom: 1px;
 }
 
-ul.rss-feed {
-    margin-left:20px;
-}
+ul.rss-feed { margin-left:20px; }
 
-ul.rss-feed li {
-    text-align: left;
-}
+ul.rss-feed li { text-align: left; }
 
 @media print {
 	* {
 		background: transparent;
-		color: #000;
+		color: #000000;
 	    text-shadow: none;
 	    box-shadow: none;
 	}
 }
 
+/* Tableaux
+--------------------------------------*/
+table.table-fixed { table-layout:fixed; width:100%; }
+
+
 /* Lightbox
 --------------------------------------*/
-#lightbox {  position:absolute;  left:0; width:100%; z-index:103; text-align:center; line-height:0;}
-#lightbox img { width:auto; height:auto;}
-#lightbox a img { border:none; }
+#lightbox {  position: absolute; left: 0; width: 100%; z-index: 103; text-align: center; line-height: 0;}
+#lightbox img { width: auto; height: auto;}
+#lightbox a img { border: none; }
 
-#outerImageContainer { position:relative; background-color:#fff; width:250px; height:250px; margin:0 auto; }
-#imageContainer { padding:10px; }
+#outerImageContainer { position: relative; background-color: #FFFFFF; width: 250px; height: 250px; margin: 0 auto; }
+#imageContainer { padding: 10px; }
 
-#loading { position:absolute; top:40%; left:0%; height:25%; width:100%; text-align:center; line-height:0; }
-#hoverNav { position:absolute; top:0; left:0; height:100%; width:100%; z-index:10; }
-#imageContainer>#hoverNav { left:0;}
-#hoverNav a { outline:none;}
+#loading { position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0; }
+#hoverNav { position: absolute; top: 0; left: 0; height: 100%; width: 100%; z-index: 10; }
+#imageContainer>#hoverNav { left: 0;}
+#hoverNav a { outline: none;}
 
-#prevLink, #nextLink{ width:49%; height:100%; background-image:url(data:image/gif;base64,AAAA); /* Trick IE into showing hover */ display:block; }
-#prevLink { left:0; float:left;}
-#nextLink { right:0; float:right;}
-#prevLink:hover, #prevLink:visited:hover { background:url(../images/lightbox/prevlabel.gif) left 15% no-repeat; }
-#nextLink:hover, #nextLink:visited:hover { background:url(../images/lightbox/nextlabel.gif) right 15% no-repeat; }
+#prevLink, #nextLink { width: 49%; height: 100%; background-image: url(data:image/gif;base64,AAAA); /* Trick IE into showing hover */ display: block; }
+#prevLink { left: 0; float: left;}
+#nextLink { right: 0; float: right;}
+#prevLink:hover, #prevLink:visited:hover { background: url(../images/lightbox/prevlabel.gif) left 15% no-repeat; }
+#nextLink:hover, #nextLink:visited:hover { background: url(../images/lightbox/nextlabel.gif) right 15% no-repeat; }
 
-#imageDataContainer { font:10px Verdana, Helvetica, sans-serif; background-color:#fff; margin:0 auto; line-height:1.4em; overflow:auto; width:100%   ; }
+#imageDataContainer { font: 10px Verdana, Helvetica, sans-serif; background-color: #FFFFFF; margin: 0 auto; line-height: 1.4em; overflow: auto; width: 100%; }
 
-#imageData { padding:0 10px; color:#666; }
-#imageData #imageDetails { width:70%; float:left; text-align:left; } 
-#imageData #caption { font-weight:bold;  }
-#imageData #numberDisplay { display:block; clear:left; padding-bottom:1.0em; }           
-#imageData #bottomNavClose { width:66px; position:relative; float:right; padding-bottom:0.7em; outline:none;}      
+#imageData { padding: 0 10px; color: #666666; }
+#imageData #imageDetails { width: 70%; float: left; text-align: left; } 
+#imageData #caption { font-weight: bold; }
+#imageData #numberDisplay { display: block; clear: left; padding-bottom: 1.0em; }           
+#imageData #bottomNavClose { width: 66px; position: relative; float: right; padding-bottom: 0.7em; outline: none; }      
 
-#overlay { position:absolute; top:0; left:0; z-index:102; width:100%; height:500px; background-color:#000; }
+#overlay { position: absolute; top: 0; left: 0; z-index: 102; width: 100%; height: 500px; background-color: #000000; }
 
 /* Effet Blink
 --------------------------------------*/
-@keyframes blink { 0% { opacity:0; } 30% { opacity:1; } 70% { opacity:1; } 100% { opacity:0; }}
-@-webkit-keyframes blink { 0% { opacity:0; } 30% { opacity:1; } 70% { opacity:1; } 100% { opacity:0; }}
+@keyframes blink { 0% { opacity: 0; } 30% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; }}
+@-webkit-keyframes blink { 0% { opacity: 0; } 30% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; }}
 .blink { animation: blink 1.5s ease-in-out infinite; -moz-animation: blink 1.5s ease-in-out infinite; -webkit-animation: blink 1.5s ease-in-out infinite; }
