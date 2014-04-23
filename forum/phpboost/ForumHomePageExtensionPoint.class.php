@@ -56,6 +56,12 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		require_once(PATH_TO_ROOT . '/forum/forum_tools.php');
 		
 		$id_get = retrieve(GET, 'id', 0);
+		
+		if (!isset($CAT_FORUM[$id_get]) && !empty($id_get))
+		{
+			$controller = PHPBoostErrors::unexisting_category();
+    		DispatchManager::redirect($controller);
+		}
 
 		$tpl = new FileTemplate('forum/forum_index.tpl');
 		$tpl_top = new FileTemplate('forum/forum_top.tpl');
