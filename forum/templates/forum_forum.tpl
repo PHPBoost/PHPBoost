@@ -137,9 +137,10 @@
 							# IF topics.C_IMG_TRACK #<i class="fa fa-msg-track"></i># ENDIF #
 						</td>
 						<td class="forum_sous_cat" style="min-width:115px;">
+							# IF topics.C_PAGINATION #<span class="pagin_forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
 							{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 							<br />
-							<span class="smaller">{topics.DESC}</span># IF topics.C_PAGINATION # &nbsp;<span class="pagin_forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
+							<span class="smaller">{topics.DESC}</span>
 						</td>
 						<td class="forum_sous_cat_compteur" style="width:100px;">
 							{topics.AUTHOR}
