@@ -11,17 +11,13 @@
 	</form>
 	<div class="spacer">&nbsp;</div>
 	# ENDIF #
-	<table>
+	<table class="table-fixed">
 		<caption>{@logged_errors_list}</caption>
 		# IF C_ERRORS #
 		<thead>
 			<tr> 
-				<th style="width:80%;overflow:auto;">
-					${LangLoader::get_message('description', 'main')}
-				</th>
-				<th>
-					${LangLoader::get_message('date', 'date-common')}
-				</th>
+				<th>${LangLoader::get_message('description', 'main')}</th>
+				<th style="width:85px;">${LangLoader::get_message('date', 'date-common')} </th>
 			</tr>
 		</thead>
 		# IF C_PAGINATION #

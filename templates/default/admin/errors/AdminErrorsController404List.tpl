@@ -11,15 +11,15 @@
 	</form>
 	<div class="spacer">&nbsp;</div>
 	# ENDIF #
-	<table>
+	<table class="table-fixed">
 		<caption>{@404_list}</caption>
 		# IF C_ERRORS #
 		<thead>
 			<tr>
 				<th>{@404_error_requested_url}</th>
 				<th>{@404_error_from_url}</th>
-				<th style="width:50px;">{@404_error_times}</th>
-				<th style="width:50px;">{@404_error_delete}</th>
+				<th style="width:60px;">{@404_error_times}</th>
+				<th style="width:75px;">{@404_error_delete}</th>
 			</tr>
 		</thead>
 		<tbody>
