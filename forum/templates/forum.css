@@ -4,9 +4,7 @@ section#main * {
 	box-sizing: content-box; 
 }
 
-.forum_table {
-
-}
+.forum_table {}
  
 /* Classe du lien du pseudo sur forum */
 a.forum_link_pseudo{
@@ -87,13 +85,11 @@ td.forum_sous_cat{
 	text-align:left;
 }
 
-td.forum_sous_cat + td.forum_sous_cat{
-	padding:6px;
-}
+td.forum_sous_cat + td.forum_sous_cat { padding:6px; }
+
 /* Case compteur message/topic */
-td.forum_sous_cat_compteur{	
-	width:60px;
-}
+td.forum_sous_cat_compteur { width:60px; }
+
 /* Case compteur dernier topic/dernier message */
 td.forum_sous_cat_last{
 	width:150px;
@@ -162,6 +158,8 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 	background:yellow;
 	color:black;	
 }
+
+.pagin_forum { float:right; }
 
 /* Module */
 .module_position {
