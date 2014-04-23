@@ -80,24 +80,26 @@
 		<h5>{@css.progress_bar}</h5><br />
 		<div class="content">
 			<h6>25%</h6> 
-			<div class="progressbar-container" style="width:35%">
-				<div class="progressbar" style="width:25%"></div>
+			<div class="progressbar-container" style="width:35%;">
+				<div class="progressbar-infos">25%</div>
+				<div class="progressbar" style="width:25%;"></div>
 			</div><br />
 			
 			<h6>50%</h6>
 			<div class="progressbar-container" style="width:35%">
+				<div class="progressbar-infos">50%</div>
 				<div class="progressbar" style="width:50%"></div>
 			</div><br />
 			
 			<h6>75%</h6> 
 			<div class="progressbar-container" style="width:35%">
-				<span class="progressbar-infos">{@css.progress_bar.util_infos}</span>
+				<div class="progressbar-infos">75%</div>
 				<div class="progressbar" style="width:75%"></div>
 			</div><br />
 			
 			<h6>100%</h6> 
 			<div class="progressbar-container" style="width:35%">
-				<span class="progressbar-infos">{@css.progress_bar.votes}</span>
+				<div class="progressbar-infos">100%</div>
 				<div class="progressbar" style="width:100%"></div>
 			</div><br />
 			

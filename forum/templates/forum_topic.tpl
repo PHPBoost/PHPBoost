@@ -173,18 +173,12 @@
 							<tr>
 								<td style="font-size:10px;">
 									{poll_result.ANSWERS}
-									<table width="95%">
-										<tr>
-											<td>
-												<div class="progressbar-container" title="{poll_result.PERCENT}%">
-													<span class="progressbar-infos">
-														{poll_result.PERCENT}% [{poll_result.NBRVOTE} {L_VOTE}]
-													</span>
-													<div class="progressbar" style="width:{poll_result.PERCENT}%"></div>
-												</div>
-											</td>
-										</tr>
-									</table>
+									
+									{poll_result.PERCENT}% - [{poll_result.NBRVOTE} {L_VOTE}]
+									<div class="progressbar-container" title="{poll_result.PERCENT}%">
+										<div class="progressbar-infos">{poll_result.PERCENT}%</div>
+										<div class="progressbar" style="width:{poll_result.PERCENT}%"></div>
+									</div>
 								</td>
 							</tr>
 							# END poll_result #
