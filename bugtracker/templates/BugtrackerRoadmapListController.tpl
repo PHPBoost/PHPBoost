@@ -96,8 +96,8 @@
 					<span>{@labels.fields.status} : {bug.STATUS}</span>
 					<div class="spacer"></div>
 					# IF bug.C_PROGRESS #
-					{bug.PROGRESS}% 
 					<div class="progressbar-container">
+						<div class="progressbar-infos">{bug.PROGRESS}% </div>
 						<div class="progressbar" style="width:{bug.PROGRESS}%"></div>
 					</div>
 					# ENDIF #
