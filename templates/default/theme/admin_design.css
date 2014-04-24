@@ -1,0 +1,220 @@
+/* --------------------------------------
+		admin_design.css
+Contient les conteneur, fortement dépendant du design.
+--------------------------------------*/ 
+
+html, body{	height: 100%; }
+
+body {
+    background:#E8EDF3 url(images/global.png) repeat-x;
+    font-size:13px;
+    font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+    color:#3F5164;
+}
+
+div#global {
+	width:1000px;
+    margin:auto;
+    min-height: 95%;
+}
+
+/* ##### Entête de la page ###### */
+header#header-admin-container {
+    background-position:20px 0px;
+	margin-bottom:8px;
+	height:170px;
+}
+
+div#site-logo {
+	float:left;
+	margin-right:20px;
+	background:url('images/logo.png') no-repeat;
+	height:90px;
+	width:90px;
+}
+
+div#site-infos {
+	float:left;
+	max-width:690px;
+	height: 90px;
+	margin: 20px 20px 0px 20px;
+}
+
+div#site-name {
+	float:left;
+	max-width:600px;
+	margin-top:40px;	
+	font-family:"Trebuchet MS";
+}
+
+div#site-name-container {
+	float:left;
+	margin-top:10px;
+}
+
+a#site-name {
+	color:#F9FCFF;
+	font-size:50px;
+	font-weight:bold;
+	line-height:1em;
+	text-shadow:0px 0px 0 rgb(0,0,0), 1px 0px 0 rgb(-255,-255,-255),2px 0px 1px rgba(0,0,0,0.1),2px 0px 1px rgba(0,0,0,0.2),0px 0px 1px rgba(0,0,0,.1);
+	letter-spacing:1.1pt;
+	text-decoration:none;
+}
+
+span#site-slogan {
+	display:block;
+	color:#FFFFFF;
+	font-size:12px;
+	padding-left:4px;
+	letter-spacing:1.5pt;
+}
+
+div#header-admin { height:139px; }
+div#sub-header-admin { height:32px; margin-top:6px; }
+
+div#sub-header-admin .dynamic-menu {
+	width:auto;
+	height:35px;
+	margin-top:-2px;
+	padding-left:15px;
+	float:left;
+}
+
+div#sub-header-admin .dynamic-menu h5 {
+    color:#FFFFFF;
+	margin-right:2px;
+	background:transparent;
+	border:none;
+	font-weight:normal;
+	border-radius:4px 4px 0 0;
+	margin-right:0;
+}
+
+div#sub-header-admin .dynamic-menu > ul > li:hover {
+    background:transparent;
+}
+
+div#sub-header-admin .dynamic-menu > ul > li:hover h5 {
+	color:#444444;
+	background:#FFFFFF;
+}
+
+div#sub-header-admin .dynamic-menu > ul > li > ul {	border-radius:0 4px 4px 4px; }
+
+/* Liens vers les menus étendus */
+div#admin-extend-link {
+	float:right;
+	margin:-2px 15px 0px 0px;
+	padding:4px 6px;
+	border-radius:4px;
+	font-size:12px;
+}
+
+div#admin-extend-link:hover { background:#FFFFFF; }
+
+div#admin-extend-link a {
+    color:#FFFFFF;
+	text-decoration:none;
+}
+div#admin-extend-link:hover a { color:#444444; }
+
+/* Conteneur principal */
+div#admin-main {
+	margin:0;
+	padding:0;
+	margin-top:10px;
+}
+
+/* Conteneurs */
+div#admin-contents {
+    margin:auto;
+    margin-left:202px;
+    border-spacing:1px;
+    padding:10px;
+    background:#FFFFFF;
+    border:1px #BEBEBE solid;
+    border-bottom:2px solid #99B1CB;
+    overflow-x:auto;
+}
+
+html>body div#admin-contents {
+    height:auto;
+    min-height:450px;
+}
+
+/* Menu de gauche */
+div#admin-quick-menu {
+    float:left;
+    width:190px;
+    text-align:center;
+    padding-top:5px;
+    margin:auto;
+    border-spacing:1px;
+    padding:10px;
+    padding-bottom:20px;
+    background:#FFFFFF;
+    border:1px #BEBEBE solid;
+    border-bottom:2px solid #99B1CB;
+}
+
+div#admin-quick-menu ul {
+    list-style-type:none;
+    width:169px;
+    margin:12px 0 0 0;
+}
+
+div#admin-quick-menu li {
+    display:block;
+    width:auto;
+    padding:15px 0px;
+}
+
+div#admin-quick-menu li.title-menu {
+    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+    text-transform:uppercase;
+    font-weight:bold;
+    font-size:11px;
+    color:#0E2A48;
+    padding:6px 0px;
+	margin-bottom:20px;
+	border-bottom: 2px solid #336397;
+}
+
+div#admin-quick-menu li a.quick-link {
+    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+    text-transform:none;
+    font-weight:normal;
+    font-size:10px;
+    color:#0E2A48;
+	background: none repeat scroll 0 0 #f2f5f8;
+    border:1px solid #D6DEE7;
+    padding:3px 8px;
+    text-decoration:none;
+}
+
+/* Tableaux de l'administration */
+.block-container {
+    width:98%;
+    margin-top:15px;
+}
+
+/* Coloration des moteur de recherche */
+.robot {
+    color:#FF6600;
+    font-size:12px;
+    font-weight:bold;
+}
+
+/* ##### Pied de page ###### */
+footer#footer {
+	height:40px;
+	clear:both;
+	padding:10px 20px 0px 0px;
+	text-align:right;
+	border-top:#336397 2px solid;
+	background:#212121;
+	min-width:1000px;
+}
+
+footer#footer span { color:#FFFFFF; font-size:10px; }
