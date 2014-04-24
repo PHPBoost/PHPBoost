@@ -21,8 +21,8 @@
 	<div class="form-element">
 		<label>{@labels.fields.progress}</label>
 		<div class="form-field" style="width: 25%;">
-			{PROGRESS}%
 			<div class="progressbar-container">
+				<div class="progressbar-infos">{PROGRESS}%</div>
 				<div class="progressbar" style="width:{PROGRESS}%"></div>
 			</div>
 			</div>

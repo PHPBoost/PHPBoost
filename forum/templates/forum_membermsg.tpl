@@ -41,12 +41,12 @@
 			</div>
 		</div>
 		# END list #
-		
-		<div class="msg_position">
-			<div class="msg_bottom_l"></div>
-			<div class="msg_bottom_r"></div>
-			<div class="msg_bottom" style="text-align:center;">
-				<span style="float:left;">
+
+		<div class="module_position">
+			<div class="module_bottom_l"></div>
+			<div class="module_bottom_r"></div>
+			<div class="module_bottom">
+				<span class="forum_cat_title">
 					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_USER}</a>
 				</span>
 				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
