@@ -78,7 +78,7 @@ class InstallWebsiteConfigController extends InstallController
 		$meta_keywords = new FormFieldMultiLineTextEditor('metaKeywords', $this->lang['website.metaKeywords'], '',
 		array('description' => $this->lang['website.metaKeywords.explanation']));
 		$fieldset->add_field($meta_keywords);
-		$timezone = new FormFieldTimezone('timezone', $this->lang['website.timezone'], '0',
+		$timezone = new FormFieldTimezone('timezone', $this->lang['website.timezone'], 'Europe/Paris',
 		array('description' => $this->lang['website.timezone.explanation']));
 		$fieldset->add_field($timezone);
 

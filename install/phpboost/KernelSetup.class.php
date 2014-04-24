@@ -343,7 +343,7 @@ class KernelSetup
 			'user_mail' => array('type' => 'string', 'length' => 50, 'default' => "''"),
 			'user_show_mail' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'user_editor' => array('type' => 'string', 'length' => 15, 'default' => "''"),
-			'user_timezone' => array('type' => 'integer', 'length' => 2),
+			'user_timezone' => array('type' => 'string', 'length' => 50, 'default' => "''"),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_msg' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 			'user_pm' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),

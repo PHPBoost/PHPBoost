@@ -47,10 +47,9 @@ class FormFieldTimezone extends FormFieldSimpleSelectChoice
     private function generate_options()
 	{
 		$options = array();
-		for ($i = -12; $i <= 14; $i++)
+		foreach (DateTimeZone::listIdentifiers() as $timezone)
 		{
-			$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : ' ' . $i);
-			$options[] = new FormFieldSelectChoiceOption('GMT' . ($i >= 1 ? ' +' : ' ') . $i, $i);
+			$options[] = new FormFieldSelectChoiceOption($timezone, $timezone);
 		}
 		return $options;
 	}

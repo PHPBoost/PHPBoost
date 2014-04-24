@@ -237,6 +237,15 @@ class UpdateServices
 		
 		PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST .' CHANGE default_values default_value TEXT');
 		
+		//Change timezone
+		PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER .' CHANGE user_timezone user_timezone VARCHAR(50)');
+		
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_timezone' => 'Europe/Paris'), 'WHERE 1');
+		
+		$general_config = GeneralConfig::load();
+		$general_config->set_site_timezone('Europe/Paris');
+		GeneralConfig::save();
+		
 		PersistenceContext::get_querier()->inject('RENAME TABLE '. PREFIX .'ranks' .' TO '. PREFIX .'forum_ranks');
 		
 		PersistenceContext::get_dbms_utils()->truncate(PREFIX .'smileys');

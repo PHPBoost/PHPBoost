@@ -64,7 +64,7 @@ class Date
 	/**
 	 * @var int The timestamp of the current date
 	 */
-	private $timestamp = 0;
+	private $date_time;
 
 	/**
 	 * @desc Builds and initializes a date. It admits a variable number of parameters depending on the value of the first one.
@@ -131,13 +131,13 @@ class Date
 				$referencial_timezone = TIMEZONE_USER;
 			}
 
-			$time_difference = self::compute_server_user_difference($referencial_timezone);
+			$date_timezone = self::get_date_timezone($referencial_timezone);
 		}
 
 		switch ($format)
 		{
 			case DATE_NOW:
-				$this->timestamp = time();
+				$this->date_time = new DateTime();
 				break;
 
 				// Année mois jour
@@ -147,11 +147,11 @@ class Date
 					$year 	= func_get_arg(2);
 					$month 	= func_get_arg(3);
 					$day 	= func_get_arg(4);
-					$this->timestamp = mktime(0, 0, 0, $month, $day, $year) - $time_difference * 3600;
+					$this->date_time = new DateTime($year .'-'. $month .'-'. $day, $date_timezone);
 				}
 				else
 				{
-					$this->timestamp = 0;
+					$this->date_time = new DateTime();
 				}
 				break;
 
@@ -165,29 +165,32 @@ class Date
 					$hour 		= func_get_arg(5);
 					$minute 	= func_get_arg(6);
 					$seconds 	= func_get_arg(7);
-					$this->timestamp = mktime($hour, $minute, $seconds, $month, $day, $year) - $time_difference * 3600;
+					
+					$this->date_time = new DateTime($year .'-'. $month .'-'. $day .' '. $hour .':'. $minute .':'. $seconds, $date_timezone);
 				}
 				else
 				{
-					$this->timestamp = 0;
+					$this->date_time = new DateTime();
 				}
 				break;
 
 			case DATE_TIMESTAMP:
 				if ($num_args >= 3)
 				{
-					$this->timestamp = func_get_arg(2) - $time_difference * 3600;
+					$this->date_time = new DateTime();
+					$this->date_time->setTimezone($date_timezone);
+					$this->date_time->setTimestamp(func_get_arg(2));
 				}
 				else
 				{
-					$this->timestamp = 0;
+					$this->date_time = new DateTime();
 				}
 				break;
 
 			case DATE_FROM_STRING:
 				if ($num_args < 4)
 				{
-					$this->timestamp = 0;
+					$this->date_time = new DateTime();
 					break;
 				}
 				list($month, $day, $year) = array(0, 0, 0);
@@ -217,16 +220,16 @@ class Date
 				//Vérification du format de la date.
 				if (self::check_date($month, $day, $year))
 				{
-					$this->timestamp = @mktime(0, 0, 1, $month, $day, $year) - $time_difference * 3600;
+					$this->date_time = new DateTime($year .'-'. $month .'-'. $day, $date_timezone);
 				}
 				else
 				{
-					$this->timestamp = 0;
+					$this->date_time = new DateTime();
 				}
 				break;
 
 			default:
-				$this->timestamp = 0;
+				$this->date_time = new DateTime();
 		}
 	}
 
@@ -250,58 +253,58 @@ class Date
 	 */
 	public function format($format = self::FORMAT_DAY_MONTH, $referencial_timezone = TIMEZONE_USER)
 	{
-		$timestamp = $this->timestamp + self::compute_server_user_difference($referencial_timezone) * 3600;
+		$this->compute_server_user_difference($referencial_timezone);
 
 		if (is_string($format))
 		{
-			return date($format, $timestamp);
+			return $this->date_time->format($format);
 		}
 		
 		switch ($format)
 		{
 			case self::FORMAT_DAY_MONTH:
-				return date(LangLoader::get_message('date_format_day_month', 'date-common'), $timestamp);
+				return $this->date_time->format(LangLoader::get_message('date_format_day_month', 'date-common'));
 				break;
 				
 			case self::FORMAT_DAY_MONTH_YEAR:
-				return date(LangLoader::get_message('date_format_day_month_year', 'date-common'), $timestamp);
+				return $this->date_time->format(LangLoader::get_message('date_format_day_month_year', 'date-common'));
 				break;
 				
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
-				return date(LangLoader::get_message('date_format_day_month_year_hour_minute', 'date-common'), $timestamp);
+				return $this->date_time->format(LangLoader::get_message('date_format_day_month_year_hour_minute', 'date-common'));
 				break;
 
 			case self::FORMAT_TIMESTAMP:
-				return $timestamp;
+				return $this->date_time->getTimestamp();
 				break;
 				
 			case self::FORMAT_RFC2822:
-				return date('r', $timestamp);
+				return $this->date_time->format('r');
 				break;
 
 			case self::FORMAT_ISO8601:
-				return date('c', $timestamp);
+				return $this->date_time->format('c');
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR_LONG:
-				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_long', 'date-common'), $timestamp));
+				return self::transform_date($this->date_time->format(LangLoader::get_message('date_format_day_month_year_long', 'date-common')));
 				break;
 				
 			case self::FORMAT_DAY_MONTH_YEAR_TEXT:
-				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_text', 'date-common'), $timestamp));
+				return self::transform_date($this->date_time->format(LangLoader::get_message('date_format_day_month_year_text', 'date-common')));
 				break;
 				
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT:
-				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_hour_minute_text', 'date-common'), $timestamp));
+				return self::transform_date($this->date_time->format(LangLoader::get_message('date_format_day_month_year_hour_minute_text', 'date-common')));
 				break;
 				
 			case self::FORMAT_RELATIVE:
 				$now = new Date(DATE_NOW, $referencial_timezone);
 				
-				if ($now->get_timestamp() > $this->timestamp)
-					$time_diff = $now->get_timestamp() - $this->timestamp;
+				if ($now->get_timestamp() > $this->get_timestamp())
+					$time_diff = $now->get_timestamp() - $this->get_timestamp();
 				else 
-					$time_diff = $this->timestamp - $now->get_timestamp();
+					$time_diff = $this->get_timestamp() - $now->get_timestamp();
 				
 				$secondes = $time_diff;
 				$minutes = round($time_diff/60);
@@ -341,7 +344,16 @@ class Date
 	 */
 	public function get_timestamp()
 	{
-		return $this->timestamp;
+		return $this->date_time->getTimestamp();
+	}
+	
+	/**
+	 * @desc Returns DateTime
+	 * @return DateTime
+	 */
+	public function get_date_time()
+	{
+		return $this->date_time;
 	}
 
 	/**
@@ -351,14 +363,14 @@ class Date
 	 */
 	public function get_year($timezone = TIMEZONE_AUTO)
 	{
-		return date('Y', $this->get_adjusted_timestamp($timezone));
+		$this->compute_server_user_difference($timezone);
+		return $this->date_time->format('Y');
 	}
 
 	public function set_year($year, $referential_timezone = TIMEZONE_AUTO)
 	{
-		$adjusted_hours = $this->get_hours() - self::compute_server_user_difference($referential_timezone);
-		$this->set_date_from_values($year, $this->get_month(), $this->get_day(),
-		$adjusted_hours, $this->get_minutes(), $this->get_seconds());
+		$this->compute_server_user_difference($referential_timezone);
+		$this->date_time->setDate($year, $this->get_month(), $this->get_day());
 	}
 
 	/**
@@ -368,14 +380,14 @@ class Date
 	 */
 	public function get_month($timezone = TIMEZONE_AUTO)
 	{
-		return date('m', $this->get_adjusted_timestamp($timezone));
+		$this->compute_server_user_difference($timezone);
+		return $this->date_time->format('m');
 	}
 
 	public function set_month($month, $referential_timezone = TIMEZONE_AUTO)
 	{
-		$adjusted_hours = $this->get_hours() - self::compute_server_user_difference($referential_timezone);
-		$this->set_date_from_values($this->get_year(), $month, $this->get_day(),
-		$adjusted_hours, $this->get_minutes(), $this->get_seconds());
+		$this->compute_server_user_difference($referential_timezone);
+		$this->date_time->setDate($this->get_year(), $month, $this->get_day());
 	}
 	
 	/**
@@ -383,14 +395,15 @@ class Date
 	 * @param $timezone The timezone in which you want this value
 	 * @return string The week number
 	 */
-	public function get_week_number($timezone = TIMEZONE_AUTO)
+	public function get_week_number($referential_timezone = TIMEZONE_AUTO)
 	{
-		return date('W', $this->get_adjusted_timestamp($timezone));
+		$this->compute_server_user_difference($referential_timezone);
+		return $this->date_time->format('W');
 	}
 
 	public function set_week_number($week_number)
 	{
-		$this->timestamp = strtotime(($week_number-1) .'week', strtotime($this->get_year() . '-01 first day'));
+		$this->date_time->setISODate($this->get_year(), $week_number);
 	}
 
 	/**
@@ -400,14 +413,14 @@ class Date
 	 */
 	public function get_day($timezone = TIMEZONE_AUTO)
 	{
-		return (int)date('d', $this->get_adjusted_timestamp($timezone));
+		$this->compute_server_user_difference($timezone);
+		return (int)$this->date_time->format('d');
 	}
 
 	public function set_day($day, $referential_timezone = TIMEZONE_AUTO)
 	{
-		$adjusted_hours = $this->get_hours() - self::compute_server_user_difference($referential_timezone);
-		$this->set_date_from_values($this->get_year(), $this->get_month(), $day,
-		$adjusted_hours, $this->get_minutes(), $this->get_seconds());
+		$this->compute_server_user_difference($referential_timezone);
+		$this->date_time->setDate($this->get_year(), $this->get_month(), $day);
 	}
 	
 	/**
@@ -417,12 +430,13 @@ class Date
 	 */
 	public function get_day_of_year($timezone = TIMEZONE_AUTO)
 	{
-		return (int)date('z', $this->get_adjusted_timestamp($timezone));
+		$this->compute_server_user_difference($timezone);
+		return (int)$this->date_time->format('z');
 	}
 
 	public function set_day_of_year($day_of_year)
 	{
-		$this->timestamp = mktime(0, 0, 0, 1, $day_of_year, $this->get_year());
+		$this->date_time->modify($this->get_year() . '-01-00 ' . $day_of_year. 'days');
 	}
 
 	/**
@@ -432,14 +446,14 @@ class Date
 	 */
 	public function get_hours($timezone = TIMEZONE_AUTO)
 	{
-		return date('H', $this->get_adjusted_timestamp($timezone));
+		$this->compute_server_user_difference($timezone);
+		return $this->date_time->format('H');
 	}
 
 	public function set_hours($hours, $referential_timezone = TIMEZONE_AUTO)
 	{
-		$adjusted_hours = $hours - self::compute_server_user_difference($referential_timezone);
-		$this->set_date_from_values($this->get_year(), $this->get_month(), $this->get_day(),
-		$adjusted_hours, $this->get_minutes(), $this->get_seconds());
+		$this->compute_server_user_difference($referential_timezone);
+		$this->date_time->setTime($hours, $this->get_minutes(), $this->get_seconds());
 	}
 
 	/**
@@ -448,14 +462,13 @@ class Date
 	 */
 	public function get_minutes()
 	{
-		return date('i', $this->timestamp);
+		return $this->date_time->format('i');
 	}
 
 	public function set_minutes($minutes, $referential_timezone = TIMEZONE_AUTO)
 	{
-		$adjusted_hours = $this->get_hours() - self::compute_server_user_difference($referential_timezone);
-		$this->set_date_from_values($this->get_year(), $this->get_month(), $this->get_day(),
-		$adjusted_hours, $minutes, $this->get_seconds());
+		$this->compute_server_user_difference($referential_timezone);
+		$this->date_time->setTime($this->get_hours(), $minutes, $this->get_seconds());
 	}
 
 	/**
@@ -464,14 +477,13 @@ class Date
 	 */
 	public function get_seconds()
 	{
-		return date('s', $this->timestamp);
+		return $this->date_time->format('s');
 	}
 
-	public function set_seconds($second, $referential_timezone = TIMEZONE_AUTO)
+	public function set_seconds($seconds, $referential_timezone = TIMEZONE_AUTO)
 	{
-		$adjusted_hours = $this->get_hours() - self::compute_server_user_difference($referential_timezone);
-		$this->set_date_from_values($this->get_year(), $this->get_month(), $this->get_day(),
-		$adjusted_hours, $this->get_minutes(), $second);
+		$this->compute_server_user_difference($referential_timezone);
+		$this->date_time->setTime($this->get_hours(), $this->get_minutes(), $seconds);
 	}
 
 	/**
@@ -480,7 +492,7 @@ class Date
 	 */
 	public function to_date()
 	{
-		return date('Y-m-d', $this->timestamp);
+		return $this->date_time->format('Y-m-d');
 	}
 	
 	/**
@@ -490,7 +502,7 @@ class Date
 	 */
 	public function is_anterior_to(Date $date)
 	{
-		return $this->timestamp < $date->timestamp;
+		return $this->get_date_time() < $date->get_date_time();
 	}
 	
 	/**
@@ -510,7 +522,7 @@ class Date
 	 */
 	public function equals(Date $date)
 	{
-		return $this->timestamp == $date->timestamp;
+		return $this->get_date_time() == $date->get_date_time();
 	}
 
 	/**
@@ -519,7 +531,7 @@ class Date
 	 */
 	public function add_days($number_days)
 	{
-		$this->timestamp = $this->timestamp + ($number_days * 86400);
+		$this->date_time->modify('+'.$number_days.' days');
 	}
 
 	/**
@@ -528,7 +540,7 @@ class Date
 	 */
 	public function add_weeks($number_weeks)
 	{
-		$this->timestamp = $this->timestamp + ($number_weeks * 604800);
+		$this->date_time->modify('+'.$number_weeks.' weeks');
 	}
 
 	/**
@@ -537,7 +549,7 @@ class Date
 	 */
 	public function is_date_year_bissextile()
 	{
-		return date("L", mktime(0, 0, 0, 1, 1, $this->get_year())) == 1;
+		return $this->date_time->format('L') == 1;
 	}
 
 	/**
@@ -556,50 +568,33 @@ class Date
 	 * @desc Computes the time difference between the server and the current user
 	 * @return int The time difference (in hours)
 	 */
-	private static function compute_server_user_difference($referencial_timezone = TIMEZONE_SYSTEM)
+	private function compute_server_user_difference($referencial_timezone = TIMEZONE_SYSTEM)
 	{
-		// Number of hours separating GMT and server's timezone
-		$server_hour = self::get_server_timezone() - self::get_offset_due_to_daylight_saving_time();
+		$this->date_time->setTimezone(self::get_date_timezone($referencial_timezone));
+	}
+	
+	private static function get_date_timezone($referencial_timezone = TIMEZONE_SYSTEM)
+	{
 		switch ($referencial_timezone)
 		{
 			// Référentiel : heure du site
 			case TIMEZONE_SITE:
-				$timezone = GeneralConfig::load()->get_site_timezone() - $server_hour;
+				$date_timezone = new DateTimeZone(GeneralConfig::load()->get_site_timezone());
 				break;
 
-				//Référentiel : heure du serveur
+			//Référentiel : heure du serveur
 			case TIMEZONE_SYSTEM:
-				$timezone = 0;
+				$date_timezone = new DateTimeZone(date_default_timezone_get());
 				break;
 
 			case TIMEZONE_USER:
-				$timezone = AppContext::get_current_user()->get_timezone() - $server_hour;
+				$date_timezone = new DateTimeZone(AppContext::get_current_user()->get_timezone());
 				break;
 					
 			default:
-				$timezone = 0;
+				$date_timezone = new DateTimeZone(date_default_timezone_get());
 		}
-		return $timezone;
-	}
-	
-	private static function get_server_timezone()
-	{
-		return intval(date('Z') / 3600);
-	}
-	
-	private static function get_offset_due_to_daylight_saving_time()
-	{
-		return intval(date('I'));
-	}
-
-	private function set_date_from_values($year, $month, $day, $hours, $minutes, $seconds)
-	{
-		$this->timestamp = mktime($hours, $minutes, $seconds, $month, $day, $year);
-	}
-	
-	private function get_adjusted_timestamp($timezone)
-	{
-		return $this->timestamp + self::compute_server_user_difference($timezone) * 3600;
+		return $date_timezone;
 	}
 	
 	public static function set_default_timezone()

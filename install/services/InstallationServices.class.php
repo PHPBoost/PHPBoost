@@ -189,7 +189,7 @@ class InstallationServices
 		$general_config->set_site_keywords($site_keywords);
 		$general_config->set_module_home_page($this->distribution_config['module_home_page']);
 		$general_config->set_site_install_date(new Date());
-		$general_config->set_site_timezone((int)$site_timezone);
+		$general_config->set_site_timezone($site_timezone);
 		GeneralConfig::save();
 	}
 
