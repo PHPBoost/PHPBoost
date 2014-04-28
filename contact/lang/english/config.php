@@ -35,7 +35,7 @@ $lang['mail_address'] = 'Mail address';
 $lang['mail_address_explain'] = 'Must be valid if you want to be answered';
 $lang['contact_subject'] = 'Subject';
 $lang['contact_subject_explain'] = 'Sum up in a few words the subject of your request';
-$lang['contact_recipients'] = 'Recipients';
+$lang['contact_recipients'] = 'Recipient(s)';
 $lang['contact_recipients_admins'] = 'Administrators';
 $lang['message'] = 'Message';
 ?>

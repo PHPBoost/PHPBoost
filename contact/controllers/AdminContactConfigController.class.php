@@ -153,14 +153,15 @@ class AdminContactConfigController extends AdminModuleController
 			$this->config->disable_informations();
 		
 		if ($this->form->get_value('tracking_number_enabled'))
+		{
 			$this->config->enable_tracking_number();
+			if ($this->form->get_value('date_in_tracking_number_enabled'))
+				$this->config->enable_date_in_tracking_number();
+			else
+				$this->config->disable_date_in_tracking_number();
+		}
 		else
 			$this->config->disable_tracking_number();
-		
-		if ($this->form->get_value('date_in_tracking_number_enabled'))
-			$this->config->enable_date_in_tracking_number();
-		else
-			$this->config->disable_date_in_tracking_number();
 		
 		if ($this->form->get_value('sender_acknowledgment_enabled'))
 			$this->config->enable_sender_acknowledgment();

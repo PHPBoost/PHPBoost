@@ -20,7 +20,7 @@ var ContactFormFieldObjectPossibleValues = Class.create({
 				' ',
 				select,
 				' ',
-				Builder.node('a', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete', title : "${LangLoader::get_message('delete', 'main')}"
+				Builder.node('a', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete', title : "${LangLoader::get_message('delete', 'main')}"})
 			]);
 			$('input_fields_' + this.id_input).insert(div);
 			
