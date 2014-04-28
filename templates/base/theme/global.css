@@ -204,12 +204,6 @@ h4.bb-title { margin-left:60px; }
 /* Mise en forme du contenu
 --------------------------------------------------------------------  */
 
-/* Liste */
-ul, ol {
-	margin-left:20px;
-	margin-bottom:10px;
-}
-
 /* Menu cache */
 .bbcode-block {
 	position:absolute;
