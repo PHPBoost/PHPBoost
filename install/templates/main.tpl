@@ -8,6 +8,7 @@ ${resources('install/install')}
 		<meta name="robots" content="noindex, follow" />
 		
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css" />
 		<link type="text/css" href="templates/install.css" title="phpboost" rel="stylesheet" />
 		<script src="{PATH_TO_ROOT}/kernel/lib/js/top.js"></script>
 		<script src="templates/global.js"></script>
@@ -78,11 +79,9 @@ ${resources('install/install')}
 				</tr>
 				<tr>
 					<td class="row_next row_final">
-						<div style="margin:auto;width:200px">
-							<div style="text-align:center;margin-bottom:5px;">{STEP_TITLE} :&nbsp;{PROGRESSION}%</div>
-							<div style="float:left;height:20px;border:1px solid black;background:white;width:200px;padding:0px 3px 3px 3px;">
-								# START progress_bar #<img src="templates/images/progress.png" alt="" /># END progress_bar #
-							</div>
+						<div class="progressbar-container" style="margin:auto;width:200px">
+							<span class="progressbar-infos">{PROGRESSION}%</span>
+							<div class="progressbar" style="width:{PROGRESSION}%"></div>
 						</div>
 					</td>
 				</tr>
