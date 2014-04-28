@@ -38,8 +38,11 @@ class AdminContactFieldsListController extends AdminModuleController
 		$this->update_fields($request);
 		
 		$fields_number = 0;
-		foreach ($this->config->get_fields() as $id => $field)
+		foreach ($this->config->get_fields() as $id => $properties)
 		{
+			$field = new ContactField();
+			$field->set_properties($properties);
+			
 			$this->view->assign_block_vars('fields_list', array(
 				'C_DELETE' => $field->is_deletable(),
 				'C_READONLY' => $field->is_readonly(),
@@ -85,9 +88,9 @@ class AdminContactFieldsListController extends AdminModuleController
 		{
 			$fields = $this->config->get_fields();
 			if ($request->get_bool('display', true))
-				$fields[$id]->displayed();
+				$fields[$id]['displayed'] = 1;
 			else
-				$fields[$id]->not_displayed();
+				$fields[$id]['displayed'] = 0;
 			$this->config->set_fields($fields);
 			
 			ContactConfig::save();

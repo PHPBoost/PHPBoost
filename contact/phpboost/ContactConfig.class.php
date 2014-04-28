@@ -183,7 +183,7 @@ class ContactConfig extends AbstractConfigData
 		$id = null;
 		foreach (self::get_fields() as $key => $field)
 		{
-			if ($field->get_field_name() == $name)
+			if ($field['field_name'] == $name)
 				$id = $key;
 		}
 		return $id;
@@ -221,7 +221,7 @@ class ContactConfig extends AbstractConfigData
 		$field->readonly();
 		$field->not_deletable();
 		
-		$fields[1] = $field;
+		$fields[1] = $field->get_properties();
 		
 		$field = new ContactField();
 		$field->set_name(TextHelper::htmlspecialchars($lang['contact_subject']));
@@ -230,7 +230,7 @@ class ContactConfig extends AbstractConfigData
 		$field->set_field_type('ContactShortTextField');
 		$field->not_deletable();
 		
-		$fields[2] = $field;
+		$fields[2] = $field->get_properties();
 		
 		$field = new ContactField();
 		$field->set_name(TextHelper::htmlspecialchars($lang['contact_recipients']));
@@ -240,7 +240,7 @@ class ContactConfig extends AbstractConfigData
 		$field->not_deletable();
 		$field->not_displayed();
 		
-		$fields[3] = $field;
+		$fields[3] = $field->get_properties();
 		
 		$field = new ContactField();
 		$field->set_name(TextHelper::htmlspecialchars($lang['message']));
@@ -249,7 +249,7 @@ class ContactConfig extends AbstractConfigData
 		$field->readonly();
 		$field->not_deletable();
 		
-		$fields[4] = $field;
+		$fields[4] = $field->get_properties();
 		
 		return $fields;
 	}

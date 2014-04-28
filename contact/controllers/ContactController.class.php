@@ -92,8 +92,11 @@ class ContactController extends ModuleController
 		$fieldset = new FormFieldsetHTML('send_a_mail', $this->config->get_title());
 		$form->add_fieldset($fieldset);
 		
-		foreach($this->config->get_fields() as $id => $field)
+		foreach($this->config->get_fields() as $id => $properties)
 		{
+			$field = new ContactField();
+			$field->set_properties($properties);
+			
 			if ($field->is_displayed() && $field->is_authorized())
 			{
 				if ($field->get_field_name() == 'f_sender_mail')
@@ -118,13 +121,17 @@ class ContactController extends ModuleController
 		
 		$fields = $this->config->get_fields();
 		$recipients_field_id = $this->config->get_field_id_by_name('f_recipients');
-		$recipients = $fields[$recipients_field_id]->get_possible_values();
+		$recipients_field = new ContactField();
+		$recipients_field->set_properties($fields[$recipients_field_id]);
+		$recipients = $recipients_field->get_possible_values();
 		$recipients['admins']['email'] = implode(';', MailServiceConfig::load()->get_administrators_mails());
 		
 		$subject_field_id = $this->config->get_field_id_by_name('f_subject');
-		$subjects = $fields[$subject_field_id]->get_possible_values();
+		$subject_field = new ContactField();
+		$subject_field->set_properties($fields[$subject_field_id]);
+		$subjects = $subject_field->get_possible_values();
 		
-		if ($fields[$subject_field_id]->get_field_type() == 'ContactShortTextField')
+		if ($subject_field->get_field_type() == 'ContactShortTextField')
 			$subject = $this->form->get_value('f_subject');
 		else
 			$subject = $this->form->get_value('f_subject')->get_raw_value();
@@ -145,8 +152,11 @@ class ContactController extends ModuleController
 			$display_message_title = true;
 		}
 		
-		foreach($this->config->get_fields() as $id => $field)
+		foreach($this->config->get_fields() as $id => $properties)
 		{
+			$field = new ContactField();
+			$field->set_properties($properties);
+			
 			if ($field->is_displayed() && $field->is_authorized() && $field->is_deletable())
 			{
 				try{
@@ -173,9 +183,9 @@ class ContactController extends ModuleController
 		$mail->set_subject($subject);
 		$mail->set_content($message);
 		
-		if ($fields[$recipients_field_id]->is_displayed())
+		if ($recipients_field->is_displayed())
 		{
-			if (in_array($fields[$recipients_field_id]->get_field_type(), array('ContactSimpleSelectField', 'ContactSimpleChoiceField')))
+			if (in_array($recipients_field->get_field_type(), array('ContactSimpleSelectField', 'ContactSimpleChoiceField')))
 				$recipients_mails = explode(';', $recipients[$this->form->get_value('f_recipients')->get_raw_value()]['email']);
 			else
 			{
@@ -196,7 +206,7 @@ class ContactController extends ModuleController
 				$mail->add_recipient($mail_address);
 			}
 		}
-		else if ($fields[$subject_field_id]->get_field_type() != 'ContactShortTextField')
+		else if ($subject_field->get_field_type() != 'ContactShortTextField')
 		{
 			$recipient = $subjects[$this->form->get_value('f_subject')->get_raw_value()]['recipient'];
 			$recipients_mails = explode(';', $recipients[$recipient]['email']);

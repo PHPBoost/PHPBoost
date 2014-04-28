@@ -47,22 +47,28 @@ class ContactAjaxDeleteFieldController extends AbstractController
 		{
 			$config = ContactConfig::load();
 			$fields = $config->get_fields();
-			if (isset($fields[$id]) && $fields[$id]->is_deletable())
+			if (isset($fields[$id]))
 			{
-				unset($fields[$id]);
-				$new_fields_list = array();
+				$field = new ContactField();
+				$field->set_properties($fields[$id]);
 				
-				$position = 0;
-				foreach ($fields as $key => $field)
+				if ($field->is_deletable())
 				{
-					$position++;
-					$new_fields_list[$position] = $field;
+					unset($fields[$id]);
+					$new_fields_list = array();
+					
+					$position = 0;
+					foreach ($fields as $key => $field)
+					{
+						$position++;
+						$new_fields_list[$position] = $field;
+					}
+					
+					$config->set_fields($new_fields_list);
+					
+					ContactConfig::save();
+					$result = $position;
 				}
-				
-				$config->set_fields($new_fields_list);
-				
-				ContactConfig::save();
-				$result = $position;
 			}
 		}
 		

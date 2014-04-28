@@ -47,7 +47,7 @@ class ContactAjaxCheckFieldNameController extends AbstractController
 		{
 			foreach (ContactConfig::load()->get_fields() as $key => $f)
 			{
-				if ($key != $id && $f->get_field_name() == $field_name)
+				if ($key != $id && $f['field_name'] == $field_name)
 					$result = 1;
 			}
 		}
@@ -55,7 +55,7 @@ class ContactAjaxCheckFieldNameController extends AbstractController
 		{
 			foreach (ContactConfig::load()->get_fields() as $key => $f)
 			{
-				if ($f->get_field_name() == $field_name)
+				if ($f['field_name'] == $field_name)
 					$result = 1;
 			}
 		}

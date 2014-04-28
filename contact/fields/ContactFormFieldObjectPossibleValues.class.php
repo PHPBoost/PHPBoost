@@ -51,8 +51,10 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 		
 		$fields = $config->get_fields();
 		$recipients_field_id = $config->get_field_id_by_name('f_recipients');
+		$recipients_field = new ContactField();
+		$recipients_field->set_properties($fields[$recipients_field_id]);
 		
-		foreach ($fields[$recipients_field_id]->get_possible_values() as $id => $options)
+		foreach ($recipients_field->get_possible_values() as $id => $options)
 		{
 			if (!empty($options))
 			{
@@ -73,7 +75,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 					'NAME' => stripslashes($options['title']),
 					'IS_DEFAULT' => (int) $options['is_default']
 				));
-				foreach ($fields[$recipients_field_id]->get_possible_values() as $id => $recipient_options)
+				foreach ($recipients_field->get_possible_values() as $id => $recipient_options)
 				{
 					if (!empty($recipient_options))
 					{
@@ -95,7 +97,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 				'NAME' => '',
 				'IS_DEFAULT' => 0,
 			));
-			foreach ($fields[$recipients_field_id]->get_possible_values() as $id => $options)
+			foreach ($recipients_field->get_possible_values() as $id => $options)
 			{
 				if (!empty($options))
 				{

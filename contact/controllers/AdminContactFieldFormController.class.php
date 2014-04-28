@@ -216,13 +216,12 @@ class AdminContactFieldFormController extends AdminModuleController
 		{
 			$fields = $this->config->get_fields();
 			
+			$this->field = new ContactField();
+			
 			if (!empty($this->id) && isset($fields[$this->id]))
 			{
-				$this->field = $fields[$this->id];
-			}
-			else
-			{
-				$this->field = new ContactField();
+				$properties = $fields[$this->id];
+				$this->field->set_properties($properties);
 			}
 		}
 		return $this->field;
@@ -275,7 +274,7 @@ class AdminContactFieldFormController extends AdminModuleController
 		if (!$this->form->field_is_disabled('authorizations'))
 			$field->set_authorization($this->form->get_value('authorizations', $field->get_authorization())->build_auth_array());
 		
-		$fields[!empty($this->id) ? $this->id : count($this->config->get_fields()) + 1] = $field;
+		$fields[!empty($this->id) ? $this->id : count($this->config->get_fields()) + 1] = $field->get_properties();
 		
 		$this->config->set_fields($fields);
 		
@@ -284,13 +283,13 @@ class AdminContactFieldFormController extends AdminModuleController
 	
 	private function get_array_select_type($field_name)
 	{
-		$module_select = array();
+		$types = array();
 		
 		foreach ($this->get_fields_class_name($field_name) as $field_type)
 		{
-			$module_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
+			$types[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
 		}
-		return $module_select;
+		return $types;
 	}
 	
 	private function get_array_select_regex()
@@ -335,19 +334,7 @@ class AdminContactFieldFormController extends AdminModuleController
 					$event .= ' || HTMLForms.getField("field_type").getValue() == "'. $name .'"';
 				}
 				$event .= ') { 
-					HTMLForms.getField("' .$name_field_disable. '").disable();';
-					if ($name_field_disable == 'regex')
-					{
-						$event .= 'HTMLForms.getField("regex").disable();
-						HTMLForms.getField("regex_type").disable();';
-					}
-					$event .= '} else {	HTMLForms.getField("' .$name_field_disable. '").enable();';
-					if ($name_field_disable == 'regex')
-					{
-						$event .= 'HTMLForms.getField("regex").disable();
-						HTMLForms.getField("regex_type").enable();';
-					}
-					$event .= '}';
+					' . ($name_field_disable != 'regex' ? 'HTMLForms.getField("' .$name_field_disable. '").disable();' : '') . '} else { HTMLForms.getField("' .$name_field_disable. '").enable(); }';
 			}
 		}
 		return $event;
