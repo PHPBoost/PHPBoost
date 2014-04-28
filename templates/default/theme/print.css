@@ -1,24 +1,14 @@
 body{
-	width:98%;
-	background-color:white;
-	font-size:12px;
- 	font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
-	color:black;
+	width: 98%;
+	background-color: white;
+	font-size: 12px;
+ 	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+	color: black;
 }
-h1{
-	border-bottom:1px solid black;
-}
-table
-{
-	border-collapse: collapse;
-}
+h1 { border-bottom: 1px solid black; }
 
-td, th
-{
-	border:1px solid black;
-}
+table { border-collapse: collapse; }
 
-th
-{
-	font-weight: bold;
-}
+td, th { border: 1px solid black; }
+
+th { font-weight: bold; }
