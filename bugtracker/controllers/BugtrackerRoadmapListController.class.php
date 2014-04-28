@@ -197,10 +197,12 @@ class BugtrackerRoadmapListController extends ModuleController
 			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap(Url::encode_rewrite($requested_version['name']))->rel() .'" + "/" + HTMLForms.getField("status").getValue();')
 		)));
 		
+		$release_date = !empty($requested_version['release_date']) && is_numeric($requested_version['release_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $requested_version['release_date']) : null;
+		
 		$fieldset = new FormFieldsetHorizontal('informations');
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldHTML('informations', (!empty($requested_version['release_date'])  ? $this->lang['labels.fields.version_release_date'] . ' : <b>' . $requested_version['release_date']->format(Date::FORMAT_DAY_MONTH_YEAR) . '</b><br />' : '') . ($requested_status == Bug::IN_PROGRESS ? $this->lang['labels.number_in_progress'] : $this->lang['labels.number_fixed']) . ' : ' . $nbr_bugs));
+		$fieldset->add_field(new FormFieldHTML('informations', (!empty($release_date) ? $this->lang['labels.fields.version_release_date'] . ' : <b>' . $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) . '</b><br />' : '') . ($requested_status == Bug::IN_PROGRESS ? $this->lang['labels.number_in_progress'] : $this->lang['labels.number_fixed']) . ' : ' . $nbr_bugs));
 		
 		return $form;
 	}

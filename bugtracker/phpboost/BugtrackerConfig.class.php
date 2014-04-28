@@ -519,7 +519,9 @@ class BugtrackerConfig extends AbstractConfigData
 		$versions_fix = array();
 		foreach ($versions as $key => $version)
 		{
-			if (empty($version['release_date']) || $version['release_date']->get_timestamp() >= $now->get_timestamp())
+			$release_date = !empty($version['release_date']) && is_numeric($version['release_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $version['release_date']) : null;
+			
+			if (empty($release_date) || $release_date->get_timestamp() >= $now->get_timestamp())
 				$versions_fix[$key] = $version;
 		}
 		return $versions_fix;
