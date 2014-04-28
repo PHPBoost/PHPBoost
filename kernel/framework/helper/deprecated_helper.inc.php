@@ -256,33 +256,8 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 		$timestamp = time();
 	}
 
-	// Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
-	$serveur_hour = NumberHelper::round(date('Z')/3600, 0) - date('I');
-
-	if ($timezone_system == 1) //Timestamp du site, non dépendant de l'utilisateur.
-	{
-		$timezone = GeneralConfig::load()->get_site_timezone() - $serveur_hour;
-	}
-	elseif ($timezone_system == 2) //Timestamp du serveur, non dépendant de l'utilisateur et du fuseau par défaut du site.
-	{
-		$timezone = 0;
-	}
-	else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
-	{
-		$timezone = AppContext::get_current_user()->get_attribute('user_timezone') - $serveur_hour;
-	}
-
-	if ($timezone != 0)
-	{
-		$timestamp += $timezone * 3600;
-	}
-
-	if ($timestamp <= 0)
-	{
-		return '';
-	}
-
-	return date($format, $timestamp);
+	$date = new Date(DATE_TIMESTAMP, $timezone_system, $timestamp);
+	return $date->format($format);
 }
 
 /**
