@@ -55,7 +55,7 @@ class ContactConstraintFieldExist extends AbstractFormFieldConstraint
 		{
 			foreach (ContactConfig::load()->get_fields() as $id => $f)
 			{
-				if ($id != $this->field_id && $f->get_field_name() == $field_name)
+				if ($id != $this->field_id && $f['field_name'] == $field_name)
 					$valid = false;
 			}
 		}
@@ -63,7 +63,7 @@ class ContactConstraintFieldExist extends AbstractFormFieldConstraint
 		{
 			foreach (ContactConfig::load()->get_fields() as $id => $f)
 			{
-				if ($f->get_field_name() == $field_name)
+				if ($f['field_name'] == $field_name)
 					$valid = false;
 			}
 		}

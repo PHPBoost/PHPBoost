@@ -100,7 +100,7 @@ class ContactField
 		return $this->default_value;
 	}
 	
-	public function set_possible_values($possible_values)
+	public function set_possible_values(Array $possible_values)
 	{
 		$this->possible_values = $possible_values;
 	}
@@ -221,6 +221,39 @@ class ContactField
 		$field = Url::encode_rewrite($field);
 		$field = str_replace('-', '_', $field);
 		return 'f_' . $field;
+	}
+	
+	public function get_properties()
+	{
+		return array(
+			'name' => $this->get_name(),
+			'field_name' => $this->get_field_name(),
+			'description' => $this->get_description(),
+			'field_type' => $this->get_field_type(),
+			'default_value' => $this->get_default_value(),
+			'possible_values' => serialize($this->get_possible_values()),
+			'required' => (int)$this->is_required(),
+			'displayed' => (int)$this->is_displayed(),
+			'regex' => $this->get_regex(),
+			'readonly' => (int)$this->is_readonly(),
+			'deletable' => (int)$this->is_deletable(),
+			'authorization' => serialize($this->get_authorization())
+		);
+	}
+	
+	public function set_properties(array $properties)
+	{
+		$this->name = $properties['name'];
+		$this->field_name = $properties['field_name'];
+		$this->description = $properties['description'];
+		$this->field_type = $properties['field_type'];
+		$this->default_value = $properties['default_value'];
+		$this->possible_values = !empty($properties['possible_values']) ? unserialize($properties['possible_values']) : array();
+		$this->required = (bool)$properties['required'];
+		$this->displayed = (bool)$properties['displayed'];
+		$this->readonly = (bool)$properties['readonly'];
+		$this->deletable = (bool)$properties['deletable'];
+		$this->authorization = !empty($properties['authorization']) ? unserialize($properties['authorization']) : array();
 	}
 }
 ?>

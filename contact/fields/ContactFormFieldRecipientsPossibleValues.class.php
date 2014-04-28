@@ -97,7 +97,9 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 		$config = ContactConfig::load();
 		$fields = $config->get_fields();
 		$recipients_field_id = $config->get_field_id_by_name('f_recipients');
-		$recipients = $fields[$recipients_field_id]->get_possible_values();
+		$recipients_field = new ContactField();
+		$recipients_field->set_properties($fields[$recipients_field_id]);
+		$recipients = $recipients_field->get_possible_values();
 		$nb_recipients = count($recipients);
 		$recipients_keys = array_keys($recipients);
 		
