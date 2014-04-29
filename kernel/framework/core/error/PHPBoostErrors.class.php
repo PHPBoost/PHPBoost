@@ -38,6 +38,7 @@ class PHPBoostErrors
 	
 	public static function module_not_installed()
 	{
+		AppContext::get_response()->set_status_code(404);
         $lang = LangLoader::get('errors');
 		$controller = new UserErrorController(
 		$lang['e_uninstalled_module'],
@@ -48,6 +49,7 @@ class PHPBoostErrors
 
 	public static function module_not_activated()
 	{
+		AppContext::get_response()->set_status_code(404);
 		$lang = LangLoader::get('errors');
 		$controller = new UserErrorController($lang['error'], $lang['e_unactivated_module']);
 		return $controller;
@@ -55,6 +57,7 @@ class PHPBoostErrors
 	
 	public static function user_not_authorized()
 	{
+		AppContext::get_response()->set_status_code(401);
 		$lang = LangLoader::get('errors');
 		$controller = new UserErrorController($lang['error'], $lang['e_auth']);
 		return $controller;
@@ -69,6 +72,7 @@ class PHPBoostErrors
 	
     public static function unexisting_page()
     {
+    	AppContext::get_response()->set_status_code(404);
 		$lang = LangLoader::get('errors');
 		$controller = new UserErrorController($lang['error'], $lang['e_unexist_page']);
 		return $controller;
@@ -119,6 +123,7 @@ class PHPBoostErrors
 
 	public static function unexisting_member()
 	{
+		AppContext::get_response()->set_status_code(404);
 		$lang = LangLoader::get('errors');
 		$controller = new UserErrorController($lang['error'], $lang['e_unexist_member']);
 		return $controller;
@@ -126,6 +131,7 @@ class PHPBoostErrors
 	
     public static function unexisting_category()
     {
+    	AppContext::get_response()->set_status_code(404);
 		$lang = LangLoader::get('errors');
 		$controller = new UserErrorController($lang['error'], $lang['e_unexist_cat']);
 		return $controller;
@@ -140,6 +146,7 @@ class PHPBoostErrors
     
 	public static function member_not_enabled()
 	{
+		AppContext::get_response()->set_status_code(404);
 		$lang = LangLoader::get('errors');
 		$controller = new UserErrorController($lang['error'], $lang['e_unactiv_member']);
 		return $controller;

@@ -162,11 +162,11 @@ class HTTPResponseCustom
 	 * @desc Send the status code
 	 * @param int $status_code
 	 */
-	private function set_status_code($status_code)
+	public function set_status_code($status_code)
 	{
 		if (isset(self::$status_list[$status_code]))
 		{
-			header(self::PROTOCOL . $status_code . self::$status_list[$status_code]);
+			header(self::PROTOCOL . ' ' . $status_code . ' ' . self::$status_list[$status_code]);
 		}
 	}
 }

@@ -208,14 +208,12 @@ elseif (!empty($error))
 	switch ($error)
 	{
 		case 'e_page_not_found' :
-			$controller = new UserErrorController($LANG['error'], $LANG['pages_not_found']);
-			$controller->set_error_type(UserErrorController::WARNING);
-			DispatchManager::redirect($controller);
+			$error_controller = PHPBoostErrors::unexisting_page();
+   			DispatchManager::redirect($error_controller);
 			break;
 		case 'e_auth' :
-			$controller = new UserErrorController($LANG['error'], $LANG['pages_error_auth_read']);
-			$controller->set_error_type(UserErrorController::WARNING);
-			DispatchManager::redirect($controller);
+			$error_controller = PHPBoostErrors::user_not_authorized();
+		   	DispatchManager::redirect($error_controller);
 			break;
 		case 'e_auth_com' :
 			$controller = new UserErrorController($LANG['error'], $LANG['pages_error_auth_com']);
