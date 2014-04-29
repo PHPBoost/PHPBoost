@@ -6,7 +6,7 @@ Contient les conteneur, fortement dépendant du design.
 html, body{	height: 100%; }
 
 body {
-    background: #E8EDF3 url(images/global.png) repeat-x;
+    background: #E8EDF3 url(images/body.png) repeat-x;
     font-size: 13px;
     font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
     color: #3F5164;
