@@ -108,6 +108,7 @@ $stats_array_os = array(
    'android' => array('Android', 'android.png'),
    'ios' => array('IOS', 'iphone.png'),
    'linux' => array('Linux', 'linux.png'),
+   'windows8.1' => array('Windows 8.1', 'windows8.png'),
    'windows8' => array('Windows 8', 'windows8.png'),
    'windowsseven' => array('Windows 7', 'windowsseven.png'),
    'windowsvista' => array('Windows Vista', 'windowsvista.png'),

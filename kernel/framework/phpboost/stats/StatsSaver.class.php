@@ -159,6 +159,7 @@ class StatsSaver
 		$array_os = array(
 			'android' => 'android',
 			'iphone|ipad' => 'ios',
+			'windows nt 6.3' => 'windows8.1',
 			'windows nt 6.2' => 'windows8',
 			'windows nt 6.1|seven' => 'windowsseven',
 			'windows nt 6.0|vista' => 'windowsvista',
