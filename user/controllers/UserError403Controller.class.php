@@ -37,6 +37,7 @@ class UserError403Controller extends UserErrorController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
+		AppContext::get_response()->set_status_code(403);
 		return parent::execute($request);
 	}
 }
