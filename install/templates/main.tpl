@@ -24,6 +24,13 @@ ${resources('install/install')}
 	<body>
 	<div id="global">
 		<div id="header-container">
+			<div id="site-infos">
+			<div id="site-logo"></div>
+			<div id="site-name-container">
+				<a id="site-name" title="PHPBoost CMS">PHPBoost CMS</a>
+				<span id="site-slogan">Créez votre site internet facilement et gratuitement !</span>
+			</div>
+		</div>
 		</div>
 		<div id="left-menu">
             # IF NOT C_HAS_PREVIOUS_STEP #
