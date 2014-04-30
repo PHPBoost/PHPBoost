@@ -16,11 +16,50 @@ div#global {
     padding-bottom: 60px; /* Taille du footer */
 }
 div#header-container {
-    background: url(images/header.png) no-repeat;
-    background-position: 50px 30px;
 	margin-bottom: 8px;
 	height: 174px;
 }
+
+div#site-infos {
+	float: left;
+	height: 90px;
+	max-width: 690px;
+	margin: 20px 20px 0px 20px;
+}
+
+div#site-logo {
+	float: left;
+	margin-right: 20px;
+	background: url('images/logo.png') no-repeat;
+	height: 90px;
+	width: 90px;
+}
+
+div#site-name-container {
+	float: left;
+	margin-top: 10px;
+}
+
+a#site-name {
+	color: #F9FCFF;
+	font-size: 50px;
+	font-weight: bold;
+	line-height: 1em;
+	text-shadow: 0px 0px 0 rgb(0,0,0), 1px 0px 0 rgb(-255,-255,-255), 2px 0px 1px rgba(0,0,0,0.1), 2px 0px 1px rgba(0,0,0,0.2), 0px 0px 1px rgba(0,0,0,.1);
+	letter-spacing: 1.1pt;
+	text-decoration: none;
+}
+
+span#site-slogan {
+	display: block;
+	color: #FFFFFF;
+	font-size: 12px;
+	padding-left: 4px;
+	letter-spacing: 1.5pt;
+}
+
+
+
 div#left-menu {
 	width: 225px;
 	padding-left: 6px;
