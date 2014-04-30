@@ -186,7 +186,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 			$array_versions[] = new FormFieldSelectChoiceOption(' ', 0);
 			foreach ($versions as $key => $version)
 			{
-				if ($key >= $this->bug->get_detected_in())
+				if ($key > $this->bug->get_detected_in())
 					$array_versions[] = new FormFieldSelectChoiceOption(stripslashes($version['name']), $key);
 			}
 			
