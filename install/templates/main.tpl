@@ -23,18 +23,18 @@ ${resources('install/install')}
 	</head>
 	<body>
 	<div id="global">
-		<div id="header_container">
+		<div id="header-container">
 		</div>
-		<div id="left_menu">
+		<div id="left-menu">
             # IF NOT C_HAS_PREVIOUS_STEP #
-			<table class="table_left">
+			<table class="table-left">
 				<tr>
-					<td class="row_top">
+					<td class="row-top">
 						{@language.change}
 					</td>
 				</tr>
 				<tr>
-					<td class="row_next row_final" style="text-align:center;">
+					<td class="row-next row-final" style="text-align:center;">
 						<form action="{U_CHANGE_LANG}" method="post">
 							<p>
 								<select name="new_language" id="change_lang" onchange="document.location='index.php?lang=' + document.getElementById('change_lang').value;">
@@ -57,9 +57,9 @@ ${resources('install/install')}
 				</tr>
 			</table>
 			# END IF #
-			<table class="table_left">
+			<table class="table-left">
 				<tr>
-					<td class="row_top">
+					<td class="row-top">
 						{@steps.list}
 					</td>
 				</tr>
@@ -71,14 +71,14 @@ ${resources('install/install')}
 					</tr>
 				# END step #
 			</table>
-			<table class="table_left">
+			<table class="table-left">
 				<tr>
-					<td class="row_top">
+					<td class="row-top">
 						{@installation.progression}
 					</td>
 				</tr>
 				<tr>
-					<td class="row_next row_final">
+					<td class="row-next row-final">
 						<div class="progressbar-container" style="margin:auto;width:200px">
 							<span class="progressbar-infos">{PROGRESSION}%</span>
 							<div class="progressbar" style="width:{PROGRESSION}%"></div>
@@ -86,21 +86,21 @@ ${resources('install/install')}
 					</td>
 				</tr>
 			</table>
-			<table class="table_left">
+			<table class="table-left">
 				<tr>
-					<td class="row_top">
+					<td class="row-top">
 						{@appendices}
 					</td>
 				</tr>
 				<tr>
-					<td class="row_next">
+					<td class="row-next">
 						<img src="templates/images/help.png" alt="{@documentation}" class="valign-middle" />
 						&nbsp;&nbsp;
 						<a href="{@documentation.link}">{@documentation}</a>
 					</td>
 				</tr>
 				<tr>
-					<td class="row_next row_final">
+					<td class="row-next row-final">
 						<img src="templates/images/intro.png" alt="{@installation.restart}" class="valign-middle" />
 						&nbsp;&nbsp;
 						<a href="{RESTART}" onclick="return confirm('${escapejs(@installation.confirmRestart)}');">{@installation.restart}</a>
@@ -110,21 +110,17 @@ ${resources('install/install')}
 		</div>
 
 		<div id="main">
-			<table class="table_contents">
-				<tr>
-					<th colspan="2">
-						<div style="text-align:right;padding-top:5px;padding-right:30px;"><img src="templates/images/phpboost.png" alt="Logo PHPBoost" class="valign-middle" /> {STEP_TITLE}</div>
-					</th>
-				</tr>
-
-				<tr>
-					<td class="row_contents">
-                        # INCLUDE installStep #
-					</td>
-				</tr>
-			</table>
+			<div id="main-content">
+				<div style="text-align: right; padding: 0px 30px 5px 0px; margin-bottom: 10px; border-bottom: 1px solid #EFEFEF;">
+					<img src="templates/images/phpboost.png" alt="Logo PHPBoost" class="valign-middle" /> {STEP_TITLE}
+				</div>
+				# INCLUDE installStep #
+			</div>
 		</div>
+		
+		<div class="spacer"></div>
 	</div>
+	
 	<div id="footer">
 		<span>
 			{@poweredBy} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {@phpboost.rights}
