@@ -63,7 +63,7 @@ section footer, article footer { margin-bottom: 15px; }
 section footer ul.pagination {	text-align: center; }
 
 ul.pagination { margin: 0px; }
-ul.pagination .fa: before { font-size: 12px; }
+ul.pagination .fa:before { font-size: 12px; }
 
 ul.pagination-block { margin: 5px 0px; }
 ul.pagination-block li { padding: 2px 2px; }
@@ -90,13 +90,13 @@ ul.pagination-block li a {
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
 
-ul.pagination-block li a: hover {
+ul.pagination-block li a:hover {
 	background-color: #FDFDFD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
 	transition: all 0.1s linear;
 }
 
-ul.pagination-block li a: active { 
+ul.pagination-block li a:active { 
 	background-color: #F1F1F1;
 	border: 1px solid #DDDDDD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
@@ -108,7 +108,7 @@ ul.pagination-block li a.current-page {
 	border-color: #366393;
 	text-decoration: none;
 }
-ul.pagination-block li a.current-page: hover, ul.pagination-block li a.current-page: hover{ 
+ul.pagination-block li a.current-page:hover, ul.pagination-block li a.current-page:hover{ 
 	background-color: #366393;
 	border-color: #315A86;
 }
@@ -121,8 +121,8 @@ ul.pagination-block-bis li a.next-page {
 	text-shadow: none;
 }
 
-ul.pagination-block-bis li a.prev-page: hover,
-ul.pagination-block-bis li a.next-page: hover { text-decoration: underline; }
+ul.pagination-block-bis li a.prev-page:hover,
+ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
 
 /* Block */
 .block, .medium-block, .small-block {
@@ -199,18 +199,18 @@ ul.pagination-block-bis li a.next-page: hover { text-decoration: underline; }
 
 .explorer .content ul a.parent .fa: first-child { width: 14px; }
 
-.explorer .content ul .fa: before {
+.explorer .content ul .fa:before {
 	width: 20px;
 	text-align: center;
 	vertical-align: middle;
 }
 
-.explorer .content ul a.parent .fa: first-child: before {
+.explorer .content ul a.parent .fa: first-child:before {
 	width: 14px;
 	font-size: 11px;
 }
 
-.explorer .content ul a: hover, .explorer .content ul a: hover+a { background-color: #EEEEEE; }
+.explorer .content ul a:hover, .explorer .content ul a:hover+a { background-color: #EEEEEE; }
 
 .explorer .content ul .sub a, .explorer .content ul .sub ul .sub { padding-left: 18px; }
 
@@ -262,7 +262,7 @@ table thead th {
 table thead th: first-child { border-top-left-radius: 3px; }
 table thead th: last-child {	border-top-right-radius: 3px; }
 table thead th a { color: #E5E6E6; }
-table thead th a: hover { color: #FFFFFF; }
+table thead th a:hover { color: #FFFFFF; }
 
 /* Contenu */
 table tbody td {
@@ -343,13 +343,13 @@ button, .button {
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
 
-button: hover, .button-hover {
+button:hover, .button-hover {
 	background-color: #FDFDFD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
 	transition: all 0.1s linear;
 }
 
-button: active, .button-active { 
+button:active, .button-active { 
 	background-color: #F1F1F1;
 	border: 1px solid #DDDDDD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
@@ -365,7 +365,7 @@ button[name=submit] {
 	background-color: #3B6B9F;
 	border-color: #366393;
 }
-button[name=submit]: hover{ 
+button[name=submit]:hover{ 
 	background-color: #366393;
 	border-color: #315A86;
 }
@@ -384,7 +384,7 @@ button[type=reset] { font-weight: bold; }
 	margin: 1px;
 }
 
-.basic-button: hover {
+.basic-button:hover {
 	background: #3D6997;
 	color: #FFFFFF;
 	text-decoration: none;
@@ -392,7 +392,7 @@ button[type=reset] { font-weight: bold; }
 
 .basic-button.alt { background: #AAAAAA; }
 
-.basic-button.alt: hover { background: #BBBBBB; }
+.basic-button.alt:hover { background: #BBBBBB; }
 
 /* Formulaires 
 --------------------------------------*/
@@ -456,13 +456,13 @@ input[type=text], input[type=password], textarea, input[type=file], select {
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 }
 
-input[type=text]: hover, input[type=password]: hover, textarea: hover, input[type=file]: hover, select: hover {
+input[type=text]:hover, input[type=password]:hover, textarea:hover, input[type=file]:hover, select:hover {
 	color: #333333;
 	border: 1px solid #BBBBBB;
 	background-color: #FFFFFF; 
 }
 
-input[type=text]: focus, input[type=password]: focus, textarea: focus, input[type=file]: focus, select: focus {
+input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=file]:focus, select:focus {
 	color: #222222;
 	border-color: #BBBBBB;
 	outline: 0;
@@ -512,14 +512,14 @@ input.field-xlarge { width: 300px; }
 	line-height: 12px;
 }
 
-input[disabled=disabled], input[disabled=disabled]: hover, input[disabled=disabled]: focus {
+input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disabled]:focus {
 	cursor: not-allowed;
 	background: #F1F1F1;
 	color: #AAAAAA;
 	border: 1px solid #CCCCCC;
 }
 
-input[readonly=readonly], input[readonly=readonly]: hover, input[readonly=readonly]: focus {
+input[readonly=readonly], input[readonly=readonly]:hover, input[readonly=readonly]:focus {
 	background: #FAFAFA;
 	color: #888888;
 	border: 1px solid #CCCCCC;
@@ -543,15 +543,15 @@ textarea {
 	color: #C43C35;
 }
 
-.constraint-status-error input: hover, .constraint-status-error input: focus, 
-.constraint-status-error textarea: hover, form .constraint-status-error textarea: focus {
+.constraint-status-error input:hover, .constraint-status-error input:focus, 
+.constraint-status-error textarea:hover, form .constraint-status-error textarea:focus {
 	border-color: rgba(196, 60, 43, 0.5);
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
 	color: #C43C35;
 }
 
-.constraint-status-right i.picture-status-constraint: before { content: "\f00c"; color: #57A957; }
-.constraint-status-error i.picture-status-constraint: before { content: "\f056"; color: #C43C35; }
+.constraint-status-right i.picture-status-constraint:before { content: "\f00c"; color: #57A957; }
+.constraint-status-error i.picture-status-constraint:before { content: "\f056"; color: #C43C35; }
 .text-status-constraint { font-weight: bold; }
 .form-element-textarea .text-status-constraint { display: inline-block; margin-bottom: 5px; }
 
@@ -618,7 +618,7 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 	margin: 10px 6px;
 }
 
-.sortable-block .sortable-element: hover {
+.sortable-block .sortable-element:hover {
 	border: 1px solid #d0d8e1;
 	cursor: move;
 	-moz-box-shadow: 0px 0px 5px #EAEAEA;
@@ -637,7 +637,7 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 	font-weight: bold;
 }
 
-.sortable-block .sortable-title: hover{ 
+.sortable-block .sortable-title:hover{ 
 	background-image: linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
 	background-image: -o-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
 	background-image: -moz-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
@@ -680,8 +680,8 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 	margin-left: 14px;
 }
 
-.sortable-block .sortable-element .fa: not(.fa-arrows): hover, .sortable-block .sortable-actions img { cursor: pointer; }
-.sortable-block .sortable-element: hover label { cursor: pointer; }
+.sortable-block .sortable-element .fa: not(.fa-arrows):hover, .sortable-block .sortable-actions img { cursor: pointer; }
+.sortable-block .sortable-element:hover label { cursor: pointer; }
 
 /* Gestion des Menus */
 .menu_link_list {
@@ -703,15 +703,15 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
     border: 1px solid #8F8F8F;
 }
 
-.menu_link_element: hover {
+.menu_link_element:hover {
     border-color: #aaaaaa;
     cursor: move;
 }
 
 .menu_link_element label { color: #1F507F; }
-.menu_link_element: hover label { cursor: move; }
-.menu_link_element: hover img { cursor: pointer; }
-.menu_link_element: hover label { cursor: pointer; }
+.menu_link_element:hover label { cursor: move; }
+.menu_link_element:hover img { cursor: pointer; }
+.menu_link_element:hover label { cursor: pointer; }
 
 /* Interface des menus */
 #valid_position_menus {
@@ -789,10 +789,10 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 	width: 16px;	
 }
 
-.menus-block-container: hover > div.menus_block_move_top { 
+.menus-block-container:hover > div.menus_block_move_top { 
 	background: url('../images/admin/move_top.png');
 }
-.menus-block-container: hover > div.menus_block_move_bot { 
+.menus-block-container:hover > div.menus_block_move_bot { 
 	background: url('../images/admin/move_bot.png');
 }
 
