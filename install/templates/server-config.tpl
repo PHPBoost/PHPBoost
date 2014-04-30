@@ -56,14 +56,14 @@
             <label>{folder.NAME}</label>
             <div class="form-field">
                 # IF folder.EXISTS #
-                    <div class="success_block">{@folder.exists}</div>
+                    <div class="success-block">{@folder.exists}</div>
                 # ELSE #
-                    <div class="failure_block">{@folder.doesNotExist}</div>
+                    <div class="failure-block">{@folder.doesNotExist}</div>
                 # ENDIF #
                 # IF folder.IS_WRITABLE #
-                    <div class="success_block">{@folder.isWritable}</div>
+                    <div class="success-block">{@folder.isWritable}</div>
                 # ELSE #
-                    <div class="failure_block">{@folder.isNotWritable}</div>
+                    <div class="failure-block">{@folder.isNotWritable}</div>
                 # ENDIF #
             </div>
         </div>
