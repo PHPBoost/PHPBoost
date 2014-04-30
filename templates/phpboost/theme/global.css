@@ -46,7 +46,7 @@
 }
 
 .calendar-block .date-picker select,
-.calendar-block .date-picker select: focus{
+.calendar-block .date-picker select:focus{
 	box-shadow: none;
 }
 
@@ -122,7 +122,7 @@ a {
 	text-decoration: none;
 }
 
-a: hover {
+a:hover {
 	color: #2D4D73;
 	text-decoration: underline;
 }
@@ -135,17 +135,17 @@ a.member { color: #000000; }
 
 /* Icônes spécifique PHPBoost
 ------------------------------------ */
-.fa-syndication: before { color: #F57900; }
-.fa-success: before { color: #478948; }
-.fa-forbidden: before { color: #BA4B49; }
-.fa-error: before { color: #BA4B49; }
-.fa-warning: before { color: #C19954; }
-.fa-ban: before { color: #BA4B49; }
-.fa-unban: before { color: #478948; }
-.fa-male: before { color: #8DC3E9; }
-.fa-female: before { color: #F49CC4; }
-.fa-online: before { color: #52D132; }
-.fa-offline: before { color: #E05759; }
+.fa-syndication:before { color: #F57900; }
+.fa-success:before { color: #478948; }
+.fa-forbidden:before { color: #BA4B49; }
+.fa-error:before { color: #BA4B49; }
+.fa-warning:before { color: #C19954; }
+.fa-ban:before { color: #BA4B49; }
+.fa-unban:before { color: #478948; }
+.fa-male:before { color: #8DC3E9; }
+.fa-female:before { color: #F49CC4; }
+.fa-online:before { color: #52D132; }
+.fa-offline:before { color: #E05759; }
 
 li.small-block .fa-stack { height: 2.34em; }
 
@@ -305,7 +305,7 @@ h4.bb-title { margin-left: 60px; }
 .code ol { margin-left: 3em; }
 
 /*Lien vers Wikipedia*/
-a.wikipedia-link: before {
+a.wikipedia-link:before {
 	content: url('../../default/images/wikipedia_icon.png');
 	vertical-align: middle;
 	padding-right: 2px;
@@ -341,11 +341,11 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	font-size: 11px;
 }
 
-.dynamic-menu > ul > li: hover {
+.dynamic-menu > ul > li:hover {
 	background-color: #EEEEEE;
 }
 
-.dynamic-menu > ul > li > a, .dynamic-menu > ul > li > a: hover {
+.dynamic-menu > ul > li > a, .dynamic-menu > ul > li > a:hover {
 	color: inherit;
 	text-decoration: none;
 	font-weight: 300;
@@ -391,7 +391,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	z-index: 102;
 }
 
-.dynamic-menu li: hover > ul {
+.dynamic-menu li:hover > ul {
 	opacity: 1;
 	top: 100%;
 	transition: opacity .2s ease-in-out,top 0s ease-in 0s;
@@ -416,7 +416,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	outline: none;
 }
 
-.dynamic-menu li li a: hover, .dynamic-menu li li span: hover {
+.dynamic-menu li li a:hover, .dynamic-menu li li span:hover {
 	cursor: pointer;
 	background-color: #F0F0F0;
 	text-decoration: none;
@@ -424,7 +424,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 
 .dynamic-menu ul li.extend > a, .dynamic-menu ul li.extend > span { padding-right: 18px; }
 
-.dynamic-menu ul li.extend > a: after, .dynamic-menu ul li.extend > span: after {
+.dynamic-menu ul li.extend > a:after, .dynamic-menu ul li.extend > span:after {
 	position: absolute;
 	display: block;
 	right: 7px;
@@ -449,7 +449,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	z-index: 101;
 }
 
-.dynamic-menu li li: hover > ul { top: -6px; }
+.dynamic-menu li li:hover > ul { top: -6px; }
 
 /* Menus de navigation */
 nav.dynamic-menu h5 {
@@ -463,7 +463,7 @@ nav.dynamic-menu h5 {
 	margin-right: 2px;
 }
 
-nav.dynamic-menu h5: hover {
+nav.dynamic-menu h5:hover {
 	color: #01528D;
 	background: #EAEDEE;
 	cursor: default;
@@ -497,7 +497,7 @@ menu.dynamic-menu > ul > li {
 	text-align: center;
 }
 
-menu.dynamic-menu > ul > li: hover { background-color: #EEEEEE; }
+menu.dynamic-menu > ul > li:hover { background-color: #EEEEEE; }
 
 menu.dynamic-menu > ul > li.current {
 	background-image: linear-gradient(to top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
@@ -508,7 +508,7 @@ menu.dynamic-menu > ul > li.current {
 menu.dynamic-menu > ul > li > a { padding: 4px 12px; }
 menu.dynamic-menu > ul > li > a > i { font-size: 1.1em; }
 
-menu.dynamic-menu li li: hover > ul { top: -7px; }
+menu.dynamic-menu li li:hover > ul { top: -7px; }
 
 menu.dynamic-menu li ul li a, menu.dynamic-menu li ul li span {
 	color: #666666;
@@ -525,12 +525,12 @@ menu.dynamic-menu li ul li a i, menu.dynamic-menu li ul li span i {
 	text-align: center;
 }
 
-menu.dynamic-menu li ul li a i: before, menu.dynamic-menu li ul li span i: before {
+menu.dynamic-menu li ul li a i:before, menu.dynamic-menu li ul li span i:before {
 	display: block;
 	width: 16px;
 }
 
-menu.dynamic-menu ul li.extend > a: after, menu.dynamic-menu ul li.extend > span: after { margin-top: -6px; }
+menu.dynamic-menu ul li.extend > a:after, menu.dynamic-menu ul li.extend > span:after { margin-top: -6px; }
 
 /* Menu Right */
 .dynamic-menu.right ul {
@@ -630,7 +630,7 @@ div.message-helper-small { width: 50% }
 	display: block;
 }
 			
-.error: before, .notice: before, .warning: before, .success: before, .question: before {
+.error:before, .notice:before, .warning:before, .success:before, .question:before {
 	font-family: FontAwesome;
 	font-style: normal;
 	font-weight: normal;
@@ -645,16 +645,16 @@ div.message-helper-small { width: 50% }
 	text-align: center;
 }
 			
-.error: before { content: "\f00d"; }
-.error, .error: before { color: #BA4B49; }
-.notice: before { content: "\f12a"; }
-.notice, .notice: before { color: #888888; }
-.warning: before { content: "\f071"; }
-.warning, .warning: before { color: #C19954; }
-.success: before { content: "\f00c"; }
-.success, .success: before { color: #478948; }
-.question: before { content: "\f128"; }
-.question, .question: before { color: #3B88AE; }
+.error:before { content: "\f00d"; }
+.error, .error:before { color: #BA4B49; }
+.notice:before { content: "\f12a"; }
+.notice, .notice:before { color: #888888; }
+.warning:before { content: "\f071"; }
+.warning, .warning:before { color: #C19954; }
+.success:before { content: "\f00c"; }
+.success, .success:before { color: #478948; }
+.question:before { content: "\f128"; }
+.question, .question:before { color: #3B88AE; }
 			
 .question { background-color: #DAEEF8; border-color: #BDE9F2; }
 .notice { background-color: #F0F0F0; border-color: #E2E2E2; }		
