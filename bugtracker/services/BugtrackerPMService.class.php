@@ -69,12 +69,10 @@ class BugtrackerPMService
 	 * @param string $pm_type Type of PM ('assigned', 'pending', 'in_progress', 'comment', 'delete', 'edit', 'fixed', 'rejected', 'reopen')
 	 * @param int $bug_id ID of the bug which is concerned
 	 * @param string $message (optional) Message to include in the PM
+	 * @param string[] $recipients_list (optional) Recipients to whom send the PM
 	 */
-	public static function send_PM_to_updaters($pm_type, $bug_id, $message = '')
+	public static function send_PM_to_updaters($pm_type, $bug_id, $message = '', $recipients_list = array())
 	{
-		//Retrieve the list of members which updated the bug
-		$recipients_list = BugtrackerService::get_updaters_list($bug_id);
-		
 		//Load configuration
 		$config = BugtrackerConfig::load();
 		$pm_enabled = $config->are_pm_enabled();
@@ -111,6 +109,10 @@ class BugtrackerPMService
 				$pm_type_enabled = $config->are_pm_reopen_enabled();
 				break;
 		}
+		
+		//Retrieve the list of members which updated the bug
+		if (empty($recipients_list))
+			$recipients_list = BugtrackerService::get_updaters_list($bug_id);
 		
 		//Send the PM to each recipient
 		foreach ($recipients_list as $recipient)

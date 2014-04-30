@@ -223,6 +223,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 	private function save()
 	{
 		$now = new Date();
+		$pm_recipients_list = array();
 		
 		$versions = array_reverse($this->config->get_versions_fix(), true);
 		$status = $this->form->get_value('status')->get_raw_value();
@@ -275,6 +276,9 @@ class BugtrackerChangeBugStatusController extends ModuleController
 				
 				//Bug update
 				$this->bug->set_assigned_to_id($new_assigned_to_id);
+				
+				//The PM will only be sent to this user
+				$pm_recipients_list[] = $new_assigned_to_id;
 			}
 		}
 		
@@ -347,7 +351,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		
 		//Send PM with comment to updaters if the option is enabled
 		if (!$this->bug->is_new() && $this->config->are_pm_enabled() && $is_pm_enabled)
-			BugtrackerPMService::send_PM_to_updaters($status, $this->bug->get_id(), $comment);
+			BugtrackerPMService::send_PM_to_updaters($status, $this->bug->get_id(), $comment, $pm_recipients_list);
 		
 		if (in_array($status, array(Bug::NEW_BUG, Bug::REOPEN, Bug::REJECTED, Bug::FIXED)) && $this->config->are_admin_alerts_enabled() && in_array($this->bug->get_severity(), $this->config->get_admin_alerts_levels()))
 		{
