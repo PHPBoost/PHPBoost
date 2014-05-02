@@ -43,7 +43,7 @@
 					# ENDIF #
 				# ELSE #
 					<div class="sortable-options">
-						<a href="{categories.ACTION_SHOW}" title="{L_MANAGEMENT_SHOW_CAT}" id="visibility_{categories.ID}" class="fa fa-eye-slash"></a>&nbsp;
+						<a href="{categories.ACTION_SHOW}" title="{L_MANAGEMENT_SHOW_CAT}" id="visibility_{categories.ID}" class="fa fa-eye-slash"></a>
 					</div>
 					# IF C_AJAX_MODE #
 						<script>

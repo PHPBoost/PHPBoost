@@ -34,7 +34,7 @@ require_once('../kernel/header.php');
 //Interdit aux non membres.
 if (!$User->check_level(User::MEMBER_LEVEL))
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 
