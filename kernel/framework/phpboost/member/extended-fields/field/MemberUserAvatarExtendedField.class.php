@@ -128,7 +128,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 						$directory = '/images/avatars/' . Url::encode_rewrite($image->get_name() . '_' . $this->key_hash()) . '.' . $image->get_extension();
 						
 						$resizer = new ImageResizer();
-						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
+						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
 						$this->delete_old_avatar($member_extended_field);
 						return $directory;
 					}
@@ -162,7 +162,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 					$directory = $dir . Url::encode_rewrite($name . '_' . $this->key_hash()) . '.' . $extension;
 			
 					try {
-						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
+						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
 						$this->delete_old_avatar($member_extended_field);
 						return $directory;
 					} catch (MimeTypeNotSupportedException $e) {
