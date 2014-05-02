@@ -51,9 +51,8 @@ if (!empty($file_id))
 
 	if (empty($download_info['id']))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            $LANG['e_unexist_file_download']);
-        DispatchManager::redirect($controller);
+		$error_controller = PHPBoostErrors::unexisting_page();
+   		DispatchManager::redirect($error_controller);
 	}
 	$Bread_crumb->add($download_info['title'], url('download.php?id=' . $file_id, 'download-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php'));
 	$id_cat_for_download = $download_info['idcat'];
@@ -63,9 +62,8 @@ elseif (!empty($category_id))
 {
 	if (!array_key_exists($category_id, $DOWNLOAD_CATS))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            $LANG['e_unexist_category_download']);
-        DispatchManager::redirect($controller);
+		$error_controller = PHPBoostErrors::unexisting_page();
+   		DispatchManager::redirect($error_controller);
 	}
 	
 	$Bread_crumb->add($DOWNLOAD_LANG['title_download'] . ' - ' . $DOWNLOAD_CATS[$category_id]['name']);
