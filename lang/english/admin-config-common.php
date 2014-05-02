@@ -128,8 +128,6 @@ $lang = array(
 		It will be asked in the direct administration connection form : :host_dir/admin/admin_index.php)
 		<br/><br/>
 		:signature',
-	'advanced-config.code_sent_success' => 'The unlock code has been successfully sent',
-	'advanced-config.code_sent_fail' => 'The sending of the unlock code failed',
 	'advanced-config.confirm_mail_sending' => 'Do you really want to send the unlock code?'
 );
 ?>
