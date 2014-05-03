@@ -300,7 +300,7 @@ function XMLHttpRequest_preview(field)
 				<a href="" class="fa bbcode-icon-html" {AUTH_HTML} onclick="{DISABLED_HTML}insertbbcode('[html]', '[/html]', '{FIELD}');return false;" title="{L_BB_HTML}"></a>
 			</li>
 			<li class="bbcode-elements">
-				<a href="http://phpboost.com/wiki/bbcode" title="{L_BB_HELP}">
+				<a href="http://www.phpboost.com/wiki/bbcode" title="{L_BB_HELP}">
 					<i class="fa bbcode-icon-help"></i>
 				</a>
 			</li>
