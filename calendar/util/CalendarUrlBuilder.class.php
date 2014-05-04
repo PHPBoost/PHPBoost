@@ -47,8 +47,9 @@ class CalendarUrlBuilder
 	public static function manage_events($sort_field = null, $sort_mode = null, $page = 1)
 	{
 		$page = $page !== 1 ? $page . '/': '';
-		$sort = $sort_field !== null ? $sort_field . '/' . $sort_mode . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/' . $sort . $page);
+		$sort_field = $sort_field !== null ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== null ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/' . $sort_field . $sort_mode . $page);
 	}
 	
 	/**

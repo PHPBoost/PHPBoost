@@ -59,7 +59,7 @@ class NewsUrlBuilder
 	
 	public static function manage_news($page = null)
 	{
-		$page = $page !== null ? $page . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/' . $page);
 	}
 	
