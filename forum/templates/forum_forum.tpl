@@ -37,7 +37,7 @@
 								<td class="forum_sous_cat" style="width:40px;text-align:center;">
 									<i class="fa fa-globe fa-2x"></i>
 								</td>
-								<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
+								<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="4">
 									<a href="{subcats.U_FORUM_URL}">{subcats.NAME}</a>
 									<br />
 									<span class="smaller">{subcats.DESC}</span>
