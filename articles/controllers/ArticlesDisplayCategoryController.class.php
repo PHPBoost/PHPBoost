@@ -116,6 +116,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			
 			$this->view->assign_block_vars('articles', $article->get_tpl_vars());
 		}
+		$result->dispose();
 		
 		$this->view->put_all(array(
 			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
@@ -160,6 +161,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 				$nbr_cat_displayed++;
 			}
 		}
+		$result->dispose();
                 
 		$nbr_column_cats = ($nbr_cat_displayed > ArticlesConfig::load()->get_number_cols_display_cats()) ? ArticlesConfig::load()->get_number_cols_display_cats() : $nbr_cat_displayed;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;

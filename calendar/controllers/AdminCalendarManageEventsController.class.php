@@ -97,6 +97,7 @@ class AdminCalendarManageEventsController extends AdminModuleController
 			
 			$this->view->assign_block_vars('event', $event->get_array_tpl_vars());
 		}
+		$result->dispose();
 		
 		$this->view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),

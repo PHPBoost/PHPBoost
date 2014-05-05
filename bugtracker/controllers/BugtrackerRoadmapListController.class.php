@@ -146,6 +146,7 @@ class BugtrackerRoadmapListController extends ModuleController
 					'LINE_COLOR' 	=> stripslashes($severities[$row['severity']]['color'])
 				)));
 			}
+			$result->dispose();
 			
 			$bugs_colspan = 4;
 			if ($this->config->is_type_column_displayed()) $bugs_colspan++;

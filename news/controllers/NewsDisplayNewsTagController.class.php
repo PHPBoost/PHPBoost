@@ -87,6 +87,7 @@ class NewsDisplayNewsTagController extends ModuleController
 				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0
 			)));
 		}
+		$result->dispose();
 		
 		$number_columns_display_news = $news_config->get_number_columns_display_news();
 		$this->tpl->put_all(array(

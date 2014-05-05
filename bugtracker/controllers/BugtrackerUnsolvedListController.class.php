@@ -120,6 +120,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 				'U_DELETE'			=> BugtrackerUrlBuilder::delete($bug->get_id(), 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
 			)));
 		}
+		$result->dispose();
 		
 		$bugs_colspan = BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4;
 		if ($config->is_type_column_displayed()) $bugs_colspan++;

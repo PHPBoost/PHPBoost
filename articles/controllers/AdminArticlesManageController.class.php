@@ -99,6 +99,7 @@ class AdminArticlesManageController extends AdminModuleController
 			
 			$this->view->assign_block_vars('articles', $article->get_tpl_vars());
 		}
+		$result->dispose();
 		
 		$this->view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),

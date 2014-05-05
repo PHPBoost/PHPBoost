@@ -62,6 +62,7 @@ class GuestbookMessagesCache implements CacheData
 			);
 			$i++;
 		}
+		$result->dispose();
 	}
 	
 	public function get_messages()

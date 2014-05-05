@@ -147,6 +147,7 @@ class BugtrackerHistoryListController extends ModuleController
 				'LINK_UPDATER_PROFILE'	=> UserUrlBuilder::profile($user->get_id())->rel(),
 			));
 		}
+		$result->dispose();
 	}
 	
 	private function init($request)

@@ -48,6 +48,7 @@ class AjaxUserAutoCompleteController extends AbstractController
 			
 			$nb_results++;
 		}
+		$result->dispose();
 		
 		$tpl->put_all(array(
 			'C_RESULTS' => $nb_results,

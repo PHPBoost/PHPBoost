@@ -146,6 +146,7 @@ class UserCommentsController extends AbstractController
 			));
 			$number_comment++;
 		}
+		$result->dispose();
 		
 		$this->tpl->put('C_NO_COMMENT', $number_comment == 0);
 		

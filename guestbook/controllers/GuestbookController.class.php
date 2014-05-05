@@ -101,6 +101,7 @@ class GuestbookController extends ModuleController
 				}
 			}
 		}
+		$result->dispose();
 		
 		$this->view->put_all(array(
 			'C_NO_MESSAGE' => $result->get_rows_count() == 0,

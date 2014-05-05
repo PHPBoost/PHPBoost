@@ -63,6 +63,7 @@ class NewsletterStreamsCache implements CacheData
 				'subscribers' => $this->list_subscribers_by_stream($row['id'])
 			);
 		}
+		$result->dispose();
 	}
 
 	public function get_streams()
@@ -157,6 +158,7 @@ class NewsletterStreamsCache implements CacheData
 				'mail' => $row['mail']
 			);
 		}
+		$result->dispose();
 		return $list_subscribers;
 	}
 }

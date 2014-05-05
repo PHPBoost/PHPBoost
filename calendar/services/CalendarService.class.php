@@ -202,6 +202,7 @@ class CalendarService
 				$participants[$participant->get_user_id()] = $participant;
 			}
 		}
+		$result->dispose();
 		
 		return $participants;
 	}
@@ -228,6 +229,7 @@ class CalendarService
 			$event->set_properties($row);
 			$events[$event->get_id()] = $event;
 		}
+		$result->dispose();
 		
 		return $events;
 	}

@@ -128,6 +128,7 @@ class NewsletterArchivesController extends ModuleController
 				'NBR_SUBSCRIBERS' => $row['nbr_subscribers'],
 			));
 		}
+		$result->dispose();
 	}
 	
 	private function init()

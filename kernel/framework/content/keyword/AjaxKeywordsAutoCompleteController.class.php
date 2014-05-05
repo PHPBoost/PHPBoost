@@ -41,6 +41,7 @@ class AjaxKeywordsAutoCompleteController extends AbstractController
 			{
 				$tpl->assign_block_vars('results', array('NAME' => $row['name']));
 			}
+			$result->dispose();
 		} catch (Exception $e) {
 		}
  

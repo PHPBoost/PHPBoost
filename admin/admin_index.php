@@ -72,6 +72,7 @@ while ($row = $result->fetch())
 	));
 	$i++;
 }
+$result->dispose();
 
 $Template->put_all(array(
 	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),

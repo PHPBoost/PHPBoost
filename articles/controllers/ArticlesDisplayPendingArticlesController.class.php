@@ -160,6 +160,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				$this->view->assign_block_vars('articles', $article->get_tpl_vars());
 			}
 		}
+		$result->dispose();
 		
 		$this->view->put('FORM', $this->form->display());
 	}

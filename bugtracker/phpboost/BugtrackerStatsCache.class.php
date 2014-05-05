@@ -52,6 +52,7 @@ class BugtrackerStatsCache implements CacheData
 			$this->bugs_number[$row['status']] = $row['bugs_number'];
 			$this->bugs_number['total'] += $row['bugs_number'];
 		}
+		$result->dispose();
 		
 		$result = $db_querier->select("SELECT @fixed_in:=fixed_in AS fixed_in, 
 		COUNT(*) as bugs_number, 
@@ -70,6 +71,7 @@ class BugtrackerStatsCache implements CacheData
 					Bug::IN_PROGRESS => $row['in_progress_bugs_number'],
 				);
 		}
+		$result->dispose();
 		
 		$result = $db_querier->select("SELECT member.*, COUNT(*) as bugs_number
 		FROM " . BugtrackerSetup::$bugtracker_table . " bugtracker
@@ -95,6 +97,7 @@ class BugtrackerStatsCache implements CacheData
 			
 			$i++;
 		}
+		$result->dispose();
 	}
 	
 	public function get_bugs_number_list()

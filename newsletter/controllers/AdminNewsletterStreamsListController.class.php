@@ -108,6 +108,7 @@ class AdminNewsletterStreamsListController extends AdminModuleController
 				'STATUS' => !$row['visible'] ? $this->lang['streams.visible-no'] : $this->lang['streams.visible-yes']
 			));
 		}
+		$result->dispose();
 	}
 	
 	private function init()
