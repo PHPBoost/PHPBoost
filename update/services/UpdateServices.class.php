@@ -301,7 +301,7 @@ class UpdateServices
 		AND COLUMN_NAME	IN :column_name
 		AND DATA_TYPE IN :data_type', array(
 			'table_name' => $db_connection_data['database'],
-			'column_name' => array('description', 'content', 'contents', 'message'),
+			'column_name' => array('description', 'content', 'contents', 'message', 'answer'),
 			'data_type' => array('mediumtext','text')
 		));
 		
@@ -313,13 +313,14 @@ class UpdateServices
 			
 			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
 			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
-			replace(replace(replace(replace(replace(replace(replace(replace(replace(
+			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
 			
 			replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(
 			replace(replace(replace(replace(replace(replace(replace(
 			
 			'. $row['COLUMN_NAME'] .', 
 		
+			\'../images/smileys/\', \'/images/smileys/\'),
 			\'/images/smileys/waw.gif\', \'/images/smileys/straight.png\'), 
 			\'/images/smileys/siffle.gif\', \'/images/smileys/whistle.png\'), 
 			\'/images/smileys/sourire.gif\', \'/images/smileys/smile.png\'),
