@@ -154,6 +154,7 @@ class NewsDisplayNewsController extends ModuleController
 				'URL' => NewsUrlBuilder::display_news($row['id_category'], NewsService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel()
 			));
 		}
+		$result->dispose();
 	}
 	
 	private function build_navigation_links(News $news)
@@ -184,6 +185,7 @@ class NewsDisplayNewsController extends ModuleController
 				'U_'. $row['type'] .'_NEWS' => NewsUrlBuilder::display_news($row['id_category'], NewsService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_name'])->rel(),
 			));
 		}
+		$result->dispose();
 	}
 	
 	private function check_authorizations()

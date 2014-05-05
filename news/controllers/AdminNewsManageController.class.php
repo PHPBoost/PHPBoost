@@ -93,6 +93,7 @@ class AdminNewsManageController extends AdminModuleController
 			
 			$this->view->assign_block_vars('news', $news->get_array_tpl_vars());
 		}
+		$result->dispose();
 		
 		$this->view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),

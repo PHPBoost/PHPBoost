@@ -275,6 +275,7 @@ class CommentsService
 					'L_CONFIRM_DELETE' => self::$comments_lang['comment.confirm_delete']
 				));
 			}
+			$result->dispose();
 		}
 
 

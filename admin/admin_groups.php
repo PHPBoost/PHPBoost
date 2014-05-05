@@ -270,6 +270,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 				));
 				$number_member++;
 			}
+			$result->dispose();
 		}
 		
 		$template->put_all(array(

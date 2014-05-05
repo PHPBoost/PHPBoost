@@ -79,6 +79,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 						
 			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars());
 		}
+		$result->dispose();
 		
 		$number_columns_display_news = $news_config->get_number_columns_display_news();
 		$this->tpl->put_all(array(

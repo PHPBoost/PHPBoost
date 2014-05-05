@@ -148,6 +148,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			
 			$this->view->assign_block_vars('articles', $article->get_tpl_vars());
 		}
+		$result->dispose();
 	}
 	
 	private function build_keywords_view(Article $article)

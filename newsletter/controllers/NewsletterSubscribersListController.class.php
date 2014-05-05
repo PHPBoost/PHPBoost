@@ -118,6 +118,7 @@ class NewsletterSubscribersListController extends ModuleController
 				));
 			}
 		}
+		$result->dispose();
 	}
 	
 	private function init()

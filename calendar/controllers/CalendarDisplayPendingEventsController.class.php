@@ -79,6 +79,7 @@ class CalendarDisplayPendingEventsController extends ModuleController
 			
 			$this->events_view->assign_block_vars('event', $event->get_array_tpl_vars());
 		}
+		$result->dispose();
 		
 		$this->events_view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),

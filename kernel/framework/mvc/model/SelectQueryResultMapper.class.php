@@ -65,7 +65,7 @@ class SelectQueryResultMapper implements SelectQueryResult
 
 	public function get_rows_count()
 	{
-		return  $this->query_result->get_rows_count();
+		return $this->query_result->get_rows_count();
 	}
 
 	public function __destruct()

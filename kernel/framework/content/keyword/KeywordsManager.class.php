@@ -94,6 +94,7 @@ class KeywordsManager
 			$keyword->set_properties($row);
 			$keywords[$row['name']] = $keyword;
 		}
+		$result->dispose();
 		return $keywords;
 	}
 	

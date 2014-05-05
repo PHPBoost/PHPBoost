@@ -167,6 +167,7 @@ class DBQuerier implements SQLQuerier
 		{
 			throw new NotASingleRowFoundException($query_result);
 		}
+		$query_result->dispose();
 		return $result;
 	}
 	
@@ -191,6 +192,7 @@ class DBQuerier implements SQLQuerier
 		{
 			throw new NotASingleRowFoundException($query_result);
 		}
+		$query_result->dispose();
 		return $result;
 	}
 	

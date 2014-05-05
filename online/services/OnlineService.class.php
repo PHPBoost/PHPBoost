@@ -66,6 +66,7 @@ class OnlineService
 			$user->set_avatar($row['user_avatar']);
 			$users[] = $user;
 		}
+		$result->dispose();
 		
 		return $users;
 	}

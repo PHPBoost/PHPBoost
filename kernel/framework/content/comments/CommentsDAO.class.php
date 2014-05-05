@@ -85,6 +85,7 @@ class CommentsDAO
 				'user_id' => $user_id
 			), SelectQueryResult::FETCH_NUM);
 			$result = $query_result->fetch();
+			$query_result->dispose();
 			return $result[0];
 		}
 		else
@@ -93,6 +94,7 @@ class CommentsDAO
 				'user_ip' => AppContext::get_current_user()->get_ip()
 			), SelectQueryResult::FETCH_NUM);
 			$result = $query_result->fetch();
+			$query_result->dispose();
 			return $result[0];
 		}
 	}

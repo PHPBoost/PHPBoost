@@ -140,6 +140,7 @@ class BugtrackerViews
 			));
 			$saved_filters = true;
 		}
+		$result->dispose();
 		
 		$filters_view->put_all(array(
 			'L_FILTERS'				=> $filters_number > 1 ? $lang['titles.filters'] : $lang['titles.filter'],

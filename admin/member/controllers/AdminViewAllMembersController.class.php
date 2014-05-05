@@ -143,6 +143,7 @@ class AdminViewAllMembersController extends AdminController
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
 			));
 		}
+		$result->dispose();
 	}
 	
 	private function init()

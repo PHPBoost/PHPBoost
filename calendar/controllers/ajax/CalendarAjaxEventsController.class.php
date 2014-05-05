@@ -90,6 +90,7 @@ class CalendarAjaxEventsController extends AbstractController
 			
 			$events_list[$event->get_id()] = $event;
 		}
+		$result->dispose();
 		
 		$events_number = $result->get_rows_count();
 		
@@ -118,6 +119,7 @@ class CalendarAjaxEventsController extends AbstractController
 					$participants[$row['event_id']][$participant->get_user_id()] = $participant;
 				}
 			}
+			$result->dispose();
 			
 			foreach ($events_list as $event)
 			{
