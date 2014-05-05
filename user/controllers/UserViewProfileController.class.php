@@ -89,7 +89,7 @@ class UserViewProfileController extends AbstractController
 			$fieldset->add_field(new FormFieldFree('email', $this->lang['email'], $link_email));
 		}
 		
-		if (!$this->same_user_view_profile($user_id))
+		if (!$this->same_user_view_profile($user_id) && $this->user->check_level(User::MEMBER_LEVEL))
 		{
 			$link_mp = '<a href="'. UserUrlBuilder::personnal_message($user_id)->rel() .'" class="basic-button smaller">MP</a>';
 			$fieldset->add_field(new FormFieldFree('private_message', $this->lang['private_message'], $link_mp));
