@@ -57,7 +57,7 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
 	}
 	
-	public static function manage_news($page = null)
+	public static function manage_news($page = 1)
 	{
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/' . $page);
