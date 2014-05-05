@@ -99,14 +99,14 @@ class AdminNewsManageController extends AdminModuleController
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_NEWS' => !$pagination->current_page_is_empty(),
 			'PAGINATION' => $pagination->display(),
-			'U_SORT_NAME_ASC' => NewsUrlBuilder::manage_news('name/asc/'. $page)->rel(),
-			'U_SORT_NAME_DESC' => NewsUrlBuilder::manage_news('name/desc/'. $page)->rel(),
-			'U_SORT_CATEGORY_ASC' => NewsUrlBuilder::manage_news('category/asc/'. $page)->rel(),
-			'U_SORT_CATEGORY_DESC' => NewsUrlBuilder::manage_news('category/desc/'. $page)->rel(),
-			'U_SORT_AUTHOR_ASC' => NewsUrlBuilder::manage_news('author/asc/'. $page)->rel(),
-			'U_SORT_AUTHOR_DESC' => NewsUrlBuilder::manage_news('author/desc/'. $page)->rel(),
-			'U_SORT_DATE_ASC' => NewsUrlBuilder::manage_news('date/asc/'. $page)->rel(),
-			'U_SORT_DATE_DESC' => NewsUrlBuilder::manage_news('date/desc/'. $page)->rel()
+			'U_SORT_NAME_ASC' => NewsUrlBuilder::manage_news('name', 'asc', $page)->rel(),
+			'U_SORT_NAME_DESC' => NewsUrlBuilder::manage_news('name', 'desc', $page)->rel(),
+			'U_SORT_CATEGORY_ASC' => NewsUrlBuilder::manage_news('category', 'asc', $page)->rel(),
+			'U_SORT_CATEGORY_DESC' => NewsUrlBuilder::manage_news('category', 'desc', $page)->rel(),
+			'U_SORT_AUTHOR_ASC' => NewsUrlBuilder::manage_news('author', 'asc', $page)->rel(),
+			'U_SORT_AUTHOR_DESC' => NewsUrlBuilder::manage_news('author', 'desc', $page)->rel(),
+			'U_SORT_DATE_ASC' => NewsUrlBuilder::manage_news('date', 'asc', $page)->rel(),
+			'U_SORT_DATE_DESC' => NewsUrlBuilder::manage_news('date', 'desc', $page)->rel()
 		));
 	}
 	
