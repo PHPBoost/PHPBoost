@@ -38,6 +38,7 @@ if (retrieve(POST, 'submit', false))
 	$faq_config->set_faq_name(stripslashes(retrieve(POST, 'faq_name', $FAQ_LANG['faq'])));
 	$faq_config->set_number_columns(retrieve(POST, 'num_cols', 3));
 	$faq_config->set_display_mode((!empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline') ? 'inline' : 'block');
+	$faq_config->set_root_cat_description(stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE)));
 	$faq_config->set_authorizations(Authorizations::build_auth_array_from_form(FaqAuthorizationsService::READ_AUTHORIZATIONS, FaqAuthorizationsService::WRITE_AUTHORIZATIONS));
 	
 	FaqConfig::save();
@@ -110,6 +111,9 @@ else
 		'admin_faq'=> 'faq/admin_faq.tpl'
 	));
 	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$Template->put_all(array(
 		'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
 		'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
@@ -125,11 +129,14 @@ else
 		'L_DISPLAY_MODE_EXPLAIN' => $FAQ_LANG['display_mode_admin_explain'],
 		'L_BLOCKS' => $FAQ_LANG['display_block'],
 		'L_INLINE' => $FAQ_LANG['display_inline'],
+		'L_ROOT_DESCRIPTION' => $FAQ_LANG['root_description'],
 		'L_AUTH' => $FAQ_LANG['general_auth'],
 		'L_AUTH_EXPLAIN' => $FAQ_LANG['general_auth_explain'],
 		'L_AUTH_READ' => $FAQ_LANG['read_auth'],
 		'L_AUTH_WRITE' => $FAQ_LANG['write_auth'],
 		'L_SUBMIT' => $LANG['submit'],
+		'KERNEL_EDITOR' => $editor->display(),
+		'ROOT_CAT_DESCRIPTION' => FormatingHelper::unparse($faq_config->get_root_cat_description()),
 		'AUTH_READ' => Authorizations::generate_select(FaqAuthorizationsService::READ_AUTHORIZATIONS, $faq_config->get_authorizations()),
 		'AUTH_WRITE' => Authorizations::generate_select(FaqAuthorizationsService::WRITE_AUTHORIZATIONS, $faq_config->get_authorizations()),
 		'FAQ_NAME' => $faq_config->get_faq_name(),

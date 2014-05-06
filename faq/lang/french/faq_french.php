@@ -104,6 +104,7 @@ $FAQ_LANG['faq_name_explain'] = 'Le nom de la FAQ apparaîtra dans le titre et da
 $FAQ_LANG['nbr_cols'] = 'Nombre de catégories par colonne';
 $FAQ_LANG['nbr_cols_explain'] = 'Ce nombre est le nombre de colonnes dans lesquelles seront présentées les sous catégories d\'une catégorie';
 $FAQ_LANG['display_mode_admin_explain'] = 'Vous pouvez choisir la façon dont les questions seront affichées. Le mode en ligne permet d\'afficher les questions et un clic sur la question affiche la réponse, alors que le mode en blocs affiche l\'enchaînement des questions et des réponses. Il sera possible de choisir pour chaque catégorie le mode d\'affichage, il ne s\'agit ici que de la configuration par défaut.';
+$FAQ_LANG['root_description'] = 'Description de la racine de la FAQ';
 $FAQ_LANG['general_auth'] = 'Autorisations générales';
 $FAQ_LANG['general_auth_explain'] = 'Vous configurez ici les autorisations générales de lecture et d\'écriture sur la FAQ. Vous pourrez ensuite pour chaque catégorie lui appliquer des autorisations particulières.';
 

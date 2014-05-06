@@ -105,6 +105,7 @@ $FAQ_LANG['faq_name_explain'] = 'The FAQ name will appear in the title and in th
 $FAQ_LANG['nbr_cols'] = 'Number of categories per column';
 $FAQ_LANG['nbr_cols_explain'] = 'This number is the number of columns in which will be displayed the subcategories of a category';
 $FAQ_LANG['display_mode_admin_explain'] = 'You can choose the way questions are displayed. "In lines" mode shows questions and, with a click on the question, the answer. "In blocks" mode shows all questions and answer. It\'s possible to choose display mode for each category. It\'s only the default configuration here.';
+$FAQ_LANG['root_description'] = 'Description of the FAQ root';
 $FAQ_LANG['general_auth'] = 'General permissions';
 $FAQ_LANG['general_auth_explain'] = 'You can configure here general reading and writing permissions for the FAQ. Later, you will be able to apply particular permissions for each category.';
 

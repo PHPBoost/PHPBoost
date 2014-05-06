@@ -52,7 +52,7 @@
 						</label>
 						<div class="form-field">
 							<input type="text" size="3" maxlength="3" id="num_cols" name="num_cols" value="{NUM_COLS}">
-						</div>	
+						</div>
 					</div>
 					<div class="form-element">
 						<label for="display_mode">
@@ -65,6 +65,11 @@
 								<option value="inline"{SELECTED_INLINE}>{L_INLINE}</option>
 							</select>
 						</div>	
+					</div>
+					<div class="form-element-textarea">
+						<label for="contents">{L_ROOT_DESCRIPTION}</label>
+						{KERNEL_EDITOR}
+						<textarea id="contents" rows="15" cols="40" name="root_contents">{ROOT_CAT_DESCRIPTION}</textarea>
 					</div>
 				</fieldset>
 				
