@@ -1,18 +1,18 @@
 .options.infos {
-	width:230px;
-	font-size:11px;
-	margin-top:15px;
+	width: 230px;
+	font-size: 11px;
+	margin-top: 15px;
 }
 
 .media-desc { 
-	text-align:justify;
-	margin-top:15px;		
+	text-align: justify;
+	margin-top: 15px;		
 }
 
 .media-content {
-	margin:25px auto;
+	margin: 25px auto;
 }
 
-.media-content a{ max-width:100%; }
+.media-content a { max-width: 100%; }
 
-.content { margin-top:10px; }
+.content { margin-top: 10px; }
