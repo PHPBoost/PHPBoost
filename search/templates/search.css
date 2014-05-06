@@ -1,5 +1,5 @@
 #search-form {
-	float:none;
+	float: none;
 	display: inline-block;
 	margin: 10px 0 10px 0;
 	font-size: 0;
@@ -8,20 +8,20 @@
 }
 
 div.search-mini input {
-    width:120px;
-    margin:2px;
+    width: 120px;
+    margin: 2px;
 }
 
 table.SearchForm {
     /*background-color: #bfd9ef;*/
-    background-color: #fcfcfc;
-    border: 1px solid #2c5169;
-    margin-top:-18px;
-    margin-bottom:15px;
-    padding:20px;
-    min-height:50px;
-    vertical-align:top;
-    width:100%;
+    background-color: #FCFCFC;
+    border: 1px solid #2C5169;
+    margin-top: -18px;
+    margin-bottom: 15px;
+    padding: 20px;
+    min-height: 50px;
+    vertical-align: top;
+    width: 100%;
 }
 
 table.SearchForm caption span {
