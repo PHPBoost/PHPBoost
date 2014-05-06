@@ -171,7 +171,7 @@
 				<div class="form-element">
 					<label>{L_SELECT_CAT}</label>
 					<div class="form-field">
-						<span style="padding-left:17px;"><a href="javascript:select_cat(0);"><i class="fa fa-folder"></i> <span id="class_0" class="{move.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
+						<span style="padding-left:20px;"><a href="javascript:select_cat(0);"><i class="fa fa-folder"></i> <span id="class_0" class="{move.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
 						<br />
 						{move.CATS}
 					</div>
