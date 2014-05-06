@@ -16,7 +16,7 @@
 	  pieSliceText: 'none'
 	};
 
-	var status_chart = new google.visualization.PieChart(document.getElementById('status_chart'));
+	var status_chart = new google.visualization.PieChart(document.getElementById('status-chart'));
 	status_chart.draw(status_chart_data, status_chart_options);
   }
 </script>
@@ -30,7 +30,7 @@
 	<div class="content">
 		<div class="center">
 		# IF C_BUGS #
-			<div id="status_chart"></div>
+			<div id="status-chart"></div>
 		# ELSE #
 			<div class="notice">{@notice.no_bug}</div>
 		# ENDIF #

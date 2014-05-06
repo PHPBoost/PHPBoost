@@ -6,8 +6,10 @@
 	height: 15px;
 }
 
-.title_column{ width: 33%; }
-.small_column{ width: 10%; }
-.medium_column{ width: 20%; }
+.title-column { width: 33%; }
 
-#status_chart { width: 90%; }
+.small-column { width: 10%; }
+
+.medium-column { width: 20%; }
+
+#status-chart { width: 90%; }
