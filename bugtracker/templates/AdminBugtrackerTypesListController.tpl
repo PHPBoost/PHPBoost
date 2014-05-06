@@ -55,13 +55,13 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 <table>
 	<thead>
 		<tr>
-			<th class="small_column">
+			<th class="small-column">
 				{@labels.default}
 			</th>
 			<th>
 				${LangLoader::get_message('name', 'main')}
 			</th>
-			<th class="small_column">
+			<th class="small-column">
 				${LangLoader::get_message('delete', 'main')}
 			</th>
 		</tr>
