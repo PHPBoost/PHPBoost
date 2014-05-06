@@ -5,13 +5,13 @@
 	<table>
 		<thead>
 			<tr>
-				<th class="column_login">
+				<th class="column-login">
 					${LangLoader::get_message('pseudo', 'main')}
 				</th>
 				<th>
 					{@online.location}
 				</th>
-				<th class="column_last_update">
+				<th class="column-last-update">
 					{@online.last_update}
 				</th>
 			</tr>
