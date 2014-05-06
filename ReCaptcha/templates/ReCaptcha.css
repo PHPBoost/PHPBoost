@@ -1,34 +1,33 @@
-#recaptcha_widget {
-	border-collapse:collapse;
+#recaptcha-widget {
+	border-collapse: collapse;
 	border-radius: 4px;
-	border:1px solid #CCC;
-	display:inline-block;
+	border: 1px solid #CCCCCC;
+	display: inline-block;
 }
 
-#recaptcha_widget .options {
-	margin:0;
-	float:none;
-	display:table-cell;
-	height:100%;
-	vertical-align:middle;
-	padding:5px;
+#recaptcha-widget .options {
+	margin: 0;
+	float: none;
+	display: table-cell;
+	height: 100%;
+	vertical-align: middle;
+	padding: 5px;
 	border-radius: 0 4px 4px 0;
-	border:none;
+	border: none;
 }
 
-#recaptcha_container {
-	display:table-cell;
-	border-right:1px solid #CCC;
-	vertical-align:top;
+#recaptcha-container {
+	display: table-cell;
+	border-right: 1px solid #CCC;
+	vertical-align: top;
 }
 
-#recaptcha_container span, #recaptcha_container div {
-	margin:5px;
-}
+#recaptcha-container span,
+#recaptcha-container div { margin: 5px; }
 
-#recaptcha_container input {
-	width:100%;
-	border:none;
-	border-top:1px solid #CCC;
+#recaptcha-container input {
+	width: 100%;
+	border: none;
+	border-top: 1px solid #CCCCCC;
 	border-radius: 0 0 0 4px;
 }
