@@ -1,21 +1,21 @@
 # IF C_USER_NOTCONNECTED #
-		<script>
-		<!--
-		function check_connect()
+	<script>
+	<!--
+	function check_connect()
+	{
+		if( document.getElementById('login').value == "" )
 		{
-			if( document.getElementById('login').value == "" )
-			{
-				alert("{L_REQUIRE_PSEUDO}");
-				return false;
-		    }
-			if( document.getElementById('password').value == "" )
-			{
-				alert("{L_REQUIRE_PASSWORD}");
-				return false;
-		    }
+			alert("{L_REQUIRE_PSEUDO}");
+			return false;
 		}
-		-->
-		</script>
+		if( document.getElementById('password').value == "" )
+		{
+			alert("{L_REQUIRE_PASSWORD}");
+			return false;
+		   }
+	}
+	-->
+	</script>
 # ENDIF #
 # IF C_VERTICAL #
 	# IF C_USER_NOTCONNECTED #
