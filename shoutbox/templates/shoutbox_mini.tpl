@@ -23,7 +23,7 @@
 					{	
 						var array_shout = new Array('', '');
 						eval(xhr_object.responseText);
-						document.getElementById('shout_container').innerHTML = '<p id="shout_container_' + array_shout[2] + '">' + array_shout[0] + '<span class="small">: ' + array_shout[1] + '</span></p>' + document.getElementById('shout_container').innerHTML;
+						document.getElementById('shout-container').innerHTML = '<p id="shout-container-' + array_shout[2] + '">' + array_shout[0] + '<span class="small">: ' + array_shout[1] + '</span></p>' + document.getElementById('shout-container').innerHTML;
 						document.getElementById('shout_contents').value = '';
 						document.getElementById('shoutimg').className = 'fa fa-refresh';
 					}
@@ -69,7 +69,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )
 				{
 					document.getElementById('shoutimg').className = 'fa fa-refresh';
-					document.getElementById('shout_container_' + idmsg).style.display = 'none';
+					document.getElementById('shout-container-' + idmsg).style.display = 'none';
 				}
 				else if( xhr_object.readyState == 4 )
 					document.getElementById('shoutimg').className = 'fa fa-refresh';
@@ -86,7 +86,7 @@
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 				{
 					document.getElementById('shoutimg').className = 'fa fa-refresh';
-					document.getElementById('shout_container').innerHTML = xhr_object.responseText;
+					document.getElementById('shout-container').innerHTML = xhr_object.responseText;
 				}
 				else if( xhr_object.readyState == 4 )
 					document.getElementById('shoutimg').className = 'fa fa-refresh';
@@ -121,9 +121,9 @@
 					<h5 class="sub-title">{L_SHOUTBOX}</h5>
 				</div>
 				<div class="module-mini-contents">
-					<div id="shout_container">
+					<div id="shout-container">
 						# START shout #
-						<p id="shout_container_{shout.IDMSG}">{shout.PSEUDO}<span class="small"> : {shout.CONTENTS}</span></p>
+						<p id="shout-container-{shout.IDMSG}">{shout.PSEUDO}<span class="small"> : {shout.CONTENTS}</span></p>
 						# END shout #
 					</div>
 					# IF C_VISIBLE_SHOUT #
@@ -137,7 +137,7 @@
 					<label for="shout_contents"><span class="small">{L_MESSAGE}</span></label>
 					<textarea id="shout_contents" name="shout_contents" rows="4" cols="16"></textarea>
 					
-					<p class="shout_spacing">
+					<p class="shout-spacing">
 						<button onclick="XMLHttpRequest_shoutmsg();" type="button">{L_SUBMIT}</button>
 						<a href="javascript:XMLHttpRequest_shoutrefresh();" title="{L_REFRESH}"><i class="fa fa-refresh" id="shoutimg"></i></a>
 					</p>
@@ -151,10 +151,10 @@
 					<h5 class="sub-title">{L_SHOUTBOX}</h5>
 				</div>
 				<div class="module-mini-contents" style="width:auto;">
-					<div class="shout_horizontal">
-						<div id="shout_container">
+					<div class="shout-horizontal">
+						<div id="shout-container">
 							# START shout #
-							<p id="shout_container_{shout.IDMSG}">{shout.DEL_MSG}<span class="small"> {shout.DATE} : </span>{shout.PSEUDO}<span class="small"> : {shout.CONTENTS}</span></p>
+							<p id="shout-container-{shout.IDMSG}">{shout.DEL_MSG}<span class="small"> {shout.DATE} : </span>{shout.PSEUDO}<span class="small"> : {shout.CONTENTS}</span></p>
 							# END shout #
 						</div>
 						# IF C_VISIBLE_SHOUT #
@@ -166,7 +166,7 @@
 						# ENDIF #
 						<br />
 						<textarea id="shout_contents" name="shout_contents" rows="2" cols="16"></textarea>
-						<p class="shout_spacing">
+						<p class="shout-spacing">
 							<button onclick="XMLHttpRequest_shoutmsg();" type="button">{L_SUBMIT}</button>
 							<a href="javascript:XMLHttpRequest_shoutrefresh();" title="{L_REFRESH}"><i class="fa fa-refresh" id="shoutimg"></i></a>
 						</p>
