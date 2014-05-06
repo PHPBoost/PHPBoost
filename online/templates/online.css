@@ -1,7 +1,3 @@
-.column_login {
-	width: 200px;
-}
+.column-login { width: 200px; }
 
-.column_last_update {
-	width: 160px;
-}
+.column-last-update { width: 160px; }
