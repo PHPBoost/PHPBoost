@@ -54,15 +54,15 @@
 		<hr />
 		<div class="spacer">&nbsp;</div>
 		# IF C_PAGINATION #
-			<div class="pages_pagination right">
+			<div class="pages-pagination right">
 				# IF C_NEXT_PAGE #
 				<a style="text-decoration:none;" href="{U_NEXT_PAGE}">{L_NEXT_TITLE} <i class="fa fa-arrow-right"></i></a>
 				# ELSE #
 				&nbsp;
 				# ENDIF #
 			</div>
-			<div class="pages_pagination center"># INCLUDE PAGINATION_ARTICLES #</div>
-			<div class="pages_pagination">
+			<div class="pages-pagination center"># INCLUDE PAGINATION_ARTICLES #</div>
+			<div class="pages-pagination">
 				# IF C_PREVIOUS_PAGE #
 				<a style="text-decoration:none;" href="{U_PREVIOUS_PAGE}"><i class="fa fa-arrow-left"></i> {L_PREVIOUS_TITLE}</a>
 				# ENDIF #
