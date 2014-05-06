@@ -6,83 +6,83 @@
 	display: table;
 }
 
-.bbcode-containers { margin-right:30px; }
+.bbcode-containers { margin-right: 30px; }
 
 .bbcode-container {
-	background-color: #EEE;
+	background-color: #EEEEEE;
 	border: 1px solid #BEBEBE;
-	margin:0px;
+	margin: 0px;
 	padding: 3px 3px;
 }
 
 .bbcode-container li { padding: 3px 3px 3px 3px; }
 
 .bbcode-elements { 
-	display:inline;
+	display: inline;
 	border-right: 1px solid #BEBEBE;
 	border-left: 1px solid #FEFEFE;
 }
 .bbcode-more .bbcode-elements:first-child,
-.bbcode-container .bbcode-elements:first-child { border-left:none; }
+.bbcode-container .bbcode-elements:first-child { border-left: none; }
 
 .bbcode-more .bbcode-elements:last-child,
-.bbcode-container .bbcode-elements:last-child { border-right:none; }
+.bbcode-container .bbcode-elements:last-child { border-right: none; }
 
-.bbcode-more { border-top:none; }
+.bbcode-more { border-top: none; }
 
-.bbcode-container{ border-radius:3px; }
+.bbcode-container{ border-radius: 3px; }
 
-.expand .bbcode-container:first-child { border-radius:3px 3px 0 0; }
+.expand .bbcode-container:first-child { border-radius: 3px 3px 0 0; }
 
-.expand .bbcode-container:last-child { border-radius:0 0 3px 3px; }
+.expand .bbcode-container:last-child { border-radius: 0 0 3px 3px; }
 
 .bbcode-upload { 
-	float:right;
-	margin-top:3px;	
+	float: right;
+	margin-top: 3px;	
 }
 
 .bbcode-hover,
 .bbcode-elements a,
-.bbcode-elements i { cursor:pointer; }
+.bbcode-elements i { cursor: pointer; }
 
 .bbcode-block-container {
-	z-index:10;
-	position:absolute;
+	z-index: 10;
+	position: absolute;
 }
 
 .bbcode-block {
-	position:relative;
-	bottom:0px; 
+	position: relative;
+	bottom: 0px; 
 }
 
-.bbcode-block .form-element { margin:2px 7px; }
+.bbcode-block .form-element { margin: 2px 7px; }
 
 .bbcode-block .form-element label { 
-	width:70%;
+	width: 70%;
 	padding-right: 0px;
 }
 	
-.bbcode-block .form-element .form-field { width:26%; }
+.bbcode-block .form-element .form-field { width: 26%; }
 
 .bbcode-form-element-text { 
 	border-top: 1px solid #BEBEBE;
-	margin-top:10px;
-	padding:5px 5px 0px 5px;
-	text-align:center;
+	margin-top: 10px;
+	padding: 5px 5px 0px 5px;
+	text-align: center;
  }
 
 /* Icones de la barre BBCode */
 .bbcode a,
 .bbcode .fa {
-	color:#555555;
-	width:17px;
-	text-align:center;
+	color: #555555;
+	width: 17px;
+	text-align: center;
 }
 
 .bbcode a:hover,
 .bbcode .fa:hover { 
-	color:#444444;
-	text-decoration:none;
+	color: #444444;
+	text-decoration: none;
 }
 
 .bbcode-icon-anchor:before { content: "\f13d"; }
@@ -128,8 +128,8 @@
 /* Icones modifications size or color */
 .bbcode-icon-math:before,
 .bbcode-icon-plus:before,
-.bbcode-icon-minus:before { font-size:0.8em; }
+.bbcode-icon-minus:before { font-size: 0.8em; }
 
-.bbcode-icon-upload:before { font-size:23px; }
+.bbcode-icon-upload:before { font-size: 23px; }
 
-.bbcode-icon-more:before { font-size:11px; }
+.bbcode-icon-more:before { font-size: 11px; }
