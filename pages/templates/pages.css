@@ -1,18 +1,15 @@
-.pages_button
-{
-	width:145px;	
-	height:20px;
-	background:#788EA0;	
-	font-weight:bold;
-	color:#edfff0;
-	text-align:center;
-	text-decoration:none;
-	border:1px solid #6D93B4;
-	margin-left:10px;
-	padding:4px 2px;
-	cursor:pointer;
+.pages-button {
+	width: 145px;	
+	height: 20px;
+	background: #788EA0;	
+	font-weight: bold;
+	color: #EDFFF0;
+	text-align: center;
+	text-decoration: none;
+	border: 1px solid #6D93B4;
+	margin-left: 10px;
+	padding: 4px 2px;
+	cursor: pointer;
 }
 
-ol{
-	margin-left:25px;
-}
+ol { margin-left: 25px; }
