@@ -133,7 +133,7 @@ elseif ($refresh)
 		else
 			$row['login'] = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . $del . ' <span class="smaller" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . ' </span>';
 		
-		echo '<p id="shout_container_' . $row['id'] . '">' . $row['login'] . '<span class="smaller">: ' . FormatingHelper::second_parse($row['contents']) . '</span></p>' . "\n";
+		echo '<p id="shout-container-' . $row['id'] . '">' . $row['login'] . '<span class="smaller">: ' . FormatingHelper::second_parse($row['contents']) . '</span></p>' . "\n";
 	}
 	$Sql->query_close($result);
 }
