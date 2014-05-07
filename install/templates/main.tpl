@@ -85,7 +85,7 @@ ${resources('install/install')}
 				</tr>
 				<tr>
 					<td class="row-next row-final">
-						<div class="progressbar-container" style="margin:auto;width:200px">
+						<div class="progressbar-container">
 							<span class="progressbar-infos">{PROGRESSION}%</span>
 							<div class="progressbar" style="width:{PROGRESSION}%"></div>
 						</div>
