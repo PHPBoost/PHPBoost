@@ -142,10 +142,8 @@
 				<hr style="margin:20px auto 30px auto;" />
 				
 				<div class="center">
-					<button class="big">
-						<a href="{PATH_TO_ROOT}/download/download.php?explore=1" class="pbt-button-a">
-							<i class="fa fa-folder"></i> Parcourir l'arborescence
-						</a>
+					<button onclick="window.location.href='{PATH_TO_ROOT}/download/download.php?explore=1'" class="big">
+						<i class="fa fa-folder"></i> Parcourir l'arborescence
 					</button>
 				</div>
 		</div>
