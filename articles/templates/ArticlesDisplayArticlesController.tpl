@@ -23,7 +23,7 @@
 			<i class="fa fa-calendar" title="{@articles.sort_field.date}"></i>&nbsp;<time datetime="{DATE}" itemprop="datePublished">{DATE}</time>&nbsp;|
 			&nbsp;<i class="fa fa-eye" title="{@articles.sort_field.views}"></i>&nbsp;{NUMBER_VIEW}
 			# IF C_COMMENTS_ENABLED #
-				&nbsp;|&nbsp;<i class="fa fa-comment"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
+				&nbsp;|&nbsp;<i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 			# ENDIF #
 			&nbsp;|&nbsp;<i class="fa fa-folder" title="{@articles.category}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{L_CAT_NAME}</a>
 			# IF C_KEYWORDS #
