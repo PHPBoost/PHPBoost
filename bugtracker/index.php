@@ -42,7 +42,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('BugtrackerSolvedListController', '`^/solved/success/([a-z_-]+)?/?([0-9]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9_-]+)?/?$`', array('success', 'id', 'page', 'filter', 'filter_id')),
 	new UrlControllerMapper('BugtrackerSolvedListController', '`^/solved(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9_-]+)?/?$`', array('field', 'sort', 'page', 'filter', 'filter_id')),
 	new UrlControllerMapper('BugtrackerRoadmapListController', '`^/roadmap/success/([a-z_-]+)?/?([a-z0-9_-]+)?/?([a-z_-]+)?/?([0-9]+)?/?$`', array('success', 'version', 'status', 'page')),
-	new UrlControllerMapper('BugtrackerRoadmapListController', '`^/roadmap(?:/([a-z0-9_-]+))?/?([a-z_-]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('version', 'status', 'field', 'sort', 'page')),
+	new UrlControllerMapper('BugtrackerRoadmapListController', '`^/roadmap(?:/([0-9]+))?-?([a-z0-9_-]+)?/?([a-z_-]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_version', 'version', 'status', 'field', 'sort', 'page')),
 	
 	//Stats
 	new UrlControllerMapper('BugtrackerStatsListController', '`^/stats/success/([a-z_-]+)?/?([0-9]+)?/?$`', array('success', 'id')),
