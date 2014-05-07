@@ -18,11 +18,9 @@ aside#menu-left + aside#menu-right + div#main section .form-element-textarea { m
 section header, article header { margin: 0 0 20px 0; }
 
 /* Titre d'une page ou d'un element d'un module */
-section header h1, article header h1 {
-	border-bottom: 1px solid #336397;
-}
+section header h1, article header h1 { border-bottom: 1px solid #336397; }
 
-section header h2, article header h2 {
+section header h2, article header h2 { 
 	border-bottom: 1px solid #336397;
 	margin-left: 15px;
 }
@@ -47,7 +45,8 @@ span.actions a { font-size: 12px; }
 	overflow: hidden;
 }
 
-section footer, article footer { margin-bottom: 15px; }
+section footer,
+article footer { margin-bottom: 15px; }
 
 /* Block */
 .block, .medium-block, .small-block {
@@ -61,14 +60,20 @@ section footer, article footer { margin-bottom: 15px; }
 .block .content, .medium-block .content, .small-block .content { margin: 0; }
 
 .block h1, .medium-block h1, .small-block h1 { border: none; }
+
 .block { width: auto; }
 .block header {	margin-bottom: 10px; }
 .block footer {	margin: 0; }
 
-.medium-block, .small-block { display: inline-block; margin: 1% 0.5%; }
+.medium-block,
+.small-block {
+	display: inline-block;
+	margin: 1% 0.5%;
+}
 
 /* Fix to the spaces between the blocks */
-.medium-block, .small-block { margin-right: -0.29em; }
+.medium-block,
+.small-block { margin-right: -0.29em; }
 
 /* Affiche 2 blocs côte à côte */
 .medium-block { width: 48.7%; }
@@ -80,9 +85,11 @@ section footer, article footer { margin-bottom: 15px; }
 section footer ul.pagination {	text-align: center; }
 
 ul.pagination { margin: 0px; }
+
 ul.pagination .fa:before { font-size: 12px; }
 
 ul.pagination-block { margin: 5px 0px; }
+
 ul.pagination-block li { padding: 2px 2px; }
 
 ul.pagination-block li a {
@@ -124,7 +131,8 @@ ul.pagination-block li a.current-page {
 	border-color: #366393;
 	text-decoration: none;
 }
-ul.pagination-block li a.current-page:hover, ul.pagination-block li a.current-page:hover{ 
+ul.pagination-block li a.current-page:hover,
+ul.pagination-block li a.current-page:hover{ 
 	background-color: #366393;
 	border-color: #315A86;
 }
@@ -142,7 +150,8 @@ ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
 
 /* Exploreur des catégories
 -------------------------------------- */
-.explorer .cats, .explorer .files {
+.explorer .cats,
+.explorer .files {
 	display: inline-block;
 	width: 62%;
 	margin: 5px 0.33%;
@@ -202,9 +211,11 @@ ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
 	font-size: 11px;
 }
 
-.explorer .content ul a:hover, .explorer .content ul a:hover+a { background-color: #EEEEEE; }
+.explorer .content ul a:hover,
+.explorer .content ul a:hover+a { background-color: #EEEEEE; }
 
-.explorer .content ul .sub a, .explorer .content ul .sub ul .sub { padding-left: 18px; }
+.explorer .content ul .sub a,
+.explorer .content ul .sub ul .sub { padding-left: 18px; }
 
 .explorer .content ul .sub a.parent { padding-left: 4px; }
 
@@ -293,12 +304,14 @@ table tfoot tr th a { color: #676A74; }
 table tfoot tr th select { padding: 2px 5px; }
 
 /* Mini tableaux */
-table.mini th, table.mini td {
+table.mini th,
+table.mini td {
 	padding: 3px 1px;
 	font-size: 11px;
 }
 
-table.mini th a, table.mini td a { font-size: 11px; }
+table.mini th a,
+table.mini td a { font-size: 11px; }
 
 /* Pagination footer tableaux */
 table tfoot nav.pagination a {
@@ -406,11 +419,14 @@ fieldset.fieldset-submit {
 	border: none;
 }
 
-fieldset.fieldset-submit legend { /* A supprimer ou remplacer par un div */
-	display: none;
+fieldset.fieldset-submit legend { display: none; } /* A supprimer ou remplacer par un div */
+
+optgroup {
+	font-weight: bold;
+	border: none;
+	border-bottom: 1px solid #5B5A5A;
 }
 
-optgroup { font-weight: bold; border: none; border-bottom: 1px solid #5B5A5A; }
 option { padding: 0px 3px; }
 
 /* Prévisualition */
@@ -465,7 +481,8 @@ input.field-large { width: 200px; }
 input.field-xlarge { width: 300px; }
 
 /* Element du formulaire (englobe le label et l'input d'un champ) */
-.form-element, .form-element-textarea { margin: 0px 15px 10px 15px; }
+.form-element,
+.form-element-textarea { margin: 0px 15px 10px 15px; }
 
 .fieldset-description { margin: 0px 15px 10px 15px; }
 
@@ -523,7 +540,8 @@ textarea {
 }
 
 /* Verification des contraintes */
-.constraint-status-error input, form .constraint-status-error textarea {
+.constraint-status-error input,
+form .constraint-status-error textarea {
 	border-color: rgba(196, 60, 43, 0.3);
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
 	color: #C43C35;
@@ -538,7 +556,9 @@ textarea {
 
 .constraint-status-right i.picture-status-constraint:before { content: "\f00c"; color: #57A957; }
 .constraint-status-error i.picture-status-constraint:before { content: "\f056"; color: #C43C35; }
+
 .text-status-constraint { font-weight: bold; }
+
 .form-element-textarea .text-status-constraint { display: inline-block; margin-bottom: 5px; }
 
 /* Auto-complétion */
@@ -611,13 +631,11 @@ h5.sub-title { /* Titre des modules minis */
 }
 
 /* Bordure inférieure des modules minis */
-.module-mini-bottom { 
-	height: 15px;
-}
+.module-mini-bottom { height: 15px; }
 
 /* Messages postés par les membres (messages privés & commentaires) 
 --------------------------------------*/
-#comments_list { clear: both; }
+#comments-list { clear: both; }
 
 .message { 
 	width: 98%; 
@@ -634,6 +652,7 @@ h5.sub-title { /* Titre des modules minis */
 }
 
 .message-container { margin-left: 180px; }
+
 .view-topic { margin-top: 10px; }
 
 .message-message {
