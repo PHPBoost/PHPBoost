@@ -62,9 +62,9 @@
 
 .calendar-block table.date-picker thead th { border-bottom: 1px solid #999999; }
 
-.calendar-block table.date-picker tbody tr td: first-child { border-left: none; }
-.calendar-block table.date-picker tbody tr td: last-child { border-right: none; }
-.calendar-block table.date-picker tbody tr: last-child { border-bottom: none; }
+.calendar-block table.date-picker tbody tr td:first-child { border-left: none; }
+.calendar-block table.date-picker tbody tr td:last-child { border-right: none; }
+.calendar-block table.date-picker tbody tr:last-child { border-bottom: none; }
 
 /* Delacement des fichiers */
 .upload-selected-cat {
@@ -333,7 +333,8 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	display: inline;
 }
 
-.dynamic-menu li a, .dynamic-menu li span {
+.dynamic-menu li a,
+.dynamic-menu li span {
 	text-decoration: none;
 	display: block;
 	white-space: nowrap;
@@ -345,7 +346,8 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	background-color: #EEEEEE;
 }
 
-.dynamic-menu > ul > li > a, .dynamic-menu > ul > li > a:hover {
+.dynamic-menu > ul > li > a,
+.dynamic-menu > ul > li > a:hover {
 	color: inherit;
 	text-decoration: none;
 	font-weight: 300;
@@ -362,13 +364,13 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	border-left: 1px solid #BBBBBB;
 }
 
-.dynamic-menu.group > ul > li: first-child {
+.dynamic-menu.group > ul > li:first-child {
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 	border-left: 1px solid rgba(0, 0, 0, 0.1)
 }
 
-.dynamic-menu.group > ul > li: last-child {
+.dynamic-menu.group > ul > li:last-child {
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
 	border-right: 1px solid rgba(0, 0, 0, 0.1)
@@ -408,7 +410,8 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	position: relative;
 }
 
-.dynamic-menu li li a, .dynamic-menu li li span {
+.dynamic-menu li li a,
+.dynamic-menu li li span {
 	font-size: 10px;
 	display: block;
 	text-decoration: none;
@@ -416,15 +419,18 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	outline: none;
 }
 
-.dynamic-menu li li a:hover, .dynamic-menu li li span:hover {
+.dynamic-menu li li a:hover,
+.dynamic-menu li li span:hover {
 	cursor: pointer;
 	background-color: #F0F0F0;
 	text-decoration: none;
 }
 
-.dynamic-menu ul li.extend > a, .dynamic-menu ul li.extend > span { padding-right: 18px; }
+.dynamic-menu ul li.extend > a,
+.dynamic-menu ul li.extend > span { padding-right: 18px; }
 
-.dynamic-menu ul li.extend > a:after, .dynamic-menu ul li.extend > span:after {
+.dynamic-menu ul li.extend > a:after,
+.dynamic-menu ul li.extend > span:after {
 	position: absolute;
 	display: block;
 	right: 7px;
@@ -437,7 +443,8 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	font-weight: 300;
 }
 
-.dynamic-menu a img,.dynamic-menu span img {
+.dynamic-menu a img,
+.dynamic-menu span img {
 	max-width: none;
 	padding-right: 6px;
 	vertical-align: -4px;
@@ -471,7 +478,8 @@ nav.dynamic-menu h5:hover {
 
 nav.dynamic-menu li ul { min-width: 160px; }
 
-nav.dynamic-menu li ul li a, nav.dynamic-menu li ul li span { color: #0578CC; }
+nav.dynamic-menu li ul li a,
+nav.dynamic-menu li ul li span { color: #0578CC; }
 
 /* Menus des modules */
 menu.dynamic-menu { margin: 5px; }
@@ -510,13 +518,15 @@ menu.dynamic-menu > ul > li > a > i { font-size: 1.1em; }
 
 menu.dynamic-menu li li:hover > ul { top: -7px; }
 
-menu.dynamic-menu li ul li a, menu.dynamic-menu li ul li span {
+menu.dynamic-menu li ul li a,
+menu.dynamic-menu li ul li span {
 	color: #666666;
 	font-size: 11px;
 	padding: 3px 12px;
 }
 
-menu.dynamic-menu li ul li a i, menu.dynamic-menu li ul li span i {
+menu.dynamic-menu li ul li a i,
+menu.dynamic-menu li ul li span i {
 	font-size: 14px;
 	vertical-align: -2px;
 	width: 16px;
@@ -525,12 +535,14 @@ menu.dynamic-menu li ul li a i, menu.dynamic-menu li ul li span i {
 	text-align: center;
 }
 
-menu.dynamic-menu li ul li a i:before, menu.dynamic-menu li ul li span i:before {
+menu.dynamic-menu li ul li a i:before,
+menu.dynamic-menu li ul li span i:before {
 	display: block;
 	width: 16px;
 }
 
-menu.dynamic-menu ul li.extend > a:after, menu.dynamic-menu ul li.extend > span:after { margin-top: -6px; }
+menu.dynamic-menu ul li.extend > a:after,
+menu.dynamic-menu ul li.extend > span:after { margin-top: -6px; }
 
 /* Menu Right */
 .dynamic-menu.right ul {
@@ -554,7 +566,7 @@ ul.vertical-scrolling-menu li { padding: 0px 5px 0px 5px; }
 
 ul.vertical-scrolling-menu li ul { margin-left: 155px; }
 
-ul.vertical-scrolling-menu li.first_level { padding-left: 20px; }
+ul.vertical-scrolling-menu li.first-level { padding-left: 20px; }
 
 /* Menu Horizontal - Scrolling */
 ul.horizontal-scrolling-menu li {
@@ -581,36 +593,42 @@ h3.menu-vertical-0 {
 	padding-bottom: 2px;
 }
 
-ul.menu_vertical a,ul.menu_vertical span { color: #445766; }
+ul.menu-vertical a,
+ul.menu-vertical span { color: #445766; }
 
-ul.menu_vertical {
+ul.menu-vertical {
 	text-align: left;
 	margin: 0 !important;
 }
 
-ul.menu_vertical li { list-style: none; }
+ul.menu-vertical li { list-style: none; }
 
-ul.menu_vertical img { margin-right: 5px; }
+ul.menu-vertical img { margin-right: 5px; }
 
-ul.menu_vertical li a,ul.menu_vertical li span {
+ul.menu-vertical li a,
+ul.menu-vertical li span {
 	margin-top: 3px;
 	margin-left: 10px;
 	list-style: none;
 	margin-left: 10px;
 }
 
-ul.menu-vertical-0 li a,ul.menu-vertical-0 li span { color: #334455; }
+ul.menu-vertical-0 li a,
+ul.menu-vertical-0 li span { color: #334455; }
 
-ul.menu-vertical-1 li a,ul.menu-vertical-1 li span { color: #445566; }
+ul.menu-vertical-1 li a,
+ul.menu-vertical-1 li span { color: #445566; }
 
-ul.menu-vertical-2 li a,ul.menu-vertical-2 li span {
+ul.menu-vertical-2 li a,
+ul.menu-vertical-2 li span {
 	color: #556677;
 	font-style: italic;
 }
 
 ul.menu-vertical-3 li { font-style: normal; }
 
-ul.menu-vertical-3 li a,ul.menu-vertical-3 li span {
+ul.menu-vertical-3 li a,
+ul.menu-vertical-3 li span {
 	color: #778899;
 	font-size: 80%;
 }
