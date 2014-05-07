@@ -41,7 +41,11 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		return FaqConfig::load()->get_faq_name();
+		global $FAQ_LANG;
+		
+		load_module_lang('faq');
+		
+		return $FAQ_LANG['faq'];
 	}
 	
 	private function get_view()
@@ -196,7 +200,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 
 		$tpl->put_all(array(
-			'TITLE' => $faq_config->get_faq_name() . ($id_faq > 0 ? ' - ' . FaqUrlBuilder::get_title($id_faq) : ''),
+			'TITLE' => $FAQ_LANG['faq'] . ($id_faq > 0 ? ' - ' . FaqUrlBuilder::get_title($id_faq) : ''),
 			'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
 			'L_UP' => $FAQ_LANG['up'],
 			'L_DOWN' => $FAQ_LANG['down'],
@@ -204,7 +208,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_QUESTION_URL' => $FAQ_LANG['url_of_question'],
 			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 			'U_MANAGEMENT' => PATH_TO_ROOT . url('/faq/management.php?faq=' . $id_faq),
-			'U_ADMIN_CAT' => $id_faq > 0 ? url(PATH_TO_ROOT . '/faq/admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq_cats.php'),
+			'U_ADMIN_CAT' => $id_faq > 0 ? url(PATH_TO_ROOT . '/faq/admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq.php'),
 			'ID_FAQ' => $id_faq,
 		));
 

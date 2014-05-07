@@ -36,7 +36,7 @@ if (!array_key_exists($id_faq, $FAQ_CATS) || (array_key_exists($id_faq, $FAQ_CAT
 }
 
 $TITLE = FaqUrlBuilder::get_title($id_faq);
-define('TITLE', $faq_config->get_faq_name() . ($id_faq > 0 ? ' - ' . $TITLE : ''));
+define('TITLE', $FAQ_LANG['faq'] . ($id_faq > 0 ? ' - ' . $TITLE : ''));
 
 $id_cat_for_bread_crumb = $id_faq;
 include_once('faq_bread_crumb.php');

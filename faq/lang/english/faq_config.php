@@ -32,7 +32,6 @@
 
 $lang = array();
 
-$lang['faq.config.faq_name'] = 'FAQ PHPBoost';
 $lang['faq.config.root_cat_description'] = 'Welcome on the FAQ!<br /><br /> Two categories and some questions were created to show you how this module works. Here are some tips to get started on this module.
 <br /><br /> 
 <ul class="bb-ul"><li class="bb-li">To configure your module, go into the <a href="/faq/admin_faq.php">module administration</a> 

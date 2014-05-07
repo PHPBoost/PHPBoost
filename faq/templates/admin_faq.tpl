@@ -37,15 +37,6 @@
 				<fieldset>
 					<legend>{L_CONFIG_MANAGEMENT}</legend>
 					<div class="form-element">
-						<label for="faq_name">
-							{L_FAQ_NAME}
-							<span class="field-description">{L_FAQ_NAME_EXPLAIN}</span>
-						</label>
-						<div class="form-field">
-							<input type="text" size="65" maxlength="100" id="faq_name" name="faq_name" value="{FAQ_NAME}">
-						</div>	
-					</div>
-					<div class="form-element">
 						<label for="num_cols">
 							{L_NBR_COLS}
 							<span class="field-description">{L_NBR_COLS_EXPLAIN}</span>
@@ -90,7 +81,7 @@
 						
 						<div class="form-field">
 							{AUTH_WRITE}
-						</div>	
+						</div>
 					</div>
 				</fieldset>
 				<fieldset class="fieldset-submit">
@@ -98,4 +89,4 @@
 					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
 				</fieldset>
 			</form>
-		</div>		
+		</div>

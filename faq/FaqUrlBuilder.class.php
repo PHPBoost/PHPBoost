@@ -35,7 +35,7 @@ class FaqUrlBuilder
 		if ($id_faq > 0)
 			$title = array_key_exists($id_faq, $FAQ_CATS) ? $FAQ_CATS[$id_faq]['name'] : $FAQ_LANG['faq'];
 		else
-			$title = FaqConfig::load()->get_faq_name();
+			$title = $FAQ_LANG['faq'];
 		return $title;
 	}
 

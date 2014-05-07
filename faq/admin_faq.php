@@ -35,7 +35,6 @@ $page = retrieve(GET, 'p', 0);
 
 if (retrieve(POST, 'submit', false))
 {
-	$faq_config->set_faq_name(stripslashes(retrieve(POST, 'faq_name', $FAQ_LANG['faq'])));
 	$faq_config->set_number_columns(retrieve(POST, 'num_cols', 3));
 	$faq_config->set_display_mode((!empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline') ? 'inline' : 'block');
 	$faq_config->set_root_cat_description(stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE)));
@@ -121,8 +120,6 @@ else
 		'L_QUESTIONS_LIST' => $FAQ_LANG['faq_questions_list'],
 		'L_ADD_QUESTION' => $FAQ_LANG['add_question'],   
 		'L_ADD_CAT' => $FAQ_LANG['add_cat'],
-		'L_FAQ_NAME' => $FAQ_LANG['faq_name'],
-		'L_FAQ_NAME_EXPLAIN' => $FAQ_LANG['faq_name_explain'],
 		'L_NBR_COLS' => $FAQ_LANG['nbr_cols'],
 		'L_NBR_COLS_EXPLAIN' => $FAQ_LANG['nbr_cols_explain'],
 		'L_DISPLAY_MODE' => $FAQ_LANG['display_mode'],
@@ -139,7 +136,6 @@ else
 		'ROOT_CAT_DESCRIPTION' => FormatingHelper::unparse($faq_config->get_root_cat_description()),
 		'AUTH_READ' => Authorizations::generate_select(FaqAuthorizationsService::READ_AUTHORIZATIONS, $faq_config->get_authorizations()),
 		'AUTH_WRITE' => Authorizations::generate_select(FaqAuthorizationsService::WRITE_AUTHORIZATIONS, $faq_config->get_authorizations()),
-		'FAQ_NAME' => $faq_config->get_faq_name(),
 		'NUM_COLS' => $faq_config->get_number_columns(),
 		'SELECTED_BLOCK' => $faq_config->get_display_mode() == FaqConfig::DISPLAY_MODE_BLOCK ? ' selected="selected"' : '',
 		'SELECTED_INLINE' => $faq_config->get_display_mode() == FaqConfig::DISPLAY_MODE_INLINE ? ' selected="selected"' : ''
