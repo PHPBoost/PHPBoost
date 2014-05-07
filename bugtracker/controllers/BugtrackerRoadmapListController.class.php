@@ -80,13 +80,7 @@ class BugtrackerRoadmapListController extends ModuleController
 		{
 			$r_version = $request->get_value('version', Url::encode_rewrite($versions[key($versions)]['name']));
 			
-			$roadmap_version = (int)key($versions);
-			foreach ($versions as $id => $version)
-			{
-				if ($r_version == Url::encode_rewrite($versions[$id]['name']))
-					$roadmap_version = $id;
-			}
-			
+			$roadmap_version = $request->get_int('id_version', 0);
 			$roadmap_status = $request->get_value('status', 'all');
 			
 			$field = $request->get_value('field', 'date');
@@ -165,7 +159,7 @@ class BugtrackerRoadmapListController extends ModuleController
 				'C_PAGINATION'					=> $pagination->has_several_pages(),
 				'PAGINATION' 					=> $pagination->display(),
 				'BUGS_COLSPAN' 					=> $bugs_colspan,
-				'SELECT_VERSION'				=> $this->build_form($versions[$roadmap_version], $roadmap_status, (int)$bugs_number[$roadmap_status])->display(),
+				'SELECT_VERSION'				=> $this->build_form(isset($versions[$roadmap_version]) ? $roadmap_version . '-' . Url::encode_rewrite($versions[$roadmap_version]['name']) : '', $roadmap_status, (int)$bugs_number[$roadmap_status])->display(),
 				'LEGEND'						=> BugtrackerViews::build_legend($displayed_severities, 'roadmap'),
 				'LINK_BUG_ID_TOP' 				=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/id/top/'. $current_page)->rel(),
 				'LINK_BUG_ID_BOTTOM' 			=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/id/bottom/'. $current_page)->rel(),
@@ -190,12 +184,12 @@ class BugtrackerRoadmapListController extends ModuleController
 		$fieldset = new FormFieldsetHorizontal('choose-version');
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('roadmap_version', $this->lang['titles.choose_version'], Url::encode_rewrite($requested_version['name']), $this->build_select_versions(),
-			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap()->rel() .'" + HTMLForms.getField("roadmap_version").getValue() + "/" + HTMLForms.getField("status").getValue();')
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('roadmap_version', $this->lang['titles.choose_version'], $requested_version, $this->build_select_versions(),
+			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap()->rel() .'" + HTMLForms.getField("roadmap_version").getValue()' . ($requested_status != 'all' ? ' + "/" + HTMLForms.getField("status").getValue()' : '') . ';')
 		)));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('status', $this->lang['labels.fields.status'], $requested_status, $this->build_select_status(),
-			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap(Url::encode_rewrite($requested_version['name']))->rel() .'" + "/" + HTMLForms.getField("status").getValue();')
+			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap($requested_version)->rel() .'" + "/" + HTMLForms.getField("status").getValue();')
 		)));
 		
 		$release_date = !empty($requested_version['release_date']) && is_numeric($requested_version['release_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $requested_version['release_date']) : null;
@@ -216,7 +210,7 @@ class BugtrackerRoadmapListController extends ModuleController
 		//Versions
 		foreach ($versions as $key => $version)
 		{
-			$array_versions[] = new FormFieldSelectChoiceOption(stripslashes($version['name']), Url::encode_rewrite($version['name']));
+			$array_versions[] = new FormFieldSelectChoiceOption(stripslashes($version['name']), $key . '-' . Url::encode_rewrite($version['name']));
 		}
 		return $array_versions;
 	}
