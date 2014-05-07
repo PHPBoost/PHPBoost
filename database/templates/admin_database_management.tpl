@@ -194,7 +194,7 @@
 			# IF C_DATABASE_BACKUP #
 			# IF TABLE_NAME #
 			<div style="width:95%;margin:auto;">
-				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px;">
+				<div class="block-contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px;">
 					- <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> - <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
 				<menu class="dynamic-menu group center">
