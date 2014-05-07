@@ -27,7 +27,7 @@ ${resources('update/update')}
 			<div id="site-logo"></div>
 			<div id="site-name-container">
 				<a id="site-name" title="PHPBoost CMS">PHPBoost CMS</a>
-				<span id="site-slogan">CrÃ©ez votre site internet facilement et gratuitement !</span>
+				<span id="site-slogan">Créez votre site internet facilement et gratuitement !</span>
 			</div>
 		</div>
 		</div>
