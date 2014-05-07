@@ -134,7 +134,7 @@ Cordially, the PHPBoost Team.</p>',
                             <legend>Thanks</legend>
                             <h2>Members</h2>
                             <p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 4.1.</p>
-                            <p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>Ptithom</strong>, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>Teki</strong> for the graphics, <strong>julienseth78</strong> and <strong>DaaX</strong> for the modules development and <strong>benflovideo</strong> for the moderation of the community.</p>
+                            <p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>ElenWii</strong>, <strong>Teki</strong> and <strong>babsolune</strong> for the graphics, <strong>julienseth78</strong> and <strong>DaaX</strong> for the modules development and <strong>benflovideo</strong> for the moderation of the community.</p>
                             <h2>Other projects</h2>
                             <p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
                             <ul>
@@ -158,6 +158,7 @@ Cordially, the PHPBoost Team.</p>',
                                 <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
                                 <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
                                 <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer</li>
+                                <li><strong>Julien BRISWALTER</strong> <em>(alias julienseth78)</em>, developer</li>
                             </ul>
                         </fieldset>',
 	'site.index' => 'Go to the website',
