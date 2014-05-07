@@ -36,5 +36,12 @@ class ReCaptchaExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ReCaptcha();
 	}
+	
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('ReCaptcha.css');
+		return $module_css_files;
+	}
 }
 ?>
