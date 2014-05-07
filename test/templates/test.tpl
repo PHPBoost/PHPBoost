@@ -1,8 +1,8 @@
-<div class="module_position">
-<div class="module_top_l"></div>
-<div class="module_top_r"></div>
-<div class="module_top">Unit tests</div>
-<div class="module_contents">
+<div class="module-position">
+<div class="module-top-l"></div>
+<div class="module-top-r"></div>
+<div class="module-top">Unit tests</div>
+<div class="module-contents">
 <form name="phpunit_launcher">
 <fieldset><legend>Command line</legend>
 <div class="form-element">
@@ -48,7 +48,7 @@
 <br />
 <iframe src="run.php?params={PARAMS}" style="width: 100%; height: 500px"
 	name="phpunit"></iframe></div>
-<div class="module_bottom_l"></div>
-<div class="module_bottom_r"></div>
-<div class="module_bottom"></div>
+<div class="module-bottom-l"></div>
+<div class="module-bottom-r"></div>
+<div class="module-bottom"></div>
 </div>

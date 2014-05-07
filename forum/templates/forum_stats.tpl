@@ -1,10 +1,10 @@
 		# INCLUDE forum_top #
 		
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top"><strong>{L_STATS}</strong></div>
-			<div class="module_contents">
+		<div class="module-position">					
+			<div class="module-top-l"></div>		
+			<div class="module-top-r"></div>
+			<div class="module-top"><strong>{L_STATS}</strong></div>
+			<div class="module-contents">
 				<table>
 					<thead>
 						<tr>
@@ -91,9 +91,9 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
+			<div class="module-bottom-l"></div>		
+			<div class="module-bottom-r"></div>
+			<div class="module-bottom"></div>
 		</div>
 				
 		# INCLUDE forum_bottom #

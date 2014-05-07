@@ -4,107 +4,105 @@ section#main * {
 	box-sizing: content-box; 
 }
 
-.forum_table {}
+.forum-table {}
  
 /* Classe du lien du pseudo sur forum */
-a.forum_link_pseudo {
+a.forum-link-pseudo {
 	color: #E8EAEB; 
 	font-weight: bold;
 }
-a.forum_link_pseudo:hover { 
+a.forum-link-pseudo:hover { 
 	color: #F2FBFF; 
 	font-weight: bold;
 }
 /* Barre du titre du forum */
-#forum_top {
+#forum-top {
 	margin: 5px 0px 15px 0px;
 	background: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 }
 
-#forum_bottom {
+#forum-bottom {
 	margin: 15px 0px 5px 0px;
 	background: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 }
 
-.forum_title_l {
+.forum-title-l {
 	float: left;
 	width: 5px;
 }
-.forum_title_r {
+.forum-title-r {
 	float: right;
 	width: 5px;
 }
-.forum_title { margin: 10px; }
-.forum_title h2 { font-size: 14px; } /* Titre du forum */
-.forum_title a {} /* Couleur des liens */
+.forum-title { margin: 10px; }
+.forum-title h2 { font-size: 14px; } /* Titre du forum */
+.forum-title a {} /* Couleur des liens */
 
 /* Barre de liens du forum */
-.forum_links {
+.forum-links {
 	color: #334455;
 	padding: 6px;
 }
-.forum_links a { color: #334455; } /* Couleur des liens */
+.forum-links a { color: #334455; } /* Couleur des liens */
 
 
-#forum_top .forum_links {
+#forum-top .forum-links {
 	margin: 9px;
 	border-top: 1px solid #CCC;
 }
 
-#forum_bottom .forum_links {
+#forum-bottom .forum-links {
 	margin: 9px;
 	border-bottom: 1px solid #CCC;
 }
-.forum_notread { /* Message non lus */
+.forum-notread { /* Message non lus */
 	background: #5D7C94;
 	padding: 4px;
 	font-size: 10px;
 	color: #366393;
 }
 /* Barre des textes relatifs aux colonnes */
-td.forum_text_column {	
+td.forum-text-column {	
 	height: 20px;
 	font-size: 11px;
 }
 /* Case des liens sous-catégories */
-td.forum_sous_cat_img {
-	width: 30px;
-}
+td.forum-sous-cat-img { width: 30px; }
 
-td.forum_sous_cat { text-align: left; }
+td.forum-sous-cat { text-align: left; }
 
-td.forum_sous_cat + td.forum_sous_cat { padding: 6px; }
+td.forum-sous-cat + td.forum-sous-cat { padding: 6px; }
 
 /* Case compteur message/topic */
-td.forum_sous_cat_compteur { width: 60px; }
+td.forum-sous-cat-compteur { width: 60px; }
 
 /* Case compteur dernier topic/dernier message */
-td.forum_sous_cat_last {
+td.forum-sous-cat-last {
 	width: 150px;
 	font-size: 10px;
 }
 
 /* Formulaire pour poster les messages */
-.forum_post_form {
+.forum-post-form {
 	width: 80%;
 	margin: auto;
 	margin-top: 15px;
 }
 /* Cadre des liens: alerter les modérateurs et suivre le sujet */
-.forum_action {	
+.forum-action {	
 	margin-top: 5px;
 	text-align: center;
 }
 
 /* Les des catégories de niveau 0 */
-a.forum_link_cat { font-weight: bold; }
+a.forum-link-cat { font-weight: bold; }
 
 /* Affichage des membres en ligne */
-.forum_online {
+.forum-online {
 	padding: 6px;
 	overflow: hidden !important;
 	height: auto !important;
@@ -112,96 +110,96 @@ a.forum_link_cat { font-weight: bold; }
 	height: 1%;
 	clear: both;
 }
-.forum_online_select_cat {
+.forum-online-select-cat {
 	float: left;
 	text-align: right;
 	clear: both;
 	padding: 5px;	
 }
-.forum_online_select {
+.forum-online-select {
 	min-width: 160px;
 	max-width: 530px;	
 }
 
 /* Fond des catégories dans l'administration */
-.forum_cat_admin {
+.forum-cat-admin {
 	width: 100%;
 	height: 20px;
 	margin-bottom: 2px;
 	padding: 4px 0px;
 }
 /* Contenu */
-.forum_contents {
+.forum-contents {
 	padding: 0px;
 	margin: 0px;
 	border-bottom: none;
 }
-.forum_cat_title {
+.forum-cat-title {
 	padding: 0px 5px;
 }
-.forum_cat_title a {}
+.forum-cat-title a {}
 
-a.forum_mbrmsg_links { color: #FFFFFF; } /* Couleur des liens pour les messages du membre */
+a.forum-mbrmsg-links { color: #FFFFFF; } /* Couleur des liens pour les messages du membre */
 
-.forum_search_word {
+.forum-search-word {
 	background: yellow;
 	color: black;	
 }
 
-.pagin_forum { float: right; }
+.pagin-forum { float: right; }
 
 /* Module */
-.module_position {
+.module-position {
     width: 98%;
     margin: auto;
 	float: none;
 }
 
 /* Barre supérieur des modules */
-.module_top_l {}
-.module_top_r {}
-.module_top {
+.module-top-l {}
+.module-top-r {}
+.module-top {
 	padding: 8px;
 	background: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 }
-.module_top a:not(.*button) {
+.module-top a:not(.*button) {
 	color: #334455;
 	font-size: 13px;
 }
-.module_contents{ clear: both; } /* Contenu des modules */
+.module-contents { clear: both; } /* Contenu des modules */
 
-.module_bottom_l {} /* Barre inférieure des modules */
-.module_bottom_r {}
-.module_bottom {
+.module-bottom-l {} /* Barre inférieure des modules */
+.module-bottom-r {}
+.module-bottom {
 	padding: 8px;
 	background: #EEEEEE;
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 }
-.module_bottom a:not(.*button) {
+.module-bottom a:not(.*button) {
 	color: #334455;
 	font-size: 13px;
 }
 
-.desc_forum { font-size: 10px; }
+.desc-forum { font-size: 10px; }
 
-.module_top ul.pagination, .module_bottom ul.pagination { display: inline; }
+.module-top ul.pagination, .module-bottom ul.pagination { display: inline; }
 
 /* Messages postés par les membres 
 --------------------------------------*/
 /* Classe du lien du pseudo des messages */
-a.msg_link_pseudo {
+a.msg-link-pseudo {
 	font-size: 11px;
     color: #E8EAEB;
     font-weight: bold;
 }
 
-a.msg_link_pseudo:hover { color: #F2FBFF; }
+a.msg-link-pseudo:hover { color: #F2FBFF; }
 
 /* Conteneur des messages */
-.msg_position { 
+.msg-position { 
     width: 96%;
     margin: 5px auto;
     background: #F0F3FF;
@@ -209,8 +207,8 @@ a.msg_link_pseudo:hover { color: #F2FBFF; }
 }
 
 /* Case contenant l'ensemble du message */
-.msg_container, 
-.msg_container2 {
+.msg-container, 
+.msg-container2 {
     background: #FCFCFD;
     overflow: hidden !important;
     height: auto !important;
@@ -218,10 +216,10 @@ a.msg_link_pseudo:hover { color: #F2FBFF; }
 }
 
 /*  Case contenant l'ensemble du message => Couleur alternative */
-.msg_container2 { background: #FCFCFD; }
+.msg-container2 { background: #FCFCFD; }
 
 /* Barre superieur des messages */
-.msg_top_l {
+.msg-top-l {
 	margin-right: 0px !important;
 	height: 34px;
 	width: 29px;
@@ -229,7 +227,7 @@ a.msg_link_pseudo:hover { color: #F2FBFF; }
 	float: left;
 }
 
-.msg_top_r {
+.msg-top-r {
 	margin-left: 0px !important;
 	height: 34px;
 	width: 21px;
@@ -237,17 +235,17 @@ a.msg_link_pseudo:hover { color: #F2FBFF; }
 	float: right;
 }
 
-.msg_top {
+.msg-top {
 	height: 25px;
 	background: #ECEFFA;
 	padding: 9px 0px 0px 6px;
 	margin: 0px 15px 0px 20px;
 }
 
-.msg_top a { color: #3F5164; }
+.msg-top a { color: #3F5164; }
 
 /* Pseudo du membre */
-.msg_pseudo_mbr {
+.msg-pseudo-mbr {
     width: 127px;
     padding: 2px 4px;
     float: left;
@@ -257,7 +255,7 @@ a.msg_link_pseudo:hover { color: #F2FBFF; }
 }
 
 /* Case au dessus du message, indique la date et les boutons d'administration */
-.msg_top_row {
+.msg-top-row {
 	height: auto;
     min-height: 26px;
     background: #4D4C50;
@@ -268,9 +266,9 @@ a.msg_link_pseudo:hover { color: #F2FBFF; }
     overflow: hidden !important;
 }
 
-.msg_top_row a { color: #E8EAEB; }
+.msg-top-row a { color: #E8EAEB; }
 
-.msg_info_mbr { /* Case des informations du membre */
+.msg-info-mbr { /* Case des informations du membre */
     background: #F0F3FF;
     width: 136px;
     padding: 4px;
@@ -279,14 +277,14 @@ a.msg_link_pseudo:hover { color: #F2FBFF; }
     border-right: 1px dotted #C4CED6;
 }
 
-.msg_info_mbr img {	max-width: 120px; }
+.msg-info-mbr img {	max-width: 120px; }
 
 /* Case contenant l'ensemble du message, infos membre + contenu */
-.msg_contents_container { background: #F0F3FF; }
+.msg-contents-container { background: #F0F3FF; }
 
 /* Case du message */
-.msg_contents, 
-.msg_contents2 { 
+.msg-contents, 
+.msg-contents2 { 
     margin-left: 135px;
     background: #FCFCFD;
     padding: 0px 5px;
@@ -294,10 +292,10 @@ a.msg_link_pseudo:hover { color: #F2FBFF; }
 }
 
 /* Case du message => Couleur alternative */
-.msg_contents2 { background: #FCFCFD; }
+.msg-contents2 { background: #FCFCFD; }
 
 /* Case du contents du message, évite que les images trop grandes soient déformées */
-.msg_contents_overflow {
+.msg-contents-overflow {
     width: 99%;
     height: auto;
     min-height: 80px;
@@ -307,8 +305,8 @@ a.msg_link_pseudo:hover { color: #F2FBFF; }
 }
 
 /* Signature du membre */
-.msg_sign,
-.msg_sign2 { 
+.msg-sign,
+.msg-sign2 { 
    	background: #FCFCFD;
     padding: 4px;
     font-size: 11px;
@@ -317,10 +315,10 @@ a.msg_link_pseudo:hover { color: #F2FBFF; }
 }
 
 /* Signature du membre => Couleur alternative */
-.msg_sign2 { background: #FCFCFD; }
+.msg-sign2 { background: #FCFCFD; }
 
 /* Signature du membre, fixe la hauteur maximale */
-.msg_sign_overflow { 
+.msg-sign-overflow { 
     height: auto !important;
     width: 99%;
     max-height: 80px;
@@ -328,7 +326,7 @@ a.msg_link_pseudo:hover { color: #F2FBFF; }
     overflow: hidden;
 }
 
-.msg_bottom {
+.msg-bottom {
     height: 23px;
     padding: 6px 6px 0px 6px;
     border: none;

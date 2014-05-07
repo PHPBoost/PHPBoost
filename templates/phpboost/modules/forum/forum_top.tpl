@@ -80,11 +80,11 @@
 		-->
 		</script>
 											
-		<div class="module_position forum_position_title">
-			<div class="forum_title_l"></div>
-			<div class="forum_title_r"></div>
-			<div class="forum_title">
-				<div class="forum_title_search">
+		<div class="module-position forum_position_title">
+			<div class="forum-title-l"></div>
+			<div class="forum-title-r"></div>
+			<div class="forum-title">
+				<div class="forum-title-search">
 					<form action="{PATH_TO_ROOT}/forum/search.php?token={TOKEN}" method="post">
 						<div>
 							<label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." placeholder="{L_SEARCH}..."></label>
@@ -112,7 +112,7 @@
 			<div class="spacer"></div>
 			</div>
 			
-		<div class="forum_links forum_links_top">
+		<div class="forum-links forum-links-top">
 			<div style="float:left;">
 				&bull; <a href="index.php?{SID}">{L_FORUM_INDEX}</a>
 			</div>
