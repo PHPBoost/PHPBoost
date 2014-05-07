@@ -36,9 +36,10 @@ class AdminErrorsUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function list_404_errors()
+	public static function list_404_errors($page = 1)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/404/list/');
+		$page = $page !== 1 ? $page . '/': '';
+		return DispatchManager::get_url(self::$dispatcher, '/404/list/' . $page);
 	}
 
 	/**
