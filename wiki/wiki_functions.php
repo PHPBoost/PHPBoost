@@ -183,7 +183,7 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 	
 
 	//Maintenant qu'on connait l'arborescence on part du début
-	$cats_list = '<ul>' . show_cat_contents(0, $cats, $id, $display_select_link) . '</ul>';
+	$cats_list = '<ul class="no-list">' . show_cat_contents(0, $cats, $id, $display_select_link) . '</ul>';
 	
 	//On liste les catégories ouvertes pour la fonction javascript
 	$opened_cats_list = '';

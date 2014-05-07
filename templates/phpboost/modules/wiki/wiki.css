@@ -73,7 +73,7 @@ div.pbt-desc-container { padding: 10px 20px; }
  
 li.bb-li span.pbt-desc{ font-size: 11px; }
  
-div.pbt-desc_container p.pbt-desc { font-weight: bold; }
+div.pbt-desc-container p.pbt-desc { font-weight: bold; }
  
 div.no-article {
  	margin: 20px;
@@ -81,7 +81,5 @@ div.no-article {
  	font-style: italic;
  	font-size: 10px;
 }
- 
-ul.no-list { list-style: none; }
 
-a i.fa { width: 20px; }
+ul.no-list a i.fa { width: 18px; }
