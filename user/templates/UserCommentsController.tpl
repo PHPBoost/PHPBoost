@@ -1,5 +1,5 @@
 # INCLUDE MODULE_CHOICE_FORM #
-<div id="comments_list">
+<div id="comments-list">
 	# IF C_PAGINATION #
 	<div style="text-align:center;">
 		# INCLUDE PAGINATION #
