@@ -132,7 +132,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'L_AUTOCONNECT' => $LANG['autoconnect'],
 	    		'L_FORGOT_PASS' => LangLoader::get_message('forget-password', 'user-common'),
 	    		'L_REGISTER' => $LANG['register'],
-	    		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) . '&amp;' : ''
+	    		'U_CONNECT' => '/'
 	    	));
 	    }
 	
