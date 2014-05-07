@@ -118,7 +118,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
 			'`<p class="float-(left|right)">(.*)</p>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
-			'`<acronym title="([^"]+)" class="bb-acronym">(.*)</acronym>`isU',
+			'`<abbr title="([^"]+)">(.*)</abbr>`isU',
 			'`<a href="mailto:(.*)">(.*)</a>`isU',
 			'`<a href="([^"]+)">(.*)</a>`isU',
 			'`<h1 class="bb-title">(.*)</h1>`isU',
