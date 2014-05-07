@@ -1,6 +1,6 @@
 <h1>{@step.server.title}</h1>
 <a href="http://www.php.net/">
-    <img src="templates/images/php.png" alt="PHP" style="float:right; margin-bottom:5px; margin-left:5px;"/>
+    <img src="templates/images/php.png" alt="PHP" style="float:right;bottom:20px; margin-left:5px;position:relative;"/>
 </a>
 {@H|step.server.explanation}
 <fieldset>
@@ -10,9 +10,9 @@
         <label>${set(@php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
         <div class="form-field">
         # IF PHP_VERSION_OK #
-            <img src="templates/images/success.png" alt="{L_YES}" />
+            <i class="fa fa-success fa-2x" title="{@yes}"></i>
         # ELSE #
-            <img src="templates/images/stop.png" alt="{L_NO}" />
+            <i class="fa fa-error fa-2x" title="{@no}"></i>
         # ENDIF #
         </div>
     </div>
@@ -25,9 +25,9 @@
         <label>{@php.extensions.check.gdLibrary} <span class="field-description">{@php.extensions.check.gdLibrary.explanation}</span></label>
         <div class="form-field">
         # IF HAS_GD_LIBRARY #
-            <img src="templates/images/success.png" alt="{@yes}" />
+            <i class="fa fa-success fa-2x" title="{@yes}"></i>
         # ELSE #
-            <img src="templates/images/stop.png" alt="{@no}" />
+            <i class="fa fa-error fa-2x" title="{@no}"></i>
         # ENDIF #
         </div>
     </div>
@@ -36,12 +36,12 @@
         <div class="form-field">
         # IF URL_REWRITING_KNOWN #
             # IF URL_REWRITING_AVAILABLE #
-            <img src="templates/images/success.png" alt="{@yes}" />
+            <i class="fa fa-success fa-2x" title="{@yes}"></i>
             # ELSE #
-            <img src="templates/images/stop.png" alt="{@no}" />
+            <i class="fa fa-error fa-2x" title="{@no}"></i>
             # ENDIF #
         # ELSE #
-        <img src="templates/images/question.png" alt="{@unknown}" />
+        <i class="fa fa-question fa-2x" title="{@unknown}"></i>
         # ENDIF #
         </div>
     </div>
