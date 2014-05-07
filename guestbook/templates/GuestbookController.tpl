@@ -22,7 +22,7 @@
 						{messages.PSEUDO}
 						# ENDIF #
 					</div>
-					# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" class="message-avatar" /># ENDIF #
+					# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" alt="" class="message-avatar" /># ENDIF #
 					# IF messages.C_USER_GROUPS #
 						<div class="spacer"></div>
 						# START messages.user_groups #
