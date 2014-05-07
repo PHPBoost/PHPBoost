@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="{PATH_TO_ROOT}/ReCaptcha/templates/ReCaptcha.css" type="text/css" media="screen" />
-
 <div id="recaptcha-widget" style="display:none">
 	<div id="recaptcha_response_field" style="display:none;"></div>
 	<div id="recaptcha-container">
