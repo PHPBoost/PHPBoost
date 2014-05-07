@@ -11,7 +11,6 @@ ${resources('install/install')}
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css" />
 		<link type="text/css" href="templates/install.css" title="phpboost" rel="stylesheet" />
 		<script src="{PATH_TO_ROOT}/kernel/lib/js/top.js"></script>
-		<script src="templates/global.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
         <script>
         <!--

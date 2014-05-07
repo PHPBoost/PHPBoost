@@ -61,7 +61,7 @@ class InstallDisplayResponse extends AbstractResponse
             'C_HAS_PREVIOUS_STEP' => false,
             'C_HAS_NEXT_STEP' => false,
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
-            'PROGRESSION' => floor(100 * $this->current_step / $this->nb_steps),
+            'PROGRESSION' => floor(100 * $this->current_step / ($this->nb_steps -1)),
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 		));
 
@@ -120,7 +120,7 @@ class InstallDisplayResponse extends AbstractResponse
 			array('name' => $this->lang['step.list.admin'], 'img' => 'admin.png'),
 			array('name' => $this->lang['step.list.end'], 'img' => 'end.png')
 		);
-		$this->nb_steps = count($steps) - 1;
+		$this->nb_steps = count($steps);
 
 		for ($i = 0; $i < $this->nb_steps; $i++)
 		{

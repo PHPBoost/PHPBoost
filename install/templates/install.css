@@ -264,6 +264,13 @@ a:hover {
 	transition: width .6s ease;
 }
 
+/* Icônes spécifique PHPBoost
+------------------------------------ */
+.fa-success:before { color: #478948; }
+.fa-forbidden:before { color: #BA4B49; }
+.fa-error:before { color: #BA4B49; }
+.fa-warning:before { color: #C19954; }
+
 /* Erreurs */
 div.message-helper-small { width: 50% }
 
