@@ -46,7 +46,7 @@ while ($id_cat_for_bread_crumb > 0)
 	$id_cat_for_bread_crumb = (int)$FAQ_CATS[$id_cat_for_bread_crumb]['id_parent'];	
 }
 
-$Bread_crumb->add($faq_config->get_faq_name(), url('faq.php'));
+$Bread_crumb->add($FAQ_LANG['faq'], url('faq.php'));
 
 $Bread_crumb->reverse();
 

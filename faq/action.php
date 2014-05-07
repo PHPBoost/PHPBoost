@@ -197,7 +197,6 @@ elseif ($cat_properties && (!empty($cat_name) || $id_cat == 0))
 		else
 		{
 			$faq_config->set_root_cat_display_mode($display_mode);
-			$faq_config->set_root_cat_description(stripslashes($description));
 			FaqConfig::save();
 		}
 		$Cache->Generate_module_file('faq');

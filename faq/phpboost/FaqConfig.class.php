@@ -32,7 +32,6 @@
  */
 class FaqConfig extends AbstractConfigData
 {
-	const FAQ_NAME = 'faq_name';
 	const NUMBER_COLUMNS = 'number_columns';
 	const DISPLAY_MODE = 'display_mode';
 	const ROOT_CAT_DISPLAY_MODE = 'root_cat_display_mode';
@@ -41,16 +40,6 @@ class FaqConfig extends AbstractConfigData
 	
 	const DISPLAY_MODE_INLINE = 'inline';
 	const DISPLAY_MODE_BLOCK = 'block';
-	
-	public function get_faq_name()
-	{
-		return $this->get_property(self::FAQ_NAME);
-	}
-	
-	public function set_faq_name($value) 
-	{
-		$this->set_property(self::FAQ_NAME, $value);
-	}
 	
 	public function get_number_columns()
 	{
@@ -107,7 +96,6 @@ class FaqConfig extends AbstractConfigData
 	{
 		return array(
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 3),
-			self::FAQ_NAME => LangLoader::get_message('faq.config.faq_name', 'faq_config', 'faq'),
 			self::NUMBER_COLUMNS => 4,
 			self::DISPLAY_MODE => self::DISPLAY_MODE_INLINE,
 			self::ROOT_CAT_DISPLAY_MODE => 0,
