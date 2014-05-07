@@ -53,11 +53,11 @@
 							<a href="{PATH_TO_ROOT}/download/category-36+mises-jour.php" class="pbt-button-a">
 								<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
 								<p class="pbt-button-title">Mises à jour</p>
-								<p class="pbt-button-com pbt-button-com_green">Mise à jour et migration</p>
+								<p class="pbt-button-com pbt-button-com-green">Mise à jour et migration</p>
 							</a>
 						</div>
 					</div>
-					<div class="pbt-dev_container">
+					<div class="pbt-dev-container">
 						<a href="{PATH_TO_ROOT}/download/download-232+phpboost-4-0-pdk.php" class="pbt-dev">Télécharger la version pour développeurs (PDK)</a>
 					</div>
 					
@@ -106,7 +106,7 @@
 							<a href="{PATH_TO_ROOT}/download/category-39+mises-jour.php" class="pbt-button-a">
 								<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
 								<p class="pbt-button-title">Mises à jour</p>
-								<p class="pbt-button-com pbt-button-com_green">Mise à jour et migration</p>
+								<p class="pbt-button-com pbt-button-com-green">Mise à jour et migration</p>
 							</a>
 						</div>
 					</div>						
