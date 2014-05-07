@@ -361,13 +361,13 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	border-left: 1px solid #BBBBBB;
 }
 
-.dynamic-menu.group > ul > li: first-child {
+.dynamic-menu.group > ul > li:first-child {
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 	border-left: 1px solid rgba(0, 0, 0, 0.1)
 }
 
-.dynamic-menu.group > ul > li: last-child {
+.dynamic-menu.group > ul > li:last-child {
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
 	border-right: 1px solid rgba(0, 0, 0, 0.1)
@@ -407,7 +407,8 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	position: relative;
 }
 
-.dynamic-menu li li a, .dynamic-menu li li span {
+.dynamic-menu li li a,
+.dynamic-menu li li span {
 	font-size: 10px;
 	display: block;
 	text-decoration: none;
@@ -415,15 +416,18 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	outline: none;
 }
 
-.dynamic-menu li li a:hover, .dynamic-menu li li span:hover {
+.dynamic-menu li li a:hover,
+.dynamic-menu li li span:hover {
 	cursor: pointer;
 	background-color: #F0F0F0;
 	text-decoration: none;
 }
 
-.dynamic-menu ul li.extend > a, .dynamic-menu ul li.extend > span { padding-right: 18px; }
+.dynamic-menu ul li.extend > a,
+.dynamic-menu ul li.extend > span { padding-right: 18px; }
 
-.dynamic-menu ul li.extend > a:after, .dynamic-menu ul li.extend > span:after {
+.dynamic-menu ul li.extend > a:after,
+.dynamic-menu ul li.extend > span:after {
 	position: absolute;
 	display: block;
 	right: 7px;
@@ -436,7 +440,8 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	font-weight: 300;
 }
 
-.dynamic-menu a img,.dynamic-menu span img {
+.dynamic-menu a img,
+.dynamic-menu span img {
 	max-width: none;
 	padding-right: 6px;
 	vertical-align: -4px;
@@ -470,7 +475,8 @@ nav.dynamic-menu h5:hover {
 
 nav.dynamic-menu li ul { min-width: 160px; }
 
-nav.dynamic-menu li ul li a, nav.dynamic-menu li ul li span { color: #0578CC; }
+nav.dynamic-menu li ul li a, 
+nav.dynamic-menu li ul li span { color: #0578CC; }
 
 /* Menus des modules */
 menu.dynamic-menu { margin: 5px; }
@@ -511,13 +517,15 @@ menu.dynamic-menu > ul > li > a > i { font-size: 1.1em; }
 
 menu.dynamic-menu li li:hover > ul { top: -7px; }
 
-menu.dynamic-menu li ul li a, menu.dynamic-menu li ul li span {
+menu.dynamic-menu li ul li a, 
+menu.dynamic-menu li ul li span {
 	color: #666666;
 	font-size: 11px;
 	padding: 3px 12px;
 }
 
-menu.dynamic-menu li ul li a i, menu.dynamic-menu li ul li span i {
+menu.dynamic-menu li ul li a i, 
+menu.dynamic-menu li ul li span i {
 	font-size: 14px;
 	vertical-align: -2px;
 	width: 16px;
@@ -526,7 +534,8 @@ menu.dynamic-menu li ul li a i, menu.dynamic-menu li ul li span i {
 	text-align: center;
 }
 
-menu.dynamic-menu li ul li a i:before, menu.dynamic-menu li ul li span i:before {
+menu.dynamic-menu li ul li a i:before, 
+menu.dynamic-menu li ul li span i:before {
 	display: block;
 	width: 16px;
 }
@@ -551,7 +560,10 @@ menu.dynamic-menu ul li.extend > span:after { margin-top: -6px; }
 	height: 1px;
 }
 
-ul.menu_vertical li { list-style: none; }
+ul.menu-vertical li { 
+	list-style: none;
+	text-align: left;
+}
 
 /* menu de flux */
 .feed-list {

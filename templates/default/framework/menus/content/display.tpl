@@ -11,7 +11,7 @@
 </div>
 # ELSE #
 <div class="block-container">
-	<div class="block_contents">
+	<div class="block-contents">
 		# IF C_DISPLAY_TITLE #<h5 class="sub-title">{TITLE}</h5># ENDIF #
 		<div style="text-align:justify; padding-top:5px;">{CONTENT}</div>
 		&nbsp;
