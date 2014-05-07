@@ -24,7 +24,7 @@ function toggleProperties(id) {
 }
 
 function build_menu_elements_tree() {
-    document.getElementById("menu_tree").value = Sortable.serialize('menu_element_{ID}_list');
+    document.getElementById("menu-tree").value = Sortable.serialize('menu_element_{ID}_list');
 }
 
 function select(element_id, execute) {
@@ -243,7 +243,7 @@ function image_preview(input,image)
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="id" value="{MENU_ID}">
 			<input type="hidden" name="token" value="{TOKEN}">
-			<input type="hidden" name="menu_tree" id="menu_tree" value="">
+			<input type="hidden" name="menu_tree" id="menu-tree" value="">
 			<button type="submit" name="valid" value="true">{L_ACTION}</button>
 		</fieldset>
 	</form>

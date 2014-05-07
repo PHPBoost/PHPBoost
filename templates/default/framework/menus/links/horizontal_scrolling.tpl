@@ -7,7 +7,7 @@
         </nav>
     # ENDIF #
     # IF C_NEXT_MENU #
-        <li class="# IF C_FIRST_LEVEL #first_level # ELSE #extend# ENDIF #">
+        <li class="# IF C_FIRST_LEVEL #first-level # ELSE #extend# ENDIF #">
             # IF C_URL #
                 <a href="{REL_URL}"># IF C_IMG #<img src="{REL_IMG}"/> # ENDIF #{TITLE}</a>
             # ELSE #
@@ -17,5 +17,5 @@
         </li>
     # ENDIF #
 # ELSE #
-    <li# IF C_FIRST_LEVEL # class="first_level"# ENDIF #><a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}"/> # ENDIF #{TITLE}</a></li>
+    <li# IF C_FIRST_LEVEL # class="first-level"# ENDIF #><a href="{REL_URL}" title="{TITLE}"># IF C_IMG #<img src="{REL_IMG}"/> # ENDIF #{TITLE}</a></li>
 # ENDIF #

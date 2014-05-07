@@ -1,10 +1,9 @@
 <div class="menus-block-container" id="menu_{IDMENU}"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
-	# IF C_UP #<div class="menus_block_move menus_block_move_top"><a href="{U_UP}" alt="{L_MOVE_UP}" title="{L_MOVE_UP}"></a></div># ENDIF #
-	<div class="menus_block_top">
-		
-		
+	# IF C_UP #<div class="menus-block-move menus-block-move-top"><a href="{U_UP}" alt="{L_MOVE_UP}" title="{L_MOVE_UP}"></a></div># ENDIF #
+	<div class="menus-block-top">
+
 		<span id="m{IDMENU}"></span>
-		<h5 class="menus_block_title">{NAME}</h5>
+		<h5 class="menus-block-title">{NAME}</h5>
 		
 		<i title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></i>
 		# IF C_EDIT #
@@ -18,5 +17,5 @@
 	</div>
 	
 	{CONTENTS}
-	# IF C_DOWN #<div class="menus_block_move menus_block_move_bot"><a href="{U_DOWN}" alt="{L_MOVE_DOWN}" title="{L_MOVE_DOWN}"></a></div># ENDIF #
+	# IF C_DOWN #<div class="menus-block-move menus-block-move-bot"><a href="{U_DOWN}" alt="{L_MOVE_DOWN}" title="{L_MOVE_DOWN}"></a></div># ENDIF #
 </div>

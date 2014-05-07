@@ -32,6 +32,8 @@ hr {
 
 ul, ol { line-height: normal; margin-left: 20px; margin-bottom: 10px; }
 
+ul.no-list { list-style: none; }
+
 p {
 	margin-bottom: 0.7em;
     line-height: normal;
@@ -160,36 +162,114 @@ table.table-fixed { table-layout:fixed; width:100%; }
 
 /* Lightbox
 --------------------------------------*/
-#lightbox {  position: absolute; left: 0; width: 100%; z-index: 103; text-align: center; line-height: 0;}
+#lightbox { 
+	position: absolute;
+	left: 0;
+	width: 100%;
+	z-index: 103;
+	text-align: center;
+	line-height: 0;
+}
 #lightbox img { width: auto; height: auto;}
 #lightbox a img { border: none; }
 
-#outerImageContainer { position: relative; background-color: #FFFFFF; width: 250px; height: 250px; margin: 0 auto; }
+#outerImageContainer { 
+	position: relative;
+	background-color: #FFFFFF;
+	width: 250px;
+	height: 250px;
+	margin: 0 auto;
+}
 #imageContainer { padding: 10px; }
 
-#loading { position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0; }
-#hoverNav { position: absolute; top: 0; left: 0; height: 100%; width: 100%; z-index: 10; }
+#loading {
+	position: absolute;
+	top: 40%;
+	left: 0%;
+	height: 25%;
+	width: 100%;
+	text-align: center;
+	line-height: 0;
+}
+
+#hoverNav { 
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 10;
+}
+
 #imageContainer>#hoverNav { left: 0;}
+
 #hoverNav a { outline: none;}
 
-#prevLink, #nextLink { width: 49%; height: 100%; background-image: url(data:image/gif;base64,AAAA); /* Trick IE into showing hover */ display: block; }
+#prevLink,
+#nextLink {
+	width: 49%;
+	height: 100%;
+	background-image: url(data:image/gif;base64,AAAA); /* Trick IE into showing hover */
+	display: block;
+}
+
 #prevLink { left: 0; float: left;}
 #nextLink { right: 0; float: right;}
 #prevLink:hover, #prevLink:visited:hover { background: url(../images/lightbox/prevlabel.gif) left 15% no-repeat; }
 #nextLink:hover, #nextLink:visited:hover { background: url(../images/lightbox/nextlabel.gif) right 15% no-repeat; }
 
-#imageDataContainer { font: 10px Verdana, Helvetica, sans-serif; background-color: #FFFFFF; margin: 0 auto; line-height: 1.4em; overflow: auto; width: 100%; }
+#imageDataContainer {
+	font: 10px Verdana, Helvetica, sans-serif;
+	background-color: #FFFFFF;
+	margin: 0 auto;
+	line-height: 1.4em;
+	overflow: auto;
+	width: 100%;
+}
 
-#imageData { padding: 0 10px; color: #666666; }
-#imageData #imageDetails { width: 70%; float: left; text-align: left; } 
+#imageData { 
+	padding: 0 10px;
+	color: #666666;
+}
+
+#imageData #imageDetails {
+	width: 70%;
+	float: left;
+	text-align: left;
+}
+
 #imageData #caption { font-weight: bold; }
-#imageData #numberDisplay { display: block; clear: left; padding-bottom: 1.0em; }           
-#imageData #bottomNavClose { width: 66px; position: relative; float: right; padding-bottom: 0.7em; outline: none; }      
 
-#overlay { position: absolute; top: 0; left: 0; z-index: 102; width: 100%; height: 500px; background-color: #000000; }
+#imageData #numberDisplay {
+	display: block;
+	clear: left;
+	padding-bottom: 1.0em;
+}
+
+#imageData #bottomNavClose {
+	width: 66px;
+	position: relative;
+	float: right;
+	padding-bottom: 0.7em;
+	outline: none;
+}      
+
+#overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 102;
+	width: 100%;
+	height: 500px;
+	background-color: #000000;
+}
 
 /* Effet Blink
 --------------------------------------*/
 @keyframes blink { 0% { opacity: 0; } 30% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; }}
 @-webkit-keyframes blink { 0% { opacity: 0; } 30% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; }}
-.blink { animation: blink 1.5s ease-in-out infinite; -moz-animation: blink 1.5s ease-in-out infinite; -webkit-animation: blink 1.5s ease-in-out infinite; }
+.blink { 
+	animation: blink 1.5s ease-in-out infinite;
+	-moz-animation: blink 1.5s ease-in-out infinite;
+	-webkit-animation: blink 1.5s ease-in-out infinite;
+}
