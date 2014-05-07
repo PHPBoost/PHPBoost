@@ -1,10 +1,10 @@
 		# INCLUDE forum_top #
 		
-		<div class="module_position">
-			<div class="module_top_l"></div>
-			<div class="module_top_r"></div>
-			<div class="module_top">&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}</div>
-			<div class="module_contents">
+		<div class="module-position">
+			<div class="module-top-l"></div>
+			<div class="module-top-r"></div>
+			<div class="module-top">&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}</div>
+			<div class="module-contents">
 				<table>
 					<thead>
 						<tr>
@@ -410,9 +410,9 @@
 
 				<br /><br />
 			</div>
-			<div class="module_bottom_r"></div>	
-			<div class="module_bottom_l"></div>
-			<div class="module_bottom text-strong">
+			<div class="module-bottom-r"></div>	
+			<div class="module-bottom-l"></div>
+			<div class="module-bottom text-strong">
 				&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
 			</div>
 		</div>

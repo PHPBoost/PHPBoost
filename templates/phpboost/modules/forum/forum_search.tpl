@@ -11,18 +11,18 @@
 		}
 		-->
 		</script>
-		<div class="module_position forum_position_cat">
-			<div class="module_top_l"></div>
-			<div class="module_top_r"></div>
-			<div class="module_top forum_top_cat">
+		<div class="module-position forum_position_cat">
+			<div class="module-top-l"></div>
+			<div class="module-top-r"></div>
+			<div class="module-top forum_top_cat">
 				&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
 			</div>
-			<div class="module_position forum_position_subcat">
+			<div class="module-position forum_position_subcat">
 				<div class="forum_position_subcat-top"></div>
 			</div>
 					<form action="search.php?token={TOKEN}#search_forum" method="post" onsubmit="return check_form();">
 						<div class="forum_position_subcat">
-							<div class="module_contents forum_contents forum_contents_subcat" style="background: #F9F9F9;">
+							<div class="module-contents forum-contents forum_contents_subcat" style="background: #F9F9F9;">
 								<fieldset style="margin:10px 20px;">
 									<legend>{L_SEARCH_FORUM}</legend>
 									<div class="form-element">
@@ -85,42 +85,42 @@
 						# INCLUDE message_helper #
 						
 						# IF C_FORUM_SEARCH #
-						<div class="module_position" style="width:100%;">
-							<div class="module_top_l"></div>
-							<div class="module_top_r"></div>
-							<div class="module_top">&nbsp;</div>
+						<div class="module-position" style="width:100%;">
+							<div class="module-top-l"></div>
+							<div class="module-top-r"></div>
+							<div class="module-top">&nbsp;</div>
 						</div>
 						# ENDIF #
 						# START list #
-						<div class="msg_position" style="width:100%;">
-							<div class="msg_container">
-								<div class="msg_top_row">
-									<div class="msg_pseudo_mbr">
+						<div class="msg-position" style="width:100%;">
+							<div class="msg-container">
+								<div class="msg-top-row">
+									<div class="msg-pseudo-mbr">
 										{list.USER_ONLINE} {list.USER_PSEUDO}
 									</div>
 									<span class="text-strong" style="float:left;">&nbsp;&nbsp;{L_TOPIC}: {list.U_TITLE}</span>
 									<span class="smaller" style="float: right;">{L_ON}: {list.DATE}</span>&nbsp;
 								</div>
-								<div class="msg_contents_container">
-									<div class="msg_info_mbr">
+								<div class="msg-contents-container">
+									<div class="msg-info-mbr">
 									</div>
-									<div class="msg_contents">
-										<div class="msg_contents_overflow">
+									<div class="msg-contents">
+										<div class="msg-contents-overflow">
 											{list.CONTENTS}
 										</div>
 									</div>
 								</div>
 							</div>	
-							<div class="msg_bottom_l"></div>
-							<div class="msg_bottom_r"></div>
-							<div class="msg_bottom"><span class="smaller">{L_RELEVANCE}: {list.RELEVANCE}%</span></div>
+							<div class="msg-bottom-l"></div>
+							<div class="msg-bottom-r"></div>
+							<div class="msg-bottom"><span class="smaller">{L_RELEVANCE}: {list.RELEVANCE}%</span></div>
 						</div>
 						# END list #
 					</form>
 
-			<div class="module_bottom_l"></div>
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom forum_top_cat">
+			<div class="module-bottom-l"></div>
+			<div class="module-bottom-r"></div>
+			<div class="module-bottom forum_top_cat">
 				<span>&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}</span>
 			</div>
 		</div>

@@ -1,5 +1,5 @@
-		<div id="forum_bottom">
-			<div class="forum_links">
+		<div id="forum-bottom">
+			<div class="forum-links">
 				<div style="float:left;">
 					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 
 				</div>
@@ -22,7 +22,7 @@
 				<div class="spacer"></div>
 			</div>
 			
-			<div class="forum_online">
+			<div class="forum-online">
 				# IF C_FORUM_CONNEXION #
 					# IF C_USER_NOTCONNECTED #
 					<form action="" method="post">
@@ -40,11 +40,11 @@
 					<br />
 					{L_USER} {L_ONLINE}: {USERS_ONLINE}
 				</span>
-				<div class="forum_online_select_cat">
+				<div class="forum-online-select-cat">
 					# IF SELECT_CAT #
 					<form action="{U_CHANGE_CAT}" method="post">
 						<div>
-							<select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 4) == '----') document.location = 'forum{U_ONCHANGE}'; else document.location = '{U_ONCHANGE_CAT}';" class="forum_online_select">
+							<select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 4) == '----') document.location = 'forum{U_ONCHANGE}'; else document.location = '{U_ONCHANGE_CAT}';" class="forum-online-select">
 								{SELECT_CAT}
 							</select>
 						</div>
@@ -84,7 +84,7 @@
 				# ENDIF #
 				
 				# IF C_AUTH_POST #
-				<div class="forum_action">
+				<div class="forum-action">
 					# IF C_DISPLAY_MSG #
 					<span id="forum_change_statut">
 						<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>

@@ -72,41 +72,41 @@
 		}
 		-->
 		</script>
-		<div class="module_position forum_position_cat">
-			<div class="module_top_l"></div>
-			<div class="module_top_r"></div>
-			<div class="module_top forum_top_cat">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
-			<div class="module_contents">		
+		<div class="module-position forum_position_cat">
+			<div class="module-top-l"></div>
+			<div class="module-top-r"></div>
+			<div class="module-top forum_top_cat">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
+			<div class="module-contents">		
 				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
 					# INCLUDE message_helper #
 
 					# IF C_FORUM_PREVIEW_MSG #
-					<div class="module_position">
-						<div class="module_top_l"></div>
-						<div class="module_top_r"></div>
-						<div class="module_top">
+					<div class="module-position">
+						<div class="module-top-l"></div>
+						<div class="module-top-r"></div>
+						<div class="module-top">
 							<span style="float:left;">{L_PREVIEW}</span>
 							<span style="float:right;"></span>&nbsp;
 						</div>
 					</div>	
-					<div class="msg_position">
-						<div class="msg_container">
-							<div class="msg_pseudo_mbr"></div>
-							<div class="msg_top_row">
+					<div class="msg-position">
+						<div class="msg-container">
+							<div class="msg-pseudo-mbr"></div>
+							<div class="msg-top-row">
 								<div style="float:left;">&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /> {DATE}</div>
 								<div style="float:right;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/quote.png" alt="" title="" />&nbsp;&nbsp;</div>
 							</div>
-							<div class="msg_contents_container">
-								<div class="msg_info_mbr">
+							<div class="msg-contents-container">
+								<div class="msg-info-mbr">
 								</div>
-								<div class="msg_contents">
-									<div class="msg_contents_overflow">
+								<div class="msg-contents">
+									<div class="msg-contents-overflow">
 										{CONTENTS_PREVIEW}
 									</div>
 								</div>
 							</div>
 						</div>	
-						<div class="msg_sign">		
+						<div class="msg-sign">		
 							<hr />
 							<span style="float:left;">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="pm" />
@@ -115,10 +115,10 @@
 							</span>&nbsp;
 						</div>	
 					</div>
-					<div class="msg_position">
-						<div class="msg_bottom_l"></div>
-						<div class="msg_bottom_r"></div>
-						<div class="msg_bottom">&nbsp;</div>
+					<div class="msg-position">
+						<div class="msg-bottom-l"></div>
+						<div class="msg-bottom-r"></div>
+						<div class="msg-bottom">&nbsp;</div>
 					</div>
 					<br /><br />
 					# ENDIF #

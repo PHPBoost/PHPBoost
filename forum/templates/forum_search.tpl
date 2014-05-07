@@ -11,13 +11,13 @@
 		}
 		-->
 		</script>
-		<div class="module_position">
-			<div class="module_top_l"></div>
-			<div class="module_top_r"></div>
-			<div class="module_top">
+		<div class="module-position">
+			<div class="module-top-l"></div>
+			<div class="module-top-r"></div>
+			<div class="module-top">
 				&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
 			</div>
-			<div class="module_contents">
+			<div class="module-contents">
 				<form action="search.php?token={TOKEN}#search_forum" method="post" onsubmit="return check_form();" class="fieldset-content">
 					<fieldset>
 						<legend>{L_SEARCH_FORUM}</legend>
@@ -73,42 +73,42 @@
 					# INCLUDE message_helper #
 					
 					# IF C_FORUM_SEARCH #
-					<div class="module_position" style="width:100%;">
-						<div class="module_top_l"></div>
-						<div class="module_top_r"></div>
-						<div class="module_top">&nbsp;</div>
+					<div class="module-position" style="width:100%;">
+						<div class="module-top-l"></div>
+						<div class="module-top-r"></div>
+						<div class="module-top">&nbsp;</div>
 					</div>
 					# ENDIF #
 					# START list #
-					<div class="msg_position" style="width:100%;">
-						<div class="msg_container">
-							<div class="msg_top_row">
-								<div class="msg_pseudo_mbr">
+					<div class="msg-position" style="width:100%;">
+						<div class="msg-container">
+							<div class="msg-top-row">
+								<div class="msg-pseudo-mbr">
 									{list.USER_ONLINE} {list.USER_PSEUDO}
 								</div>
 								<span class="text-strong" style="float:left;">{L_TOPIC}: {list.U_TITLE}</span>
 								<span class="smaller" style="float: right;">{L_ON}: {list.DATE}</span>&nbsp;
 							</div>
-							<div class="msg_contents_container">
-								<div class="msg_info_mbr">
+							<div class="msg-contents-container">
+								<div class="msg-info-mbr">
 								</div>
-								<div class="msg_contents">
-									<div class="msg_contents_overflow">
+								<div class="msg-contents">
+									<div class="msg-contents-overflow">
 										{list.CONTENTS}
 									</div>
 								</div>
 							</div>
 						</div>	
-						<div class="msg_bottom_l"></div>
-						<div class="msg_bottom_r"></div>
-						<div class="msg_bottom"><span class="smaller">{L_RELEVANCE}: {list.RELEVANCE}%</span></div>
+						<div class="msg-bottom-l"></div>
+						<div class="msg-bottom-r"></div>
+						<div class="msg-bottom"><span class="smaller">{L_RELEVANCE}: {list.RELEVANCE}%</span></div>
 					</div>
 					# END list #
 				</form>
 			</div>	
-			<div class="module_bottom_l"></div>
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
+			<div class="module-bottom-l"></div>
+			<div class="module-bottom-r"></div>
+			<div class="module-bottom">
 				&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
 			</div>
 		</div>

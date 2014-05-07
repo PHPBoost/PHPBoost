@@ -121,12 +121,12 @@
 		-->
 		</script>
 
-		<div class="module_position">
-			<div class="module_top_l"></div>
-			<div class="module_top_r"></div>
-			<div class="module_top forum_breadcrumb_topic">
+		<div class="module-position">
+			<div class="module-top-l"></div>
+			<div class="module-top-r"></div>
+			<div class="module-top forum_breadcrumb_topic">
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
-				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
+				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 				
 				<span style="float:right;font-size:12px;">
 					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
@@ -145,7 +145,7 @@
 		</div>	
 
 		# IF C_POLL_EXIST #
-		<div class="module_position">
+		<div class="module-position">
 			<div class="center">
 				<form method="post" action="action{U_POLL_ACTION}">
 					<table style="width:80%;margin : 10px auto auto auto;">
@@ -198,13 +198,13 @@
 		# ENDIF #
 
 		# START msg #
-		<div class="msg_position" id="d{msg.ID}">
-			<div class="msg_container{msg.CLASS_COLOR}">
+		<div class="msg-position" id="d{msg.ID}">
+			<div class="msg-container{msg.CLASS_COLOR}">
 				<span id="m{msg.ID}" />
-				<div class="msg_top_row">
-					<div class="msg_pseudo_mbr">
+				<div class="msg-top-row">
+					<div class="msg-pseudo-mbr">
 						# IF msg.C_FORUM_USER_LOGIN # 
-							<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a class="msg_link_pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
+							<i class="fa # IF msg.C_USER_ONLINE #fa-online# ELSE #fa-offline# ENDIF #"></i> <a class="msg-link-pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
 						# ELSE # 
 							<em>{L_GUEST}</em>
 						# ENDIF #
@@ -233,9 +233,9 @@
 					
 					<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><i class="fa fa-arrow-up"></i></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><i class="fa fa-arrow-down"></i></a></span>
 				</div>
-				<div class="msg_contents_global_container">
-					<div class="msg_contents_container">
-						<div class="msg_info_mbr">
+				<div class="msg-contents_global_container">
+					<div class="msg-contents-container">
+						<div class="msg-info-mbr">
 							<p style="text-align:center;">{msg.USER_RANK}</p>
 							<p style="text-align:center;">{msg.USER_IMG_ASSOC}</p>
 							<p style="text-align:center;">{msg.USER_AVATAR}</p>
@@ -243,8 +243,8 @@
 							{msg.USER_DATE}<br />
 							{msg.USER_MSG}<br />
 						</div>
-						<div class="msg_contents{msg.CLASS_COLOR}">
-							<div class="msg_contents_overflow">
+						<div class="msg-contents{msg.CLASS_COLOR}">
+							<div class="msg-contents-overflow">
 								# IF msg.L_FORUM_QUOTE_LAST_MSG # <span class="text-strong">{msg.L_FORUM_QUOTE_LAST_MSG}</span><br /><br /> # ENDIF #
 								
 								{msg.FORUM_MSG_CONTENTS}
@@ -265,8 +265,8 @@
 					<div class="spacer"></div>
 					
 					<div class="msg-sign-container">
-						<div class="msg_sign{msg.CLASS_COLOR}">				
-							<div class="msg_sign_overflow">
+						<div class="msg-sign{msg.CLASS_COLOR}">				
+							<div class="msg-sign-overflow">
 								{msg.USER_SIGN}
 							</div>			
 							<hr />
@@ -287,12 +287,12 @@
 			</div>	
 		</div>	
 		# END msg #
-		<div class="module_position">
-			<div class="module_bottom_l"></div>
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom forum_breadcrumb_topic">
+		<div class="module-position">
+			<div class="module-bottom-l"></div>
+			<div class="module-bottom-r"></div>
+			<div class="module-bottom forum_breadcrumb_topic">
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
-				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
+				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESC}</em></span>
 				
 				<span style="float:right;font-size:12px!important;">
 					# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
@@ -314,7 +314,7 @@
 			
 		<span id="go_bottom"></span>
 		# IF C_AUTH_POST #
-		<div class="forum_post_form">
+		<div class="forum-post-form">
 			<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
 				<div>
 					<div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
@@ -333,7 +333,7 @@
 		
 		# IF C_ERROR_AUTH_WRITE #
 		<div style="font-size:10px;text-align:center;padding-bottom:2px;">{L_RESPOND}</div>	
-		<div class="forum_text_column" style="width:350px;margin:auto;height:auto;padding:2px;">
+		<div class="forum-text-column" style="width:350px;margin:auto;height:auto;padding:2px;">
 			{L_ERROR_AUTH_WRITE}
 		</div>
 		# ENDIF #

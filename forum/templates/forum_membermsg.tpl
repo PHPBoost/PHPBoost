@@ -2,11 +2,11 @@
 
 		# INCLUDE forum_top #
 		
-		<div class="module_position">
-			<div class="module_top_l"></div>
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<span class="forum_cat_title">
+		<div class="module-position">
+			<div class="module-top-l"></div>
+			<div class="module-top-r"></div>
+			<div class="module-top">
+				<span class="forum-cat-title">
 					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_USER}</a>
 				</span>
 				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
@@ -14,11 +14,11 @@
 		</div>
 
 		# START list #
-		<div class="msg_position">
-			<div class="msg_container">
-				<div class="msg_top_row">
-					<div class="msg_pseudo_mbr">
-						{list.USER_ONLINE} <a class="forum_link_pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">{list.USER_PSEUDO}</a>
+		<div class="msg-position">
+			<div class="msg-container">
+				<div class="msg-top-row">
+					<div class="msg-pseudo-mbr">
+						{list.USER_ONLINE} <a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">{list.USER_PSEUDO}</a>
 					</div>
 					<span style="float:left;">
 						&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title=""><i class="fa fa-hand-o-right"></i></a> {list.DATE}
@@ -29,11 +29,11 @@
 						<a href="#go_bottom"><i class="fa fa-arrow-down"></i></a>
 					</span>
 				</div>
-				<div class="msg_contents_container">
-					<div class="msg_info_mbr">
+				<div class="msg-contents-container">
+					<div class="msg-info-mbr">
 					</div>
-					<div class="msg_contents">
-						<div class="msg_contents_overflow">
+					<div class="msg-contents">
+						<div class="msg-contents-overflow">
 							{list.CONTENTS}
 						</div>
 					</div>
@@ -42,11 +42,11 @@
 		</div>
 		# END list #
 
-		<div class="module_position">
-			<div class="module_bottom_l"></div>
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-				<span class="forum_cat_title">
+		<div class="module-position">
+			<div class="module-bottom-l"></div>
+			<div class="module-bottom-r"></div>
+			<div class="module-bottom">
+				<span class="forum-cat-title">
 					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_USER}</a>
 				</span>
 				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #

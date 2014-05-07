@@ -80,10 +80,10 @@
 		-->
 		</script>
 		
-		<div id="forum_top">
-			<div class="forum_title_l"></div>
-			<div class="forum_title_r"></div>
-			<div class="forum_title">
+		<div id="forum-top">
+			<div class="forum-title-l"></div>
+			<div class="forum-title-r"></div>
+			<div class="forum-title">
 				<div>
 					<div style="float:left;">
 						<h2>{FORUM_NAME}</h2>
@@ -114,7 +114,7 @@
 					<div class="spacer"></div>		
 				</div>
 			</div>
-			<div class="forum_links">
+			<div class="forum-links">
 				<div style="float:left;">
 					&bull; <a href="index.php?{SID}">{L_FORUM_INDEX}</a>
 				</div>

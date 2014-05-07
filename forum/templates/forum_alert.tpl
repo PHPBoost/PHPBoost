@@ -1,10 +1,10 @@
 		# INCLUDE forum_top #
 		
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></div>
-			<div class="module_contents">
+		<div class="module-position">					
+			<div class="module-top-l"></div>		
+			<div class="module-top-r"></div>
+			<div class="module-top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></div>
+			<div class="module-contents">
 
 			# START alert_form #
 				<script type='text/javascript'>
@@ -68,9 +68,9 @@
 				</fieldset>
 				# END alert_confirm #
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></div>
+			<div class="module-bottom-l"></div>		
+			<div class="module-bottom-r"></div>
+			<div class="module-bottom">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></div>
 		</div>
 		
 		# INCLUDE forum_bottom #

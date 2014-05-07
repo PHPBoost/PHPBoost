@@ -250,7 +250,7 @@
 							<i class="fa fa-folder"></i> 
 							{list.LOCK} 
 							{list.URL}
-							<a href="{list.U_FORUM_VARS}" class="forum_link_cat">{list.NAME}</a>
+							<a href="{list.U_FORUM_VARS}" class="forum-link-cat">{list.NAME}</a>
 							<div class="sortable-actions">
 								<span id="l{list.ID}"></span> 
 								<div class="sortable-options">

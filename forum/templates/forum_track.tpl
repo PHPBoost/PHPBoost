@@ -11,20 +11,20 @@
 		</script>
 		
 		<form action="track{U_TRACK_ACTION}" method="post">
-			<div class="module_position">
-				<div class="module_top_l"></div>
-				<div class="module_top_r"></div>
-				<div class="module_top">
+			<div class="module-position">
+				<div class="module-top-l"></div>
+				<div class="module-top-r"></div>
+				<div class="module-top">
 					<span>
 						&bull; {U_FORUM_CAT}
 					</span>
 					# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
 				</div>
-				<div class="module_contents forum_contents">
+				<div class="module-contents forum-contents">
 					<div class="text_small">{L_EXPLAIN_TRACK}</div>
-					<table class="module-table forum_table">
+					<table class="module-table forum-table">
 						<thead>
-							<tr class="forum_text_column">
+							<tr class="forum-text-column">
 								<th style="width:120px;">{L_TOPIC}</th>
 								<th style="width:100px;">{L_AUTHOR}</th>
 								<th style="width:60px;">{L_MESSAGE}</th>
@@ -38,13 +38,13 @@
 					</table>
 				</div>
 			</div>
-			<div class="module_position">
-				<div class="module_contents forum_contents">
-					<table class="module-table forum_table">
+			<div class="module-position">
+				<div class="module-contents forum-contents">
+					<table class="module-table forum-table">
 						<tbody>
 							# IF C_NO_TRACKED_TOPICS #
 							<tr>
-								<td colspan="8" class="forum_sous_cat" style="text-align:center;">
+								<td colspan="8" class="forum-sous-cat" style="text-align:center;">
 									<strong>{L_NO_TRACKED_TOPICS}</strong>
 								</td>
 							</tr>
@@ -52,41 +52,41 @@
 	
 							# START topics #
 							<tr>
-								<td class="forum_sous_cat" style="width:40px;text-align:center;">
+								<td class="forum-sous-cat" style="width:40px;text-align:center;">
 									# IF NOT topics.C_HOT_TOPIC # 
 									<i class="fa {topics.IMG_ANNOUNCE}"></i>
 									# ELSE #
 									<i class="fa # IF topics.C_BLINK #blink # ENDIF #{topics.IMG_ANNOUNCE}-hot"></i>
 									# ENDIF #
 								</td>
-								<td class="forum_sous_cat" style="width:35px;text-align:center;">
+								<td class="forum-sous-cat" style="width:35px;text-align:center;">
 									{topics.DISPLAY_MSG} {topics.TRACK} # IF C_POLL #<i class="fa fa-tasks"></i># ENDIF #
 								</td>
-								<td class="forum_sous_cat">
-									# IF topics.C_PAGINATION #<span class="pagin_forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
+								<td class="forum-sous-cat">
+									# IF topics.C_PAGINATION #<span class="pagin-forum"># INCLUDE topics.PAGINATION #</span># ENDIF #
 									{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 									<br />
 									<span class="smaller">{topics.DESC}</span>
 								</td>
-								<td class="forum_sous_cat_compteur" style="width:100px;">
+								<td class="forum-sous-cat-compteur" style="width:100px;">
 									{topics.AUTHOR}
 								</td>
-								<td class="forum_sous_cat_compteur">
+								<td class="forum-sous-cat-compteur">
 									{topics.MSG}
 								</td>
-								<td class="forum_sous_cat_compteur">
+								<td class="forum-sous-cat-compteur">
 									{topics.VUS}
 								</td>
-								<td class="forum_sous_cat_compteur" style="width:40px;text-align:center;">
+								<td class="forum-sous-cat-compteur" style="width:40px;text-align:center;">
 									<input type="checkbox" id="p{topics.INCR}" name="p{topics.ID}" {topics.CHECKED_PM}>
 								</td>
-								<td class="forum_sous_cat_compteur" style="width:50px;text-align:center;">
+								<td class="forum-sous-cat-compteur" style="width:50px;text-align:center;">
 									<input type="checkbox" id="m{topics.INCR}" name="m{topics.ID}" {topics.CHECKED_MAIL}>
 								</td>
-								<td class="forum_sous_cat_compteur" style="width:85px;text-align:center;">
+								<td class="forum-sous-cat-compteur" style="width:85px;text-align:center;">
 									<input type="checkbox" id="d{topics.INCR}" name="d{topics.ID}">
 								</td>
-								<td class="forum_sous_cat_last">
+								<td class="forum-sous-cat-last">
 									{topics.U_LAST_MSG}
 								</td>
 							</tr>
@@ -98,10 +98,10 @@
 			</div>
 		</form>
 		
-		<div class="module_position">
-			<div class="module_bottom_l"></div>
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
+		<div class="module-position">
+			<div class="module-bottom-l"></div>
+			<div class="module-bottom-r"></div>
+			<div class="module-bottom">
 				<span style="float:left;" class="text-strong">
 					&bull; {U_FORUM_CAT}
 				</span>

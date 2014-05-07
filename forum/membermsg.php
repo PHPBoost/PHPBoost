@@ -109,8 +109,8 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			'GROUP_COLOR' => $group_color,
 			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 			'U_VARS_ANCRE' => url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
-			'U_FORUM_CAT' => '<a class="forum_mbrmsg_links" href="../forum/forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . $rewrited_cat_title . '.php') . '">' . $row['name'] . '</a>',
-			'U_TITLE_T' => '<a class="forum_mbrmsg_links" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '">' . ucfirst($row['title']) . '</a>'
+			'U_FORUM_CAT' => '<a class="forum-mbrmsg-links" href="../forum/forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . $rewrited_cat_title . '.php') . '">' . $row['name'] . '</a>',
+			'U_TITLE_T' => '<a class="forum-mbrmsg-links" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '">' . ucfirst($row['title']) . '</a>'
 		));
 	}
 	$Sql->query_close($result);
