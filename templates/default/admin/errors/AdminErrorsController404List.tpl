@@ -22,6 +22,15 @@
 				<th style="width:75px;">{@404_error_delete}</th>
 			</tr>
 		</thead>
+		# IF C_PAGINATION #
+		<tfoot>
+			<tr>
+				<th colspan="4">
+					# INCLUDE PAGINATION #
+				</th>
+			</tr>
+		</tfoot>
+		# ENDIF #
 		<tbody>
 			# START errors #
 			<tr>

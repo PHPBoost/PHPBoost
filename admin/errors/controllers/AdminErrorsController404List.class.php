@@ -27,6 +27,8 @@
 
 class AdminErrorsController404List extends AdminController
 {
+	const NUMBER_ITEMS_PER_PAGE = 20;
+	
 	private $view;
 	private $lang;
 
@@ -34,7 +36,7 @@ class AdminErrorsController404List extends AdminController
 	{
 		$this->init();
 		
-		$this->build_view();
+		$this->build_view($request);
 		
 		return new AdminErrorsDisplayResponse($this->view, $this->lang['404_list']);
 	}
@@ -47,26 +49,51 @@ class AdminErrorsController404List extends AdminController
 		$this->view->add_lang($this->lang);
 	}
 
-	private function build_view()
+	private function build_view(HTTPRequestCustom $request)
 	{
 		$errors_404 = AdminError404Service::list_404_errors();
-		$nb_errors = 0;
+		
+		$page = $request->get_getint('page', 1);
+		$pagination = $this->get_pagination($page, $errors_404->get_rows_count());
+		
+		$nb_errors = $nb_displayed_errors = 0;
 		
 		foreach ($errors_404 as $error)
 		{
-			$this->view->assign_block_vars('errors', array(
-				'REQUESTED_URL' => $error->get_requested_url(),
-				'FROM_URL' => $error->get_from_url(),
-				'TIMES' => $error->get_times(),
-				'U_DELETE' => AdminErrorsUrlBuilder::delete_404_error($error->get_id())->rel(),
-			));
 			$nb_errors++;
+			
+			if ($nb_errors > $pagination->get_display_from() && $nb_displayed_errors < $pagination->get_number_items_per_page())
+			{
+				$this->view->assign_block_vars('errors', array(
+					'REQUESTED_URL' => $error->get_requested_url(),
+					'FROM_URL' => $error->get_from_url(),
+					'TIMES' => $error->get_times(),
+					'U_DELETE' => AdminErrorsUrlBuilder::delete_404_error($error->get_id())->rel(),
+				));
+				$nb_displayed_errors++;
+			}
 		}
 		
 		$this->view->put_all(array(
 			'C_ERRORS' => $nb_errors,
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'PAGINATION' => $pagination->display(),
 			'U_CLEAR_404_ERRORS' => AdminErrorsUrlBuilder::clear_404_errors()->rel()
 		));
+	}
+	
+	private function get_pagination($page, $errors_number)
+	{
+		$pagination = new ModulePagination($page, $errors_number, self::NUMBER_ITEMS_PER_PAGE);
+		$pagination->set_url(AdminErrorsUrlBuilder::list_404_errors('%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		return $pagination;
 	}
 }
 ?>
