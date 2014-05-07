@@ -567,7 +567,7 @@ class TinyMCEParser extends ContentFormattingParser
 		$array_preg_replace = array(
 			'pre' => "<pre>$1</pre>",
 			'float' => "<p class=\"float-$1\">$2</p>",
-			'acronym' => "<acronym title=\"$1\" class=\"bb-acronym\">$2</acronym>",
+			'acronym' => "<abbr title=\"$1\">$2</abbr>",
 			'style' => "<span class=\"$1\">$2</span>",
 			'swf' => "[[MEDIA]]insertSwfPlayer('$3', $1, $2);[[/MEDIA]]",
 			'movie' => "[[MEDIA]]insertMoviePlayer('$3', $1, $2);[[/MEDIA]]",

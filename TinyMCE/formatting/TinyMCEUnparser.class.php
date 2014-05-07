@@ -205,7 +205,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	{
 		$array_preg = array(
 			'`<p class="float-(left|right)">(.*)</p>`isU',
-			'`<acronym title="([^"]+)" class="bb-acronym">(.*)</acronym>`isU',
+			'`<abbr title="([^"]+)">(.*)</abbr>`isU',
 			'`<a href="mailto:(.*)">(.*)</a>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
 			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/kernel/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',

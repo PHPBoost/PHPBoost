@@ -210,7 +210,7 @@ class BBCodeParser extends ContentFormattingParser
 			'align' => "<p style=\"text-align:$1\">$2</p>",
 			'float' => "<p class=\"float-$1\">$2</p>",
 			'anchor' => "<span id=\"$1\">$2</span>",
-			'acronym' => "<acronym title=\"$1\" class=\"bb-acronym\">$2</acronym>",
+			'acronym' => "<abbr title=\"$1\">$2</abbr>",
 			'style' => "<span class=\"$1\">$2</span>",
 			'swf' => '[[MEDIA]]insertSwfPlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'movie' => '[[MEDIA]]insertMoviePlayer(\'$3\', $1, $2);[[/MEDIA]]',
