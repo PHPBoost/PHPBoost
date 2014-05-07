@@ -255,7 +255,7 @@
 							<i class="fa fa-folder"></i>
 							{list.LOCK}
 							<a href="gallery{list.U_GALLERY_VARS}" class="gallery-link-cat">{list.NAME}</a>
-							<span class="cat_desc"> | {list.DESC}</span>
+							<span class="cat-desc"> | {list.DESC}</span>
 							<div class="sortable-actions">
 								<span id="l{list.ID}"></span> 
 								<div class="sortable-options">
