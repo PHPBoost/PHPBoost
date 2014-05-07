@@ -116,23 +116,23 @@ class UpdateDisplayResponse extends AbstractResponse
 		{
 			if ($i < $this->current_step)
 			{
-				$row_class = 'row_success';
+				$row_class = 'row-success';
 			}
 			elseif ($i == $this->current_step && $i == ($this->nb_steps - 1))
 			{
-				$row_class = 'row_current row_final';
+				$row_class = 'row-current row-final';
 			}
 			elseif ($i == $this->current_step)
 			{
-				$row_class = 'row_current';
+				$row_class = 'row-current';
 			}
 			elseif ($i == ($this->nb_steps - 1))
 			{
-				$row_class = 'row_next row_final';
+				$row_class = 'row-next row-final';
 			}
 			else
 			{
-				$row_class = 'row_next';
+				$row_class = 'row-next';
 			}
 
 			$this->full_view->assign_block_vars('step', array(

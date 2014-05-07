@@ -1,6 +1,6 @@
 <h1>{@step.server.title}</h1>
 <a href="http://www.php.net/">
-    <img src="templates/images/php.png" alt="PHP" style="float:right; margin-bottom:5px; margin-left:5px;"/>
+    <img src="templates/images/php.png" alt="PHP" style="float:right;bottom:20px; margin-left:5px;position:relative;"/>
 </a>
 {@H|step.server.explanation}
 <fieldset>
@@ -10,9 +10,9 @@
         <label>${set(@php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
         <div class="form-field">
         # IF PHP_VERSION_OK #
-            <img src="templates/images/success.png" alt="{L_YES}" />
+            <i class="fa fa-success fa-2x" title="{@yes}"></i>
         # ELSE #
-            <img src="templates/images/stop.png" alt="{L_NO}" />
+            <i class="fa fa-error fa-2x" title="{@no}"></i>
         # ENDIF #
         </div>
     </div>
@@ -22,26 +22,26 @@
     <legend>{@php.extensions}</legend>
     <p>{@php.extensions.check}</p>
     <div class="form-element">
-        <label>{@php.extensions.check.gdLibrary}</label><br /><span>{@php.extensions.check.gdLibrary.explanation}</span>
+        <label>{@php.extensions.check.gdLibrary} <span class="field-description">{@php.extensions.check.gdLibrary.explanation}</span></label>
         <div class="form-field">
         # IF HAS_GD_LIBRARY #
-            <img src="templates/images/success.png" alt="{@yes}" />
+            <i class="fa fa-success fa-2x" title="{@yes}"></i>
         # ELSE #
-            <img src="templates/images/stop.png" alt="{@no}" />
+            <i class="fa fa-error fa-2x" title="{@no}"></i>
         # ENDIF #
         </div>
     </div>
     <div class="form-element">
-        <label>{@server.urlRewriting}</label><br /><span>{@server.urlRewriting.explanation}</span>
+        <label>{@server.urlRewriting} <span class="field-description">{@server.urlRewriting.explanation}</span></label>
         <div class="form-field">
         # IF URL_REWRITING_KNOWN #
             # IF URL_REWRITING_AVAILABLE #
-            <img src="templates/images/success.png" alt="{@yes}" />
+            <i class="fa fa-success fa-2x" title="{@yes}"></i>
             # ELSE #
-            <img src="templates/images/stop.png" alt="{@no}" />
+            <i class="fa fa-error fa-2x" title="{@no}"></i>
             # ENDIF #
         # ELSE #
-        <img src="templates/images/question.png" alt="{@unknown}" />
+        <i class="fa fa-question fa-2x" title="{@unknown}"></i>
         # ENDIF #
         </div>
     </div>
@@ -56,14 +56,14 @@
             <label>{folder.NAME}</label>
             <div class="form-field">
                 # IF folder.EXISTS #
-                    <div class="success_block">{@folder.exists}</div>
+                    <div class="success-block">{@folder.exists}</div>
                 # ELSE #
-                    <div class="failure_block">{@folder.doesNotExist}</div>
+                    <div class="failure-block">{@folder.doesNotExist}</div>
                 # ENDIF #
                 # IF folder.IS_WRITABLE #
-                    <div class="success_block">{@folder.isWritable}</div>
+                    <div class="success-block">{@folder.isWritable}</div>
                 # ELSE #
-                    <div class="failure_block">{@folder.isNotWritable}</div>
+                    <div class="failure-block">{@folder.isNotWritable}</div>
                 # ENDIF #
             </div>
         </div>
