@@ -83,9 +83,9 @@ class InstallWebsiteConfigController extends InstallController
 		$fieldset->add_field($timezone);
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::database(), 'templates/images/left.png');
+		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::database(), 'fa fa-arrow-left fa-2x');
 		$action_fieldset->add_element($back);
-		$this->submit_button = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'website');
+		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right fa-2x', 'website');
 		$action_fieldset->add_element($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
 	}
