@@ -405,7 +405,7 @@
 										</tr>
 										<tr>
 											<td style="text-align:center;" class="smaller">
-												<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox[2]"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
+												<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
 												<br />
 												{pics.list.U_POSTOR}
 											</td>
