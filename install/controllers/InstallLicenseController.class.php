@@ -71,9 +71,9 @@ class InstallLicenseController extends InstallController
     	$fieldset->add_field($agree_checkbox);
 
     	$action_fieldset = new FormFieldsetSubmit('actions');
-		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::welcome(), 'templates/images/left.png');
+		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::welcome(), 'fa fa-arrow-left fa-2x');
 		$action_fieldset->add_element($back);
-		$this->submit = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'license');
+		$this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right fa-2x', 'license');
 		$action_fieldset->add_element($this->submit);
 		$this->form->add_fieldset($action_fieldset);
     }

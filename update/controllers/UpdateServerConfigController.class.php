@@ -65,11 +65,11 @@ class UpdateServerConfigController extends UpdateController
 	{
 		$this->form = new HTMLForm('continueForm');
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$back = new FormButtonLink($this->lang['step.previous'], UpdateUrlBuilder::introduction(), 'templates/images/left.png');
+		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateUrlBuilder::introduction(), 'fa fa-arrow-left fa-2x');
 		$action_fieldset->add_element($back);
-		$refresh = new FormButtonLink($this->lang['folders.chmod.refresh'], UpdateUrlBuilder::server_configuration()->rel(), 'templates/images/refresh.png');
+		$refresh = new FormButtonLinkCssImg($this->lang['folders.chmod.refresh'], UpdateUrlBuilder::server_configuration()->rel(), 'fa fa-refresh fa-2x');
 		$action_fieldset->add_element($refresh);
-		$this->submit = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'server');
+		$this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right fa-2x', 'server');
 		$action_fieldset->add_element($this->submit);
 		$this->form->add_fieldset($action_fieldset);
 	}
