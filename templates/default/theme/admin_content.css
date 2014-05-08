@@ -829,10 +829,10 @@ div.container-block-absolute > div {
 }
 
 /*Conteneur des menus*/
-#mod-header, #mod-subheader, #mod-left,
-#mod-right, #mod-topcentral,
-#mod-central, #mod-bottomcentral,
-#mod-topfooter, #mod-footer {
+#mod_header, #mod_subheader, #mod_left,
+#mod_right, #mod_topcentral,
+#mod_central, #mod_bottomcentral,
+#mod_topfooter, #mod_footer {
 	min-height: 55px;
 	padding: 10px;
 	padding-top: 30px;
