@@ -123,7 +123,7 @@
 				<div class="module-mini-contents">
 					<div id="shout-container">
 						# START shout #
-						<p id="shout-container-{shout.IDMSG}">{shout.PSEUDO}<span class="small"> : {shout.CONTENTS}</span></p>
+						<p id="shout-container-{shout.IDMSG}"><span class="small">{shout.PSEUDO} : {shout.CONTENTS}</span></p>
 						# END shout #
 					</div>
 					# IF C_VISIBLE_SHOUT #
@@ -154,7 +154,7 @@
 					<div class="shout-horizontal">
 						<div id="shout-container">
 							# START shout #
-							<p id="shout-container-{shout.IDMSG}">{shout.DEL_MSG}<span class="small"> {shout.DATE} : </span>{shout.PSEUDO}<span class="small"> : {shout.CONTENTS}</span></p>
+							<p id="shout-container-{shout.IDMSG}">{shout.DEL_MSG}<span class="small"> {shout.DATE} : </span><span class="small">{shout.PSEUDO} : {shout.CONTENTS}</span></p>
 							# END shout #
 						</div>
 						# IF C_VISIBLE_SHOUT #

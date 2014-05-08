@@ -89,11 +89,11 @@ if ($add)
 			if ($User->get_attribute('user_id') !== -1)
 			{
 				$group_color = User::get_group_color($User->get_groups(), $User->get_level(), true);
-				$style = $group_color ? 'style="font-size:10px;color:'.$group_color.'"' : 'style="font-size:10px;"';
-				$shout_pseudo = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><i class="fa fa-remove"></i></a> <a class="' . UserService::get_level_class($User->get_level()) . '" '.$style.' href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->rel() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . ' </a>';
+				$style = $group_color ? 'style="color:'.$group_color.'"' : '';
+				$shout_pseudo = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '" class="small"><i class="fa fa-remove"></i></a> <a class="small ' . UserService::get_level_class($User->get_level()) . '" '.$style.' href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->rel() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . ' </a>';
 			}
 			else
-				$shout_pseudo = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . '<span class="smaller" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . ' </span>';
+				$shout_pseudo = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . '<span class="small" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . ' </span>';
 			
 			echo "array_shout[0] = '" . $shout_pseudo . "';";
 			echo "array_shout[1] = '" . FormatingHelper::second_parse($shout_contents) . "';";
@@ -117,7 +117,7 @@ elseif ($refresh)
 	{
 		$row['user_id'] = (int)$row['user_id'];
 		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
-			$del = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><i class="fa fa-remove"></i></a>';
+			$del = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '" class="small"><i class="fa fa-remove"></i></a>';
 		else
 			$del = '';
 			
@@ -127,13 +127,13 @@ elseif ($refresh)
 		if ($row['user_id'] !== -1) 
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
-			$style = $group_color ? 'style="font-size:10px;color:'.$group_color.'"' : 'style="font-size:10px;"';
-			$row['login'] = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . $del . ' <a class="' . UserService::get_level_class($row['level']) . '" '.$style.' href="'. UserUrlBuilder::profile($row['user_id'])->rel()  . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . ' </a>';
+			$style = $group_color ? 'style="color:'.$group_color.'"' : '';
+			$row['login'] = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . $del . ' <a class="small ' . UserService::get_level_class($row['level']) . '" '.$style.' href="'. UserUrlBuilder::profile($row['user_id'])->rel()  . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . ' </a>';
 		}
 		else
-			$row['login'] = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . $del . ' <span class="smaller" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . ' </span>';
+			$row['login'] = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . $del . ' <span class="small" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . ' </span>';
 		
-		echo '<p id="shout-container-' . $row['id'] . '">' . $row['login'] . '<span class="smaller">: ' . FormatingHelper::second_parse($row['contents']) . '</span></p>' . "\n";
+		echo '<p id="shout-container-' . $row['id'] . '">' . $row['login'] . '<span class="small">: ' . FormatingHelper::second_parse($row['contents']) . '</span></p>' . "\n";
 	}
 	$Sql->query_close($result);
 }
