@@ -35,7 +35,7 @@ function menu_hide_block(idfield, stop)
 }
 function minimize_container(input, containerName) 
 {
-	var container = document.getElementById('mod-' + containerName);
+	var container = document.getElementById('mod_' + containerName);
 	
 	if (!container)
 		return;
@@ -54,22 +54,22 @@ function minimize_container(input, containerName)
 
 //Drag'n drop
 var menusContainerList = new Array(
-	'mod-header',
-	'mod-subheader',
-	'mod-left',
-	'mod-right',
-	'mod-topcentral',
-	'mod-central',
-	'mod-bottomcentral',
-	'mod-topfooter',
-	'mod-footer'
+	'mod_header',
+	'mod_subheader',
+	'mod_left',
+	'mod_right',
+	'mod_topcentral',
+	'mod_central',
+	'mod_bottomcentral',
+	'mod_topfooter',
+	'mod_footer'
 );
 function build_menu_tree() 
 {
 	var containerListLength = menusContainerList.length;
 	for(var i = 0; i < containerListLength; i++)
 	{
-		document.getElementById('menu-tree').value += Sortable.serialize(menusContainerList[i]);
+		document.getElementById('menu_tree').value += Sortable.serialize(menusContainerList[i]);
 	}
 }
 function createSortableMenu() 
@@ -81,7 +81,7 @@ function createSortableMenu()
 			menusContainerList[i], 
 			{
 				tag:'div',
-				containment:['mod-header','mod-subheader','mod-left','mod-right','mod-topcentral','mod-central','mod-bottomcentral','mod-topfooter','mod-footer'],
+				containment:['mod_-header','mod_subheader','mod_left','mod_right','mod_topcentral','mod_central','mod_bottomcentral','mod_topfooter','mod_footer'],
 				constraint:false,
 				scroll:window,
 				format:/^menu_([0-9]+)$/,
@@ -132,7 +132,7 @@ function createSortableMenu()
 							</p>
 						</div>
 					</div>
-					<div id="mod-header">
+					<div id="mod_header">
 						# START mod_header #
 							{mod_header.MENU}
 						# END mod_header #
@@ -140,8 +140,8 @@ function createSortableMenu()
 						# IF C_HEADER_COLUMN #
 							<script>
 							<!--
-							$('mod-header').style.opacity = 0.5;
-							$('mod-header').style.filter='alpha(opacity=50)';
+							$('mod_header').style.opacity = 0.5;
+							$('mod_header').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -172,7 +172,7 @@ function createSortableMenu()
 							</p>
 						</div>
 					</div>
-					<div id="mod-subheader">
+					<div id="mod_subheader">
 						# START mod_subheader #
 							{mod_subheader.MENU}
 						# END mod_subheader #
@@ -180,7 +180,7 @@ function createSortableMenu()
 						# IF C_SUB_HEADER_COLUMN #
 							<script>
 							<!--
-							$('mod-subheader').style.opacity = 0.5;
+							$('mod_subheader').style.opacity = 0.5;
 							$('mod-subheader').style.filter='alpha(opacity=50)';
 							-->
 							</script>
@@ -212,7 +212,7 @@ function createSortableMenu()
 							</p>
 						</div>
 					</div>
-					<div id="mod-left">
+					<div id="mod_left">
 						<hr style="margin:10px 0px" />
 						# START mod_left #
 							{mod_left.MENU}
@@ -221,8 +221,8 @@ function createSortableMenu()
 						# IF C_LEFT_COLUMN #
 							<script>
 							<!--
-							$('mod-left').style.opacity = 0.5;
-							$('mod-left').style.filter='alpha(opacity=50)';
+							$('mod_left').style.opacity = 0.5;
+							$('mod_left').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -254,7 +254,7 @@ function createSortableMenu()
 										</p>
 									</div>
 								</div>
-								<div id="mod-topcentral">
+								<div id="mod_topcentral">
 									# START mod_topcentral #
 										{mod_topcentral.MENU}
 									# END mod_topcentral #
@@ -262,8 +262,8 @@ function createSortableMenu()
 									# IF C_TOP_CENTRAL_COLUMN #
 										<script>
 										<!--
-										$('mod-topcentral').style.opacity = 0.5;
-										$('mod-topcentral').style.filter='alpha(opacity=50)';
+										$('mod_topcentral').style.opacity = 0.5;
+										$('mod_topcentral').style.filter='alpha(opacity=50)';
 										-->
 										</script>
 									# ENDIF #
@@ -280,7 +280,7 @@ function createSortableMenu()
 									</div>
 								</div>
 								
-								<div id="mod-central">
+								<div id="mod_central">
 									# START mod_main #
 										{mod_main.MENU}
 									# END mod_main #
@@ -313,7 +313,7 @@ function createSortableMenu()
 										</p>
 									</div>
 								</div>
-								<div id="mod-bottomcentral">
+								<div id="mod_bottomcentral">
 									# START mod_bottomcentral #
 										{mod_bottomcentral.MENU}
 									# END mod_bottomcentral #
@@ -321,8 +321,8 @@ function createSortableMenu()
 									# IF C_BOTTOM_CENTRAL_COLUMN #
 										<script>
 										<!--
-										$('mod-bottomcentral').style.opacity = 0.5;
-										$('mod-bottomcentral').style.filter='alpha(opacity=50)';
+										$('mod_bottomcentral').style.opacity = 0.5;
+										$('mod_bottomcentral').style.filter='alpha(opacity=50)';
 										-->
 										</script>
 									# ENDIF #
@@ -354,7 +354,7 @@ function createSortableMenu()
 							</p>
 						</div>
 					</div>
-					<div id="mod-right">
+					<div id="mod_right">
 						<hr style="margin:10px 0px" />
 						# START mod_right #
 							{mod_right.MENU}
@@ -363,8 +363,8 @@ function createSortableMenu()
 						# IF C_RIGHT_COLUMN #
 							<script>
 							<!--
-							$('mod-right').style.opacity = 0.5;
-							$('mod-right').style.filter='alpha(opacity=50)';
+							$('mod_right').style.opacity = 0.5;
+							$('mod_right').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -395,7 +395,7 @@ function createSortableMenu()
 							</p>
 						</div>
 					</div>
-					<div id="mod-topfooter">
+					<div id="mod_topfooter">
 						# START mod_topfooter #
 							{mod_topfooter.MENU}
 						# END mod_topfooter #
@@ -403,8 +403,8 @@ function createSortableMenu()
 						# IF C_TOP_FOOTER_COLUMN #
 							<script>
 							<!--
-							$('mod-topfooter').style.opacity = 0.5;
-							$('mod-topfooter').style.filter='alpha(opacity=50)';
+							$('mod_topfooter').style.opacity = 0.5;
+							$('mod_topfooter').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -435,15 +435,15 @@ function createSortableMenu()
 							</p>
 						</div>
 					</div>
-					<div id="mod-footer">
+					<div id="mod_footer">
 						# START mod_footer #
 							{mod_footer.MENU}
 						# END mod_footer #
 						# IF C_FOOTER_COLUMN #
 							<script>
 							<!--
-							$('mod-footer').style.opacity = 0.5;
-							$('mod-footer').style.filter='alpha(opacity=50)';
+							$('mod_footer').style.opacity = 0.5;
+							$('mod_footer').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -466,6 +466,6 @@ function createSortableMenu()
 			<input type="hidden" name="theme" value="{NAME_THEME}">
 			<input type="hidden" name="token" value="{TOKEN}">
 		</div>
-		<input type="hidden" name="menu_tree" id="menu-tree" value="">
+		<input type="hidden" name="menu_tree" id="menu_tree" value="">
 	</form>
 </div>
