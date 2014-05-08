@@ -51,28 +51,32 @@ class AdminErrorsController404List extends AdminController
 
 	private function build_view(HTTPRequestCustom $request)
 	{
-		$errors_404 = AdminError404Service::list_404_errors();
-		
 		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($page, $errors_404->get_rows_count());
+		$pagination = $this->get_pagination($page);
 		
-		$nb_errors = $nb_displayed_errors = 0;
+		$result = PersistenceContext::get_querier()->select("SELECT *
+		FROM " . PREFIX . "errors_404
+		ORDER BY times DESC
+		LIMIT :number_items_per_page OFFSET :display_from",
+			array(
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+			)
+		);
 		
-		foreach ($errors_404 as $error)
+		$nb_errors = 0;
+		
+		while($row = $result->fetch())
 		{
+			$this->view->assign_block_vars('errors', array(
+				'REQUESTED_URL' => $row['requested_url'],
+				'FROM_URL' => $row['from_url'],
+				'TIMES' => $row['times'],
+				'U_DELETE' => AdminErrorsUrlBuilder::delete_404_error($row['id'])->rel(),
+			));
 			$nb_errors++;
-			
-			if ($nb_errors > $pagination->get_display_from() && $nb_displayed_errors < $pagination->get_number_items_per_page())
-			{
-				$this->view->assign_block_vars('errors', array(
-					'REQUESTED_URL' => $error->get_requested_url(),
-					'FROM_URL' => $error->get_from_url(),
-					'TIMES' => $error->get_times(),
-					'U_DELETE' => AdminErrorsUrlBuilder::delete_404_error($error->get_id())->rel(),
-				));
-				$nb_displayed_errors++;
-			}
 		}
+		$result->dispose();
 		
 		$this->view->put_all(array(
 			'C_ERRORS' => $nb_errors,
@@ -82,8 +86,10 @@ class AdminErrorsController404List extends AdminController
 		));
 	}
 	
-	private function get_pagination($page, $errors_number)
+	private function get_pagination($page)
 	{
+		$errors_number = PersistenceContext::get_querier()->count(PREFIX . 'errors_404');
+		
 		$pagination = new ModulePagination($page, $errors_number, self::NUMBER_ITEMS_PER_PAGE);
 		$pagination->set_url(AdminErrorsUrlBuilder::list_404_errors('%d'));
 		
