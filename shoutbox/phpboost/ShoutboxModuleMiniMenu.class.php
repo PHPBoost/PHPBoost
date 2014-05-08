@@ -135,18 +135,18 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    	{
 	    		$row['user_id'] = (int)$row['user_id'];
 	    		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
-	    			$del_message = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><i class="fa fa-remove"></i></a>';
+	    			$del_message = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '" class="small"><i class="fa fa-remove"></i></a>';
 	    		else
 	    			$del_message = '';
 	
 	    		if ($row['user_id'] !== -1)
 	    		{
 	    			$group_color = User::get_group_color($row['user_groups'], $row['level']);
-					$style = $group_color ? 'style="font-size:10px;color:'.$group_color.'"' : 'style="font-size:10px;"';
+					$style = $group_color ? 'style="color:'.$group_color.'"' : '';
 	    			$row['login'] = $del_message . ' <a '.$style.' class="'. UserService::get_level_class($row['level']) .'" href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . (!empty($row['mlogin']) ? TextHelper::wordwrap_html($row['mlogin'], 16) : $LANG['guest'])  . '</a>';
 	    		}
 	    		else
-	    			$row['login'] = $del_message . ' <span class="smaller" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
+	    			$row['login'] = $del_message . ' <span class="small" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 				
 				$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
 	    		$tpl->assign_block_vars('shout', array(
