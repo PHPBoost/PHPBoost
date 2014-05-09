@@ -63,9 +63,9 @@ class UpdateVersionExecuteController extends UpdateController
     {
     	$form = new HTMLForm('continueForm', '#error');
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateUrlBuilder::database(), 'fa fa-arrow-left fa-2x');
+		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateUrlBuilder::database(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
-		$this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right fa-2x', 'finish');
+		$this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'finish');
 		$action_fieldset->add_element($this->submit);
 		$form->add_fieldset($action_fieldset);
         $view->put('SERVER_FORM', $form->display());

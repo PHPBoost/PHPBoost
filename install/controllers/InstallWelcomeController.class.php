@@ -50,7 +50,7 @@ class InstallWelcomeController extends InstallController
     {
         $form = new HTMLForm('preambleForm', InstallUrlBuilder::license()->rel());
         $action_fieldset = new FormFieldsetSubmit('actions');
-		$next = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right fa-2x', 'welcome');
+		$next = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'welcome');
 		$action_fieldset->add_element($next);
 		$form->add_fieldset($action_fieldset);
         $view->put('LICENSE_FORM', $form->display());
