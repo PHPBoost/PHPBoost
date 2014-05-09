@@ -284,6 +284,7 @@ h4.bb-title { margin-left: 60px; }
 	color: #444444;
 	padding: 8px;
 	margin: 0px 25px;
+	word-break: break-word;
 }
 
 .hide {	
