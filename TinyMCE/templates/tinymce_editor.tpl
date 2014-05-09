@@ -72,7 +72,6 @@ tinyMCE.init({
 	elements : "{FIELD}", 
 	theme : "advanced",
 	language : "fr",
-	content_css : "{PATH_TO_ROOT}/templates/{THEME}/theme/tinymce.css",
 	theme_advanced_buttons1 : "{THEME_ADVANCED_BUTTONS1}", 
 	theme_advanced_buttons2 : "{THEME_ADVANCED_BUTTONS2}", 
 	theme_advanced_buttons3 : "{THEME_ADVANCED_BUTTONS3}",
