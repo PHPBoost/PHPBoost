@@ -1,3 +1,20 @@
+<script>
+<!--
+function delete_filter(id) {
+	new Ajax.Request('${relative_url(BugtrackerUrlBuilder::delete_filter())}', {
+		method:'post',
+		asynchronous: false,
+		parameters: {'id' : id, 'token' : '{TOKEN}'},
+		onSuccess: function(transport) {
+			if (transport.responseText > 0) {
+				var elementToDelete = $('filter' + id);
+				elementToDelete.parentNode.removeChild(elementToDelete);
+			}
+		}
+	});
+}
+-->
+</script>
 <menu class="dynamic-menu">
 	<ul>
 		<li>
@@ -77,11 +94,20 @@
 		</tr>
 		# IF C_SAVED_FILTERS #
 		# START filters #
-		<tr>
+		<tr id="filter{filters.ID}">
 			<td colspan="{FILTERS_NUMBER}">
-				<a href="{filters.LINK_FILTER_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_filter}"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				<a title="${LangLoader::get_message('delete', 'main')}" id="delete_{filters.ID}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_filter}"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>
+		<script>
+		<!--
+		Event.observe(window, 'load', function() {
+			$('delete_{filters.ID}').observe('click',function(){
+				delete_filter('{filters.ID}');
+			});
+		});
+		-->
+		</script>
 		# END filters #
 		# ENDIF #
 	</tbody>

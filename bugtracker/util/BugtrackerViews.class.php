@@ -33,22 +33,12 @@ class BugtrackerViews
 	public static function build_body_view(View $view, $current_page, $bug_id = 0)
 	{
 		$lang = LangLoader::get('common', 'bugtracker');
-		
-		$request = AppContext::get_request();
-		$back_page = $request->get_value('back_page', '');
-		$page = $request->get_int('page', 1);
-		$back_filter = $request->get_value('back_filter', '');
-		$filter = $request->get_value('filter', '');
-		$filter_id = $request->get_value('filter_id', '');
-		
 		$config = BugtrackerConfig::load();
-		$versions = $config->get_versions();
-		$nbr_versions = array_keys($versions);
 		
 		$body_view = new FileTemplate('bugtracker/BugtrackerBody.tpl');
 		$body_view->add_lang($lang);
 		$body_view->put_all(array(
-			'C_ROADMAP_ENABLED'			=> $config->is_roadmap_enabled() && !empty($nbr_versions),
+			'C_ROADMAP_ENABLED'			=> $config->is_roadmap_displayed(),
 			'C_STATS_ENABLED'			=> $config->are_stats_enabled(),
 			'C_DISPLAY_MENU'			=> in_array($current_page, array('unsolved', 'solved', 'roadmap', 'stats')),
 			'C_SYNDICATION'				=> $current_page == 'unsolved' || $current_page == 'solved',
@@ -136,7 +126,6 @@ class BugtrackerViews
 				'ID'					=> $row['id'],
 				'FILTER'				=> '|	' . (in_array('type', $row_filters) && $row_filters_ids[array_search('type', $row_filters)] ? $types[$row_filters_ids[array_search('type', $row_filters)]] : $filter_not_saved_value) . '	|	' . (in_array('category', $row_filters) && $row_filters_ids[array_search('category', $row_filters)] ? $categories[$row_filters_ids[array_search('category', $row_filters)]] : $filter_not_saved_value) . '	|	' . (in_array('severity', $row_filters) && $row_filters_ids[array_search('severity', $row_filters)] ? $severities[$row_filters_ids[array_search('severity', $row_filters)]]['name'] : $filter_not_saved_value) . '	|	' . (in_array('status', $row_filters) && $row_filters_ids[array_search('status', $row_filters)] ? $lang['status.' . $row_filters_ids[array_search('status', $row_filters)]] : $filter_not_saved_value) . '	|	' . ($current_page == 'unsolved' ? (in_array('detected_in', $row_filters) && $row_filters_ids[array_search('detected_in', $row_filters)] ? $versions[$row_filters_ids[array_search('detected_in', $row_filters)]]['name'] : $filter_not_saved_value) : (in_array('fixed_in', $row_filters) && $row_filters_ids[array_search('fixed_in', $row_filters)] ? $all_versions[$row_filters_ids[array_search('fixed_in', $row_filters)]]['name'] : $filter_not_saved_value)) . '	|',
 				'LINK_FILTER'			=> ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . $row['filters'] . '/' . $row['filters_ids'])->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . $row['filters'] . '/' . $row['filters_ids'])->rel()),
-				'LINK_FILTER_DELETE'	=> BugtrackerUrlBuilder::delete_filter($row['id'] . '/' . $current_page . '/' . $page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel()
 			));
 			$saved_filters = true;
 		}

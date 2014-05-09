@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                      BugtrackerDeleteFilterController.class.php
+ *                          BugtrackerAjaxDeleteFilterController.class.php
  *                            -------------------
- *   begin                : November 09, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
+ *   begin                : May 8, 2014
+ *   copyright            : (C) 2014 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
  *
@@ -25,32 +25,35 @@
  *
  ###################################################*/
 
-class BugtrackerDeleteFilterController extends ModuleController
+class BugtrackerAjaxDeleteFilterController extends AbstractController
 {
+	private $view;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
-		AppContext::get_session()->csrf_get_protect();
+		$this->init();
+		$this->build_view($request);
+		return new SiteNodisplayResponse($this->view);
+	}
+	
+	private function build_view(HTTPRequestCustom $request)
+	{
+		AppContext::get_session()->csrf_post_protect();
 		
 		$id = $request->get_int('id', 0);
-		$page = $request->get_int('page', 1);
-		$back_page = $request->get_value('back_page', '');
-		$back_filter = $request->get_value('back_filter', '');
-		$filter_id = $request->get_value('filter_id', '');
 		
-		//Delete filter
-		BugtrackerService::delete_filter("WHERE id=:id", array('id' => $id));
-		
-		switch ($back_page)
+		if (!empty($id))
 		{
-			case 'solved' :
-				$redirect = BugtrackerUrlBuilder::solved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-				break;
-			default :
-				$redirect = BugtrackerUrlBuilder::unsolved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-				break;
+			//Delete filter
+			BugtrackerService::delete_filter("WHERE id=:id", array('id' => $id));
 		}
 		
-		AppContext::get_response()->redirect($redirect);
+		$this->view->put('RESULT', $id);
+	}
+	
+	private function init()
+	{
+		$this->view = new StringTemplate('{RESULT}');
 	}
 }
 ?>

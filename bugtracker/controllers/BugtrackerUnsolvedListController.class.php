@@ -115,7 +115,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 			$this->view->assign_block_vars('bug', array_merge($bug->get_array_tpl_vars(), array(
 				'C_LINE_COLOR'		=> $bug->get_severity() && isset($severities[$bug->get_severity()]),
 				'LINE_COLOR' 		=> stripslashes($severities[$bug->get_severity()]['color']),
-				'U_CHANGE_STATUS'	=> BugtrackerUrlBuilder::change_status($bug->get_id(), 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
+				'U_CHANGE_STATUS'	=> BugtrackerUrlBuilder::change_status($bug->get_id())->rel(),
 				'U_EDIT'			=> BugtrackerUrlBuilder::edit($bug->get_id() . '/unsolved/' . $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
 				'U_DELETE'			=> BugtrackerUrlBuilder::delete($bug->get_id(), 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
 			)));
@@ -218,29 +218,8 @@ class BugtrackerUnsolvedListController extends ModuleController
 			case 'edit':
 				$errstr = StringVars::replace_vars($this->lang['success.edit'], array('id' => $bug_id));
 				break;
-			case 'new':
-				$errstr = StringVars::replace_vars($this->lang['success.new'], array('id' => $bug_id));
-				break;
-			case 'fixed':
-				$errstr = StringVars::replace_vars($this->lang['success.fixed'], array('id' => $bug_id));
-				break;
-			case 'pending':
-				$errstr = StringVars::replace_vars($this->lang['success.pending'], array('id' => $bug_id));
-				break;
-			case 'in_progress':
-				$errstr = StringVars::replace_vars($this->lang['success.in_progress'], array('id' => $bug_id));
-				break;
 			case 'delete':
 				$errstr = StringVars::replace_vars($this->lang['success.delete'], array('id' => $bug_id));
-				break;
-			case 'rejected':
-				$errstr = StringVars::replace_vars($this->lang['success.reject'], array('id' => $bug_id));
-				break;
-			case 'reopen':
-				$errstr = StringVars::replace_vars($this->lang['success.reopen'], array('id' => $bug_id));
-				break;
-			case 'assigned':
-				$errstr = StringVars::replace_vars($this->lang['success.assigned'], array('id' => $bug_id));
 				break;
 			default:
 				$errstr = '';
@@ -251,7 +230,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.unsolved']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::unsolved($field . '/' . $sort . '/' . $page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : '')));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::unsolved($field . '/' . $sort . '/' . $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());

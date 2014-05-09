@@ -296,12 +296,12 @@ $lang['error.e_status_not_changed'] = 'The bug status has not changed';
 //Success
 $lang['success.add'] = 'The bug #:id has been committed';
 $lang['success.edit'] = 'The bug #:id has been updated';
-$lang['success.new'] = 'The bug #:id has been set to <b>New</b>';
-$lang['success.fixed'] = 'The bug #:id has been fixed';
-$lang['success.in_progress'] = 'The bug #:id resolution is in progress';
+$lang['success.new'] = 'The bug has been set to <b>New</b>';
+$lang['success.fixed'] = 'The bug has been fixed';
+$lang['success.in_progress'] = 'The bug resolution is in progress';
 $lang['success.delete'] = 'The bug #:id has been deleted';
-$lang['success.reject'] = 'The bug #:id has been rejected';
-$lang['success.reopen'] = 'The bug #:id has been reopen';
-$lang['success.assigned'] = 'The bug #:id has been assigned';
-$lang['success.pending'] = 'The bug #:id has been put on hold';
+$lang['success.rejected'] = 'The bug has been rejected';
+$lang['success.reopen'] = 'The bug has been reopen';
+$lang['success.assigned'] = 'The bug has been assigned';
+$lang['success.pending'] = 'The bug has been put on hold';
 ?>

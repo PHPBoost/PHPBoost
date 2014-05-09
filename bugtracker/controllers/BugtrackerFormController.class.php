@@ -626,7 +626,7 @@ class BugtrackerFormController extends ModuleController
 			$response = new SiteDisplayResponse($body_view);
 			$graphical_environment = $response->get_graphical_environment();
 			$graphical_environment->set_page_title($this->lang['titles.add']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::add(!empty($back_page) ? $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : ''));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::add();
 			
 			$breadcrumb = $graphical_environment->get_breadcrumb();
 			$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
@@ -639,7 +639,7 @@ class BugtrackerFormController extends ModuleController
 			$response = new SiteDisplayResponse($body_view);
 			$graphical_environment = $response->get_graphical_environment();
 			$graphical_environment->set_page_title($this->lang['titles.edit'] . ' #' . $bug->get_id());
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::edit(!empty($back_page) ? $bug->get_id() . '/' . $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : $bug->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::edit($bug->get_id()));
 			
 			$breadcrumb = $graphical_environment->get_breadcrumb();
 			$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
