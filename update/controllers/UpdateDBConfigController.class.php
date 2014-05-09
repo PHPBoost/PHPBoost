@@ -100,15 +100,15 @@ class UpdateDBConfigController extends UpdateController
 		$fieldset_schema->add_field($tables_prefix);
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateUrlBuilder::server_configuration(), 'fa fa-arrow-left fa-2x');
+		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateUrlBuilder::server_configuration(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
 		$check_request = new AjaxRequest(UpdateUrlBuilder::check_database(), 'function(response){
 		alert(response.responseJSON.message);
 		}');
-		$check = new FormButtonAjaxCssImg($this->lang['db.config.check'], $check_request, 'fa fa-refresh fa-2x',
+		$check = new FormButtonAjaxCssImg($this->lang['db.config.check'], $check_request, 'fa fa-refresh',
 		array($host, $port, $login, $password, $schema, $tables_prefix), '$HF(\'databaseForm\').validate()');
 		$action_fieldset->add_element($check);
-		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right fa-2x', 'database');
+		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'database');
 		$action_fieldset->add_element($this->submit_button);
 		$this->form->add_fieldset($action_fieldset);
 	}
