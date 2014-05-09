@@ -21,7 +21,7 @@
 			# IF C_AUTHOR_EXIST #<a itemprop="author" href="{U_AUTHOR}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a># ELSE #{PSEUDO}# ENDIF #|&nbsp;
 			# ENDIF #
 			<i class="fa fa-calendar" title="{@articles.sort_field.date}"></i>&nbsp;<time datetime="{DATE}" itemprop="datePublished">{DATE}</time>&nbsp;|
-			&nbsp;<i class="fa fa-eye" title="{@articles.sort_field.views}"></i>&nbsp;{NUMBER_VIEW}
+			&nbsp;<i class="fa fa-eye" title="{NUMBER_VIEW} {@articles.sort_field.views}"></i>&nbsp;<span title="{NUMBER_VIEW} {@articles.sort_field.views}">{NUMBER_VIEW}</span>
 			# IF C_COMMENTS_ENABLED #
 				&nbsp;|&nbsp;<i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 			# ENDIF #
