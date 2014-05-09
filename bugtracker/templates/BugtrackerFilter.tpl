@@ -1,24 +1,26 @@
 <script>
 <!--
 function delete_filter(id) {
-	new Ajax.Request('${relative_url(BugtrackerUrlBuilder::delete_filter())}', {
-		method:'post',
-		asynchronous: false,
-		parameters: {'id' : id, 'token' : '{TOKEN}'},
-		onSuccess: function(transport) {
-			if (transport.responseText > 0) {
-				var elementToDelete = $('filter' + id);
-				elementToDelete.parentNode.removeChild(elementToDelete);
+	if (confirm(${escapejs(@actions.confirm.del_filter)})) {
+		new Ajax.Request('${relative_url(BugtrackerUrlBuilder::delete_filter())}', {
+			method:'post',
+			asynchronous: false,
+			parameters: {'id' : id, 'token' : '{TOKEN}'},
+			onSuccess: function(transport) {
+				if (transport.responseText > 0) {
+					var elementToDelete = $('filter' + id);
+					elementToDelete.parentNode.removeChild(elementToDelete);
+				}
 			}
-		}
-	});
+		});
+	}
 }
 -->
 </script>
 <menu class="dynamic-menu">
 	<ul>
 		<li>
-			<a onclick="Effect.toggle('table_filters', 'appear'); return false;"><i class="fa fa-filter"></i> {L_FILTERS}</a> 
+			<a href="" onclick="Effect.toggle('table_filters', 'appear'); return false;"><i class="fa fa-filter"></i> {L_FILTERS}</a> 
 		</li>
 	</ul>
 </menu>
@@ -96,7 +98,7 @@ function delete_filter(id) {
 		# START filters #
 		<tr id="filter{filters.ID}">
 			<td colspan="{FILTERS_NUMBER}">
-				<a title="${LangLoader::get_message('delete', 'main')}" id="delete_{filters.ID}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_filter}"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				<a href="" title="${LangLoader::get_message('delete', 'main')}" id="delete_{filters.ID}" onclick="return false;" class="fa fa-delete"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>
 		<script>
