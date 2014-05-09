@@ -2,11 +2,11 @@
 <!--
 function refresh_comments()
 {
-	new Ajax.Updater('comments-list', PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/display/', {
+	new Ajax.Updater('comments_list', PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/display/', {
 		parameters: {module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)}},
 		insertion: Insertion.Bottom,
 		onComplete: function() { 
-			$('refresh-comments').remove() 
+			$('refresh_comments').remove() 
 		}
 	})
 }
@@ -14,7 +14,7 @@ function refresh_comments()
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
 Event.observe(window, 'load', function() {
 	
-	$('refresh-comments').observe('click', function() {
+	$('refresh_comments').observe('click', function() {
 		refresh_comments();
 	});
 });
@@ -26,7 +26,7 @@ Event.observe(window, 'load', function() {
 //-->
 </script>
 
-<section id="comments-list">
+<section id="comments_list">
 	# IF C_DISPLAY_FORM #
 		<div id="comment-form">
 			# INCLUDE COMMENT_FORM #
@@ -52,6 +52,6 @@ Event.observe(window, 'load', function() {
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
 <div style="text-align:center;">
-	<button type="submit" id="refresh-comments">{@allComments}</button>
+	<button type="submit" id="refresh_comments">{@allComments}</button>
 </div>
 # ENDIF #
