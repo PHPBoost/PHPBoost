@@ -33,13 +33,13 @@
 				{
 					if( status == 0 )
 					{
-						document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-eye\"></i>";
+						document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-success\"></i>";
 						document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '2');";
 						document.getElementById("status_" + id).title = "{L_UNFIX}";
 					}
 					else
 					{
-						document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-eye-slash\"></i>";
+						document.getElementById("status_" + id).innerHTML = "<i class=\"fa fa-error\"></i>";
 						document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '0');";
 						document.getElementById("status_" + id).title = "{L_FIX}";
 					}
@@ -153,7 +153,7 @@
 						</td>
 						<td>
 							{alerts.ACTIONS}
-							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa # IF alerts.C_PROCESSED #fa-eye# ELSE #fa-eye-slash# ENDIF #"></i></a>
+							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="# IF alerts.C_PROCESSED #{L_UNFIX}# ELSE #{L_FIX}# ENDIF #" id="status_{alerts.ID}"><i class="fa # IF alerts.C_PROCESSED #fa-success# ELSE #fa-error# ENDIF #"></i></a>
 							<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>
