@@ -202,7 +202,6 @@ if ($action == 'punish')
 			'INFO' => $array_sanction[$key_sanction],
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" .
-			'if (replace_value != \'326592000\'){'. "\n" .
 			'array_time = new Array(' . (implode(', ', $array_time)) . ');' . "\n" .
 			'array_sanction = new Array(\'' . implode('\', \'', array_map('addslashes', $array_sanction)) . '\');'. "\n" .
 			'var i;
@@ -220,10 +219,10 @@ if ($action == 'punish')
 				'document.getElementById(\'action_contents\').disabled = \'\'' . "\n" .
 			'} else' . "\n" .
 			'	document.getElementById(\'action_contents\').disabled = \'disabled\';' . "\n" .
-			'document.getElementById(\'action_info\').innerHTML = replace_value;}',
-			'REGEX'=> '/[0-9]+ [a-zA-Z]+/',
+			'document.getElementById(\'action_info\').innerHTML = replace_value;',
+			'REGEX'=> '/[0-9]+ [a-zéèêA-Z]+/',
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
-			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('ban', $id_get)->rel() . '&amp;token=' . $Session->get_token(),
+			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('punish', $id_get)->rel() . '&amp;token=' . $Session->get_token(),
 			'U_PROFILE' => UserUrlBuilder::profile($id_get)->rel(),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
