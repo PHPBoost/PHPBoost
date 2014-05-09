@@ -40,6 +40,7 @@ $lang['category.edit'] = 'Edit category';
 $lang['category.delete'] = 'Delete category';
 $lang['category.move_up'] = 'Move category up';
 $lang['category.move_down'] = 'Move category down';
+$lang['category.update_categories_position'] = 'Change categories position';
 
 //Errors
 $lang['errors.unexisting'] = 'The category doesn\'t exist.';

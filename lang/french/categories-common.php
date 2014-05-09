@@ -40,6 +40,7 @@ $lang['category.edit'] = 'Modifier une catégorie';
 $lang['category.delete'] = 'Supprimer une catégorie';
 $lang['category.move_up'] = 'Monter la catégorie';
 $lang['category.move_down'] = 'Descendre la catégorie';
+$lang['category.update_categories_position'] = 'Valider la position des catégories';
 
 //Errors
 $lang['errors.unexisting'] = 'La catégorie n\'existe pas.';

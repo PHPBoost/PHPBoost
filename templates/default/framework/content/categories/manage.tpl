@@ -63,8 +63,8 @@ function move_category_down(parent_id, id){
 			</ul>
 	</fieldset>
 	<fieldset class="fieldset-submit">
+		<button type="submit" name="submit" value="true">{@category.update_categories_position}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="tree" id="tree" value="">
-		<button type="submit" name="valid" value="true">${LangLoader::get_message('submit', 'main')}</button>
 	</fieldset>
 </form>
