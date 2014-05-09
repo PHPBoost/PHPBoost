@@ -60,16 +60,19 @@ var ContactField = Class.create({
 		# ENDIF #
 	},
 	delete_fields : function() {
-		new Ajax.Request('${relative_url(ContactUrlBuilder::delete_field())}', {
-			method:'post',
-			asynchronous: false,
-			parameters: {'id' : this.id, 'token' : '{TOKEN}'}
-		});
-		
-		var elementToDelete = $('list_' + this.id);
-		elementToDelete.parentNode.removeChild(elementToDelete);
-		ContactFields.destroy_sortable();
-		ContactFields.create_sortable();
+		if (confirm(${escapejs(@fields.delete_field.confirm)}))
+		{
+			new Ajax.Request('${relative_url(ContactUrlBuilder::delete_field())}', {
+				method:'post',
+				asynchronous: false,
+				parameters: {'id' : this.id, 'token' : '{TOKEN}'}
+			});
+			
+			var elementToDelete = $('list_' + this.id);
+			elementToDelete.parentNode.removeChild(elementToDelete);
+			ContactFields.destroy_sortable();
+			ContactFields.create_sortable();
+		}
 	},
 	move_up : function() {
 		var sequence = ContactFields.get_sortable_sequence();
@@ -169,10 +172,10 @@ Event.observe(window, 'load', function() {
 								<a href="{fields_list.U_EDIT}" title="{@fields.action.edit_field}" class="fa fa-edit"></a>
 							</div>
 							<div class="sortable-options">
-								# IF fields_list.C_DELETE #<a title="{@fields.action.delete_field}" id="delete_{fields_list.ID}" class="fa fa-delete" data-confirmation="${@fields.delete_field.confirm}"></a># ELSE #&nbsp;# ENDIF #
+								# IF fields_list.C_DELETE #<a href="" onclick="return false;" title="{@fields.action.delete_field}" id="delete_{fields_list.ID}" class="fa fa-delete"></a># ELSE #&nbsp;# ENDIF #
 							</div>
 							<div class="sortable-options">
-							# IF NOT fields_list.C_READONLY #<a id="change_display_{fields_list.ID}" class="fa fa-eye"></a># ELSE #&nbsp;# ENDIF #
+							# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change_display_{fields_list.ID}" class="fa fa-eye"></a># ELSE #&nbsp;# ENDIF #
 							</div>
 						</div>
 					</div>

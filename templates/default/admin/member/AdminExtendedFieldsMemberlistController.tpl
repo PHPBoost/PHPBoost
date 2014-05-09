@@ -178,12 +178,12 @@ Event.observe(window, 'load', function() {
 							</div>
 							<div class="sortable-options">
 								# IF NOT list_extended_fields.C_FREEZE #
-								<a title="{@fields.action.delete_field}" id="delete_{list_extended_fields.ID}" class="fa fa-delete"></a>
+								<a href="" onclick="return false;" title="{@fields.action.delete_field}" id="delete_{list_extended_fields.ID}" class="fa fa-delete"></a>
 								# ELSE #
 								&nbsp;
 								# ENDIF #
 							</div>
-							<a id="change_display_{list_extended_fields.ID}" class="fa fa-eye"></a>
+							<a href="" onclick="return false;" id="change_display_{list_extended_fields.ID}" class="fa fa-eye"></a>
 						</div>
 					</div>
 					<div class="spacer"></div>
