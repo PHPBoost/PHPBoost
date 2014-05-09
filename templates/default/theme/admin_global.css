@@ -291,6 +291,7 @@ ul, ol {
 	color: #444444;
 	padding: 8px;
 	margin: 0px 25px;
+	word-break: break-word;
 }
 
 .hide {	cursor: pointer;	height: 10px; overflow: hidden; }
