@@ -93,7 +93,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	
 	private function update_positions(HTTPRequestCustom $request)
 	{
-		if ($request->get_postvalue('valid', false))
+		if ($request->get_postvalue('submit', false))
 		{
 			parse_str($_POST['tree']);
 			
