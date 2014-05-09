@@ -72,7 +72,7 @@ class BugtrackerDetailController extends ModuleController
 			'USER_ASSIGNED'					=> $user_assigned ? $user_assigned->get_pseudo() : '',
 			'USER_ASSIGNED_LEVEL_CLASS'		=> $user_assigned ? UserService::get_level_class($user_assigned->get_level()) : '',
 			'USER_ASSIGNED_GROUP_COLOR'		=> $user_assigned_group_color,
-			'U_CHANGE_STATUS'				=> BugtrackerUrlBuilder::change_status($this->bug->get_id(), 'detail')->rel(),
+			'U_CHANGE_STATUS'				=> BugtrackerUrlBuilder::change_status($this->bug->get_id())->rel(),
 			'U_EDIT'						=> BugtrackerUrlBuilder::edit($this->bug->get_id() . '/detail')->rel(),
 			'U_DELETE'						=> BugtrackerUrlBuilder::delete($this->bug->get_id(), 'unsolved')->rel(),
 		));
@@ -127,29 +127,8 @@ class BugtrackerDetailController extends ModuleController
 			case 'edit':
 				$errstr = StringVars::replace_vars($this->lang['success.edit'], array('id' => $this->bug->get_id()));
 				break;
-			case 'new':
-				$errstr = StringVars::replace_vars($this->lang['success.new'], array('id' => $this->bug->get_id()));
-				break;
-			case 'fixed':
-				$errstr = StringVars::replace_vars($this->lang['success.fixed'], array('id' => $this->bug->get_id()));
-				break;
-			case 'pending':
-				$errstr = StringVars::replace_vars($this->lang['success.pending'], array('id' => $this->bug->get_id()));
-				break;
-			case 'in_progress':
-				$errstr = StringVars::replace_vars($this->lang['success.in_progress'], array('id' => $this->bug->get_id()));
-				break;
 			case 'delete':
 				$errstr = StringVars::replace_vars($this->lang['success.delete'], array('id' => $this->bug->get_id()));
-				break;
-			case 'rejected':
-				$errstr = StringVars::replace_vars($this->lang['success.reject'], array('id' => $this->bug->get_id()));
-				break;
-			case 'reopen':
-				$errstr = StringVars::replace_vars($this->lang['success.reopen'], array('id' => $this->bug->get_id()));
-				break;
-			case 'assigned':
-				$errstr = StringVars::replace_vars($this->lang['success.assigned'], array('id' => $this->bug->get_id()));
 				break;
 			default:
 				$errstr = '';

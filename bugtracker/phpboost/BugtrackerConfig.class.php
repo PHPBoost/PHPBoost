@@ -147,6 +147,11 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::ROADMAP_ENABLED);
 	}
 	
+	public function is_roadmap_displayed()
+	{
+		return $this->get_property(self::ROADMAP_ENABLED) && $this->get_property(self::VERSIONS);
+	}
+	
 	public function enable_stats()
 	{
 		$this->set_property(self::STATS_ENABLED, true);

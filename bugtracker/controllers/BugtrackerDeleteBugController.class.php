@@ -179,7 +179,7 @@ class BugtrackerDeleteBugController extends ModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.delete'] . ' #' . $this->bug->get_id());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::delete($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::delete($this->bug->get_id()));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());

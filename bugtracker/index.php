@@ -64,12 +64,12 @@ $url_controller_mappers = array(
 	
 	//Actions
 	new UrlControllerMapper('BugtrackerDeleteBugController', '`^/delete/([0-9]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('id', 'back_page', 'page', 'back_filter', 'filter_id')),
-	new UrlControllerMapper('BugtrackerChangeBugStatusController', '`^/change_status/([0-9]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('id', 'back_page', 'page', 'back_filter', 'filter_id')),
+	new UrlControllerMapper('BugtrackerChangeBugStatusController', '`^/change_status/([0-9]+)?/?$`', array('id')),
 	new UrlControllerMapper('BugtrackerAjaxCheckStatusChangedController', '`^/check_status_changed/?$`'),
 	
 	//Filters
 	new UrlControllerMapper('BugtrackerAddFilterController', '`^/add_filter/([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('back_page', 'page', 'back_filter', 'filter_id')),
-	new UrlControllerMapper('BugtrackerDeleteFilterController', '`^/delete_filter/([0-9]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('id', 'back_page', 'page', 'back_filter', 'filter_id')),
+	new UrlControllerMapper('BugtrackerAjaxDeleteFilterController', '`^/delete_filter/?$`'),
 	
 	new UrlControllerMapper('BugtrackerUnsolvedListController', '`^/?$`'),
 );

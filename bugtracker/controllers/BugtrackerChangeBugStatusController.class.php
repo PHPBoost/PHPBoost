@@ -53,27 +53,11 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		{
 			$this->save();
 			
-			$back_page = $request->get_value('back_page', '');
-			$page = $request->get_int('page', 1);
-			$back_filter = $request->get_value('back_filter', '');
-			$filter_id = $request->get_int('filter_id', 0);
+			$this->form->get_field_by_id('assigned_to')->set_hidden(!$this->bug->is_assigned());
+			if ($this->config->get_versions_fix())
+				$this->form->get_field_by_id('fixed_in')->set_hidden(!$this->bug->is_fixed() && !$this->bug->is_in_progress());
 			
-			$status = $this->form->get_value('status')->get_raw_value();
-			
-			switch ($back_page)
-			{
-				case 'detail' :
-					$redirect = BugtrackerUrlBuilder::detail_success($status . '/' . $this->bug->get_id());
-					break;
-				case 'solved' :
-					$redirect = BugtrackerUrlBuilder::solved_success($status . '/'. $this->bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-					break;
-				default :
-					$redirect = BugtrackerUrlBuilder::unsolved_success($status . '/' . $this->bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-					break;
-			}
-			
-			AppContext::get_response()->redirect($redirect);
+			$this->view->put('MSG', MessageHelper::display($this->lang['success.' . $this->bug->get_status()], E_USER_SUCCESS, 5));
 		}
 		
 		$this->view->put('FORM', $this->form->display());
@@ -93,40 +77,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$this->view = new StringTemplate('# INCLUDE FORM #
-			<script>
-			<!--
-				function BugtrackerStatusChangedValidator(message, bug_id, bug_status)
-				{
-					var field = HTMLForms.getField(\'status\');
-					if (field)
-					{
-						var value = field.getValue();
-						var error = \'\';
-						new Ajax.Request(
-							\'${relative_url(BugtrackerUrlBuilder::check_status_changed())}\',
-							{
-								method: \'post\',
-								asynchronous: false,
-								parameters: {id : bug_id, status : value, old_status : bug_status},
-								onSuccess: function(transport) {
-									if (transport.responseText == \'1\')
-									{
-										error = message;
-									}
-									else
-									{
-										error = \'\';
-									}
-								}
-							}
-						);
-						return error;
-					}
-					return \'\';
-				}
-			-->
-			</script>');
+		$this->view = new FileTemplate('bugtracker/BugtrackerChangeBugStatusController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->config = BugtrackerConfig::load();
 		$this->current_user = AppContext::get_current_user();
@@ -277,8 +228,9 @@ class BugtrackerChangeBugStatusController extends ModuleController
 				//Bug update
 				$this->bug->set_assigned_to_id($new_assigned_to_id);
 				
-				//The PM will only be sent to this user
-				$pm_recipients_list[] = $new_assigned_to_id;
+				//The PM will only be sent to the assigned user
+				if ($new_assigned_to_id != $this->current_user->get_id())
+					$pm_recipients_list[] = $new_assigned_to_id;
 			}
 		}
 		
@@ -384,21 +336,16 @@ class BugtrackerChangeBugStatusController extends ModuleController
 	{
 		$request = AppContext::get_request();
 		
-		$back_page = $request->get_value('back_page', '');
-		$page = $request->get_int('page', 1);
-		$back_filter = $request->get_value('back_filter', '');
-		$filter_id = $request->get_value('filter_id', '');
-		
 		$body_view = BugtrackerViews::build_body_view($view, 'change_status', $this->bug->get_id());
 		
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.change_status'] . ' #' . $this->bug->get_id());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::change_status($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::change_status($this->bug->get_id()));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$breadcrumb->add($this->lang['titles.change_status'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::change_status($this->bug->get_id(), $back_page, $page, $back_filter, $filter_id));
+		$breadcrumb->add($this->lang['titles.change_status'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::change_status($this->bug->get_id()));
 		
 		return $response;
 	}

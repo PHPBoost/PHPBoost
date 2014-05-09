@@ -172,17 +172,17 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function delete_filter($param = '')
+	public static function delete_filter()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/delete_filter/' . $param . '/?token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/delete_filter/');
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function change_status($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
+	public static function change_status($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/change_status/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : ''));
+		return DispatchManager::get_url(self::$dispatcher, '/change_status/' . $id);
 	}
 	
 	/**
