@@ -48,7 +48,7 @@ if ($add)
 	$shout_pseudo = !empty($_POST['pseudo']) ? TextHelper::strprotect(utf8_decode($_POST['pseudo'])) : $LANG['guest'];
 	
 	$shout_contents = htmlentities(retrieve(POST, 'contents', ''), ENT_COMPAT, 'UTF-8');
-	$shout_contents = stripslashes(html_entity_decode($shout_contents, ENT_COMPAT, 'ISO-8859-1'));
+	$shout_contents = htmlspecialchars_decode(stripslashes(html_entity_decode($shout_contents, ENT_COMPAT, 'ISO-8859-1')));
 	
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{
