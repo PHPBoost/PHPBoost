@@ -92,15 +92,20 @@ class UserErrorController extends AbstractController
 	{
 		$this->create_view();
 		$this->fill_view();
-		$response = new $this->response_classname($this->view);
-		$graphical_env = $response->get_graphical_environment();
-		if (!($graphical_env instanceof AbstractDisplayGraphicalEnvironment))
+		if (MaintenanceConfig::load()->is_maintenance_enabled())
+			return new SiteNodisplayResponse($this->view);
+		else
 		{
-			throw new Exception($this->response_classname . ' does not contains a graphical environement ' .
-			    'that is an instance of AbstractDisplayGraphicalEnvironment');
+			$response = new $this->response_classname($this->view);
+			$graphical_env = $response->get_graphical_environment();
+			if (!($graphical_env instanceof AbstractDisplayGraphicalEnvironment))
+			{
+				throw new Exception($this->response_classname . ' does not contains a graphical environement ' .
+					'that is an instance of AbstractDisplayGraphicalEnvironment');
+			}
+			$graphical_env->set_page_title($this->title);
+			return $response;
 		}
-		$graphical_env->set_page_title($this->title);
-		return $response;
 	}
 
 	private function create_view()
