@@ -86,7 +86,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 		}
 		
 		$stats_cache = BugtrackerStatsCache::load();
-		$bugs_number = !empty($select_filters) ? BugtrackerService::count("WHERE status <> '" . Bug::FIXED . "' AND status <> '" . Bug::REJECTED . "'" . $select_filters) : $stats_cache->get_bugs_number(Bug::NEW_BUG) + $stats_cache->get_bugs_number(Bug::ASSIGNED) + $stats_cache->get_bugs_number(Bug::IN_PROGRESS) + $stats_cache->get_bugs_number(Bug::REOPEN);
+		$bugs_number = BugtrackerService::count("WHERE status <> '" . Bug::FIXED . "' AND status <> '" . Bug::REJECTED . "'" . $select_filters);
 		
 		$pagination = $this->get_pagination($bugs_number, $current_page, $field, $sort, $filter, $filter_id);
 		
