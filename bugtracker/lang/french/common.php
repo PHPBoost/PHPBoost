@@ -182,15 +182,15 @@ $lang['explain.change_status_select_fix_version'] = 'Vous pouvez sélectionner un
 $lang['explain.change_status_comments_message'] = 'Facultatif. Permet de commenter le bug et d\'ajouter ce commentaire dans le Message Privé si son envoi est activé.';
 
 //MP
-$lang['pm.with_comment'] = '
-
-Commentaire :
+$lang['pm.with_comment'] = '<br />
+<br />
+Commentaire :<br />
 :comment';
-$lang['pm.edit_fields'] = '
-
+$lang['pm.edit_fields'] = '<br />
+<br />
 :fields';
-$lang['pm.bug_link'] = '
-
+$lang['pm.bug_link'] = '<br />
+<br />
 <a href=":link">Lien vers le bug</a>';
 
 $lang['pm.assigned.title'] = '[Rapport de bugs] Le bug #:id vous a été assigné';

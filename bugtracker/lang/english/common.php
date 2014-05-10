@@ -182,15 +182,15 @@ $lang['explain.change_status_select_fix_version'] = 'You can select a version to
 $lang['explain.change_status_comments_message'] = 'Optional. Permits to comment the bug and add it in the Private Message if sending is enabled.';
 
 //PM
-$lang['pm.with_comment'] = '
-
-Comment:
+$lang['pm.with_comment'] = '<br />
+<br />
+Comment:<br />
 :comment';
-$lang['pm.edit_fields'] = '
-
+$lang['pm.edit_fields'] = '<br />
+<br />
 :fields';
-$lang['pm.bug_link'] = '
-
+$lang['pm.bug_link'] = '<br />
+<br />
 <a href=":link">Bug link</a>';
 
 $lang['pm.assigned.title'] = '[Bugtracker] The bug #:id has been assigned to you';
