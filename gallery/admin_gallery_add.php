@@ -49,31 +49,31 @@ if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 	$idpic = 0;
 	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $config->get_max_weight());
 	if ($Upload->get_error() != '') //Erreur, on arrête ici
-		AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Upload->get_error() . '#message_helper');
+		AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Upload->get_error() . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
 	else
 	{
 		$path = $dir . $Upload->get_filename();
 		$error = $Upload->check_img($config->get_max_width(), $config->get_max_height(), Upload::DELETE_ON_ERROR);
 		if (!empty($error)) //Erreur, on arrête ici
-			AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $error . '#message_helper');
+			AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $error . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
 		else
 		{
 			//Enregistrement de l'image dans la bdd.
 			$Gallery->Resize_pics($path);
 			if ($Gallery->get_error() != '')
-				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . '#message_helper');
+				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
 
 			$name = !empty($_POST['name']) ? TextHelper::strprotect($_POST['name']) : '';
 			$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->get_filename(), $User->get_attribute('user_id'));
 			if ($Gallery->get_error() != '')
-				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . '#message_helper');
+				AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->get_error() . ($idcat_post ? '&cat=' . $idcat_post : '') . '#message_helper');
 
 			//Régénération du cache des photos aléatoires.
 			$Cache->Generate_module_file('gallery');
 		}
 	}
 
-	AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?add=' . $idpic);
+	AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?add=' . $idpic . ($idcat_post ? '&cat=' . $idcat_post : ''));
 }
 elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
 {
@@ -116,7 +116,7 @@ else
 		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 
 	//Création de la liste des catégories.
-	$cat_list = '<option value="0" selected="selected">' . $LANG['root'] . '</option>';
+	$cat_list = '<option value="0">' . $LANG['root'] . '</option>';
 	$cat_list_unselect = '<option value="0" selected="selected">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, level, name
 	FROM " . PREFIX . "gallery_cats
@@ -209,7 +209,7 @@ else
 				'NBR_PICS' => $nbr_pics,
 				'COLUMN_WIDTH_PICS' => $column_width_pics,
 				'SELECTBOX_WIDTH' => $selectbox_width,
-				'CATEGORIES' => $cat_list_unselect
+				'CATEGORIES' => $cat_list
 			));
 
 			$j = 0;
