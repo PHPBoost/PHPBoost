@@ -51,7 +51,7 @@ class BugtrackerPMService
 			
 			$author = $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main');
 			
-			$pm_content = nl2br(StringVars::replace_vars($lang['pm.' . $pm_type . '.contents'], array('author' => $author, 'id' => $bug_id)) . (!empty($message) ? ($pm_type != 'edit' ? StringVars::replace_vars($lang['pm.with_comment'], array('comment' => $message)) : StringVars::replace_vars($lang['pm.edit_fields'], array('fields' => $message))) : '') . ($pm_type != 'delete' ? StringVars::replace_vars($lang['pm.bug_link'], array('link' => BugtrackerUrlBuilder::detail($bug_id)->relative())) : ''));
+			$pm_content = StringVars::replace_vars($lang['pm.' . $pm_type . '.contents'], array('author' => $author, 'id' => $bug_id)) . (!empty($message) ? ($pm_type != 'edit' ? StringVars::replace_vars($lang['pm.with_comment'], array('comment' => $message)) : StringVars::replace_vars($lang['pm.edit_fields'], array('fields' => $message))) : '') . ($pm_type != 'delete' ? StringVars::replace_vars($lang['pm.bug_link'], array('link' => BugtrackerUrlBuilder::detail($bug_id)->relative())) : '');
 			
 			//Send the PM
 			PrivateMsg::start_conversation(
