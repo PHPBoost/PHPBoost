@@ -380,10 +380,10 @@
 						{COMMENTS}
 						# ENDIF #
 						
-						<table>
+						<table style="table-layout:fixed;">
 							# START pics_list #
 								{pics_list.OPEN_TR}
-								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle">
+								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle;">
 									<div style="margin-bottom:5px;" id="pics{pics_list.ID}"><a class="small" href="{pics_list.U_DISPLAY}">{pics_list.IMG}</a></div>
 									<div class="smaller">
 										{pics_list.NAME}
@@ -393,7 +393,7 @@
 										{pics_list.KERNEL_NOTATION}
 									</div>
 									
-									<div style="width:180px;margin:auto;">
+									<div style="margin:auto;">
 										# IF C_GALLERY_MODO #
 										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a></span>
 										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
