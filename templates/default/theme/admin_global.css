@@ -291,14 +291,29 @@ ul, ol {
 	color: #444444;
 	padding: 8px;
 	margin: 0px 25px;
-	word-break: break-word;
 }
 
-.hide {	cursor: pointer;	height: 10px; overflow: hidden; }
-.hide2 { visibility: hidden; overflow: auto; }
+.hide {
+	cursor: pointer;
+	height: 10px; 
+	overflow: hidden;
+}
+
+.hide2 { 
+	visibility: hidden;
+	overflow: auto;
+}
+
 .indent { margin-left: 30px; }
+
 .bb-acronym { cursor: help; }
-.bb-block {	margin: 5px 20px; padding: 5px; border: 1px solid #C4CED6; }
+
+.bb-block {
+	margin: 5px 20px; 
+	padding: 5px; 
+	border: 1px solid #C4CED6;
+}
+
 .bb-fieldset { margin: 10px; }
 
 /* Code avec numerotation des listes */
