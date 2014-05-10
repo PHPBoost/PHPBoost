@@ -1,4 +1,3 @@
-		<link href="{PICTURES_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script>
 		<!--
 		var previous_path_pics = '';
@@ -300,14 +299,18 @@
 							# START pics.pics_max #
 							<tr>
 								<td colspan="{COLSPAN}">
-									<table style="border-collapse:collapse;margin:auto;width:400px">
+									<table style="border-collapse:collapse;margin:auto;max-width:300px;">
 										<tr>
-											<td>
+											# IF pics.pics_max.C_PREVIOUS #
+											<td style="text-align:left;border:0;">
 												&nbsp;&nbsp;&nbsp;{pics.pics_max.U_PREVIOUS} 
-											</td>	
-											<td style="text-align:right;">
+											</td>
+											# ENDIF #
+											# IF pics.pics_max.C_NEXT #
+											<td style="text-align:right;border:0;">
 												{pics.pics_max.U_NEXT}&nbsp;&nbsp;&nbsp;
 											</td>
+											# ENDIF #
 										</tr>
 									</table>
 									<br />
@@ -342,7 +345,7 @@
 											</td>
 										</tr>
 										<tr>
-											<td colspan="2" class="smaller" style="border:none;padding:4px;">
+											<td colspan="2" class="small" style="border:none;padding:4px;">
 												&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a>
 												
 												<a href="gallery{pics.pics_max.U_DEL}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a> 
@@ -375,15 +378,24 @@
 										</tr>
 										<tr>
 											<td style="width:50px;text-align:center">
-												{pics.pics_max.U_LEFT_THUMBNAILS}
+												<span id="display_left">
+												# IF pics.pics_max.C_LEFT_THUMBNAILS #
+												<a href="javascript:display_thumbnails('left')" class="fa fa-arrow-left fa-2x"></a>
+												# ENDIF #
+												</span>
 											</td>
 											
 											# START pics.pics_max.list_preview_pics #
 												{pics.pics_max.list_preview_pics.PICS}
 											# END pics.pics_max.list_preview_pics #
 											
+											
 											<td style="width:50px;text-align:center">
-												{pics.pics_max.U_RIGHT_THUMBNAILS}
+												<span id="display_right">
+												# IF pics.pics_max.C_RIGHT_THUMBNAILS #
+												<a href="javascript:display_thumbnails('right')" class="fa fa-arrow-right fa-2x"></a>
+												# ENDIF #
+												</span>
 											</td>
 										</tr>
 									</table>
