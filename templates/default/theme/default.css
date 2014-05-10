@@ -15,6 +15,7 @@ button::-moz-focus-inner, .button::-moz-focus-inner{ border: 0; padding: 0; }
 
 div, textarea, table, td, th, code, pre, samp {
 	word-wrap: break-word;
+	word-break: break-all;
 	overflow-wrap: break-word;
 	-webkit-hyphens: auto;
 	-moz-hyphens: auto;
