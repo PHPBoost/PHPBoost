@@ -70,7 +70,7 @@
 							</div>
 							# END result #
 							<div>
-								<span class="smaller" style="float:left;">{VOTES} {L_VOTE}</span>
+								# IF NOT C_POLL_QUESTION #<span class="smaller" style="float:left;">{VOTES} {L_VOTE}</span># ENDIF #
 								<span class="smaller" style="float:right;">{L_ON} : {DATE} </span>
 								&nbsp;
 							</div>
