@@ -383,14 +383,16 @@
 						<table>
 							# START pics_list #
 								{pics_list.OPEN_TR}
-								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle" class="smaller">
+								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle">
 									<div style="margin-bottom:5px;" id="pics{pics_list.ID}"><a class="small" href="{pics_list.U_DISPLAY}">{pics_list.IMG}</a></div>
-									{pics_list.NAME}
-									{pics_list.POSTOR}
-									{pics_list.VIEWS}
-									{pics_list.COM}
-									{pics_list.KERNEL_NOTATION}
-										
+									<div class="smaller">
+										{pics_list.NAME}
+										{pics_list.POSTOR}
+										{pics_list.VIEWS}
+										{pics_list.COM}
+										{pics_list.KERNEL_NOTATION}
+									</div>
+									
 									<div style="width:180px;margin:auto;">
 										# IF C_GALLERY_MODO #
 										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a></span>
