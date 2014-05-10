@@ -4,32 +4,32 @@
 <!--
 	function BugtrackerStatusChangedValidator(message, bug_id, bug_status)
 	{
-		var field = HTMLForms.getField(\'status\');
+		var field = HTMLForms.getField('status');
 		if (field)
 		{
 			var value = field.getValue();
-			var error = \'\';
+			var error = '';
 			new Ajax.Request(
-				\'${relative_url(BugtrackerUrlBuilder::check_status_changed())}\',
+				'${relative_url(BugtrackerUrlBuilder::check_status_changed())}',
 				{
-					method: \'post\',
+					method: 'post',
 					asynchronous: false,
 					parameters: {id : bug_id, status : value, old_status : bug_status},
 					onSuccess: function(transport) {
-						if (transport.responseText == \'1\')
+						if (transport.responseText == '1')
 						{
 							error = message;
 						}
 						else
 						{
-							error = \'\';
+							error = '';
 						}
 					}
 				}
 			);
 			return error;
 		}
-		return \'\';
+		return '';
 	}
 -->
 </script>
