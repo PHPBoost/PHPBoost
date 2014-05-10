@@ -119,7 +119,7 @@ class Gallery
 	public function Create_pics($thumbnail, $source, $path, $ext)
 	{
 		// Make the background transparent
-		imagecolortransparent($source, imagecolorallocate($source, 0, 0, 0));	
+		imagecolortransparent($source, imagecolorallocate($source, 0, 0, 0));
 		imagealphablending($source, false); // turn off the alpha blending to keep the alpha channel
 		imagesavealpha($source, true);
 		
@@ -213,7 +213,12 @@ class Gallery
 						
 						if (@imagecopymerge($destination, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s, (100 - $config->get_logo_transparency())) === false)
 							$this->error = 'e_unabled_incrust_logo';
-							
+						
+						// Make the background transparent
+						imagecolortransparent($destination, imagecolorallocate($destination, 0, 0, 0));
+						imagealphablending($destination, false); // turn off the alpha blending to keep the alpha channel
+						imagesavealpha($destination, true);
+						
 						switch ($ext) //Création de l'image suivant l'extension.
 						{
 							case 'jpg':
