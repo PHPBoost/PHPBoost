@@ -117,23 +117,14 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->build_keywords_view();
 		
-		$this->tpl->put_all($this->article->get_tpl_vars());
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 		
-		$this->tpl->put_all(array(
+		$this->tpl->put_all(array_merge($this->article->get_tpl_vars(), array(
 			'C_COMMENTS_ENABLED' => $comments_enabled,
-			'C_DATE_UPDATED' => $this->article->get_date_updated() != null ? true : false,
-			'L_CAT_NAME' => $this->category->get_name(),
-			'DATE_UPDATED' => $this->article->get_date_updated() != null ? $this->article->get_date_updated()->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
-			'PAGE_NAME' => $page_name,
-			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->article->get_id()),
-			'U_CATEGORY' => ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel(),
-			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->rel(),
-			'U_EDIT_ARTICLE_PAGE' => $page_name !== '' ? ArticlesUrlBuilder::edit_article($this->article->get_id(), $page_name)->rel() : ArticlesUrlBuilder::edit_article($this->article->get_id())->rel(),
-			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
-		));
+			'PAGE_NAME' => $page_name
+		)));
 		
 		$this->build_pages_pagination($current_page, $nbr_pages, $array_page);
 		
