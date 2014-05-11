@@ -128,7 +128,7 @@ class NewsDisplayCategoryController extends ModuleController
 			{
 				try {
 					$this->category = NewsService::get_categories_manager()->get_categories_cache()->get_category($id);
-				} catch (RowNotFoundException $e) {
+				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
 				}
