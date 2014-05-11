@@ -428,6 +428,7 @@ class Article
 			'C_PUBLISHING_START_AND_END_DATE' => $this->publishing_start_date != null && $this->publishing_end_date != null,
 			'C_PUBLISHING_START_DATE' => $this->publishing_start_date != null,
 			'C_PUBLISHING_END_DATE' => $this->publishing_end_date != null,
+			'C_DATE_UPDATED' => $this->date_updated != null,
 			'C_AUTHOR_DISPLAYED' => $this->get_author_name_displayed(),
 			'C_NOTATION_ENABLED' => $this->get_notation_enabled(),
 			
@@ -440,6 +441,7 @@ class Article
 			'PUBLISHING_START_DATE_ISO8601' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_ISO8601) : '',
 			'PUBLISHING_END_DATE' => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
 			'PUBLISHING_END_DATE_ISO8601' => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_ISO8601) : '',
+			'DATE_UPDATED' => $this->date_updated->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->get_id()),
 			'NUMBER_VIEW' => $this->get_number_view(),
@@ -464,7 +466,8 @@ class Article
 			'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
 			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->get_id())->rel(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->get_id())->rel(),
-			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($category->get_id())->rel()
+			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($category->get_id())->rel(),
+			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->get_id(), $this->get_rewrited_title())->rel()
 		);
 	}
 }

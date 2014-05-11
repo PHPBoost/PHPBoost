@@ -6,7 +6,7 @@
 			<span itemprop="name">{TITLE}</span>
 			<span class="actions">
 				# IF C_EDIT #
-					<a href="{U_EDIT_ARTICLE_PAGE}" title="${i18n('articles.edit')}" class="fa fa-edit"></a>
+					<a href="{U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="fa fa-edit"></a>
 				# ENDIF #
 				# IF C_DELETE #
 					<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="fa fa-delete" data-confirmation="delete-element"></a>
@@ -25,7 +25,7 @@
 			# IF C_COMMENTS_ENABLED #
 				&nbsp;|&nbsp;<i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 			# ENDIF #
-			&nbsp;|&nbsp;<i class="fa fa-folder" title="{@articles.category}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{L_CAT_NAME}</a>
+			&nbsp;|&nbsp;<i class="fa fa-folder" title="{@articles.category}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 			# IF C_KEYWORDS #
 			&nbsp;|&nbsp;<i title="{@articles.tags}" class="fa fa-tags"></i> 
 				# START keywords #
