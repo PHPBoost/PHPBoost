@@ -209,14 +209,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$row = PersistenceContext::get_querier()->select_single_row(ArticlesSetup::$articles_cats_table, array('*'), 'WHERE id=:id', array('id' => $id));
-
-					$category = new RichCategory();
-					$category->set_properties($row);
-					$this->category = $category;
-				} 
-				catch (RowNotFoundException $e) 
-				{
+					$this->category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($id);
+				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
 				}
