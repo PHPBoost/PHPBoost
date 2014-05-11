@@ -1,4 +1,3 @@
-		<link href="{PICTURES_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script>
 		<!--
 		var list_cats = new Array({LIST_CATS});
@@ -12,7 +11,6 @@
 			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&g_' + direction + '=' + divid + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
-				console.log(xhr_object.responseText);
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					XMLHttpRequest_gallery_cats_move(xhr_object.responseText, divid, direction);
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
@@ -234,7 +232,6 @@
 			# INCLUDE message_helper #
 			<fieldset>
 				<legend>{L_GALLERY_CAT_MANAGEMENT}</legend>
-				<style> .sortable-block .sortable-options { width:22px; } </style>
 				<ul id="categories cat-administration" class="sortable-block" style="position:relative;">
 					<li class="sortable-element" style="cursor:default;">
 						<div class="sortable-title">
@@ -255,7 +252,7 @@
 							<i class="fa fa-folder"></i>
 							{list.LOCK}
 							<a href="gallery{list.U_GALLERY_VARS}" class="gallery-link-cat">{list.NAME}</a>
-							<span class="cat-desc"> | {list.DESC}</span>
+							# IF list.C_DESC #<span class="cat-desc"> | {list.DESC}</span># ENDIF #
 							<div class="sortable-actions">
 								<span id="l{list.ID}"></span> 
 								<div class="sortable-options">

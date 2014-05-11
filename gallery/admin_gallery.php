@@ -211,8 +211,9 @@ else
 	if ($nbr_pics > 0)
 	{
 		$Template->assign_block_vars('pics', array(
+			'C_PICS_MAX' => !empty($idpics),
 			'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>',
-			'PICS_MAX' => !empty($idpics) ? '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $idcat . '" alt="" / >' : ''
+			'PICS_MAX' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $idcat . '" alt="" / >'
 		));
 
 		//On crée une pagination si le nombre de photos est trop important.

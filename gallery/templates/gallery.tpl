@@ -384,7 +384,7 @@
 							# START pics_list #
 								{pics_list.OPEN_TR}
 								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle;">
-									<div style="margin-bottom:5px;" id="pics{pics_list.ID}"><a class="small" href="{pics_list.U_DISPLAY}">{pics_list.IMG}</a></div>
+									<div style="height:{HEIGHT_MAX}px;" id="pics{pics_list.ID}"><a class="small" href="{pics_list.U_DISPLAY}">{pics_list.IMG}</a></div>
 									<div class="smaller">
 										{pics_list.NAME}
 										{pics_list.POSTOR}

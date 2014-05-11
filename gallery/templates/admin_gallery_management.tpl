@@ -290,11 +290,13 @@
 									{GALLERY} {pics.EDIT}
 								</th>
 							</tr>
+							# IF pics.C_PICS_MAX #
 							<tr>
 								<td colspan="{COLSPAN}" style="text-align:center;">
 									{pics.PICS_MAX}
 								</td>
 							</tr>
+							# ENDIF #
 							
 							# START pics.pics_max #
 							<tr>
@@ -408,42 +410,33 @@
 							
 							# START pics.list #
 							{pics.list.TR_START}
-								<td style="padding:6px;text-align:center;width:{COLUMN_WIDTH_PICS}%">
-									<table style="border:0;margin:auto;">
-										<tr>
-											<td style="height:{HEIGHT_MAX}px;">
-												<span id="pics{pics.list.ID}"><a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox[2]">{pics.list.IMG}</a></span>
-											</td>
-										</tr>
-										<tr>
-											<td style="text-align:center;" class="smaller">
-												<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
-												<br />
-												{pics.list.U_POSTOR}
-											</td>
-										</tr>
-										<tr>
-											<td style="text-align:center;">
-												{pics.list.RENAME_FILE}
-												
-												<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
-									
-												<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
-													<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
-														<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-														<select class="valign-middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;token={TOKEN}&amp;move=' + this.options[this.selectedIndex].value">
-															{pics.list.CAT}
-														</select>
-														<br /><br />
-													</div>
-												</div>
-												<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
-												
-												<a id="img_aprob{pics.list.ID}" href="javascript:pics_aprob({pics.list.ID});" # IF pics.list.C_APPROVED #title="{L_APROB}" class="fa fa-eye"# ELSE #title="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
-												&nbsp;<span id="img{pics.list.ID}"></span>
-											</td>
-										</tr>
-									</table>
+								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle;">
+									<div style="margin-bottom:20px;height:{HEIGHT_MAX}px;" id="pics{pics.list.ID}"><a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox[2]">{pics.list.IMG}</a></div>
+									<div class="smaller">
+										<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
+										<br />
+										{pics.list.U_POSTOR}
+									</div>
+										
+									<div style="margin:auto;">
+										{pics.list.RENAME_FILE}
+										
+										<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+							
+										<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
+											<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
+												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
+												<select class="valign-middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;token={TOKEN}&amp;move=' + this.options[this.selectedIndex].value">
+													{pics.list.CAT}
+												</select>
+												<br /><br />
+											</div>
+										</div>
+										<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
+										
+										<a id="img_aprob{pics.list.ID}" href="javascript:pics_aprob({pics.list.ID});" # IF pics.list.C_APPROVED #title="{L_APROB}" class="fa fa-eye"# ELSE #title="{L_UNAPROB}" class="fa fa-eye-slash"# ENDIF #></a>
+										&nbsp;<span id="img{pics.list.ID}"></span>
+									</div>
 								</td>
 							{pics.list.TR_END}
 							# END pics.list #

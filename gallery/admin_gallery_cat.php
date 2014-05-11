@@ -854,6 +854,7 @@ else
 	{
 		//On assigne les variables pour le POST en précisant l'idurl.
 		$Template->assign_block_vars('list', array(
+			'C_DESC' => !empty($row['contents']),
 			'I' => $i,
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
