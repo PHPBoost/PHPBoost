@@ -257,7 +257,7 @@
 				# START cat.list #
 				{cat.list.TR_START}
 					<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%">
-						<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.IMG}</a>
+						<a href="admin_gallery.php?cat={cat.list.IDCAT}"># IF cat.list.C_IMG #{cat.list.IMG}# ENDIF #</a>
 						
 						<br />
 						<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> <a href="admin_gallery_cat.php?id={cat.list.IDCAT}" title="{L_EDIT}" class="fa fa-edit"></a> 
