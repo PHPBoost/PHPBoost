@@ -635,7 +635,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 			
 		########## Suppression ##########
 		//On supprime virtuellement (changement de signe des bornes) les enfants.
-		$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left, id_right = - id_right WHERE " . $clause_cats, __LINE__, __FILE__);					
+		$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left, id_right = - id_right WHERE " . $clause_cats, __LINE__, __FILE__);
 		//On modifie les bornes droites des parents.
 		if (!empty($list_parent_cats))
 		{
@@ -651,17 +651,17 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 
 		//On augmente la taille de l'arbre du nombre de galeries supprimées à partir de la position de la galerie cible.
 		if ($CAT_GALLERY[$id]['id_left'] > $CAT_GALLERY[$to]['id_left'] ) //Direction galerie source -> galerie cible.
-		{	
-			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$to]['id_right'] . "'", __LINE__, __FILE__);						
+		{
+			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$to]['id_right'] . "'", __LINE__, __FILE__);
 			$limit = $CAT_GALLERY[$to]['id_right'];
 			$end = $limit + ($nbr_cat*2) - 1;
 		}
 		else
-		{	
+		{
 			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
 			$limit = $CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2);
-			$end = $limit + ($nbr_cat*2) - 1;						
-		}	
+			$end = $limit + ($nbr_cat*2) - 1;
+		}
 
 		//On replace les galeries supprimées virtuellement.
 		$array_sub_cats = explode(', ', $list_cats);
@@ -686,13 +686,13 @@ elseif (!empty($id)) //Edition des catégories.
 	$Template->set_filenames(array(
 		'admin_gallery_cat_edit'=> 'gallery/admin_gallery_cat_edit.tpl'
 	));
-			
+	
 	$gallery_info = $Sql->query_array(PREFIX . "gallery_cats", "id_left", "id_right", "level", "name", "contents", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	if (!isset($CAT_GALLERY[$id]))
 		AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php?error=unexist_cat');
 	
-	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
+	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$galeries = '<option value="0">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, id_left, id_right, name, level
 	FROM " . PREFIX . "gallery_cats 
@@ -711,7 +711,7 @@ elseif (!empty($id)) //Edition des catégories.
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));	
+		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 
 	$Template->put_all(array(
 		'ID' => $id,
@@ -740,7 +740,7 @@ elseif (!empty($id)) //Edition des catégories.
 		'L_PARENT_CATEGORY' => $LANG['parent_category'],
 		'L_NAME' => $LANG['name'],
 		'L_DESC' => $LANG['description'],
-		'L_RESET' => $LANG['reset'],		
+		'L_RESET' => $LANG['reset'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_LOCK' => $LANG['gallery_lock'],
@@ -813,34 +813,12 @@ else
 		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], E_USER_NOTICE));
 		
 	$Template->put_all(array(
-		'L_CONFIRM_DEL' => $LANG['del_entry'],
-		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 
 		'L_GALLERY_CAT_MANAGEMENT' => $LANG['gallery_cats_management'], 
 		'L_GALLERY_CAT_ADD' => $LANG['gallery_cats_add'],
 		'L_GALLERY_CONFIG' => $LANG['gallery_config'],
-		'L_DELETE' => $LANG['delete'],
-		'L_ROOT' => $LANG['root'],
-		'L_NAME' => $LANG['name'],
-		'L_DESC' => $LANG['description'],
-		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset'],		
-		'L_YES' => $LANG['yes'],
-		'L_NO' => $LANG['no'],
-		'L_LOCK' => $LANG['gallery_lock'],
-		'L_UNLOCK' => $LANG['gallery_unlock'],
-		'L_GUEST' => $LANG['guest'],
-		'L_USER' => $LANG['member'],
-		'L_MODO' => $LANG['modo'],
-		'L_ADMIN' => $LANG['admin'],
-		'L_ADD' => $LANG['add'],
-		'L_AUTH_READ' => $LANG['auth_read'],
-		'L_AUTH_WRITE' => $LANG['auth_write'],
-		'L_AUTH_EDIT' => $LANG['auth_edit'],
-		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
-		'L_SELECT_ALL' => $LANG['select_all'],
-		'L_SELECT_NONE' => $LANG['select_none']
+		'L_ROOT' => $LANG['root']
 	));
 
 	$max_cat = $Sql->query("SELECT MAX(id_left) FROM " . PREFIX . "gallery_cats", __LINE__, __FILE__);
@@ -855,12 +833,12 @@ else
 		//On assigne les variables pour le POST en précisant l'idurl.
 		$Template->assign_block_vars('list', array(
 			'C_DESC' => !empty($row['contents']),
+			'C_LOCK' => ($row['status'] == 0),
 			'I' => $i,
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'DESC' => $row['contents'],
 			'INDENT' => ($row['level'] + 1) * 30, //Indentation des sous catégories.
-			'LOCK' => ($row['status'] == 0) ? '<i class="fa fa-lock"></i>' : '',
 			'U_GALLERY_VARS' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php')
 		));
 		
@@ -870,6 +848,7 @@ else
 		$array_js .= 'array_cats[' . $row['id'] . '][\'id\'] = ' . $row['id'] . ";\n";
 		$array_js .= 'array_cats[' . $row['id'] . '][\'id_left\'] = ' . $row['id_left'] . ";\n";
 		$array_js .= 'array_cats[' . $row['id'] . '][\'id_right\'] = ' . $row['id_right'] . ";\n";
+		$array_js .= 'array_cats[' . $row['id'] . '][\'level\'] = ' . $row['level'] . ";\n";
 		$array_js .= 'array_cats[' . $row['id'] . '][\'i\'] = ' . $i . ";\n";
 		$i++;
 	}

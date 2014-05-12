@@ -25,7 +25,7 @@
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-				{	
+				{
 					gallery_cats_move(change_cat, divid, direction);
 					eval(xhr_object.responseText);
 					document.getElementById('l' + divid).innerHTML = '';
@@ -37,12 +37,12 @@
 		}
 		
 		function gallery_cats_move(change_cat, divid, direction)
-		{		 
+		{
 			var i;
 			var id_left = array_cats[divid]['id_left'];
 			var id_right = array_cats[divid]['id_right'];
 			var id = array_cats[divid]['i'];
-			var tmp_list_cats = list_cats;		
+			var tmp_list_cats = list_cats;
 			var id_parent;
 			var pos_parent;
 			var parents_end = 0;
@@ -50,7 +50,7 @@
 			var tmp;
 
 			if( change_cat.substring(0, 1) == 's' )
-			{	
+			{
 				change_cat = change_cat.substring(1, change_cat.length);
 				check_change_cat = true;
 			}
@@ -73,7 +73,7 @@
 					var child_cats_id = new Array();
 					var child_end = id + (((id_right - id_left) - 1)/2);
 					for(i = id; i <= child_end; i++)
-					{	
+					{
 						child_cats.push(document.getElementById('c' + i).innerHTML);
 						child_cats_id.push(list_cats[i]);
 					}
@@ -88,7 +88,7 @@
 					z = 0;
 					var parent_length = pos_parent + child_cats.length + parent_cats.length;
 					for(i = pos_parent + child_cats.length; i < parent_length; i++)
-					{				
+					{
 						document.getElementById('c' + i).innerHTML = parent_cats[z];
 						tmp_list_cats[i] = parent_cats_id[z];
 						z++;
@@ -111,7 +111,7 @@
 					var z = 0;
 					child_end = pos_parent + child_cats.length;
 					for(i = pos_parent; i < child_end; i++)
-					{	
+					{
 						document.getElementById('c' + i).innerHTML = child_cats[z];
 						z++;
 					}
@@ -119,7 +119,7 @@
 					parent_end = pos_parent + child_cats.length + parent_cats.length;
 					var z = 0;
 					for(i = pos_parent + child_cats.length; i < parent_end; i++)
-					{	
+					{
 						document.getElementById('c' + i).innerHTML = parent_cats[z];
 						z++;
 					}
@@ -132,7 +132,7 @@
 					var parent_cats = new Array();
 					var parent_cats_id = new Array();
 					for(i = pos_parent; i <= parents_end; i++)
-					{	
+					{
 						parent_cats.push(document.getElementById('c' + i).innerHTML);
 						parent_cats_id.push(list_cats[i]);
 					}
@@ -140,7 +140,7 @@
 					var child_cats_id = new Array();
 					var child_end = id + ((id_right - id_left) - 1)/2;
 					for(i = id; i <= child_end; i++)
-					{	
+					{
 						child_cats.push(document.getElementById('c' + i).innerHTML);
 						child_cats_id.push(list_cats[i]);
 					}
@@ -156,7 +156,7 @@
 					z = 0;
 					var parent_length = id + parent_cats.length;
 					for(i = id; i < parent_length; i++)
-					{				
+					{
 						document.getElementById('c' + i).innerHTML = parent_cats[z];
 						tmp_list_cats[i] = parent_cats_id[z];
 						z++;
@@ -179,7 +179,7 @@
 					var z = 0;
 					child_end = id + child_cats.length + parent_cats.length;
 					for(i = id + parent_cats.length; i < child_end; i++)
-					{	
+					{
 						document.getElementById('c' + i).innerHTML = child_cats[z];
 						z++;
 					}
@@ -187,11 +187,22 @@
 					z = 0;
 					parent_end = id + parent_cats.length;
 					for(i = id; i < parent_end; i++)
-					{	
+					{
 						document.getElementById('c' + i).innerHTML = parent_cats[z];
 						z++;
 					}
 				}
+			}
+			
+			indent_categories();
+		}
+		
+		function indent_categories()
+		{
+			for(i = 0; i < list_cats.length; i++)
+			{
+				j = list_cats[i];
+				document.getElementById('c' + i).style.marginLeft = ((array_cats[j]['level'] + 1) * 30) + "px";
 			}
 		}
 		-->
@@ -239,33 +250,33 @@
 							<a href="gallery.php" class="gallery-link-cat">{L_ROOT}</a>
 							<div class="sortable-actions">
 								<div class="sortable-options">
-									<a href="admin_gallery_cat.php?root=1" class="fa fa-edit"></a>
+									<a href="admin_gallery_cat.php?root=1" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 								</div>
 							</div>
 						</div>
-					</li>	
+					</li>
 	
 								
 					# START list #
 					<li id="c{list.I}" class="sortable-element" style="cursor:default;margin-left:{list.INDENT}px;">
 						<div class="sortable-title">
 							<i class="fa fa-folder"></i>
-							{list.LOCK}
+							# IF list.C_LOCK#<i class="fa fa-lock"></i># ENDIF #
 							<a href="gallery{list.U_GALLERY_VARS}" class="gallery-link-cat">{list.NAME}</a>
 							# IF list.C_DESC #<span class="cat-desc"> | {list.DESC}</span># ENDIF #
 							<div class="sortable-actions">
 								<span id="l{list.ID}"></span> 
 								<div class="sortable-options">
-									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');" class="fa fa-arrow-up"></a>
+									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');" title="${LangLoader::get_message('category.move_up', 'categories-common')}" class="fa fa-arrow-up"></a>
 								</div>
 								<div class="sortable-options">
-									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');" class="fa fa-arrow-down"></a>
+									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');" title="${LangLoader::get_message('category.move_down', 'categories-common')}" class="fa fa-arrow-down"></a>
 								</div>
 								<div class="sortable-options">
-									<a href="admin_gallery_cat.php?id={list.ID}" title="{L_EDIT_CAT}" class="fa fa-edit"></a>
+									<a href="admin_gallery_cat.php?id={list.ID}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 								</div>
 								<div class="sortable-options">
-									<a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" class="fa fa-delete" data-confirmation="delete-element"></a>
+									<a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								</div>
 							</div>
 						</div>
