@@ -71,7 +71,7 @@ class AdminModulesManagementController extends AdminController
 					'ID' => $module->get_id(),
 					'NAME' => ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
-					'VERSION' => $configuration->get_version(),
+					'VERSION' => $module->get_installed_version(),
 					'AUTHOR' => $author,
 					'AUTHOR_EMAIL' => $author_email,
 					'AUTHOR_WEBSITE' => $author_website,
