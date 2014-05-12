@@ -163,6 +163,7 @@ foreach ($Bread_crumb->get_links() as $key => $array)
 
 $Template->put_all(array(
 	'C_PAGINATION' => $pagination->has_several_pages(),
+	'C_FOCUS_CONTENT' => !empty($quote_get),
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'MODULE_DATA_PATH' => $module_data_path,
 	'DESC' => !empty($topic['subtitle']) ? $topic['subtitle'] : '',

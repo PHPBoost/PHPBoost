@@ -118,6 +118,12 @@
 			if( confirm('{L_DELETE_MESSAGE}') )
 				XMLHttpRequest_del(idmsg);
 		}
+		
+		# IF C_FOCUS_CONTENT #
+		Event.observe(window, 'load', function() {
+			document.getElementById('contents').focus();
+		});
+		# ENDIF #
 		-->
 		</script>
 
@@ -210,7 +216,7 @@
 						# ENDIF #
 					</div>
 					<span style="float:left;"><a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><i class="fa fa-hand-o-right"></i></a> {msg.FORUM_MSG_DATE}</span>
-					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a>
+					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}" title="{L_QUOTE}"><i class="fa fa-quote-right"></i></a>
 					# IF msg.C_FORUM_MSG_EDIT # 
 					<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>
 					# ENDIF #
