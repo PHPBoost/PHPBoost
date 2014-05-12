@@ -16,9 +16,10 @@ button::-moz-focus-inner, .button::-moz-focus-inner{ border: 0; padding: 0; }
 div, textarea, table, td, th, code, pre, samp {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
+	word-break: break-word; /* Patch pour webkit */
 	-webkit-hyphens: auto;
-	-moz-hyphens: auto;
-	-ms-hyphens: auto;
+   	-moz-hyphens: auto;
+    -ms-hyphens: auto;
 	hyphens: auto;
 }
 
