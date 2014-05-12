@@ -1,7 +1,7 @@
 # START categories #
 	<li id="c{categories.ID}" class="sortable-element" style="cursor:default;margin-left:{categories.MARGIN_LEFT}px;">
 		<div class="sortable-title">
-			<i class="fa fa-folder fa-2x"></i>
+			<i class="fa fa-folder"></i>
 			# IF categories.C_DISPLAY_URL #
 				<a href="{categories.URL}">{categories.NAME}</a>
 			# ELSE #
