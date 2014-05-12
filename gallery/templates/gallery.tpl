@@ -389,7 +389,7 @@
 										{pics_list.NAME}
 										{pics_list.POSTOR}
 										{pics_list.VIEWS}
-										{pics_list.COM}
+										{pics_list.COM}<br />
 										{pics_list.KERNEL_NOTATION}
 									</div>
 									
