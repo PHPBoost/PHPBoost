@@ -185,6 +185,7 @@ else
 				$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
 			$Template->assign_block_vars('cat.list', array(
+				'C_IMG' => !empty($row['path']),
 				'IDCAT' => $row['id'],
 				'CAT' => $row['name'],
 				'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="" />',
