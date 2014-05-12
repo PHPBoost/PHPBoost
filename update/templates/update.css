@@ -368,6 +368,12 @@ button[name=submit]:hover{
 .basic-button.alt { background: #AAAAAA; }
 .basic-button.alt:hover { background: #BBBBBB; }
 
+button.image { 
+	padding: 3px 13px 6px 12px;
+	color: #555555;	
+}
+button.image:hover { color: #336397; }
+
 /* Formulaires */
 .fieldset-mini {
 	width: 540px;
