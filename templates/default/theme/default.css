@@ -126,6 +126,8 @@ ul.pagination .current-page { text-decoration: underline; }
 	border-radius: 4px;
 }
 
+img#preview_picture { width: 100%; }
+
 /* Syndications */
 div.syndication-choices {
     position: absolute;
