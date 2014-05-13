@@ -52,27 +52,12 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		$this->check_authorizations();
 		
-		global $Cache, $FAQ_CATS, $LANG, $FAQ_LANG, $id_faq, $User, $auth_write, $Session, $id_question;
+		global $Cache, $FAQ_CATS, $LANG, $FAQ_LANG, $id_faq, $User, $auth_write, $Session, $id_question, $faq_config;
 		
 		require_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
 		$tpl = new FileTemplate('faq/faq.tpl');
 		
-		$faq_config = FaqConfig::load();
-
-		if (!empty($FAQ_CATS[$id_faq]['description']) && $id_faq > 0)
-		{
-			$tpl->assign_block_vars('description', array(
-				'DESCRIPTION' => FormatingHelper::second_parse($FAQ_CATS[$id_faq]['description'])
-			));
-		}
-		else
-		{
-			$tpl->assign_block_vars('description', array(
-				'DESCRIPTION' => FormatingHelper::second_parse($faq_config->get_root_cat_description())
-			));
-		}
-
 		//let's check if there are some subcategories
 		$num_subcats = 0;
 		foreach ($FAQ_CATS as $id => $value)
@@ -198,16 +183,19 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$id_faq > 0 ? $tpl->assign_block_vars('no_question', array()) : '';
 		}
-
+		
+		$cat_description = $id_faq > 0 ? $FAQ_CATS[$id_faq]['description'] : $faq_config->get_root_cat_description();
+		
 		$tpl->put_all(array(
+			'C_CAT_DESCRIPTION' => !empty($cat_description),
 			'TITLE' => $FAQ_LANG['faq'] . ($id_faq > 0 ? ' - ' . FaqUrlBuilder::get_title($id_faq) : ''),
+			'CAT_DESCRIPTION' => FormatingHelper::second_parse($cat_description),
 			'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
 			'L_UP' => $FAQ_LANG['up'],
 			'L_DOWN' => $FAQ_LANG['down'],
 			'L_MOVE' => $FAQ_LANG['move'],
 			'L_QUESTION_URL' => $FAQ_LANG['url_of_question'],
 			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
-			'U_MANAGEMENT' => PATH_TO_ROOT . url('/faq/management.php?faq=' . $id_faq),
 			'U_ADMIN_CAT' => $id_faq > 0 ? url(PATH_TO_ROOT . '/faq/admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq.php'),
 			'ID_FAQ' => $id_faq,
 		));

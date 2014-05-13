@@ -86,6 +86,16 @@
 
 				return true;
 			}
+			
+			var global_auth = {JS_GLOBAL};
+			function change_status_global_auth()
+			{
+				if( global_auth )
+					hide_div("hide_global_auth");
+				else
+					show_div("hide_global_auth");
+				global_auth = !global_auth;
+			}
 			-->
 			</script>
 			<form action="admin_faq_cats.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
@@ -123,6 +133,40 @@
 						{KERNEL_EDITOR}
 						<textarea id="contents" rows="15" cols="40" name="description">{edition_interface.DESCRIPTION}</textarea>
 					</div>
+					<div class="form-element">
+						<label for="display_mode">{L_DISPLAY_MODE} <span class="field-description">{L_DISPLAY_EXPLAIN}</span></label>
+						<div class="form-field">
+							<select name="display_mode" id="display_mode">
+								<option value="0" {edition_interface.AUTO_SELECTED}>{L_DISPLAY_AUTO}</option>
+								<option value="1" {edition_interface.INLINE_SELECTED}>{L_DISPLAY_INLINE}</option>
+								<option value="2" {edition_interface.BLOCK_SELECTED}>{L_DISPLAY_BLOCK}</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-element">
+						<label for="global_auth">{L_GLOBAL_AUTH} <span class="field-description">{L_GLOBAL_AUTH_EXPLAIN}</span></label>
+						<div class="form-field">
+							<input type="checkbox" name="global_auth" id="global_auth" onclick="javascript: change_status_global_auth();" {GLOBAL_CHECKED}>
+						</div>
+					</div>
+					<div id="hide_global_auth" style="display:{DISPLAY_GLOBAL};">
+						<div class="form-element">
+							<label>
+								{L_READ_AUTH}
+							</label>
+							<div class="form-field">
+								{edition_interface.READ_AUTH}
+							</div>
+						</div>
+						<div class="form-element">
+							<label>
+								{L_WRITE_AUTH}
+							</label>
+							<div class="form-field">
+								{edition_interface.WRITE_AUTH}
+							</div>
+						</div>
+					</div>
 				</fieldset>
 				
 				<fieldset class="fieldset-submit">
@@ -130,7 +174,7 @@
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}">
 					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
 					<button type="button" name="preview" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
-					<button type="reset" value="true">{L_RESET}</button>				
+					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>
 			# END edition_interface #

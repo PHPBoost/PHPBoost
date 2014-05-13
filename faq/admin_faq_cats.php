@@ -42,6 +42,7 @@ $cat_to_del_post = retrieve(POST, 'cat_to_del', 0);
 $id_edit = retrieve(GET, 'edit', 0);
 $new_cat = retrieve(GET, 'new', false);
 $error = retrieve(GET, 'error', '');
+$parent_cat_id = retrieve(GET, 'parent_cat_id', 0);
 
 $Template->set_filenames(array(
 	'admin_faq_cat'=> 'faq/admin_faq_cats.tpl'
@@ -115,14 +116,17 @@ elseif (!empty($_POST['submit']))
 		$name = retrieve(POST, 'name', '');
 		$image = retrieve(POST, 'image', '');
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
+		$display_mode = $_POST['display_mode'];
+		$special_auth = Authorizations::build_auth_array_from_form(FaqAuthorizationsService::READ_AUTHORIZATIONS, FaqAuthorizationsService::WRITE_AUTHORIZATIONS);
+		$special_auth = $special_auth != $faq_config->get_authorizations() ? addslashes(serialize($special_auth)) : '';
 		
 		if (empty($name))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');
 		
 		if ($id_cat > 0)
-			$error_string = $faq_categories->Update_category($id_cat, $id_parent, $name, $description, $image);
+			$error_string = $faq_categories->update_category($id_cat, $id_parent, $name, $description, $image, $display_mode, $special_auth);
 		else
-			$error_string = $faq_categories->add_category($id_parent, $name, $description, $image);
+			$error_string = $faq_categories->add_category($id_parent, $name, $description, $image, $display_mode, $special_auth);
 	}
 
 	$Cache->Generate_module_file('faq');
@@ -147,30 +151,73 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_NAME' => $FAQ_LANG['category_name'],
 		'L_LOCATION' => $FAQ_LANG['category_location'],
 		'L_DESCRIPTION' => $FAQ_LANG['cat_description'],
+		'L_DISPLAY_MODE' => $FAQ_LANG['display_mode'],
+		'L_DISPLAY_BLOCK' => $FAQ_LANG['display_block'],
+		'L_DISPLAY_INLINE' => $FAQ_LANG['display_inline'],
+		'L_DISPLAY_AUTO' => $FAQ_LANG['display_auto'],
+		'L_DISPLAY_EXPLAIN' => $FAQ_LANG['display_explain'],
+		'L_GLOBAL_AUTH' => $FAQ_LANG['global_auth'],
+		'L_GLOBAL_AUTH_EXPLAIN' => $FAQ_LANG['global_auth_explain'],
 		'L_IMAGE' => $FAQ_LANG['category_image'],
+		'L_READ_AUTH' => $FAQ_LANG['read_auth'],
+		'L_WRITE_AUTH' => $FAQ_LANG['write_auth'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
 		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
 		'L_REQUIRE_TITLE' => $LANG['require_title']
 	));
-		
-	if ($id_edit > 0 && array_key_exists($id_edit, $FAQ_CATS))	
+	
+	if ($id_edit > 0 && array_key_exists($id_edit, $FAQ_CATS))
+	{
+		//Special authorization
+		if (!empty($FAQ_CATS[$id_edit]['auth']))
+		{
+			$Template->put_all(array(
+				'GLOBAL_CHECKED' => 'checked="checked"',
+				'DISPLAY_GLOBAL' => 'block',
+				'JS_GLOBAL' => 'true'
+			));
+		}
+		else
+		{
+			$Template->put_all(array(
+				'GLOBAL_CHECKED' => '',
+				'DISPLAY_GLOBAL' => 'none',
+				'JS_GLOBAL' => 'false'
+			));
+		}
+		echo $FAQ_CATS[$id_edit]['display_mode'];
 		$Template->assign_block_vars('edition_interface', array(
 			'NAME' => $FAQ_CATS[$id_edit]['name'],
+			'AUTO_SELECTED' => $FAQ_CATS[$id_edit]['display_mode'] == 0 ? 'selected="selected"' : '',
+			'INLINE_SELECTED' => $FAQ_CATS[$id_edit]['display_mode'] == 1 ? 'selected="selected"' : '',
+			'BLOCK_SELECTED' => $FAQ_CATS[$id_edit]['display_mode'] == 2 ? 'selected="selected"' : '',
 			'DESCRIPTION' => FormatingHelper::unparse($FAQ_CATS[$id_edit]['description']),
 			'IMAGE' => $FAQ_CATS[$id_edit]['image'],
 			'CATEGORIES_TREE' => $faq_categories->build_select_form($FAQ_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
-			'IDCAT' => $id_edit
+			'IDCAT' => $id_edit,
+			'READ_AUTH' => Authorizations::generate_select(FaqAuthorizationsService::READ_AUTHORIZATIONS, !empty($FAQ_CATS[$id_edit]['auth']) ? $FAQ_CATS[$id_edit]['auth'] : $faq_config->get_authorizations()),
+			'WRITE_AUTH' => Authorizations::generate_select(FaqAuthorizationsService::WRITE_AUTHORIZATIONS, !empty($FAQ_CATS[$id_edit]['auth']) ? $FAQ_CATS[$id_edit]['auth'] : $faq_config->get_authorizations())
 		));
+	}
 	else
 	{
 		$id_edit = 0;
+		
+		$Template->put_all(array(
+			'GLOBAL_CHECKED' => '',
+			'DISPLAY_GLOBAL' => 'none',
+			'JS_GLOBAL' => 'false'
+		));
+		
 		$Template->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'IMAGE' => '',
-			'CATEGORIES_TREE' => $faq_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
-			'IDCAT' => $id_edit
+			'CATEGORIES_TREE' => $faq_categories->build_select_form($parent_cat_id, 'id_parent', 'id_parent'),
+			'IDCAT' => $id_edit,
+			'READ_AUTH' => Authorizations::generate_select(FaqAuthorizationsService::READ_AUTHORIZATIONS, $faq_config->get_authorizations()),
+			'WRITE_AUTH' => Authorizations::generate_select(FaqAuthorizationsService::WRITE_AUTHORIZATIONS, $faq_config->get_authorizations())
 		));
 	}
 }

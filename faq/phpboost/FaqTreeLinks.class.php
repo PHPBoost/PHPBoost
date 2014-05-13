@@ -35,16 +35,18 @@ class FaqTreeLinks implements ModuleTreeLinksExtensionPoint
 		global $FAQ_LANG;
 		load_module_lang('faq'); //Chargement de la langue du module.
 		
+		$id_cat = retrieve(GET, 'id', 0);
+		
 		$tree = new ModuleTreeLinks();
 		
 		$manage_categories_link = new AdminModuleLink($FAQ_LANG['admin.categories.manage'], new Url('/faq/admin_faq_cats.php'));
 		$manage_categories_link->add_sub_link(new AdminModuleLink($FAQ_LANG['admin.categories.manage'], new Url('/faq/admin_faq_cats.php')));
-		$manage_categories_link->add_sub_link(new AdminModuleLink($FAQ_LANG['add_cat'], new Url('/faq/admin_faq_cats.php?new=1')));
+		$manage_categories_link->add_sub_link(new AdminModuleLink($FAQ_LANG['add_cat'], new Url('/faq/admin_faq_cats.php?new=1' . (!empty($id_cat) ? '&amp;parent_cat_id=' . $id_cat : ''))));
 		$tree->add_link($manage_categories_link);
 		
 		$manage_faq_link = new AdminModuleLink($FAQ_LANG['questions.manage'], new Url('/faq/admin_faq.php?p=1'));
 		$manage_faq_link->add_sub_link(new AdminModuleLink($FAQ_LANG['questions.manage'], new Url('/faq/admin_faq.php?p=1')));
-		$manage_faq_link->add_sub_link(new AdminModuleLink($FAQ_LANG['add_question'], new Url('/faq/management.php?new=1')));
+		$manage_faq_link->add_sub_link(new AdminModuleLink($FAQ_LANG['add_question'], new Url('/faq/management.php?new=1' . (!empty($id_cat) ? '&amp;parent_cat_id=' . $id_cat : ''))));
 		$tree->add_link($manage_faq_link);
 		
 		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), new Url('/faq/admin_faq.php')));
