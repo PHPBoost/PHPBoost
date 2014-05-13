@@ -13,7 +13,6 @@
 	# IF C_EDITOR_ENABLED #
 		<div class="center">{PREVIEW_BUTTON}</div>
 	# ENDIF #
-	<br />
 </div>
 		
 # INCLUDE ADD_FIELD_JS #
