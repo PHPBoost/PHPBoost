@@ -186,7 +186,7 @@ elseif ($new_cat XOR $id_edit > 0)
 				'JS_GLOBAL' => 'false'
 			));
 		}
-		echo $FAQ_CATS[$id_edit]['display_mode'];
+		
 		$Template->assign_block_vars('edition_interface', array(
 			'NAME' => $FAQ_CATS[$id_edit]['name'],
 			'AUTO_SELECTED' => $FAQ_CATS[$id_edit]['display_mode'] == 0 ? 'selected="selected"' : '',
