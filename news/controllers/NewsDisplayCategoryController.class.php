@@ -123,7 +123,7 @@ class NewsDisplayCategoryController extends ModuleController
 	{
 		if ($this->category === null)
 		{
-			$id = AppContext::get_request()->get_getint('id', 0);
+			$id = AppContext::get_request()->get_getint('id_category', 0);
 			if (!empty($id))
 			{
 				try {
