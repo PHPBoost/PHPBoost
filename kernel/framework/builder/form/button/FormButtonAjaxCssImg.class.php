@@ -29,7 +29,7 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  * @package {@package}
  */
-class FormButtonAjaxCssImg extends FormButtonButton
+class FormButtonAjaxCssImg extends AbstractFormButton
 {
     public function __construct($label, AjaxRequest $request, $css_class_image = '', array $fields, $condition = null)
     {
@@ -42,7 +42,7 @@ class FormButtonAjaxCssImg extends FormButtonButton
     	{
     		$full_label = $label;
     	}
-        parent::__construct($full_label, $this->build_ajax_request($request, $fields, $condition), '');
+        parent::__construct('button', $full_label, '', $this->build_ajax_request($request, $fields, $condition), '');
     }
 
     private function build_ajax_request(AjaxRequest $request, array $fields, $condition)
