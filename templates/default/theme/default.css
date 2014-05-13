@@ -13,15 +13,17 @@ optgroup, select, label, button, input[type=radio], input[type=checkbox], .butto
 input[type=checkbox] { border: none; background: none; }
 button::-moz-focus-inner, .button::-moz-focus-inner{ border: 0; padding: 0; }
 
-div, textarea, table, td, th, code, pre, samp {
+div, textarea, table, td, th, code, pre, samp, fieldset {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
-	word-break: break-word; /* Patch pour webkit */
 	-webkit-hyphens: auto;
    	-moz-hyphens: auto;
     -ms-hyphens: auto;
 	hyphens: auto;
 }
+
+/* Fix for chrome word-wrap ... */
+fieldset { min-width: 0 !important; }
 
 hr {
     background: #C4CED6;
