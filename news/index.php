@@ -41,7 +41,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('NewsDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
 	
 	//Manage News
-	new UrlControllerMapper('NewsFormController', '`^/add/?$`'),
+	new UrlControllerMapper('NewsFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('NewsFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('NewsDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
 	
@@ -50,7 +50,7 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('NewsDisplayNewsController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 	
-	new UrlControllerMapper('NewsDisplayCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?$`', array('id', 'rewrited_name', 'page')),	
+	new UrlControllerMapper('NewsDisplayCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

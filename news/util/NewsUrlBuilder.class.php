@@ -101,9 +101,10 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $page);
 	}
 	
-	public static function add_news()
+	public static function add_news($id_category = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/add/');
+		$id_category = !empty($id_category) ? $id_category . '/': '';
+		return DispatchManager::get_url(self::$dispatcher, '/add/' . $id_category);
 	}
 	
 	public static function edit_news($id)
