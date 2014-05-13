@@ -203,17 +203,18 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	
 	private function get_pagination(Date $now, $authorized_categories, $field, $mode)
 	{
-		$number_articles = PersistenceContext::get_querier()->count(
-			ArticlesSetup::$articles_table, 
-			'WHERE id_category IN :id_category AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))', 
-			array(
-				'id_category' => $authorized_categories,
-				'timestamp_now' => $now->get_timestamp()
+		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS nbr_articles
+		FROM '. ArticlesSetup::$articles_table .' articles
+		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'articles\' AND relation.id_in_module = articles.id 
+		WHERE relation.id_keyword = :id_keyword AND (articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0))) AND articles.id_category IN :authorized_categories', array(
+			'id_keyword' => $this->get_keyword()->get_id(),
+			'timestamp_now' => $now->get_timestamp(),
+			'authorized_categories' => $authorized_categories,
 		));
 		
 		$current_page = AppContext::get_request()->get_getint('page', 1);
 		
-		$pagination = new ModulePagination($current_page, $number_articles, ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination = new ModulePagination($current_page, $result['nbr_articles'], ArticlesConfig::load()->get_number_articles_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, '%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
