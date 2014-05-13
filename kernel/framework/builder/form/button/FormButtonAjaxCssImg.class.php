@@ -42,7 +42,7 @@ class FormButtonAjaxCssImg extends AbstractFormButton
     	{
     		$full_label = $label;
     	}
-        parent::__construct('button', $full_label, '', $this->build_ajax_request($request, $fields, $condition), '');
+        parent::__construct('button', $full_label, '', $this->build_ajax_request($request, $fields, $condition), 'image');
     }
 
     private function build_ajax_request(AjaxRequest $request, array $fields, $condition)
