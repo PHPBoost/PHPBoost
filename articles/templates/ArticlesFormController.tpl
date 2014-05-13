@@ -2,7 +2,7 @@
 <!--
 	function bbcode_page()
 	{
-		var page = prompt("Titre de la nouvelle page");
+		var page = prompt('{@articles.form.add_page.title}');
 
 		if (page) {
 			var textarea = $('ArticlesFormController_contents');
@@ -24,28 +24,27 @@
 		}
 	}
 	
-	function page_to_edit(page_number, page) 
+	function page_to_edit(page) 
 	{
 		var searchText = page;
-		var t = $('ArticlesFormController_contents');
-		var l = t.value.indexOf(searchText);
+		var content_input = $('ArticlesFormController_contents');
+		var matched_page = content_input.value.indexOf('[page]' + searchText + '[/page]');
 
-		if (l != -1)
+		if (matched_page != -1)
 		{
-			t.focus();
-			t.selectionStart = l;
-			t.selectionEnd = l + searchText.length;
-			if (page_number > 1)
-				t.scrollTop = t.scrollHeight;
+			content_input.focus();
+			content_input.selectionStart = matched_page + 6;
+			content_input.selectionEnd = matched_page + searchText.length + 6;
+			content_input.scrollTop = content_input.scrollHeight;
 		}
 	}
 
-	function setPagePosition (page_number, page) {
-		page_to_edit(page_number, page);
+	function setPagePosition(page) {
+		page_to_edit(page);
 	}
 	
 	# IF C_PAGE #
-	window.onload = function(){setPagePosition('{CURRENT_PAGE}', {PAGE})};
+	window.onload = function(){setPagePosition({PAGE})};
 	# ENDIF #
 -->
 </script>

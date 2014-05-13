@@ -78,6 +78,7 @@ $lang['articles.form.rewrited_title'] = 'Titre de l\'article dans l\'url';
 $lang['articles.form.rewrited_title.personalize'] = 'Personnaliser le titre de l\'article dans l\'url';
 $lang['articles.form.rewrited_title.description'] = 'Doit contenir uniquement des lettres minuscules, des chiffres et des traits d\'union.';
 $lang['articles.form.add_page'] = 'Insérer une page';
+$lang['articles.form.add_page.title'] = 'Titre de la nouvelle page';
 $lang['articles.form.author_name_displayed'] = 'Afficher le nom de l\'auteur';
 $lang['articles.form.notation_enabled'] = 'Activer la notation de l\'article';
 $lang['articles.form.picture'] = 'Image de l\'article';
