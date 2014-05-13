@@ -13,7 +13,7 @@ optgroup, select, label, button, input[type=radio], input[type=checkbox], .butto
 input[type=checkbox] { border: none; background: none; }
 button::-moz-focus-inner, .button::-moz-focus-inner{ border: 0; padding: 0; }
 
-div, textarea, table, td, th, code, pre, samp, fieldset {
+div, textarea, table, td, th, code, pre, samp {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	-webkit-hyphens: auto;
