@@ -12,7 +12,7 @@
 				<span id="l{categories.ID}"></span>
 				# IF categories.C_NOT_FIRST_CAT #
 					<div class="sortable-options">
-						<a href="{categories.ACTION_GO_UP}" class="fa fa-arrow-up"></a>
+						<a href="{categories.ACTION_GO_UP}" title="${LangLoader::get_message('category.move_up', 'categories-common')}" class="fa fa-arrow-up"></a>
 					</div>
 					# IF C_AJAX_MODE #
 						<script>
@@ -23,7 +23,7 @@
 				
 				# IF categories.C_NOT_LAST_CAT #
 					<div class="sortable-options">
-						<a href="{categories.ACTION_GO_DOWN}" class="fa fa-arrow-down"></a>
+						<a href="{categories.ACTION_GO_DOWN}" title="${LangLoader::get_message('category.move_down', 'categories-common')}" class="fa fa-arrow-down"></a>
 					</div>
 					# IF C_AJAX_MODE #
 						<script>
@@ -53,12 +53,12 @@
 				# ENDIF #
 				
 				<div class="sortable-options">
-					<a href="{categories.ACTION_EDIT}" class="fa fa-edit"></a>
+					<a href="{categories.ACTION_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 				</div>
 				<div class="sortable-options">
-					<a href="{categories.ACTION_DELETE}" title="{L_CONFIRM_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
+					<a href="{categories.ACTION_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				</div>
-			</div>	
+			</div>
 		</div>
 	</li>
 	{categories.NEXT_CATEGORY}
