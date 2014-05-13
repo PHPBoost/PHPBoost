@@ -248,12 +248,12 @@ a:hover {
 	width: 100%;
 	position: absolute;
 }
-.progressbar{
+.progressbar {
 	border-top-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
-.progressbar[style*="width: 100"]{
+.progressbar[style*="width: 100"] {
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;	
 }
@@ -388,6 +388,8 @@ button.image {
 	color: #555555;	
 }
 button.image:hover { color: #336397; }
+
+button.image i.fa-refresh { color: #336397; }
 
 /* Formulaires */
 .fieldset-mini {
