@@ -29,7 +29,7 @@
  * @author Loic Rouchon <horn@phpboost.com>
  * @package {@package}
  */
-class FormButtonLink extends FormButtonButton
+class FormButtonLink extends AbstractFormButton
 {
     public function __construct($label, $link, $img = '')
     {
@@ -42,7 +42,7 @@ class FormButtonLink extends FormButtonButton
     	{
     		$full_label = $label;
     	}
-        parent::__construct($full_label, 'window.location=' . TextHelper::to_js_string(Url::to_rel($link)), '');
+        parent::__construct('button', $full_label, '', 'window.location=' . TextHelper::to_js_string(Url::to_rel($link)), !empty($img) ? 'image' : '');
     }
 }
 ?>
