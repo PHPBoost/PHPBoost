@@ -312,6 +312,8 @@ ul, ol {
 	margin: 5px 20px; 
 	padding: 5px; 
 	border: 1px solid #C4CED6;
+	display: flex;
+	justify-content: center;
 }
 
 .bb-fieldset { margin: 10px; }
