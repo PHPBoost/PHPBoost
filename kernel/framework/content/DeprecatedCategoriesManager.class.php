@@ -694,8 +694,7 @@ class DeprecatedCategoriesManager
 		$template->put_all(array(
 			'C_AJAX_MODE' => $ajax_mode,
 			'L_MANAGEMENT_HIDE_CAT' => $LANG['cats_management_hide_cat'],
-			'L_MANAGEMENT_SHOW_CAT' => $LANG['cats_management_show_cat'],
-			'L_CONFIRM_DELETE' => $LANG['cats_management_confirm_delete']
+			'L_MANAGEMENT_SHOW_CAT' => $LANG['cats_management_show_cat']
 		));
 
 		// Browsing categories
@@ -737,7 +736,6 @@ class DeprecatedCategoriesManager
 					'ACTION_SHOW' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?show=' . $id . '&amp;token=' . $session->get_token()) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');',
 					'ACTION_EDIT' => url($this->display_config['administration_file_name'] . '?edit=' . $id . '&amp;token=' . $session->get_token()),
 					'ACTION_DELETE' => url($this->display_config['administration_file_name'] . '?del=' . $id . '&amp;token=' . $session->get_token()),
-					'CONFIRM_DELETE' => $LANG['cats_management_confirm_delete'],
 					//We call the function for its daughter categories
 					'NEXT_CATEGORY' => $this->create_row_interface($id, $level + 1, $ajax_mode, $reference_template)
 				));
