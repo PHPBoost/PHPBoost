@@ -60,7 +60,7 @@ class ArticlesFormController extends ModuleController
 	}
 	
 	private function build_form($request)
-	{		
+	{
 		$common_lang = LangLoader::get('common');
 		
 		$form = new HTMLForm(__CLASS__);
@@ -207,9 +207,36 @@ class ArticlesFormController extends ModuleController
 		
 		$this->form = $form;
 		
+		// Positionnement à la bonne page quand on édite un article avec plusieurs pages
 		if ($this->get_article()->get_id() !== null)
 		{
-		    $this->tpl->put('PAGE', AppContext::get_request()->get_getstring('page', ''));
+			$current_page = $request->get_getstring('page', '');
+			
+			$this->tpl->put('C_PAGE', !empty($current_page));
+			
+			if (!empty($current_page))
+			{
+				$article_contents = $this->article->get_contents();
+				
+				//If article doesn't begin with a page, we insert one
+				if (substr(trim($article_contents), 0, 6) != '[page]')
+				{
+					$article_contents = '[page]&nbsp;[/page]' . $article_contents;
+				}
+				
+				//Removing [page] bbcode
+				$article_contents_clean = preg_split('`\[page\].+\[/page\](.*)`Us', $article_contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+				
+				//Retrieving pages 
+				preg_match_all('`\[page\]([^[]+)\[/page\]`U', $article_contents, $array_page);
+
+				$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
+				
+				$this->tpl->put_all(array(
+					'PAGE' => TextHelper::to_js_string($page_name),
+					'CURRENT_PAGE' => $current_page
+				));
+			}
 		}
 	}
 

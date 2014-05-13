@@ -91,9 +91,10 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $id_category);
 	}
 	
-	public static function edit_article($id)
+	public static function edit_article($id, $page = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
+		$page = $page !== 0 ? $page . '/': '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $page);
 	}
 	
 	public static function delete_article($id)

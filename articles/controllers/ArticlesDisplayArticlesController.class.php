@@ -123,7 +123,8 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
-			'PAGE_NAME' => $page_name
+			'PAGE_NAME' => $page_name,
+			'U_EDIT_ARTICLE' => $page_name !== '' ? ArticlesUrlBuilder::edit_article($this->article->get_id(), $current_page)->rel() : ArticlesUrlBuilder::edit_article($this->article->get_id())->rel(),
 		)));
 		
 		$this->build_pages_pagination($current_page, $nbr_pages, $array_page);
