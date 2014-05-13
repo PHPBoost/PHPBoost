@@ -23,8 +23,8 @@
 			textarea.selectionEnd = start + insert_value.length;
 		}
 	}
-			  
-	function page_to_edit(page) 
+	
+	function page_to_edit(page_number, page) 
 	{
 		var searchText = page;
 		var t = $('ArticlesFormController_contents');
@@ -35,14 +35,18 @@
 			t.focus();
 			t.selectionStart = l;
 			t.selectionEnd = l + searchText.length;
-			t.scrollTop = t.scrollHeight;
+			if (page_number > 1)
+				t.scrollTop = t.scrollHeight;
 		}
 	}
 
-	function setPagePosition (page) {
-		  page_to_edit(page);
+	function setPagePosition (page_number, page) {
+		page_to_edit(page_number, page);
 	}
-	window.onload = function(){setPagePosition("{PAGE}")};
+	
+	# IF C_PAGE #
+	window.onload = function(){setPagePosition('{CURRENT_PAGE}', {PAGE})};
+	# ENDIF #
 -->
 </script>
 # INCLUDE MSG # # INCLUDE FORM #
