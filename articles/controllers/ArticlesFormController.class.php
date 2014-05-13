@@ -232,10 +232,7 @@ class ArticlesFormController extends ModuleController
 
 				$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 				
-				$this->tpl->put_all(array(
-					'PAGE' => TextHelper::to_js_string($page_name),
-					'CURRENT_PAGE' => $current_page
-				));
+				$this->tpl->put('PAGE', TextHelper::to_js_string($page_name));
 			}
 		}
 	}
