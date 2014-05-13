@@ -29,10 +29,10 @@
 		</h1>
 	</header>
 	<div class="content">
-		# START description #
-			{description.DESCRIPTION}
+		# IF C_CAT_DESCRIPTION #
+			{CAT_DESCRIPTION}
 			<hr style="margin-top:25px;margin-bottom:25px;" />
-		# END description #
+		# ENDIF #
 		
 		# IF C_FAQ_CATS #
 			# START row #

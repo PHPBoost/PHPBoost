@@ -71,7 +71,7 @@ class FaqCats extends DeprecatedCategoriesManager
 		foreach ($this->cache_var as $id_cat => $properties)
 		{
 			if ($id_cat != 0 && $properties['id_parent'] == $id_category)
-				parent::move_into_another($id_cat, $new_id_cat_content);			
+				parent::move_into_another($id_cat, $new_id_cat_content);
 		}
 		
 		$max_q_order = $Sql->query("SELECT MAX(q_order) FROM " . PREFIX . "faq WHERE idcat = '" . $new_id_cat_content . "'", __LINE__, __FILE__);
@@ -83,13 +83,13 @@ class FaqCats extends DeprecatedCategoriesManager
 		return true;
 	}
 	
-	public function add_category($id_parent, $name, $description, $image)
+	public function add_category($id_parent, $name, $description, $image, $display_mode, $auth)
 	{
 		global $Sql;
 		if (array_key_exists($id_parent, $this->cache_var))
 		{
 			$new_id_cat = parent::add($id_parent, $name);
-			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET description = '" . $description . "', image = '" . $image . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET description = '" . $description . "', image = '" . $image . "', display_mode = '" . $display_mode . "', auth = '" . $auth . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
 			//We don't recount the number of questions because this category is empty
 			return 'e_success';
 		}
@@ -97,14 +97,14 @@ class FaqCats extends DeprecatedCategoriesManager
 			return 'e_unexisting_cat';
 	}
 	
-	public function update_category($id_cat, $id_parent, $name, $description, $image)
+	public function update_category($id_cat, $id_parent, $name, $description, $image, $display_mode, $auth)
 	{
 		global $Sql, $Cache;
 		if (array_key_exists($id_cat, $this->cache_var))
 		{
 			if ($id_parent != $this->cache_var[$id_cat]['id_parent'])
 			{
-				if (!parent::move_into_another($id_cat, $id_parent))			
+				if (!parent::move_into_another($id_cat, $id_parent))
 				{
 					if ($this->check_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST))
 						return 'e_new_cat_does_not_exist';
@@ -117,7 +117,7 @@ class FaqCats extends DeprecatedCategoriesManager
 					$this->recount_subquestions(false);
 				}
 			}
-			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "', display_mode = '" . $display_mode . "', auth = '" . $auth . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
 			$Cache->Generate_module_file('faq');
 			
 			return 'e_success';
@@ -142,7 +142,7 @@ class FaqCats extends DeprecatedCategoriesManager
 	}
 	
 	/**
-	 * Determines if a category is writable by the current user 
+	 * Determines if a category is readable by the current user 
 	 */
 	public function check_auth($id)
 	{

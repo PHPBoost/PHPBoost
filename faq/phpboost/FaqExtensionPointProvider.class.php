@@ -42,7 +42,7 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	{
 		$string = 'global $FAQ_CATS, $RANDOM_QUESTIONS;' . "\n\n";
 		
-		$root = array('name' => '', 'auth' => FaqConfig::load()->get_authorizations());
+		$root = array('name' => '', 'id_parent' => 0, 'auth' => FaqConfig::load()->get_authorizations());
 		//List of categories and their own properties
 		$string .= '$FAQ_CATS = array();' . "\n\n";
 		$string .= '$FAQ_CATS[0] = ' . var_export($root, true) . ';' . "\n";
