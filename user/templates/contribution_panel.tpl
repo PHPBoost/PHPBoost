@@ -7,7 +7,7 @@
 			<h1>{L_CONTRIBUTION_LIST}</h1>
 			<br />
 			# IF C_NO_CONTRIBUTION #
-			<div class="warning">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
+			<div class="success">{L_NO_CONTRIBUTION_TO_DISPLAY}</div>
 			# ELSE #
 			<table>
 				<thead>
