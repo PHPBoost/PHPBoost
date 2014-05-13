@@ -441,7 +441,7 @@ class Article
 			'PUBLISHING_START_DATE_ISO8601' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_ISO8601) : '',
 			'PUBLISHING_END_DATE' => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
 			'PUBLISHING_END_DATE_ISO8601' => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_ISO8601) : '',
-			'DATE_UPDATED' => $this->date_updated->format(Date::FORMAT_DAY_MONTH_YEAR),
+			'DATE_UPDATED' => $this->date_updated != null ? $this->date_updated->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->get_id()),
 			'NUMBER_VIEW' => $this->get_number_view(),
