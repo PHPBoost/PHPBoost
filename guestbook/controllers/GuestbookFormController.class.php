@@ -105,11 +105,15 @@ class GuestbookFormController extends ModuleController
 			));
 		}
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('contents',  $main_lang['message'], $this->get_message()->get_contents(), array(
-			'formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true)
+		$fieldset->add_field(new FormFieldRichTextEditor('contents',  $main_lang['message'], $this->get_message()->get_contents(), 
+			array('formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true), 
+			array(
+				new FormFieldConstraintMaxLinks(GuestbookConfig::load()->get_maximum_links_message(), true),
+				new FormFieldConstraintAntiFlood(GuestbookService::get_last_message_timestamp_from_user($this->get_message()->get_author_user()->get_id())
+			))
 		));
 		
-		$fieldset->add_field(new FormFieldCaptcha('captcha'));
+		$fieldset->add_field(new FormFieldCaptcha());
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -165,31 +169,6 @@ class GuestbookFormController extends ModuleController
 		{
 			$controller = PHPBoostErrors::user_in_read_only();
 			DispatchManager::redirect($controller);
-		}
-	}
-	
-	private function check_links_number()
-	{
-		$config = GuestbookConfig::load();
-		$message = $this->get_message();
-		
-		if (!TextHelper::check_nbr_links($message->get_contents(), $config->get_maximum_links_message())) 
-		{
-			$controller = PHPBoostErrors::link_flood($config->get_maximum_links_message());
-			DispatchManager::redirect($controller);
-		}
-	}
-	
-	private function check_flood()
-	{
-		$content_config = ContentManagementConfig::load();
-		if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && $content_config->is_anti_flood_enabled()) 
-		{
-			if (GuestbookService::get_last_message_timestamp_from_user($this->get_message()->get_author_user()->get_id()) >= (time() - $content_config->get_anti_flood_duration()))
-			{
-				$controller = PHPBoostErrors::flood();
-				DispatchManager::redirect($controller);
-			}
 		}
 	}
 	
