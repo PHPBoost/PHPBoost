@@ -196,11 +196,6 @@ class ArticlesFormController extends ModuleController
 
 		$this->build_contribution_fieldset($form);
 		
-		$fieldset_captcha = new FormFieldsetHTML('captcha', '');
-		$form->add_fieldset($fieldset_captcha);
-		
-		$fieldset_captcha->add_field(new FormFieldCaptcha('captcha'));
-
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());

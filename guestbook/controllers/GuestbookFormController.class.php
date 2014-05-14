@@ -113,8 +113,6 @@ class GuestbookFormController extends ModuleController
 			))
 		));
 		
-		$fieldset->add_field(new FormFieldCaptcha());
-		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
