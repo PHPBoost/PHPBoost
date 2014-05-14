@@ -323,6 +323,22 @@ class TinyMCEParser extends ContentFormattingParser
 		$array_preg = array();
 		$array_preg_replace = array();
 
+		//Color tag
+		if (!in_array('color', $this->forbidden_tags))
+		{
+			array_push($array_preg, '`&lt;span style="(.+)?color: *([#a-z0-9]+);(.+)?"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg_replace, '<span style="color:$2;">&lt;span style="$1$3"&gt;$4&lt;/span&gt;</span>');
+			array_push($array_preg, '`&lt;span style="color: *([#a-z0-9]+);"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg_replace, '<span style="color:$1;">$2</span>');
+		}
+		//Background color tag
+		if (!in_array('bgcolor', $this->forbidden_tags))
+		{
+			array_push($array_preg, '`&lt;span style="(.+)?background-color: *([#a-z0-9]+);(.+)?"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg_replace, '<span style="background-color:$2;">&lt;span style="$1$3"&gt;$4&lt;/span&gt;</span>');
+			array_push($array_preg, '`&lt;span style="background-color: *([#a-z0-9]+);"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg_replace, '<span style="background-color:$1;">$2</span>');
+		}
 		//Strong tag
 		if (!in_array('b', $this->forbidden_tags))
 		{
@@ -338,14 +354,14 @@ class TinyMCEParser extends ContentFormattingParser
 		//Underline tag
 		if (!in_array('u', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="text-decoration: underline;"&gt;(.+)&lt;/span&gt;`isU');
-			array_push($array_preg_replace, '<span style="text-decoration: underline;">$1</span>');
+			array_push($array_preg, '`&lt;span style="( *)?text-decoration: underline;( *)?"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg_replace, '<span style="text-decoration: underline;">$3</span>');
 		}
 		//Strike tag
 		if (!in_array('s', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="text-decoration: line-through;"&gt;(.+)&lt;/span&gt;`isU');
-			array_push($array_preg_replace, '<strike>$1</strike>');
+			array_push($array_preg, '`&lt;span style="( *)?text-decoration: line-through;( *)?"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg_replace, '<strike>$3</strike>');
 		}
 		//Link tag
 		if (!in_array('url', $this->forbidden_tags))
@@ -371,18 +387,6 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			array_push($array_preg, '`&lt;pre&gt;(.+)(<br />[\s]*)*&lt;/pre&gt;`isU');
 			array_push($array_preg_replace, '<pre>$1</pre>');
-		}
-		//Color tag
-		if (!in_array('color', $this->forbidden_tags))
-		{
-			array_push($array_preg, '`&lt;span style="color: *([#a-z0-9]+);"&gt;(.+)&lt;/span&gt;`isU');
-			array_push($array_preg_replace, '<span style="color:$1;">$2</span>');
-		}
-		//Background color tag
-		if (!in_array('bgcolor', $this->forbidden_tags))
-		{
-			array_push($array_preg, '`&lt;span style="background-color: *([#a-z0-9]+);"&gt;(.+)&lt;/span&gt;`isU');
-			array_push($array_preg_replace, '<span style="background-color:$1;">$2</span>');
 		}
 		//Align tag
 		if (!in_array('align', $this->forbidden_tags))
