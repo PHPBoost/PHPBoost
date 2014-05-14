@@ -196,16 +196,25 @@ class TextHelper
 	 * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).
 	 * @param string $contents String in which you want to count the number of links
 	 * @param int $max_nbr Maximum number of links accepted.
+	 * @param bool $has_html_links true if the content is in HTML
 	 * @return bool true if there are no too much links, false otherwise.
 	 */
-	public static function check_nbr_links($contents, $max_nbr)
+	public static function check_nbr_links($contents, $max_nbr, $has_html_links = false)
 	{
 		if ($max_nbr == -1)
 		{
 			return true;
 		}
 
-		$nbr_link = preg_match_all('`(?:ftp|https?)://`', $contents, $array);
+		if ($has_html_links)
+		{
+			$nbr_link = preg_match_all('`<a href="(?:ftp|https?)://`', $contents, $array);
+		}
+		else
+		{
+			$nbr_link = preg_match_all('`(?:ftp|https?)://`', $contents, $array);
+		}
+
 		if ($nbr_link !== false && $nbr_link > $max_nbr)
 		{
 			return false;

@@ -82,7 +82,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		$fieldset->add_field(new FormFieldRichTextEditor('message', $this->lang['message'], '', array(
 			'formatter' => $this->get_formatter(),
 			'rows' => 10, 'cols' => 47, 'required' => $this->lang['require_text']),
-			array(new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment()),
+			array(new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment(), true),
 				new FormFieldConstraintAntiFlood(CommentsManager::get_last_comment_added($this->user->get_id()))
 			)
 		));

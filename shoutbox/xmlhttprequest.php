@@ -73,7 +73,7 @@ if ($add)
 				echo -3;
 				exit;
 			}
-			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
+			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
 			{	
 				echo -4;
 				exit;

@@ -32,14 +32,17 @@
 class FormFieldConstraintMaxLinks extends AbstractFormFieldConstraint
 {
 	private $number_links_authorized;
+	private $has_html_content;
 	
 	/**
 	 * @param int $number_links_authorized
+	 * @param bool $has_html_links true if the content is in HTML
 	 * @param string $error_message
 	 */
-	public function __construct($number_links_authorized, $error_message = '')
+	public function __construct($number_links_authorized, $has_html_links = false, $error_message = '')
 	{	
 		$this->number_links_authorized = $number_links_authorized;
+		$this->has_html_links = $has_html_links;
 		
 		if (empty($error_message))
 		{
@@ -60,7 +63,7 @@ class FormFieldConstraintMaxLinks extends AbstractFormFieldConstraint
 	
 	public function exceeding_links($field)
 	{
-		return TextHelper::check_nbr_links($field->get_value(), $this->number_links_authorized);
+		return TextHelper::check_nbr_links($field->get_value(), $this->number_links_authorized, $this->has_html_links);
 	}
 }
  

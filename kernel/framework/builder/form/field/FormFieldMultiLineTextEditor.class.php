@@ -33,7 +33,6 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
 {
     protected $rows = 5;
     protected $cols = 40;
-    protected $forbiddentags = array();
 
     /**
      * @desc Constructs a multi line text edit.
