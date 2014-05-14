@@ -249,7 +249,7 @@ a:hover {
 	transition: width .6s ease;
 }
 
-/* Icônes spécifique PHPBoost
+/* IcÃ´nes spÃ©cifique PHPBoost
 ------------------------------------ */
 .fa-success:before { color: #478948; }
 .fa-forbidden:before { color: #BA4B49; }
@@ -405,7 +405,7 @@ fieldset.fieldset-submit legend { /* A supprimer ou remplacer par un div */
 optgroup { font-weight: bold; border: none; border-bottom: 1px solid #5B5A5A; }
 option { padding: 0px 3px; }
 
-/* Prévisualition */
+/* PrÃ©visualition */
 .xmlhttprequest-preview {
 	font-size: 11px;
 	border-left: 1px solid #99b1cb;
@@ -452,7 +452,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=f
 }
 
 input.field-smaller { width: 29px; }
-input.field-small {	width: 77px; }
+input.field-small {  width: 77px; }
 input.field-large { width: 200px; }
 input.field-xlarge { width: 300px; }
 
@@ -464,7 +464,7 @@ input.field-xlarge { width: 300px; }
 
 .form-field {
 	display: inline-block;
-	width: 59%;
+	width: 58%;
 }
 
 /* Label pour les checkbox et radio */
@@ -473,7 +473,7 @@ input.field-xlarge { width: 300px; }
 	display: block;
 }
 
-/* Label pour les inputs [for] et pour les Ã©lements sans associations */
+/* Label pour les inputs [for] et pour les ÃƒÂ©lements sans associations */
 .form-element > label {
 	display: inline-block;
 	width: 40%;
@@ -532,7 +532,7 @@ textarea {
 .text-status-constraint { font-weight: bold; }
 .form-element-textarea .text-status-constraint { display: inline-block; margin-bottom: 5px; }
 
-/* Auto-complétion */
+/* Auto-complÃ©tion */
 div.form-autocompleter-container { position: relative;}
 
 div.form-autocompleter { 
