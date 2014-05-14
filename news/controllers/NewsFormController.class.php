@@ -94,12 +94,10 @@ class NewsFormController extends ModuleController
 			), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`i'))));
 		}
 		
-		$id_category = $this->get_news()->get_id() === null ? $request->get_getint('id_category', 0) : null;
-		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', LangLoader::get_message('category', 'categories-common'), ($id_category === null ? $this->get_news()->get_id_cat() : $id_category), $search_category_children_options));
+		$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', LangLoader::get_message('category', 'categories-common'), ($this->get_news()->get_id() === null ? $request->get_getint('id_category', 0) : $this->get_news()->get_id_cat()), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.contents'], $this->get_news()->get_contents(), array('rows' => 15, 'required' => true)));
 		
