@@ -489,6 +489,7 @@ input.field-xlarge { width: 300px; }
 .form-field { 
 	display: inline-block;
 	width: 58%;
+	max-width: 600px;
 }
 
 /* Label pour les checkbox et radio */
