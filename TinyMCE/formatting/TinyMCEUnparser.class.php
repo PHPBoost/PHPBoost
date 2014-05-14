@@ -98,11 +98,11 @@ class TinyMCEUnparser extends ContentFormattingUnparser
     		    ),
     		'<p>' . $this->content . '</p>'
     		);
-
-    		//Unparsing tags supported by TinyMCE
-    		$this->unparse_tinymce_formatting();
+			
     		//Unparsing tags unsupported by TinyMCE, those are in BBCode
     		$this->unparse_bbcode_tags();
+    		//Unparsing tags supported by TinyMCE
+    		$this->unparse_tinymce_formatting();
 
     		$this->content = TextHelper::htmlspecialchars($this->content);
     		 

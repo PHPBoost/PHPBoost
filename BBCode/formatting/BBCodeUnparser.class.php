@@ -179,13 +179,13 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		//Hidden bloc
 		$this->_parse_imbricated('<span class="text-hide">', '`<span class="text-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 
-		//Indentation
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->content);
-
 		//Block
 		$this->_parse_imbricated('<div class="bb-block"', '`<div class="bb-block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
 		$this->_parse_imbricated('<div class="bb-block" style=', '`<div class="bb-block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
-			
+
+		//Indentation
+		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->content);
+		
 		##Callbacks
 		//Image
 		$this->content = preg_replace_callback('`<img src="([^"]+)" alt="([^"]*)?"(?: title="([^"]*)")?(?: style="([^"]+)")?(?: class="[^"]+")? />`iU', array($this, 'unparse_img'), $this->content);
