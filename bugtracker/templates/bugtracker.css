@@ -1,0 +1,15 @@
+.legend {
+	padding: 5px;
+	text-align: center;
+	border: 1px solid;
+	width: 30px;
+	height: 15px;
+}
+
+.title-column { width: 33%; }
+
+.small-column { width: 10%; }
+
+.medium-column { width: 20%; }
+
+#status-chart { width: 90%; }
