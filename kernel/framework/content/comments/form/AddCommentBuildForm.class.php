@@ -86,8 +86,6 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 				new FormFieldConstraintAntiFlood(CommentsManager::get_last_comment_added($this->user->get_id()))
 			)
 		));
-		
-		$fieldset->add_field(new FormFieldCaptcha('captcha'));
 
 		$form->add_button($submit_button = new FormButtonDefaultSubmit());
 		$form->add_button(new FormButtonReset());

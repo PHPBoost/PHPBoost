@@ -108,6 +108,13 @@ class HTMLForm
 		$csrf_protection_fieldset->add_field($csrf_protection_field);
 		$this->add_fieldset($csrf_protection_fieldset);
 	}
+	
+	private function add_catpcha_protection()
+	{
+		$csrf_protection_fieldset = new FormFieldsetHTML('captcha');
+		$csrf_protection_fieldset->add_field(new FormFieldCaptcha());
+		$this->add_fieldset($csrf_protection_fieldset);
+	}
 
 	/**
 	 * @desc Adds fieldset in the form
@@ -231,6 +238,9 @@ class HTMLForm
 	{
 		global $LANG;
 
+		//Add captcha protection for visitor
+		$this->add_catpcha_protection();
+		
 		$template = $this->get_template_to_use();
 
 		$template->put_all(array(
@@ -255,7 +265,7 @@ class HTMLForm
 				));
 			}
 		}
-
+		
 		self::$js_already_included = true;
 
 		foreach ($this->fieldsets as $fieldset)

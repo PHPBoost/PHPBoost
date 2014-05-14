@@ -106,8 +106,6 @@ class ContactController extends ModuleController
 			}
 		}
 		
-		$fieldset->add_field(new FormFieldCaptcha('captcha'));
-		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
