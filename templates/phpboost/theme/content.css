@@ -3,7 +3,7 @@
 Contient les formulaires, les modules (et modules minis), messages.
 --------------------------------------*/
 
-/* Conteneurs, éléments de module, ... */
+/* Conteneurs, Ã©lÃ©ments de module, ... */
 section, article {
 	width: 96%;
 	margin: auto;
@@ -71,12 +71,12 @@ section footer, article footer { margin-bottom: 15px; }
 .medium-block,
 .small-block { margin-right: -0.29em; }
 
-/* Affiche 2 blocs côte à côte */
+/* Affiche 2 blocs cÃ´te Ã  cÃ´te */
 .medium-block {
 	width: 48.7%;
 }
 
-/* Affiche 3 blocs côte à côte */
+/* Affiche 3 blocs cÃ´te Ã  cÃ´te */
 .small-block {
 	width: 31.96%;
 }
@@ -145,7 +145,7 @@ ul.pagination-block-bis li a.next-page {
 ul.pagination-block-bis li a.prev-page:hover,
 ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
 
-/* Exploreur des catégories
+/* Exploreur des catÃ©gories
 -------------------------------------- */
 .explorer .cats, .explorer .files {
 	display: inline-block;
@@ -252,7 +252,7 @@ table {
 	border-spacing: 0;
 }
 
-/* Entête */
+/* EntÃªte */
 table caption {
 	color: #757679;
 	font-size: 13px;
@@ -435,7 +435,7 @@ optgroup {
 }
 option { padding: 0px 3px; }
 
-/* Prévisualition */
+/* PrÃ©visualition */
 .xmlhttprequest-preview {
 	font-size: 11px;
 	border-left: 1px solid #99b1cb;
@@ -482,7 +482,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=f
 }
 
 input.field-smaller { width: 29px; }
-input.field-small {	width: 77px; }
+input.field-small {  width: 77px; }
 input.field-large { width: 200px; }
 input.field-xlarge { width: 300px; }
 
@@ -495,7 +495,7 @@ input.field-xlarge { width: 300px; }
 
 .form-field {
 	display: inline-block;
-	width: 59%;
+	width: 58%;
 }
 
 /* Label pour les checkbox et radio */
@@ -504,7 +504,7 @@ input.field-xlarge { width: 300px; }
 	display: block;
 }
 
-/* Label pour les inputs [for] et pour les élements sans associations */
+/* Label pour les inputs [for] et pour les Ã©lements sans associations */
 .form-element > label {
 	display: inline-block;
 	width: 40%;
@@ -566,7 +566,7 @@ form .constraint-status-error textarea {
 
 .form-element-textarea .text-status-constraint { display: inline-block; margin-bottom: 5px; }
 
-/* Auto-complétion */
+/* Auto-complÃ©tion */
 div.form-autocompleter-container { position: relative;}
 
 div.form-autocompleter { 
@@ -644,10 +644,10 @@ h5.sub-title { /* Titre des modules minis */
 	padding: 5px 4px 0px 4px;
 }
 
-/* Bordure inférieure des modules minis */
+/* Bordure infÃ©rieure des modules minis */
 .module-mini-bottom { height: 15px; }
 
-/* Messages postés par les membres (messages privés & commentaires) 
+/* Messages postÃ©s par les membres (messages privÃ©s & commentaires) 
 --------------------------------------*/
 #comments-list { clear: both; }
 
