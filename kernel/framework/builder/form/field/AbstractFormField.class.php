@@ -438,7 +438,9 @@ abstract class AbstractFormField implements FormField
 
 		$description = $this->get_description();
 		$template->put_all(array(
-			'ID' => $this->get_html_id(),
+			'ID' => $this->get_id(),
+			'HTML_ID' => $this->get_html_id(),
+			'NAME' => $this->get_html_id(),
 			'LABEL' => $this->get_label(),
 			'DESCRIPTION' => $description,
 			'C_DESCRIPTION' => !empty($description),
