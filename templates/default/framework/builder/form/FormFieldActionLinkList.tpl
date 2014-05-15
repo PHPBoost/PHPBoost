@@ -1,4 +1,4 @@
-<div id="${escape(ID)}" style="text-align:center; # IF C_HIDDEN # display:none; # ENDIF #">
+<div id="${escape(HTML_ID)}" style="text-align:center; # IF C_HIDDEN # display:none; # ENDIF #">
     <ul style="margin:5px;list-style-type:none;">
 		# START action #
         <li style="margin:2px 10px;display:inline-table;">

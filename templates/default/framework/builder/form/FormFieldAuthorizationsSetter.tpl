@@ -1,4 +1,4 @@
-<div id="${escape(ID)}" # IF C_HIDDEN # style="display:none;" # ENDIF #>
+<div id="${escape(HTML_ID)}" # IF C_HIDDEN # style="display:none;" # ENDIF #>
 # START actions #
 	<div class="form-element">
 		<label>

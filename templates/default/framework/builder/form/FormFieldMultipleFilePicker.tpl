@@ -24,12 +24,12 @@
 var MultipleFilePicker = new MultipleFilePicker();
 
 </script>
-<div id="input_files_list_${escape(ID)}">
-	<input type="file" name="${escape(ID)}_1" id="${escape(ID)}_1" # IF C_DISABLED # disabled="disabled" # ENDIF #></br>
+<div id="input_files_list_${escape(HTML_ID)}">
+	<input type="file" name="${escape(HTML_ID)}_1" id="${escape(HTML_ID)}_1" # IF C_DISABLED # disabled="disabled" # ENDIF #></br>
 	<input name="max_file_size" value="{MAX_FILE_SIZE}" type="hidden">
 </div>
-<a href="javascript:MultipleFilePicker.add_file_input();" class="fa fa-plus" id="add_${escape(ID)}"></a>
+<a href="javascript:MultipleFilePicker.add_file_input();" class="fa fa-plus" id="add_${escape(HTML_ID)}"></a>
 <script>
 <!--
-$("${escape(ID)}_1").form.enctype = "multipart/form-data";
+$("${escape(HTML_ID)}_1").form.enctype = "multipart/form-data";
 </script>

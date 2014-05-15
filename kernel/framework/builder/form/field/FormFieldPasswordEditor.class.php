@@ -34,7 +34,7 @@ class FormFieldPasswordEditor extends AbstractFormField
 	private $size = 30;
 	private $maxlength = 255;
 	private static $tpl_src = '<input type="password" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}"
-	id="${escape(ID)}" value="${escape(VALUE)}" class="${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # />';
+	id="${escape(HTML_ID)}" value="${escape(VALUE)}" class="${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # />';
 
 	/**
 	 * @desc Constructs a FormFieldPasswordEditor.
