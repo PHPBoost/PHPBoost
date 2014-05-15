@@ -108,10 +108,11 @@
 				</td>
 			</tr>
 			# END bug #
+			<tr>
+				<td colspan="{BUGS_COLSPAN}" class="legend-line"># INCLUDE LEGEND #</td>
+			</tr>
 		</tbody>
 	</table>
-
-	# INCLUDE LEGEND #
 
 	# ELSE #
 	<div class="notice"># IF C_STATUS_IN_PROGRESS #{@notice.no_bug_in_progress}# ELSE #{@notice.no_bug_fixed}# ENDIF #</div>

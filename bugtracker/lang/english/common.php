@@ -97,7 +97,6 @@ $lang['titles.contents_value_title'] = 'Request default description';
 $lang['titles.contents_value'] = 'Default description';
 $lang['titles.filter'] = 'Filter';
 $lang['titles.filters'] = 'Filters';
-$lang['titles.legend'] = 'Legend';
 $lang['titles.informations'] = 'Informations';
 $lang['titles.version_informations'] = 'Version Informations';
 
@@ -168,11 +167,11 @@ $lang['status.rejected'] = 'Rejected';
 //Explainations
 $lang['explain.contents'] = 'Useful details to treat the bug';
 $lang['explain.roadmap'] = 'Displays the fixed bug list for each version. Displayed if there is at least one version in the list.';
-$lang['explain.type'] = 'Demands types. Examples : Anomaly, Evolution...';
-$lang['explain.category'] = 'Demands categories. Examples : Kernel, Module...';
-$lang['explain.severity'] = 'Demands severities. Examples : Minor, Major, Critical...';
-$lang['explain.priority'] = 'Demands priorities. Examples : Low, Normal, High...';
-$lang['explain.version'] = 'Product versions list.';
+$lang['explain.type'] = 'Demands type. Examples : Anomaly, Evolution...';
+$lang['explain.category'] = 'Demands category. Examples : Kernel, Module...';
+$lang['explain.severity'] = 'Demands severity. Examples : Minor, Major, Critical...';
+$lang['explain.priority'] = 'Demands priority. Examples : Low, Normal, High...';
+$lang['explain.version'] = 'Product version list.';
 $lang['explain.remarks'] = 'Remarks : <br />
 - If the table is empty, this option will not be visible on the post bug page<br />
 - If the table contains only one value, this option will not be visible too and will automatically be assigned to the bug<br /><br />';
