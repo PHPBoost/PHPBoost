@@ -40,10 +40,15 @@ class ModuleTreeLinksService
 			$tpl = new FileTemplate('framework/module/module_actions_links_menu.tpl');
 			$tpl->put('C_DISPLAY', $actions_tree_links->has_visible_links());
 			
-			$module_home = new ModuleLink(LangLoader::get_message('home', 'main'), new Url('/' . Environment::get_running_module_name() . '/'));
-			$tpl->assign_block_vars('element', array(), array(
-				'ELEMENT' => $module_home->export()
-			));
+			$module = ModulesManager::get_module(Environment::get_running_module_name());
+			$home_page = $module->get_configuration()->get_home_page();
+			if (!empty($home_page))
+			{
+				$module_home = new ModuleLink(LangLoader::get_message('home', 'main'), new Url('/' . $module->get_id() . '/' . $home_page));
+				$tpl->assign_block_vars('element', array(), array(
+					'ELEMENT' => $module_home->export()
+				));
+			}
 			
 			return self::display($actions_tree_links, $tpl);
 		}
@@ -74,10 +79,14 @@ class ModuleTreeLinksService
 				'C_DISPLAY' => $actions_tree_links->has_links() || !empty($admin_main_page)
 			));
 			
-			$module_home = new ModuleLink(LangLoader::get_message('home', 'main'), new Url('/' . $id_module . '/'));
-			$tpl->assign_block_vars('element', array(), array(
-				'ELEMENT' => $module_home->export()
-			));
+			$home_page = $configuration->get_home_page();
+			if (!empty($home_page))
+			{
+				$module_home = new ModuleLink(LangLoader::get_message('home', 'main'), new Url('/' . $id_module . '/' . $home_page));
+				$tpl->assign_block_vars('element', array(), array(
+					'ELEMENT' => $module_home->export()
+				));
+			}
 			
 			return self::display($actions_tree_links, $tpl);
 		}
