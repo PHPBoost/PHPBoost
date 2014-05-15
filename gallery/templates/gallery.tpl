@@ -278,25 +278,27 @@
 				<section class="block">
 					<header><h1>{L_CATEGORIES}</h1></header>
 					<div class="content">
-						<table style="width:100%">
-							# START cat_list #
-							{cat_list.OPEN_TR}								
-							<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%;margin:15px 0px;">
-								<a href="{cat_list.U_CAT}">{cat_list.IMG}</a>
-								<br />
-								<a href="{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
-								<br />
-								<span class="smaller">{cat_list.DESC}</span> 
-								<br />
-								{cat_list.LOCK} <span class="smaller">{cat_list.L_NBR_PICS}</span>
-							</td>	
-							{cat_list.CLOSE_TR}
-							# END cat_list #
-						
-							# START end_table_cats #
-								{end_table_cats.TD_END}
-							{end_table_cats.TR_END}
-							# END end_table_cats #
+						<table>
+							<tbody>
+								# START cat_list #
+								{cat_list.OPEN_TR}
+								<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%;margin:15px 0px;">
+									<a href="{cat_list.U_CAT}">{cat_list.IMG}</a>
+									<br />
+									<a href="{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
+									<br />
+									<span class="smaller">{cat_list.DESC}</span> 
+									<br />
+									{cat_list.LOCK} <span class="smaller">{cat_list.L_NBR_PICS}</span>
+								</td>
+								{cat_list.CLOSE_TR}
+								# END cat_list #
+								
+								# START end_table_cats #
+									{end_table_cats.TD_END}
+								{end_table_cats.TR_END}
+								# END end_table_cats #
+							</tbody>
 						</table>
 					</div>
 					<footer></footer>
@@ -352,35 +354,49 @@
 								# ENDIF #
 							</div>
 							<p style="text-align:center;padding:15px 0px;overflow:auto;">{IMG_MAX}</p>
-							<div style="margin:auto;width:400px;height:32px;padding:0;">
+							<div style="margin:auto;width:640px;height:32px;padding:0;">
 								<span style="float:left">&nbsp;&nbsp;&nbsp;{U_PREVIOUS}</span>
 								<span style="float:right">{U_NEXT}&nbsp;&nbsp;&nbsp;</span>
 							</div>
 							<br /><br />
-							<table class="module-table" style="width:100%;">
-								<tr>
-									<th colspan="{COLSPAN}">
-										{L_THUMBNAILS}
-									</th>
-								</tr>
-								<tr>
-									<td style="width:50px;text-align:center">
-										{U_LEFT_THUMBNAILS}
-									</td>
-									
-									# START list_preview_pics #
-										{list_preview_pics.PICS}
-									# END list_preview_pics #
-									
-									<td style="width:50px;text-align:center">
-										{U_RIGHT_THUMBNAILS}
-									</td>
-								</tr>
+							<table>
+								<thead>
+									<tr>
+										<th colspan="{COLSPAN}">
+											{L_THUMBNAILS}
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td style="width:50px;text-align:center">
+											{U_LEFT_THUMBNAILS}
+										</td>
+										
+										# START list_preview_pics #
+											{list_preview_pics.PICS}
+										# END list_preview_pics #
+										
+										<td style="width:50px;text-align:center">
+											{U_RIGHT_THUMBNAILS}
+										</td>
+									</tr>
+								</tbody>
 							</table>
 						{COMMENTS}
 						# ENDIF #
 						
-						<table style="table-layout:fixed;">
+						<table>
+							# IF C_PAGINATION #
+							<tfoot>
+								<tr>
+									<th colspan="{COLUMNS_NUMBER}">
+									# INCLUDE PAGINATION #
+									</th>
+								</tr>
+							</foot>
+							# ENDIF #
+							<tbody>
 							# START pics_list #
 								{pics_list.OPEN_TR}
 								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle;">
@@ -421,15 +437,9 @@
 								
 							{end_table.TR_END}
 							# END end_table #
+							</tbody>
 						</table>
 					</div>
-					<footer>
-						# IF C_PAGINATION #
-						<p class="center">
-							# INCLUDE PAGINATION #
-						</p>
-						# ENDIF #
-					</footer>
 				</article>
 				# ENDIF #
 					

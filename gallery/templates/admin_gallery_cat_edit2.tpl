@@ -1,29 +1,6 @@
-		<script>
-		<!--
-			function check_form_list()
-			{
-				if(document.getElementById('name').value == "") {
-					alert("{L_REQUIRE}");
-					return false;
-			    }		
-				return true;
-			}
-		-->
-		</script>
-		
 		<div id="admin-quick-menu">
 			<ul>
 				<li class="title-menu">{L_GALLERY_MANAGEMENT}</li>
-				<li>
-					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
-					<br />
-					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
-				</li>
-				<li>
-					<a href="admin_gallery_add.php"><img src="gallery.png" alt="" /></a>
-					<br />
-					<a href="admin_gallery_add.php" class="quick-link">{L_GALLERY_PICS_ADD}</a>
-				</li>
 				<li>
 					<a href="admin_gallery_cat.php"><img src="gallery.png" alt="" /></a>
 					<br />
@@ -33,6 +10,16 @@
 					<a href="admin_gallery_cat_add.php"><img src="gallery.png" alt="" /></a>
 					<br />
 					<a href="admin_gallery_cat_add.php" class="quick-link">{L_GALLERY_CAT_ADD}</a>
+				</li>
+				<li>
+					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
+					<br />
+					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
+				</li>
+				<li>
+					<a href="admin_gallery_add.php"><img src="gallery.png" alt="" /></a>
+					<br />
+					<a href="admin_gallery_add.php" class="quick-link">{L_GALLERY_PICS_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_gallery_config.php"><img src="gallery.png" alt="" /></a>
@@ -47,9 +34,7 @@
 				
 			<form action="admin_gallery_cat.php?token={TOKEN}" method="post" class="fieldset-content">
 				<fieldset>
-					<legend>{L_EDIT_CAT}</legend>
-					<p>{L_REQUIRE}</p>
-					<p><strong>{L_ROOT}</strong></p>
+					<legend>{L_EDIT_CAT} {L_ROOT}</legend>
 					<div class="form-element">
 						<label>{L_AUTH_READ}</label>
 						<div class="form-field">{AUTH_READ}</div>
@@ -68,6 +53,6 @@
 					<legend>{L_UPDATE}</legend>
 					<button type="submit" name="valid_root" value="true">{L_UPDATE}</button>
 					<button type="reset" value="true">{L_RESET}</button>
-				</fieldset>	
+				</fieldset>
 			</form>
 		</div>

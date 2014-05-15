@@ -3,7 +3,7 @@
 		var list_cats = new Array({LIST_CATS});
 		var array_cats = new Array();
 		{ARRAY_JS}
-			
+		
 		function XMLHttpRequest_get_parent(divid, direction)
 		{
 			document.getElementById('l' + divid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
@@ -57,7 +57,7 @@
 			id_parent = parseInt(change_cat);
 			pos_parent = array_cats[id_parent]['i'];
 			parents_end = pos_parent + ((array_cats[id_parent]['id_right'] - array_cats[id_parent]['id_left']) - 1)/2;
-				
+			
 			if( direction == 'up' )
 			{
 				if( !check_change_cat ) 
@@ -212,16 +212,6 @@
 			<ul>
 				<li class="title-menu">{L_GALLERY_MANAGEMENT}</li>
 				<li>
-					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
-					<br />
-					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
-				</li>
-				<li>
-					<a href="admin_gallery_add.php"><img src="gallery.png" alt="" /></a>
-					<br />
-					<a href="admin_gallery_add.php" class="quick-link">{L_GALLERY_PICS_ADD}</a>
-				</li>
-				<li>
 					<a href="admin_gallery_cat.php"><img src="gallery.png" alt="" /></a>
 					<br />
 					<a href="admin_gallery_cat.php" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
@@ -230,6 +220,16 @@
 					<a href="admin_gallery_cat_add.php"><img src="gallery.png" alt="" /></a>
 					<br />
 					<a href="admin_gallery_cat_add.php" class="quick-link">{L_GALLERY_CAT_ADD}</a>
+				</li>
+				<li>
+					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
+					<br />
+					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
+				</li>
+				<li>
+					<a href="admin_gallery_add.php"><img src="gallery.png" alt="" /></a>
+					<br />
+					<a href="admin_gallery_add.php" class="quick-link">{L_GALLERY_PICS_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_gallery_config.php"><img src="gallery.png" alt="" /></a>
@@ -255,8 +255,7 @@
 							</div>
 						</div>
 					</li>
-	
-								
+					
 					# START list #
 					<li id="c{list.I}" class="sortable-element" style="cursor:default;margin-left:{list.INDENT}px;">
 						<div class="sortable-title">

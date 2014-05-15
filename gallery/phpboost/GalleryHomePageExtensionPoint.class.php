@@ -155,6 +155,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'START_THUMB' => 0,
 			'END_THUMB' => 0,
 			'PAGINATION' => $pagination->display(),
+			'COLUMNS_NUMBER' => $nbr_column_pics,
 			'COLUMN_WIDTH_CATS' => $column_width_cats,
 			'COLUMN_WIDTH_PICS' => $column_width_pics,
 			'CAT_ID' => $g_idcat,
