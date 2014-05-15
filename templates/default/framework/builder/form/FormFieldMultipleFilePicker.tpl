@@ -1,7 +1,7 @@
 <script>
  var MultipleFilePicker = Class.create({
 	integer : 2,
-	id_input : ${escapejs(ID)},
+	id_input : ${escapejs(HTML_ID)},
 	max_input : ${escapejs(MAX_INPUT)},
 	add_file_input : function () {
 		if (this.integer <= this.max_input) {

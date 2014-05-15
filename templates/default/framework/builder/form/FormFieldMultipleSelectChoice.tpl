@@ -2,7 +2,7 @@
 <!--
 	function ${escapejscharacters(NAME)}select_all()
 	{
-		var select = $(${escapejs(ID)});
+		var select = $(${escapejs(HTML_ID)});
 		for(i = 0; i < select.length; i++)
 		{	
 			if (select[i])
@@ -11,7 +11,7 @@
 	}
 	function ${escapejscharacters(NAME)}unselect_all()
 	{
-		var select = $(${escapejs(ID)});
+		var select = $(${escapejs(HTML_ID)});
 		for(i = 0; i < select.length; i++)
 		{	
 			if (select[i])
