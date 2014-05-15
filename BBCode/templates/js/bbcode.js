@@ -345,8 +345,13 @@ function bbcode_url(field, prompt_text)
 	var url = prompt(prompt_text);
 	if( url != null && url != '' )
 		insertbbcode('[url=' + url + ']', '[/url]', field);
-	else
-		insertbbcode('[url]', '[/url]', field);
+}
+
+function bbcode_lightbox(field, prompt_text)
+{
+	var url = prompt(prompt_text);
+	if( url != null && url != '' )
+		insertbbcode('[lightbox=' + url + ']', '[/lightbox]', field);
 }
 
 function bbcode_anchor(field, prompt_text)
