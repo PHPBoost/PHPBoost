@@ -75,7 +75,7 @@ class BugtrackerStatsListController extends ModuleController
 		{
 			$this->view->assign_block_vars('fixed_version', array(
 				'NAME'					=> stripslashes($versions[$version_id]['name']),
-				'LINK_VERSION_ROADMAP'	=> BugtrackerUrlBuilder::roadmap(Url::encode_rewrite($versions[$version_id]['name']))->rel(),
+				'LINK_VERSION_ROADMAP'	=> BugtrackerUrlBuilder::roadmap($version_id . '-' . Url::encode_rewrite($versions[$version_id]['name']))->rel(),
 				'NUMBER'				=> $bugs_number['all']
 			));
 		}
