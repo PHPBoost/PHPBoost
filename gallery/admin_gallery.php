@@ -209,14 +209,15 @@ else
 	}
 
 	##### Affichage des photos #####
+	$Template->assign_block_vars('pics', array(
+		'C_PICTURES' => $nbr_pics > 0,
+		'C_PICS_MAX' => $nbr_pics == 0 || !empty($idpics),
+		'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>',
+		'PICS_MAX' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $idcat . '" alt="" / >'
+	));
+	
 	if ($nbr_pics > 0)
 	{
-		$Template->assign_block_vars('pics', array(
-			'C_PICS_MAX' => !empty($idpics),
-			'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>',
-			'PICS_MAX' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $idcat . '" alt="" / >'
-		));
-
 		//On crée une pagination si le nombre de photos est trop important.
 		$page = AppContext::get_request()->get_getint('pp', 1);
 		$pagination = new ModulePagination($page, $nbr_pics, $config->get_pics_number_per_page());

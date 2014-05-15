@@ -242,11 +242,11 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 						'GALLERIES' => $subgallery,
 						'L_KEEP' => $LANG['keep_pics'],
 						'L_MOVE_PICS' => $LANG['move_pics_to'],
-						'L_EXPLAIN_CAT' => sprintf($LANG['error_warning'], sprintf((($check_pics > 1) ? $LANG['explain_pics'] : $LANG['explain_pic']), $check_pics), '', '')
+						'L_EXPLAIN_CAT' => sprintf($LANG['error_warning_tiny'], sprintf((($check_pics > 1) ? $LANG['explain_pics'] : $LANG['explain_pic']), $check_pics), '', '')
 					));
-				}		
+				}
 				if ($nbr_sub_cat > 0) //Converse uniquement les sous-galeries.
-				{			
+				{
 					//Listing des catégories disponibles, sauf celle qui va être supprimée.		
 					$subgallery = '<option value="0">' . $LANG['root'] . '</option>';
 					$result = $Sql->query_while("SELECT id, name, level
@@ -254,7 +254,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					WHERE id_left NOT BETWEEN '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND '" . $CAT_GALLERY[$idcat]['id_right'] . "'
 					ORDER BY id_left", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
-					{	
+					{
 						$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 						$subgallery .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 					}
@@ -784,12 +784,7 @@ elseif (!empty($root)) //Edition de la racine.
 		'L_GALLERY_CAT_ADD' => $LANG['gallery_cats_add'],
 		'L_GALLERY_CONFIG' => $LANG['gallery_config'],
 		'L_EDIT_CAT' => $LANG['cat_edit'],
-		'L_REQUIRE' => $LANG['require'],
 		'L_RESET' => $LANG['reset'],
-		'L_GUEST' => $LANG['guest'],
-		'L_USER' => $LANG['member'],
-		'L_MODO' => $LANG['modo'],
-		'L_ADMIN' => $LANG['admin'],
 		'L_UPDATE' => $LANG['update'],
 		'L_AUTH_READ' => $LANG['auth_read'],
 		'L_AUTH_WRITE' => $LANG['auth_upload'],
@@ -801,8 +796,8 @@ elseif (!empty($root)) //Edition de la racine.
 	
 	$Template->pparse('admin_gallery_cat_edit2'); // traitement du modele
 }
-else	
-{		
+else
+{
 	$Template->set_filenames(array(
 		'admin_gallery_cat'=> 'gallery/admin_gallery_cat.tpl'
 	));

@@ -2,16 +2,6 @@
 			<ul>
 				<li class="title-menu">{L_GALLERY_MANAGEMENT}</li>
 				<li>
-					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
-					<br />
-					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
-				</li>
-				<li>
-					<a href="admin_gallery_add.php"><img src="gallery.png" alt="" /></a>
-					<br />
-					<a href="admin_gallery_add.php" class="quick-link">{L_GALLERY_PICS_ADD}</a>
-				</li>
-				<li>
 					<a href="admin_gallery_cat.php"><img src="gallery.png" alt="" /></a>
 					<br />
 					<a href="admin_gallery_cat.php" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
@@ -22,23 +12,32 @@
 					<a href="admin_gallery_cat_add.php" class="quick-link">{L_GALLERY_CAT_ADD}</a>
 				</li>
 				<li>
+					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
+					<br />
+					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
+				</li>
+				<li>
+					<a href="admin_gallery_add.php"><img src="gallery.png" alt="" /></a>
+					<br />
+					<a href="admin_gallery_add.php" class="quick-link">{L_GALLERY_PICS_ADD}</a>
+				</li>
+				<li>
 					<a href="admin_gallery_config.php"><img src="gallery.png" alt="" /></a>
 					<br />
 					<a href="admin_gallery_config.php" class="quick-link">{L_GALLERY_CONFIG}</a>
 				</li>
 			</ul>
 		</div>
-						 
+		
 		<div id="admin-contents">
-			<form method="post" action="admin_gallery_cat.php?del={IDCAT}&amp;token={TOKEN}" onsubmit="javascript:return check_form_select();" class="fieldset-content">
+			<form action="admin_gallery_cat.php?del={IDCAT}&amp;token={TOKEN}" method="post" class="fieldset-content">
 				# START pics #
 				<fieldset>
 					<legend>{pics.L_KEEP}</legend>
-					<div class="error_warning" style="width:500px;margin:auto;padding:15px;">
-						<i class="fa fa-notice fa-2x"></i> &nbsp;{pics.L_EXPLAIN_CAT}
-						<br />	
+					<div class="notice">
+						{pics.L_EXPLAIN_CAT}
 					</div>
-					<br />	
+					<br />
 					<div class="form-element">
 						<label for="t_to">{pics.L_MOVE_PICS}</label>
 						<div class="form-field"><label>
@@ -47,7 +46,7 @@
 							</select>
 						</label></div>
 					</div>
-				</fieldset>			
+				</fieldset>
 				# END pics #
 				
 				# START subgalleries #
@@ -63,7 +62,7 @@
 							</select>
 						</label></div>
 					</div>
-				</fieldset>			
+				</fieldset>
 				# END subgalleries #
 				
 				<fieldset>
@@ -72,7 +71,7 @@
 						<label for="del_conf">{L_DEL_GALLERY_CONTENTS}</label>
 						<div class="form-field"><label><input type="checkbox" name="del_conf" id="del_conf"></label></div>
 					</div>
-				</fieldset>	
+				</fieldset>
 				
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>

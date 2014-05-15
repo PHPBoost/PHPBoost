@@ -5,7 +5,7 @@
 			if( level == -1 )
 			{
 				document.getElementById('limit_member').innerHTML = '{L_UNLIMITED}';
-				document.getElementById('limit_modo').innerHTML = '{L_UNLIMITED}';			
+				document.getElementById('limit_modo').innerHTML = '{L_UNLIMITED}';
 			}
 			else if( level == 1 )
 			{
@@ -15,12 +15,12 @@
 			else if( level == 2 )
 			{
 				document.getElementById('limit_member').innerHTML = '{L_UNAUTH}';
-				document.getElementById('limit_modo').innerHTML = '{L_UNAUTH}';			
+				document.getElementById('limit_modo').innerHTML = '{L_UNAUTH}';
 			}
 			else
 			{
 				document.getElementById('limit_member').innerHTML = '<input type="text" size="5" name="limit_member" value="{LIMIT_USER}">';
-				document.getElementById('limit_modo').innerHTML = '<input type="text" size="5" name="limit_modo" value="{LIMIT_MODO}">';		
+				document.getElementById('limit_modo').innerHTML = '<input type="text" size="5" name="limit_modo" value="{LIMIT_MODO}">';
 			}
 		}
 		
@@ -28,35 +28,35 @@
 			if(document.getElementById('height_max').value == "") {
 				alert("{L_REQUIRE_MAX_HEIGHT}");
 				return false;
-		    }
+			}
 			if(document.getElementById('width_max').value == "") {
 				alert("{L_REQUIRE_MAX_WIDTH}");
 				return false;
-		    }
+			}
 				if(document.getElementById('mini_max_height').value == "") {
 				alert("{L_REQUIRE_MINI_MAX_HEIGHT}");
 				return false;
-		    }
+			}
 			if(document.getElementById('mini_max_width').value == "") {
 				alert("{L_REQUIRE_MINI_MAX_WIDTH}");
 				return false;
-		    }
+			}
 			if(document.getElementById('nbr_column').value == "") {
 				alert("{L_REQUIRE_ROW}");
 				return false;
-		    }
+			}
 			if(document.getElementById('nbr_pics_max').value == "") {
 				alert("{L_REQUIRE_IMG_P}");
 				return false;
-		    }
+			}
 			if(document.getElementById('quality').value == "") {
 				alert("{L_REQUIRE_QUALITY}V");
 				return false;
-		    }
+			}
 			if(document.getElementById('weight_max').value == "") {
 				alert("{L_REQUIRE_MAX_WEIGHT}");
 				return false;
-		    }
+			}
 			
 			
 			return true;
@@ -69,16 +69,6 @@
 			<ul>
 				<li class="title-menu">{L_GALLERY_MANAGEMENT}</li>
 				<li>
-					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
-					<br />
-					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
-				</li>
-				<li>
-					<a href="admin_gallery_add.php"><img src="gallery.png" alt="" /></a>
-					<br />
-					<a href="admin_gallery_add.php" class="quick-link">{L_GALLERY_PICS_ADD}</a>
-				</li>
-				<li>
 					<a href="admin_gallery_cat.php"><img src="gallery.png" alt="" /></a>
 					<br />
 					<a href="admin_gallery_cat.php" class="quick-link">{L_GALLERY_CAT_MANAGEMENT}</a>
@@ -89,18 +79,28 @@
 					<a href="admin_gallery_cat_add.php" class="quick-link">{L_GALLERY_CAT_ADD}</a>
 				</li>
 				<li>
+					<a href="admin_gallery.php"><img src="gallery.png" alt="" /></a>
+					<br />
+					<a href="admin_gallery.php" class="quick-link">{L_GALLERY_MANAGEMENT}</a>
+				</li>
+				<li>
+					<a href="admin_gallery_add.php"><img src="gallery.png" alt="" /></a>
+					<br />
+					<a href="admin_gallery_add.php" class="quick-link">{L_GALLERY_PICS_ADD}</a>
+				</li>
+				<li>
 					<a href="admin_gallery_config.php"><img src="gallery.png" alt="" /></a>
 					<br />
 					<a href="admin_gallery_config.php" class="quick-link">{L_GALLERY_CONFIG}</a>
 				</li>
 			</ul>
 		</div>
-						 
+		
 		<div id="admin-contents">
 			<form action="admin_gallery_config.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<fieldset>
 					<legend>{L_CONFIG_CONFIG}</legend>
-					<p>{L_REQUIRE}</p>
+					<p class="center">{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="max_width">* {L_MAX_WIDTH} <span class="field-description">{L_MAX_WIDTH_EXPLAIN}</span></label>
 						<div class="form-field"><input type="text" size="5" id="max_width" name="max_width" value="{MAX_WIDTH}"> {L_UNIT_PX}</div>
@@ -246,8 +246,8 @@
 						<label for="logo_vertical_distance">{L_HEIGHT_BOTTOM_RIGHT} <span class="field-description">{L_HEIGHT_BOTTOM_RIGHT_EXPLAIN}</span></label>
 						<div class="form-field"><input type="text" size="5" name="logo_vertical_distance" id="logo_vertical_distance" value="{LOGO_VERTICAL_DISTANCE}"> {L_UNIT_PX}</div>
 					</div>
-				</fieldset>	
-					
+				</fieldset>
+				
 				<fieldset>
 					<legend>{L_UPLOAD_PICS}</legend>
 					<div class="form-element">
@@ -272,11 +272,10 @@
 					<legend>{L_CACHE}</legend>
 					<img src="{PATH_TO_ROOT}/templates/default/images/admin/cache.png" alt="" style="float:left;padding:6px;" />
 					{L_EXPLAIN_GALLERY_CACHE}
-					<br /><br />
-				</fieldset>			
+				</fieldset>
 				<fieldset class="fieldset-submit">
 					<legend>{L_EMPTY}</legend>
-					<button type="submit" name="gallery_cache" value="true">{L_EMPTY}</button> 		
+					<button type="submit" name="gallery_cache" value="true">{L_EMPTY}</button>
 				</fieldset>
 			</form>
 		</div>
