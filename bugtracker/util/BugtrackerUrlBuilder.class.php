@@ -116,22 +116,6 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function history_success($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/history/success/' . $param);
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function roadmap_success($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/roadmap/success/' . $param);
-	}
-	
-	/**
-	 * @return Url
-	 */
 	public static function roadmap($param = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/roadmap/' . $param);
@@ -143,14 +127,6 @@ class BugtrackerUrlBuilder
 	public static function stats($param = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/stats/' . $param);
-	}
-	
-	/**
-	 * @return Url
-	 */
-	public static function stats_success($param = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/stats/success/' . $param);
 	}
 	
 	/**
