@@ -60,7 +60,8 @@ class FormFieldFilePicker extends AbstractFormField
         $file_field_tpl->put_all(array(
 			'MAX_FILE_SIZE' => $this->get_max_file_size(),
 			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_html_id(),
+			'ID' => $this->get_id(),
+			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled()
         ));
 

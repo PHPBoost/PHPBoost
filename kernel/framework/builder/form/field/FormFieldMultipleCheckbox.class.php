@@ -125,7 +125,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
     private function generate_html_code()
     {
         $tpl_src = '# START choice #
-        <label><input type="checkbox" name="${escape(choice.ID)}" id="${escape(choice.ID)}" # IF choice.C_CHECKED # checked="checked" # ENDIF # />&nbsp;${escape(choice.NAME)}</label>
+        <label><input type="checkbox" name="${escape(choice.HTML_ID)}" id="${escape(choice.ID)}" # IF choice.C_CHECKED # checked="checked" # ENDIF # />&nbsp;${escape(choice.NAME)}</label>
         # END choice #';
 		
         $rows = array();
@@ -133,7 +133,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
         {
         	$rows[] = array(
         		'NAME' => $option->get_label(),
-        		'ID' => $this->get_option_id($option),
+        		'HTML_ID' => $this->get_option_id($option),
         		'C_CHECKED' => $this->is_selected($option)
         	);
         }

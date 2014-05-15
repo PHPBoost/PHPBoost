@@ -95,7 +95,8 @@ class FormFieldCheckbox extends AbstractFormField
         $tpl = new StringTemplate($tpl_src);
         $tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_html_id(),
+			'ID' => $this->get_id(),
+			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
         	'C_READONLY' => $this->is_readonly(),
 			'C_CHECKED' => $this->is_checked()
