@@ -40,6 +40,11 @@ class ModuleTreeLinksService
 			$tpl = new FileTemplate('framework/module/module_actions_links_menu.tpl');
 			$tpl->put('C_DISPLAY', $actions_tree_links->has_visible_links());
 			
+			$module_home = new ModuleLink(LangLoader::get_message('home', 'main'), new Url('/' . Environment::get_running_module_name() . '/'));
+			$tpl->assign_block_vars('element', array(), array(
+				'ELEMENT' => $module_home->export()
+			));
+			
 			return self::display($actions_tree_links, $tpl);
 		}
 	}
@@ -67,6 +72,11 @@ class ModuleTreeLinksService
 			$tpl->put_all(array(
 				'C_HAS_SUB_LINK' => $actions_tree_links->has_links(),
 				'C_DISPLAY' => $actions_tree_links->has_links() || !empty($admin_main_page)
+			));
+			
+			$module_home = new ModuleLink(LangLoader::get_message('home', 'main'), new Url('/' . $id_module . '/'));
+			$tpl->assign_block_vars('element', array(), array(
+				'ELEMENT' => $module_home->export()
 			));
 			
 			return self::display($actions_tree_links, $tpl);
