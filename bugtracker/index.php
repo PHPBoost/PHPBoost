@@ -41,15 +41,12 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('BugtrackerUnsolvedListController', '`^/unsolved?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9_-]+)?/?$`', array('field', 'sort', 'page', 'filter', 'filter_id')),
 	new UrlControllerMapper('BugtrackerSolvedListController', '`^/solved/success/([a-z_-]+)?/?([0-9]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9_-]+)?/?$`', array('success', 'id', 'page', 'filter', 'filter_id')),
 	new UrlControllerMapper('BugtrackerSolvedListController', '`^/solved(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9_-]+)?/?$`', array('field', 'sort', 'page', 'filter', 'filter_id')),
-	new UrlControllerMapper('BugtrackerRoadmapListController', '`^/roadmap/success/([a-z_-]+)?/?([a-z0-9_-]+)?/?([a-z_-]+)?/?([0-9]+)?/?$`', array('success', 'version', 'status', 'page')),
 	new UrlControllerMapper('BugtrackerRoadmapListController', '`^/roadmap(?:/([0-9]+))?-?([a-z0-9_-]+)?/?([a-z_-]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_version', 'version', 'status', 'field', 'sort', 'page')),
 	
 	//Stats
-	new UrlControllerMapper('BugtrackerStatsListController', '`^/stats/success/([a-z_-]+)?/?([0-9]+)?/?$`', array('success', 'id')),
 	new UrlControllerMapper('BugtrackerStatsListController', '`^/stats?/?([0-9]+)?/?$`', array('id')),
 	
 	//Bug history
-	new UrlControllerMapper('BugtrackerHistoryListController', '`^/history/success/([a-z_-]+)?/?([0-9]+)?/?$`', array('success', 'id')),
 	new UrlControllerMapper('BugtrackerHistoryListController', '`^/history/([0-9]+)?/?([0-9]+)?/?$`', array('id', 'page')),
 	
 	//Bug detail
@@ -57,7 +54,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('BugtrackerDetailController', '`^/detail/([0-9]+)?-?([0-9A-Za-z_-]+)?/?$`', array('id', 'rewrited_title')),
 	
 	//New bug
-	new UrlControllerMapper('BugtrackerFormController', '`^/add?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('back_page', 'page', 'back_filter', 'filter_id')),
+	new UrlControllerMapper('BugtrackerFormController', '`^/add/?$`'),
 	
 	//Bug edition
 	new UrlControllerMapper('BugtrackerFormController', '`^/edit/([0-9]+)?/?([a-z]+)?/?([0-9]+)?/?([a-z_-]+)?/?([a-z0-9-]+)?/?$`', array('id', 'back_page', 'page', 'back_filter', 'filter_id')),

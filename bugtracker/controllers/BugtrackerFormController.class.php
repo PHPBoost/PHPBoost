@@ -545,33 +545,19 @@ class BugtrackerFormController extends ModuleController
 		Feed::clear_cache('bugtracker');
 		BugtrackerStatsCache::invalidate();
 		
-		$request = AppContext::get_request();
-		
-		$back_page = $request->get_value('back_page', '');
-		$page = $request->get_int('page', 1);
-		$back_filter = $request->get_value('back_filter', '');
-		$filter_id = $request->get_value('filter_id', '');
-		
 		if ($bug->get_id() === null)
 		{
-			switch ($back_page)
-			{
-				case 'roadmap' :
-					$redirect = BugtrackerUrlBuilder::roadmap_success('add/'. $id . '/' . $page);
-					break;
-				case 'stats' :
-					$redirect = BugtrackerUrlBuilder::stats_success('add/'. $id);
-					break;
-				case 'solved' :
-					$redirect = BugtrackerUrlBuilder::solved_success('add/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-					break;
-				default :
-					$redirect = BugtrackerUrlBuilder::unsolved_success('add/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
-					break;
-			}
+			$redirect = BugtrackerUrlBuilder::unsolved_success('add/'. $id);
 		}
 		else
 		{
+			$request = AppContext::get_request();
+			
+			$back_page = $request->get_value('back_page', '');
+			$page = $request->get_int('page', 1);
+			$back_filter = $request->get_value('back_filter', '');
+			$filter_id = $request->get_value('filter_id', '');
+			
 			if ($modification)
 			{
 				switch ($back_page)
@@ -610,12 +596,6 @@ class BugtrackerFormController extends ModuleController
 	private function generate_response(View $tpl)
 	{
 		$bug = $this->get_bug();
-		$request = AppContext::get_request();
-		
-		$back_page = $request->get_value('back_page', '');
-		$page = $request->get_int('page', 1);
-		$back_filter = $request->get_value('back_filter', '');
-		$filter_id = $request->get_value('filter_id', '');
 		
 		if ($bug->get_id() === null)
 		{
@@ -628,10 +608,17 @@ class BugtrackerFormController extends ModuleController
 			
 			$breadcrumb = $graphical_environment->get_breadcrumb();
 			$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
-			$breadcrumb->add($this->lang['titles.add'], BugtrackerUrlBuilder::add(!empty($back_page) ? $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : ''));
+			$breadcrumb->add($this->lang['titles.add'], BugtrackerUrlBuilder::add());
 		}
 		else
 		{
+			$request = AppContext::get_request();
+			
+			$back_page = $request->get_value('back_page', '');
+			$page = $request->get_int('page', 1);
+			$back_filter = $request->get_value('back_filter', '');
+			$filter_id = $request->get_value('filter_id', '');
+			
 			$body_view = BugtrackerViews::build_body_view($tpl, 'edit', $bug->get_id());
 			
 			$response = new SiteDisplayResponse($body_view);
