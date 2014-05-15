@@ -125,21 +125,8 @@ class ArticlesFormController extends ModuleController
 		$other_fieldset->add_field(new FormFieldCheckbox('author_name_displayed', $this->lang['articles.form.author_name_displayed'], $this->get_article()->get_author_name_displayed()));
 
 		$other_fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->lang['articles.form.notation_enabled'], $this->get_article()->get_notation_enabled()));
-
-		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 'function(response){
-		$(\'loading-article-picture\').remove();
-		if (response.responseJSON.image_url) {
-			$(\'preview_picture\').src = response.responseJSON.image_url;
-			$(\'preview_picture\').style.display = "inline";
-		} else {
-			$(\'preview_picture\').style.display = "none";
-		}}');
-		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-article-picture" class="fa fa-spinner fa-spin"></i>\'}); }');
-		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
-		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->lang['articles.form.picture'], $this->get_article()->get_picture()->relative(), 
-			array('description' => $this->lang['articles.form.picture.description'], 'events' => array('change' => $image_preview_request->render())
-		)));
-		$other_fieldset->add_field(new FormFieldFree('preview_picture', $common_lang['form.picture.preview'], '<img id="preview_picture" src="'. $this->get_article()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
+		
+		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->lang['articles.form.picture'], $this->get_article()->get_picture()->relative(), array('description' => $this->lang['articles.form.picture.description'])));
 
 		$other_fieldset->add_field(ArticlesService::get_keywords_manager()->get_form_field($this->get_article()->get_id(), 'keywords', $common_lang['form.keywords'],  
 			array('description' => $this->lang['articles.form.keywords.description'])
