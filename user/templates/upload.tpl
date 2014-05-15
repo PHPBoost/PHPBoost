@@ -339,7 +339,7 @@
 								<input type="file" name="upload_file" size="30" id="upload-file">					
 								<input type="hidden" name="max_file_size" value="2000000">
 							</div>
-							<button type="submit" name="valid_up" value="true">{L_UPLOAD}</button>
+							<button type="submit" name="valid_up" value="true" class="submit">{L_UPLOAD}</button>
 							</div>
 					</fieldset>
 				</form>	

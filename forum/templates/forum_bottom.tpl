@@ -29,7 +29,7 @@
 						<p style="margin-bottom:8px;" class="smaller"><label>{L_PSEUDO} <input size="15" type="text" name="login" maxlength="25"></label>
 						<label>{L_PASSWORD}	<input size="15" type="password" name="password" maxlength="30"></label>
 						&nbsp;| <label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked"></label>
-						&nbsp;| <button type="submit" name="connect" value="true">{L_CONNECT}</button></p>
+						&nbsp;| <button type="submit" name="connect" value="true" class="submit">{L_CONNECT}</button></p>
 					</form>
 					# ENDIF #
 				# ENDIF #
@@ -63,7 +63,7 @@
 								<option value="unlock">{L_UNLOCK}</option>
 								<option value="del">{L_DELETE}</option>
 							</select>
-							<button type="submit" value="true" name="valid">{L_GO}</button>
+							<button type="submit" value="true" name="valid" class="submit">{L_GO}</button>
 						</div>
 					</form>
 					# ENDIF #

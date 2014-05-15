@@ -107,7 +107,7 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="idcat" value="{IDCAT}">
-					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
+					<button type="submit" name="submit" value="true" class="submit">{L_SUBMIT}</button>
 					<button type="button" name="preview" onclick="XMLHttpRequest_preview();" value="true">{L_PREVIEW}</button>
 					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>

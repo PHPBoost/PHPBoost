@@ -66,7 +66,7 @@
 					</fieldset>
 					<fieldset class="fieldset-submit">
 						<legend>{L_SEARCH}</legend>
-						<button type="submit" name="valid_search" value="true">{L_SEARCH}</button>
+						<button type="submit" name="valid_search" value="true" class="submit">{L_SEARCH}</button>
 					</fieldset>
 					
 					<p><span id="search_forum"></span></p>

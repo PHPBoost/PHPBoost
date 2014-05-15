@@ -95,7 +95,7 @@
 				</fieldset>
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
-					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
+					<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
 					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>	
 			</form>

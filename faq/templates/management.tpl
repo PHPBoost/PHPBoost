@@ -54,7 +54,7 @@
 					</fieldset>
 					<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
-						<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
+						<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
 						<button type="reset" value="true">{L_RESET}</button>
 						<input type="hidden" name="id_question" value="{edit_question.ID_QUESTION}">
 					</fieldset>
@@ -83,7 +83,7 @@
 					</fieldset>
 					<fieldset class="fieldset-submit">
 						<legend>{L_MOVE}</legend>
-						<button type="submit" name="submit" value="true">{L_MOVE}</button>
+						<button type="submit" name="submit" value="true" class="submit">{L_MOVE}</button>
 						<input type="hidden" name="id_question" value="{move_question.ID_QUESTION}">
 						<input type="hidden" name="move_question" value="true">
 					</fieldset>

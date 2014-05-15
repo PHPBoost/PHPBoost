@@ -279,7 +279,7 @@
 								</select>
 								# ENDIF #
 								<input type="hidden" name="{TYPE}" value="1">
-								<button type="submit" name="date" value="true">{L_SUBMIT}</button>
+								<button type="submit" name="date" value="true" class="submit">{L_SUBMIT}</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								<a class="fa fa-arrow-right" href="admin_stats{U_NEXT_LINK}#stats"></a>
 							</div>
@@ -766,7 +766,7 @@
 			<br /><br />
 			<fieldset class="fieldset-submit">
 				<legend>{L_ERASE_RAPPORT}</legend>
-				<button type="submit" name="erase" value="true">{L_ERASE_RAPPORT}</button> 
+				<button type="submit" name="erase" value="true" class="submit">{L_ERASE_RAPPORT}</button> 
 			</fieldset>
 		</form>
 		# ENDIF #
@@ -790,7 +790,7 @@
 				</fieldset>
 				
 				<fieldset class="fieldset-submit">
-					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
+					<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>

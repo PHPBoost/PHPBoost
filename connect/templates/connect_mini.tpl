@@ -30,7 +30,7 @@
 					<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto"></label>
 					<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
 					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" name="connect" value="true">{L_CONNECT}</button>
+					<button type="submit" name="connect" value="true" class="submit">{L_CONNECT}</button>
 				</form>
 				<div class="connect-register">
 					# IF C_USER_REGISTER # 
@@ -93,11 +93,11 @@
 				<input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
 				<input checked="checked" type="checkbox" name="auto">
 				<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
-				<button type="submit" name="connect" value="true">{L_CONNECT}</button>
+				<button type="submit" name="connect" value="true" class="submit">{L_CONNECT}</button>
 			</form>
 			# IF C_USER_REGISTER #
 			<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
-				<button type="submit" name="register" value="true">{L_REGISTER}</button>
+				<button type="submit" name="register" value="true" class="submit">{L_REGISTER}</button>
 			</form>
 			# ENDIF #
 		</div>

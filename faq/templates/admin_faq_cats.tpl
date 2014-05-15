@@ -67,7 +67,7 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}">
-					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>	
+					<button type="submit" name="submit" value="true" class="submit">{L_SUBMIT}</button>	
 				</fieldset>
 			</form>
 			
@@ -172,7 +172,7 @@
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}">
-					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
+					<button type="submit" name="submit" value="true" class="submit">{L_SUBMIT}</button>
 					<button type="button" name="preview" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>

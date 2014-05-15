@@ -50,7 +50,7 @@
 					<br />
 					<fieldset class="fieldset-submit">
 					<legend></legend><input type="hidden" name="max_file_size" value="2000000">
-					<button type="submit" name="vupload" value="true">{L_UPLOAD}</button>
+					<button type="submit" name="vupload" value="true" class="submit">{L_UPLOAD}</button>
 					</fieldset>
 				</div>
 				<footer>

@@ -190,7 +190,7 @@
 				
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
-					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
+					<button type="submit" name="submit" value="true" class="submit">{L_SUBMIT}</button>
 					<button type="submit" name="preview" value="true">{L_PREVIEW}</button>
 					<button type="reset" value="true">{L_RESET}</button>
 					<input type="hidden" name="token" value="{TOKEN}">

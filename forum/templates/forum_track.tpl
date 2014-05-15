@@ -93,7 +93,7 @@
 							# END topics #
 						</tbody>
 					</table>
-					<div style="margin:10px;text-align:center"><button type="submit" name="valid" value="true">{L_SUBMIT}</button></div>
+					<div style="margin:10px;text-align:center"><button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button></div>
 				</div>
 			</div>
 		</form>
