@@ -39,7 +39,7 @@
 					<label><input type="radio" name="activated-{langs_not_installed.ID}" value="0"> {@langs.no}</label>
 				</td>
 				<td>
-					<button type="submit" name="add-{langs_not_installed.ID}" value="true">{L_ADD}</button>
+					<button type="submit" class="submit" name="add-{langs_not_installed.ID}" value="true">{L_ADD}</button>
 				</td>
 			</tr>
 		# END themes_not_installed #

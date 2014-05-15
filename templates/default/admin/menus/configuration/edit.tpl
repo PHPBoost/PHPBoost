@@ -4,7 +4,7 @@
 		<div class="form-element">
 			<label for="menu_config_name">* {EL_MENU_CONFIGURATION_EDITION_NAME}</label>
 			<div class="form-field"><label>
-				<input type="text" id="menu_config_name"	name="menu_config_name" value="${escape(NAME)}">
+				<input type="text" id="menu_config_name" name="menu_config_name" value="${escape(NAME)}">
 			</label></div>
 		</div>
 		<div class="form-element">
@@ -17,7 +17,7 @@
 
 	<fieldset class="fieldset-submit">
 		<legend>{EL_SUBMIT}</legend>
-		<button type="submit" name="valid" value="true">{EL_SUBMIT}</button>
+		<button type="submit" class="submit" name="valid" value="true">{EL_SUBMIT}</button>
 		<button type="reset" value="true">{EL_RESET}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 	</fieldset>

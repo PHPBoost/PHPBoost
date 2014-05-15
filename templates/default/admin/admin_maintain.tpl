@@ -62,14 +62,14 @@
 						<label for="auth_read">{L_AUTH_WEBSITE}</label>
 						<div class="form-field">{AUTH_WEBSITE}</div>
 					</div>
-				</fieldset>			
+				</fieldset>
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
-					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
+					<button type="submit" class="submit" name="valid" value="true">{L_UPDATE}</button>
 					<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
 					<button type="reset" value="true">{L_RESET}</button>
 					<input type="hidden" name="token" value="{TOKEN}">
-				</fieldset>	
-			</form>	
+				</fieldset>
+			</form>
 		</div>
 		

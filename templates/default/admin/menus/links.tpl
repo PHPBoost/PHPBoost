@@ -244,7 +244,7 @@ function image_preview(input,image)
 			<input type="hidden" name="id" value="{MENU_ID}">
 			<input type="hidden" name="token" value="{TOKEN}">
 			<input type="hidden" name="menu_tree" id="menu_tree" value="">
-			<button type="submit" name="valid" value="true">{L_ACTION}</button>
+			<button type="submit" class="submit" name="valid" value="true">{L_ACTION}</button>
 		</fieldset>
 	</form>
 </div>

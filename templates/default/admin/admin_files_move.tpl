@@ -65,7 +65,7 @@
 						<div class="spacer"></div>
 						<fieldset class="fieldset-submit">
 							<input type="hidden" name="new_cat" id="id_cat" value="{SELECTED_CAT}">
-							<button type="submit" value="true" name="valid">{L_SUBMIT}</button>
+							<button type="submit" class="submit" value="true" name="valid">{L_SUBMIT}</button>
 						</fieldset>
 					</form>
 				</div>

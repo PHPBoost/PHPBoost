@@ -61,8 +61,8 @@ function CheckForm() {
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="action" value="{ACTION}">
 			<input type="hidden" name="id" value="{IDMENU}">
-			<button type="submit" name="valid" value="true">{L_ACTION}</button>
-			<input type="hidden" name="token" value="{TOKEN}">			
-		</fieldset>	
+			<button type="submit" class="submit" name="valid" value="true">{L_ACTION}</button>
+			<input type="hidden" name="token" value="{TOKEN}">
+		</fieldset>
 	</form>
 </div>

@@ -4,7 +4,7 @@
 			<legend>{@clear_list}</legend>
 			<div class="form-element">
 				<label>{@clear_list} <span class="field-description">{@clear_list_explain}</span></label>
-				<div class="form-field"><label><button type="submit" name="clear" data-confirmation="{@404_errors_clear_confirmation}" value="true">{@clear_list}</button></label></div>
+				<div class="form-field"><label><button type="submit" class="submit" name="clear" data-confirmation="{@404_errors_clear_confirmation}" value="true">{@clear_list}</button></label></div>
 			</div>
 		</fieldset>
 		<input type="hidden" name="token" value="{TOKEN}">
