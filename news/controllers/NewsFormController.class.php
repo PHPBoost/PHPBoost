@@ -118,20 +118,7 @@ class NewsFormController extends ModuleController
 		$other_fieldset = new FormFieldsetHTML('other', $common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
 
-		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 'function(response){
-		$(\'loading-news-picture\').remove();
-		if (response.responseJSON.image_url) {
-			$(\'preview_picture\').src = response.responseJSON.image_url;
-			$(\'preview_picture\').style.display = "inline";
-		} else {
-			$(\'preview_picture\').style.display = "none";
-		}}');
-		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-news-picture" class="fa fa-spinner fa-spin"></i>\'}); }');
-		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
-		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->lang['news.form.picture'], $this->get_news()->get_picture()->relative(), array(
-			'events' => array('change' => $image_preview_request->render())
-		)));
-		$other_fieldset->add_field(new FormFieldFree('preview_picture', $common_lang['form.picture.preview'], '<img id="preview_picture" src="'. $this->get_news()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
+		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->lang['news.form.picture'], $this->get_news()->get_picture()->relative()));
 
 		$other_fieldset->add_field(NewsService::get_keywords_manager()->get_form_field($this->get_news()->get_id(), 'keywords', $common_lang['form.keywords'], array('description' => $this->lang['news.form.keywords.description'])));
 		

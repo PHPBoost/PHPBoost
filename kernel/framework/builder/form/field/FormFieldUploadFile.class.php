@@ -51,23 +51,11 @@ class FormFieldUploadFile extends AbstractFormField
     public function display()
     {
         $template = $this->get_template_to_use();
-
-        $field = new FileTemplate('framework/builder/form/FormFieldUploadFile.tpl');
-
-        $field->put_all(array(
-			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_html_id(),
-			'VALUE' => $this->get_value(),
-			'CLASS' => $this->get_css_class(),
-			'C_DISABLED' => $this->is_disabled(),
-			'C_READONLY' => $this->is_readonly(),
-			'L_FILE_ADD' => LangLoader::get_message('bb_upload', 'editor-common')
-        ));
-
+        
         $this->assign_common_template_variables($template);
-
-        $template->assign_block_vars('fieldelements', array(
-			'ELEMENT' => $field->render()
+        
+        $template->put_all(array(
+			'FILE_PATH' => Url::to_rel($this->get_value()),
         ));
 
         return $template;
@@ -75,7 +63,7 @@ class FormFieldUploadFile extends AbstractFormField
 
     protected function get_default_template()
     {
-        return new FileTemplate('framework/builder/form/FormField.tpl');
+        return new FileTemplate('framework/builder/form/FormFieldUploadFile.tpl');
     }
 }
 ?>
