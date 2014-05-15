@@ -23,7 +23,7 @@
 
 <div class="spacer">&nbsp;</div>
 
-<section class="block" style="background:#FFF">
+<section class="block">
 	<header>
 		<h1>{@labels.fields.status}</h1>
 	</header>
@@ -41,7 +41,7 @@
 <div class="spacer">&nbsp;</div>
 
 # IF C_DISPLAY_VERSIONS #
-<section class="block" style="background:#FFF">
+<section class="block">
 	<header>
 		<h1>{@labels.fix_bugs_per_version}</h1>
 	</header>
@@ -81,7 +81,7 @@
 # ENDIF #
 
 # IF C_DISPLAY_TOP_POSTERS #
-<section class="block" style="background:#FFF">
+<section class="block">
 	<header>
 		<h1>{@labels.top_posters}</h1>
 	<header>

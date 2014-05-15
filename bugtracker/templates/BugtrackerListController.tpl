@@ -1,6 +1,5 @@
-# INCLUDE FILTER_LIST #
-
 # IF C_BUGS #
+	# INCLUDE FILTER_LIST #
 	<table>
 		<thead>
 			<tr>
@@ -115,10 +114,11 @@
 				# ENDIF #
 			</tr>
 			# END bug #
+			<tr>
+				<td colspan="{BUGS_COLSPAN}" class="legend-line"># INCLUDE LEGEND #</td>
+			</tr>
 		</tbody>
 	</table>
-
-	# INCLUDE LEGEND #
 # ELSE #
 <div class="spacer">&nbsp;</div>
 

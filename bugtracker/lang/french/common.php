@@ -97,7 +97,6 @@ $lang['titles.contents_value_title'] = 'Description par défaut d\'un bug';
 $lang['titles.contents_value'] = 'Description par défaut';
 $lang['titles.filter'] = 'Filtre';
 $lang['titles.filters'] = 'Filtres';
-$lang['titles.legend'] = 'Légende';
 $lang['titles.informations'] = 'Informations';
 $lang['titles.version_informations'] = 'Informations sur la version';
 
@@ -168,7 +167,7 @@ $lang['status.rejected'] = 'Rejeté';
 //Explications
 $lang['explain.contents'] = 'Détails qui seront utiles pour la résolution du bug';
 $lang['explain.roadmap'] = 'Permet d\'afficher la liste des bugs corrigés pour chaque version. Affichée s\'il y a au moins une version dans la liste.';
-$lang['explain.type'] = 'Types des demandes. Exemples : Anomalie, Demande d\'évolution...';
+$lang['explain.type'] = 'Type des demandes. Exemples : Anomalie, Demande d\'évolution...';
 $lang['explain.category'] = 'Catégorie des demandes. Exemples : Noyau, Module...';
 $lang['explain.severity'] = 'Niveau des demandes. Exemples : Mineur, Majeur, Critique...';
 $lang['explain.priority'] = 'Priorité des demandes. Exemples : Basse, Normale, Elevée...';

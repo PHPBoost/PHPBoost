@@ -11,10 +11,10 @@
 		<menu class="dynamic-menu group center">
 			<ul>
 				<li# IF C_UNSOLVED # class="current"# ENDIF #>
-					<a href="${relative_url(BugtrackerUrlBuilder::unsolved())}" style="display:inline-block;">{@titles.unsolved}</a> 
+					<a href="${relative_url(BugtrackerUrlBuilder::unsolved())}">{@titles.unsolved}</a> 
 				</li>
 				<li# IF C_SOLVED # class="current"# ENDIF #>
-					<a href="${relative_url(BugtrackerUrlBuilder::solved())}" style="display:inline-block;">{@titles.solved}</a>
+					<a href="${relative_url(BugtrackerUrlBuilder::solved())}">{@titles.solved}</a>
 				</li>
 				# IF C_ROADMAP_ENABLED #
 				<li# IF C_ROADMAP # class="current"# ENDIF #>
