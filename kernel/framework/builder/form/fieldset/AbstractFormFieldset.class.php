@@ -229,7 +229,8 @@ abstract class AbstractFormFieldset implements FormFieldset
 		$template->put_all(array(
             'C_DESCRIPTION' => !empty($this->description),
             'DESCRIPTION' => $this->description,
-			'ID' => $this->get_html_id(),
+			'ID' => $this->id,
+			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->disabled,
 			'CSS_CLASS' => $this->css_class,
 			'FORM_ID' => $this->form_id
