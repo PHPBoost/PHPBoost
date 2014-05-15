@@ -49,6 +49,8 @@ class InstallWelcomeController extends InstallController
 	private function add_navigation(Template $view)
     {
         $form = new HTMLForm('preambleForm', InstallUrlBuilder::license()->rel());
+        $form->disable_captcha_protection();
+        
         $action_fieldset = new FormFieldsetSubmit('actions');
 		$next = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'welcome');
 		$action_fieldset->add_element($next);

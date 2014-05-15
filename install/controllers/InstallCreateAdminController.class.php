@@ -60,7 +60,8 @@ class InstallCreateAdminController extends InstallController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('adminForm');
-
+		$this->form->disable_captcha_protection();
+		
 		$fieldset = new FormFieldsetHTML('adminAccount', $this->lang['admin.account']);
 		$this->form->add_fieldset($fieldset);
 

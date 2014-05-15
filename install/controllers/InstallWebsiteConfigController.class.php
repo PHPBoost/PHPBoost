@@ -55,6 +55,7 @@ class InstallWebsiteConfigController extends InstallController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('websiteForm');
+		$this->form->disable_captcha_protection();
 
 		$fieldset = new FormFieldsetHTML('yourSite', $this->lang['website.yours']);
 		$this->form->add_fieldset($fieldset);
