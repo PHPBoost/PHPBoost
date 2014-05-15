@@ -74,7 +74,8 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 		
 		 $tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_html_id(),
+			'ID' => $this->get_id(),
+			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
         	'MAX_INPUT' => $this->max_input,
 		 	'NBR_FIELDS' => $i == 0 ? 1 : $i,
