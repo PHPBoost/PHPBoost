@@ -131,7 +131,7 @@
 				
 				<fieldset class="fieldset-submit">
 					<legend>{L_SUBMIT}</legend>
-					<button type="submit" name="valid" value="true">{L_SUBMIT}</button>
+					<button type="submit" name="valid" value="true" class="submit">{L_SUBMIT}</button>
 					<button type="submit" name="previs" value="true">{L_PREVIEW}</button>
 					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>	

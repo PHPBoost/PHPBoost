@@ -64,7 +64,7 @@
 							<tr>
 								<th colspan="4" style="text-align:center;">
 									# IF C_FORUM_ADMIN #
-									<span style="float:left"><button type="submit" name="valid" value="true">{L_DELETE}</button></span> 
+									<span style="float:left"><button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></span> 
 									# ENDIF #
 									# IF C_DISPLAY_LINK_MORE_ACTION #
 									<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
@@ -131,7 +131,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="6">
-									<button type="submit" name="" value="true">{L_DELETE}</button>
+									<button type="submit" name="" value="true" class="submit">{L_DELETE}</button>
 								</th>
 							</tr>
 						</tfoot>
@@ -216,7 +216,7 @@
 				<form action="{U_CHANGE_STATUS}" method="post">
 					<fieldset class="fieldset-submit" style="padding-top:25px;">
 						<legend></legend>
-						<button type="submit" name="valid" value="true">{L_CHANGE_STATUS}</button>
+						<button type="submit" name="valid" value="true" class="submit">{L_CHANGE_STATUS}</button>
 					</fieldset>
 				</form>
 				# ENDIF #
@@ -294,7 +294,7 @@
 								<span id="search_img"></span>
 							</span>
 							<span style="float:left;margin-left:5px;">
-								<button type="submit" id="search_member" name="search_member">{L_SEARCH}</button>
+								<button type="submit" id="search_member" name="search_member" class="submit">{L_SEARCH}</button>
 								<script>
 								<!--
 									document.getElementById('search_member').style.display = 'none';
@@ -399,7 +399,7 @@
 									<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 										{SELECT}
 									</select></label>
-									<button type="submit" name="valid_user" value="true">{L_CHANGE_INFO}</button>
+									<button type="submit" name="valid_user" value="true" class="submit">{L_CHANGE_INFO}</button>
 								</td>
 							</tr>
 						</tbody>

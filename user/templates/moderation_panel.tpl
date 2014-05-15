@@ -169,7 +169,7 @@
 					
 					<fieldset class="fieldset-submit">
 						<legend></legend>
-						<button type="submit" name="valid_user" value="true">{L_CHANGE_INFO}</button>
+						<button type="submit" name="valid_user" value="true" class="submit">{L_CHANGE_INFO}</button>
 					</fieldset>
 				</form>
 				# ENDIF #
@@ -205,7 +205,7 @@
 					
 					<fieldset class="fieldset-submit">
 						<legend></legend>
-						<button type="submit" name="valid_user" value="true">{L_BAN}</button>
+						<button type="submit" name="valid_user" value="true" class="submit">{L_BAN}</button>
 					</fieldset>
 				</form>
 				# ENDIF #

@@ -341,7 +341,7 @@
 									<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 								</fieldset>
 								<fieldset class="fieldset-submit" style="margin:0">
-									<button type="submit" name="submit" value="true">{L_EXECUTE}</button>
+									<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
 								</fieldset>
 							</div>
 							<footer></footer>
@@ -439,7 +439,7 @@
 				</table>
 				<fieldset class="fieldset-submit" style="margin:0">
 					<legend>{L_EXECUTE}</legend>
-					<button type="submit" name="submit" value="true">{L_EXECUTE}</button>
+					<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
 				</fieldset>
 			</form>
 			# ENDIF #

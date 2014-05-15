@@ -5,7 +5,7 @@
 				<p style="text-align:center">
 					{L_EXPLAIN_DEFAULT}
 					<br />
-					<button type="submit" name="default" value="true">{L_DEFAULT}</button>
+					<button type="submit" name="default" value="true" class="submit">{L_DEFAULT}</button>
 				</p>
 				<br />
 				<hr />
@@ -53,7 +53,7 @@
 			
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
-				<button type="submit" name="valid" value="true">{L_UPDATE}</button>
+				<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
 				<button type="reset" value="true">{L_RESET}</button>
 				<input type="hidden" name="id_auth" value="{auth.ID}">
 			</fieldset>
@@ -138,7 +138,7 @@
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_change_status" value="{status.ID_ARTICLE}">
-				<button type="submit" value="true">{L_SUBMIT}</button>
+				<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
 				<button onclick="XMLHttpRequest_preview();hide_div('xmlhttprequest_result')" type="button">{L_PREVIEW}</button>
 				<button type="reset">{L_RESET}</button>
 			</fieldset>
@@ -181,7 +181,7 @@
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_move" value="{move.ID_ARTICLE}">
-				<button type="submit" value="true">{L_SUBMIT}</button>
+				<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END move #
@@ -221,7 +221,7 @@
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_rename" value="{rename.ID_ARTICLE}">
-				<button type="submit" value="true">{L_SUBMIT}</button>
+				<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END rename #
@@ -296,7 +296,7 @@
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="create_redirection" value="{create.ID_ARTICLE}">
-				<button type="submit" value="true">{L_SUBMIT}</button>
+				<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END create #
@@ -342,7 +342,7 @@
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_to_remove" value="{remove.ID_ARTICLE}">
-				<button type="submit" value="true">{L_SUBMIT}</button>
+				<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
 			</fieldset>
 		</form>
 		# END remove #

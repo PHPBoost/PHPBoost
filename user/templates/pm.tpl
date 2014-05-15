@@ -93,7 +93,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="6">
-									<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<button type="submit" name="valid" value="true">{L_DELETE}</button></div>
+									<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<button type="submit" name="valid" value="true" class="submit">{L_DELETE}</button></div>
 									# IF convers.C_PAGINATION #<div class="float-right"># INCLUDE convers.PAGINATION #</div># ENDIF #
 								</th>
 							</tr>
@@ -208,7 +208,7 @@
 			{KERNEL_EDITOR}
 			<textarea rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 			<div class="center">
-				<button type="submit" name="pm" value="true">{L_SUBMIT}</button>
+				<button type="submit" name="pm" value="true" class="submit">{L_SUBMIT}</button>
 				<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 				<button type="reset" value="true">{L_RESET}</button>
 			</div>
@@ -241,7 +241,7 @@
 						</fieldset>
 						
 						<div class="center">
-							<button type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}">{L_SUBMIT}</button>	
+							<button type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit">{L_SUBMIT}</button>	
 							<button type="button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>											
 							<button type="reset" value="true">{L_RESET}</button>
 						</div>	
@@ -294,7 +294,7 @@
 						</fieldset>
 						
 						<div class="center">
-							<button type="submit" name="convers" value="true">{L_SUBMIT}</button>
+							<button type="submit" name="convers" value="true" class="submit">{L_SUBMIT}</button>
 							<button type="button" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 							<button type="reset" value="true">{L_RESET}</button>
 						</div>	

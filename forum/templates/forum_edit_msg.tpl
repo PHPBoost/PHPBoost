@@ -80,7 +80,7 @@
 						<fieldset class="fieldset-submit">
 						<legend>{L_SUBMIT}</legend>
 							<input type="hidden" name="p_update" value="{P_UPDATE}">
-							<button type="submit" name="edit_msg" value="true">{L_SUBMIT}</button>
+							<button type="submit" name="edit_msg" value="true" class="submit">{L_SUBMIT}</button>
 							<button onclick="XMLHttpRequest_preview();" type="button">{L_PREVIEW}</button>
 							<button type="reset" value="true">{L_RESET}</button>
 						</fieldset>

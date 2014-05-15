@@ -59,7 +59,7 @@
 							<input type="file" class="file" name="file_sql">
 							<input type="hidden" name="max_file_size" value="10485760">
 							<br /><br />
-							<div class="center"><button type="submit" name="" value="true">{L_RESTORE_NOW}</button></div>
+							<div class="center"><button type="submit" name="" value="true" class="submit">{L_RESTORE_NOW}</button></div>
 						</div>
 						<footer></footer>
 					</article>
@@ -161,15 +161,15 @@
 						<ul class="center" style="width:99%;margin:20px auto;">
 							<li class="small-block" style="width:20%;">
 								<img src="./database.png" alt="optimize" /><br/>
-								<button type="submit" name="optimize" value="true">{L_OPTIMIZE}</button>
+								<button type="submit" name="optimize" value="true" class="submit">{L_OPTIMIZE}</button>
 							</li>
 							<li class="small-block" style="width:20%;">
 								<img src="{PATH_TO_ROOT}/templates/default/images/admin/configuration.png" alt="repair" /><br/>
-								<button type="submit" name="repair" value="true">{L_REPAIR}</button>
+								<button type="submit" name="repair" value="true" class="submit">{L_REPAIR}</button>
 							</li>
 							<li class="small-block" style="width:20%;">
 								<img src="{PATH_TO_ROOT}/templates/default/images/admin/updater.png" alt="backup" class="valign-middle" /><br/>
-								<button type="submit" name="backup" value="true">{L_BACKUP}</button>
+								<button type="submit" name="backup" value="true" class="submit">{L_BACKUP}</button>
 							</li>
 						</ul>
 					</div>
@@ -267,7 +267,7 @@
 								<label><input type="radio" name="backup_type" value="struct"> {L_BACKUP_STRUCT}</label>
 								<label><input type="radio" name="backup_type" value="data"/> {L_BACKUP_DATA}</label>
 								<br /><br />
-								<button type="submit" name="" value="true">{L_BACKUP}</button>
+								<button type="submit" name="" value="true" class="submit">{L_BACKUP}</button>
 							</td>
 						</tr>
 					</tbody>
@@ -324,7 +324,7 @@
 									<textarea rows="12" id="query" name="query">{QUERY}</textarea>
 								</fieldset>
 								<fieldset class="fieldset-submit" style="margin:0">
-									<button type="submit" name="submit" value="true">{L_EXECUTE}</button>
+									<button type="submit" name="submit" value="true" class="submit">{L_EXECUTE}</button>
 								</fieldset>
 							</div>
 							<footer></footer>

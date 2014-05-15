@@ -100,7 +100,7 @@
 				</table>
 				<fieldset class="fieldset-submit" style="margin:0px;">
 					<legend>{L_UPDATE}</legend>
-					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
+					<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>	
 			</form>
@@ -154,7 +154,7 @@
 				
 				<fieldset class="fieldset-submit">
 					<legend>{L_ADD}</legend>
-					<button type="submit" name="add" value="true">{L_ADD}</button>
+					<button type="submit" name="add" value="true" class="submit">{L_ADD}</button>
 					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>	
 			</form>

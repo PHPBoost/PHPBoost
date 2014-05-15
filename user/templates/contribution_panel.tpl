@@ -273,7 +273,7 @@
 				</fieldset>
 				<fieldset class="fieldset-submit">
 					<input type="hidden" name="idedit" value="{CONTRIBUTION_ID}">
-					<button type="submit" value="true">{L_SUBMIT}</button>
+					<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
 					<button type="button" name="preview" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 					<button type="reset">{L_RESET}</button>
 				</fieldset>

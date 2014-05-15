@@ -105,7 +105,7 @@
 	</fieldset>
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
-		<button type="submit" name="" value="true">{L_SUBMIT}</button>
+		<button type="submit" name="" value="true" class="submit">{L_SUBMIT}</button>
 	</fieldset>
 </form>
 # END rename #
@@ -127,7 +127,7 @@
 	
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
-		<button type="submit" name="" value="true">{L_SUBMIT}</button>
+		<button type="submit" name="" value="true" class="submit">{L_SUBMIT}</button>
 	</fieldset>
 </form>
 # END new #
@@ -167,7 +167,7 @@
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
 		<input type="hidden" name="del_cat" value="{remove.ID_ARTICLE}">
-		<button type="submit" value="true">{L_SUBMIT}</button>
+		<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
 	</fieldset>
 </form>
 # END remove #

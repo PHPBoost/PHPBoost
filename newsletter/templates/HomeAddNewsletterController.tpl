@@ -35,6 +35,6 @@
 	<fieldset class="fieldset-submit">
 		<legend>{@newsletter.types.choice}</legend>
 		<input type="hidden" name="token" value="{TOKEN}">
-		<button type="submit">{@newsletter.types.next}</button>
+		<button type="submit" class="submit">{@newsletter.types.next}</button>
 	</fieldset>
 </form>
