@@ -91,8 +91,8 @@ class UserEditProfileController extends AbstractController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], $this->user->get_email(), array(
-			'maxlength' => 255, 'description' => LangLoader::get_message('valid', 'main')),
-		array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($this->user->get_id()))
+			'required' => true, 'maxlength' => 255, 'description' => LangLoader::get_message('valid', 'main')),
+			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($this->user->get_id()))
 		));
 		
 		$fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
