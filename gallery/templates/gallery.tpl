@@ -282,14 +282,20 @@
 							<tbody>
 								# START cat_list #
 								{cat_list.OPEN_TR}
-								<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%;margin:15px 0px;">
-									<a href="{cat_list.U_CAT}">{cat_list.IMG}</a>
-									<br />
-									<a href="{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
-									<br />
-									<span class="smaller">{cat_list.DESC}</span> 
-									<br />
-									{cat_list.LOCK} <span class="smaller">{cat_list.L_NBR_PICS}</span>
+								<td style="vertical-align:bottom;width:{COLUMN_WIDTH_CATS}%;padding:15px 0px;">
+									<div style="padding:0 5px;">
+										<a href="{cat_list.U_CAT}">{cat_list.IMG}</a>
+									</div>
+									
+									<div class="spacer">&nbsp;</div>
+									
+									<div>
+										<span class="smaller"><a href="{cat_list.U_CAT}">{cat_list.CAT}</a></span> {cat_list.EDIT}
+										<div class="spacer"></div>
+										<span class="smaller">{cat_list.DESC}</span> 
+										<div class="spacer"></div>
+										{cat_list.LOCK} <span class="smaller">{cat_list.L_NBR_PICS}</span>
+									</div>
 								</td>
 								{cat_list.CLOSE_TR}
 								# END cat_list #
@@ -386,7 +392,7 @@
 						{COMMENTS}
 						# ENDIF #
 						
-						<table>
+						<table style="table-layout:fixed">
 							# IF C_PAGINATION #
 							<tfoot>
 								<tr>
@@ -399,8 +405,12 @@
 							<tbody>
 							# START pics_list #
 								{pics_list.OPEN_TR}
-								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle;">
-									<div style="height:{HEIGHT_MAX}px;" id="pics{pics_list.ID}"><a class="small" href="{pics_list.U_DISPLAY}">{pics_list.IMG}</a></div>
+								<td style="vertical-align:bottom;width:{COLUMN_WIDTH_PICS}%;padding:15px 0px;">
+									<div style="padding:0 5px;" id="pics{pics_list.ID}"><a class="small" href="{pics_list.U_DISPLAY}">{pics_list.IMG}</a>
+									</div>
+									
+									<div class="spacer">&nbsp;</div>
+									
 									<div class="smaller">
 										{pics_list.NAME}
 										{pics_list.POSTOR}

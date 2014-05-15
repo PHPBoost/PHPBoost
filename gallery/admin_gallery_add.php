@@ -163,15 +163,16 @@ else
 		'L_AUTH_EXTENSION' => $LANG['auth_extension'],
 		'L_CATEGORY' => $LANG['category'],
 		'L_IMG_DISPO_GALLERY' => $LANG['img_dispo'],
-		'L_REQUIRE' => $LANG['require'],
-		'L_SELECT_IMG_ADD' => $LANG['select_img_add'],
 		'L_NAME' => $LANG['name'],
 		'L_UNIT_PX' => $LANG['unit_pixels'],
 		'L_UNIT_KO' => $LANG['unit_kilobytes'],
 		'L_SELECT' => $LANG['select'],
+		'L_GLOBAL_CAT_SELECTION' => $LANG['global_cat_selection'],
+		'L_GLOBAL_CAT_SELECTION_EXPLAIN' => $LANG['global_cat_selection_explain'],
 		'L_CAT' => $LANG['categorie'],
 		'L_DELETE' => $LANG['delete'],
-		'L_SUBMIT' => $LANG['submit']
+		'L_SUBMIT' => $LANG['submit'],
+		'L_NO_IMG' => $LANG['no_pics']
 	));
 
 	//Affichage photos
@@ -282,12 +283,7 @@ else
 		}
 	}
 
-	if ($j == 0)
-	{
-		$Template->assign_block_vars('no_img', array(
-			'L_NO_IMG' => $LANG['no_pics']
-		));
-	}
+	$Template->put('C_IMG', $j);
 
 	$Template->pparse('admin_gallery_add');
 }

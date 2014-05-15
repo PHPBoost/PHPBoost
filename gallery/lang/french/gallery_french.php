@@ -43,7 +43,6 @@ $LANG['gallery_config'] = 'Configuration de la galerie';
 $LANG['cat_edit'] = 'Edition de la catégorie';
 $LANG['parent_category'] = 'Catégorie parente';
 $LANG['add_pic'] = 'Ajouter une image';
-$LANG['select_img_add'] = 'Sélectionnez d\'abord les photos à ajouter/supprimer';
 $LANG['img_dispo'] = 'Images disponibles sur le serveur';
 $LANG['img_without_cat'] = 'Image(s) sans catégories';
 $LANG['total_img_cat'] = '%d image(s) dans cette catégorie !';
@@ -135,6 +134,8 @@ $LANG['static_scroll'] = 'Défilement statique';
 $LANG['vertical_dynamic_scroll'] = 'Défilement dynamique vertical';
 $LANG['horizontal_dynamic_scroll'] = 'Défilement dynamique horizontal';
 $LANG['column'] = 'Colonnes';
+$LANG['global_cat_selection'] = 'Catégorie de toutes les images sélectionnées';
+$LANG['global_cat_selection_explain'] = 'Permet de changer la catégorie de toutes les images sélectionnées d\'un coup';
 
 //Requis
 $LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les miniatures !';
