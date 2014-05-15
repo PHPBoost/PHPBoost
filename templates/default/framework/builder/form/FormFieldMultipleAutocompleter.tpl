@@ -2,7 +2,7 @@
 <!--
 var FormFieldMultipleAutocompleter = Class.create({
 	integer : {NBR_FIELDS},
-	id_input : ${escapejs(ID)},
+	id_input : ${escapejs(HTML_ID)},
 	max_input : {MAX_INPUT},
 	add_field : function () {
 		if (this.integer <= this.max_input) {
