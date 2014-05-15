@@ -30,12 +30,12 @@ function ${escape(NAME)}bbcode_color(field)
 -->
 </script>
 
-<input type="text" size="8" maxlength="7" name="${escape(NAME)}" id="${escape(ID)}" value="${escape(VALUE)}" style="background-color:${escape(VALUE)};" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_HIDDEN # style="display:none;" # ENDIF #>
-<a href="javascript:${escape(NAME)}bbcode_color('${escape(ID)}');bb_display_block('${escape(ID)}', '');" onmouseout="bb_hide_block('${escape(ID)}', '', 0);">
+<input type="text" size="8" maxlength="7" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="${escape(VALUE)}" style="background-color:${escape(VALUE)};" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_HIDDEN # style="display:none;" # ENDIF #>
+<a href="javascript:${escape(NAME)}bbcode_color('${escape(HTML_ID)}');bb_display_block('${escape(HTML_ID)}', '');" onmouseout="bb_hide_block('${escape(HTML_ID)}', '', 0);">
 	<img src="{PATH_TO_ROOT}/templates/default/images/color.png" alt="" class="valign-middle" />
 </a>
-<div class="color-picker" style="display:none;" id="bb-block${escape(ID)}">
-	<div id="${escape(ID)}_list" class="bbcode-block" onmouseover="bb_hide_block('${escape(ID)}', '', 1);" onmouseout="bb_hide_block('${escape(ID)}', '', 0);">
+<div class="color-picker" style="display:none;" id="bb-block${escape(HTML_ID)}">
+	<div id="${escape(HTML_ID)}_list" class="bbcode-block" onmouseover="bb_hide_block('${escape(HTML_ID)}', '', 1);" onmouseout="bb_hide_block('${escape(HTML_ID)}', '', 0);">
 	</div>
 </div>
 

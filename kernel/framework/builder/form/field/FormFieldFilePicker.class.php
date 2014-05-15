@@ -37,10 +37,10 @@ class FormFieldFilePicker extends AbstractFormField
 {
     private $max_size = 0;
     private static $tpl_src = '<input name="max_file_size" value="{MAX_FILE_SIZE}" type="hidden">
-		<input type="file" name="${escape(NAME)}" id="${escape(ID)}" # IF C_DISABLED # disabled="disabled" # ENDIF #>
+		<input type="file" name="${escape(NAME)}" id="${escape(HTML_ID)}" # IF C_DISABLED # disabled="disabled" # ENDIF #>
 		<script>
 		<!--
-		$("${escape(ID)}").form.enctype = "multipart/form-data";
+		$("${escape(HTML_ID)}").form.enctype = "multipart/form-data";
 		-->
 		</script>';
 
