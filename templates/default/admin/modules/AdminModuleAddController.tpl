@@ -31,7 +31,7 @@
 				</td>
 				<td>
 					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" name="add-{available.ID}" value="true">{@modules.install_module}</button>
+					<button type="submit" class="submit" name="add-{available.ID}" value="true">{@modules.install_module}</button>
 				</td>
 			</tr>
 			# END available #

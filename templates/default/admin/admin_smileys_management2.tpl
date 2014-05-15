@@ -56,13 +56,13 @@
 							<span id="img_smiley">{IMG_SMILEY}</span>
 						</label></div>
 					</div>
-				</fieldset>			
+				</fieldset>
 				<fieldset class="fieldset-submit">
 					<legend>{L_DELETE}</legend>
 					<input type="hidden" name="idsmiley" value="{IDSMILEY}">
-					<button type="submit" name="valid" value="true">{L_UPDATE}</button>
-					<button type="reset" value="true">{L_RESET}</button>				
-				</fieldset>	
+					<button type="submit" class="submit" name="valid" value="true">{L_UPDATE}</button>
+					<button type="reset" value="true">{L_RESET}</button>
+				</fieldset>
 			</form>
 		</div>
 		

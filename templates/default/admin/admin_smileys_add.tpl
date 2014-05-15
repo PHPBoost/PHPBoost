@@ -48,13 +48,13 @@
 						<div class="form-field"><label><input type="file" name="upload_smiley" id="upload_smiley" size="30" class="file">
 						<input type="hidden" name="max_file_size" value="2000000"></label></div>
 					</div>
-				</fieldset>			
+				</fieldset>
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPLOAD}</legend>
-					<button type="submit" name="" value="true">{L_UPLOAD}</button>				
+					<button type="submit" class="submit" name="submit" value="true">{L_UPLOAD}</button>
 				</fieldset>
 			</form>
-							
+			
 			<form action="admin_smileys_add.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
 				<fieldset>
 				<legend>{L_ADD_SMILEY}</legend>
@@ -71,12 +71,12 @@
 							<span id="img_smiley"></span>
 						</label></div>
 					</div>
-				</fieldset>			
+				</fieldset>
 				<fieldset class="fieldset-submit">
 					<legend>{L_ADD}</legend>
 					<button type="submit" name="add" value="true">{L_ADD}</button>
-					<button type="reset" value="true">{L_RESET}</button>				
-				</fieldset>	
-			</form>	
+					<button type="reset" value="true">{L_RESET}</button>
+				</fieldset>
+			</form>
 		</div>
 		

@@ -97,7 +97,7 @@
 					<label><input type="radio" name="activated-{modules_not_activated.ID}" value="0" # IF NOT modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
 				</td>
 				<td>
-					<button type="submit" name="delete-{modules_not_activated.ID}" value="true">{@modules.delete}</button>
+					<button type="submit" class="submit" name="delete-{modules_not_activated.ID}" value="true">{@modules.delete}</button>
 				</td>
 			</tr>
 			# END modules_not_activated #
@@ -157,7 +157,7 @@
 					<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
 				</td>
 				<td>
-					<button type="submit" name="delete-{modules_activated.ID}" value="true">{@modules.delete}</button>
+					<button type="submit" class="submit" name="delete-{modules_activated.ID}" value="true">{@modules.delete}</button>
 				</td>
 			</tr>
 			# END modules_activated #
@@ -170,7 +170,7 @@
 		
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
-		<button type="submit" name="update_modules_configuration" value="true">{@modules.update}</button>
+		<button type="submit" class="submit" name="update_modules_configuration" value="true">{@modules.update}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="update" value="true">
 		<button type="reset" value="true">{@modules.reset}</button>

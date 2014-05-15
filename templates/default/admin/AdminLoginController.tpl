@@ -39,6 +39,6 @@ function check_connect(){
 	</fieldset>
 	<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
 	<fieldset class="fieldset-submit">
-		<button type="submit" name="connect" value="true">{@connect}</button>
-	</fieldset>	
+		<button type="submit" class="submit" name="connect" value="true">{@connect}</button>
+	</fieldset>
 </form>

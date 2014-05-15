@@ -225,7 +225,7 @@ Event.observe(window, 'load', function() {
 	</fieldset>
 	# IF C_MORE_THAN_ONE_FIELD #
 	<fieldset class="fieldset-submit">
-		<button type="submit" name="submit" value="true">{@fields.update_fields_position}</button>
+		<button type="submit" class="submit" name="submit" value="true">{@fields.update_fields_position}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="position" id="position" value="">
 	</fieldset>

@@ -57,9 +57,9 @@
 					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="0"> {@themes.no}</label>
 				</td>
 				<td>
-					<button type="submit" name="add-{themes_not_installed.ID}" value="true">{L_ADD}</button>
+					<button type="submit" class="submit" name="add-{themes_not_installed.ID}" value="true">{L_ADD}</button>
 				</td>
-			</tr>						
+			</tr>
 			# END themes_not_installed #
 		</tbody>
 	</table>

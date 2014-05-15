@@ -47,7 +47,7 @@
 						<label><input type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@langs.no}</label>
 					</td>
 					<td>
-						<button type="submit" name="delete-{langs_installed.ID}" value="true">{L_DELETE}</button>
+						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">{L_DELETE}</button>
 					</td>
 					# ELSE #
 					<td class="row-disabled" style="text-align:center;">
@@ -65,7 +65,7 @@
 	
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
-		<button type="submit" name="update_langs_configuration" value="true">{L_UPDATE}</button>
+		<button type="submit" class="submit" name="update_langs_configuration" value="true">{L_UPDATE}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="update" value="true">
 		<button type="reset" value="true">{L_RESET}</button>

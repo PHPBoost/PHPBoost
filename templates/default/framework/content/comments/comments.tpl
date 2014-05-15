@@ -52,6 +52,6 @@ Event.observe(window, 'load', function() {
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
 <div style="text-align:center;">
-	<button type="submit" id="refresh_comments">{@allComments}</button>
+	<button type="submit" class="submit" id="refresh_comments">{@allComments}</button>
 </div>
 # ENDIF #
