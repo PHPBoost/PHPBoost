@@ -269,7 +269,7 @@
 					<tbody>
 					# START cat.list #
 					{cat.list.TR_START}
-						<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%">
+						<td style="vertical-align:bottom;width:{COLUMN_WIDTH_CATS}%;padding:15px 0px;">
 							<a href="admin_gallery.php?cat={cat.list.IDCAT}"># IF cat.list.C_IMG #{cat.list.IMG}# ENDIF #</a>
 							
 							<br />
@@ -410,7 +410,7 @@
 					# END pics.pics_max #
 					
 					# IF NOT pics.C_PICS_MAX #
-					<table>
+					<table style="table-layout:fixed">
 						<thead>
 							<tr>
 								<th colspan="{COLSPAN}">
@@ -421,8 +421,8 @@
 						<tbody>
 							# START pics.list #
 							{pics.list.TR_START}
-								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle;">
-									<div style="margin-bottom:20px;height:{HEIGHT_MAX}px;" id="pics{pics.list.ID}"><a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox[2]">{pics.list.IMG}</a></div>
+								<td style="vertical-align:bottom;width:{COLUMN_WIDTH_PICS}%;padding:15px 0px;">
+									<div style="margin-bottom:20px;height:{HEIGHT_MAX}px;padding:0 5px;" id="pics{pics.list.ID}"><a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox[2]">{pics.list.IMG}</a></div>
 									<div class="smaller">
 										<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
 										<br />

@@ -43,7 +43,6 @@ $LANG['gallery_config'] = 'Gallery configuration';
 $LANG['cat_edit'] = 'Edit category';
 $LANG['parent_category'] = 'Parent category';
 $LANG['add_pic'] = 'Add picture';
-$LANG['select_img_add'] = 'Select the picture(s) to add/delete';
 $LANG['img_dispo'] = 'Pictures available on the server';
 $LANG['img_without_cat'] = 'Picture(s) without categories';
 $LANG['total_img_cat'] = 'Picture(s) in this category';
@@ -135,6 +134,8 @@ $LANG['static_scroll'] = 'Static scrolling';
 $LANG['vertical_dynamic_scroll'] = 'Vertical dynamic scrolling';
 $LANG['horizontal_dynamic_scroll'] = 'Horizontal dynamic scrolling';
 $LANG['column'] = 'Columns';
+$LANG['global_cat_selection'] = 'All selected pictures category';
+$LANG['global_cat_selection_explain'] = 'Allows to change all selected pictures category in one time';
 
 //Require
 $LANG['require_height'] = 'Please enter maximum height for the thumbnails!';
