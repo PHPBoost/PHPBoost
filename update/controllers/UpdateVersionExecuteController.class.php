@@ -62,6 +62,7 @@ class UpdateVersionExecuteController extends UpdateController
 	private function add_navigation(Template $view)
     {
     	$form = new HTMLForm('continueForm', '#error');
+    	$form->disable_captcha_protection();
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateUrlBuilder::database(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);

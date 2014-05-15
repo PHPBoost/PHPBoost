@@ -70,7 +70,8 @@ class InstallDBConfigController extends InstallController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('databaseForm');
-
+		$this->form->disable_captcha_protection();
+		
 		$fieldset_server = new FormFieldsetHTML('serverConfig', $this->lang['dbms.paramters']);
 		$this->form->add_fieldset($fieldset_server);
 

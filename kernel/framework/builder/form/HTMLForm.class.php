@@ -83,6 +83,8 @@ class HTMLForm
 	 * @var Template
 	 */
 	private $template = null;
+	
+	private $enable_captcha_protection = true;
 
 	/**
 	 * @desc Constructs a HTMLForm object
@@ -111,9 +113,17 @@ class HTMLForm
 	
 	private function add_catpcha_protection()
 	{
-		$csrf_protection_fieldset = new FormFieldsetHTML('captcha');
-		$csrf_protection_fieldset->add_field(new FormFieldCaptcha());
-		$this->add_fieldset($csrf_protection_fieldset);
+		if ($this->enable_captcha_protection)
+		{
+			$csrf_protection_fieldset = new FormFieldsetHTML('captcha');
+			$csrf_protection_fieldset->add_field(new FormFieldCaptcha());
+			$this->add_fieldset($csrf_protection_fieldset);
+		}
+	}
+	
+	public function disable_captcha_protection()
+	{
+		$this->enable_captcha_protection = false;
 	}
 
 	/**

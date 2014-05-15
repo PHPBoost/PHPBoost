@@ -49,6 +49,8 @@ class UpdateIntroductionController extends UpdateController
 	private function add_navigation(Template $view)
     {
         $form = new HTMLForm('preambleForm', UpdateUrlBuilder::server_configuration()->rel());
+        $form->disable_captcha_protection();
+        
         $action_fieldset = new FormFieldsetSubmit('actions');
 		$next = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'introduction');
 		$action_fieldset->add_element($next);

@@ -58,6 +58,8 @@ class InstallLicenseController extends InstallController
 	private function build_form()
     {
     	$this->form = new HTMLForm('licenseForm');
+    	$this->form->disable_captcha_protection();
+    	
     	$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['step.license.terms.title']);
     	$this->form->add_fieldset($fieldset);
     	$agreement = new FormFieldHTML('agreementExplanation', $this->lang['step.license.require.agreement'] . '<br /><br />');
