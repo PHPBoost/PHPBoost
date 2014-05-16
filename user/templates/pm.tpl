@@ -222,11 +222,11 @@
 				<header>
 					<h1>&bull; {edit_pm.U_USER_VIEW} &raquo; {edit_pm.U_PM_BOX}</h1>
 				</header>
-				<div class="content">	
+				<div class="content">
 					<div class="fieldset-content">
+						<p class="center">{L_REQUIRE}</p>
 						<fieldset>
 							<legend>{L_EDIT}</legend>
-							<p>{L_REQUIRE}</p>
 							# START edit_pm.title #
 							<div class="form-element">
 								<label for="title">* {L_TITLE}</label>
@@ -263,9 +263,9 @@
 					# INCLUDE message_helper #
 					
 					<div class="fieldset-content">
+						<p class="center">{L_REQUIRE}</p>
 						<fieldset>
 							<legend>{L_POST_NEW_CONVERS}</legend>
-							<p>{L_REQUIRE}</p>
 							# START post_convers.user_id_dest #
 							<div class="form-element">
 								<label for="login">* {L_RECIPIENT}</label>
@@ -273,7 +273,7 @@
 									<label>
 										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}">
 										<span id="search_img"></span>
-										<button type="button" value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');">{L_SEARCH}</button>							
+										<button type="button" value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');">{L_SEARCH}</button>
 									</label>
 									<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 									# START post_convers.user_id_dest.search #

@@ -44,10 +44,11 @@
 		# INCLUDE admin_media_menu #
 		<div id="admin-contents">
 			<form action="admin_media_config.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
+					<p class="center">{L_REQUIRE_FIELDS}</p>
 					<fieldset>
 						<legend>{L_CONFIG_GENERAL}</legend>
 						<div class="form-element">
-							<label for="media_name">{L_MODULE_NAME} <span class="field-description">{L_MODULE_NAME_EXPLAIN}</span></label>
+							<label for="media_name">* {L_MODULE_NAME} <span class="field-description">{L_MODULE_NAME_EXPLAIN}</span></label>
 							<div class="form-field">
 								<input type="text" size="65" maxlength="100" id="media_name" name="media_name" value="{MODULE_NAME}">
 							</div>
@@ -70,23 +71,23 @@
 					<fieldset>
 						<legend>{L_CONFIG_DISPLAY}</legend>
 						<div class="form-element">
-							<label for="num_cols">{L_NBR_COLS}</label>
+							<label for="num_cols">* {L_NBR_COLS}</label>
 							<div class="form-field"><input type="text" size="4" maxlength="1" id="num_cols" name="num_cols" value="{NBR_COLS}"></div>
 						</div>
 						<div class="form-element">
-							<label for="pagin">{L_PAGINATION}</label>
+							<label for="pagin">* {L_PAGINATION}</label>
 							<div class="form-field"><input type="text" size="4" maxlength="3" id="pagin" name="pagin" value="{PAGINATION}"></div>
 						</div>
 						<div class="form-element">
-							<label for="note">{L_NOTE}</label>
+							<label for="note">* {L_NOTE}</label>
 							<div class="form-field"><input type="text" size="4" maxlength="3" id="note" name="note" value="{NOTE}"></div>
 						</div>
 						<div class="form-element">
-							<label for="width">{L_WIDTH_MAX}</label>
+							<label for="width">* {L_WIDTH_MAX}</label>
 							<div class="form-field"><input type="text" size="4" maxlength="4" id="width" name="width" value="{WIDTH_MAX}"></div>
 						</div>
 						<div class="form-element">
-							<label for="height">{L_HEIGHT_MAX}</label>
+							<label for="height">* {L_HEIGHT_MAX}</label>
 							<div class="form-field"><input type="text" size="4" maxlength="4" id="height" name="height" value="{HEIGHT_MAX}"></div>
 						</div>
 						<div class="form-element">

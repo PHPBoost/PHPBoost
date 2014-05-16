@@ -1,19 +1,3 @@
-<script>
-<!--
-function check_msg(){
-	if(document.getElementById('name').value == "") {
-		alert("{L_REQUIRE_TITLE}");
-		return false;
-	}
-	if(document.getElementById('contents').value == "") {
-		alert("{L_REQUIRE_TEXT}");
-		return false;
-	}
-	return true;
-}
--->
-</script>
-
 <div id="admin-contents">
 	<form action="auth.php" method="post" class="fieldset-content">
 		<fieldset> 
@@ -23,7 +7,7 @@ function check_msg(){
 				<div class="form-field"><label>{NAME}</label></div>
 			</div>
 			<div class="form-element">
-				<label for="location">* {L_LOCATION}</label>
+				<label for="location">{L_LOCATION}</label>
 				<div class="form-field"><select name="location" id="location">{LOCATIONS}</select></div>
 			</div>
 			<div class="form-element">

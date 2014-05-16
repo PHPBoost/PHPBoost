@@ -46,9 +46,9 @@
 			# INCLUDE message_helper #
 			
 			<form action="admin_gallery_cat_add.php?token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_GALLERY_CAT_ADD}</legend>
-					<p class="center">{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="category">{L_PARENT_CATEGORY}</label>
 						<div class="form-field"><label>

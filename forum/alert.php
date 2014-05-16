@@ -75,6 +75,7 @@ if (!empty($alert) && empty($alert_post))
 			'L_ALERT_EXPLAIN' => $LANG['alert_modo_explain'],
 			'L_ALERT_TITLE' => $LANG['alert_title'],
 			'L_ALERT_CONTENTS' => $LANG['alert_contents'],
+			'L_REQUIRE' => $LANG['require'],
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_REQUIRE_TITLE' => $LANG['require_title']
 		));

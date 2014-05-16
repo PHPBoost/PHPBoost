@@ -11,11 +11,11 @@
 		function check_select_multiple_ext(id, status)
 		{
 			for(var i = 0; i < {NBR_EXTENSIONS}; i++)
-			{	
+			{
 				if( document.getElementById(id + i) )
-					document.getElementById(id + i).selected = status;			
+					document.getElementById(id + i).selected = status;
 			}
-		}			
+		}
 		-->
 		</script>
 
@@ -35,12 +35,13 @@
 			</ul>
 		</div>
 		
-		<div id="admin-contents">	
+		<div id="admin-contents">
 			<form action="admin_files_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_CONFIG_FILES}</legend>
 					<div class="form-element"> 
-						<label>* {L_AUTH_FILES}</label>
+						<label>{L_AUTH_FILES}</label>
 						<div class="form-field">{AUTH_FILES}</div>
 					</div>
 					<div class="form-element"> 
@@ -58,13 +59,13 @@
 						</div>
 					</div>
 					<div class="form-element"> 
-						<label>* {L_AUTH_EXTENSIONS}</label>
+						<label>{L_AUTH_EXTENSIONS}</label>
 						<div class="form-field">
 							<select id="auth_extensions" name="auth_extensions[]" size="12" multiple="multiple">
 								{AUTH_EXTENSIONS}
-							</select>	
+							</select>
 							<br />
-							<a class="small" href="javascript:check_select_multiple_ext('ext', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple_ext('ext', false);">{L_SELECT_NONE}</a>							
+							<a class="small" href="javascript:check_select_multiple_ext('ext', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple_ext('ext', false);">{L_SELECT_NONE}</a>
 						</div>
 					</div>
 					<div class="form-element"> 

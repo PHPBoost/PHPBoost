@@ -18,7 +18,7 @@
 			if(!poll_hidded && document.getElementById('question').value == "") {
 				alert("{L_REQUIRE_TITLE_POLL}");
 				return false;
-		    }
+			}
 			return true;
 		}
 		var poll_hidded = true;
@@ -28,7 +28,7 @@
 			{
 				document.getElementById(divID).style.display = 'block';
 				if( document.getElementById('hidepoll_link') )
-				{	
+				{
 					document.getElementById('hidepoll_link').style.display = 'none';
 					poll_hidded = false;
 				}
@@ -88,7 +88,7 @@
 							<span style="float:left;">{L_PREVIEW}</span>
 							<span style="float:right;"></span>&nbsp;
 						</div>
-					</div>	
+					</div>
 					<div class="msg-position">
 						<div class="msg-container">
 							<div class="msg-pseudo-mbr"></div>
@@ -105,15 +105,15 @@
 									</div>
 								</div>
 							</div>
-						</div>	
-						<div class="msg-sign">		
+						</div>
+						<div class="msg-sign">
 							<hr />
 							<span style="float:left;">
 								<span class="basic-button smaller">MP</span>
 							</span>
 							<span style="float:right;font-size:10px;">
 							</span>&nbsp;
-						</div>	
+						</div>
 					</div>
 					<div class="msg-position">
 						<div class="msg-bottom-l"></div>
@@ -124,9 +124,9 @@
 					# ENDIF #
 					
 					<div class="fieldset-content">
+						<p class="center">{L_REQUIRE}</p>
 						<fieldset>
 							<legend>{L_ACTION}</legend>
-							<p>{L_REQUIRE}</p>
 							# IF C_FORUM_CUT_CAT #
 							<div class="form-element">
 								<label for="to">* {L_CAT}</label>

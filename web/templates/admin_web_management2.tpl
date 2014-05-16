@@ -89,20 +89,20 @@
 			# ENDIF #
 			
 			<form action="admin_web.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_EDIT_LINK}</legend>
-					<p>{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="name">* {L_TITLE}</label>
 						<div class="form-field"><label><input type="text" size="55" maxlength="50" name="name" id="name" value="{NAME}"></label></div>
 					</div>
 					<div class="form-element">
-						<label for="idcat">* {L_CATEGORY}</label>
+						<label for="idcat">{L_CATEGORY}</label>
 						<div class="form-field"><label>
-							<select id="idcat" name="idcat">				
-							# START select #				
-								{select.CAT}				
-							# END select #				
+							<select id="idcat" name="idcat">
+							# START select #
+								{select.CAT}
+							# END select #
 							</select>
 						</label></div>
 					</div>
@@ -128,15 +128,15 @@
 							<label><input type="radio" {APROB_DISABLED}  name="aprob" value="0"> {L_NO}</label>
 						</div>
 					</div>
-				</fieldset>		
+				</fieldset>
 				
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{IDWEB}">
 					<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
 					<button type="submit" name="previs" value="true">{L_PREVIEW}</button>
-					<button type="reset" value="true">{L_RESET}</button>				
-				</fieldset>	
+					<button type="reset" value="true">{L_RESET}</button>
+				</fieldset>
 			</form>
 		</div>
 		

@@ -99,9 +99,9 @@ else //Sinon on rempli le formulaire
 	
 	$template->put_all(array(
 		'RANK_OPTIONS' => $rank_options,
+		'L_REQUIRE' => $LANG['require'],
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
-		'L_CONFIRM_DEL_RANK' => $LANG['confirm_del_rank'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
 		'L_ADD_CAT' => $LANG['cat_add'],

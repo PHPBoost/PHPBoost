@@ -1,4 +1,3 @@
-		<link href="{PICTURES_DATA_PATH}/forum.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script>
 		<!--
 			function check_form_list()
@@ -6,14 +5,14 @@
 				if(document.getElementById('name').value == "") {
 					alert("{L_REQUIRE}");
 					return false;
-				}		
+				}
 				return true;
 			}
 			
-			var disabled = {DISABLED};				
+			var disabled = {DISABLED};
 			function check_select_multiple_ranks(id, start)
 			{
-				if( !disabled || id == '1r' )			
+				if( !disabled || id == '1r' )
 				{
 					id_select = id.replace(/(.*)r/g, '$1');
 					check_select_multiple(id_select, false);
@@ -26,9 +25,9 @@
 				}
 			}
 			function change_type(value)
-			{			
+			{
 				if( value == 3 ) //Lien
-				{					
+				{
 					document.getElementById('forum_url').style.display = 'block';
 					document.getElementById('forum_status').style.display = 'none';
 					document.getElementById('write_auth').style.display = 'none';
@@ -42,7 +41,7 @@
 					document.getElementById('edit_auth').style.display = 'none';
 				}
 				else //Forum
-				{					
+				{
 					document.getElementById('forum_url').style.display = 'none';
 					document.getElementById('forum_status').style.display = 'block';
 					document.getElementById('write_auth').style.display = 'block';
@@ -92,9 +91,9 @@
 			# INCLUDE message_helper #
 				
 			<form action="admin_forum.php?id={ID}&amp;token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_EDIT_CAT}</legend>
-					<p>{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="name">* {L_NAME}</label>
 						<div class="form-field"><label><input type="text" maxlength="100" size="35" id="name" name="name" value="{NAME}"></label></div>

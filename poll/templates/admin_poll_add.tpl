@@ -1,8 +1,3 @@
-		<script>
-		<!--
-			var theme = '{THEME}';
-		-->
-		</script>
 		<script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 		<script>
 		<!--
@@ -59,9 +54,9 @@
 			# INCLUDE message_helper #
 			
 			<form action="admin_poll_add.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_POLL_ADD}</legend>
-					<p>{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="question">* {L_QUESTION}</label>
 						<div class="form-field"><input type="text" size="40" maxlength="100" id="question" name="question"></div>

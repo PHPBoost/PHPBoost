@@ -21,14 +21,14 @@
 				var calculatedResults = new Array('all');
 				
 				function HideResults()
-				// Cache tous les rÃ©sultats
+				// Cache tous les résultats
 				{
 					for( var i = 0; i < modulesResults.length; i++ )
 						hide_div(RESULTS + modulesResults[i]);
 				}
 				
 				function ChangeResults()
-				// Change le cadre des rÃ©sultats
+				// Change le cadre des résultats
 				{
 					var module = document.getElementById('results_choice').value;
 					HideResults();

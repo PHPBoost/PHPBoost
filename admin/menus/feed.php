@@ -88,7 +88,8 @@ lateral_menu();
 $tpl = new FileTemplate('admin/menus/feed.tpl');
 
 $tpl->put_all(array(
-	'JL_REQUIRE_TITLE' => TextHelper::to_js_string($LANG['require_title']),
+	'L_REQUIRE' => $LANG['require'],
+	'JL_REQUIRE_NAME' => TextHelper::to_js_string($LANG['require_name']),
 	'JL_REQUIRE_FEED' => TextHelper::to_js_string($LANG['choose_feed_in_list']),
 	'L_FEED' => $LANG['feed'],
 	'L_AVAILABLES_FEEDS' => $LANG['availables_feeds'],

@@ -1,10 +1,9 @@
-		<link href="{PICTURES_DATA_PATH}/forum.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script>
 		<!--
 			function change_type(value)
-			{			
+			{
 				if( value == 3 ) //Lien
-				{					
+				{
 					document.getElementById('forum_category').style.display = 'block';
 					document.getElementById('forum_url').style.display = 'block';
 					document.getElementById('forum_status').style.display = 'none';
@@ -20,7 +19,7 @@
 					document.getElementById('edit_auth').style.display = 'none';
 				}
 				else //Forum
-				{					
+				{
 					document.getElementById('forum_category').style.display = 'block';
 					document.getElementById('forum_url').style.display = 'none';
 					document.getElementById('forum_status').style.display = 'block';
@@ -71,9 +70,9 @@
 			# INCLUDE message_helper #
 				
 			<form action="admin_forum_add.php?token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_ADD_CAT}</legend>
-					<p>{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="type">* {L_TYPE}</label>
 						<div class="form-field"><label>

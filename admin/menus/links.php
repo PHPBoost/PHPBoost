@@ -165,8 +165,6 @@ lateral_menu();
 $tpl = new FileTemplate('admin/menus/links.tpl');
 
 $tpl->put_all(array(
-	'L_REQUIRE_TITLE' => $LANG['require_title'],
-	'L_REQUIRE_TEXT' => $LANG['require_text'],
 	'L_NAME' => $LANG['name'],
 	'L_URL' => $LANG['url'],
 	'L_IMAGE' => $LANG['img'],

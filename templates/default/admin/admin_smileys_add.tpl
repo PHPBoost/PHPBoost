@@ -56,6 +56,7 @@
 			</form>
 			
 			<form action="admin_smileys_add.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 				<legend>{L_ADD_SMILEY}</legend>
 					<div class="form-element">
@@ -66,7 +67,7 @@
 						<label for="code_smiley">* {L_SMILEY_AVAILABLE}</label>
 						<div class="form-field"><label>
 							<select name="url_smiley" id="url_smiley" onchange="img_smiley(this.options[selectedIndex].value)">
-								{SMILEY_OPTIONS}						
+								{SMILEY_OPTIONS}
 							</select>
 							<span id="img_smiley"></span>
 						</label></div>

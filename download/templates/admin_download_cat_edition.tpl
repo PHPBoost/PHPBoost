@@ -31,9 +31,9 @@
 			-->
 			</script>
 			<form action="admin_download_cat.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
+				<p class="center">{L_REQUIRED_FIELDS}</p>
 				<fieldset>
 					<legend>{L_CATEGORY}</legend>
-					<p>{L_REQUIRED_FIELDS}</p>
 					<div class="form-element">
 						<label for="name">* {L_NAME}</label>
 						<div class="form-field">

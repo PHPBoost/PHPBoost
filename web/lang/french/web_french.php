@@ -37,6 +37,7 @@ $LANG['links.manage'] = 'Gérer les liens';
 $LANG['web_config'] = 'Configuration des liens';
 $LANG['edit_link'] = 'Edition du lien';
 $LANG['nbr_web_max'] = 'Nombre maximum de liens web affichés';
+$LANG['no_cat'] = 'Aucune catégorie';
 $LANG['icon_cat'] = 'Icône de la catégorie';
 $LANG['admin.categories.manage'] = 'Gérer les catégories';
 $LANG['admin.authorizations'] = 'Autorisations';

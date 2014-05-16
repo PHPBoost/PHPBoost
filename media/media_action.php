@@ -137,6 +137,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		'L_NOTICE_CONTRIBUTION' => $MEDIA_LANG['notice_contribution'],
 		'L_CONTRIBUTION_COUNTERPART' => $MEDIA_LANG['contribution_counterpart'],
 		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $MEDIA_LANG['contribution_counterpart_explain'],
+		'L_REQUIRE' => $LANG['require'],
 		'L_REQUIRE_NAME' => $MEDIA_LANG['require_name'],
 		'L_REQUIRE_URL' => $MEDIA_LANG['require_url'],
 		'L_RESET' => $LANG['reset'],
