@@ -319,10 +319,10 @@ class UserMaintainController extends AbstractController
 				}
 			break;
 			case 'unexisting':
-				$this->display_error_message($errors_lang['e_unexist_member']);				
+				$this->display_error_message($errors_lang['e_unexist_member']);
 			break;
 			case 'not_authorized':
-				$this->display_error_message($errors_lang['e_auth']);				
+				$this->display_error_message($errors_lang['e_auth']);
 			break;
 		}
 	}
@@ -334,16 +334,21 @@ class UserMaintainController extends AbstractController
 	
 	private function build_reponse()
 	{
-		return new SiteDisplayFrameResponse($this->tpl);
+		$response = new SiteDisplayFrameResponse($this->tpl);
+		
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title(LangLoader::get_message('home', 'main'));
+		
+		return $response;
 	}
 	
 	public function get_right_controller_regarding_authorizations()
-    {
-      	if (!MaintenanceConfig::load()->is_under_maintenance())
-      	{
-       		AppContext::get_response()->redirect(Environment::get_home_page());
-      	}
-      	return $this;
-    }
+	{
+		if (!MaintenanceConfig::load()->is_under_maintenance())
+		{
+			AppContext::get_response()->redirect(Environment::get_home_page());
+		}
+		return $this;
+	}
 }
 ?>
