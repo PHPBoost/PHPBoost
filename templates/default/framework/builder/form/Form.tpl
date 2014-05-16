@@ -25,7 +25,7 @@ Event.observe(window, 'load', function() {
 
 <form id="${HTML_ID}" # IF C_TARGET #action="${TARGET}"# ENDIF # method="${METHOD}" onsubmit="return HTMLForms.get('${HTML_ID}').validate();" class="${FORMCLASS}">
 	# IF C_HAS_REQUIRED_FIELDS #
-	<p style="text-align:center;">{L_REQUIRED_FIELDS}</p>
+	<p class="center">{L_REQUIRED_FIELDS}</p>
 	# ENDIF #
 	
 	# START fieldsets #

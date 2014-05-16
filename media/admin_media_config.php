@@ -133,6 +133,7 @@ else
 		'AUTH_CONTRIBUTE' => Authorizations::generate_select(MEDIA_AUTH_CONTRIBUTION, $MEDIA_CATS[0]['auth']),
 		'L_AUTH_WRITE' => $MEDIA_LANG['auth_write'],
 		'AUTH_WRITE' => Authorizations::generate_select(MEDIA_AUTH_WRITE, $MEDIA_CATS[0]['auth']),
+		'L_REQUIRE_FIELDS' => $LANG['require'],
 		'L_REQUIRE' => $MEDIA_LANG['require'],
 		'L_UPDATE' => $LANG['update'],
 		'L_PREVIEW' => $LANG['preview'],

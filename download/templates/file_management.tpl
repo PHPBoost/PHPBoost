@@ -36,7 +36,7 @@
 		-->
 		</script>
 		
-		<section>			
+		<section>
 			<header>
 				<h1>{L_PAGE_TITLE}</h1>
 			</header>
@@ -71,9 +71,9 @@
 			# ENDIF #
 
 			<form action="{U_TARGET}" method="post" onsubmit="return check_form();" class="fieldset-content">
-				<fieldset>
+				<p class="center">{L_REQUIRE}</p>
+					<fieldset>
 					<legend>{L_PAGE_TITLE}</legend>
-					<p>{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="title">* {L_TITLE}</label>
 						<div class="form-field">
@@ -81,7 +81,7 @@
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="idcat">* {L_CATEGORY}</label>
+						<label for="idcat">{L_CATEGORY}</label>
 						<div class="form-field">
 							{CATEGORIES_TREE}
 						</div>
@@ -121,7 +121,7 @@
 					<div class="form-element-textarea">
 						<label for="contents">* {L_CONTENTS}</label>
 						{KERNEL_EDITOR}
-						<textarea rows="20" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>					
+						<textarea rows="20" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>
 					</div>
 					<div class="form-element-textarea">
 						<label for="short_contents">{L_SHORT_CONTENTS}</label>

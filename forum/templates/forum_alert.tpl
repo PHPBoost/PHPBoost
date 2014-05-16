@@ -1,7 +1,7 @@
 		# INCLUDE forum_top #
 		
-		<div class="module-position">					
-			<div class="module-top-l"></div>		
+		<div class="module-position">
+			<div class="module-top-l"></div>
 			<div class="module-top-r"></div>
 			<div class="module-top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span> &raquo; <a href="">{L_ALERT}</a></div>
 			<div class="module-contents">
@@ -33,13 +33,13 @@
 						
 						<div id="id-message-helper" class="notice" style="width:80%;">{L_ALERT_EXPLAIN}: <a href="{alert_form.U_TOPIC}">{alert_form.TITLE}</a></div>
 						<div class="form-element">
-							<label for="">{L_ALERT_TITLE}</label>
+							<label for="title">{L_ALERT_TITLE}</label>
 							<div class="form-field">
-								<input type="text" name="" id="" size="50">
+								<input type="text" name="title" id="title" size="50">
 							</div>
 						</div>
 						<div class="form-element-textarea">
-							<label for="contents">{L_ALERT_CONTENTS}</label>
+							<label for="contents"> *{L_ALERT_CONTENTS}</label>
 							{KERNEL_EDITOR}
 							<textarea style="width:70%" rows="15" cols="40" id="contents" name="contents"></textarea> 
 							<input type="hidden" name="id" value="{alert_form.ID_ALERT}">

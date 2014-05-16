@@ -1,10 +1,5 @@
-		<link href="{PICTURES_DATA_PATH}/forum.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script>
 		<!--
-		function Confirm() {
-		return confirm("{L_CONFIRM_DEL_ENTRY}");
-		}
-		
 		var list_cats = new Array({LIST_CATS});
 		var array_cats = new Array();
 		{ARRAY_JS}

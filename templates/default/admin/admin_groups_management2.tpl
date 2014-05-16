@@ -96,10 +96,10 @@
 			{
 				br = (i+1) % 8;
 				br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-				contents += '<td><a style="background:' + color[i] + ';" onclick="javascript:insert_color(\'' + color[i] + '\');"></a></td>' + br;								
+				contents += '<td><a style="background:' + color[i] + ';" onclick="javascript:insert_color(\'' + color[i] + '\');"></a></td>' + br;
 			}
 			document.getElementById("color_group_list").innerHTML = contents + '</tr></table>';
-		}	
+		}
 		-->
 		</script>
 
@@ -119,9 +119,10 @@
 			</ul>
 		</div>
 		
-		<div id="admin-contents">		
-			# IF C_EDIT_GROUP #					
+		<div id="admin-contents">
+			# IF C_EDIT_GROUP #
 			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_GROUPS_MANAGEMENT}</legend>
 					<div class="form-element">
@@ -170,7 +171,7 @@
 							</label>
 						</div>
 					</div>
-				</fieldset>						
+				</fieldset>
 				<fieldset class="fieldset-submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{GROUP_ID}" class="update">
@@ -183,6 +184,7 @@
 			# INCLUDE message_helper #
 			
 			<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_ADD_MBR_GROUP}</legend>
 					<div class="form-element">
@@ -194,7 +196,7 @@
 							<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 						</div>
 					</div>
-				</fieldset>	
+				</fieldset>
 				<fieldset class="fieldset-submit">
 					<legend>{L_ADD}</legend>
 					<button type="submit" class="submit" name="add_mbr" value="true">{L_ADD}</button>
@@ -211,10 +213,10 @@
 					<tr> 
 						<th>
 							{L_PSEUDO}
-						</th>	
+						</th>
 						<th>
 							{L_DELETE}
-						</th>					
+						</th>
 					</tr>
 				</thead>
 				# IF C_PAGINATION #
@@ -253,9 +255,9 @@
 			
 			# INCLUDE message_helper #
 			
-			<form action="admin_groups.php?add=1" method="post" enctype="multipart/form-data" class="fieldset-content">				
+			<form action="admin_groups.php?add=1" method="post" enctype="multipart/form-data" class="fieldset-content">
 				<fieldset>
-				<legend>{L_UPLOAD_GROUPS}</legend>						
+				<legend>{L_UPLOAD_GROUPS}</legend>
 					<div class="form-element">
 						<label for="upload_groups">{L_UPLOAD_GROUPS} <span class="field-description">{L_UPLOAD_FORMAT}</span></label>
 						<div class="form-field"><label>
@@ -272,6 +274,7 @@
 			</form>
 			
 			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_ADD_GROUPS}</legend>
 					<div class="form-element">
@@ -314,10 +317,10 @@
 						<div class="form-field"><label>
 							<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 								{IMG_GROUPS}
-							</select>				
+							</select>
 							<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="" class="valign-middle" style="display:none" />
 						</label></div>
-					</div>				
+					</div>
 				</fieldset>
 				<fieldset class="fieldset-submit">
 					<legend>{L_ADD}</legend>

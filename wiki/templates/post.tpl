@@ -22,7 +22,7 @@
 		</script>
 
 		# START preview #
-		<article>					
+		<article>
 			<header>
 				<h1>{L_PREVIEWING}: {preview.TITLE}</h1>
 			</header>
@@ -43,9 +43,9 @@
 		# INCLUDE message_helper #
 		
 		<form action="{TARGET}" method="post" onsubmit="return check_form_post();" class="fieldset-content">
+			<p class="center">{L_REQUIRE}</p>
 			<fieldset>
 				<legend>{TITLE}</legend>
-				<p>{L_REQUIRE}</p>
 				# START create #
 				<div class="form-element">
 					<label for="title">* {L_TITLE_FIELD}</label>

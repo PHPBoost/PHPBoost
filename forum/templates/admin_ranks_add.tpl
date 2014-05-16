@@ -16,7 +16,7 @@
 			function img_change(id, url)
 			{
 				if( document.getElementById(id) && url != '' )
-				{	
+				{
 					document.getElementById(id).style.display = 'inline';
 					document.getElementById(id).src = url;
 				}
@@ -62,13 +62,13 @@
 			</ul>
 		</div>
 		
-		<div id="admin-contents">	
+		<div id="admin-contents">
 		
 			# INCLUDE message_helper #
 			
 			<form action="admin_ranks_add.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset-content">				
 				<fieldset>
-				<legend>{L_UPLOAD_RANKS}</legend>						
+				<legend>{L_UPLOAD_RANKS}</legend>
 					<div class="form-element">
 						<label for="upload_ranks">{L_UPLOAD_RANKS}</label><br />{L_UPLOAD_FORMAT}
 						<div class="form-field"><label>
@@ -83,7 +83,8 @@
 				</fieldset>
 			</form>
 
-			<form action="admin_ranks_add.php?token={TOKEN}" method="post" onsubmit="return check_form_rank_add();" class="fieldset-content">	
+			<form action="admin_ranks_add.php?token={TOKEN}" method="post" onsubmit="return check_form_rank_add();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_ADD_RANKS}</legend>
 					<div class="form-element">

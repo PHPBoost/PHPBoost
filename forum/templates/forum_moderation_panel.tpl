@@ -110,16 +110,13 @@
 					for (i = 0; i < document.alert.length; i++)
 						document.alert.elements[i].checked = status;
 				}
-				function Confirm_msg() {
-					return confirm("{L_DELETE_MESSAGE}");
-				}
 				-->
 				</script>
 		
 				<form name="alert" action="moderation_forum{U_ACTION_ALERT}" method="post" onsubmit="javascript:return Confirm_alert();">
 					<table>
 						<thead>
-							<tr>			
+							<tr>
 								<th style="width:25px;"><input type="checkbox" onclick="if(this.checked) {check_alert(true)} else {check_alert(false)};"></th>
 								<th style="width:20%;">{L_TITLE}</th>
 								<th style="width:20%;">{L_TOPIC}</th>
@@ -272,7 +269,7 @@
 								}
 							}
 							xmlhttprequest_sender(xhr_object, data);
-						}	
+						}
 						else
 							alert("{L_REQUIRE_LOGIN}");
 					}

@@ -13,7 +13,7 @@
 			}
 		}
 		-->
-		</script>	
+		</script>
 		
 		<div class="module-position">
 			<div class="module-top-l"></div>
@@ -31,7 +31,7 @@
 							<span style="float:left;">{L_PREVIEW}</span>
 							<span style="float:right;"></span>&nbsp;
 						</div>
-					</div>	
+					</div>
 					<div class="msg-position">
 						<div class="msg-container">
 							<div class="msg-pseudo-mbr"></div>
@@ -48,7 +48,7 @@
 									</div>
 								</div>
 							</div>
-						</div>	
+						</div>
 						<div class="msg-sign">
 							<hr />
 							<span style="float:left;">
@@ -56,7 +56,7 @@
 							</span>
 							<span style="float:right;font-size:10px;">
 							</span>&nbsp;
-						</div>	
+						</div>
 					</div>
 					<div class="msg-position">
 						<div class="msg-bottom-l"></div>
@@ -67,9 +67,9 @@
 					# ENDIF #
 					
 					<div class="fieldset-content">
+						<p class="center">{L_REQUIRE}</p>
 						<fieldset>
 							<legend>{L_EDIT_MESSAGE}</legend>
-							<p>{L_REQUIRE}</p>
 							<div class="form-element-textarea">
 								<label for="contents">* {L_MESSAGE}</label>
 								{KERNEL_EDITOR}

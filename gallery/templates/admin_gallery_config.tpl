@@ -98,9 +98,9 @@
 		
 		<div id="admin-contents">
 			<form action="admin_gallery_config.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_CONFIG_CONFIG}</legend>
-					<p class="center">{L_REQUIRE}</p>
 					<div class="form-element">
 						<label for="max_width">* {L_MAX_WIDTH} <span class="field-description">{L_MAX_WIDTH_EXPLAIN}</span></label>
 						<div class="form-field"><input type="text" size="5" id="max_width" name="max_width" value="{MAX_WIDTH}"> {L_UNIT_PX}</div>

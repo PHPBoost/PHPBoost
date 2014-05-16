@@ -58,11 +58,11 @@
 					</thead>
 					<tbody>
 						# START cat #
-						<tr>	
+						<tr>
 							<td> 
 								<span id="w{cat.IDCAT}"></span>
 								<input type="text" maxlength="60" size="20" name="{cat.IDCAT}cat" value="{cat.CAT}">
-							</td>							
+							</td>
 							<td> 
 								<textarea rows="3" cols="40" name="{cat.IDCAT}contents">{cat.CONTENTS}</textarea> 
 							</td>
@@ -73,14 +73,14 @@
 								<span id="{cat.IDCAT}icon_img">{cat.IMG_ICON}</span>
 								<br />
 								<span class="smaller">{L_OR_DIRECT_PATH}</span> <input type="text" name="{cat.IDCAT}icon_path" value="{cat.IMG_PATH}" onblur="if( this.value != '' )change_icon('{cat.IDCAT}', this.value)">
-							</td>	
+							</td>
 							<td> 
 								<select name="{cat.IDCAT}secure">
-									# START cat.select_secure #	
+									# START cat.select_secure #
 										{cat.select_secure.RANK}
 									# END cat.select_secure #
 								</select>
-							</td>							
+							</td>
 							<td>
 								<div class="form-field" style="width: 79px;text-align:left;">
 									<label><input type="radio" {cat.ACTIV_ENABLED} name="{cat.IDCAT}aprob" value="1"> {L_ACTIV}</label>
@@ -96,6 +96,11 @@
 							</td>
 						</tr>
 						# END cat #
+						# IF NOT C_CATS #
+						<tr>
+							<td colspan="7">{L_NO_CAT}</td>
+						</tr>
+						# ENDIF #
 					</tbody>
 				</table>
 				<fieldset class="fieldset-submit" style="margin:0px;">

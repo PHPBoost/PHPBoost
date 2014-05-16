@@ -19,10 +19,11 @@
 			</div>
 			<div class="module-contents">
 				<form action="search.php?token={TOKEN}#search_forum" method="post" onsubmit="return check_form();" class="fieldset-content">
+					<p class="center">{L_REQUIRE}</p>
 					<fieldset>
 						<legend>{L_SEARCH_FORUM}</legend>
 						<div class="form-element">
-							<label for="search_forum_form">{L_KEYWORDS}</label>
+							<label for="search_forum_form">* {L_KEYWORDS}</label>
 							<div class="form-field"><label><input type="text" size="35" id="search_forum_form" name="search" value="{SEARCH}"></label></div>
 						</div>
 						<div class="form-element">

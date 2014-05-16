@@ -171,6 +171,7 @@ else
 		'L_WEB_CAT' => $LANG['cat_management'],
 		'L_WEB_CONFIG' => $LANG['web_config'],
 		'L_ADD_CAT' => $LANG['cat_add'],
+		'L_NO_CAT' => $LANG['no_cat'],
 		'L_NAME' => $LANG['name'],
 		'L_DESC' => $LANG['description'],
 		'L_ICON' => $LANG['icon_cat'],
@@ -198,7 +199,9 @@ else
 	
 	$min_cat = $Sql->query("SELECT MIN(class) FROM " . PREFIX . "web_cat", __LINE__, __FILE__);
 	$max_cat = $Sql->query("SELECT MAX(class) FROM " . PREFIX . "web_cat", __LINE__, __FILE__);
-
+	
+	$number_cats = 0;
+	
 	$result = $Sql->query_while("SELECT id, name, class, contents, icon, aprob, secure
 	FROM " . PREFIX . "web_cat
 	ORDER BY class", __LINE__, __FILE__);
@@ -264,8 +267,11 @@ else
 				'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 			));
 		}
+		$number_cats++;
 	}
 	$Sql->query_close($result);
+	
+	$Template->put('C_CATS', $number_cats);
 	
 	$Template->pparse('admin_web_cat'); // traitement du modele	
 }

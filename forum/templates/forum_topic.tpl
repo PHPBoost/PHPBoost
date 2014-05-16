@@ -21,7 +21,7 @@
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
-				{	
+				{
 					if( document.getElementById('d' + idmsg) )
 						document.getElementById('d' + idmsg).style.display = 'none';
 				}
@@ -318,7 +318,7 @@
 		<div class="forum-post-form">
 			<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
 				<div>
-					<div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
+					<div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>
 					{KERNEL_EDITOR}
 					<label><textarea rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 					<fieldset class="fieldset-submit" style="padding-top:17px;margin-bottom:0px;">

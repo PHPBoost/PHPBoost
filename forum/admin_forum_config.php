@@ -134,6 +134,7 @@ else
 		'EXPLAIN_DISPLAY_MSG_BIS' => !empty($CONFIG_FORUM['explain_display_msg_bis']) ? $CONFIG_FORUM['explain_display_msg_bis'] : '',
 		'ICON_DISPLAY_MSG_ENABLED' => ($CONFIG_FORUM['icon_activ_display_msg'] == 1) ? 'checked="checked"' : '',
 		'ICON_DISPLAY_MSG_DISABLED' => ($CONFIG_FORUM['icon_activ_display_msg'] == 0) ? 'checked="checked"' : '',
+		'L_REQUIRE' => $LANG['require'],
 		'L_REQUIRE_NAME' => $LANG['require_name'],
 		'L_REQUIRE_TOPIC_P' => $LANG['require_topic_p'],
 		'L_REQUIRE_NBR_MSG_P' => $LANG['require_nbr_msg_p'],

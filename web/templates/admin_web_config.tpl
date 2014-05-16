@@ -54,8 +54,9 @@
 			</ul>
 		</div> 
 		
-		<div id="admin-contents">							
+		<div id="admin-contents">
 			<form action="admin_web_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_WEB_CONFIG}</legend>
 					<div class="form-element">

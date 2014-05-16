@@ -1,12 +1,3 @@
-		<script>
-		<!--
-		function Confirm() {
-		return confirm("{L_CONFIRM_DEL_ENTRY}");
-		}
-
-		-->
-		</script>
-
 		<div id="admin-quick-menu">
 			<ul>
 				<li class="title-menu">{L_FORUM_MANAGEMENT}</li>

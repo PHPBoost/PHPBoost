@@ -28,9 +28,9 @@
 			</header>
 			<div class="content">
 				<form action="{PATH_TO_ROOT}/faq/action.php?token={TOKEN}" method="post" onsubmit="return check_form_faq()">
+					<p class="center">{L_REQUIRED_FIELDS}</p>
 					<fieldset>
 						<legend>{L_QUESTION}</legend>
-						<p>{L_REQUIRED_FIELDS}</p>
 						<div class="form-element">
 							<label for="idcat">{L_CATEGORY}</label>
 							<div class="form-field">

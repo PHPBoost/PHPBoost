@@ -3,7 +3,7 @@
 function CheckForm() {
 	if (document.getElementById('name').value == '') {
 		document.getElementById('name').select();
-		window.alert({JL_REQUIRE_TITLE});
+		window.alert({JL_REQUIRE_NAME});
 		return false;
 	}
 	if (document.getElementById('feed_url').options[0].selected || document.getElementById('feed_url').options[1].selected) {
@@ -17,6 +17,7 @@ function CheckForm() {
 </script>
 <div id="admin-contents">
 	<form action="feed.php" method="post" class="fieldset-content" onsubmit="return CheckForm();">
+		<p class="center">{L_REQUIRE}</p>
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
 			<div class="form-element">
@@ -24,7 +25,7 @@ function CheckForm() {
 				<div class="form-field"><label><input type="text" size="18" name="name" id="name" value="{NAME}"></label></div>
 			</div>
 			<div class="form-element">
-				<label for="location">* {L_LOCATION}</label>
+				<label for="location">{L_LOCATION}</label>
 				<div class="form-field"><label><select name="location" id="location">{LOCATIONS}</select></label></div>
 			</div>
 			<div class="form-element">
