@@ -337,7 +337,8 @@ class UserMaintainController extends AbstractController
 		$response = new SiteDisplayFrameResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title(LangLoader::get_message('home', 'main'));
+		$graphical_environment->set_page_title(LangLoader::get_message('title_maintain', 'main'));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::maintain());
 		
 		return $response;
 	}
