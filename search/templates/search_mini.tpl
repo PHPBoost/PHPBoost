@@ -23,7 +23,7 @@
 		<div class="module-mini-top"><h5 class="sub-title">{SEARCH}</h5></div>
 		<div class="module-mini-contents">
 			<div id="mini-search-form" class="input-element-button">
-				<input type="text" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" class="search_entry" placeholder="{L_SEARCH}...">
+				<input type="text" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" placeholder="{L_SEARCH}...">
 				<input type="hidden" name="token" value="{TOKEN}">
 				<button type="submit" name="search_submit"><i class="fa fa-search"></i></button>
 			</div>
@@ -35,7 +35,7 @@
 # ELSE #
 <form action="{U_FORM_VALID}" onsubmit="return check_search_mini_form_post();" method="post">
 	<div id="mini-search-form" class="input-element-button">
-		<input type="text" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" class="search_entry" placeholder="{L_SEARCH}...">
+		<input type="text" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" placeholder="{L_SEARCH}...">
 		<input type="hidden" name="search_submit" id="search_submit_mini" value="{SEARCH}">
 		<button type="submit" name="search_submit"><i class="fa fa-search"></i></button>
 	</div>
