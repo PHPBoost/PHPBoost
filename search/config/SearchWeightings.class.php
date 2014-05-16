@@ -35,11 +35,11 @@ class SearchWeightings
 	{
 		$weighting = array();
 		$provider_service = AppContext::get_extension_provider_service();
-        foreach ($provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT) as $module_id => $provider)
-        {
-        	$weighting[$module_id] = $this->get_module_weighting($module_id);
-        }
-        return $weighting;
+		foreach ($provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT) as $module_id => $provider)
+		{
+			$weighting[$module_id] = $this->get_module_weighting($module_id);
+		}
+		return $weighting;
 	}
 	
 	public function get_module_weighting($module_id)
