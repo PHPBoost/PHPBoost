@@ -119,7 +119,7 @@ else
 		'AUTH_READ' => Authorizations::generate_select(GalleryAuthorizationsService::READ_AUTHORIZATIONS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'AUTH_WRITE' => Authorizations::generate_select(GalleryAuthorizationsService::WRITE_AUTHORIZATIONS, array(), array(1 => true, 2 => true)),
 		'AUTH_EDIT' => Authorizations::generate_select(GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS, array(), array(2 => true)),
-		'L_REQUIRE_TITLE' => $LANG['require_title'],
+		'L_REQUIRE_NAME' => $LANG['require_name'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 
 		'L_GALLERY_CAT_MANAGEMENT' => $LANG['gallery_cats_management'], 

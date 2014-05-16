@@ -3,7 +3,7 @@
 			function check_form_list()
 			{
 				if(document.getElementById('name').value == "") {
-					alert("{L_REQUIRE}");
+					alert("{L_REQUIRE_NAME}");
 					return false;
 				}
 				return true;
