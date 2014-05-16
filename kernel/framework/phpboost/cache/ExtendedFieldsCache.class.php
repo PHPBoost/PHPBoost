@@ -71,7 +71,7 @@ class ExtendedFieldsCache implements CacheData
 	
 	public function get_exist_fields()
 	{
-		return (count($this->extended_fields) > 0) ? true : false;
+		return (count($this->extended_fields) > 0);
 	}
 
 	public function get_extended_field($id)
@@ -81,6 +81,21 @@ class ExtendedFieldsCache implements CacheData
 			return $this->extended_fields[$id];
 		}
 		return null;
+	}
+
+	public function get_extended_field_by_field_name($field_name)
+	{
+		$field = null;
+		
+		foreach ($this->extended_fields as $id => $field_options)
+		{
+			if ($field_options['field_name'] == $field_name)
+			{
+				$field = $this->extended_fields[$id];
+			}
+		}
+		
+		return $field;
 	}
 	
 	/**
