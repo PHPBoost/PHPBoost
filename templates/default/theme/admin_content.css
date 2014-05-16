@@ -60,7 +60,7 @@ span.actions a { font-size: 12px; }
 section footer, article footer { margin-bottom: 15px; }
 
 /* Pagination */
-section footer ul.pagination {	text-align: center; }
+section footer ul.pagination { text-align: center; }
 
 ul.pagination { margin: 0px; }
 ul.pagination .fa:before { font-size: 12px; }
@@ -75,7 +75,7 @@ ul.pagination-block li a {
 	text-decoration: none;
 	outline: none;
 	font-weight: bold;
-	font-size: 12px;	
+	font-size: 12px;
 }
 
 ul.pagination-block li a {
@@ -313,7 +313,6 @@ table tfoot nav.pagination a{
 	color: #8B8D90;
 	text-decoration: none;
 	padding: 3px 3px;
-	
 }
 
 table tfoot nav.pagination a span.current-page {
@@ -432,7 +431,7 @@ option { padding: 0px 3px; }
 	border-top: 1px solid #99b1cb;
 	border-right: 1px solid #CCCCCC;
 	border-bottom: 1px solid #CCCCCC;
-	background-color: #FFFFFF;	
+	background-color: #FFFFFF;
 	color: #2E3B5F;
 	padding: 0px 2px;
 }
@@ -597,16 +596,16 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 
 /* Gestion des Catégories */
 #cats-elements-list {
-    position: relative;
-    padding: 5px;
+	position: relative;
+	padding: 5px;
 }
 
 .sortable-block .sortable-element > .sortable-block { margin-left: 30px; }
 
 .sortable-block {
-    list-style-type: none;
-    list-style-position: outside;
-    margin: 0;
+	list-style-type: none;
+	list-style-position: outside;
+	margin: 0;
 	padding: 0;
 	min-height: 24px;
 }
@@ -686,27 +685,27 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 
 /* Gestion des Menus */
 .menu-link-list {
-    list-style-type: none;
-    list-style-position: outside;
-    margin-left: 20px;
-    padding: 10px 0;
+	list-style-type: none;
+	list-style-position: outside;
+	margin-left: 20px;
+	padding: 10px 0;
 }
 
 .menu-link-element {
-    margin-top: 10px;
-        background: #E5E5E5;
-        border: 1px solid #8F8F8F;
-        padding: 5px
+	margin-top: 10px;
+	background: #E5E5E5;
+	border: 1px solid #8F8F8F;
+	padding: 5px
 }
 .menu-link-menu {
-    margin-top: 15px;
-    background: #EFEFEF;
-    border: 1px solid #8F8F8F;
+	margin-top: 15px;
+	background: #EFEFEF;
+	border: 1px solid #8F8F8F;
 }
 
 .menu-link-element:hover {
-    border-color: #AAAAAA;
-    cursor: move;
+	border-color: #AAAAAA;
+	cursor: move;
 }
 
 .menu-link-element label { color: #1F507F; }
@@ -716,16 +715,12 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 
 /* Interface des menus */
 #valid-position-menus {
-	color: #0E2A48;
 	position: fixed;
 	z-index: 101;
 	top: 90%;
 	right: 0px;
 	margin-right: 5px;
 	padding: 6px;
-	border: 1px solid #353535;
-	background: #366393;
-	border-radius: 5px;
 }
 
 div.container-block {
@@ -743,12 +738,12 @@ div.container-block-absolute {
 	margin-top: 38px;
 	margin-left: 0px;
 	float: left;
-	display: none;	
+	display: none;
 }
 
 div.container-block-absolute > div {
 	position: absolute;
-	z-index: 100;	
+	z-index: 100;
 }
 
 .menu-block-libelle {
@@ -816,7 +811,7 @@ div.container-block-absolute > div {
 .menus-block-move a {
 	display: block;
 	height: 16px;
-	width: 16px;	
+	width: 16px;
 }
 
 .menus-block-container:hover > div.menus-block-move-top { background: url('../images/admin/move_top.png'); }
@@ -839,7 +834,7 @@ div.container-block-absolute > div {
 	padding-top: 30px;
 	border: 2px dashed #8F8F8F;
 	margin-top: 20px;
-    border-radius: 3px;
+	border-radius: 3px;
 	background: #E5E5E5;
 }
 
