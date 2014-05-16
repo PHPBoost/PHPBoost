@@ -1,5 +1,6 @@
+# INCLUDE FILTER_LIST #
+
 # IF C_BUGS #
-	# INCLUDE FILTER_LIST #
 	<table>
 		<thead>
 			<tr>
@@ -120,7 +121,5 @@
 		</tbody>
 	</table>
 # ELSE #
-<div class="spacer">&nbsp;</div>
-
 <div class="notice">{L_NO_BUG}</div>
 # ENDIF #
