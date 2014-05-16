@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                           AdminExtendedFieldsDisplayResponse.class.php
+ *                       AdminExtendedFieldsUrlBuilder.class.php
  *                            -------------------
- *   begin                : April 18, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
+ *   begin                : May 16, 2014
+ *   copyright            : (C) 2014 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,20 +25,40 @@
  *
  ###################################################*/
 
-class AdminExtendedFieldsDisplayResponse extends AdminMenuDisplayResponse
+class AdminExtendedFieldsUrlBuilder
 {
-	public function __construct($view, $title_page)
+	private static $dispatcher = '/admin/member/extended-fields';
+	
+	/*
+	 * @ return Url
+	*/
+	public static function fields_list($params = '')
 	{
-        parent::__construct($view);
-
-		$lang = LangLoader::get('admin-user-common');
-		$picture = '/templates/default/images/admin/extendfield.png';
-		$this->set_title($lang['extended-field']);
-		$this->add_link($lang['extended-fields-management'], AdminExtendedFieldsUrlBuilder::fields_list(), $picture);
-		$this->add_link($lang['extended-field-add'], AdminExtendedFieldsUrlBuilder::add(), $picture);
+		return DispatchManager::get_url(self::$dispatcher, '/list/' . $params);
+	}
+	
+	/*
+	 * @ return Url
+	 */
+	public static function add()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/add/');
+	}
+	
+	/*
+	 * @ return Url
+	 */
+	public static function edit($id)
+	{
+		return DispatchManager::get_url(self::$dispatcher, $id. '/edit/');
+	}
 		
-		$env = $this->get_graphical_environment();
-		$env->set_page_title($title_page);
+	/*
+	 * @ return Url
+	 */
+	public static function delete()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/delete/');
 	}
 }
 ?>

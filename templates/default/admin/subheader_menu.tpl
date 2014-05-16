@@ -110,10 +110,10 @@
 				</ul>
 			</li>
 			<li class="extend">
-				<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/extended-fields/list/"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png"/> {L_EXTEND_FIELD}</a>
+				<a href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield_mini.png"/> {L_EXTEND_FIELD}</a>
 				<ul>
-					<li><a href="{PATH_TO_ROOT}/admin/member/?url=/extended-fields/list/">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/member/?url=/extended-fields/add/">{L_ADD}</a></li>
+					<li><a href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}">{L_MANAGEMENT}</a></li>
+					<li><a href="${relative_url(AdminExtendedFieldsUrlBuilder::add())}">{L_ADD}</a></li>
 				</ul>
 			</li>
 			# IF C_ADMIN_LINKS_4 #

@@ -50,7 +50,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 					'C_FREEZE' => $row['freeze'],
 					'ID' => $row['id'],
 					'NAME' => $row['name'],
-					'U_EDIT' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->rel()
+					'U_EDIT' => AdminExtendedFieldsUrlBuilder::edit($row['id'])->rel()
 				));
 				$fields_number++;
 			}
