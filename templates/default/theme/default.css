@@ -7,7 +7,7 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
 * { margin: 0; padding: 0; font-size: 100%; -moz-box-sizing: border-box; box-sizing: border-box; }
 html, body { height: 100%; margin: 0; padding: 0; }
 img { border: none; overflow: scroll; vertical-align: middle; }
-img, table, td, blockquote, code, pre, textarea, input, video, object, .video-player {	max-width: 100%; }
+img, table, td, blockquote, code, pre, textarea, input, video, object, .video-player { max-width: 100%; }
 input, button, label, select, textarea, legend { font-family: inherit; font-size: inherit; vertical-align: middle; }
 optgroup, select, label, button, input[type=radio], input[type=checkbox], .button, .notation .star { cursor: pointer; }
 input[type=checkbox] { border: none; background: none; }
@@ -17,8 +17,8 @@ div, textarea, table, td, th, code, pre, samp {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	-webkit-hyphens: auto;
-   	-moz-hyphens: auto;
-    -ms-hyphens: auto;
+	-moz-hyphens: auto;
+	-ms-hyphens: auto;
 	hyphens: auto;
 }
 
@@ -26,11 +26,11 @@ div, textarea, table, td, th, code, pre, samp {
 fieldset { min-width: 0 !important; }
 
 hr {
-    background: #C4CED6;
-    border: none;
-    margin: 1px auto;
-    height: 1px;
-    width: 99%;
+	background: #C4CED6;
+	border: none;
+	margin: 1px auto;
+	height: 1px;
+	width: 99%;
 }
 
 ul, ol { line-height: normal; margin-left: 20px; margin-bottom: 10px; }
@@ -39,8 +39,8 @@ ul.no-list { list-style: none; }
 
 p {
 	margin-bottom: 0.7em;
-    line-height: normal;
-    font-size: 1em;
+	line-height: normal;
+	font-size: 1em;
 }
 
 pre { white-space: pre-wrap; }
@@ -92,9 +92,9 @@ div.horizontal-fieldset .form-element label {
 
 /* Imite l'affichage fieldset / legend */
 .fieldset-content {
-    width: 95%;
-    margin: auto;
-    margin-top: 20px;
+	width: 95%;
+	margin: auto;
+	margin-top: 20px;
 }
 
 .module-mini-contents .fieldset-content { width: 100%; }
@@ -121,29 +121,29 @@ ul.pagination .current-page { text-decoration: underline; }
 	height: 220px;
 	width: 94%;
 	font-size: 11px;
-	margin: 4px auto 3px auto;		
+	margin: 4px auto 3px auto;
 	padding: 1px 2px 1px 2px;
 	border-radius: 4px;
 }
 
 /* Syndications */
 div.syndication-choices {
-    position: absolute;
-    width: 0px;
-    height: 0px;
-    visibility: hidden;
-    overflow: visible;
-    margin-top: 2px 0px 0px -20px;
+	position: absolute;
+	width: 0px;
+	height: 0px;
+	visibility: hidden;
+	overflow: visible;
+	margin-top: 2px 0px 0px -20px;
 }
 
 div.syndication-choices ul {
-    width: 90px;
-    list-style-type: none;
+	width: 90px;
+	list-style-type: none;
 	line-height: 18px;
 }
 div.syndication-choices ul li {
 	height: 18px;
-    margin-bottom: 1px;
+	margin-bottom: 1px;
 }
 
 ul.rss-feed { margin-left:20px; }
@@ -154,14 +154,17 @@ ul.rss-feed li { text-align: left; }
 	* {
 		background: transparent;
 		color: #000000;
-	    text-shadow: none;
-	    box-shadow: none;
+		text-shadow: none;
+		box-shadow: none;
 	}
 }
 
 /* Tableaux
 --------------------------------------*/
-table.table-fixed { table-layout:fixed; width:100%; }
+table.table-fixed {
+	table-layout: fixed;
+	width: 100%;
+}
 
 /* Lightbox
 --------------------------------------*/
@@ -173,7 +176,10 @@ table.table-fixed { table-layout:fixed; width:100%; }
 	text-align: center;
 	line-height: 0;
 }
-#lightbox img { width: auto; height: auto;}
+#lightbox img {
+	width: auto;
+	height: auto;
+}
 #lightbox a img { border: none; }
 
 #outerImageContainer { 
