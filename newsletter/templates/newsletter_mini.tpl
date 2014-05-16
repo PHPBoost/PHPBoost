@@ -30,7 +30,7 @@
 	<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
 		<div class="newsletter-form input-element-button">
 			<span class="newsletter-title">{L_NEWSLETTER}</span> 
-			<input type="text" name="mail_newsletter" maxlength="50" class="newsletter_text" value="{USER_MAIL}">
+			<input type="text" name="mail_newsletter" maxlength="50" value="{USER_MAIL}">
 			<input type="hidden" name="subscribe" value="subscribe">
 			<button type="submit" class="newsletter-submit"><i class="fa fa-envelope-o"></i></button>
 		</div>
