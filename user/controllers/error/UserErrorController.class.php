@@ -92,7 +92,7 @@ class UserErrorController extends AbstractController
 	{
 		$this->create_view();
 		$this->fill_view();
-		if (MaintenanceConfig::load()->is_maintenance_enabled())
+		if (MaintenanceConfig::load()->is_under_maintenance())
 			return new SiteNodisplayResponse($this->view);
 		else
 		{
