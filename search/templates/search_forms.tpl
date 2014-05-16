@@ -13,7 +13,7 @@
 				document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).className = '';
 
 				LastSpecializedFormUsed = module;
-				document.getElementById('search_in').value = module;
+				document.getElementById('search-in').value = module;
 				
 				document.getElementById(SPECIALIZED_FORM_LINK + module).className = 'SFL-current';
 			}
@@ -74,9 +74,9 @@
 					# END forms #
 					<fieldset class="fieldset-submit">
 						<legend>{L_SEARCH}</legend>
-						<input type="hidden" id="search_in" name="search_in" value="all">
-						<input type="hidden" id="query_mode" name="query_mode" value="0">
-						<button type="submit" id="search_submit" name="search_submit" value="{L_SEARCH}" class="submit"><i class="fa fa-search"></i> {L_SEARCH}</button>
+						<input type="hidden" id="search-in" name="search_in" value="all">
+						<input type="hidden" name="query_mode" value="0">
+						<button type="submit" name="search_submit" value="{L_SEARCH}" class="submit"><i class="fa fa-search"></i> {L_SEARCH}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
 					</fieldset>
 				</form>

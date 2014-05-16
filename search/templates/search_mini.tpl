@@ -36,7 +36,7 @@
 <form action="{U_FORM_VALID}" onsubmit="return check_search_mini_form_post();" method="post">
 	<div id="mini-search-form" class="input-element-button">
 		<input type="text" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" placeholder="{L_SEARCH}...">
-		<input type="hidden" name="search_submit" id="search_submit_mini" value="{SEARCH}">
+		<input type="hidden" name="search_submit" value="{SEARCH}">
 		<button type="submit" name="search_submit"><i class="fa fa-search"></i></button>
 	</div>
 </form>
