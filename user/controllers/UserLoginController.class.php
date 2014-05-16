@@ -172,6 +172,7 @@ class UserLoginController extends AbstractController
 	{
 		$this->form = new HTMLForm('loginForm');
 		$this->form->set_css_class('fieldset-content');
+		$this->form->disable_captcha_protection();
 
 		$this->fieldset = new FormFieldsetHTML('loginFieldset', $this->lang['connect']);
 		$login = new FormFieldTextEditor('login', $this->lang['pseudo'], '', array('required' => true));
