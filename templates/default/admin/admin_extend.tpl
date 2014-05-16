@@ -85,9 +85,9 @@
 			</tr>
 			<tr class="center">
 				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/management/"><img src="{PATH_TO_ROOT}/templates/default/images/admin/members.png" alt="" /></a>
+					<a href="${relative_url(AdminMembersUrlBuilder::management())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/management/">{L_USER}</a>
+					<a href="${relative_url(AdminMembersUrlBuilder::management())}">{L_USER}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">
 					<a href="{PATH_TO_ROOT}/admin/admin_groups.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/groups.png" alt="" /></a>
@@ -95,9 +95,9 @@
 					<a href="{PATH_TO_ROOT}/admin/admin_groups.php">{L_GROUP}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/extended-fields/list/"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield.png" alt=""/></a>
+					<a href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/extendfield.png" alt=""/></a>
 					<br />
-					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/extended-fields/list/">{L_EXTEND_FIELD}</a>
+					<a href="${relative_url(AdminExtendedFieldsUrlBuilder::fields_list())}">{L_EXTEND_FIELD}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">&nbsp;</td>
 				<td class="no-separator" style="width:20%;">&nbsp;</td>

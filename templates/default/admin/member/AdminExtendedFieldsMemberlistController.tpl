@@ -63,7 +63,7 @@ var ExtendedField = Class.create({
 	delete_fields : function() {
 		if (confirm(${escapejs(@fields.delete_field.confirm)}))
 		{
-			new Ajax.Request('{PATH_TO_ROOT}/admin/member/?url=/extended-fields/delete/', {
+			new Ajax.Request('${relative_url(AdminExtendedFieldsUrlBuilder::delete())}', {
 				method:'post',
 				asynchronous: false,
 				parameters: {'id' : this.id, 'token' : '{TOKEN}'},

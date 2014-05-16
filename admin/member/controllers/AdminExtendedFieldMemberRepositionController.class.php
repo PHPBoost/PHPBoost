@@ -51,7 +51,7 @@ class AdminExtendedFieldMemberRepositionController extends AdminController
 		}
 		
 		ExtendedFieldsCache::invalidate();
-		AppContext::get_response()->redirect('/admin/member/index.php?url=/extended-fields/list');
+		AppContext::get_response()->redirect(AdminExtendedFieldsUrlBuilder::fields_list());
 	}
 }
 
