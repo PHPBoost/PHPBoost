@@ -56,13 +56,11 @@ function delete_filter(id) {
 			# ENDIF #
 		</tr>
 	</thead>
-	# IF BUGS_NUMBER #
 	<tfoot>
 		<tr>
 			<th colspan="{FILTERS_NUMBER}">{@labels.number} # IF C_FILTER #{@labels.matching_selected_filter} # ELSE ## IF C_FILTERS #{@labels.matching_selected_filters} # ENDIF ## ENDIF #: {BUGS_NUMBER}</th>
 		</tr>
 	</tfoot>
-	# ENDIF #
 	<tbody>
 		<tr>
 			# IF C_DISPLAY_TYPES #
