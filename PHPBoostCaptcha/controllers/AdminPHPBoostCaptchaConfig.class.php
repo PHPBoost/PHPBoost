@@ -49,12 +49,13 @@ class AdminPHPBoostCaptchaConfig extends AdminModuleController
 		
 		$this->build_form();
 		
-		$tpl = new StringTemplate('# INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), E_USER_SUCCESS, 5));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -72,7 +73,7 @@ class AdminPHPBoostCaptchaConfig extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('config', $this->lang['admin.config']);
+		$fieldset = new FormFieldsetHTML('config', LangLoader::get_message('configuration', 'admin'));
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('difficulty', $this->lang['difficulty'], $this->config->get_difficulty(),
@@ -99,11 +100,15 @@ class AdminPHPBoostCaptchaConfig extends AdminModuleController
 	
 	private function build_response(View $tpl)
 	{
+		$title = LangLoader::get_message('configuration', 'admin');
+		
 		$response = new AdminMenuDisplayResponse($tpl);
-		$response->set_title($this->lang['admin.config']);
-		$response->add_link($this->lang['admin.config'], DispatchManager::get_url('/PHPBoostCaptcha', '/admin/config/'), 'PHPBoostCaptcha.png');
+		$response->set_title($title);
+		$response->add_link($title, DispatchManager::get_url('/PHPBoostCaptcha', '/admin/config/'), 'PHPBoostCaptcha.png');
+		
 		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['admin.config']);
+		$env->set_page_title($title);
+		
 		return $response;
 	}
 }
