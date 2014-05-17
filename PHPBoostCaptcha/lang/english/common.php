@@ -25,7 +25,6 @@
  *
  ###################################################*/
 
-$lang['admin.config'] = 'Configuration';
 $lang['difficulty'] = 'Verification code difficulty';
 $lang['difficulty.very_easy'] = 'Very easy';
 $lang['difficulty.easy'] = 'Easy';
