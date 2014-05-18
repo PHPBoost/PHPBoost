@@ -185,7 +185,6 @@
 				| {L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}">{L_THEME_AUTHOR}</a>
 			</span>
 			# ENDIF #
-			# ENDIF #
 			<span>
 				| <a href="http://www.phpboost.com/contact">Contactez nous</a>
 			</span>
