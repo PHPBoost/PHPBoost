@@ -29,7 +29,7 @@
 
 # INCLUDE ADD_FIELD_JS #
 
-<script type="text/javascript">
+<script>
 <!--
 Event.observe(${escapejs(NAME)}, 'change', function() {
 	new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',{method:'post',parameters:{image:HTMLForms.getField(${escapejs(ID)}).getValue()},onSuccess:function(response){
@@ -42,5 +42,5 @@ Event.observe(${escapejs(NAME)}, 'change', function() {
 		$('${escape(HTML_ID)}_preview_picture').style.display = "none";
 	}},onFailure:function() {alert('ajax failure');},onCreate:function(response){ $('${escape(HTML_ID)}_preview_picture').insert({after: '<i id="${escape(HTML_ID)}_preview_loading" class="fa fa-spinner fa-spin"></i>'}); },});
 });
-//-->
+-->
 </script>

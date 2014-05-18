@@ -50,7 +50,6 @@ class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
      */
     public function __construct($id, $label, $value, $field_options = array(), array $constraints = array())
     {
-        $this->css_class = "text";
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
 
