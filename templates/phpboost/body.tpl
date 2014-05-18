@@ -15,10 +15,10 @@
 		<div id="sub-header">
 			<ul class="menu-link">
 				<li # IF Url::is_current_url('/', true) # class="current" # ENDIF # # IF Url::is_current_url('/index.php', true) # class="current" # ENDIF # ><a href="{PATH_TO_ROOT}/" class="title" title="Accueil">Accueil</a></li>
-				<li # IF Url::is_current_url('/news') # class="current" # ENDIF #><a href="{PATH_TO_ROOT}/news" class="title" title="ActualitÃ©s de PHPBoost">ActualitÃ©s</a></li>
+				<li # IF Url::is_current_url('/news') # class="current" # ENDIF #><a href="{PATH_TO_ROOT}/news" class="title" title="Actualités de PHPBoost">Actualités</a></li>
 				<li # IF Url::is_current_url('/wiki') # class="current" # ENDIF #><a href="{PATH_TO_ROOT}/wiki" class="title" title="Documentation">Documentation</a></li>
 				<li # IF Url::is_current_url('/forum') # class="current" # ENDIF #><a href="{PATH_TO_ROOT}/forum" class="title" title="Aide et support">Support</a></li>
-				<li # IF Url::is_current_url('/download') # class="current" # ENDIF #><a href="{PATH_TO_ROOT}/download" class="title" title="TÃ©lÃ©charger et tester PHPBoost">TÃ©lÃ©chargement</a></li>
+				<li # IF Url::is_current_url('/download') # class="current" # ENDIF #><a href="{PATH_TO_ROOT}/download" class="title" title="Télécharger et tester PHPBoost">Téléchargement</a></li>
 			</ul>
 			# IF C_MENUS_SUB_HEADER_CONTENT #
 			{MENUS_SUB_HEADER_CONTENT}
@@ -102,9 +102,9 @@
 				</div>
 				<div class="footer-columns-partners">
 					<a href="http://www.nuxit.com/" style="text-decoration:none;" title="Nuxit">
-						<p style="font-size:9px;color:#dfa959;line-height:0px;margin-bottom: 0px;font-weight:bold;">HÃ©bergement de site web</p>
+						<p style="font-size:9px;color:#DFA959;line-height:0px;margin-bottom: 0px;font-weight:bold;">Hébergement de site web</p>
 						<div class="footer-columns-title-partners-nuxit"></div>
-						<p style="font-size:9px;font-style:italic;color:#8bb9ff;">QualitÃ©, fiabilitÃ©, Support</p>
+						<p style="font-size:9px;font-style:italic;color:#8BB9FF;">Qualité, fiabilité, Support</p>
 					</a>
 				</div>
 			</div>
@@ -114,9 +114,9 @@
 					Le projet PHPBoost
 				</div>
 				<ul>
-					<li><a href="{PATH_TO_ROOT}/pages/fonctionnalites-de-phpboost" title="FonctionnalitÃ©s de PHPBoost">FonctionnalitÃ©s</a></li>
-					<li><a href="{PATH_TO_ROOT}/download/" title="TÃ©lÃ©charger PHPBoost">TÃ©lÃ©charger</a></li>
-					<li><a href="http://demo.phpboost.com" title="Essayer PHPBoost">DÃ©monstration</a></li>
+					<li><a href="{PATH_TO_ROOT}/pages/fonctionnalites-de-phpboost" title="Fonctionnalités de PHPBoost">Fonctionnalités</a></li>
+					<li><a href="{PATH_TO_ROOT}/download/" title="Télécharger PHPBoost">Télécharger</a></li>
+					<li><a href="http://demo.phpboost.com" title="Essayer PHPBoost">Démonstration</a></li>
 					<li><a href="{PATH_TO_ROOT}/pages/aider-phpboost" title="Soutenir le projet">Contribuer au projet</a></li>
 				</ul>
 			</div>	
@@ -126,8 +126,8 @@
 					Contribuer au Projet
 				</div>
 				<ul>
-					<li><a href="{PATH_TO_ROOT}/wiki/creer-un-theme" title="CrÃ©er un thÃ¨me pour PHPBoost">CrÃ©er un ThÃ¨me</a></li>
-					<li><a href="{PATH_TO_ROOT}/wiki/creer-un-module" title="CrÃ©er un module pour PHPBoost">CrÃ©er un Module</a></li>
+					<li><a href="{PATH_TO_ROOT}/wiki/creer-un-theme" title="Créer un thème pour PHPBoost">Créer un Thème</a></li>
+					<li><a href="{PATH_TO_ROOT}/wiki/creer-un-module" title="Créer un module pour PHPBoost">Créer un Module</a></li>
 					<li><a href="{PATH_TO_ROOT}/doc/" title="Documentation du framework">A.P.I.</a></li>
 					<li><a href="{PATH_TO_ROOT}/bugtracker/" title="Rapporter un bug">Rapport de bugs</a></li>
 				</ul>
@@ -140,7 +140,7 @@
 				<ul>
 					<li><a href="{PATH_TO_ROOT}/faq/">Foire Aux Questions</a></li>
 					<li><a href="{PATH_TO_ROOT}/forum/" title="Support">Forum</a></li>
-					<li><a href="{PATH_TO_ROOT}/news/" title="ActualitÃ©s de PHPBoost">News</a></li>
+					<li><a href="{PATH_TO_ROOT}/news/" title="Actualités de PHPBoost">News</a></li>
 					<li><a href="{PATH_TO_ROOT}/wiki/" title="Documentation">Documentation</a></li>
 				</ul>
 			</div>	
