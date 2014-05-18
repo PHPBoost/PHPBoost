@@ -246,8 +246,6 @@ class HTMLForm
 	 */
 	public function display()
 	{
-		global $LANG;
-
 		//Add captcha protection for visitor
 		$this->add_catpcha_protection();
 		
@@ -260,7 +258,7 @@ class HTMLForm
 			'FORMCLASS' => $this->css_class,
 			'TARGET' => $this->target,
 			'HTML_ID' => $this->html_id,
-			'L_REQUIRED_FIELDS' => $LANG['require'],
+			'L_REQUIRED_FIELDS' => LangLoader::get_message('require', 'main'),
 			'C_VALIDATION_ERROR' => count($this->validation_error_messages),
 			'TITLE_VALIDATION_ERROR_MESSAGE' => LangLoader::get_message('validation_error', 'builder-form-Validator'),
 			'METHOD' => $this->method
