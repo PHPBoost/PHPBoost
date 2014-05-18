@@ -26,14 +26,13 @@
  ###################################################*/
 
 #####################################################
- #                      French			    #
- ####################################################
-
-$lang = array();
+#						French						#
+#####################################################
 
 $lang['incorrect_sol'] = 'Le mot entré ne correspondait pas à celui qui était affiché. Veuillez réessayer.';
 $lang['type_the_answer_here'] = 'Saisissez la valeur ...';
-$lang['image_captcha'] = 'Obtenir une nouvelle image';
+$lang['refresh_captcha'] = 'Changer le code';
+$lang['image_captcha'] = 'Obtenir une image';
 $lang['audio_captcha'] = 'Obtenir un test audio';
 $lang['captcha_help'] = 'Aide';
 ?>
