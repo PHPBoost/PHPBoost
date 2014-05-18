@@ -286,7 +286,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		
 		//Add comment if needed
 		$comment = $this->form->get_value('comments_message', '');
-		if (!empty($comment) && !$this->bug->is_assigned())
+		if (!empty($comment))
 		{
 			$comments_topic = new BugtrackerCommentsTopic();
 			$comments_topic->set_id_in_module($this->bug->get_id());
