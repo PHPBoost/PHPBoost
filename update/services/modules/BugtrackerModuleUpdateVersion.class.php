@@ -27,11 +27,13 @@
 
 class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 {
+	private $querier;
 	private $db_utils;
 	
 	public function __construct()
 	{
 		parent::__construct('bugtracker');
+		$this->querier = PersistenceContext::get_querier();
 		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
@@ -57,6 +59,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		{
 			$this->db_utils->drop_column(PREFIX . 'bugtracker', 'progess');
 		}
+		$this->querier->inject('ALTER TABLE '. PREFIX .'bugtracker' .' CHANGE title title VARCHAR(255);');
 	}
 	
 	private function create_bugtracker_users_filters_table()
