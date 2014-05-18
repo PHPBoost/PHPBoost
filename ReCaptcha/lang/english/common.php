@@ -26,14 +26,13 @@
  ###################################################*/
 
 #####################################################
-#                      ENGLISH			    #
+#						ENGLISH						#
 #####################################################
-
-$lang = array();
 
 $lang['incorrect_sol'] = 'The string you entered for the image verification did not match what was displayed.';
 $lang['type_the_answer_here'] = 'Type the answer here ...';
-$lang['image_captcha'] = 'Get a new image';
+$lang['refresh_captcha'] = 'Change code';
+$lang['image_captcha'] = 'Get an image';
 $lang['audio_captcha'] = 'Get an audio test';
 $lang['captcha_help'] = 'Help';
 ?>
