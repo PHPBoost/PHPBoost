@@ -37,6 +37,6 @@ $lang['confirm.delete'] = 'Do you really want to delete this item ?';
 $lang['message.success.config'] = 'The configuration has been modified';
 
 //Captcha
-$lang['captcha.is_default'] = 'The captcha you want to uninstall or disable is set by default, you must select another default captcha first';
+$lang['captcha.is_default'] = 'The captcha you want to uninstall or disable is set on your site, you must select another captcha in the content management first.';
 $lang['captcha.last_installed'] = 'Last captcha, you can not delete or disable it. Please install another one first.';
 ?>
