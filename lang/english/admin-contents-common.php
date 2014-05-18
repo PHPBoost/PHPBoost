@@ -45,7 +45,7 @@ $lang['content.config.max-pm-number-explain'] = 'Unlimited for administrators an
 $lang['content.config.anti-flood-enabled'] = 'Anti-flood';
 $lang['content.config.anti-flood-enabled-explain'] = 'Block too rapid repeat messages, except if the visitors are authorized';
 $lang['content.config.delay-flood'] = 'Minimal interval of time between two messages';
-$lang['content.config.delay-flood-explain'] = '7 seconds by default';
+$lang['content.config.delay-flood-explain'] = 'In seconds. 7 seconds per default.';
 
 $lang['content.config.captcha'] = 'Captcha';
 $lang['content.config.captcha-used'] = 'Captcha used on your site';

@@ -54,7 +54,7 @@ class AdminContentConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), E_USER_SUCCESS, 5));
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -97,7 +97,7 @@ class AdminContentConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('max_pm_number', $this->lang['content.config.max-pm-number'], $this->user_accounts_config->get_max_private_messages_number(), array(
-			'maxlength' => 4, 'size' => 4, 'description' => $this->lang['content.config.max-pm-number-explain']),
+			'maxlength' => 4, 'size' => 4, 'required' => true, 'description' => $this->lang['content.config.max-pm-number-explain']),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
 		));
 		
@@ -109,7 +109,7 @@ class AdminContentConfigController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
-			'maxlength' => 4, 'size' => 4, 'description' => $this->lang['content.config.delay-flood-explain']),
+			'maxlength' => 4, 'size' => 4, 'required' => true, 'description' => $this->lang['content.config.delay-flood-explain']),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
 		));
 		
