@@ -25,6 +25,7 @@
  *
  ###################################################*/
 
+$lang['change_picture'] = 'change_picture';
 $lang['difficulty'] = 'Verification code difficulty';
 $lang['difficulty.very_easy'] = 'Very easy';
 $lang['difficulty.easy'] = 'Easy';
