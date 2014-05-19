@@ -81,7 +81,7 @@ function createSortableMenu()
 			menusContainerList[i], 
 			{
 				tag:'div',
-				containment:['mod_-header','mod_subheader','mod_left','mod_right','mod_topcentral','mod_central','mod_bottomcentral','mod_topfooter','mod_footer'],
+				containment:['mod_header','mod_subheader','mod_left','mod_right','mod_topcentral','mod_central','mod_bottomcentral','mod_topfooter','mod_footer'],
 				constraint:false,
 				scroll:window,
 				format:/^menu_([0-9]+)$/,
