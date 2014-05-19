@@ -58,6 +58,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->form->get_field_by_id('number_cols_display_cats')->set_hidden(!$this->config->are_cats_icon_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 4));
 		}
 		
@@ -86,8 +87,8 @@ class AdminArticlesConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldTextEditor('number_categories_per_page', $this->lang['articles_configuration.number_categories_per_page'], $this->config->get_number_categories_per_page(),
 			array('maxlength' => 3, 'size' => 4, 'required' => true), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
-                
-                $fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles_configuration.display_icon_cats'], $this->config->are_cats_icon_enabled(), array(
+		
+		$fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['articles_configuration.display_icon_cats'], $this->config->are_cats_icon_enabled(), array(
 		'events' => array('click' => '
 			if (HTMLForms.getField("display_icon_cats").getValue()) {
 				HTMLForms.getField("number_cols_display_cats").enable();
@@ -97,13 +98,13 @@ class AdminArticlesConfigController extends AdminModuleController
 		))));
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_cols_display_cats', $this->lang['articles_configuration.number_cols_display_cats'], $this->config->get_number_cols_display_cats(), 
-			array('hidden' => !$this->config->are_cats_icon_enabled(), 'size' => 6), 
+			array('maxlength' => 2, 'size' => 4, 'required' => true, 'hidden' => !$this->config->are_cats_icon_enabled()), 
 			array(new FormFieldConstraintIntegerRange(1, 10)
 		)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('notation_scale', LangLoader::get_message('config.notation_scale', 'admin-common'), $this->config->get_notation_scale(),
-			array('maxlength' => 2, 'size' => 4),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array('maxlength' => 2, 'size' => 4, 'required' => true),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(3, 20))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', LangLoader::get_message('config.comments_enabled', 'admin-common'), $this->config->are_comments_enabled()));
@@ -114,10 +115,10 @@ class AdminArticlesConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.list'], ArticlesConfig::DISPLAY_LIST)
 			)
 		));
-                
-                $fieldset->add_field(new FormFieldTextEditor('number_character_to_cut', $this->lang['articles_configuration.number_character_to_cut'], $this->config->get_number_character_to_cut(),  
-			array('size' => 6),
-                        array(new FormFieldConstraintIntegerRange(20, 1000)
+		
+		$fieldset->add_field(new FormFieldTextEditor('number_character_to_cut', $this->lang['articles_configuration.number_character_to_cut'], $this->config->get_number_character_to_cut(),  
+			array('maxlength' => 4, 'size' => 6, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 		
 		$common_lang = LangLoader::get('common');
@@ -126,7 +127,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		);
 		
 		$form->add_fieldset($fieldset_authorizations);
-			
+		
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($common_lang['authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new ActionAuthorization($common_lang['authorizations.write'], Category::WRITE_AUTHORIZATIONS),
@@ -148,35 +149,35 @@ class AdminArticlesConfigController extends AdminModuleController
 	private function save()
 	{
 		$this->config->set_number_articles_per_page($this->form->get_value('number_articles_per_page'));
-                
-                if ($this->form->get_value('display_icon_cats'))
-                {
-			$this->config->enable_cats_icon();
-                }
-		else
-                {
-			$this->config->disable_cats_icon();
-                }
-                
-                $this->config->set_number_cols_display_cats($this->form->get_value('number_cols_display_cats', $this->config->get_number_cols_display_cats()));
-		$this->config->set_number_categories_per_page($this->form->get_value('number_categories_per_page'));
-                $this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
 		
+		if ($this->form->get_value('display_icon_cats'))
+		{
+			$this->config->enable_cats_icon();
+		}
+		else
+		{
+			$this->config->disable_cats_icon();
+		}
+		
+		$this->config->set_number_cols_display_cats($this->form->get_value('number_cols_display_cats', $this->config->get_number_cols_display_cats()));
+		$this->config->set_number_categories_per_page($this->form->get_value('number_categories_per_page'));
+		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
+
 		if ($this->form->get_value('notation_scale') != $this->config->get_notation_scale())
-                {
+		{
 			NotationService::update_notation_scale('articles', $this->config->get_notation_scale(), $this->form->get_value('notation_scale'));
-                }
-                
+		}
+		
 		$this->config->set_notation_scale($this->form->get_value('notation_scale'));
 		
 		if ($this->form->get_value('comments_enabled'))
-                {
+		{
 			$this->config->enable_comments();
-                }
+		}
 		else
-                {
+		{
 			$this->config->disable_comments();
-                }
+		}
 		
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
