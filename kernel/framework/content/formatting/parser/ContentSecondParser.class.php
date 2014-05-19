@@ -90,17 +90,17 @@ class ContentSecondParser extends AbstractParser
 	{
 		//Balise vidéo
 		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="movie_[0-9]+"></a><br /><script><!--\s*insertMoviePlayer\(\'movie_[0-9]+\'\);\s*--></script>`isU',
-            '<object type="application/x-shockwave-flash" data="/kernel/lib/flash/movieplayer.swf" width="$2" height="$3">
-            	<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
-            	<param name="allowScriptAccess" value="never" />
-                <param name="play" value="true" />
-                <param name="movie" value="$1" />
-                <param name="menu" value="false" />
-                <param name="quality" value="high" />
-                <param name="scalemode" value="noborder" />
-                <param name="wmode" value="transparent" />
-                <param name="bgcolor" value="#FFFFFF" />
-            </object>',
+			'<object type="application/x-shockwave-flash" data="/kernel/lib/flash/movieplayer.swf" width="$2" height="$3">
+				<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
+				<param name="allowScriptAccess" value="never" />
+				<param name="play" value="true" />
+				<param name="movie" value="$1" />
+				<param name="menu" value="false" />
+				<param name="quality" value="high" />
+				<param name="scalemode" value="noborder" />
+				<param name="wmode" value="transparent" />
+				<param name="bgcolor" value="#FFFFFF" />
+			</object>',
 		$html_content);
 
 		return Url::html_convert_root_relative2absolute($html_content);
@@ -182,8 +182,6 @@ class ContentSecondParser extends AbstractParser
 	 */
 	private function callbackhighlight_code($matches)
 	{
-		global $LANG;
-
 		$line_number = !empty($matches[2]);
 		$inline_code = !empty($matches[3]);
 		
@@ -199,11 +197,11 @@ class ContentSecondParser extends AbstractParser
 
 		if (!$inline_code && !empty($matches[1]))
 		{
-			$contents = '<span class="text-code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
+			$contents = '<span class="text-code">' . sprintf(LangLoader::get_message('code_langage', 'main'), strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
 		}
 		else if (!$inline_code && empty($matches[1]))
 		{
-			$contents = '<span class="text-code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
+			$contents = '<span class="text-code">' . LangLoader::get_message('code_tag', 'main') . '</span><div class="code">' . $contents . '</div>';
 		}
 			
 		return $contents;
@@ -279,15 +277,15 @@ class ContentSecondParser extends AbstractParser
 	{
 		//Balise son
 		return '<object type="application/x-shockwave-flash" data="' . TPL_PATH_TO_ROOT . '/kernel/lib/flash/dewplayer.swf?son=' . $matches[1] . '" width="200" height="20">
-         		<param name="allowScriptAccess" value="never" />
-                <param name="play" value="true" />
-                <param name="movie" value="' . TPL_PATH_TO_ROOT . '/kernel/lib/flash/dewplayer.swf?son=' . $matches[1] . '" />
-                <param name="menu" value="false" />
-                <param name="quality" value="high" />
-                <param name="scalemode" value="noborder" />
-                <param name="wmode" value="transparent" />
-                <param name="bgcolor" value="#FFFFFF" />
-            </object>';
+				<param name="allowScriptAccess" value="never" />
+				<param name="play" value="true" />
+				<param name="movie" value="' . TPL_PATH_TO_ROOT . '/kernel/lib/flash/dewplayer.swf?son=' . $matches[1] . '" />
+				<param name="menu" value="false" />
+				<param name="quality" value="high" />
+				<param name="scalemode" value="noborder" />
+				<param name="wmode" value="transparent" />
+				<param name="bgcolor" value="#FFFFFF" />
+			</object>';
 	}
 	
 	private static function process_youtube_tag($matches)
@@ -326,7 +324,6 @@ class ContentSecondParser extends AbstractParser
 		}
 		else
 		{
-			global $LANG;
 			$error = StringVars::replace_vars(LangLoader::get_message('feed_tag_error', 'editor-common'), array('module' => $module));
 			return '<div class="error">' . $error . '</div>';
 		}

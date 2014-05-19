@@ -230,8 +230,6 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
  */
 function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 {
-	global $LANG;
-
 	if (strpos($format, 'date_format') !== false) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
 	{
 		switch ($format)

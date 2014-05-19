@@ -31,45 +31,43 @@
  */
 class FormFieldDateTime extends FormFieldDate
 {
-    public function __construct($id, $label, Date $value = null, $field_options = array(), array $constraints = array())
-    {
-        parent::__construct($id, $label, $value, $field_options, $constraints);
-    }
+	public function __construct($id, $label, Date $value = null, $field_options = array(), array $constraints = array())
+	{
+		parent::__construct($id, $label, $value, $field_options, $constraints);
+	}
 
-    /**
-     * @return string The html code for the input.
-     */
-    public function display()
-    {
-        global $LANG;
+	/**
+	 * @return string The html code for the input.
+	 */
+	public function display()
+	{
+		$template = parent::display();
 
-        $template = parent::display();
-
-        $template->put_all(array(
+		$template->put_all(array(
 			'C_HOUR' => true,
 			'HOURS' => $this->get_value() ? $this->get_value()->get_hours() : '',
 			'MINUTES' => $this->get_value() ? $this->get_value()->get_minutes() : '',
-			'L_AT' => $LANG['at'],
-			'L_H' => $LANG['unit_hour']
-        ));
+			'L_AT' => LangLoader::get_message('at', 'main'),
+			'L_H' => LangLoader::get_message('unit_hour', 'main')
+		));
 
-        return $template;
-    }
+		return $template;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function retrieve_value()
-    {
-        parent::retrieve_value();
+	/**
+	 * {@inheritdoc}
+	 */
+	public function retrieve_value()
+	{
+		parent::retrieve_value();
 
-        $request = AppContext::get_request();
-        $date = $this->get_value();
-        $date->set_minutes($request->get_int($this->get_html_id() . '_minutes', 0));
-        $date->set_hours($request->get_int($this->get_html_id() . '_hours', 0));
-        
-        // TODO Add a range constraint for the hours and minutes
-        $this->set_value($date);
-    }
+		$request = AppContext::get_request();
+		$date = $this->get_value();
+		$date->set_minutes($request->get_int($this->get_html_id() . '_minutes', 0));
+		$date->set_hours($request->get_int($this->get_html_id() . '_hours', 0));
+		
+		// TODO Add a range constraint for the hours and minutes
+		$this->set_value($date);
+	}
 }
 ?>
