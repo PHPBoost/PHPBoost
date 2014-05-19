@@ -34,14 +34,6 @@
 global $MEDIA_LANG;
 
 $MEDIA_LANG = array(
-// admin_media.php
-'aprob_media' => 'Approuver le fichier multimédia',
-'hide_media' => 'Cacher ce fichier multimédia',
-'recount_per_cat' => 'Recompter le nombre de fichiers multimédias par catégorie',
-'show_media' => 'Montrer ce fichier multimédia',
-'width_max' => 'Largeur maximale',
-'height_max' => 'Hauteur maximale',
-
 // admin_media_cats.php
 'auth_read' => 'Permissions de lecture',
 'auth_contrib' => 'Permissions de contribution',
@@ -76,6 +68,12 @@ $MEDIA_LANG = array(
 'unexisting_category' => 'La catégorie que vous avez sélectionné n\'existe pas',
 
 // admin_media_config.php
+'aprob_media' => 'Approuver le fichier multimédia',
+'hide_media' => 'Cacher ce fichier multimédia',
+'recount_per_cat' => 'Recompter le nombre de fichiers multimédias par catégorie',
+'show_media' => 'Montrer ce fichier multimédia',
+'width_max' => 'Largeur maximale',
+'height_max' => 'Hauteur maximale',
 'config_auth' => 'Autorisations générales',
 'config_auth_explain' => 'Configurez ici les autorisations générales de lecture et d\'écriture du module MULTIMEDIA. Vous pourrez ensuite pour chaque catégorie appliquer des autorisations particulières.',
 'config_display' => 'Configuration de l\'affichage',
