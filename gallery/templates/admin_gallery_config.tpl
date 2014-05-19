@@ -25,15 +25,15 @@
 		}
 		
 		function check_form(){
-			if(document.getElementById('height_max').value == "") {
+			if(document.getElementById('max_height').value == "") {
 				alert("{L_REQUIRE_MAX_HEIGHT}");
 				return false;
 			}
-			if(document.getElementById('width_max').value == "") {
+			if(document.getElementById('max_width').value == "") {
 				alert("{L_REQUIRE_MAX_WIDTH}");
 				return false;
 			}
-				if(document.getElementById('mini_max_height').value == "") {
+			if(document.getElementById('mini_max_height').value == "") {
 				alert("{L_REQUIRE_MINI_MAX_HEIGHT}");
 				return false;
 			}
@@ -41,23 +41,26 @@
 				alert("{L_REQUIRE_MINI_MAX_WIDTH}");
 				return false;
 			}
-			if(document.getElementById('nbr_column').value == "") {
-				alert("{L_REQUIRE_ROW}");
-				return false;
-			}
-			if(document.getElementById('nbr_pics_max').value == "") {
-				alert("{L_REQUIRE_IMG_P}");
-				return false;
-			}
-			if(document.getElementById('quality').value == "") {
-				alert("{L_REQUIRE_QUALITY}V");
-				return false;
-			}
-			if(document.getElementById('weight_max').value == "") {
+			if(document.getElementById('max_weight').value == "") {
 				alert("{L_REQUIRE_MAX_WEIGHT}");
 				return false;
 			}
-			
+			if(document.getElementById('quality').value == "") {
+				alert("{L_REQUIRE_QUALITY}");
+				return false;
+			}
+			if(document.getElementById('columns_number').value == "") {
+				alert("{L_REQUIRE_ROW}");
+				return false;
+			}
+			if(document.getElementById('pics_number_per_page').value == "") {
+				alert("{L_REQUIRE_IMG_P}");
+				return false;
+			}
+			if(document.getElementById('notation_scale').value == "") {
+				alert("{L_REQUIRE_NOTATION_SCALE}");
+				return false;
+			}
 			
 			return true;
 		}
@@ -189,7 +192,7 @@
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="notation_scale">{L_NOTATION_SCALE} <span class="field-description">{L_NOTATION_SCALE_EXPLAIN}</span></label>
+						<label for="notation_scale">* {L_NOTATION_SCALE} <span class="field-description">{L_NOTATION_SCALE_EXPLAIN}</span></label>
 						<div class="form-field"><label><input type="text" size="3" name="notation_scale" id="notation_scale" value="{NOTATION_SCALE}"></label></div>
 					</div>
 				</fieldset>
