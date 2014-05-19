@@ -1,0 +1,115 @@
+<?php
+/*##################################################
+ *		               AdminPHPBoostCaptchaConfig.class.php
+ *                            -------------------
+ *   begin                : February 28, 2013
+ *   copyright            : (C) 2013 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
+ *
+ *
+ ###################################################
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
+
+class AdminPHPBoostCaptchaConfig extends AdminModuleController
+{
+	/**
+	 * @var HTMLForm
+	 */
+	private $form;
+	/**
+	 * @var FormButtonSubmit
+	 */
+	private $submit_button;
+	
+	private $lang;
+	
+	/**
+	 * @var PHPBoostCaptchaConfig
+	 */
+	private $config;
+	
+	public function execute(HTTPRequestCustom $request)
+	{
+		$this->init();
+		
+		$this->build_form();
+		
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl->add_lang($this->lang);
+		
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		{
+			$this->save();
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), E_USER_SUCCESS, 5));
+		}
+		
+		$tpl->put('FORM', $this->form->display());
+		
+		return $this->build_response($tpl);
+	}
+	
+	private function init()
+	{
+		$this->lang = LangLoader::get('common', 'PHPBoostCaptcha');
+		$this->config = PHPBoostCaptchaConfig::load();
+	}
+	
+	private function build_form()
+	{
+		$form = new HTMLForm(__CLASS__);
+		
+		$fieldset = new FormFieldsetHTML('config', LangLoader::get_message('configuration', 'admin'));
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('difficulty', $this->lang['difficulty'], $this->config->get_difficulty(),
+			array(
+				new FormFieldSelectChoiceOption($this->lang['difficulty.very_easy'], PHPBoostCaptcha::CAPTCHA_VERY_EASY),
+				new FormFieldSelectChoiceOption($this->lang['difficulty.easy'], PHPBoostCaptcha::CAPTCHA_EASY),
+				new FormFieldSelectChoiceOption($this->lang['difficulty.normal'], PHPBoostCaptcha::CAPTCHA_NORMAL),
+				new FormFieldSelectChoiceOption($this->lang['difficulty.hard'], PHPBoostCaptcha::CAPTCHA_HARD),
+				new FormFieldSelectChoiceOption($this->lang['difficulty.very_hard'], PHPBoostCaptcha::CAPTCHA_VERY_HARD),
+		)));
+		
+		$this->submit_button = new FormButtonDefaultSubmit();
+		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonReset());
+		
+		$this->form = $form;
+	}
+	
+	private function save()
+	{
+		$this->config->set_difficulty($this->form->get_value('difficulty')->get_raw_value());
+		PHPBoostCaptchaConfig::save();
+	}
+	
+	private function build_response(View $tpl)
+	{
+		$title = LangLoader::get_message('configuration', 'admin');
+		
+		$response = new AdminMenuDisplayResponse($tpl);
+		$response->set_title($title);
+		$response->add_link($title, DispatchManager::get_url('/PHPBoostCaptcha', '/admin/config/'), 'PHPBoostCaptcha.png');
+		
+		$env = $response->get_graphical_environment();
+		$env->set_page_title($title);
+		
+		return $response;
+	}
+}
+?>

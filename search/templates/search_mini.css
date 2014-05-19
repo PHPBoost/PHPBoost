@@ -1,0 +1,22 @@
+.input-element-button input {
+	width: 120px;
+	font-size: 12px;
+	border-radius: 4px 0px 0px 4px;
+}
+
+.input-element-button button {
+	font-size: 12px;
+	border-radius: 0px 4px 4px 0px;
+	margin-left: -1px;
+}
+
+#mini-search-form {
+	float: right;
+	margin-top: 20px;
+	margin-right: 25px;
+	display: inline-block;
+	margin-bottom: 10px;
+	font-size: 0;
+	white-space: nowrap;
+	vertical-align: middle;
+}
