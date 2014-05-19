@@ -1,6 +1,6 @@
 <script>
 <!--
-var delay = 1200; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
+var delay = 1200; //DÃ©lai aprÃ¨s lequel le bloc est automatiquement masquÃ©, aprÃ¨s le dÃ©part de la souris.
 var timeout;
 var displayed = false;
 var previous = '';
@@ -181,7 +181,7 @@ function createSortableMenu()
 							<script>
 							<!--
 							$('mod_subheader').style.opacity = 0.5;
-							$('mod-subheader').style.filter='alpha(opacity=50)';
+							$('mod_subheader').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
