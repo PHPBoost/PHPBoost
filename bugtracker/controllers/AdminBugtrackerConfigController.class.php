@@ -199,7 +199,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('stats_top_posters_number', $this->lang['config.stats_top_posters_number'], (int)$this->config->get_stats_top_posters_number(), array(
-			'maxlength' => 3, 'size' => 3, 'hidden' => !$this->config->are_stats_top_posters_enabled()),
+			'maxlength' => 3, 'size' => 3, 'required' => true, 'hidden' => !$this->config->are_stats_top_posters_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		

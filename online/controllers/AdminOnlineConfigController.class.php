@@ -89,7 +89,7 @@ class AdminOnlineConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption(LangLoader::get_message('ranks', 'main'), OnlineConfig::LEVEL_DISPLAY_ORDER),
 				new FormFieldSelectChoiceOption($this->lang['online.last_update'], OnlineConfig::SESSION_TIME_DISPLAY_ORDER),
 				new FormFieldSelectChoiceOption(LangLoader::get_message('ranks', 'main') . ' ' . LangLoader::get_message('and', 'main') . ' ' . $this->lang['online.last_update'], OnlineConfig::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER)
-			), array('required' => true)
+			)
 		));
 		
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
