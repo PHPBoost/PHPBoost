@@ -103,7 +103,7 @@ class AdminNewsConfigController extends AdminModuleController
 		))));
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(), 
-			array('hidden' => !$this->config->get_display_condensed_enabled(), 'size' => 6), 
+			array('maxlength' => 2, 'size' => 4, 'required' => true, 'hidden' => !$this->config->get_display_condensed_enabled()), 
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 		
