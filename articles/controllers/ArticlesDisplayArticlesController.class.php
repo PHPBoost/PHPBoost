@@ -28,7 +28,6 @@
 class ArticlesDisplayArticlesController extends ModuleController
 {
 	private $lang;
-	private $form;
 	private $tpl;
 	private $article;
 	private $category;
@@ -111,7 +110,8 @@ class ArticlesDisplayArticlesController extends ModuleController
 
 		$nbr_pages = count($array_page[1]);
 		
-		$this->build_form($array_page, $current_page);
+		if ($nbr_pages > 1)
+			$this->build_form($array_page, $current_page);
 		
 		$this->build_sources_view();
 		
@@ -129,12 +129,10 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->build_pages_pagination($current_page, $nbr_pages, $array_page);
 		
-		$this->tpl->put('FORM', $this->form->display());
-		
 		//Affichage commentaires
 		if ($comments_enabled)
 		{
-			$comments_topic = new ArticlesCommentsTopic($this->get_article());
+			$comments_topic = new ArticlesCommentsTopic($this->article);
 			$comments_topic->set_id_in_module($this->article->get_id());
 			$comments_topic->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
 
@@ -157,7 +155,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			array('class' => 'summary', 'events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . '" + HTMLForms.getField("article_pages").getValue();'))
 		));
 		
-		$this->form = $form;
+		$this->tpl->put('FORM', $form->display());
 	}
 	
 	private function build_pages_pagination($current_page, $nbr_pages, $array_page)
