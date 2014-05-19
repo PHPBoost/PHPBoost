@@ -86,9 +86,7 @@ class NewsDisplayNewsController extends ModuleController
 			$comments_topic->set_id_in_module($news->get_id());
 			$comments_topic->set_url(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
 			
-			$this->tpl->put_all(array(
-				'COMMENTS' => $comments_topic->display(),
-			));
+			$this->tpl->put('COMMENTS', $comments_topic->display());
 		}
 		$this->build_sources_view($news);
 		$this->build_keywords_view($news);
