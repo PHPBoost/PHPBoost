@@ -75,6 +75,7 @@ $LANG['activ_note_explain'] = 'Picture average rating is displayed under its thu
 $LANG['display_nbrnote'] = 'Display number of rating';
 $LANG['note_max'] = 'Max rating';
 $LANG['note_max_explain'] = '5 by default';
+$LANG['require_notation_scale'] = 'Please enter a notation scale!';
 $LANG['img_protect'] = 'Picture protection';
 $LANG['activ_logo'] = 'Activate logo';
 $LANG['activ_logo_explain'] = 'Inlay on the picture';

@@ -75,6 +75,7 @@ $LANG['activ_note_explain'] = 'Moyenne des notes attribuées à la photo sous la m
 $LANG['display_nbrnote'] = 'Afficher le nombre de notes';
 $LANG['note_max'] = 'Echelle de notation';
 $LANG['note_max_explain'] = '5 par défaut';
+$LANG['require_notation_scale'] = 'Veuillez entrer une échelle de notation !';
 $LANG['img_protect'] = 'Protection des images';
 $LANG['activ_logo'] = 'Activer Logo';
 $LANG['activ_logo_explain'] = 'Incrustation sur la photo';

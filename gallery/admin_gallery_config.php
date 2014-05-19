@@ -179,6 +179,7 @@ else
 		'L_REQUIRE_MAX_HEIGHT' => $LANG['require_height_max'],
 		'L_REQUIRE_MAX_WIDTH' => $LANG['require_width_max'],
 		'L_REQUIRE_MAX_WEIGHT' => $LANG['require_weight_max'],
+		'L_REQUIRE_NOTATION_SCALE' => $LANG['require_notation_scale'],
 		'L_REQUIRE_ROW' => $LANG['require_row'],
 		'L_REQUIRE_IMG_P' => $LANG['require_img_p'],
 		'L_REQUIRE_QUALITY' => $LANG['require_quality'],
