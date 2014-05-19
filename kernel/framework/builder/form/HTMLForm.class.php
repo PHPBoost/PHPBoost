@@ -96,10 +96,13 @@ class HTMLForm
 	{
 		$this->set_html_id($html_id);
 		$this->set_target($target);
+		
+		//Add captcha protection for visitor
+		$this->add_catpcha_protection();
+		
 		if ($enable_csrf_protection)
-		{
-		    $this->add_csrf_protection();
-		}
+			$this->add_csrf_protection();
+		
 		self::$instance_id++;
 	}
 	
@@ -115,15 +118,21 @@ class HTMLForm
 	{
 		if ($this->enable_captcha_protection)
 		{
-			$csrf_protection_fieldset = new FormFieldsetHTML('captcha');
-			$csrf_protection_fieldset->add_field(new FormFieldCaptcha());
-			$this->add_fieldset($csrf_protection_fieldset);
+			$captcha_protection_fieldset = new FormFieldsetHTML('captcha');
+			$captcha_protection_fieldset->add_field(new FormFieldCaptcha());
+			$this->add_fieldset($captcha_protection_fieldset);
 		}
 	}
 	
 	public function disable_captcha_protection()
 	{
 		$this->enable_captcha_protection = false;
+	}
+	
+	public function move_captcha_protection_in_last_position()
+	{
+		$this->fieldsets[] = $this->fieldsets[0];
+		unset($this->fieldsets[0]);
 	}
 
 	/**
@@ -246,8 +255,7 @@ class HTMLForm
 	 */
 	public function display()
 	{
-		//Add captcha protection for visitor
-		$this->add_catpcha_protection();
+		$this->move_captcha_protection_in_last_position();
 		
 		$template = $this->get_template_to_use();
 
