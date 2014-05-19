@@ -35,14 +35,6 @@
 global $MEDIA_LANG;
 
 $MEDIA_LANG = array(
-// admin_media.php
-'aprob_media' => 'Approve this multimedia file',
-'hide_media' => 'Hide this multimedia file',
-'recount_per_cat' => 'Recount the number of multimedia files per category',
-'show_media' => 'Show this multimedia file',
-'width_max' => 'Maximum width',
-'height_max' => 'Maximum height',
-
 // admin_media_cats.php
 'auth_read' => 'Read permissions',
 'auth_contrib' => 'Contribute permissions',
@@ -77,6 +69,12 @@ $MEDIA_LANG = array(
 'unexisting_category' => 'The category you want to select does\'nt exist',
 
 // admin_media_config.php
+'aprob_media' => 'Approve this multimedia file',
+'hide_media' => 'Hide this multimedia file',
+'recount_per_cat' => 'Recount the number of multimedia files per category',
+'show_media' => 'Show this multimedia file',
+'width_max' => 'Maximum width',
+'height_max' => 'Maximum height',
 'config_auth' => 'General permissions',
 'config_auth_explain' => 'You can configure here general reading and writing permissions for the MEDIA module. Later, you will be able to apply particular permissions for each category.',
 'config_display' => 'Display configuration',
