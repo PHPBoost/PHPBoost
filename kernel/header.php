@@ -34,10 +34,10 @@ $env = new SiteDisplayGraphicalEnvironment();
 $env->set_breadcrumb($Bread_crumb);
 
 Environment::set_graphical_environment($env);
-global $LANG;
+
 if (!defined('TITLE'))
 {
-	define('TITLE', $LANG['unknow']);
+	define('TITLE', LangLoader::get_message('unknow', 'main'));
 }
 
 //Menus display configuration

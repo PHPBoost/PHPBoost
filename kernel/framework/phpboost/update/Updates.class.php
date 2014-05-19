@@ -38,123 +38,123 @@ define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
 class Updates
 {
 	private $repositories = array();
-    private $apps = array();
+	private $apps = array();
 	
 	const PHPBOOST_OFFICIAL_REPOSITORY = 'http://www.phpboost.com/repository/main.xml';
 	//const PHPBOOST_OFFICIAL_REPOSITORY = '../../../../../main.xml'; // Test repository
 	const PHP_MIN_VERSION_UPDATES = '5';
 	
-    /**
+	/**
 	* @desc constructor of the class
 	* @param $checks
 	*/
-    public function __construct($checks = CHECK_ALL_UPDATES)
-    {
-        $this->load_apps($checks);
-        $this->load_repositories();
-        $this->check_repositories();
-    }
+	public function __construct($checks = CHECK_ALL_UPDATES)
+	{
+		$this->load_apps($checks);
+		$this->load_repositories();
+		$this->check_repositories();
+	}
 
-    /**
+	/**
 	* @desc Load Application Classes
 	* @param $checks
 	*/
-    private function load_apps($checks = CHECK_ALL_UPDATES)
-    {
-        if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
-        {
-            if ($checks & CHECK_KERNEL)
-            {   // Add the kernel to the check list
-                $this->apps[] = new Application('kernel', get_ulang(), Application::KERNEL_TYPE, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
-            }
+	private function load_apps($checks = CHECK_ALL_UPDATES)
+	{
+		if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
+		{
+			if ($checks & CHECK_KERNEL)
+			{   // Add the kernel to the check list
+				$this->apps[] = new Application('kernel', get_ulang(), Application::KERNEL_TYPE, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
+			}
 
-            if ($checks & CHECK_MODULES)
-            {
-            	$activated_modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
-                foreach ($activated_modules as $module)
-                {
-                    $this->apps[] = new Application($module->get_id(),
-                    get_ulang(), Application::MODULE_TYPE,
-                    $module->get_configuration()->get_version(), $module->get_configuration()->get_repository());
-                }
-            }
+			if ($checks & CHECK_MODULES)
+			{
+				$activated_modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
+				foreach ($activated_modules as $module)
+				{
+					$this->apps[] = new Application($module->get_id(),
+					get_ulang(), Application::MODULE_TYPE,
+					$module->get_configuration()->get_version(), $module->get_configuration()->get_repository());
+				}
+			}
 
-            if ($checks & CHECK_THEMES)
-            {
-                // Add Themes
-               $activated_themes = ThemesManager::get_activated_themes_map();
-                foreach ($activated_themes as $id => $value)
-                {
+			if ($checks & CHECK_THEMES)
+			{
+				// Add Themes
+			   $activated_themes = ThemesManager::get_activated_themes_map();
+				foreach ($activated_themes as $id => $value)
+				{
 					$repository = $value->get_configuration()->get_repository();
 					if (!empty($repository))
 					{
 						$this->apps[] = new Application($id, get_ulang(), Application::TEMPLATE_TYPE, $value->get_configuration()->get_version(), $repository);
 					}
-                }
-            }
-        }
-    }
+				}
+			}
+		}
+	}
 
-    /**
+	/**
 	* @desc Load Repository Classes
 	*/
-    private function load_repositories()
-    {
-        if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
-        {
-            foreach ($this->apps as $app)
-            {
-                $rep = $app->get_repository();
-                if (!empty($rep) && !isset($this->repositories[$rep]))
-                    $this->repositories[$rep] = new Repository($rep);
-            }
-        }
-    }
+	private function load_repositories()
+	{
+		if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
+		{
+			foreach ($this->apps as $app)
+			{
+				$rep = $app->get_repository();
+				if (!empty($rep) && !isset($this->repositories[$rep]))
+					$this->repositories[$rep] = new Repository($rep);
+			}
+		}
+	}
 
-    /**
+	/**
 	* @desc Check Repository for Update Notification
 	*/
-    private function check_repositories()
-    {
-        if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
-        {
-            foreach ($this->apps as $app)
-            {
-                $result = $this->repositories[$app->get_repository()]->check($app);
-                if ($result !== null)
-                {   // processing to the update notification
-                    $this->add_update_alert($result);
-                }
-            }
-        }
-    }
+	private function check_repositories()
+	{
+		if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
+		{
+			foreach ($this->apps as $app)
+			{
+				$result = $this->repositories[$app->get_repository()]->check($app);
+				if ($result !== null)
+				{   // processing to the update notification
+					$this->add_update_alert($result);
+				}
+			}
+		}
+	}
 
-    /**
+	/**
 	* @desc Save an alert for Update Notification
 	*/
-    private function add_update_alert($app)
-    {
-        $identifier = $app->get_identifier();
-        // We verify that the alert is not already registered
-        if (AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null)
-        {
-            $alert = new AdministratorAlert();
-            global $LANG;
-            require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
-            if ($app->get_type() == Application::MODULE_TYPE)
-                $alert->set_entitled(sprintf($LANG['kernel_update_available'], $app->get_version()));
-            else
-                $alert->set_entitled(sprintf($LANG['update_available'], $app->get_type(), $app->get_name(), $app->get_version()));
+	private function add_update_alert($app)
+	{
+		$identifier = $app->get_identifier();
+		// We verify that the alert is not already registered
+		if (AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null)
+		{
+			$alert = new AdministratorAlert();
+			require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
+			
+			if ($app->get_type() == Application::MODULE_TYPE)
+				$alert->set_entitled(sprintf(LangLoader::get_message('kernel_update_available', 'admin'), $app->get_version()));
+			else
+				$alert->set_entitled(sprintf(LangLoader::get_message('update_available', 'admin'), $app->get_type(), $app->get_name(), $app->get_version()));
 
-            $alert->set_fixing_url('admin/updates/detail.php?identifier=' . $identifier);
-            $alert->set_priority($app->get_priority());
-            $alert->set_properties(serialize($app));
-            $alert->set_type('updates');
-            $alert->set_identifier($identifier);
+			$alert->set_fixing_url('admin/updates/detail.php?identifier=' . $identifier);
+			$alert->set_priority($app->get_priority());
+			$alert->set_properties(serialize($app));
+			$alert->set_type('updates');
+			$alert->set_identifier($identifier);
 
-            //Save
-            AdministratorAlertService::save_alert($alert);
-        }
-    }
+			//Save
+			AdministratorAlertService::save_alert($alert);
+		}
+	}
 }
 ?>

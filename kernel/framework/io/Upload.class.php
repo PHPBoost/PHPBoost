@@ -65,21 +65,19 @@ class Upload
 	 * @return boolean True if the file has been succefully uploaded. Error code if an error occured.
 	 */
 	public function file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
-	{		
-		global $LANG;
-		
+	{
 		$file = $_FILES[$filepostname];
 		$this->size = $file['size'];
 		$this->original_filename = $file['name'];
 		
 		if (!empty($file) && $this->size > 0)
-		{	
+		{
 			if (($this->size/1024) <= $weight_max)
 			{
 				//Récupération des infos sur le fichier à traiter.
-				$this->generate_file_info($uniq_name);				
+				$this->generate_file_info($uniq_name);
 				if ($this->check_file_path($regexp))
-				{					
+				{
 					if (!$check_exist || !file_exists($this->base_directory . $this->filename)) //Autorisation d'écraser le fichier?
 					{
 						$this->error = self::error_manager($file['error']);
@@ -135,7 +133,7 @@ class Upload
 	 */
 	public function check_img($width_max, $height_max, $delete = true)
 	{
-		$error = '';		
+		$error = '';
 		if (!empty($this->filename))
 		{
 			$filepath = $this->base_directory . $this->filename;

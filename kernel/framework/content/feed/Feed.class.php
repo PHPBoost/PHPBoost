@@ -117,17 +117,17 @@ class Feed
 		{
 			$desc = TextHelper::htmlspecialchars($this->data->get_desc());
 			$tpl->put_all(array(
-	            'DATE' => $this->data->get_date(),
-	            'DATE_RFC822' => $this->data->get_date_rfc2822(),
-	            'DATE_RFC3339' => $this->data->get_date_iso8601(),
+				'DATE' => $this->data->get_date(),
+				'DATE_RFC822' => $this->data->get_date_rfc2822(),
+				'DATE_RFC3339' => $this->data->get_date_iso8601(),
 				'DATE_TEXT' => $this->data->get_date_text(),
 				'THIS_YEAR' => date('Y'),
-	            'TITLE' => $this->data->get_title(),
-	            'U_LINK' => $this->data->get_link(),
-	            'HOST' => $this->data->get_host(),
-	            'DESC' => ContentSecondParser::export_html_text($desc),
-	            'RAW_DESC' => $desc,
-	            'LANG' => $this->data->get_lang()
+				'TITLE' => $this->data->get_title(),
+				'U_LINK' => $this->data->get_link(),
+				'HOST' => $this->data->get_host(),
+				'DESC' => ContentSecondParser::export_html_text($desc),
+				'RAW_DESC' => $desc,
+				'LANG' => $this->data->get_lang()
 			));
 
 			$items = $this->data->subitems($number, $begin_at);
@@ -136,17 +136,17 @@ class Feed
 				$desc = TextHelper::htmlspecialchars($item->get_desc());
 				$enclosure = $item->get_enclosure();
 				$tpl->assign_block_vars('item', array(
-	                'TITLE' => $item->get_title(),
-	                'U_LINK' => $item->get_link(),
-	                'U_GUID' => $item->get_guid(),
-	                'DESC' => ContentSecondParser::export_html_text($desc),
-	                'RAW_DESC' => $desc,
-	                'DATE' => $item->get_date(),
-	                'DATE_RFC822' => $item->get_date_rfc2822(),
-	                'DATE_RFC3339' => $item->get_date_iso8601(),
+					'TITLE' => $item->get_title(),
+					'U_LINK' => $item->get_link(),
+					'U_GUID' => $item->get_guid(),
+					'DESC' => ContentSecondParser::export_html_text($desc),
+					'RAW_DESC' => $desc,
+					'DATE' => $item->get_date(),
+					'DATE_RFC822' => $item->get_date_rfc2822(),
+					'DATE_RFC3339' => $item->get_date_iso8601(),
 					'DATE_TEXT' => $item->get_date_text(),
-	                'C_IMG' => ($item->get_image_url() != '') ? true : false,
-	                'U_IMG' => $item->get_image_url(),
+					'C_IMG' => ($item->get_image_url() != '') ? true : false,
+					'U_IMG' => $item->get_image_url(),
 					'C_ENCLOSURE' => $enclosure !== null,
 					'ENCLOSURE_LENGHT' => $enclosure !== null ? $enclosure->get_lenght() : '',
 					'ENCLOSURE_TYPE' => $enclosure !== null ? $enclosure->get_type() : '',
@@ -305,18 +305,16 @@ class Feed
 	 */
 	public static function get_feed_menu($feed_url)
 	{
-		global $LANG;
-
 		$feed_menu = new FileTemplate('framework/content/syndication/menu.tpl');
 
 		$general_config = GeneralConfig::load();
 		$feed_absolut_url = $general_config->get_site_url() . $general_config->get_site_path() . '/' . trim($feed_url, '/');
 
 		$feed_menu->put_all(array(
-	        'U_FEED' => $feed_absolut_url,
-	        'SEPARATOR' => strpos($feed_absolut_url, '?') !== false ? '&amp;' : '?',
-	        'L_RSS' => $LANG['rss'],
-	        'L_ATOM' => $LANG['atom']
+			'U_FEED' => $feed_absolut_url,
+			'SEPARATOR' => strpos($feed_absolut_url, '?') !== false ? '&amp;' : '?',
+			'L_RSS' => LangLoader::get_message('rss', 'main'),
+			'L_ATOM' => LangLoader::get_message('atom', 'main')
 		));
 
 		return $feed_menu->render();
