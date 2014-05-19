@@ -66,8 +66,8 @@ while ($row = $result->fetch())
 		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 	
 	$Template->assign_block_vars('comments_list', array(
-		'CONTENT' => ucfirst(FormatingHelper::second_parse($row['message'])),
-		'U_PSEUDO' => $com_pseudo,			
+		'CONTENT' => FormatingHelper::second_parse($row['message']),
+		'U_PSEUDO' => $com_pseudo,
 		'U_LINK' => PATH_TO_ROOT . $row['path'],
 	));
 	$i++;
@@ -98,10 +98,10 @@ $Template->put_all(array(
 	'L_USER_IP' => $LANG['user_ip'],
 	'L_LOCALISATION' => $LANG['localisation'],
 	'L_LAST_UPDATE' => $LANG['last_update'],
-    'L_WEBSITE_UPDATES' => $LANG['website_updates'],
-    'L_BY' => $LANG['by'],
-    'L_UPDATE' => $LANG['update'],
-    'L_RESET' => $LANG['reset']
+	'L_WEBSITE_UPDATES' => $LANG['website_updates'],
+	'L_BY' => $LANG['by'],
+	'L_UPDATE' => $LANG['update'],
+	'L_RESET' => $LANG['reset']
 ));
 
 
@@ -119,7 +119,7 @@ while ($row = $Sql->fetch_assoc($result))
 	$robot = Robots::get_robot_by_ip($row['session_ip']);
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
-	{ 		
+	{
 		case User::MEMBER_LEVEL:
 		$class = 'member';
 		break;
@@ -132,7 +132,7 @@ while ($row = $Sql->fetch_assoc($result))
 		$class = 'admin';
 		break;
 	} 
-		
+	
 	if (!empty($robot))
 		$login = '<span class="robot">' . ($robot == 'unknow_bot' ? $LANG['unknow_bot'] : $robot) . '</span>';
 	else
@@ -151,7 +151,7 @@ while ($row = $Sql->fetch_assoc($result))
 	));
 }
 $Sql->query_close($result);
-	
+
 $Template->pparse('admin_index'); // traitement du modele
 
 require_once('../admin/admin_footer.php');
