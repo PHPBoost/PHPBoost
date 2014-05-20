@@ -18,9 +18,11 @@
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',forums_list.cats.IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum-link-cat">{forums_list.cats.NAME}</a>
 				</span>
+				# IF C_DISPLAY_UNREAD_DETAILS #
 				<span style="float:right">
 					<a href="{PATH_TO_ROOT}/forum/unread.php?cat={forums_list.cats.IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><i class="fa fa-notread"></i></a>
 				</span>
+				# ENDIF #
 			</div>
 			<div class="module-contents forum-contents">
 				<table class="forum-table">
