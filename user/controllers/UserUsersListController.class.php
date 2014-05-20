@@ -120,7 +120,7 @@ class UserUsersListController extends AbstractController
 	
 	private function build_select_group_form()
 	{
-		$form = new HTMLForm('groups');
+		$form = new HTMLForm('groups', '', false);
 
 		$fieldset = new FormFieldsetHorizontal('show_group');
 		$form->add_fieldset($fieldset);

@@ -63,11 +63,11 @@ class UserViewProfileController extends AbstractController
 	
 	private function build_form($user_id)
 	{
-		$form = new HTMLForm('member-view-profile');
+		$form = new HTMLForm('member-view-profile', '', false);
 
 		$fieldset = new FormFieldsetHTML('profile', $this->lang['profile']);
 		$form->add_fieldset($fieldset);
-				
+		
 		if ($this->user->check_level(User::ADMIN_LEVEL))
 		{
 			$link_edit = '<a href="'. AdminMembersUrlBuilder::edit($user_id)->rel() .'" title="'.$this->lang['profile.edit'].'" class="fa fa-edit"></a>';
