@@ -2,7 +2,7 @@
 	<thead>
 		<tr>
 			<th></th>
-			<th class="column-title">
+			<th>
 				<a href="{U_SORT_TITLE_ASC}" class="fa fa-table-sort-up"></a>
 				${LangLoader::get_message('form.title', 'common')}
 				<a href="{U_SORT_TITLE_DESC}" class="fa fa-table-sort-down"></a>
