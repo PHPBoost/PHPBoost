@@ -173,7 +173,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	{
 		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
 		
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
 		
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['articles.sort_filter_title']));
