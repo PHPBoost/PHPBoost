@@ -27,14 +27,14 @@
 
 class AdminExtendedFieldsUrlBuilder
 {
-	private static $dispatcher = '/admin/member/extended-fields';
+	private static $dispatcher = '/admin/member';
 	
 	/*
 	 * @ return Url
 	*/
 	public static function fields_list($params = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/list/' . $params);
+		return DispatchManager::get_url(self::$dispatcher, '/extended-fields/list/' . $params);
 	}
 	
 	/*
@@ -42,7 +42,7 @@ class AdminExtendedFieldsUrlBuilder
 	 */
 	public static function add()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/add/');
+		return DispatchManager::get_url(self::$dispatcher, '/extended-fields/add/');
 	}
 	
 	/*
@@ -50,7 +50,7 @@ class AdminExtendedFieldsUrlBuilder
 	 */
 	public static function edit($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, $id. '/edit/');
+		return DispatchManager::get_url(self::$dispatcher, '/extended-fields' . $id. '/edit/');
 	}
 		
 	/*
@@ -58,7 +58,7 @@ class AdminExtendedFieldsUrlBuilder
 	 */
 	public static function delete()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/extended-fields/delete/');
 	}
 }
 ?>
