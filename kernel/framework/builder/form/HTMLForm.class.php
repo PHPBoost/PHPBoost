@@ -90,6 +90,7 @@ class HTMLForm
 	 * @desc Constructs a HTMLForm object
 	 * @param string $html_id The HTML name of the form
      * @param string $target The url where the form sends data
+     * @param bool $enable_captcha_protection True if the CAPTCHA is enabled
      * @param bool $enable_csrf_protection True if the form is CSRF protected
 	 */
 	public function __construct($html_id, $target = '', $enable_captcha_protection = true, $enable_csrf_protection = true)
