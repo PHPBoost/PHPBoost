@@ -117,7 +117,7 @@ class UserExploreGroupsController extends AbstractController
 	
 	private function build_form($group_id_selected)
 	{
-		$form = new HTMLForm('groups');
+		$form = new HTMLForm('groups', '', false);
 
 		$fieldset = new FormFieldsetHorizontal('show_group');
 		$form->add_fieldset($fieldset);
