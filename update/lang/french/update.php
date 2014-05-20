@@ -88,7 +88,7 @@ $lang = array(
     'step.dbConfig.title' => 'Configuration base de données',
 	'db.parameters.config' => 'Paramètres de connexion à la base de données',
 	'db.parameters.config.explanation' => '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébergeur qui vous les transmettra.</p>',
-	'dbms.paramters' => 'Paramètres d\'accès au <acronym title="Système de Gestion de Base de Données">SGBD</acronym>',
+	'dbms.parameters' => 'Paramètres d\'accès au <acronym title="Système de Gestion de Base de Données">SGBD</acronym>',
 	'dbms.host' => 'Nom de l\'hôte',
 	'dbms.host.explanation' => 'URL du serveur qui gère la base de données, <em>localhost</em> la plupart du temps.',
     'dbms.port' => 'Port du serveur',

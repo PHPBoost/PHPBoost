@@ -29,7 +29,7 @@ class InstallFinishController extends InstallController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-        parent::load_lang($request);
+		parent::load_lang($request);
 		$view = new FileTemplate('install/finish.tpl');
 		return $this->create_response($view);
 	}
@@ -40,7 +40,7 @@ class InstallFinishController extends InstallController
 	 */
 	private function create_response(View $view)
 	{
-        $step_title = $this->lang['step.finish.title'];
+		$step_title = $this->lang['step.finish.title'];
 		$response = new InstallDisplayResponse(6, $step_title, $view);
 		return $response;
 	}

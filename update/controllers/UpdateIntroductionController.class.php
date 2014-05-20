@@ -29,7 +29,7 @@ class UpdateIntroductionController extends UpdateController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-        parent::load_lang($request);
+		parent::load_lang($request);
 		$view = new FileTemplate('update/introduction.tpl');
 		$this->add_navigation($view);
 		return $this->create_response($view);
@@ -41,21 +41,20 @@ class UpdateIntroductionController extends UpdateController
 	 */
 	private function create_response(Template $view)
 	{
-        $step_title = $this->lang['step.introduction.title'];
+		$step_title = $this->lang['step.introduction.title'];
 		$response = new UpdateDisplayResponse(0, $step_title, $view);
 		return $response;
 	}
 
 	private function add_navigation(Template $view)
-    {
-        $form = new HTMLForm('preambleForm', UpdateUrlBuilder::server_configuration()->rel());
-        $form->disable_captcha_protection();
-        
-        $action_fieldset = new FormFieldsetSubmit('actions');
+	{
+		$form = new HTMLForm('preambleForm', UpdateUrlBuilder::server_configuration()->rel(), false);
+		
+		$action_fieldset = new FormFieldsetSubmit('actions');
 		$next = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'introduction');
 		$action_fieldset->add_element($next);
 		$form->add_fieldset($action_fieldset);
-        $view->put('SERVER_FORM', $form->display());
-    }
+		$view->put('SERVER_FORM', $form->display());
+	}
 }
 ?>
