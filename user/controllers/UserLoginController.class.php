@@ -93,10 +93,10 @@ class UserLoginController extends AbstractController
 				else
 				{
 					$this->display_error_message($errors_lang['e_nomore_test_connect']);
-				}		
+				}
 			break;
 			case 'not_enabled':
-				$this->display_error_message($errors_lang['e_unactiv_member']);				
+				$this->display_error_message($errors_lang['e_unactiv_member']);
 			break;
 			case 'wrong_password':
 				$this->display_error_message($errors_lang['e_wrong_password']);
@@ -144,10 +144,10 @@ class UserLoginController extends AbstractController
 				}
 			break;
 			case 'unexisting':
-				$this->display_error_message($errors_lang['e_unexist_member']);				
+				$this->display_error_message($errors_lang['e_unexist_member']);
 			break;
 			case 'not_authorized':
-				$this->display_error_message($errors_lang['e_auth']);				
+				$this->display_error_message($errors_lang['e_auth']);
 			break;
 		}
 	}
@@ -171,8 +171,7 @@ class UserLoginController extends AbstractController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('loginForm');
-		$this->form->set_css_class('fieldset-content');
-		$this->form->disable_captcha_protection();
+		$this->form->set_css_class('fieldset-content', '', false);
 
 		$this->fieldset = new FormFieldsetHTML('loginFieldset', $this->lang['connect']);
 		$login = new FormFieldTextEditor('login', $this->lang['pseudo'], '', array('required' => true));
