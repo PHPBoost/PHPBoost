@@ -72,25 +72,25 @@
 								</ul>
 							</div>
 						</div>
-					</div>					
+					</div>
 				</div>
 				# END create #
-				# IF C_VERIF_CODE #
-				<div class="form-element">
-					<label for="verif_code">* {L_VERIF_CODE}</label>
-					<div class="form-field">
-						{VERIF_CODE}
-					</div>		
-				</div>
-				# ENDIF #
 				<div class="form-element-textarea">
 					<label for="contents">* {L_CONTENTS}</label>
 					# INCLUDE post_js_tools #
 					{KERNEL_EDITOR}
 					<textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea>
 				</div>
+				# IF C_VERIF_CODE #
+				<div class="form-element">
+					<label for="verif_code">* {L_VERIF_CODE}</label>
+					<div class="form-field">
+						{VERIF_CODE}
+					</div>
+				</div>
+				# ENDIF #
 				
-			</fieldset>	
+			</fieldset>
 			<fieldset class="fieldset-submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="is_cat" value="{IS_CAT}">
