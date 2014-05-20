@@ -1,3 +1,16 @@
+		<script>
+		<!--
+		function check_form(){
+			if(document.getElementById('num_cols').value == "")
+			{
+				alert("{L_REQUIRE_NBR_COLS}");
+				return false;
+			}
+
+			return true;
+		}
+		-->
+		</script>
 		<div id="admin-quick-menu">
 			<ul>
 				<li class="title-menu">{L_FAQ_MANAGEMENT}</li>
@@ -33,12 +46,13 @@
 		
 			# INCLUDE message_helper #
 		
-			<form action="admin_faq.php?token={TOKEN}" method="post" class="fieldset-content">
+			<form action="admin_faq.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset-content">
+				<p class="center">{L_REQUIRE}</p>
 				<fieldset>
 					<legend>{L_CONFIG_MANAGEMENT}</legend>
 					<div class="form-element">
 						<label for="num_cols">
-							{L_NBR_COLS}
+							* {L_NBR_COLS}
 							<span class="field-description">{L_NBR_COLS_EXPLAIN}</span>
 						</label>
 						<div class="form-field">

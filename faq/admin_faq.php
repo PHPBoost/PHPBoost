@@ -120,6 +120,8 @@ else
 		'L_QUESTIONS_LIST' => $FAQ_LANG['faq_questions_list'],
 		'L_ADD_QUESTION' => $FAQ_LANG['add_question'],   
 		'L_ADD_CAT' => $FAQ_LANG['add_cat'],
+		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE_NBR_COLS' => $FAQ_LANG['require_nbr_cols'],
 		'L_NBR_COLS' => $FAQ_LANG['nbr_cols'],
 		'L_NBR_COLS_EXPLAIN' => $FAQ_LANG['nbr_cols_explain'],
 		'L_DISPLAY_MODE' => $FAQ_LANG['display_mode'],

@@ -90,6 +90,7 @@ $FAQ_LANG['required_fields'] = 'The fields with an * are required!';
 $FAQ_LANG['require_entitled'] = 'Please enter the question heading';
 $FAQ_LANG['require_answer'] = 'Please enter the answer';
 $FAQ_LANG['require_cat_name'] = 'Please enter the category name';
+$FAQ_LANG['require_nbr_cols'] = 'Please enter a number of categories per column!';
 
 //Administration / categories
 $FAQ_LANG['category'] = 'Category';
@@ -109,17 +110,16 @@ $FAQ_LANG['general_auth_explain'] = 'You can configure here general reading and 
 
 //Errors
 $FAQ_LANG['successful_operation'] = 'The operation you asked for was successfully executed';
-$LANG['required_fields_empty'] = 'Some required fields are missing, please restart the operation correctly';
-$LANG['unexisting_category'] = 'The category you want to select does\'nt exist';
-$LANG['new_cat_does_not_exist'] = 'The target category does\'nt exist';
-$LANG['infinite_loop'] = 'You want to move a category into itself or in its subcategory, that\'s not possible. Please choose another category';
+$FAQ_LANG['required_fields_empty'] = 'Some required fields are missing, please restart the operation correctly';
+$FAQ_LANG['unexisting_category'] = 'The category you want to select does\'nt exist';
+$FAQ_LANG['new_cat_does_not_exist'] = 'The target category does\'nt exist';
+$FAQ_LANG['infinite_loop'] = 'You want to move a category into itself or in its subcategory, that\'s not possible. Please choose another category';
 
 //Module mini
 $FAQ_LANG['random_question'] = 'Random question';
 $FAQ_LANG['no_random_question'] = 'No available questions';
 
 //Others
-$LANG['ranks'] = 'Ranks';
 $FAQ_LANG['recount_success'] = 'The number of questions for each category was successfully recounted.';
 $FAQ_LANG['recount_questions_number'] = 'Recount the number of questions for each category';
 
