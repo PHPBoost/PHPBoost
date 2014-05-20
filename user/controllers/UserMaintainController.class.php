@@ -116,10 +116,10 @@ class UserMaintainController extends AbstractController
 			$current_time = time();
 			$end_timestamp = $this->maintain_config->get_end_date()->get_timestamp();
 			for ($i = 10; $i >= 0; $i--)
-			{					
-				$delay = ($end_timestamp - $current_time) - $array_time[$i];		
+			{
+				$delay = ($end_timestamp - $current_time) - $array_time[$i];
 				if ($delay >= $array_time[$i]) 
-				{	
+				{
 					$key = $i;
 					break;
 				}
@@ -135,9 +135,9 @@ class UserMaintainController extends AbstractController
 		    $array_now = array(
 		    gmdate_format('Y', time(), TIMEZONE_SITE), (gmdate_format('n', time(), TIMEZONE_SITE) - 1), gmdate_format('j', time(), TIMEZONE_SITE),
 		    gmdate_format('G', time(), TIMEZONE_SITE), gmdate_format('i', time(), TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
-		}	
+		}
 		else
-		{	
+		{
 			$key = -1;
 			$array_release = array('0', '0', '0', '0', '0', '0');
 			$array_now = array('0', '0', '0', '0', '0', '0');
@@ -152,8 +152,7 @@ class UserMaintainController extends AbstractController
 		{
 			$this->tpl->put_all(array(
 				'C_DISPLAY_DELAY' => true,
-				'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
-				
+				'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0'
 			));
 		}
 	}
@@ -162,9 +161,8 @@ class UserMaintainController extends AbstractController
 	{
 		$lang = LangLoader::get('user-common');
 		
-		$this->form = new HTMLForm('loginForm');
+		$this->form = new HTMLForm('loginForm', '', false);
 		$this->form->set_css_class('fieldset-content');
-		$this->form->disable_captcha_protection();
 
 		$fieldset = new FormFieldsetHTML('loginFieldset', $lang['connect']);
 		$login = new FormFieldTextEditor('login', $this->lang['pseudo'], '', array('required' => true));

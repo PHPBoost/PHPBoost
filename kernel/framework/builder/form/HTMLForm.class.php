@@ -84,14 +84,12 @@ class HTMLForm
 	 */
 	private $template = null;
 	
-	private $enable_captcha_protection = true;
-
 	/**
 	 * @desc Constructs a HTMLForm object
 	 * @param string $html_id The HTML name of the form
-     * @param string $target The url where the form sends data
-     * @param bool $enable_captcha_protection True if the CAPTCHA is enabled
-     * @param bool $enable_csrf_protection True if the form is CSRF protected
+	 * @param string $target The url where the form sends data
+	 * @param bool $enable_captcha_protection True if the CAPTCHA is enabled
+	 * @param bool $enable_csrf_protection True if the form is CSRF protected
 	 */
 	public function __construct($html_id, $target = '', $enable_captcha_protection = true, $enable_csrf_protection = true)
 	{
@@ -117,17 +115,9 @@ class HTMLForm
 	
 	private function add_catpcha_protection()
 	{
-		if ($this->enable_captcha_protection)
-		{
-			$captcha_protection_fieldset = new FormFieldsetHTML('captcha');
-			$captcha_protection_fieldset->add_field(new FormFieldCaptcha());
-			$this->add_fieldset($captcha_protection_fieldset);
-		}
-	}
-	
-	public function disable_captcha_protection()
-	{
-		$this->enable_captcha_protection = false;
+		$captcha_protection_fieldset = new FormFieldsetHTML('captcha');
+		$captcha_protection_fieldset->add_field(new FormFieldCaptcha());
+		$this->add_fieldset($captcha_protection_fieldset);
 	}
 	
 	public function move_captcha_protection_in_last_position()
@@ -401,7 +391,7 @@ class HTMLForm
 		}
 		else
 		{
-            $this->target = $target;
+			$this->target = $target;
 		}
 	}
 
