@@ -172,7 +172,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 	
 	private function build_sorting_form($field, $mode)
 	{
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
 		
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['articles.sort_filter_title']));
