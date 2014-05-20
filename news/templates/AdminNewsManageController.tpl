@@ -2,7 +2,7 @@
 	<thead>
 		<tr>
 			<th></th>
-			<th class="column_title">
+			<th>
 				<a href="{U_SORT_NAME_ASC}" class="fa fa-table-sort-up"></a>
 				{@news.form.name}
 				<a href="{U_SORT_NAME_DESC}" class="fa fa-table-sort-down"></a>
