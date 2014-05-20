@@ -178,7 +178,7 @@ class BugtrackerRoadmapListController extends ModuleController
 	
 	private function build_form($requested_version, $requested_status, $nbr_bugs)
 	{
-		$form = new HTMLForm('version');
+		$form = new HTMLForm('version', '', false);
 		
 		$fieldset = new FormFieldsetHorizontal('choose-version');
 		$form->add_fieldset($fieldset);
