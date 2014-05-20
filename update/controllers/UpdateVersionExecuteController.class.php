@@ -31,7 +31,7 @@ class UpdateVersionExecuteController extends UpdateController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-        parent::load_lang($request);
+		parent::load_lang($request);
 		$view = new FileTemplate('update/execute.tpl');
 		$this->add_navigation($view);
 		if ($this->submit->has_been_submited())
@@ -54,22 +54,22 @@ class UpdateVersionExecuteController extends UpdateController
 	 */
 	private function create_response(Template $view)
 	{
-        $step_title = $this->lang['step.execute.title'];
+		$step_title = $this->lang['step.execute.title'];
 		$response = new UpdateDisplayResponse(3, $step_title, $view);
 		return $response;
 	}
 
 	private function add_navigation(Template $view)
-    {
-    	$form = new HTMLForm('continueForm', '#error');
-    	$form->disable_captcha_protection();
+	{
+		$form = new HTMLForm('continueForm', '#error', false);
+		
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], UpdateUrlBuilder::database(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
 		$this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'finish');
 		$action_fieldset->add_element($this->submit);
 		$form->add_fieldset($action_fieldset);
-        $view->put('SERVER_FORM', $form->display());
-    }
+		$view->put('SERVER_FORM', $form->display());
+	}
 }
 ?>

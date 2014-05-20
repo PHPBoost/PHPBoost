@@ -38,7 +38,7 @@ class InstallLicenseController extends InstallController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-        parent::load_lang($request);
+		parent::load_lang($request);
 		$this->build_form();
 		if ($this->submit->has_been_submited())
 		{
@@ -56,29 +56,28 @@ class InstallLicenseController extends InstallController
 	}
 
 	private function build_form()
-    {
-    	$this->form = new HTMLForm('licenseForm');
-    	$this->form->disable_captcha_protection();
-    	
-    	$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['step.license.terms.title']);
-    	$this->form->add_fieldset($fieldset);
-    	$agreement = new FormFieldHTML('agreementExplanation', $this->lang['step.license.require.agreement'] . '<br /><br />');
-    	$fieldset->add_field($agreement);
-    	$license_content = file_get_contents('gpl-license.txt');
-    	$license_block = '<div class="licence-container"><div class="license-content">' . $license_content . '</div></div>';
-    	$license = new FormFieldHTML('licenseContent', $license_block);
-    	$fieldset->add_field($license);
-    	$agree_checkbox = new FormFieldCheckbox('agree', $this->lang['step.license.please_agree'], FormFieldCheckbox::UNCHECKED,
-    	array('required' => $this->lang['step.license.submit.alert']));
-    	$fieldset->add_field($agree_checkbox);
+	{
+		$this->form = new HTMLForm('licenseForm', '', false);
+		
+		$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['step.license.terms.title']);
+		$this->form->add_fieldset($fieldset);
+		$agreement = new FormFieldHTML('agreementExplanation', $this->lang['step.license.require.agreement'] . '<br /><br />');
+		$fieldset->add_field($agreement);
+		$license_content = file_get_contents('gpl-license.txt');
+		$license_block = '<div class="licence-container"><div class="license-content">' . $license_content . '</div></div>';
+		$license = new FormFieldHTML('licenseContent', $license_block);
+		$fieldset->add_field($license);
+		$agree_checkbox = new FormFieldCheckbox('agree', $this->lang['step.license.please_agree'], FormFieldCheckbox::UNCHECKED,
+		array('required' => $this->lang['step.license.submit.alert']));
+		$fieldset->add_field($agree_checkbox);
 
-    	$action_fieldset = new FormFieldsetSubmit('actions');
+		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::welcome(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
 		$this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'license');
 		$action_fieldset->add_element($this->submit);
 		$this->form->add_fieldset($action_fieldset);
-    }
+	}
 
 	/**
 	 * @param Template $view
@@ -88,7 +87,7 @@ class InstallLicenseController extends InstallController
 	{
 		$view = new FileTemplate('install/license.tpl');
 		$view->put('LICENSE_FORM', $this->form->display());
-        $step_title = $this->lang['step.license.title'];
+		$step_title = $this->lang['step.license.title'];
 		$response = new InstallDisplayResponse(1, $step_title, $view);
 		return $response;
 	}

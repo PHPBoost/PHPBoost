@@ -63,7 +63,7 @@ class InstallationServices
 
 	public function is_already_installed()
 	{
-		$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
+		$tables_list = PersistenceContext::get_dbms.parameters_utils()->list_tables();
 		return in_array(PREFIX . 'member', $tables_list) || in_array(PREFIX . 'configs', $tables_list);
 	}
 
@@ -102,7 +102,7 @@ class InstallationServices
 	{
 		defined('PREFIX') or define('PREFIX', $tables_prefix);
 		$db_connection_data = array(
-			'dbms' => DBFactory::MYSQL,
+			'dbms.parameters' => DBFactory::MYSQL,
 			'dsn' => 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database,
 			'driver_options' => array(),
 			'host' => $host,
@@ -112,7 +112,7 @@ class InstallationServices
 			'port' => $port
 		);
 		$db_connection = new MySQLDBConnection();
-		DBFactory::init_factory($db_connection_data['dbms']);
+		DBFactory::init_factory($db_connection_data['dbms.parameters']);
 		DBFactory::set_db_connection($db_connection);
 		$db_connection->connect($db_connection_data);
 	}
@@ -120,8 +120,8 @@ class InstallationServices
 	private function create_database($database)
 	{
 		try {
-			$database = PersistenceContext::get_dbms_utils()->create_database($database);
-			$databases_list = PersistenceContext::get_dbms_utils()->list_databases();
+			$database = PersistenceContext::get_dbms.parameters_utils()->create_database($database);
+			$databases_list = PersistenceContext::get_dbms.parameters_utils()->list_databases();
 			PersistenceContext::close_db_connection();
 			return in_array($database, $databases_list);
 		} catch (SQLQuerierException $e) {
@@ -129,9 +129,9 @@ class InstallationServices
 		}
 	}
 
-	public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix)
+	public function create_phpboost_tables($dbms.parameters, $host, $port, $database, $login, $password, $tables_prefix)
 	{
-		$db_connection_data = $this->initialize_db_connection($dbms, $host, $port, $database, $login,
+		$db_connection_data = $this->initialize_db_connection($dbms.parameters, $host, $port, $database, $login,
 		$password, $tables_prefix);
         $this->create_tables();
 		$this->write_connection_config_file($db_connection_data, $tables_prefix);
@@ -294,11 +294,11 @@ class InstallationServices
 		AppContext::get_cache_service()->clear_cache();
 	}
 
-	private function initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix)
+	private function initialize_db_connection($dbms.parameters, $host, $port, $database, $login, $password, $tables_prefix)
 	{
 		defined('PREFIX') or define('PREFIX', $tables_prefix);
 		$db_connection_data = array(
-			'dbms' => $dbms,
+			'dbms.parameters' => $dbms.parameters,
 			'dsn' => 'mysql:host=' . $host . ';port=' . $port . 'dbname=' . $database,
 			'driver_options' => array(),
 			'host' => $host,
@@ -307,13 +307,13 @@ class InstallationServices
 			'password' => $password,
 			'database' => $database,
 		);
-		$this->connect_to_database($dbms, $db_connection_data, $database);
+		$this->connect_to_database($dbms.parameters, $db_connection_data, $database);
 		return $db_connection_data;
 	}
 
-	private function connect_to_database($dbms, array $db_connection_data, $database)
+	private function connect_to_database($dbms.parameters, array $db_connection_data, $database)
 	{
-		DBFactory::init_factory($dbms);
+		DBFactory::init_factory($dbms.parameters);
 		$connection = DBFactory::new_db_connection();
 		DBFactory::set_db_connection($connection);
 		try
@@ -322,7 +322,7 @@ class InstallationServices
 		}
 		catch (UnexistingDatabaseException $exception)
 		{
-			PersistenceContext::get_dbms_utils()->create_database($database);
+			PersistenceContext::get_dbms.parameters_utils()->create_database($database);
 			PersistenceContext::close_db_connection();
 			$connection = DBFactory::new_db_connection();
 			$connection->connect($db_connection_data);

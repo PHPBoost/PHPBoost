@@ -69,10 +69,9 @@ class UpdateDBConfigController extends UpdateController
 
 	private function build_form()
 	{
-		$this->form = new HTMLForm('databaseForm');
-		$this->form->disable_captcha_protection();
+		$this->form = new HTMLForm('databaseForm', '', false);
 		
-		$fieldset_server = new FormFieldsetHTML('serverConfig', $this->lang['dbms.paramters']);
+		$fieldset_server = new FormFieldsetHTML('serverConfig', $this->lang['dbms.parameters']);
 		$this->form->add_fieldset($fieldset_server);
 
 		$host = new FormFieldTextEditor('host', $this->lang['dbms.host'], 'localhost',

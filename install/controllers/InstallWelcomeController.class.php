@@ -29,7 +29,7 @@ class InstallWelcomeController extends InstallController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-        parent::load_lang($request);
+		parent::load_lang($request);
 		$view = new FileTemplate('install/welcome.tpl');
 		$this->add_navigation($view);
 		return $this->create_response($view);
@@ -41,21 +41,20 @@ class InstallWelcomeController extends InstallController
 	 */
 	private function create_response(Template $view)
 	{
-        $step_title = $this->lang['step.welcome.title'];
+		$step_title = $this->lang['step.welcome.title'];
 		$response = new InstallDisplayResponse(0, $step_title, $view);
 		return $response;
 	}
 
 	private function add_navigation(Template $view)
-    {
-        $form = new HTMLForm('preambleForm', InstallUrlBuilder::license()->rel());
-        $form->disable_captcha_protection();
-        
-        $action_fieldset = new FormFieldsetSubmit('actions');
+	{
+		$form = new HTMLForm('preambleForm', InstallUrlBuilder::license()->rel(), false);
+		
+		$action_fieldset = new FormFieldsetSubmit('actions');
 		$next = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'welcome');
 		$action_fieldset->add_element($next);
 		$form->add_fieldset($action_fieldset);
-        $view->put('LICENSE_FORM', $form->display());
-    }
+		$view->put('LICENSE_FORM', $form->display());
+	}
 }
 ?>

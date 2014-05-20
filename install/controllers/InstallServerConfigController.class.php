@@ -63,8 +63,7 @@ class InstallServerConfigController extends InstallController
 
 	private function build_form()
 	{
-		$this->form = new HTMLForm('continueForm');
-		$this->form->disable_captcha_protection();
+		$this->form = new HTMLForm('continueForm', '', false);
 		
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::license(), 'fa fa-arrow-left');

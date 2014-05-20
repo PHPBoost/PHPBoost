@@ -69,24 +69,23 @@ class InstallDBConfigController extends InstallController
 
 	private function build_form()
 	{
-		$this->form = new HTMLForm('databaseForm');
-		$this->form->disable_captcha_protection();
+		$this->form = new HTMLForm('databaseForm', '', false);
 		
-		$fieldset_server = new FormFieldsetHTML('serverConfig', $this->lang['dbms.paramters']);
+		$fieldset_server = new FormFieldsetHTML('serverConfig', $this->lang['dbms.parameters.paramters']);
 		$this->form->add_fieldset($fieldset_server);
 
-		$host = new FormFieldTextEditor('host', $this->lang['dbms.host'], 'localhost',
-		array('description' => $this->lang['dbms.host.explanation'], 'required' => $this->lang['db.required.host']));
+		$host = new FormFieldTextEditor('host', $this->lang['dbms.parameters.host'], 'localhost',
+		array('description' => $this->lang['dbms.parameters.host.explanation'], 'required' => $this->lang['db.required.host']));
 		$fieldset_server->add_field($host);
-		$port = new FormFieldTextEditor('port', $this->lang['dbms.port'], '3306',
-		array('description' => $this->lang['dbms.port.explanation'], 'required' => $this->lang['db.required.port']));
+		$port = new FormFieldTextEditor('port', $this->lang['dbms.parameters.port'], '3306',
+		array('description' => $this->lang['dbms.parameters.port.explanation'], 'required' => $this->lang['db.required.port']));
 		$port->add_constraint(new FormFieldConstraintIntegerRange(1, 65536));
 		$fieldset_server->add_field($port);
-		$login = new FormFieldTextEditor('login', $this->lang['dbms.login'], 'root',
-		array('description' => $this->lang['dbms.login.explanation'], 'required' => $this->lang['db.required.login']));
+		$login = new FormFieldTextEditor('login', $this->lang['dbms.parameters.login'], 'root',
+		array('description' => $this->lang['dbms.parameters.login.explanation'], 'required' => $this->lang['db.required.login']));
 		$fieldset_server->add_field($login);
-		$password = new FormFieldPasswordEditor('password', $this->lang['dbms.password'], '',
-		array('description' => $this->lang['dbms.password.explanation']));
+		$password = new FormFieldPasswordEditor('password', $this->lang['dbms.parameters.password'], '',
+		array('description' => $this->lang['dbms.parameters.password.explanation']));
 		$fieldset_server->add_field($password);
 
 		$fieldset_schema = new FormFieldsetHTML('schemaConfig', $this->lang['schema.properties']);
