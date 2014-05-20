@@ -205,7 +205,7 @@ class BugtrackerViews
 		$filter = implode('-', $filters);
 		$filter_id = implode('-', $filters_ids);
 		
-		$form = new HTMLForm('type-form');
+		$form = new HTMLForm('type-form', '', false);
 		$fieldset = new FormFieldsetHorizontal('filter-type');
 		
 		$form->add_fieldset($fieldset);
@@ -246,7 +246,7 @@ class BugtrackerViews
 		$filter = implode('-', $filters);
 		$filter_id = implode('-', $filters_ids);
 		
-		$form = new HTMLForm('category-form');
+		$form = new HTMLForm('category-form', '', false);
 		$fieldset = new FormFieldsetHorizontal('filter-category');
 		
 		$form->add_fieldset($fieldset);
@@ -287,7 +287,7 @@ class BugtrackerViews
 		$filter = implode('-', $filters);
 		$filter_id = implode('-', $filters_ids);
 		
-		$form = new HTMLForm('severity-form');
+		$form = new HTMLForm('severity-form', '', false);
 		$fieldset = new FormFieldsetHorizontal('filter-severity');
 		
 		$form->add_fieldset($fieldset);
@@ -328,7 +328,7 @@ class BugtrackerViews
 		$filter = implode('-', $filters);
 		$filter_id = implode('-', $filters_ids);
 		
-		$form = new HTMLForm('status-form');
+		$form = new HTMLForm('status-form', '', false);
 		$fieldset = new FormFieldsetHorizontal('filter-status');
 		
 		$form->add_fieldset($fieldset);
@@ -372,7 +372,7 @@ class BugtrackerViews
 		$filter = implode('-', $filters);
 		$filter_id = implode('-', $filters_ids);
 		
-		$form = new HTMLForm('version-form');
+		$form = new HTMLForm('version-form', '', false);
 		$fieldset = new FormFieldsetHorizontal('filter-version');
 		
 		$form->add_fieldset($fieldset);
