@@ -41,10 +41,13 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$this->update_articles_table();
 		$this->update_cats_table();
+		$this->update_comments();
 	}
 	
 	private function update_articles_table()
 	{
+		$columns = $this->db_utils->desc_table(PREFIX . 'articles');
+		
 		$rows_change = array(
 			'idcat' => 'id_category INT(11)',
 			'views' => 'number_view INT(11)',
@@ -58,13 +61,18 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		
 		foreach ($rows_change as $old_name => $new_name)
 		{
-			$this->querier->inject('ALTER TABLE '. PREFIX .'articles' .' CHANGE '. $old_name .' '. $new_name);
+			if (isset($columns[$old_name]))
+				$this->querier->inject('ALTER TABLE '. PREFIX .'articles' .' CHANGE '. $old_name .' '. $new_name);
 		}
 		
-		$this->db_utils->add_column(PREFIX .'articles', 'rewrited_title', array('type' => 'string', 'length' => 250, 'default' => "''"));
-		$this->db_utils->add_column(PREFIX .'articles', 'author_name_displayed', array('type' => 'boolean', 'notnull' => 1, 'default' => 1));
-		$this->db_utils->add_column(PREFIX .'articles', 'date_updated', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
-                $this->db_utils->add_column(PREFIX .'articles', 'notation_enabled', array('type' => 'boolean', 'notnull' => 1, 'default' => 1));
+		if (!isset($columns['rewrited_title']))
+			$this->db_utils->add_column(PREFIX .'articles', 'rewrited_title', array('type' => 'string', 'length' => 250, 'default' => "''"));
+		if (!isset($columns['author_name_displayed']))
+			$this->db_utils->add_column(PREFIX .'articles', 'author_name_displayed', array('type' => 'boolean', 'notnull' => 1, 'default' => 1));
+		if (!isset($columns['date_updated']))
+			$this->db_utils->add_column(PREFIX .'articles', 'date_updated', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
+		if (!isset($columns['notation_enabled']))
+			$this->db_utils->add_column(PREFIX .'articles', 'notation_enabled', array('type' => 'boolean', 'notnull' => 1, 'default' => 1));
 		
 		$result = $this->querier->select_rows(PREFIX .'articles', array('id', 'title'));
 		while ($row = $result->fetch())
@@ -77,14 +85,34 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function update_cats_table()
 	{
-		$this->db_utils->add_column(PREFIX .'articles_cats', 'rewrited_name', array('type' => 'string', 'length' => 250, 'default' => "''"));
-	
+		$columns = $this->db_utils->desc_table(PREFIX . 'articles_cats');
+		if (!isset($columns['rewrited_name']))
+			$this->db_utils->add_column(PREFIX .'articles_cats', 'rewrited_name', array('type' => 'string', 'length' => 250, 'default' => "''"));
+		
 		$result = $this->querier->select_rows(PREFIX .'articles_cats', array('id', 'name'));
 		while ($row = $result->fetch())
 		{
 			$this->querier->update(PREFIX . 'articles_cats', array(
 				'rewrited_name' => Url::encode_rewrite($row['name'])
 			), 'WHERE id=:id', array('id' => $row['id']));
+		}
+	}
+	
+	private function update_comments()
+	{
+		$result = $this->querier->select('SELECT article.id, article.rewrited_title, article.id_category, cat.rewrited_name AS cat_rewrited_name
+		FROM ' . PREFIX . 'articles article
+		JOIN ' . PREFIX . 'articles_cats cat ON cat.id = article.id_category
+		JOIN ' . PREFIX . 'comments_topic com ON com.id_in_module = article.id
+		WHERE com.module_id = \'articles\'
+		ORDER BY article.id ASC');
+		while ($row = $result->fetch())
+		{
+			$this->querier->update(PREFIX . 'comments_topic',
+				array('path' => '/articles/?url=/'.$row['id_category'].'-'.$row['cat_rewrited_name'].'/'.$row['id'].'-'.$row['rewrited_title']), 
+				'WHERE id_in_module=:id_in_module AND module_id=:module_id',
+				array('id_in_module' => $row['id'], 'module_id' => 'articles')
+			);
 		}
 	}
 }

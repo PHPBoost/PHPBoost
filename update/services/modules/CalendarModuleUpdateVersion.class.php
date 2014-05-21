@@ -41,17 +41,19 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$tables = $this->db_utils->list_tables(true);
 		
-		if (!isset($tables[PREFIX . 'calendar_events']))
+		if (!in_array(PREFIX . 'calendar_events', $tables))
 			$this->create_calendar_events_table();
-		if (!isset($tables[PREFIX . 'calendar_events_content']))
+		if (!in_array(PREFIX . 'calendar_events_content', $tables))
 			$this->create_calendar_events_content_table();
-		if (!isset($tables[PREFIX . 'calendar_cats']))
+		if (!in_array(PREFIX . 'calendar_cats', $tables))
 			$this->create_calendar_cats_table();
-		if (!isset($tables[PREFIX . 'calendar_users_relation']))
+		if (!in_array(PREFIX . 'calendar_users_relation', $tables))
 			$this->create_calendar_users_relation_table();
 		
-		if (isset($tables[PREFIX . 'calendar']))
+		if (in_array(PREFIX . 'calendar', $tables))
 			$this->update_events();
+		
+		$this->update_comments();
 	}
 	
 	private function create_calendar_events_table()
@@ -90,7 +92,7 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 			'last_registration_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'register_authorizations' => array('type' => 'text', 'length' => 65000),
 			'repeat_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'repeat_type' => array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => 'never')
+			'repeat_type' => array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => "'never'")
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -142,6 +144,7 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 		while ($row = $result->fetch())
 		{
 			$insert_result = $this->querier->insert(PREFIX . 'calendar_events_content', array(
+				'id' => $row['id'],
 				'title' => $row['title'],
 				'rewrited_title' => Url::encode_rewrite($row['title']),
 				'contents' => $row['contents'],
@@ -151,7 +154,7 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 			));
 			
 			$this->querier->insert(PREFIX . 'calendar_events', array(
-				'content_id' => $insert_result->get_last_inserted_id(),
+				'content_id' => $row['id'],
 				'start_date' => $row['timestamp'],
 				'end_date' => $row['timestamp'] + 7200,
 				'parent_id' => 0
@@ -159,6 +162,24 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 		}
 		
 		$this->db_utils->drop(array(PREFIX . 'calendar'));
+	}
+	
+	private function update_comments()
+	{
+		$result = $this->querier->select('SELECT calendar.id, calendar.title
+		FROM ' . PREFIX . 'calendar_events_content calendar
+		JOIN ' . PREFIX . 'comments_topic com ON com.id_in_module = calendar.id
+		WHERE com.module_id = \'calendar\'
+		ORDER BY calendar.id ASC');
+		
+		while ($row = $result->fetch())
+		{
+			$this->querier->update(PREFIX . 'comments_topic',
+				array('path' => '/calendar/?url=/0-root/'.$row['id'].'-'.Url::encode_rewrite($row['title'])), 
+				'WHERE id_in_module=:id_in_module AND module_id=:module_id',
+				array('id_in_module' => $row['id'], 'module_id' => 'calendar')
+			);
+		}
 	}
 }
 ?>

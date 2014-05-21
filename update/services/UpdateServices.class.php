@@ -208,34 +208,44 @@ class UpdateServices
 			UserAccountsConfig::save();
 		}
 		
-		ModulesManager::install_module('PHPBoostCaptcha');
+		ModulesManager::install_module('QuestionCaptcha');
 		ModulesManager::install_module('ReCaptcha');
 		
 		$content_management_config = ContentManagementConfig::load();
 		$content_management_config->set_used_captcha_module('ReCaptcha');
 		ContentManagementConfig::save();
 		
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
-			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'name' => array('type' => 'unique', 'fields' => 'name',
-				'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
-		)));
-		PersistenceContext::get_dbms_utils()->create_table(PREFIX . 'keywords', $fields, $options);
+		$tables = PersistenceContext::get_dbms_utils()->list_tables(true);
 		
-		$fields = array(
-			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'module_id' => array('type' => 'string', 'length' => 25, 'default' => "''"),
-			'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-		);
-		PersistenceContext::get_dbms_utils()->create_table(PREFIX . 'keywords_relations', $fields);
+		if (!in_array(PREFIX . 'keywords', $tables))
+		{
+			$fields = array(
+				'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+				'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+				'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
+			);
+			$options = array(
+				'primary' => array('id'),
+				'indexes' => array(
+					'name' => array('type' => 'unique', 'fields' => 'name',
+					'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
+			)));
+			PersistenceContext::get_dbms_utils()->create_table(PREFIX . 'keywords', $fields, $options);
+		}
 		
-		PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST .' CHANGE default_values default_value TEXT');
+		if (!in_array(PREFIX . 'keywords_relations', $tables))
+		{
+			$fields = array(
+				'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+				'module_id' => array('type' => 'string', 'length' => 25, 'default' => "''"),
+				'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			);
+			PersistenceContext::get_dbms_utils()->create_table(PREFIX . 'keywords_relations', $fields);
+		}
+		
+		$columns = PersistenceContext::get_dbms_utils()->desc_table(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST);
+		if (!isset($columns['default_value']))
+			PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST .' CHANGE default_values default_value TEXT');
 		
 		//Change timezone
 		PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER .' CHANGE user_timezone user_timezone VARCHAR(50)');
@@ -246,13 +256,12 @@ class UpdateServices
 		$general_config->set_site_timezone('Europe/Paris');
 		GeneralConfig::save();
 		
-		PersistenceContext::get_querier()->inject('RENAME TABLE '. PREFIX .'ranks' .' TO '. PREFIX .'forum_ranks');
+		if (!in_array(PREFIX . 'forum_ranks', $tables))
+			PersistenceContext::get_querier()->inject('RENAME TABLE '. PREFIX .'ranks' .' TO '. PREFIX .'forum_ranks');
 		
 		PersistenceContext::get_dbms_utils()->truncate(PREFIX .'smileys');
 		
 		$this->insert_smileys_data();
-		
-		//ModulesManager::uninstall_module('HomeCustom');
 		
 		$modules_config = ModulesConfig::load();
 		foreach (ModulesManager::get_installed_modules_map() as $id => $module)

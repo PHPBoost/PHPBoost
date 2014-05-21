@@ -112,13 +112,13 @@ class UpdateDisplayResponse extends AbstractResponse
 		);
 		$this->nb_steps = count($steps) - 1;
 
-		for ($i = 0; $i < $this->nb_steps + 1; $i++)
+		for ($i = 0; $i <= $this->nb_steps; $i++)
 		{
 			if ($i < $this->current_step)
 			{
 				$row_class = 'row-success';
 			}
-			elseif ($i == $this->current_step && $i == ($this->nb_steps - 1))
+			elseif ($i == $this->current_step && $i == $this->nb_steps)
 			{
 				$row_class = 'row-current row-final';
 			}
@@ -126,7 +126,7 @@ class UpdateDisplayResponse extends AbstractResponse
 			{
 				$row_class = 'row-current';
 			}
-			elseif ($i == ($this->nb_steps - 1))
+			elseif ($i == $this->nb_steps)
 			{
 				$row_class = 'row-next row-final';
 			}
