@@ -46,7 +46,6 @@ $DOWNLOAD_LANG['require_description'] = 'Veuillez entrer une description !';
 $DOWNLOAD_LANG['require_url'] = 'Veuillez entrer une adresse correcte pour le fichier !';
 $DOWNLOAD_LANG['require_creation_date'] = 'Veuillez entrer une date de création au bon format (jj/mm/aa) !';
 $DOWNLOAD_LANG['require_release_date'] = 'Veuillez entrer une date de sortie (ou de mise à jour) au bon format (jj/mm/aa) !';
-$DOWNLOAD_LANG['download_add'] = 'Ajouter un fichier';
 $DOWNLOAD_LANG['download_management'] = 'Gestion Téléchargements';
 $DOWNLOAD_LANG['download_config'] = 'Configuration';
 $DOWNLOAD_LANG['file_list'] = 'Liste des fichiers';

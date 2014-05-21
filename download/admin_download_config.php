@@ -78,7 +78,7 @@ else
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE' => $LANG['require'],		
 		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
-		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
+		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['add_file'],
 		'L_DOWNLOAD_CAT' => $LANG['cat_management'],
 		'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
 		'L_MAX_FILES_NUMBER_PER_PAGE' => $DOWNLOAD_LANG['nbr_download_max'],

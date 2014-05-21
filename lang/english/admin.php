@@ -63,7 +63,7 @@ $LANG['alert_fct_unlink'] = 'Impossible to delete picture. You must remove it ma
 $LANG['alert_no_login'] = 'The input nickname doesn\'t exist !';
 
 //Requis
-$LANG['require'] = 'The fields marked with an * are required !';
+$LANG['require'] = 'The fields marked with a * are required !';
 $LANG['require_title'] = 'Please enter a title !';
 $LANG['require_text'] = 'Please enter content !';
 $LANG['require_password'] = 'Please enter a password !';

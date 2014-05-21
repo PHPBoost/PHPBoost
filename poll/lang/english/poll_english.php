@@ -26,10 +26,9 @@
  *
  ###################################################*/
 
-
- ####################################################
-#                                                           English                                                                             #
- ####################################################
+#####################################################
+#						English						#
+#####################################################
  
 //Admin
 $LANG['confirm_del_poll'] = 'Delete this poll ?';
@@ -47,7 +46,7 @@ $LANG['multiple'] = 'Multiple';
 $LANG['number_vote'] = 'Number of votes';
 $LANG['add_answer'] = 'Add an answer';
 $LANG['displayed_in_mini_module_list'] = 'Mini-poll';
-$LANG['displayed_in_mini_module_list'] = 'Random display if more than one poll is selected';
+$LANG['displayed_in_mini_module_list_explain'] = 'Random display if more than one poll is selected';
 $LANG['cookie_name'] = 'Cookie name';
 $LANG['cookie_lenght'] = 'Cookie life length';
 $LANG['admin.authorizations'] = 'Permissions';
