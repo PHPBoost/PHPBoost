@@ -100,12 +100,25 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
 			)
 		);
-		PersistenceContext::get_dbms_utils()->create_table(PREFIX . 'calendar_events_content', $fields, $options);
+		$this->db_utils->create_table(PREFIX . 'calendar_events_content', $fields, $options);
 	}
 	
 	private function create_calendar_cats_table()
 	{
-		CalendarCategory::create_categories_table(PREFIX . 'calendar_cats');
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
+			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
+			'auth' => array('type' => 'text', 'length' => 65000),
+			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'color' => array('type' => 'string', 'length' => 250, 'default' => "''"),
+		);
+		
+		$options = array(
+			'primary' => array('id')
+		);
+		$this->db_utils->create_table(PREFIX . 'calendar_cats', $fields, $options);
 	}
 	
 	private function create_calendar_users_relation_table()
