@@ -13,7 +13,7 @@ section, article {
 
 aside#menu-left + aside#menu-right + div#main section .content { padding: 0px 5px; }
 aside#menu-left + aside#menu-right + div#main section .form-element,
-aside#menu-left + aside#menu-right + div#main section .form-element-textarea { margin: 0px; }
+aside#menu-left + aside#menu-right + div#main section .form-element-textarea { margin: 5px 0px; }
 
 section header, article header { margin: 0 0 20px 0; }
 
