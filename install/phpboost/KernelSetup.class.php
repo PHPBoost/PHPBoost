@@ -59,7 +59,7 @@ class KernelSetup
 
 	public static function __static()
 	{
-		self::$db_utils = PersistenceContext::get_dbms.parameters_utils();
+		self::$db_utils = PersistenceContext::get_dbms_utils();
 		self::$db_querier = PersistenceContext::get_querier();
 
 		self::$comments_table = PREFIX . 'comments';
@@ -317,7 +317,7 @@ class KernelSetup
 				'name' => array('type' => 'unique', 'fields' => 'name',
 				'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
 		)));
-		PersistenceContext::get_dbms.parameters_utils()->create_table(self::$keywords_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$keywords_table, $fields, $options);
 	}
 	
 	private function create_keywords_relations_table()
@@ -327,7 +327,7 @@ class KernelSetup
 			'module_id' => array('type' => 'string', 'length' => 25, 'default' => "''"),
 			'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 		);
-		PersistenceContext::get_dbms.parameters_utils()->create_table(self::$keywords_relations_table, $fields);
+		PersistenceContext::get_dbms_utils()->create_table(self::$keywords_relations_table, $fields);
 	}
 
 	private function create_member_table()
