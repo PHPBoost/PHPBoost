@@ -47,7 +47,7 @@
 					<div class="form-element">
 						<label for="authorized_modules[]">* {L_AUTHORIZED_MODULES} <span class="field-description">{L_AUTHORIZED_MODULES_EXPLAIN}</span></label>
 						<div class="form-field"><label>
-							<select id="authorized_modules[]" name="authorized_modules[]" size="5" multiple="multiple" class="list_modules">
+							<select id="authorized_modules[]" name="authorized_modules[]" size="5" multiple="multiple" class="list-modules">
 								# START authorized_modules #
 								<option value="{authorized_modules.MODULE}" id="{authorized_modules.MODULE}"{authorized_modules.SELECTED}>{authorized_modules.L_MODULE_NAME}</option>
 								# END authorized_modules #
