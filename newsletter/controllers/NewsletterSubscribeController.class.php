@@ -34,7 +34,7 @@ class NewslettersubscribeController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$nbr_streams = NewsletterStreamsCache::load()->get_number_streams();		
+		$nbr_streams = NewsletterStreamsCache::load()->get_number_streams();
 		if (empty($nbr_streams))
 		{
 			AppContext::get_response()->redirect(NewsletterUrlBuilder::home());
