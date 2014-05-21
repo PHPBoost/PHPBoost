@@ -299,12 +299,12 @@
 							</tr>
 							<tr>
 								# IF pics.pics_max.C_PREVIOUS #
-								<td style="text-align:left;">
+								<td class="left no-separator" style="width:50%">
 									{pics.pics_max.U_PREVIOUS} 
 								</td>
 								# ENDIF #
 								# IF pics.pics_max.C_NEXT #
-								<td style="text-align:right;">
+								<td class="right no-separator">
 									{pics.pics_max.U_NEXT}
 								</td>
 								# ENDIF #
