@@ -41,8 +41,9 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$this->update_news_table();
 		$this->update_cats_table();
+		$this->update_comments();
 	}
-	
+		
 	private function update_news_table()
 	{
 		$rows_change = array(
@@ -89,6 +90,24 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 			$this->querier->update(PREFIX . 'news_cats', array(
 				'rewrited_name' => Url::encode_rewrite($row['name'])
 			), 'WHERE id=:id', array('id' => $row['id']));
+		}
+	}
+	
+	private function update_comments()
+	{
+		$result = $this->querier->select('SELECT news.id, news.rewrited_name, news.id_category, cat.rewrited_name AS cat_rewrited_name
+		FROM ' . PREFIX . 'news news
+		JOIN ' . PREFIX . 'news_cats cat ON cat.id = news.id_category
+		JOIN ' . PREFIX . 'comments_topic com ON com.id_in_module = news.id
+		WHERE com.module_id = \'news\'
+		ORDER BY news.id ASC');
+		while ($row = $result->fetch())
+		{
+			$this->querier->update(PREFIX . 'comments_topic',
+				array('path' => '/news/?url=/'.$row['id_category'].'-'.$row['cat_rewrited_name'].'/'.$row['id'].'-'.$row['rewrited_name']), 
+				'WHERE id_in_module=:id_in_module AND module_id=:module_id',
+				array('id_in_module' => $row['id'], 'module_id' => 'news')
+			);
 		}
 	}
 }
