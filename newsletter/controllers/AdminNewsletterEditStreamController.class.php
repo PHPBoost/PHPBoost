@@ -85,22 +85,7 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 		array('rows' => 4, 'cols' => 47)
 		));
 		
-		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 'function(response){
-		$(\'loading-stream-picture\').remove();
-		if (response.responseJSON.image_url) {
-			$(\'preview_picture\').src = response.responseJSON.image_url;
-			$(\'preview_picture\').style.display = "inline";
-		} else {
-			$(\'preview_picture\').style.display = "none";
-		}}');
-		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').insert({after: \'<i id="loading-stream-picture" class="fa fa-spinner fa-spin"></i>\'}); }');
-		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
-		
-		$fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['streams.picture'], $newsletter_stream_cache['picture'], array(
-			'class' => 'text',
-			'events' => array('change' => $image_preview_request->render())
-		)));
-		$fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['streams.picture-preview'], '<img id="preview_picture" src="'. Url::to_rel($newsletter_stream_cache['picture']) .'" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldUploadFile('picture', $this->lang['streams.picture'], $newsletter_stream_cache['picture']));
 		
 		$fieldset->add_field(new FormFieldCheckbox('visible', $this->lang['streams.visible'], $newsletter_stream_cache['visible']));
 		
