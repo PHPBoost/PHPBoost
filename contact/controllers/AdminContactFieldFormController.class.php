@@ -181,9 +181,7 @@ class AdminContactFieldFormController extends AdminModuleController
 			));
 		}
 		
-		$fieldset->add_field(new FormFieldTextEditor('default_value_small', $this->admin_user_common_lang['field.default-value'], $field->get_default_value(), array(
-			'class' => 'text')
-		));
+		$fieldset->add_field(new FormFieldTextEditor('default_value_small', $this->admin_user_common_lang['field.default-value'], $field->get_default_value()));
 		
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value_medium', $this->admin_user_common_lang['field.default-value'], $field->get_default_value(), array(
 			'rows' => 4, 'cols' => 47)
