@@ -31,3 +31,5 @@
 	border-top: 1px solid #CCCCCC;
 	border-radius: 0 0 0 4px;
 }
+
+#recaptcha_image { width: 285px !important; height: 54px !important; }
