@@ -91,9 +91,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			'required' => true)
 		));
 		
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], '',
-		array('rows' => 4, 'cols' => 47)
-		));
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], ''));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], '1',
 			$this->get_array_select_type(),

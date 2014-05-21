@@ -72,9 +72,7 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 			'maxlength' => 25, 'required' => true)
 		));
 		
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['streams.description'], '',
-		array('rows' => 4, 'cols' => 47)
-		));
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['streams.description'], ''));
 				
 		$fieldset->add_field(new FormFieldUploadFile('picture', $this->lang['streams.picture'], '/newsletter/newsletter.png'));
 	
