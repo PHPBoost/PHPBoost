@@ -80,7 +80,7 @@ div.search-field { text-align: center; }
 
 select.search-field { width: 300px; }
 
-select.list_modules { min-width: 200px; }
+select.list-modules { min-width: 200px; }
 
 div.resultsChoices {
 	position: relative;
