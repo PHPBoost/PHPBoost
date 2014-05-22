@@ -135,6 +135,11 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	abstract protected function generate_response(View $view);
 	
 	/**
+	 * @return string Page title
+	 */
+	abstract protected function get_title();
+	
+	/**
 	 * @return CategoriesManager
 	 */
 	abstract protected function get_categories_manager();

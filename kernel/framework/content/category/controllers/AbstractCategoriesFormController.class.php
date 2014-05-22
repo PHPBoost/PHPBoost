@@ -79,7 +79,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('category', $this->lang['category']);
+		$fieldset = new FormFieldsetHTML('category', $this->get_title());
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['category.form.name'], $this->get_category()->get_name(), array('required' => true)));
@@ -223,6 +223,11 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	 * @return Response
 	 */
 	abstract protected function generate_response(View $view);
+	
+	/**
+	 * @return string Page title
+	 */
+	abstract protected function get_title();
 	
 	/**
 	 * @return CategoriesManager
