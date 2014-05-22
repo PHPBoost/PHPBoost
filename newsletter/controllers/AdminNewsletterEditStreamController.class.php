@@ -43,7 +43,7 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 		
 		if (!$this->categorie_exist($id) || $id == 0)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('admin.stream-not-existed', 'common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 
@@ -65,7 +65,7 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
+		$this->lang = LangLoader::get('common', 'newsletter');
 	}
 
 	private function build_form($id)

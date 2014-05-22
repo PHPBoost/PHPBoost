@@ -56,7 +56,7 @@ class NewsletterArchivesController extends ModuleController
 		
 		if (!NewsletterStreamsCache::load()->get_existed_stream($this->id_stream))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('admin.stream-not-existed', 'common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 		
@@ -133,7 +133,7 @@ class NewsletterArchivesController extends ModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
+		$this->lang = LangLoader::get('common', 'newsletter');
 		$this->view = new FileTemplate('newsletter/NewsletterArchivesController.tpl');
 		$this->view->add_lang($this->lang);
 	}

@@ -32,7 +32,7 @@ class NewsletterTreeLinks implements ModuleTreeLinksExtensionPoint
 {
 	public function get_actions_tree_links()
 	{
-		$lang = LangLoader::get('newsletter_common', 'newsletter');
+		$lang = LangLoader::get('common', 'newsletter');
 		$tree = new ModuleTreeLinks();
 		
 		$manage_newsletter_link = new AdminModuleLink($lang['newsletter.streams.manage'], NewsletterUrlBuilder::streams());

@@ -42,7 +42,7 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
     	$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
 	    MenuService::assign_positions_conditions($tpl, $this->get_block());
 	    
-	    $lang = LangLoader::get('newsletter_common', 'newsletter');
+	    $lang = LangLoader::get('common', 'newsletter');
 	    $tpl->put_all(array(
 	    	'SUBSCRIBE' => $lang['newsletter.subscribe_newsletters'],
 	    	'UNSUBSCRIBE' => $lang['newsletter.unsubscribe_newsletters'],

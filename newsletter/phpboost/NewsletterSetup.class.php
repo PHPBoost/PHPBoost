@@ -135,7 +135,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	
 	private function create_field_member()
 	{
-		$lang = LangLoader::get('newsletter_common', 'newsletter');
+		$lang = LangLoader::get('common', 'newsletter');
 		
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['extended_fields.newsletter.name']);

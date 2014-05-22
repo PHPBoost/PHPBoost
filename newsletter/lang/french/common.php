@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             newsletter_common.php
+ *                             common.php
  *                            -------------------
  *   begin                :  March 11, 2011
  *   copyright            : (C) 2011 MASSY Kevin

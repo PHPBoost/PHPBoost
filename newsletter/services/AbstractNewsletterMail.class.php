@@ -35,7 +35,7 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	
 	public function __construct()
 	{
-		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
+		$this->lang = LangLoader::get('common', 'newsletter');
 		$this->querier = PersistenceContext::get_querier();
 	}
 	

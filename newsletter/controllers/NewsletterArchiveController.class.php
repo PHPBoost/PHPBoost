@@ -59,7 +59,7 @@ class NewsletterArchiveController extends ModuleController
 	
 	private function init($request)
 	{
-		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
+		$this->lang = LangLoader::get('common', 'newsletter');
 		$this->build_form($request);
 		$this->view = new StringTemplate($this->contents);
 		$this->view->add_lang($this->lang);

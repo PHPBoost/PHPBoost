@@ -32,7 +32,7 @@ class NewsletterService
 	
 	public static function __static()
 	{
-		self::$lang = LangLoader::get('newsletter_common', 'newsletter');
+		self::$lang = LangLoader::get('common', 'newsletter');
 		self::$errors = '';
 	}
 	

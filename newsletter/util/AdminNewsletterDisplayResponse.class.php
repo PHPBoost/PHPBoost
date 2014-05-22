@@ -31,7 +31,7 @@ class AdminNewsletterDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 
-		$lang = LangLoader::get('newsletter_common', 'newsletter');
+		$lang = LangLoader::get('common', 'newsletter');
 		$picture = '/newsletter/newsletter.png';
 		$this->set_title($lang['newsletter']);
 		$this->add_link($lang['newsletter.streams'], NewsletterUrlBuilder::streams(), $picture);
