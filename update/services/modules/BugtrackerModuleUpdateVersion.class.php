@@ -43,6 +43,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		$this->update_bugtracker_table();
 		$this->create_bugtracker_users_filters_table();
 		$this->update_comments();
+		$this->delete_old_files();
 	}
 	
 	private function update_config()
@@ -99,6 +100,38 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 				array('id_in_module' => $row['id'], 'module_id' => 'bugtracker')
 			);
 		}
+	}
+	
+	private function delete_old_files()
+	{
+		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/english/' . $this->module_id . '_config.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/english/' . $this->module_id . '_english.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/french/' . $this->module_id . '_config.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/french/' . $this->module_id . '_french.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '_authorizations.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/' . $this->module_id . '.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/' . $this->module_id . '_search_form.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/admin_' . $this->module_id . '.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/admin_' . $this->module_id . '_authorizations.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/' . $this->module_id . '.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/' . $this->module_id . '_begin.php'));
+		$file->delete();
+		
+		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/templates/images'));
+		if ($folder->exists())
+			$folder->delete();
 	}
 }
 ?>

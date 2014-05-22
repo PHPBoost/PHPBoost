@@ -42,6 +42,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		$this->update_articles_table();
 		$this->update_cats_table();
 		$this->update_comments();
+		$this->delete_old_files();
 	}
 	
 	private function update_articles_table()
@@ -114,6 +115,70 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 				array('id_in_module' => $row['id'], 'module_id' => 'articles')
 			);
 		}
+	}
+	
+	private function delete_old_files()
+	{
+		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/english/' . $this->module_id . '_english.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/french/' . $this->module_id . '_french.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/phpboost/ArticlesCats.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/images/articles.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/images/contentbg.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/images/folder.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/images/msg_top_row.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/images/notes.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/images/views.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '_cat.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '_config.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '_menu.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/' . $this->module_id . '.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/' . $this->module_id . '_cat.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/management.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/admin_' . $this->module_id . '.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/admin_' . $this->module_id . '_cat.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/admin_' . $this->module_id . '_config.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/admin_' . $this->module_id . '_menu.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/' . $this->module_id . '.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/' . $this->module_id . '_begin.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/' . $this->module_id . '_constants.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/carousel.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/management.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/print.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/xmlhttprequest.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/xmlhttprequest_cats.php'));
+		$file->delete();
+		
+		$folder = new Folder(Url::to_rel('/' . $this->module_id . '/templates/framework'));
+		if ($folder->exists())
+			$folder->delete();
 	}
 }
 ?>
