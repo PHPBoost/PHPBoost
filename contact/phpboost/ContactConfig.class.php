@@ -236,7 +236,7 @@ class ContactConfig extends AbstractConfigData
 		$field->set_name(TextHelper::htmlspecialchars($lang['contact_recipients']));
 		$field->set_field_name('f_recipients');
 		$field->set_field_type('ContactSimpleSelectField');
-		$field->set_possible_values(array('admins' => array('is_default' => true, 'title' => $lang['contact_recipients_admins'], 'email' => implode(';', MailServiceConfig::load()->get_administrators_mails()))));
+		$field->set_possible_values(array('admins' => array('is_default' => true, 'title' => $lang['contact_recipients_admins'], 'email' => '')));
 		$field->not_deletable();
 		$field->not_displayed();
 		
