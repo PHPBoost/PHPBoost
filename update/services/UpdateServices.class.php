@@ -179,6 +179,15 @@ class UpdateServices
 		
 		Environment::try_to_increase_max_execution_time();
 
+		//Change timezone
+		PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER .' CHANGE user_timezone user_timezone VARCHAR(50)');
+		
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_timezone' => 'Europe/Paris'), 'WHERE 1');
+		
+		$general_config = GeneralConfig::load();
+		$general_config->set_site_timezone('Europe/Paris');
+		GeneralConfig::save();
+		
 		$general_config = GeneralConfig::load();
 		//$general_config->set_site_path('/trunk');
 		$general_config->set_phpboost_major_version('4.1');
@@ -246,16 +255,7 @@ class UpdateServices
 		$columns = PersistenceContext::get_dbms_utils()->desc_table(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST);
 		if (!isset($columns['default_value']))
 			PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST .' CHANGE default_values default_value TEXT');
-		
-		//Change timezone
-		PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER .' CHANGE user_timezone user_timezone VARCHAR(50)');
-		
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_timezone' => 'Europe/Paris'), 'WHERE 1');
-		
-		$general_config = GeneralConfig::load();
-		$general_config->set_site_timezone('Europe/Paris');
-		GeneralConfig::save();
-		
+				
 		if (!in_array(PREFIX . 'forum_ranks', $tables))
 			PersistenceContext::get_querier()->inject('RENAME TABLE '. PREFIX .'ranks' .' TO '. PREFIX .'forum_ranks');
 		
