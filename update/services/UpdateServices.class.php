@@ -738,7 +738,7 @@ class UpdateServices
 	
 	private function delete_old_files_connect()
 	{
-		$file = new File(Url::to_rel('/connect/templates/index.php'));
+		$file = new File(Url::to_rel('/connect/index.php'));
 		$file->delete();
 		
 		$folder = new Folder(Url::to_rel('/connect/templates/images'));
@@ -750,11 +750,11 @@ class UpdateServices
 	{
 		$file = new File(Url::to_rel('/images/avatars/index.php'));
 		$file->delete();
-		$file = new File(Url::to_rel('/images/avatars/customization.php'));
+		$file = new File(Url::to_rel('/images/customization/index.php'));
 		$file->delete();
-		$file = new File(Url::to_rel('/images/avatars/group.php'));
+		$file = new File(Url::to_rel('/images/group/index.php'));
 		$file->delete();
-		$file = new File(Url::to_rel('/images/avatars/math.php'));
+		$file = new File(Url::to_rel('/images/maths/index.php'));
 		$file->delete();
 		$file = new File(Url::to_rel('/images/smileys/angry.gif'));
 		$file->delete();
@@ -814,7 +814,7 @@ class UpdateServices
 		$file->delete();
 		$file = new File(Url::to_rel('/images/smileys/top.gif'));
 		$file->delete();
-		$file = new File(Url::to_rel('/images/smileys/wow.gif'));
+		$file = new File(Url::to_rel('/images/smileys/waw.gif'));
 		$file->delete();
 		$file = new File(Url::to_rel('/images/stats/index.php'));
 		$file->delete();
@@ -858,9 +858,9 @@ class UpdateServices
 		$file->delete();
 		$file = new File(Url::to_rel('/kernel/framework/functions.inc.php'));
 		$file->delete();
-		$file = new File(Url::to_rel('/kernel/lib/phpboost/bbcode.js'));
+		$file = new File(Url::to_rel('/kernel/lib/js/phpboost/bbcode.js'));
 		$file->delete();
-		$file = new File(Url::to_rel('/kernel/lib/phpboost/global.js'));
+		$file = new File(Url::to_rel('/kernel/lib/js/phpboost/global.js'));
 		$file->delete();
 		$file = new File(Url::to_rel('/kernel/css_cache.php'));
 		$file->delete();
@@ -976,6 +976,8 @@ class UpdateServices
 		$file = new File(Url::to_rel('/templates/default/framework/confirm.tpl'));
 		$file->delete();
 		$file = new File(Url::to_rel('/templates/default/framework/fatal.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/lightbox/blank.gif'));
 		$file->delete();
 		$file = new File(Url::to_rel('/templates/default/images/lightbox/closelabel.gif'));
 		$file->delete();

@@ -142,11 +142,11 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		$file->delete();
 		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/images/views.png'));
 		$file->delete();
-		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '.tpl'));
-		$file->delete();
 		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '_cat.tpl'));
 		$file->delete();
 		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '_config.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '_management.tpl'));
 		$file->delete();
 		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '_menu.tpl'));
 		$file->delete();
