@@ -895,7 +895,128 @@ class UpdateServices
 	
 	private function delete_old_files_templates()
 	{
-		/* A compléter */
+		//Theme base
+		$file = new File(Url::to_rel('/templates/base/theme/images/bg.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/theme/images/bgmenu.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/theme/images/bgmenu_extend.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/theme/images/bg_link_menu.jpg'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/theme/images/border.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/theme/images/border_bottom.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/theme/images/border_right.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/theme/images/bouton.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/theme/images/global.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/theme/images/li.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/theme/generic.css'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/theme/print.css'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/footer.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/header.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/base/index.php'));
+		$file->delete();
+		
+		$folder = new Folder(Url::to_rel('/templates/base/config'));
+		if ($folder->exists())
+			$folder->delete();
+		
+		//Suppression de toutes les images du theme base sauf no_avatar.png
+		$folder = new Folder(Url::to_rel('/templates/base/images'));
+		if ($folder->exists())
+		{
+			rename(Url::to_rel('/templates/base/images/no_avatar.png'), Url::to_rel('/templates/base/no_avatar.png'));
+			$folder->delete();
+			$folder->create();
+			rename(Url::to_rel('/templates/base/no_avatar.png'), Url::to_rel('/templates/base/images/no_avatar.png'));
+		}
+		
+		//Default
+		$file = new File(Url::to_rel('/templates/default/admin/menus/error.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_content_config.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_errors_management.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_footer.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_header.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_members_management.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_members_punishment.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_ranks.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/admin/admin_ranks_add.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/content/syndication/syndication.css'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/util/captcha.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/confirm.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/framework/fatal.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/lightbox/closelabel.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/drag.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/important.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/li.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/move_bot.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/move_top.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/notice.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/question.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/stop.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/images/success.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/theme/images/bg.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/theme/images/bgmenu.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/theme/images/bgmenu_extend.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/theme/images/bouton.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/theme/images/global.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/theme/images/li.png'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/theme/admin_bbcode.css'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/theme/admin_default.css'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/theme/admin_generic.css'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/default/index.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/templates/index.php'));
+		$file->delete();
+		
+		$folder = new Folder(Url::to_rel('/templates/default/framework/content/search'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/templates/default/framework/content/sitemap'));
+		if ($folder->exists())
+			$folder->delete();
 	}
 	
 	private function delete_old_files_user()
