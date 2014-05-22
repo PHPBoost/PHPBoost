@@ -28,11 +28,13 @@
 class ShoutboxModuleUpdateVersion extends ModuleUpdateVersion
 {
 	private $querier;
+	private $db_utils;
 	
 	public function __construct()
 	{
 		parent::__construct('shoutbox');
 		$this->querier = PersistenceContext::get_querier();
+		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
