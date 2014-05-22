@@ -170,6 +170,7 @@ class InstallationServices
 		$user->set_locale($locale);
 		AppContext::set_current_user($user);
 		$this->save_general_config($server_url, $server_path, $site_name, $site_slogan, $site_desc, $site_keyword, $site_timezone);
+		$this->save_server_environnement_config();
 		$this->init_graphical_config();
 		$this->init_debug_mode();
 		$this->init_user_accounts_config($locale);
@@ -190,6 +191,18 @@ class InstallationServices
 		$general_config->set_site_install_date(new Date());
 		$general_config->set_site_timezone($site_timezone);
 		GeneralConfig::save();
+	}
+
+	private function save_server_environnement_config()
+	{
+		$server_configuration = new ServerConfiguration();
+		
+		if ($server_configuration->has_url_rewriting())
+		{
+			$server_environnement_config = ServerEnvironmentConfig::load();
+			$server_environnement_config->set_url_rewriting_enabled(true);
+			ServerEnvironmentConfig::save();
+		}
 	}
 
 	private function init_graphical_config()
