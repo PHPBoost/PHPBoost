@@ -1,0 +1,46 @@
+#connect-menu div.horizontal-fieldset {
+	text-align: right;
+	padding: 4px 8px 0px 0px;
+}
+
+#connect-menu div.vertical-fieldset,
+#connect-menu div.horizontal-fieldset { margin: 0px; }
+
+#connect-menu div.vertical-fieldset form { margin-bottom: 10px; }
+#connect-menu div.horizontal-fieldset form { display: inline-block; }
+
+ul.connect-content {
+	margin: auto;
+	padding-top: 3px;
+}
+
+#connect-menu div.vertical-fieldset ul li,
+#connect-menu div.horizontal-fieldset ul li { list-style-type: none; }
+
+#connect-menu div.horizontal-fieldset ul.connect-content li {
+	display: inline-block;
+	margin-right: 10px;
+}
+#connect-menu div.horizontal-fieldset ul.connect-content li::last-child { margin-right: 0px; }
+
+#connect-menu div.vertical-fieldset ul.connect-content li > i{ 
+	width: 18px;
+	text-align: center;
+}
+
+#connect-menu div.horizontal-fieldset ul li,
+#connect-menu div.horizontal-fieldset ul li a { color: #FFFFFF; }
+#connect-menu div.horizontal-fieldset ul li > i{ vertical-align: 0px; }
+
+#connect-menu div.vertical-fieldset label { 
+	text-align: center;
+	padding-right: 0px;
+}
+#connect-menu div.vertical-fieldset ul.connect-content { text-align: left; }
+#connect-menu div.horizontal-fieldset ul.connect-content { text-align: center; }
+ 
+div.connect-register i { vertical-align: -1px; }
+
+#connect-menu div.vertical-fieldset input#login, 
+#connect-menu div.vertical-fieldset input#password { width: 120px; }
+#connect-menu div.vertical-fieldset button { margin: 5px 0px; }

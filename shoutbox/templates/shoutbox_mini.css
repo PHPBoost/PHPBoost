@@ -1,0 +1,22 @@
+/* Conteneur des messages de la shoutbox.*/
+div#shout-container, 
+.shout-horizontal div#shout-container{
+	width: 142px;
+	height: 150px;
+	overflow: auto;
+	text-align: left;
+	margin: auto;
+	word-wrap: break-word;
+}
+
+.shout-horizontal div#shout-container{
+	width: auto;
+	padding-left: 15px;
+}
+
+.shout-horizontal { width: auto; }
+
+.shout-spacing {
+	margin: 0;
+	margin-bottom: 10px;
+}
