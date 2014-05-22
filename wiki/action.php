@@ -311,7 +311,7 @@ elseif ($del_archive > 0)
 	$contents_infos = $Sql->query_array(PREFIX . "wiki_contents", "activ", "id_article", "WHERE id_contents = '" . $del_archive . "'", __LINE__, __FILE__);
 	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "auth", "WHERE id = '" . $contents_infos['id_article'] . "'", __LINE__, __FILE__);
 	
-	$general_auth = empty($article_infos['auth']) ? true : false;
+	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 
 	if (!((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE))))
@@ -320,9 +320,9 @@ elseif ($del_archive > 0)
 		DispatchManager::redirect($error_controller);
 	} 
 	
-	if ($is_activ == 0) //C'est une archive -> on peut supprimer
+	if ($contents_infos['activ'] == 0) //C'est une archive -> on peut supprimer
 		$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_contents = '" . $del_archive . "'", __LINE__, __FILE__);
-	if (!empty($article_infos['encoded_title'])) //on redirige vees l'article
+	if (!empty($article_infos['encoded_title'])) //on redirige vers l'article
 		AppContext::get_response()->redirect('/wiki/' . url('history.php?id=' . $contents_infos['id_article'], '', '&'));
 }
 elseif ($del_article > 0) //Suppression d'un article
