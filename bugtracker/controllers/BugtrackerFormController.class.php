@@ -509,7 +509,7 @@ class BugtrackerFormController extends ModuleController
 							break;
 						
 						case 'reproductible': 
-							$new_value = $new_values[$field] ? $main_lang['yes'] : $main_lang['no'];
+							$new_value = $n_values[$field] ? $main_lang['yes'] : $main_lang['no'];
 							break;
 						
 						default:
