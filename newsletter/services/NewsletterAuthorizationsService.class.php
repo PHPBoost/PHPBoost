@@ -174,7 +174,7 @@ class NewsletterAuthorizationsService
 	
 	private function get_error($authorizations_type)
 	{
-		$lang = LangLoader::get('newsletter_common', 'newsletter');
+		$lang = LangLoader::get('common', 'newsletter');
 		switch ($authorizations_type) {
 			case self::AUTH_READ:
 				$error_message = $lang['errors.not_authorized_read'];

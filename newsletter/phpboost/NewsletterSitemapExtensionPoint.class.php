@@ -39,7 +39,7 @@ class NewsletterSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		$lang = LangLoader::get('newsletter_common', 'newsletter');
+		$lang = LangLoader::get('common', 'newsletter');
 		
 		$link = new SitemapLink($lang['newsletter'], NewsletterUrlBuilder::home(), Sitemap::FREQ_MONTHLY, Sitemap::PRIORITY_MAX);
 		$module_map = new ModuleMap($link, 'newsletter');

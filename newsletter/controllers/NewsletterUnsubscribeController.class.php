@@ -52,7 +52,7 @@ class NewsletterUnSubscribeController extends ModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
+		$this->lang = LangLoader::get('common', 'newsletter');
 	}
 	
 	private function build_form()

@@ -123,7 +123,7 @@ class NewsletterSubscribersListController extends ModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
+		$this->lang = LangLoader::get('common', 'newsletter');
 		$this->view = new FileTemplate('newsletter/NewsletterSubscribersListController.tpl');
 		$this->view->add_lang($this->lang);
 		$this->user = AppContext::get_current_user();
