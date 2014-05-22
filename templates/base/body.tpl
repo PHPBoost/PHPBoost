@@ -85,7 +85,7 @@
 		</div>
 		# ENDIF #
 		
-		<div class="push"></div>
+		<div class="spacer"></div>
 	</div>
 	<footer id="footer">
 		# IF C_MENUS_FOOTER_CONTENT #

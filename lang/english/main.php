@@ -80,7 +80,7 @@ $LANG['pseudo'] = 'Nickname';
 $LANG['message'] = 'Message';
 $LANG['message_s'] = 'Messages';
 
-$LANG['require'] = 'The fields marked with an * are required !';
+$LANG['require'] = 'The fields marked with a * are required !';
 $LANG['required_field'] = 'The field \"%s\" is required !';
 
 //Alert Form
@@ -359,7 +359,7 @@ $LANG['user_alternative_pm'] = 'Private message sent to the member <span class="
 $LANG['punishment'] = 'Punishment';
 $LANG['punishment_management'] = 'Punishment management';
 $LANG['user_punish_until'] = 'Punishment until';
-$LANG['no_punish'] = 'No members punished';
+$LANG['no_punish'] = 'No punished user';
 $LANG['user_readonly_explain'] = 'User is in read only, he can read but can\'t post on the whole website (comments, etc...)';
 $LANG['weeks'] = 'weeks';
 $LANG['life'] = 'Life';

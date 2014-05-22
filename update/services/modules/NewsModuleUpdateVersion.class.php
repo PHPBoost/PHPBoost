@@ -46,6 +46,8 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		
 	private function update_news_table()
 	{
+		$columns = $this->db_utils->desc_table(PREFIX . 'news');
+		
 		$rows_change = array(
 			'idcat' => 'id_category INT(11)',
 			'title' => 'name VARCHAR(100)',
@@ -60,15 +62,21 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		
 		foreach ($rows_change as $old_name => $new_name)
 		{
-			$this->querier->inject('ALTER TABLE '. PREFIX .'news' .' CHANGE '. $old_name .' '. $new_name);
+			if (isset($columns[$old_name]))
+				$this->querier->inject('ALTER TABLE '. PREFIX .'news' .' CHANGE '. $old_name .' '. $new_name);
 		}
-
-		$this->db_utils->drop_column(PREFIX .'news', 'alt');
-		$this->db_utils->drop_column(PREFIX .'news', 'compt');
 		
-		$this->db_utils->add_column(PREFIX .'news', 'rewrited_name', array('type' => 'string', 'length' => 250, 'default' => "''"));
-		$this->db_utils->add_column(PREFIX .'news', 'updated_date', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
-		$this->db_utils->add_column(PREFIX .'news', 'top_list_enabled', array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0));
+		if (isset($columns['alt']))
+			$this->db_utils->drop_column(PREFIX .'news', 'alt');
+		if (isset($columns['compt']))
+			$this->db_utils->drop_column(PREFIX .'news', 'compt');
+		
+		if (!isset($columns['rewrited_name']))
+			$this->db_utils->add_column(PREFIX .'news', 'rewrited_name', array('type' => 'string', 'length' => 250, 'default' => "''"));
+		if (!isset($columns['updated_date']))
+			$this->db_utils->add_column(PREFIX .'news', 'updated_date', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
+		if (!isset($columns['top_list_enabled']))
+			$this->db_utils->add_column(PREFIX .'news', 'top_list_enabled', array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0));
 		
 		$result = $this->querier->select_rows(PREFIX .'news', array('id', 'name'));
 		while ($row = $result->fetch())
@@ -81,8 +89,13 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function update_cats_table()
 	{
-		$this->querier->inject('RENAME TABLE '. PREFIX .'news_cat' .' TO '. PREFIX .'news_cats');
-		$this->db_utils->add_column(PREFIX .'news_cats', 'rewrited_name', array('type' => 'string', 'length' => 250, 'default' => "''"));
+		$tables = $this->db_utils->list_tables(true);
+		if (!in_array(PREFIX . 'news_cats', $tables))
+			$this->querier->inject('RENAME TABLE '. PREFIX .'news_cat' .' TO '. PREFIX .'news_cats');
+		
+		$columns = $this->db_utils->desc_table(PREFIX . 'news_cats');
+		if (!isset($columns['rewrited_name']))
+			$this->db_utils->add_column(PREFIX .'news_cats', 'rewrited_name', array('type' => 'string', 'length' => 250, 'default' => "''"));
 	
 		$result = $this->querier->select_rows(PREFIX .'news_cats', array('id', 'name'));
 		while ($row = $result->fetch())
