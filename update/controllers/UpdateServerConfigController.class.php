@@ -79,17 +79,9 @@ class UpdateServerConfigController extends UpdateController
 	{
 		if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate())
 		{
-			if (file_exists(PATH_TO_ROOT . '/kernel/db/config.php'))
+			if (UpdateServices::database_config_file_checked())
 			{
-				@include_once(PATH_TO_ROOT . '/kernel/db/config.php');
-				
-				if (defined('PREFIX') && !empty($db_connection_data))
-				{
-					if (!empty($db_connection_data['host']) && !empty($db_connection_data['login']) && !empty($db_connection_data['database']))
-					{
-						AppContext::get_response()->redirect(UpdateUrlBuilder::update());
-					}
-				}
+				AppContext::get_response()->redirect(UpdateUrlBuilder::update());
 			}
 			AppContext::get_response()->redirect(UpdateUrlBuilder::database());
 		}	

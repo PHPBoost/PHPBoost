@@ -680,5 +680,22 @@ class UpdateServices
 	{
 		$this->token->delete();
 	}
+	
+	public static function database_config_file_checked()
+	{
+		if (file_exists(PATH_TO_ROOT . '/kernel/db/config.php'))
+		{
+			@include_once(PATH_TO_ROOT . '/kernel/db/config.php');
+			
+			if (defined('PREFIX') && !empty($db_connection_data))
+			{
+				if (!empty($db_connection_data['host']) && !empty($db_connection_data['login']) && !empty($db_connection_data['database']))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }
 ?>
