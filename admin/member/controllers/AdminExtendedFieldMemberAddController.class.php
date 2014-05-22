@@ -121,12 +121,9 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			'maxlength' => 25)
 		));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->lang['field.required'], 1,
-			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0)
-			), array('description' => $this->lang['field.required_explain'])
-		));
+		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->lang['field.required'], 0, array(
+			'description' => $this->lang['field.required_explain']
+		)));
 
 		$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['field.possible-values'], array()));
 		
@@ -134,12 +131,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			'width' => 60, 'rows' => 4)
 		));
 
-		$fieldset->add_field(new FormFieldRadioChoice('display', $this->lang['field.display'], 1,
-			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0)
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('display', $this->lang['field.display'], 1));
 
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['field.read_authorizations'], ExtendedField::READ_PROFILE_AUTHORIZATION), new ActionAuthorization($this->lang['field.actions_authorizations'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION)));
 		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 3, 'r-1' => 3));
@@ -285,8 +277,8 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		$extended_fields_class_name = array();
 		foreach ($providers as $name_provider => $properties)
 		{
-			$extended_fiel_extension_point = $properties->get_extension_point(ExtendedFieldExtensionPoint::EXTENSION_POINT);
-			$extended_fields = $extended_fiel_extension_point->get_extended_fields();
+			$extended_fields_extension_point = $properties->get_extension_point(ExtendedFieldExtensionPoint::EXTENSION_POINT);
+			$extended_fields = $extended_fields_extension_point->get_extended_fields();
 			
 			$extended_fields_class_name[$name_provider] = $extended_fields;
 		}
