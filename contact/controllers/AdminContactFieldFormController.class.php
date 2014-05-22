@@ -155,12 +155,7 @@ class AdminContactFieldFormController extends AdminModuleController
 			));
 		}
 		
-		$fieldset->add_field(new FormFieldRadioChoice('field_required', $this->admin_user_common_lang['field.required'], (int)$field->is_required(),
-			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1, array('disable' => $field->is_readonly() && !$field->is_required())),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0, array('disable' => $field->is_readonly() && $field->is_required()))
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->admin_user_common_lang['field.required'], (int)$field->is_required()));
 		
 		if ($field->get_field_name() == 'f_recipients')
 		{
@@ -187,12 +182,7 @@ class AdminContactFieldFormController extends AdminModuleController
 			'rows' => 4, 'cols' => 47)
 		));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('display', $this->admin_user_common_lang['field.display'], (int)$field->is_displayed(),
-			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1, array('disable' => $field->is_readonly() && !$field->is_displayed())),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0, array('disable' => $field->is_readonly() && $field->is_displayed()))
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('display', $this->admin_user_common_lang['field.display'], (int)$field->is_displayed()));
 		
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['admin.authorizations.display_field'], ContactField::DISPLAY_FIELD_AUTHORIZATION)

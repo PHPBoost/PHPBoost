@@ -40,7 +40,7 @@ class ContactField
 	private $field_type;
 	private $default_value;
 	private $possible_values = array();
-	private $required = true;
+	private $required = false;
 	private $displayed = true;
 	private $regex;
 	private $readonly = false;
