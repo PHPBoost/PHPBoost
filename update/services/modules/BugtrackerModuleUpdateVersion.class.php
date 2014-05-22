@@ -39,9 +39,15 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function execute()
 	{
-		$this->update_config();
-		$this->update_bugtracker_table();
-		$this->create_bugtracker_users_filters_table();
+		$tables = $this->db_utils->list_tables(true);
+		
+		if (in_array(PREFIX . 'bugtracker', $tables))
+		{
+			$this->update_config();
+			$this->update_bugtracker_table();
+			$this->create_bugtracker_users_filters_table();
+		}
+		
 		$this->update_comments();
 		$this->delete_old_files();
 	}

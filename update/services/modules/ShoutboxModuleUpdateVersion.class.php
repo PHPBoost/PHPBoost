@@ -27,19 +27,25 @@
 
 class ShoutboxModuleUpdateVersion extends ModuleUpdateVersion
 {
-	private $db_utils;
+	private $querier;
 	
 	public function __construct()
 	{
 		parent::__construct('shoutbox');
+		$this->querier = PersistenceContext::get_querier();
 	}
 	
 	public function execute()
 	{
-		$result = PersistenceContext::get_querier()->select('SELECT id, contents FROM ' . PREFIX . 'shoutbox');
-		while ($row = $result->fetch())
+		$tables = $this->db_utils->list_tables(true);
+		
+		if (in_array(PREFIX . 'shoutbox', $tables))
 		{
-			PersistenceContext::get_querier()->update(PREFIX . 'shoutbox', array('contents' => stripslashes($row['contents'])), 'WHERE id=:id', array('id' => $row['id']));
+			$result = $this->querier->select('SELECT id, contents FROM ' . PREFIX . 'shoutbox');
+			while ($row = $result->fetch())
+			{
+				$this->querier->update(PREFIX . 'shoutbox', array('contents' => stripslashes($row['contents'])), 'WHERE id=:id', array('id' => $row['id']));
+			}
 		}
 	}
 }

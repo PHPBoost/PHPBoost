@@ -41,17 +41,20 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$tables = $this->db_utils->list_tables(true);
 		
-		if (!in_array(PREFIX . 'calendar_events', $tables))
-			$this->create_calendar_events_table();
-		if (!in_array(PREFIX . 'calendar_events_content', $tables))
-			$this->create_calendar_events_content_table();
-		if (!in_array(PREFIX . 'calendar_cats', $tables))
-			$this->create_calendar_cats_table();
-		if (!in_array(PREFIX . 'calendar_users_relation', $tables))
-			$this->create_calendar_users_relation_table();
-		
 		if (in_array(PREFIX . 'calendar', $tables))
+		{
+			if (!in_array(PREFIX . 'calendar_events', $tables))
+				$this->create_calendar_events_table();
+			if (!in_array(PREFIX . 'calendar_events_content', $tables))
+				$this->create_calendar_events_content_table();
+			if (!in_array(PREFIX . 'calendar_cats', $tables))
+				$this->create_calendar_cats_table();
+			if (!in_array(PREFIX . 'calendar_users_relation', $tables))
+				$this->create_calendar_users_relation_table();
+			
 			$this->update_events();
+			$this->delete_old_calendar_table();
+		}
 		
 		$this->update_comments();
 		$this->delete_old_files();
@@ -161,7 +164,10 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 				'parent_id' => 0
 			));
 		}
-		
+	}
+	
+	private function delete_old_calendar_table()
+	{
 		$this->db_utils->drop(array(PREFIX . 'calendar'));
 	}
 	
