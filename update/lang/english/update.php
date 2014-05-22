@@ -45,10 +45,10 @@ $lang = array(
 	'installation.progression' => 'Update progression',
 	'language.change' => 'Change language',
 	'change' => 'Change',
-    'step.previous' => 'Previous step',
-    'step.next' => 'Next step',
-    'yes' => 'Yes',
-    'no' => 'No',
+	'step.previous' => 'Previous step',
+	'step.next' => 'Next step',
+	'yes' => 'Yes',
+	'no' => 'No',
 	'unknown' => 'Unknown',
 	'generatedBy' => 'Powered by %s',
 	'poweredBy' => 'Powered by',
@@ -57,9 +57,12 @@ $lang = array(
 //Introduction
 	'step.welcome.title' => 'Preamble',
 	'step.welcome.message' => 'Welcome to PHPBoost update wizard',
-    'step.introduction.explanation' => '<p>Thank you to have trusted PHPBoost to build your website.<br /><br />
-To install PHPBoost you need to have some informations about your hosting which would be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow to start the installation process.<br /><br />
-Cordially, the PHPBoost Team.</p>',
+	'step.introduction.explanation' => '<p>Thank you to have trusted PHPBoost to build your website.</p>
+<p>To install PHPBoost you need to have some informations about your hosting which would be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow to start the installation process.</p>
+<div class="message-helper-small">
+	<div class="notice">Your site will automatically be placed in maintenance. Consider disabling maintenance when you have verified that everything works properly.</div>
+</div>
+<p>Cordially, the PHPBoost Team.</p>',
 
 //Configuration du serveur
 	'step.server.title' => 'Looking up server configuration...',
@@ -84,14 +87,14 @@ Cordially, the PHPBoost Team.</p>',
 	'folders.chmod.error' => 'Some directories seem to be missing and/or not writable. You need to create the missing directories or make the directories writable.',
 
 //Base de données
-    'step.dbConfig.title' => 'Database settings',
+	'step.dbConfig.title' => 'Database settings',
 	'db.parameters.config' => 'Database connection parameters',
 	'db.parameters.config.explanation' => '<p>This step will generate a configuration file that contains the database settings and database tables will also be created at the same time. If you don\'t know your database settings, you might be able to find them in your host panel or need to ask for them from your host support.</p>',
 	'dbms.parameters' => 'DBMS connection parameters',
 	'dbms.host' => 'Database server hostname or DSN:',
 	'dbms.host.explanation' => 'Database managing system server URL, often <em>localhost</em>',
-    'dbms.port' => 'Database port',
-    'dbms.port.explanation' => 'Database server port, <em>3306</em> most of the time.',
+	'dbms.port' => 'Database port',
+	'dbms.port.explanation' => 'Database server port, <em>3306</em> most of the time.',
 	'dbms.login' => 'Database username',
 	'dbms.login.explanation' => 'Provided by your host',
 	'dbms.password' => 'Database password',
@@ -123,44 +126,44 @@ Cordially, the PHPBoost Team.</p>',
 	Warning this step is irreversible, as a precaution please backup your data first !',
 	
 	'finish.message' => '<fieldset>
-                            <legend>PHPBoost is now updated and ready to run !</legend>
-                            <p class="success">The update of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
-                            <p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.org">www.phpboost.org</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
-                            <p class="warning">For security reasons we also recommand you to delete the installation folder and all its contents, hackers could manage to run the installation script and you could lose data !</p>
-                            <p>Don\'t forget the <a href="http://www.phpboost.org/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.org/faq/faq.php"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
-                            <p>If you have any problem please go to the <a href="http://www.phpboost.org/forum/">support forum of PHPBoost</a>.</p>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Thanks</legend>
-                            <h2>Members</h2>
-                            <p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 4.1.</p>
-                            <p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>ElenWii</strong>, <strong>Teki</strong> and <strong>babsolune</strong> for the graphics, <strong>julienseth78</strong> and <strong>DaaX</strong> for the modules development and <strong>benflovideo</strong> for the moderation of the community.</p>
-                            <h2>Other projects</h2>
-                            <p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
-                            <ul>
-                                <li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Very powerful text editor used for the whole development, thanks a lot !</li>
-                                <li><a href="http://www.eclipse.org/pdt/">Eclipse <acronym title="PHP Development Tools">PDT</acronym></a> : Eclipse based PHP <acronym title="Integrated Development Environment">IDE</acronym> (development tool).</li>
-                                <li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Icon set used in the whole interface.</li>
-                                <li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
-                                <li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
-                                <li><a href="http://tinymce.moxiecode.com/">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
-                                <li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
-                                <li><a href="http://script.aculo.us/">script.aculo.us</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
-                                <li><a href="http://www.alsacreations.fr/mp3-dewplayer.html">Dewplayer</a> : flash audio reader</li>
-                                <li><a href="http://flowplayer.org">Flowplayer</a> : flash video reader</li>
-                                <li><a href="http://fontawesome.io">Font Awesome</a> : icons librairy</li>
-                            </ul>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Credits</legend>
-                            <ul>
-                                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
-                                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
-                                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
-                                <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer</li>
-                                <li><strong>Julien BRISWALTER</strong> <em>(alias julienseth78)</em>, developer</li>
-                            </ul>
-                        </fieldset>',
+							<legend>PHPBoost is now updated and ready to run !</legend>
+							<p class="success">The update of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
+							<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.org">www.phpboost.org</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
+							<p class="warning">For security reasons we also recommand you to delete the installation folder and all its contents, hackers could manage to run the installation script and you could lose data !</p>
+							<p>Don\'t forget the <a href="http://www.phpboost.org/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.org/faq/faq.php"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
+							<p>If you have any problem please go to the <a href="http://www.phpboost.org/forum/">support forum of PHPBoost</a>.</p>
+						</fieldset>
+						<fieldset>
+							<legend>Thanks</legend>
+							<h2>Members</h2>
+							<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 4.1.</p>
+							<p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>ElenWii</strong>, <strong>Teki</strong> and <strong>babsolune</strong> for the graphics, <strong>julienseth78</strong> and <strong>DaaX</strong> for the modules development and <strong>benflovideo</strong> for the moderation of the community.</p>
+							<h2>Other projects</h2>
+							<p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
+							<ul>
+								<li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Very powerful text editor used for the whole development, thanks a lot !</li>
+								<li><a href="http://www.eclipse.org/pdt/">Eclipse <acronym title="PHP Development Tools">PDT</acronym></a> : Eclipse based PHP <acronym title="Integrated Development Environment">IDE</acronym> (development tool).</li>
+								<li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Icon set used in the whole interface.</li>
+								<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
+								<li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
+								<li><a href="http://tinymce.moxiecode.com/">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
+								<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
+								<li><a href="http://script.aculo.us/">script.aculo.us</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
+								<li><a href="http://www.alsacreations.fr/mp3-dewplayer.html">Dewplayer</a> : flash audio reader</li>
+								<li><a href="http://flowplayer.org">Flowplayer</a> : flash video reader</li>
+								<li><a href="http://fontawesome.io">Font Awesome</a> : icons librairy</li>
+							</ul>
+						</fieldset>
+						<fieldset>
+							<legend>Credits</legend>
+							<ul>
+								<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
+								<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
+								<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
+								<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer</li>
+								<li><strong>Julien BRISWALTER</strong> <em>(alias julienseth78)</em>, developer</li>
+							</ul>
+						</fieldset>',
 	'site.index' => 'Go to the website',
 	'admin.index' => 'Go to the administration panel'
 );

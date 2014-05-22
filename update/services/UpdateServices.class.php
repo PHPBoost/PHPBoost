@@ -179,6 +179,8 @@ class UpdateServices
 		
 		Environment::try_to_increase_max_execution_time();
 		
+		$this->put_site_under_maintenance();
+		
 		$this->delete_old_files();
 		
 		//Change timezone
@@ -191,7 +193,6 @@ class UpdateServices
 		GeneralConfig::save();
 		
 		$general_config = GeneralConfig::load();
-		//$general_config->set_site_path('/trunk');
 		$general_config->set_phpboost_major_version('4.1');
 		GeneralConfig::save();
 		
@@ -284,7 +285,15 @@ class UpdateServices
 		$this->delete_update_token();
 		$this->generate_cache();
 	}
-		
+	
+	public function put_site_under_maintenance()
+	{
+		$maintenance_config = MaintenanceConfig::load();
+		$maintenance_config->enable_maintenance();
+		$maintenance_config->set_unlimited_maintenance(true);
+		MaintenanceConfig::save();
+	}
+	
 	public function update_modules()
 	{
 		$update_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern);
