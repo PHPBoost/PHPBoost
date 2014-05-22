@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       ThemeSwitcherModuleUpdateVersion.class.php
+ *                       LangsSwitcherModuleUpdateVersion.class.php
  *                            -------------------
  *   begin                : May 22, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -25,11 +25,11 @@
  *
  ###################################################*/
 
-class ThemeSwitcherModuleUpdateVersion extends ModuleUpdateVersion
+class LangsSwitcherModuleUpdateVersion extends ModuleUpdateVersion
 {
 	public function __construct()
 	{
-		parent::__construct('ThemeSwitcher');
+		parent::__construct('LangsSwitcher');
 	}
 	
 	public function execute()
