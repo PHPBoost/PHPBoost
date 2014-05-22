@@ -178,7 +178,9 @@ class UpdateServices
 		$this->get_update_token();
 		
 		Environment::try_to_increase_max_execution_time();
-
+		
+		$this->delete_old_files();
+		
 		//Change timezone
 		PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER .' CHANGE user_timezone user_timezone VARCHAR(50)');
 		
@@ -696,6 +698,212 @@ class UpdateServices
 			}
 		}
 		return false;
+	}
+	
+	private function delete_old_files()
+	{
+		$this->delete_old_files_admin();
+		$this->delete_old_files_connect();
+		$this->delete_old_files_images();
+		$this->delete_old_files_kernel();
+		$this->delete_old_files_lang();
+		$this->delete_old_files_templates();
+		$this->delete_old_files_user();
+	}
+	
+	private function delete_old_files_admin()
+	{
+		$file = new File(Url::to_rel('/admin/admin_content_config.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/admin/admin_errors.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/admin/admin_members.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/admin/admin_members_punishment.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/admin/admin_ranks.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/admin/admin_ranks_add.php'));
+		$file->delete();
+	}
+	
+	private function delete_old_files_connect()
+	{
+		$file = new File(Url::to_rel('/connect/templates/index.php'));
+		$file->delete();
+		
+		$folder = new Folder(Url::to_rel('/connect/templates/images'));
+		if ($folder->exists())
+			$folder->delete();
+	}
+	
+	private function delete_old_files_images()
+	{
+		$file = new File(Url::to_rel('/images/avatars/index.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/avatars/customization.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/avatars/group.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/avatars/math.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/angry.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/berk.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/clap.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/clindoeil.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/colere.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/content.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/doute.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/hehe.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/heink.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/heureux.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/incertain.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/index.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/lol.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/love.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/lu.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/malheureux.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/mat.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/miam.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/nex.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/nuit.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/pinch.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/plus1.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/rire.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/siffle.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/snif.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/sourire.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/star.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/tirelangue.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/top.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/smileys/wow.gif'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/stats/index.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/images/index.php'));
+		$file->delete();
+	}
+	
+	private function delete_old_files_kernel()
+	{
+		$file = new File(Url::to_rel('/kernel/framework/ajax/captcha.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/ajax/stats_xmlhttprequest.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/content/category/CategoryTree.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/content/category/CategoryTreeCache.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/content/category/CategoryTreeManager.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/content/search/Search.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/content/CategoriesManager.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/helper/BooleanHelper.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/cache/RanksCache.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/deprecated/DeprecatedPagination.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/langs/LangManager.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/module/css/CssFilesExtensionPointService.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/theme/ThemeManager.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/util/ImagesStats.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/util/Pagination.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/util/PHPBoostCaptcha.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/functions.inc.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/lib/phpboost/bbcode.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/lib/phpboost/global.js'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/css_cache.php'));
+		$file->delete();
+		
+		$folder = new Folder(Url::to_rel('/kernel/framework/phpboost/module/homepage'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/kernel/lib/js/lightbox'));
+		if ($folder->exists())
+			$folder->delete();
+		$folder = new Folder(Url::to_rel('/kernel/lib/js/scriptaculous'));
+		if ($folder->exists())
+			$folder->delete();
+	}
+	
+	private function delete_old_files_lang()
+	{
+		$file = new File(Url::to_rel('/lang/english/classes/AdminErrorsController404List.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/english/admin-extended-fields-common.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/english/admin-members-common.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/english/errors-common.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/english/index.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/french/classes/AdminErrorsController404List.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/french/admin-extended-fields-common.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/french/admin-members-common.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/french/errors-common.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/french/index.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/index.php'));
+		$file->delete();
+	}
+	
+	private function delete_old_files_templates()
+	{
+		/* A compléter */
+	}
+	
+	private function delete_old_files_user()
+	{
+		$file = new File(Url::to_rel('/user/util/UserCommentsListPagination.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/user/util/UserUsersListPagination.class.php'));
+		$file->delete();
 	}
 }
 ?>
