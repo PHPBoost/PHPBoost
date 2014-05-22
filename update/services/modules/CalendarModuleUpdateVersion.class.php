@@ -54,6 +54,7 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 			$this->update_events();
 		
 		$this->update_comments();
+		$this->delete_old_files();
 	}
 	
 	private function create_calendar_events_table()
@@ -180,6 +181,26 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 				array('id_in_module' => $row['id'], 'module_id' => 'calendar')
 			);
 		}
+	}
+	
+	private function delete_old_files()
+	{
+		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/english/' . $this->module_id . '_english.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/lang/french/' . $this->module_id . '_french.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/admin_' . $this->module_id . '_config.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/templates/' . $this->module_id . '.tpl'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/admin_' . $this->module_id . '.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/' . $this->module_id . '.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/' . $this->module_id . '_begin.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/' . $this->module_id . '_constants.php'));
+		$file->delete();
 	}
 }
 ?>
