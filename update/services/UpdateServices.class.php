@@ -299,7 +299,7 @@ class UpdateServices
 				$success = false;
 				$message = $e->getMessage();
 			}
-			$this->add_error_to_file($object->get_module_id() . '_module', $success, $message);
+			$this->add_error_to_file('module ' . $object->get_module_id(), $success, $message);
 		}
 	}
 	
