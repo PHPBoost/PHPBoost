@@ -267,10 +267,11 @@ class UpdateServices
 		foreach (ModulesManager::get_installed_modules_map() as $id => $module)
 		{
 			if (ModulesManager::module_is_upgradable($id))
-			{
 				$module->set_installed_version('4.1');
-				$modules_config->update($module);
-			}
+			else
+				$module->set_activated(false);
+				
+			$modules_config->update($module);
 		}
 		ModulesConfig::save();
 
