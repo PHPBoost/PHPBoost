@@ -39,8 +39,13 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function execute()
 	{
-		$this->update_articles_table();
-		$this->update_cats_table();
+		$tables = $this->db_utils->list_tables(true);
+		
+		if (in_array(PREFIX . 'articles', $tables))
+			$this->update_articles_table();
+		if (in_array(PREFIX . 'articles_cats', $tables))
+			$this->update_cats_table();
+		
 		$this->update_comments();
 		$this->delete_old_files();
 	}

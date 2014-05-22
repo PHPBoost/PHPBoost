@@ -39,8 +39,13 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function execute()
 	{
-		$this->update_news_table();
-		$this->update_cats_table();
+		$tables = $this->db_utils->list_tables(true);
+		
+		if (in_array(PREFIX . 'news', $tables))
+			$this->update_news_table();
+		if (in_array(PREFIX . 'news_cat', $tables))
+			$this->update_cats_table();
+		
 		$this->update_comments();
 		$this->delete_old_files();
 	}
@@ -90,9 +95,7 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function update_cats_table()
 	{
-		$tables = $this->db_utils->list_tables(true);
-		if (!in_array(PREFIX . 'news_cats', $tables))
-			$this->querier->inject('RENAME TABLE '. PREFIX .'news_cat' .' TO '. PREFIX .'news_cats');
+		$this->querier->inject('RENAME TABLE '. PREFIX .'news_cat' .' TO '. PREFIX .'news_cats');
 		
 		$columns = $this->db_utils->desc_table(PREFIX . 'news_cats');
 		if (!isset($columns['rewrited_name']))
