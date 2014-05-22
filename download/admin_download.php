@@ -54,7 +54,7 @@ $Template->put_all(array(
 	'C_PAGINATION' => $pagination->has_several_pages(),
 	'PAGINATION' => $pagination->display(),
 	'L_DEL_ENTRY' => $LANG['del_entry'],
-	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
+	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['add_file'],
 	'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 	'L_DOWNLOAD_CAT' => $LANG['cat_management'],
 	'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],

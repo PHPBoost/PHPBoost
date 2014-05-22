@@ -68,7 +68,7 @@ while ($row = $result->fetch())
 	$Template->assign_block_vars('comments_list', array(
 		'CONTENT' => FormatingHelper::second_parse($row['message']),
 		'U_PSEUDO' => $com_pseudo,
-		'U_LINK' => PATH_TO_ROOT . $row['path'],
+		'U_LINK' => Url::to_rel($row['path']) . '#com' . $row['id'],
 	));
 	$i++;
 }

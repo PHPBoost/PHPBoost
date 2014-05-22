@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              poll_english.php
+ *                              poll_french.php
  *                            -------------------
  *   begin                : July 14, 2005
  *   copyright            : (C) 2005 Viarre Régis
@@ -9,26 +9,25 @@
  *  
  ###################################################
  *
- * This program is free software; you can redistribute it and/or modify
+ *   This program is a free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
+ * along with this program. If not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
 
-
- ####################################################
-#                                                          French                                                                        #
- ####################################################
+#####################################################
+#						French						#
+#####################################################
 
 //Admin
 $LANG['confirm_del_poll'] = 'Supprimer ce sondage ?';
@@ -38,7 +37,7 @@ $LANG['poll.manage'] = 'Gérer les sondages';
 $LANG['poll_config'] = 'Configuration des sondages';
 $LANG['poll_config_mini'] = 'Configuration des mini-sondages';
 $LANG['poll_config_advanced'] = 'Configurations avancées';
-$LANG['poll_entry'] = 'Nombre d\'entrées du sondage';	
+$LANG['poll_entry'] = 'Nombre d\'entrées du sondage';
 $LANG['answer_type'] = 'Type des réponses'; 
 $LANG['polls'] = 'Sondage(s)';
 $LANG['single'] = 'Unique';

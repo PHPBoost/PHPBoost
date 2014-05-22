@@ -353,7 +353,7 @@ elseif (!empty($_POST['submit']))
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . FormatingHelper::strparse($media['contents']) . "', infos = '" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
 
-		$media_categories->recount_media_per_cat($media['idcat']);
+		$media_categories->recount_media_per_cat();
 
 		if ($media['approved'])
 		{

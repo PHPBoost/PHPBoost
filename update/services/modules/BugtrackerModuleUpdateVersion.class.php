@@ -42,6 +42,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		$this->update_config();
 		$this->update_bugtracker_table();
 		$this->create_bugtracker_users_filters_table();
+		$this->update_comments();
 	}
 	
 	private function update_config()
@@ -56,16 +57,16 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$columns = $this->db_utils->desc_table(PREFIX . 'bugtracker');
 		if (isset($columns['progess']))
-		{
 			$this->db_utils->drop_column(PREFIX . 'bugtracker', 'progess');
-		}
+		
 		$this->querier->inject('ALTER TABLE '. PREFIX .'bugtracker' .' CHANGE title title VARCHAR(255);');
 	}
 	
 	private function create_bugtracker_users_filters_table()
 	{
 		$tables = $this->db_utils->list_tables(true);
-		if (!isset($tables[PREFIX . 'bugtracker_users_filters']))
+		
+		if (!in_array(PREFIX . 'bugtracker_users_filters', $tables))
 		{
 			$fields = array(
 				'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
@@ -79,6 +80,24 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 				'indexes' => array('user_id' => array('type' => 'key', 'fields' => 'user_id'))
 			);
 			$this->db_utils->create_table(PREFIX . 'bugtracker_users_filters', $fields, $options);
+		}
+	}
+	
+	private function update_comments()
+	{
+		$result = $this->querier->select('SELECT bugtracker.id, bugtracker.title
+		FROM ' . PREFIX . 'bugtracker bugtracker
+		JOIN ' . PREFIX . 'comments_topic com ON com.id_in_module = bugtracker.id
+		WHERE com.module_id = \'bugtracker\'
+		ORDER BY bugtracker.id ASC');
+		
+		while ($row = $result->fetch())
+		{
+			$this->querier->update(PREFIX . 'comments_topic',
+				array('path' => '/bugtracker/?url=/detail/'.$row['id'].'-'.Url::encode_rewrite($row['title'])), 
+				'WHERE id_in_module=:id_in_module AND module_id=:module_id',
+				array('id_in_module' => $row['id'], 'module_id' => 'bugtracker')
+			);
 		}
 	}
 }

@@ -195,7 +195,7 @@ $Template->put_all(array(
 	'L_TITLE' => $LANG['title'],
 	'L_CATEGORY' => $LANG['category'],
 	'L_REQUIRE' => $LANG['require'],
-	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
+	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['add_file'],
 	'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 	'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
 	'L_UPDATE' => $LANG['update'],
