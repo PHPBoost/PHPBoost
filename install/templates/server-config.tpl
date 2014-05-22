@@ -2,6 +2,7 @@
 <a href="http://www.php.net/">
     <img src="templates/images/php.png" alt="PHP" style="float:right;bottom:20px; margin-left:5px;position:relative;"/>
 </a>
+<span class="spacer">&nbsp;</span>
 {@H|step.server.explanation}
 <fieldset>
     <legend>{@php.version}</legend>
