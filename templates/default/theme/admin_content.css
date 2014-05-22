@@ -417,9 +417,7 @@ fieldset.fieldset-submit {
 	border: none;
 }
 
-fieldset.fieldset-submit legend { /* A supprimer ou remplacer par un div */
-	display: none;
-}
+fieldset.fieldset-submit legend { display: none; }
 
 optgroup { font-weight: bold; border: none; border-bottom: 1px solid #5B5A5A; }
 option { padding: 0px 3px; }
