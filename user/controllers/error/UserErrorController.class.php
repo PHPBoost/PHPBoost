@@ -95,7 +95,7 @@ class UserErrorController extends AbstractController
 		
 		$maintenance_config = MaintenanceConfig::load();
 		
-		if ($maintenance_config->is_under_maintenance() && !AppContext::get_current_user()->check_auth($maintenance_config->get_auth(), 1))
+		if ($maintenance_config->is_under_maintenance() && !$maintenance_config->is_authorized_in_maintenance())
 			return new SiteNodisplayResponse($this->view);
 		else
 		{

@@ -130,6 +130,12 @@ class MaintenanceConfig extends AbstractConfigData
 	{
 		return $this->is_maintenance_enabled() && ($this->is_unlimited_maintenance() || $this->is_end_date_not_reached());
 	}
+	
+	public function is_authorized_in_maintenance()
+	{
+		return $this->user->check_auth($this->get_auth(), 1);
+	}
+	
 
 	/**
 	 * {@inheritdoc}

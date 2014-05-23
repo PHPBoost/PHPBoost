@@ -44,7 +44,7 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 		if ($this->is_under_maintenance())
 		{
 			$maintenance_config = MaintenanceConfig::load();
-			if (!$this->user->check_auth($maintenance_config->get_auth(), 1))
+			if (!$maintenance_config->is_authorized_in_maintenance())
 			{
 				// Redirect if user not authorized the site for maintenance
 				if ($this->user->check_level(User::MEMBER_LEVEL))
