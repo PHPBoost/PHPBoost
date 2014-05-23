@@ -70,16 +70,6 @@ class NewsDisplayPendingNewsController extends ModuleController
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		));
-
-		$i = 0;
-		while ($row = $result->fetch())
-		{
-			$news = new News();
-			$news->set_properties($row);
-						
-			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars());
-		}
-		$result->dispose();
 		
 		$number_columns_display_news = $news_config->get_number_columns_display_news();
 		$this->tpl->put_all(array(
@@ -95,6 +85,15 @@ class NewsDisplayPendingNewsController extends ModuleController
 			'C_SEVERAL_COLUMNS' => $number_columns_display_news > 1,
 			'NUMBER_COLUMNS' => $number_columns_display_news
 		));
+		
+		while ($row = $result->fetch())
+		{
+			$news = new News();
+			$news->set_properties($row);
+			
+			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars());
+		}
+		$result->dispose();
 	}
 	
 	private function get_pagination(Date $now, $authorized_categories)

@@ -72,6 +72,13 @@ class CalendarDisplayPendingEventsController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		));
 		
+		$this->events_view->put_all(array(
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'C_EVENTS' => $result->get_rows_count() > 0,
+			'C_PENDING_PAGE' => true,
+			'PAGINATION' => $pagination->display()
+		));
+		
 		while ($row = $result->fetch())
 		{
 			$event = new CalendarEvent();
@@ -80,13 +87,6 @@ class CalendarDisplayPendingEventsController extends ModuleController
 			$this->events_view->assign_block_vars('event', $event->get_array_tpl_vars());
 		}
 		$result->dispose();
-		
-		$this->events_view->put_all(array(
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_EVENTS' => $result->get_rows_count() > 0,
-			'C_PENDING_PAGE' => true,
-			'PAGINATION' => $pagination->display()
-		));
 		
 		$this->tpl->put_all(array(
 			'EVENTS' => $this->events_view,
