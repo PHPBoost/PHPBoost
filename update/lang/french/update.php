@@ -58,9 +58,9 @@ $lang = array(
 	'step.introduction.title' => 'Préambule',
 	'step.introduction.message' => 'Bienvenue dans l\'assistant de mise à jour de PHPBoost',
 	'step.introduction.explanation' => '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
-<p>Pour mettre à jour PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. La mise à jour est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus de mise à jour.</p>
-<div class="notice">Votre site va automatiquement être placé en maintenance. Pensez à désactiver la maintenance lorsque vous aurez vérifié que tout fonctionne correctement.</div>
-<p>Cordialement, l\'équipe PHPBoost</p>',
+<p>Pour mettre à jour PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. La mise à jour est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus de mise à jour.</p>',
+	'step.introduction.maintenance_notice' => '<div class="notice">Votre site va automatiquement être placé en maintenance. Pensez à désactiver la maintenance lorsque vous aurez vérifié que tout fonctionne correctement.</div>',
+	'step.introduction.team_signature' => '<p>Cordialement, l\'équipe PHPBoost</p>',
 
 //Configuration du serveur
 	'step.server.title' => 'Vérification de la configuration du serveur',

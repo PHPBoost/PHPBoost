@@ -54,7 +54,10 @@ class UpdateIntroductionController extends UpdateController
 		$next = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'introduction');
 		$action_fieldset->add_element($next);
 		$form->add_fieldset($action_fieldset);
-		$view->put('SERVER_FORM', $form->display());
+		$view->put_all(array(
+			'C_PUT_UNDER_MAINTENANCE' => !MaintenanceConfig::load()->is_under_maintenance(),
+			'SERVER_FORM' => $form->display()
+		));
 	}
 }
 ?>
