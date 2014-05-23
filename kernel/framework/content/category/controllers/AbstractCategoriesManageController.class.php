@@ -57,8 +57,11 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	{
 		$categories = $this->get_categories_manager()->get_categories_cache()->get_categories();
 		
+		$number_categories = count($categories);
+		
 		$this->tpl->put_all(array(
-			'C_NO_CATEGORIES' => count($categories) <= 1,
+			'C_NO_CATEGORIES' => $number_categories <= 1,
+			'C_MORE_THAN_ONE_CATEGORY' => $number_categories > 2, // Root category is not displayed, but taken into account in the calculation
 			'FIELDSET_TITLE' => $this->get_title()
 		));
 		
