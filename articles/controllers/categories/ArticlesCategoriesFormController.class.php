@@ -32,11 +32,6 @@ class ArticlesCategoriesFormController extends AbstractRichCategoriesFormControl
 		return new AdminArticlesDisplayResponse($view, $this->get_title());
 	}
 	
-	protected function get_title()
-	{
-		return $this->get_id_category() == 0 ? LangLoader::get_message('category.add', 'categories-common') : LangLoader::get_message('category.edit', 'categories-common');
-	}
-	
 	protected function get_categories_manager()
 	{
 		return ArticlesService::get_categories_manager();

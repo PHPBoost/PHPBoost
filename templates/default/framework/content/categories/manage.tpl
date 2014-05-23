@@ -54,7 +54,7 @@ function move_category_down(parent_id, id){
 		<legend>{FIELDSET_TITLE}</legend>
 			<ul id="categories" class="sortable-block">
 				# IF C_NO_CATEGORIES #
-					<div class="center">{NO_ELEMENT_MESSAGE}</div>
+					<div class="center">{@message.no_element}</div>
 				# ELSE #
 					# START childrens #
 						{childrens.child}

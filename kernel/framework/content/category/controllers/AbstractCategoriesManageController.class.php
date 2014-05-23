@@ -59,8 +59,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 		
 		$this->tpl->put_all(array(
 			'C_NO_CATEGORIES' => count($categories) <= 1,
-			'FIELDSET_TITLE' => $this->get_title(),
-			'NO_ELEMENT_MESSAGE' => $this->get_no_element_message()
+			'FIELDSET_TITLE' => $this->get_title()
 		));
 		
 		$this->build_children_view($this->tpl, $categories, Category::ROOT_CATEGORY);
@@ -132,9 +131,12 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 		}
 	}
 	
-	private function get_no_element_message()
+	/**
+	 * @return string Page title
+	 */
+	protected function get_title()
 	{
-		return $this->lang['message.no_categories'];
+		return $this->lang['categories.management'];
 	}
 	
 	/**
@@ -142,11 +144,6 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	 * @return Response
 	 */
 	abstract protected function generate_response(View $view);
-	
-	/**
-	 * @return string Page title
-	 */
-	abstract protected function get_title();
 	
 	/**
 	 * @return CategoriesManager

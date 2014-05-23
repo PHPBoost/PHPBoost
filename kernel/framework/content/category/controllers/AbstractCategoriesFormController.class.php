@@ -211,6 +211,14 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	}
 	
 	/**
+	 * @return string Page title
+	 */
+	protected function get_title()
+	{
+		return $this->get_id_category() == 0 ? $this->lang['category.add'] : $this->lang['category.edit'];
+	}
+	
+	/**
 	 * @return string id category for edit it
 	 */
 	protected function get_id_category()
@@ -223,11 +231,6 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 	 * @return Response
 	 */
 	abstract protected function generate_response(View $view);
-	
-	/**
-	 * @return string Page title
-	 */
-	abstract protected function get_title();
 	
 	/**
 	 * @return CategoriesManager

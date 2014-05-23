@@ -157,7 +157,18 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 		throw new CategoryNotFoundException($id_category);
 	}
 	
-	private function get_description()
+	/**
+	 * @return string Page title
+	 */
+	protected function get_title()
+	{
+		return $this->lang['category.delete'];
+	}
+	
+	/**
+	 * @return string delete description
+	 */
+	protected function get_description()
 	{
 		return $this->lang['delete.description'];
 	}
@@ -172,11 +183,6 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 	 * @return Response
 	 */
 	abstract protected function generate_response(View $view);
-	
-	/**
-	 * @return string Page title
-	 */
-	abstract protected function get_title();
 	
 	/**
 	 * @return CategoriesManager

@@ -32,11 +32,6 @@ class ArticlesDeleteCategoryController extends AbstractDeleteCategoryController
 		return new AdminArticlesDisplayResponse($view, $this->get_title());
 	}
 	
-	protected function get_title()
-	{
-		return LangLoader::get_message('category.delete', 'categories-common');
-	}
-	
 	protected function get_categories_manager()
 	{
 		return ArticlesService::get_categories_manager();

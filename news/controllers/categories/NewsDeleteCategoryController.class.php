@@ -35,11 +35,6 @@ class NewsDeleteCategoryController extends AbstractDeleteCategoryController
 		return new AdminNewsDisplayResponse($view, $this->get_title());
 	}
 	
-	protected function get_title()
-	{
-		return LangLoader::get_message('category.delete', 'categories-common');
-	}
-	
 	protected function get_categories_manager()
 	{
 		return NewsService::get_categories_manager();
