@@ -77,18 +77,6 @@ class NewsDisplayNewsTagController extends ModuleController
 			'display_from' => $pagination->get_display_from()
 		));
 		
-		while ($row = $result->fetch())
-		{
-			$news = new News();
-			$news->set_properties($row);
-						
-			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
-				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
-				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0
-			)));
-		}
-		$result->dispose();
-		
 		$number_columns_display_news = $news_config->get_number_columns_display_news();
 		$this->tpl->put_all(array(
 			'C_DISPLAY_BLOCK_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_BLOCK,
@@ -102,6 +90,18 @@ class NewsDisplayNewsTagController extends ModuleController
 			'C_SEVERAL_COLUMNS' => $number_columns_display_news > 1,
 			'NUMBER_COLUMNS' => $number_columns_display_news,
 		));
+		
+		while ($row = $result->fetch())
+		{
+			$news = new News();
+			$news->set_properties($row);
+			
+			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
+				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
+				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0
+			)));
+		}
+		$result->dispose();
 	}
 	
 	private function get_keyword()

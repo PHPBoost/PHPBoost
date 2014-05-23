@@ -106,17 +106,6 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
 		));
-
-		while($row = $result->fetch())
-		{
-			$article = new Article();
-			$article->set_properties($row);
-			
-			$this->build_keywords_view($article);
-			
-			$this->view->assign_block_vars('articles', $article->get_tpl_vars());
-		}
-		$result->dispose();
 		
 		$this->view->put_all(array(
 			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
@@ -128,6 +117,17 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'PAGINATION' => $pagination->display(),
 			'ID_CAT' => $this->category->get_id()
 		));
+
+		while($row = $result->fetch())
+		{
+			$article = new Article();
+			$article->set_properties($row);
+			
+			$this->build_keywords_view($article);
+			
+			$this->view->assign_block_vars('articles', $article->get_tpl_vars());
+		}
+		$result->dispose();
 	}
 	
 	private function build_categories_listing_view(Date $now)
