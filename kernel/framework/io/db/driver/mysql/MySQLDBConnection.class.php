@@ -47,6 +47,11 @@ class MySQLDBConnection implements DBConnection
 
 	public function connect(array $db_connection_data)
 	{
+		if (!extension_loaded('mysql'))
+		{
+			throw new DBConnectionException('Unable to load mysql extension');
+		}
+                
 		$mysql_link = @mysql_connect(
 		$db_connection_data['host'] . ':' . $db_connection_data['port'],
 		$db_connection_data['login'],
