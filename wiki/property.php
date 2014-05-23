@@ -325,7 +325,7 @@ elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
 {
 	$comments_topic = new WikiCommentsTopic();
 	$comments_topic->set_id_in_module($idcom);
-	$comments_topic->set_url(new Url('/wiki/property.php?idcom=' . $idcom . '&amp;com=%s'));
+	$comments_topic->set_url(new Url('/wiki/property.php?idcom=' . $idcom . '&com=0'));
 	
 	$Template->put_all(array(
 		'C_COMMENTS' => true,
