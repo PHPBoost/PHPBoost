@@ -45,7 +45,7 @@ class MenuService
 	/**
 	 * @var string[] the columns needed to instanciate a menu
 	 */
-	private static $columns = array('id', 'object', 'block', 'position', 'enabled');
+	private static $columns = array('id', 'object', 'class', 'block', 'position', 'enabled');
 
 	public static function __static()
 	{
@@ -743,7 +743,15 @@ class MenuService
 	 */
 	private static function initialize($db_result)
 	{
-		$menu = unserialize($db_result['object']);
+		if (!class_exists($db_result['class']))
+		{
+			$menu = new ContentMenu('Unable to load the menu');
+			$menu->set_content('Unable to load the menu with the following class : ' . $db_result['class']);
+		}
+		else
+		{
+			$menu = unserialize($db_result['object']);
+		}
 
 		// Synchronize the object and the database
 		$menu->id($db_result['id']);
