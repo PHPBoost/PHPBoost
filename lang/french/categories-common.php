@@ -44,7 +44,7 @@ $lang['category.update_position'] = 'Valider les positions';
 
 //Errors
 $lang['errors.unexisting'] = 'La catégorie n\'existe pas.';
-$lang['message.no_element'] = 'Aucun élément existante';
+$lang['message.no_element'] = 'Aucun élément existant';
 
 //Form
 $lang['category.form.name'] = 'Nom';
