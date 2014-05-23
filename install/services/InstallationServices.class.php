@@ -196,13 +196,18 @@ class InstallationServices
 	private function save_server_environnement_config()
 	{
 		$server_configuration = new ServerConfiguration();
+		$server_environment_config = ServerEnvironmentConfig::load();
 		
 		if ($server_configuration->has_url_rewriting())
 		{
-			$server_environnement_config = ServerEnvironmentConfig::load();
-			$server_environnement_config->set_url_rewriting_enabled(true);
-			ServerEnvironmentConfig::save();
+			$server_environment_config->set_url_rewriting_enabled(true);
 		}
+		if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
+		{
+			$server_environment_config->set_output_gziping_enabled(true);
+		}
+		
+		ServerEnvironmentConfig::save();
 	}
 
 	private function init_graphical_config()
