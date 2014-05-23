@@ -13,8 +13,7 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Filtres d'exclusion pour les menus
-- Sortir les pages d'erreurs 404 et 403 de l'environnement graphique de PHPBoost pour éviter le problème : http://phpboost.com/bugtracker/bugtracker.php?view&id=713
+
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -59,12 +58,11 @@
 - [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés avec contrôles sur les champs.
 - [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
 - [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
-- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification du titre/sous-titre et des couleurs du site.
+- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification des couleurs du site.
 - Outils avancés de visualisation et gestion du cache.
 - Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
 - Gestion des contraintes asynchrones dans le form builder
 - Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
-- Changer de format de stockage des fuseaux horaires
 + [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 + Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
 + [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
@@ -74,7 +72,8 @@
 - Refonte du système d'événement et intégration d'un système de notification
 - Suppression de l'ancienne classe SQL
 - Refonte de la gestion des liens : suppression des types de menu de liens et création d'un menu de lien qui s'adapte automatiquement à l'emplacement
-- 
+- Filtres d'exclusion pour les menus
+- Nettoyage des variables de langues
 
 [b]Installateur[/b]
 - Ajout d'une option pour supprimer le dossier à la fin de l'installation
@@ -88,6 +87,7 @@
 
 [b]Upload[/b]
 - Refonte de l'interface, ajout d'API, ... 
+- Améliorer l'ajout de fichier (drag & drop)
 
 [b]Messages privés[/b]
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.

@@ -22,6 +22,7 @@
 [*] Création d'un FormFieldUploadFile permettant d'utiliser le gestionnaire d'upload pour attacher un fichier à un élément facilement
 [*] Modification du ScheduledJobs pour intégrer une fonction on_changepage() pour exécuter du code à chaque génération de page à partir des modules
 [*] Ajout de l'url dans le stacktrace du gestionnaire d'erreur pour mieux suivre les erreurs levées
+[*] Changer de format de stockage des fuseaux horaires
 
 [b]Menus :[/b]
 [*] Améliorations graphique
