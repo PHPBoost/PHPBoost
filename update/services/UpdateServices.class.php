@@ -271,7 +271,7 @@ class UpdateServices
 		{
 			if (ModulesManager::module_is_upgradable($id))
 				$module->set_installed_version('4.1');
-			else
+			elseif (version_compare($module->get_configuration()->get_version(), '4.1') == -1)
 				$module->set_activated(false);
 				
 			$modules_config->update($module);
@@ -668,7 +668,7 @@ class UpdateServices
 		$this->update_followed_file->append($step_name.' '.$success_message.' '. $message. "\r\n");
 	}
 	
-	private function generate_update_token()
+	public function generate_update_token()
 	{
 		$this->token->write(self::$token_file_content);
 	}
