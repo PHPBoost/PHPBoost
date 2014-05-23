@@ -289,9 +289,13 @@ class UpdateServices
 	public function put_site_under_maintenance()
 	{
 		$maintenance_config = MaintenanceConfig::load();
-		$maintenance_config->enable_maintenance();
-		$maintenance_config->set_unlimited_maintenance(true);
-		MaintenanceConfig::save();
+		
+		if (!$maintenance_config->is_under_maintenance())
+		{
+			$maintenance_config->enable_maintenance();
+			$maintenance_config->set_unlimited_maintenance(true);
+			MaintenanceConfig::save();
+		}
 	}
 	
 	public function update_modules()

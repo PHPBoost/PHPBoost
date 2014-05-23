@@ -58,11 +58,9 @@ $lang = array(
 	'step.welcome.title' => 'Preamble',
 	'step.welcome.message' => 'Welcome to PHPBoost update wizard',
 	'step.introduction.explanation' => '<p>Thank you to have trusted PHPBoost to build your website.</p>
-<p>To install PHPBoost you need to have some informations about your hosting which would be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow to start the installation process.</p>
-<div class="message-helper-small">
-	<div class="notice">Your site will automatically be placed in maintenance. Consider disabling maintenance when you have verified that everything works properly.</div>
-</div>
-<p>Cordially, the PHPBoost Team.</p>',
+<p>To install PHPBoost you need to have some informations about your hosting which would be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow to start the installation process.</p>',
+	'step.introduction.maintenance_notice' => '<div class="notice">Your site will automatically be placed in maintenance. Consider disabling maintenance when you have verified that everything works properly.</div>',
+	'step.introduction.team_signature' => '<p>Cordially, the PHPBoost Team.</p>',
 
 //Configuration du serveur
 	'step.server.title' => 'Looking up server configuration...',
