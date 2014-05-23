@@ -81,6 +81,8 @@ class UpdateServerConfigController extends UpdateController
 		{
 			if (UpdateServices::database_config_file_checked())
 			{
+				$service = new UpdateServices();
+				$service->generate_update_token();
 				AppContext::get_response()->redirect(UpdateUrlBuilder::update());
 			}
 			AppContext::get_response()->redirect(UpdateUrlBuilder::database());
