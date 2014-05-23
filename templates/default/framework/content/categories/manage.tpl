@@ -51,10 +51,10 @@ function move_category_down(parent_id, id){
 </script>
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
 	<fieldset>
-		<legend>{@categories}</legend>
+		<legend>{FIELDSET_TITLE}</legend>
 			<ul id="categories" class="sortable-block">
 				# IF C_NO_CATEGORIES #
-					<div class="center">{@message.no_categories}</div>
+					<div class="center">{NO_ELEMENT_MESSAGE}</div>
 				# ELSE #
 					# START childrens #
 						{childrens.child}
@@ -63,7 +63,7 @@ function move_category_down(parent_id, id){
 			</ul>
 	</fieldset>
 	<fieldset class="fieldset-submit">
-		<button type="submit" class="submit" name="submit" value="true">{@category.update_categories_position}</button>
+		<button type="submit" class="submit" name="submit" value="true">{@category.update_position}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="tree" id="tree" value="">
 	</fieldset>

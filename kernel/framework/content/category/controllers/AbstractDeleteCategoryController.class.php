@@ -105,8 +105,8 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('delete_category', $this->lang['delete.category']);
-		$fieldset->set_description($this->lang['delete.description']);
+		$fieldset = new FormFieldsetHTML('delete_category', $this->get_title());
+		$fieldset->set_description($this->get_description());
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldCheckbox('delete_category_and_content', $this->lang['delete.category_and_content'], FormFieldCheckbox::UNCHECKED, array('events' => array('click' => '
@@ -155,6 +155,11 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 			return $this->get_categories_manager()->get_categories_cache()->get_category($id_category);
 		}
 		throw new CategoryNotFoundException($id_category);
+	}
+	
+	private function get_description()
+	{
+		return $this->lang['delete.description'];
 	}
 	
 	/**
