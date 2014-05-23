@@ -30,12 +30,9 @@
  #						English						#
  ####################################################
 
-$lang = array();
-
 //Title
 $lang['newsletter.home'] = 'Home';
 $lang['newsletter'] = 'Newsletter';
-$lang['newsletter.config'] = 'Configuration';
 $lang['newsletter.archives'] = 'Archive';
 $lang['newsletter.subscribers'] = 'list of subscribers';
 $lang['newsletter.streams'] = 'Feed management';
@@ -48,8 +45,10 @@ $lang['archives.list'] = 'Archive List';
 $lang['newsletter-add'] = 'Add newsletter';
 $lang['newsletter.subscribe_newsletters'] = 'Subscribe to a newsletter';
 $lang['newsletter.unsubscribe_newsletters'] = 'Unsubscribe to a newsletter';
-$lang['streams.add'] = 'Add Feed';
-$lang['streams.edit'] = 'Edit Feed';
+$lang['stream.add'] = 'Add Feed';
+$lang['stream.edit'] = 'Edit Feed';
+$lang['stream.delete'] = 'Delete feed';
+$lang['stream.delete.description'] = 'You are about to delete the stream. Two solutions are available to you. You can either move all of its contents (newsletters and streams) in another stream or delete the whole stream. <strong>Note that this action is irreversible!</ strong>';
 $lang['newsletter.list_newsletters'] = 'List of newsletters';
 
 //Admin
@@ -66,23 +65,6 @@ $lang['auth.subscribers-read'] = 'Subscribers read authorizations';
 $lang['auth.subscribers-moderation'] = 'Subscribers moderation authorizations';
 $lang['auth.subscribe'] = 'Authorizations to register for newsletters';
 $lang['auth.create-newsletter'] = 'Add newsletter authorizations';
-
-//Categories
-$lang['streams.name'] = 'Name';
-$lang['streams.description'] = 'Description';
-$lang['streams.picture'] = 'Image representation';
-$lang['streams.visible'] = 'View';
-$lang['streams.picture-preview'] = 'Preview the image stream';
-$lang['streams.auth.read'] = 'Feed access authorizations';
-$lang['streams.auth.subscribers-read'] = 'Subscribers read authorizations';
-$lang['streams.auth.subscribers-moderation'] = 'Subscribers moderation authorizations';
-$lang['streams.auth.create-newsletter'] = 'Create newsletter authorizations';
-$lang['streams.auth.subscribe'] = 'Authorizations to register for newsletter';
-$lang['streams.auth.archives-read'] = 'Read archive authorizations';
-$lang['streams.active-advanced-authorizations'] = 'Enable advanced permissions flow';
-$lang['streams.visible-no'] = 'No';
-$lang['streams.visible-yes'] = 'Yes';
-$lang['streams.no_cats'] = 'No feed';
 
 //Subscribe
 $lang['subscribe.mail'] = 'Mail';
@@ -134,12 +116,7 @@ $lang['newsletter.visitor'] = 'Visitor';
 $lang['newsletter.submit'] = 'OK';
 
 //Errors
-$lang['admin.success-saving-config'] = 'You have successfully changed the configuration';
-$lang['admin.success-add-stream'] = 'Category added successfully';
-$lang['admin.stream-not-existed'] = 'The requested category does not exist';
-$lang['admin.success-add-stream'] = 'The category has been added';
-$lang['admin.success-edit-stream'] = 'The category has been changed';
-$lang['admin.success-delete-stream'] = 'The category has been deleted';
+$lang['admin.stream-not-existed'] = 'The requested stream does not exist';
 $lang['success-subscribe'] = 'You have successfully registered for newsletters';
 $lang['success-unsubscribe'] = 'You have successfully unsubscribed from newsletters';
 $lang['success-delete-subscriber'] = 'You removed the subscriber successfully';

@@ -36,14 +36,13 @@ class NewsletterDAO
 
 	public static function add_archive($stream_id, $subject, $contents, $language_type)
 	{
-		$stream_cache = NewsletterStreamsCache::load()->get_stream($stream_id);
 		$columns = array(
 			'stream_id' => $stream_id,
 			'subject' => TextHelper::htmlspecialchars($subject),
 			'contents' => $contents,
 			'timestamp' => time(),
 			'language_type' => $language_type,
-			'nbr_subscribers' => count($stream_cache['subscribers'])
+			'nbr_subscribers' => count(NewsletterService::list_subscribers_by_stream($stream_id))
 		);
 		self::$db_querier->insert(NewsletterSetup::$newsletter_table_archives, $columns);
 		
@@ -147,12 +146,12 @@ class NewsletterDAO
 
 	public static function user_id_existed($user_id)
 	{
-		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE user_id = '" . $user_id . "'") > 0 ? true : false;
+		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE user_id = '" . $user_id . "'") > 0;
 	}
 	
 	public static function mail_existed($mail)
 	{
-		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE mail = '" . $mail . "'") > 0 ? true : false;
+		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE mail = '" . $mail . "'") > 0;
 	}
 	
 	public static function unsubscriber_all_streams_member($user_id)

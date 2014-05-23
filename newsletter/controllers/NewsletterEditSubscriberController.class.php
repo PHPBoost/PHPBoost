@@ -46,7 +46,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$id = $request->get_getint('id', 0);
 		$this->init();
 		
-		$verificate_is_edit = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '". $id ."' AND user_id = -1") > 0 ? true : false;
+		$verificate_is_edit = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '". $id ."' AND user_id = -1") > 0;
 		if (!$this->subscriber_exist($id) || !$verificate_is_edit)
 		{
 			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error-subscriber-not-existed', 'common', 'newsletter'));
@@ -118,11 +118,11 @@ class NewsletterEditSubscriberController extends ModuleController
 		$breadcrumb->add($this->lang['subscriber.edit'], '');
 		$response->get_graphical_environment()->set_page_title($this->lang['subscriber.edit']);
 		return $response;
-	}	
+	}
 	
 	private static function subscriber_exist($id)
 	{
-		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '" . $id . "'") > 0 ? true : false;
+		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '" . $id . "'") > 0;
 	}
 }
 ?>

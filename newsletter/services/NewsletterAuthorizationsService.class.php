@@ -46,7 +46,7 @@ class NewsletterAuthorizationsService
 		if (!empty($id_stream))
 		{
 			$this->id_stream = $id_stream;
-			$this->stream_authorizations = NewsletterStreamsCache::load()->get_authorizations_by_stream($this->id_stream);
+			$this->stream_authorizations = NewsletterStreamsCache::load()->get_stream($this->id_stream)->get_authorizations();
 		}
 	}
 	

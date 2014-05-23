@@ -28,32 +28,76 @@
 class HomeAddNewsletterController extends ModuleController
 {
 	private $lang;
+	/**
+	 * @var HTMLForm
+	 */
+	private $form;
+	/**
+	 * @var FormButtonDefaultSubmit
+	 */
+	private $submit_button;
 	
 	public function execute(HTTPRequestCustom $request)
+	{
+		$this->check_authorizations();
+		
+		$this->init();
+		
+		$this->build_form();
+		
+		$tpl = new StringTemplate('# INCLUDE FORM #');
+		
+		$tpl->add_lang($this->lang);
+		
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		{
+			$type = $request->get_value('type', '');
+			
+			if ($type !== '' && ($type == 'html' || $type == 'bbcode' || $type == 'text'))
+			{
+				AppContext::get_response()->redirect(NewsletterUrlBuilder::add_newsletter($type));
+			}
+		}
+		
+		$tpl->put('FORM', $this->form->display());
+		
+		return $this->build_response($tpl);
+	}
+	
+	private function check_authorizations()
 	{
 		if (!NewsletterAuthorizationsService::default_authorizations()->create_newsletters())
 		{
 			NewsletterAuthorizationsService::get_errors()->create_newsletters();
 		}
-		
-		$type = $request->get_value('type', '');
-		
-		if ($type !== '' && ($type == 'html' || $type == 'bbcode' || $type == 'text'))
-		{
-			AppContext::get_response()->redirect(NewsletterUrlBuilder::add_newsletter($type));
-		}
-		
-		$this->init();
-		
-		$tpl = new fileTemplate('newsletter/HomeAddNewsletterController.tpl');
-		$tpl->add_lang($this->lang);
-
-		return $this->build_response($tpl);
 	}
 	
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'newsletter');
+	}
+	
+	private function build_form()
+	{
+		$form = new HTMLForm(__CLASS__);
+		
+		$fieldset = new FormFieldsetHTML('choices-fieldset');
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldHTML('choices_table', $this->build_choices_table()->render()));
+		
+		$this->submit_button = new FormButtonDefaultSubmit($this->lang['newsletter.types.next']);
+		$form->add_button($this->submit_button);
+		
+		$this->form = $form;
+	}
+	
+	private function build_choices_table()
+	{
+		$choices_table = new FileTemplate('newsletter/HomeAddNewsletterController.tpl');
+		$choices_table->add_lang($this->lang);
+		
+		return $choices_table;
 	}
 	
 	private function build_response(View $view)
@@ -67,6 +111,6 @@ class HomeAddNewsletterController extends ModuleController
 		$breadcrumb->add($this->lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter()->rel());
 		$response->get_graphical_environment()->set_page_title($this->lang['newsletter-add']);
 		return $response;
-	}	
+	}
 }
 ?>

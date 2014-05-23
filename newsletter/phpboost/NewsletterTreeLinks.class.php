@@ -35,12 +35,12 @@ class NewsletterTreeLinks implements ModuleTreeLinksExtensionPoint
 		$lang = LangLoader::get('common', 'newsletter');
 		$tree = new ModuleTreeLinks();
 		
-		$manage_newsletter_link = new AdminModuleLink($lang['newsletter.streams.manage'], NewsletterUrlBuilder::streams());
-		$manage_newsletter_link->add_sub_link(new AdminModuleLink($lang['newsletter.streams.manage'], NewsletterUrlBuilder::streams()));
-		$manage_newsletter_link->add_sub_link(new AdminModuleLink($lang['streams.add'], NewsletterUrlBuilder::add_stream()));
+		$manage_newsletter_link = new AdminModuleLink($lang['newsletter.streams.manage'], NewsletterUrlBuilder::manage_streams());
+		$manage_newsletter_link->add_sub_link(new AdminModuleLink($lang['newsletter.streams.manage'], NewsletterUrlBuilder::manage_streams()));
+		$manage_newsletter_link->add_sub_link(new AdminModuleLink($lang['stream.add'], NewsletterUrlBuilder::add_stream()));
 		$tree->add_link($manage_newsletter_link);
 		
-		$tree->add_link(new AdminModuleLink($lang['newsletter.config'], NewsletterUrlBuilder::configuration()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), NewsletterUrlBuilder::configuration()));
 		
 		$tree->add_link(new ModuleLink($lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter(), NewsletterAuthorizationsService::default_authorizations()->create_newsletters()));
 		$tree->add_link(new ModuleLink($lang['newsletter.archives'], NewsletterUrlBuilder::archives(), NewsletterAuthorizationsService::default_authorizations()->read_archives()));

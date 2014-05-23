@@ -87,18 +87,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	
 	private function create_newsletter_streams_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'description' => array('type' => 'text', 'length' => 65000),
-			'picture' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000)
-		);
-		$options = array(
-			'primary' => array('id')
-		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_streams, $fields, $options);
+		RichCategory::create_categories_table(self::$newsletter_table_streams);
 	}
 
 	private function create_newsletter_archives_table()

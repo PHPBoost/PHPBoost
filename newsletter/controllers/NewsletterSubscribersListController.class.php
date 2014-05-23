@@ -30,17 +30,15 @@ class NewsletterSubscribersListController extends ModuleController
 	private $lang;
 	private $view;
 	private $user;
-	private $id_stream;
-	private $stream_cache;
+	private $stream;
 	
 	private $nbr_subscribers_per_page = 25;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->id_stream = $request->get_int('id_stream', 0);
-		$this->stream_cache = NewsletterStreamsCache::load()->get_stream($this->id_stream);
+		$this->stream = NewsletterStreamsCache::load()->get_stream($request->get_int('id_stream', 0));
 		
-		if ($this->id_stream == 0 || empty($this->stream_cache))
+		if ($this->stream->get_id() == 0)
 		{
 			AppContext::get_response()->redirect(NewsletterUrlBuilder::home());
 		}
@@ -57,7 +55,7 @@ class NewsletterSubscribersListController extends ModuleController
 		$sort = $request->get_value('sort', 'top');
 		$current_page = $request->get_int('page', 1);
 		
-		if (!NewsletterAuthorizationsService::id_stream($this->id_stream)->read_subscribers())
+		if (!NewsletterAuthorizationsService::id_stream($this->stream->get_id())->read_subscribers())
 		{
 			NewsletterAuthorizationsService::get_errors()->read_subscribers();
 		}
@@ -72,10 +70,10 @@ class NewsletterSubscribersListController extends ModuleController
 				$field_bdd = 'login';
 		}
 		
-		$nbr_subscribers = count($this->stream_cache['subscribers']);
+		$nbr_subscribers = count(NewsletterService::list_subscribers_by_stream($this->stream->get_id()));
 		
 		$pagination = new ModulePagination($current_page, $nbr_subscribers, $this->nbr_subscribers_per_page);
-		$pagination->set_url(NewsletterUrlBuilder::subscribers($this->id_stream .'/'. $field .'/'. $sort .'/%d'));
+		$pagination->set_url(NewsletterUrlBuilder::subscribers($this->stream->get_id() .'/'. $field .'/'. $sort .'/%d'));
 
 		if ($pagination->current_page_is_empty() && $current_page > 1)
 		{
@@ -87,8 +85,8 @@ class NewsletterSubscribersListController extends ModuleController
 			'C_SUBSCRIBERS' => (float)$nbr_subscribers,
 			'C_SUBSCRIPTION' => NewsletterUrlBuilder::subscribe()->rel(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'SORT_PSEUDO_TOP' => NewsletterUrlBuilder::subscribers($this->id_stream .'/pseudo/top/'. $current_page)->rel(),
-			'SORT_PSEUDO_BOTTOM' => NewsletterUrlBuilder::subscribers($this->id_stream .'/pseudo/bottom/'. $current_page)->rel(),
+			'SORT_PSEUDO_TOP' => NewsletterUrlBuilder::subscribers($this->stream->get_id() .'/pseudo/top/'. $current_page)->rel(),
+			'SORT_PSEUDO_BOTTOM' => NewsletterUrlBuilder::subscribers($this->stream->get_id() .'/pseudo/bottom/'. $current_page)->rel(),
 			'PAGINATION' => $pagination->display()
 		));
 
@@ -100,19 +98,19 @@ class NewsletterSubscribersListController extends ModuleController
 			array(
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
-			), SelectQueryResult::FETCH_ASSOC
+			)
 		);
+		
 		while ($row = $result->fetch())
 		{
-			if (array_key_exists($row['id'], $this->stream_cache['subscribers']))
+			if (array_key_exists($row['id'], NewsletterService::list_subscribers_by_stream($this->stream->get_id())))
 			{
-				$moderation_auth = NewsletterAuthorizationsService::id_stream($this->id_stream)->moderation_subscribers();
 				$pseudo = $row['user_id'] > 0 ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">'. $row['login'] .'</a>' : $this->lang['newsletter.visitor'];
 				$this->view->assign_block_vars('subscribers_list', array(
-					'C_AUTH_MODO' => $moderation_auth,
-					'C_EDIT_LINK' => $row['user_id'] == User::VISITOR_LEVEL,
-					'EDIT_LINK' => $row['user_id'] == User::VISITOR_LEVEL ? NewsletterUrlBuilder::edit_subscriber($row['id'])->rel() : '',
-					'DELETE_LINK' => NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream_cache['id'])->rel(),
+					'C_AUTH_MODO' => NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers(),
+					'C_EDIT' => $row['user_id'] == User::VISITOR_LEVEL,
+					'U_EDIT' => $row['user_id'] == User::VISITOR_LEVEL ? NewsletterUrlBuilder::edit_subscriber($row['id'])->rel() : '',
+					'U_DELETE' => NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream->get_id())->rel(),
 					'PSEUDO' => $pseudo,
 					'MAIL' => $row['user_id'] > 0 ? $row['user_mail'] : $row['mail']
 				));
@@ -137,8 +135,8 @@ class NewsletterSubscribersListController extends ModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
-		$name_page = $this->lang['newsletter.subscribers'] . ' : ' . $this->stream_cache['name'];
-		$breadcrumb->add($name_page, NewsletterUrlBuilder::subscribers($this->id_stream)->rel());
+		$name_page = $this->lang['newsletter.subscribers'] . ' : ' . $this->stream->get_name();
+		$breadcrumb->add($name_page, NewsletterUrlBuilder::subscribers($this->stream->get_id())->rel());
 		$response->get_graphical_environment()->set_page_title($name_page);
 		return $response;
 	}

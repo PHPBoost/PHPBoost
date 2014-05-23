@@ -32,11 +32,12 @@ class AdminNewsletterDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 
 		$lang = LangLoader::get('common', 'newsletter');
-		$picture = '/newsletter/newsletter.png';
+		$picture = 'newsletter.png';
 		$this->set_title($lang['newsletter']);
-		$this->add_link($lang['newsletter.streams'], NewsletterUrlBuilder::streams(), $picture);
-		$this->add_link($lang['streams.add'], NewsletterUrlBuilder::add_stream(), $picture);
-		$this->add_link($lang['newsletter.config'], NewsletterUrlBuilder::configuration(), $picture);
+		
+		$this->add_link($lang['newsletter.streams'], NewsletterUrlBuilder::manage_streams(), $picture);
+		$this->add_link($lang['stream.add'], NewsletterUrlBuilder::add_stream(), $picture);
+		$this->add_link(LangLoader::get_message('configuration', 'admin'), NewsletterUrlBuilder::configuration(), $picture);
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

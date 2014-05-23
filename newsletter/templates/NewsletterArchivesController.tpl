@@ -40,11 +40,11 @@
 			<tr>
 				# IF NOT C_SPECIFIC_STREAM #
 				<td>
-					<a href="{archives_list.VIEW_STREAM}">{archives_list.STREAM_NAME}</a>
+					<a href="{archives_list.U_VIEW_STREAM}">{archives_list.STREAM_NAME}</a>
 				</td>
 				# ENDIF #
 				<td>
-					<a href="{archives_list.VIEW_ARCHIVE}">{archives_list.SUBJECT}</a>
+					<a href="{archives_list.U_VIEW_ARCHIVE}">{archives_list.SUBJECT}</a>
 				</td>
 				<td>
 					{archives_list.DATE}

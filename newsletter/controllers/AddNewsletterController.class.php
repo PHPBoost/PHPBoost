@@ -106,7 +106,7 @@ class AddNewsletterController extends ModuleController
 		{
 			$streams[] = $option->get_raw_value();
 		}
-			
+		
 		NewsletterService::add_newsletter(
 			$streams, 
 			$this->form->get_value('title'), 
@@ -145,14 +145,11 @@ class AddNewsletterController extends ModuleController
 	private function get_streams()
 	{
 		$streams = array();
-		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
-		foreach ($newsletter_streams_cache as $id => $value)
+		$newsletter_streams = NewsletterStreamsCache::load()->get_streams();
+		foreach ($newsletter_streams as $id => $stream)
 		{
-			$read_auth = NewsletterAuthorizationsService::id_stream($id)->create_newsletters();
-			if ($read_auth && $value['visible'] == 1)
-			{
-				$streams[] = new FormFieldSelectChoiceOption($value['name'], $id);
-			}
+			if ($id != Category::ROOT_CATEGORY && NewsletterAuthorizationsService::id_stream($id)->subscribe())
+				$streams[] = new FormFieldSelectChoiceOption($stream->get_name(), $id);
 		}
 		return $streams;
 	}

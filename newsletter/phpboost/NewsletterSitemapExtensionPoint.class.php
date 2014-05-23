@@ -47,20 +47,21 @@ class NewsletterSitemapExtensionPoint implements SitemapExtensionPoint
 		$streams = NewsletterStreamsCache::load()->get_streams();
 		$config = NewsletterConfig::load();
 		$user = AppContext::get_current_user();
-		foreach ($streams as $id => $properties)
-		{			
+		
+		foreach ($streams as $id => $stream)
+		{
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$is_authorized = is_array($properties['authorizations']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['authorizations'], NewsletterAuthorizationsService::AUTH_READ) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $config->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ);
+				$is_authorized = is_array($stream->get_authorizations()) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $stream->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $config->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ);
 			}
 			else
 			{
-				$is_authorized = is_array($properties['authorizations']) ? $user->check_auth($properties['authorizations'], NewsletterAuthorizationsService::AUTH_READ) : $user->check_auth($config->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ);
+				$is_authorized = is_array($stream->get_authorizations()) ? $user->check_auth($stream->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ) : $user->check_auth($config->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ);
 			}
 			
-			if ($is_authorized && $properties['visible'])
+			if ($is_authorized)
 			{
-				$link = new SitemapLink($properties['name'], NewsletterUrlBuilder::archives($id));
+				$link = new SitemapLink($stream->get_name(), NewsletterUrlBuilder::archives($id));
 				$section = new SitemapSection($link);
 				$module_map->add($section);
 			}

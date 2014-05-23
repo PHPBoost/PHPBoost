@@ -30,22 +30,27 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
+	//Admin
 	new UrlControllerMapper('AdminNewsletterConfigController', '`^/admin(?:/config)?/?$`'),
 	
+	//Streams
+	new UrlControllerMapper('NewsletterStreamsManageController', '`^/admin/streams/?$`'),
+	new UrlControllerMapper('NewsletterStreamsFormController', '`^/admin/stream/add/?$`'),
+	new UrlControllerMapper('NewsletterStreamsFormController', '`^/admin/stream/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('NewsletterDeleteStreamController', '`^/admin/stream/([0-9]+)/delete/?$`', array('id')),
+	
+	//Newsletter
 	new UrlControllerMapper('HomeAddNewsletterController', '`^/add/?$`'),
 	new UrlControllerMapper('AddNewsletterController', '`^/add/([a-z]+)?/?$`', array('type')),
 	
-	new UrlControllerMapper('AdminNewsletterStreamsListController', '`^/admin/streams(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
-	new UrlControllerMapper('AdminNewsletterAddStreamController', '`^/admin/stream/add/?$`'),
-	new UrlControllerMapper('AdminNewsletterEditStreamController', '`^/admin/stream/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('AdminNewsletterDeleteStreamController', '`^/admin/stream/([0-9]+)/delete/?$`', array('id')),
-	
+	//Suscribers
 	new UrlControllerMapper('NewsletterSubscribersListController', '`^/subscribers(?:/([0-9]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_stream', 'field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterSubscribeController', '`^/subscribe/?$`'),
 	new UrlControllerMapper('NewsletterUnsubscribeController', '`^/unsubscribe/?$`'),
 	new UrlControllerMapper('NewsletterEditSubscriberController', '`^/subscriber/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('NewsletterDeleteSubscriberController', '`^/subscriber/([0-9]+)/delete(?:/([0-9]+))?/?$`', array('id', 'id_stream')),
-
+	
+	//Archives
 	new UrlControllerMapper('NewsletterArchivesController', '`^/archives(?:/([0-9]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_stream', 'field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterArchiveController', '`^/archive/([0-9]+)?/?$`', array('id')),
 	
