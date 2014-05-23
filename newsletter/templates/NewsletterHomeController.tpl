@@ -1,13 +1,26 @@
+<menu class="dynamic-menu group center">
+	<ul>
+		<li>
+			<a href="${relative_url(NewsletterUrlBuilder::subscribe())}">{@newsletter.subscribe_newsletters}</a> 
+		</li>
+		<li>
+			<a href="${relative_url(NewsletterUrlBuilder::unsubscribe())}">{@newsletter.unsubscribe_newsletters}</a>
+		</li>
+	</ul>
+</menu>
+
+<div class="spacer">&nbsp;</div>
+
 <table>
 	<thead>
 		<tr> 
 			<th>
 			</th>
 			<th>
-				{@streams.name}
+				${LangLoader::get_message('category.form.name', 'categories-common')}
 			</th>
 			<th>
-				{@streams.description}
+				${LangLoader::get_message('category.form.description', 'categories-common')}
 			</th>
 			<th>
 				{@newsletter.archives}
@@ -28,19 +41,10 @@
 	# ENDIF #
 	<tbody>
 	# IF C_STREAMS #
-		<tr>
-			<td colspan="2">
-				<a href="{LINK_SUBSCRIBE}">{@newsletter.subscribe_newsletters}</a>
-			</td>
-			<td class="no-separator"></td>
-			<td colspan="2" class="no-separator">
-				<a href="{LINK_UNSUBSCRIBE}">{@newsletter.unsubscribe_newsletters}</a>
-			</td>
-		</tr>
 		# START streams_list #
 		<tr>
 			<td> 
-				<img src="{streams_list.PICTURE}"></img>
+				<img src="{streams_list.IMAGE}"></img>
 			</td>
 			<td>
 				{streams_list.NAME}
@@ -49,10 +53,10 @@
 				{streams_list.DESCRIPTION}
 			</td>
 			<td>
-				{streams_list.VIEW_ARCHIVES}
+				# IF streams_list.C_VIEW_ARCHIVES #<a href="{streams_list.U_VIEW_ARCHIVES}">{@newsletter.view_archives}</a># ELSE #{@newsletter.not_level}# ENDIF #
 			</td>
 			<td>
-				{streams_list.VIEW_SUBSCRIBERS}
+				# IF streams_list.C_VIEW_SUBSCRIBERS #<a href="{streams_list.U_VIEW_SUBSCRIBERS}">{@newsletter.view_subscribers}</a># ELSE #{@newsletter.not_level}# ENDIF #
 			</td>
 		</tr>
 		# END streams_list #

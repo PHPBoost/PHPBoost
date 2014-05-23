@@ -33,7 +33,10 @@ class NewsletterHomeController extends ModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->check_authorizations();
+		
 		$this->init();
+		
 		$this->build_form($request);
 
 		return $this->build_response($this->view);
@@ -41,48 +44,47 @@ class NewsletterHomeController extends ModuleController
 
 	private function build_form($request)
 	{
-		$current_page = $request->get_int('page', 1);
-		$nbr_streams = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_streams, __LINE__, __FILE__);
-		$nbr_pages =  ceil($nbr_streams / $this->nbr_streams_per_page);
-		$pagination = new Pagination($nbr_pages, $current_page);
+		$pagination = $this->get_pagination();
 		
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '')->absolute());
-		$this->view->put_all(array(
-			'C_STREAMS' => (float)$nbr_streams,
-			'C_CREATE_AUTH' => NewsletterAuthorizationsService::default_authorizations()->create_newsletters(),
-			'LINK_CREATE' => NewsletterUrlBuilder::add_newsletter()->absolute(),
-			'LINK_SUBSCRIBE' => NewsletterUrlBuilder::subscribe()->absolute(),
-			'LINK_UNSUBSCRIBE' => NewsletterUrlBuilder::unsubscribe()->absolute(),
-			'PAGINATION' => $pagination->export()->render()
-		));
-
-		$limit_page = $current_page > 0 ? $current_page : 1;
-		$limit_page = (($limit_page - 1) * $this->nbr_streams_per_page);
-		
-		$result = PersistenceContext::get_querier()->select("SELECT id, name, description, picture, visible, auth
-		FROM " . NewsletterSetup::$newsletter_table_streams . "
-		LIMIT ". $this->nbr_streams_per_page ." OFFSET :start_limit",
+		$result = PersistenceContext::get_querier()->select('SELECT *
+		FROM ' . NewsletterSetup::$newsletter_table_streams . '
+		LIMIT :number_items_per_page OFFSET :display_from',
 			array(
-				'start_limit' => $limit_page
-			), SelectQueryResult::FETCH_ASSOC
-		);
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+		));
+		
 		while ($row = $result->fetch())
 		{
-			$read_auth = NewsletterAuthorizationsService::id_stream($row['id'])->read();
-			if ($read_auth && $row['visible'] == 1)
+			if (NewsletterAuthorizationsService::id_stream($row['id'])->read())
 			{
-				$read_archives_auth = NewsletterAuthorizationsService::id_stream($row['id'])->read_archives();
-				$read_subscribers_auth = NewsletterAuthorizationsService::id_stream($row['id'])->read_subscribers();
 				$this->view->assign_block_vars('streams_list', array(
-					'PICTURE' => PATH_TO_ROOT . $row['picture'],
+					'C_VIEW_ARCHIVES' => NewsletterAuthorizationsService::id_stream($row['id'])->read_archives(),
+					'C_VIEW_SUBSCRIBERS' => NewsletterAuthorizationsService::id_stream($row['id'])->read_subscribers(),
+					'IMAGE' => Url::to_rel($row['image']),
 					'NAME' => $row['name'],
 					'DESCRIPTION' => $row['description'],
-					'VIEW_ARCHIVES' => $read_archives_auth ? '<a href="' . NewsletterUrlBuilder::archives($row['id'])->absolute() . '">'. $this->lang['newsletter.view_archives'] .'</a>' : $this->lang['newsletter.not_level'],
-					'VIEW_SUBSCRIBERS' => $read_subscribers_auth ? '<a href="' . NewsletterUrlBuilder::subscribers($row['id'])->absolute() . '">'. $this->lang['newsletter.view_subscribers'] .'</a>' : $this->lang['newsletter.not_level'],
+					'U_VIEW_ARCHIVES' => NewsletterUrlBuilder::archives($row['id'])->absolute(),
+					'U_VIEW_SUBSCRIBERS' => NewsletterUrlBuilder::subscribers($row['id'])->absolute(),
 				));
 			}
 		}
+		
+		$this->view->put_all(array(
+			'C_STREAMS' => $result->get_rows_count() != 0,
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'PAGINATION' => $pagination->display()
+		));
+		
 		$result->dispose();
+	}
+	
+	private function check_authorizations()
+	{
+		if (!NewsletterAuthorizationsService::default_authorizations()->read())
+		{
+			NewsletterAuthorizationsService::get_errors()->read();
+		}
 	}
 	
 	private function init()
@@ -91,10 +93,30 @@ class NewsletterHomeController extends ModuleController
 		$this->view = new FileTemplate('newsletter/NewsletterHomeController.tpl');
 		$this->view->add_lang($this->lang);
 	}
+		
+	private function get_pagination()
+	{
+		$nbr_streams = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_streams);
+		
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = new ModulePagination($page, $nbr_streams, $this->nbr_streams_per_page);
+		$pagination->set_url(NewsletterUrlBuilder::home('%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		return $pagination;
+	}
 
 	private function build_response(View $view)
 	{
-		$response = new SiteDisplayResponse($view);
+		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$body_view->add_lang($this->lang);
+		$body_view->put('TEMPLATE', $view);
+		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$breadcrumb->add($this->lang['newsletter.list_newsletters'], NewsletterUrlBuilder::home()->absolute());
@@ -105,6 +127,7 @@ class NewsletterHomeController extends ModuleController
 	public static function get_view()
 	{
 		$object = new self();
+		$object->check_authorizations();
 		$object->init();
 		$object->build_form(AppContext::get_request());
 		return $object->view;

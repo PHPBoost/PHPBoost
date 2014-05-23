@@ -53,7 +53,7 @@ class NewsletterDeleteSubscriberController extends ModuleController
 				'id' => $id,
 			);
 			
-			$is_last = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscriptions, $condition, $parameters) == 0 ? true :false;
+			$is_last = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscriptions, $condition, $parameters) == 0;
 			if ($is_last)
 			{
 				$condition = "WHERE id = :id";
@@ -77,7 +77,7 @@ class NewsletterDeleteSubscriberController extends ModuleController
 	
 	private static function subscriber_exist($id)
 	{
-		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '" . $id . "'") > 0 ? true : false;
+		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '" . $id . "'") > 0;
 	}
 }
 ?>

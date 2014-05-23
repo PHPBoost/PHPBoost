@@ -27,32 +27,27 @@
 
 class NewsletterModuleMiniMenu extends ModuleMiniMenu
 {    
-    public function get_default_block()
-    {
-    	return self::BLOCK_POSITION__TOP_FOOTER;
-    }
-    
+	public function get_default_block()
+	{
+		return self::BLOCK_POSITION__TOP_FOOTER;
+	}
+	
 	public function admin_display()
-    {
-        return '';
-    }
+	{
+		return '';
+	}
 
 	public function display($tpl = false)
-    {
-    	$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
-	    MenuService::assign_positions_conditions($tpl, $this->get_block());
-	    
-	    $lang = LangLoader::get('common', 'newsletter');
-	    $tpl->put_all(array(
-	    	'SUBSCRIBE' => $lang['newsletter.subscribe_newsletters'],
-	    	'UNSUBSCRIBE' => $lang['newsletter.unsubscribe_newsletters'],
-	    	'USER_MAIL' => (AppContext::get_current_user()->get_attribute('user_mail') != '') ? AppContext::get_current_user()->get_attribute('user_mail') : '',
-	    	'L_NEWSLETTER' => $lang['newsletter'],
-	    	'L_SUBMIT' => $lang['newsletter.submit'],
-	    	'L_ARCHIVES' => $lang['newsletter.archives']
-	    ));
-	
-	    return $tpl->render();
-    }
+	{
+		$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
+		MenuService::assign_positions_conditions($tpl, $this->get_block());
+		
+		$lang = LangLoader::get('common', 'newsletter');
+		$tpl->add_lang($lang);
+		
+		$tpl->put('USER_MAIL', AppContext::get_current_user()->get_email());
+		
+		return $tpl->render();
+	}
 }
 ?>

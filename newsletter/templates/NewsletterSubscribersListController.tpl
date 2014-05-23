@@ -27,10 +27,10 @@
 		<tr>
 			<td> 
 				# IF subscribers_list.C_AUTH_MODO #
-					# IF subscribers_list.C_EDIT_LINK #
-					<a href="{subscribers_list.EDIT_LINK}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+					# IF subscribers_list.C_EDIT #
+					<a href="{subscribers_list.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
 					# ENDIF #
-					<a href="{subscribers_list.DELETE_LINK}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+					<a href="{subscribers_list.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				# ENDIF #
 			</td>
 			<td>

@@ -47,12 +47,12 @@ class AdminNewsletterConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-saving-config'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), E_USER_SUCCESS, 5));
 		}
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminNewsletterDisplayResponse($tpl, $this->lang['streams.add']);
+		return new AdminNewsletterDisplayResponse($tpl, LangLoader::get_message('configuration', 'admin'));
 	}
 
 	private function init()
@@ -65,7 +65,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 		$form = new HTMLForm('newsletter_admin');
 		$newsletter_config = NewsletterConfig::load();
 
-		$fieldset_config = new FormFieldsetHTML('configuration', $this->lang['newsletter.config']);
+		$fieldset_config = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin'));
 		$form->add_fieldset($fieldset_config);
 		
 		$fieldset_config->add_field(new FormFieldTextEditor('mail_sender', $this->lang['admin.mail-sender'], $newsletter_config->get_mail_sender(), array(
@@ -81,12 +81,12 @@ class AdminNewsletterConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset_authorizations);
 		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['auth.read'], NewsletterConfig::AUTH_READ),
-			new ActionAuthorization($this->lang['auth.subscribe'], NewsletterConfig::AUTH_SUBSCRIBE),
-			new ActionAuthorization($this->lang['auth.subscribers-read'], NewsletterConfig::AUTH_READ_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['auth.subscribers-moderation'], NewsletterConfig::AUTH_MODERATION_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['auth.create-newsletter'], NewsletterConfig::AUTH_CREATE_NEWSLETTER),
-			new ActionAuthorization($this->lang['auth.archives-read'], NewsletterConfig::AUTH_READ_ARCHIVES)
+			new ActionAuthorization($this->lang['auth.read'], NewsletterAuthorizationsService::AUTH_READ),
+			new ActionAuthorization($this->lang['auth.subscribe'], NewsletterAuthorizationsService::AUTH_SUBSCRIBE),
+			new ActionAuthorization($this->lang['auth.subscribers-read'], NewsletterAuthorizationsService::AUTH_READ_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['auth.subscribers-moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['auth.create-newsletter'], NewsletterAuthorizationsService::AUTH_CREATE_NEWSLETTERS),
+			new ActionAuthorization($this->lang['auth.archives-read'], NewsletterAuthorizationsService::AUTH_READ_ARCHIVES)
 		));
 		
 		$auth_settings->build_from_auth_array($newsletter_config->get_authorizations());

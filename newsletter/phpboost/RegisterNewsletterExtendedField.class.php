@@ -52,7 +52,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		$streams = $this->get_streams();
 		if (!empty($streams))
 		{
-			$newsletter_subscribe = NewsletterService::get_id_streams_member($member_extended_field->get_user_id());
+			$newsletter_subscribe = NewsletterService::get_member_id_streams($member_extended_field->get_user_id());
 			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $newsletter_subscribe, $streams, array('description' => $member_extended_field->get_description())));
 		}
 	}
@@ -90,17 +90,14 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		}
 	}
 	
-	public function get_streams()
+	private function get_streams()
 	{
 		$streams = array();
-		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
-		foreach ($newsletter_streams_cache as $id => $value)
+		$newsletter_streams = NewsletterStreamsCache::load()->get_streams();
+		foreach ($newsletter_streams as $id => $stream)
 		{
-			$read_auth = NewsletterAuthorizationsService::id_stream($id)->subscribe();
-			if ($read_auth && $value['visible'] == 1)
-			{
-				$streams[] = new FormFieldSelectChoiceOption($value['name'], $id);
-			}
+			if ($id != Category::ROOT_CATEGORY && NewsletterAuthorizationsService::id_stream($id)->subscribe())
+				$streams[] = new FormFieldSelectChoiceOption($stream->get_name(), $id);
 		}
 		return $streams;
 	}

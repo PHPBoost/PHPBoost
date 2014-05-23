@@ -86,7 +86,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		}')
 		)));
 
-		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_id_streams_member(AppContext::get_current_user()->get_attribute('user_id')) : array();
+		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_member_id_streams(AppContext::get_current_user()->get_id()) : array();
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('choice', $this->lang['unsubscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -113,14 +113,11 @@ class NewsletterUnSubscribeController extends ModuleController
 	private function get_streams()
 	{
 		$streams = array();
-		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
-		foreach ($newsletter_streams_cache as $id => $value)
+		$newsletter_streams = NewsletterStreamsCache::load()->get_streams();
+		foreach ($newsletter_streams as $id => $stream)
 		{
-			$read_auth = NewsletterAuthorizationsService::id_stream($id)->subscribe();
-			if ($read_auth && $value['visible'] == 1)
-			{
-				$streams[] = new FormFieldSelectChoiceOption($value['name'], $id);
-			}
+			if ($id != Category::ROOT_CATEGORY && NewsletterAuthorizationsService::id_stream($id)->subscribe())
+				$streams[] = new FormFieldSelectChoiceOption($stream->get_name(), $id);
 		}
 		return $streams;
 	}
@@ -132,7 +129,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		{
 			if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 			{
-				NewsletterService::unsubscriber_all_streams_member(AppContext::get_current_user()->get_attribute('user_id'));
+				NewsletterService::unsubscriber_all_streams_member(AppContext::get_current_user()->get_id());
 			}
 			else
 			{
@@ -149,7 +146,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		
 			if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && $streams !== '')
 			{
-				NewsletterService::update_subscriptions_member_registered($streams, AppContext::get_current_user()->get_attribute('user_id'));
+				NewsletterService::update_subscriptions_member_registered($streams, AppContext::get_current_user()->get_id());
 			}
 			else
 			{

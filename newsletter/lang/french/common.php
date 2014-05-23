@@ -30,12 +30,9 @@
  #						French						#
  ####################################################
 
-$lang = array();
-
 //Title
 $lang['newsletter.home'] = 'Accueil';
 $lang['newsletter'] = 'Newsletter';
-$lang['newsletter.config'] = 'Configuration';
 $lang['newsletter.archives'] = 'Archives';
 $lang['newsletter.subscribers'] = 'Liste des inscrits';
 $lang['newsletter.streams'] = 'Gestion des flux';
@@ -48,8 +45,10 @@ $lang['archives.list'] = 'Liste des archives';
 $lang['newsletter-add'] = 'Ajouter une newsletter';
 $lang['newsletter.subscribe_newsletters'] = 'S\'abonner à une newsletter';
 $lang['newsletter.unsubscribe_newsletters'] = 'Se désabonner d\'une newsletter';
-$lang['streams.add'] = 'Ajouter un flux';
-$lang['streams.edit'] = 'Modifier un flux';
+$lang['stream.add'] = 'Ajout d\'un flux';
+$lang['stream.edit'] = 'Modification d\'un flux';
+$lang['stream.delete'] = 'Suppression d\'un flux';
+$lang['stream.delete.description'] = 'Vous êtes sur le point de supprimer le flux. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (newsletters et flux) dans un autre flux soit supprimer l\'ensemble du flux. <strong>Attention, cette action est irréversible !</strong>';
 $lang['newsletter.list_newsletters'] = 'Liste des newsletters';
 
 //Admin
@@ -66,23 +65,6 @@ $lang['auth.subscribers-read'] = 'Autorisations de lecture de la liste des inscr
 $lang['auth.subscribers-moderation'] = 'Autorisations de modéreration des inscrits';
 $lang['auth.subscribe'] = 'Autorisations de s\'enregistrer aux newsletters';
 $lang['auth.create-newsletter'] = 'Autorisations de créer une newsletter';
-
-//Categories
-$lang['streams.name'] = 'Nom';
-$lang['streams.description'] = 'Description';
-$lang['streams.picture'] = 'Image de représentation';
-$lang['streams.visible'] = 'Afficher';
-$lang['streams.picture-preview'] = 'Prévisualiser l\'image du flux';
-$lang['streams.auth.read'] = 'Autorisations d\'accès au flux';
-$lang['streams.auth.subscribers-read'] = 'Autorisations de lecture des inscrits';
-$lang['streams.auth.subscribers-moderation'] = 'Autorisations de modération des inscrits';
-$lang['streams.auth.create-newsletter'] = 'Autorisations de créer une newsletter';
-$lang['streams.auth.subscribe'] = 'Autorisations de s\'enregistrer à la newsletter';
-$lang['streams.auth.archives-read'] = 'Autorisations de lecture des archives';
-$lang['streams.active-advanced-authorizations'] = 'Activer les autorisations avancées du flux';
-$lang['streams.visible-no'] = 'Non';
-$lang['streams.visible-yes'] = 'Oui';
-$lang['streams.no_cats'] = 'Aucun flux';
 
 //Subscribe
 $lang['subscribe.mail'] = 'Mail';
@@ -134,11 +116,7 @@ $lang['newsletter.visitor'] = 'Visiteur';
 $lang['newsletter.submit'] = 'OK';
 
 //Errors
-$lang['admin.success-saving-config'] = 'Vous avez modifié la configuration avec succès';
-$lang['admin.success-add-stream'] = 'Catégorie ajoutée avec succès';
-$lang['admin.stream-not-existed'] = 'La catégorie demandée n\'existe pas';
-$lang['admin.success-edit-stream'] = 'La catégorie a bien été modifiée';
-$lang['admin.success-delete-stream'] = 'La catégorie a bien été supprimée';
+$lang['admin.stream-not-existed'] = 'Le flux demandé n\'existe pas';
 $lang['success-subscribe'] = 'Vous vous êtes inscrit au(x) newsletter(s) avec succès';
 $lang['success-unsubscribe'] = 'Vous vous êtes désinscrit des newsletters avec succès';
 $lang['success-delete-subscriber'] = 'Vous avez supprimé la personne inscrite avec succès';

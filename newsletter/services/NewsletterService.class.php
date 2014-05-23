@@ -30,6 +30,8 @@ class NewsletterService
 	private static $lang;
 	public static $errors;
 	
+	private static $streams_manager;
+	
 	public static function __static()
 	{
 		self::$lang = LangLoader::get('common', 'newsletter');
@@ -38,13 +40,13 @@ class NewsletterService
 	
 	public static function add_newsletter(array $streams, $subject, $contents, $language_type)
 	{
-		$streams_cache = NewsletterStreamsCache::load()->get_streams();
-		foreach ($streams_cache as $id => $values)
+		$newsletter_streams = NewsletterStreamsCache::load()->get_streams();
+		foreach ($newsletter_streams as $id => $stream)
 		{
 			if (in_array($id, $streams))
 			{
 				//Send mail
-				NewsletterMailFactory::send_mail($values['subscribers'], $language_type, NewsletterConfig::load()->get_mail_sender(), $subject, $contents);
+				NewsletterMailFactory::send_mail(self::list_subscribers_by_stream($id), $language_type, NewsletterConfig::load()->get_mail_sender(), $subject, $contents);
 				//Add archive
 				NewsletterDAO::add_archive($id, $subject, $contents, $language_type);
 			}
@@ -98,38 +100,48 @@ class NewsletterService
 		}
 	}
 	
-	public static function get_id_streams_member($user_id)
+	public static function get_member_id_streams($user_id)
 	{
-		$streams = array();
-		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
-		foreach ($newsletter_streams_cache as $id => $value)
+		$id_streams = array();
+		
+		$result = PersistenceContext::get_querier()->select_rows(NewsletterSetup::$newsletter_table_subscriptions, array('stream_id'), 'WHERE subscriber_id=:id', array(
+			'id' => $user_id
+		));
+		
+		while ($row = $result->fetch())
 		{
-			if (is_array($value['subscribers']))
-			{
-				foreach ($value['subscribers'] as $value)
-				{
-					if ($value['user_id'] == $user_id)
-					{
-						$streams[] = (string)$id;
-					}
-				}
-			}
+			$id_streams[] = $row['stream_id'];
 		}
-		return $streams;
+		$result->dispose();
+		
+		return $id_streams;
 	}
 	
-	public static function get_name_streams_member($user_id)
+	public static function list_subscribers_by_stream($stream_id)
 	{
-		$streams = array();
-		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
-		foreach ($newsletter_streams_cache as $id => $value)
+		$list_subscribers = array();
+		
+		$result = PersistenceContext::get_querier()->select("SELECT 
+		subscribtion.stream_id, subscribtion.subscriber_id, subscriber.id, subscriber.user_id, subscriber.mail
+		FROM " . NewsletterSetup::$newsletter_table_subscriptions . " subscribtion
+		LEFT JOIN " . NewsletterSetup::$newsletter_table_subscribers . " subscriber ON subscribtion.subscriber_id = subscriber.id
+		WHERE subscribtion.stream_id = :stream_id
+		",
+			array(
+				'stream_id' => $stream_id
+		));
+		
+		while ($row = $result->fetch())
 		{
-			if (array_key_exists($user_id, $value['subscribers']))
-			{
-				$streams[] = $value['name'];
-			}
+			$list_subscribers[$row['id']] = array(
+				'id' => $row['id'],
+				'user_id' => $row['user_id'],
+				'mail' => $row['mail']
+			);
 		}
-		return $streams;
+		$result->dispose();
+		
+		return $list_subscribers;
 	}
 	
 	public static function get_errors()
@@ -142,6 +154,17 @@ class NewsletterService
 		{
 			return false;
 		}
+	}
+	
+	public static function get_streams_manager()
+	{
+		if (self::$streams_manager === null)
+		{
+			$categories_items_parameters = new CategoriesItemsParameters();
+			$categories_items_parameters->set_table_name_contains_items(NewsletterSetup::$newsletter_table_archives);
+			self::$streams_manager = new CategoriesManager(NewsletterStreamsCache::load(), $categories_items_parameters);
+		}
+		return self::$streams_manager;
 	}
 }
 ?>

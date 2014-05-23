@@ -52,7 +52,7 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function streams($param = '')
+    public static function manage_streams($param = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/streams/' . $param);
 	}
@@ -143,14 +143,6 @@ class NewsletterUrlBuilder
     public static function home($page = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $page);
-	}
-	
-	/**
-	 * @return Url
-	 */
-    public static function image_preview()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/ajax/image/preview/');
 	}
 }
 ?>
