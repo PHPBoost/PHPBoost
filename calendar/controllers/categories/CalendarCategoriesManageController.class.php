@@ -31,11 +31,6 @@ class CalendarCategoriesManageController extends AbstractCategoriesManageControl
 	{
 		return new AdminCalendarDisplayResponse($view, $this->get_title());
 	}
-	
-	protected function get_title()
-	{
-		return LangLoader::get_message('categories.management', 'categories-common');
-	}
 
 	protected function get_categories_manager()
 	{

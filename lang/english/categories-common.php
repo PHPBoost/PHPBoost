@@ -44,7 +44,7 @@ $lang['category.update_position'] = 'Change positions';
 
 //Errors
 $lang['errors.unexisting'] = 'The category doesn\'t exist.';
-$lang['message.no_categories'] = 'No category';
+$lang['message.no_element'] = 'No element';
 
 //Form
 $lang['category.form.name'] = 'Name';
