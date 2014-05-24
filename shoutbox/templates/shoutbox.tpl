@@ -1,9 +1,14 @@
 <section>
 	<header><h1>{TITLE}</h1></header>
 	<div class="content">
-	
+		
+		# IF C_POST_MESSAGE #
 		# INCLUDE SHOUTBOX_FORM #
-
+		# ELSE #
+		<div class="notice">{E_UNAUTHORIZED}</div>
+		<div class="spacer">&nbsp;</div>
+		# ENDIF #
+		
 		# START messages #
 		<article id="msg{messages.ID}" class="message">
 			<div class="message-user-infos">
@@ -36,9 +41,6 @@
 			</div>
 		</article>
 		# END messages #
-		# IF C_PAGINATION #
-			# INCLUDE PAGINATION #
-		# ENDIF #
 	</div>
-	<footer></footer>
+	<footer># IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #</footer>
 </section>

@@ -92,20 +92,21 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		$form->add_button(new FormButtonDefaultSubmit());
 		$form->add_button(new FormButtonReset());
 		
-		$tpl->put('SHOUTBOX_FORM', $form->display());
-		
 		//On crée une pagination si le nombre de messages est trop important.
 		$nbr_messages = $this->sql_querier->count_table(PREFIX . 'shoutbox', __LINE__, __FILE__);
 		$pagination = new ModulePagination(AppContext::get_request()->get_getint('p', 1), $nbr_messages, 10);
 		$pagination->set_url(new Url('shoutbox' . url('.php?p=%d')));
 		
 		$tpl->put_all(array(
-			'TITLE' => $LANG['title_shoutbox'],
+			'C_POST_MESSAGE' => ShoutboxAuthorizationsService::check_authorizations()->write(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
+			'SHOUTBOX_FORM' => $form->display(),
+			'TITLE' => $LANG['title_shoutbox'],
+			'E_UNAUTHORIZED' => $LANG['e_unauthorized']
 		));
 		
-		//Gestion des rangs.	
+		//Gestion des rangs.
 		$ranks_cache = ForumRanksCache::load()->get_ranks();
 		$result = $this->sql_querier->query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, s.contents
 		FROM " . PREFIX . "shoutbox s
