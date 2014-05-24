@@ -104,7 +104,7 @@ class NewsletterService
 	{
 		$id_streams = array();
 		
-		$result = PersistenceContext::get_querier()->select_rows(NewsletterSetup::$newsletter_table_subscriptions, array('stream_id'), 'WHERE subscriber_id=:id', array(
+		$result = PersistenceContext::get_querier()->select_rows(NewsletterSetup::$newsletter_table_subscriptions, array('stream_id'), 'WHERE subscriber_id = :id', array(
 			'id' => $user_id
 		));
 		
