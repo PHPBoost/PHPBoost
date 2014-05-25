@@ -20,7 +20,7 @@
 					<span class="text-strong">{available.NAME}</span>
 					<em>({available.VERSION})</em>
 				</td>
-				<td style="text-align:left;">
+				<td class="left">
 					<span class="text-strong">{@modules.author} :</span> {available.AUTHOR} {available.AUTHOR_WEBSITE}<br />
 					<span class="text-strong">{@modules.description} :</span> {available.DESCRIPTION}<br />
 					<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {available.COMPATIBILITY}<br />

@@ -21,7 +21,7 @@
 				<td>
 					<img src="{PATH_TO_ROOT}/{modules_upgradable.ICON}/{modules_upgradable.ICON}.png" alt="" /> <span class="text-strong">{modules_upgradable.NAME}</span> <span class="text-italic">({modules_upgradable.VERSION})</span>
 				</td>
-				<td style="text-align:left;">
+				<td class="left">
 					<span class="text-strong">{@modules.author} :</span> {modules_upgradable.AUTHOR} {modules_upgradable.AUTHOR_WEBSITE}<br />
 					<span class="text-strong">{@modules.description} :</span> {modules_upgradable.DESCRIPTION}<br />
 					<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_upgradable.COMPATIBILITY}<br />
