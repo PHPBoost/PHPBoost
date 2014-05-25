@@ -68,26 +68,21 @@
 					<span class="text-strong">{modules_not_activated.NAME}</span> <em>({modules_not_activated.VERSION})</em>
 				</td>
 				<td>
-					<div id="desc_explain{modules_not_activated.ID}" style="text-align:left;display: none;">
+					<div id="desc_explain{modules_not_activated.ID}" class="left" style="display: none;">
 						<span class="text-strong">{@modules.name} :</span> # IF modules_not_activated.C_AUTHOR #<a href="mailto:{modules_not_activated.AUTHOR_EMAIL}">{modules_not_activated.AUTHOR}</a># ELSE #{modules_not_activated.AUTHOR}# ENDIF # # IF modules_not_activated.C_AUTHOR_WEBSITE #<a href="{modules_not_activated.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">{@modules.description} :</span> {modules_not_activated.DESCRIPTION}<br />
 						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_not_activated.COMPATIBILITY}<br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_not_activated.PHP_VERSION}
 					</div>
-					<div style="text-align: center;cursor: pointer;"><i class="fa fa-plus" id="picture_desc{modules_not_activated.ID}"></i></div>
+					<div class="center"><a href="" onclick="return false;" class="fa fa-plus" id="picture_desc{modules_not_activated.ID}"></a></div>
 				</td>
 				<script>
 				<!--
 					Event.observe(window, 'load', function() {
 						var OpenCloseDivDesc = new OpenCloseDiv('desc_explain{modules_not_activated.ID}', 'picture_desc{modules_not_activated.ID}');
-						var OpenCloseDivAuth = new OpenCloseDiv('auth_explain{modules_not_activated.ID}', 'picture_auth{modules_not_activated.ID}');
-								
+						
 						Event.observe($('picture_desc{modules_not_activated.ID}'), 'click', function() {
 							OpenCloseDivDesc.change_status();
-						});
-						
-						Event.observe($('picture_auth{modules_not_activated.ID}'), 'click', function() {
-							OpenCloseDivAuth.change_status();
 						});
 					});
 				-->
@@ -128,26 +123,21 @@
 					<span class="text-strong">{modules_activated.NAME}</span> <em>({modules_activated.VERSION})</em>
 				</td>
 				<td>
-					<div id="desc_explain{modules_activated.ID}" style="text-align:left;display:none;">
+					<div id="desc_explain{modules_activated.ID}" class="left" style="display:none;">
 						<span class="text-strong">{@modules.name} :</span> # IF modules_activated.C_AUTHOR #<a href="mailto:{modules_activated.AUTHOR_EMAIL}">{modules_activated.AUTHOR}</a># ELSE #{modules_activated.AUTHOR}# ENDIF # # IF modules_activated.C_AUTHOR_WEBSITE #<a href="{modules_activated.AUTHOR_WEBSITE}" class="basic-button smaller">Web</a># ENDIF #<br />
 						<span class="text-strong">{@modules.description} :</span> {modules_activated.DESCRIPTION}<br />
 						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_activated.COMPATIBILITY}<br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_activated.PHP_VERSION}
 					</div>
-					<div style="text-align: center;cursor: pointer;"><i class="fa fa-plus" id="picture_desc{modules_activated.ID}"></i></div>
+					<div class="center"><a href="" onclick="return false;" class="fa fa-plus" id="picture_desc{modules_activated.ID}"></a></div>
 				</td>
 				<script>
 				<!--
 					Event.observe(window, 'load', function() {
 						var OpenCloseDivDesc = new OpenCloseDiv('desc_explain{modules_activated.ID}', 'picture_desc{modules_activated.ID}');
-						var OpenCloseDivAuth = new OpenCloseDiv('auth_explain{modules_activated.ID}', 'picture_auth{modules_activated.ID}');
-								
+						
 						Event.observe($('picture_desc{modules_activated.ID}'), 'click', function() {
 							OpenCloseDivDesc.change_status();
-						});
-								
-						Event.observe($('picture_auth{modules_activated.ID}'), 'click', function() {
-							OpenCloseDivAuth.change_status();
 						});
 					});
 				-->
