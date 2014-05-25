@@ -64,6 +64,12 @@
 [*] Suppression des extensions de programmation dans la configuration des fichiers (pouvait entrainer l'upload de fichier "critique" sur le serveur avec la configuration de base)
 [*] Ajout de l'url canonique. Elle permet de définir une url favorite pour accéder à une page et évite ainsi la duplication de contenu.
 
+[b]Installation :[/b]
+[*] Activation des options url rewriting et compression des pages automatiquement si elles sont disponibles sur le serveur
+
+[b]Script de migration :[/b]
+[*] Mise en maintenance automatique si le site n'est pas déjà en maintenance
+
 [b]Divers :[/b]
 [*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
 [*] Ajout de l'affichage de la taille de la mémoire utilisée par PHP

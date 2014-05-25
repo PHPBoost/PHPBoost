@@ -80,7 +80,7 @@
 - Possibilité de choisir les modules, thèmes et langues à installer
 
 [b]Script de migration[/b]
-- Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update + mise en maintenance automatique et déblocage par administrateur
+- Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update
 
 [b]Administration[/b]
 - Refonte de la partie Rapport système avec ajout de différentes informations concernant la sécurité, les options APC, des conseils, etc...
