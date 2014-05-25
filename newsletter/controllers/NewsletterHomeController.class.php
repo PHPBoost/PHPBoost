@@ -71,6 +71,7 @@ class NewsletterHomeController extends ModuleController
 		}
 		
 		$this->view->put_all(array(
+			'C_SUSCRIBE' => NewsletterAuthorizationsService::check_authorizations()->subscribe(),
 			'C_STREAMS' => $result->get_rows_count() != 0,
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display()
