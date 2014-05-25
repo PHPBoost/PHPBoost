@@ -50,6 +50,12 @@ class NewsletterAuthorizationsService
 		}
 	}
 	
+	public static function check_authorizations()
+	{
+		$instance = new self();
+		return $instance;
+	}
+	
 	/**
 	 * Int $id_stream Stream id
 	 * @return NewsletterAuthorizationsService by id stream
@@ -83,7 +89,7 @@ class NewsletterAuthorizationsService
 	{
 		if ($this->is_error == false)
 		{
-			return $this->check_authorizations(self::AUTH_READ);
+			return $this->get_authorizations(self::AUTH_READ);
 		}
 		else
 		{
@@ -95,7 +101,7 @@ class NewsletterAuthorizationsService
 	{
 		if ($this->is_error == false)
 		{
-			return $this->check_authorizations(self::AUTH_SUBSCRIBE);
+			return $this->get_authorizations(self::AUTH_SUBSCRIBE);
 		}
 		else
 		{
@@ -107,7 +113,7 @@ class NewsletterAuthorizationsService
 	{
 		if ($this->is_error == false)
 		{
-			return $this->check_authorizations(self::AUTH_READ_SUBSCRIBERS);
+			return $this->get_authorizations(self::AUTH_READ_SUBSCRIBERS);
 		}
 		else
 		{
@@ -119,7 +125,7 @@ class NewsletterAuthorizationsService
 	{
 		if ($this->is_error == false)
 		{
-			return $this->check_authorizations(self::AUTH_MODERATION_SUBSCRIBERS);
+			return $this->get_authorizations(self::AUTH_MODERATION_SUBSCRIBERS);
 		}
 		else
 		{
@@ -131,7 +137,7 @@ class NewsletterAuthorizationsService
 	{
 		if ($this->is_error == false)
 		{
-			return $this->check_authorizations(self::AUTH_CREATE_NEWSLETTERS);
+			return $this->get_authorizations(self::AUTH_CREATE_NEWSLETTERS);
 		}
 		else
 		{
@@ -143,7 +149,7 @@ class NewsletterAuthorizationsService
 	{
 		if ($this->is_error == false)
 		{
-			return $this->check_authorizations(self::AUTH_READ_ARCHIVES);
+			return $this->get_authorizations(self::AUTH_READ_ARCHIVES);
 		}
 		else
 		{
@@ -151,7 +157,7 @@ class NewsletterAuthorizationsService
 		}
 	}
 	
-	private function get_authorizations()
+	private function retrieve_authorizations()
 	{
 		if (is_array($this->stream_authorizations) && !empty($this->id_stream))
 		{
@@ -167,9 +173,9 @@ class NewsletterAuthorizationsService
 	 * Const $authorizations_type
 	 * @return true or false if user is not authorized
 	 */
-	private function check_authorizations($authorizations_type)
+	private function get_authorizations($authorizations_type)
 	{
-		return AppContext::get_current_user()->check_auth($this->get_authorizations(), $authorizations_type);
+		return AppContext::get_current_user()->check_auth($this->retrieve_authorizations(), $authorizations_type);
 	}
 	
 	private function get_error($authorizations_type)

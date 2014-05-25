@@ -1,3 +1,4 @@
+# IF C_SUSCRIBE #
 <menu class="dynamic-menu group center">
 	<ul>
 		<li>
@@ -10,6 +11,7 @@
 </menu>
 
 <div class="spacer">&nbsp;</div>
+# ENDIF #
 
 <table>
 	<thead>

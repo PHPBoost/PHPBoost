@@ -39,15 +39,19 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
 
 	public function display($tpl = false)
 	{
-		$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
-		MenuService::assign_positions_conditions($tpl, $this->get_block());
-		
-		$lang = LangLoader::get('common', 'newsletter');
-		$tpl->add_lang($lang);
-		
-		$tpl->put('USER_MAIL', AppContext::get_current_user()->get_email());
-		
-		return $tpl->render();
+		 if (NewsletterAuthorizationsService::check_authorizations()->subscribe())
+		{
+			$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
+			MenuService::assign_positions_conditions($tpl, $this->get_block());
+			
+			$lang = LangLoader::get('common', 'newsletter');
+			$tpl->add_lang($lang);
+			
+			$tpl->put('USER_MAIL', AppContext::get_current_user()->get_email());
+			
+			return $tpl->render();
+		}
+		return '';
 	}
 }
 ?>
