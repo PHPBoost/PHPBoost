@@ -106,7 +106,7 @@ class InstallUrlBuilder
     	{
     		$path .= '?lang=' . self::$locale;
     	}
-		return new Url(self::$dispatcher . '?' . Dispatcher::URL_PARAM_NAME . '=' . $path);
+		return DispatchManager::get_url(self::$dispatcher, $path, true);
     }
 }
 ?>
