@@ -79,7 +79,7 @@ class BugtrackerDetailController extends ModuleController
 		
 		$comments_topic = new BugtrackerCommentsTopic();
 		$comments_topic->set_id_in_module($this->bug->get_id());
-		$comments_topic->set_url(BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
+		$comments_topic->set_url(BugtrackerUrlBuilder::detail_comments($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
 		$this->view->put('COMMENTS', $comments_topic->display());
 	}
 	
