@@ -110,7 +110,7 @@ class ArticlesUrlBuilder
 	
 	public static function display_comments_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' . $rewrited_title . '/#comments_list');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' . $rewrited_title . '/', true);
 	}
 	
 	public static function display_pending_articles($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
