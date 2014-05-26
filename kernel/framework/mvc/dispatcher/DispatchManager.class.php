@@ -68,13 +68,14 @@ class DispatchManager
 	 * dispatcher must be in the index.php file
 	 * @param string $path the url to apply the rewrite form on
 	 * @param string $url the url to apply the rewrite form on
+	 * @param boolean $not_rewriting_url_forced forced to have a non-rewritten url
 	 * @return Url an url object relative to the current script path
 	 */
-	public static function get_url($path, $url)
+	public static function get_url($path, $url, $not_rewriting_url_forced = false)
 	{
 		$dispatcher_url = new Url(rtrim($path, '/'));
 		$url = ltrim($url, '/');
-		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !$not_rewriting_url_forced)
 		{
 			return new Url(self::get_dispatcher_path($dispatcher_url->relative()) . '/' . $url);
 		}
