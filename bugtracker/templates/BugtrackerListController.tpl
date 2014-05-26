@@ -9,7 +9,7 @@
 					{@labels.fields.id}
 					<a href="{LINK_BUG_ID_BOTTOM}" class="fa fa-table-sort-down"></a>
 				</th>
-				<th>
+				<th class="title-column">
 					<a href="{LINK_BUG_TITLE_TOP}" class="fa fa-table-sort-up"></a>
 					{@labels.fields.title}
 					<a href="{LINK_BUG_TITLE_BOTTOM}" class="fa fa-table-sort-down"></a>
