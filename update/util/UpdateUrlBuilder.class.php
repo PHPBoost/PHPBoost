@@ -102,7 +102,7 @@ class UpdateUrlBuilder
     	{
     		$path .= '?lang=' . self::$locale;
     	}
-        return DispatchManager::get_url(self::$dispatcher, $path);
+		return new Url(self::$dispatcher . '?' . Dispatcher::URL_PARAM_NAME . '=' . $path);
     }
 }
 ?>
