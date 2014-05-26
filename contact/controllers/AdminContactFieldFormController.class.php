@@ -237,7 +237,7 @@ class AdminContactFieldFormController extends AdminModuleController
 			
 			$field->set_regex($regex);
 			
-			if ((bool)$this->form->get_value('field_required')->get_raw_value())
+			if ((bool)$this->form->get_value('field_required'))
 				$field->required();
 			else
 				$field->not_required();
@@ -254,7 +254,7 @@ class AdminContactFieldFormController extends AdminModuleController
 		if (!$this->form->field_is_disabled('default_value_medium'))
 			$field->set_default_value($this->form->get_value('default_value_medium'));
 		
-		if ((bool)$this->form->get_value('display')->get_raw_value())
+		if ((bool)$this->form->get_value('display'))
 			$field->displayed();
 		else
 			$field->not_displayed();
