@@ -97,7 +97,7 @@ class CalendarUrlBuilder
 	 */
 	public static function display_event_comments($category_id, $rewrited_name_category, $event_id, $rewrited_title)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $category_id . '-' . $rewrited_name_category . '/' . $event_id . '-' . $rewrited_title . '#comments_list');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $category_id . '-' . $rewrited_name_category . '/' . $event_id . '-' . $rewrited_title, true);
 	}
 	
 	/**
