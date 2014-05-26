@@ -94,7 +94,7 @@ class CalendarDisplayEventController extends ModuleController
 		{
 			$comments_topic = new CalendarCommentsTopic($event);
 			$comments_topic->set_id_in_module($event->get_id());
-			$comments_topic->set_url(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
+			$comments_topic->set_url(CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 			
 			$this->tpl->put('COMMENTS', $comments_topic->display());
 		}
