@@ -57,7 +57,7 @@ $lang['admin.config.informations.position_bottom'] = 'Bottom';
 $lang['admin.config.tracking_number_enabled'] = 'Generate a tracking number for each email sent';
 $lang['admin.config.date_in_date_in_tracking_number_enabled'] = 'Display day date in the tracking number';
 $lang['admin.config.date_in_date_in_tracking_number_enabled.explain'] = 'Allows to generate a tracking number like <b>yyyymmdd-number</b>';
-$lang['admin.config.sender_acknowledgment_enabled'] = 'Send an acknowledgment';
+$lang['admin.config.sender_acknowledgment_enabled'] = 'Send a copy of the email to the sender';
 $lang['admin.authorizations.read']  = 'Permission to display the contact form';
 $lang['admin.authorizations.display_field']  = 'Permission to display the field';
 
