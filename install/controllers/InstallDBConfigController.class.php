@@ -114,15 +114,7 @@ class InstallDBConfigController extends InstallController
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLinkCssImg($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
-		$check_request = new AjaxRequest(InstallUrlBuilder::check_database(), 'function(response){
-		alert(response.responseJSON.message);
-		if (response.responseJSON.alreadyInstalled) {
-			$FFS(\'overwriteFieldset\').enable();
-		} else {
-			$FFS(\'overwriteFieldset\').disable();
-		}}');
-		$check = new FormButtonAjaxCssImg($this->lang['db.config.check'], $check_request, 'fa fa-refresh',
-		array($host, $port, $login, $password, $schema, $tables_prefix), '$HF(\'databaseForm\').validate()');
+		$check = new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fa fa-refresh', 'database');
 		$action_fieldset->add_element($check);
 		$this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'database');
 		$action_fieldset->add_element($this->submit_button);
