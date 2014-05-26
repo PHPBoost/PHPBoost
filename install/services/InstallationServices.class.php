@@ -207,7 +207,7 @@ class InstallationServices
 		}
 		catch (UnsupportedOperationException $ex) 
 		{
-			$server_environment_config->set_url_rewriting_enabled(true);
+			$server_environment_config->set_url_rewriting_enabled(false);
 		}
 		
 		if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
