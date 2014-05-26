@@ -57,6 +57,8 @@
 	cursor: pointer;
 }
 
-ol { margin-left: 25px; }
+ol { margin: 0px 0px 0px 25px; }
+
+ol[class~=wiki_list_] li+li { margin-top:5px; }
 
 ul.no-list a i.fa { width: 18px; }
