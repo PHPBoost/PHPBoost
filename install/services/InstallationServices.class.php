@@ -198,10 +198,18 @@ class InstallationServices
 		$server_configuration = new ServerConfiguration();
 		$server_environment_config = ServerEnvironmentConfig::load();
 		
-		if ($server_configuration->has_url_rewriting())
+		try
+		{
+			if ($server_configuration->has_url_rewriting())
+			{
+				$server_environment_config->set_url_rewriting_enabled(true);
+			}
+		}
+		catch (UnsupportedOperationException $ex) 
 		{
 			$server_environment_config->set_url_rewriting_enabled(true);
 		}
+		
 		if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
 		{
 			$server_environment_config->set_output_gziping_enabled(true);
