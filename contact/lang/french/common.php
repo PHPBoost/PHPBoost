@@ -57,7 +57,7 @@ $lang['admin.config.informations.position_bottom'] = 'Bas';
 $lang['admin.config.tracking_number_enabled'] = 'Générer un numéro de suivi pour chaque mail envoyé';
 $lang['admin.config.date_in_date_in_tracking_number_enabled'] = 'Afficher la date du jour dans le numéro de suivi';
 $lang['admin.config.date_in_date_in_tracking_number_enabled.explain'] = 'Permet de générer un numéro de suivi de la forme <b>aaaammjj-numéro</b>';
-$lang['admin.config.sender_acknowledgment_enabled'] = 'Envoyer un accusé de réception';
+$lang['admin.config.sender_acknowledgment_enabled'] = 'Envoyer une copie du mail à l\'émetteur';
 $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le formulaire de contact';
 $lang['admin.authorizations.display_field']  = 'Autorisation d\'afficher le champ';
 
