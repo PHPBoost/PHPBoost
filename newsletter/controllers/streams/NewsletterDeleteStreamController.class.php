@@ -32,7 +32,7 @@ class NewsletterDeleteStreamController extends AbstractDeleteCategoryController
 {
 	protected function generate_response(View $view)
 	{
-		return new AdminNewsletterDisplayResponse($view, );
+		return new AdminNewsletterDisplayResponse($view, $this->get_title());
 	}
 	
 	protected function get_categories_manager()
