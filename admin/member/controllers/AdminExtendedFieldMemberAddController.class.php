@@ -163,8 +163,8 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		if (!$this->form->field_is_disabled('default_value'))
 			$extended_field->set_default_value($this->form->get_value('default_value'));
 		
-		$extended_field->set_is_required((bool)$this->form->get_value('field_required')->get_raw_value());
-		$extended_field->set_display((bool)$this->form->get_value('display')->get_raw_value());
+		$extended_field->set_is_required((bool)$this->form->get_value('field_required'));
+		$extended_field->set_display((bool)$this->form->get_value('display'));
 		$regex = 0;
 		
 		if (!$this->form->field_is_disabled('regex_type'))
