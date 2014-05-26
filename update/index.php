@@ -45,7 +45,6 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('UpdateIntroductionController', '`^(?:/introduction)?/?$`'),
 	new UrlControllerMapper('UpdateServerConfigController', '`^/server/?$`'),
 	new UrlControllerMapper('UpdateDBConfigController', '`^/database/?$`'),
-	new UrlControllerMapper('UpdateDBConfigCheckController', '`^/database/check/?$`'),
 	new UrlControllerMapper('UpdateVersionExecuteController', '`^/execute/?$`'),
 	new UrlControllerMapper('UpdateFinishController', '`^/finish/?$`')
 );

@@ -48,7 +48,6 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('InstallLicenseController', '`^/license/?$`'),
 	new UrlControllerMapper('InstallServerConfigController', '`^/server/?$`'),
 	new UrlControllerMapper('InstallDBConfigController', '`^/database/?$`'),
-	new UrlControllerMapper('InstallDBConfigCheckController', '`^/database/check/?$`'),
 	new UrlControllerMapper('InstallWebsiteConfigController', '`^/website/?$`'),
 	new UrlControllerMapper('InstallCreateAdminController', '`^/admin/?$`'),
 	new UrlControllerMapper('InstallFinishController', '`^/finish/?$`')

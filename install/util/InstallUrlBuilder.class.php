@@ -75,14 +75,6 @@ class InstallUrlBuilder
     /**
      * @return Url
      */
-    public static function check_database()
-    {
-        return self::url('/database/check');
-    }
-
-    /**
-     * @return Url
-     */
     public static function website()
     {
         return self::url('/website');

@@ -63,14 +63,6 @@ class UpdateUrlBuilder
     /**
      * @return Url
      */
-    public static function check_database()
-    {
-        return self::url('/database/check');
-    }
-
-    /**
-     * @return Url
-     */
     public static function update()
     {
         return self::url('/execute');
