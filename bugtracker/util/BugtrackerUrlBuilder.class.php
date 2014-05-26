@@ -84,6 +84,14 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function detail_comments($param = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/detail/' . $param, true);
+	}
+	
+	/**
+	 * @return Url
+	 */
 	public static function add($param = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $param);
