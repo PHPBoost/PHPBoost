@@ -41,7 +41,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		$streams = $this->get_streams();
 		if (!empty($streams))
 		{
-			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), array(), $streams, array('description' => $member_extended_field->get_description())));
+			$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), array(), $streams, array('description' => $member_extended_field->get_description())));
 		}
 	}
 	
@@ -53,7 +53,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		if (!empty($streams))
 		{
 			$newsletter_subscribe = NewsletterService::get_member_id_streams($member_extended_field->get_user_id());
-			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $newsletter_subscribe, $streams, array('description' => $member_extended_field->get_description())));
+			$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $newsletter_subscribe, $streams, array('description' => $member_extended_field->get_description())));
 		}
 	}
 	
@@ -67,7 +67,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 			$array = array();
 			foreach ($form->get_value($field_name) as $field => $option)
 			{
-				$array[] = $option->get_raw_value();
+				$array[] = $option->get_id();
 			}
 			return $this->serialise_value($array);
 		}
@@ -81,7 +81,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		$streams = array();
 		foreach ($form->get_value($member_extended_field->get_field_name(), array()) as $field => $option)
 		{
-			$streams[] = $option->get_raw_value();
+			$streams[] = $option->get_id();
 		}
 		
 		if (is_array($streams))
@@ -97,7 +97,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		foreach ($newsletter_streams as $id => $stream)
 		{
 			if ($id != Category::ROOT_CATEGORY && NewsletterAuthorizationsService::id_stream($id)->subscribe())
-				$streams[] = new FormFieldSelectChoiceOption($stream->get_name(), $id);
+				$streams[] = new FormFieldMultipleCheckboxOption($id, $stream->get_name());
 		}
 		return $streams;
 	}

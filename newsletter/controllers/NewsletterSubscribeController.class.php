@@ -79,7 +79,7 @@ class NewslettersubscribeController extends ModuleController
 		));
 		
 		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_member_id_streams(AppContext::get_current_user()->get_id()) : array();
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
+		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -109,7 +109,7 @@ class NewslettersubscribeController extends ModuleController
 		foreach ($newsletter_streams as $id => $stream)
 		{
 			if ($id != Category::ROOT_CATEGORY && NewsletterAuthorizationsService::id_stream($id)->subscribe())
-				$streams[] = new FormFieldSelectChoiceOption($stream->get_name(), $id);
+				$streams[] = new FormFieldMultipleCheckboxOption($id, $stream->get_name());
 		}
 		return $streams;
 	}
@@ -119,7 +119,7 @@ class NewslettersubscribeController extends ModuleController
 		$streams = array();
 		foreach ($this->form->get_value('newsletter_choice') as $field => $option)
 		{
-			$streams[] = $option->get_raw_value();
+			$streams[] = $option->get_id();
 		}
 		
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))

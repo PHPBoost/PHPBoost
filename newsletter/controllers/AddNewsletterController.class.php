@@ -82,7 +82,7 @@ class AddNewsletterController extends ModuleController
 		$fieldset = new FormFieldsetHTML('add-newsletter', $this->lang['newsletter-add']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['add.choice_streams'], array(), $this->get_streams(), array('required' => true)));
+		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['add.choice_streams'], array(), $this->get_streams(), array('required' => true)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['newsletter.title'], NewsletterConfig::load()->get_newsletter_name(), array(
 			'required' => true)
@@ -104,7 +104,7 @@ class AddNewsletterController extends ModuleController
 		$streams = array();
 		foreach ($this->form->get_value('newsletter_choice') as $field => $option)
 		{
-			$streams[] = $option->get_raw_value();
+			$streams[] = $option->get_id();
 		}
 		
 		NewsletterService::add_newsletter(
@@ -149,7 +149,7 @@ class AddNewsletterController extends ModuleController
 		foreach ($newsletter_streams as $id => $stream)
 		{
 			if ($id != Category::ROOT_CATEGORY && NewsletterAuthorizationsService::id_stream($id)->subscribe())
-				$streams[] = new FormFieldSelectChoiceOption($stream->get_name(), $id);
+				$streams[] = new FormFieldMultipleCheckboxOption($id, $stream->get_name());
 		}
 		return $streams;
 	}

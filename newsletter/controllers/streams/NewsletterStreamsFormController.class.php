@@ -62,7 +62,7 @@ class NewsletterStreamsFormController extends AbstractRichCategoriesFormControll
 			new ActionAuthorization($lang['auth.subscribe'], NewsletterAuthorizationsService::AUTH_SUBSCRIBE),
 			new ActionAuthorization($lang['auth.subscribers-read'], NewsletterAuthorizationsService::AUTH_READ_SUBSCRIBERS),
 			new ActionAuthorization($lang['auth.subscribers-moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_SUBSCRIBERS),
-			new ActionAuthorization($lang['auth.create-newsletter'], NewsletterAuthorizationsService::AUTH_CREATE_NEWSLETTER),
+			new ActionAuthorization($lang['auth.create-newsletter'], NewsletterAuthorizationsService::AUTH_CREATE_NEWSLETTERS),
 			new ActionAuthorization($lang['auth.archives-read'], NewsletterAuthorizationsService::AUTH_READ_ARCHIVES)
 		));
 	}
