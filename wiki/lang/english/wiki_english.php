@@ -57,7 +57,7 @@ $LANG['wiki_add_cat'] = 'Add a category';
 $LANG['wiki_article_cat'] = 'Category of this article';
 $LANG['wiki_create_cat'] = 'Create a category';
 $LANG['wiki_update_index'] = 'Edit wiki index';
-$LANG['wiki_warning_updated_article'] = '<span class="warning"><strong>Warning :</strong> This article has been updated, you are now consulting an old release of this article!</span>';
+$LANG['wiki_warning_updated_article'] = 'This article has been updated, you are now consulting an old release of this article!';
 $LANG['wiki_article_cat'] = 'Category of the article';
 $LANG['wiki_current_cat'] = 'Current category';
 $LANG['wiki_contribuate'] = 'Contribute to the wiki';
