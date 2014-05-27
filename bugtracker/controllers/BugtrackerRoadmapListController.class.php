@@ -78,9 +78,20 @@ class BugtrackerRoadmapListController extends ModuleController
 		
 		if (!empty($versions))
 		{
-			$roadmap_version = $request->get_int('id_version', key($versions));
-			$roadmap_version_name = $request->get_value('version', Url::encode_rewrite($versions[key($versions)]['name']));
+			$roadmap_version = $request->get_int('id_version', 0);
+			$roadmap_version_name = $request->get_value('version', '');
 			$roadmap_status = $request->get_value('status', 'all');
+			
+			if (empty($roadmap_version) && empty($roadmap_version_name))
+			{
+				$roadmap_version = key($versions);
+				$roadmap_version_name = Url::encode_rewrite($versions[key($versions)]['name']);
+			}
+			else if (!isset($versions[$roadmap_version]))
+			{
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
+			}
 			
 			$field = $request->get_value('field', 'date');
 			$sort = $request->get_value('sort', 'desc');
