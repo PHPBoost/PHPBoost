@@ -56,7 +56,7 @@ $LANG['wiki_add_cat'] = 'Ajouter une catégorie';
 $LANG['wiki_article_cat'] = 'Catégorie de l\'article';
 $LANG['wiki_create_cat'] = 'Créer une catégorie';
 $LANG['wiki_update_index'] = 'Modifier l\'accueil';
-$LANG['wiki_warning_updated_article'] = '<span class="warning"><strong>Attention :</strong> Cet article a été mis à jour, vous consultez ici une archive de cet article!</span>';
+$LANG['wiki_warning_updated_article'] = 'Cet article a été mis à jour, vous consultez ici une archive de cet article!';
 $LANG['wiki_article_cat'] = 'Catégorie de l\'article';
 $LANG['wiki_current_cat'] = 'Catégorie courante';
 $LANG['wiki_contribuate'] = 'Contribuer au wiki';
