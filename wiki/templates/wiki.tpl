@@ -1,4 +1,4 @@
-		<article>					
+		<article>
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'main')}" class="fa fa-syndication"></a>
@@ -11,7 +11,7 @@
 				# START warning #
 				<div id="id-message-helper" class="warning">{warning.UPDATED_ARTICLE}</div>
 				# END warning #
-						
+				
 				# START redirect #
 					<div style="width:30%;">
 					{redirect.REDIRECTED}
@@ -19,13 +19,13 @@
 							<a href="{redirect.remove_redirection.U_REMOVE_REDIRECTION}" title="{redirect.remove_redirection.L_REMOVE_REDIRECTION}" class="fa fa-delete" data-confirmation="{redirect.remove_redirection.L_ALERT_REMOVE_REDIRECTION}"></a>
 						# END redirect.remove_redirection #
 					</div>
-					<br />
+					<div class="spacer">&nbsp;</div>
 				# END redirect #
 				
 				# START status #
-					<br /><br />
+					<div class="spacer">&nbsp;</div>
 					<div class="blockquote">{status.ARTICLE_STATUS}</div>
-					<br />
+					<div class="spacer">&nbsp;</div>
 				# END status #
 				
 				# START menu #
@@ -34,9 +34,9 @@
 						{menu.MENU}
 					</div>
 				# END menu #
-				<br /><br /><br />
+				<div class="spacer">&nbsp;</div>
 				{CONTENTS}
-				<br /><br />
+				<div class="spacer">&nbsp;</div>
 				# START cat #
 					<hr />
 					# IF cat.list_cats #
