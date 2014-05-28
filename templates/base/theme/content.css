@@ -3,7 +3,7 @@
 Contient les formulaires, les modules (et modules minis), messages.
 --------------------------------------*/
 
-/* Conteneurs, 茅l茅ments de module, ... */
+/* Conteneurs, 閘閙ents de module, ... */
 section, article {
 	width: 96%;
 	margin: auto;
@@ -75,10 +75,10 @@ article footer { margin-bottom: 15px; }
 .medium-block,
 .small-block { margin-right: -0.29em; }
 
-/* Affiche 2 blocs c么te 脿 c么te */
+/* Affiche 2 blocs c魌e犩 c魌e */
 .medium-block { width: 48.7%; }
 
-/* Affiche 3 blocs c么te 脿 c么te */
+/* Affiche 3 blocs c魌e犩 c魌e */
 .small-block { width: 31.96%; }
 
 /* Pagination */
@@ -148,7 +148,7 @@ ul.pagination-block-bis li a.next-page {
 ul.pagination-block-bis li a.prev-page:hover,
 ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
 
-/* Exploreur des cat茅gories
+/* Exploreur des cat間ories
 -------------------------------------- */
 .explorer .cats,
 .explorer .files {
@@ -181,30 +181,26 @@ ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
 	margin: 0;
 	padding: 0;
 }
+.explorer .content ul ul { margin-left: 22px; }
 
-.explorer .content ul a.parent {
-	float: left;
-	display: inline-block;
-	padding-right: 0;
-}
+.explorer .content ul a.parent { float: left; }
 
 .explorer .content ul a {
-	padding: 3px 5px;
+	padding: 3px 0px;
 	display: block;
 	text-decoration: none;
 	color: #666666;
-	font-weight: 300;
 }
 
-.explorer .content ul .fa { width: 20px; }
+.explorer .content > ul > li > a { padding: 3px 5px; }
+
+.explorer .content ul .fa { 
+	width: 20px;
+	vertical-align: top;
+}
+.explorer .content ul .fa:before { vertical-align: middle; }
 
 .explorer .content ul a.parent .fa:first-child { width: 14px; }
-
-.explorer .content ul .fa:before {
-	width: 20px;
-	text-align: center;
-	vertical-align: middle;
-}
 
 .explorer .content ul a.parent .fa:first-child:before {
 	width: 14px;
@@ -213,9 +209,6 @@ ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
 
 .explorer .content ul a:hover,
 .explorer .content ul a:hover+a { background-color: #EEEEEE; }
-
-.explorer .content ul .sub a,
-.explorer .content ul .sub ul .sub { padding-left: 18px; }
 
 .explorer .content ul .sub a.parent { padding-left: 4px; }
 

@@ -168,12 +168,15 @@
 						<div id="selected_cat">{move.CURRENT_CAT}</div>
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element explorer">
 					<label>{L_SELECT_CAT}</label>
-					<div class="form-field">
-						<span style="padding-left:20px;"><a href="javascript:select_cat(0);"><i class="fa fa-folder"></i> <span id="class_0" class="{move.CAT_0}">{L_DO_NOT_SELECT_ANY_CAT}</span></a></span>
-						<br />
-						{move.CATS}
+					<div class="form-field content">
+						<ul>
+							<li>
+								<a id="class_0" class="{move.CAT_0}" href="javascript:select_cat(0);"><i class="fa fa-folder"></i> {L_DO_NOT_SELECT_ANY_CAT}</a>
+								{move.CATS}
+							</li>
+						</ul>
 					</div>
 				</div>
 			</fieldset>
