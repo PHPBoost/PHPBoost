@@ -41,7 +41,7 @@ $module_data_path = $Template->get_pictures_data_path();
 //Listage des répertoires dont le répertoire parent est connu
 if ($id_cat != 0)
 {
-	echo '<ul>';
+	echo '<ul class="no-list">';
 	//On sélectionne les répetoires dont l'id parent est connu
 	$result = $Sql->query_while("SELECT c.id, a.title, a.encoded_title
 	FROM " . PREFIX . "wiki_cats c
@@ -88,7 +88,7 @@ elseif ($select_cat && empty($open_cat) && $root == 0)
 elseif (!empty($open_cat) || $root == 1)
 {
 	$open_cat = $root == 1 ? 0 : $open_cat;
-	$return = '<ul>';
+	$return = '<ul class="no-list">';
 	//Liste des catégories dans cette catégorie
 	$Cache->load('wiki');
 	foreach ($_WIKI_CATS as $key => $value)
