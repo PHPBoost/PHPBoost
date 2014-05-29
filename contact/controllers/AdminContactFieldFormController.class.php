@@ -55,9 +55,8 @@ class AdminContactFieldFormController extends AdminModuleController
 			<script>
 			<!--
 				Event.observe(window, \'load\', function() {
-					' . $this->get_readonly_fields() . '
 					' . $this->get_events_select_type() . '
-					' . ($this->get_field()->is_readonly() ? '$(' . __CLASS__ . '_regex_type).disabled = \'disabled\';' : '') . '
+					' . $this->get_readonly_fields() . '
 				});
 				
 				function ContactFieldExistValidator(message, field_id)
@@ -236,12 +235,12 @@ class AdminContactFieldFormController extends AdminModuleController
 				$regex = is_numeric($this->form->get_value('regex_type', '')->get_raw_value()) ? $this->form->get_value('regex_type', '')->get_raw_value() : $this->form->get_value('regex', '');
 			
 			$field->set_regex($regex);
-			
-			if ((bool)$this->form->get_value('field_required'))
-				$field->required();
-			else
-				$field->not_required();
 		}
+		
+		if ((bool)$this->form->get_value('field_required'))
+			$field->required();
+		else
+			$field->not_required();
 		
 		if (!$this->form->field_is_disabled('possible_values'))
 		{
@@ -302,7 +301,10 @@ class AdminContactFieldFormController extends AdminModuleController
 		if ($field->is_readonly())
 		{
 			$event = '$(' . __CLASS__ . '_regex_type).disabled = "disabled";
-					$(' . __CLASS__ . '_display_field).disabled = "disabled";';
+					$(' . __CLASS__ . '_regex).disabled = "disabled";
+					$(' . __CLASS__ . '_field_required).disabled = "disabled";
+					$(' . __CLASS__ . '_default_value_small).disabled = "disabled";
+					$(' . __CLASS__ . '_display).disabled = "disabled";';
 		}
 		return $event;
 	}
@@ -322,7 +324,7 @@ class AdminContactFieldFormController extends AdminModuleController
 					$event .= ' || HTMLForms.getField("field_type").getValue() == "'. $name .'"';
 				}
 				$event .= ') { 
-					' . ($name_field_disable != 'regex' ? 'HTMLForms.getField("' .$name_field_disable. '").disable();' : '') . '} else { HTMLForms.getField("' .$name_field_disable. '").enable(); }';
+					HTMLForms.getField("' .$name_field_disable. '").disable();} else { HTMLForms.getField("' .$name_field_disable. '").enable(); }';
 			}
 		}
 		return $event;
@@ -332,11 +334,12 @@ class AdminContactFieldFormController extends AdminModuleController
 	{
 		$disable_field = array(
 			'name' => array(), 
-			'description' => array(), 
+			'description' => array(),
+			'regex_type' => array(),
+			'regex' => array(),
 			'possible_values' => array(), 
 			'default_value_small' => array(), 
 			'default_value_medium' => array(), 
-			'regex' => array()
 		);
 		
 		foreach ($this->get_fields_class_name() as $field_type)
@@ -356,20 +359,7 @@ class AdminContactFieldFormController extends AdminModuleController
 	
 	private function get_fields_class_name($field_name = '')
 	{
-		if ($field_name != 'f_recipients' && $field_name != 'f_subject')
-		{
-			return array(
-				new ContactShortTextField(),
-				new ContactHalfLongTextField(),
-				new ContactLongTextField(),
-				new ContactSimpleSelectField(),
-				new ContactMultipleSelectField(),
-				new ContactSimpleChoiceField(),
-				new ContactMultipleChoiceField(),
-				new ContactDateField()
-			);
-		}
-		else if ($field_name == 'f_recipients')
+		if ($field_name == 'f_recipients')
 		{
 			return array(
 				new ContactSimpleSelectField(),
@@ -383,9 +373,20 @@ class AdminContactFieldFormController extends AdminModuleController
 			return array(
 				new ContactShortTextField(),
 				new ContactSimpleSelectField(),
+				new ContactSimpleChoiceField(),
+			);
+		}
+		else
+		{
+			return array(
+				new ContactShortTextField(),
+				new ContactHalfLongTextField(),
+				new ContactLongTextField(),
+				new ContactSimpleSelectField(),
 				new ContactMultipleSelectField(),
 				new ContactSimpleChoiceField(),
 				new ContactMultipleChoiceField(),
+				new ContactDateField()
 			);
 		}
 	}
