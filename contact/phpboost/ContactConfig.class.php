@@ -219,6 +219,7 @@ class ContactConfig extends AbstractConfigData
 		$field->set_field_type('ContactShortTextField');
 		$field->set_regex(4);
 		$field->readonly();
+		$field->required();
 		$field->not_deletable();
 		
 		$fields[1] = $field->get_properties();
@@ -247,6 +248,7 @@ class ContactConfig extends AbstractConfigData
 		$field->set_field_name('f_message');
 		$field->set_field_type('ContactHalfLongTextField');
 		$field->readonly();
+		$field->required();
 		$field->not_deletable();
 		
 		$fields[4] = $field->get_properties();
