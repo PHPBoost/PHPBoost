@@ -255,18 +255,6 @@ h4.bb-title { margin-left: 60px; }
 	height: 14px;
 }
 
-/* Tableaux */
-.bb-table {
-	border: 1px solid #2C5169;
-	border-spacing: 0px;
-	border-collapse: collapse;
-	margin: 2px;
-}
-.bb-table-col {
-	border: 1px solid #2C5169;
-	padding: 6px;
-}
-
 /* Affichage balise quote, code, hide */
 .text-blockquote, .text-code, .text-hide {
 	display: block;
