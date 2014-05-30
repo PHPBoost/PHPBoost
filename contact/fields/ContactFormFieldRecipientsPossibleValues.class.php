@@ -64,17 +64,6 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 			}
 		}
 		
-		if ($i == 0)
-		{
-			$tpl->assign_block_vars('fieldelements', array(
-				'ID' => $i,
-				'NAME' => '',
-				'IS_DEFAULT' => 0,
-				'EMAIL' => ''
-			));
-			$i++;
-		}
-		
 		$tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
