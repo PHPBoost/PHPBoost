@@ -280,7 +280,15 @@ class AdminExtendedFieldMemberAddController extends AdminController
 			$extended_fields_extension_point = $properties->get_extension_point(ExtendedFieldExtensionPoint::EXTENSION_POINT);
 			$extended_fields = $extended_fields_extension_point->get_extended_fields();
 			
-			$extended_fields_class_name[$name_provider] = $extended_fields;
+			$extended_fields_list = array();
+			foreach ($extended_fields as $extended_field)
+			{
+				if (!$extended_field->get_field_used_once())
+					$extended_fields_list[] = $extended_field;
+			}
+			
+			if (!empty($extended_fields_list))
+				$extended_fields_class_name[$name_provider] = $extended_fields_list;
 		}
 		return $extended_fields_class_name;
 	}
