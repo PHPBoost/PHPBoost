@@ -174,22 +174,25 @@ class BugtrackerService
 		$current_user = AppContext::get_current_user();
 		$bug = self::get_bug('WHERE id=:id', array('id' => $bug_id));
 		
-		$updater_ids = self::$db_querier->select_rows(BugtrackerSetup::$bugtracker_history_table, array('updater_id'), "WHERE bug_id=:id GROUP BY updater_id", array(
-			'id' => $bug_id
-		));
-		
 		$updaters_list = array($bug->get_author_user()->get_id());
-		if ($bug->get_assigned_to_id() && $bug->get_assigned_to_id() != $bug->get_author_user()->get_id())
+		
+		if ($bug->get_assigned_to_id() && $bug->get_assigned_to_id() != $bug->get_author_user()->get_id() && $bug->get_assigned_to_id() != $current_user->get_id())
 			$updaters_list[] = $bug->get_assigned_to_id();
 		
-		while ($row = $updater_ids->fetch())
-		{
-			if ($row['updater_id'] != $bug->get_author_user()->get_id() && $row['updater_id'] != $bug->get_assigned_to_id())
-				$updaters_list[] = $row['updater_id'];
-		}
+		$result = self::$db_querier->select_rows(BugtrackerSetup::$bugtracker_history_table, array('updater_id'), '
+		WHERE bug_id = :id AND updater_id <> :current_user_id AND updater_id <> :author_user_id AND updater_id <> :assigned_user_id
+		GROUP BY updater_id', array(
+			'id' => $bug_id,
+			'current_user_id' => $current_user->get_id(),
+			'author_user_id' => $bug->get_author_user()->get_id(),
+			'assigned_user_id' => $bug->get_assigned_to_id(),
+		));
 		
-		if (in_array($current_user->get_id(), $updaters_list))
-			unset($updaters_list[array_search($current_user->get_id(), $updaters_list)]);
+		while ($row = $result->fetch())
+		{
+			$updaters_list[] = $row['updater_id'];
+		}
+		$result->dispose();
 		
 		return $updaters_list;
 	}
