@@ -182,9 +182,11 @@ class AdminExtendedFieldMemberAddController extends AdminController
 	private function get_array_select_type()
 	{
 		$select = array();
-		foreach ($this->get_extended_fields_class_name() as $module => $files)
+		$modules = $this->get_extended_fields_class_name();
+		
+		foreach ($modules as $module => $files)
 		{
-			if (count($module) > 1)
+			if (count($modules) > 1)
 			{
 				if ($module == 'kernel')
 				{
