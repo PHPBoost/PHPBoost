@@ -50,7 +50,7 @@ class AdminExtendedFieldsUrlBuilder
 	 */
 	public static function edit($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/extended-fields' . $id. '/edit/');
+		return DispatchManager::get_url(self::$dispatcher, '/extended-fields/' . $id. '/edit/');
 	}
 		
 	/*
