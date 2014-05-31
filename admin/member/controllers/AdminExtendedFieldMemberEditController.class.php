@@ -219,25 +219,35 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$select = array();
 		foreach ($this->get_extended_fields_class_name() as $module => $files)
 		{
-			if ($module == 'kernel')
+			if (count($module) > 1)
 			{
-				$kernel_select = array();
-				foreach ($files as $field_type)
+				if ($module == 'kernel')
 				{
-					$kernel_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
+					$kernel_select = array();
+					foreach ($files as $field_type)
+					{
+						$kernel_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
+					}
+					$select[] = new FormFieldSelectChoiceGroupOption($this->lang['default-field'], $kernel_select);
 				}
-				$select[] = new FormFieldSelectChoiceGroupOption($this->lang['default-field'], $kernel_select);
+				else
+				{
+					$module_select = array();
+					foreach ($files as $field_type)
+					{
+						$module_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
+					}
+
+					$module_name = ModulesManager::get_module($module)->get_configuration()->get_name();
+					$select[] = new FormFieldSelectChoiceGroupOption($module_name, $module_select);
+				}
 			}
 			else
 			{
-				$module_select = array();
 				foreach ($files as $field_type)
 				{
-					$module_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
+					$select[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
 				}
-
-				$module_name = ModulesManager::get_module($module)->get_configuration()->get_name();
-				$select[] = new FormFieldSelectChoiceGroupOption($module_name, $module_select);
 			}
 		}
 		return $select;
