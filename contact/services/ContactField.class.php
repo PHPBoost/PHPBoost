@@ -251,6 +251,7 @@ class ContactField
 		$this->possible_values = !empty($properties['possible_values']) ? unserialize($properties['possible_values']) : array();
 		$this->required = (bool)$properties['required'];
 		$this->displayed = (bool)$properties['displayed'];
+		$this->regex = $properties['regex'];
 		$this->readonly = (bool)$properties['readonly'];
 		$this->deletable = (bool)$properties['deletable'];
 		$this->authorization = !empty($properties['authorization']) ? unserialize($properties['authorization']) : array();
