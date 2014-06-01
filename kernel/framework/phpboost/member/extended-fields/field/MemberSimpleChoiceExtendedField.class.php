@@ -69,6 +69,16 @@ class MemberSimpleChoiceExtendedField extends AbstractMemberExtendedField
 		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
 			$options[] = new FormFieldRadioChoiceOption(stripslashes($parameters['title']), $name);
+			if ($parameters['is_default'])
+			{
+				$default = $name;
+			}
+		}
+		
+		if (empty($default))
+		{
+			$options = array_merge(array(new FormFieldSelectChoiceOption('', '')), $options);
+			$default = '';
 		}
 		
 		$fieldset->add_field(new FormFieldRadioChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $options, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
