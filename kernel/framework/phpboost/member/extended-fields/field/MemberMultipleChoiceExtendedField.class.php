@@ -58,12 +58,12 @@ class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 		
 		$options = array();
-		$default_values = array();
+		$default_values = explode('|', $member_extended_field->get_value());
 		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
 			$options[] = new FormFieldMultipleCheckboxOption($name, stripslashes($parameters['title']));
 			
-			if ($parameters['is_default'])
+			if (empty($default_values) && $parameters['is_default'])
 			{
 				$default_values[] = $name;
 			}
