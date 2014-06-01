@@ -69,7 +69,7 @@ class MemberSimpleChoiceExtendedField extends AbstractMemberExtendedField
 		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
 			$options[] = new FormFieldRadioChoiceOption(stripslashes($parameters['title']), $name);
-			if ($parameters['is_default'])
+			if (empty($default) && $parameters['is_default'])
 			{
 				$default = $name;
 			}
