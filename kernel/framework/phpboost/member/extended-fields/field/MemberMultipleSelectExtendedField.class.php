@@ -62,11 +62,6 @@ class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
 			$options[] = new FormFieldSelectChoiceOption(stripslashes($parameters['title']), $name);
-			
-			if (empty($default_values) && $parameters['is_default'])
-			{
-				$default_values[] = $name;
-			}
 		}
 		
 		$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default_values, $options, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
