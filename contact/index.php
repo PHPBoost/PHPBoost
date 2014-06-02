@@ -41,7 +41,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminContactConfigController', '`^/admin(?:/config)?/?([a-z]+)?/?$`', array('message')),
 	
 	//Contact form
-	new UrlControllerMapper('ContactController', '`^/?$`')
+	new UrlControllerMapper('ContactController')
 );
 
 DispatchManager::dispatch($url_controller_mappers);
