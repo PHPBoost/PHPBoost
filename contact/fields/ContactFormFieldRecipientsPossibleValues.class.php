@@ -57,8 +57,8 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 					'C_DELETABLE' => $i > 0,
 					'ID' => $i,
 					'NAME' => stripslashes($options['title']),
-					'IS_DEFAULT' => (int) $options['is_default'],
-					'EMAIL' => $name == 'admins' ? implode(';', MailServiceConfig::load()->get_administrators_mails()) : stripslashes($options['email'])
+					'IS_DEFAULT' => (int)$options['is_default'],
+					'EMAIL' => $i > 0 ? stripslashes($options['email']) : implode(';', MailServiceConfig::load()->get_administrators_mails())
 				));
 				$i++;
 			}
@@ -66,7 +66,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 		
 		$tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_html_id(),
+			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
 		 	'NBR_FIELDS' => $i,
@@ -101,13 +101,16 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 				$field_is_default = 'field_is_default_' . $this->get_html_id() . '_' . $i;
 				$field_title = 'field_name_' . $this->get_html_id() . '_' . $i;
 				$field_email = 'field_email_' . $this->get_html_id() . '_' . $i;
-				if ($request->get_poststring($field_title) && $request->get_poststring($field_email))
+				
+				$email = $i > 0 ? $request->get_poststring($field_email) : true;
+				
+				if ($request->get_poststring($field_title) && $email)
 				{
 					$id = $i < $nb_recipients ? $recipients_keys[$i] : preg_replace('/\s+/', '', $request->get_poststring($field_name));
 					$values[$id] = array(
 						'is_default' => $request->get_postint($field_is_default, 0),
 						'title' => addslashes($request->get_poststring($field_title)),
-						'email' => $request->get_poststring($field_email)
+						'email' => $request->get_poststring($field_email, '')
 					);
 				}
 			}
