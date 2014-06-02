@@ -72,6 +72,7 @@ $lang['admin.fields.title.edit_field.page_title'] = 'Field edition in the contac
 //Field
 $lang['field.possible_values.email'] = 'Mail address(es)';
 $lang['field.possible_values.email.explain'] = 'It is possible to put more than one mail address separated by a semi-colon';
+$lang['field.possible_values.subject'] = 'Subject';
 $lang['field.possible_values.recipient'] = 'Recipient(s)';
 $lang['field.possible_values.recipient.explain'] = 'The mail will ve sent to the selected recipient(s) if the recipients field is not displayed';
 
