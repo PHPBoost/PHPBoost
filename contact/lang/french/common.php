@@ -72,6 +72,7 @@ $lang['admin.fields.title.edit_field.page_title'] = 'Edition d\'un champ dans le
 //Field
 $lang['field.possible_values.email'] = 'Adresse(s) email';
 $lang['field.possible_values.email.explain'] = 'Il est possible d\'indiquer plusieurs adresses email séparées par un point-virgule';
+$lang['field.possible_values.subject'] = 'Objet';
 $lang['field.possible_values.recipient'] = 'Destinataire(s)';
 $lang['field.possible_values.recipient.explain'] = 'Le mail sera envoyé au(x) destinataire(s) sélectionné(s) si le champ destinataire n\'est pas affiché';
 
