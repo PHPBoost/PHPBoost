@@ -114,4 +114,5 @@ $lang['calendar.error.e_unexist_event'] = 'The selected event doesn\'t exist';
 $lang['calendar.error.e_invalid_date'] = 'Invalid date';
 $lang['calendar.error.e_invalid_start_date'] = 'Invalid start date';
 $lang['calendar.error.e_invalid_end_date'] = 'Invalid end date';
+$lang['calendar.error.e_user_born_field_disabled'] = 'The field <b>Date of birth</b> is not displayed in members profile. Please enable its display it in the <a href="' . AdminExtendedFieldsUrlBuilder::fields_list()->rel() . '">Profile field management</a> to allow members to fill the field date of birth and display their birthday date in the calendar.';
 ?>
