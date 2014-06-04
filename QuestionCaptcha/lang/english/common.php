@@ -32,7 +32,7 @@
 $lang['form.questions'] = 'Questions';
 $lang['form.questions.explain'] = 'Separate answers with ; when many answers are possible';
 $lang['form.question'] = 'Question';
-$lang['form.answer'] = 'Answer';
+$lang['form.answers'] = 'Answer(s)';
 $lang['form.change_question'] = 'Change question';
 $lang['config.title'] = 'Questions configuration';
 ?>
