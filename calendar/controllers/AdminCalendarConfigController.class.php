@@ -97,6 +97,13 @@ class AdminCalendarConfigController extends AdminModuleController
 			)
 		));
 		
+		$user_born_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_born');
+		
+		if (!empty($user_born_field) && !$user_born_field['display'])
+		{
+			$fieldset->add_field(new FormFieldHTML('user_born_disabled_msg', MessageHelper::display($this->lang['calendar.error.e_user_born_field_disabled'], MessageHelper::WARNING)->render()));
+		}
+		
 		$fieldset->add_field(new FormFieldColorPicker('birthday_color', $this->lang['calendar.config.birthday_color'], $this->config->get_birthday_color(),
 			array('hidden' => !$this->config->is_members_birthday_enabled())
 		));
