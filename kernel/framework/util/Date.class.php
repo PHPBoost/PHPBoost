@@ -62,9 +62,15 @@ class Date
 	const FORMAT_RELATIVE = 9;
 
 	/**
-	 * @var int The timestamp of the current date
+	 * @var DateTime Representation of date and time.
 	 */
 	private $date_time;
+	
+	/**
+	 * @var int The timestamp of the current date
+	 * @deprecated
+	 */
+	private $timestamp;
 
 	/**
 	 * @desc Builds and initializes a date. It admits a variable number of parameters depending on the value of the first one.
@@ -579,28 +585,44 @@ class Date
 		{
 			// Référentiel : heure du site
 			case TIMEZONE_SITE:
-				$date_timezone = new DateTimeZone(GeneralConfig::load()->get_site_timezone());
+				$timezone = GeneralConfig::load()->get_site_timezone();
 				break;
 
 			//Référentiel : heure du serveur
 			case TIMEZONE_SYSTEM:
-				$date_timezone = new DateTimeZone(date_default_timezone_get());
+				$timezone = date_default_timezone_get();
 				break;
 
 			case TIMEZONE_USER:
-				$date_timezone = new DateTimeZone(AppContext::get_current_user()->get_timezone());
+				$timezone = AppContext::get_current_user()->get_timezone();
 				break;
 					
 			default:
-				$date_timezone = new DateTimeZone(date_default_timezone_get());
+				$timezone = date_default_timezone_get();
 		}
-		return $date_timezone;
+		
+		if (is_int($timezone))
+			$timezone = 'Europe/Paris';
+			
+		return new DateTimeZone($timezone);
 	}
 	
 	public static function set_default_timezone()
 	{
 		$default = @date_default_timezone_get();
         @date_default_timezone_set($default);
+	}
+	
+	public function update_to_date_time($referencial_timezone = TIMEZONE_AUTO)
+	{
+		if (!empty($this->timestamp))
+		{
+			$date_timezone = self::get_date_timezone($referencial_timezone);
+			$this->date_time = new DateTime();
+			$this->date_time->setTimezone($date_timezone);
+			$this->date_time->setTimestamp($this->timestamp);
+		}
+		unset($this->timestamp);
 	}
 	
 	private static function transform_date($date)
