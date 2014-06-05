@@ -177,6 +177,8 @@ class UpdateServices
 	{
 		$this->get_update_token();
 		
+		AppContext::get_cache_service()->clear_cache();
+		
 		Environment::try_to_increase_max_execution_time();
 		
 		$this->put_site_under_maintenance();
@@ -193,7 +195,9 @@ class UpdateServices
 		GeneralConfig::save();
 		
 		$general_config = GeneralConfig::load();
-		$general_config->set_phpboost_major_version('4.1');
+		$date = $general_config->get_site_install_date();
+		$date->update_to_date_time();
+		$general_config->set_site_install_date($date);
 		GeneralConfig::save();
 		
 		//On désinstalle les thèmes non compatible
@@ -281,6 +285,10 @@ class UpdateServices
 		$this->update_modules();
 		
 		$this->update_content();
+		
+		$general_config = GeneralConfig::load();
+		$general_config->set_phpboost_major_version('4.1');
+		GeneralConfig::save();
 		
 		$this->delete_update_token();
 		$this->generate_cache();
@@ -376,25 +384,25 @@ class UpdateServices
 			\'/images/smileys/plus1.gif\', \'/images/smileys/top.png\'),
 			\'/images/smileys/lu.gif\', \'/images/smileys/hello.png\'),
 			
-			\'class="bb_table"\', \'class="bb-table"\'),
-			\'class="bb_table_row"\', \'class="bb-table-row"\'),
-			\'class="bb_table_head"\', \'class="bb-table-head"\'),
-			\'class="bb_table_col"\', \'class="bb-table-col"\'),
-			\'class="bb_li"\', \'class="bb-li"\'),
-			\'class="bb_ul"\', \'class="bb-ul"\'),
-			\'class="bb_ol"\', \'class="bb-ol"\'),
+			\'class="bb_table"\', \'class="formatter-table"\'),
+			\'class="bb_table_row"\', \'class="formatter-table-row"\'),
+			\'class="bb_table_head"\', \'class="formatter-table-head"\'),
+			\'class="bb_table_col"\', \'class="formatter-table-col"\'),
+			\'class="bb_li"\', \'class="formatter-li"\'),
+			\'class="bb_ul"\', \'class="formatter-ul"\'),
+			\'class="bb_ol"\', \'class="formatter-ol"\'),
 			
-			\'class="text_blockquote"\', \'class="text-blockquote"\'),
-			\'class="text_hide"\', \'class="text-hide"\'),
-			\'class="bb_block"\', \'class="bb-block"\'),
-			\'class="bb_fieldset"\', \'class="bb-fieldset"\'),
+			\'class="text_blockquote"\', \'class="formatter-blockquote"\'),
+			\'class="text_hide"\', \'class="formatter-hide"\'),
+			\'class="bb_block"\', \'class="formatter-block"\'),
+			\'class="bb_fieldset"\', \'class="formatter-fieldset"\'),
 			\'class="wikipedia_link"\', \'class="wikipedia-link"\'),
 			\'class="float_\', \'class="float-\'),
 			
-			\'class="title1\', \'class="bb-title\'),
-			\'class="title2\', \'class="bb-title\'),
-			\'class="stitle1\', \'class="bb-title\'),
-			\'class="stitle2\', \'class="bb-title\')
+			\'class="title1\', \'class="formatter-title\'),
+			\'class="title2\', \'class="formatter-title\'),
+			\'class="stitle1\', \'class="formatter-title\'),
+			\'class="stitle2\', \'class="formatter-title\')
 			');
 		}
 	}
