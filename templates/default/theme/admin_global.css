@@ -3,23 +3,96 @@
  Contient les classes globales au site, peuvent Ãªtre utilisÃ©es partout.
 --------------------------------------*/ 
 
-/* Classes generales
---------------------------------------*/
-/* Case resultat recherche membre AJAX */
-.xmlhttprequest-result-search {
-	overflow: auto;
-	min-height: 40px;
-	width: 100px;
-	overflow: auto;
-	background-color: #FFFFFF;
-	border: 1px solid #CCCCCC;  
-	padding: 2px;
-	margin: 2px 0px 0px 0px;
-	border-radius: 4px;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
+
+/* La mise en forme du texte
+-------------------------------------------*/
+
+/* --- Les liens du site --- */
+a {
+	color: #4372AA;
+	text-decoration: none;
 }
 
-/* Affichage du mini calendrier */
+a:hover {
+	color: #2D4D73;
+	text-decoration: underline;
+}
+
+/* --- Les liens des utilisateurs --- */
+a.admin { color: #FFA34F; }
+a.modo { color: #006699; }
+a.member { color: #000000; }
+
+/* --- Les differentes tailles de polices --- */
+.smaller { font-size: 10px; }
+.small { font-size: 12px; }
+.big { font-size: 16px; }
+.bigger { font-size: 18px; }
+.biggest { font-size: 20px; }
+
+/* --- Les titres (balise h) --- */
+h1 { font-size: 23px; }
+h2 { font-size: 20px; }
+h3 { font-size: 19px; }
+h4 { font-size: 18px; }
+h5 { font-size: 16px; }
+h6 { font-size: 14px; }
+
+/* --- Les sous titres --- */
+h3.title1, h3.title2, h4.stitle1, h4.stitle2 { display: inline; }
+
+h3.title1, h3.title2 {
+	border-bottom: 1px solid #366393;
+	font-weight: bold;
+	padding: 0px 0px 0px 3px;
+	margin-bottom: 15px;
+}
+
+/* Titre 1 */
+h3.title1 {
+	font-size: 2em;
+}
+
+/* Titre 2 */
+h3.title2 {
+	font-size: 1.7em;
+	display: inline-block;
+	margin-left: 20px;
+}
+
+/* Sous titre 1 */
+h4.stitle1 {
+	font-size: 1.5em;
+	color: #366393;
+	margin: 0px 0px 10px 40px;
+}
+
+/* Sous titre 2 */
+h4.stitle2 {
+	font-size: 1.3em;
+	margin: 0px 0px 10px 60px;
+}
+
+/* --- Les listes --- */
+ul, ol {
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
+
+/* --- Les liens vers wikipedia --- */
+a.wikipedia-link:before {
+	content: url('../../default/images/wikipedia_icon.png');
+	vertical-align: middle;
+	padding-right: 2px;
+}
+
+a.wikipedia-link { border-bottom: 1px dotted; }
+
+
+/* -- Mise en forme du contenu --
+--------------------------------------*/
+
+/* --- Affichage du mini calendrier --- */
 .calendar-block {
 	position: absolute;
 	text-align: center;
@@ -61,13 +134,112 @@
 	padding: 2px 4px;
 }
 
-/* Delacement des fichiers */
-.upload-selected-cat {
-	background: #F5FBFF;
-	border: 1px solid #2C5169;
+/* --- les blocs bbcode --- */
+.bbcode-block {
+	position: absolute;
+	text-align: center;
+	padding: 6px 4px;
+	bottom: 2px; 
+	z-index: 100;
+	background: #F3F3F3;
+	border-radius: 3px;
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+	border: 1px solid #AAA;
 }
 
-/* Barre de progression */
+.bbcode-block a {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+/* --- Le selecteur de couleur --- */
+.color-picker {
+	position: absolute;
+	z-index: 100;
+}
+
+.color-picker .bbcode-block { left: 80px; }
+
+.color-picker .bbcode-block table {
+	border-collapse: collapse;
+	margin: auto;
+	border: none;
+}
+
+.color-picker td {
+	padding: 0;
+	border: 1px solid #F3F3F3;
+}
+
+.color-picker td a {
+	display: block;
+	width: 14px;
+	height: 14px;
+}
+
+/* --- les blocs de quote, de code ou caches --- */
+.text-blockquote, .text-code, .text-hide {
+	display: block;
+	width: 93%;
+	padding-bottom: 2px;
+	font-weight: bold;
+	margin: auto;
+}
+.blockquote, .code, .hide {
+	overflow: auto;
+	max-height: 500px;
+	background: #FAFAFA;
+	border: 1px solid #DDDDDD;
+	border-radius: 3px;
+	color: #444444;
+	padding: 8px;
+	margin: 0px 25px;
+}
+
+.hide {
+	cursor: pointer;
+	height: 10px; 
+	overflow: hidden;
+}
+
+.hide2 { 
+	visibility: hidden;
+	overflow: auto;
+}
+
+/* --- les autres element bbcode --- */
+.indent { margin-left: 30px; }
+
+.bb-acronym { cursor: help; }
+
+.bb-block {
+	margin: 5px 20px; 
+	padding: 5px; 
+	border: 1px solid #C4CED6;
+	display: flex;
+	justify-content: center;
+}
+
+.bb-fieldset { margin: 10px; }
+
+/* --- les listes numerotees --- */
+.code ol { margin-left: 3em; }
+
+/* --- La recherche de membre (AJAX) --- */
+.xmlhttprequest-result-search {
+	overflow: auto;
+	min-height: 40px;
+	width: 100px;
+	overflow: auto;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;  
+	padding: 2px;
+	margin: 2px 0px 0px 0px;
+	border-radius: 4px;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
+}
+
+/* --- La barre de progression --- */
 .progressbar-container {
 	background: #F5F5F5;
 	margin: 4px 0px 10px;
@@ -98,30 +270,14 @@
 	transition: width .6s ease;
 }
 
-/* Notation */
+/* --- Le systeme de notation --- */
 .static-notation, .notation { display: inline-block; }
 .static-notation .star, .notation .star { color: #E3CF7A; font-size: 14px; padding-right: 5px; text-decoration: none; }
 
-/* Lien du site
---------------------------------------*/
-a {
-	color: #4372AA;
-	text-decoration: none;
-}
 
-a:hover {
-	color: #2D4D73;
-	text-decoration: underline;
-}
+/* -- Les Icones specifiques PHPBoost de FontAwesome --
+-------------------------------------------*/
 
-/* Lien des utilisateurs */
-a.admin { color: #FFA34F; }
-a.modo { color: #006699; }
-a.member { color: #000000; }
-
-
-/* Icônes spécifique PHPBoost
------------------------------------- */
 .fa-syndication:before { color: #F57900; }
 .fa-success:before { color: #478948; }
 .fa-forbidden:before { color: #BA4B49; }
@@ -155,175 +311,13 @@ li.small-block .fa-stack { height: 2.34em; }
 	text-align: center;
 }
 
-/* Mise en forme
--------------------------------------------*/
 
-/* Taille police alternative */
-.smaller { font-size: 10px; }
-.small { font-size: 12px; }
-.big { font-size: 16px; }
-.bigger { font-size: 18px; }
-.biggest { font-size: 20px; }
-
-/* Titres */
-h1 { font-size: 23px; }
-h2 { font-size: 20px; }
-h3 { font-size: 19px; }
-h4 { font-size: 18px; }
-h5 { font-size: 16px; }
-h6 { font-size: 14px; }
-
-/* BBCode */
-
-/* Titres */
-h3.title1, h3.title2, h4.stitle1, h4.stitle2 { display: inline; }
-
-h3.title1, h3.title2 {
-	border-bottom: 1px solid #366393;
-	font-weight: bold;
-	padding: 0px 0px 0px 3px;
-	margin-bottom: 15px;
-}
-
-/* Titre 1 */
-h3.title1 {
-	font-size: 2em;
-}
-
-/* Titre 2 */
-h3.title2 {
-	font-size: 1.7em;
-	display: inline-block;
-	margin-left: 20px;
-}
-
-/* Sous titre 1 */
-h4.stitle1 {
-	font-size: 1.5em;
-	color: #366393;
-	margin: 0px 0px 10px 40px;
-}
-
-/* Sous titre 2 */
-h4.stitle2 {
-	font-size: 1.3em;
-	margin: 0px 0px 10px 60px;
-}
-
-/* Mise en forme du contenu
---------------------------------------------------------------------  */
-
-/* Liste */
-ul, ol {
-	margin-left: 20px;
-	margin-bottom: 10px;
-}
-
-/* Menu cache */
-.bbcode-block {
-	position: absolute;
-	text-align: center;
-	padding: 6px 4px;
-	bottom: 2px; 
-	z-index: 100;
-	background: #F3F3F3;
-	border-radius: 3px;
-	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-	border: 1px solid #AAA;
-}
-
-.bbcode-block a {
-	cursor: pointer;
-	text-decoration: none;
-}
-
-/* Color-Picker */
-.color-picker {
-	position: absolute;
-	z-index: 100;
-}
-
-.color-picker .bbcode-block { left: 80px; }
-
-.color-picker .bbcode-block table {
-	border-collapse: collapse;
-	margin: auto;
-	border: none;
-}
-
-.color-picker td {
-	padding: 0;
-	border: 1px solid #F3F3F3;
-}
-
-.color-picker td a {
-	display: block;
-	width: 14px;
-	height: 14px;
-}
-
-/* Affichage balise quote, code, hide */
-.text-blockquote, .text-code, .text-hide {
-	display: block;
-	width: 93%;
-	padding-bottom: 2px;
-	font-weight: bold;
-	margin: auto;
-}
-.blockquote, .code, .hide {
-	overflow: auto;
-	max-height: 500px;
-	background: #FAFAFA;
-	border: 1px solid #DDDDDD;
-	border-radius: 3px;
-	color: #444444;
-	padding: 8px;
-	margin: 0px 25px;
-}
-
-.hide {
-	cursor: pointer;
-	height: 10px; 
-	overflow: hidden;
-}
-
-.hide2 { 
-	visibility: hidden;
-	overflow: auto;
-}
-
-.indent { margin-left: 30px; }
-
-.bb-acronym { cursor: help; }
-
-.bb-block {
-	margin: 5px 20px; 
-	padding: 5px; 
-	border: 1px solid #C4CED6;
-	display: flex;
-	justify-content: center;
-}
-
-.bb-fieldset { margin: 10px; }
-
-/* Code avec numerotation des listes */
-.code ol { margin-left: 3em; }
-
-/*Lien vers Wikipedia*/
-a.wikipedia-link:before {
-	content: url('../../default/images/wikipedia_icon.png');
-	vertical-align: middle;
-	padding-right: 2px;
-}
-
-a.wikipedia-link { border-bottom: 1px dotted; }
-
-/* Menus dynamiques
+/* -- Les differents menus --
 --------------------------------------*/
 
 .dynamic-menu { position: relative; }
 
-/* Niveau 1 */
+/* --- Niveau 1 --- */
 .dynamic-menu ul {
 	margin: 0;
 	padding: 0;
@@ -356,30 +350,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	font-weight: 300;
 }
 
-/* Menus groupés */
-.dynamic-menu.group > ul {
-	font-size: 0
-}
-
-.dynamic-menu.group > ul > li {
-	border-radius: 0;
-	border-right: 1px solid #F9F9F9;
-	border-left: 1px solid #BBBBBB;
-}
-
-.dynamic-menu.group > ul > li:first-child {
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-	border-left: 1px solid rgba(0, 0, 0, 0.1)
-}
-
-.dynamic-menu.group > ul > li:last-child {
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
-	border-right: 1px solid rgba(0, 0, 0, 0.1)
-}
-
-/* Niveau 2 */
+/* --- Niveau 2 --- */
 .dynamic-menu li ul {
 	position: absolute;
 	top: -99999em;
@@ -453,7 +424,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	vertical-align: -4px;
 }
 
-/* Niveau 3 */
+/* --- Niveau 3 --- */
 .dynamic-menu li li ul {
 	left: 100%;
 	z-index: 101;
@@ -461,7 +432,30 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 
 .dynamic-menu li li:hover > ul { top: -6px; }
 
-/* Menus de navigation */
+/* --- Menus groupes --- */
+.dynamic-menu.group > ul {
+	font-size: 0
+}
+
+.dynamic-menu.group > ul > li {
+	border-radius: 0;
+	border-right: 1px solid #F9F9F9;
+	border-left: 1px solid #BBBBBB;
+}
+
+.dynamic-menu.group > ul > li:first-child {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-left: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+.dynamic-menu.group > ul > li:last-child {
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-right: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+/* --- Menus de navigation --- */
 nav.dynamic-menu h5 {
 	text-align: center;
 	padding: 4px 6px;
@@ -484,7 +478,7 @@ nav.dynamic-menu li ul { min-width: 160px; }
 nav.dynamic-menu li ul li a, 
 nav.dynamic-menu li ul li span { color: #0578CC; }
 
-/* Menus des modules */
+/* --- Menus des modules --- */
 menu.dynamic-menu { margin: 5px; }
 
 menu.dynamic-menu ul li ul {
@@ -549,7 +543,7 @@ menu.dynamic-menu li ul li span i:before {
 menu.dynamic-menu ul li.extend > a:after,
 menu.dynamic-menu ul li.extend > span:after { margin-top: -6px; }
 
-/* Menu Right */
+/* --- Menu de droite --- */
 .dynamic-menu.right ul {
 	right: -1px;
 	left: auto;
@@ -560,26 +554,29 @@ menu.dynamic-menu ul li.extend > span:after { margin-top: -6px; }
 	left: auto;
 }
 
-/* Separateur */
+/* --- Separateur --- */
 .dynamic-menu ul li.separator {
 	background: #E8EDF3;
 	height: 1px;
 }
 
+/* --- Menu Vertical --- */
 ul.menu-vertical li {
 	list-style: none;
 	text-align: left;
 }
 
-/* menu de flux */
+/* --- menu de flux --- */
 .feed-list {
 	list-style: none;
 	text-align: left;
 	margin: 5px 0px;
 }
 
-/* Erreurs
+
+/* -- Les message d erreurs --
 --------------------------------------*/
+
 div.message-helper-small { width: 50%; }
 
 .error, .notice, .warning, .success, .question { 
@@ -625,7 +622,7 @@ div.message-helper-small { width: 50%; }
 .error { background-color: #F3DFDF; border-color: #ECCDD2; }
 .success { background-color: #E0F1D9; border-color: #D7EAC7; }
 
-/* Système d'Upload
+/* -- Systeme d Upload --
 --------------------------------------*/
 .upload-address-bar {
 	background: #FAFAFA;
@@ -654,3 +651,9 @@ div.message-helper-small { width: 50%; }
 }
 
 .upload-elements-repertory { height: 60px; }
+
+/* --- Deplacement des fichiers --- */
+.upload-selected-cat {
+	background: #F5FBFF;
+	border: 1px solid #2C5169;
+}
