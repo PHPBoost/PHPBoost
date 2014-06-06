@@ -39,7 +39,7 @@ class CLIInstallCommand implements CLICommand
 	private $website_name = 'PHPBoost';
 	private $website_description = 'PHPBoost command line installation';
 	private $website_locale = 'english';
-	private $website_timezone = 0;
+	private $website_timezone = 'Europe/Paris';
 
 	private $user_login = 'admin';
 	private $user_password = 'admin';
@@ -89,7 +89,7 @@ class CLIInstallCommand implements CLICommand
 		$this->show_parameter('--ws-name', $this->website_name);
 		$this->show_parameter('--ws-desc', $this->website_description);
 		$this->show_parameter('--ws-locale', $this->website_locale);
-		$this->show_parameter('--ws-timezone', 'GMT' . ($this->website_timezone >= 0 ? '+' : '') . $this->website_timezone);
+		$this->show_parameter('--ws-timezone', $this->website_timezone);
 
 		$this->show_parameter_section('admin');
 		$this->show_parameter('--u-login', $this->user_login);
@@ -123,15 +123,7 @@ class CLIInstallCommand implements CLICommand
 		$this->website_name = $this->arg_reader->get('--ws-name', $this->website_name);
 		$this->website_description = $this->arg_reader->get('--ws-desc', $this->website_description);
 		$this->website_locale = $this->arg_reader->get('--ws-locale', $this->website_locale);
-		$timezone = str_replace('GMT', '', $this->arg_reader->get('--ws-timezone', $this->website_timezone));
-		if (is_numeric($timezone))
-		{
-			$timezone = (int) $timezone;
-			if ($timezone >= -12 && $timezone <= 14)
-			{
-				$this->website_timezone = $timezone;
-			}
-		}
+		$this->website_timezone = $this->arg_reader->get('--ws-timezone', $this->website_timezone);
 
 		$this->user_login = $this->arg_reader->get('--u-login', $this->user_login);
 		$this->user_password = $this->arg_reader->get('--u-pwd', $this->user_password);
@@ -154,7 +146,7 @@ class CLIInstallCommand implements CLICommand
 		$this->show_parameter('--ws-name', $this->website_name);
 		$this->show_parameter('--ws-desc', $this->website_description);
 		$this->show_parameter('--ws-locale', $this->website_locale);
-		$this->show_parameter('--ws-timezone', 'GMT' . ($this->website_timezone >= 0 ? '+' : '') . $this->website_timezone);
+		$this->show_parameter('--ws-timezone', $this->website_timezone);
 
 		$this->show_parameter_section('admin');
 		$this->show_parameter('--u-login', $this->user_login);
