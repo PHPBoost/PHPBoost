@@ -2,6 +2,7 @@
 		
 		<div id="admin-contents">
 			<table>
+				<caption>{L_FILE_LIST}</caption>
 				<thead>
 					<tr>
 						<th></th>

@@ -1,4 +1,5 @@
 <table>
+	<caption>{@articles_management}</caption>
 	<thead>
 		<tr>
 			<th></th>

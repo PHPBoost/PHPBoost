@@ -1,4 +1,5 @@
 <table>
+	<caption>{@calendar.config.events.management}</caption>
 	<thead>
 		<tr>
 			<th></th>

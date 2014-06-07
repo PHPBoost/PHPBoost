@@ -20,9 +20,8 @@
 		</div> 
 		
 		<div id="admin-contents">
-			
-			
 			<table>
+				<caption>{L_POLL_MANAGEMENT}</caption>
 				<thead>
 					<tr>
 						<th></th>
