@@ -37,14 +37,6 @@ h3 { font-size: 18px; }
 h4 { font-size: 17px; }
 h5 { font-size: 16px; }
 h6 { font-size: 15px; }
-
-/* --- Le positionnement de l editeur tinyMCE --- */
-span.mceEditor {
-	width: 94%;
-	margin: 0 auto;
-	display: block;	
-}
-span.mceEditor table { border-right: none !important; }
 		
 /* --- Les Titres bbcode --- */
 .bb-title { display: inline; }
