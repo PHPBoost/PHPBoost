@@ -59,6 +59,7 @@ $Template->put_all(array(
 	'L_DOWNLOAD_CAT' => $LANG['cat_management'],
 	'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
 	'L_CATEGORY' => $LANG['category'],
+	'L_FILE_LIST' => $DOWNLOAD_LANG['file_list'],
 	'L_SIZE' => $LANG['size'],
 	'L_TITLE' => $LANG['title'],
 	'L_APROB' => $LANG['aprob'],

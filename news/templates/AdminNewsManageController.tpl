@@ -1,4 +1,5 @@
 <table>
+	<caption>{@news.management}</caption>
 	<thead>
 		<tr>
 			<th></th>

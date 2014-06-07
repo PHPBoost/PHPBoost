@@ -31,6 +31,7 @@
 
 		<div id="admin-contents">
 			<table>
+				<caption>{L_QUESTIONS_LIST}</caption>
 				<thead>
 					<tr>
 						<th></th>

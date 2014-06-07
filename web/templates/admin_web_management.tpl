@@ -31,6 +31,7 @@
 		
 		<div id="admin-contents">
 			<table>
+				<caption>{L_WEB_MANAGEMENT}</caption>
 				<thead>
 					<tr>
 						<th></th>
