@@ -181,7 +181,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 .text-blockquote, .text-code, .text-hide {
 	display: block;
 	width: 93%;
-	padding-bottom: 2px;
+	padding: 2px 0px;
 	font-weight: bold;
 	margin: auto;
 }
@@ -322,7 +322,7 @@ li.small-block .fa-stack { height: 2.34em; }
 	margin: 0;
 	padding: 0;
 	border: none;
-	list-style: none;
+	list-style-type: none;
 	z-index: 101;
 }
 
@@ -562,13 +562,13 @@ menu.dynamic-menu ul li.extend > span:after { margin-top: -6px; }
 
 /* --- Menu Vertical --- */
 ul.menu-vertical li {
-	list-style: none;
+	list-style-type: none;
 	text-align: left;
 }
 
 /* --- menu de flux --- */
 .feed-list {
-	list-style: none;
+	list-style-type: none;
 	text-align: left;
 	margin: 5px 0px;
 }
