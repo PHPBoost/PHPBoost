@@ -99,7 +99,7 @@ if ($calendar_type == 'date')
     foreach ($array_l_days as $l_day)
     {
         $Template->assign_block_vars('day', array(
-			'L_DAY' => '<td style="width:25px;"><span class="smaller">' . $l_day . '</span></td>'
+			'L_DAY' => '<td><span class="smaller">' . $l_day . '</span></td>'
 		));
     }
 
@@ -110,7 +110,7 @@ if ($calendar_type == 'date')
         $first_day = 7;
     }
     	
-    //Prise en compte et converstion des formats de dates.
+    //Prise en compte et conversion des formats de dates.
     $format = '';
     $array_date = explode('/', LangLoader::get_message('date_format_day_month_year', 'date-common'));
     for ($i = 0; $i < 3; $i++)
@@ -139,21 +139,30 @@ if ($calendar_type == 'date')
     {
         if ($i >= $first_day && $i < $last_day)
         {
-            $class = ($day == $j) ? ' style="padding:0px;"' : ' style="padding:0px;"';
-            $style = ($day == $j) ? '' : '';
-            $date = sprintf($format, (($j < 10 && substr($j, 0, 1) != 0) ? '0' . $j : $j), $month, $year);
-            	
-            $contents = '<td' . $class . '><a href="javascript:insert_date(\'' . $input_field . '\', \'' . $date . '\');">' . $j . '</a></td>';
+        	$date = sprintf($format, (($j < 10 && substr($j, 0, 1) != 0) ? '0' . $j : $j), $month, $year);
+            
+        	$class ='';
+			if ( (($i % 7) == 6) || (($i % 7) == 0)) 
+			{ 
+				$class = ' class="calendar-weekend"';
+			}
+
+			if ($day == $j)
+			{
+				$class = ' class="calendar-today"';
+			}
+			
+            $contents = '<td' . $class . '><a class="small" href="javascript:insert_date(\'' . $input_field . '\', \'' . $date . '\');">' . $j . '</a></td>';
             $j++;
         }
         else
         {
-            $contents = '<td style="padding:0px;height:21px;" class="calendar_none">&nbsp;</td>';
+            $contents = '<td class="calendar-none"></td>';
         }
 
         $Template->assign_block_vars('calendar', array(
 			'DAY' => $contents,
-			'TR' => (($i % 7) == 0 && $i != 42) ? '</tr><tr style="text-align:center;">' : ''
+			'TR' => (($i % 7) == 0 && $i != 42) ? '</tr><tr>' : ''
 			));
     }
 }
