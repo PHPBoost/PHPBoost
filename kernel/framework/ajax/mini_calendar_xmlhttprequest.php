@@ -56,6 +56,7 @@ if ($calendar_type == 'date')
     $year = !empty($_GET['y']) ? NumberHelper::numeric($_GET['y']) : $year;
     $month = !empty($_GET['m']) ? NumberHelper::numeric($_GET['m']) : $month;
     $day = !empty($_GET['d']) ? NumberHelper::numeric($_GET['d']) : $day;
+    
     if (!checkdate($month, $day, $year))
     {
         list($year, $month, $day) = array(gmdate_format('Y'), gmdate_format('n'), gmdate_format('j'));
@@ -147,7 +148,7 @@ if ($calendar_type == 'date')
 				$class = ' class="calendar-weekend"';
 			}
 
-			if ($day == $j)
+			if (($j == Date("j")) && ($month == Date("m")) && ($year == Date("Y")))
 			{
 				$class = ' class="calendar-today"';
 			}
