@@ -32,9 +32,9 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
 {
 	private $sql_querier;
 
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
+	public function __construct()
+	{
+		$this->sql_querier = PersistenceContext::get_sql();
 	}
 	
 	public function get_search_request($args)
@@ -51,9 +51,8 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
 			CONCAT('" . PATH_TO_ROOT . "/news/index.php?url=/', id_category, '-', cat.rewrited_name, '/', n.id, '-', n.rewrited_name) AS link
 			FROM " . NewsSetup::$news_table . " n
 			LEFT JOIN ". NewsSetup::$news_cats_table ." cat ON n.id_category = cat.id
-			WHERE ( FT_SEARCH(n.name, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR
-			FT_SEARCH_RELEVANCE(n.short_contents, '" . $args['search'] . "') )
-			AND n.approbation_type = 1 OR (n.approbation_type = 2 AND n.start_date < '" . $now->get_timestamp() . "' AND (end_date > '" . $now->get_timestamp() . "' OR end_date = 0))
+			WHERE ( FT_SEARCH(n.name, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR FT_SEARCH_RELEVANCE(n.short_contents, '" . $args['search'] . "') )
+			AND (n.approbation_type = 1 OR (n.approbation_type = 2 AND n.start_date < '" . $now->get_timestamp() . "' AND (end_date > '" . $now->get_timestamp() . "' OR end_date = 0)))
 			AND id_category IN(" . implode(", ", $authorized_categories) . ")
 			ORDER BY relevance DESC " . $this->sql_querier->limit(0, 100);
 	}
