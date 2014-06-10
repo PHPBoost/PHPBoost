@@ -84,7 +84,7 @@ class BugtrackerSearchable extends AbstractSearchableExtensionPoint
 			FT_SEARCH_RELEVANCE(contents, '".$args['search']."') ) / 3 AS `relevance`,
 			CONCAT('" . PATH_TO_ROOT . "/bugtracker/index.php?url=/detail/',id) AS `link`
 			FROM " . PREFIX . "bugtracker
-			WHERE ( FT_SEARCH(title, '".$args['search']."') OR MATCH(contents, '".$args['search']."') )
+			WHERE ( FT_SEARCH(title, '".$args['search']."') OR FT_SEARCH(contents, '".$args['search']."') )
 			ORDER BY relevance DESC " . $this->sql_querier->limit(0, BugtrackerConfig::BUGTRACKER_MAX_SEARCH_RESULTS);
 		if ($where == 'contents')
 			$request = "SELECT ".
