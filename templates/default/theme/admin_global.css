@@ -105,7 +105,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 
 .calendar-block .date-picker {
 	margin: 0px;
-	width: 166px;
+	width: 172px;
 	table-layout: fixed;
 }
 
@@ -118,7 +118,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 .calendar-block .date-picker select,
 .calendar-block .date-picker select:focus { 
 	box-shadow: none;
-	max-width: 65px;
+	max-width: 75px;
 }
 
 .calendar-block .date-picker th {
