@@ -49,9 +49,10 @@ $Template->add_lang($date_lang);;
 //Type date.
 if ($calendar_type == 'date')
 {
-	$year = !empty($_GET['y']) ? NumberHelper::numeric($_GET['y']) : date('Y');
-	$month = !empty($_GET['m']) ? NumberHelper::numeric($_GET['m']) : date('n');
-	$day = !empty($_GET['d']) ? NumberHelper::numeric($_GET['d']) : date('j');
+	$now = new Date();
+	$year = !empty($_GET['y']) ? NumberHelper::numeric($_GET['y']) : $now->get_year();
+	$month = !empty($_GET['m']) ? NumberHelper::numeric($_GET['m']) : $now->get_month();
+	$day = !empty($_GET['d']) ? NumberHelper::numeric($_GET['d']) : $now->get_day();
 	$input_date = !empty($_GET['input_date']) ? trim($_GET['input_date']) : $day . '/' . $month . '/' . $year;
 	
 	$selected = explode('/', $input_date);
@@ -140,11 +141,6 @@ if ($calendar_type == 'date')
 				$class = 'calendar-weekend';
 			}
 
-			if (($j == Date("j")) && ($month == Date("m")) && ($year == Date("Y")))
-			{
-				$class = 'calendar-today';
-			}
-			
 			if ($j == $selected_day && $month == $selected_month && $year == $selected_year)
 			{
 				$class = 'calendar-event';
