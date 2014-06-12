@@ -22,16 +22,25 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr style="text-align:center;">
-			# START day #
-			{day.L_DAY}
-			# END day #
+		<tr>
+			<td><span class="smaller">{@monday_short}</span></td>
+			<td><span class="smaller">{@tuesday_short}</span></td>
+			<td><span class="smaller">{@wednesday_short}</span></td>
+			<td><span class="smaller">{@thursday_short}</span></td>
+			<td><span class="smaller">{@friday_short}</span></td>
+			<td><span class="smaller">{@saturday_short}</span></td>
+			<td><span class="smaller">{@sunday_short}</span></td>
 		</tr>
-		<tr style="text-align:center;">			
-			# START calendar #					
-			{calendar.DAY}
-			{calendar.TR}
-			# END calendar #
+		<tr>
+			# START day #
+			<td class="{day.CLASS}">
+				<a href="javascript:insert_date('{day.INPUT_DATE}', '{day.DATE}');">{day.DAY}</a>
+			</td>
+			# IF day.CHANGE_LINE #
+		</tr>
+		<tr>
+			# ENDIF #
+			# END day #
 		</tr>
 	</tbody>
 </table>
