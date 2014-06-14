@@ -81,8 +81,8 @@
 									# END cat.select_secure #
 								</select>
 							</td>
-							<td class="input-radio">
-								<label><input type="radio" {cat.ACTIV_ENABLED} name="{cat.IDCAT}aprob" value="1"> {L_ACTIV}</label>
+							<td class="status_column">
+								<label><input type="radio" {cat.ACTIV_ENABLED} name="{cat.IDCAT}aprob" value="1"> {L_ACTIV}</label><br />
 								<label><input type="radio" {cat.ACTIV_DISABLED} name="{cat.IDCAT}aprob" value="0"> {L_UNACTIV}</label>
 							</td>
 							<td>
