@@ -1,7 +1,7 @@
 # IF C_MENU # <!--  Menu -->
 	# IF C_FIRST_MENU # <!-- First one -->
 		<nav class="dynamic-menu">
-			<ul>
+			<ul class="vertical-scrolling-menu">
                 # IF C_HAS_CHILD #
 			    <li>
                 # ELSE #
