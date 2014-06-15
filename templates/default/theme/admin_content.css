@@ -333,6 +333,8 @@ table tfoot nav.pagination a span.current-page {
 	text-decoration: none;
 }
 
+td.input-radio { width: 60px; }
+
 /* Deprecated */
 .row-disabled { background: #E1E1E1 !important; }
 
