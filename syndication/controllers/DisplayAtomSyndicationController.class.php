@@ -54,10 +54,20 @@ class DisplayAtomSyndicationController extends AbstractController
 			{
 				$provider = $eps->get_provider($module_id);
 				$feeds = $provider->feeds();
-				$feed->load_data($feeds->get_feed_data_struct($module_category_id, $feed_name));
-				$feed->cache();
+				$data = $feeds->get_feed_data_struct($module_category_id, $feed_name);
 				
-				$this->tpl->put('SYNDICATION', $feed->export());
+				if ($data === null)
+				{
+					AppContext::get_response()->set_header('content-type', 'text/html');
+					DispatchManager::redirect(PHPBoostErrors::unexisting_category());
+				}
+				else
+				{
+					$feed->load_data($data);
+					$feed->cache();
+				
+					$this->tpl->put('SYNDICATION', $feed->export());
+				}
 			}
 			else
 			{
