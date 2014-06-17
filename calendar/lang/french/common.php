@@ -64,6 +64,7 @@ $lang['calendar.labels.max_registered_members.explain'] = '0 pour illimité';
 $lang['calendar.labels.remaining_place'] = 'Plus qu\'une place disponible !';
 $lang['calendar.labels.remaining_places'] = 'Il ne reste que :missing_number places !';
 $lang['calendar.labels.max_participants_reached'] = 'Le nombre de participants maximum a été atteint.';
+$lang['calendar.labels.last_registration_date_enabled'] = 'Définir une date limite d\'inscription';
 $lang['calendar.labels.last_registration_date'] = 'Dernière date d\'inscription';
 $lang['calendar.labels.remaining_day'] = 'Dernier jour pour s\'inscrire !';
 $lang['calendar.labels.remaining_days'] = 'Il ne reste que :days_left jours pour s\'inscrire !';

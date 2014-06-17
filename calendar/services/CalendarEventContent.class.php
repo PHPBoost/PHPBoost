@@ -42,6 +42,7 @@ class CalendarEventContent
 	
 	private $registration_authorized;
 	private $max_registered_members;
+	private $last_registration_date_enabled;
 	private $last_registration_date;
 	private $register_authorizations;
 	
@@ -177,7 +178,22 @@ class CalendarEventContent
 		return $this->max_registered_members;
 	}
 	
-	public function set_last_registration_date(Date $last_registration_date)
+	public function enable_last_registration_date()
+	{
+		$this->last_registration_date_enabled = true;
+	}
+	
+	public function disable_last_registration_date()
+	{
+		$this->last_registration_date_enabled = false;
+	}
+	
+	public function is_last_registration_date_enabled()
+	{
+		return $this->last_registration_date_enabled;
+	}
+	
+	public function set_last_registration_date($last_registration_date)
 	{
 		$this->last_registration_date = $last_registration_date;
 	}
@@ -273,6 +289,7 @@ class CalendarEventContent
 			$this->unauthorize_registration();
 		
 		$this->max_registered_members = $properties['max_registered_members'];
+		$this->last_registration_date_enabled = !empty($properties['last_registration_date']);
 		$this->last_registration_date = !empty($properties['last_registration_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['last_registration_date']) : null;
 		$this->register_authorizations = unserialize($properties['register_authorizations']);
 		
@@ -298,6 +315,7 @@ class CalendarEventContent
 		
 		$this->registration_authorized = false;
 		$this->max_registered_members = 0;
+		$this->last_registration_date_enabled = false;
 		$this->register_authorizations = array('r0' => 3, 'r1' => 3);
 		
 		if (CalendarAuthorizationsService::check_authorizations()->write())

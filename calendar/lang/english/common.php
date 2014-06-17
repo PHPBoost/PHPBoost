@@ -63,6 +63,7 @@ $lang['calendar.labels.remaining_places'] = 'Only :missing_number places left!';
 $lang['calendar.labels.max_registered_members'] = 'Maximum participant number';
 $lang['calendar.labels.max_registered_members.explain'] = '0 for no limit';
 $lang['calendar.labels.max_participants_reached'] = 'Maximum participants number has been reached.';
+$lang['calendar.labels.last_registration_date_enabled'] = 'Set a limit registration date';
 $lang['calendar.labels.last_registration_date'] = 'Last registration date';
 $lang['calendar.labels.remaining_day'] = 'Last day to suscribe !';
 $lang['calendar.labels.remaining_days'] = 'Only :days_left days left to suscribe !';
