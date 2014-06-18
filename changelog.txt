@@ -69,6 +69,8 @@
 
 [b]Script de migration :[/b]
 [*] Mise en maintenance automatique si le site n'est pas déjà en maintenance
+[*] Simplification du script de migration pour ne plus avoir à faire d'actions manuelles sur les fichiers. Tout est maintnant automatique, il suffit d'écraser les fichiers de la 4.0 par la 4.1 et de lancer la migration
+[*] Les informations de connexion vers la base de données n'ont plus besoin d'être entrées si phpboost est déjà installé
 
 [b]Divers :[/b]
 [*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
@@ -92,6 +94,8 @@
 
 [color=red]Nouveauté :[/color] Nouveau module ReCaptcha
 
+[color=red]Nouveauté :[/color] Nouveau module QuestionCaptcha
+
 [b]Articles[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
 [*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie
@@ -107,29 +111,9 @@
 [*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver la notation d'un article pour chacun des articles
 [*] Ajout des microdonnées pour améliorer le référencement
 
-[b]Rapport de bugs[/b]
-[*] [color=red]Nouveauté :[/color] Passage du module en MVC
-[*] [color=red]Nouveauté :[/color] Filtres en haut des tableaux avec possibilité pour chaque utilisateur d'enregistrer ses combinaisons de filtres favoris
-[*] [color=red]Nouveauté :[/color] Légende en bas des tableaux avec la couleur des niveaux et leurs noms
-[*] [color=red]Nouveauté :[/color] Affichage du nombre de bugs correspondants aux filtres choisis
-[*] [color=red]Nouveauté :[/color] Options dans l'administration pour personnaliser les statistiques
-[*] [color=red]Nouveauté :[/color] Graphiques dans les statistiques
-[*] [color=red]Nouveauté :[/color] Alertes administrateur en fonction de la criticité du bug lors de l'ajout, possibilité de désactiver l'option dans l'administration
-[*] [color=red]Nouveauté :[/color] Statut d'avancement sous forme de %
-[*] [color=red]Nouveauté :[/color] Ajout d'une date de parution pour les versions (utilisée dans la roadmap)
-[*] [color=red]Nouveauté :[/color] Nouvel état : "En cours", lorsque la version de correction d'un bug est choisie mais qu'il n'est pas encore corrigé
-[*] [color=red]Nouveauté :[/color] Nouvel état : "En attente", pour indiquer que le bug ne sera pas corrigé toute suite
-[*] [color=red]Nouveauté :[/color] Sitemap avec bugs résolus, non résolus, feuille de route (si activée) et statistiques
-[*] [color=red]Nouveauté :[/color] Flux RSS pour les bugs non-résolus et résolus
-[*] [color=red]Nouveauté :[/color] Nouveau bouton pour corriger un bug directement depuis la liste des bugs/le détail d'un bug pour les utilisateurs autorisés (on est maintenant plus obligé de choisir la version quand on passe à l'état corrigé)
-[*] [color=red]Nouveauté :[/color] Nouveau bouton pour assigner un bug directement depuis la liste des bugs/le détail d'un bug pour les utilisateurs autorisés
-[*] [color=red]Nouveauté :[/color] Possibilité de mettre un commentaire directement quand on assigne, corrige, rejete, réouvre et supprime un bug
-[*] L'ajout et la suppression de niveaux et priorités n'est plus possible pour être cohérent avec les alertes administrateur. Par contre il est toujours possible de changer leur nom et la couleur des niveaux
-[*] L'envoi de MP peut être activé de manière plus affinée
-[*] Changement de mise en forme des tableaux pour plus de lisibilité
-[*] Amélioration de l'affichage Corrigé/En cours dans la roadmap
-[*] Suppression de l'option pour désactiver les commentaires (dorénavant ils sont toujours activés)
-[*] Refonte de l'affichage général du module
+[b]Bac à sable[/b]
+[*] Intégration d'une section regroupant tous les styles que l'on peut trouver dans les différentes pages du projet. Elle permettra de gagner du temps lors de la personnalisation d'un thème
+[*] Page regroupant les alias des icônes de Font-Awesome
 
 [b]Calendrier[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
@@ -156,6 +140,9 @@
 [*] [color=red]Nouveauté :[/color] Ajout de l'avatar des membres dans la liste
 [*] Refonte de l'affichage
 
+[b]Forum[/b]
+[*] Déplacement de la gestion des rangs dans le module forum
+
 [b]Livre d'or[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
 [*] Refonte de l'affichage
@@ -163,9 +150,6 @@
 [b]Multimedia[/b]
 [*] Ajout de la balise enclosure dans les flux RSS pour pouvoir diffuser le media
 [*] Ajout du support du format MP4
-
-[b]Forum[/b]
-[*] Déplacement de la gestion des rangs dans le module forum
 
 [b]News[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
@@ -182,6 +166,33 @@
 [*] [color=red]Nouveauté :[/color] Suppression de l'édito et ajout d'une option supplémentaire dans le formulaire d'ajout pour placer les news en tête de liste.
 [*] Ajout des microdonnées pour améliorer le référencement
 
+[b]Newsletter[/b]
+[*] Remplacement de l'ancien système de flux par le nouveau système de catégories pour gagner en lisibilité et efficacité
+
+[b]Rapport de bugs[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Filtres en haut des tableaux avec possibilité pour chaque utilisateur d'enregistrer ses combinaisons de filtres favoris
+[*] [color=red]Nouveauté :[/color] Légende en bas des tableaux avec la couleur des niveaux et leurs noms
+[*] [color=red]Nouveauté :[/color] Affichage du nombre de bugs correspondants aux filtres choisis
+[*] [color=red]Nouveauté :[/color] Options dans l'administration pour personnaliser les statistiques
+[*] [color=red]Nouveauté :[/color] Graphiques dans les statistiques
+[*] [color=red]Nouveauté :[/color] Alertes administrateur en fonction de la criticité du bug lors de l'ajout, possibilité de désactiver l'option dans l'administration
+[*] [color=red]Nouveauté :[/color] Statut d'avancement sous forme de %
+[*] [color=red]Nouveauté :[/color] Ajout d'une date de parution pour les versions (utilisée dans la roadmap)
+[*] [color=red]Nouveauté :[/color] Nouvel état : "En cours", lorsque la version de correction d'un bug est choisie mais qu'il n'est pas encore corrigé
+[*] [color=red]Nouveauté :[/color] Nouvel état : "En attente", pour indiquer que le bug ne sera pas corrigé toute suite
+[*] [color=red]Nouveauté :[/color] Sitemap avec bugs résolus, non résolus, feuille de route (si activée) et statistiques
+[*] [color=red]Nouveauté :[/color] Flux RSS pour les bugs non-résolus et résolus
+[*] [color=red]Nouveauté :[/color] Nouveau bouton pour corriger un bug directement depuis la liste des bugs/le détail d'un bug pour les utilisateurs autorisés (on est maintenant plus obligé de choisir la version quand on passe à l'état corrigé)
+[*] [color=red]Nouveauté :[/color] Nouveau bouton pour assigner un bug directement depuis la liste des bugs/le détail d'un bug pour les utilisateurs autorisés
+[*] [color=red]Nouveauté :[/color] Possibilité de mettre un commentaire directement quand on assigne, corrige, rejete, réouvre et supprime un bug
+[*] L'ajout et la suppression de niveaux et priorités n'est plus possible pour être cohérent avec les alertes administrateur. Par contre il est toujours possible de changer leur nom et la couleur des niveaux
+[*] L'envoi de MP peut être activé de manière plus affinée
+[*] Changement de mise en forme des tableaux pour plus de lisibilité
+[*] Amélioration de l'affichage Corrigé/En cours dans la roadmap
+[*] Suppression de l'option pour désactiver les commentaires (dorénavant ils sont toujours activés)
+[*] Refonte de l'affichage général du module
+
 [b]Recherche[/b]
 [*] Refonte visuelle
 
@@ -190,7 +201,3 @@
 
 [b]Wiki[/b]
 [*] Ajout du captcha pour les visiteurs
-
-[b]Bac à sable[/b]
-[*] Intégration d'une section regroupant tous les styles que l'on peut trouver dans les différentes pages du projet. Elle permettra de gagner du temps lors de la personnalisation d'un thème
-[*] Page regroupant les alias des icônes de Font-Awesome
