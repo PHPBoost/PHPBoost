@@ -33,7 +33,7 @@ $shout_id = retrieve(GET, 'id', 0);
 $add = retrieve(GET, 'add', false);
 
 if ($add && empty($shout_id)) //Insertion
-{		
+{
 	//Membre en lecture seule?
 	if ($User->get_attribute('user_readonly') > time()) 
 	{
@@ -47,7 +47,7 @@ if ($add && empty($shout_id)) //Insertion
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{
 		
-		//Accès pour poster.		
+		//Accès pour poster.
 		if (ShoutboxAuthorizationsService::check_authorizations()->write())
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
@@ -102,9 +102,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		}
 		elseif ($edit_message)
 		{
-			$Template->set_filenames(array(
-				'shoutbox'=> 'shoutbox/shoutbox.tpl'
-			));
+			$Template = new StringTemplate('# INCLUDE SHOUTBOX_FORM #');
 			
 			$formatter = AppContext::get_content_formatting_service()->create_factory();
 			$formatter->set_forbidden_tags($config_shoutbox->get_forbidden_formatting_tags());
@@ -132,7 +130,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 
 			$Template->put('SHOUTBOX_FORM', $form->display());
 			
-			$Template->pparse('shoutbox'); 
+			$Template->display(); 
 		}
 		elseif ($update_message)
 		{
