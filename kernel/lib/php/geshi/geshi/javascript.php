@@ -138,9 +138,6 @@ $language_data = array (
             '<script>' => '</script>'
             ),
         1 => array(
-            '<script type="text/javascript">' => '</script>'
-            ),
-        2 => array(
             '<script language="javascript">' => '</script>'
             )
         ),
