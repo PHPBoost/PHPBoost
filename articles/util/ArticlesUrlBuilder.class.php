@@ -61,10 +61,11 @@ class ArticlesUrlBuilder
 	
 	public static function display_category($id, $rewrited_name, $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
+		$category = $id > 0 ? $id . '-' . $rewrited_name .'/' : '';
 		$page = $page !== 1 ? $page . '/': '';
 		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name . '/' . $sort_field . $sort_mode . $page);
+		return DispatchManager::get_url(self::$dispatcher, '/' . $category . $sort_field . $sort_mode . $page);
 	}
 	
 	public static function manage_articles($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)

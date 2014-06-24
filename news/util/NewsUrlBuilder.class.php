@@ -85,8 +85,9 @@ class NewsUrlBuilder
 	
 	public static function display_category($id, $rewrited_name, $page = 1)
 	{
+		$category = $id > 0 ? $id . '-' . $rewrited_name .'/' : '';
 		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name .'/' . $page);
+		return DispatchManager::get_url(self::$dispatcher, '/' . $category . $page);
 	}
 	
 	public static function display_tag($rewrited_name, $page = 1)
