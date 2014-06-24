@@ -206,7 +206,7 @@
 		# START msg #
 		<div class="msg-position" id="d{msg.ID}">
 			<div class="msg-container{msg.CLASS_COLOR}">
-				<span id="m{msg.ID}" />
+				<span id="m{msg.ID}"></span>
 				<div class="msg-top-row">
 					<div class="msg-pseudo-mbr">
 						# IF msg.C_FORUM_USER_LOGIN # 
