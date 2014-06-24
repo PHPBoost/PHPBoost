@@ -7,7 +7,7 @@
 				{L_POLL_MAIN}
 				<br /><br />
 				# START list #
-				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}">{list.QUESTION}
+				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}">{list.QUESTION}</a>
 				<br />  
 				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}"><img src="{PATH_TO_ROOT}/poll/poll.png" alt="" title="{list.QUESTION}" /></a> 
 				<br /><br />
