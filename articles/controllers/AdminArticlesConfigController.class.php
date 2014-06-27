@@ -117,7 +117,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_character_to_cut', $this->lang['articles_configuration.number_character_to_cut'], $this->config->get_number_character_to_cut(),  
-			array('maxlength' => 4, 'size' => 6, 'required' => true),
+			array('maxlength' => 4, 'size' => 4, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 		
