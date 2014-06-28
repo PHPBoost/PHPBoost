@@ -42,7 +42,7 @@ var QuestionCaptchaFormFieldQuestions = new QuestionCaptchaFormFieldQuestions();
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
 		<textarea name="field_label_${escape(HTML_ID)}_{fieldelements.ID}" id="field_label_${escape(ID)}_{fieldelements.ID}" placeholder="{@form.question}">{fieldelements.LABEL}</textarea>
-		<textarea name="field_answer_${escape(HTML_ID)}_{fieldelements.ID}" id="field_answer_${escape(ID)}_{fieldelements.ID}" placeholder="{@form.answers}" class="answers">{fieldelements.ANSWERS}</textarea>
+		<textarea name="field_answers_${escape(HTML_ID)}_{fieldelements.ID}" id="field_answers_${escape(ID)}_{fieldelements.ID}" placeholder="{@form.answers}" class="answers">{fieldelements.ANSWERS}</textarea>
 		
 		# IF fieldelements.C_DELETE #<a href="javascript:QuestionCaptchaFormFieldQuestions.delete_question({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" class="fa fa-delete" data-confirmation="delete-element"></a># ENDIF #
 		<div class="spacer"></div>
