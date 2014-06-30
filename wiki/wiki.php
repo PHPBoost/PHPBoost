@@ -216,7 +216,8 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 //Si l'article n'existe pas
 elseif (!empty($encoded_title) && $num_rows == 0)
 {
-	AppContext::get_response()->redirect('/wiki/' . url('post.php?title=' . $encoded_title, '', '&'));
+	$error_controller = PHPBoostErrors::unexisting_page();
+   	DispatchManager::redirect($error_controller);
 }
 //Sinon c'est l'accueil
 else
