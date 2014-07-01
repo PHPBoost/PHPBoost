@@ -31,7 +31,7 @@
 
 <script>
 <!--
-Event.observe(${escapejs(NAME)}, 'change', function() {
+Event.observe(${escapejs(NAME)}, 'blur', function() {
 	new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',{method:'post',parameters:{image:HTMLForms.getField(${escapejs(ID)}).getValue()},onSuccess:function(response){
 		$('${escape(HTML_ID)}_preview_picture').style.display = "none";
 		$('${escape(HTML_ID)}_preview_loading').remove();
