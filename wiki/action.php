@@ -193,7 +193,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 		if ($create_redirection_while_renaming) //On crée un nouvel article
 		{
 			//On ajoute un article
-			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (id_contents, title, encoded_title, hits, id_cat, is_cat, defined_status, undefined_status, redirect, auth) VALUES ('" . $article_infos['id_contents'] . "', '" . $new_title . "', '" . Url::encode_rewrite($new_title) . "', '" . $article_infos['hits'] . "', '" . $article_infos['id_cat'] . "', '" . $article_infos['is_cat'] . "', '" . $article_infos['defined_status'] . "', '" . $article_infos['undefied_status'] . "', 0, '" . $article_infos['auth'] . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (id_contents, title, encoded_title, hits, id_cat, is_cat, defined_status, undefined_status, redirect, auth) VALUES ('" . $article_infos['id_contents'] . "', '" . $new_title . "', '" . Url::encode_rewrite($new_title) . "', '" . $article_infos['hits'] . "', '" . $article_infos['id_cat'] . "', '" . $article_infos['is_cat'] . "', '" . $article_infos['defined_status'] . "', '" . $article_infos['undefined_status'] . "', 0, '" . $article_infos['auth'] . "')", __LINE__, __FILE__);
 			$new_id_article = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
 			
 			//On met à jour la table contents
