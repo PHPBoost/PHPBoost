@@ -100,7 +100,7 @@ class ContactController extends ModuleController
 			if ($field->is_displayed() && $field->is_authorized())
 			{
 				if ($field->get_field_name() == 'f_sender_mail')
-					$field->set_default_value(AppContext::get_current_user()->get_attribute('user_mail'));
+					$field->set_default_value(AppContext::get_current_user()->get_email());
 				$field->set_fieldset($fieldset);
 				ContactFieldsFactory::display_field($field);
 			}
@@ -116,6 +116,7 @@ class ContactController extends ModuleController
 	private function send_mail()
 	{
 		$message = '';
+		$current_user = AppContext::get_current_user();
 		
 		$fields = $this->config->get_fields();
 		$recipients_field_id = $this->config->get_field_id_by_name('f_recipients');
@@ -177,7 +178,7 @@ class ContactController extends ModuleController
 		$message .= $this->form->get_value('f_message');
 		
 		$mail = new Mail();
-		$mail->set_sender($this->form->get_value('f_sender_mail'), AppContext::get_current_user()->get_attribute('login'));
+		$mail->set_sender($this->form->get_value('f_sender_mail'), ($current_user->get_level() == User::VISITOR_LEVEL ? $this->lang['module_title'] : $current_user->get_login()));
 		$mail->set_subject($subject);
 		$mail->set_content($message);
 		
