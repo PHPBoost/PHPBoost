@@ -422,6 +422,9 @@ class ModulesManager
 		$error = '';
 		if (!$activated)
 		{
+			MenuService::delete_mini_module($module_id);
+			MenuService::delete_module_feeds_menus($module_id);
+				
 			$general_config = GeneralConfig::load();
 			$module_home_page_selected = $general_config->get_module_home_page();
 			if ($module_home_page_selected == $module_id)
