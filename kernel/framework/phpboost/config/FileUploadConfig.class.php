@@ -46,6 +46,11 @@ class FileUploadConfig extends AbstractConfigData
 		$this->set_property(self::AUTHORIZATION_ENABLE_INTERFACE_FILES, $array);
 	}
 	
+	public function is_authorized_to_access_interface_files()
+	{
+		return AppContext::get_current_user()->check_auth($this->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT);
+	}
+	
 	public function get_maximum_size_upload()
 	{
 		return $this->get_property(self::MAXIMUM_SIZE_UPLOAD);
