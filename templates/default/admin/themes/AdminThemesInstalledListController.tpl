@@ -1,13 +1,13 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<table>
-		<caption>{@themes.installed}</caption>
+		<caption>{@themes.installed_theme}</caption>
 		<thead>
 			<tr> 
 				<th>{@themes.name}</th>
 				<th>{@themes.description}</th>
-				<th>{@themes.authorisations}</th>
-				<th>{@themes.activated}</th>
-				<th>{L_DELETE}</th>
+				<th>{@themes.authorization}</th>
+				<th>{@themes.activated_theme}</th>
+				<th>{@themes.delete}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -65,7 +65,7 @@
 						<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.no}</label>
 					</td>
 					<td>
-						<button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">{L_DELETE}</button>
+						<button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">{@themes.delete}</button>
 					</td>
 					# ELSE #
 					<td class="row-disabled">

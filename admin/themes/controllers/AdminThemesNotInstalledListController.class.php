@@ -60,7 +60,7 @@ class AdminThemesNotInstalledListController extends AdminController
 		
 		$this->view->put('UPLOAD_FORM', $this->form->display());
 
-		return new AdminThemesDisplayResponse($this->view, $this->lang['themes.add']);
+		return new AdminThemesDisplayResponse($this->view, $this->lang['themes.add_theme']);
 	}
 	
 	private function build_view()
@@ -153,10 +153,10 @@ class AdminThemesNotInstalledListController extends AdminController
 	{
 		$form = new HTMLForm('upload_theme');
 		
-		$fieldset = new FormFieldsetHTML('upload', $this->lang['themes.upload']);
+		$fieldset = new FormFieldsetHTML('upload', $this->lang['themes.upload_theme']);
 		$form->add_fieldset($fieldset);
 	
-		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['themes.upload.description']));
+		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['themes.upload_description']));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -210,7 +210,7 @@ class AdminThemesNotInstalledListController extends AdminController
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::NOTICE, 4));
+						$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload_invalid_format'], MessageHelper::NOTICE, 4));
 					}
 				}
 				else

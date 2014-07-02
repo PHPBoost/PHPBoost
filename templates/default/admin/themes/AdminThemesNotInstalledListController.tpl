@@ -2,15 +2,15 @@
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	# INCLUDE MSG #
 	<table>
-		<caption>{@themes.not_installed}</caption>
+		<caption>{@themes.themes_available}</caption>
 		# IF C_THEME_INSTALL #
 		<thead>
 			<tr> 
 				<th>{@themes.name}</th>
 				<th>{@themes.description}</th>
-				<th>{@themes.authorisations}</th>
-				<th>{@themes.activated}</th>
-				<th>{L_ADD}</th>
+				<th>{@themes.authorization}</th>
+				<th>{@themes.activated_theme}</th>
+				<th>{@themes.install_theme}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -57,7 +57,7 @@
 					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="0"> {@themes.no}</label>
 				</td>
 				<td>
-					<button type="submit" class="submit" name="add-{themes_not_installed.ID}" value="true">{L_ADD}</button>
+					<button type="submit" class="submit" name="add-{themes_not_installed.ID}" value="true">{@themes.install_theme}</button>
 				</td>
 			</tr>
 			# END themes_not_installed #
@@ -65,7 +65,7 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="notice message-helper-small">{@themes.add.not_theme}</div>
+	<div class="notice message-helper-small">{@themes.no_theme_to_install}</div>
 		# ENDIF #
 		
 	<fieldset class="fieldset-submit">
