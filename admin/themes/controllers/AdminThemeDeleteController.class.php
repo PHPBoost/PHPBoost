@@ -74,7 +74,7 @@ class AdminThemeDeleteController extends AdminController
 		$fieldset = new FormFieldsetHTML('delete_theme', $this->lang['themes.delete']);
 		$form->add_fieldset($fieldset);
 	
-		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->lang['themes.delete.drop_files'], '0',
+		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->lang['themes.drop_files'], '0',
 			array(
 				new FormFieldRadioChoiceOption($this->lang['themes.yes'], '1'),
 				new FormFieldRadioChoiceOption($this->lang['themes.no'], '0')

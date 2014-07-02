@@ -36,7 +36,7 @@ class AdminThemesInstalledListController extends AdminController
 		$this->build_view();
 		$this->save($request);
 
-		return new AdminThemesDisplayResponse($this->view, $this->lang['themes.installed']);
+		return new AdminThemesDisplayResponse($this->view, $this->lang['themes.installed_theme']);
 	}
 	
 	private function build_view()

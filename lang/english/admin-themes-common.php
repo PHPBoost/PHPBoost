@@ -26,27 +26,25 @@
  ###################################################*/
 
  ####################################################
-#                     French                       #
+#                     English                       #
  ####################################################
  
 $lang = array();
 
 // Title 
-$lang['themes.management'] = 'Theme management';
-$lang['themes.installed'] = 'Installed themes';
-$lang['themes.add'] = 'Add Theme';
-$lang['themes.not_installed'] = 'Not installed themes';
-$lang['themes.delete'] = 'Remove theme';
 
-//Installed thèmes
-$lang['themes.name'] = 'Name';
-$lang['themes.description'] = 'Description';
-$lang['themes.authorisations'] = 'Authorizations';
-$lang['themes.activated'] = 'Activated';
+$lang['themes.theme_management'] = 'Theme management';
+$lang['themes.add_theme'] = 'Add themes';
+$lang['themes.update_theme'] = 'Update themes';
+$lang['themes.delete_theme'] = 'Delete or Deactivate themes';
+$lang['themes.installed_theme'] = 'Installed themes';
 
 //Theme
+$lang['themes.name'] = 'Name';
+$lang['themes.description'] = 'Description';
 $lang['themes.author'] = 'Author';
 $lang['themes.compatibility'] = 'Compatibility';
+$lang['themes.authorization'] = 'Autorizations';
 $lang['themes.html_version'] = 'HTML version';
 $lang['themes.css_version'] = 'CSS version';
 $lang['themes.main_color'] = 'Main colors';
@@ -55,28 +53,34 @@ $lang['themes.width'] = 'Width';
 $lang['themes.bot_informed'] = 'Not specified';
 $lang['themes.view_real_preview'] = 'View full size';
 $lang['themes.default_theme_explain'] = 'The default theme can not be uninstalled, disabled or reserved';
+$lang['themes.themes_available'] = 'Available themes';
 
 //Others
 $lang['themes.yes'] = 'Yes';
 $lang['themes.no'] = 'No';
 $lang['themes.visitor'] = 'Visitor';
 
-//Add thème
-$lang['themes.add_theme'] = 'Add theme';
-$lang['themes.add.not_theme'] = 'No theme to install';
+//Themes management
+$lang['themes.activate_theme'] = 'Activate';
+$lang['themes.install_theme'] = 'Install';
+$lang['themes.activated_theme'] = 'Activated';
+$lang['themes.delete'] = 'Delete';
+$lang['themes.update'] = 'Modify';
+$lang['themes.reset'] = 'Reset';
 
 //Upload
-$lang['themes.upload'] = 'Upload theme';
-$lang['themes.upload.description'] = 'The archive should be uploaded as zip or gzip';
+$lang['themes.upload_theme'] = 'Upload theme';
+$lang['themes.upload_description'] = 'The archive should be uploaded as zip or gzip';
 
 //Messages
 $lang['themes.already_exist'] = 'This theme already exists';
-$lang['themes.upload.invalid_format'] = 'The format of the archive is not valid';
-$lang['themes.upload.error'] = 'Error with the upload file';
+$lang['themes.upload_invalid_format'] = 'The format of the archive is not valid';
+$lang['themes.upload_error'] = 'Error with the upload file';
 $lang['themes.not_compatible'] = 'The theme is apparently incompatible with your current version of PHPBoost, he was anyhow installed. If a problem comes please contact the author of the theme.';
 $lang['themes.old_version'] = 'The theme is incompatible with your current version of PHPBoost, it has not been installed.';
 $lang['themes.install_success'] = 'Theme successfully installed !';
+$lang['themes.no_theme_to_install'] = 'No theme to install !';
 
 //Delete theme
-$lang['themes.delete.drop_files'] = 'Delete all the theme\'s files';
+$lang['themes.drop_files'] = 'Delete all the theme\'s files';
 ?>

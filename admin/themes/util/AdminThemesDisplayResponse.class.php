@@ -33,9 +33,9 @@ class AdminThemesDisplayResponse extends AdminMenuDisplayResponse
 
 		$lang = LangLoader::get('admin-themes-common');
 		$picture = '/templates/default/images/admin/themes.png';
-		$this->set_title($lang['themes.management']);
-		$this->add_link($lang['themes.installed'], AdminThemeUrlBuilder::list_installed_theme(), $picture);
-		$this->add_link($lang['themes.add'], AdminThemeUrlBuilder::add_theme(), $picture);
+		$this->set_title($lang['themes.theme_management']);
+		$this->add_link($lang['themes.installed_theme'], AdminThemeUrlBuilder::list_installed_theme(), $picture);
+		$this->add_link($lang['themes.add_theme'], AdminThemeUrlBuilder::add_theme(), $picture);
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);
