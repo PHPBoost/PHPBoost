@@ -48,7 +48,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		
 		$this->view->put('UPLOAD_FORM', $this->form->display());
 
-		return new AdminLangsDisplayResponse($this->view, $this->lang['langs.install']);
+		return new AdminLangsDisplayResponse($this->view, $this->lang['langs.add_lang']);
 	}
 	
 	private function build_view()
@@ -74,7 +74,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		}
 		$this->view->put_all(array(
 			'C_LANG_INSTALL' => count($not_installed_langs) > 0 ? true : false,
-			'L_ADD' => $this->lang['langs.install']
+			'L_ADD' => $this->lang['langs.add_lang']
 		));
 	}
 	
@@ -144,10 +144,10 @@ class AdminLangsNotInstalledListController extends AdminController
 	{
 		$form = new HTMLForm('upload_lang');
 		
-		$fieldset = new FormFieldsetHTML('upload', $this->lang['langs.upload']);
+		$fieldset = new FormFieldsetHTML('upload', $this->lang['langs.upload_lang']);
 		$form->add_fieldset($fieldset);
 	
-		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['langs.upload.description']));
+		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['langs.upload_description']));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

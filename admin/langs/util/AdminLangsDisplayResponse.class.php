@@ -33,9 +33,9 @@ class AdminLangsDisplayResponse extends AdminMenuDisplayResponse
 
 		$lang = LangLoader::get('admin-langs-common');
 		$picture = '/templates/default/images/admin/languages.png';
-		$this->set_title($lang['langs.management']);
-		$this->add_link($lang['langs.installed'], AdminLangsUrlBuilder::list_installed_langs(), $picture);
-		$this->add_link($lang['langs.install'], AdminLangsUrlBuilder::install(), $picture);
+		$this->set_title($lang['langs.langs_management']);
+		$this->add_link($lang['langs.installed_langs'], AdminLangsUrlBuilder::list_installed_langs(), $picture);
+		$this->add_link($lang['langs.add_lang'], AdminLangsUrlBuilder::install(), $picture);
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

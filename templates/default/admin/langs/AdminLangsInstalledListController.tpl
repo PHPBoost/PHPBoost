@@ -1,13 +1,13 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<table>
-		<caption>{@langs.installed}</caption>
+		<caption>{@langs.installed_langs}</caption>
 		<thead>
 			<tr> 
 				<th>{@langs.name}</th>
 				<th>{@langs.description}</th>
-				<th>{@langs.authorisations}</th>
-				<th>{@langs.activated}</th>
-				<th>{L_DELETE}</th>
+				<th>{@langs.authorizations}</th>
+				<th>{@langs.activated_lang}</th>
+				<th>{@langs.delete}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -47,7 +47,7 @@
 						<label><input type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@langs.no}</label>
 					</td>
 					<td>
-						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">{L_DELETE}</button>
+						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">{@langs.delete}</button>
 					</td>
 					# ELSE #
 					<td class="row-disabled" style="text-align:center;">
