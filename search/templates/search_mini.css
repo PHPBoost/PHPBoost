@@ -11,12 +11,8 @@
 }
 
 #mini-search-form {
-	float: right;
-	margin-top: 20px;
-	margin-right: 25px;
-	display: inline-block;
-	margin-bottom: 10px;
-	font-size: 0;
+	margin: 20px 25px 10px 0;
+	display: flex;
 	white-space: nowrap;
 	vertical-align: middle;
 }

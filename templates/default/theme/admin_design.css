@@ -20,36 +20,34 @@ div#global {
 
 /* ##### Entête de la page ###### */
 header#header-admin-container {
-	background-position: 20px 0px;
-	margin-bottom: 8px;
-	height: 170px;
+	height: 174px;
+	width: 980px;
+	margin: auto;
+}
+
+div#header-admin { 
+	height: 139px;
+	display: flex;
 }
 
 div#site-logo {
-	float: left;
 	margin-right: 20px;
 	background: url('images/logo.png') no-repeat;
-	height: 90px;
 	width: 90px;
 }
 
 div#site-infos {
-	float: left;
-	max-width: 690px;
+	display: flex;
+	max-width: 940px;
 	height: 90px;
 	margin: 20px 20px 0px 20px;
 }
 
-div#site-name {
-	float: left;
-	max-width: 600px;
-	margin-top: 40px;
-	font-family: "Trebuchet MS";
-}
-
 div#site-name-container {
-	float: left;
 	margin-top: 10px;
+	flex: 1;
+	height: 108px;
+	overflow: hidden;
 }
 
 a#site-name {
@@ -60,6 +58,7 @@ a#site-name {
 	text-shadow: 0px 0px 0 rgb(0,0,0), 1px 0px 0 rgb(-255,-255,-255),2px 0px 1px rgba(0,0,0,0.1),2px 0px 1px rgba(0,0,0,0.2),0px 0px 1px rgba(0,0,0,.1);
 	letter-spacing: 1.1pt;
 	text-decoration: none;
+	white-space: nowrap;
 }
 
 span#site-slogan {
@@ -70,8 +69,10 @@ span#site-slogan {
 	letter-spacing: 1.5pt;
 }
 
-div#header-admin { height: 139px; }
-div#sub-header-admin { height: 32px; margin-top: 6px; }
+div#sub-header-admin {
+	height: 29px;
+	margin-top: 6px;
+}
 
 div#sub-header-admin .dynamic-menu {
 	width: auto;
