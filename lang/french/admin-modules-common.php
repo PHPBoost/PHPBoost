@@ -35,9 +35,10 @@ $lang['modules.module_management'] = 'Gestion des modules';
 $lang['modules.add_module'] = 'Ajouter un module';
 $lang['modules.update_module'] = 'Mettre à jour un module';
 $lang['modules.delete_module'] = 'Suppression ou désactivation d\'un module';
+$lang['modules.installed_modules'] = 'Modules installés';
 
 //Upload
-$lang['modules.upload_module'] = 'Installer un module';
+$lang['modules.upload_module'] = 'Uploader un module';
 $lang['modules.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip';
 
 //Module
