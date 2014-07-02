@@ -35,6 +35,7 @@ $lang['modules.module_management'] = 'Module management';
 $lang['modules.add_module'] = 'Add a module';
 $lang['modules.update_module'] = 'Update a module';
 $lang['modules.delete_module'] = 'Delete or deactivate a module';
+$lang['modules.installed_modules'] = 'Installed modules';
 
 //Upload
 $lang['modules.upload_module'] = 'Install a module';
@@ -69,7 +70,7 @@ $lang['modules.upload_invalid_format'] = 'The archive format is invalid';
 $lang['modules.already_installed'] = 'The module is already installed';
 $lang['modules.upload_error'] = 'An error occured in the upload';
 $lang['modules.delete_success'] = 'The module has successfully been deleted';
-$lang['modules.deactivated_success'] = 'The module has successfully been deactivated';
+$lang['modules.uninstalled_success'] = 'The module has successfully been deactivated';
 $lang['modules.update_success'] = 'The module has successfully been updated';
 $lang['modules.upgrade_failed'] = 'The update failed';
 $lang['modules.module_not_upgradable'] = 'The module cannot be updated';
@@ -86,6 +87,7 @@ $lang['modules.no_module_to_install'] = 'No module to install !';
 $lang['modules.drop_files'] = 'Delete all the module\'s files';
 $lang['modules.yes'] = 'Yes';
 $lang['modules.no'] = 'No';
+
 //Update
 $lang['modules.upgrade_module'] = 'Update';
 ?>
