@@ -439,7 +439,7 @@ optgroup {
 
 option { padding: 0px 3px; }
 
-/* Prévisualition */
+/* Previsualition */
 .xmlhttprequest-preview {
 	font-size: 11px;
 	border-left: 1px solid #99b1cb;
@@ -576,7 +576,7 @@ form .constraint-status-error textarea {
 
 .form-element-textarea .text-status-constraint { display: inline-block; margin-bottom: 5px; }
 
-/* Auto-complétion */
+/* Auto-completion */
 div.form-autocompleter-container { position: relative;}
 
 div.form-autocompleter { 
@@ -645,10 +645,10 @@ h5.sub-title { /* Titre des modules minis */
 	padding: 5px 4px 0px 4px;
 }
 
-/* Bordure inférieure des modules minis */
+/* Bordure inferieure des modules minis */
 .module-mini-bottom { height: 15px; }
 
-/* Messages postés par les membres (messages privés & commentaires) 
+/* Messages postes par les membres (messages prives & commentaires) 
 --------------------------------------*/
 #comments-list { clear: both; }
 
