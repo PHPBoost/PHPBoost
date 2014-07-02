@@ -50,7 +50,7 @@ class AdminUninstallLangController extends AdminController
 			
 			$this->tpl->put('FORM', $this->form->display());
 
-			return new AdminLangsDisplayResponse($this->tpl, $this->lang['langs.uninstall']);
+			return new AdminLangsDisplayResponse($this->tpl, $this->lang['langs.delete']);
 		}
 		else
 		{
@@ -70,10 +70,10 @@ class AdminUninstallLangController extends AdminController
 	{
 		$form = new HTMLForm('uninstall_lang');
 		
-		$fieldset = new FormFieldsetHTML('uninstall_lang', $this->lang['langs.uninstall']);
+		$fieldset = new FormFieldsetHTML('uninstall_lang', $this->lang['langs.delete']);
 		$form->add_fieldset($fieldset);
 	
-		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->lang['langs.uninstall.drop_files'], '0',
+		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->lang['langs.drop_files'], '0',
 			array(
 				new FormFieldRadioChoiceOption($this->lang['langs.yes'], '1'),
 				new FormFieldRadioChoiceOption($this->lang['langs.no'], '0')

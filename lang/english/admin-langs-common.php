@@ -33,27 +33,37 @@ $lang = array();
 
 //Title
 $lang['langs'] = 'Languages';
-$lang['langs.management'] = 'Languages Management';
-$lang['langs.installed'] = 'Installed languages';
-$lang['langs.uninstall'] = 'Remove language';
-$lang['langs.install'] = 'Install';
+$lang['langs.langs_management'] = 'Languages Management';
+$lang['langs.add_lang'] = 'Add languages';
+$lang['langs.update_lang'] = 'Update languages';
+$lang['langs.delete_lang'] = 'Delete or Deactivate languages';
+$lang['langs.installed_langs'] = 'Installed Languages';
 
 //Messages
 $lang['langs.already_exist'] = 'This language already exists';
 $lang['langs.not_compatible'] = 'This language is not compliant with your version of PHPBoost';
 $lang['langs.install_success'] = 'Language successfully installed !';
-$lang['langs.add.not_lang'] = 'No language to add';
+$lang['langs.no_lang_to_install'] = 'No language to add';
+$lang['langs.langs_available'] = 'languages available';
+
+//Themes management
+$lang['langs.activate_lang'] = 'Activated';
+$lang['langs.install_lang'] = 'Installed';
+$lang['langs.activated_lang'] = 'Activate';
+$lang['langs.delete'] = 'Delete';
+$lang['langs.update'] = 'Modify';
+$lang['langs.reset'] = 'Reset';
 
 //Uninstall
-$lang['langs.uninstall.drop_files'] = 'Delete all the language\'s files';
+$lang['langs.drop_files'] = 'Delete all the language\'s files';
 $lang['langs.default_lang_explain'] = 'The default language can not be uninstalled, disabled or reserved';
 
-$lang['langs.upload'] = 'Upload a language';
-$lang['langs.upload.description'] = 'The archive should be uploaded as zip or gzip';
+$lang['langs.upload_lang'] = 'Upload a language';
+$lang['langs.upload_description'] = 'The archive should be uploaded as zip or gzip';
 
 $lang['langs.not_installed'] = 'Languages not installed';
 $lang['langs.name'] = 'Name';
-$lang['langs.authorisations'] = 'Authorizations';
+$lang['langs.authorizations'] = 'Authorizations';
 $lang['langs.activated'] = 'Activated';
 $lang['langs.compatibility'] = 'Compatibility';
 $lang['langs.author'] = 'Author';

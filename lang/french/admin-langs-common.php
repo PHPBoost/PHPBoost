@@ -33,27 +33,37 @@ $lang = array();
 
 //Title
 $lang['langs'] = 'Langues';
-$lang['langs.management'] = 'Gestion des langues';
-$lang['langs.installed'] = 'Langues installées';
-$lang['langs.uninstall'] = 'Suppression de la langue';
-$lang['langs.install'] = 'Installer';
+$lang['langs.langs_management'] = 'Gestion des langues';
+$lang['langs.add_lang'] = 'Ajouter une langue';
+$lang['langs.update_lang'] = 'Mettre à jour une langue';
+$lang['langs.delete_lang'] = 'Suppression ou désactivation d\'une langue';
+$lang['langs.installed_langs'] = 'Langues installées';
 
 //Messages
 $lang['langs.already_exist'] = 'La langue existe déjà';
 $lang['langs.not_compatible'] = 'La langue n\'est pas compatible avec votre version de PHPBoost';
 $lang['langs.install_success'] = 'Langue installée avec succès !';
-$lang['langs.add.not_lang'] = 'Aucune langue à ajouter';
+$lang['langs.no_lang_to_install'] = 'Aucune langue à ajouter';
+$lang['langs.langs_available'] = 'Langues disponibles';
+
+//Themes management
+$lang['langs.activate_lang'] = 'Activer';
+$lang['langs.install_lang'] = 'Installer';
+$lang['langs.activated_lang'] = 'Activé';
+$lang['langs.delete'] = 'Désinstaller';
+$lang['langs.update'] = 'Modifier';
+$lang['langs.reset'] = 'Défaut';
 
 //Uninstall
-$lang['langs.uninstall.drop_files'] = 'Supprimer tous les fichiers de la langue';
+$lang['langs.drop_files'] = 'Supprimer tous les fichiers de la langue';
 $lang['langs.default_lang_explain'] = 'La langue par défaut ne peut pas être désinstallée, désactivée ou réservée';
 
-$lang['langs.upload'] = 'Uploader une langue';
-$lang['langs.upload.description'] = 'L\'archive uploadée doit être au format zip ou gzip';
+$lang['langs.upload_lang'] = 'Uploader une langue';
+$lang['langs.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip';
 
 $lang['langs.not_installed'] = 'Langues non installées';
 $lang['langs.name'] = 'Nom';
-$lang['langs.authorisations'] = 'Autorisations';
+$lang['langs.authorizations'] = 'Autorisations';
 $lang['langs.activated'] = 'Activé';
 $lang['langs.compatibility'] = 'Compatibilité';
 $lang['langs.author'] = 'Auteur';

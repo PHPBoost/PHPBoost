@@ -36,7 +36,7 @@ class AdminLangsInstalledListController extends AdminController
 		$this->build_view();
 		$this->save($request);
 
-		return new AdminLangsDisplayResponse($this->view, $this->lang['langs.installed']);
+		return new AdminLangsDisplayResponse($this->view, $this->lang['langs.installed_langs']);
 	}
 	
 	private function build_view()

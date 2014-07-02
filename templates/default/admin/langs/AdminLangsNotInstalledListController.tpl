@@ -2,15 +2,15 @@
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	# INCLUDE MSG #
 	<table>
-		<caption>{@langs.not_installed}</caption>
+		<caption>{@langs.langs_available}</caption>
 		# IF C_LANG_INSTALL #
 		<thead>
 			<tr> 
 				<th>{@langs.name}</th>
 				<th>{@langs.description}</th>
-				<th>{@langs.authorisations}</th>
-				<th>{@langs.activated}</th>
-				<th>{L_ADD}</th>
+				<th>{@langs.authorizations}</th>
+				<th>{@langs.activated_lang}</th>
+				<th>{@langs.install_lang}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -39,7 +39,7 @@
 					<label><input type="radio" name="activated-{langs_not_installed.ID}" value="0"> {@langs.no}</label>
 				</td>
 				<td>
-					<button type="submit" class="submit" name="add-{langs_not_installed.ID}" value="true">{L_ADD}</button>
+					<button type="submit" class="submit" name="add-{langs_not_installed.ID}" value="true">{@langs.install_lang}</button>
 				</td>
 			</tr>
 		# END themes_not_installed #
@@ -47,7 +47,7 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="notice message-helper-small">{@langs.add.not_lang}</div>
+	<div class="notice message-helper-small">{@langs.no_lang_to_install}</div>
 		# ENDIF #
 		
 	<fieldset class="fieldset-submit">
