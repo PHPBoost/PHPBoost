@@ -34,7 +34,7 @@ class CalendarFeedProvider implements FeedProvider
 	
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		if (CalendarService::get_categories_manager()->get_categories_cache()->category_exists($id_cat))
+		if (CalendarService::get_categories_manager()->get_categories_cache()->category_exists($idcat))
 		{
 			$now = new Date();
 			$lang = LangLoader::get('common', 'calendar');
