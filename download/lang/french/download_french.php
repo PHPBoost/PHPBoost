@@ -77,14 +77,10 @@ $DOWNLOAD_LANG['size'] = 'Taille';
 $DOWNLOAD_LANG['download'] = 'Téléchargements';
 $DOWNLOAD_LANG['none_download'] = 'Aucun fichier dans cette catégorie';
 $DOWNLOAD_LANG['xml_download_desc'] = 'Derniers fichiers';
-$DOWNLOAD_LANG['no_note'] = 'Aucune note';
-$DOWNLOAD_LANG['actual_note'] = 'Note actuelle';
-$DOWNLOAD_LANG['vote_action'] = 'Voter';
 $DOWNLOAD_LANG['add_on_date'] = 'Ajouté le %s';
 $DOWNLOAD_LANG['downloaded_n_times'] = 'Téléchargé %d fois';
 $DOWNLOAD_LANG['num_com'] = '%d commentaire';
 $DOWNLOAD_LANG['num_coms'] = '%d commentaires';
-$DOWNLOAD_LANG['this_note'] = 'Note :';
 $DOWNLOAD_LANG['short_contents'] = 'Courte description';
 $DOWNLOAD_LANG['complete_contents'] = 'Description complète';
 $DOWNLOAD_LANG['url'] = 'Adresse du fichier';
@@ -145,7 +141,7 @@ $DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Expliquez les raisons de v
 $DOWNLOAD_LANG['contribution_entitled'] = 'Un fichier a été proposé : %s';
 
 // Lien mort
-$DOWNLOAD_LANG['contribution_deadlink'] = 'Lient mort : %s';
+$DOWNLOAD_LANG['contribution_deadlink'] = 'Lien mort : %s';
 $DOWNLOAD_LANG['contribution_deadlink_explain'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien de la fiche de téléchargement, et modifiez-le si nécessaire.';
 
 //Erreurs
