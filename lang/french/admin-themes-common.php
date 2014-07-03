@@ -32,11 +32,11 @@
 $lang = array();
 
 // Title 
-$lang['themes.theme_management'] = 'Gestion des themes';
-$lang['themes.add_theme'] = 'Ajouter un theme';
-$lang['themes.update_theme'] = 'Mettre à jour un theme';
-$lang['themes.delete_theme'] = 'Suppression ou désactivation d\'un theme';
-$lang['themes.installed_theme'] = 'Themes installés';
+$lang['themes.theme_management'] = 'Gestion des thèmes';
+$lang['themes.add_theme'] = 'Ajouter un thème';
+$lang['themes.update_theme'] = 'Mettre à jour un thème';
+$lang['themes.delete_theme'] = 'Suppression ou désactivation d\'un thème';
+$lang['themes.installed_theme'] = 'Thèmes installés';
 
 //Theme
 $lang['themes.name'] = 'Nom';
@@ -52,7 +52,7 @@ $lang['themes.width'] = 'Largeur';
 $lang['themes.bot_informed'] = 'Non renseigné';
 $lang['themes.view_real_preview'] = 'Voir en taille réelle';
 $lang['themes.default_theme_explain'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé ou réservé';
-$lang['themes.themes_available'] = 'Themes disponibles';
+$lang['themes.themes_available'] = 'Thèmes disponibles';
 
 //Others
 $lang['themes.yes'] = 'Oui';
@@ -75,10 +75,10 @@ $lang['themes.upload_description'] = 'L\'archive uploadée doit être au format zi
 $lang['themes.already_exist'] = 'Le thème existe déjà';
 $lang['themes.upload_invalid_format'] = 'Le format de l\'archive n\'est pas valide';
 $lang['themes.upload_error'] = 'Erreur avec l\'upload du fichier';
-$lang['themes.not_compatible'] = 'Le thème est apparemment incompatible avec votre version actuelle de PHPBoost, il a tout de même été installé. Si un problème subvient veuillez contacter l\'auteur du thème.';
+$lang['themes.not_compatible'] = 'Le thème est apparemment incompatible avec votre version actuelle de PHPBoost, il a tout de même été installé. Si un problème survient veuillez contacter l\'auteur du thème.';
 $lang['themes.old_version'] = 'Le thème est incompatible avec votre version actuelle de PHPBoost, il n\'a pas été installé.';
 $lang['themes.install_success'] = 'Thème installé avec succès !';
-$lang['themes.no_theme_to_install'] = 'Aucun theme à installer !';
+$lang['themes.no_theme_to_install'] = 'Aucun thème à installer !';
 
 //Delete theme
 $lang['themes.drop_files'] = 'Supprimer tous les fichiers du thème';
