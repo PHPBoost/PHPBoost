@@ -76,7 +76,7 @@ class AdminModuleAddController extends AdminController
 	
 	private function upload_form()
 	{
-		$form = new HTMLForm('upload_module');
+		$form = new HTMLForm('upload_module', '', false);
 		
 		$fieldset = new FormFieldsetHTML('upload', $this->lang['modules.upload_module']);
 		$form->add_fieldset($fieldset);

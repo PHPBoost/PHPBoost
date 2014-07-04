@@ -64,7 +64,7 @@ class AdminModuleUpdateController extends AdminController
 	
 	private function upload_form()
 	{
-		$form = new HTMLForm('upload_module');
+		$form = new HTMLForm('upload_module', '', false);
 		
 		$fieldset = new FormFieldsetHTML('upload', $this->lang['modules.update_module']);
 		$form->add_fieldset($fieldset);
@@ -72,7 +72,7 @@ class AdminModuleUpdateController extends AdminController
 		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['modules.upload_description']));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);	
+		$form->add_button($this->submit_button);
 		
 		$this->form = $form;
 	}

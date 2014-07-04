@@ -151,7 +151,7 @@ class AdminThemesNotInstalledListController extends AdminController
 	
 	private function upload_form()
 	{
-		$form = new HTMLForm('upload_theme');
+		$form = new HTMLForm('upload_theme', '', false);
 		
 		$fieldset = new FormFieldsetHTML('upload', $this->lang['themes.upload_theme']);
 		$form->add_fieldset($fieldset);
