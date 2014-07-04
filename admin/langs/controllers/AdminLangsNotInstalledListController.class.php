@@ -142,7 +142,7 @@ class AdminLangsNotInstalledListController extends AdminController
 	
 	private function upload_form()
 	{
-		$form = new HTMLForm('upload_lang');
+		$form = new HTMLForm('upload_lang', '', false);
 		
 		$fieldset = new FormFieldsetHTML('upload', $this->lang['langs.upload_lang']);
 		$form->add_fieldset($fieldset);
