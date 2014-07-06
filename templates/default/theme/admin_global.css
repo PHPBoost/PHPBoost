@@ -231,7 +231,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	padding: 5px; 
 	border: 1px solid #C4CED6;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 }
 
 .bb-fieldset { margin: 10px; }
