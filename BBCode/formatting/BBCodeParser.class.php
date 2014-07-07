@@ -308,14 +308,14 @@ class BBCodeParser extends ContentFormattingParser
             //Block tag
             if (!in_array('block', $this->forbidden_tags))
             {
-            	$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb-block">$1</div>');
-            	$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="bb-block" style="$1">$2</div>');
+            	$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="formatter-block">$1</div>');
+            	$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="formatter-block" style="$1">$2</div>');
             }
 
             //Fieldset tag
             if (!in_array('fieldset', $this->forbidden_tags))
             {
-            	$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb-fieldset" style="$2"><legend>$1</legend>$3</fieldset>');
+            	$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="formatter-fieldset" style="$2"><legend>$1</legend>$3</fieldset>');
             }
 
             // Feed tag
@@ -358,11 +358,11 @@ class BBCodeParser extends ContentFormattingParser
 						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[/row\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[/row\]`U', array('BBCodeParser', 'clear_html_br'), $content[$i]);
 						//Parsage de row, col et head
-						$content[$i] = preg_replace('`\[row( style="[^"]+")?\](.*)\[/row\]`sU', '<tr class="bb-table-row"$1>$2</tr>', $content[$i]);
-						$content[$i] = preg_replace('`\[col((?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/col\]`sU', '<td class="bb-table-col"$1>$2</td>', $content[$i]);
-						$content[$i] = preg_replace('`\[head((?: colspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/head\]`sU', '<th class="bb-table-head"$1>$2</th>', $content[$i]);
+						$content[$i] = preg_replace('`\[row( style="[^"]+")?\](.*)\[/row\]`sU', '<tr class="formatter-table-row"$1>$2</tr>', $content[$i]);
+						$content[$i] = preg_replace('`\[col((?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/col\]`sU', '<td class="formatter-table-col"$1>$2</td>', $content[$i]);
+						$content[$i] = preg_replace('`\[head((?: colspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/head\]`sU', '<th class="formatter-table-head"$1>$2</th>', $content[$i]);
 						//parsage réussi (tableau valide), on rajoute le tableau devant
-						$content[$i] = '<table class="bb-table"' . $content[$i - 1] . '>' . $content[$i] . '</table>';
+						$content[$i] = '<table class="formatter-table"' . $content[$i - 1] . '>' . $content[$i] . '</table>';
 
 					}
 					else
@@ -426,8 +426,8 @@ class BBCodeParser extends ContentFormattingParser
 						{
 							$list_tag = 'ul';
 						}
-						$content[$i] = preg_replace_callback('`^((?:\s|<br />)*)\[\*\]`U', create_function('$var', 'return str_replace("<br />", "", str_replace("[*]", "<li class=\"bb-li\">", $var[0]));'), $content[$i]);
-						$content[$i] = '<' . $list_tag . $content[$i - 1] . ' class="bb-' . $list_tag . '">' . str_replace('[*]', '</li><li class="bb-li">', $content[$i]) . '</li></' . $list_tag . '>';
+						$content[$i] = preg_replace_callback('`^((?:\s|<br />)*)\[\*\]`U', create_function('$var', 'return str_replace("<br />", "", str_replace("[*]", "<li class=\"formatter-li\">", $var[0]));'), $content[$i]);
+						$content[$i] = '<' . $list_tag . $content[$i - 1] . ' class="formatter-' . $list_tag . '">' . str_replace('[*]', '</li><li class="formatter-li">', $content[$i]) . '</li></' . $list_tag . '>';
 					}
 				}
 				//On concatène la chaîne finale si ce n'est pas le style ou le type de tableau
@@ -462,16 +462,16 @@ class BBCodeParser extends ContentFormattingParser
 		$level = (int)$matches[1];
 		switch ($level) {
 			case 1:
-				return '<h1 class="bb-title">' . $matches[2] . '</h1>';
+				return '<h1 class="formatter-title">' . $matches[2] . '</h1>';
 			break;
 			case 2:
-				return '<h2 class="bb-title">' . $matches[2] . '</h2>';
+				return '<h2 class="formatter-title">' . $matches[2] . '</h2>';
 			break;
 			case 3:
-				return '<h3 class="bb-title">' . $matches[2] . '</h3>';
+				return '<h3 class="formatter-title">' . $matches[2] . '</h3>';
 			break;
 			case 4:
-				return '<h4 class="bb-title">' . $matches[2] . '</h4>';
+				return '<h4 class="formatter-title">' . $matches[2] . '</h4>';
 			break;
 		}
 	}

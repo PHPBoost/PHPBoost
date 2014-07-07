@@ -297,7 +297,7 @@ table tfoot tr th a { color: #676A74; }
 table tfoot tr th select { padding: 2px 5px; }
 
 /* Patch thead Tableaux formatés */
-table.bb-table th.bb-table-head {
+table.formatter-table th.formatter-table-head {
 	padding: 8px;
 	background-color: #4D4C50;
 	color: #E5E6E6;
@@ -305,13 +305,13 @@ table.bb-table th.bb-table-head {
 	text-align: center;
 	font-weight: normal;
 }
-table.bb-table th.bb-table-head:first-child { border-top-left-radius: 3px; }
-table.bb-table th.bb-table-head:last-child { border-top-right-radius: 3px; }
+table.formatter-table th.formatter-table-head:first-child { border-top-left-radius: 3px; }
+table.formatter-table th.formatter-table-head:last-child { border-top-right-radius: 3px; }
 
-table.bb-table th.bb-table-head a { color: #E5E6E6; }
-table.bb-table th.bb-table-head a:hover { color: #FFFFFF; }
+table.formatter-table th.formatter-table-head a { color: #E5E6E6; }
+table.formatter-table th.formatter-table-head a:hover { color: #FFFFFF; }
 
-table.bb-table th.bb-table-head p { margin-bottom: 0px; }
+table.formatter-table th.formatter-table-head p { margin-bottom: 0px; }
 
 /* Mini tableaux */
 table.mini th,

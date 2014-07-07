@@ -292,6 +292,8 @@ class UpdateServices
 		
 		$this->delete_update_token();
 		$this->generate_cache();
+		
+		HtaccessFileCache::regenerate();
 	}
 	
 	public function put_site_under_maintenance()
@@ -667,7 +669,6 @@ class UpdateServices
 	{
 		AppContext::get_cache_service()->clear_cache();
 		AppContext::init_extension_provider_service();
-		HtaccessFileCache::regenerate();
 	}
 	
 	private function add_error_to_file($step_name, $success, $message)

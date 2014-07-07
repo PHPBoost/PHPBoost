@@ -36,26 +36,26 @@ $lang['news.title'] = 'Votre site sous PHPBoost ' . GeneralConfig::load()->get_p
 $lang['news.content'] = 'Votre site boosté par PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' est bien installé. Afin de vous aider à le prendre en main, 
 l\'accueil de chaque module contient un message pour vous guider vos premiers pas. Voici également quelques recommandations supplémentaires que nous vous proposons de lire avec attention : <br />
 <br />
-<h2 class="bb-title">N\'oubliez pas de supprimer le répertoire "install"</h2><br />
+<h2 class="formatter-title">N\'oubliez pas de supprimer le répertoire "install"</h2><br />
 <br />
 Supprimez le répertoire /install à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.<br />
 <br />
-<h2 class="bb-title">Administrez votre site</h2><br />
+<h2 class="formatter-title">Administrez votre site</h2><br />
 <br />
 Accédez au <a href="/admin/admin_index.php">panneau d\'administration de votre site</a> afin de le paramétrer comme vous le souhaitez!  Pour cela : <br />
 <br />
-<ul class="bb-ul">
-<li class="bb-li"><a href="/admin/admin_maintain.php">Mettez votre site en maintenance</a> en attendant que vous le configuriez à votre guise.
-</li><li class="bb-li">Rendez vous à la <a href="/admin/config/?url=/general/">Configuration générale du site</a>.
-</li><li class="bb-li"><a href="/admin/modules/?url=/installed/">Configurez les modules</a> disponibles et donnez leur les droits d\'accès (si vous n\'avez pas installé le pack complet, tous les modules sont disponibles sur le site de <a href="http://www.phpboost.com">phpboost.com</a> dans la section téléchargement).
-</li><li class="bb-li"><a href="/admin/content/?url=/config/">Choisissez le langage de formatage du contenu</a> par défaut du site.
-</li><li class="bb-li"><a href="/admin/member/?url=/config/">Configurez l\'inscription des membres</a>.
-</li><li class="bb-li"><a href="/admin/themes/?url=/installed/">Choisissez le thème par défaut de votre site</a> pour changer l\'apparence de votre site (vous pouvez en obtenir d\'autres sur le site de <a href="http://www.phpboost.com">phpboost.com</a>).
-</li><li class="bb-li">Avant de donner l\'accès de votre site à vos visiteurs, prenez un peu de temps pour y mettre du contenu.
-</li><li class="bb-li">Enfin <a href="/admin/admin_maintain.php">désactivez la maintenance</a> de votre site afin qu\'il soit visible par vos visiteurs.<br />
+<ul class="formatter-ul">
+<li class="formatter-li"><a href="/admin/admin_maintain.php">Mettez votre site en maintenance</a> en attendant que vous le configuriez à votre guise.
+</li><li class="formatter-li">Rendez vous à la <a href="/admin/config/?url=/general/">Configuration générale du site</a>.
+</li><li class="formatter-li"><a href="/admin/modules/?url=/installed/">Configurez les modules</a> disponibles et donnez leur les droits d\'accès (si vous n\'avez pas installé le pack complet, tous les modules sont disponibles sur le site de <a href="http://www.phpboost.com">phpboost.com</a> dans la section téléchargement).
+</li><li class="formatter-li"><a href="/admin/content/?url=/config/">Choisissez le langage de formatage du contenu</a> par défaut du site.
+</li><li class="formatter-li"><a href="/admin/member/?url=/config/">Configurez l\'inscription des membres</a>.
+</li><li class="formatter-li"><a href="/admin/themes/?url=/installed/">Choisissez le thème par défaut de votre site</a> pour changer l\'apparence de votre site (vous pouvez en obtenir d\'autres sur le site de <a href="http://www.phpboost.com">phpboost.com</a>).
+</li><li class="formatter-li">Avant de donner l\'accès de votre site à vos visiteurs, prenez un peu de temps pour y mettre du contenu.
+</li><li class="formatter-li">Enfin <a href="/admin/admin_maintain.php">désactivez la maintenance</a> de votre site afin qu\'il soit visible par vos visiteurs.<br />
 </li></ul><br />
 <br />
-<h2 class="bb-title">Que faire si vous rencontrez un problème ?</h2><br />
+<h2 class="formatter-title">Que faire si vous rencontrez un problème ?</h2><br />
 <br />
 N\'hésitez pas à consulter <a href="http://www.phpboost.com/wiki/wiki.php">la documentation de PHPBoost</a> ou à poser vos question sur le <a href="http://www.phpboost.com/forum/index.php">forum d\'entraide</a>.<br /> <br />
 <br />
