@@ -208,6 +208,8 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 
 .formatter-fieldset { margin: 10px; }
 
+.formatter-ul { text-align: left; }
+
 /* --- les listes numerotees --- */
 .code ol { margin-left: 3em; }
 
