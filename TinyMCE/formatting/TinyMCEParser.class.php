@@ -191,7 +191,7 @@ class TinyMCEParser extends ContentFormattingParser
 			$style_properties .= $temp_array[1];
 		}
 
-		return '<table class="bb-table"' . (!empty($style_properties) ? ' style="' . $style_properties . '"' : '') . '>' . $matches[2] . '</table>';
+		return '<table class="formatter-table"' . (!empty($style_properties) ? ' style="' . $style_properties . '"' : '') . '>' . $matches[2] . '</table>';
 	}
 
 	/**
@@ -222,7 +222,7 @@ class TinyMCEParser extends ContentFormattingParser
 			$col_style = ' style="' . $col_style . '"';
 		}
 
-		return '<tr class="bb-table-row"' . $col_new_properties . $col_style . '>' . $matches[2] . '</tr>';
+		return '<tr class="formatter-table-row"' . $col_new_properties . $col_style . '>' . $matches[2] . '</tr>';
 	}
 
 	/**
@@ -268,7 +268,7 @@ class TinyMCEParser extends ContentFormattingParser
 			$col_style = ' style="' . $col_style . '"';
 		}
 
-		return '<' . $tag . ' class="bb-table-' . $bbcode_tag . '"' . $col_new_properties . $col_style . '>' . $matches[3] . '</' . $tag . '>';
+		return '<' . $tag . ' class="formatter-table-' . $bbcode_tag . '"' . $col_new_properties . $col_style . '>' . $matches[3] . '</' . $tag . '>';
 	}
 
 	/**
@@ -405,16 +405,16 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			//Title 1
 			array_push($array_preg, '`&lt;h1[^&]*&gt;(.+)&lt;/h1&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<h1 class="bb-title">$1</h1>' . "\n<br />");
+			array_push($array_preg_replace, "\n" . '<h1 class="formatter-title">$1</h1>' . "\n<br />");
 			//Title 2
 			array_push($array_preg, '`&lt;h2[^&]*&gt;(.+)&lt;/h2&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<h2 class="bb-title">$1</h2>' . "\n<br />");
+			array_push($array_preg_replace, "\n" . '<h2 class="formatter-title">$1</h2>' . "\n<br />");
 			//Title 3
 			array_push($array_preg, '`&lt;h3[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<br /><h3 class="bb-title">$1</h3><br />' . "\n<br />");
+			array_push($array_preg_replace, "\n" . '<br /><h3 class="formatter-title">$1</h3><br />' . "\n<br />");
 			//Title 4
 			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
-			array_push($array_preg_replace, "\n" . '<br /><h4 class="bb-title">$1</h4><br />' . "\n<br />");
+			array_push($array_preg_replace, "\n" . '<br /><h4 class="formatter-title">$1</h4><br />' . "\n<br />");
 		}
 		//Flash tag
 		if (!in_array('swf', $this->forbidden_tags))
@@ -431,9 +431,9 @@ class TinyMCEParser extends ContentFormattingParser
 		{
 			while (preg_match('`&lt;o|ul&gt;(.+)&lt;/o|ul&gt;`isU', $this->content))
 			{
-				$this->content = preg_replace('`&lt;ul&gt;(.+)&lt;/ul&gt;`isU', '<ul class="bb-ul">' . "\n" .'$1</ul>', $this->content);
-				$this->content = preg_replace('`&lt;ol&gt;(.+)&lt;/ol&gt;`isU', '<ol class="bb-ol">' . "\n" .'$1</ol>', $this->content);
-				$this->content = preg_replace('`&lt;li&gt;(.*)&lt;/li&gt;`isU', '<li class="bb-li">$1</li>' . "\n", $this->content);
+				$this->content = preg_replace('`&lt;ul&gt;(.+)&lt;/ul&gt;`isU', '<ul class="formatter-ul">' . "\n" .'$1</ul>', $this->content);
+				$this->content = preg_replace('`&lt;ol&gt;(.+)&lt;/ol&gt;`isU', '<ol class="formatter-ol">' . "\n" .'$1</ol>', $this->content);
+				$this->content = preg_replace('`&lt;li&gt;(.*)&lt;/li&gt;`isU', '<li class="formatter-li">$1</li>' . "\n", $this->content);
 			}
 		}
 
@@ -472,7 +472,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Line tag
 		if (!in_array('line', $this->forbidden_tags))
 		{
-			$this->content = str_replace('&lt;hr /&gt;', '<hr class="bb-hr" />', $this->content);
+			$this->content = str_replace('&lt;hr /&gt;', '<hr class="formatter-hr" />', $this->content);
 		}
 
 		//Quote tag
@@ -621,14 +621,14 @@ class TinyMCEParser extends ContentFormattingParser
 		//Block tag
 		if (!in_array('block', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb-block">$1</div>', $this->content);
-			$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="bb-block" style="$1">$2</div>', $this->content);
+			$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="formatter-block">$1</div>', $this->content);
+			$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="formatter-block" style="$1">$2</div>', $this->content);
 		}
 
 		//Fieldset tag
 		if (!in_array('fieldset', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb-fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->content);
+			$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="formatter-fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->content);
 		}
 
 		//Wikipedia tag

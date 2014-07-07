@@ -224,9 +224,9 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 /* --- les autres element bbcode --- */
 .indent { margin-left: 30px; }
 
-.bb-acronym { cursor: help; }
+.formatter-acronym { cursor: help; }
 
-.bb-block {
+.formatter-block {
 	margin: 5px 20px; 
 	padding: 5px; 
 	border: 1px solid #C4CED6;
@@ -234,7 +234,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	justify-content: flex-start;
 }
 
-.bb-fieldset { margin: 10px; }
+.formatter-fieldset { margin: 10px; }
 
 /* --- les listes numerotees --- */
 .code ol { margin-left: 3em; }

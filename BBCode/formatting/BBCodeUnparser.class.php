@@ -59,13 +59,13 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->unparse_simple_tags();
 
 		//Unparsage de la balise table.
-		if (strpos($this->content, '<table class="bb-table"') !== false)
+		if (strpos($this->content, '<table class="formatter-table"') !== false)
 		{
 			$this->unparse_table();
 		}
 
 		//Unparsage de la balise table.
-		if (strpos($this->content, '<li class="bb-li"') !== false)
+		if (strpos($this->content, '<li class="formatter-li"') !== false)
 		{
 			$this->unparse_list();
 		}
@@ -121,10 +121,10 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<abbr title="([^"]+)">(.*)</abbr>`isU',
 			'`<a href="mailto:(.*)">(.*)</a>`isU',
 			'`<a href="([^"]+)">(.*)</a>`isU',
-			'`<h1 class="bb-title">(.*)</h1>`isU',
-			'`<h2 class="bb-title">(.*)</h2>`isU',
-			'`<h3 class="bb-title">(.*)</h3>`isU',
-			'`<h4 class="bb-title">(.*)</h4>`isU',
+			'`<h1 class="formatter-title">(.*)</h1>`isU',
+			'`<h2 class="formatter-title">(.*)</h2>`isU',
+			'`<h3 class="formatter-title">(.*)</h3>`isU',
+			'`<h4 class="formatter-title">(.*)</h4>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
 			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
 		    '`<script><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`sU',
@@ -180,8 +180,8 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->_parse_imbricated('<span class="text-hide">', '`<span class="text-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 
 		//Block
-		$this->_parse_imbricated('<div class="bb-block"', '`<div class="bb-block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
-		$this->_parse_imbricated('<div class="bb-block" style=', '`<div class="bb-block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-block"', '`<div class="formatter-block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-block" style=', '`<div class="formatter-block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
 
 		//Indentation
 		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->content);
@@ -191,9 +191,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->content = preg_replace_callback('`<img src="([^"]+)" alt="([^"]*)?"(?: title="([^"]*)")?(?: style="([^"]+)")?(?: class="[^"]+")? />`iU', array($this, 'unparse_img'), $this->content);
 
 		//Fieldset
-		while (preg_match('`<fieldset class="bb-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
+		while (preg_match('`<fieldset class="formatter-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
 		{
-			$this->content = preg_replace_callback('`<fieldset class="bb-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
+			$this->content = preg_replace_callback('`<fieldset class="formatter-fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array($this, 'unparse_fieldset'), $this->content);
 		}
 
 		//Wikipedia link
@@ -219,21 +219,21 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_table()
 	{
 		//On boucle pour parcourir toutes les imbrications
-		while (strpos($this->content, '<table class="bb-table"') !== false)
+		while (strpos($this->content, '<table class="formatter-table"') !== false)
 		{
-			$this->content = preg_replace('`<table class="bb-table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
+			$this->content = preg_replace('`<table class="formatter-table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
 		}
-		while (strpos($this->content, '<tr class="bb-table-row"') !== false)
+		while (strpos($this->content, '<tr class="formatter-table-row"') !== false)
 		{
-			$this->content = preg_replace('`<tr class="bb-table-row"([^>]*)>(.*)</tr>`sU', '[row$1]$2[/row]', $this->content);
+			$this->content = preg_replace('`<tr class="formatter-table-row"([^>]*)>(.*)</tr>`sU', '[row$1]$2[/row]', $this->content);
 		}
-		while (strpos($this->content, '<th class="bb-table-head"') !== false)
+		while (strpos($this->content, '<th class="formatter-table-head"') !== false)
 		{
-			$this->content = preg_replace('`<th class="bb-table-head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
+			$this->content = preg_replace('`<th class="formatter-table-head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
 		}
-		while (strpos($this->content, '<td class="bb-table-col"') !== false)
+		while (strpos($this->content, '<td class="formatter-table-col"') !== false)
 		{
-			$this->content = preg_replace('`<td class="bb-table-col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->content);
+			$this->content = preg_replace('`<td class="formatter-table-col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->content);
 		}
 	}
 
@@ -243,17 +243,17 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_list()
 	{
 		//On boucle tant qu'il y a de l'imbrication
-		while (strpos($this->content, '<ul class="bb-ul">') !== false)
+		while (strpos($this->content, '<ul class="formatter-ul">') !== false)
 		{
-			$this->content = preg_replace('`<ul( style="[^"]+")? class="bb-ul">(.*)</ul>`sU', '[list$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">(.*)</ul>`sU', '[list$1]$2[/list]', $this->content);
 		}
-		while (strpos($this->content, '<ol class="bb-ol">') !== false)
+		while (strpos($this->content, '<ol class="formatter-ol">') !== false)
 		{
-			$this->content = preg_replace('`<ol( style="[^"]+")? class="bb-ol">(.*)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
+			$this->content = preg_replace('`<ol( style="[^"]+")? class="formatter-ol">(.*)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
 		}
-		while (strpos($this->content, '<li class="bb-li">') !== false)
+		while (strpos($this->content, '<li class="formatter-li">') !== false)
 		{
-			$this->content = preg_replace('`<li class="bb-li">(.*)</li>`isU', '[*]$1', $this->content);
+			$this->content = preg_replace('`<li class="formatter-li">(.*)</li>`isU', '[*]$1', $this->content);
 		}
 	}
 
