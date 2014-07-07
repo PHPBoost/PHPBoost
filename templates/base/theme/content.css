@@ -266,8 +266,8 @@ table tbody td {
 	border-top: 1px solid #D1D2D4;
 	border-left: 1px solid #D1D2D4;
 	padding: 8px;
-	color: #676a74;
-	text-align: center;
+	color: #676A74;
+	text-align: justify;
 }
 
 table tbody tr:nth-child(even) td {	background-color: #FFFFFF; }
