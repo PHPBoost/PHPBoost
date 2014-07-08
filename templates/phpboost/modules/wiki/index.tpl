@@ -90,6 +90,14 @@
 								<span class="more"> - Les nouveautés de la version 3.0 de PHPBoost</span>
 							</li>
 						</ul>
+						
+						<p class="more">Les articles<p>
+						<ul class="no-list">
+							<li>
+								<i class="fa fa-file-text"></i>
+								<a href="{PATH_TO_ROOT}/wiki/liste-des-modules-supportes-et-contenus-dans-votre-distribution">Liste des modules supportés et contenus dans votre distribution</a>
+							</li>
+						</ul>
 					</div>
 					<footer></footer>
 				</section>
@@ -118,14 +126,6 @@
 								<i class="fa fa-folder-open"></i>
 								<a href="{PATH_TO_ROOT}/wiki/migrer-son-site-vers-une-nouvelle-version">Migrer son site vers une nouvelle version</a>
 								<span class="more"> - Passer aux nouvelles versions majeures pour obtenir plus de fonctionnalités</span>
-							</li>
-						</ul>
-						
-						<p class="more">Les articles<p>
-						<ul class="no-list">
-							<li>
-								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/liste-des-modules-supportes-et-contenus-dans-votre-distribution">Liste des modules supportés et contenus dans votre distribution</a>
 							</li>
 						</ul>
 					</div>
