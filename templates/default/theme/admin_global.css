@@ -231,7 +231,11 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 	padding: 5px; 
 	border: 1px solid #C4CED6;
 	display: flex;
+	display: -webkit-flex;
+	display: -ms-flex;
 	justify-content: flex-start;
+	-webkit-justify-content: flex-start;
+	-ms-justify-content: flex-start;
 }
 
 .formatter-fieldset { margin: 10px; }

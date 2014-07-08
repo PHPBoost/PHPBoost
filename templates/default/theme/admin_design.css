@@ -28,6 +28,8 @@ header#header-admin-container {
 div#header-admin { 
 	height: 139px;
 	display: flex;
+	display: -webkit-flex;
+	display: -ms-flex;
 }
 
 div#site-logo {
@@ -38,6 +40,8 @@ div#site-logo {
 
 div#site-infos {
 	display: flex;
+	display: -webkit-flex;
+	display: -ms-flex;
 	max-width: 940px;
 	height: 90px;
 	margin: 20px 20px 0px 20px;
@@ -46,6 +50,8 @@ div#site-infos {
 div#site-name-container {
 	margin-top: 10px;
 	flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
 	height: 108px;
 	overflow: hidden;
 }
