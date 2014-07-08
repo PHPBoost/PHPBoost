@@ -70,6 +70,10 @@ if (!empty($encoded_title)) //Si on connait son titre
 		$Sql->query_close($result);
 		$id_article = $article_infos['id'];
 		$parse_redirection = true;
+		
+		AppContext::get_response()->set_status_code(301);
+		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
+		exit();
 	}
 }
 //Sinon on cherche dans les archives
@@ -118,6 +122,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 	else //Sinon on affiche statut, avertissements en tout genre et redirection
 	{
 		//Si on doit parser le bloc redirection
+		/*
 		if ($parse_redirection)
 		{
 			$Template->assign_block_vars('redirect', array(
@@ -134,6 +139,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 				));
 			}
 		}
+		*/
 		
 		//Cet article comporte un type
 		if ($article_infos['defined_status'] != 0)
