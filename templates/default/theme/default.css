@@ -55,6 +55,7 @@ pre { white-space: pre-wrap; }
 .center { text-align: center !important; }
 .left { text-align: left !important; }
 .right { text-align: right !important; }
+.justify { text-align: justify !important; }
 
 .float-left, img.left { float: left !important; }
 .float-right, img.right { float: right !important; }

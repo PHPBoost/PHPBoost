@@ -182,6 +182,11 @@ div#admin-quick-menu li.title-menu {
 	border-bottom: 2px solid #336397;
 }
 
+div#admin-quick-menu li a {	
+	display: inline-block;
+	margin-bottom: 8px;
+}
+
 div#admin-quick-menu li a.quick-link {
 	font-family: Verdana, 'Bitstream Vera Sans', Times, serif;
 	text-transform: none;
@@ -192,6 +197,7 @@ div#admin-quick-menu li a.quick-link {
 	border: 1px solid #D6DEE7;
 	padding: 3px 8px;
 	text-decoration: none;
+	margin: 0px;
 }
 
 /* Tableaux de l'administration */
