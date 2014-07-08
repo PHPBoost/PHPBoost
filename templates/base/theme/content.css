@@ -237,7 +237,7 @@ table {
 	border-spacing: 0;
 }
 
-/* Entête */
+/* Entete */
 table caption {
 	color: #757679;
 	font-size: 13px;
@@ -267,7 +267,7 @@ table tbody td {
 	border-left: 1px solid #D1D2D4;
 	padding: 8px;
 	color: #676A74;
-	text-align: justify;
+	text-align: center;
 }
 
 table tbody tr:nth-child(even) td {	background-color: #FFFFFF; }
@@ -277,8 +277,6 @@ table tbody tr td:last-child { border-right: 1px solid #D1D2D4; }
 table tbody tr.no-separator td { border-top: none; }
 table tbody tr td.no-separator { border-left: none; }
 table tbody tr td.no-separator:first-child { border-left: 1px solid #D1D2D4; }
-
-table tbody td.align-left {	text-align: left; }
 
 /* Pied */
 table tfoot tr th {

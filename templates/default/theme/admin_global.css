@@ -604,6 +604,7 @@ div.message-helper-small { width: 50%; }
 	border-radius: 4px;
 	position: relative;
 	display: block;
+	text-align: left;
 }
 
 .error:before, .notice:before, .warning:before, .success:before, .question:before { 
