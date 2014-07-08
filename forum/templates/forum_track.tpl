@@ -25,7 +25,7 @@
 					<table class="module-table forum-table">
 						<thead>
 							<tr class="forum-text-column">
-								<th style="width:120px;">{L_TOPIC}</th>
+								<th>{L_TOPIC}</th>
 								<th style="width:100px;">{L_AUTHOR}</th>
 								<th style="width:60px;">{L_MESSAGE}</th>
 								<th style="width:60px;">{L_VIEW}</th>
