@@ -33,7 +33,11 @@ hr {
 	width: 99%;
 }
 
-ul, ol { line-height: normal; margin-left: 20px; margin-bottom: 10px; }
+ul, ol { 
+	line-height: normal;
+	margin-left: 30px;
+	margin-bottom: 10px;
+}
 
 ul.no-list { list-style: none; }
 
