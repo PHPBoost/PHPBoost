@@ -101,7 +101,7 @@
 					<div style="float:right;text-align:right">
 						<form action="{PATH_TO_ROOT}/forum/search.php?token={TOKEN}" method="post">
                             <div>
-                                <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." placeholder="{L_SEARCH}..."></label>
+                                <label><input type="text" size="14" id="search" name="search" placeholder="{L_SEARCH}..."></label>
                                 <button type="submit" name="valid_search"><i class="fa fa-search"></i></button><br/>
                                 <a href="{PATH_TO_ROOT}/forum/search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small">{L_ADVANCED_SEARCH}</a>
                                 
