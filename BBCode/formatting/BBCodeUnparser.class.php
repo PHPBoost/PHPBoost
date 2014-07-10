@@ -110,9 +110,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 
 		$array_preg = array(
+			'`<span style="text-decoration: underline;">(.*)</span>`isU',
 			'`<span style="color:([^;]+);">(.*)</span>`isU',
 			'`<span style="background-color:([^;]+);">(.*)</span>`isU',
-			'`<span style="text-decoration: underline;">(.*)</span>`isU',
 			'`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU',
 			'`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU',
 			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
@@ -141,9 +141,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		);
 
 		$array_preg_replace = array(
+			"[u]$1[/u]",
 			"[color=$1]$2[/color]",
 			"[bgcolor=$1]$2[/bgcolor]",
-			"[u]$1[/u]",	
 			"[size=$1]$2[/size]",
 			"[font=$1]$2[/font]",
 			"[align=$1]$2[/align]",
