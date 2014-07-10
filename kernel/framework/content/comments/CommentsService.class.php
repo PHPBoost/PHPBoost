@@ -171,6 +171,21 @@ class CommentsService
 	
 		return !empty($number_comments) ? $lang . ' (' . $number_comments . ')' : self::$lang['post_com'];
 	}
+	
+	/**
+	 * @desc Returns lang (example : "Comments" for several comments, "comment" for one comment and "No comment" if no comment
+	 * @param string $module_id the module identifier
+	 * @param integer $id_in_module id in module used in comments system
+	 * @param string $topic_identifier topic identifier (use if you have several comments system)
+	 * @return string
+	 */
+	public static function get_lang_comments($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
+	{
+		$number_comments = CommentsManager::get_number_comments($module_id, $id_in_module, $topic_identifier);
+		$lang = $number_comments > 1 ? self::$comments_lang['comments'] : self::$comments_lang['comment'];
+	
+		return !empty($number_comments) ? ' ' .$lang : self::$comments_lang['no_comment'];
+	}
 
 	/**
 	 * @desc Delete all comments module

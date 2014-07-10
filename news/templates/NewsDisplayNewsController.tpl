@@ -18,6 +18,7 @@
 			# IF C_AUTHOR_EXIST #<a itemprop="author" rel="author" class="small {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a># ELSE #{PSEUDO}# ENDIF #,  
 			${TextHelper::lowercase_first(LangLoader::get_message('the', 'common'))} <time datetime="{DATE_ISO8601}" itemprop="datePublished">{DATE}</time>
 			${TextHelper::lowercase_first(LangLoader::get_message('in', 'common'))} <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+			- # IF C_COMMENTS # {NUMBER_COMMENTS} # ENDIF #	{L_COMMENTS}
 		</div>
 		
 		<meta itemprop="url" content="{U_LINK}">

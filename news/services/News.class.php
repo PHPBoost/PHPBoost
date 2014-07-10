@@ -376,7 +376,8 @@ class News
 		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($this->id_cat);
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-	
+		$number_comments = CommentsService::get_number_comments('news', $this->id);
+		
 		return array(
 			'C_EDIT' => $this->is_authorized_edit(),
 			'C_DELETE' => $this->is_authorized_delete(),
@@ -395,6 +396,9 @@ class News
 			'PSEUDO' => $user->get_pseudo(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
+		
+			'C_COMMENTS' => !empty($number_comments),
+			'L_COMMENTS' => CommentsService::get_lang_comments('news', $this->id),
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('news', $this->id),
 			
 			//Category
