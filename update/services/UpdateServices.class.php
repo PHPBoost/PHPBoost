@@ -204,7 +204,12 @@ class UpdateServices
 		$has_compatible_themes = false;
 		foreach (ThemesManager::get_activated_themes_map() as $id => $theme)
 		{
-			$compatibility = $theme->get_configuration()->get_compatibility();
+			try {
+				$compatibility = $theme->get_configuration()->get_compatibility();
+			} catch (Exception $e) {
+				$compatibility = 4.0;
+			}
+			
 			if ($id !== 'base' && version_compare($compatibility, '4.1', '<'))
 			{
 				ThemesManager::uninstall($id);
