@@ -50,47 +50,47 @@ $Template->put_all(array(
 	'L_OTHER_TOOLS' => $LANG['wiki_other_tools'],
 
 	'L_EDIT_INDEX' => $LANG['wiki_update_index'],
-	'U_EDIT_INDEX' => url('admin_wiki.php#index'),
+	'U_EDIT_INDEX' => PATH_TO_ROOT . '/wiki/' . url('admin_wiki.php#index'),
 
 	'L_HISTORY' => $LANG['wiki_history'],
-	'U_HISTORY' => !empty($id_article) ? url('history.php?id=' . $id_article) : url('history.php'),
+	'U_HISTORY' => !empty($id_article) ? PATH_TO_ROOT . '/wiki/' . url('history.php?id=' . $id_article) : PATH_TO_ROOT . '/wiki/' . url('history.php'),
 
 	'C_EDIT' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT)),
 	'L_EDIT' => $LANG['update'],
-	'U_EDIT' => url('post.php?id=' . $id_article),
+	'U_EDIT' => PATH_TO_ROOT . '/wiki/' . url('post.php?id=' . $id_article),
 
 	'C_DELETE' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE)),
 	'L_DELETE' => $LANG['delete'],
-	'U_DELETE' => $page_type == 'article' ? url('action.php?del_article=' . $id_article . '&amp;token=' . $Session->get_token()) : url('property.php?del=' . $id_article),
+	'U_DELETE' => $page_type == 'article' ? PATH_TO_ROOT . '/wiki/' . url('action.php?del_article=' . $id_article . '&amp;token=' . $Session->get_token()) : PATH_TO_ROOT . '/wiki/' . url('property.php?del=' . $id_article),
 
 	'C_RENAME' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME)),
 	'L_RENAME' => $LANG['wiki_rename'],
-	'U_RENAME' => url('property.php?rename=' . $article_infos['id']),
+	'U_RENAME' => PATH_TO_ROOT . '/wiki/' . url('property.php?rename=' . $article_infos['id']),
 
 	'C_REDIRECT' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth  || $User->check_auth($article_auth , WIKI_REDIRECT)),
 	'L_REDIRECT' => $LANG['wiki_redirections'],
-	'U_REDIRECT' => url('property.php?redirect=' . $article_infos['id']),
+	'U_REDIRECT' => PATH_TO_ROOT . '/wiki/' . url('property.php?redirect=' . $article_infos['id']),
 
 	'C_MOVE' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE)),
 	'L_MOVE' => $LANG['wiki_move'],
-	'U_MOVE' => url('property.php?move=' . $article_infos['id']),
+	'U_MOVE' => PATH_TO_ROOT . '/wiki/' . url('property.php?move=' . $article_infos['id']),
 
 	'C_STATUS' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS)),
 	'L_STATUS' => $LANG['wiki_article_status'],
-	'U_STATUS' => url('property.php?status=' . $article_infos['id']),
+	'U_STATUS' => PATH_TO_ROOT . '/wiki/' . url('property.php?status=' . $article_infos['id']),
 
 	'C_RESTRICTION' => $User->check_auth($config->get_authorizations(), WIKI_RESTRICTION),
 	'L_RESTRICTION' => $LANG['wiki_restriction_level'],
-	'U_RESTRICTION' => url('property.php?auth=' . $article_infos['id']),
+	'U_RESTRICTION' => PATH_TO_ROOT . '/wiki/' . url('property.php?auth=' . $article_infos['id']),
 	
 	'L_RANDOM' => $LANG['wiki_random_page'],
-	'U_RANDOM' => url('property.php?random=1'),
+	'U_RANDOM' => PATH_TO_ROOT . '/wiki/' . url('property.php?random=1'),
 
 	'L_PRINT' => $LANG['printable_version'],
-	'U_PRINT' => url('print.php?id=' . $article_infos['id']),
+	'U_PRINT' => PATH_TO_ROOT . '/wiki/' . url('print.php?id=' . $article_infos['id']),
 
 	'L_WATCH' => $article_infos['id_favorite'] > 0 ? $LANG['wiki_unwatch_this_topic'] : $LANG['wiki_watch'],
-	'U_WATCH' => $article_infos['id_favorite'] > 0 ? url('favorites.php?del=' . $id_article . '&amp;token=' . $Session->get_token()) : url('favorites.php?add=' . $id_article),
+	'U_WATCH' => $article_infos['id_favorite'] > 0 ? PATH_TO_ROOT . '/wiki/' . url('favorites.php?del=' . $id_article . '&amp;token=' . $Session->get_token()) : PATH_TO_ROOT . '/wiki/' . url('favorites.php?add=' . $id_article),
 ));
 
 //Discussion

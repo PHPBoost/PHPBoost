@@ -107,7 +107,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 						'SRC' => ($value['icon'] == 'download.png' || $value['icon'] == 'download_mini.png' ? PATH_TO_ROOT . '/download/' . $value['icon'] : $value['icon']),
 						'IMG_NAME' => addslashes($value['name']),
 						'NUM_FILES' => sprintf(((int)$value['num_files'] > 1 ? $DOWNLOAD_LANG['num_files_plural'] : $DOWNLOAD_LANG['num_files_singular']), (int)$value['num_files']),
-						'U_CAT' => url(PATH_TO_ROOT . '/download/download.php?cat=' . $id, 'category-' . $id . '+' . Url::encode_rewrite($value['name']) . '.php'),
+						'U_CAT' => PATH_TO_ROOT . '/download/' . url('download.php?cat=' . $id, 'category-' . $id . '+' . Url::encode_rewrite($value['name']) . '.php'),
 						'U_ADMIN_CAT' => url(PATH_TO_ROOT . '/download/admin_download_cat.php?edit=' . $id),
 						'C_CAT_IMG' => !empty($value['icon'])
 					));
@@ -229,9 +229,9 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 					'SIZE' => ($row['size'] >= 1) ? NumberHelper::round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : (NumberHelper::round($row['size'], 1) * 1024) . ' ' . $LANG['unit_kilobytes'],
 					'C_IMG' => !empty($row['image']),
 					'IMG' => Url::to_absolute($row['image']),
-					'U_DOWNLOAD_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
-					'U_ADMIN_EDIT_FILE' => url(PATH_TO_ROOT . '/download/management.php?edit=' . $row['id']),
-					'U_ADMIN_DELETE_FILE' => url(PATH_TO_ROOT . '/download/management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+					'U_DOWNLOAD_LINK' => PATH_TO_ROOT . '/download/' . url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+					'U_ADMIN_EDIT_FILE' => PATH_TO_ROOT . '/download/' . url('management.php?edit=' . $row['id']),
+					'U_ADMIN_DELETE_FILE' => PATH_TO_ROOT . '/download/' . url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 					'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('download', $row['id']) . '</a>'
 				));
 			}
