@@ -58,3 +58,5 @@ syntax: regexp
 ^templates/test$
 syntax: regexp
 ^templates/lorem$
+syntax: regexp
+^templates/underline$
