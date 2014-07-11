@@ -36,7 +36,7 @@
 			</li>
 			# ENDIF #
 			# IF IS_ADMIN #
-			<li class="small-block" style="padding: 10px 0px; width: 210px; margin-right: 2px;">
+			<li class="small-block" style="padding: 10px 1px; width: 210px; margin-right: 2px;">
 				<a href="{PATH_TO_ROOT}/admin/">
 					# IF C_UNREAD_ALERT #
 					<span class="fa fa-stack">
@@ -53,14 +53,14 @@
 			</li>
 			# ENDIF #
 			# IF C_IS_MODERATOR #
-			<li class="small-block" style="padding: 10px 0px; margin-right: 2px;">
+			<li class="small-block" style="padding: 10px 2px; margin-right: 2px;">
 				<a href="{U_MODERATION_PANEL}">
 					<i class="fa fa-gavel fa-2x"></i><br />
 					${LangLoader::get_message('moderation_panel', 'main')}
 				</a>
 			</li>
 			# ENDIF #
-			<li class="small-block" style="padding: 10px 0px;">
+			<li class="small-block" style="padding: 10px 2px;">
 				<a href="{U_CONTRIBUTION_PANEL}">
 					# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
 					<span class="fa fa-stack">
