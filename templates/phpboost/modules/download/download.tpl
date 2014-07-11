@@ -26,10 +26,10 @@
 			Vous trouverez sur cette page :
 			<br /><br />
 			<ul>
-				<li>La dernière version stable : PHPBoost 4.0 Sirocco et 4.0 Sirocco PDK (Version destinée aux développeurs)</li>
-				<li>PHPBoost 3.0 Tornade</li>
-				<li>Mise à jour des versions 3.0 et 4.0</li>
-				<li>Migration de PHPBoost 3.0 à PHPBoost 4.0</li>
+				<li>La dernière version stable : PHPBoost 4.1 et sa version PDK destinée aux développeurs</li>
+				<li>L'ancienne version PHPBoost 4.0</li>
+				<li>Mise à jour des versions 4.0 et 4.1</li>
+				<li>Les scripts de migration pour passer votre site sous PHPBoost 4.0 ou 4.1</li>
 			</ul>
 			<hr style="margin:25px auto 25px auto;" />
 			

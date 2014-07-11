@@ -196,7 +196,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_MOVE' => $FAQ_LANG['move'],
 			'L_QUESTION_URL' => $FAQ_LANG['url_of_question'],
 			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
-			'U_ADMIN_CAT' => $id_faq > 0 ? url(PATH_TO_ROOT . '/faq/admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq.php'),
+			'U_ADMIN_CAT' => $id_faq > 0 ? url(PATH_TO_ROOT . '/faq/admin_faq_cats.php?edit=' . $id_faq) : url(PATH_TO_ROOT . '/faq/admin_faq.php'),
 			'ID_FAQ' => $id_faq,
 		));
 
