@@ -1,0 +1,370 @@
+section#main * { 
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box; 
+}
+
+.forum-table {}
+ 
+/* Classe du lien du pseudo sur forum */
+a.forum-link-pseudo {
+	color: #E8EAEB; 
+	font-weight: bold;
+}
+a.forum-link-pseudo:hover { 
+	color: #F2FBFF; 
+	font-weight: bold;
+}
+/* Barre du titre du forum */
+#forum-top {
+	margin: 5px 0px 15px 0px;
+	background: #EEEEEE;
+	border: 1px solid #DDDDDD;
+	border-radius: 3px;
+}
+
+#forum-bottom {
+	margin: 15px 0px 5px 0px;
+	background: #EEEEEE;
+	border: 1px solid #DDDDDD;
+	border-radius: 3px;
+}
+
+.forum-title-l {
+	float: left;
+	width: 5px;
+}
+.forum-title-r {
+	float: right;
+	width: 5px;
+}
+.forum-title { margin: 10px; }
+.forum-title h2 { font-size: 14px; } /* Titre du forum */
+.forum-title a {} /* Couleur des liens */
+
+/* Barre de liens du forum */
+.forum-links {
+	color: #334455;
+	padding: 6px;
+}
+.forum-links a { color: #334455; } /* Couleur des liens */
+
+
+#forum-top .forum-links {
+	margin: 9px;
+	border-top: 1px solid #CCC;
+}
+
+#forum-bottom .forum-links {
+	margin: 9px;
+	border-bottom: 1px solid #CCC;
+}
+.forum-notread { /* Message non lus */
+	background: #5D7C94;
+	padding: 4px;
+	font-size: 10px;
+	color: #366393;
+}
+/* Barre des textes relatifs aux colonnes */
+td.forum-text-column {	
+	height: 20px;
+	font-size: 11px;
+}
+/* Case des liens sous-catégories */
+td.forum-sous-cat-img { width: 30px; }
+
+td.forum-sous-cat { text-align: left; }
+
+td.forum-sous-cat + td.forum-sous-cat { padding: 6px; }
+
+/* Case compteur message/topic */
+td.forum-sous-cat-compteur { width: 60px; }
+
+/* Case compteur dernier topic/dernier message */
+td.forum-sous-cat-last {
+	width: 150px;
+	font-size: 10px;
+}
+
+/* Formulaire pour poster les messages */
+.forum-post-form {
+	width: 90%;
+	margin: auto;
+	margin-top: 15px;
+}
+/* Cadre des liens: alerter les modérateurs et suivre le sujet */
+.forum-action {	
+	margin-top: 5px;
+	text-align: center;
+}
+
+/* Les des catégories de niveau 0 */
+a.forum-link-cat { font-weight: bold; }
+
+/* Affichage des membres en ligne */
+.forum-online {
+	padding: 6px;
+	overflow: hidden !important;
+	height: auto !important;
+	overflow: visible;
+	height: 1%;
+	clear: both;
+}
+.forum-online-select-cat {
+	float: left;
+	text-align: right;
+	clear: both;
+	padding: 5px;	
+}
+.forum-online-select {
+	min-width: 160px;
+	max-width: 530px;	
+}
+
+/* Fond des catégories dans l'administration */
+.forum-cat-admin {
+	width: 100%;
+	height: 20px;
+	margin-bottom: 2px;
+	padding: 4px 0px;
+}
+/* Contenu */
+.forum-contents {
+	padding: 0px;
+	margin: 0px;
+	border-bottom: none;
+}
+.forum-cat-title {
+	padding: 0px 5px;
+}
+.forum-cat-title a {}
+
+a.forum-mbrmsg-links { color: #FFFFFF; } /* Couleur des liens pour les messages du membre */
+
+.forum-search-word {
+	background: yellow;
+	color: black;	
+}
+
+.pagin-forum { float: right; }
+
+/* Module */
+.module-position {
+    width: 98%;
+    margin: auto;
+	float: none;
+}
+
+/* Barre supérieur des modules */
+.module-top-l {}
+.module-top-r {}
+.module-top {
+	padding: 8px;
+	background: #EEEEEE;
+	border: 1px solid #DDDDDD;
+	border-radius: 3px;
+}
+.module-top a:not(.*button) {
+	color: #334455;
+	font-size: 13px;
+}
+.module-contents { clear: both; } /* Contenu des modules */
+
+.module-bottom-l {} /* Barre inférieure des modules */
+.module-bottom-r {}
+.module-bottom {
+	padding: 8px;
+	background: #EEEEEE;
+	border: 1px solid #DDDDDD;
+	border-radius: 3px;
+}
+.module-bottom a:not(.*button) {
+	color: #334455;
+	font-size: 13px;
+}
+
+.desc-forum { font-size: 10px; }
+
+.module-top ul.pagination, .module-bottom ul.pagination { display: inline; }
+
+/* Messages postés par les membres 
+--------------------------------------*/
+/* Classe du lien du pseudo des messages */
+a.msg-link-pseudo {
+	font-size: 11px;
+    color: #E8EAEB;
+    font-weight: bold;
+}
+
+a.msg-link-pseudo:hover { color: #F2FBFF; }
+
+/* Conteneur des messages */
+.msg-position { 
+    width: 96%;
+    margin: 5px auto;
+    background: #F0F3FF;
+	border: 1px solid #D1D4DF;
+}
+
+/* Case contenant l'ensemble du message */
+.msg-container, 
+.msg-container2 {
+    background: #FCFCFD;
+    overflow: hidden !important;
+    height: auto !important;
+    clear: both;
+}
+
+/*  Case contenant l'ensemble du message => Couleur alternative */
+.msg-container2 { background: #FCFCFD; }
+
+/* Barre superieur des messages */
+.msg-top-l {
+	margin-right: 0px !important;
+	height: 34px;
+	width: 29px;
+	background: #ECEFFA;
+	float: left;
+}
+
+.msg-top-r {
+	margin-left: 0px !important;
+	height: 34px;
+	width: 21px;
+	background: #ECEFFA;
+	float: right;
+}
+
+.msg-top {
+	height: 25px;
+	background: #ECEFFA;
+	padding: 9px 0px 0px 6px;
+	margin: 0px 15px 0px 20px;
+}
+
+.msg-top a { color: #3F5164; }
+
+/* Pseudo du membre */
+.msg-pseudo-mbr {
+    width: 127px;
+    padding: 2px 4px;
+    float: left;
+    margin-right: 0px !important;
+    margin-left: -127px !important;
+    margin-top: -4px;
+}
+
+/* Case au dessus du message, indique la date et les boutons d'administration */
+.msg-top-row {
+	height: auto;
+    min-height: 26px;
+    background: #4D4C50;
+    font-size: 11px;
+    color: #E8EAEB;
+    border: 1px solid #444444;
+    padding: 4px 5px 0px 130px;
+    overflow: hidden !important;
+}
+
+.msg-top-row a { color: #E8EAEB; }
+
+.msg-info-mbr { /* Case des informations du membre */
+    background: #F0F3FF;
+    width: 136px;
+    padding: 4px;
+    float: left;
+    font-size: 10px;
+    border-right: 1px dotted #C4CED6;
+}
+
+.msg-info-mbr img {	max-width: 120px; }
+
+/* Case contenant l'ensemble du message, infos membre + contenu */
+.msg-contents-container { background: #F0F3FF; }
+
+/* Case du message */
+.msg-contents, 
+.msg-contents2 { 
+    margin-left: 135px;
+    background: #FCFCFD;
+    padding: 0px 5px;
+    border-left: 1px dotted #C4CED6;
+}
+
+/* Case du message => Couleur alternative */
+.msg-contents2 { background: #FCFCFD; }
+
+/* Case du contents du message, évite que les images trop grandes soient déformées */
+.msg-contents-overflow {
+    width: 99%;
+    height: auto;
+    min-height: 80px;
+    overflow: auto;
+    padding: 10px 0px;
+    word-wrap: break-word;
+}
+
+/* Signature du membre */
+.msg-sign,
+.msg-sign2 { 
+   	background: #FCFCFD;
+    padding: 4px;
+    font-size: 11px;
+    margin-left: 135px;
+    border-left: 1px dotted #C4CED6;
+}
+
+/* Signature du membre => Couleur alternative */
+.msg-sign2 { background: #FCFCFD; }
+
+/* Signature du membre, fixe la hauteur maximale */
+.msg-sign-overflow { 
+    height: auto !important;
+    width: 99%;
+    max-height: 80px;
+    max-width: 99%;
+    overflow: hidden;
+}
+
+.msg-bottom {
+    height: 23px;
+    padding: 6px 6px 0px 6px;
+    border: none;
+    background: none;
+}
+
+.fa-announce:before,
+.fa-announce-new:before { content: "\f075"; }
+
+.fa-announce-hot:before
+.fa-announce-new-hot:before { content: "\f086"; }
+
+.fa-announce-lock:before,
+.fa-announce-new-lock:before { content: "\f023"; }
+
+.fa-announce-post:before,
+.fa-announce-new-post:before { content: "\f071"; }
+
+.fa-announce-top:before,
+.fa-announce-new-top:before { content: "\f06a"; }
+
+.fa-announce:before,
+.fa-announce-hot:before { color: #D1D2D4; }
+
+.fa-announce-new:before,
+.fa-announce-new-hot:before { color: #676A74; }
+
+.fa-msg-display:before { content: "\f00c"; color: #478948; }
+.fa-msg-not-display:before { content: "\f00d"; color: #BA4B49; }
+
+.fa-msg-track:before { content: "\f004"; color: #BA4B49; }
+.fa-msg-not-track:before { content: "\f004"; color: #000000; }
+
+.fa-pm-track:before { content: "\f0e0"; color: #4372AA; }
+.fa-pm-not-track:before { content: "\f0e0"; color: #000000; }
+
+.fa-mail-track:before { content: "\f003"; color: #4372aa; }
+.fa-mail-not-track:before { content: "\f003"; color: #000000; }
+
+.fa-lastview:before { content: "\f017"; color: #334455; }
+.fa-notread:before { content: "\f0f6"; color: #334455; }
