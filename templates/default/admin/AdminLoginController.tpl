@@ -15,7 +15,7 @@ function check_connect(){
 -->
 </script>
 
-<form action="{PATH_TO_ROOT}/admin/admin_index.php?token={TOKEN}" method="post" onsubmit="return check_connect();" class="fieldset-content" style="width:550px;margin:auto;margin-top:180px;">
+<form action="{PATH_TO_ROOT}/admin/admin_index.php?token={TOKEN}" method="post" onsubmit="return check_connect();" class="fieldset-content" style="width:550px;margin:auto;margin-top:200px;">
 	<fieldset>
 		<legend>{@admin}</legend>
 		<div class="form-element">
