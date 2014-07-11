@@ -42,7 +42,7 @@ div#site-infos {
 	display: flex;
 	display: -webkit-flex;
 	display: -ms-flex;
-	width: 940px;
+	max-width: 940px;
 	height: 90px;
 	margin: 20px 20px 0px 20px;
 }
