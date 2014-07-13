@@ -80,7 +80,7 @@ $LANG['e_unexist_member'] = 'This member doesn\'t exist!';
 $LANG['e_member_ban'] = 'You have been banned! You can retry to connect in';
 $LANG['e_member_ban_w'] = 'You have been banned for your behaviour! Contact the administator if you think it\'s an error.';
 $LANG['e_unactiv_member'] = 'Your account has not been activated yet!';
-$LANG['e_test_connect'] = 'You still have %d attempt(s) remaining. After that you will have to wait 5 minutes to obtain 2 new attempts (10mins for 5) !';
+$LANG['e_test_connect'] = 'You have %d attempt(s) remaining. After that you will have to wait 5 minutes to obtain 2 new attempts (10 minutes for 5) !';
 $LANG['e_nomore_test_connect'] = 'You have used all your log in attempts and your account is locked for 5 minutes';
 $LANG['e_wrong_password'] = 'The password is not correct';
 
