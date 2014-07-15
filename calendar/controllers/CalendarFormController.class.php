@@ -437,7 +437,7 @@ class CalendarFormController extends ModuleController
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id_event);
 				$contribution->set_description(stripslashes($this->form->get_value('contents')));
-				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.entitled', 'user-common'), array('module_name' => $this->lang['module_title'], 'title' => $this->form->get_value('title'))));
+				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.entitled', 'user-common'), array('module_name' => $this->lang['module_title'], 'name' => $this->form->get_value('title'))));
 				$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($id_event)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('calendar');
