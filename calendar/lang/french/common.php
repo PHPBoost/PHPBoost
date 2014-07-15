@@ -91,9 +91,6 @@ $lang['calendar.labels.no_one'] = 'Personne';
 $lang['calendar.labels.suscribe'] = 'S\'inscrire';
 $lang['calendar.labels.unsuscribe'] = 'Se désinscrire';
 
-//Explications
-$lang['calendar.explain.date'] = '<span class="smaller">(jj/mm/aa)</span>';
-
 //Administration
 $lang['calendar.config.events.management'] = 'Gestion des événements';
 $lang['calendar.config.category.color'] = 'Couleur';

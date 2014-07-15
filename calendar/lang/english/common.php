@@ -90,9 +90,6 @@ $lang['calendar.labels.no_one'] = 'No one';
 $lang['calendar.labels.suscribe'] = 'Suscribe';
 $lang['calendar.labels.unsuscribe'] = 'Unsuscribe';
 
-//Explications
-$lang['calendar.explain.date'] = '<span class="smaller">(mm/dd/yy)</span>';
-
 //Administration
 $lang['calendar.config.events.management'] = 'Events management';
 $lang['calendar.config.category.color'] = 'Color';
