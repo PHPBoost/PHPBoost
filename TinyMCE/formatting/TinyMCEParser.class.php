@@ -478,7 +478,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Quote tag
 		if (!in_array('quote', $this->forbidden_tags))
 		{
-			$this->content = preg_replace('`(.)(?:\s*<br />\s*)?\s*&lt;blockquote&gt;\s*(?:&lt;p&gt;)?(.+)(?:<br />[\s]*)*\s*(&lt;/p&gt;)?&lt;/blockquote&gt;`isU', '$1<span class="text-blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$2</div>', $this->content);
+			$this->content = preg_replace('`(.)(?:\s*<br />\s*)?\s*&lt;blockquote&gt;\s*(?:&lt;p&gt;)?(.+)(?:<br />[\s]*)*\s*(&lt;/p&gt;)?&lt;/blockquote&gt;`isU', '$1<span class="formatter-blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$2</div>', $this->content);
 		}
 
 		//Font tag
@@ -615,7 +615,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Hide tag
 		if (!in_array('hide', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text-hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
+			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="formatter-hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
 		}
 
 		//Block tag
@@ -640,14 +640,14 @@ class TinyMCEParser extends ContentFormattingParser
 		//Hide tag
 		if (!in_array('hide', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text-hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
+			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="formatter-hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
 		}
 
 		//Quote tag (this tag is managed by TinyMCE but it can also be used in BBCode syntax)
 		if (!in_array('quote', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text-blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->content);
-			$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text-blockquote">$1:</span><div class="blockquote">$2</div>', $this->content);
+			$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="formatter-blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->content);
+			$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="formatter-blockquote">$1:</span><div class="blockquote">$2</div>', $this->content);
 		}
 		
 		if (!in_array('feed', $this->forbidden_tags))
