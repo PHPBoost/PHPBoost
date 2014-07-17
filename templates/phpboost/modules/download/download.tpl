@@ -43,7 +43,7 @@
 
 				<div class="pbt-button-container">
 					<div class="pbt-button pbt-button-blue">
-						<a href="{PATH_TO_ROOT}/download/category-40+phpboost-4-1.php" class="pbt-button-a">
+						<a href="{PATH_TO_ROOT}/download/file-299+phpboost-4-1.php" class="pbt-button-a">
 							<div class="pbt-custom-img pbt-custom-img-phpboost"></div>
 							<p class="pbt-button-title">Télécharger PHPBoost 4.1</p>
 							<p class="pbt-button-com">Rev : 4.1.0 | Req : PHP 5.3 | .zip </p>
@@ -59,7 +59,7 @@
 				</div>
 				
 				<div class="pbt-dev-container">
-					<a href="{PATH_TO_ROOT}/download/category-40+phpboost-4-1.php" class="pbt-dev">Télécharger la version pour développeurs (PDK)</a>
+					<a href="{PATH_TO_ROOT}/download/download-339+phpboost-4-1-pdk.php" class="pbt-dev">Télécharger la version pour développeurs (PDK)</a>
 				</div>
 					
 				<hr style="margin:10px auto 0px auto;" />
@@ -90,7 +90,7 @@
 				<header>
 					<h1>Télécharger PHPBoost 4.0 - Sirocco</h1>
 					<p class="pbt-desc">
-						La version stable de PHPBoost. A utiliser pour bénéficier de toutes les dernières fonctionnalités implantées.
+						Pour les nostalgiques, ou pour les personnes ayant besoin de réparer une version 4.0 encore en production.
 					</p>
 				</header>
 					
