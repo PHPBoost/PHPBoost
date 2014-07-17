@@ -174,10 +174,10 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			
 		##Nested tags
 		//Quotes
-		$this->_parse_imbricated('<span class="text-blockquote">', '`<span class="text-blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', '[quote=$1]$2[/quote]', $this->content);
+		$this->_parse_imbricated('<span class="formatter-blockquote">', '`<span class="formatter-blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', '[quote=$1]$2[/quote]', $this->content);
 
 		//Hidden bloc
-		$this->_parse_imbricated('<span class="text-hide">', '`<span class="text-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
+		$this->_parse_imbricated('<span class="formatter-hide">', '`<span class="formatter-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 
 		//Block
 		$this->_parse_imbricated('<div class="formatter-block"', '`<div class="formatter-block">(.+)</div>`sU', '[block]$1[/block]', $this->content);

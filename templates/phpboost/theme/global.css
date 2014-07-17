@@ -164,7 +164,7 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 }
 
 /* --- les blocs de quote, de code ou caches --- */
-.text-blockquote, .text-code, .text-hide {
+.formatter-blockquote, .formatter-code, .formatter-hide {
 	display: block;
 	width: 93%;
 	padding: 2px 0px;

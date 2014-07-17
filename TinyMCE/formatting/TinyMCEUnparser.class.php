@@ -183,7 +183,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace_callback('`<span style="font-size: ([0-9-]+)px;">(.+)</span>`isU', array($this, 'unparse_size_tag'), $this->content);
 
 			//Citations
-			$this->_parse_imbricated('<span class="text-blockquote">', '`<span class="text-blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', "\n" . '<blockquote>$2</blockquote>', $this->content);
+			$this->_parse_imbricated('<span class="formatter-blockquote">', '`<span class="formatter-blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', "\n" . '<blockquote>$2</blockquote>', $this->content);
 
 			//Balise indentation
 			$this->content = preg_replace('`(?:<p>\s*</p>)?\s*<p>\s*<div class="indent">(.+)</div>\s*</p>`isU', "\n" . '<p style="padding-left: 30px;">$1</p>', $this->content);
@@ -238,7 +238,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			##Remplacement des balises imbriquées
 
 			//Texte caché
-			$this->_parse_imbricated('<span class="text-hide">', '`<span class="text-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
+			$this->_parse_imbricated('<span class="formatter-hide">', '`<span class="formatter-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 
 			//Bloc HTML
 			$this->_parse_imbricated('<div class="formatter-block"', '`<div class="formatter-block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
@@ -254,7 +254,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`sU', array($this, 'unparse_wikipedia_link'), $this->content);
 
 			//Hide
-			$this->_parse_imbricated('<span class="text-hide">', '`<span class="text-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
+			$this->_parse_imbricated('<span class="formatter-hide">', '`<span class="formatter-hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 	}
 
 	/**
