@@ -3,7 +3,7 @@
 		<script>
 		<!--
 		function check_form(){
-			if(document.getElementById('search').value == "") {
+			if(document.getElementByName('search').value == "") {
 				alert("{L_REQUIRE_TEXT}");
 				return false;
 			}
