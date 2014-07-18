@@ -245,10 +245,10 @@ class CalendarService
 		$authorized_categories = CalendarService::get_authorized_categories($id_category);
 		
 		return self::$db_querier->select((CalendarConfig::load()->is_members_birthday_enabled() ? "
-		(SELECT user_born AS start_date, user_born AS end_date, login AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarEventContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
+		(SELECT member_extended_fields.user_born AS start_date, member_extended_fields.user_born AS end_date, login AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarEventContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
 		FROM " . DB_TABLE_MEMBER . " member
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " member_extended_fields ON member_extended_fields.user_id = member.user_id
-		WHERE MONTH(FROM_UNIXTIME(user_born)) = :month)
+		WHERE MONTH(FROM_UNIXTIME(member_extended_fields.user_born)) = :month)
 		UNION
 		" : "") . "(SELECT start_date, end_date, title, 'EVENT' AS type, id_category, repeat_type, repeat_number
 		FROM " . CalendarSetup::$calendar_events_table . " event
