@@ -49,16 +49,16 @@ class Countries
 	{
 		if (empty(self::$countries))
 		{
-			self::build_contries();
+			self::build_countries();
 		}
 	}
 	
-	public static function get_contries()
+	public static function get_countries()
 	{
 		return self::$countries;
 	}
 	
-	public static function get_contrie($identifier)
+	public static function get_countrie($identifier)
 	{
 		if (self::is_available($identifier))
 		{
@@ -72,7 +72,7 @@ class Countries
 		return array_key_exists($identifier, self::$countries_identifier);
 	}
 	
-	private static function build_contries()
+	private static function build_countries()
 	{
 		$lang = LangLoader::get('countries');
 		foreach (self::$countries_identifier as $country_identifier)

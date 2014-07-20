@@ -241,7 +241,10 @@ elseif ($get_os)
 }
 elseif ($get_lang)
 {
-    $array_stats = array();
+	$countries = new Countries();
+	$stats_array_lang = $countries->get_countries();
+	
+	$array_stats = array();
     $percent_other = 0;
     foreach (StatsSaver::retrieve_stats('lang') as $name => $value)
     {
