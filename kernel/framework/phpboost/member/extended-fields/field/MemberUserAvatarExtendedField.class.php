@@ -204,7 +204,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 	{
 		$value = MemberExtendedFieldsService::return_field_member($member_extended_field->get_field_name(), $member_extended_field->get_user_id());
 
-		if (!empty($value) && strpos($value, '/images/avatars/') !== false && is_file(PATH_TO_ROOT . $value))
+		if (!empty($value) && strpos($value, '/images/avatars/') !== false && @is_file(PATH_TO_ROOT . $value))
 		{
 			@unlink(PATH_TO_ROOT . $value);
 		}
