@@ -5,7 +5,9 @@
     <div class="content">
         <div class="float-right">
             <a href="{U_LINK}">
-                <img src="{U_IMG}" alt="${escape(TITLE)}">
+            	# IF C_IMG #
+					<img src="{U_IMG}" alt="${escape(TITLE)}">
+				# ENDIF #
             </a>
         </div>
         <p>{SHORT_DESCRIPTION}</p>
