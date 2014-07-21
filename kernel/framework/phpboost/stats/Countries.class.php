@@ -78,7 +78,7 @@ class Countries
 		foreach (self::$countries_identifier as $country_identifier)
 		{
 			self::$countries[$country_identifier] = array(
-				'name' => $lang['$country_identifier'], 
+				'name' => $lang[$country_identifier], 
 				'picture' => self::$pictures_path . $country_identifier . self::$pictures_extension
 			);
 		}
