@@ -100,7 +100,7 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
         $tpl->put_all(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(Date::FORMAT_DAY_MONTH)),
             'U_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $result_data['id']),
-        	'C_IMG' => !empty($row['image']),
+        	'C_IMG' => !empty($result_data['image']),
             'U_IMG' => $result_data['image'],
             'E_TITLE' => TextHelper::strprotect($result_data['title']),
             'TITLE' => $result_data['title'],
