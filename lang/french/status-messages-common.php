@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                errors-common.php
+ *                                status-messages-common.php
  *                            -------------------
  *   begin                : April 12, 2012
  *   copyright            : (C) 2012 Kevin MASSY
@@ -39,5 +39,17 @@ $lang['message.success.config'] = 'La configuration a été modifiée';
 //Captcha
 $lang['captcha.is_default'] = 'Le captcha que vous souhaitez désinstaller ou désactiver est défini sur le site, veuillez d\'abord sélectionner un autre captcha dans la configuration du contenu.';
 $lang['captcha.last_installed'] = 'Dernier captcha, vous ne pouvez pas le supprimer ou le désactiver. Veuillez d\'abord en installer un autre.';
+
+//Form
+$lang['doesnt_match_regex'] = 'La valeur saisie n\'est pas au bon format';
+$lang['doesnt_match_url_regex'] = 'La valeur saisie doit être une url valide';
+$lang['doesnt_match_mail_regex'] = 'La valeur saisie doit être un mail valide';
+$lang['doesnt_match_length_intervall'] = 'La valeur saisie ne respecte par la longueur définie';
+$lang['doesnt_match_integer_intervall'] = 'La valeur saisie ne respecte pas l\'intervalle définie (:lower_bound <= valeur <= :upper_bound)';
+$lang['has_to_be_filled'] = 'Le champ ":name" doit être renseigné';
+$lang['captcha_validation_error'] = 'Le champ de vérification visuel n\'a pas été saisi correctement !';
+$lang['validation_error'] = 'Veuillez corriger les erreurs du formulaire';
+$lang['fields_must_be_equal'] = 'Les champs ":field1" et ":field2" doivent être égaux';
+$lang['fields_must_not_be_equal'] = 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes';
 
 ?>

@@ -37,7 +37,7 @@ class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 	{
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('has_to_be_filled', 'builder-form-Validator');
+			$error_message = LangLoader::get_message('has_to_be_filled', 'status-messages-common');
 		}
 		$this->error_message = $error_message;
 	}

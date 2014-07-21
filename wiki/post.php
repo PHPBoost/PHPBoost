@@ -138,7 +138,7 @@ if (!empty($contents)) //On enregistre un article
 			{
 				$error_controller = new UserErrorController(
 					LangLoader::get_message('error', 'errors'),
-					LangLoader::get_message('captcha_validation_error', 'builder-form-Validator'),
+					LangLoader::get_message('captcha_validation_error', 'status-messages-common'),
 					UserErrorController::NOTICE
 				);
 				DispatchManager::redirect($error_controller);
