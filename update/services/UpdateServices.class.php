@@ -200,34 +200,17 @@ class UpdateServices
 		$general_config->set_site_install_date($date);
 		GeneralConfig::save();
 		
-		//On désinstalle les thèmes non compatible
-		$has_compatible_themes = false;
-		foreach (ThemesManager::get_activated_themes_map() as $id => $theme)
+		//On désinstalle les thèmes
+		foreach (ThemesManager::get_installed_themes_map() as $id => $theme)
 		{
-			try {
-				$compatibility = $theme->get_configuration()->get_compatibility();
-			} catch (Exception $e) {
-				$compatibility = 4.0;
-			}
-			
-			if ($id !== 'base' && version_compare($compatibility, '4.1', '<'))
-			{
-				ThemesManager::uninstall($id);
-			}
-			else
-			{
-				$has_compatible_themes = true;
-			}
+			ThemesManager::uninstall($id);
 		}
 		
-		if (!$has_compatible_themes)
-		{
-			ThemesManager::install('base');
-			
-			$user_accounts_config = UserAccountsConfig::load();
-			$user_accounts_config->set_default_theme('base');
-			UserAccountsConfig::save();
-		}
+		ThemesManager::install('base');
+		
+		$user_accounts_config = UserAccountsConfig::load();
+		$user_accounts_config->set_default_theme('base');
+		UserAccountsConfig::save();
 		
 		ModulesManager::install_module('QuestionCaptcha');
 		ModulesManager::install_module('ReCaptcha');
