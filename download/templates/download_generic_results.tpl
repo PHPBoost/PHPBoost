@@ -4,11 +4,11 @@
 	</header>
     <div class="content">
         <div class="float-right">
+        	# IF C_IMG #
             <a href="{U_LINK}">
-            	# IF C_IMG #
-					<img src="{U_IMG}" alt="${escape(TITLE)}">
-				# ENDIF #
+				<img src="{U_IMG}" alt="${escape(TITLE)}">
             </a>
+            # ENDIF #
         </div>
         <p>{SHORT_DESCRIPTION}</p>
         <div class="smaller">
