@@ -81,13 +81,13 @@
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/phpboost-4-0">PHPBoost 4.0</a>
-								<span class="more"> - Les nouveautés de la version 4.0 de PHPBoost</span>
+								<a href="{PATH_TO_ROOT}/wiki/phpboost-4-1">PHPBoost 4.1</a>
+								<span class="more"> - Les nouveautés de la version 4.1 de PHPBoost</span>
 							</li>
 							<li>
 								<i class="fa fa-file-text"></i>
-								<a href="{PATH_TO_ROOT}/wiki/phpboost-3-0">PHPBoost 3.0</a>
-								<span class="more"> - Les nouveautés de la version 3.0 de PHPBoost</span>
+								<a href="{PATH_TO_ROOT}/wiki/phpboost-4-0">PHPBoost 4.0</a>
+								<span class="more"> - Les nouveautés de la version 4.0 de PHPBoost</span>
 							</li>
 						</ul>
 						
