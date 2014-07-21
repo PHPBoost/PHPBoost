@@ -47,7 +47,7 @@ class FormFieldConstraintRegex extends AbstractFormFieldConstraint
 		
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('doesnt_match_regex', 'builder-form-Validator');
+			$error_message = LangLoader::get_message('doesnt_match_regex', 'status-messages-common');
 		}
 		$this->set_validation_error_message($error_message);
 		$this->error_message = $error_message;

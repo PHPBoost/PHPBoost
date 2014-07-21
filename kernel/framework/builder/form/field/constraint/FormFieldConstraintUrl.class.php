@@ -35,7 +35,7 @@ class FormFieldConstraintUrl extends FormFieldConstraintRegex
 	{
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('doesnt_match_url_regex', 'builder-form-Validator');
+			$error_message = LangLoader::get_message('doesnt_match_url_regex', 'status-messages-common');
 		}
 		$this->set_validation_error_message($error_message);
 		
