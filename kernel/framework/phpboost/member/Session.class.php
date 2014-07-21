@@ -681,7 +681,7 @@ class Session
 				return true;
 			}
 			//If those two lines are executed, none of the two cases has been matched. Thow it's a potential attack.
-			$this->csrf_attack();
+			AppContext::get_response()->redirect(UserUrlBuilder::CSRF());
 			return false;
 		}
 		//It's not a POST request, there is no problem.
@@ -701,7 +701,7 @@ class Session
 		$token = $this->get_token();
 		if (empty($token) || retrieve(REQUEST, 'token', '') !== $token)
 		{
-			$this->csrf_attack();
+			AppContext::get_response()->redirect(UserUrlBuilder::CSRF());
 			return false;
 		}
 		return true;
@@ -722,17 +722,6 @@ class Session
 	}
 
 	/**
-	 * @desc Redirect to the error page if the token is wrong
-	 */
-	private function csrf_attack()
-	{
-		$bad_token = $this->get_printable_token(retrieve(REQUEST, 'token', ''));
-		$good_token = $this->get_printable_token($this->get_token());
-
-		AppContext::get_response()->redirect(UserUrlBuilder::CSRF());
-	}
-
-	/**
 	 * Returns the session data
 	 * @return array
 	 */
@@ -748,12 +737,6 @@ class Session
 	public function supports_cookies()
 	{
 		return (bool)$this->session_mod;
-	}
-
-	private function get_printable_token($token)
-	{
-		$digits = 6;
-		return substr($token, 0, $digits) . '...' . substr($token, strlen($token) - $digits);
 	}
 }
 ?>
