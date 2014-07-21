@@ -119,8 +119,8 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 		$search = $args['search'];
 		$idcat = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
-		$time = !empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 0;
-		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'title';
+		$time = (!empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 30000) * 3600 * 24;
+		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
 		$colorate_result = !empty($args['ForumColorate_result']) ? true : false;
 
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
