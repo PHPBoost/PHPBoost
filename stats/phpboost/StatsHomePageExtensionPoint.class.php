@@ -998,7 +998,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 					'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-					'TREND' => '<i class="fa fa-arrow-' . $trend_img . ' fa-2x"></i> (' . $sign . $trend . '%)'
+					'TREND' => '<i class="fa fa-trend-' . $trend_img . '"></i> (' . $sign . $trend . '%)'
 				));
 			}
 			$this->sql_querier->query_close($result);
@@ -1066,7 +1066,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'TOTAL_VISIT' => $row['total_visit'],
 					'AVERAGE_VISIT' => NumberHelper::round($average, 1),
 					'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-					'TREND' => '<i class="fa fa-arrow-' . $trend_img . ' fa-2x"></i> (' . $sign . $trend . '%)'
+					'TREND' => '<i class="fa fa-trend-' . $trend_img . '"></i> (' . $sign . $trend . '%)'
 				));
 			}
 			$this->sql_querier->query_close($result);
