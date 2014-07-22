@@ -581,28 +581,24 @@
 			<tbody>
 				# START referer_list #
 				<tr>
-					<td colspan="5">
-						<table>
-							<tbody>
-								<tr>
-									<td>
-										{referer_list.IMG_MORE} <span class="smaller">({referer_list.NBR_LINKS})</span> <a href="{referer_list.URL}">{referer_list.URL}</a>	<span id="load{referer_list.ID}"></span>
-									</td>
-									<td style="width:70px;">
-										{referer_list.TOTAL_VISIT}
-									</td>
-									<td style="width:60px;">
-										{referer_list.AVERAGE_VISIT}
-									</td>
-									<td style="width:96px;">
-										{referer_list.LAST_UPDATE}
-									</td>
-									<td style="width:95px;">
-										{referer_list.TREND}
-									</td>
-								</tr>
-							</tbody>
-						</table>
+					<td>
+						{referer_list.IMG_MORE} <span class="smaller">({referer_list.NBR_LINKS})</span> <a href="{referer_list.URL}">{referer_list.URL}</a>	<span id="load{referer_list.ID}"></span>
+					</td>
+					<td>
+						{referer_list.TOTAL_VISIT}
+					</td>
+					<td>
+						{referer_list.AVERAGE_VISIT}
+					</td>
+					<td>
+						{referer_list.LAST_UPDATE}
+					</td>
+					<td>
+						{referer_list.TREND}
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5" >
 						<div id="url{referer_list.ID}" style="display:none;width:100%;"></div>
 					</td>
 				</tr>
@@ -683,28 +679,24 @@
 			<tbody>
 				# START keyword_list #
 				<tr>
+					<td>
+						{keyword_list.IMG_MORE} <span class="smaller">({keyword_list.NBR_LINKS})</span> {keyword_list.KEYWORD} <span id="load{keyword_list.ID}"></span>
+					</td>
+					<td>
+						{keyword_list.TOTAL_VISIT}
+					</td>
+					<td>
+						{keyword_list.AVERAGE_VISIT}
+					</td>
+					<td>
+						{keyword_list.LAST_UPDATE}
+					</td>
+					<td>
+						{keyword_list.TREND}
+					</td>						
+				</tr>
+				<tr>
 					<td colspan="5">
-						<table>
-							<tbody>
-								<tr>
-									<td>
-										{keyword_list.IMG_MORE} <span class="smaller">({keyword_list.NBR_LINKS})</span> {keyword_list.KEYWORD} <span id="load{keyword_list.ID}"></span>
-									</td>
-									<td style="width:70px;">
-										{keyword_list.TOTAL_VISIT}
-									</td>
-									<td style="width:60px;">
-										{keyword_list.AVERAGE_VISIT}
-									</td>
-									<td style="width:96px;">
-										{keyword_list.LAST_UPDATE}
-									</td>
-									<td style="width:95px;">
-										{keyword_list.TREND}
-									</td>
-								</tr>
-							</tbody>
-						</table>
 						<div id="url{keyword_list.ID}" style="display:none;width:100%;"></div>
 					</td>
 				</tr>
