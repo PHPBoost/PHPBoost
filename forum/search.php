@@ -203,11 +203,12 @@ if (!empty($valid_search) && !empty($search))
 			
 			$Template->assign_block_vars('list', array(
 				'USER_ONLINE' => '<i class="fa ' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'fa-online' : 'fa-offline') . '"></i>',
-				'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg-link-pseudo '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
+				'USER_PSEUDO' => !empty($row['login']) ? '<a class="'.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
 				'CONTENTS' => $contents,
 				'RELEVANCE' => ($relevance > $max_relevance ) ? '100' : NumberHelper::round(($relevance * 100) / $max_relevance, 2),
 				'DATE' => gmdate_format('d/m/y', $row['timestamp']),
-				'U_TITLE'  => '<a class="small" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '#m' . $row['msgid'] . '">' . ucfirst($title) . '</a>'				
+				'U_TITLE'  => '<a class="small" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '#m' . $row['msgid'] . '">' . ucfirst($title) . '</a>',
+				'USER_AVATAR' => '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" class="message-avatar"/>'				
 			));
 			
 			$check_result = true;

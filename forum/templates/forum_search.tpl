@@ -87,14 +87,14 @@
 								<div class="message-pseudo">
 									{list.USER_ONLINE} {list.USER_PSEUDO}
 								</div>
-								<div class="message-level">getLEVEL</div>
-								<img src="/templates/phpboost/images/no_avatar.png" title="getAVATAR" alt="" class="message-avatar">
+								<div class="message-level"></div>
+								{list.USER_AVATAR}
 							</div>
 						
 							<div class="message-container">
 								<div class="message-date">
 									<span class="actions">
-										<a href="#m19980">{L_TOPIC} : {list.U_TITLE}</a> | <span class="smaller">{L_RELEVANCE}: {list.RELEVANCE}%</span>
+										{L_TOPIC} : {list.U_TITLE} | <span class="smaller">{L_RELEVANCE}: {list.RELEVANCE}%</span>
 									</span>
 									<span>{L_ON} : {list.DATE}</span>
 								</div>
