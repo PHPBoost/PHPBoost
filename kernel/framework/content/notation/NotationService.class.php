@@ -67,13 +67,27 @@ class NotationService
 				'L_NO_NOTE' => self::$lang['no_note'],
 			));
 		
-			for ($i = 1; $i <= $notation_scale; $i++)
-			{
-				$decimal = $i - $average_notes;
+			$int = intval($average_notes);
+			$decimal = floatval('0.' . substr($average_notes, strpos($average_notes, '.') + 1));
+
+			for ($i = 1; $i <= $notation->get_notation_scale(); $i++)
+			{				
+				$star_full = false;
+				$star_half = false;
+				$star_empty = false;
+				
+				if ($int >= $i || ($int+1 == $i && $decimal >= 0.75))
+					$star_full = true;
+				else if ($int+1 == $i && $decimal > 0.25 && $decimal < 0.75)
+					$star_half = true;
+				else
+					$star_empty = true;
+				
 				$template->assign_block_vars('star', array(
-					'STAR_EMPTY' => $decimal >= 1,
-					'STAR_HALF' => $decimal <= 0.50 && $decimal > 0,
-					'STAR_FULL' => $average_notes >= $i
+					'I' => $i,
+					'STAR_EMPTY' => $star_empty,
+					'STAR_HALF' => $star_half,
+					'STAR_FULL' => $star_full
 				));
 			}
 			return $template->render();
@@ -102,17 +116,29 @@ class NotationService
 		else
 		{
 			$template = new FileTemplate('framework/content/notation/notation.tpl');
-			
+
 			$average_notes = $notation->get_average_notes();
-						
+			$int = intval($average_notes);
+			$decimal = floatval('0.' . substr($average_notes, strpos($average_notes, '.') + 1));
+
 			for ($i = 1; $i <= $notation->get_notation_scale(); $i++)
-			{
-				$decimal = $i - $average_notes;
+			{				
+				$star_full = false;
+				$star_half = false;
+				$star_empty = false;
+				
+				if ($int >= $i || ($int+1 == $i && $decimal >= 0.75))
+					$star_full = true;
+				else if ($int+1 == $i && $decimal > 0.25 && $decimal < 0.75)
+					$star_half = true;
+				else
+					$star_empty = true;
+				
 				$template->assign_block_vars('star', array(
 					'I' => $i,
-					'STAR_EMPTY' => $decimal >= 1,
-					'STAR_HALF' => $decimal <= 0.50 && $decimal > 0,
-					'STAR_FULL' => $average_notes >= $i
+					'STAR_EMPTY' => $star_empty,
+					'STAR_HALF' => $star_half,
+					'STAR_FULL' => $star_full
 				));
 			}
 
