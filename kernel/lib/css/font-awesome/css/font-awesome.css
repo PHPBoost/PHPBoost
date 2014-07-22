@@ -1600,5 +1600,16 @@
 .fa-offline:before { /* copie user */
 	content: "\f007";
 }
-.fa-table-sort-up:before { content: "\f062"; }
-.fa-table-sort-down:before { content: "\f063"; }
+.fa-table-sort-up:before { /* copie arrow-up */
+	content: "\f062";
+}
+.fa-table-sort-down:before { /* copie arrow-down */
+	content: "\f063";
+}
+
+.fa-trend-up:before { /* copie caret-up */
+	content: "\f0d8";
+}
+.fa-trend-down:before { /* copie caret-down */
+	content: "\f0d7";
+}
