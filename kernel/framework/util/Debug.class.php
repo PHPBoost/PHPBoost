@@ -234,7 +234,7 @@ class Debug
 				':' . ExceptionUtils::get_line($trace) . ' - ' . ExceptionUtils::get_method_prototype($trace) . "\n";
 		}
 		
-		$string_stacktrace .= '[URL] ' . REWRITED_SCRIPT;
+		$string_stacktrace .= '[URL] ' . $_SERVER['REQUEST_URI'];
 
 		if (self::is_output_html())
 		{
