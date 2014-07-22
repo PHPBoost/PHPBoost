@@ -97,8 +97,6 @@ class StatsSaver
 	 */
 	public static function compute_users()
 	{
-		global $stats_array_lang;
-		
 		//Inclusion une fois par jour et par visiteur.
 		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		
@@ -207,15 +205,15 @@ class StatsSaver
 			if (strpos($favorite_lang, '-') !== false)
 				$favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`i', '$1', $favorite_lang);
 			$lang = str_replace(array('en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da'), array('uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk'), $favorite_lang);
+			$lang = substr($lang, 0, 2);
 			
 			if (!empty($lang)) //On ignore ceux qui n'ont pas renseigné le champs.
 			{
 				$wlang = 'other';
-				if (isset($stats_array_lang[$lang]))
+				if (Countries::is_available($lang))
+				{
 					$wlang = $lang;
-				elseif (isset($stats_array_lang[substr($lang, 0, 2)]))
-					$wlang = substr($lang, 0, 2);
-
+				}
 				self::write_stats('lang', $wlang);
 			}
 		}
