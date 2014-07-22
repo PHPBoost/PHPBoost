@@ -49,7 +49,7 @@ class FormConstraintFieldsInequality implements FormConstraint
 		}
 		else
 		{
-			$this->js_message = LangLoader::get_message('fields_must_not_be_equal', 'status-messages-common');
+			$this->js_message = LangLoader::get_message('form.fields_must_not_be_equal', 'status-messages-common');
 		}
 		$this->first_field = $first_field;
 		$this->second_field = $second_field;

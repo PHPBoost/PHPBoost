@@ -37,19 +37,19 @@ $lang['confirm.delete'] = 'Voulez-vous vraiment supprimer cet élément ?';
 $lang['message.success.config'] = 'La configuration a été modifiée';
 
 //Captcha
+$lang['captcha.validation_error'] = 'Le champ de vérification visuel n\'a pas été saisi correctement !';
 $lang['captcha.is_default'] = 'Le captcha que vous souhaitez désinstaller ou désactiver est défini sur le site, veuillez d\'abord sélectionner un autre captcha dans la configuration du contenu.';
 $lang['captcha.last_installed'] = 'Dernier captcha, vous ne pouvez pas le supprimer ou le désactiver. Veuillez d\'abord en installer un autre.';
 
 //Form
-$lang['doesnt_match_regex'] = 'La valeur saisie n\'est pas au bon format';
-$lang['doesnt_match_url_regex'] = 'La valeur saisie doit être une url valide';
-$lang['doesnt_match_mail_regex'] = 'La valeur saisie doit être un mail valide';
-$lang['doesnt_match_length_intervall'] = 'La valeur saisie ne respecte par la longueur définie';
-$lang['doesnt_match_integer_intervall'] = 'La valeur saisie ne respecte pas l\'intervalle définie (:lower_bound <= valeur <= :upper_bound)';
-$lang['has_to_be_filled'] = 'Le champ ":name" doit être renseigné';
-$lang['captcha_validation_error'] = 'Le champ de vérification visuel n\'a pas été saisi correctement !';
-$lang['validation_error'] = 'Veuillez corriger les erreurs du formulaire';
-$lang['fields_must_be_equal'] = 'Les champs ":field1" et ":field2" doivent être égaux';
-$lang['fields_must_not_be_equal'] = 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes';
+$lang['form.doesnt_match_regex'] = 'La valeur saisie n\'est pas au bon format';
+$lang['form.doesnt_match_url_regex'] = 'La valeur saisie doit être une url valide';
+$lang['form.doesnt_match_mail_regex'] = 'La valeur saisie doit être un mail valide';
+$lang['form.doesnt_match_length_intervall'] = 'La valeur saisie ne respecte par la longueur définie';
+$lang['form.doesnt_match_integer_intervall'] = 'La valeur saisie ne respecte pas l\'intervalle définie (:lower_bound <= valeur <= :upper_bound)';
+$lang['form.has_to_be_filled'] = 'Le champ ":name" doit être renseigné';
+$lang['form.validation_error'] = 'Veuillez corriger les erreurs du formulaire';
+$lang['form.fields_must_be_equal'] = 'Les champs ":field1" et ":field2" doivent être égaux';
+$lang['form.fields_must_not_be_equal'] = 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes';
 
 ?>

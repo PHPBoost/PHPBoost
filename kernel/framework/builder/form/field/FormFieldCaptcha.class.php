@@ -93,7 +93,7 @@ class FormFieldCaptcha extends AbstractFormField
         $result = $this->get_value();
         if (!$result)
         {
-            $this->set_validation_error_message(LangLoader::get_message('captcha_validation_error', 'status-messages-common'));
+            $this->set_validation_error_message(LangLoader::get_message('captcha.validation_error', 'status-messages-common'));
         }
         return $result;
     }
