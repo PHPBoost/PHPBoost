@@ -285,6 +285,8 @@ a.wikipedia-link { border-bottom: 1px dotted; }
 .fa-female:before { color: #F49CC4; }
 .fa-online:before { color: #52D132; }
 .fa-offline:before { color: #E05759; }
+.fa-trend-up:before { color: #478948; }
+.fa-trend-down:before { color: #BA4B49; }
 
 li.small-block .fa-stack { height: 2.34em; }
 
