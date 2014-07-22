@@ -39,7 +39,7 @@ class FormFieldConstraintIntegerRange extends AbstractFormFieldConstraint
 	{
 		if (empty($js_message))
 		{
-			$js_message = LangLoader::get_message('doesnt_match_integer_intervall', 'status-messages-common');
+			$js_message = LangLoader::get_message('form.doesnt_match_integer_intervall', 'status-messages-common');
 		}
 		$this->error_message = StringVars::replace_vars($js_message, array('lower_bound' => $lower_bound, 'upper_bound' => $upper_bound));
 		$this->set_validation_error_message($this->error_message);

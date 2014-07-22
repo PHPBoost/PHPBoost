@@ -37,19 +37,19 @@ $lang['confirm.delete'] = 'Do you really want to delete this item ?';
 $lang['message.success.config'] = 'The configuration has been modified';
 
 //Captcha
+$lang['captcha.validation_error'] = 'The visual confirmation field has not been properly filled!';
 $lang['captcha.is_default'] = 'The captcha you want to uninstall or disable is set on your site, you must select another captcha in the content management first.';
 $lang['captcha.last_installed'] = 'Last captcha, you can not delete or disable it. Please install another one first.';
 
 //Form
-$lang['doesnt_match_regex'] = 'The entered value does not fit the proper format';
-$lang['doesnt_match_url_regex'] = 'The entered value has to be a valid url';
-$lang['doesnt_match_mail_regex'] = 'The entered value has to be a valid mail';
-$lang['doesnt_match_length_intervall'] = 'The entered value does not fit the specified length';
-$lang['doesnt_match_integer_intervall'] = 'The entered value does not fit the specified interval (:lower_bound <= value <= :upper_bound)';
-$lang['has_to_be_filled'] = 'The field ":name" has to be filled';
-$lang['captcha_validation_error'] = 'The visual confirmation field has not been properly filled!';
-$lang['validation_error'] = 'Please correct the form errors';
-$lang['fields_must_be_equal'] = 'Fields ":field1" and ":field2" must be equal';
-$lang['fields_must_not_be_equal'] = 'Fields ":field1" and ":field2" must have different values';
+$lang['form.doesnt_match_regex'] = 'The entered value does not fit the proper format';
+$lang['form.doesnt_match_url_regex'] = 'The entered value has to be a valid url';
+$lang['form.doesnt_match_mail_regex'] = 'The entered value has to be a valid mail';
+$lang['form.doesnt_match_length_intervall'] = 'The entered value does not fit the specified length';
+$lang['form.doesnt_match_integer_intervall'] = 'The entered value does not fit the specified interval (:lower_bound <= value <= :upper_bound)';
+$lang['form.has_to_be_filled'] = 'The field ":name" has to be filled';
+$lang['form.validation_error'] = 'Please correct the form errors';
+$lang['form.fields_must_be_equal'] = 'Fields ":field1" and ":field2" must be equal';
+$lang['form.fields_must_not_be_equal'] = 'Fields ":field1" and ":field2" must have different values';
 
 ?>

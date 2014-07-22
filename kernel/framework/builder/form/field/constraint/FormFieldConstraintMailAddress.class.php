@@ -35,7 +35,7 @@ class FormFieldConstraintMailAddress extends FormFieldConstraintRegex
 	{
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('doesnt_match_mail_regex', 'status-messages-common');
+			$error_message = LangLoader::get_message('form.doesnt_match_mail_regex', 'status-messages-common');
 		}
 		$this->set_validation_error_message($error_message);
 		$mail_service = AppContext::get_mail_service();
