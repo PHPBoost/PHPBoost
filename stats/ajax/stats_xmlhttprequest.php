@@ -84,7 +84,7 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 						' . gmdate_format('date_format_short', $row['last_update']) . '
 					</td>
 					<td class="no-separator" style="width:95px;">
-						<i class="fa fa-arrow-' . $trend_img . ' fa-2x"></i> (' . $sign . $trend . '%)
+						<i class="fa fa-trend-' . $trend_img . '"></i> (' . $sign . $trend . '%)
 					</td>
 				</tr>
 			</tbody>
@@ -139,7 +139,7 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
 						' . gmdate_format('date_format_short', $row['last_update']) . '
 					</td>
 					<td class="no-separator" style="width:95px;">
-						<i class="fa fa-arrow-' . $trend_img . ' fa-2x"></i> (' . $sign . $trend . '%)
+						<i class="fa fa-trend-' . $trend_img . '"></i> (' . $sign . $trend . '%)
 					</td>
 				</tr>
 			</tbody>
