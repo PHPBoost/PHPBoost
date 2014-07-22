@@ -69,7 +69,7 @@ class Countries
 	
 	public static function is_available($identifier)
 	{
-		return array_key_exists($identifier, self::$countries_identifier);
+		return in_array($identifier, self::$countries_identifier);
 	}
 	
 	private static function build_countries()
