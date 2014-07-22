@@ -80,31 +80,33 @@
 						<div class="module-top">&nbsp;</div>
 					</div>
 					# ENDIF #
-					# START list #
-					<div class="msg-position" style="width:100%;">
-						<div class="msg-container">
-							<div class="msg-top-row">
-								<div class="msg-pseudo-mbr">
+					<div class="content">
+						# START list #
+						<div class="message">
+							<div class="message-user-infos">
+								<div class="message-pseudo">
 									{list.USER_ONLINE} {list.USER_PSEUDO}
 								</div>
-								<span class="text-strong" style="float:left;">{L_TOPIC}: {list.U_TITLE}</span>
-								<span class="smaller" style="float: right;">{L_ON}: {list.DATE}</span>&nbsp;
+								<div class="message-level">getLEVEL</div>
+								<img src="/templates/phpboost/images/no_avatar.png" title="getAVATAR" alt="" class="message-avatar">
 							</div>
-							<div class="msg-contents-container">
-								<div class="msg-info-mbr">
+						
+							<div class="message-container">
+								<div class="message-date">
+									<span class="actions">
+										<a href="#m19980">{L_TOPIC} : {list.U_TITLE}</a> | <span class="smaller">{L_RELEVANCE}: {list.RELEVANCE}%</span>
+									</span>
+									<span>{L_ON} : {list.DATE}</span>
 								</div>
-								<div class="msg-contents">
-									<div class="msg-contents-overflow">
+								<div class="message-message">
+									<div class="message-content">
 										{list.CONTENTS}
 									</div>
 								</div>
 							</div>
-						</div>	
-						<div class="msg-bottom-l"></div>
-						<div class="msg-bottom-r"></div>
-						<div class="msg-bottom"><span class="smaller">{L_RELEVANCE}: {list.RELEVANCE}%</span></div>
+						</div>
+						# END list #
 					</div>
-					# END list #
 				</form>
 			</div>	
 			<div class="module-bottom-l"></div>
