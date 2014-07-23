@@ -65,19 +65,26 @@ class Robots
 	{
 		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
-		if (strpos($_SERVER['HTTP_USER_AGENT'], 'Google') !== false)
+		if (!empty($_SERVER['HTTP_USER_AGENT']))
 		{
-			return 'Google bot';
+			if (strpos($_SERVER['HTTP_USER_AGENT'], 'Google') !== false)
+			{
+				return 'Google bot';
+			}
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Bing') !== false)
+			{
+				return 'Bing bot';
+			}
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Yahoo') !== false)
+			{
+				return 'Yahoo Slurp';
+			}
+			else
+			{
+				return $_SERVER['HTTP_USER_AGENT'];
+			}
 		}
-		elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Bing') !== false)
-		{
-			return 'Bing bot';
-		}
-		elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Yahoo') !== false)
-		{
-			return 'Yahoo Slurp';
-		}
-		
+
 		return null;
 	}
 	
