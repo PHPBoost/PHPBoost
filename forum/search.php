@@ -208,7 +208,7 @@ if (!empty($valid_search) && !empty($search))
 				'RELEVANCE' => ($relevance > $max_relevance ) ? '100' : NumberHelper::round(($relevance * 100) / $max_relevance, 2),
 				'DATE' => gmdate_format('d/m/y', $row['timestamp']),
 				'U_TITLE'  => '<a class="small" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '#m' . $row['msgid'] . '">' . ucfirst($title) . '</a>',
-				'USER_AVATAR' => '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" class="message-avatar"/>'				
+				'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($row['user_avatar']) ? $row['user_avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" class="message-avatar"/>'
 			));
 			
 			$check_result = true;
