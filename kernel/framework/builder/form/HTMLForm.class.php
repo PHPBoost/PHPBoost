@@ -224,7 +224,8 @@ class HTMLForm
 				return $fieldset->get_field($field_id);
 			}
 		}
-		return null;
+		throw new FormBuilderException('The field "' . $field_id .
+			'" doesn\'t exists in the "' . $this->html_id . '" form');
 	}
 
 	private function get_fieldset_by_id($fieldset_id)
@@ -443,8 +444,11 @@ class HTMLForm
 			$disabled_fieldsets = explode('|', $disabled_fieldsets_str);
 			foreach ($disabled_fieldsets as $fieldset_id)
 			{
-				$fieldset = $this->get_fieldset_by_id(str_replace($this->html_id . '_', '', $fieldset_id));
-				$fieldset->disable();
+				try {
+					$fieldset = $this->get_fieldset_by_id(str_replace($this->html_id . '_', '', $fieldset_id));
+					$fieldset->disable();
+				} catch (FormBuilderException $e) {
+				}
 			}
 		}
 
@@ -455,8 +459,11 @@ class HTMLForm
 			$disabled_fields = explode('|', $disabled_fields_str);
 			foreach ($disabled_fields as $field_id)
 			{
-				$field = $this->get_field_by_id(str_replace($this->html_id . '_', '', $field_id));
-				$field->disable();
+				try {
+					$field = $this->get_field_by_id(str_replace($this->html_id . '_', '', $field_id));
+					$field->disable();
+				} catch (FormBuilderException $e) {
+				}
 			}
 		}
 	}
