@@ -238,6 +238,10 @@ class AppContext
 	 */
 	public static function get_extension_provider_service()
 	{
+		if (self::$extension_provider_service === null)
+		{
+			self::$extension_provider_service = new ExtensionPointProviderService();
+		}
 		return self::$extension_provider_service;
 	}
 
