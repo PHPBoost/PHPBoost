@@ -512,7 +512,7 @@ class KernelSetup
 			'name' => array('type' => 'string', 'length' => 150, 'default' => "''"),
 			'path' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'size' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1),
+			'size' => array('type' => 'float', 'length' => 1, 'notnull' => 1),
 			'type' => array('type' => 'string', 'length' => 10, 'default' => "''"),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
