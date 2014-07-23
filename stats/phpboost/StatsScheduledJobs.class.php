@@ -71,5 +71,14 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 		StatsSaver::update_pages_displayed();
 		StatsSaver::compute_referer();
 	}
+	
+	public function on_new_session($new_visitor, $is_robot)
+	{
+		if ($new_visitor && !$is_robot)
+			StatsSaver::compute_users();
+			
+		if ($is_robot)
+			StatsSaver::register_bot();
+	}
 }
 ?>
