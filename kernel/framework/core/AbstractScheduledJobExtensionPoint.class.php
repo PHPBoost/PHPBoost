@@ -33,5 +33,7 @@ abstract class AbstractScheduledJobExtensionPoint implements ScheduledJobExtensi
 	public function on_changeday(Date $yesterday, Date $today) { }
 	
 	public function on_changepage() { }
+	
+	public function on_new_session($new_visitor, $is_robot) { }
 }
 ?>

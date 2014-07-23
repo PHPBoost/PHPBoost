@@ -40,5 +40,12 @@ interface ScheduledJobExtensionPoint extends ExtensionPoint
 	 * @desc Execute commands to change page.
 	 */
 	function on_changepage();
+	
+	/**
+	 * @desc Execute commands to new session start.
+	 * @param bool $new_visitor true if the new session start with a new visitor
+	 * @param bool $is_robot true if the new session start with a robot visitor
+	 */
+	function on_new_session($new_visitor, $is_robot);
 }
 ?>

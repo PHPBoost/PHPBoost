@@ -177,8 +177,9 @@ class Session
 
 		########Insertion dans le compteur si l'ip est inconnue.########
 		$check_ip = $this->sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VISIT_COUNTER . " WHERE ip = '" . AppContext::get_current_user()->get_ip() . "'", __LINE__, __FILE__);
-		$_include_once = empty($check_ip) && !Robots::is_robot();
-		if ($_include_once)
+		$is_robot = Robots::is_robot();
+		
+		if (empty($check_ip) && !$is_robot)
 		{
 			//Récupération forcée de la valeur du total de visites, car problème de CAST avec postgresql.
 			$this->sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', total = total + 1 WHERE id = 1", __LINE__, __FILE__);
@@ -189,8 +190,12 @@ class Session
 			{
 				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			}
-			
-			StatsSaver::compute_users();
+		}
+		
+		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
+		foreach ($jobs as $job)
+		{
+			$job->on_new_session(empty($check_ip), $is_robot);
 		}
 
 		########Génération d'un ID de session unique########
@@ -217,13 +222,8 @@ class Session
 
 			//Récupération password BDD
 			$password_m = $this->sql->query("SELECT password FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "' AND user_warning < 100 AND '" . time() . "' - user_ban >= 0", __LINE__, __FILE__);
-			if (!empty($password) && (($password === $password_m) || (md5($pwd) === $password_m))) //Succès! => md5 gestion des vieux mdp
+			if (!empty($password) && (($password === $password_m))) //Succès!
 			{
-				if (md5($pwd) === $password_m) // Si le mot de passe est encore stocké en md5, on l'update
-				{
-					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = '" . $password . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-				}
-				
 				if (!array_key_exists('modules_parameters', $this->data))
 				{
 					$this->data['modules_parameters'] = '';
