@@ -763,6 +763,11 @@ abstract class AbstractPlatform
 
 		return 'NUMERIC(' . $columnDef['precision'] . ', ' . $columnDef['scale'] . ')';
 	}
+	
+	public function getFloatTypeDeclarationSql(array $fieldDeclaration)
+    {
+        return 'DOUBLE PRECISION';
+    }
 
 	/**
 	 * Gets the SQL snippet that declares a boolean column.

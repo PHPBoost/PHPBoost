@@ -37,7 +37,8 @@ abstract class Type
         'date' => 'DateType',
         'time' => 'TimeType',
         'decimal' => 'DecimalType',
-        'double' => 'DoubleType'
+        'double' => 'DoubleType',
+    	'float' => 'FloatType',
     );
 
     /* Prevent instantiation and force use of the factory method. */
