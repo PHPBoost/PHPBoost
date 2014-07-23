@@ -55,17 +55,17 @@ class Robots
 		{
 			return $robot_by_ip;
 		}
+		else
+		{
+			return 'unknow_bot';
+		}
 	}
 	
 	private static function detect_robot_by_user_agent()
 	{
 		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
-		if (preg_match('`(w3c|http:\/\/|bot|spider|Gigabot|gigablast.com)+`i', $_SERVER['HTTP_USER_AGENT']))
-		{
-			return 'unknow_bot';
-		}
-		elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Google') !== false)
+		if (strpos($_SERVER['HTTP_USER_AGENT'], 'Google') !== false)
 		{
 			return 'Google bot';
 		}
