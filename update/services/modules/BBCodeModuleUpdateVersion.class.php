@@ -41,6 +41,8 @@ class BBCodeModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$file = new File(Url::to_rel('/' . $this->module_id . '/index.php'));
 		$file->delete();
+		$file = new File(Url::to_rel('/' . $this->module_id . '/formatting/BBCodeHighlighter.class.php'));
+		$file->delete();
 	}
 }
 ?>
