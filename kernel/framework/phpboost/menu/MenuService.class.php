@@ -338,7 +338,7 @@ class MenuService
 						foreach ($menu->get_filters() as $filter) 
 						{
 							$has_filter = ($filter->get_pattern() != '/') ? true : false;
-							$cache_filter .= $filter->get_raw_matcher('REWRITED_SCRIPT') .  ' || ';
+							$cache_filter .= $filter->get_raw_matcher() .  ' || ';
 						}
 						$cache_filter = trim($cache_filter, '|| ');
 						
