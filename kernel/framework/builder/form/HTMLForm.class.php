@@ -162,13 +162,9 @@ class HTMLForm
 	 */
 	public function get_value($field_id, $default_value = null)
 	{
-		$field = $this->get_field_by_id($field_id);
-		if ($field == null)
-		{
-			return $default_value;
-		}
-		else
-		{
+		try {
+			$field = $this->get_field_by_id($field_id);
+			
 			if ($field->is_disabled() && $default_value !== null)
 			{
 				$field->set_value($default_value);
@@ -178,6 +174,8 @@ class HTMLForm
 				throw new FormBuilderDisabledFieldException($field->get_id(), $field->get_value());
 			}
 			return $field->get_value();
+		} catch (FormBuilderException $e) {
+			return $default_value;
 		}
 	}
 	
@@ -189,12 +187,7 @@ class HTMLForm
 	public function field_is_disabled($field_id)
 	{
 		$field = $this->get_field_by_id($field_id);
-		if ($field == null)
-		{
-			throw new FormBuilderException('The field "' . $field_id .
-			'" doesn\'t exists in the "' . $this->html_id . '" form');
-		}
-		elseif ($field->is_disabled())
+		if ($field->is_disabled())
 		{
 			return true;
 		}
