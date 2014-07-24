@@ -587,7 +587,7 @@
 					</td>
 					<td>
 						{referer_list.TREND}
-					</td>						
+					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
@@ -686,9 +686,8 @@
 					<td>
 						{keyword_list.TREND}
 					</td>
-					<td>
 				</tr>
-				</tr>
+				<tr>
 					<td colspan="5">
 						<div id="url{keyword_list.ID}" style="display:none;width:100%;"></div>
 					</td>

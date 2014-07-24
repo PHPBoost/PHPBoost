@@ -693,7 +693,7 @@
 					</td>
 					<td>
 						{keyword_list.TREND}
-					</td>						
+					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
