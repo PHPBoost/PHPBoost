@@ -79,9 +79,17 @@ class Robots
 			{
 				return 'Yahoo Slurp';
 			}
-			else
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Yandex') !== false)
 			{
-				return $_SERVER['HTTP_USER_AGENT'];
+				return 'Yandex';
+			}
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Baidu') !== false)
+			{
+				return 'Baidu';
+			}
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Exabot') !== false)
+			{
+				return 'Exalead';
 			}
 		}
 
