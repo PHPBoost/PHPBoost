@@ -247,6 +247,8 @@ class UpdateServices
 			PersistenceContext::get_dbms_utils()->create_table(PREFIX . 'keywords_relations', $fields);
 		}
 		
+		PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_UPLOAD .' CHANGE size size DOUBLE');
+		
 		$columns = PersistenceContext::get_dbms_utils()->desc_table(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST);
 		if (!isset($columns['default_value']))
 			PersistenceContext::get_querier()->inject('ALTER TABLE '. DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST .' CHANGE default_values default_value TEXT');
@@ -847,7 +849,13 @@ class UpdateServices
 		$file->delete();
 		$file = new File(Url::to_rel('/kernel/framework/phpboost/langs/LangManager.class.php'));
 		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/menu/StringFilter.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/menu/RegexFilter.class.php'));
+		$file->delete();
 		$file = new File(Url::to_rel('/kernel/framework/phpboost/module/css/CssFilesExtensionPointService.class.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/kernel/framework/phpboost/stats/StatsSaver.class.php'));
 		$file->delete();
 		$file = new File(Url::to_rel('/kernel/framework/phpboost/theme/ThemeManager.class.php'));
 		$file->delete();
@@ -881,6 +889,8 @@ class UpdateServices
 	{
 		$file = new File(Url::to_rel('/lang/english/classes/AdminErrorsController404List.php'));
 		$file->delete();
+		$file = new File(Url::to_rel('/lang/english/builder-form-Validator.php'));
+		$file->delete();
 		$file = new File(Url::to_rel('/lang/english/admin-extended-fields-common.php'));
 		$file->delete();
 		$file = new File(Url::to_rel('/lang/english/admin-members-common.php'));
@@ -890,6 +900,8 @@ class UpdateServices
 		$file = new File(Url::to_rel('/lang/english/index.php'));
 		$file->delete();
 		$file = new File(Url::to_rel('/lang/french/classes/AdminErrorsController404List.php'));
+		$file->delete();
+		$file = new File(Url::to_rel('/lang/french/builder-form-Validator.php'));
 		$file->delete();
 		$file = new File(Url::to_rel('/lang/french/admin-extended-fields-common.php'));
 		$file->delete();
