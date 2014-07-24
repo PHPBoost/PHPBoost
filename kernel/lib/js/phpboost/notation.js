@@ -69,25 +69,27 @@
 		
 		$$('#notation-' + id + ' .stars').invoke('insert', {after: '<i id="loading-'+ id +'" class="fa fa-spinner fa-spin"></i>'});
 
-		new Ajax.Request('', {
-			method: 'post',
-			parameters: {'note': note, 'id': id, 'token' : TOKEN},
-			onSuccess: function() {
-				$('loading-' + id).remove();
-				if (NOTATION_USER_CONNECTED == 0) {
-					alert(NOTATION_LANG_AUTH);
+		if (NOTATION_USER_CONNECTED == 0) {
+			alert(NOTATION_LANG_AUTH);
+		} 
+		else {
+			new Ajax.Request('', {
+				method: 'post',
+				parameters: {'note': note, 'id': id, 'token' : TOKEN},
+				onSuccess: function() {
+					$('loading-' + id).remove();
+					if(object.already_post == 1) {
+						alert(NOTATION_LANG_ALREADY_VOTE);
+					}
+					else {
+						object.default_note = note;
+						object.already_post = 1;
+						object.change_picture_status(note);
+						object.change_nbr_note();
+					}
 				}
-				else if(object.already_post == 1) {
-					alert(NOTATION_LANG_ALREADY_VOTE);
-				}
-				else {
-					object.default_note = note;
-					object.already_post = 1;
-					object.change_picture_status(note);
-					object.change_nbr_note();
-				}
-			}
-		});
+			});
+		}
 	},
 	change_picture_status : function (note) {
 		var star_class;
