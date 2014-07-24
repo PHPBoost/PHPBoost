@@ -31,7 +31,8 @@
  * @abstract
  * @package {@package}
  */
-abstract class Filter {
+abstract class Filter 
+{
 	protected $pattern;
 	
 	/**
@@ -53,6 +54,6 @@ abstract class Filter {
 		return $this->pattern = $pattern;
 	}
 	
-	abstract function match($input);
+	abstract function match();
 }
 ?>

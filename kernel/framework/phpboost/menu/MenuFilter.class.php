@@ -32,6 +32,6 @@
  * @package {@package}
  */
 interface MenuFilter {
-	public function get_raw_matcher($input);
+	public function get_raw_matcher();
 }
 ?>
