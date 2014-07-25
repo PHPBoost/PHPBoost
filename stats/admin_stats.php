@@ -64,7 +64,7 @@ else
 
 	if (!empty($_POST['erase'])) //Suppression de robots.txt
 	{
-		$file = new File('../cache/robots.txt');
+		$file = new File('../stats/cache/robots.txt');
 		try
 		{
 			$file->delete();
