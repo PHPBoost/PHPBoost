@@ -55,41 +55,53 @@ class Robots
 		{
 			return $robot_by_ip;
 		}
-		else
-		{
-			return 'unknow_bot';
-		}
 	}
 	
 	private static function detect_robot_by_user_agent()
 	{
-		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 
 		if (!empty($_SERVER['HTTP_USER_AGENT']))
 		{
-			if (strpos($_SERVER['HTTP_USER_AGENT'], 'Google') !== false)
+			if (strpos($_SERVER['HTTP_USER_AGENT'], 'google') !== false)
 			{
-				return 'Google bot';
+				return 'Google';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Bing') !== false)
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'bing') !== false)
 			{
-				return 'Bing bot';
+				return 'Bing';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Yahoo') !== false)
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'yahoo') !== false)
 			{
-				return 'Yahoo Slurp';
+				return 'Yahoo';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Yandex') !== false)
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'yandex') !== false)
 			{
 				return 'Yandex';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Baidu') !== false)
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'baidu') !== false)
 			{
 				return 'Baidu';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Exabot') !== false)
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'exabot') !== false)
 			{
 				return 'Exalead';
+			}
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'voila') !== false)
+			{
+				return 'Voila';
+			}
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'gigablast') !== false)
+			{
+				return 'Gigablast';
+			}
+			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'w3c') !== false)
+			{
+				return 'W3C';
+			}
+			elseif (preg_match('`(http:\/\/|bot|spider|crawl)+`i', $_SERVER['HTTP_USER_AGENT']))
+			{
+				return 'Unknow bot';
 			}
 		}
 
@@ -113,13 +125,13 @@ class Robots
 		);
 		
 		$array_robots = array(
-			'Google bot',
-			'Google bot',
-			'Bing bot',
-			'Bing bot',
-			'Yahoo Slurp',
-			'Yahoo Slurp',
-			'Yahoo Slurp',
+			'Google',
+			'Google',
+			'Bing',
+			'Bing',
+			'Yahoo',
+			'Yahoo',
+			'Yahoo',
 			'Voila',
 			'Gigablast',
 			'Ia archiver',
