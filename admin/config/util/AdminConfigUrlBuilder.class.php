@@ -42,7 +42,7 @@ class AdminConfigUrlBuilder
 	 */
 	public static function advanced_config()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/advanced/');
+		return DispatchManager::get_url(self::$dispatcher, '/advanced/', true);
 	}
 	
 	/*
