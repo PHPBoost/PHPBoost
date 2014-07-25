@@ -46,7 +46,7 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		if (in_array(PREFIX . 'news_cat', $tables))
 			$this->update_cats_table();
 		
-		$this->update_comments();
+		$this->update();
 		$this->delete_old_files();
 	}
 	
@@ -110,9 +110,9 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		}
 	}
 	
-	private function update_comments()
+	private function update()
 	{
-		$result = $this->querier->select('SELECT news.id, news.rewrited_name, news.id_category, cat.rewrited_name AS cat_rewrited_name
+		$result = $this->querier->select('SELECT news.id, news.rewrited_name, news.id_category, news.contents, news.short_contents, cat.rewrited_name AS cat_rewrited_name
 		FROM ' . PREFIX . 'news news
 		JOIN ' . PREFIX . 'news_cats cat ON cat.id = news.id_category
 		JOIN ' . PREFIX . 'comments_topic com ON com.id_in_module = news.id
@@ -120,6 +120,18 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		ORDER BY news.id ASC');
 		while ($row = $result->fetch())
 		{
+			if (!empty($row['short_contents']))
+			{
+				$this->querier->update(PREFIX . 'news',
+					array(
+						'contents' => $row['short_contents'],
+						'short_contents' => $row['contents']
+					), 
+					'WHERE id = :id',
+					array('id' => $row['id'])
+				);
+			}
+			
 			$this->querier->update(PREFIX . 'comments_topic',
 				array('path' => '/news/?url=/'.$row['id_category'].'-'.$row['cat_rewrited_name'].'/'.$row['id'].'-'.$row['rewrited_name']), 
 				'WHERE id_in_module=:id_in_module AND module_id=:module_id',
