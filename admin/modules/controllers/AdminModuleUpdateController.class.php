@@ -37,13 +37,14 @@ class AdminModuleUpdateController extends AdminController
 		$this->init();
 		$this->upload_form();
 		
-		$this->build_view();
 		$this->upgrade_module($request->get_string('module_id', ''));
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->upload_module();
 		}
+		
+		$this->build_view();
 		
 		$this->view->put('UPLOAD_FORM', $this->form->display());
 		
