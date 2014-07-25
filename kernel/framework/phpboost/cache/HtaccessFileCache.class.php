@@ -147,7 +147,7 @@ class HtaccessFileCache implements CacheData
     {
         foreach ($mapping_list->list_mappings() as $mapping)
         {
-            $this->add_rewrite_rule($mapping->from(), $mapping->to());
+            $this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
         }
     }
 
