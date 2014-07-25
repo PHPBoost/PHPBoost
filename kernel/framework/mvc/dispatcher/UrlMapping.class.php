@@ -30,14 +30,16 @@ class UrlMapping
 {	
     private $to;
     private $from;
+    private $options;
 	
 	/**
 	 * @param UrlMapping[] $mappings
 	 */
-	public function __construct($from, $to)
+	public function __construct($from, $to, $options = 'L,QSA')
 	{
         $this->to = $to;
         $this->from = $from;
+        $this->options = $options;
 	}
     
     /**
@@ -54,6 +56,14 @@ class UrlMapping
     public function to()
     {
         return $this->to;
+    }
+    
+	/**
+     * {@inheritdoc}
+     */
+    public function options()
+    {
+        return $this->options;
     }
 }
 ?>
