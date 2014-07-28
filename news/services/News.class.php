@@ -383,7 +383,8 @@ class News
 			'C_DELETE' => $this->is_authorized_delete(),
 			'C_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			
+			'C_AUTHOR_DISPLAYED' => NewsConfig::load()->get_author_displayed(), 
+
 			//News
 			'ID' => $this->id,
 			'NAME' => $this->name,

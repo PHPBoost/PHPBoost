@@ -66,6 +66,7 @@ $lang['admin.config.number_columns_display_news'] = 'Nombre de colonnes pour aff
 $lang['admin.config.display_condensed'] = 'Afficher le condensé de la news et non la news entière';
 $lang['admin.config.number_character_to_cut'] = 'Nombre de caractères pour couper la news';
 $lang['admin.config.news_suggestions_enabled'] = 'Activer l\'affichage des suggestions';
+$lang['admin.config.display_author'] = 'Activer l\'affichage de l\'auteur';
 $lang['admin.config.display_type'] = 'Type d\'affichage des news';
 $lang['admin.config.display_type.block'] = 'Affichage en bloc';
 $lang['admin.config.display_type.list'] = 'Affichage en liste';
