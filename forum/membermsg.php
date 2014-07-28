@@ -100,6 +100,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		
 		$Template->assign_block_vars('list', array(
 			'C_GROUP_COLOR' => !empty($group_color),
+			'C_GUEST' => empty($row['login']),
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'ID' => $row['id'],
