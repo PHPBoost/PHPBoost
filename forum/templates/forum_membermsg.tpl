@@ -18,7 +18,7 @@
 			<div class="msg-container">
 				<div class="msg-top-row">
 					<div class="msg-pseudo-mbr">
-						{list.USER_ONLINE} <a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">{list.USER_PSEUDO}</a>
+						{list.USER_ONLINE} # IF NOT list.C_GUEST #<a class="forum-link-pseudo {list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">{list.USER_PSEUDO}</a># ELSE # {list.USER_PSEUDO} # ENDIF #
 					</div>
 					<span style="float:left;">
 						&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title=""><i class="fa fa-hand-o-right"></i></a> {list.DATE}
