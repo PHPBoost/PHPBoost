@@ -59,49 +59,53 @@ class Robots
 	
 	private static function detect_robot_by_user_agent()
 	{
-		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
+		$user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? mb_strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 
-		if (!empty($_SERVER['HTTP_USER_AGENT']))
+		if (!empty($user_agent))
 		{
-			if (strpos($_SERVER['HTTP_USER_AGENT'], 'google') !== false)
+			if (strpos($user_agent, 'google') !== false)
 			{
 				return 'Google';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'bing') !== false)
+			elseif (strpos($user_agent, 'bing') !== false)
 			{
 				return 'Bing';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'yahoo') !== false)
+			elseif (strpos($user_agent, 'yahoo') !== false)
 			{
 				return 'Yahoo';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'yandex') !== false)
+			elseif (strpos($user_agent, 'yandex') !== false)
 			{
 				return 'Yandex';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'baidu') !== false)
+			elseif (strpos($user_agent, 'baidu') !== false)
 			{
 				return 'Baidu';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'exabot') !== false)
+			elseif (strpos($user_agent, 'exabot') !== false)
 			{
 				return 'Exalead';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'voila') !== false)
+			elseif (strpos($user_agent, 'voila') !== false)
 			{
 				return 'Voila';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'gigablast') !== false)
+			elseif (strpos($user_agent, 'gigablast') !== false)
 			{
 				return 'Gigablast';
 			}
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'w3c') !== false)
+			elseif (strpos($user_agent, 'w3c') !== false)
 			{
 				return 'W3C';
 			}
-			elseif (preg_match('`(http:\/\/|bot|spider|crawl)+`i', $_SERVER['HTTP_USER_AGENT']))
+			elseif (strpos($user_agent, 'ahrefs') !== false)
 			{
-				return 'Unknow bot';
+				return 'Ahrefs';
+			}
+			elseif (preg_match('`(http:\/\/|bot|spider|crawl)+`i', $user_agent))
+			{
+				return 'unknow_bot';
 			}
 		}
 
