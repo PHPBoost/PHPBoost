@@ -25,6 +25,7 @@ div.calendar-top-r { float: right; padding-right: 25px; }
 
 /* Affichage des évenements */
 div.event-display-author {
+	font-size: 10px;
 	float: left;
 	padding-top: 4px;
 	padding-bottom: 4px;
