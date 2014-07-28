@@ -111,6 +111,8 @@ class AdminNewsConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldCheckbox('news_suggestions_enabled', $this->lang['admin.config.news_suggestions_enabled'], $this->config->get_news_suggestions_enabled()));
 		
+		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['admin.config.display_author'], $this->config->get_author_displayed()));
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['admin.config.display_type'], $this->config->get_display_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['admin.config.display_type.block'], NewsConfig::DISPLAY_BLOCK),
@@ -147,6 +149,7 @@ class AdminNewsConfigController extends AdminModuleController
 		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut', $this->config->get_number_character_to_cut()));
 		$this->config->set_comments_enabled($this->form->get_value('comments_enabled'));
 		$this->config->set_news_suggestions_enabled($this->form->get_value('news_suggestions_enabled'));
+		$this->config->set_author_displayed($this->form->get_value('author_displayed'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		NewsConfig::save();

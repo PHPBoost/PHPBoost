@@ -80,8 +80,8 @@ class NewsDisplayCategoryController extends ModuleController
 		
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_PAGINATION' => $pagination->has_several_pages(),
-		
 			'PAGINATION' => $pagination->display(),
+		
 			'C_SEVERAL_COLUMNS' => $number_columns_display_news > 1,
 			'NUMBER_COLUMNS' => $number_columns_display_news
 		));

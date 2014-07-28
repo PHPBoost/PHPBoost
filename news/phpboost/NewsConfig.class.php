@@ -38,6 +38,7 @@ class NewsConfig extends AbstractConfigData
 	
 	const COMMENTS_ENABLED = 'comments_enabled';
 	const NEWS_SUGGESTIONS_ENABLED = 'news_suggestions_enabled';
+	const AUTHOR_DISPLAYED = 'author_displayed';
 
 	const DISPLAY_TYPE = 'display_type';
 	const DISPLAY_BLOCK = 'block';
@@ -105,6 +106,16 @@ class NewsConfig extends AbstractConfigData
 		$this->set_property(self::NEWS_SUGGESTIONS_ENABLED, $news_suggestions_enabled);
 	}
 	
+	public function get_author_displayed()
+	{
+		return $this->get_property(self::AUTHOR_DISPLAYED);
+	}
+
+	public function set_author_displayed($author_displayed)
+	{
+		$this->set_property(self::AUTHOR_DISPLAYED, $author_displayed);
+	}
+	
 	public function get_display_type()
 	{
 		return $this->get_property(self::DISPLAY_TYPE);
@@ -137,6 +148,7 @@ class NewsConfig extends AbstractConfigData
 			self::NUMBER_CHARACTER_TO_CUT => 250,
 			self::COMMENTS_ENABLED => true,
 			self::NEWS_SUGGESTIONS_ENABLED => true,
+			self::AUTHOR_DISPLAYED => true,
 			self::DISPLAY_TYPE => self::DISPLAY_LIST,
 			self::AUTHORIZATIONS => array('r1' => 13, 'r0' => 5, 'r-1' => 1)
 		);
