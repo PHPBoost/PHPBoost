@@ -55,6 +55,7 @@ span.actions a { font-size: 12px; }
 	margin: 0 15px;
 	word-wrap: break-word;
 	overflow: hidden;
+	text-align: justify;
 }
 
 section footer, article footer { margin-bottom: 15px; }

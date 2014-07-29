@@ -43,6 +43,7 @@ span.actions a { font-size: 12px; }
 .content {
 	padding: 0 15px;
 	overflow: hidden;
+	text-align: justify;
 }
 
 section footer,
