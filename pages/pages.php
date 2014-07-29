@@ -29,7 +29,6 @@ require_once('../kernel/begin.php');
 
 $encoded_title = retrieve(GET, 'title', '');
 $id_com = retrieve(GET, 'id', 0);
-$error = retrieve(GET, 'error', '');
 
 include_once('pages_begin.php');
 include_once('pages_functions.php');
@@ -105,8 +104,11 @@ else
 	$auth_index = $User->check_auth($config_authorizations, EDIT_PAGE);
 	if ($auth_index)
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
-	elseif (!$auth_index && empty($error))
-		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_auth'));
+	elseif (!$auth_index)
+	{
+		$error_controller = PHPBoostErrors::user_not_authorized();
+		DispatchManager::redirect($error_controller);
+	}
 }
 require_once('../kernel/header.php');
 
@@ -121,7 +123,10 @@ if (!empty($encoded_title) && $num_rows == 1)
 
 	//Vérification de l'autorisation de voir la page
 	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_PAGE)))
-		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_auth'));
+	{
+		$error_controller = PHPBoostErrors::user_not_authorized();
+		DispatchManager::redirect($error_controller);
+	}
 	
 	$auth = ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE));
 	$Template->put_all(array(
@@ -176,20 +181,29 @@ if (!empty($encoded_title) && $num_rows == 1)
 }
 //Page non trouvée
 elseif ((!empty($encoded_title) || $id_com > 0) && $num_rows == 0)
-	AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_page_not_found'));
+{
+	$error_controller = PHPBoostErrors::unexisting_page();
+	DispatchManager::redirect($error_controller);
+}
 //Commentaires
 elseif ($id_com > 0)
 {
 	//Commentaires activés pour cette page ?
 	if ($page_infos['activ_com'] == 0)
-		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_unactiv_com'));
+	{
+		$controller = new UserErrorController($LANG['error'], $LANG['pages_error_unactiv_com']);
+		$controller->set_error_type(UserErrorController::WARNING);
+	}
 		
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de voir la page
 	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_COM)))
-		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_auth_com'));
+	{
+		$controller = new UserErrorController($LANG['error'], $LANG['pages_error_auth_com']);
+		$controller->set_error_type(UserErrorController::WARNING);
+	}
 	
 	$Template = new FileTemplate('pages/com.tpl');
 	
@@ -201,45 +215,6 @@ elseif ($id_com > 0)
 	));
 	
 	$Template->display();
-}
-//gestionnaire d'erreurs
-elseif (!empty($error))
-{
-	switch ($error)
-	{
-		case 'e_page_not_found' :
-			$error_controller = PHPBoostErrors::unexisting_page();
-   			DispatchManager::redirect($error_controller);
-			break;
-		case 'e_auth' :
-			$error_controller = PHPBoostErrors::user_not_authorized();
-		   	DispatchManager::redirect($error_controller);
-			break;
-		case 'e_auth_com' :
-			$controller = new UserErrorController($LANG['error'], $LANG['pages_error_auth_com']);
-			$controller->set_error_type(UserErrorController::WARNING);
-			DispatchManager::redirect($controller);
-			break;
-		case 'e_unactiv_com' :
-			$controller = new UserErrorController($LANG['error'], $LANG['pages_error_unactiv_com']);
-			$controller->set_error_type(UserErrorController::WARNING);
-			DispatchManager::redirect($controller);
-			break;
-		case 'delete_success' :
-			$controller = new UserErrorController($LANG['success'], $LANG['pages_delete_success']);
-			$controller->set_error_type(UserErrorController::SUCCESS);
-			$controller->set_correction_link($LANG['back'], PATH_TO_ROOT . '/pages/pages.php');
-			DispatchManager::redirect($controller);
-			break;
-		case 'delete_failure' :
-			$controller = new UserErrorController($LANG['error'], $LANG['pages_delete_failure']);
-			$controller->set_error_type(UserErrorController::WARNING);
-			DispatchManager::redirect($controller);
-			break;
-			
-		default :
-			AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error());
-	}
 }
 else
 {
