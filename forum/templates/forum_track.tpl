@@ -105,8 +105,7 @@
 				<span style="float:left;" class="text-strong">
 					&bull; {U_FORUM_CAT}
 				</span>
-				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span># ENDIF #
-				<div class="spacer"></div>
+				# IF C_PAGINATION #<span class="float-right"># INCLUDE PAGINATION #</span><div class="spacer"></div># ENDIF #
 			</div>
 		</div>
 		

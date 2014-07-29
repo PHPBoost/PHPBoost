@@ -308,6 +308,7 @@
 					<a href="move{U_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="fa fa-move" data-confirmation="{L_ALERT_MOVE_TOPIC}"></a>
 					# ENDIF #
 				</span>&nbsp;
+				<div class="spacer"></div>
 			</div>
 		</div>
 		
