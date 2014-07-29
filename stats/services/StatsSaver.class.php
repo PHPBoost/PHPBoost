@@ -42,34 +42,58 @@ class StatsSaver
 		{
 			########### Détection des mots clés ###########
 			$is_search_engine = false;
-			$search_engine = '';
+			$search_engine = $query_param = '';
 			if (!empty($referer['host']))
 			{
-				$array_search = array('google', 'search.live', 'search.msn', 'yahoo', 'exalead', 'altavista', 'lycos', 'ke.voila', 'recherche.aol');
-				foreach ($array_search as $search_engine_check)
-				{	
-					if (strpos($referer['host'], $search_engine_check) !== false)
+				$engines = array(
+					'dmoz'		=> 'q',
+					'aol'		=> 'q',
+					'ask'		=> 'q',
+					'google'	=> 'q',
+					'bing'		=> 'q',
+					'hotbot'	=> 'q',
+					'teoma'		=> 'q',
+					'alltheweb'	=> 'q',
+					'exalead'	=> 'q',
+					'yahoo'		=> 'p',
+					'altavista'	=> 'p',
+					'lycos'		=> 'query',
+					'kanoodle'	=> 'query',
+					'voila'		=> 'kw',
+					'baidu'		=> 'wd',
+					'yandex'	=> 'text'
+				);
+				
+				foreach ($engines as $engine => $param)
+				{
+					if (strpos($referer['host'], $engine) !== false)
 					{
 						$is_search_engine = true;
-						$search_engine = $search_engine_check;
+						$search_engine = $engine;
+						$query_param = $param;
 						break;
 					}
-				}	
+				}
 			}
 
 			if ($is_search_engine)
 			{
-				$query = !empty($referer['query']) ? $referer['query'] : '';
-				$keyword = strtolower(preg_replace('`(?:.*)(?:q|p|query|rdata)=([^&]+)(?:.*)`i', '$1', $query));
-				$keyword = addslashes(str_replace('+', ' ', urldecode($keyword)));
+				$query = !empty($referer['query']) ? $referer['query'] . '&' : '';
 				
-				$check_search_engine = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . StatsSetup::$stats_referer_table . " WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
-				if (!empty($keyword))
+				if (strpos($query, $query_param . '=') !==  false)
 				{
-					if (!empty($check_search_engine))
-						PersistenceContext::get_sql()->query_inject("UPDATE " . StatsSetup::$stats_referer_table . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);			
-					else
-						PersistenceContext::get_sql()->query_inject("INSERT INTO " . StatsSetup::$stats_referer_table . " (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $search_engine . "', '" . $keyword . "', 1, 1, 1, 1, '" . time() . "', 1)", __LINE__, __FILE__);
+					$pattern = "/[?&]{$query_param}=(.*?)&/si";
+					preg_match($pattern, $query, $matches);
+					$keyword = addslashes(urldecode(strtolower($matches[1])));
+					
+					$check_search_engine = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . StatsSetup::$stats_referer_table . " WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
+					if (!empty($keyword))
+					{
+						if (!empty($check_search_engine))
+							PersistenceContext::get_sql()->query_inject("UPDATE " . StatsSetup::$stats_referer_table . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);			
+						else
+							PersistenceContext::get_sql()->query_inject("INSERT INTO " . StatsSetup::$stats_referer_table . " (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $search_engine . "', '" . $keyword . "', 1, 1, 1, 1, '" . time() . "', 1)", __LINE__, __FILE__);
+					}
 				}
 			}
 			elseif (!empty($referer['host']))
@@ -78,7 +102,7 @@ class StatsSaver
 				########### Détection du site de provenance ###########
 				$url = addslashes($referer['scheme'] . '://' . $referer['host']);
 				if (strpos($url, HOST) === false)
-				{				
+				{
 					$referer['path'] = !empty($referer['path']) ? $referer['path'] : '';
 					$relative_url = addslashes(((substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
 					
