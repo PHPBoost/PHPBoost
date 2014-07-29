@@ -71,6 +71,8 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 				$this->querier->inject('ALTER TABLE '. PREFIX .'articles' .' CHANGE '. $old_name .' '. $new_name);
 		}
 		
+		$this->querier->inject('ALTER TABLE '. PREFIX .'articles ADD FULLTEXT KEY `description` (`description`)');
+		
 		if (!isset($columns['rewrited_title']))
 			$this->db_utils->add_column(PREFIX .'articles', 'rewrited_title', array('type' => 'string', 'length' => 250, 'default' => "''"));
 		if (!isset($columns['author_name_displayed']))
