@@ -79,16 +79,6 @@ ul, ol {
 	margin-bottom: 10px;
 }
 
-/* --- Les liens vers wikipedia --- */
-a.wikipedia-link:before {
-	content: url('../../default/images/wikipedia_icon.png');
-	vertical-align: middle;
-	padding-right: 2px;
-}
-
-a.wikipedia-link { border-bottom: 1px dotted; }
-
-
 /* -- Mise en forme du contenu --
 --------------------------------------*/
 

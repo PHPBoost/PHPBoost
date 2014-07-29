@@ -51,16 +51,6 @@ h3.formatter-title { margin-left: 40px; }
 /* Sous titre 2 */
 h4.formatter-title { margin-left: 60px; }
 
-/* --- Les liens vers wikipedia --- */
-a.wikipedia-link:before {
-	content: url('../../default/images/wikipedia_icon.png');
-	vertical-align: middle;
-	padding-right: 2px;
-}
-
-a.wikipedia-link { border-bottom: 1px dotted; }
-
-
 /* -- Mise en forme du contenu --
 --------------------------------------*/
 
