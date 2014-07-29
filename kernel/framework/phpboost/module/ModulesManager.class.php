@@ -234,7 +234,7 @@ class ModulesManager
 		{
 			MenuService::generate_cache();
 			
-			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && self::module_contains_rewrited_rules($module_identifier))
+			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 			{
 				HtaccessFileCache::regenerate();
 			}
@@ -293,7 +293,7 @@ class ModulesManager
 				Feed::clear_cache($module_id);
 	
 				try {
-					if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && self::module_contains_rewrited_rules($module_id))
+					if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 					{
 						HtaccessFileCache::regenerate();
 					}
@@ -366,7 +366,7 @@ class ModulesManager
 						AppContext::get_cache_service()->clear_cache();
 						
 						try {
-							if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && self::module_contains_rewrited_rules($module_identifier))
+							if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 							{
 								HtaccessFileCache::regenerate();
 							}
@@ -463,7 +463,7 @@ class ModulesManager
 			MenuService::generate_cache();
 			Feed::clear_cache($module_id);
 			
-			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && self::module_contains_rewrited_rules($module_id))
+			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 			{
 				HtaccessFileCache::regenerate();
 			}
@@ -521,20 +521,6 @@ class ModulesManager
 	private static function update_class_list()
 	{
 		ClassLoader::generate_classlist();
-	}
-	
-	private static function module_contains_rewrited_rules($module_identifier)
-	{
-		$rewrite_rules = self::get_module($module_identifier)->get_configuration()->get_url_rewrite_rules();
-		if (!empty($rewrite_rules))
-		{
-			return true;
-		}
-		elseif (AppContext::get_extension_provider_service()->provider_exists($module_identifier, UrlMappingsExtensionPoint::EXTENSION_POINT))
-		{
-			return true;
-		}
-		return false;
 	}
 }
 ?>
