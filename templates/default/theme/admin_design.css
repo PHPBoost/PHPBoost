@@ -30,6 +30,7 @@ div#header-admin {
 	display: flex;
 	display: -webkit-flex;
 	display: -ms-flex;
+	display: -ms-flexbox; /* IE10 */
 }
 
 div#site-logo {
@@ -42,16 +43,17 @@ div#site-infos {
 	display: flex;
 	display: -webkit-flex;
 	display: -ms-flex;
+	display: -ms-flexbox; /* IE10 */
 	max-width: 940px;
-	height: 90px;
-	margin: 20px 20px 0px 20px;
+	padding: 20px 20px 0px 20px;
 }
 
 div#site-name-container {
 	margin-top: 10px;
-	flex: 1;
-	-webkit-flex: 1;
-	-ms-flex: 1;
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+	-ms-flex: 1 1 auto;
+	-ms-flexbox: 1 1 auto; /* IE10 */
 	height: 108px;
 	overflow: hidden;
 }
@@ -71,13 +73,13 @@ span#site-slogan {
 	display: block;
 	color: #FFFFFF;
 	font-size: 12px;
-	padding-left: 4px;
+	padding: 4px 0px 0px 4px;
 	letter-spacing: 1.5pt;
 }
 
 div#sub-header-admin {
 	height: 29px;
-	margin-top: 6px;
+	padding-top: 6px;
 }
 
 div#sub-header-admin .dynamic-menu {
