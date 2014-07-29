@@ -48,6 +48,7 @@ p {
 }
 
 pre { white-space: pre-wrap; }
+abbr { border-bottom: 1px dotted black; cursor:help; }
 
 /* Alignements */
 .inline { display: inline !important; }
