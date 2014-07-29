@@ -82,7 +82,7 @@ class StatsSaver
 				
 				if (strpos($query, $query_param . '=') !==  false)
 				{
-					$pattern = "/[?&]{$query_param}=(.*?)&/si";
+					$pattern = '/' . $query_param . '=(.*?)&/si';
 					preg_match($pattern, $query, $matches);
 					$keyword = addslashes(urldecode(strtolower($matches[1])));
 					
