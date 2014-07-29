@@ -66,13 +66,13 @@
 	send_request : function(note) {
 		var id = this.id;
 		var object = this;
-		
-		$$('#notation-' + id + ' .stars').invoke('insert', {after: '<i id="loading-'+ id +'" class="fa fa-spinner fa-spin"></i>'});
 
 		if (NOTATION_USER_CONNECTED == 0) {
 			alert(NOTATION_LANG_AUTH);
 		} 
 		else {
+			$$('#notation-' + id + ' .stars').invoke('insert', {after: '<i id="loading-'+ id +'" class="fa fa-spinner fa-spin"></i>'});
+			
 			new Ajax.Request('', {
 				method: 'post',
 				parameters: {'note': note, 'id': id, 'token' : TOKEN},
