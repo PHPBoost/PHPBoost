@@ -150,7 +150,7 @@ function XMLHttpRequest_preview(field)
 				<div class="bbcode-block-container" style="display:none;" id="bb-block9{FIELD}">
 					<div class="bbcode-block" style="margin-left:260px;" onmouseover="bb_hide_block('9', '{FIELD}', 1);" onmouseout="bb_hide_block('9', '{FIELD}', 0);">
 						<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" name="bb_list{FIELD}" id="bb_list{FIELD}" maxlength="3" value="3"></label></p>
-						<p><label style="font-size:10px;font-weight:normal">{L_ORDERED_LIST} <input size="3" type="checkbox" name="bb_ordered_list{FIELD}" id="bb_ordered_list{FIELD}"></label></p>
+						<p><label style="font-size:10px;font-weight:normal">{L_ORDERED_LIST} <input type="checkbox" name="bb_ordered_list{FIELD}" id="bb_ordered_list{FIELD}"></label></p>
 						<p style="text-align:center;">
 							<a class="small" href="javascript:bbcode_list('{FIELD}');">
 								<i class="fa bbcode-icon-list valign-middle" title="{L_BB_LIST}"></i> {L_INSERT_LIST}
@@ -219,21 +219,21 @@ function XMLHttpRequest_preview(field)
 				<div class="bbcode-block-container" style="display:none;" id="bb-block7{FIELD}">
 					<div id="bbtable{FIELD}" class="bbcode-block" style="margin-left:130px;width:160px;" onmouseover="bb_hide_block('7', '{FIELD}', 1);" onmouseout="bb_hide_block('7', '{FIELD}', 0);">			
 						<div class="form-element">
-							<label class="smaller" for="bb_lines{FIELD}">* {L_LINES}</label>
+							<label class="smaller" for="bb-lines{FIELD}">* {L_LINES}</label>
 							<div class="form-field">
-								<input type="text" maxlength="2" name="bb-lines{FIELD}" id="bb-lines{FIELD}" value="2" class="field-smaller" data-cip-id="bb_lines{FIELD}">
+								<input type="text" maxlength="2" name="bb-lines{FIELD}" id="bb-lines{FIELD}" value="2" class="field-smaller">
 							</div>
 						</div>
 						<div class="form-element">
-							<label class="smaller" for="bb_cols{FIELD}">* {L_COLS}</label>
+							<label class="smaller" for="bb-cols{FIELD}">* {L_COLS}</label>
 							<div class="form-field">
-								<input type="text" maxlength="2" name="bb-cols{FIELD}" id="bb-cols{FIELD}" value="2" class="field-smaller" data-cip-id="bb_cols{FIELD}">
+								<input type="text" maxlength="2" name="bb-cols{FIELD}" id="bb-cols{FIELD}" value="2" class="field-smaller">
 							</div>
 						</div>
 						<div class="form-element">
-							<label class="smaller" for="bb_head{FIELD}">{L_ADD_HEAD}</label>
+							<label class="smaller" for="bb-head{FIELD}">{L_ADD_HEAD}</label>
 							<div class="form-field">
-								<input type="checkbox" name="bb-head{FIELD}" id="bb-head{FIELD}" class="field-smaller" data-cip-id="bb_head{FIELD}">
+								<input type="checkbox" name="bb-head{FIELD}" id="bb-head{FIELD}" class="field-smaller">
 							</div>
 						</div>
 						<div class="bbcode-form-element-text">
