@@ -115,7 +115,7 @@ class HTMLForm
 	
 	private function add_catpcha_protection()
 	{
-		$captcha_protection_fieldset = new FormFieldsetHTML('captcha');
+		$captcha_protection_fieldset = new FormFieldsetHTML('captcha_fieldset');
 		$captcha_protection_fieldset->add_field(new FormFieldCaptcha());
 		$this->add_fieldset($captcha_protection_fieldset);
 	}
