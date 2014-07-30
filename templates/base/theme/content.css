@@ -730,3 +730,27 @@ i.message-announce-track { font-size: 1.6em; }
 
 i.message-announce { color: #D1D2D4; }
 i.message-announce-new { color: #4372AA; }
+
+
+/* Profile User
+--------------------------------------*/
+ul#profil-container {
+	width: 99%;
+	margin: 30px auto;
+	display: flex;
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: -ms-flexbox; /* IE 10 */
+}
+
+ul#profil-container li {
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+	-ms-flex: 1 1 auto;
+	-ms-flexbox: 1 1 auto; /* IE 10 */
+	margin-right: 2px;
+	padding: 10px 2px;
+}
