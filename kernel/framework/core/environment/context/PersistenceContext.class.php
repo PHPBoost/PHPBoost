@@ -68,7 +68,7 @@ class PersistenceContext
     }
 
 	/**
-	 * @deprecated de merde pour toi benoit
+	 * @deprecated
 	 */
 	public static function set_sql($sql)
 	{
