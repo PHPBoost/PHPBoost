@@ -19,7 +19,7 @@
 			<div class="module-contents">
 				<form method="post" action="move{U_MOVE}" onsubmit="javascript:return check_form_move();" class="fieldset-content">
 					<fieldset>
-						<legend>{L_MOVE_SUBJECT} :: {TITLE}</legend>
+						<legend>{L_MOVE_SUBJECT} : {TITLE}</legend>
 						<div class="form-element">
 							<label for="to">{L_CAT}</label>
 							<div class="form-field"><label>

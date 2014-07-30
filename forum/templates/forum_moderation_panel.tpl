@@ -223,7 +223,7 @@
 					<thead>
 						<tr>
 							<th colspan="2">
-								{L_MODERATION_FORUM} :: {L_ALERT_MANAGEMENT} 
+								{L_MODERATION_FORUM} : {L_ALERT_MANAGEMENT} 
 							</th>
 						</tr>
 					</thead>
