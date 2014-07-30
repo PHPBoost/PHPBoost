@@ -336,7 +336,7 @@ a.msg-link-pseudo:hover { color: #F2FBFF; }
 .fa-announce:before,
 .fa-announce-new:before { content: "\f075"; }
 
-.fa-announce-hot:before
+.fa-announce-hot:before,
 .fa-announce-new-hot:before { content: "\f086"; }
 
 .fa-announce-lock:before,
