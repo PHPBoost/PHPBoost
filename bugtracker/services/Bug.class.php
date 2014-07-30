@@ -289,7 +289,7 @@ class Bug
 	{
 		return array(
 			'id' => $this->get_id(),
-			'title' => $this->get_title(),
+			'title' => TextHelper::htmlspecialchars($this->get_title()),
 			'contents' => $this->get_contents(),
 			'author_id' => $this->get_author_user()->get_id(),
 			'submit_date' => $this->get_submit_date() ? $this->get_submit_date()->get_timestamp() : '',
