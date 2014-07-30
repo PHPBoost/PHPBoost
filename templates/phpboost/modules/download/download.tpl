@@ -314,9 +314,9 @@
 					</div>
 					
 				</div>
-				<span itemprop="text">
+				<div itemprop="text">
 					{CONTENTS}
-				</span>
+				</div>
 				<br />
 				{COMMENTS}
 			</div>
