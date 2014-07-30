@@ -734,7 +734,7 @@ i.message-announce-new { color: #4372AA; }
 
 /* Profile User
 --------------------------------------*/
-ul#profil-container {
+ul#profile-container {
 	width: 99%;
 	margin: 30px auto;
 	display: flex;
@@ -743,7 +743,7 @@ ul#profil-container {
 	display: -ms-flexbox; /* IE 10 */
 }
 
-ul#profil-container li {
+ul#profile-container li {
 	justify-content: center;
 	align-items: center;
 	text-align: center;

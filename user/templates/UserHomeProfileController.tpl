@@ -5,7 +5,7 @@
 	<div class="content" >
 		<p style="text-align:center;" class="text-strong">${LangLoader::get_message('welcome', 'main')} {PSEUDO}</p>
 		
-		<ul id="profil-container">
+		<ul id="profile-container">
 			<li class="small-block">
 				<a href="{U_EDIT_PROFILE}" title="">
 					<i class="fa fa-user fa-2x"></i><br/>
