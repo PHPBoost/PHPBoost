@@ -38,7 +38,7 @@
 			# START row #
 				# START row.list_cats #
 					<div style="float:left;width:{row.list_cats.WIDTH}%;text-align:center;margin:20px 0px;">
-						# IF C_CAT_IMG #
+						# IF row.list_cats.C_CAT_IMG #
 							<a href="{row.list_cats.U_CAT}" title="{row.list_cats.IMG_NAME}"><img src="{row.list_cats.SRC}" alt="{row.list_cats.IMG_NAME}" /></a>
 							<br />
 						# ENDIF #
