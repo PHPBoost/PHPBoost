@@ -102,7 +102,7 @@
 						<form action="{PATH_TO_ROOT}/forum/search.php?token={TOKEN}" method="post">
                             <div>
                                 <label><input type="text" size="14" id="search" name="search" placeholder="{L_SEARCH}..."></label>
-                                <button type="submit" name="valid_search"><i class="fa fa-search"></i></button><br/>
+                                <button type="submit" name="valid_search" value="true"><i class="fa fa-search"></i></button><br/>
                                 <a href="{PATH_TO_ROOT}/forum/search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small">{L_ADVANCED_SEARCH}</a>
                                 
                                 <input type="hidden" name="time" value="30000">
