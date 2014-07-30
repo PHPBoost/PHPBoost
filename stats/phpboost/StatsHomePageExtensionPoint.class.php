@@ -950,6 +950,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		elseif ($referer)
 		{
+			include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
+			
 			$nbr_referer = $this->sql_querier->query("SELECT COUNT(DISTINCT(url)) FROM " . StatsSetup::$stats_referer_table . " WHERE type = 0", __LINE__, __FILE__);
 			
 			$page = AppContext::get_request()->get_getint('p', 1);
@@ -970,35 +972,17 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			" . $this->sql_querier->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
-				$average = ($row['total_visit'] / $row['nbr_day']);
-				if ($row['yesterday_visit'] > $average)
-				{
-					$trend_img = 'up';
-					$sign = '+';
-					$trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average) - 100, 1);
-				}
-				elseif ($row['yesterday_visit'] < $average)
-				{
-					$trend_img = 'down';
-					$sign = '-';
-					$trend = NumberHelper::round(100 - (($row['yesterday_visit'] * 100) / $average), 1);
-				}
-				else
-				{
-					$trend_img = 'right';
-					$sign = '+';
-					$trend = 0;
-				}
-					
+				$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
+				
 				$tpl->assign_block_vars('referer_list', array(
 					'ID' => $row['id'],
 					'URL' => $row['url'],
 					'IMG_MORE' => '<a class="fa fa-plus-square-o" style="cursor:pointer;" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 					'NBR_LINKS' => $row['count'],
 					'TOTAL_VISIT' => $row['total_visit'],
-					'AVERAGE_VISIT' => NumberHelper::round($average, 1),
+					'AVERAGE_VISIT' => $trend_parameters['average'],
 					'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-					'TREND' => '<i class="fa fa-trend-' . $trend_img . '"></i> (' . $sign . $trend . '%)'
+					'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 			}
 			$this->sql_querier->query_close($result);
@@ -1018,6 +1002,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		elseif ($keyword)
 		{
+			include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
+			
 			$nbr_keyword = $this->sql_querier->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . StatsSetup::$stats_referer_table . " WHERE type = 1", __LINE__, __FILE__);
 			
 			$page = AppContext::get_request()->get_getint('p', 1);
@@ -1038,39 +1024,21 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			" . $this->sql_querier->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
-				$average = ($row['total_visit'] / $row['nbr_day']);
-				if ($row['yesterday_visit'] > $average)
-				{
-					$trend_img = 'up';
-					$sign = '+';
-					$trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
-				}
-				elseif ($row['yesterday_visit'] < $average)
-				{
-					$trend_img = 'down';
-					$sign = '-';
-					$trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
-				}
-				else
-				{
-					$trend_img = 'right';
-					$sign = '+';
-					$trend = 0;
-				}
-					
+				$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
+				
 				$tpl->assign_block_vars('keyword_list', array(
 					'ID' => $row['id'],
 					'KEYWORD' => $row['relative_url'],
 					'IMG_MORE' => '<a class="fa fa-plus-square-o" style="cursor:pointer;" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 					'NBR_LINKS' => $row['count'],
 					'TOTAL_VISIT' => $row['total_visit'],
-					'AVERAGE_VISIT' => NumberHelper::round($average, 1),
+					'AVERAGE_VISIT' => $trend_parameters['average'],
 					'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-					'TREND' => '<i class="fa fa-trend-' . $trend_img . '"></i> (' . $sign . $trend . '%)'
+					'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 			}
 			$this->sql_querier->query_close($result);
-				
+			
 			$tpl->put_all(array(
 				'C_STATS_KEYWORD' => true,
 				'C_KEYWORDS' => $nbr_keyword,
