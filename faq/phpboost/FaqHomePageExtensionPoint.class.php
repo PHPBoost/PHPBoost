@@ -81,7 +81,9 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 				{
 					if ( $i % $faq_config->get_number_columns() == 1 )
 						$tpl->assign_block_vars('row', array());
+
 					$tpl->assign_block_vars('row.list_cats', array(
+						'C_CAT_IMG' => !empty($value['image']),
 						'ID' => $id,
 						'NAME' => $value['name'],
 						'WIDTH' => floor(100 / (float)$faq_config->get_number_columns()),
@@ -91,12 +93,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 						'U_CAT' => PATH_TO_ROOT . FaqUrlBuilder::get_link_cat($id,$value['name']),
 						'U_ADMIN_CAT' => PATH_TO_ROOT . url('/faq/admin_faq_cats.php?edit=' . $id)
 					));
-					
-					if (!empty($value['image']))
-						$tpl->put_all(array(
-							'C_CAT_IMG' => true
-						));
-						
+										
 					$i++;
 				}
 			}
