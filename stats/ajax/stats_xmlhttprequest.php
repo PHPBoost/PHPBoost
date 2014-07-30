@@ -35,40 +35,24 @@ include_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
+include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
+
 $sql_querier = PersistenceContext::get_sql();
 
 if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 {
-    $idurl = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
-    $url = $sql_querier->query("SELECT url FROM " . StatsSetup::$stats_referer_table . " WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
+	$idurl = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
+	$url = $sql_querier->query("SELECT url FROM " . StatsSetup::$stats_referer_table . " WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
 
-    $result = $sql_querier->query_while("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
+	$result = $sql_querier->query_while("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 	FROM " . PREFIX . "stats_referer
 	WHERE url = '" . addslashes($url) . "' AND type = 0
 	ORDER BY total_visit DESC", __LINE__, __FILE__);
-    while ($row = $sql_querier->fetch_assoc($result))
-    {
-        $average = ($row['total_visit'] / $row['nbr_day']);
-        if ($row['yesterday_visit'] > $average)
-        {
-            $trend_img = 'up';
-            $sign = '+';
-            $trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
-        }
-        elseif ($row['yesterday_visit'] < $average)
-        {
-            $trend_img = 'down';
-            $sign = '-';
-            $trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
-        }
-        else
-        {
-            $trend_img = 'right';
-            $sign = '+';
-            $trend = 0;
-        }
-
-        echo '<table>
+	while ($row = $sql_querier->fetch_assoc($result))
+	{
+		$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
+		
+		echo '<table>
 			<tbody>
 				<tr>
 					<td class="no-separator">
@@ -78,52 +62,34 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 						' . $row['total_visit'] . '
 					</td>
 					<td class="no-separator" style="width:60px;">
-						' . NumberHelper::round($average, 1) . '
+						' . $trend_parameters['average'] . '
 					</td>
 					<td class="no-separator" style="width:96px;">
 						' . gmdate_format('date_format_short', $row['last_update']) . '
 					</td>
 					<td class="no-separator" style="width:95px;">
-						<i class="fa fa-trend-' . $trend_img . '"></i> (' . $sign . $trend . '%)
+						' . ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)
 					</td>
 				</tr>
 			</tbody>
 		</table>';
-    }
-    $sql_querier->query_close($result);
+	}
+	$sql_querier->query_close($result);
 }
 elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le mp.
 {
-    $idkeyword = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
-    $keyword = $sql_querier->query("SELECT relative_url FROM " . StatsSetup::$stats_referer_table . " WHERE id = '" . $idkeyword . "'", __LINE__, __FILE__);
+	$idkeyword = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
+	$keyword = $sql_querier->query("SELECT relative_url FROM " . StatsSetup::$stats_referer_table . " WHERE id = '" . $idkeyword . "'", __LINE__, __FILE__);
 
-    $result = $sql_querier->query_while("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
+	$result = $sql_querier->query_while("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 	FROM " . PREFIX . "stats_referer
 	WHERE relative_url = '" . addslashes($keyword) . "' AND type = 1
 	ORDER BY total_visit DESC", __LINE__, __FILE__);
-    while ($row = $sql_querier->fetch_assoc($result))
-    {
-        $average = ($row['total_visit'] / $row['nbr_day']);
-        if ($row['yesterday_visit'] > $average)
-        {
-            $trend_img = 'up';
-            $sign = '+';
-            $trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
-        }
-        elseif ($row['yesterday_visit'] < $average)
-        {
-            $trend_img = 'down';
-            $sign = '-';
-            $trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
-        }
-        else
-        {
-            $trend_img = 'right';
-            $sign = '+';
-            $trend = 0;
-        }
-
-        echo '<table>
+	while ($row = $sql_querier->fetch_assoc($result))
+	{
+		$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
+		
+		echo '<table>
 			<tbody>
 				<tr>
 					<td class="no-separator">
@@ -133,19 +99,19 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
 						' . $row['total_visit'] . '
 					</td>
 					<td class="no-separator" style="width:60px;">
-						' . NumberHelper::round($average, 1) . '
+						' . $trend_parameters['average'] . '
 					</td>
 					<td class="no-separator" style="width:96px;">
 						' . gmdate_format('date_format_short', $row['last_update']) . '
 					</td>
 					<td class="no-separator" style="width:95px;">
-						<i class="fa fa-trend-' . $trend_img . '"></i> (' . $sign . $trend . '%)
+						' . ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)
 					</td>
 				</tr>
 			</tbody>
 		</table>';
-    }
-    $sql_querier->query_close($result);
+	}
+	$sql_querier->query_close($result);
 }
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');

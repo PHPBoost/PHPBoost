@@ -958,6 +958,8 @@ else
 	}
 	elseif (!empty($referer))
 	{
+		include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
+		
 		$nbr_referer = $Sql->query("SELECT COUNT(DISTINCT(url)) FROM " . StatsSetup::$stats_referer_table . " WHERE type = 0", __LINE__, __FILE__);
 		
 		$page = AppContext::get_request()->get_getint('p', 1);
@@ -978,35 +980,17 @@ else
 		" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$average = ($row['total_visit'] / $row['nbr_day']);
-			if ($row['yesterday_visit'] > $average)
-			{
-				$trend_img = 'up';
-				$sign = '+';
-				$trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
-			}
-			elseif ($row['yesterday_visit'] < $average)
-			{
-				$trend_img = 'down';
-				$sign = '-';
-				$trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
-			}
-			else
-			{
-				$trend_img = 'right';
-				$sign = '+';
-				$trend = 0;
-			}
-				
+			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
+			
 			$Template->assign_block_vars('referer_list', array(
 				'ID' => $row['id'],
 				'URL' => $row['url'],
 				'IMG_MORE' => '<a class="fa fa-plus-square-o" style="cursor:pointer;" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 				'NBR_LINKS' => $row['count'],
 				'TOTAL_VISIT' => $row['total_visit'],
-				'AVERAGE_VISIT' => NumberHelper::round($average, 1),
+				'AVERAGE_VISIT' => $trend_parameters['average'],
 				'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-				'TREND' => '<i class="fa fa-trend-' . $trend_img . '"></i> (' . $sign . $trend . '%)'
+				'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 		}
 		$Sql->query_close($result);
@@ -1026,6 +1010,8 @@ else
 	}
 	elseif (!empty($keyword))
 	{
+		include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
+		
 		$nbr_keyword = $Sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . StatsSetup::$stats_referer_table . " WHERE type = 1", __LINE__, __FILE__);
 		
 		$page = AppContext::get_request()->get_getint('p', 1);
@@ -1046,25 +1032,7 @@ else
 		" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$average = ($row['total_visit'] / $row['nbr_day']);
-			if ($row['yesterday_visit'] > $average)
-			{
-				$trend_img = 'up';
-				$sign = '+';
-				$trend = NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
-			}
-			elseif ($row['yesterday_visit'] < $average)
-			{
-				$trend_img = 'down';
-				$sign = '-';
-				$trend = 100 - NumberHelper::round((($row['yesterday_visit'] * 100) / $average), 1);
-			}
-			else
-			{
-				$trend_img = 'right';
-				$sign = '+';
-				$trend = 0;
-			}
+			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 			
 			$Template->assign_block_vars('keyword_list', array(
 				'ID' => $row['id'],
@@ -1072,9 +1040,9 @@ else
 				'IMG_MORE' => '<a class="fa fa-plus-square-o" style="cursor:pointer;" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
 				'NBR_LINKS' => $row['count'],
 				'TOTAL_VISIT' => $row['total_visit'],
-				'AVERAGE_VISIT' => NumberHelper::round($average, 1),
+				'AVERAGE_VISIT' => $trend_parameters['average'],
 				'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-				'TREND' => '<i class="fa fa-trend-' . $trend_img . '"></i> (' . $sign . $trend . '%)'
+				'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 		}
 		$Sql->query_close($result);
