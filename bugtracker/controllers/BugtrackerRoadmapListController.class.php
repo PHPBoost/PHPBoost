@@ -175,7 +175,7 @@ class BugtrackerRoadmapListController extends ModuleController
 				'C_PAGINATION'					=> $pagination->has_several_pages(),
 				'PAGINATION' 					=> $pagination->display(),
 				'BUGS_COLSPAN' 					=> $bugs_colspan,
-				'SELECT_VERSION'				=> $this->build_form(isset($versions[$roadmap_version]) ? $roadmap_version . '-' . Url::encode_rewrite($versions[$roadmap_version]['name']) : '', $roadmap_status, (int)$bugs_number[$roadmap_status])->display(),
+				'SELECT_VERSION'				=> $this->build_form(isset($versions[$roadmap_version]) ? $roadmap_version . '-' . Url::encode_rewrite($versions[$roadmap_version]['name']) : '', $roadmap_status, (int)$bugs_number[$roadmap_status], isset($versions[$roadmap_version]) ? $versions[$roadmap_version]['release_date'] : 0)->display(),
 				'LEGEND'						=> BugtrackerViews::build_legend($displayed_severities, 'roadmap'),
 				'LINK_BUG_ID_TOP' 				=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/id/top/'. $current_page)->rel(),
 				'LINK_BUG_ID_BOTTOM' 			=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/id/bottom/'. $current_page)->rel(),
@@ -193,7 +193,7 @@ class BugtrackerRoadmapListController extends ModuleController
 		return $this->view;
 	}
 	
-	private function build_form($requested_version, $requested_status, $nbr_bugs)
+	private function build_form($requested_version, $requested_status, $nbr_bugs, $requested_version_release_date = 0)
 	{
 		$form = new HTMLForm('version', '', false);
 		
@@ -208,7 +208,7 @@ class BugtrackerRoadmapListController extends ModuleController
 			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap($requested_version)->rel() .'" + "/" + HTMLForms.getField("status").getValue();')
 		)));
 		
-		$release_date = !empty($requested_version['release_date']) && is_numeric($requested_version['release_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $requested_version['release_date']) : null;
+		$release_date = !empty($requested_version_release_date) && is_numeric($requested_version_release_date) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $requested_version_release_date) : null;
 		
 		$fieldset = new FormFieldsetHorizontal('informations');
 		$form->add_fieldset($fieldset);
