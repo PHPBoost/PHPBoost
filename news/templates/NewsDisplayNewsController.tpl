@@ -32,7 +32,7 @@
 	<div class="content">
 		# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="right" /># ENDIF #
 		
-		<span itemprop="text">{CONTENTS}</span>
+		<div itemprop="text">{CONTENTS}</div>
 	</div>
 	<aside>
 		# IF C_SOURCES #
