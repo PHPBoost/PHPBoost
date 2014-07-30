@@ -22,10 +22,14 @@
 				</div>
 				<div class="module-contents forum-contents">
 					<div class="text_small">{L_EXPLAIN_TRACK}</div>
+				</div>
+			</div>
+			<div class="module-position">
+				<div class="module-contents forum-contents">
 					<table class="module-table forum-table">
 						<thead>
 							<tr class="forum-text-column">
-								<th>{L_TOPIC}</th>
+								<th colspan="3" >{L_TOPIC}</th>
 								<th style="width:100px;">{L_AUTHOR}</th>
 								<th style="width:60px;">{L_MESSAGE}</th>
 								<th style="width:60px;">{L_VIEW}</th>
@@ -35,12 +39,6 @@
 								<th style="width:150px;">{L_LAST_MESSAGE}</th>
 							</tr>
 						</thead>
-					</table>
-				</div>
-			</div>
-			<div class="module-position">
-				<div class="module-contents forum-contents">
-					<table class="module-table forum-table">
 						<tbody>
 							# IF C_NO_TRACKED_TOPICS #
 							<tr>
