@@ -46,7 +46,7 @@
 		# START streams_list #
 		<tr>
 			<td> 
-				<img src="{streams_list.IMAGE}"></img>
+				<img src="{streams_list.IMAGE}" alt="" />
 			</td>
 			<td>
 				{streams_list.NAME}
