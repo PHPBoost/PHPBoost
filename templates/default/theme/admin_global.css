@@ -597,6 +597,7 @@ div.message-helper-small { width: 50%; }
 	position: relative;
 	display: block;
 	text-align: left;
+	overflow: hidden;
 }
 
 .error:before, .notice:before, .warning:before, .success:before, .question:before { 
