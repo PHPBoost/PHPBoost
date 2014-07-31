@@ -22,7 +22,7 @@
 					# ENDIF #
 				</div>
 				<div class="message-level">{messages.L_LEVEL}</div>
-				# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" class="message-avatar" /># ENDIF #
+				# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" alt="" class="message-avatar" /># ENDIF #
 			</div>
 			<div class="message-container">
 				<div class="message-date">
@@ -36,7 +36,7 @@
 					<span>{messages.DATE}</span>
 				</div>
 				<div class="message-message">
-					<div class="message-content" class="content">{messages.MESSAGE}</div>
+					<div class="message-content">{messages.MESSAGE}</div>
 				</div>
 			</div>
 		</article>
