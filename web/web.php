@@ -32,7 +32,7 @@ require_once('../kernel/header.php');
 $tpl = new FileTemplate('web/web.tpl');
 
 if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Contenu du lien.
-{	
+{
 	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
@@ -66,7 +66,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	$comments_topic = new WebCommentsTopic();
 	$tpl->put_all(array(
 		'C_DISPLAY_WEB' => true,
-		'IDWEB' => $web['id'],		
+		'IDWEB' => $web['id'],
 		'NAME' => $web['title'],
 		'CONTENTS' => FormatingHelper::second_parse($web['contents']),
 		'URL' => $web['url'],
@@ -93,7 +93,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		$tpl->put_all(array(
 			'COMMENTS' => $comments_topic->display()->render()
 		));
-	}	
+	}
 }
 elseif (!empty($idcat) && empty($idweb)) //Catégories.
 {
