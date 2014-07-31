@@ -114,7 +114,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2">
+					<th>
 						{L_TEMPLATES}
 					</th>
 				</tr>
@@ -163,7 +163,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2">
+					<th>
 						{L_SEX}
 					</th>
 				</tr>
@@ -340,7 +340,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="{COLSPAN}">
+						<td>
 							{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}
 						</td>
 					</tr>
@@ -384,7 +384,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="3">
+					<th colspan="2">
 						{L_BROWSERS}
 					</th>
 				</tr>
@@ -423,7 +423,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="3">
+					<th colspan="2">
 						{L_OS}
 					</th>
 				</tr>
@@ -462,7 +462,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="3">
+					<th colspan="2">
 						{L_LANG}
 					</th>
 				</tr>
