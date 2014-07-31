@@ -146,7 +146,6 @@ $lang['labels.detected'] = 'Detected';
 $lang['labels.detected_in'] = 'Detected in';
 $lang['labels.fixed'] = 'Fixed';
 $lang['labels.fix_bugs_per_version'] = 'Fixed bugs number per version';
-$lang['labels.release_date'] = 'Release date';
 $lang['labels.not_yet_fixed'] = 'Not yet fixed';
 $lang['labels.alert_fix'] = 'Fix alert';
 $lang['labels.alert_delete'] = 'Delete alert';
