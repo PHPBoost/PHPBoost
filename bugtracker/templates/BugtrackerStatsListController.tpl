@@ -54,15 +54,21 @@
 						{@labels.fields.version}
 					</th>
 					<th>
+						{@labels.fields.version_release_date}
+					</th>
+					<th>
 						{@labels.number_fixed}
 					</th>
 				</tr>
 			</thead>
 			<tbody>
 				# START fixed_version #
-				<tr> 
+				<tr>
 					<td> 
 						{fixed_version.NAME}
+					</td>
+					<td> 
+						{fixed_version.RELEASE_DATE}
 					</td>
 					<td> 
 						# IF C_ROADMAP_ENABLED #<a href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a># ELSE #{fixed_version.NUMBER}# ENDIF #
