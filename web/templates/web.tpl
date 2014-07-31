@@ -48,7 +48,7 @@
 	</header>
 	<div class="content">
 		# IF NO_CAT #
-			<p style="text-align:center;padding:6px;">{NO_CAT}</p>
+			<p class="center">{NO_CAT}</p>
 		# ELSE #
 			<table>
 				<thead>
@@ -91,7 +91,7 @@
 				# ENDIF #
 				<tbody>
 					# START web #
-					<tr>	
+					<tr>
 						<td>
 							<a href="web{web.U_WEB_LINK}">{web.NAME}</a>
 						</td>
