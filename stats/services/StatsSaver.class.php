@@ -82,7 +82,7 @@ class StatsSaver
 				{
 					$pattern = '/' . $query_param . '=(.*?)&/si';
 					preg_match($pattern, $query, $matches);
-					$keyword = addslashes(utf8_decode(urldecode(strtolower($matches[1]))));
+					$keyword = TextHelper::strprotect(utf8_decode(urldecode(strtolower($matches[1]))));
 					
 					$check_search_engine = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . StatsSetup::$stats_referer_table . " WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
 					if (!empty($keyword))
