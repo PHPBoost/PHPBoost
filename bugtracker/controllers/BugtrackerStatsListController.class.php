@@ -73,9 +73,11 @@ class BugtrackerStatsListController extends ModuleController
 		
 		foreach ($bugs_number_per_version as $version_id => $bugs_number)
 		{
+			$release_date = !empty($versions[$version_id]['release_date']) && is_numeric($versions[$version_id]['release_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $versions[$version_id]['release_date']) : null;
+			
 			$this->view->assign_block_vars('fixed_version', array(
 				'NAME'					=> stripslashes($versions[$version_id]['name']),
-				'RELEASE_DATE'			=> !empty($versions[$version_id]['release_date']) ? $versions[$version_id]['release_date'] : $this->lang['notice.not_defined_e_date'],
+				'RELEASE_DATE'			=> !empty($release_date) ? $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['notice.not_defined_e_date'],
 				'LINK_VERSION_ROADMAP'	=> BugtrackerUrlBuilder::roadmap($version_id . '-' . Url::encode_rewrite($versions[$version_id]['name']))->rel(),
 				'NUMBER'				=> $bugs_number['all']
 			));
