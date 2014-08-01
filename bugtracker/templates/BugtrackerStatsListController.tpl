@@ -90,7 +90,7 @@
 <section class="block">
 	<header>
 		<h1>{@labels.top_posters}</h1>
-	<header>
+	</header>
 	<div class="spacer">&nbsp;</div>
 	<div class="content">
 		# IF C_POSTERS #
