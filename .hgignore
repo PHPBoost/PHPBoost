@@ -36,27 +36,14 @@ syntax: regexp
 
 syntax: regexp
 ^update/update_followed\.txt$
-syntax: regexp
-^templates/bluedream$
+
 syntax: regexp
 ^HomeCustom$
-syntax: regexp
-^templates/around_the_world$
-syntax: regexp
-^templates/Cameleon$
-syntax: regexp
-^templates/Hiver$
-syntax: regexp
-^templates/steel_blue$
-syntax: regexp
-^templates/Summerday$
-syntax: regexp
-^templates/Enigma$
-syntax: regexp
-^templates/CrazyRider$
-syntax: regexp
-^templates/test$
-syntax: regexp
-^templates/lorem$
-syntax: regexp
-^templates/underline$
+
+# Ignore le répertoire des thèmes:
+^templates/*
+
+# Sauf les thèmes suivants :
+!/templates/base/*
+!/templates/default/*
+!/templates/phpboost/*
