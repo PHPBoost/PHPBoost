@@ -226,7 +226,7 @@ class StatsSaver
 			$favorite_lang = !empty($user_lang[0]) ? strtolower($user_lang[0]) : '';
 			if (strpos($favorite_lang, '-') !== false)
 				$favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`i', '$1', $favorite_lang);
-			$lang = str_replace(array('en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da'), array('uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk'), $favorite_lang);
+			$lang = str_replace(array('en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da', 'gb'), array('uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk', 'uk'), $favorite_lang);
 			$lang = substr($lang, 0, 2);
 			
 			if (!empty($lang)) //On ignore ceux qui n'ont pas renseigné le champs.
