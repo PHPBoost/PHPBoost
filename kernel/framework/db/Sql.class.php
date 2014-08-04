@@ -145,7 +145,7 @@ class Sql
 	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
 	 * @return resource The MySQL resource corresponding to the result of the query.
 	 */
-	public function query_inject($query, $errline, $errfile)
+	public function query_inject($query)
 	{
 		$this->inject_query_result = $this->inject($query);
 	}
@@ -159,7 +159,7 @@ class Sql
 	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
 	 * @return resource MySQL resource containing the results. You will browse it with the sql_fetch_assoc method.
 	 */
-	public function query_while ($query, $errline, $errfile)
+	public function query_while ($query)
 	{
 		$this->select_query_result = $this->select($query);
 		$this->needs_rewind = true;
@@ -175,7 +175,7 @@ class Sql
 	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
 	 * @return int The rows number of the table.
 	 */
-	public function count_table($table, $errline, $errfile)
+	public function count_table($table)
 	{
 		return PersistenceContext::get_querier()->count($table);
 	}
@@ -531,7 +531,7 @@ class Sql
 	 * @param int $errfile The file in which you call this method. Use the __FILE__ constant.
 	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
 	 */
-	private function _error($query, $errstr, $errline = '', $errfile = '')
+	private function _error($query, $errstr)
 	{	// TODO review this
 	//		//Enregistrement dans le log d'erreur.
 	//		$too_many_connections = strpos($errstr, 'already has more than \'max_user_connections\' active connections') > 0;
