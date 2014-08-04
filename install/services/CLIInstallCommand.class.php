@@ -37,6 +37,7 @@ class CLIInstallCommand implements CLICommand
 	private $website_server = 'http://localhost';
 	private $website_path = '/';
 	private $website_name = 'PHPBoost';
+	private $website_slogan = '';
 	private $website_description = 'PHPBoost command line installation';
 	private $website_locale = 'english';
 	private $website_timezone = 'Europe/Paris';
@@ -87,6 +88,7 @@ class CLIInstallCommand implements CLICommand
 		$this->show_parameter('--ws-server', $this->website_server);
 		$this->show_parameter('--ws-path', $this->website_path);
 		$this->show_parameter('--ws-name', $this->website_name);
+		$this->show_parameter('--ws-name', $this->website_slogan);
 		$this->show_parameter('--ws-desc', $this->website_description);
 		$this->show_parameter('--ws-locale', $this->website_locale);
 		$this->show_parameter('--ws-timezone', $this->website_timezone);
@@ -121,6 +123,7 @@ class CLIInstallCommand implements CLICommand
 		$this->website_server = $this->arg_reader->get('--ws-server', $this->website_server);
 		$this->website_path = $this->arg_reader->get('--ws-path', $this->website_path);
 		$this->website_name = $this->arg_reader->get('--ws-name', $this->website_name);
+		$this->website_slogan = $this->arg_reader->get('--ws-slogan', $this->website_slogan);
 		$this->website_description = $this->arg_reader->get('--ws-desc', $this->website_description);
 		$this->website_locale = $this->arg_reader->get('--ws-locale', $this->website_locale);
 		$this->website_timezone = $this->arg_reader->get('--ws-timezone', $this->website_timezone);
@@ -144,6 +147,7 @@ class CLIInstallCommand implements CLICommand
 		$this->show_parameter('--ws-server', $this->website_server);
 		$this->show_parameter('--ws-path', $this->website_path);
 		$this->show_parameter('--ws-name', $this->website_name);
+		$this->show_parameter('--ws-slogan', $this->website_slogan);
 		$this->show_parameter('--ws-desc', $this->website_description);
 		$this->show_parameter('--ws-locale', $this->website_locale);
 		$this->show_parameter('--ws-timezone', $this->website_timezone);
@@ -180,7 +184,7 @@ class CLIInstallCommand implements CLICommand
 			return false;
 		}
 		CLIOutput::writeln("\t" . 'modules...');
-		if (!$this->installation->configure_website($this->website_server, $this->website_path, $this->website_name,
+		if (!$this->installation->configure_website($this->website_server, $this->website_path, $this->website_name, $this->website_slogan,
 			$this->website_description, '', $this->website_timezone))
 		{
 			return false;
