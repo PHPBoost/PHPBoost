@@ -328,12 +328,12 @@ class News
 		$this->contents = $properties['contents'];
 		$this->short_contents = $properties['short_contents'];
 		$this->approbation_type = $properties['approbation_type'];
-		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['start_date']) : null;
-		$this->end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['end_date']) : null;
+		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['start_date']) : null;
+		$this->end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['end_date']) : null;
 		$this->end_date_enabled = !empty($properties['end_date']);
 		$this->top_list_enabled = (bool)$properties['top_list_enabled'];
-		$this->creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']);
-		$this->updated_date = !empty($properties['updated_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['updated_date']) : null;
+		$this->creation_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['creation_date']);
+		$this->updated_date = !empty($properties['updated_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['updated_date']) : null;
 		$this->picture_url = new Url($properties['picture_url']);
 		$this->sources = !empty($properties['sources']) ? unserialize($properties['sources']) : array();
 

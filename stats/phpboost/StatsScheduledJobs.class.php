@@ -30,9 +30,9 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 	public function on_changeday(Date $yesterday, Date $today)
 	{
 		$result = PersistenceContext::get_querier()->insert(StatsSetup::$stats_table, array(
-			'stats_year' => $yesterday->get_year(TIMEZONE_SYSTEM),
-			'stats_month' => $yesterday->get_month(TIMEZONE_SYSTEM),
-			'stats_day' => $yesterday->get_day(TIMEZONE_SYSTEM),
+			'stats_year' => $yesterday->get_year(Timezone::SERVER_TIMEZONE),
+			'stats_month' => $yesterday->get_month(Timezone::SERVER_TIMEZONE),
+			'stats_day' => $yesterday->get_day(Timezone::SERVER_TIMEZONE),
 			'nbr' => 0, 
 			'pages' => 0, 
 			'pages_detail' => ''

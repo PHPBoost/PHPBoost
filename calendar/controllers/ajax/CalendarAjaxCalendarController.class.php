@@ -126,8 +126,8 @@ class CalendarAjaxCalendarController extends AbstractController
 		
 		foreach ($events as $event)
 		{
-			$start_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $event['start_date']);
-			$end_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $event['end_date']);
+			$start_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $event['start_date']);
+			$end_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $event['end_date']);
 			
 			for ($j = $start_date->get_day() ; $j <= $end_date->get_day() ; $j++)
 			{

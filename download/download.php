@@ -42,8 +42,8 @@ if ($file_id > 0) //Contenu
 	else
 		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 	
- 	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['timestamp']);
- 	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['release_timestamp']);
+ 	$creation_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $download_info['timestamp']);
+ 	$release_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $download_info['release_timestamp']);
 	
 	$Template->put_all(array(
 		'C_DISPLAY_DOWNLOAD' => true,

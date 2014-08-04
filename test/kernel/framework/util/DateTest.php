@@ -10,31 +10,31 @@ class DateTest extends PHPBoostUnitTestCase
 		$date = new Date(DATE_NOW);
 		self::assertEquals(time(), $date->get_timestamp());
 
-		$date = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 17);
-		self::assertEquals('2009', $date->get_year(TIMEZONE_SYSTEM));
-		self::assertEquals('10', $date->get_month(TIMEZONE_SYSTEM));
-		self::assertEquals('17', $date->get_day(TIMEZONE_SYSTEM));
+		$date = new Date(DATE_YEAR_MONTH_DAY, Timezone::SERVER_TIMEZONE, 2009, 10, 17);
+		self::assertEquals('2009', $date->get_year(Timezone::SERVER_TIMEZONE));
+		self::assertEquals('10', $date->get_month(Timezone::SERVER_TIMEZONE));
+		self::assertEquals('17', $date->get_day(Timezone::SERVER_TIMEZONE));
 
-		$date = new Date(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND, TIMEZONE_SYSTEM, 2009, 10, 17, 12, 9, 24);
-		self::assertEquals('2009',$date->get_year(TIMEZONE_SYSTEM));
-		self::assertEquals('10', $date->get_month(TIMEZONE_SYSTEM));
-		self::assertEquals('17', $date->get_day(TIMEZONE_SYSTEM));
-		self::assertEquals('12', $date->get_hours(TIMEZONE_SYSTEM));
+		$date = new Date(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND, Timezone::SERVER_TIMEZONE, 2009, 10, 17, 12, 9, 24);
+		self::assertEquals('2009',$date->get_year(Timezone::SERVER_TIMEZONE));
+		self::assertEquals('10', $date->get_month(Timezone::SERVER_TIMEZONE));
+		self::assertEquals('17', $date->get_day(Timezone::SERVER_TIMEZONE));
+		self::assertEquals('12', $date->get_hours(Timezone::SERVER_TIMEZONE));
 		self::assertEquals('9', $date->get_minutes());
 		self::assertEquals('24', $date->get_seconds());
 
-		$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, 100000);
+		$date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, 100000);
 		self::assertEquals(100000, $date->get_timestamp());
 
-		$date = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, '10/17/2009', 'm/d/y');
-		self::assertEquals('2009', $date->get_year(TIMEZONE_SYSTEM));
-		self::assertEquals('10', $date->get_month(TIMEZONE_SYSTEM));
-		self::assertEquals('17', $date->get_day(TIMEZONE_SYSTEM));
+		$date = new Date(DATE_FROM_STRING, Timezone::SERVER_TIMEZONE, '10/17/2009', 'm/d/y');
+		self::assertEquals('2009', $date->get_year(Timezone::SERVER_TIMEZONE));
+		self::assertEquals('10', $date->get_month(Timezone::SERVER_TIMEZONE));
+		self::assertEquals('17', $date->get_day(Timezone::SERVER_TIMEZONE));
 		
-		$date = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, '2009/10/17', 'y/m/d');
-		self::assertEquals('2009', $date->get_year(TIMEZONE_SYSTEM));
-		self::assertEquals('10', $date->get_month(TIMEZONE_SYSTEM));
-		self::assertEquals('17', $date->get_day(TIMEZONE_SYSTEM));
+		$date = new Date(DATE_FROM_STRING, Timezone::SERVER_TIMEZONE, '2009/10/17', 'y/m/d');
+		self::assertEquals('2009', $date->get_year(Timezone::SERVER_TIMEZONE));
+		self::assertEquals('10', $date->get_month(Timezone::SERVER_TIMEZONE));
+		self::assertEquals('17', $date->get_day(Timezone::SERVER_TIMEZONE));
 	}
 
 	public function test_format()
@@ -98,14 +98,14 @@ class DateTest extends PHPBoostUnitTestCase
 		$date = new Date();
 		$time = time();
 		self::assertEquals($time, $date->get_timestamp());
-		self::assertEquals(date('H', $time), $date->get_hours(TIMEZONE_SYSTEM));
+		self::assertEquals(date('H', $time), $date->get_hours(Timezone::SERVER_TIMEZONE));
 	}
 
 	public function test_set_hours()
 	{
 		$date = new Date();
-		$date->set_hours(3, TIMEZONE_SYSTEM);
-		self::assertEquals(3, $date->get_hours(TIMEZONE_SYSTEM));
+		$date->set_hours(3, Timezone::SERVER_TIMEZONE);
+		self::assertEquals(3, $date->get_hours(Timezone::SERVER_TIMEZONE));
 	}
 
 	public function test_get_minutes()
@@ -148,24 +148,24 @@ class DateTest extends PHPBoostUnitTestCase
 	
 	public function test_is_anterior_to()
 	{
-		$date1 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 17);
-		$date2 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 18);
+		$date1 = new Date(DATE_YEAR_MONTH_DAY, Timezone::SERVER_TIMEZONE, 2009, 10, 17);
+		$date2 = new Date(DATE_YEAR_MONTH_DAY, Timezone::SERVER_TIMEZONE, 2009, 10, 18);
 		self::assertEquals(true, $date1->is_anterior_to($date2));
 		self::assertEquals(false, $date2->is_anterior_to($date1));
 	}
 	
 	public function test_is_posterior_to()
 	{
-		$date1 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 17);
-		$date2 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 18);
+		$date1 = new Date(DATE_YEAR_MONTH_DAY, Timezone::SERVER_TIMEZONE, 2009, 10, 17);
+		$date2 = new Date(DATE_YEAR_MONTH_DAY, Timezone::SERVER_TIMEZONE, 2009, 10, 18);
 		self::assertEquals(true, $date2->is_posterior_to($date1));
 		self::assertEquals(false, $date1->is_posterior_to($date2));
 	}
 	
 	public function test_equals()
 	{
-		$date1 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 17);
-		$date2 = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_SYSTEM, 2009, 10, 18);
+		$date1 = new Date(DATE_YEAR_MONTH_DAY, Timezone::SERVER_TIMEZONE, 2009, 10, 17);
+		$date2 = new Date(DATE_YEAR_MONTH_DAY, Timezone::SERVER_TIMEZONE, 2009, 10, 18);
 		self::assertEquals(false, $date2->equals($date1));
 		self::assertEquals(true, $date1->equals($date1));
 	}

@@ -88,7 +88,7 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
         $tpl = new FileTemplate('download/download_generic_results.tpl');
 
 
-        $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result_data['timestamp']);
+        $date = new Date(DATE_TIMESTAMP, Timezone::USER_TIMEZONE, $result_data['timestamp']);
          //Notes
          
         $notation = new Notation();

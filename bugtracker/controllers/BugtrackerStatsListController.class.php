@@ -73,7 +73,7 @@ class BugtrackerStatsListController extends ModuleController
 		
 		foreach ($bugs_number_per_version as $version_id => $bugs_number)
 		{
-			$release_date = !empty($versions[$version_id]['release_date']) && is_numeric($versions[$version_id]['release_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $versions[$version_id]['release_date']) : null;
+			$release_date = !empty($versions[$version_id]['release_date']) && is_numeric($versions[$version_id]['release_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $versions[$version_id]['release_date']) : null;
 			
 			$this->view->assign_block_vars('fixed_version', array(
 				'NAME'					=> stripslashes($versions[$version_id]['name']),

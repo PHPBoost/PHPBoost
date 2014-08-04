@@ -110,7 +110,7 @@ class Application
 		$pubdate = self::get_attribute($xml_desc, 'pubdate');
 		if (!empty($pubdate))
 		{
-			$this->pubdate = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, $pubdate, 'y/m/d');
+			$this->pubdate = new Date(DATE_FROM_STRING, Timezone::SERVER_TIMEZONE, $pubdate, 'y/m/d');
 		}
 		else
 		{
@@ -254,7 +254,7 @@ class Application
 	/**
 	 * @desc Accessor of Publication Date
 	 */
-	public function get_pubdate() { return !empty($this->pubdate) && is_object($this->pubdate) ? $this->pubdate->format(Date::FORMAT_DAY_MONTH_YEAR, TIMEZONE_USER) : ''; }
+	public function get_pubdate() { return !empty($this->pubdate) && is_object($this->pubdate) ? $this->pubdate->format(Date::FORMAT_DAY_MONTH_YEAR, Timezone::USER_TIMEZONE) : ''; }
 	/**
 	 * @desc Accessor of Priority
 	 */

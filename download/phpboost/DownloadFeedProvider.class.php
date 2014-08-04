@@ -77,7 +77,7 @@ class DownloadFeedProvider implements FeedProvider
 			$item->set_link($link);
 			$item->set_guid($link);
 			$item->set_desc(FormatingHelper::second_parse($row['contents']));
-			$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
+			$item->set_date(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['timestamp']));
 			$item->set_image_url($row['image']);
 			$item->set_auth($cats->compute_heritated_auth($row['idcat'], DOWNLOAD_READ_CAT_AUTH_BIT, Authorizations::AUTH_PARENT_PRIORITY));
 
