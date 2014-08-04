@@ -52,7 +52,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		$this->check_authorizations();
 		
-		global $LANG, $Cache, $User, $auth_write, $Session, $Bread_crumb;
+		global $LANG, $Cache, $User, $auth_write, $Bread_crumb;
 		
 		require_once(PATH_TO_ROOT . '/shoutbox/shoutbox_begin.php');
 		
@@ -75,7 +75,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		$formatter = AppContext::get_content_formatting_service()->create_factory();
 		$formatter->set_forbidden_tags($shoutbox_config->get_forbidden_formatting_tags());
 		
-		$form = new HTMLForm('shoutboxform', PATH_TO_ROOT . '/shoutbox/shoutbox.php?add=1&amp;token=' . $Session->get_token());
+		$form = new HTMLForm('shoutboxform', PATH_TO_ROOT . '/shoutbox/shoutbox.php?add=1&amp;token=' . AppContext::get_session()->get_token());
 		$fieldset = new FormFieldsetHTML('add_msg', $LANG['add_msg']);
 		if (!$User->check_level(User::MEMBER_LEVEL)) //Visiteur
 		{
@@ -141,7 +141,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 				'GROUP_COLOR' => $group_color,
 				'L_LEVEL' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $LANG['banned']),
 				'U_EDIT' => PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?edit=1&amp;id=' . $row['id']),
-				'U_DELETE' => PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+				'U_DELETE' => PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_AVATAR' => $user_avatar
 			));

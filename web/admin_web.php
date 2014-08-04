@@ -209,7 +209,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 }
 elseif ($del && !empty($id)) //Suppresion du lien web.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . PREFIX . "web WHERE id = '" . $id . "'", __LINE__, __FILE__);	

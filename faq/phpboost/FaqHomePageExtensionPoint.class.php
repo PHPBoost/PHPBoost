@@ -52,7 +52,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		$this->check_authorizations();
 		
-		global $Cache, $FAQ_CATS, $LANG, $FAQ_LANG, $id_faq, $User, $auth_write, $Session, $id_question, $faq_config;
+		global $Cache, $FAQ_CATS, $LANG, $FAQ_LANG, $id_faq, $User, $auth_write, $id_question, $faq_config;
 		
 		require_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
@@ -138,7 +138,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 						'QUESTION' => $row['question'],
 						'ANSWER' => FormatingHelper::second_parse($row['answer']),
 						'U_QUESTION' => PATH_TO_ROOT . FaqUrlBuilder::get_link_question($id_faq, $row['id']),
-						'U_DEL' => PATH_TO_ROOT . url('/faq/action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+						'U_DEL' => PATH_TO_ROOT . url('/faq/action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 						'U_DOWN' => PATH_TO_ROOT . url('/faq/action.php?down=' . $row['id']),
 						'U_UP' => PATH_TO_ROOT . url('/faq/action.php?up=' . $row['id']),
 						'U_MOVE' => PATH_TO_ROOT . url('/faq/management.php?move=' . $row['id']),
@@ -161,7 +161,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 						'ANSWER' => FormatingHelper::second_parse($row['answer']),
 						'QUESTION' => $row['question'],
 						'ID' => $row['id'],
-						'U_DEL' => PATH_TO_ROOT . url('/faq/action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+						'U_DEL' => PATH_TO_ROOT . url('/faq/action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 						'U_DOWN' => PATH_TO_ROOT . url('/faq/action.php?down=' . $row['id']),
 						'U_UP' => PATH_TO_ROOT . url('/faq/action.php?up=' . $row['id']),
 						'U_EDIT' => PATH_TO_ROOT . url('/faq/management.php?edit=' . $row['id']),

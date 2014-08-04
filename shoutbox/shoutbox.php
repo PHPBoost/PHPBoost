@@ -94,7 +94,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 	{
 		if ($del_message)
 		{
-			$Session->csrf_get_protect(); //Protection csrf
+			AppContext::get_session()->csrf_get_protect(); //Protection csrf
 			
 			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
@@ -107,7 +107,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			$formatter = AppContext::get_content_formatting_service()->create_factory();
 			$formatter->set_forbidden_tags($config_shoutbox->get_forbidden_formatting_tags());
 	
-			$form = new HTMLForm('shoutboxform', 'shoutbox.php?update=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token());
+			$form = new HTMLForm('shoutboxform', 'shoutbox.php?update=1&amp;id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token());
 			$fieldset = new FormFieldsetHTML('update_msg', $LANG['update_msg']);
 			
 			if ($row['user_id'] == -1) //Visiteur

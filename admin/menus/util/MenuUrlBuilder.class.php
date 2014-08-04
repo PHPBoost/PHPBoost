@@ -55,7 +55,7 @@ class MenuUrlBuilder
 	public static function menu_configuration_create_valid()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/configs/create/valid/?token=' .
-		$Session->get_token());
+		AppContext::get_session()->get_token());
 	}
 	
 	/**
@@ -72,7 +72,7 @@ class MenuUrlBuilder
 	public static function menu_configuration_edit_valid($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/edit/valid/?token=' .
-		$Session->get_token());
+		AppContext::get_session()->get_token());
 	}
 	
 	/**
@@ -81,7 +81,7 @@ class MenuUrlBuilder
 	public static function menu_configuration_edit_delete($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/delete/?token=' .
-		$Session->get_token());
+		AppContext::get_session()->get_token());
 	}
 	
 	/**

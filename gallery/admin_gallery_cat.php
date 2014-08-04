@@ -196,7 +196,7 @@ elseif (!empty($_POST['valid_root'])) //Modification des autorisations de la rac
 }
 elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$Cache->load('gallery');
 	
@@ -512,7 +512,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 }
 elseif (!empty($id) && !empty($move)) //Monter/descendre.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$Cache->load('gallery');
 	

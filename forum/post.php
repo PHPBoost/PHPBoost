@@ -111,7 +111,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		$contents = retrieve(POST, 'contents', '', TSTRING);
 		$post_update = retrieve(POST, 'p_update', '', TSTRING_UNCHANGE);
 
-		$update = !empty($post_update) ? $post_update : url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . $Session->get_token());
+		$update = !empty($post_update) ? $post_update : url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token());
 		$submit = !empty($post_update) ? $LANG['update'] : $LANG['submit'];
 
 		$Template->put_all(array(
@@ -123,7 +123,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
 			'CONTENTS_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 			'C_FORUM_PREVIEW_MSG' => true,
-			'U_ACTION' => 'post.php' . $update . '&amp;token=' . $Session->get_token(),
+			'U_ACTION' => 'post.php' . $update . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_FORUM_CAT' => $forum_cats,
 			'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . ucfirst($topic['title']) . '</a>',
 			'L_REQUIRE' => $LANG['require'],
@@ -285,7 +285,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'CONTENTS_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($contents))),
 				'C_FORUM_PREVIEW_MSG' => true,
 				'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
-				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
+				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_FORUM_CAT' => $forum_cats,
 				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '">' . $title . '</a>',
 				'L_ACTION' => $LANG['forum_edit_subject'],
@@ -355,7 +355,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => $nbr_poll_field,
 				'C_ADD_POLL_FIELD' => true,
-				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
+				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_FORUM_CAT' => $forum_cats,
 				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '" class="basic-button">' . $LANG['post_new_subject'] . '</a>',
 				'L_ACTION' => $LANG['forum_new_subject'],
@@ -595,7 +595,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'C_FORUM_PREVIEW_MSG' => true,
 					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
 					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
-					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . $Session->get_token()),
+					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $title . '</a>',
 					'L_ACTION' => $LANG['forum_edit_subject'],
@@ -669,7 +669,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 						'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
 						'L_EXPLAIN_DISPLAY_MSG_BIS' => $CONFIG_FORUM['explain_display_msg_bis'],
-						'U_ACTION_MSG_DISPLAY' => url('.php?msg_d=1&amp;id=' . $id_get . '&amp;token=' . $Session->get_token())
+						'U_ACTION_MSG_DISPLAY' => url('.php?msg_d=1&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token())
 					));
 				}
 
@@ -712,7 +712,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'NO_DISPLAY_POLL' => !empty($poll['question']) ? 'false' : 'true',
 					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
 					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
-					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . $Session->get_token()),
+					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
 					'L_ACTION' => $LANG['forum_edit_subject'],
@@ -809,7 +809,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => FormatingHelper::unparse($contents),
 					'KERNEL_EDITOR' => $editor->display(),
-					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . $Session->get_token()),
+					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
 					'L_REQUIRE' => $LANG['require'],
@@ -870,7 +870,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'DESC' => $topic['subtitle'],
 				'KERNEL_EDITOR' => $editor->display(),
-				'U_ACTION' => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
+				'U_ACTION' => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 				'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
 				'L_ACTION' => $LANG['respond'],
@@ -949,7 +949,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => $nbr_poll_field,
 				'C_ADD_POLL_FIELD' => true,
-				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
+				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '" class="basic-button">' . $LANG['post_new_subject'] . '</a>',
 				'L_ACTION' => $LANG['forum_new_subject'],

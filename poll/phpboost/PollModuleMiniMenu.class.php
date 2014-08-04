@@ -95,9 +95,8 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 						'U_POLL_RESULT' => url('.php?id=' . $poll_mini['id'] . '&amp;r=1', '-' . $poll_mini['id'] . '-1.php')
 					));
 	
-					global $Session;
 					$tpl->assign_block_vars('question', array(
-						'ID' => url('.php?id=' . $poll_mini['id'] . '&amp;token=' . $Session->get_token(), '-' . $poll_mini['id'] . '.php?token=' . $Session->get_token()),
+						'ID' => url('.php?id=' . $poll_mini['id'] . '&amp;token=' . AppContext::get_session()->get_token(), '-' . $poll_mini['id'] . '.php?token=' . AppContext::get_session()->get_token()),
 						'QUESTION' => $poll_mini['question']
 					));
 	

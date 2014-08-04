@@ -81,7 +81,7 @@ if ($page > 0)
 			'QUESTION' => $row['question'],
 			'CATEGORY' => !empty($row['idcat']) ? $row['name'] : $LANG['root'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-			'U_DEL' => url('action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+			'U_DEL' => url('action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 			'U_EDIT' => url('management.php?edit=' . $row['id']),
 			'U_QUESTION' => url('faq.php?id=' . $row['idcat'] . '&amp;question=' . $row['id'], 'faq-' . $row['idcat'] . '+' . Url::encode_rewrite($row['name']) . '.php?question=' . $row['id']) . '#q' . $row['id'],
 			'U_CATEGORY' => !empty($row['idcat']) ? url('faq.php?id=' . $row['idcat'], 'faq-' . $row['idcat'] . '+' . Url::encode_rewrite($row['name']) . '.php') : url('faq.php')

@@ -32,7 +32,7 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']))
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$question = retrieve(POST, 'question', '');
 	$type = retrieve(POST, 'type', 1);

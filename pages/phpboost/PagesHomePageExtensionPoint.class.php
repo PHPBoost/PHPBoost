@@ -50,7 +50,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $User, $Cache, $Bread_crumb, $_PAGES_CATS, $PAGES_LANG, $LANG, $Session, $pages;
+		global $User, $Cache, $Bread_crumb, $_PAGES_CATS, $PAGES_LANG, $LANG, $pages;
 		
 		$pages_config = PagesConfig::load();
 		

@@ -122,7 +122,7 @@ elseif ($id_to_update > 0)
 elseif ($id_to_delete > 0)
 {
 	//Vérification de la validité du jeton
-    $Session->csrf_get_protect();
+    AppContext::get_session()->csrf_get_protect();
 	
 	$contribution = new Contribution();
 	
@@ -220,7 +220,7 @@ if ($contribution_id > 0)
 		'L_DELETE' => $LANG['delete'],
 		'L_UPDATE' => $LANG['update'],
 		'U_UPDATE' => url('contribution_panel.php?edit=' . $contribution_id),
-		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id . '&amp;token=' . $Session->get_token())
+		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id . '&amp;token=' . AppContext::get_session()->get_token())
 	));
 }
 //Modification d'une contribution
@@ -248,7 +248,7 @@ elseif ($id_update > 0)
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
-		'U_TARGET' => url('contribution_panel.php?token=' . $Session->get_token())
+		'U_TARGET' => url('contribution_panel.php?token=' . AppContext::get_session()->get_token())
 	));
 }
 else

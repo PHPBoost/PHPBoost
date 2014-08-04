@@ -180,7 +180,7 @@ if (!empty($contents))
 elseif ($del_article > 0)
 {
     //Vérification de la validité du jeton
-    $Session->csrf_get_protect();
+    AppContext::get_session()->csrf_get_protect();
     
 	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link', "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 	
@@ -326,7 +326,7 @@ $Template->put_all(array(
 	'L_PREVIEWING' => $LANG['pages_previewing'],
 	'L_CONTENTS_PART' => $LANG['pages_contents_part'],
 	'L_SUBMIT' => $id_edit > 0 ? $LANG['update'] : $LANG['submit'],
-	'TARGET' => url('post.php?token=' . $Session->get_token())
+	'TARGET' => url('post.php?token=' . AppContext::get_session()->get_token())
 ));
 
 $Template->display();

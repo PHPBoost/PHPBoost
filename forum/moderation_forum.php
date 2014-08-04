@@ -136,8 +136,8 @@ if ($action == 'alert') //Gestion des alertes
 		'L_FORUM' => $LANG['forum'],
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_ALERT' => $LANG['alert_management'],
-		'U_MODERATION_FORUM_ACTION' => '&raquo; <a href="moderation_forum.php'. url('?action=alert&amp;token=' . $Session->get_token()) . '">' . $LANG['alert_management'] . '</a>',
-		'U_ACTION_ALERT' => url('.php?action=alert&amp;del=1&amp;' . $Session->get_token())
+		'U_MODERATION_FORUM_ACTION' => '&raquo; <a href="moderation_forum.php'. url('?action=alert&amp;token=' . AppContext::get_session()->get_token()) . '">' . $LANG['alert_management'] . '</a>',
+		'U_ACTION_ALERT' => url('.php?action=alert&amp;del=1&amp;' . AppContext::get_session()->get_token())
 	));
 
 	if (empty($id_get)) //On liste les alertes
@@ -257,7 +257,7 @@ if ($action == 'alert') //Gestion des alertes
 				'TIME' => gmdate_format('date_format', $row['timestamp']),
 				'CAT' => '<a href="forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($CAT_FORUM[$row['idcat']]['name']) . '.php') . '">' . $CAT_FORUM[$row['idcat']]['name'] . '</a>',
 				'C_FORUM_ALERT_LIST' => true,
-				'U_CHANGE_STATUS' => ($row['status'] == '0') ? 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=1&amp;token=' . $Session->get_token()) : 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=0&amp;token=' . $Session->get_token()),
+				'U_CHANGE_STATUS' => ($row['status'] == '0') ? 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=1&amp;token=' . AppContext::get_session()->get_token()) : 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=0&amp;token=' . AppContext::get_session()->get_token()),
 				'L_CHANGE_STATUS' => ($row['status'] == '0') ? $LANG['change_status_to_1'] : $LANG['change_status_to_0'],
 				'L_TITLE' => $LANG['alert_title'],
 				'L_TOPIC' => $LANG['alert_concerned_topic'],
@@ -316,8 +316,8 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
 		'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
 		'U_XMLHTTPREQUEST' => 'punish_moderation_panel',
-		'U_MODERATION_FORUM_ACTION' => '&raquo; <a href="moderation_forum.php' . url('?action=punish&amp;token=' . $Session->get_token()) . '">' .$LANG['punishment_management'] . '</a>',
-		'U_ACTION' => url('.php?action=punish&amp;token=' . $Session->get_token())
+		'U_MODERATION_FORUM_ACTION' => '&raquo; <a href="moderation_forum.php' . url('?action=punish&amp;token=' . AppContext::get_session()->get_token()) . '">' .$LANG['punishment_management'] . '</a>',
+		'U_ACTION' => url('.php?action=punish&amp;token=' . AppContext::get_session()->get_token())
 	));
 
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -360,7 +360,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 				'GROUP_COLOR' => $group_color,
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id'] . '&amp;token=' . $Session->get_token()) . '" class="fa fa-lock"></a>',
+				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" class="fa fa-lock"></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
 
@@ -450,7 +450,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO' => $LANG['submit'],
 			'U_PM' => UserUrlBuilder::personnal_message($id_get)->rel(),
-			'U_ACTION_INFO' => url('.php?action=punish&amp;id=' . $id_get . '&amp;token=' . $Session->get_token())
+			'U_ACTION_INFO' => url('.php?action=punish&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token())
 		));
 	}
 }
@@ -506,8 +506,8 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
 		'L_INFO_MANAGEMENT' => $LANG['warning_management'],
 		'U_XMLHTTPREQUEST' => 'warning_moderation_panel',
-		'U_MODERATION_FORUM_ACTION' => '&raquo; <a href="moderation_forum.php' . url('?action=warning&amp;token=' . $Session->get_token()) . '">' . $LANG['warning_management'] . '</a>',
-		'U_ACTION' => url('.php?action=warning&amp;token=' . $Session->get_token())
+		'U_MODERATION_FORUM_ACTION' => '&raquo; <a href="moderation_forum.php' . url('?action=warning&amp;token=' . AppContext::get_session()->get_token()) . '">' . $LANG['warning_management'] . '</a>',
+		'U_ACTION' => url('.php?action=warning&amp;token=' . AppContext::get_session()->get_token())
 	));
 
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -548,7 +548,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				'INFO' => $row['user_warning'] . '%',
-				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=warning&amp;id=' . $row['user_id'] . '&amp;token=' . $Session->get_token()) . '" class="fa fa-warning"></a>',
+				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=warning&amp;id=' . $row['user_id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" class="fa fa-warning"></a>',
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel()
 			));
@@ -592,7 +592,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
 			'REGEX'=> '/ [0-9]+%/',
-			'U_ACTION_INFO' => url('.php?action=warning&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
+			'U_ACTION_INFO' => url('.php?action=warning&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_warning_explain'],
@@ -615,7 +615,7 @@ else //Panneau de modération
 
 	$Template->put_all(array(
 		'C_FORUM_MODO_MAIN' => true,
-		'U_ACTION_HISTORY' => url('.php?del_h=1&amp;token=' . $Session->get_token()),
+		'U_ACTION_HISTORY' => url('.php?del_h=1&amp;token=' . AppContext::get_session()->get_token()),
 		'U_MORE_ACTION' => !empty($get_more) ? url('.php?more=' . ($get_more + 100)) : url('.php?more=100')
 	));
 

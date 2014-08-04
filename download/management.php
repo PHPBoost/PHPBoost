@@ -49,7 +49,7 @@ $selected_cat = retrieve(GET, 'idcat', 0);
 $delete_file = retrieve(GET, 'del', 0);
 
 if ($delete_file || ($submit && ($add_file || $edit_file_id > 0)))
-    $Session->csrf_get_protect();
+    AppContext::get_session()->csrf_get_protect();
 
 //Form variables
 $file_title = retrieve(POST, 'title', '');
@@ -81,7 +81,7 @@ $end_date = MiniCalendar::retrieve_date('end_date');
 if ($delete_file > 0)
 {
     //Vérification de la valiité du jeton
-    $Session->csrf_get_protect();
+    AppContext::get_session()->csrf_get_protect();
 	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
 	if (empty($file_infos['title']))
 		AppContext::get_response()->redirect(HOST. DIR . url('/download/download.php'));
@@ -441,7 +441,7 @@ if ($edit_file_id > 0)
 			'APPROVED' => $file_infos['approved'] ? ' checked="checked"' : '',
 		    'FORCE_DOWNLOAD_SELECTED' => $file_infos['force_download'] == DOWNLOAD_FORCE_DL ? ' selected="selected"' : '',
 			'REDIRECTION_SELECTED' => $file_infos['force_download'] == DOWNLOAD_REDIRECT ? ' selected="selected"' : '',
-			'U_TARGET' => url('management.php?edit=' . $edit_file_id . '&amp;token=' . $Session->get_token())
+			'U_TARGET' => url('management.php?edit=' . $edit_file_id . '&amp;token=' . AppContext::get_session()->get_token())
 		));
 	}
 }
@@ -686,7 +686,7 @@ else
 			'APPROVED' => $file_approved ? ' checked="checked"' : '',
 			'FORCE_DOWNLOAD_SELECTED' => ' selected="selected"',
 			'REDIRECTION_SELECTED' => ' selected="selected"',
-			'U_TARGET' => url('management.php?new=1&amp;token=' . $Session->get_token())
+			'U_TARGET' => url('management.php?new=1&amp;token=' . AppContext::get_session()->get_token())
 		));
 	}
 	

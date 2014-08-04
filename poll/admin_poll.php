@@ -42,7 +42,7 @@ $config_displayed_in_mini_module_list = $poll_config->get_displayed_in_mini_modu
 
 if ($del && !empty($id)) //Suppresion poll
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$Cache->load('poll');
 	
@@ -65,7 +65,7 @@ if ($del && !empty($id)) //Suppresion poll
 }
 elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$Cache->load('poll');
 	

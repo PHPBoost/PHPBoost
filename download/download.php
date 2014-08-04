@@ -72,7 +72,7 @@ if ($file_id > 0) //Contenu
 		'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
 		'L_DEADLINK' => $DOWNLOAD_LANG['deadlink'],
 		'U_EDIT_FILE' => url('management.php?edit=' . $file_id),
-		'U_DELETE_FILE' => url('management.php?del=' . $file_id . '&amp;token=' . $Session->get_token()),
+		'U_DELETE_FILE' => url('management.php?del=' . $file_id . '&amp;token=' . AppContext::get_session()->get_token()),
 		'U_DOWNLOAD_FILE' => url('count.php?id=' . $file_id, 'file-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php'),
 		'U_DEADLINK' => url('download.php?id=' . $file_id . '&deadlink=1')
 	));

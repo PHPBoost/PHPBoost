@@ -222,7 +222,7 @@ if ($action == 'punish')
 			'document.getElementById(\'action_info\').innerHTML = replace_value;',
 			'REGEX'=> '/[0-9]+ [a-zéèêA-Z]+/',
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
-			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('punish', $id_get)->rel() . '&amp;token=' . $Session->get_token(),
+			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('punish', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PROFILE' => UserUrlBuilder::profile($id_get)->rel(),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
@@ -267,7 +267,7 @@ else if ($action == 'warning')
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['warning_management'],
 		'U_XMLHTTPREQUEST' => 'warning_user',
-		'U_ACTION' => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . $Session->get_token()
+		'U_ACTION' => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . AppContext::get_session()->get_token()
 	));
 	
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -352,7 +352,7 @@ else if ($action == 'warning')
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
 			'REGEX'=> '/ [0-9]+%/',
-			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('warning', $id_get)->rel() . '&amp;token=' . $Session->get_token(),
+			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('warning', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PM' => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_PROFILE' => UserUrlBuilder::profile($id_get)->rel(),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
@@ -388,7 +388,7 @@ else
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['ban_management'],
 		'U_XMLHTTPREQUEST' => 'ban_user',
-		'U_ACTION' => UserUrlBuilder::moderation_panel('ban')->rel() . '&amp;token=' . $Session->get_token()
+		'U_ACTION' => UserUrlBuilder::moderation_panel('ban')->rel() . '&amp;token=' . AppContext::get_session()->get_token()
 	));
 	
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -458,7 +458,7 @@ else
 			'USER_GROUP_COLOR' => $group_color,
 			'KERNEL_EDITOR' => $editor->display(),
 			'U_PM' => UserUrlBuilder::personnal_message($id_get)->rel(),
-			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('ban', $id_get)->rel() . '&amp;token=' . $Session->get_token(),
+			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('ban', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PROFILE' => UserUrlBuilder::profile($id_get)->rel(),
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_LOGIN' => $LANG['pseudo'],

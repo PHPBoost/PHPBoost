@@ -227,7 +227,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 elseif ($del_redirection > 0)//Supprimer une redirection
 {
     //Vérification de la validité du jeton
-    $Session->csrf_get_protect();
+    AppContext::get_session()->csrf_get_protect();
     
 	$is_redirection = $Sql->query("SELECT redirect FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_redirection . "'", __LINE__, __FILE__);
 	if ($is_redirection > 0)
@@ -306,7 +306,7 @@ elseif (!empty($restore)) //on restaure un ancien article
 elseif ($del_archive > 0)
 {
     //Vérification de la validité du jeton
-    $Session->csrf_get_protect();
+    AppContext::get_session()->csrf_get_protect();
     
 	$contents_infos = $Sql->query_array(PREFIX . "wiki_contents", "activ", "id_article", "WHERE id_contents = '" . $del_archive . "'", __LINE__, __FILE__);
 	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "auth", "WHERE id = '" . $contents_infos['id_article'] . "'", __LINE__, __FILE__);
@@ -328,7 +328,7 @@ elseif ($del_archive > 0)
 elseif ($del_article > 0) //Suppression d'un article
 {
     //Vérification de la validité du jeton
-    $Session->csrf_get_protect();
+    AppContext::get_session()->csrf_get_protect();
     
 	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "auth", "encoded_title", "id_cat", "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 	

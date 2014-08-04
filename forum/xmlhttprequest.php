@@ -109,7 +109,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 }
 elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	//Instanciation de la class du forum.
 	$Forumfct = new Forum();
@@ -183,7 +183,7 @@ elseif (!empty($untrack_mail) && $User->check_level(User::MEMBER_LEVEL)) //Retra
 }
 elseif (!empty($msg_d))
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	//Vérification de l'appartenance du sujet au membres, ou modo.
 	$topic = $Sql->query_array(PREFIX . "forum_topics", "idcat", "user_id", "display_msg", "WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);

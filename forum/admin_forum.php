@@ -122,7 +122,7 @@ if (!empty($_POST['valid']) && !empty($id))
 }
 elseif (!empty($del)) //Suppression de la cat�gorie/sous-cat�gorie.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$Cache->load('forum');
 	$confirm_delete = false;
@@ -235,7 +235,7 @@ elseif (!empty($del)) //Suppression de la cat�gorie/sous-cat�gorie.
 }
 elseif (!empty($id) && !empty($move)) //Monter/descendre.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$Cache->load('forum');
 

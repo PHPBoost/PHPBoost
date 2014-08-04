@@ -93,7 +93,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 }
 elseif (!empty($del_folder)) //Supprime un dossier.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	//Suppression du dossier et de tout le contenu	
 	Uploads::Del_folder($del_folder);
@@ -105,7 +105,7 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 }
 elseif (!empty($empty_folder)) //Vide un dossier membre.
 {
-	$Session->csrf_get_protect(); //Protection csrf.
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf.
 	
 	//Suppression de tout les dossiers enfants.
 	Uploads::Empty_folder_member($empty_folder);
@@ -114,7 +114,7 @@ elseif (!empty($empty_folder)) //Vide un dossier membre.
 }
 elseif (!empty($del_file)) //Suppression d'un fichier
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	//Suppression d'un fichier.
 	Uploads::Del_file($del_file, -1, Uploads::ADMIN_NO_CHECK);
@@ -123,7 +123,7 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 }
 elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 	$move_list_parent = array();
@@ -148,7 +148,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 }
 elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	Uploads::Move_file($move_file, $to, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
 	
@@ -220,7 +220,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$template->put_all(array(
 			'SELECTED_CAT' => $id_cat,
 			'ID_FILE' => $move_folder,
-			'TARGET' => url('admin_files.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . $Session->get_token())
+			'TARGET' => url('admin_files.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token())
 		));
 		$cat_explorer = display_cat_explorer($id_cat, $cats, 1, $folder_member);
 	}
@@ -258,7 +258,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		));
 		$template->put_all(array(
 			'SELECTED_CAT' => $info_move['idcat'],
-			'TARGET' => url('admin_files.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . $Session->get_token())
+			'TARGET' => url('admin_files.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token())
 		));
 	}
 	

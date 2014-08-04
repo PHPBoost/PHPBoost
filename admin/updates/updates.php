@@ -40,7 +40,7 @@ if (!in_array($update_type, array('', 'kernel', 'module', 'template')))
 
 if ($check_updates === true)
 {
-	$Session->csrf_get_protect();
+	AppContext::get_session()->csrf_get_protect();
 	new Updates();
 	AppContext::get_response()->redirect('updates.php' . (!empty($update_type) ? '?type=' . $update_type : ''));
 }
@@ -144,7 +144,7 @@ $tpl->put_all(array(
 	'L_MODULES' => $LANG['modules'],
 	'L_THEMES' => $LANG['themes'],
 	'C_UPDATES' => $updates_availables,
-	'U_CHECK' => 'updates.php?check=1' . (!empty($update_type) ? '&amp;type=' . $update_type : '') . '&amp;token=' . $Session->get_token(),
+	'U_CHECK' => 'updates.php?check=1' . (!empty($update_type) ? '&amp;type=' . $update_type : '') . '&amp;token=' . AppContext::get_session()->get_token(),
 	'L_CHECK_FOR_UPDATES_NOW' => $LANG['check_for_updates_now']
 ));
 

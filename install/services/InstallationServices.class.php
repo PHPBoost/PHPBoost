@@ -443,9 +443,8 @@ class InstallationServices
 
 	private function connect_admin($password, $auto_connect)
 	{
-		$Session = new Session();
 		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('last_connect' => time()), 'WHERE user_id=1');
-		$Session->start(1, $password, 2, '/install/index.php', '', $this->messages['installation.title'], $auto_connect);
+		AppContext::get_session()->start(1, $password, 2, '/install/index.php', '', $this->messages['installation.title'], $auto_connect);
 	}
 
 	private function generate_installation_token()
