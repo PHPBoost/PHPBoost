@@ -134,48 +134,6 @@ class Environment
 		Date::set_default_timezone();
 
 		@ini_set('open_basedir', NULL);
-
-		/* TODO deprecated for php 5.4 */
-		//Disabling magic quotes if possible
-		if (ServerConfiguration::get_phpversion() < '5.3')
-		{
-			@set_magic_quotes_runtime(0);
-		}
-
-		/* TODO deprecated for php 5.4 */
-		//If the register globals option is enabled, we clear the automatically assigned variables
-		if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on')
-		{
-			require_once PATH_TO_ROOT . '/kernel/framework/util/unusual_functions.inc.php';
-			cancel_register_globals_effect();
-		}
-
-		/* TODO deprecated for php 5.4 */
-		if (get_magic_quotes_gpc())
-		{
-			//If magic_quotes_sybase is enabled
-			if (ini_get('magic_quotes_sybase') &&
-			(strtolower(ini_get('magic_quotes_sybase')) != "off"))
-			{
-				//We consider the magic quotes as disabled
-				define('MAGIC_QUOTES', false);
-
-				//We treat the content: it must be as if the magic_quotes option is disabled
-				foreach ($_REQUEST as $var_name => $value)
-				{
-					$_REQUEST[$var_name] = str_replace('\'\'', '\'', $value);
-				}
-			}
-			//Magic quotes GPC
-			else
-			{
-				define('MAGIC_QUOTES', true);
-			}
-		}
-		else
-		{
-			define('MAGIC_QUOTES', false);
-		}
 	}
 
 	public static function load_static_constants()
@@ -183,48 +141,16 @@ class Environment
 		//Path from the server root
 		define('SCRIPT', 			$_SERVER['PHP_SELF']);
 		define('REWRITED_SCRIPT', 	$_SERVER['REQUEST_URI']);
-
-		//Defines for PHP 5.1
-		if (!defined('E_RECOVERABLE_ERROR'))
-			define('E_RECOVERABLE_ERROR', 4096);
 		
 		//Get parameters
 		define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING']));
 		define('PHPBOOST', 			true);
-		define('E_UNKNOWN', 		0);
-		define('E_TOKEN', 			-3);
-		define('E_USER_REDIRECT', 	-1); //Deprecated
-		define('E_USER_SUCCESS', 	-2);
 		define('HTML_UNPROTECT', 	false);
 
 		### Authorizations ###
 		define('AUTH_FLOOD', 		'auth_flood');
 		define('PM_GROUP_LIMIT', 	'pm_group_limit');
 		define('DATA_GROUP_LIMIT', 	'data_group_limit');
-
-		### Variable types ###
-		define('GET', 		1);
-		define('POST', 		2);
-		define('REQUEST', 	3);
-		define('COOKIE', 	4);
-		define('FILES', 	5);
-
-		define('TBOOL', 			'boolean');
-		define('TINTEGER', 			'integer');
-		define('TDOUBLE', 			'double');
-		define('TFLOAT', 			'double');
-		define('TSTRING', 			'string');
-		define('TSTRING_PARSE', 	'string_parse');
-		define('TSTRING_UNCHANGE', 	'string_unsecure');
-		define('TSTRING_HTML', 		'string_html');
-		define('TSTRING_AS_RECEIVED', 'string_unchanged');
-		define('TARRAY', 			'array');
-		define('TUNSIGNED_INT', 	'uint');
-		define('TUNSIGNED_DOUBLE', 	'udouble');
-		define('TUNSIGNED_FLOAT', 	'udouble');
-		define('TNONE', 			'none');
-
-		define('USE_DEFAULT_IF_EMPTY', 1);
 	}
 
 	public static function load_dynamic_constants()

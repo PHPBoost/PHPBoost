@@ -48,11 +48,6 @@ $formatting_factory = AppContext::get_content_formatting_service()->create_facto
 //On prend le bon parseur avec la bonne configuration
 $parser = $formatting_factory->get_parser();
 
-if (MAGIC_QUOTES)
-{
-	$contents = stripslashes($contents);
-}
-
 $parser->set_content($contents);
 $parser->set_path_to_root($page_path_to_root);
 $parser->set_page_path($page_path);

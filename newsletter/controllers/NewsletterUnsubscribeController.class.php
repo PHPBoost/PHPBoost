@@ -42,7 +42,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['success-unsubscribe'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['success-unsubscribe'], MessageHelper::SUCCESS, 4));
 		}
 		
 		$tpl->put('FORM', $this->form->display());

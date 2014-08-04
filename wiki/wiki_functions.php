@@ -35,12 +35,7 @@ function wiki_parse($var)
 	//On force le langage de formatage à BBCode
 	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$parser = $content_manager->get_parser();
-	
-	if (MAGIC_QUOTES)
-	{
-		$var = stripslashes($var);
-	}
-	
+		
     $parser->set_content($var);
     $parser->parse();
 	

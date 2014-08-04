@@ -280,10 +280,10 @@ else
 				$Template->put('message_helper', MessageHelper::display($DOWNLOAD_LANG['infinite_loop'], E_USER_WARNING));
 				break;
 			case 'e_success' :
-				$Template->put('message_helper', MessageHelper::display($DOWNLOAD_LANG['successful_operation'], E_USER_SUCCESS, 4));
+				$Template->put('message_helper', MessageHelper::display($DOWNLOAD_LANG['successful_operation'], MessageHelper::SUCCESS, 4));
 				break;
 			case 'e_recount_success' :
-				$Template->put('message_helper', MessageHelper::display($DOWNLOAD_LANG['recount_success'], E_USER_SUCCESS, 4));
+				$Template->put('message_helper', MessageHelper::display($DOWNLOAD_LANG['recount_success'], MessageHelper::SUCCESS, 4));
 				break;
 		}
 	}

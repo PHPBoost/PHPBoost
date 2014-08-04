@@ -243,7 +243,7 @@ elseif ($action == 'restore')
 		switch ($_GET['error'])
 		{
 			case 'success' :
-				$Template->put('message_helper', MessageHelper::display($LANG['db_restore_success'], E_USER_SUCCESS));
+				$Template->put('message_helper', MessageHelper::display($LANG['db_restore_success'], MessageHelper::SUCCESS));
 				break;
 			case 'failure' :
 				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
@@ -387,12 +387,12 @@ else
 				if ($repair)
 				{
 					$Sql->repair_tables($selected_tables);
-					$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), E_USER_SUCCESS));
+					$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), MessageHelper::SUCCESS));
 				}
 				else
 				{
 					$Sql->optimize_tables($selected_tables);
-					$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), E_USER_SUCCESS));
+					$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), MessageHelper::SUCCESS));
 				}
 			}
 		}
@@ -400,7 +400,7 @@ else
 		if (!empty($_GET['error']))
 		{
 			if (trim($_GET['error']) == 'backup_success' && !empty($_GET['file']))
-				$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), E_USER_SUCCESS));
+				$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), MessageHelper::SUCCESS));
 		}
 		
 		//liste des tables

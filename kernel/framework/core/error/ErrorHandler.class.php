@@ -228,9 +228,6 @@ class ErrorHandler
 	{
 		switch ($errno)
 		{
-			//Redirection utilisateur.
-			case E_USER_REDIRECT:
-				return 'error';
 				//Notice utilisateur.
 			case E_USER_NOTICE:
 			case E_NOTICE:

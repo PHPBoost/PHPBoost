@@ -245,7 +245,6 @@ $LANG['php_version'] = 'PHP version';
 $LANG['dbms_version'] = 'DBMS version';
 $LANG['dg_library'] = 'GD Library';
 $LANG['url_rewriting'] = 'URL rewriting';
-$LANG['register_globals_option'] = '<em>register globals</em> option';
 $LANG['phpboost_config'] = 'PHPBoost configuration';
 $LANG['kernel_version'] = 'Kernel version';
 $LANG['output_gz'] = 'Output pages compression';

@@ -123,11 +123,6 @@ class ErrorViewBuilder
 
 	private function get_level_img_name($level)
 	{
-		if (empty($level))
-		{
-			$level = E_UNKNOWN;
-		}
-
 		$level_img = 'question';
 		switch ($level)
 		{
@@ -146,8 +141,6 @@ class ErrorViewBuilder
 			case E_ERROR:
 				$level_img = 'stop';
 				break;
-				//Erreur inconnue.
-			case E_UNKNOWN:
 			default:
 				$level_img = 'question';
 		}

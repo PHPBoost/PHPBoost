@@ -27,7 +27,7 @@
 
 class ErrorController extends AbstractController
 {
-	private $level = E_UNKNOWN;
+	private $level;
 	private $title = '';
 	private $code = '';
 	private $message = '';
