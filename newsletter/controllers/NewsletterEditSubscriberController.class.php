@@ -61,7 +61,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
-			$tpl->put('MSG', MessageHelper::display($this->lang['success-edit-subscriber'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['success-edit-subscriber'], MessageHelper::SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());

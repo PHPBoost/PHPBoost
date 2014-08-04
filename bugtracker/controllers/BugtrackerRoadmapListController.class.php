@@ -281,7 +281,7 @@ class BugtrackerRoadmapListController extends ModuleController
 				$errstr = '';
 		}
 		if (!empty($errstr))
-			$body_view->put('MSG', MessageHelper::display($errstr, E_USER_SUCCESS, 5));
+			$body_view->put('MSG', MessageHelper::display($errstr, MessageHelper::SUCCESS, 5));
 		
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();

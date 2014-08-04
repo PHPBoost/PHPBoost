@@ -25,6 +25,30 @@
  *
  ###################################################*/
 
+### Variable types ###
+define('GET', 		1);
+define('POST', 		2);
+define('REQUEST', 	3);
+define('COOKIE', 	4);
+define('FILES', 	5);
+
+define('TBOOL', 			'boolean');
+define('TINTEGER', 			'integer');
+define('TDOUBLE', 			'double');
+define('TFLOAT', 			'double');
+define('TSTRING', 			'string');
+define('TSTRING_PARSE', 	'string_parse');
+define('TSTRING_UNCHANGE', 	'string_unsecure');
+define('TSTRING_HTML', 		'string_html');
+define('TSTRING_AS_RECEIVED', 'string_unchanged');
+define('TARRAY', 			'array');
+define('TUNSIGNED_INT', 	'uint');
+define('TUNSIGNED_DOUBLE', 	'udouble');
+define('TUNSIGNED_FLOAT', 	'udouble');
+define('TNONE', 			'none');
+
+define('USE_DEFAULT_IF_EMPTY', 1);
+		
 /**
  * @deprecated
  * @desc Retrieves an input variable. You can retrieve any parameter of the HTTP request which launched the execution of this page.
@@ -45,7 +69,7 @@
  * 	<li>TUNSIGNED_INT if you expect an unsigned integer.</li>
  * 	<li>TUNSIGNED_DOUBLE to retrieve an unsigned double value.</li>
  * 	<li>TSTRING_HTML if you don't want to protect the HTML code of the content but you want to escape the quotes.</li>
- * 	<li>TSTRING_AS_RECEIVED if you want to retrieve the string variable as it was in the HTTP request. Be careful, if the magic_quotes are enabled (use the MAGIC_QUOTES constant to know it), the quotes are escaped, otherwise they aren't.</li>
+ * 	<li>TSTRING_AS_RECEIVED if you want to retrieve the string variable as it was in the HTTP request. </li>
  * 	<li>TARRAY to retrieve an array. The values it contains aren't processed.</li>
  * 	<li>TDOUBLE to retrieve a double value</li>
  * 	<li>TNONE if you want to get the input variable as it has been recieved (the return value will be a string because HTTP parameters are all strings).</li>
@@ -106,20 +130,8 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 		case TSTRING:
 			return TextHelper::strprotect($var); //Chaine protégée.
 		case TSTRING_UNCHANGE:
-			if (MAGIC_QUOTES)
-			{
-				$var = trim(stripslashes((string)$var));
-			}
-			else
-			{
-				$var = trim((string)$var);
-			}
-			return $var; //Chaine non protégée.
+			return trim((string)$var); //Chaine non protégée.
 		case TSTRING_PARSE:
-			if (MAGIC_QUOTES)
-			{
-				$var = stripslashes((string)$var);
-			}
 			return FormatingHelper::strparse($var); //Chaine parsée.
 		case TBOOL:
 			return (bool)$var;

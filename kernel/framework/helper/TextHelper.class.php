@@ -35,7 +35,6 @@ class TextHelper
 	const HTML_NO_PROTECT = false;
 	const HTML_PROTECT = true;
 
-	const ADDSLASHES_AUTO = 0; //Automatique : échappe seulement si le serveur n'échappe pas automatiquement
 	const ADDSLASHES_FORCE = 1; //Force l'échappement des caractères critique
 	const ADDSLASHES_NONE = 2; //Aucun échappement
 
@@ -45,10 +44,9 @@ class TextHelper
 	 * @param bool $html_protect HTML_PROTECT if you don't accept the HTML code (it will be transformed
 	 * by the corresponding HTML entities and won't be considerer by the web browsers). HTML_UNPROTECT if you want to let them.
 	 * @param int $addslashes If you want to escape the quotes in the string, use ADDSLASHES_FORCE, if you don't want, use the ADDSLASHES_NONE constant.
-	 * If you want to escape them only if they have not been escaped automatically by the magic quotes option, use the ADDSLASHES_AUTO constant.
 	 * @return string The protected string.
 	 */
-	public static function strprotect($var, $html_protect = self::HTML_PROTECT, $addslashes = self::ADDSLASHES_AUTO)
+	public static function strprotect($var, $html_protect = self::HTML_PROTECT, $addslashes = self::ADDSLASHES_FORCE)
 	{
 		$var = trim((string)$var);
 
@@ -63,6 +61,7 @@ class TextHelper
 		switch ($addslashes)
 		{
 			case self::ADDSLASHES_FORCE:
+			default:
 				//On force l'échappement de caractères
 				$var = addslashes($var);
 				break;
@@ -70,14 +69,6 @@ class TextHelper
 				//On ne touche pas la chaîne
 				$var = stripslashes($var);
 				break;
-				//Mode automatique
-			case self::ADDSLASHES_AUTO:
-			default:
-				//On échappe les ' si la fonction magic_quotes_gpc() n'est pas activée sur le serveur.
-				if (!MAGIC_QUOTES)
-				{
-					$var = addslashes($var);
-				}
 		}
 
 		return $var;

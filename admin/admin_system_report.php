@@ -45,7 +45,6 @@ $template->put_all(array(
 	'L_DBMS_VERSION' => $LANG['dbms_version'],
 	'L_GD_LIBRARY' => $LANG['dg_library'],
 	'L_URL_REWRITING' => $LANG['url_rewriting'],
-	'L_REGISTER_GLOBALS_OPTION' => $LANG['register_globals_option'],
 	'L_SERVER_URL' => $LANG['serv_name'],
 	'L_SITE_PATH' => $LANG['serv_path'],
 	'L_PHPBOOST_CONFIG' => $LANG['phpboost_config'],
@@ -111,7 +110,6 @@ php version              : " . ServerConfiguration::get_phpversion() . "
 dbms version             : " . PersistenceContext::get_dbms_utils()->get_dbms_version() . "
 gd library               : " . (int)$server_configuration->has_gd_library() . "
 url rewriting            : " . ($url_rewriting_known ? (int) $url_rewriting_available : 'N/A') . "
-register globals         : " . (int)(@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on') . "
 server url               : " . $server_name . "
 site path                : " . $server_path  . "
 
@@ -140,7 +138,6 @@ $template->put_all(array(
 	'C_SERVER_GD_LIBRARY' => $server_configuration->has_gd_library(),
 	'C_URL_REWRITING_KNOWN' => $url_rewriting_known,
 	'C_SERVER_URL_REWRITING' => $url_rewriting_available,
-	'C_REGISTER_GLOBALS' => @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on',
 	'SERV_SERV_URL' => $server_name,
 	'SERV_SITE_PATH' => $server_path,
 	'KERNEL_VERSION' => Environment::get_phpboost_version(),

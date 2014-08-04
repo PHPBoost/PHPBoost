@@ -38,7 +38,7 @@ class UserErrorController extends AbstractController
     const SITE_RESPONSE = 'SiteDisplayResponse';
     const ADMIN_RESPONSE = 'AdminDisplayResponse';
 
-	private $error_type = E_UNKNOWN;
+	private $error_type;
 	private $title = '';
 	private $message = '';
 	private $time;

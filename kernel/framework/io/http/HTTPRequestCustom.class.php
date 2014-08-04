@@ -295,10 +295,6 @@ class HTTPRequestCustom
 
 	private static function sanitize($value)
 	{
-		if (MAGIC_QUOTES)
-		{
-			$value = stripslashes($value);
-		}
 		return str_replace(array("\r\n", "\r"), "\n", $value);
 	}
 

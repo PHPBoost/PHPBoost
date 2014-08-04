@@ -44,7 +44,6 @@ class MessageHelper
 		
 		switch ($type)
 		{
-			case E_USER_SUCCESS:
 			case self::SUCCESS:
 				$css_class = 'success';
 				$image = 'error_success';

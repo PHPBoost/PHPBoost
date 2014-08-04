@@ -58,7 +58,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 				$this->form->get_field_by_id('fixed_in')->set_hidden(!$this->bug->is_fixed() && !$this->bug->is_in_progress());
 			$this->form->get_field_by_id('comments_message')->set_value('');
 			
-			$this->view->put('MSG', MessageHelper::display($this->lang['success.' . $this->bug->get_status()], E_USER_SUCCESS, 5));
+			$this->view->put('MSG', MessageHelper::display($this->lang['success.' . $this->bug->get_status()], MessageHelper::SUCCESS, 5));
 		}
 		
 		$this->view->put('FORM', $this->form->display());

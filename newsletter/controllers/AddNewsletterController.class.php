@@ -57,12 +57,12 @@ class AddNewsletterController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->send_mail($type);
-			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.success-add'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.success-add'], MessageHelper::SUCCESS, 4));
 		}
 		else if ($this->send_test_button->has_been_submited() && $this->form->validate())
 		{
 			$this->send_test($type);
-			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.success-send-test'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.success-send-test'], MessageHelper::SUCCESS, 4));
 		}
 		
 		$tpl->put('FORM', $this->form->display());
