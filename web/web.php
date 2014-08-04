@@ -49,7 +49,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	if ($User->check_level(User::ADMIN_LEVEL))
 	{
 		$edit = '<a href="../web/admin_web' . url('.php?id=' . $web['id']) . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>';
-		$del = '<a href="../web/admin_web.php?delete=1&amp;id=' . $web['id'] . '&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="delete-element"></a>';
+		$del = '<a href="../web/admin_web.php?delete=1&amp;id=' . $web['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="delete-element"></a>';
 	}
 	else
 	{

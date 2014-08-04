@@ -61,7 +61,7 @@ $Template->put_all(array(
 
 	'C_DELETE' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE)),
 	'L_DELETE' => $LANG['delete'],
-	'U_DELETE' => $page_type == 'article' ? PATH_TO_ROOT . '/wiki/' . url('action.php?del_article=' . $id_article . '&amp;token=' . $Session->get_token()) : PATH_TO_ROOT . '/wiki/' . url('property.php?del=' . $id_article),
+	'U_DELETE' => $page_type == 'article' ? PATH_TO_ROOT . '/wiki/' . url('action.php?del_article=' . $id_article . '&amp;token=' . AppContext::get_session()->get_token()) : PATH_TO_ROOT . '/wiki/' . url('property.php?del=' . $id_article),
 
 	'C_RENAME' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME)),
 	'L_RENAME' => $LANG['wiki_rename'],
@@ -90,7 +90,7 @@ $Template->put_all(array(
 	'U_PRINT' => PATH_TO_ROOT . '/wiki/' . url('print.php?id=' . $article_infos['id']),
 
 	'L_WATCH' => $article_infos['id_favorite'] > 0 ? $LANG['wiki_unwatch_this_topic'] : $LANG['wiki_watch'],
-	'U_WATCH' => $article_infos['id_favorite'] > 0 ? PATH_TO_ROOT . '/wiki/' . url('favorites.php?del=' . $id_article . '&amp;token=' . $Session->get_token()) : PATH_TO_ROOT . '/wiki/' . url('favorites.php?add=' . $id_article),
+	'U_WATCH' => $article_infos['id_favorite'] > 0 ? PATH_TO_ROOT . '/wiki/' . url('favorites.php?del=' . $id_article . '&amp;token=' . AppContext::get_session()->get_token()) : PATH_TO_ROOT . '/wiki/' . url('favorites.php?add=' . $id_article),
 ));
 
 //Discussion

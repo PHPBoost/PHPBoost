@@ -141,7 +141,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	$login = !empty($pm_get) ? $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $pm_get . "'", __LINE__, __FILE__) : '';
 	
 	$tpl->assign_block_vars('post_convers', array(
-		'U_ACTION_CONVERS' => url('.php?token=' . $Session->get_token()),
+		'U_ACTION_CONVERS' => url('.php?token=' . AppContext::get_session()->get_token()),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_USER_VIEW' => '<a href="' . UserUrlBuilder::personnal_message($User->get_attribute('user_id'))->rel() . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => $login
@@ -202,7 +202,7 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 	));
 	
 	$tpl->assign_block_vars('post_convers', array(
-		'U_ACTION_CONVERS' => url('.php?token=' . $Session->get_token()),
+		'U_ACTION_CONVERS' => url('.php?token=' . AppContext::get_session()->get_token()),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_USER_VIEW' => '<a href="' . MemberUrlBuilder::profile($User->get_attribute('user_id'))->rel() . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => !empty($_POST['login']) ? stripslashes($_POST['login']) : '',
@@ -247,7 +247,7 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 	
 	$tpl->assign_block_vars('post_pm', array(
 		'CONTENTS' => !empty($_POST['contents']) ? stripslashes($_POST['contents']) : '',
-		'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get . '&amp;token=' . $Session->get_token())
+		'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get . '&amp;token=' . AppContext::get_session()->get_token())
 	));
 	
 	$tpl->display();
@@ -292,7 +292,7 @@ elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 }
 elseif ($pm_del_convers) //Suppression de conversation.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	//Conversation présente chez les deux membres: user_convers_status => 0.
 	//Conversation supprimée chez l'expediteur: user_convers_status => 1.
@@ -344,7 +344,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 }
 elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne la pas encore lu.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$pm = $Sql->query_array(DB_TABLE_PM_MSG, 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_del . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
@@ -479,7 +479,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				
 				$tpl->assign_block_vars('edit_pm', array(
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : FormatingHelper::unparse($pm['contents']),
-					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . $Session->get_token()),
+					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 					'U_USER_VIEW' => '<a href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->rel() . '">' . $LANG['member_area'] . '</a>'
 				));
@@ -656,7 +656,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 		$tpl->assign_block_vars('post_pm', array(
 			'CONTENTS' => $contents,
-			'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get . '&amp;token=' . $Session->get_token(), '-0-' . $pm_id_get . '.php?token=' . $Session->get_token())
+			'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get . '&amp;token=' . AppContext::get_session()->get_token(), '-0-' . $pm_id_get . '.php?token=' . AppContext::get_session()->get_token())
 		));
 		
 		//Gestion des erreurs
@@ -708,7 +708,7 @@ else //Liste des conversation, dans la boite du membre.
 		'PM_POURCENT' => '<strong>' . $nbr_pm . '</strong> / <strong>' . $pm_max . '</strong>',
 		'U_MARK_AS_READ' => 'pm.php?read=1',
 		'L_MARK_AS_READ' => $LANG['mark_pm_as_read'],
-		'U_USER_ACTION_PM' => url('.php?del_convers=1&amp;p=' . $page . '&amp;token=' . $Session->get_token()),
+		'U_USER_ACTION_PM' => url('.php?del_convers=1&amp;p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
 		'U_USER_VIEW' => '<a href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->rel() . '">' . $LANG['member_area'] . '</a>',
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_POST_NEW_CONVERS' => 'pm' . url('.php?post=1', ''),
@@ -855,7 +855,7 @@ else //Liste des conversation, dans la boite du membre.
 			'TITLE' => $row['title'],
 			'MSG' => ($row['nbr_msg'] - 1),
 			'U_PARTICIPANTS' => (($row['user_convers_status'] != 0) ? '<strike>' . $participants . '</strike>' : $participants),
-			'U_CONVERS'	=> url('.php?id=' . $row['id'] . '&amp;token=' . $Session->get_token(), '-0-' . $row['id'] . '.php?token=' . $Session->get_token()),
+			'U_CONVERS'	=> url('.php?id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token(), '-0-' . $row['id'] . '.php?token=' . AppContext::get_session()->get_token()),
 			'U_AUTHOR' => $LANG['by'] . ' ' . $author,
 			'U_LAST_MSG' => $last_msg
 		));

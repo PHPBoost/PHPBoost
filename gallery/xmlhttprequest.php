@@ -62,7 +62,7 @@ if (!empty($_GET['increment_view']))
 }
 else
 {	
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	if (!empty($_GET['rename_pics'])) //Renomme une image.
 	{

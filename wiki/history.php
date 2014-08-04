@@ -72,10 +72,10 @@ if (!empty($id_article))
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//Restauration
-		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . $Session->get_token()) . '" class="fa fa-undo" title="' . $LANG['wiki_restore_version'] . '"></a> &nbsp; ' : '';
+		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" class="fa fa-undo" title="' . $LANG['wiki_restore_version'] . '"></a> &nbsp; ' : '';
 		
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="' . $LANG['wiki_confirm_delete_archive'] . '"></a>' : '';
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="' . $LANG['wiki_confirm_delete_archive'] . '"></a>' : '';
 		
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 		

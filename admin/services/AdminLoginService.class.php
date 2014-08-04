@@ -105,17 +105,17 @@ class AdminLoginService
 		
 		if (self::$admin_data['test_connect'] < 5)
 		{
-			$error_report = $Session->start(self::$admin_uid, $password, self::$admin_data['level'], '', '', '', $autoconnexion); //On lance la session.
+			$error_report = AppContext::get_session()->start(self::$admin_uid, $password, self::$admin_data['level'], '', '', '', $autoconnexion); //On lance la session.
 		}
 		elseif ($delay_connect >= 600 && self::$admin_data['test_connect'] == 5) //5 nouveau essais, 10 minutes après.
 		{
 			self::set_test_connections(0);
-			$error_report = $Session->start(self::$admin_uid, $password, self::$admin_data['level'], '', '', '', $autoconnexion); //On lance la session.
+			$error_report = AppContext::get_session()->start(self::$admin_uid, $password, self::$admin_data['level'], '', '', '', $autoconnexion); //On lance la session.
 		}
 		elseif ($delay_connect >= 300 && self::$admin_data['test_connect'] == 5) //2 essais 5 minutes après
 		{
 			self::set_test_connections(3);
-			$error_report = $Session->start(self::$admin_uid, $password, self::$admin_data['level'], '', '', '', $autoconnexion); //On lance la session.
+			$error_report = AppContext::get_session()->start(self::$admin_uid, $password, self::$admin_data['level'], '', '', '', $autoconnexion); //On lance la session.
 		}
 		else
 		{

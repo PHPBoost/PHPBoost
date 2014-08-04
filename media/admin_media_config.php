@@ -33,7 +33,7 @@ require_once('media_begin.php');
 
 if (!empty($_POST['valid']))
 {
-	$Session->csrf_get_protect();
+	AppContext::get_session()->csrf_get_protect();
 
 	// Param�tre afichage.
 	$display_array = retrieve(POST, 'activ', 0, TARRAY);

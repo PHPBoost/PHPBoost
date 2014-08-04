@@ -94,7 +94,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'APROBATION' => $aprob,
 		'U_FILE' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 		'U_EDIT_FILE' => url('management.php?edit=' . $row['id']),
-		'U_DEL_FILE' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+		'U_DEL_FILE' => url('management.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 	));
 }
 $Sql->query_close($result);

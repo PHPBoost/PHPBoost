@@ -151,7 +151,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 }
 elseif (!empty($del_folder)) //Supprime un dossier.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	if ($User->check_level(User::ADMIN_LEVEL))
 		Uploads::Del_folder($del_folder);
@@ -174,7 +174,7 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 }
 elseif (!empty($del_file)) //Suppression d'un fichier
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	if ($User->check_level(User::ADMIN_LEVEL))
 	{
@@ -194,7 +194,7 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 }
 elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$folder_owner = $Sql->query("SELECT user_id FROM ".DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 	
@@ -225,7 +225,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 }
 elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$file_infos = $Sql->query_array(PREFIX . "upload", "idcat", "user_id", "WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
 	$id_cat = $file_infos['idcat'];
@@ -293,7 +293,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$Template->put_all(array(
 			'SELECTED_CAT' => $id_cat,
 			'ID_FILE' => $move_folder,
-			'TARGET' => url('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . $Session->get_token() . $popup)
+			'TARGET' => url('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token() . $popup)
 		));
 		$cat_explorer = display_cat_explorer($id_cat, $cats, 1, $User->get_attribute('user_id'));
 	}
@@ -331,7 +331,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		));
 		$Template->put_all(array(
 			'SELECTED_CAT' => $info_move['idcat'],
-			'TARGET' => url('upload.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . $Session->get_token() . $popup)
+			'TARGET' => url('upload.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token() . $popup)
 		));
 	}
 	

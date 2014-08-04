@@ -67,8 +67,7 @@ function menu_admin_link($menu, $mode)
 			$link = 'menus.php?action=down&amp;';
 		break;
     }
-    global $Session;
-    return $link . 'id=' . $menu->get_id() . '&amp;token=' . $Session->get_token();
+    return $link . 'id=' . $menu->get_id() . '&amp;token=' . AppContext::get_session()->get_token();
 }
 
 if (!empty($id))
@@ -78,7 +77,7 @@ if (!empty($id))
         AppContext::get_response()->redirect('menus.php');
 
     // In GET mode so we check it
-    $Session->csrf_get_protect();
+    AppContext::get_session()->csrf_get_protect();
 
     switch ($action)
     {
@@ -219,7 +218,7 @@ $menu_template->put_all(array(
     'I_FOOTER' => Menu::BLOCK_POSITION__FOOTER,
     'I_LEFT' => Menu::BLOCK_POSITION__LEFT,
     'I_RIGHT' => Menu::BLOCK_POSITION__RIGHT,
-	'U_TOKEN' => $Session->get_token()
+	'U_TOKEN' => AppContext::get_session()->get_token()
 ));
 
 foreach ($menus_blocks as $block_id => $menus)
@@ -340,7 +339,7 @@ $tpl->put_all(array(
     'L_MENUS_AVAILABLE' => count($menus_blocks[Menu::BLOCK_POSITION__NOT_ENABLED]) ? $LANG['available_menus'] : $LANG['no_available_menus'],
     'L_SUBMIT' => $LANG['submit'],
     'L_RESET' => $LANG['reset'],
-	'U_TOKEN' => $Session->get_token()
+	'U_TOKEN' => AppContext::get_session()->get_token()
 ));
 $tpl->display();
 

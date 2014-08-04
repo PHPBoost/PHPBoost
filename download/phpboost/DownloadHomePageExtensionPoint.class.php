@@ -50,7 +50,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $DOWNLOAD_LANG, $LANG, $DOWNLOAD_CATS, $Cache, $User, $Bread_crumb, $Session, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
+		global $DOWNLOAD_LANG, $LANG, $DOWNLOAD_CATS, $Cache, $User, $Bread_crumb, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
 		
 		require_once(PATH_TO_ROOT . '/download/download_begin.php');
 		
@@ -231,7 +231,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 					'IMG' => Url::to_absolute($row['image']),
 					'U_DOWNLOAD_LINK' => PATH_TO_ROOT . '/download/' . url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 					'U_ADMIN_EDIT_FILE' => PATH_TO_ROOT . '/download/' . url('management.php?edit=' . $row['id']),
-					'U_ADMIN_DELETE_FILE' => PATH_TO_ROOT . '/download/' . url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+					'U_ADMIN_DELETE_FILE' => PATH_TO_ROOT . '/download/' . url('management.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('download', $row['id']) . '</a>'
 				));
 			}

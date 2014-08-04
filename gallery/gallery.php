@@ -61,7 +61,7 @@ if (!empty($g_del)) //Suppression d'une image.
 		DispatchManager::redirect($controller);
 	}
 	
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$Gallery->Del_pics($g_del);
 
@@ -78,7 +78,7 @@ elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 		DispatchManager::redirect($controller);
 	}
 	
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$g_move = max($g_move, 0);
 	$Gallery->Move_pics($g_idpics, $g_move);
@@ -272,7 +272,7 @@ elseif ($g_add)
 		'L_UNIT_KO' => $LANG['unit_kilobytes'],
 		'L_UPLOAD' => $LANG['upload_img'],
 		'U_GALLERY_CAT_LINKS' => $cat_links,
-		'U_GALLERY_ACTION_ADD' => GalleryUrlBuilder::get_link_cat_add($g_idcat,null,$Session->get_token()),
+		'U_GALLERY_ACTION_ADD' => GalleryUrlBuilder::get_link_cat_add($g_idcat,null,AppContext::get_session()->get_token()),
 		'U_INDEX' => url('.php')
 	));
 

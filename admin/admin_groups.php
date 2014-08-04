@@ -101,7 +101,7 @@ elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 }
 elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$login = retrieve(POST, 'login_mbr', '');
 	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
@@ -124,7 +124,7 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 }
 elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membre du groupe.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	GroupsService::remove_member($user_id, $idgroup);
 	GroupsCache::invalidate();

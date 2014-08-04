@@ -31,7 +31,7 @@ require_once('../kernel/header_no_display.php');
 
 if ($User->check_level(User::ADMIN_LEVEL)) //Admin
 {			
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$Cache->load('forum');
 

@@ -86,7 +86,7 @@ if (!empty($_GET['query']))
 
 	if (!empty($query)) //On exécute une requête
 	{
-		$Session->csrf_get_protect(); //Protection csrf
+		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
 		$Template->put_all(array(
 			'C_QUERY_RESULT' => true
@@ -161,7 +161,7 @@ elseif ($action == 'restore')
 	//Suppression d'un fichier
 	if (!empty($_GET['del']))
 	{
-		$Session->csrf_get_protect(); //Protection csrf
+		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
 		$file = TextHelper::strprotect($_GET['del']);
 		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
@@ -181,7 +181,7 @@ elseif ($action == 'restore')
 	
 	if (!empty($_GET['file'])) //Restauration d'un fichier sur le ftp
 	{
-		$Session->csrf_get_protect(); //Protection csrf
+		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
 		$file = TextHelper::strprotect($_GET['file']);
 		$file_path = PATH_TO_ROOT .'/cache/backup/' . $file;
@@ -344,7 +344,7 @@ else
 		$Template->put_all(array(
 			'C_DATABASE_BACKUP' => true,
 			'NBR_TABLES' => count($tables),
-			'TARGET' => url('admin_database.php?token=' . $Session->get_token()),
+			'TARGET' => url('admin_database.php?token=' . AppContext::get_session()->get_token()),
 			'SELECT_ALL' => $LANG['select_all'],
 			'SELECT_NONE' => $LANG['select_none'],
 			'L_BACKUP_DATABASE' => $LANG['db_backup_database'],
@@ -437,7 +437,7 @@ else
 		
 		$Template->put_all(array(
 			'C_DATABASE_INDEX' => true,
-			'TARGET' => url('admin_database.php?token=' . $Session->get_token()),
+			'TARGET' => url('admin_database.php?token=' . AppContext::get_session()->get_token()),
 			'NBR_TABLES' => count(PersistenceContext::get_dbms_utils()->list_tables()),
 			'NBR_ROWS' => $nbr_rows,
 			'NBR_DATA' => $nbr_data,

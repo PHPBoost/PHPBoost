@@ -43,7 +43,7 @@ $Cache->load('gallery');
 
 if (!empty($idpics) && isset($_GET['move'])) //Déplacement d'une image.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$Gallery->Move_pics($idpics, $move);
 
@@ -54,7 +54,7 @@ if (!empty($idpics) && isset($_GET['move'])) //Déplacement d'une image.
 }
 elseif (!empty($del)) //Suppression d'une image.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$Gallery->Del_pics($del);
 
@@ -354,8 +354,8 @@ else
 					'CAT' => $cat_list,
 					'RENAME' => addslashes($info_pics['name']),
 					'RENAME_CUT' => addslashes($info_pics['name']),
-					'U_DEL' => 'php?del=' . $info_pics['id'] . '&amp;cat=' . $idcat . '&amp;token=' . $Session->get_token(),
-					'U_MOVE' => '.php?id=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value',
+					'U_DEL' => 'php?del=' . $info_pics['id'] . '&amp;cat=' . $idcat . '&amp;token=' . AppContext::get_session()->get_token(),
+					'U_MOVE' => '.php?id=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value',
 					'U_PREVIOUS' => '<a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_previous . '#pics_max" class="fa fa-arrow-left fa-2x"></a> <a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_previous . '#pics_max">' . $LANG['previous'] . '</a>',
 					'U_NEXT' => '<a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_next . '#pics_max">' . $LANG['next'] . '</a> <a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_next . '#pics_max" class="fa fa-arrow-right fa-2x"></a>'
 				));

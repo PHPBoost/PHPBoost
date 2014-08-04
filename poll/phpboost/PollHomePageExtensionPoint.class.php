@@ -52,7 +52,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		$this->check_authorizations();
 		
-		global $User, $Cache, $Bread_crumb, $POLL_CAT, $POLL_LANG, $LANG, $Session;
+		global $User, $Cache, $Bread_crumb, $POLL_CAT, $POLL_LANG, $LANG;
 
 		require_once(PATH_TO_ROOT . '/poll/poll_begin.php');
 

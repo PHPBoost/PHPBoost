@@ -47,7 +47,7 @@ require_once('../kernel/header.php');
 
 if (!empty($_POST['submit']))
 {
-	$Session->csrf_get_protect();
+	AppContext::get_session()->csrf_get_protect();
 
 	$action = retrieve(POST, 'action', array(), TARRAY);
 	$show = $hide = $unaprobed = $delete = array();

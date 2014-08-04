@@ -176,7 +176,7 @@ $Template->put_all(array(
 	'C_PAGINATION' => $pagination->has_several_pages(),
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'PAGINATION' => $pagination->display(),
-	'U_CHANGE_CAT'=> 'unread.php' . SID . '&amp;token=' . $Session->get_token(),
+	'U_CHANGE_CAT'=> 'unread.php' . SID . '&amp;token=' . AppContext::get_session()->get_token(),
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 	'U_FORUM_CAT' => '<a href="../forum/unread.php' . SID . '">' . $LANG['show_not_reads'] . '</a>',

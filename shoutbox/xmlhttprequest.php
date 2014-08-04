@@ -139,7 +139,7 @@ elseif ($refresh)
 }
 elseif ($del)
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$shout_id = !empty($_POST['idmsg']) ? NumberHelper::numeric($_POST['idmsg']) : '';
 	if (!empty($shout_id))

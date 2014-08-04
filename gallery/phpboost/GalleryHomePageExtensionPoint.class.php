@@ -52,7 +52,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		$this->check_authorizations();
 		
-		global $Cache, $CAT_GALLERY, $Bread_crumb, $LANG, $User, $Session;
+		global $Cache, $CAT_GALLERY, $Bread_crumb, $LANG, $User;
 		
 		require_once(PATH_TO_ROOT . '/gallery/gallery_begin.php');
 		
@@ -459,8 +459,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'L_EDIT' => $LANG['edit'],
 						'L_APROB_IMG' => ($info_pics['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
 						'L_THUMBNAILS' => $LANG['thumbnails'],
-						'U_DEL' => url('gallery.php?del=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;cat=' . $g_idcat),
-						'U_MOVE' => url('gallery.php?id=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
+						'U_DEL' => url('gallery.php?del=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $g_idcat),
+						'U_MOVE' => url('gallery.php?id=' . $info_pics['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 						'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max"><i class="fa fa-arrow-left fa-2x"></i></a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max">' . $LANG['previous'] . '</a>' : '',
 						'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max"><i class="fa fa-arrow-right fa-2x"></i></a>' : '',
 						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><i class="fa fa-arrow-left fa-2x"></i></a></span>' : '<span id="display_left"></span>',
@@ -586,8 +586,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'OPEN_TR' => is_int($j++/$nbr_column_pics) ? '<tr>' : '',
 						'CLOSE_TR' => is_int($j/$nbr_column_pics) ? '</tr>' : '',
 						'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
-						'U_DEL' => url('gallery.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token() . '&amp;cat=' . $g_idcat),
-						'U_MOVE' => url('gallery.php?id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
+						'U_DEL' => url('gallery.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $g_idcat),
+						'U_MOVE' => url('gallery.php?id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 						'U_DISPLAY' => $display_link
 					));
 				}

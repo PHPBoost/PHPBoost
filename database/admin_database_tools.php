@@ -116,7 +116,7 @@ if (!empty($table) && $action == 'data')
 			if ($j == 0)
 			{
 				$Template->assign_block_vars('line.field', array(
-					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . $Session->get_token() . '" title="' . $LANG['update'] . '" class="fa fa-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="delete-element"></a></span>',
+					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['update'] . '" class="fa fa-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="delete-element"></a></span>',
 					'STYLE' => ''
 				));
 			}
@@ -148,7 +148,7 @@ if (!empty($table) && $action == 'data')
 }
 elseif (!empty($table) && $action == 'delete')
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$field = retrieve(GET, 'field', '');
 	$value = retrieve(GET, 'value', '');
@@ -159,7 +159,7 @@ elseif (!empty($table) && $action == 'delete')
 }
 elseif (!empty($table) && $action == 'update') //Mise à jour.
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
@@ -214,7 +214,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 	$submit = retrieve(POST, 'submit', '');
 	if (!empty($submit)) //On exécute une requête
 	{
-		$Session->csrf_get_protect(); //Protection csrf
+		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
 		//Détection de la clée primaire.
 		$primary_key = '';
@@ -277,14 +277,14 @@ elseif (!empty($table) && $action == 'optimize')
 }
 elseif (!empty($table) && $action == 'truncate')
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$Sql->truncate_tables(array($table));
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'drop')
 {
-	$Session->csrf_get_protect(); //Protection csrf
+	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$Sql->drop_tables(array($table));
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
@@ -299,7 +299,7 @@ elseif (!empty($table) && $action == 'query')
 
 	if (!empty($query)) //On exécute une requête
 	{
-		$Session->csrf_get_protect(); //Protection csrf
+		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
 		$Template->put_all(array(
 			'C_QUERY_RESULT' => true

@@ -47,7 +47,7 @@ $delete = retrieve(GET, 'del', 0, TINTEGER);
 // Modification du statut du fichier.
 if ($unvisible > 0)
 {
-	$Session->csrf_get_protect();
+	AppContext::get_session()->csrf_get_protect();
 
 	$media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $unvisible . "'", __LINE__, __FILE__);
 
@@ -66,7 +66,7 @@ if ($unvisible > 0)
 
 	bread_crumb($media['idcat']);
 	$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
-	$Bread_crumb->add($MEDIA_LANG['hide_media'], url('media_action.php?unvisible=' . $media['id'] . '&amp;token=' . $Session->get_token()));
+	$Bread_crumb->add($MEDIA_LANG['hide_media'], url('media_action.php?unvisible=' . $media['id'] . '&amp;token=' . AppContext::get_session()->get_token()));
 
 	define('TITLE', $MEDIA_LANG['media_moderation']);
 
@@ -81,7 +81,7 @@ if ($unvisible > 0)
 // Suppression d'un fichier.
 elseif ($delete > 0)
 {
-	$Session->csrf_get_protect();
+	AppContext::get_session()->csrf_get_protect();
 
 	$media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $delete. "'", __LINE__, __FILE__);
 
@@ -233,7 +233,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 // Traitement du formulaire.
 elseif (!empty($_POST['submit']))
 {
-	$Session->csrf_get_protect();
+	AppContext::get_session()->csrf_get_protect();
 
 	$media = array(
 		'idedit' => retrieve(POST, 'idedit', 0, TINTEGER),
