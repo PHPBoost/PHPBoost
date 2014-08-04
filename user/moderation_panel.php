@@ -80,7 +80,7 @@ if ($action == 'punish')
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
-		if ($id_get != AppContext::get_current_user()->get_attribute('user_id'))
+		if ($id_get != AppContext::get_current_user()->get_id())
 		{
 			if (!empty($readonly_contents))
 			{
@@ -247,7 +247,7 @@ else if ($action == 'warning')
 			if ($new_warning_level <= 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if ($id_get != AppContext::get_current_user()->get_attribute('user_id'))
+				if ($id_get != AppContext::get_current_user()->get_id())
 				{
 					MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::SEND_MP, $warning_contents);				
 				}

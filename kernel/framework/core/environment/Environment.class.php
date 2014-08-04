@@ -171,9 +171,9 @@ class Environment
 		if (AppContext::get_session()->supports_cookies())
 		{
 			define('SID', 'sid=' . AppContext::get_current_user()->get_attribute('session_id') .
-				'&amp;suid=' . AppContext::get_current_user()->get_attribute('user_id'));
+				'&amp;suid=' . AppContext::get_current_user()->get_id());
 			define('SID2', 'sid=' . AppContext::get_current_user()->get_attribute('session_id') .
-				'&suid=' . AppContext::get_current_user()->get_attribute('user_id'));
+				'&suid=' . AppContext::get_current_user()->get_id());
 		}
 		else
 		{

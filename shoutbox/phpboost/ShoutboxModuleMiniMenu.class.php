@@ -67,7 +67,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    			if (ShoutboxAuthorizationsService::check_authorizations()->write())
 	    			{
 	    				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-	    				$check_time = (AppContext::get_current_user()->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'") : '';
+	    				$check_time = (AppContext::get_current_user()->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'") : '';
 	    				if (!empty($check_time) && !AppContext::get_current_user()->check_max_value(AUTH_FLOOD))
 	    				{
 	    					if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
@@ -81,7 +81,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
 	    					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
 	
-	    				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . AppContext::get_current_user()->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')");
+	    				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_id() . "', '" . AppContext::get_current_user()->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')");
 	
 	    				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	    			}
@@ -96,7 +96,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	       MenuService::assign_positions_conditions($tpl, $this->get_block());
 	
 	    	//Pseudo du membre connecté.
-	    	if (AppContext::get_current_user()->get_attribute('user_id') !== -1)
+	    	if (AppContext::get_current_user()->get_id() !== -1)
 	    		$tpl->put_all(array(
 	    			'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_attribute('login'),
 	    			'C_HIDDEN_SHOUT' => true
@@ -134,7 +134,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    	while ($row = $Sql->fetch_assoc($result))
 	    	{
 	    		$row['user_id'] = (int)$row['user_id'];
-	    		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_attribute('user_id') && AppContext::get_current_user()->get_attribute('user_id') !== -1))
+	    		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== -1))
 	    			$del_message = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '" class="small"><i class="fa fa-remove"></i></a>';
 	    		else
 	    			$del_message = '';

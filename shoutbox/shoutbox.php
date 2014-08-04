@@ -51,7 +51,7 @@ if ($add && empty($shout_id)) //Insertion
 		if (ShoutboxAuthorizationsService::check_authorizations()->write())
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-			$check_time = (AppContext::get_current_user()->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'") : '';
+			$check_time = (AppContext::get_current_user()->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'") : '';
 			if (!empty($check_time) && !AppContext::get_current_user()->check_max_value(AUTH_FLOOD))
 			{
 				if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
@@ -64,7 +64,7 @@ if ($add && empty($shout_id)) //Insertion
 			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
 				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
-			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . AppContext::get_current_user()->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')");
+			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_id() . "', '" . AppContext::get_current_user()->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')");
 				
 			AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 		}
@@ -90,7 +90,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 	$row = $Sql->query_array(PREFIX . 'shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
-	if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_attribute('user_id') && AppContext::get_current_user()->get_attribute('user_id') !== -1))
+	if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== -1))
 	{
 		if ($del_message)
 		{

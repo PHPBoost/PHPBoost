@@ -140,7 +140,7 @@ elseif (!empty($entitled) && !empty($answer))
 		{
 			//shifting right all questions which will be after this
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE idcat = '" . $id_cat . "' AND q_order > '" . $FAQ_CATS[$id_cat]['num_questions'] . "'");
-			$Sql->query_inject("INSERT INTO " . PREFIX . "faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $id_cat . "', '" . ($FAQ_CATS[$id_cat]['num_questions'] + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . time() . "')");
+			$Sql->query_inject("INSERT INTO " . PREFIX . "faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $id_cat . "', '" . ($FAQ_CATS[$id_cat]['num_questions'] + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . AppContext::get_current_user()->get_id() . "', '" . time() . "')");
 			
 			$new_question_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "faq");
 			

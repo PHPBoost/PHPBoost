@@ -37,7 +37,7 @@ class UserViewProfileController extends AbstractController
 	{
 		$this->init();
 
-		$user_id = $request->get_getint('user_id', $this->user->get_attribute('user_id'));
+		$user_id = $request->get_getint('user_id', $this->user->get_id());
 		if (!UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $user_id)))
 		{
 			$error_controller = PHPBoostErrors::unexisting_member();
@@ -110,7 +110,7 @@ class UserViewProfileController extends AbstractController
 	
 	private function same_user_view_profile($user_id)
 	{
-		return $user_id == $this->user->get_attribute('user_id');
+		return $user_id == $this->user->get_id();
 	}
 	
 	private function get_level_lang($user_informations)

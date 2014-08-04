@@ -43,7 +43,7 @@ class UserEditProfileController extends AbstractController
 	{
 		$this->init();
 		
-		$user_id = $request->get_getint('user_id', AppContext::get_current_user()->get_attribute('user_id'));
+		$user_id = $request->get_getint('user_id', AppContext::get_current_user()->get_id());
 		
 		try {
 			$this->user = UserService::get_user('WHERE user_aprob = 1 AND user_id=:id', array('id' => $user_id));
