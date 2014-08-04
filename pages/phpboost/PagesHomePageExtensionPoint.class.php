@@ -50,7 +50,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $User, $Cache, $Bread_crumb, $_PAGES_CATS, $PAGES_LANG, $LANG, $pages;
+		global $Cache, $Bread_crumb, $_PAGES_CATS, $PAGES_LANG, $LANG, $pages;
 		
 		$pages_config = PagesConfig::load();
 		
@@ -81,7 +81,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 					//Autorisation particulière ?
 					$special_auth = !empty($value['auth']);
 					//Vérification de l'autorisation d'éditer la page
-					if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
+					if (($special_auth && AppContext::get_current_user()->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 					{
 						$root .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $value['name'] . '</a></li>';
 					}
@@ -99,7 +99,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			$special_auth = !empty($row['auth']);
 			$array_auth = unserialize($row['auth']);
 			//Vérification de l'autorisation d'éditer la page
-			if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
+			if (($special_auth && AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 			{
 				$root .= '<li><a href="' . PagesUrlBuilder::get_link_item($row['encoded_title']) . '"><i class="fa fa-file"></i>' . $row['title'] . '</a></li>';
 			}

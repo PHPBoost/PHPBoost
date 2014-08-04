@@ -117,7 +117,7 @@ elseif ($edit_file_id > 0)
 	define('TITLE', $DOWNLOAD_LANG['file_management']);
 	
 	//Barre d'arborescence
-	$auth_write = $User->check_auth($config->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT);
+	$auth_write = AppContext::get_current_user()->check_auth($config->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT);
 	
 	$Bread_crumb->add($DOWNLOAD_LANG['file_management'], url('management.php?edit=' . $edit_file_id));
 	
@@ -131,7 +131,7 @@ elseif ($edit_file_id > 0)
 		$Bread_crumb->add($DOWNLOAD_CATS[$id_cat]['name'], url('download.php?id=' . $id_cat, 'category-' . $id_cat . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php'));
 		
 		if (!empty($DOWNLOAD_CATS[$id_cat]['auth']))
-			$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
+			$auth_write = AppContext::get_current_user()->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
 		
 		$id_cat = (int)$DOWNLOAD_CATS[$id_cat]['id_parent'];
 	}
@@ -147,7 +147,7 @@ else
 	$Bread_crumb->add($DOWNLOAD_LANG['file_addition'], url('management.php?new=1'));
 	define('TITLE', $DOWNLOAD_LANG['file_addition']);
 	
-	if (!($auth_write = $User->check_auth($config->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT)) && !($auth_contribute = $User->check_auth($config->get_authorizations(), DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT)))
+	if (!($auth_write = AppContext::get_current_user()->check_auth($config->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT)) && !($auth_contribute = AppContext::get_current_user()->check_auth($config->get_authorizations(), DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT)))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -486,7 +486,7 @@ else
             $file_relative_url = new Url($file_url);
 			
 			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, force_download, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved, user_id) " .
-				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_relative_url->relative() . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . $file_contents . "', '" . $file_short_contents . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "', '" . (int)$User->get_id() . "')", __LINE__, __FILE__);
+				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_relative_url->relative() . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . $file_contents . "', '" . $file_short_contents . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "', '" . (int)AppContext::get_current_user()->get_id() . "')", __LINE__, __FILE__);
 			
 			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "download");
 			
@@ -504,7 +504,7 @@ else
 				//The URL where a validator can treat the contribution (in the file edition panel)
 				$download_contribution->set_fixing_url('/download/management.php?edit=' . $new_id_file);
 				//Who is the contributor?
-				$download_contribution->set_poster_id($User->get_attribute('user_id'));
+				$download_contribution->set_poster_id(AppContext::get_current_user()->get_attribute('user_id'));
 				//The module
 				$download_contribution->set_module('download');
 				

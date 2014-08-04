@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 
-if (!$User->check_level(User::MEMBER_LEVEL)) //Si il n'est pas member (les invités n'ont rien à faire ici)
+if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Si il n'est pas member (les invités n'ont rien à faire ici)
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -44,7 +44,7 @@ if ($contribution_id > 0)
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if (($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $User->get_id()))
+	if (($contribution = ContributionService::find_by_id($contribution_id)) == null || (!AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != AppContext::get_current_user()->get_id()))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -62,7 +62,7 @@ elseif ($id_update > 0)
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if (($contribution = ContributionService::find_by_id($id_update)) == null || !$User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT))
+	if (($contribution = ContributionService::find_by_id($id_update)) == null || !AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT))
 	{
     	$error_controller = PHPBoostErrors::unexisting_page();
 	   DispatchManager::redirect($error_controller);
@@ -78,11 +78,9 @@ elseif ($id_update > 0)
 //Enregistrement de la modification d'une contribution
 elseif ($id_to_update > 0)
 {
-	global $User;
-	
 	$contribution = new Contribution();
 	
-	if (($contribution = ContributionService::find_by_id($id_to_update)) == null || !$User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT))
+	if (($contribution = ContributionService::find_by_id($id_to_update)) == null || !AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT))
 	{
 	   $error_controller = PHPBoostErrors::unexisting_page();
 	   DispatchManager::redirect($error_controller);
@@ -103,7 +101,7 @@ elseif ($id_to_update > 0)
 		//Changement de statut ? On regarde si la contribution a été réglée
 		if ($status == Event::EVENT_STATUS_PROCESSED && $contribution->get_status() != Event::EVENT_STATUS_PROCESSED)
 		{
-			$contribution->set_fixer_id($User->get_id());
+			$contribution->set_fixer_id(AppContext::get_current_user()->get_id());
 			$contribution->set_fixing_date(new Date());
 		}
 		
@@ -127,7 +125,7 @@ elseif ($id_to_delete > 0)
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if (($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!$User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT)))
+	if (($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT)))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -169,7 +167,7 @@ if ($contribution_id > 0)
 	$contributor_group_color = User::get_group_color($contributor['user_groups'], $contributor['level']);
 	
 	$template->put_all(array(
-		'C_WRITE_AUTH' => $User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
+		'C_WRITE_AUTH' => AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
 		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != Event::EVENT_STATUS_PROCESSED,
 		'C_CONTRIBUTOR_GROUP_COLOR' => !empty($contributor_group_color),
 		'ENTITLED' => $contribution->get_entitled(),
@@ -279,7 +277,7 @@ else
 		$fixing_date = $this_contribution->get_fixing_date();
 		
 		//Affichage des contributions du membre
-		if ($User->check_auth($this_contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) || $User->get_id() == $this_contribution->get_poster_id())
+		if (AppContext::get_current_user()->check_auth($this_contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) || AppContext::get_current_user()->get_id() == $this_contribution->get_poster_id())
 		{
 			//On affiche seulement si on est dans le bon cadre d'affichage
 			if ($num_contributions > CONTRIBUTIONS_PER_PAGE * ($page - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $page)

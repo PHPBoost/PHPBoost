@@ -50,7 +50,7 @@ if (!empty($popup)) //Popup.
 }
 else //Affichage de l'interface de gestion.
 {
-	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::profile($User->get_attribute('user_id'))->rel());
+	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::profile(AppContext::get_current_user()->get_attribute('user_id'))->rel());
 	$Bread_crumb->add($LANG['files_management'], UserUrlBuilder::upload_files_panel()->rel());
 	require_once('../kernel/header.php');
 	$field = '';
@@ -60,7 +60,7 @@ else //Affichage de l'interface de gestion.
 	$popup_noamp = '';
 }
 
-if (!$User->check_level(User::MEMBER_LEVEL)) //Visiteurs interdits!
+if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Visiteurs interdits!
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -69,7 +69,7 @@ if (!$User->check_level(User::MEMBER_LEVEL)) //Visiteurs interdits!
 $files_upload_config = FileUploadConfig::load();
 
 //Droit d'accès?.
-if (!$User->check_auth($files_upload_config->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT))
+if (!AppContext::get_current_user()->check_auth($files_upload_config->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT))
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -92,7 +92,7 @@ if (!empty($parent_folder)) //Changement de dossier
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=0&' . $popup_noamp, '', '&'));
 	
 	$info_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
-	if ($info_folder['id_parent'] != 0 || $User->check_level(User::ADMIN_LEVEL))
+	if ($info_folder['id_parent'] != 0 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 	{
 		if ($parent_folder['user_id'] == -1)
 			AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?showm=1', '', '&'));
@@ -108,10 +108,10 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 {
 	$error = '';
 	//Autorisation d'upload aux groupes.
-	$group_limit = $User->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
-	$unlimited_data = ($group_limit === -1) || $User->check_level(User::ADMIN_LEVEL);
+	$group_limit = AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
+	$unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 	
-	$member_memory_used = Uploads::Member_memory_used($User->get_attribute('user_id'));
+	$member_memory_used = Uploads::Member_memory_used(AppContext::get_current_user()->get_attribute('user_id'));
 	if ($member_memory_used >= $group_limit && !$unlimited_data)
 		$error = 'e_max_data_reach';
 	else
@@ -139,7 +139,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			}
 			else //Insertion dans la bdd
 			{
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($Upload->get_original_filename()) . "', '" . addslashes($Upload->get_filename()) . "', '" . $User->get_attribute('user_id') . "', '" . $Upload->get_human_readable_size() . "', '" . $Upload->get_extension() . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($Upload->get_original_filename()) . "', '" . addslashes($Upload->get_filename()) . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . $Upload->get_human_readable_size() . "', '" . $Upload->get_extension() . "', '" . time() . "')", __LINE__, __FILE__);
 			}
 		}
 		else
@@ -153,13 +153,13 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	if ($User->check_level(User::ADMIN_LEVEL))
+	if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		Uploads::Del_folder($del_folder);
 	else
 	{
 		$check_user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $del_folder . "'", __LINE__, __FILE__);
 		//Suppression du dossier et de tout le contenu
-		if ($check_user_id == $User->get_attribute('user_id'))
+		if ($check_user_id == AppContext::get_current_user()->get_attribute('user_id'))
 		{
 			Uploads::Del_folder($del_folder);
 		}
@@ -176,13 +176,13 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	if ($User->check_level(User::ADMIN_LEVEL))
+	if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 	{
-		Uploads::Del_file($del_file, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
+		Uploads::Del_file($del_file, AppContext::get_current_user()->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
 	}
 	else
 	{
-		$error = Uploads::Del_file($del_file, $User->get_attribute('user_id'));
+		$error = Uploads::Del_file($del_file, AppContext::get_current_user()->get_attribute('user_id'));
 		if (!empty($error))
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
@@ -198,17 +198,17 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 	
 	$folder_owner = $Sql->query("SELECT user_id FROM ".DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 	
-	if ($folder_owner == $User->get_attribute('user_id'))
+	if ($folder_owner == AppContext::get_current_user()->get_attribute('user_id'))
 	{
 		include('upload_functions.php');
 		$sub_cats = array();
-		upload_find_subcats($sub_cats, $move_folder, $User->get_attribute('user_id'));
+		upload_find_subcats($sub_cats, $move_folder, AppContext::get_current_user()->get_attribute('user_id'));
 		$sub_cats[] = $move_folder;
 		//Si on ne déplace pas le dossier dans un de ses fils ou dans lui même
 		if (!in_array($to, $sub_cats))
 		{
 			$new_folder_owner = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);
-			if ($new_folder_owner == $User->get_attribute('user_id') || $to == 0)
+			if ($new_folder_owner == AppContext::get_current_user()->get_attribute('user_id') || $to == 0)
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $to . "' WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 				AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
@@ -231,11 +231,11 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 	$id_cat = $file_infos['idcat'];
 	$file_owner = $file_infos['user_id'];
 	//Si le fichier nous appartient alors on peut en faire ce que l'on veut
-	if ($file_owner == $User->get_attribute('user_id'))
+	if ($file_owner == AppContext::get_current_user()->get_attribute('user_id'))
 	{
 		$new_folder_owner = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);
 		//Si le dossier de destination nous appartient
-		if ($new_folder_owner == $User->get_attribute('user_id') || $to == 0)
+		if ($new_folder_owner == AppContext::get_current_user()->get_attribute('user_id') || $to == 0)
 		{
 			$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET idcat = '" . $to . "' WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
 			AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
@@ -270,7 +270,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		'L_ROOT' => $LANG['root'],
 		'L_URL' => $LANG['url'],
 		'L_SUBMIT' => $LANG['submit'],
-		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . $User->get_attribute('login') . '</a>/'
+		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . AppContext::get_current_user()->get_attribute('login') . '</a>/'
 	));
 	
 	if ($get_error == 'folder_contains_folder')
@@ -295,7 +295,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			'ID_FILE' => $move_folder,
 			'TARGET' => url('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token() . $popup)
 		));
-		$cat_explorer = display_cat_explorer($id_cat, $cats, 1, $User->get_attribute('user_id'));
+		$cat_explorer = display_cat_explorer($id_cat, $cats, 1, AppContext::get_current_user()->get_attribute('user_id'));
 	}
 	else
 	{
@@ -320,7 +320,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			}
 		}
 		
-		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, $User->get_attribute('user_id'));
+		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, AppContext::get_current_user()->get_attribute('user_id'));
 		
 		$Template->assign_block_vars('file', array(
 			'C_DISPLAY_REAL_IMG' => $display_real_img,	
@@ -344,7 +344,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 }
 else
 {
-	$is_admin = $User->check_level(User::ADMIN_LEVEL);
+	$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 	
 	$Template->set_filenames(array(
 		'upload' => 'user/upload.tpl'
@@ -366,7 +366,7 @@ else
 		'FOOTER' => $footer,
 		'FIELD' => $field,
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
-		'USER_ID' => $User->get_attribute('user_id'),
+		'USER_ID' => AppContext::get_current_user()->get_attribute('user_id'),
 		'URL' => Uploads::get_url($folder, '', '&amp;' . $popup),
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
@@ -391,14 +391,14 @@ else
 		'L_EMPTY' => $LANG['empty'],
 		'L_UPLOAD' => $LANG['upload'],
 		'L_URL' => $LANG['url'],
-		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . $User->get_attribute('login') . '</a>/'
+		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . AppContext::get_current_user()->get_attribute('login') . '</a>/'
 	));
 	
 	list($total_folder_size, $total_files, $total_directories) = array(0, 0, 0);
 	//Affichage des dossiers
 	$result = $Sql->query_while("SELECT id, name, id_parent, user_id
 	FROM " . PREFIX . "upload_cat
-	WHERE id_parent = '" . $folder . "' AND user_id = '" . $User->get_attribute('user_id') . "'
+	WHERE id_parent = '" . $folder . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 	ORDER BY name", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -420,7 +420,7 @@ else
 	$result = $Sql->query_while("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.login
 	FROM " . DB_TABLE_UPLOAD . " up
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
-	WHERE up.idcat = '" . $folder . "' AND up.user_id = '" . $User->get_attribute('user_id') . "'
+	WHERE up.idcat = '" . $folder . "' AND up.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 	ORDER BY up.name", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -484,10 +484,10 @@ else
 	$Sql->query_close($result);
 	
 	//Autorisation d'uploader sans limite aux groupes.
-	$group_limit = $User->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
-	$unlimited_data = ($group_limit === -1) || $User->check_level(User::ADMIN_LEVEL);
+	$group_limit = AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
+	$unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 	
-	$total_size = !empty($folder) ? Uploads::Member_memory_used($User->get_attribute('user_id')) : $Sql->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_attribute('user_id')) : $Sql->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	$Template->put_all(array(
 		'PERCENT' => !$unlimited_data ? '(' . NumberHelper::round($total_size/$group_limit, 3) * 100 . '%)' : '',
 		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($group_limit, 0) . ' ' . $LANG['unit_kilobytes']) : $LANG['illimited'],

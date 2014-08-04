@@ -140,7 +140,7 @@ elseif (!empty($entitled) && !empty($answer))
 		{
 			//shifting right all questions which will be after this
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE idcat = '" . $id_cat . "' AND q_order > '" . $FAQ_CATS[$id_cat]['num_questions'] . "'", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT INTO " . PREFIX . "faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $id_cat . "', '" . ($FAQ_CATS[$id_cat]['num_questions'] + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . $User->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $id_cat . "', '" . ($FAQ_CATS[$id_cat]['num_questions'] + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
 			
 			$new_question_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "faq");
 			
@@ -170,12 +170,12 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 	{
 		$question_infos = $Sql->query_array(PREFIX . "faq", "*", "WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
 		$id_cat_for_bread_crumb = $question_infos['idcat'];
-		$auth_write = $User->check_auth($faq_config->get_authorizations(), AUTH_WRITE);
+		$auth_write = AppContext::get_current_user()->check_auth($faq_config->get_authorizations(), AUTH_WRITE);
 		while ($id_cat_for_bread_crumb > 0)
 		{
 			$id_cat_for_bread_crumb = (int)$FAQ_CATS[$id_cat_for_bread_crumb]['id_parent'];
 			if (!empty($FAQ_CATS[$id_cat_for_bread_crumb]['auth']))
-				$auth_write = $User->check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], AUTH_WRITE);
+				$auth_write = AppContext::get_current_user()->check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], AUTH_WRITE);
 		}
 		if ($auth_write)
 		{

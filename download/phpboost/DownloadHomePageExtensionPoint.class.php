@@ -50,7 +50,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $DOWNLOAD_LANG, $LANG, $DOWNLOAD_CATS, $Cache, $User, $Bread_crumb, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
+		global $DOWNLOAD_LANG, $LANG, $DOWNLOAD_CATS, $Cache,  $Bread_crumb, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
 		
 		require_once(PATH_TO_ROOT . '/download/download_begin.php');
 		
@@ -95,7 +95,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			foreach ($DOWNLOAD_CATS as $id => $value)
 			{
 				//List of children categories
-				if ($id != 0 && $value['visible'] && $value['id_parent'] == $category_id && (empty($value['auth']) || $User->check_auth($value['auth'], DOWNLOAD_READ_CAT_AUTH_BIT)))
+				if ($id != 0 && $value['visible'] && $value['id_parent'] == $category_id && (empty($value['auth']) || AppContext::get_current_user()->check_auth($value['auth'], DOWNLOAD_READ_CAT_AUTH_BIT)))
 				{
 					if ( $i % $config->get_columns_number() == 1 )
 						$tpl->assign_block_vars('row', array());

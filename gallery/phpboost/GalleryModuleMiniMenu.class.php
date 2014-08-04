@@ -36,7 +36,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
     {
     	if (GalleryAuthorizationsService::check_authorizations()->read())
 		{
-			global $Cache, $User, $CAT_GALLERY, $LANG, $_array_random_pics, $Sql;
+			global $Cache,  $CAT_GALLERY, $LANG, $_array_random_pics, $Sql;
 			$tpl = new FileTemplate('gallery/gallery_mini.tpl');
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
 			
@@ -61,7 +61,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				$break = 0;
 				foreach ($_array_random_pics as $array_pics_info)
 				{
-					if ($User->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
+					if (AppContext::get_current_user()->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
 					{
 						$gallery_mini[] = $array_pics_info;
 						$break++;
@@ -89,7 +89,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 					$break = 0;
 					foreach ($_array_random_pics as $key => $array_pics_info)
 					{
-						if ($User->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
+						if (AppContext::get_current_user()->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
 						{
 							$gallery_mini[] = $array_pics_info;
 							$break++;

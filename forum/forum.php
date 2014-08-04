@@ -40,7 +40,7 @@ if (empty($id_get) || !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'
 }
 	
 //Vérification des autorisations d'accès.
-if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
+if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -84,7 +84,7 @@ if (!empty($id_get))
 	));
 	
 	//Invité?	
-	$is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
+	$is_guest = (AppContext::get_current_user()->get_attribute('user_id') !== -1) ? false : true;
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$max_time_msg = forum_limit_time_msg();
@@ -113,7 +113,7 @@ if (!empty($id_get))
 		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, m.level AS user_level, m.user_groups, v.last_view_id 
 		FROM " . PREFIX . "forum_cats c
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
-		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
+		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND v.idtopic = t.id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 		WHERE c.aprob = 1 AND c.id_left > '" . $CAT_FORUM[$id_get]['id_left'] . "' AND c.id_right < '" . $CAT_FORUM[$id_get]['id_right'] . "' AND c.level = '" . $CAT_FORUM[$id_get]['level'] . "' + 1  " . $unauth_cats . "
 		ORDER BY c.id_left ASC", __LINE__, __FILE__);
@@ -202,8 +202,8 @@ if (!empty($id_get))
 	}
 		
 	//On vérifie si l'utilisateur a les droits d'écritures.
-	$check_group_write_auth = $User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM);
-	$locked_cat = ($CAT_FORUM[$id_get]['status'] == 1 || $User->check_level(User::ADMIN_LEVEL)) ? false : true;
+	$check_group_write_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM);
+	$locked_cat = ($CAT_FORUM[$id_get]['status'] == 1 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) ? false : true;
 	if (!$check_group_write_auth)
 	{
 		$Template->assign_block_vars('error_auth_write', array(
@@ -244,7 +244,7 @@ if (!empty($id_get))
 	}
 	
 	//Si l'utilisateur a les droits d'édition.	
-	$check_group_edit_auth = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
+	$check_group_edit_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 
 	$Template->put_all(array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
@@ -285,11 +285,11 @@ if (!empty($id_get))
 	$nbr_topics_display = 0;
 	$result = $Sql->query_while("SELECT m1.login AS login, m1.level AS user_level, m1.user_groups AS user_groups, m2.login AS last_login, m2.level AS last_user_level, m2.user_groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 	FROM " . PREFIX . "forum_topics t
-	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
+	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND v.idtopic = t.id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
 	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
-	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $User->get_attribute('user_id') . "'
+	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 	WHERE t.idcat = '" . $id_get . "'
 	ORDER BY t.type DESC , t.last_timestamp DESC
 	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);

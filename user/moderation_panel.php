@@ -48,7 +48,7 @@ switch ($action)
 define('TITLE', $LANG['moderation_panel']);
 require_once('../kernel/header.php');
 
-if (!$User->check_level(User::MODERATOR_LEVEL)) //Si il n'est pas modérateur
+if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) //Si il n'est pas modérateur
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -80,7 +80,7 @@ if ($action == 'punish')
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
-		if ($id_get != $User->get_attribute('user_id'))
+		if ($id_get != AppContext::get_current_user()->get_attribute('user_id'))
 		{
 			if (!empty($readonly_contents))
 			{
@@ -242,12 +242,12 @@ else if ($action == 'warning')
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(User::ADMIN_LEVEL)))
+		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
 		{
 			if ($new_warning_level <= 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if ($id_get != $User->get_attribute('user_id'))
+				if ($id_get != AppContext::get_current_user()->get_attribute('user_id'))
 				{
 					MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::SEND_MP, $warning_contents);				
 				}

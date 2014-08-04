@@ -105,14 +105,14 @@ elseif (isset($_FILES['gallery'])) //Upload
 		$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
+	if (!AppContext::get_current_user()->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!$Gallery->auth_upload_pics($User->get_attribute('user_id'), $User->get_attribute('level')))
+	if (!$Gallery->auth_upload_pics(AppContext::get_current_user()->get_attribute('user_id'), AppContext::get_current_user()->get_attribute('level')))
 		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#message_helper');
 
 	$dir = 'pics/';
@@ -141,7 +141,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$Upload->get_error()) . '#message_helper');
 
-			$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->get_filename(), $User->get_attribute('user_id'));
+			$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->get_filename(), AppContext::get_current_user()->get_attribute('user_id'));
 			if ($Gallery->get_error() != '')
 				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$Upload->get_error()) . '#message_helper');
 
@@ -186,7 +186,7 @@ elseif ($g_add)
 	}
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
+	if (!AppContext::get_current_user()->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -197,7 +197,7 @@ elseif ($g_add)
 	{
 		if ($idcat != 0  && $CAT_GALLERY[$idcat]['aprob'] == 1)
 		{
-			if ($User->check_auth($CAT_GALLERY[$idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS) && $User->check_auth($CAT_GALLERY[$idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
+			if (AppContext::get_current_user()->check_auth($CAT_GALLERY[$idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS) && AppContext::get_current_user()->check_auth($CAT_GALLERY[$idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
 			{
 				$margin = ($CAT_GALLERY[$idcat]['level'] > 0) ? str_repeat('--------', $CAT_GALLERY[$idcat]['level']) : '--';
 				$selected = ($idcat == $g_idcat) ? ' selected="selected"' : '';
@@ -233,7 +233,7 @@ elseif ($g_add)
 	$quota = isset($CAT_GALLERY[$g_idcat]['auth']['r-1']) ? ($CAT_GALLERY[$g_idcat]['auth']['r-1'] != '3') : true;
 	if ($quota)
 	{
-		switch ($User->get_attribute('level'))
+		switch (AppContext::get_current_user()->get_attribute('level'))
 		{
 			case 2:
 			$l_pics_quota = $LANG['illimited'];
@@ -244,7 +244,7 @@ elseif ($g_add)
 			default:
 			$l_pics_quota = $config->get_member_max_pics_number();
 		}
-		$nbr_upload_pics = $Gallery->get_nbr_upload_pics($User->get_attribute('user_id'));
+		$nbr_upload_pics = $Gallery->get_nbr_upload_pics(AppContext::get_current_user()->get_attribute('user_id'));
 
 		$Template->assign_block_vars('image_quota', array(
 			'L_IMAGE_QUOTA' => sprintf($LANG['image_quota'], $nbr_upload_pics, $l_pics_quota)

@@ -203,7 +203,7 @@ class Sitemap
 	 */
 	private function build_kernel_map($mode = self::USER_MODE, $auth_mode = self::AUTH_PUBLIC)
 	{
-		global $LANG, $User;
+		global $LANG;
 			
 		//We consider the kernel as a module
 		$kernel_map = new ModuleMap(new SitemapLink($LANG['home'], new Url(Environment::get_home_page())));
@@ -220,26 +220,26 @@ class Sitemap
 			}
 			
 			//Member space
-			if ($auth_mode == self::AUTH_USER && $User->check_level(User::MEMBER_LEVEL))
+			if ($auth_mode == self::AUTH_USER && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 			{
 				//We create a section for that
 				$member_space_section = new SitemapSection(new SitemapLink($LANG['my_private_profile'],
-				UserUrlBuilder::profile($User->get_id())));
+				UserUrlBuilder::profile(AppContext::get_current_user()->get_id())));
 					
 				//Profile edition
 				$member_space_section->add(new SitemapLink(LangLoader::get_message('profile.edit', 'user-common'),
-				UserUrlBuilder::edit_profile($User->get_id())));
+				UserUrlBuilder::edit_profile(AppContext::get_current_user()->get_id())));
 					
 				//Private messaging
 				$member_space_section->add(new SitemapLink($LANG['private_messaging'],
-				UserUrlBuilder::personnal_message($User->get_id())));
+				UserUrlBuilder::personnal_message(AppContext::get_current_user()->get_id())));
 					
 				//Contribution panel
 				$member_space_section->add(new SitemapLink($LANG['contribution_panel'], 
 				UserUrlBuilder::contribution_panel()));
 					
 				//Administration panel
-				if ($User->check_level(User::ADMIN_LEVEL))
+				if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 				{
 					$member_space_section->add(new SitemapLink($LANG['admin_panel'], 
 					UserUrlBuilder::administration()));

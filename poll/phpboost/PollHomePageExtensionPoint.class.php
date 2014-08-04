@@ -52,7 +52,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		$this->check_authorizations();
 		
-		global $User, $Cache, $Bread_crumb, $POLL_CAT, $POLL_LANG, $LANG;
+		global $Cache, $Bread_crumb, $POLL_CAT, $POLL_LANG, $LANG;
 
 		require_once(PATH_TO_ROOT . '/poll/poll_begin.php');
 
@@ -64,7 +64,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 		$show_archives = !empty($show_archives) ? '<a href="poll' . url('.php?archives=1', '.php?archives=1') . '">' . $LANG['archives'] . '</a>' : '';
 	
 		$edit = '';	
-		if ($User->check_level(User::ADMIN_LEVEL))
+		if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 			$edit = '<a href="' . PATH_TO_ROOT . '/poll/admin_poll.php" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>';
 	
 		$tpl->put_all(array(

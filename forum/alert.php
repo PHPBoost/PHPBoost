@@ -47,7 +47,7 @@ require_once('../kernel/header.php');
 if (empty($alert) && empty($alert_post) || empty($topic['idcat']))
 	AppContext::get_response()->redirect('/forum/index' . url('.php'));
 
-if (!$User->check_level(User::MEMBER_LEVEL)) //Si c'est un invité
+if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Si c'est un invité
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);

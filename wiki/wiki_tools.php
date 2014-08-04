@@ -55,31 +55,31 @@ $Template->put_all(array(
 	'L_HISTORY' => $LANG['wiki_history'],
 	'U_HISTORY' => !empty($id_article) ? PATH_TO_ROOT . '/wiki/' . url('history.php?id=' . $id_article) : PATH_TO_ROOT . '/wiki/' . url('history.php'),
 
-	'C_EDIT' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT)),
+	'C_EDIT' => (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_EDIT)),
 	'L_EDIT' => $LANG['update'],
 	'U_EDIT' => PATH_TO_ROOT . '/wiki/' . url('post.php?id=' . $id_article),
 
-	'C_DELETE' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE)),
+	'C_DELETE' => (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE)),
 	'L_DELETE' => $LANG['delete'],
 	'U_DELETE' => $page_type == 'article' ? PATH_TO_ROOT . '/wiki/' . url('action.php?del_article=' . $id_article . '&amp;token=' . AppContext::get_session()->get_token()) : PATH_TO_ROOT . '/wiki/' . url('property.php?del=' . $id_article),
 
-	'C_RENAME' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME)),
+	'C_RENAME' => (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RENAME)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_RENAME)),
 	'L_RENAME' => $LANG['wiki_rename'],
 	'U_RENAME' => PATH_TO_ROOT . '/wiki/' . url('property.php?rename=' . $article_infos['id']),
 
-	'C_REDIRECT' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth  || $User->check_auth($article_auth , WIKI_REDIRECT)),
+	'C_REDIRECT' => (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth  || AppContext::get_current_user()->check_auth($article_auth , WIKI_REDIRECT)),
 	'L_REDIRECT' => $LANG['wiki_redirections'],
 	'U_REDIRECT' => PATH_TO_ROOT . '/wiki/' . url('property.php?redirect=' . $article_infos['id']),
 
-	'C_MOVE' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE)),
+	'C_MOVE' => (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_MOVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_MOVE)),
 	'L_MOVE' => $LANG['wiki_move'],
 	'U_MOVE' => PATH_TO_ROOT . '/wiki/' . url('property.php?move=' . $article_infos['id']),
 
-	'C_STATUS' => (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS)),
+	'C_STATUS' => (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_STATUS)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_STATUS)),
 	'L_STATUS' => $LANG['wiki_article_status'],
 	'U_STATUS' => PATH_TO_ROOT . '/wiki/' . url('property.php?status=' . $article_infos['id']),
 
-	'C_RESTRICTION' => $User->check_auth($config->get_authorizations(), WIKI_RESTRICTION),
+	'C_RESTRICTION' => AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RESTRICTION),
 	'L_RESTRICTION' => $LANG['wiki_restriction_level'],
 	'U_RESTRICTION' => PATH_TO_ROOT . '/wiki/' . url('property.php?auth=' . $article_infos['id']),
 	
@@ -94,7 +94,7 @@ $Template->put_all(array(
 ));
 
 //Discussion
-if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_COM)) && ($general_auth || $User->check_auth($article_auth , WIKI_COM)))
+if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_COM)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_COM)))
 {
 	$Template->put_all(array(
 		'C_ACTIV_COM' => true,

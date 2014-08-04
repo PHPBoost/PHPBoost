@@ -34,7 +34,7 @@ $Template->set_filenames(array(
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
-$is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
+$is_guest = (AppContext::get_current_user()->get_attribute('user_id') !== -1) ? false : true;
 $nbr_msg_not_read = 0;
 if (!$is_guest)
 {
@@ -65,7 +65,7 @@ if (!$is_guest)
 	$nbr_msg_not_read = $Sql->query("SELECT COUNT(*)
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-	LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . $User->get_attribute('user_id') . "'
+	LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . $unauth_cats, __LINE__, __FILE__);
 }
 
@@ -83,11 +83,11 @@ if ($CONFIG_FORUM['display_connexion'])
 
 $sid = (SID != '' ? '?' . SID : '');
 $Template->put_all(array(	
-	'C_DISPLAY_UNREAD_DETAILS' => ($User->get_attribute('user_id') !== -1) ? true : false,
-	'C_MODERATION_PANEL' => $User->check_level(1) ? true : false,
+	'C_DISPLAY_UNREAD_DETAILS' => (AppContext::get_current_user()->get_attribute('user_id') !== -1) ? true : false,
+	'C_MODERATION_PANEL' => AppContext::get_current_user()->check_level(1) ? true : false,
 	'U_TOPIC_TRACK' => '<a class="small" href="../forum/track.php' . $sid . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
 	'U_LAST_MSG_READ' => '<a class="small" href="../forum/lastread.php' . $sid . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',
-	'U_MSG_NOT_READ' => '<a class="small" href="../forum/unread.php' . $sid  . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . ($User->get_attribute('user_id') !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
+	'U_MSG_NOT_READ' => '<a class="small" href="../forum/unread.php' . $sid  . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . (AppContext::get_current_user()->get_attribute('user_id') !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
 	'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 	'L_CONFIG' => $LANG['forum_config'],

@@ -52,7 +52,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		$this->check_authorizations();
 		
-		global $LANG, $Cache, $User, $auth_write, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang;
+		global $LANG, $Cache,  $auth_write, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang;
 		
 		require_once(PATH_TO_ROOT . '/stats/stats_begin.php');
 		

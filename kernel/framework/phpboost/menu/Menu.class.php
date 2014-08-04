@@ -128,7 +128,7 @@ abstract class Menu
     {
         if (is_array($this->auth))
         {
-        	return '\'; $__auth=' . preg_replace('`[\s]+`', '', var_export($this->auth, true)) . ';if ($User->check_auth($__auth,1)){$__menu.=\'';
+        	return '\'; $__auth=' . preg_replace('`[\s]+`', '', var_export($this->auth, true)) . ';if (AppContext::get_current_user()->check_auth($__auth,1)){$__menu.=\'';
         }
         return '';
     }

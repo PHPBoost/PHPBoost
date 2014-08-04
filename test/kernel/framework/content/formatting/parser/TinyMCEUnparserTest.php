@@ -1,7 +1,4 @@
 <?php
-
-$User = new User();
-
 class TinyMCEUnparserTest extends PHPBoostUnitTestCase
 {
 	public function test_img()

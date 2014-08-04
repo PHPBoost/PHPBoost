@@ -47,7 +47,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	$auth_cats = '';
 	foreach ($CAT_FORUM as $idcat => $key)
 	{
-		if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
+		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
 			$auth_cats .= $idcat . ',';
 	}
 	$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';

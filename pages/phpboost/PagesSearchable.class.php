@@ -43,18 +43,18 @@ class PagesSearchable extends AbstractSearchableExtensionPoint
         $search = $args['search'];
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         
-        global $_PAGES_CATS, $User, $Cache;
+        global $_PAGES_CATS,  $Cache;
         require_once(PATH_TO_ROOT . '/pages/pages_defines.php');
         $Cache->load('pages');
         
         $auth_cats = '';
         if (is_array($_PAGES_CATS))
         {
-            if (isset($_PAGES_CATS['auth']) && !$User->check_auth($_PAGES_CATS['auth'], READ_PAGE))
+            if (isset($_PAGES_CATS['auth']) && !AppContext::get_current_user()->check_auth($_PAGES_CATS['auth'], READ_PAGE))
                 $auth_cats .= '0,';
             foreach ($_PAGES_CATS as $id => $key)
             {
-                if (!$User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
+                if (!AppContext::get_current_user()->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
                     $auth_cats .= $id.',';
             }
         }
@@ -78,7 +78,7 @@ class PagesSearchable extends AbstractSearchableExtensionPoint
             if ( !empty($row['auth']) )
             {
                 $auth = unserialize($row['auth']);
-                if ( !$User->check_auth($auth, READ_PAGE) )
+                if ( !AppContext::get_current_user()->check_auth($auth, READ_PAGE) )
                 {
                     unset($row['auth']);
                     array_push($results, $row);

@@ -39,7 +39,7 @@ class DownloadSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $DOWNLOAD_CATS, $DOWNLOAD_LANG, $LANG, $User, $Cache;
+		global $DOWNLOAD_CATS, $DOWNLOAD_LANG, $LANG,  $Cache;
 
 		load_module_lang('download');
 		$Cache->load('download');
@@ -66,7 +66,7 @@ class DownloadSitemapExtensionPoint implements SitemapExtensionPoint
 			}
 			else
 			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) : $User->check_auth($config->get_authorizations(), DOWNLOAD_READ_CAT_AUTH_BIT);
+				$this_auth = is_array($properties['auth']) ? AppContext::get_current_user()->check_auth($properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) : AppContext::get_current_user()->check_auth($config->get_authorizations(), DOWNLOAD_READ_CAT_AUTH_BIT);
 			}
 
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
@@ -80,7 +80,7 @@ class DownloadSitemapExtensionPoint implements SitemapExtensionPoint
 	
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $DOWNLOAD_CATS, $LANG, $User;
+		global $DOWNLOAD_CATS, $LANG;
 		
 		$this_category = new SitemapLink($DOWNLOAD_CATS[$id_cat]['name'], new Url('/download/' . url('download.php?cat='.$id_cat, 'category-' . $id_cat . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php')));
 

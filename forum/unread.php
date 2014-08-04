@@ -37,7 +37,7 @@ require_once('../kernel/header.php');
 //Redirection changement de catégorie.
 if (!empty($_POST['change_cat']))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
-if (!$User->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
+if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
 {	
 	AppContext::get_response()->redirect(UserUrlBuilder::connect()); 
 }
@@ -59,7 +59,7 @@ if (is_array($CAT_FORUM))
 {
 	foreach ($CAT_FORUM as $idcat => $key)
 	{
-		if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) || !$CAT_FORUM[$idcat]['aprob'])
+		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) || !$CAT_FORUM[$idcat]['aprob'])
 			$auth_cats .= $idcat . ',';
 	}
 	$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -70,7 +70,7 @@ $clause_cat = !empty($idcat_unread) ? "(c.id_left >= '" . $CAT_FORUM[$idcat_unre
 
 $nbr_topics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . $User->get_attribute('user_id') . "'
+LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats, __LINE__, __FILE__);
 
 $cat_filter = !empty($idcat_unread) ? '&amp;cat=' . $idcat_unread : '';
@@ -88,9 +88,9 @@ if ($pagination->current_page_is_empty() && $page > 1)
 $result = $Sql->query_while("SELECT c.id as cid, m1.login AS login, m1.level AS user_level, m1.user_groups AS user_groups, m2.login AS last_login, m2.level AS last_user_level, m2.user_groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id	AND v.user_id = '" . $User->get_attribute('user_id') . "'
+LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id	AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
-LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $User->get_attribute('user_id') . "'
+LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
 WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "

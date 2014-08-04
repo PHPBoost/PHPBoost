@@ -69,7 +69,7 @@ if (!empty($_POST['change_cat']))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
 	
 //Autorisation en lecture.
-if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM))
+if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM))
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -91,7 +91,7 @@ $TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 $module_data_path = $TmpTemplate->get_pictures_data_path();
 
 //Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.	
-$check_group_edit_auth = $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM);
+$check_group_edit_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM);
 if ($check_group_edit_auth)
 {
 	$Template->put_all(array(
@@ -212,7 +212,7 @@ LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = '" . $id_get . "'
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = msg.user_id_edit
 LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
-LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = '" . $id_get . "' AND tr.user_id = '" . $User->get_attribute('user_id') . "'
+LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = '" . $id_get . "' AND tr.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
 WHERE msg.idtopic = '" . $id_get . "'
 ORDER BY msg.timestamp 
@@ -225,7 +225,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 
 	//Gestion du niveau d'autorisation.
 	list($edit, $del, $cut, $moderator) = array(false, false, false, false);
-	if ($check_group_edit_auth || ($User->get_attribute('user_id') == $row['user_id'] && !$is_guest && !$first_message))
+	if ($check_group_edit_auth || (AppContext::get_current_user()->get_attribute('user_id') == $row['user_id'] && !$is_guest && !$first_message))
 	{
 		list($edit, $del) = array(true, true);
 		if ($check_group_edit_auth) //Fonctions réservées à ceux possédants les droits de modérateurs seulement.
@@ -234,7 +234,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 			$moderator = (!$is_guest) ? true : false;
 		}
 	}
-	elseif ($User->get_attribute('user_id') == $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
+	elseif (AppContext::get_current_user()->get_attribute('user_id') == $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
 		$edit = true;
 	
 	//Gestion des sondages => executé une seule fois.
@@ -251,7 +251,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		));
 		
 		$array_voter = explode('|', $row['voter_id']);			
-		if (in_array($User->get_attribute('user_id'), $array_voter) || !empty($_GET['r']) || $User->get_attribute('user_id') === -1) //Déjà voté.
+		if (in_array(AppContext::get_current_user()->get_attribute('user_id'), $array_voter) || !empty($_GET['r']) || AppContext::get_current_user()->get_attribute('user_id') === -1) //Déjà voté.
 		{
 			$array_answer = explode('|', $row['answers']);
 			$array_vote = explode('|', $row['votes']);
@@ -482,7 +482,7 @@ if ($topic['status'] == '0' && !$check_group_edit_auth)
 		'L_ERROR_AUTH_WRITE' => $LANG['e_topic_lock_forum']
 	));
 }	
-elseif (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM)) //On vérifie si l'utilisateur a les droits d'écritures.
+elseif (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM)) //On vérifie si l'utilisateur a les droits d'écritures.
 {
 	$Template->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,
@@ -509,7 +509,7 @@ else
 	));
 
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
-	if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $User->get_attribute('user_id') == $topic['user_id']))
+	if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || AppContext::get_current_user()->get_attribute('user_id') == $topic['user_id']))
 	{
 		$img_msg_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
 		$Template->put_all(array(

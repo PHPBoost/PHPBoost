@@ -39,10 +39,10 @@ require_once('../kernel/header.php');
 $change_cat = retrieve(POST, 'change_cat', '');
 if (!empty($change_cat))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
-if (!$User->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
+if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
 	AppContext::get_response()->redirect(UserUrlBuilder::connect()->rel()); 
 
-if ($User->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
+if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->set_filenames(array(
 		'forum_topics'=> 'forum/forum_forum.tpl',
@@ -57,7 +57,7 @@ if ($User->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s)
 	$nbr_topics = $Sql->query("SELECT COUNT(*)
 	FROM " . PREFIX . "forum_view v
 	LEFT JOIN " . PREFIX . "forum_topics t ON t.id = v.idtopic
-	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topics, $CONFIG_FORUM['pagination_topic'], Pagination::LIGHT_PAGINATION);
@@ -74,10 +74,10 @@ if ($User->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s)
 	LEFT JOIN " . PREFIX . "forum_topics t ON t.id = v.idtopic
 	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat 
 	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
-	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $User->get_attribute('user_id') . "'
+	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
-	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . $User->get_attribute('user_id') . "'
+	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 	ORDER BY t.last_timestamp DESC
 	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))

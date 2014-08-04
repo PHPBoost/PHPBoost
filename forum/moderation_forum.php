@@ -50,7 +50,7 @@ if (is_array($CAT_FORUM))
 {
 	foreach ($CAT_FORUM as $idcat => $value)
 	{
-		if ($User->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM))
+		if (AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM))
 		{
 			$check_auth_by_group = true;
 			break;
@@ -58,7 +58,7 @@ if (is_array($CAT_FORUM))
 	}
 }
 
-if (!$User->check_level(User::MODERATOR_LEVEL) && $check_auth_by_group !== true) //Si il n'est pas modérateur (total ou partiel)
+if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL) && $check_auth_by_group !== true) //Si il n'est pas modérateur (total ou partiel)
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -157,7 +157,7 @@ if ($action == 'alert') //Gestion des alertes
 		$auth_cats = '';
 		foreach ($CAT_FORUM as $idcat => $key)
 		{
-			if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM))
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM))
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? " WHERE c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -211,7 +211,7 @@ if ($action == 'alert') //Gestion des alertes
 		$auth_cats = '';
 		foreach ($CAT_FORUM as $idcat => $key)
 		{
-			if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM))
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM))
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -288,12 +288,12 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(User::ADMIN_LEVEL)))
+		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
 		{
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
+			if ($info_mbr['user_id'] != AppContext::get_current_user()->get_attribute('user_id'))
 			{
 				if (!empty($readonly_contents) && !empty($readonly))
 				{
@@ -463,14 +463,14 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(User::ADMIN_LEVEL)))
+		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
 		{
 			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
+				if ($info_mbr['user_id'] != AppContext::get_current_user()->get_attribute('user_id'))
 				{
 					if (!empty($warning_contents))
 					{
@@ -603,7 +603,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		));
 	}
 }
-elseif (retrieve(GET, 'del_h', false) && $User->check_level(User::ADMIN_LEVEL)) //Suppression de l'historique.
+elseif (retrieve(GET, 'del_h', false) && AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Suppression de l'historique.
 {
 	$Sql->query_inject("DELETE FROM " . PREFIX . "forum_history");
 
@@ -620,7 +620,7 @@ else //Panneau de modération
 	));
 
 	//Bouton de suppression de l'historique, visible uniquement pour l'admin.
-	if ($User->check_level(User::ADMIN_LEVEL))
+	if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 	{
 		$Template->put_all(array(
 			'C_FORUM_ADMIN' => true

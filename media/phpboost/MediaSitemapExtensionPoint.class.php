@@ -39,7 +39,7 @@ class MediaSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $MEDIA_CATS, $MEDIA_LANG, $LANG, $User, $MEDIA_CONFIG, $Cache, $Bread_crumb;
+		global $MEDIA_CATS, $MEDIA_LANG, $LANG,  $MEDIA_CONFIG, $Cache, $Bread_crumb;
 
 		require_once PATH_TO_ROOT . '/media/media_begin.php';
 
@@ -62,7 +62,7 @@ class MediaSitemapExtensionPoint implements SitemapExtensionPoint
 			}
 			else
 			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], MEDIA_AUTH_READ) : $User->check_auth($MEDIA_CONFIG['auth'], MEDIA_AUTH_READ);
+				$this_auth = is_array($properties['auth']) ? AppContext::get_current_user()->check_auth($properties['auth'], MEDIA_AUTH_READ) : AppContext::get_current_user()->check_auth($MEDIA_CONFIG['auth'], MEDIA_AUTH_READ);
 			}
 
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
@@ -76,7 +76,7 @@ class MediaSitemapExtensionPoint implements SitemapExtensionPoint
 	
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $MEDIA_CATS, $LANG, $User, $MEDIA_CONFIG;
+		global $MEDIA_CATS, $LANG,  $MEDIA_CONFIG;
 
 		$this_category = new SitemapLink($MEDIA_CATS[$id_cat]['name'], new Url('/media/media' . url('.php?cat='.$id_cat, '-0-' . $id_cat . '+' . Url::encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php')));
 

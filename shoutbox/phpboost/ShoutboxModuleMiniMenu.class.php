@@ -39,7 +39,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 
 	public function display($tpl = false)
     {
-	    global $Cache, $LANG, $User, $Sql;
+	    global $Cache, $LANG,  $Sql;
 
 	    $config_shoutbox = ShoutboxConfig::load();
 	
@@ -53,7 +53,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    	if ($shoutbox)
 	    	{
 	    		//Membre en lecture seule?
-	    		if ($User->get_attribute('user_readonly') > time())
+	    		if (AppContext::get_current_user()->get_attribute('user_readonly') > time())
 	    		{
 	    			$error_controller = PHPBoostErrors::user_in_read_only();
 	                DispatchManager::redirect($error_controller);
@@ -67,8 +67,8 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    			if (ShoutboxAuthorizationsService::check_authorizations()->write())
 	    			{
 	    				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-	    				$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
-	    				if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
+	    				$check_time = (AppContext::get_current_user()->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+	    				if (!empty($check_time) && !AppContext::get_current_user()->check_max_value(AUTH_FLOOD))
 	    				{
 	    					if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
 	    						AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=flood', '', '&'));
@@ -81,7 +81,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
 	    					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
 	
-	    				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+	    				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . AppContext::get_current_user()->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 	
 	    				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	    			}
@@ -96,9 +96,9 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	       MenuService::assign_positions_conditions($tpl, $this->get_block());
 	
 	    	//Pseudo du membre connecté.
-	    	if ($User->get_attribute('user_id') !== -1)
+	    	if (AppContext::get_current_user()->get_attribute('user_id') !== -1)
 	    		$tpl->put_all(array(
-	    			'SHOUTBOX_PSEUDO' => $User->get_attribute('login'),
+	    			'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_attribute('login'),
 	    			'C_HIDDEN_SHOUT' => true
 	    		));
 	    	else
@@ -134,7 +134,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    	while ($row = $Sql->fetch_assoc($result))
 	    	{
 	    		$row['user_id'] = (int)$row['user_id'];
-	    		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+	    		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_attribute('user_id') && AppContext::get_current_user()->get_attribute('user_id') !== -1))
 	    			$del_message = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '" class="small"><i class="fa fa-remove"></i></a>';
 	    		else
 	    			$del_message = '';

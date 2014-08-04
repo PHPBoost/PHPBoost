@@ -70,7 +70,7 @@ if ($id_edit > 0)
 		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
-	if ($User->check_auth($config_authorizations, EDIT_PAGE))
+	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	$Bread_crumb->reverse();
 }
@@ -103,7 +103,7 @@ if (!empty($contents))
 			$special_auth = !empty($page_infos['auth']);
 			$array_auth = unserialize($page_infos['auth']);
 			//Vérification de l'autorisation d'éditer la page
-			if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, EDIT_PAGE)))
+			if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 				AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 			
 			//on vérifie que la catégorie ne s'insère pas dans un de ses filles
@@ -143,7 +143,7 @@ if (!empty($contents))
 		//Création d'une page
 		elseif (!empty($title))
 		{
-			if (!$User->check_auth($config_authorizations, EDIT_PAGE))
+			if (!AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 				AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 			
 			$encoded_title = Url::encode_rewrite($title);
@@ -152,7 +152,7 @@ if (!empty($contents))
 			//Si l'article n'existe pas déjà, on enregistre
 			if ($is_already_page == 0)
 			{
-				$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat, display_print_link) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . $User->get_attribute('user_id') . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "', '" . $display_print_link . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat, display_print_link) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "', '" . $display_print_link . "')", __LINE__, __FILE__);
 				//Si c'est une catégorie
 				if ($is_cat > 0)
 				{
@@ -187,7 +187,7 @@ elseif ($del_article > 0)
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
-	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, EDIT_PAGE)))
+	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 		
 	//la page existe bien, on supprime
@@ -210,7 +210,7 @@ if ($id_edit > 0)
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation d'éditer la page
-	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, EDIT_PAGE)))
+	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 	
 	//Erreur d'enregistrement ?
@@ -246,7 +246,7 @@ if ($id_edit > 0)
 else
 {
 	//Autorisations
-	if (!$User->check_auth($config_authorizations, EDIT_PAGE))
+	if (!AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 		
 	//La page existe déjà !

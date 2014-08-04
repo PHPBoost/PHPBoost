@@ -28,7 +28,7 @@
 
 require_once('../kernel/begin.php');
 
-if (!$User->check_level(User::MODERATOR_LEVEL))
+if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 {
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
@@ -243,7 +243,7 @@ else
 		'PAGINATION' => $pagination->display(),
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset'],
-		'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
+		'C_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 		'L_RECOUNT_MEDIA' => $MEDIA_LANG['recount_per_cat'],
 		'JS_ARRAY' => '"' . implode('", "', $js_array) . '"'
 	));
