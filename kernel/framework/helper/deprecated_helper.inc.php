@@ -254,48 +254,6 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	return $date->format($format);
 }
 
-//Convertit une chaîne au format $LANG['date_format'] (ex:DD/MM/YYYY) en type DATE, si la date saisie est valide sinon retourne 0000-00-00.
-/**
- * @deprecated
- * @desc Converts a formatted date to the SQL date format.
- * @param string $str Formatted date
- * @param string $date_format Formatting pattern (DD for the day, MM for the month and YYYY for the year separated only by / characters).
- * @return string The formatted date
- */
-function strtodate($str, $date_format)
-{
-	list($month, $day, $year) = array(0, 0, 0);
-	$array_date = explode('/', $str);
-	$array_format = explode('/', $date_format);
-	for ($i = 0; $i < 3; $i++)
-	{
-		switch ($array_format[$i])
-		{
-			case 'DD':
-				$day = (isset($array_date[$i])) ? NumberHelper::numeric($array_date[$i]) : 0;
-				break;
-			case 'MM':
-				$month = (isset($array_date[$i])) ? NumberHelper::numeric($array_date[$i]) : 0;
-				break;
-			case 'YYYY':
-				$year = (isset($array_date[$i])) ? NumberHelper::numeric($array_date[$i]) : 0;
-				break;
-		}
-	}
-
-	//Vérification du format de la date.
-	if (checkdate($month, $day, $year))
-	{
-		$date = $year . '-' . $month . '-' . $day;
-	}
-	else
-	{
-		$date = '0000-00-00';
-	}
-
-	return $date;
-}
-
 /**
  * @deprecated
  * @desc Returns the current user's theme.

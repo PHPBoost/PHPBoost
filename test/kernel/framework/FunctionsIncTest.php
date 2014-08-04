@@ -102,11 +102,6 @@ class FunctionsIncTest extends PHPBoostUnitTestCase {
 		// TODO(__METHOD__);
 	}
 	
-	function test_strtodate()
-	{
-		// TODO(__METHOD__);
-	}
-	
 	function test_delete_file()
 	{
 		// TODO(__METHOD__);
