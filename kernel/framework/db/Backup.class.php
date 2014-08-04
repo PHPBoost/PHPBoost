@@ -65,7 +65,7 @@ class Backup
 	{
 		if (empty($this->tables))
 		{
-			$this->tables = PersistenceContext::get_sql()->list_tables();
+			$this->tables = PersistenceContext::get_dbms_utils()->list_and_desc_tables();
 		}
 		return $this->tables;
 	}
