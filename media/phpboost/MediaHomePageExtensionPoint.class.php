@@ -50,14 +50,14 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $MEDIA_CATS, $LANG, $MEDIA_LANG, $MEDIA_CONFIG, $Cache, $id_cat, $id_media, $User, $auth_write, $Bread_crumb, $level;
+		global $MEDIA_CATS, $LANG, $MEDIA_LANG, $MEDIA_CONFIG, $Cache, $id_cat, $id_media,  $auth_write, $Bread_crumb, $level;
 		
 		require_once(PATH_TO_ROOT . '/media/media_begin.php');
 		
 		$tpl = new FileTemplate('media/media.tpl');
 		
 		//if the category doesn't exist or is not visible
-		if (empty($MEDIA_CATS[$id_cat]) || $MEDIA_CATS[$id_cat]['visible'] === false || !$User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_READ))
+		if (empty($MEDIA_CATS[$id_cat]) || $MEDIA_CATS[$id_cat]['visible'] === false || !AppContext::get_current_user()->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_READ))
 		{
 			$controller = PHPBoostErrors::unexisting_category();
 	        DispatchManager::redirect($controller);
@@ -67,7 +67,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 		//List of children categories
 		foreach ($MEDIA_CATS as $id => $array)
 		{
-			if ($id != 0 && $array['visible'] && $array['id_parent'] == $id_cat && $User->check_auth($array['auth'], MEDIA_AUTH_READ))
+			if ($id != 0 && $array['visible'] && $array['id_parent'] == $id_cat && AppContext::get_current_user()->check_auth($array['auth'], MEDIA_AUTH_READ))
 			{
 				if ($i % $MEDIA_CONFIG['nbr_column'] == 1)
 				{
@@ -95,11 +95,11 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 			'TITLE' => $MEDIA_CATS[$id_cat]['name'],
 			'C_CAT' => ($id_cat <> 0),
-			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
-			'C_MODO' => $User->check_level(User::MODERATOR_LEVEL),
+			'C_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
+			'C_MODO' => AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL),
 			'U_CONFIG' => PATH_TO_ROOT . '/media/admin_media_config.php',
 			'U_ADMIN_CAT' => PATH_TO_ROOT . '/media/admin_media_cats.php?edit=' . $id_cat,
-			'C_ADD_FILE' => $User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_WRITE) || $User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_CONTRIBUTION),
+			'C_ADD_FILE' => AppContext::get_current_user()->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_WRITE) || AppContext::get_current_user()->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_CONTRIBUTION),
 			'U_ADD_FILE' => PATH_TO_ROOT . '/media/media_action.php?add=' . $id_cat,
 			'L_ADD_FILE' => $MEDIA_LANG['add_media'],
 			'L_ADMIN_CAT' => $MEDIA_LANG['category_manage'],

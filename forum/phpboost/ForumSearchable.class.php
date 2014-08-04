@@ -40,7 +40,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	 *  Renvoie le formulaire de recherche du forum
 	 */
 	{
-		global $User, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
+		global $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
 
 		$Tpl = new FileTemplate('forum/forum_search_form.tpl');
 
@@ -86,7 +86,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		{
 			foreach ($CAT_FORUM as $id => $key)
 			{
-				if ($User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM))
+				if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM))
 				{
 					$Tpl->assign_block_vars('cats', array(
                         'MARGIN' => ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----',
@@ -113,7 +113,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	 *  Renvoie la requête de recherche dans le forum
 	 */
 	{
-		global $CAT_FORUM, $User, $Cache;
+		global $CAT_FORUM,  $Cache;
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		$Cache->load('forum');
 
@@ -129,7 +129,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		{
 			foreach ($CAT_FORUM as $id => $key)
 			{
-				if (!$User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM))
+				if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM))
 				$auth_cats .= $id.',';
 			}
 		}

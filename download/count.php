@@ -41,7 +41,7 @@ if (!empty($idurl))
 	//Vérification de l'autorisation sur le fichier
 	$Cache->load('download');
 	
-    $auth_read = $User->check_auth(DownloadConfig::load()->get_authorizations(), DOWNLOAD_READ_CAT_AUTH_BIT);
+    $auth_read = AppContext::get_current_user()->check_auth(DownloadConfig::load()->get_authorizations(), DOWNLOAD_READ_CAT_AUTH_BIT);
     $id_cat_for_download = (int)$info_file['idcat'];
     
     //Bread_crumb : we read categories list recursively
@@ -51,7 +51,7 @@ if (!empty($idurl))
     	if (is_array($DOWNLOAD_CATS[$id_cat_for_download]['auth']))
     	{
     		//If we can't read a category, we can't read sub elements.
-    		$auth_read = $auth_read && $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+    		$auth_read = $auth_read && AppContext::get_current_user()->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
     	}
     	$id_cat_for_download = (int)$DOWNLOAD_CATS[$id_cat_for_download]['id_parent'];
     }

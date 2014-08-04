@@ -52,7 +52,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		$this->check_authorizations();
 		
-		global $Cache, $CAT_GALLERY, $Bread_crumb, $LANG, $User;
+		global $Cache, $CAT_GALLERY, $Bread_crumb, $LANG;
 		
 		require_once(PATH_TO_ROOT . '/gallery/gallery_begin.php');
 		
@@ -106,7 +106,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 	
 		//Niveau d'autorisation de la catégorie
-		if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
+		if (!AppContext::get_current_user()->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -141,8 +141,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 		$column_width_pics = floor(100/$nbr_column_pics);
 	
-		$is_admin = $User->check_level(User::ADMIN_LEVEL) ? true : false;
-		$is_modo = ($User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS)) ? true : false;
+		$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL) ? true : false;
+		$is_modo = (AppContext::get_current_user()->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS)) ? true : false;
 	
 		$module_data_path = $Template->get_pictures_data_path();
 		$rewrite_title = Url::encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
@@ -209,7 +209,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			if ($idcat > 0 && $CAT_GALLERY[$idcat]['aprob'] == 1)
 			{
-				if (!$User->check_auth($CAT_GALLERY[$idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
+				if (!AppContext::get_current_user()->check_auth($CAT_GALLERY[$idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
 				{
 					$clause_level = !empty($g_idcat) ? ($CAT_GALLERY[$idcat]['level'] == ($CAT_GALLERY[$g_idcat]['level'] + 1)) : ($CAT_GALLERY[$idcat]['level'] == 0);
 					if ($clause_level)
@@ -318,7 +318,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				if (!in_array($row['id'], $unauth_cats))
 				{
 					$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
-					$array_cat_list[$row['id']] = $User->check_auth($CAT_GALLERY[$row['id']]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS) ? '<option value="' . $row['id'] . '" %s>' . $margin . ' ' . $row['name'] . '</option>' : '';
+					$array_cat_list[$row['id']] = AppContext::get_current_user()->check_auth($CAT_GALLERY[$row['id']]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS) ? '<option value="' . $row['id'] . '" %s>' . $margin . ' ' . $row['name'] . '</option>' : '';
 				}
 			}
 			$this->sql_querier->query_close($result);
@@ -392,7 +392,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					foreach ($array_cat_list as $key_cat => $option_value)
 						$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 	
-					$activ_note = ($config->is_notation_enabled() && $User->check_level(User::MEMBER_LEVEL) );
+					$activ_note = ($config->is_notation_enabled() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) );
 					if ($activ_note)
 					{
 						//Affichage notation.
@@ -521,7 +521,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					'L_VIEWS' => $LANG['views']
 				));
 				
-				$is_connected = $User->check_level(User::MEMBER_LEVEL);
+				$is_connected = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
 				$j = 0;
 				$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob, m.login, m.user_groups, m.level, notes.average_notes, notes.number_notes, note.note
 				FROM " . PREFIX . "gallery g

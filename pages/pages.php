@@ -64,12 +64,12 @@ if (!empty($encoded_title)) //Si on connait son titre
 	while ($id > 0)
 	{
 		//Si on a les droits de lecture sur la catégorie, on l'affiche	
-		if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
+		if (empty($_PAGES_CATS[$id]['auth']) || AppContext::get_current_user()->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
 			$Bread_crumb->add($_PAGES_CATS[$id]['name'],
 				PagesUrlBuilder::get_link_item(Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}	
-	if ($User->check_auth($config_authorizations, EDIT_PAGE))
+	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	//On renverse ce fil pour le mettre dans le bon ordre d'arborescence
 	$Bread_crumb->reverse();
@@ -94,14 +94,14 @@ elseif ($id_com > 0)
 			PagesUrlBuilder::get_link_item(Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
-	if ($User->check_auth($config_authorizations, EDIT_PAGE))
+	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	$Bread_crumb->reverse();
 }
 else
 {
 	define('TITLE', $LANG['pages']);
-	$auth_index = $User->check_auth($config_authorizations, EDIT_PAGE);
+	$auth_index = AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE);
 	if ($auth_index)
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	elseif (!$auth_index)
@@ -122,13 +122,13 @@ if (!empty($encoded_title) && $num_rows == 1)
 	$array_auth = unserialize($page_infos['auth']);
 
 	//Vérification de l'autorisation de voir la page
-	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_PAGE)))
+	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$auth = ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE));
+	$auth = ($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE));
 	$Template->put_all(array(
 		'C_TOOLS_AUTH' => $auth,
 		'C_PRINT' => $page_infos['display_print_link'],
@@ -149,13 +149,13 @@ if (!empty($encoded_title) && $num_rows == 1)
 	{
 		$Template->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
-			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) ||
-				(!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="fa fa-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>' : ''
+			'DELETE_REDIRECTION' => (($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) ||
+				(!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="fa fa-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>' : ''
 		));
 	}
 	
 	//Affichage des commentaires si il y en a la possibilité
-	if ($page_infos['activ_com'] == 1 && (($special_auth && $User->check_auth($array_auth, READ_COM)) || (!$special_auth && $User->check_auth($config_authorizations, READ_COM))))
+	if ($page_infos['activ_com'] == 1 && (($special_auth && AppContext::get_current_user()->check_auth($array_auth, READ_COM)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_COM))))
 	{	
 		$number_comments = CommentsService::get_number_comments('pages', $page_infos['id']);
 		$Template->put_all(array(
@@ -199,7 +199,7 @@ elseif ($id_com > 0)
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de voir la page
-	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_COM)))
+	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)) && ($special_auth && !AppContext::get_current_user()->check_auth($array_auth, READ_COM)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, READ_COM)))
 	{
 		$controller = new UserErrorController($LANG['error'], $LANG['pages_error_auth_com']);
 		$controller->set_error_type(UserErrorController::WARNING);

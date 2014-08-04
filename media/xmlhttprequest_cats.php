@@ -30,7 +30,7 @@ require_once('../kernel/begin.php');
 AppContext::get_session()->no_session_location();
 require_once('../kernel/header_no_display.php');
 
-if ($User->check_level(User::ADMIN_LEVEL)) //Admin
+if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 {
 	$media_categories = new MediaCats();
 	$id_up = retrieve(GET, 'id_up', 0);

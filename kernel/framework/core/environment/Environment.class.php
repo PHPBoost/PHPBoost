@@ -88,8 +88,7 @@ class Environment
 
 		// TODO move in begin
 		/* DEPRECATED VARS */
-		global $User, $Template;
-		$User = AppContext::get_current_user();
+		global $Template;
 		$Template = new DeprecatedTemplate();
 		/* END DEPRECATED */
 

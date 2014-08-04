@@ -38,7 +38,7 @@ if (!isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FOR
     DispatchManager::redirect($controller);
 }
 
-if ($User->get_attribute('user_readonly') > time()) //Lecture seule.
+if (AppContext::get_current_user()->get_attribute('user_readonly') > time()) //Lecture seule.
 {
 	$controller = PHPBoostErrors::user_in_read_only();
     DispatchManager::redirect($controller);
@@ -68,12 +68,12 @@ $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
 	
 //Niveau d'autorisation de la catégorie
-if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
+if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 {
 	$Forumfct = new Forum();
 
 	//Mod anti-flood
-	$check_time = (ContentManagementConfig::load()->is_anti_flood_enabled() && $User->get_attribute('user_id') != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "forum_msg WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : false;
+	$check_time = (ContentManagementConfig::load()->is_anti_flood_enabled() && AppContext::get_current_user()->get_attribute('user_id') != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "forum_msg WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__) : false;
 
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
@@ -90,7 +90,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 	if ($previs) //Prévisualisation des messages
 	{
-		if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
@@ -143,8 +143,8 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 	{
 		if ($post_topic && !empty($id_get))
 		{
-			$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
-			if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+			$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			if ($is_modo)
@@ -169,7 +169,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$delay_expire = time() - $delay_flood; //On calcul la fin du delai.
 
 				//Droit de flooder?.
-				if ($check_time >= $delay_expire && !$User->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM)) //Flood
+				if ($check_time >= $delay_expire && !AppContext::get_current_user()->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM)) //Flood
 					AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=flood_t&id=' . $id_get, '', '&') . '#message_helper');
 			}
 
@@ -210,7 +210,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		}
 		elseif (!empty($preview_topic) && !empty($id_get))
 		{
-			if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			$Template->set_filenames(array(
@@ -224,7 +224,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 			$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
 
-			$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
+			$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 			$type = retrieve(POST, 'type', 0);
 
 			if (!$is_modo)
@@ -313,7 +313,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		}
 		else
 		{
-			if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			$Template->set_filenames(array(
@@ -322,7 +322,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'forum_bottom'=> 'forum/forum_bottom.tpl'
 			));
 
-			if ($User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
+			if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
 			{
 				$Template->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
@@ -384,7 +384,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 	}
 	elseif ($new_get === 'n_msg' && empty($error_get)) //Nouveau message
 	{
-		if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		//Verrouillé?
@@ -396,7 +396,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
             DispatchManager::redirect($controller);
 		}
 
-		$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
+		$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 		//Catégorie verrouillée?
 		$check_status = $CAT_FORUM[$id_get]['status'];
 		//Déverrouillé pour admin et modo dans tous les cas
@@ -411,7 +411,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		{
 			$delay_expire = time() - ContentManagementConfig::load()->get_anti_flood_duration(); //On calcul la fin du delai.
 			//Droit de flooder?
-			if ($check_time >= $delay_expire && !$User->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM)) //Ok
+			if ($check_time >= $delay_expire && !AppContext::get_current_user()->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM)) //Ok
 				AppContext::get_response()->redirect( url(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#message_helper');
 		}
 
@@ -439,7 +439,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 	}
 	elseif ($new_get === 'msg' && empty($error_get)) //Edition d'un message/topic.
 	{
-		if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
+		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		$id_m = retrieve(GET, 'idm', 0);
@@ -454,7 +454,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
             DispatchManager::redirect($controller);
 		}
 
-		$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
+		$is_modo = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 
 		//Edition du topic complet
 		if ($id_first == $id_m)
@@ -462,7 +462,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.
 			$user_id_msg = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'",  __LINE__, __FILE__);
 			$check_auth = false;
-			if ($user_id_msg == $User->get_attribute('user_id'))
+			if ($user_id_msg == AppContext::get_current_user()->get_attribute('user_id'))
 				$check_auth = true;
 			elseif ($is_modo)
 				$check_auth = true;
@@ -512,7 +512,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 						elseif ($check_poll == 0) //Ajout du sondage.
 							$Forumfct->Add_poll($idt_get, $question, $answers, $nbr_votes, $poll_type);
 					}
-					elseif ($del_poll && $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM)) //Suppression du sondage, admin et modo seulement biensûr...
+					elseif ($del_poll && AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM)) //Suppression du sondage, admin et modo seulement biensûr...
 						$Forumfct->Del_poll($idt_get);
 
 					//Redirection après post.
@@ -660,7 +660,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$module_data_path = $TmpTemplate->get_pictures_data_path();
 
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
-				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || $User->get_attribute('user_id') == $topic['user_id']))
+				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || AppContext::get_current_user()->get_attribute('user_id') == $topic['user_id']))
 				{
 					$img_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
 					$Template->put_all(array(
@@ -760,7 +760,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.
 			$user_id_msg = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
 			$check_auth = false;
-			if ($user_id_msg == $User->get_attribute('user_id'))
+			if ($user_id_msg == AppContext::get_current_user()->get_attribute('user_id'))
 				$check_auth = true;
 			elseif ($is_modo)
 				$check_auth = true;
@@ -892,7 +892,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'forum_bottom'=> 'forum/forum_bottom.tpl'
 			));
 
-			if ($User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
+			if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
 			{
 				$Template->put_all(array(
 					'C_FORUM_POST_TYPE' => true,

@@ -35,7 +35,7 @@ if ($id_cat != 0)
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if (($special_auth && $User->check_auth($row['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
+		if (($special_auth && AppContext::get_current_user()->check_auth($row['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 		{
 			//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
 			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
@@ -84,7 +84,7 @@ elseif (!empty($open_cat) || $root == 1)
 			//Autorisation particulière ?
 			$special_auth = !empty($value['auth']);
 			//Vérification de l'autorisation d'éditer la page
-			if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
+			if (($special_auth && AppContext::get_current_user()->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 			{
 				$return .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $value['name'] . '</a></li>';
 			}
@@ -99,7 +99,7 @@ elseif (!empty($open_cat) || $root == 1)
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if (($special_auth && $User->check_auth(unserialize($row['auth']), READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
+		if (($special_auth && AppContext::get_current_user()->check_auth(unserialize($row['auth']), READ_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_PAGE)))
 		{
 			$return .= '<li><a href="' . PATH_TO_ROOT . url('/pages/pages.php?title=' . $row['encoded_title'], '/pages/' . $row['encoded_title']) . '"><i class="fa fa-file"></i>' . $row['title'] . '</a></li>';
 		}

@@ -66,7 +66,7 @@ elseif ($id_media > 0)
             $LANG['e_unexist_media']);
         DispatchManager::redirect($controller);
 	}
-	elseif (!$User->check_auth($MEDIA_CATS[$media['idcat']]['auth'], MEDIA_AUTH_READ))
+	elseif (!AppContext::get_current_user()->check_auth($MEDIA_CATS[$media['idcat']]['auth'], MEDIA_AUTH_READ))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
@@ -94,7 +94,7 @@ elseif ($id_media > 0)
 	
 	$tpl->put_all(array(
 		'C_DISPLAY_MEDIA' => true,
-		'C_MODO' => $User->check_level(User::MODERATOR_LEVEL),
+		'C_MODO' => AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL),
 		'ID_MEDIA' => $id_media,
 		'NAME' => $media['name'],
 		'CONTENTS' => FormatingHelper::second_parse($media['contents']),

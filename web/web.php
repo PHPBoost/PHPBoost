@@ -33,7 +33,7 @@ $tpl = new FileTemplate('web/web.tpl');
 
 if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Contenu du lien.
 {
-	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
+	if (!AppContext::get_current_user()->check_level($CAT_WEB[$idcat]['secure']))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -46,7 +46,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
         DispatchManager::redirect($controller);
 	}
 		
-	if ($User->check_level(User::ADMIN_LEVEL))
+	if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 	{
 		$edit = '<a href="../web/admin_web' . url('.php?id=' . $web['id']) . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>';
 		$del = '<a href="../web/admin_web.php?delete=1&amp;id=' . $web['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="delete-element"></a>';
@@ -103,7 +103,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		DispatchManager::redirect($error_controller);
 	}
 	
-	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
+	if (!AppContext::get_current_user()->check_level($CAT_WEB[$idcat]['secure']))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -115,7 +115,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	
 	$tpl->put_all(array(
 		'C_WEB_LINK' => true,
-		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
+		'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 		'CAT_NAME' => $CAT_WEB[$idcat]['name'],
 		'NO_CAT' => ($nbr_web == 0) ? $LANG['none_link'] : '',
 		'MAX_NOTE' => $web_config->get_note_max(),

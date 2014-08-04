@@ -39,7 +39,7 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $_PAGES_CATS, $LANG, $User, $Cache;
+		global $_PAGES_CATS, $LANG,  $Cache;
 
 		include(PATH_TO_ROOT.'/pages/pages_defines.php');
 		load_module_lang('pages');
@@ -67,10 +67,10 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 			}
 			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{
-				if ($User->get_attribute('level') == User::ADMIN_LEVEL)
+				if (AppContext::get_current_user()->get_attribute('level') == User::ADMIN_LEVEL)
 				$this_auth = true;
 				else
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $config_authorizations, READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_attribute('level'), $config_authorizations, READ_PAGE);
 			}
 			if ($this_auth && $id != 0 && $properties['id_parent'] == $id_cat)
 			{
@@ -83,7 +83,7 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $_PAGES_CATS, $LANG, $User;
+		global $_PAGES_CATS, $LANG;
 		
 		$pages_config = PagesConfig::load();
 		
@@ -109,10 +109,10 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 			}
 			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{
-				if ($User->get_attribute('level') == User::ADMIN_LEVEL)
+				if (AppContext::get_current_user()->get_attribute('level') == User::ADMIN_LEVEL)
 				$this_auth = true;
 				else
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $config_authorizations, READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_attribute('level'), $config_authorizations, READ_PAGE);
 			}
 			if ($this_auth && $id != 0 && $properties['id_parent'] == $id_cat)
 			{

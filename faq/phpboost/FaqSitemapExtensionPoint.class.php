@@ -44,7 +44,7 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 	 */
 	private function get_module_map($auth_mode)
 	{
-		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $Cache;
+		global $FAQ_CATS, $FAQ_LANG, $LANG,  $Cache;
 		$faq_config = FaqConfig::load();
 		
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
@@ -67,7 +67,7 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 			}
 			else
 			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], FaqAuthorizationsService::READ_AUTHORIZATIONS) : $User->check_auth($faq_config->get_authorizations(), FaqAuthorizationsService::READ_AUTHORIZATIONS);
+				$this_auth = is_array($properties['auth']) ? AppContext::get_current_user()->check_auth($properties['auth'], FaqAuthorizationsService::READ_AUTHORIZATIONS) : AppContext::get_current_user()->check_auth($faq_config->get_authorizations(), FaqAuthorizationsService::READ_AUTHORIZATIONS);
 			}
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
 			{
@@ -79,7 +79,7 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $FAQ_CATS, $FAQ_LANG, $LANG, $User;
+		global $FAQ_CATS, $FAQ_LANG, $LANG;
 
 		$this_category = new SitemapLink($FAQ_CATS[$id_cat]['name'], new Url('/faq/' . url('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . Url::encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php')));
 			
@@ -102,7 +102,7 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 			}
 			else
 			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], FaqAuthorizationsService::READ_AUTHORIZATIONS) : $User->check_auth($faq_config->get_authorizations(), FaqAuthorizationsService::READ_AUTHORIZATIONS);
+				$this_auth = is_array($properties['auth']) ? AppContext::get_current_user()->check_auth($properties['auth'], FaqAuthorizationsService::READ_AUTHORIZATIONS) : AppContext::get_current_user()->check_auth($faq_config->get_authorizations(), FaqAuthorizationsService::READ_AUTHORIZATIONS);
 			}
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
 			{

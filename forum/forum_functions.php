@@ -88,9 +88,9 @@ function forum_list_cat($id_select, $level)
 //Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 function forum_limit_time_msg()
 {
-	global $User, $CONFIG_FORUM;
+	global $CONFIG_FORUM;
 	
-	$last_view_forum = $User->get_attribute('last_view_forum');
+	$last_view_forum = AppContext::get_current_user()->get_attribute('last_view_forum');
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
 	
@@ -100,24 +100,24 @@ function forum_limit_time_msg()
 //Marque un topic comme lu.
 function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 {
-	global $Sql, $User, $CONFIG_FORUM;
+	global $Sql,  $CONFIG_FORUM;
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-	$last_view_forum = ($User->get_attribute('last_view_forum') > 0) ? $User->get_attribute('last_view_forum') : 0;
+	$last_view_forum = (AppContext::get_current_user()->get_attribute('last_view_forum') > 0) ? AppContext::get_current_user()->get_attribute('last_view_forum') : 0;
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
-	if ($User->get_attribute('user_id') !== -1 && $last_timestamp >= $max_time_msg)
+	if (AppContext::get_current_user()->get_attribute('user_id') !== -1 && $last_timestamp >= $max_time_msg)
 	{
-		$check_view_id = $Sql->query("SELECT last_view_id FROM " . PREFIX . "forum_view WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+		$check_view_id = $Sql->query("SELECT last_view_id FROM " . PREFIX . "forum_view WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 		if (!empty($check_view_id) && $check_view_id != $last_msg_id) 
 		{
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_view SET last_view_id = '" . $last_msg_id . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_view SET last_view_id = '" . $last_msg_id . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		}
 		elseif (empty($check_view_id))
 		{			
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO " . PREFIX . "forum_view (idtopic, last_view_id, user_id, timestamp) VALUES('" . $idtopic . "', '" . $last_msg_id . "', '" . $User->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);			
+			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO " . PREFIX . "forum_view (idtopic, last_view_id, user_id, timestamp) VALUES('" . $idtopic . "', '" . $last_msg_id . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);			
 		}
 		else
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
@@ -129,9 +129,9 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 //Gestion de l'historique des actions sur le forum.
 function forum_history_collector($type, $user_id_action = '', $url_action = '')
 {
-	global $Sql, $User;
+	global $Sql;
 	
-	$Sql->query_inject("INSERT INTO " . PREFIX . "forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . TextHelper::strprotect($type) . "', '" . $User->get_attribute('user_id') . "', '" . NumberHelper::numeric($user_id_action) . "', '" . TextHelper::strprotect($url_action) . "', '" . time() . "')", __LINE__, __FILE__);
+	$Sql->query_inject("INSERT INTO " . PREFIX . "forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . TextHelper::strprotect($type) . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . NumberHelper::numeric($user_id_action) . "', '" . TextHelper::strprotect($url_action) . "', '" . time() . "')", __LINE__, __FILE__);
 }
 
 //Gestion du rss du forum.

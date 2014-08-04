@@ -32,8 +32,8 @@ $Cache->load('faq');
 load_module_lang('faq'); //Chargement de la langue du module.
 $faq_config = FaqConfig::load();
 
-$auth_read = $User->check_auth($faq_config->get_authorizations(), FaqAuthorizationsService::READ_AUTHORIZATIONS);
-$auth_write = $User->check_auth($faq_config->get_authorizations(), FaqAuthorizationsService::WRITE_AUTHORIZATIONS);
+$auth_read = AppContext::get_current_user()->check_auth($faq_config->get_authorizations(), FaqAuthorizationsService::READ_AUTHORIZATIONS);
+$auth_write = AppContext::get_current_user()->check_auth($faq_config->get_authorizations(), FaqAuthorizationsService::WRITE_AUTHORIZATIONS);
 
 $id_faq = retrieve(GET, 'id', 0);
 //For users who have disabled javascript

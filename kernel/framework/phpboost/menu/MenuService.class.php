@@ -322,7 +322,7 @@ class MenuService
 		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__FOOTER] = \'\';';
 		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__LEFT] = \'\';';
 		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__RIGHT] = \'\';';
-		$cache_str .= 'global $User, $columns_disabled;' . "\n";
+		$cache_str .= '$columns_disabled;' . "\n";
 		
 		$menus_map = MenuService::get_menus_map();
 		foreach ($menus_map as $block => $block_menus)

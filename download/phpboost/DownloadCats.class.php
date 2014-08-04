@@ -154,8 +154,8 @@ class DownloadCats extends DeprecatedCategoriesManager
 	//Method which determines if a category is writable by the current user
 	public function check_auth($id)
 	{
-		global $User, $DOWNLOAD_CATS;
-		$auth_write = $User->check_auth(DownloadConfig::load()->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT);
+		global $DOWNLOAD_CATS;
+		$auth_write = AppContext::get_current_user()->check_auth(DownloadConfig::load()->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT);
 		
 		$id_cat = $id;
 
@@ -163,7 +163,7 @@ class DownloadCats extends DeprecatedCategoriesManager
 		while ($id_cat > 0)
 		{
 			if (!empty($DOWNLOAD_CATS[$id_cat]['auth']))
-				$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
+				$auth_write = AppContext::get_current_user()->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
 			
 			$id_cat = (int)$DOWNLOAD_CATS[$id_cat]['id_parent'];
 		}
@@ -173,8 +173,8 @@ class DownloadCats extends DeprecatedCategoriesManager
 	//Method which determines if a category is writable by the current user
 	public function check_contribution_auth($id)
 	{
-		global $User, $DOWNLOAD_CATS;
-		$contribution_auth = $User->check_auth(DownloadConfig::load()->get_authorizations(), DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
+		global $DOWNLOAD_CATS;
+		$contribution_auth = AppContext::get_current_user()->check_auth(DownloadConfig::load()->get_authorizations(), DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 		
 		$id_cat = $id;
 
@@ -182,7 +182,7 @@ class DownloadCats extends DeprecatedCategoriesManager
 		while ($id_cat > 0)
 		{
 			if (!empty($DOWNLOAD_CATS[$id_cat]['auth']))
-				$contribution_auth = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
+				$contribution_auth = AppContext::get_current_user()->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 			
 			$id_cat = (int)$DOWNLOAD_CATS[$id_cat]['id_parent'];
 		}

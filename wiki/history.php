@@ -58,8 +58,8 @@ if (!empty($id_article))
 	
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-	$restore_auth = (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_RESTORE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_RESTORE_ARCHIVE)) ? true : false;
-	$delete_auth = (!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
+	$restore_auth = (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RESTORE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_RESTORE_ARCHIVE)) ? true : false;
+	$delete_auth = (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
 	
 	//on va chercher le contenu de la page
 	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.login, m.user_groups, m.level, c.id_article, c.activ

@@ -52,7 +52,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		$this->check_authorizations();
 		
-		global $Cache, $FAQ_CATS, $LANG, $FAQ_LANG, $id_faq, $User, $auth_write, $id_question, $faq_config;
+		global $Cache, $FAQ_CATS, $LANG, $FAQ_LANG, $id_faq,  $auth_write, $id_question, $faq_config;
 		
 		require_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
@@ -77,7 +77,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 			foreach ($FAQ_CATS as $id => $value)
 			{
 				//List of children categories
-				if ($id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $User->check_auth($value['auth'], FaqAuthorizationsService::READ_AUTHORIZATIONS)))
+				if ($id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || AppContext::get_current_user()->check_auth($value['auth'], FaqAuthorizationsService::READ_AUTHORIZATIONS)))
 				{
 					if ( $i % $faq_config->get_number_columns() == 1 )
 						$tpl->assign_block_vars('row', array());
@@ -192,7 +192,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_DOWN' => $FAQ_LANG['down'],
 			'L_MOVE' => $FAQ_LANG['move'],
 			'L_QUESTION_URL' => $FAQ_LANG['url_of_question'],
-			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
+			'C_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 			'U_ADMIN_CAT' => $id_faq > 0 ? url(PATH_TO_ROOT . '/faq/admin_faq_cats.php?edit=' . $id_faq) : url(PATH_TO_ROOT . '/faq/admin_faq.php'),
 			'ID_FAQ' => $id_faq,
 		));

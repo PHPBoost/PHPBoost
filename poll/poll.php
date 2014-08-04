@@ -104,11 +104,11 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.	
-			$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+			$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 			if (empty($user_id))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . $User->get_attribute('user_id') . "', '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
 				$check_bdd = false;
 			}
 		}
@@ -177,7 +177,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
-		$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+		$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 		if (!empty($user_id))
 			$check_bdd = true;
 	}
@@ -214,7 +214,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$sum_vote = array_sum($array_vote);
 		$Template->put_all(array(
 			'C_POLL_VIEW' => true,
-			'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
+			'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 			'IDPOLL' => $poll['id'],
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short', $poll['timestamp']),
@@ -246,7 +246,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$Template->put_all(array(
 			'C_POLL_VIEW' => true,
 			'C_POLL_QUESTION' => true,
-			'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
+			'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 			'IDPOLL' => $poll['id'],
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short'),
@@ -318,7 +318,7 @@ elseif ($archives) //Archives.
 	
 	$Template->put_all(array(
 		'C_POLL_ARCHIVES' => true,
-		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
+		'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION' => $pagination->display(),
 		'L_ARCHIVE' => $LANG['archives'],

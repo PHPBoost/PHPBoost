@@ -58,7 +58,7 @@ if ($unvisible > 0)
             $LANG['e_unexist_media']);
         DispatchManager::redirect($controller);
 	}
-	elseif (!$User->check_level(User::MODERATOR_LEVEL))
+	elseif (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
@@ -91,7 +91,7 @@ elseif ($delete > 0)
             $LANG['e_unexist_media']);
         DispatchManager::redirect($controller);
 	}
-	elseif (!$User->check_level(User::MODERATOR_LEVEL))
+	elseif (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
@@ -156,7 +156,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	}
 
 	// Édition.
-	if ($edit > 0 && ($media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $edit. "'", __LINE__, __FILE__)) && !empty($media) && $User->check_level(User::MODERATOR_LEVEL))
+	if ($edit > 0 && ($media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $edit. "'", __LINE__, __FILE__)) && !empty($media) && AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 	{
 		bread_crumb($media['idcat']);
 		
@@ -186,7 +186,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		));
 	}
 	// Ajout.
-	elseif (($write = $User->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_WRITE)) || $User->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_CONTRIBUTION))
+	elseif (($write = AppContext::get_current_user()->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_WRITE)) || AppContext::get_current_user()->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_CONTRIBUTION))
 	{
 		bread_crumb($add);
 
@@ -349,9 +349,9 @@ elseif (!empty($_POST['submit']))
 	}
 
 	// Édition
-	if ($media['idedit'] && $User->check_level(User::MODERATOR_LEVEL))
+	if ($media['idedit'] && AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . FormatingHelper::strparse($media['contents']) . "', infos = '" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . FormatingHelper::strparse($media['contents']) . "', infos = '" . (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
 
 		$media_categories->recount_media_per_cat();
 
@@ -378,9 +378,9 @@ elseif (!empty($_POST['submit']))
 		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
 	}
 	// Ajout
-	elseif (!$media['idedit'] && (($auth_write = $User->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || $User->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
+	elseif (!$media['idedit'] && (($auth_write = AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
 	{
-		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height) VALUES ('" . $media['idcat'] . "', '" . $User->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . FormatingHelper::strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height) VALUES ('" . $media['idcat'] . "', '" . AppContext::get_current_user()->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . FormatingHelper::strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "')", __LINE__, __FILE__);
 
 		$new_id_media = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "media");
 		$media_categories->recount_media_per_cat($media['idcat']);
@@ -395,7 +395,7 @@ elseif (!empty($_POST['submit']))
 			$media_contribution->set_description(stripslashes($media['counterpart']));
 			$media_contribution->set_entitled(sprintf($MEDIA_LANG['contribution_entitled'], $media['name']));
 			$media_contribution->set_fixing_url('/media/media_action.php?edit=' . $new_id_media);
-			$media_contribution->set_poster_id($User->get_attribute('user_id'));
+			$media_contribution->set_poster_id(AppContext::get_current_user()->get_attribute('user_id'));
 			$media_contribution->set_module('media');
 			$media_contribution->set_auth(Authorizations::capture_and_shift_bit_auth(Authorizations::merge_auth($MEDIA_CATS[0]['auth'], $media_categories->compute_heritated_auth($media['idcat'], MEDIA_AUTH_WRITE, Authorizations::AUTH_CHILD_PRIORITY), MEDIA_AUTH_WRITE, Authorizations::AUTH_CHILD_PRIORITY), MEDIA_AUTH_WRITE, Contribution::CONTRIBUTION_AUTH_BIT));
 

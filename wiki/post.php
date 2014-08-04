@@ -96,7 +96,7 @@ if (!empty($contents)) //On enregistre un article
 			//Autorisations
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-			if (!((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
+			if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_EDIT))))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -106,7 +106,7 @@ if (!empty($contents)) //On enregistre un article
 			//On met à jour l'ancien contenu (comme archive)
 			$Sql->query_inject("UPDATE " . PREFIX . "wiki_contents SET activ = 0 WHERE id_contents = '" . $previous_id_contents . "'", __LINE__, __FILE__);
 			//On insère le contenu
-			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . AppContext::get_current_user()->get_ip() . "', " . time() . ")", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . AppContext::get_current_user()->get_attribute('user_id') . ", '" . AppContext::get_current_user()->get_ip() . "', " . time() . ")", __LINE__, __FILE__);
 			//Dernier id enregistré
 			$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
             
@@ -124,12 +124,12 @@ if (!empty($contents)) //On enregistre un article
 		elseif (!empty($title)) //On crée un article
 		{
 			//autorisations
-			if ($is_cat && !$User->check_auth($config->get_authorizations(), WIKI_CREATE_CAT))
+			if ($is_cat && !AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_CREATE_CAT))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			} 
-			elseif (!$is_cat && !$User->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE))
+			elseif (!$is_cat && !AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -157,7 +157,7 @@ if (!empty($contents)) //On enregistre un article
 				//On récupère le numéro de l'article créé
 				$id_article = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "wiki_articles");
 				//On insère le contenu
-				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . AppContext::get_current_user()->get_ip() . "', " . time() . ")", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . AppContext::get_current_user()->get_attribute('user_id') . ", '" . AppContext::get_current_user()->get_ip() . "', " . time() . ")", __LINE__, __FILE__);
 				//On met à jour le numéro du contenu dans la table articles
 				$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
 				$cat_update = '';
@@ -193,7 +193,7 @@ if ($id_edit > 0)//On édite
 	//Autorisations
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-	if (!((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
+	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_EDIT))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -221,12 +221,12 @@ if ($id_edit > 0)//On édite
 else
 {
 	//autorisations
-	if ($is_cat && !$User->check_auth($config->get_authorizations(), WIKI_CREATE_CAT))
+	if ($is_cat && !AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_CREATE_CAT))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
-	elseif (!$is_cat && !$User->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE))
+	elseif (!$is_cat && !AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);

@@ -35,13 +35,13 @@ $add = retrieve(GET, 'add', false);
 if ($add && empty($shout_id)) //Insertion
 {
 	//Membre en lecture seule?
-	if ($User->get_attribute('user_readonly') > time()) 
+	if (AppContext::get_current_user()->get_attribute('user_readonly') > time()) 
 	{
 		$error_controller = PHPBoostErrors::user_in_read_only();
         DispatchManager::redirect($error_controller);
 	}
 	
-	$shout_pseudo = $User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutboxform_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
+	$shout_pseudo = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? AppContext::get_current_user()->get_attribute('login') : substr(retrieve(POST, 'shoutboxform_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
 	$shout_contents = retrieve(POST, 'shoutboxform_shoutbox_contents', '', TSTRING_PARSE);
 	
 	if (!empty($shout_pseudo) && !empty($shout_contents))
@@ -51,8 +51,8 @@ if ($add && empty($shout_id)) //Insertion
 		if (ShoutboxAuthorizationsService::check_authorizations()->write())
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-			$check_time = ($User->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
-			if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
+			$check_time = (AppContext::get_current_user()->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			if (!empty($check_time) && !AppContext::get_current_user()->check_max_value(AUTH_FLOOD))
 			{
 				if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
 					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=flood', '', '&') . '#errorh');
@@ -64,7 +64,7 @@ if ($add && empty($shout_id)) //Insertion
 			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
 				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
-			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . AppContext::get_current_user()->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
 			AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 		}
@@ -77,7 +77,7 @@ if ($add && empty($shout_id)) //Insertion
 elseif (!empty($shout_id)) //Edition + suppression!
 {
 	//Membre en lecture seule?
-	if ($User->get_attribute('user_readonly') > time()) 
+	if (AppContext::get_current_user()->get_attribute('user_readonly') > time()) 
 	{
 		$error_controller = PHPBoostErrors::user_in_read_only();
         DispatchManager::redirect($error_controller);
@@ -90,7 +90,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 	$row = $Sql->query_array(PREFIX . 'shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
-	if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+	if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_attribute('user_id') && AppContext::get_current_user()->get_attribute('user_id') !== -1))
 	{
 		if ($del_message)
 		{
@@ -136,7 +136,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		{
 			$shout_contents = retrieve(POST, 'shoutboxform_shoutbox_contents', '', TSTRING_PARSE);
 			$shout_pseudo = retrieve(POST, 'shoutboxform_shoutbox_pseudo', $LANG['guest']);
-			$shout_pseudo = empty($shout_pseudo) && $User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : $shout_pseudo;
+			$shout_pseudo = empty($shout_pseudo) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? AppContext::get_current_user()->get_attribute('login') : $shout_pseudo;
 			if (!empty($shout_contents) && !empty($shout_pseudo))
 			{
 				//Vérifie que le message ne contient pas du flood de lien.

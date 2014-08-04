@@ -58,7 +58,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, EDIT_PAGE)))
+	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
 	$encoded_title = Url::encode_rewrite($new_title);
@@ -96,7 +96,7 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, EDIT_PAGE)))
+	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
 	$encoded_title = Url::encode_rewrite($redirection_name);
@@ -123,7 +123,7 @@ elseif ($del_redirection > 0)
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, EDIT_PAGE)))
+	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 		
 	//On supprime la redirection
@@ -140,7 +140,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	
 	$general_auth = empty($page_infos['auth']) ? true : false;
 	$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : array();
-	if (!((!$general_auth || $User->check_auth($config_authorizations, EDIT_PAGE)) && ($general_auth || $User->check_auth($array_auth , EDIT_PAGE))))
+	if (!((!$general_auth || AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)) && ($general_auth || AppContext::get_current_user()->check_auth($array_auth , EDIT_PAGE))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -206,7 +206,7 @@ if ($id_page > 0)
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, EDIT_PAGE)))
+	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
 	if ($id_redirection > 0)
@@ -221,11 +221,11 @@ if ($id_page > 0)
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
-	if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
+	if (empty($_PAGES_CATS[$id]['auth']) || AppContext::get_current_user()->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
 		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
-	if ($User->check_auth($config_authorizations, EDIT_PAGE))
+	if (AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	$Bread_crumb->reverse();
 }
@@ -243,7 +243,7 @@ if ($del_cat > 0)
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, EDIT_PAGE)))
+	if (($special_auth && !AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 	
 	$cats = array();
@@ -366,7 +366,7 @@ elseif ($id_redirection > 0)
 //Liste des redirections
 else
 {
-	if (!$User->check_auth($config_authorizations, EDIT_PAGE))
+	if (!AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 
 	$Template->assign_block_vars('redirections', array());
@@ -386,7 +386,7 @@ else
 		$Template->assign_block_vars('redirections.list', array(
 			'REDIRECTION_TITLE' => '<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a>',
 			'REDIRECTION_TARGET' => '<a href="' . url('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',
-			'ACTIONS' => ( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="fa fa-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '" class="fa fa-fast-forward"></a>' : ''		));
+			'ACTIONS' => ( ($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="fa fa-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '" class="fa fa-fast-forward"></a>' : ''		));
 	}
 	
 	if ($nbr_rows == 0)
