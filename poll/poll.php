@@ -104,11 +104,11 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.	
-			$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+			$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 			if (empty($user_id))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . $poll['id'] . "', '" . time() . "')");
+				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . AppContext::get_current_user()->get_id() . "', '" . $poll['id'] . "', '" . time() . "')");
 				$check_bdd = false;
 			}
 		}
@@ -177,7 +177,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
-		$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+		$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 		if (!empty($user_id))
 			$check_bdd = true;
 	}

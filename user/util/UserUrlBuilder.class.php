@@ -106,7 +106,7 @@ class UserUrlBuilder
 		{
 			return DispatchManager::get_url(self::$dispatcher, '/profile/'. $user_id .'/edit/');
 		}
-		return DispatchManager::get_url(self::$dispatcher, '/profile/'. AppContext::get_current_user()->get_attribute('user_id') .'/edit/');
+		return DispatchManager::get_url(self::$dispatcher, '/profile/'. AppContext::get_current_user()->get_id() .'/edit/');
 	}
 	
 	public static function users($field = '', $sort = '', $page = '')

@@ -315,7 +315,7 @@ class NewsFormController extends ModuleController
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.entitled', 'user-common'), array('module_name' => $this->lang['news'], 'name' => $news->get_name())));
 				$contribution->set_fixing_url(NewsUrlBuilder::edit_news($id_news)->relative());
-				$contribution->set_poster_id(AppContext::get_current_user()->get_attribute('user_id'));
+				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('news');
 				$contribution->set_auth(
 					Authorizations::capture_and_shift_bit_auth(

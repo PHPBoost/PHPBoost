@@ -293,7 +293,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'");
 
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if ($info_mbr['user_id'] != AppContext::get_current_user()->get_attribute('user_id'))
+			if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
 			{
 				if (!empty($readonly_contents) && !empty($readonly))
 				{
@@ -470,7 +470,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'");
 
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if ($info_mbr['user_id'] != AppContext::get_current_user()->get_attribute('user_id'))
+				if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
 				{
 					if (!empty($warning_contents))
 					{

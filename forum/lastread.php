@@ -57,7 +57,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	$nbr_topics = $Sql->query("SELECT COUNT(*)
 	FROM " . PREFIX . "forum_view v
 	LEFT JOIN " . PREFIX . "forum_topics t ON t.id = v.idtopic
-	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
+	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'");
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topics, $CONFIG_FORUM['pagination_topic'], Pagination::LIGHT_PAGINATION);
@@ -74,10 +74,10 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	LEFT JOIN " . PREFIX . "forum_topics t ON t.id = v.idtopic
 	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat 
 	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
-	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
+	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . AppContext::get_current_user()->get_id() . "'
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
-	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
+	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'
 	ORDER BY t.last_timestamp DESC
 	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']));
 	while ($row = $Sql->fetch_assoc($result))

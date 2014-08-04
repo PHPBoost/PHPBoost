@@ -73,7 +73,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 	$Forumfct = new Forum();
 
 	//Mod anti-flood
-	$check_time = (ContentManagementConfig::load()->is_anti_flood_enabled() && AppContext::get_current_user()->get_attribute('user_id') != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "forum_msg WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'") : false;
+	$check_time = (ContentManagementConfig::load()->is_anti_flood_enabled() && AppContext::get_current_user()->get_id() != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "forum_msg WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'") : false;
 
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
@@ -462,7 +462,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.
 			$user_id_msg = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'",  __LINE__, __FILE__);
 			$check_auth = false;
-			if ($user_id_msg == AppContext::get_current_user()->get_attribute('user_id'))
+			if ($user_id_msg == AppContext::get_current_user()->get_id())
 				$check_auth = true;
 			elseif ($is_modo)
 				$check_auth = true;
@@ -660,7 +660,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				$module_data_path = $TmpTemplate->get_pictures_data_path();
 
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
-				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || AppContext::get_current_user()->get_attribute('user_id') == $topic['user_id']))
+				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || AppContext::get_current_user()->get_id() == $topic['user_id']))
 				{
 					$img_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
 					$Template->put_all(array(
@@ -760,7 +760,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.
 			$user_id_msg = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'");
 			$check_auth = false;
-			if ($user_id_msg == AppContext::get_current_user()->get_attribute('user_id'))
+			if ($user_id_msg == AppContext::get_current_user()->get_id())
 				$check_auth = true;
 			elseif ($is_modo)
 				$check_auth = true;

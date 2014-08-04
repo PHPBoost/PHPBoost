@@ -504,7 +504,7 @@ else
 				//The URL where a validator can treat the contribution (in the file edition panel)
 				$download_contribution->set_fixing_url('/download/management.php?edit=' . $new_id_file);
 				//Who is the contributor?
-				$download_contribution->set_poster_id(AppContext::get_current_user()->get_attribute('user_id'));
+				$download_contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				//The module
 				$download_contribution->set_module('download');
 				

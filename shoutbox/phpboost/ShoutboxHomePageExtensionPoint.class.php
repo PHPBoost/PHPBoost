@@ -61,7 +61,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		$shoutbox_config = ShoutboxConfig::load();
 		
 		//Pseudo du membre connecté.
-		if (AppContext::get_current_user()->get_attribute('user_id') !== -1)
+		if (AppContext::get_current_user()->get_id() !== -1)
 			$tpl->put_all(array(
 				'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_attribute('login'),
 				'C_HIDDEN_SHOUT' => true
@@ -128,7 +128,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 			
 			$tpl->assign_block_vars('messages', array(
-				'C_MODERATOR' => ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_attribute('user_id') && AppContext::get_current_user()->get_attribute('user_id') !== -1),
+				'C_MODERATOR' => ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== -1),
 				'C_VISITOR' => $row['user_id'] === -1,
 				'C_GROUP_COLOR' => !empty($group_color),
 				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),

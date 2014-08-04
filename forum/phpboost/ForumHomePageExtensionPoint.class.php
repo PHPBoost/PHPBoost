@@ -82,11 +82,11 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		
 		$vars_tpl = array(	
-			'C_DISPLAY_UNREAD_DETAILS' => (AppContext::get_current_user()->get_attribute('user_id') !== -1) ? true : false,
+			'C_DISPLAY_UNREAD_DETAILS' => (AppContext::get_current_user()->get_id() !== -1) ? true : false,
 			'C_MODERATION_PANEL' => AppContext::get_current_user()->check_level(1) ? true : false,
 			'U_TOPIC_TRACK' => '<a class="small" href="'. PATH_TO_ROOT .'/forum/track.php' . $sid . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
 			'U_LAST_MSG_READ' => '<a class="small" href="'. PATH_TO_ROOT .'/forum/lastread.php' . $sid . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',
-			'U_MSG_NOT_READ' => '<a class="small" href="'. PATH_TO_ROOT .'/forum/unread.php' . $sid  . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . (AppContext::get_current_user()->get_attribute('user_id') !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
+			'U_MSG_NOT_READ' => '<a class="small" href="'. PATH_TO_ROOT .'/forum/unread.php' . $sid  . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . (AppContext::get_current_user()->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
 			'U_MSG_SET_VIEW' => '<a class="small" href="'. PATH_TO_ROOT .'/forum/action' . url('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 			'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 			'L_CONFIG' => $LANG['forum_config'],
@@ -122,7 +122,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 		$max_time_msg = forum_limit_time_msg();
 
-		$is_guest = (AppContext::get_current_user()->get_attribute('user_id') !== -1) ? false : true;
+		$is_guest = (AppContext::get_current_user()->get_id() !== -1) ? false : true;
 		$total_topic = 0;
 		$total_msg = 0;
 		$i = 0;
@@ -132,7 +132,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, m.level as user_level, m.user_groups, v.last_view_id
 		FROM " . PREFIX . "forum_cats c
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
-		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND v.idtopic = t.id
+		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . AppContext::get_current_user()->get_id() . "' AND v.idtopic = t.id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 		WHERE c.aprob = 1 " . $display_sub_cat . " " . $unauth_cats . "
 		ORDER BY c.id_left");

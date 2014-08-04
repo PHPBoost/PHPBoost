@@ -324,7 +324,7 @@ class CommentsService
 		$user_id_posted_comment = CommentsManager::get_user_id_posted_comment($comment_id);
 		if ($user_id_posted_comment !== '-1')
 		{
-			return ($authorizations->is_authorized_moderation() || $user_id_posted_comment == self::$user->get_attribute('user_id')) && $authorizations->is_authorized_access_module();
+			return ($authorizations->is_authorized_moderation() || $user_id_posted_comment == self::$user->get_id()) && $authorizations->is_authorized_access_module();
 		}
 		return false;
 	}

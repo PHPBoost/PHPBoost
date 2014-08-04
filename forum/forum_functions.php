@@ -106,18 +106,18 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 	$last_view_forum = (AppContext::get_current_user()->get_attribute('last_view_forum') > 0) ? AppContext::get_current_user()->get_attribute('last_view_forum') : 0;
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
-	if (AppContext::get_current_user()->get_attribute('user_id') !== -1 && $last_timestamp >= $max_time_msg)
+	if (AppContext::get_current_user()->get_id() !== -1 && $last_timestamp >= $max_time_msg)
 	{
-		$check_view_id = $Sql->query("SELECT last_view_id FROM " . PREFIX . "forum_view WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'");
+		$check_view_id = $Sql->query("SELECT last_view_id FROM " . PREFIX . "forum_view WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idtopic = '" . $idtopic . "'");
 		if (!empty($check_view_id) && $check_view_id != $last_msg_id) 
 		{
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
-			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_view SET last_view_id = '" . $last_msg_id . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
+			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_view SET last_view_id = '" . $last_msg_id . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
 		}
 		elseif (empty($check_view_id))
 		{			
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
-			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO " . PREFIX . "forum_view (idtopic, last_view_id, user_id, timestamp) VALUES('" . $idtopic . "', '" . $last_msg_id . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . time() . "')");			
+			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO " . PREFIX . "forum_view (idtopic, last_view_id, user_id, timestamp) VALUES('" . $idtopic . "', '" . $last_msg_id . "', '" . AppContext::get_current_user()->get_id() . "', '" . time() . "')");			
 		}
 		else
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
@@ -131,7 +131,7 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 {
 	global $Sql;
 	
-	$Sql->query_inject("INSERT INTO " . PREFIX . "forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . TextHelper::strprotect($type) . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . NumberHelper::numeric($user_id_action) . "', '" . TextHelper::strprotect($url_action) . "', '" . time() . "')");
+	$Sql->query_inject("INSERT INTO " . PREFIX . "forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . TextHelper::strprotect($type) . "', '" . AppContext::get_current_user()->get_id() . "', '" . NumberHelper::numeric($user_id_action) . "', '" . TextHelper::strprotect($url_action) . "', '" . time() . "')");
 }
 
 //Gestion du rss du forum.

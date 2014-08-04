@@ -56,7 +56,7 @@ if ($add)
 		if (ShoutboxAuthorizationsService::check_authorizations()->write())
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-			$check_time = (AppContext::get_current_user()->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'") : '';
+			$check_time = (AppContext::get_current_user()->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'") : '';
 			if (!empty($check_time) && !AppContext::get_current_user()->check_max_value(AUTH_FLOOD))
 			{
 				if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
@@ -79,18 +79,18 @@ if ($add)
 				exit;
 			}
 			
-			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . AppContext::get_current_user()->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')");
+			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_id() . "', '" . AppContext::get_current_user()->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')");
 			$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "shoutbox"); 
 			
 			$date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time());
 			$date = $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
 			
 			$array_class = array('member', 'modo', 'admin');
-			if (AppContext::get_current_user()->get_attribute('user_id') !== -1)
+			if (AppContext::get_current_user()->get_id() !== -1)
 			{
 				$group_color = User::get_group_color(AppContext::get_current_user()->get_groups(), AppContext::get_current_user()->get_level(), true);
 				$style = $group_color ? 'style="color:'.$group_color.'"' : '';
-				$shout_pseudo = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '" class="small"><i class="fa fa-remove"></i></a> <a class="small ' . UserService::get_level_class(AppContext::get_current_user()->get_level()) . '" '.$style.' href="' . UserUrlBuilder::profile(AppContext::get_current_user()->get_attribute('user_id'))->rel() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . ' </a>';
+				$shout_pseudo = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '" class="small"><i class="fa fa-remove"></i></a> <a class="small ' . UserService::get_level_class(AppContext::get_current_user()->get_level()) . '" '.$style.' href="' . UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . ' </a>';
 			}
 			else
 				$shout_pseudo = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . '<span class="small" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . ' </span>';
@@ -116,7 +116,7 @@ elseif ($refresh)
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
-		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_attribute('user_id') && AppContext::get_current_user()->get_attribute('user_id') !== -1))
+		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== -1))
 			$del = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '" class="small"><i class="fa fa-remove"></i></a>';
 		else
 			$del = '';
@@ -145,7 +145,7 @@ elseif ($del)
 	if (!empty($shout_id))
 	{
 		$user_id = (int)$Sql->query("SELECT user_id FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'");
-		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($user_id === AppContext::get_current_user()->get_attribute('user_id') && AppContext::get_current_user()->get_attribute('user_id') !== -1))
+		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($user_id === AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== -1))
 		{
 			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'");
 			echo 1;
