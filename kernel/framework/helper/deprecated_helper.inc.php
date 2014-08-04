@@ -254,56 +254,6 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	return $date->format($format);
 }
 
-/**
- * @deprecated
- * @desc Parses a formatted date
- * @param string $str String to parse
- * @param string $date_format Formatting pattern (d for day, m for month and y for year, for instance m/d/y)
- * @return int The timestamp corresponding to the parsed date or 0 if it couldn't be parsed.
- * @see Date::Date()
- */
-function strtotimestamp($str, $date_format)
-{
-	list($month, $day, $year) = array(0, 0, 0);
-	$array_timestamp = explode('/', $str);
-	$array_date = explode('/', $date_format);
-	for ($i = 0; $i < 3; $i++)
-	{
-		switch ($array_date[$i])
-		{
-			case 'd':
-				$day = (isset($array_timestamp[$i])) ? NumberHelper::numeric($array_timestamp[$i]) : 0;
-				break;
-			case 'm':
-				$month = (isset($array_timestamp[$i])) ? NumberHelper::numeric($array_timestamp[$i]) : 0;
-				break;
-			case 'y':
-			case 'Y':
-				$year = (isset($array_timestamp[$i])) ? NumberHelper::numeric($array_timestamp[$i]) : 0;
-				break;
-		}
-	}
-
-	//Vérification du format de la date.
-	if (checkdate($month, $day, $year))
-	{
-		$timestamp = @mktime(0, 0, 1, $month, $day, $year);
-	}
-	else
-	{
-		$timestamp = time();
-	}
-
-	$serveur_hour = NumberHelper::round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
-	$timezone = AppContext::get_current_user()->get_attribute('user_timezone') - $serveur_hour;
-	if ($timezone != 0)
-	{
-		$timestamp -= $timezone * 3600;
-	}
-
-	return ($timestamp > 0) ? $timestamp : time();
-}
-
 //Convertit une chaîne au format $LANG['date_format'] (ex:DD/MM/YYYY) en type DATE, si la date saisie est valide sinon retourne 0000-00-00.
 /**
  * @deprecated

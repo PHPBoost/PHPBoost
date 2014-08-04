@@ -59,8 +59,7 @@ if (!empty($_POST['valid']))
 		break;
 		case 2:
 			$maintain = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
-			$maintain = strtotimestamp($maintain, LangLoader::get_message('date_format_day_month_year', 'date-common'));
-			$date = new Date(DATE_TIMESTAMP, Timezone::SITE_TIMEZONE, $maintain);
+			$date = new Date(DATE_FROM_STRING, Timezone::SITE_TIMEZONE, $maintain, LangLoader::get_message('date_format_day_month_year', 'date-common'));
 			$maintenance_config->enable_maintenance();
 			$maintenance_config->set_unlimited_maintenance(false);
 			$maintenance_config->set_end_date($date);
