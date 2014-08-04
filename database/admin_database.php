@@ -329,7 +329,7 @@ else
 
 		$selected_tables = $_POST['table_list'];
 		
-		$file_name = 'backup_' . $Sql->get_data_base_name() . '_' . str_replace('/', '-', gmdate_format('y-m-d-H-i-s')) . '.sql';
+		$file_name = 'backup_' . PersistenceContext::get_dbms_utils()->get_database_name() . '_' . str_replace('/', '-', gmdate_format('y-m-d-H-i-s')) . '.sql';
 		$file_path = PATH_TO_ROOT . '/cache/backup/' . $file_name;
 
 		Environment::try_to_increase_max_execution_time();
@@ -386,12 +386,12 @@ else
 			{
 				if ($repair)
 				{
-					$Sql->repair_tables($selected_tables);
+					PersistenceContext::get_dbms_utils()->repair($selected_tables);
 					$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), MessageHelper::SUCCESS));
 				}
 				else
 				{
-					$Sql->optimize_tables($selected_tables);
+					PersistenceContext::get_dbms_utils()->optimize($selected_tables);
 					$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), MessageHelper::SUCCESS));
 				}
 			}

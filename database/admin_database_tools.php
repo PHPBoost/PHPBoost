@@ -272,21 +272,24 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 }
 elseif (!empty($table) && $action == 'optimize')
 {
-	$Sql->optimize_tables(array($table));	
+	PersistenceContext::get_dbms_utils()->optimize(array($table));
+
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'truncate')
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	$Sql->truncate_tables(array($table));
+	PersistenceContext::get_dbms_utils()->truncate(array($table));
+
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'drop')
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	$Sql->drop_tables(array($table));
+	PersistenceContext::get_dbms_utils()->drop(array($table));
+
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'query')
