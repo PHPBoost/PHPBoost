@@ -208,7 +208,7 @@ class BugtrackerRoadmapListController extends ModuleController
 			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap($requested_version)->rel() .'" + "/" + HTMLForms.getField("status").getValue();')
 		)));
 		
-		$release_date = !empty($requested_version_release_date) && is_numeric($requested_version_release_date) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $requested_version_release_date) : null;
+		$release_date = !empty($requested_version_release_date) && is_numeric($requested_version_release_date) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $requested_version_release_date) : null;
 		
 		$fieldset = new FormFieldsetHorizontal('informations');
 		$form->add_fieldset($fieldset);

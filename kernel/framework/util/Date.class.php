@@ -35,7 +35,7 @@ define('DATE_FROM_STRING', 		4);
 define('ISO_FORMAT', 	'Y-m-d');
 define('RFC3339_FORMAT', 	'Y-m-d\TH:i:s');
 
-define('TIMEZONE_AUTO', 		TIMEZONE_USER);
+define('TIMEZONE_AUTO', 		Timezone::USER_TIMEZONE);
 
 /**
  * @package {@package}
@@ -65,20 +65,14 @@ class Date
 	 * @var DateTime Representation of date and time.
 	 */
 	private $date_time;
-	
-	/**
-	 * @var int The timestamp of the current date
-	 * @deprecated
-	 */
-	private $timestamp;
 
 	/**
 	 * @desc Builds and initializes a date. It admits a variable number of parameters depending on the value of the first one.
 	 * The second parameter allows us to chose what time referential we use to create the date:
 	 * <ul>
-	 * 	<li>TIMEZONE_SYSTEM if that date comes from for example the database (dates must be stored under this referential).</li>
-	 * 	<li>TIMEZONE_SITE if it's an entry coming from the site (nearly never used).</li>
-	 * 	<li>TIMEZONE_USER if it's an entry coming from the user (it's own timezone will be used)</li>
+	 * 	<li>Timezone::SERVER_TIMEZONE if that date comes from for example the database (dates must be stored under this referential).</li>
+	 * 	<li>Timezone::SITE_TIMEZONE if it's an entry coming from the site (nearly never used).</li>
+	 * 	<li>Timezone::USER_TIMEZONE if it's an entry coming from the user (it's own timezone will be used)</li>
 	 * </ul>
 	 * The first parameter determines how to initialize the date, here are the rules to use for the other parameters:
 	 * <ul>
@@ -90,7 +84,7 @@ class Date
 	 * 			<li>int The month (for example 11)</li>
 	 * 			<li>int The day (for example 09)</li>
 	 * 		</ul>
-	 * For example, $date = new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_USER, 2009, 11, 09);
+	 * For example, $date = new Date(DATE_YEAR_MONTH_DAY, Timezone::USER_TIMEZONE, 2009, 11, 09);
 	 * 	</li>
 	 * 	<li>DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND if you want to build a date from a specified time. Here is the rule for the following parameters:
 	 * 		<ul>
@@ -104,7 +98,7 @@ class Date
 	 * For instance $date = new Date(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND, 2009, 11, 09, 12, 34, 12);
 	 * 	</li>
 	 * 	<li>DATE_TIMESTAMP which builds a date from a UNIX timestamp.
-	 * For example $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time()); is equivalent to $date = new Date(DATE_NOW);</li>
+	 * For example $date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time()); is equivalent to $date = new Date(DATE_NOW);</li>
 	 * 	<li>DATE_FROM_STRING which decodes a date written in a string by matching a pattern you have to specify.
 	 * The pattern is easy to write: d for day, m for month and y for year and the separators have to be slashes only.
 	 * For instance, if your third parameter is '12/24/2009' and the fourth is 'm/d/y', it will be the december 24th of 2009.</li>
@@ -134,10 +128,10 @@ class Date
 			}
 			else
 			{
-				$referencial_timezone = TIMEZONE_USER;
+				$referencial_timezone = Timezone::USER_TIMEZONE;
 			}
 
-			$date_timezone = self::get_date_timezone($referencial_timezone);
+			$date_timezone = Timezone::get_timezone($referencial_timezone);
 		}
 
 		switch ($format)
@@ -251,13 +245,13 @@ class Date
 	 * </ul>
 	 * @param int $referencial_timezone One of the following enumeration:
 	 * <ul>
-	 * 	<li>TIMEZONE_SYSTEM</li>
-	 * 	<li>TIMZONE_SITE</li>
-	 * 	<li>TIMEZONE_USER</li>
+	 * 	<li>Timezone::SERVER_TIMEZONE</li>
+	 * 	<li>Timezone::SITE_TIMEZONE</li>
+	 * 	<li>Timezone::USER_TIMEZONE</li>
 	 * </ul>
 	 * @return string The formatted date
 	 */
-	public function format($format = self::FORMAT_DAY_MONTH, $referencial_timezone = TIMEZONE_USER)
+	public function format($format = self::FORMAT_DAY_MONTH, $referencial_timezone = Timezone::USER_TIMEZONE)
 	{
 		$this->compute_server_user_difference($referencial_timezone);
 
@@ -574,55 +568,15 @@ class Date
 	 * @desc Computes the time difference between the server and the current user
 	 * @return int The time difference (in hours)
 	 */
-	private function compute_server_user_difference($referencial_timezone = TIMEZONE_SYSTEM)
+	private function compute_server_user_difference($referencial_timezone = Timezone::SERVER_TIMEZONE)
 	{
-		$this->date_time->setTimezone(self::get_date_timezone($referencial_timezone));
+		$this->date_time->setTimezone(Timezone::get_timezone($referencial_timezone));
 	}
-	
-	private static function get_date_timezone($referencial_timezone = TIMEZONE_SYSTEM)
-	{
-		switch ($referencial_timezone)
-		{
-			// Référentiel : heure du site
-			case TIMEZONE_SITE:
-				$timezone = GeneralConfig::load()->get_site_timezone();
-				break;
-
-			//Référentiel : heure du serveur
-			case TIMEZONE_SYSTEM:
-				$timezone = date_default_timezone_get();
-				break;
-
-			case TIMEZONE_USER:
-				$timezone = AppContext::get_current_user()->get_timezone();
-				break;
-					
-			default:
-				$timezone = date_default_timezone_get();
-		}
 		
-		if (is_int($timezone))
-			$timezone = 'Europe/Paris';
-			
-		return new DateTimeZone($timezone);
-	}
-	
 	public static function set_default_timezone()
 	{
 		$default = @date_default_timezone_get();
         @date_default_timezone_set($default);
-	}
-	
-	public function update_to_date_time($referencial_timezone = TIMEZONE_AUTO)
-	{
-		if (!empty($this->timestamp))
-		{
-			$date_timezone = self::get_date_timezone($referencial_timezone);
-			$this->date_time = new DateTime();
-			$this->date_time->setTimezone($date_timezone);
-			$this->date_time->setTimestamp($this->timestamp);
-		}
-		unset($this->timestamp);
 	}
 	
 	private static function transform_date($date)

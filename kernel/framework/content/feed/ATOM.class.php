@@ -74,7 +74,7 @@ class ATOM extends Feed
                     $item->set_link(preg_match('`<link href="(.*)"/>`is', $expParsed[$i], $url) ? $url[1] : '');
                     $item->set_guid(preg_match('`<id>(.*)</id>`is', $expParsed[$i], $guid) ? $guid[1] : '');
                     $item->set_desc(preg_match('`<summary>(.*)</summary>`is', $expParsed[$i], $desc) ? $desc[1] : '');
-                    $item->set_date(preg_match('`<updated>(.*)</updated>`is', $expParsed[$i], $date) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, strtotime($date[1])) : null);
+                    $item->set_date(preg_match('`<updated>(.*)</updated>`is', $expParsed[$i], $date) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, strtotime($date[1])) : null);
                     
                  	$enclosure = preg_match('`<enclosure rel="enclosure" url="(.*)" length="(.*)" type="(.*)" />`is', $expParsed[$i]);
                     if ($enclosure)

@@ -82,7 +82,7 @@ if ($add)
 			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 			$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "shoutbox"); 
 			
-			$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time());
+			$date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time());
 			$date = $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
 			
 			$array_class = array('member', 'modo', 'admin');
@@ -121,7 +121,7 @@ elseif ($refresh)
 		else
 			$del = '';
 			
-		$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
+		$date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['timestamp']);
 		$date = $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
 		
 		if ($row['user_id'] !== -1) 

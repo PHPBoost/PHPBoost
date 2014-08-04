@@ -313,8 +313,8 @@ class Bug
 		$this->title = $properties['title'];
 		$this->rewrited_title = Url::encode_rewrite($properties['title']);
 		$this->contents = $properties['contents'];
-		$this->submit_date = !empty($properties['submit_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['submit_date']) : null;
-		$this->fix_date = !empty($properties['fix_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['fix_date']) : null;
+		$this->submit_date = !empty($properties['submit_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['submit_date']) : null;
+		$this->fix_date = !empty($properties['fix_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['fix_date']) : null;
 		$this->status = $properties['status'];
 		$this->type = $properties['type'];
 		$this->category = $properties['category'];

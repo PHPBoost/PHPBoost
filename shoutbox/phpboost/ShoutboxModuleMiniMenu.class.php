@@ -148,7 +148,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    		else
 	    			$row['login'] = $del_message . ' <span class="small" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 				
-				$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
+				$date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['timestamp']);
 	    		$tpl->assign_block_vars('shout', array(
 	    			'IDMSG' => $row['id'],
 	    			'PSEUDO' => $row['login'],

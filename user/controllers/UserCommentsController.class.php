@@ -109,7 +109,7 @@ class UserCommentsController extends AbstractController
 			//Avatar
 			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 			
-			$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_SITE, $row['comment_timestamp']);
+			$timestamp = new Date(DATE_TIMESTAMP, Timezone::SITE_TIMEZONE, $row['comment_timestamp']);
 
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 			

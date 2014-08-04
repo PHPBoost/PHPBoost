@@ -64,7 +64,7 @@ class OnlineHomeController extends ModuleController
 			{
 				$user->set_location_script(OnlineUrlBuilder::home()->rel());
 				$user->set_location_title($this->lang['online']);
-				$user->set_last_update(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time()));
+				$user->set_last_update(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time()));
 			}
 			
 			$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);

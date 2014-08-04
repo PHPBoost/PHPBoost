@@ -122,7 +122,7 @@ class GuestbookMessage
 		$this->id = $properties['id'];
 		$this->contents = $properties['contents'];
 		$this->login = $properties['glogin'];
-		$this->creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['timestamp']);
+		$this->creation_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['timestamp']);
 		
 		$user = new User();
 		if (!empty($properties['user_id']))

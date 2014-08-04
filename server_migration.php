@@ -31,8 +31,7 @@ require_once PATH_TO_ROOT . '/kernel/framework/io/data/cache/CacheData.class.php
 require_once PATH_TO_ROOT . '/kernel/framework/io/data/config/ConfigData.class.php';
 require_once PATH_TO_ROOT . '/kernel/framework/io/data/config/AbstractConfigData.class.php';
 require_once PATH_TO_ROOT . '/kernel/framework/phpboost/config/GeneralConfig.class.php';
- 
-define('TIMEZONE_USER', 3);
+
 require_once PATH_TO_ROOT . '/kernel/framework/util/Date.class.php';
  
 $config_file = PATH_TO_ROOT . '/cache/CacheManager-kernel-general-config.data';

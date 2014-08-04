@@ -108,10 +108,10 @@ class FeedData
     ## Getters ##
     public function get_title() { return $this->title; }
     public function get_link() { return $this->link; }
-    public function get_date() { return $this->date->format(Date::FORMAT_DAY_MONTH, TIMEZONE_USER); }
-    public function get_date_rfc2822() { return $this->date->format(Date::FORMAT_RFC2822, TIMEZONE_USER); }
-    public function get_date_iso8601() { return $this->date->format(Date::FORMAT_ISO8601, TIMEZONE_USER); }
-	public function get_date_text() { return $this->date->format(Date::FORMAT_DAY_MONTH_YEAR_LONG, TIMEZONE_USER); }
+    public function get_date() { return $this->date->format(Date::FORMAT_DAY_MONTH, Timezone::USER_TIMEZONE); }
+    public function get_date_rfc2822() { return $this->date->format(Date::FORMAT_RFC2822, Timezone::USER_TIMEZONE); }
+    public function get_date_iso8601() { return $this->date->format(Date::FORMAT_ISO8601, Timezone::USER_TIMEZONE); }
+	public function get_date_text() { return $this->date->format(Date::FORMAT_DAY_MONTH_YEAR_LONG, Timezone::USER_TIMEZONE); }
     public function get_desc() { return $this->desc; }
     public function get_lang() { return $this->lang; }
     public function get_host() { return $this->host; }

@@ -508,7 +508,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$key = 0;
 		foreach ($versions as $key => $version)
 		{
-			$release_date = !empty($version['release_date']) && is_numeric($version['release_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $version['release_date']) : null;
+			$release_date = !empty($version['release_date']) && is_numeric($version['release_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $version['release_date']) : null;
 			
 			$versions_table->assign_block_vars('versions', array(
 				'C_IS_DEFAULT'		=> $this->config->get_default_version() == $key,

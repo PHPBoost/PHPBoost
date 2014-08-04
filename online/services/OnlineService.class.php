@@ -60,7 +60,7 @@ class OnlineService
 			$user->set_pseudo($row['login']);
 			$user->set_level($row['level']);
 			$user->set_groups(explode('|', $row['user_groups']));
-			$user->set_last_update(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['session_time']));
+			$user->set_last_update(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['session_time']));
 			$user->set_location_script($row['session_script'] . $row['session_script_get']);
 			$user->set_location_title(stripslashes($row['session_script_title']));
 			$user->set_avatar($row['user_avatar']);
