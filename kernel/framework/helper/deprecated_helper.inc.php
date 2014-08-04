@@ -310,17 +310,6 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
 
 /**
  * @deprecated
- * @desc Loads a menu lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
- * An error will be displayed on the page and the script execution will be stopped if no lang file is found for this menu.
- * @param string $menu_name The identifier of the menu for which you want to load the lang file.
- */
-function load_menu_lang($menu_name)
-{
-	load_module_lang($menu_name, PATH_TO_ROOT . '/menus');
-}
-
-/**
- * @deprecated
  * @desc Loads a configuration file. You choose a bases path, and you specify a folder name in which you file should be found, if it doesn't exist, it will take a file in another folder.
  * It's very interesting when you want to
  * @param string $dir_path Path of the file (relative from this page).
