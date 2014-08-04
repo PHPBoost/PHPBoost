@@ -66,7 +66,7 @@ class Environment
 		}
 		catch (PHPBoostNotInstalledException $ex)
 		{
-            AppContext::get_response()->redirect('/install/');
+			AppContext::get_response()->redirect('/install/');
 		}
 	}
 
@@ -139,11 +139,10 @@ class Environment
 		//Path from the server root
 		define('SCRIPT', 			$_SERVER['PHP_SELF']);
 		define('REWRITED_SCRIPT', 	$_SERVER['REQUEST_URI']);
-		
+
 		//Get parameters
 		define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING']));
 		define('PHPBOOST', 			true);
-		define('HTML_UNPROTECT', 	false);
 
 		### Authorizations ###
 		define('AUTH_FLOOD', 		'auth_flood');
@@ -183,37 +182,23 @@ class Environment
 
 		$current_user = AppContext::get_current_user();
 		$user_accounts_config = UserAccountsConfig::load();
-		
+
 		$user_theme = ThemesManager::get_theme($current_user->get_theme());
 		$default_theme = $user_accounts_config->get_default_theme();
-		
-		if ($user_theme !== null)
-		{
-			if ((!$user_theme->check_auth() || !$user_theme->is_activated()) && $user_theme->get_id() !== $default_theme)
-			{
-				AppContext::get_current_user()->update_theme($default_theme);
-			}
-		}
-		else
+
+		if ($user_theme === null || (!$user_theme->check_auth() || !$user_theme->is_activated()) && $user_theme->get_id() !== $default_theme)
 		{
 			AppContext::get_current_user()->update_theme($default_theme);
 		}
-		
+
 		$user_lang = LangsManager::get_lang($current_user->get_locale());
 		$default_lang = $user_accounts_config->get_default_lang();
-		if ($user_lang !== null)
-		{
-			if ((!$user_lang->check_auth() || !$user_lang->is_activated()) && $user_lang->get_id() !== $default_lang)
-			{
-				AppContext::get_current_user()->update_lang($default_lang);
-			}
-		}
-		else
+		if ($user_lang === null || (!$user_lang->check_auth() || !$user_lang->is_activated()) && $user_lang->get_id() !== $default_lang)
 		{
 			AppContext::get_current_user()->update_lang($default_lang);
 		}
 	}
-	
+
 	public static function init_output_bufferization()
 	{
 		if (ServerEnvironmentConfig::load()->is_output_gziping_enabled() && !in_array('ob_gzhandler', ob_list_handlers()))
@@ -250,7 +235,7 @@ class Environment
 		{
 			$last_use_config->set_last_use_date($current_date);
 			LastUseDateConfig::save();
-			
+
 			self::perform_changeday();
 		}
 	}
@@ -262,7 +247,7 @@ class Environment
 		self::clear_all_temporary_cache_files();
 
 		self::execute_modules_changedays_tasks();
-		
+
 		self::update_visit_counter_table();
 
 		self::remove_old_unactivated_member_accounts();
@@ -298,17 +283,17 @@ class Environment
 			$job->on_changeday($yesterday, $today);
 		}
 	}
-	
+
 	private static function update_visit_counter_table()
 	{
 		//We truncate the table containing the visitors of today
 		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER . " WHERE id <> 1");
-		
+
 		//We update the last changeday date
 		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
 			" SET time = '" . gmdate_format('Y-m-d', time(), Timezone::SERVER_TIMEZONE) .
 				"', total = 1 WHERE id = 1");
-		
+
 		//We insert this visitor as a today visitor
 		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
 			" (ip, time, total) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . gmdate_format('Y-m-d', time(),
@@ -333,7 +318,7 @@ class Environment
 	{
 		new Updates();
 	}
-	
+
 	private static function execute_modules_changepage_tasks()
 	{
 		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
@@ -349,24 +334,24 @@ class Environment
 		$path = trim($path, '/');
 		if (strpos($path, '/'))
 		{
-        	$module_name = explode('/', $path);
-        	self::$running_module_name = $module_name[0];
-        	self::$home_page_running = false;
+			$module_name = explode('/', $path);
+			self::$running_module_name = $module_name[0];
+			self::$home_page_running = false;
 		}
 		else
 		{
 			self::$home_page_running = true;
-			
+
 			$general_config = GeneralConfig::load();
 			$other_home_page = $general_config->get_other_home_page();
 			$module_home_page = $general_config->get_module_home_page();
-			
+
 			if (empty($other_home_page) && !empty($module_home_page))
 			{
 				self::$running_module_name = $general_config->get_module_home_page();
 			}
 			else
-				self::$running_module_name = '';
+			self::$running_module_name = '';
 		}
 	}
 
@@ -378,7 +363,7 @@ class Environment
 	{
 		return self::$running_module_name;
 	}
-	
+
 	public static function home_page_running()
 	{
 		return self::$home_page_running;
@@ -433,7 +418,7 @@ class Environment
 	{
 		self::get_graphical_environment()->display($content);
 	}
-	
+
 	public static function set_graphical_environment(GraphicalEnvironment $env)
 	{
 		self::$graphical_environment = $env;

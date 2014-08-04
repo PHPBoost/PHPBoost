@@ -42,7 +42,7 @@ class TextHelper
 	 * @desc Protects an input variable. Never trust user input!
 	 * @param string $var Variable to protect.
 	 * @param bool $html_protect HTML_PROTECT if you don't accept the HTML code (it will be transformed
-	 * by the corresponding HTML entities and won't be considerer by the web browsers). HTML_UNPROTECT if you want to let them.
+	 * by the corresponding HTML entities and won't be considerer by the web browsers).
 	 * @param int $addslashes If you want to escape the quotes in the string, use ADDSLASHES_FORCE, if you don't want, use the ADDSLASHES_NONE constant.
 	 * @return string The protected string.
 	 */
