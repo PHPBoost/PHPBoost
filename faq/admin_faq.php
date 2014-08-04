@@ -57,7 +57,7 @@ if ($page > 0)
 		'admin_faq_questions'=> 'faq/admin_faq_questions.tpl'
 	));
 	
-	$nbr_questions = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq", __LINE__, __FILE__);
+	$nbr_questions = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq");
 	
 	//On instancie la classe de pagination
 	$pagination = new ModulePagination($page, $nbr_questions, $_NBR_QUESTIONS_PER_PAGE);
@@ -73,7 +73,7 @@ if ($page > 0)
 	FROM " . PREFIX . "faq q
 	LEFT JOIN " . PREFIX . "faq_cats c ON c.id = q.idcat
 	ORDER BY q.timestamp DESC
-	" . $Sql->limit($pagination->get_display_from(), $_NBR_QUESTIONS_PER_PAGE), __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $_NBR_QUESTIONS_PER_PAGE));
 	
 	while ($row = $Sql->fetch_assoc($result))
 	{

@@ -35,8 +35,8 @@ load_module_lang('download');
 
 if (!empty($idurl))
 {
-	$Sql->query_inject("UPDATE " . PREFIX . "download SET count = count + 1 WHERE id = '" . $idurl . "'", __LINE__, __FILE__); //MAJ du counteur.
-	$info_file = $Sql->query_array(PREFIX . "download", "url", "force_download", "idcat", "size", "WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "download SET count = count + 1 WHERE id = '" . $idurl . "'"); //MAJ du counteur.
+	$info_file = $Sql->query_array(PREFIX . "download", "url", "force_download", "idcat", "size", "WHERE id = '" . $idurl . "'");
 
 	//Vérification de l'autorisation sur le fichier
 	$Cache->load('download');

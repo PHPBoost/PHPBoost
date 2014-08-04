@@ -97,7 +97,7 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 			$list_parent_cats = '';
 			$result = $Sql->query_while("SELECT id
 			FROM " . PREFIX . "forum_cats
-			WHERE id_left <= '" . $CAT_FORUM[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$parent_category]['id_right'] . "'", __LINE__, __FILE__);
+			WHERE id_left <= '" . $CAT_FORUM[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$parent_category]['id_right'] . "'");
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				$list_parent_cats .= $row['id'] . ', ';
@@ -111,19 +111,19 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 				$clause_parent = "id IN (" . $list_parent_cats . ")";
 			
 			$id_left = $CAT_FORUM[$parent_category]['id_right'];
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2 WHERE " . $clause_parent, __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2 WHERE " . $clause_parent);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'");
 			$level = $CAT_FORUM[$parent_category]['level'] + 1;
 
 		}
 		else //Insertion forum niveau 0.
 		{
-			$id_left = $Sql->query("SELECT MAX(id_right) FROM " . PREFIX . "forum_cats", __LINE__, __FILE__);
+			$id_left = $Sql->query("SELECT MAX(id_right) FROM " . PREFIX . "forum_cats");
 			$id_left++;
 			$level = 0;
 		}
 		
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_cats (id_left, id_right, level, name, subname, url, nbr_topic, nbr_msg, last_topic_id, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', '" . $url . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . addslashes(serialize($array_auth_all)) . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_cats (id_left, id_right, level, name, subname, url, nbr_topic, nbr_msg, last_topic_id, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', '" . $url . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . addslashes(serialize($array_auth_all)) . "')");
 
 		###### Regénération du cache des catégories (liste déroulante dans le forum) #######
 		$Cache->Generate_module_file('forum');
@@ -144,7 +144,7 @@ else
 	$forums = '<option value="0" checked="checked" disabled="disabled">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, name, level
 	FROM " . PREFIX . "forum_cats
-	ORDER BY id_left", __LINE__, __FILE__);
+	ORDER BY id_left");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';

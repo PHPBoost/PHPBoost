@@ -66,7 +66,7 @@ if (!$is_guest)
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 	LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
-	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . $unauth_cats, __LINE__, __FILE__);
+	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . $unauth_cats);
 }
 
 //Formulaire de connexion sur le forum.

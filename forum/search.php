@@ -102,7 +102,7 @@ $Template->assign_block_vars('cat', array(
 $result = $Sql->query_while("SELECT id, name, level
 FROM " . PREFIX . "forum_cats 
 WHERE aprob = 1 " . $auth_cats_select . "
-ORDER BY id_left", __LINE__, __FILE__);
+ORDER BY id_left");
 while ($row = $Sql->fetch_assoc($result))
 {	
 	$margin = ($row['level'] > 0) ? str_repeat('----------', $row['level']) : '----';
@@ -175,7 +175,7 @@ if (!empty($valid_search) && !empty($search))
 
 		$max_relevance = 4.5;		
 		$check_result = false;
-		$result = $Sql->query_while ($req, __LINE__, __FILE__);
+		$result = $Sql->query_while ($req);
 		while ($row = $Sql->fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
 		{ 
 			$title = $row['title'];

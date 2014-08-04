@@ -57,7 +57,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	$nbr_topics = $Sql->query("SELECT COUNT(*)
 	FROM " . PREFIX . "forum_view v
 	LEFT JOIN " . PREFIX . "forum_topics t ON t.id = v.idtopic
-	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topics, $CONFIG_FORUM['pagination_topic'], Pagination::LIGHT_PAGINATION);
@@ -79,7 +79,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
 	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 	ORDER BY t.last_timestamp DESC
-	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']));
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);

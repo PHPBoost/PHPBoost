@@ -44,13 +44,13 @@ $parent_cat_id = retrieve(GET, 'parent_cat_id', 0);
 if ($id_move > 0)
 {
 	define('TITLE', $FAQ_LANG['moving_a_question']);
-	$question_infos = $Sql->query_array(PREFIX . "faq", "*", "WHERE id = '" . $id_move . "'", __LINE__, __FILE__);
+	$question_infos = $Sql->query_array(PREFIX . "faq", "*", "WHERE id = '" . $id_move . "'");
 	$id_cat_for_bread_crumb = $question_infos['idcat'];
 }
 elseif ($edit_question > 0)
 {
 	define('TITLE', $FAQ_LANG['question_edition']);
-	$question_infos = $Sql->query_array(PREFIX . "faq", "*", "WHERE id = '" . $edit_question . "'", __LINE__, __FILE__);
+	$question_infos = $Sql->query_array(PREFIX . "faq", "*", "WHERE id = '" . $edit_question . "'");
 	$id_cat_for_bread_crumb = $question_infos['idcat'];
 }
 else

@@ -80,7 +80,7 @@ class Search
 
 		$nbIdsToDelete = 0;
 		$idsToDelete = '';
-		$request = $this->sql_querier->query_while ($reqOldIndex, __LINE__, __FILE__);
+		$request = $this->sql_querier->query_while ($reqOldIndex);
 		while ($row = $this->sql_querier->fetch_assoc($request))
 		{
 			if ($nbIdsToDelete > 0)
@@ -98,8 +98,8 @@ class Search
 			$reqDeleteIdx = "DELETE FROM " . SearchSetup::$search_index_table . " WHERE id_search IN (".$idsToDelete.")";
 			$reqDeleteRst = "DELETE FROM " . SearchSetup::$search_results_table . " WHERE id_search IN (".$idsToDelete.")";
 
-			$this->sql_querier->query_inject($reqDeleteIdx, __LINE__, __FILE__);
-			$this->sql_querier->query_inject($reqDeleteRst, __LINE__, __FILE__);
+			$this->sql_querier->query_inject($reqDeleteIdx);
+			$this->sql_querier->query_inject($reqDeleteRst);
 		}
 
 		// Don't compute anything if no text is searched
@@ -114,7 +114,7 @@ class Search
 				$reqCache .= " AND " . $this->modules_conditions;
 			}
 
-			$request = $this->sql_querier->query_while ($reqCache, __LINE__, __FILE__);
+			$request = $this->sql_querier->query_while ($reqCache);
 			while ($row = $this->sql_querier->fetch_assoc($request))
 			{   // retrieves cache result meta-inf
 				array_push($this->cache, $row['module']);
@@ -127,7 +127,7 @@ class Search
 			{
 				$reqUpdate  = "UPDATE " . SearchSetup::$search_index_table . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
 				$reqUpdate .= "id_search IN (" . implode(',', $this->id_search) . ");";
-				$this->sql_querier->query_inject($reqUpdate, __LINE__, __FILE__);
+				$this->sql_querier->query_inject($reqUpdate);
 			}
 
 			// Adds modules missing in cache
@@ -146,7 +146,7 @@ class Search
 						{
 							$reqInsert = "INSERT INTO " . SearchSetup::$search_index_table .
 								" (id_user, module, search, options, last_search_use, times_used) VALUES " . rtrim($reqInsert, ',');
-							$this->sql_querier->query_inject($reqInsert, __LINE__, __FILE__);
+							$this->sql_querier->query_inject($reqInsert);
 							$reqInsert = '';
 							$nbReqInsert = 0;
 						}
@@ -160,7 +160,7 @@ class Search
 				// Executes last insertions queries
 				if ($nbReqInsert > 0)
 				{
-					$this->sql_querier->query_inject("INSERT INTO " . SearchSetup::$search_index_table . " (id_user, module, search, options, last_search_use, times_used) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("INSERT INTO " . SearchSetup::$search_index_table . " (id_user, module, search, options, last_search_use, times_used) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "");
 				}
 
 				// Checks and retrieves cache meta-informations
@@ -171,7 +171,7 @@ class Search
 					$reqCache .= " AND " . $this->modules_conditions;
 				}
 
-				$request = $this->sql_querier->query_while ($reqCache, __LINE__, __FILE__);
+				$request = $this->sql_querier->query_while ($reqCache);
 				while ($row = $this->sql_querier->fetch_assoc($request))
 				{   // Ajout des résultats s'ils font partie de la liste des modules à traiter
 					$this->id_search[$row['module']] = $row['id_search'];
@@ -207,7 +207,7 @@ class Search
 		}
 
 		// Retrieves results
-		$request = $this->sql_querier->query_while ($reqResults, __LINE__, __FILE__);
+		$request = $this->sql_querier->query_while ($reqResults);
 		while ($result = $this->sql_querier->fetch_assoc($request))
 		{
 			$results[] = $result;
@@ -266,12 +266,12 @@ class Search
 		}
 
 		// Executes search
-		$request = $this->sql_querier->query_while ($reqResults, __LINE__, __FILE__);
+		$request = $this->sql_querier->query_while ($reqResults);
 		while ($result = $this->sql_querier->fetch_assoc($request))
 		{
 			$results[] = $result;
 		}
-		$nbResults = $this->sql_querier->num_rows($request, __LINE__, __FILE__  );
+		$nbResults = $this->sql_querier->num_rows($request  );
 
 		$this->sql_querier->query_close($request);
 
@@ -334,7 +334,7 @@ class Search
 
 			if (!empty($reqSEARCH))
 			{   // Inserts results
-				$request = $this->sql_querier->query_while($reqSEARCH, __LINE__, __FILE__);
+				$request = $this->sql_querier->query_while($reqSEARCH);
 				while ($row = $this->sql_querier->fetch_assoc($request))
 				{
 					if ($nbReqInsert > 0)
@@ -350,7 +350,7 @@ class Search
 			// Executes last insertions
 			if ($nbReqInsert > 0)
 			{
-				$this->sql_querier->query_inject("INSERT INTO " . SearchSetup::$search_results_table . " VALUES ".$reqInsert, __LINE__, __FILE__);
+				$this->sql_querier->query_inject("INSERT INTO " . SearchSetup::$search_results_table . " VALUES ".$reqInsert);
 			}
 		}
 	}
@@ -368,13 +368,13 @@ class Search
 			return true;
 		}
 
-		$id = $this->sql_querier->query("SELECT COUNT(*) FROM " . SearchSetup::$search_index_table . " WHERE id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';", __LINE__, __FILE__);
+		$id = $this->sql_querier->query("SELECT COUNT(*) FROM " . SearchSetup::$search_index_table . " WHERE id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';");
 		if ($id == 1)
 		{
 			// Search is already in cache, we update it.
 			$reqUpdate  = "UPDATE " . SearchSetup::$search_index_table . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
 			$reqUpdate .= "id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';";
-			$this->sql_querier->query_inject($reqUpdate, __LINE__, __FILE__);
+			$this->sql_querier->query_inject($reqUpdate);
 
 			return true;
 		}

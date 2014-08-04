@@ -111,7 +111,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	
 	$nbr_web = $Sql->query("SELECT COUNT(*) as compt 
 	FROM " . PREFIX . "web 
-	WHERE aprob = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
+	WHERE aprob = 1 AND idcat = '" . $idcat . "'");
 	
 	$tpl->put_all(array(
 		'C_WEB_LINK' => true,
@@ -186,7 +186,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON w.id = com.id_in_module AND com.module_id = 'web'
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
-	$Sql->limit($pagination->get_display_from(), $web_config->get_max_nbr_weblinks()), __LINE__, __FILE__);
+	$Sql->limit($pagination->get_display_from(), $web_config->get_max_nbr_weblinks()));
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$notation->set_id_in_module($row['id']);

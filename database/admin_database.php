@@ -97,7 +97,7 @@ if (!empty($_GET['query']))
 		{
 			//On éxécute la requête
 			try {
-				$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);
+				$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query));
 				$i = 1;
 				while ($row = $Sql->fetch_assoc($result))
 				{
@@ -133,7 +133,7 @@ if (!empty($_GET['query']))
 		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
 			try {
-				$result = $Sql->query_inject($query, __LINE__, __FILE__);
+				$result = $Sql->query_inject($query);
 				$affected_rows = @$Sql->affected_rows($result, "");
 			} catch (MySQLQuerierException $e) {
 				$Template->assign_block_vars('line', array());

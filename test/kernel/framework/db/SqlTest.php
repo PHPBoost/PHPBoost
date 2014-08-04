@@ -21,10 +21,10 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 		
-		$ret = $Sql->query('SELECT TOTO', __LINE__, __FILE__);
+		$ret = $Sql->query('SELECT TOTO');
 		$this->assertEquals($ret, null);
 
-		$ret = $Sql->query('SELECT * FROM '.PREFIX.'member', __LINE__, __FILE__);
+		$ret = $Sql->query('SELECT * FROM '.PREFIX.'member');
 		$this->assertTrue($ret);
 	}
 
@@ -32,10 +32,10 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 		
-		$ret = $Sql->query_array('members', '*', __LINE__, __FILE__);
+		$ret = $Sql->query_array('members', '*');
 		$this->assertEquals($ret, null);
 
-		$ret = $Sql->query_array(PREFIX.'member', '*', __LINE__, __FILE__);
+		$ret = $Sql->query_array(PREFIX.'member', '*');
 		$this->assertTrue(is_array($ret));
 	}
 	
@@ -43,27 +43,27 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 		
-		$ret = $Sql->query_inject('INSERT INTO members', __LINE__, __FILE__);
+		$ret = $Sql->query_inject('INSERT INTO members');
 		$this->assertEquals($ret, null);
 
-		$ret = $Sql->query_inject("INSERT INTO ".PREFIX."member SET login = 'toto'", __LINE__, __FILE__);
+		$ret = $Sql->query_inject("INSERT INTO ".PREFIX."member SET login = 'toto'");
 		$this->assertEquals($ret, true);
 		
-		$ret = $Sql->query_inject("UPDATE INTO Erreur de syntaxe SET login = 'titi' WHERE login='toto'", __LINE__, __FILE__);
+		$ret = $Sql->query_inject("UPDATE INTO Erreur de syntaxe SET login = 'titi' WHERE login='toto'");
 		$this->assertEquals($ret, null);
 
-		$ret = $Sql->query_inject("UPDATE ".PREFIX."member SET login = 'titi' WHERE login='toto'", __LINE__, __FILE__);
+		$ret = $Sql->query_inject("UPDATE ".PREFIX."member SET login = 'titi' WHERE login='toto'");
 		$this->assertEquals($ret, true);
 		$rows = $Sql->affected_rows('resource', 'Bidon');
 		$this->assertTrue(is_int($rows) AND ($rows>0));
 		
-		$ret = $Sql->query_inject("DELETE INTO Erreur de syntaxe SET login = 'titi' WHERE login='toto'", __LINE__, __FILE__);
+		$ret = $Sql->query_inject("DELETE INTO Erreur de syntaxe SET login = 'titi' WHERE login='toto'");
 		$this->assertEquals($ret, null);
 
-		$ret = $Sql->query_inject("DELETE FROM ".PREFIX."member WHERE login='titi'", __LINE__, __FILE__);
+		$ret = $Sql->query_inject("DELETE FROM ".PREFIX."member WHERE login='titi'");
 		$this->assertEquals($ret, true);
 		
-		$ret = $Sql->query_inject("ALTER TABLE ".PREFIX."member AUTO_INCREMENT=3", __LINE__, __FILE__);
+		$ret = $Sql->query_inject("ALTER TABLE ".PREFIX."member AUTO_INCREMENT=3");
 		$this->assertEquals($ret, true);
 	}
 	
@@ -71,7 +71,7 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 
-		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member", __LINE__, __FILE__);
+		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member");
 		$this->assertTrue(is_resource($ret));
 
 		$tmp = $Sql->query_close($ret);
@@ -82,7 +82,7 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 
-		$ret = $Sql->query_inject("INSERT INTO ".PREFIX."member SET login = 'toto'", __LINE__, __FILE__);
+		$ret = $Sql->query_inject("INSERT INTO ".PREFIX."member SET login = 'toto'");
 		$this->assertEquals($ret, true);
 		
 		$id = $Sql->insert_id($ret);
@@ -93,7 +93,7 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 
-		$ret = $Sql->query_inject("INSERT INTO ".PREFIX."member SET login = 'toto'", __LINE__, __FILE__);
+		$ret = $Sql->query_inject("INSERT INTO ".PREFIX."member SET login = 'toto'");
 		$this->assertEquals($ret, true);
 		
 		$nb = $Sql->affected_rows($ret);
@@ -104,10 +104,10 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 		
-		$ret = $Sql->query_while('SELECT * FROM table_inexsistante', __LINE__, __FILE__);
+		$ret = $Sql->query_while('SELECT * FROM table_inexsistante');
 		$this->assertEquals($ret, null);
 
-		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member LIMIT 3", __LINE__, __FILE__);
+		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member LIMIT 3");
 		$this->assertTrue(is_resource($ret));
 
 		$tmp = $Sql->query_close($ret);
@@ -118,7 +118,7 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 
-		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member LIMIT 3", __LINE__, __FILE__);
+		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member LIMIT 3");
 		$this->assertTrue(is_resource($ret));
 		
 		while( $row = $Sql->fetch_row($ret)) {
@@ -134,7 +134,7 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 
-		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member LIMIT 3", __LINE__, __FILE__);
+		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member LIMIT 3");
 		$this->assertTrue(is_resource($ret));
 
 		while( $row = $Sql->fetch_assoc($ret)) {
@@ -150,7 +150,7 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 
-		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member", __LINE__, __FILE__);
+		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member");
 		$this->assertTrue(is_resource($ret));
 		
 		$num 	= $Sql->num_rows($ret);
@@ -162,7 +162,7 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 		
-		$ret = $Sql->count_table("member", __LINE__, __FILE__);
+		$ret = $Sql->count_table("member");
 		$this->assertTrue($ret AND ($ret>0));
 	}
 	
@@ -259,7 +259,7 @@ class SqlTest extends PHPBoostUnitTestCase
 	{
 		global $Sql;
 
-		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member LIMIT 3", __LINE__, __FILE__);
+		$ret = $Sql->query_while("SELECT * FROM ".PREFIX."member LIMIT 3");
 		$this->assertTrue(is_resource($ret));
 
 		$tmp = $Sql->close($ret);

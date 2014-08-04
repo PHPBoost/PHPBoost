@@ -91,7 +91,7 @@ if ($file_id > 0) //Contenu
 	// Gestion des liens morts
 	if ($deadlink > 0)
 	{
-		$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "events WHERE id_in_module = '" . $file_id . "' AND module='download' AND current_status = 0", __LINE__, __FILE__);
+		$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "events WHERE id_in_module = '" . $file_id . "' AND module='download' AND current_status = 0");
 		if (empty($nbr_alert)) 
 		{
 			$contribution = new Contribution();

@@ -59,7 +59,7 @@ if ($get_visit_month)
     $array_stats = array();
     $result = $Sql->query_while("SELECT nbr, stats_day
 	FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
-	ORDER BY stats_day", __LINE__, __FILE__);
+	ORDER BY stats_day");
     while ($row = $Sql->fetch_assoc($result))
     {
         $array_stats[$row['stats_day']] = $row['nbr'];
@@ -89,7 +89,7 @@ elseif ($get_visit_year)
     $result = $Sql->query_while ("SELECT SUM(nbr) as total, stats_month
 	FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "'
 	GROUP BY stats_month
-	ORDER BY stats_month", __LINE__, __FILE__);
+	ORDER BY stats_month");
     while ($row = $Sql->fetch_assoc($result))
     {
         $array_stats[$row['stats_month']] = $row['total'];
@@ -115,7 +115,7 @@ elseif ($get_pages_day)
     $day = !empty($_GET['day']) ? NumberHelper::numeric($_GET['day']) : '1';
 
     $array_stats = array();
-    $pages_details = unserialize((string)$Sql->query("SELECT pages_detail FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'", __LINE__, __FILE__));
+    $pages_details = unserialize((string)$Sql->query("SELECT pages_detail FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'"));
     if (is_array($pages_details))
     {
         foreach ($pages_details as $hour => $pages)
@@ -144,7 +144,7 @@ elseif ($get_pages_month)
     $array_stats = array();
     $result = $Sql->query_while("SELECT pages, stats_day
 	FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
-	ORDER BY stats_day", __LINE__, __FILE__);
+	ORDER BY stats_day");
     while ($row = $Sql->fetch_assoc($result))
     {
         $array_stats[$row['stats_day']] = $row['pages'];
@@ -174,7 +174,7 @@ elseif ($get_pages_year)
     $result = $Sql->query_while ("SELECT SUM(pages) as total, stats_month
 	FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "'
 	GROUP BY stats_month
-	ORDER BY stats_month", __LINE__, __FILE__);
+	ORDER BY stats_month");
     while ($row = $Sql->fetch_assoc($result))
     {
         $array_stats[$row['stats_month']] = $row['total'];
@@ -295,7 +295,7 @@ elseif ($get_sex)
 	FROM " . PREFIX . "member member
 	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
 	GROUP BY ext_field.user_sex
-	ORDER BY compt", __LINE__, __FILE__);
+	ORDER BY compt");
     while ($row = $Sql->fetch_assoc($result))
     {
         switch ($row['user_sex'])

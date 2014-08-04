@@ -188,7 +188,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		}
 		
 		$extended_field->set_name(TextHelper::htmlspecialchars($this->form->get_value('name')));
-		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "", __LINE__, __FILE__));
+		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . ""));
 		$extended_field->set_description(TextHelper::htmlspecialchars($this->form->get_value('description', $extended_field->get_description())));
 		
 		if (!$this->form->field_is_disabled('possible_values'))

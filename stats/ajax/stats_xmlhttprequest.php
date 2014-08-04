@@ -42,12 +42,12 @@ $sql_querier = PersistenceContext::get_sql();
 if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 {
 	$idurl = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
-	$url = $sql_querier->query("SELECT url FROM " . StatsSetup::$stats_referer_table . " WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
+	$url = $sql_querier->query("SELECT url FROM " . StatsSetup::$stats_referer_table . " WHERE id = '" . $idurl . "'");
 
 	$result = $sql_querier->query_while("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 	FROM " . PREFIX . "stats_referer
 	WHERE url = '" . addslashes($url) . "' AND type = 0
-	ORDER BY total_visit DESC", __LINE__, __FILE__);
+	ORDER BY total_visit DESC");
 	while ($row = $sql_querier->fetch_assoc($result))
 	{
 		$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
@@ -79,12 +79,12 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le mp.
 {
 	$idkeyword = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
-	$keyword = $sql_querier->query("SELECT relative_url FROM " . StatsSetup::$stats_referer_table . " WHERE id = '" . $idkeyword . "'", __LINE__, __FILE__);
+	$keyword = $sql_querier->query("SELECT relative_url FROM " . StatsSetup::$stats_referer_table . " WHERE id = '" . $idkeyword . "'");
 
 	$result = $sql_querier->query_while("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 	FROM " . PREFIX . "stats_referer
 	WHERE relative_url = '" . addslashes($keyword) . "' AND type = 1
-	ORDER BY total_visit DESC", __LINE__, __FILE__);
+	ORDER BY total_visit DESC");
 	while ($row = $sql_querier->fetch_assoc($result))
 	{
 		$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);

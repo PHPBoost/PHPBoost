@@ -33,7 +33,7 @@ $id_get = retrieve(GET, 'id', 0);
 $quote_get = retrieve(GET, 'quote', 0);	
 
 //On va chercher les infos sur le topic	
-$topic = !empty($id_get) ? $Sql->query_array(PREFIX . 'forum_topics', 'id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__) : '';
+$topic = !empty($id_get) ? $Sql->query_array(PREFIX . 'forum_topics', 'id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg', "WHERE id = '" . $id_get . "'") : '';
 //Existance du topic.
 if (empty($topic['id']))
 {
@@ -124,7 +124,7 @@ $idm = retrieve(GET, 'idm', 0);
 if (!empty($idm))
 {
 	//Calcul de la page sur laquelle se situe le message.
-	$nbr_msg_before = $Sql->query("SELECT COUNT(*) as nbr_msg_before FROM " . PREFIX . "forum_msg WHERE idtopic = " . $id_get . " AND id < '" . $idm . "'", __LINE__, __FILE__); //Nombre de message avant le message de destination.
+	$nbr_msg_before = $Sql->query("SELECT COUNT(*) as nbr_msg_before FROM " . PREFIX . "forum_msg WHERE idtopic = " . $id_get . " AND id < '" . $idm . "'"); //Nombre de message avant le message de destination.
 	
 	//Dernier message de la page? Redirection vers la page suivante pour prendre en compte la reprise du message précédent.
 	if (is_int(($nbr_msg_before + 1) / $CONFIG_FORUM['pagination_msg'])) 
@@ -216,7 +216,7 @@ LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = '" . $id_get . "' AND tr.
 LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
 WHERE msg.idtopic = '" . $id_get . "'
 ORDER BY msg.timestamp 
-" . $Sql->limit(($pagination->get_display_from() - $quote_last_msg), ($CONFIG_FORUM['pagination_msg'] + $quote_last_msg)), __LINE__, __FILE__);
+" . $Sql->limit(($pagination->get_display_from() - $quote_last_msg), ($CONFIG_FORUM['pagination_msg'] + $quote_last_msg)));
 while ( $row = $Sql->fetch_assoc($result) )
 {
 	//Invité?
@@ -469,8 +469,8 @@ $Template->put_all(array(
 $contents = '';
 if (!empty($quote_get))
 {	
-	$quote_msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'contents', "WHERE id = '" . $quote_get . "'", __LINE__, __FILE__);
-	$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $quote_msg['user_id'] . "'", __LINE__, __FILE__);	
+	$quote_msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'contents', "WHERE id = '" . $quote_get . "'");
+	$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $quote_msg['user_id'] . "'");	
 	$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
 }
 

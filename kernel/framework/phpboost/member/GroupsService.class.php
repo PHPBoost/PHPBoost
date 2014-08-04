@@ -53,12 +53,12 @@ class GroupsService
 	public static function add_member($user_id, $idgroup)
 	{
 		//On insère le groupe au champ membre.
-		$user_groups = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'");
 		$user_groups = explode('|', $user_groups);
 		if (!in_array($idgroup, $user_groups)) //Le membre n'appartient pas déjà au groupe.
 		{
 			array_push($user_groups, $idgroup);
-			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . (trim(implode('|', $user_groups), '|')) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . (trim(implode('|', $user_groups), '|')) . "' WHERE user_id = '" . $user_id . "'");
 		}
 		else
 		{
@@ -66,12 +66,12 @@ class GroupsService
 		}
 
 		//On insère le membre dans le groupe.
-		$group_members = self::$sql_querier->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$group_members = self::$sql_querier->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'");
 		$group_members = explode('|', $group_members);
 		if (!in_array($user_id, $group_members)) //Le membre n'appartient pas déjà au groupe.
 		{
 			array_push($group_members, $user_id);
-			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . (trim(implode('|', $group_members), '|')) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . (trim(implode('|', $group_members), '|')) . "' WHERE id = '" . $idgroup . "'");
 		}
 		else
 		{
@@ -90,7 +90,7 @@ class GroupsService
 	public static function edit_member($user_id, $array_user_groups)
 	{
 		//Récupération des groupes précédent du membre.
-		$user_groups_old = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups_old = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'");
 		$array_user_groups_old = explode('|', $user_groups_old);
 
 		//Insertion du différentiel positif des groupes précédent du membre et ceux choisis dans la table des groupes.		
@@ -156,20 +156,20 @@ class GroupsService
 	public static function remove_member($user_id, $idgroup)
 	{
 		//Suppression dans la table des membres.
-		$user_groups = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'");
 		$user_groups = explode('|', $user_groups);
 		
 		unset($user_groups[array_search($idgroup, $user_groups)]);
 		
-		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . trim(implode('|', $user_groups), '|') . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . trim(implode('|', $user_groups), '|') . "' WHERE user_id = '" . $user_id . "'");
 		
 		//Suppression dans la table des groupes.
-		$members_group = self::$sql_querier->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$members_group = self::$sql_querier->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'");
 		$members_group = explode('|', $members_group);
 		
 		unset($members_group[array_search($user_id, $members_group)]);
 		
-		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . trim(implode('|', $members_group), '|') . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . trim(implode('|', $members_group), '|') . "' WHERE id = '" . $idgroup . "'");
 	}
 }
 ?>

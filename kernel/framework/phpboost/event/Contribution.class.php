@@ -235,7 +235,7 @@ class Contribution extends Event
 		{
 			$this->poster_id = $poster_id;
 			//Assigning also the associated login
-			$this->poster_login = $this->sql_querier->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $poster_id . "'", __LINE__, __FILE__);
+			$this->poster_login = $this->sql_querier->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $poster_id . "'");
 		}
 	}
 
@@ -249,7 +249,7 @@ class Contribution extends Event
 		{
 			$this->fixer_id = $fixer_id;
 			//Assigning also the associated login
-			$this->fixer_login = $this->sql_querier->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $fixer_id . "'", __LINE__, __FILE__);
+			$this->fixer_login = $this->sql_querier->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $fixer_id . "'");
 		}
 	}
 

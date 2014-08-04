@@ -93,7 +93,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		$form->add_button(new FormButtonReset());
 		
 		//On crée une pagination si le nombre de messages est trop important.
-		$nbr_messages = $this->sql_querier->count_table(PREFIX . 'shoutbox', __LINE__, __FILE__);
+		$nbr_messages = $this->sql_querier->count_table(PREFIX . 'shoutbox');
 		$pagination = new ModulePagination(AppContext::get_request()->get_getint('p', 1), $nbr_messages, 10);
 		$pagination->set_url(new Url('shoutbox' . url('.php?p=%d')));
 		
@@ -115,7 +115,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = s.user_id
 		GROUP BY s.id
 		ORDER BY s.timestamp DESC 
-		LIMIT " . $pagination->get_number_items_per_page() . " OFFSET " . $pagination->get_display_from(), __LINE__, __FILE__);	
+		LIMIT " . $pagination->get_number_items_per_page() . " OFFSET " . $pagination->get_display_from());	
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$row['user_id'] = (int)$row['user_id'];

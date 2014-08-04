@@ -247,7 +247,7 @@ class MenuService
         if ($direction > 0)
         {   // Moving the menu down
             $max_position_query = "SELECT MAX(position) FROM " . DB_TABLE_MENUS . " WHERE block='" . $menu->get_block() . "' AND enabled='1'";
-            $max_position = $Sql->query($max_position_query, __LINE__, __FILE__);
+            $max_position = $Sql->query($max_position_query);
             // Getting the max diff
             if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
                 $new_block_position = $max_position;
@@ -277,7 +277,7 @@ class MenuService
         
         if ($block_position != $new_block_position)
         {   // Updating other menus
-            $Sql->query_inject($update_query, __LINE__, __FILE__);
+            $Sql->query_inject($update_query);
             
             // Updating the current menu
             $menu->set_block_position($new_block_position);

@@ -32,7 +32,7 @@ if (!empty($idweb))
 	$Sql->query_inject("UPDATE " . PREFIX . "web SET compt = compt + 1 WHERE id = '" . $idweb . "'", __LINE__, __LINE__); //MAJ du compteur.
 
 //Redirection vers le site demandé!
-$url_web = $Sql->query("SELECT url FROM " . PREFIX . "web WHERE id = '" . $idweb . "'", __LINE__, __FILE__);
+$url_web = $Sql->query("SELECT url FROM " . PREFIX . "web WHERE id = '" . $idweb . "'");
 if (!empty($url_web))
 	AppContext::get_response()->redirect($url_web);
 

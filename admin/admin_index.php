@@ -112,7 +112,7 @@ s.session_script_title, m.login, m.user_groups
 FROM " . DB_TABLE_SESSIONS . " s
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON s.user_id = m.user_id
 WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-ORDER BY s.session_time DESC", __LINE__, __FILE__);
+ORDER BY s.session_time DESC");
 while ($row = $Sql->fetch_assoc($result))
 {
 	//On vérifie que la session ne correspond pas à un robot.

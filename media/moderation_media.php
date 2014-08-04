@@ -78,7 +78,7 @@ if (!empty($_POST['submit']))
 		{
 			foreach ($show as $key)
 			{
-				$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_APROBED . "' WHERE id = '" . $key . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_APROBED . "' WHERE id = '" . $key . "'");
 			}
 		}
 		
@@ -86,7 +86,7 @@ if (!empty($_POST['submit']))
 		{
 			foreach ($hide as $key)
 			{
-				$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_UNVISIBLE . "' WHERE id = '" . $key . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_UNVISIBLE . "' WHERE id = '" . $key . "'");
 			}
 		}
 		
@@ -94,7 +94,7 @@ if (!empty($_POST['submit']))
 		{
 			foreach ($unaprobed as $key)
 			{
-				$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_UNAPROBED . "' WHERE id = '" . $key . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_UNAPROBED . "' WHERE id = '" . $key . "'");
 			}
 		}
 
@@ -102,7 +102,7 @@ if (!empty($_POST['submit']))
 		{
 			foreach ($delete as $key)
 			{
-				$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $key . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $key . "'");
 				CommentsService::delete_comments_topic_module('media', $key);
 				NotationService::delete_notes_id_in_module('media', $key);
 			}
@@ -170,7 +170,7 @@ else
 	}
 	
 	$nbr_media = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "media
-	WHERE " . (!empty($array_cats) ? 'idcat IN (' . "'" . implode("', '", $array_cats) . "'" . ')' : 'idcat=' . (!empty($cat) ? $cat : 0)) . (is_null($db_where) ? '' : ' AND infos=' . $db_where), __LINE__, __FILE__);
+	WHERE " . (!empty($array_cats) ? 'idcat IN (' . "'" . implode("', '", $array_cats) . "'" . ')' : 'idcat=' . (!empty($cat) ? $cat : 0)) . (is_null($db_where) ? '' : ' AND infos=' . $db_where));
 	
 	//On crée une pagination si le nombre de fichier est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -187,7 +187,7 @@ else
 		FROM " . PREFIX . "media
 		WHERE " . (!empty($array_cats) ? 'idcat IN (' . "'" . implode("', '", $array_cats) . "'" . ')' : 'idcat=' . (!empty($cat) ? $cat : 0)) . (is_null($db_where) ? '' : ' AND infos=' . $db_where) . "
 		ORDER BY infos ASC, timestamp DESC
-		" . $Sql->limit($pagination->get_display_from(), NUM_MODO_MEDIA), __LINE__, __FILE__);
+		" . $Sql->limit($pagination->get_display_from(), NUM_MODO_MEDIA));
 
 	while ($row = $Sql->fetch_assoc($result))
 	{

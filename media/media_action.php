@@ -49,7 +49,7 @@ if ($unvisible > 0)
 {
 	AppContext::get_session()->csrf_get_protect();
 
-	$media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $unvisible . "'", __LINE__, __FILE__);
+	$media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $unvisible . "'");
 
 	// Gestion des erreurs.
 	if (empty($media))
@@ -70,7 +70,7 @@ if ($unvisible > 0)
 
 	define('TITLE', $MEDIA_LANG['media_moderation']);
 
-	$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_UNVISIBLE . "' WHERE id = '" . $unvisible . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_UNVISIBLE . "' WHERE id = '" . $unvisible . "'");
 
 	require_once('../kernel/header.php');
 
@@ -83,7 +83,7 @@ elseif ($delete > 0)
 {
 	AppContext::get_session()->csrf_get_protect();
 
-	$media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $delete. "'", __LINE__, __FILE__);
+	$media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $delete. "'");
 
 	if (empty($media))
 	{
@@ -97,7 +97,7 @@ elseif ($delete > 0)
         DispatchManager::redirect($error_controller);
 	}
 
-	$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $delete . "'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $delete . "'");
 
 	NotationService::delete_notes_id_in_module('media', $delete);
 	
@@ -156,7 +156,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	}
 
 	// Édition.
-	if ($edit > 0 && ($media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $edit. "'", __LINE__, __FILE__)) && !empty($media) && AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
+	if ($edit > 0 && ($media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $edit. "'")) && !empty($media) && AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 	{
 		bread_crumb($media['idcat']);
 		
@@ -351,7 +351,7 @@ elseif (!empty($_POST['submit']))
 	// Édition
 	if ($media['idedit'] && AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . FormatingHelper::strparse($media['contents']) . "', infos = '" . (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . FormatingHelper::strparse($media['contents']) . "', infos = '" . (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'");
 
 		$media_categories->recount_media_per_cat();
 
@@ -380,7 +380,7 @@ elseif (!empty($_POST['submit']))
 	// Ajout
 	elseif (!$media['idedit'] && (($auth_write = AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
 	{
-		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height) VALUES ('" . $media['idcat'] . "', '" . AppContext::get_current_user()->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . FormatingHelper::strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height) VALUES ('" . $media['idcat'] . "', '" . AppContext::get_current_user()->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . FormatingHelper::strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "')");
 
 		$new_id_media = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "media");
 		$media_categories->recount_media_per_cat($media['idcat']);

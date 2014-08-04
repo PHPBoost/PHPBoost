@@ -61,7 +61,7 @@ if (!empty($table) && $action == 'data')
 {
 	$_NBR_ELEMENTS_PER_PAGE = 30;
 	
-	$nbr_lines = $Sql->query("SELECT COUNT(*) FROM " . $table, __LINE__, __FILE__);
+	$nbr_lines = $Sql->query("SELECT COUNT(*) FROM " . $table);
 	
 	//On crée une pagination (si activé) si le nombre de news est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -93,7 +93,7 @@ if (!empty($table) && $action == 'data')
 
 	//On éxécute la requête
 	$query = "SELECT * FROM ".$table.$Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE);
-	$result = $Sql->query_while ($query, __LINE__, __FILE__);
+	$result = $Sql->query_while ($query);
 	$i = 1;
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -154,7 +154,7 @@ elseif (!empty($table) && $action == 'delete')
 	$value = retrieve(GET, 'value', '');
 	
 	if (!empty($value) && !empty($field))
-		$Sql->query_inject("DELETE FROM ".$table." WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".$table." WHERE " . $field . " = '" . $value . "'");
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 }
 elseif (!empty($table) && $action == 'update') //Mise à jour.
@@ -172,7 +172,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 		foreach ($table_structure['fields'] as $fields_info)
 			$request .= $fields_info['name'] . " = '" . retrieve(POST, $fields_info['name'], '', TSTRING_HTML) . "', ";
 		
-		$Sql->query_inject("UPDATE ".$table." SET " . trim($request, ', ') . " WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".$table." SET " . trim($request, ', ') . " WHERE " . $field . " = '" . $value . "'");
 		AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
 	elseif (!empty($field) && !empty($value))
@@ -191,7 +191,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 		));
 		
 		//On éxécute la requête
-		$row = $Sql->query_array($table, '*', "WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
+		$row = $Sql->query_array($table, '*', "WHERE " . $field . " = '" . $value . "'");
 		//On parse les valeurs de sortie
 		$i = 0;
 		foreach ($row as $field_name => $field_value)
@@ -240,7 +240,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 			$fields .= $fields_info['name'] . ', ';
 		}
 		
-		$Sql->query_inject("INSERT INTO ".$table." (" . trim($fields, ', ') . ") VALUES (" . trim($values, ', ') . ")", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".$table." (" . trim($fields, ', ') . ") VALUES (" . trim($values, ', ') . ")");
 		AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
 	else
@@ -309,7 +309,7 @@ elseif (!empty($table) && $action == 'query')
 		if (strtolower(substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
 			//On éxécute la requête
-			$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);
+			$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query));
 			$i = 1;
 			while ($row = $Sql->fetch_assoc($result))
 			{
@@ -334,7 +334,7 @@ elseif (!empty($table) && $action == 'query')
 		}
 		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
-			$result = $Sql->query_inject($query, __LINE__, __FILE__);
+			$result = $Sql->query_inject($query);
 			$affected_rows = @$Sql->affected_rows($result, "");
 		}
 	}	

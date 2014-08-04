@@ -47,18 +47,18 @@ if (!empty($_POST['valid']))
 	$result = $Sql->query_while("SELECT t.id, tr.pm, tr.mail
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
-	WHERE tr.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	WHERE tr.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$pm = (isset($_POST['p' . $row['id']]) && $_POST['p' . $row['id']] == 'on') ? 1 : 0;
 		if ($row['pm'] != $pm)
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '" . $pm . "' WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '" . $pm . "' WHERE idtopic = '" . $row['id'] . "'");
 		$mail = (isset($_POST['m' . $row['id']]) && $_POST['m' . $row['id']] == 'on') ? 1 : 0;
 		if ($row['mail'] != $mail)
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '" . $mail . "' WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '" . $mail . "' WHERE idtopic = '" . $row['id'] . "'");
 		$del = (isset($_POST['d' . $row['id']]) && $_POST['d' . $row['id']] == 'on') ? true : false;
 		if ($del)
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $row['id'] . "'");
 	}
 	$Sql->query_close($result);
 	
@@ -74,7 +74,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 
 	$nbr_topics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
-	WHERE tr.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	WHERE tr.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topics, $CONFIG_FORUM['pagination_topic'], Pagination::LIGHT_PAGINATION);
@@ -103,7 +103,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " me ON me.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 	WHERE tr.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 	ORDER BY t.last_timestamp DESC
-	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']));
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On définit un array pour l'appellation correspondant au type de champ

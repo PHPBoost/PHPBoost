@@ -53,7 +53,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, icon, num_files, contents
 		FROM " . PREFIX . "download_cat
-		ORDER BY id_parent, c_order", __LINE__, __FILE__);
+		ORDER BY id_parent, c_order");
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$auth = unserialize($row['auth']);
@@ -126,7 +126,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 	function get_cat()
 	{
 		$result = $this->sql_querier->query_while("SELECT *
-	            FROM " . PREFIX . "download_cat", __LINE__, __FILE__);
+	            FROM " . PREFIX . "download_cat");
 			$data = array();
 		while ($row = $this->sql_querier->fetch_assoc($result)) {
 			$data[$row['id']] = $row['name'];

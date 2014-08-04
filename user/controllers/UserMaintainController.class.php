@@ -183,10 +183,10 @@ class UserMaintainController extends AbstractController
 		$errors_lang = LangLoader::get('errors');
 		$sql = PersistenceContext::get_sql();
 		$session = AppContext::get_session();
-		$user_id = $sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
+		$user_id = $sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'");
 		if (!empty($user_id)) //Membre existant.
 		{
-			$info_connect = $sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', 'password', "WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
+			$info_connect = $sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', 'password', "WHERE user_id='" . $user_id . "'");
 			$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
 			$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
 
@@ -194,12 +194,12 @@ class UserMaintainController extends AbstractController
 			{
 				if ($delay_connect >= 600) //5 nouveau essais, 10 minutes après.
 				{
-					$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+					$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'"); //Remise à zéro du compteur d'essais.
 					$error_report = $session->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnect); //On lance la session.
 				}
 				elseif ($delay_connect >= 300) //2 essais 5 minutes après
 				{
-					$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Redonne 2 essais.
+					$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'"); //Redonne 2 essais.
 					$error_report = $session->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnect); //On lance la session.
 				}
 				elseif ($info_connect['test_connect'] < 5) //Succès.
@@ -227,14 +227,14 @@ class UserMaintainController extends AbstractController
 
 			if (!empty($error_report)) //Erreur
 			{
-				$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
+				$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'");
 				$info_connect['test_connect']++;
 				$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
 				AppContext::get_response()->redirect(UserUrlBuilder::maintain('flood/' . $info_connect['test_connect']));
 			}
 			elseif ($info_connect['test_connect'] > 0) //Succès redonne tous les essais.
 			{
-				$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+				$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'"); //Remise à zéro du compteur d'essais.
 			}
 		}
 		else

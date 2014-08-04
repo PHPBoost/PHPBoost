@@ -49,14 +49,14 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 
-	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'");
 	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
-	$cat = $Sql->query_array(PREFIX . 'forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
+	$cat = $Sql->query_array(PREFIX . 'forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'");
 
 	$auth_cats = '';
 	if (is_array($CAT_FORUM))
@@ -74,7 +74,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$result = $Sql->query_while("SELECT id, name, level
 	FROM " . PREFIX . "forum_cats
 	WHERE url = '' " . $auth_cats . "
-	ORDER BY id_left", __LINE__, __FILE__);
+	ORDER BY id_left");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$disabled = ($row['id'] == $topic['idcat']) ? ' disabled="disabled"' : '';
@@ -120,11 +120,11 @@ if (!empty($id_get)) //Déplacement du sujet.
 }
 elseif (!empty($id_post)) //Déplacement du topic
 {
-	$idcat = $Sql->query("SELECT idcat FROM " . PREFIX . "forum_topics WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+	$idcat = $Sql->query("SELECT idcat FROM " . PREFIX . "forum_topics WHERE id = '" . $id_post . "'");
 	if (AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 	{
 		$to = retrieve(POST, 'to', $idcat); //Catégorie cible.
-		$level = $Sql->query("SELECT level FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
+		$level = $Sql->query("SELECT level FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "'");
 		if (!empty($to) && $level > 0 && $idcat != $to)
 		{
 			//Instanciation de la class du forum.
@@ -156,8 +156,8 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	));
 
 	$idm = !empty($id_get_msg) ? $id_get_msg : $id_post_msg;
-	$msg =  $Sql->query_array(PREFIX . 'forum_msg', 'idtopic', 'contents', "WHERE id = '" . $idm . "'", __LINE__, __FILE__);
-	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$msg =  $Sql->query_array(PREFIX . 'forum_msg', 'idtopic', 'contents', "WHERE id = '" . $idm . "'");
+	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', "WHERE id = '" . $msg['idtopic'] . "'");
 
 	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 	{
@@ -165,7 +165,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
     	DispatchManager::redirect($error_controller);
     }
 
-	$id_first = $Sql->query("SELECT MIN(id) as id FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$id_first = $Sql->query("SELECT MIN(id) as id FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'");
 	//Scindage du premier message interdite.
 	if ($id_first == $idm)
 	{
@@ -174,7 +174,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
         DispatchManager::redirect($controller);
 	}
 
-	$cat = $Sql->query_array(PREFIX . 'forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
+	$cat = $Sql->query_array(PREFIX . 'forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'");
 	$to = retrieve(POST, 'to', $cat['id']); //Catégorie cible.
 
 	$auth_cats = '';
@@ -193,7 +193,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$result = $Sql->query_while("SELECT id, name, level
 	FROM " . PREFIX . "forum_cats
 	WHERE url = '' " . $auth_cats . "
-	ORDER BY id_left", __LINE__, __FILE__);
+	ORDER BY id_left");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$cat_forum .= ($row['level'] > 0) ? '<option value="' . $row['id'] . '">' . str_repeat('--------', $row['level']) . ' ' . $row['name'] . '</option>' : '<option value="' . $row['id'] . '" disabled="disabled">-- ' . $row['name'] . '</option>';
@@ -347,8 +347,8 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 }
 elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 {
-	$msg =  $Sql->query_array(PREFIX . 'forum_msg', 'idtopic', 'user_id', 'timestamp', 'contents', "WHERE id = '" . $id_post_msg . "'", __LINE__, __FILE__);
-	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$msg =  $Sql->query_array(PREFIX . 'forum_msg', 'idtopic', 'user_id', 'timestamp', 'contents', "WHERE id = '" . $id_post_msg . "'");
+	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'");
 	$to = retrieve(POST, 'to', 0); //Catégorie cible.
 
 	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
@@ -357,7 +357,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 		DispatchManager::redirect($error_controller);
 	}
 
-	$id_first = $Sql->query("SELECT MIN(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$id_first = $Sql->query("SELECT MIN(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'");
 	//Scindage du premier message interdite.
 	if ($id_first == $id_post_msg)
 	{
@@ -366,7 +366,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
         DispatchManager::redirect($controller);
 	}
 
-	$level = $Sql->query("SELECT level FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
+	$level = $Sql->query("SELECT level FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "'");
 	if (!empty($to) && $level > 0)
 	{
 		$title = retrieve(POST, 'title', '');

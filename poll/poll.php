@@ -36,7 +36,7 @@ $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 if (!empty($poll_id))
 {
-	$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
+	$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)");
 	
 	//Pas de sondage trouvé => erreur.
 	if (empty($poll['id']))
@@ -97,7 +97,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			if (empty($ip))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_current_user()->get_ip() . "', -1, '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_current_user()->get_ip() . "', -1, '" . $poll['id'] . "', '" . time() . "')");
 				$check_bdd = false;
 			}
 		}
@@ -108,7 +108,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			if (empty($user_id))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . $poll['id'] . "', '" . time() . "')");
 				$check_bdd = false;
 			}
 		}
@@ -145,7 +145,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 
 		if ($check_answer) //Enregistrement vote du sondage
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'");
 						
 			if (in_array($poll['id'], $config_displayed_in_mini_module_list) ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
 				$Cache->Generate_module_file('poll');
@@ -303,7 +303,7 @@ elseif ($archives) //Archives.
 		'poll'=> 'poll/poll.tpl'
 	));
 	
-	$nbrarchives = $Sql->query("SELECT COUNT(*) as id FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
+	$nbrarchives = $Sql->query("SELECT COUNT(*) as id FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1");
 	
 	//On crée une pagination si le nombre de sondages est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -333,7 +333,7 @@ elseif ($archives) //Archives.
 	FROM " . PREFIX . "poll
 	WHERE archive = 1 AND visible = 1
 	ORDER BY timestamp DESC
-	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__); 
+	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE)); 
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$array_answer = explode('|', $row['answers']);

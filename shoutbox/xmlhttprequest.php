@@ -56,7 +56,7 @@ if ($add)
 		if (ShoutboxAuthorizationsService::check_authorizations()->write())
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-			$check_time = (AppContext::get_current_user()->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			$check_time = (AppContext::get_current_user()->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'") : '';
 			if (!empty($check_time) && !AppContext::get_current_user()->check_max_value(AUTH_FLOOD))
 			{
 				if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
@@ -79,7 +79,7 @@ if ($add)
 				exit;
 			}
 			
-			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . AppContext::get_current_user()->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . AppContext::get_current_user()->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')");
 			$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "shoutbox"); 
 			
 			$date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time());
@@ -112,7 +112,7 @@ elseif ($refresh)
 	FROM " . PREFIX . "shoutbox s
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 	ORDER BY timestamp DESC 
-	" . $Sql->limit(0, 25), __LINE__, __FILE__);
+	" . $Sql->limit(0, 25));
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
@@ -144,10 +144,10 @@ elseif ($del)
 	$shout_id = !empty($_POST['idmsg']) ? NumberHelper::numeric($_POST['idmsg']) : '';
 	if (!empty($shout_id))
 	{
-		$user_id = (int)$Sql->query("SELECT user_id FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
+		$user_id = (int)$Sql->query("SELECT user_id FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'");
 		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($user_id === AppContext::get_current_user()->get_attribute('user_id') && AppContext::get_current_user()->get_attribute('user_id') !== -1))
 		{
-			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'");
 			echo 1;
 		}
 	}

@@ -47,7 +47,7 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		//Configuration
 		$i = 0;
 		$config = array();
-		$config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'media'", __LINE__, __FILE__));
+		$config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'media'"));
 		$root_config = $config['root'];
 		unset($config['root']);
 
@@ -56,7 +56,7 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 
 		//List of categories and their own properties
 		$string .= '$MEDIA_CATS[0] = ' . var_export($root_config, true) . ';' . "\n\n";
-		$result = $this->sql_querier->query_while("SELECT * FROM " . PREFIX . "media_cat ORDER BY id_parent, c_order ASC", __LINE__, __FILE__);
+		$result = $this->sql_querier->query_while("SELECT * FROM " . PREFIX . "media_cat ORDER BY id_parent, c_order ASC");
 
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{

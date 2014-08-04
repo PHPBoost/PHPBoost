@@ -32,7 +32,7 @@ require_once('../forum/forum_tools.php');
 $alert = retrieve(GET, 'id', 0);
 $alert_post = retrieve(POST, 'id', 0);
 $topic_id = !empty($alert) ? $alert : $alert_post;
-$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $topic_id . "'", __LINE__, __FILE__);
+$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $topic_id . "'");
 
 $cat_name = !empty($CAT_FORUM[$topic['idcat']]['name']) ? $CAT_FORUM[$topic['idcat']]['name'] : '';
 $topic_name = !empty($topic['title']) ? $topic['title'] : '';
@@ -63,7 +63,7 @@ $Template->set_filenames(array(
 if (!empty($alert) && empty($alert_post))
 {
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert ."' AND status = 0", __LINE__, __FILE__);
+	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert ."' AND status = 0");
 	if (empty($nbr_alert)) //On affiche le formulaire
 	{
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
@@ -110,7 +110,7 @@ if (!empty($alert_post))
 	));
 
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert_post ."' AND status = 0", __LINE__, __FILE__);
+	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert_post ."' AND status = 0");
 	if (empty($nbr_alert)) //On enregistre
 	{
 		$alert_title = retrieve(POST, 'title', '');

@@ -46,19 +46,19 @@ if ($faq_del_id > 0)
 	//Vérification de la validité du jeton
 	AppContext::get_session()->csrf_get_protect();
 
-	$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__);
+	$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $faq_del_id . "'");
 	$id_cat_for_bread_crumb = $faq_infos['idcat'];
 	include('faq_bread_crumb.php');
 	if ($auth_write)
 	{
 		if (!empty($faq_infos['question'])) //If the id corresponds to a question existing in the database
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order > '" . $faq_infos['q_order'] . "'", __LINE__, __FILE__); //Decrementation of the order of every question which are after
-			$Sql->query_inject("DELETE FROM " . PREFIX . "faq WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__);			 //Updating number of subcategories
+			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order > '" . $faq_infos['q_order'] . "'"); //Decrementation of the order of every question which are after
+			$Sql->query_inject("DELETE FROM " . PREFIX . "faq WHERE id = '" . $faq_del_id . "'");			 //Updating number of subcategories
 			if ($faq_infos['idcat'] != 0)
 			{
 				$faq_cats = new FaqCats();
-				$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($faq_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($faq_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")");
 			}
 			
 			$Cache->Generate_module_file('faq');
@@ -73,17 +73,17 @@ if ($faq_del_id > 0)
 }
 elseif ($down > 0)
 {
-	$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $down . "'", __LINE__, __FILE__);
+	$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $down . "'");
 	
-	$num_questions = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq WHERE idcat = '" . $faq_infos['idcat'] . "'", __LINE__, __FILE__);
+	$num_questions = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq WHERE idcat = '" . $faq_infos['idcat'] . "'");
 	$id_cat_for_bread_crumb = $faq_infos['idcat'];
 	include('faq_bread_crumb.php');
 	if ($auth_write && !empty($faq_infos['question'])) //If the id corresponds to a question existing in the database
 	{
 		if ($faq_infos['q_order'] < $num_questions) //If it's not the last question we exchange it and its previous neighboor
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] + 1) . "'", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE id = '" . $down . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] + 1) . "'");
+			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE id = '" . $down . "'");
 			AppContext::get_response()->redirect(PATH_TO_ROOT . FaqUrlBuilder::get_link_cat($faq_infos['idcat'],$FAQ_CATS[$faq_infos['idcat']]['name']) . '#q' . $down);
 		}
 	}
@@ -95,15 +95,15 @@ elseif ($down > 0)
 }
 elseif ($up > 0)
 {
-	$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $up . "'", __LINE__, __FILE__);
+	$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $up . "'");
 	$id_cat_for_bread_crumb = $faq_infos['idcat'];
 	include('faq_bread_crumb.php');
 	if ($auth_write && !empty($faq_infos['question'])) //If the id corresponds to a question existing in the database
 	{
 		if ($faq_infos['q_order'] > 1) //If it's not the first question we exchange it and its following
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] - 1) . "'", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE id = '" . $up . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order = '" . ($faq_infos['q_order'] - 1) . "'");
+			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE id = '" . $up . "'");
 			AppContext::get_response()->redirect(PATH_TO_ROOT . FaqUrlBuilder::get_link_cat($faq_infos['idcat'],$FAQ_CATS[$faq_infos['idcat']]['name']) . '#q' . $up);
 		}
 	}
@@ -118,12 +118,12 @@ elseif (!empty($entitled) && !empty($answer))
 {
 	if ($id_question > 0)
 	{
-		$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', "WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
+		$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', "WHERE id = '" . $id_question . "'");
 		$id_cat_for_bread_crumb = $faq_infos['idcat'];
 		include('faq_bread_crumb.php');
 		if ($auth_write)//If authorized user
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "faq SET question = '" . $entitled . "', answer = '" . $answer . "', idcat = '" . $id_cat . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "faq SET question = '" . $entitled . "', answer = '" . $answer . "', idcat = '" . $id_cat . "' WHERE id = '" . $id_question . "'");
 			AppContext::get_response()->redirect(PATH_TO_ROOT . FaqUrlBuilder::get_link_question($faq_infos['idcat'], $id_question, $FAQ_CATS[$faq_infos['idcat']]['name']));
 		}
 		else
@@ -139,8 +139,8 @@ elseif (!empty($entitled) && !empty($answer))
 		if ($auth_write)//If authorized user
 		{
 			//shifting right all questions which will be after this
-			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE idcat = '" . $id_cat . "' AND q_order > '" . $FAQ_CATS[$id_cat]['num_questions'] . "'", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT INTO " . PREFIX . "faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $id_cat . "', '" . ($FAQ_CATS[$id_cat]['num_questions'] + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE idcat = '" . $id_cat . "' AND q_order > '" . $FAQ_CATS[$id_cat]['num_questions'] . "'");
+			$Sql->query_inject("INSERT INTO " . PREFIX . "faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $id_cat . "', '" . ($FAQ_CATS[$id_cat]['num_questions'] + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . time() . "')");
 			
 			$new_question_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "faq");
 			
@@ -148,7 +148,7 @@ elseif (!empty($entitled) && !empty($answer))
 			if ($id_cat != 0)
 			{
 				$faq_cats = new FaqCats();
-				$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($id_cat, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($id_cat, ADD_THIS_CATEGORY_IN_LIST)) . ")");
 			}
 			
 			$Cache->Generate_module_file('faq');
@@ -168,7 +168,7 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 	//We check if new category exists
 	if (array_key_exists($target, $FAQ_CATS) || $target == 0)
 	{
-		$question_infos = $Sql->query_array(PREFIX . "faq", "*", "WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
+		$question_infos = $Sql->query_array(PREFIX . "faq", "*", "WHERE id = '" . $id_question . "'");
 		$id_cat_for_bread_crumb = $question_infos['idcat'];
 		$auth_write = AppContext::get_current_user()->check_auth($faq_config->get_authorizations(), AUTH_WRITE);
 		while ($id_cat_for_bread_crumb > 0)
@@ -181,20 +181,20 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 		{
 			if ($target != $question_infos['idcat'])
 			{
-				$max_order = $Sql->query("SELECT MAX(q_order) FROM " . PREFIX . "faq WHERE idcat = '" . $target . "'", __LINE__, __FILE__);
-				$Sql->query_inject("UPDATE " . PREFIX . "faq SET idcat = '" . $target . "', q_order = '" . ($max_order + 1) . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
-				$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE idcat = '" . $question_infos['idcat'] . "' AND q_order > '" . $question_infos['q_order'] . "'", __LINE__, __FILE__);
+				$max_order = $Sql->query("SELECT MAX(q_order) FROM " . PREFIX . "faq WHERE idcat = '" . $target . "'");
+				$Sql->query_inject("UPDATE " . PREFIX . "faq SET idcat = '" . $target . "', q_order = '" . ($max_order + 1) . "' WHERE id = '" . $id_question . "'");
+				$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE idcat = '" . $question_infos['idcat'] . "' AND q_order > '" . $question_infos['q_order'] . "'");
 				
 				//Updating number of subcategories of its old parents
 				if ($question_infos['idcat'] != 0)
 				{
-					$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_categories->build_parents_id_list($question_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_categories->build_parents_id_list($question_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")");
 				}
 				
 				//Updating the number of subcategories of its new parents
 				if ($target != 0)
 				{
-					$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_categories->build_parents_id_list($target, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_categories->build_parents_id_list($target, ADD_THIS_CATEGORY_IN_LIST)) . ")");
 				}
 				
 				if ($question_infos['idcat'] != 0 || $target != 0)

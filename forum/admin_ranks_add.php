@@ -42,7 +42,7 @@ if (!empty($_POST['add']))
 	{	
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
 		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_ranks (name,msg,icon,special) 
-		VALUES('" . $name . "', '" . $msg . "', '" . $icon . "', '0')", __LINE__, __FILE__);	
+		VALUES('" . $name . "', '" . $msg . "', '" . $icon . "', '0')");	
 				
 		###### Régénération du cache des rangs #######
 		ForumRanksCache::invalidate();

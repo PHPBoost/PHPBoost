@@ -48,8 +48,8 @@ if (!empty($encoded_title)) //Si on connait son titre
 	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 	WHERE a.encoded_title = '" . $encoded_title . "'
-	GROUP BY a.id", __LINE__, __FILE__);
-	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+	GROUP BY a.id");
+	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'");
 	$article_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	$id_article = $article_infos['id'];
@@ -65,7 +65,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 		WHERE a.id = '" . $article_infos['redirect'] . "'
-		GROUP BY a.id", __LINE__, __FILE__);
+		GROUP BY a.id");
 		$article_infos = $Sql->fetch_assoc($result);
 		$Sql->query_close($result);
 		$id_article = $article_infos['id'];
@@ -84,7 +84,7 @@ elseif (!empty($id_contents))
 	LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
 	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
-	WHERE c.id_contents = '" . $id_contents . "'", __LINE__, __FILE__);
+	WHERE c.id_contents = '" . $id_contents . "'");
 	$article_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	$id_article = $article_infos['id'];
@@ -109,7 +109,7 @@ $Template->set_filenames(array(
 if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 {
 	if ($config->is_hits_counter_enabled())//Si on prend en compte le nombre de vus
-		$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "wiki_articles SET hits = hits + 1 WHERE id = '" . $article_infos['id'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "wiki_articles SET hits = hits + 1 WHERE id = '" . $article_infos['id'] . "'");
 
 	//Si c'est une archive
 	if ($id_contents > 0)
@@ -179,7 +179,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		ORDER BY a.title",
 		__LINE__, __FILE__);
 
-		$num_articles = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE a.id_cat = '" . $article_infos['id_cat'] . "' AND a.id <> '" . $id_article . "' AND a.redirect = 0", __LINE__, __FILE__);
+		$num_articles = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE a.id_cat = '" . $article_infos['id_cat'] . "' AND a.id <> '" . $id_article . "' AND a.redirect = 0");
 		
 		$Template->assign_block_vars('cat', array(
 		));

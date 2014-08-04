@@ -67,7 +67,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    			if (ShoutboxAuthorizationsService::check_authorizations()->write())
 	    			{
 	    				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-	    				$check_time = (AppContext::get_current_user()->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+	    				$check_time = (AppContext::get_current_user()->get_attribute('user_id') !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'") : '';
 	    				if (!empty($check_time) && !AppContext::get_current_user()->check_max_value(AUTH_FLOOD))
 	    				{
 	    					if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
@@ -81,7 +81,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
 	    					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
 	
-	    				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . AppContext::get_current_user()->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+	    				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . AppContext::get_current_user()->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')");
 	
 	    				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	    			}
@@ -130,7 +130,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    	FROM " . PREFIX . "shoutbox s
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 	    	ORDER BY s.timestamp DESC
-	    	" . $Sql->limit(0, 25), __LINE__, __FILE__);
+	    	" . $Sql->limit(0, 25));
 	    	while ($row = $Sql->fetch_assoc($result))
 	    	{
 	    		$row['user_id'] = (int)$row['user_id'];

@@ -72,7 +72,7 @@ class PagesSearchable extends AbstractSearchableExtensionPoint
             WHERE ( FT_SEARCH(title, '".$args['search']."') OR FT_SEARCH(contents, '".$args['search']."') )".$auth_cats
             .$this->sql_querier->limit(0, PAGES_MAX_SEARCH_RESULTS);
 
-        $result = $this->sql_querier->query_while ($request, __LINE__, __FILE__);
+        $result = $this->sql_querier->query_while ($request);
         while ($row = $this->sql_querier->fetch_assoc($result))
         {
             if ( !empty($row['auth']) )

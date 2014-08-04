@@ -74,9 +74,9 @@ class FaqCats extends DeprecatedCategoriesManager
 				parent::move_into_another($id_cat, $new_id_cat_content);
 		}
 		
-		$max_q_order = $Sql->query("SELECT MAX(q_order) FROM " . PREFIX . "faq WHERE idcat = '" . $new_id_cat_content . "'", __LINE__, __FILE__);
+		$max_q_order = $Sql->query("SELECT MAX(q_order) FROM " . PREFIX . "faq WHERE idcat = '" . $new_id_cat_content . "'");
 		$max_q_order = $max_q_order > 0 ? $max_q_order : 1;
-		$Sql->query_inject("UPDATE " . PREFIX . "faq SET idcat = '" . $new_id_cat_content . "', q_order = q_order + " . $max_q_order . " WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "faq SET idcat = '" . $new_id_cat_content . "', q_order = q_order + " . $max_q_order . " WHERE idcat = '" . $id_category . "'");
 		
 		$this->recount_subquestions();
 		
@@ -89,7 +89,7 @@ class FaqCats extends DeprecatedCategoriesManager
 		if (array_key_exists($id_parent, $this->cache_var))
 		{
 			$new_id_cat = parent::add($id_parent, $name);
-			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET description = '" . $description . "', image = '" . $image . "', display_mode = '" . $display_mode . "', auth = '" . $auth . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET description = '" . $description . "', image = '" . $image . "', display_mode = '" . $display_mode . "', auth = '" . $auth . "' WHERE id = '" . $new_id_cat . "'");
 			//We don't recount the number of questions because this category is empty
 			return 'e_success';
 		}
@@ -117,7 +117,7 @@ class FaqCats extends DeprecatedCategoriesManager
 					$this->recount_subquestions(false);
 				}
 			}
-			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "', display_mode = '" . $display_mode . "', auth = '" . $auth . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "', display_mode = '" . $display_mode . "', auth = '" . $auth . "' WHERE id = '" . $id_cat . "'");
 			$Cache->Generate_module_file('faq');
 			
 			return 'e_success';
@@ -187,7 +187,7 @@ class FaqCats extends DeprecatedCategoriesManager
 		if ($test = parent::delete($id))
 		{
 			//We remove its whole content
-			$Sql->query_inject("DELETE FROM " . PREFIX . "faq WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "faq WHERE idcat = '" . $id . "'");
 			return true;
 		}
 		else
@@ -213,9 +213,9 @@ class FaqCats extends DeprecatedCategoriesManager
 		if ($cat_id != 0)
 		{
 			//We add to this number the number of questions of this category
-			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq WHERE idcat = '" . $cat_id . "'", __LINE__, __FILE__);
+			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq WHERE idcat = '" . $cat_id . "'");
 			
-			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "'");
 			
 			return $num_subquestions;
 		}

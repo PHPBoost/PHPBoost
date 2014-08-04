@@ -79,7 +79,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 					LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
 					WHERE g.aprob = 1 AND gc.aprob = 1
 					ORDER BY RAND()
-					" . $Sql->limit(0, $config->get_pics_number_in_mini()), __LINE__, __FILE__);
+					" . $Sql->limit(0, $config->get_pics_number_in_mini()));
 					while($row = $Sql->fetch_assoc($result))
 					{
 						$_array_random_pics[] = $row;

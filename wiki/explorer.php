@@ -54,7 +54,7 @@ $result = $Sql->query_while("SELECT title, id, encoded_title
 	FROM " . PREFIX . "wiki_articles a
 	WHERE id_cat = 0
 	AND a.redirect = 0
-	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
+	ORDER BY is_cat DESC, title ASC");
 while ($row = $Sql->fetch_assoc($result))
 {
 	$root .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><i class="fa fa-file"></i>' . $row['title'] . '</a></li>';
@@ -75,10 +75,10 @@ $result = $Sql->query_while("SELECT c.id, a.title, a.encoded_title
 FROM " . PREFIX . "wiki_cats c
 LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
 WHERE c.id_parent = 0
-ORDER BY title ASC", __LINE__, __FILE__);
+ORDER BY title ASC");
 while ($row = $Sql->fetch_assoc($result))
 {
-	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'");
 	if ($sub_cats_number > 0)
 	{	
 		$template->assign_block_vars('list', array(

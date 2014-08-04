@@ -39,10 +39,10 @@ if (!empty($_POST['add']))
 	
 	if (!empty($code_smiley) && !empty($url_smiley))
 	{
-		$check_smiley = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_SMILEYS . " WHERE code_smiley = '" . $code_smiley . "'", __LINE__, __FILE__);
+		$check_smiley = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_SMILEYS . " WHERE code_smiley = '" . $code_smiley . "'");
 		if (empty($check_smiley))
 		{
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_SMILEYS . " (code_smiley,url_smiley) VALUES('" . $code_smiley . "','" . $url_smiley . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_SMILEYS . " (code_smiley,url_smiley) VALUES('" . $code_smiley . "','" . $url_smiley . "')");
 		
 			###### Régénération du cache des smileys #######	
 			SmileysCache::invalidate();
@@ -98,7 +98,7 @@ else
 		$smileys_array[] = $smileys->get_name();
 	
 	$result = $Sql->query_while("SELECT url_smiley
-	FROM " . PREFIX . "smileys", __LINE__, __FILE__);
+	FROM " . PREFIX . "smileys");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On recherche les clées correspondante à celles trouvée dans la bdd.

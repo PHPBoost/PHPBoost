@@ -43,8 +43,8 @@ if ($article_id > 0) //Si on connait son titre
 	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 	WHERE a.id = '" . $article_id . "'
-	GROUP BY a.id", __LINE__, __FILE__);	
-	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE id = '" . $article_id . "'", __LINE__, __FILE__);
+	GROUP BY a.id");	
+	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE id = '" . $article_id . "'");
 	$article_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
@@ -58,7 +58,7 @@ if ($article_id > 0) //Si on connait son titre
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 		WHERE a.id = '" . $article_infos['redirect'] . "'
-		GROUP BY a.id", __LINE__, __FILE__);	
+		GROUP BY a.id");	
 		$article_infos = $Sql->fetch_assoc($result);
 		$Sql->query_close($result);
 	}

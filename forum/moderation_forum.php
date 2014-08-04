@@ -83,7 +83,7 @@ $id_topic_get = retrieve(POST, 'change_cat', '');
 if (!empty($id_topic_get))
 {
 	//On va chercher les infos sur le topic
-	$topic = !empty($id_topic_get) ? $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', "WHERE id = '" . $id_topic_get . "'", __LINE__, __FILE__) : '';
+	$topic = !empty($id_topic_get) ? $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', "WHERE id = '" . $id_topic_get . "'") : '';
 
 	//Informations sur la catégorie du topic, en cache $CAT_FORUM variable globale.
 	$CAT_FORUM[$topic['idcat']]['secure'] = '2';
@@ -170,7 +170,7 @@ if ($action == 'alert') //Gestion des alertes
 		LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = ta.idmodo
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 		" . $auth_cats . "
-		ORDER BY ta.status ASC, ta.timestamp DESC", __LINE__, __FILE__);
+		ORDER BY ta.status ASC, ta.timestamp DESC");
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if ($row['status'] == 0)
@@ -223,7 +223,7 @@ if ($action == 'alert') //Gestion des alertes
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = ta.idmodo
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-		WHERE ta.id = '" . $id_get . "'" . $auth_cats, __LINE__, __FILE__);
+		WHERE ta.id = '" . $id_get . "'" . $auth_cats);
 		$row = $Sql->fetch_assoc($result);
 		if (!empty($row))
 		{
@@ -285,12 +285,12 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if (!empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', "WHERE user_id = '" . $id_get . "'");
 
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'");
 
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 			if ($info_mbr['user_id'] != AppContext::get_current_user()->get_attribute('user_id'))
@@ -325,7 +325,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		if (retrieve(POST, 'search_member', false))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'");
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish&id=' . $user_id, '', '&'));
 			else
@@ -348,7 +348,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_readonly
 		FROM " . PREFIX . "member
 		WHERE user_readonly > " . time() . "
-		ORDER BY user_readonly", __LINE__, __FILE__);
+		ORDER BY user_readonly");
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
@@ -377,7 +377,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_readonly', "WHERE user_id = '" . $id_get . "'");
 
 		//Durée de la sanction.
 		$date_lang = LangLoader::get('date-common');
@@ -460,14 +460,14 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'");
 
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
 		{
 			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'");
 
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 				if ($info_mbr['user_id'] != AppContext::get_current_user()->get_attribute('user_id'))
@@ -484,8 +484,8 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			}
 			elseif ($new_warning_level == 100) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-				$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'");
+				$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $info_mbr['user_id'] . "'");
 
 				//Insertion de l'action dans l'historique.
 				forum_history_collector(H_BAN_USER, $info_mbr['user_id'], 'moderation_forum.php?action=warning&id=' . $info_mbr['user_id']);
@@ -515,7 +515,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		if (retrieve(POST, 'search_member', false))
 		{
 			$login = retrieve(POST, 'login_member', '');
-			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'");
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning&id=' . $user_id, '', '&'));
 			else
@@ -537,7 +537,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_warning
 		FROM " . PREFIX . "member
 		WHERE user_warning > 0
-		ORDER BY user_warning", __LINE__, __FILE__);
+		ORDER BY user_warning");
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
@@ -566,7 +566,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_warning', "WHERE user_id = '" . $id_get . "'");
 
 		$select = '';
 		$j = 0;
@@ -652,7 +652,7 @@ else //Panneau de modération
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = h.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = h.user_id_action
 	ORDER BY h.timestamp DESC
-	" . $Sql->limit(0, $end), __LINE__, __FILE__);
+	" . $Sql->limit(0, $end));
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);

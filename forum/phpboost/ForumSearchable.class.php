@@ -217,7 +217,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
         WHERE msg.id IN (".implode(',', $ids).")
         GROUP BY t.id";
 
-		$request_results = $this->sql_querier->query_while ($request, __LINE__, __FILE__);
+		$request_results = $this->sql_querier->query_while ($request);
 		while ($row = $this->sql_querier->fetch_assoc($request_results))
 		{
 			$results_data[] = $row;

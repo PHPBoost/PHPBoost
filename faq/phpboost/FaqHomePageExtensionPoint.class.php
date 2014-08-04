@@ -106,7 +106,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 		ORDER BY q_order",
 		__LINE__, __FILE__);
 
-		$num_rows = $this->sql_querier->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
+		$num_rows = $this->sql_querier->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "faq_cats WHERE idcat = '" . $id_faq . "'");
 
 		if ($num_rows > 0)
 		{

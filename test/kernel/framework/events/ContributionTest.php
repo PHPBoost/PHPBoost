@@ -73,7 +73,7 @@ class ContributionTest extends PHPBoostUnitTestCase
 //		$tmp  = 1;
 //		$contrib->set_poster_id($tmp);
 //		self::assertEquals($contrib->get_poster_id(), $tmp);
-//		$login = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $tmp . "'", __LINE__, __FILE__);
+//		$login = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $tmp . "'");
 //		self::assertEquals($contrib->get_poster_login(), $login);
 //	}
 //
@@ -89,7 +89,7 @@ class ContributionTest extends PHPBoostUnitTestCase
 //		$tmp  = 1;
 //		$contrib->set_fixer_id($tmp);
 //		self::assertEquals($contrib->get_fixer_id(), $tmp);
-//		$login = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $tmp . "'", __LINE__, __FILE__);
+//		$login = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $tmp . "'");
 //		self::assertEquals($contrib->get_fixer_login(), $login);
 //	}
 //
