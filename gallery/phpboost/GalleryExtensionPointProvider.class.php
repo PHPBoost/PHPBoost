@@ -50,7 +50,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		
 		$result = $this->sql_querier->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
 		FROM " . PREFIX . "gallery_cats
-		ORDER BY id_left", __LINE__, __FILE__);
+		ORDER BY id_left");
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			if (empty($row['auth']))
@@ -73,7 +73,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
 		WHERE g.aprob = 1 AND (gc.aprob = 1 OR g.idcat = 0)
 		ORDER BY RAND()
-		" . $this->sql_querier->limit(0, 30), __LINE__, __FILE__);
+		" . $this->sql_querier->limit(0, 30));
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			if ($row['idcat'] == 0)

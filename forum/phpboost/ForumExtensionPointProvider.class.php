@@ -41,7 +41,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		//Configuration du forum
 		$forum_config = 'global $CONFIG_FORUM;' . "\n";
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_FORUM = unserialize($sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'forum'", __LINE__, __FILE__));
+		$CONFIG_FORUM = unserialize($sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'forum'"));
 		$CONFIG_FORUM['auth'] = unserialize($CONFIG_FORUM['auth']);
 
 		$forum_config .= '$CONFIG_FORUM = ' . var_export($CONFIG_FORUM, true) . ';' . "\n";
@@ -53,7 +53,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		$result = $sql_querier->query_while("SELECT child.*, parent.id as id_parent
 		FROM " . PREFIX . "forum_cats child
 		LEFT JOIN " . PREFIX . "forum_cats parent ON child.id_left > parent.id_left AND child.id_right < parent.id_right
-		ORDER BY child.id_left", __LINE__, __FILE__);
+		ORDER BY child.id_left");
 		while ($row = $sql_querier->fetch_assoc($result))
 		{
 			if (empty($row['id_parent']))

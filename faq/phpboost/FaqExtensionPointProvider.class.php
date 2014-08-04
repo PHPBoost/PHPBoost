@@ -48,7 +48,7 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 		$string .= '$FAQ_CATS[0] = ' . var_export($root, true) . ';' . "\n";
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
 		FROM " . PREFIX . "faq_cats
-		ORDER BY id_parent, c_order", __LINE__, __FILE__);
+		ORDER BY id_parent, c_order");
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$string .= '$FAQ_CATS[' . $row['id'] . '] = ' .
@@ -68,7 +68,7 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 		}
 
 		//Random questions
-		$query = $this->sql_querier->query_while ("SELECT id, question, idcat FROM " . PREFIX . "faq LIMIT 0, 20", __LINE__, __FILE__);
+		$query = $this->sql_querier->query_while ("SELECT id, question, idcat FROM " . PREFIX . "faq LIMIT 0, 20");
 		$questions = array();
 		while ($row = $this->sql_querier->fetch_assoc($query))
 			$questions[] = array('id' => $row['id'], 'question' => $row['question'], 'idcat' => $row['idcat']);

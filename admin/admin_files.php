@@ -48,7 +48,7 @@ $to = retrieve(POST, 'new_cat', -1);
 
 if (isset($_GET['fup'])) //Changement de dossier
 {
-	$parent_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
+	$parent_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'");
 	
 	if (!empty($folder_member)) 
 		AppContext::get_response()->redirect('/admin/admin_files.php?showm=1');
@@ -78,11 +78,11 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#message_helper');
 		else //Insertion dans la bdd
 		{
-			$check_user_folder = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $folder . "'", __LINE__, __FILE__);
+			$check_user_folder = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $folder . "'");
 			$user_id = ($check_user_folder <= 0) ? -1 : AppContext::get_current_user()->get_attribute('user_id');
 			$user_id = max($user_id, $folder_member);
 			
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($Upload->get_original_filename()) . "', '" . addslashes($Upload->get_filename()) . "', '" . $user_id . "', '" . $Upload->get_human_readable_size() . "', '" . $Upload->get_extension() . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($Upload->get_original_filename()) . "', '" . addslashes($Upload->get_filename()) . "', '" . $user_id . "', '" . $Upload->get_human_readable_size() . "', '" . $Upload->get_extension() . "', '" . time() . "')");
 		}
 	}
 	else
@@ -125,12 +125,12 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
-	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
+	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $move_folder . "'");
 	$move_list_parent = array();
 	$result = $Sql->query_while("SELECT id, id_parent, name
 	FROM " . PREFIX . "upload_cat
 	WHERE user_id = '" . $user_id . "'
-	ORDER BY id", __LINE__, __FILE__);
+	ORDER BY id");
 	while ($row = $Sql->fetch_assoc($result))
 		$move_list_parent[$row['id']] = $row['id_parent'];
 	
@@ -173,7 +173,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.id = '" . $folder . "'");
 
-	$result = $Sql->query_while ($sql_request, __LINE__, __FILE__);
+	$result = $Sql->query_while ($sql_request);
 	$folder_info = $Sql->fetch_assoc($result);
 	
 	if ($show_member)
@@ -211,7 +211,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	//Affichage du dossier/fichier à déplacer
 	if ($is_folder)
 	{
-		$folder_info = $Sql->query_array(PREFIX . "upload_cat", "name", "id_parent", "WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
+		$folder_info = $Sql->query_array(PREFIX . "upload_cat", "name", "id_parent", "WHERE id = '" . $move_folder . "'");
 		$name = $folder_info['name'];
 		$id_cat = $folder_info['id_parent'];
 		$template->assign_block_vars('folder', array(
@@ -226,7 +226,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	}
 	else
 	{
-		$info_move = $Sql->query_array(PREFIX . "upload", "path", "name", "type", "size", "idcat", "WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
+		$info_move = $Sql->query_array(PREFIX . "upload", "path", "name", "type", "size", "idcat", "WHERE id = '" . $move_file . "'");
 		$get_img_mimetype = Uploads::get_img_mimetype($info_move['type']);
 		$size_img = '';
 		$display_real_img = false;
@@ -288,7 +288,7 @@ else
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.id = '" . $folder . "'");
 
-	$result = $Sql->query_while ($sql_request, __LINE__, __FILE__);
+	$result = $Sql->query_while ($sql_request);
 	$folder_info = $Sql->fetch_assoc($result);
 		
 	//Gestion des erreurs.
@@ -386,7 +386,7 @@ else
 		ORDER BY name";
 
 	//Affichage des dossiers
-	$result = $Sql->query_while ($sql_folder, __LINE__, __FILE__);
+	$result = $Sql->query_while ($sql_folder);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
@@ -411,7 +411,7 @@ else
 	if (!$show_member) //Dossier membres.
 	{
 		//Affichage des fichiers contenu dans le dossier
-		$result = $Sql->query_while ($sql_files, __LINE__, __FILE__);
+		$result = $Sql->query_while ($sql_files);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
@@ -468,7 +468,7 @@ else
 	}
 	
 
-	$total_size = $Sql->query("SELECT SUM(size) FROM " . PREFIX . "upload", __LINE__, __FILE__);
+	$total_size = $Sql->query("SELECT SUM(size) FROM " . PREFIX . "upload");
 	$template->put_all(array(
 		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_folder_size, 0) . ' ' . $LANG['unit_kilobytes'],

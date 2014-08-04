@@ -63,9 +63,9 @@ class PHPBoostCaptcha extends Captcha
 		}
 
 		$get_code = retrieve(POST, $this->get_html_id(), '', TSTRING_UNCHANGE);
-		$captcha = $this->sql_querier->query_array(PHPBoostCaptchaSetup::$verif_code_table, 'code', 'difficulty', "WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+		$captcha = $this->sql_querier->query_array(PHPBoostCaptchaSetup::$verif_code_table, 'code', 'difficulty', "WHERE user_id = '" . $this->user_id . "'");
 
-		$this->sql_querier->query_inject("DELETE FROM " . PHPBoostCaptchaSetup::$verif_code_table . " WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+		$this->sql_querier->query_inject("DELETE FROM " . PHPBoostCaptchaSetup::$verif_code_table . " WHERE user_id = '" . $this->user_id . "'");
 
 		if (!empty($captcha['code']) && $captcha['code'] == $get_code && $captcha['difficulty'] == $this->get_options()->get_difficulty())
 		{
@@ -265,14 +265,14 @@ class PHPBoostCaptcha extends Captcha
 	
 	private function update_code()
 	{
-		$check_user_id = $this->sql_querier->query("SELECT COUNT(*) FROM " . PHPBoostCaptchaSetup::$verif_code_table . " WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+		$check_user_id = $this->sql_querier->query("SELECT COUNT(*) FROM " . PHPBoostCaptchaSetup::$verif_code_table . " WHERE user_id = '" . $this->user_id . "'");
 		if ($check_user_id == 1)
 		{
-		  $this->sql_querier->query_inject("UPDATE " . PHPBoostCaptchaSetup::$verif_code_table . " SET code = '" . $this->get_code() . "' WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
+		  $this->sql_querier->query_inject("UPDATE " . PHPBoostCaptchaSetup::$verif_code_table . " SET code = '" . $this->get_code() . "' WHERE user_id = '" . $this->user_id . "'");
 		}
 		else
 		{
-		  $this->sql_querier->query_inject("INSERT INTO " . PHPBoostCaptchaSetup::$verif_code_table . " (user_id, code, difficulty, timestamp) VALUES ('" . $this->user_id . "', '" . $this->get_code() . "', '" . $this->get_options()->get_difficulty() . "', '" . time() . "')", __LINE__, __FILE__);
+		  $this->sql_querier->query_inject("INSERT INTO " . PHPBoostCaptchaSetup::$verif_code_table . " (user_id, code, difficulty, timestamp) VALUES ('" . $this->user_id . "', '" . $this->get_code() . "', '" . $this->get_options()->get_difficulty() . "', '" . time() . "')");
 		}
 	}
 	

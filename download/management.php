@@ -82,13 +82,13 @@ if ($delete_file > 0)
 {
     //Vérification de la valiité du jeton
     AppContext::get_session()->csrf_get_protect();
-	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
+	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $delete_file . "'");
 	if (empty($file_infos['title']))
 		AppContext::get_response()->redirect(HOST. DIR . url('/download/download.php'));
 	
 	if ($download_categories->check_auth($file_infos['idcat']))
 	{
-		$Sql->query_inject("DELETE FROM " . PREFIX . "download WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "download WHERE id = '" . $delete_file . "'");
 		
 		CommentsService::delete_comments_topic_module('download', $delete_file);
 
@@ -110,7 +110,7 @@ if ($delete_file > 0)
 //Editing a page
 elseif ($edit_file_id > 0)
 {
-	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
+	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $edit_file_id . "'");
 	
 	if (empty($file_infos['title']))
 		AppContext::get_response()->redirect(HOST. DIR . url('/download/download.php'));
@@ -252,7 +252,7 @@ if ($edit_file_id > 0)
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$file_properties = $Sql->query_array(PREFIX . "download", "visible", "approved", "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
+			$file_properties = $Sql->query_array(PREFIX . "download", "visible", "approved", "WHERE id = '" . $edit_file_id . "'");
 			
 			
 			$file_relative_url = new Url($file_url);
@@ -261,7 +261,7 @@ if ($edit_file_id > 0)
 				"size = '" . $file_size . "', count = '" . $file_hits . "', force_download = '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', contents = '" . $file_contents . "', short_contents = '" . $file_short_contents . "', " .
 				"image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', " .
 				"start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "', approved = " . (int)$file_approved . " " .
-				"WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
+				"WHERE id = '" . $edit_file_id . "'");
 			
 			//Updating the number of subfiles in each category
 			if ($file_cat_id != $file_infos['idcat'] || (int)$file_properties['visible'] != $visible || (int)$file_properties['approved'] != $file_approved)
@@ -486,7 +486,7 @@ else
             $file_relative_url = new Url($file_url);
 			
 			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, force_download, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved, user_id) " .
-				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_relative_url->relative() . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . $file_contents . "', '" . $file_short_contents . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "', '" . (int)AppContext::get_current_user()->get_id() . "')", __LINE__, __FILE__);
+				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_relative_url->relative() . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . $file_contents . "', '" . $file_short_contents . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "', '" . (int)AppContext::get_current_user()->get_id() . "')");
 			
 			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "download");
 			

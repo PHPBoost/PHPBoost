@@ -83,7 +83,7 @@ class MediaCats extends DeprecatedCategoriesManager
 			}
 		}
 
-		$Sql->query_inject("UPDATE ".PREFIX."media SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."media SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'");
 
 		$this->recount_media_per_cat();
 
@@ -114,7 +114,7 @@ class MediaCats extends DeprecatedCategoriesManager
 			}
 
 			$new_id_cat = parent::add($id_parent, $name);
-			$Sql->query_inject("UPDATE ".PREFIX."media_cat SET description = '" . $description . "', image = '" . $image . "', auth = '" . $new_auth . "', mime_type = '" . $mime_type . "', active = '" . $activ . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."media_cat SET description = '" . $description . "', image = '" . $image . "', auth = '" . $new_auth . "', mime_type = '" . $mime_type . "', active = '" . $activ . "' WHERE id = '" . $new_id_cat . "'");
 			//We don't recount the number of questions because this category is empty
 			return 'e_success';
 		}
@@ -167,7 +167,7 @@ class MediaCats extends DeprecatedCategoriesManager
 				}
 			}
 
-			$Sql->query_inject("UPDATE ".PREFIX."media_cat SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "', auth = '" . $new_auth . "', mime_type = '" . $mime_type . "', active = '" . $activ . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."media_cat SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "', auth = '" . $new_auth . "', mime_type = '" . $mime_type . "', active = '" . $activ . "' WHERE id = '" . $id_cat . "'");
 			$Cache->Generate_module_file('media');
 
 			return 'e_success';
@@ -226,7 +226,7 @@ class MediaCats extends DeprecatedCategoriesManager
 
 		if (is_null($id))
 		{
-			$result = $Sql->query_while("SELECT id, idcat FROM ".PREFIX."media WHERE infos = '" . MEDIA_STATUS_APROBED . "' ORDER BY idcat", __LINE__, __FILE__);
+			$result = $Sql->query_while("SELECT id, idcat FROM ".PREFIX."media WHERE infos = '" . MEDIA_STATUS_APROBED . "' ORDER BY idcat");
 
 			while ($row = $Sql->fetch_assoc($result))
 			{
@@ -240,11 +240,11 @@ class MediaCats extends DeprecatedCategoriesManager
 
 			if (!empty($MEDIA_CATS[0]) && $MEDIA_CATS[0]['num_media'] != $num_media[0])
 			{
-				$config = $Sql->query_array(PREFIX . 'configs', 'value', "WHERE name = 'media'", __LINE__, __FILE__);
+				$config = $Sql->query_array(PREFIX . 'configs', 'value', "WHERE name = 'media'");
 				$config = unserialize($config['value']);
 				$config['root']['num_media'] = $num_media[0];
 
-				$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'media'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'media'");
 			}
 
 			if (!empty($num_media))
@@ -253,7 +253,7 @@ class MediaCats extends DeprecatedCategoriesManager
 				{
 					if ($idcat != 0 && $MEDIA_CATS[$idcat] != $number)
 					{
-						$Sql->query_inject("UPDATE ".PREFIX."media_cat SET num_media = '" . $number . "' WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+						$Sql->query_inject("UPDATE ".PREFIX."media_cat SET num_media = '" . $number . "' WHERE id = '" . $idcat . "'");
 					}
 				}
 			}
@@ -262,20 +262,20 @@ class MediaCats extends DeprecatedCategoriesManager
 		{
 			if (is_null($num))
 			{
-				$num = (int) $Sql->query("SELECT COUNT(*) FROM ".PREFIX."media WHERE idcat = '" . $id . "' AND infos = '" . MEDIA_STATUS_APROBED . "'", __LINE__, __FILE__);
+				$num = (int) $Sql->query("SELECT COUNT(*) FROM ".PREFIX."media WHERE idcat = '" . $id . "' AND infos = '" . MEDIA_STATUS_APROBED . "'");
 			}
 
 			if ($id > 0)
 			{
-				$Sql->query_inject("UPDATE ".PREFIX."media_cat SET num_media = '" . $num . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."media_cat SET num_media = '" . $num . "' WHERE id = '" . $id . "'");
 			}
 			else
 			{
-				$config = $Sql->query_array(PREFIX . 'configs', 'value', "WHERE name = 'media'", __LINE__, __FILE__);
+				$config = $Sql->query_array(PREFIX . 'configs', 'value', "WHERE name = 'media'");
 				$config = unserialize($config['value']);
 				$config['root']['num_media'] = $num;
 
-				$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'media'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'media'");
 			}
 		}
 
@@ -298,7 +298,7 @@ class MediaCats extends DeprecatedCategoriesManager
 		if (parent::delete($id))
 		{
 			//We remove its whole content
-			$Sql->query_inject("DELETE FROM ".PREFIX."media WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."media WHERE idcat = '" . $id . "'");
 
 			return true;
 		}

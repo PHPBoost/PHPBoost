@@ -71,8 +71,8 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 			WHERE a.redirect = 0
 			ORDER BY c.timestamp DESC
-			LIMIT 0, " . $config->get_number_articles_on_index(), __LINE__, __FILE__);
-			$articles_number = $this->sql_querier->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+			LIMIT 0, " . $config->get_number_articles_on_index());
+			$articles_number = $this->sql_querier->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'");
 
 			$Template->assign_block_vars('last_articles', array(
 				'C_ARTICLES' => $articles_number,

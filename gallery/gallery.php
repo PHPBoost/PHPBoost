@@ -215,12 +215,12 @@ elseif ($g_add)
 		$Template->put('message_helper', MessageHelper::display(LangLoader::get_message('e_unexist_cat', 'errors'), E_USER_NOTICE));
 
 	$module_data_path = $Template->get_pictures_data_path();
-	$path_pics = $Sql->query("SELECT path FROM " . PREFIX . "gallery WHERE id = '" . $g_idpics . "'", __LINE__, __FILE__);
+	$path_pics = $Sql->query("SELECT path FROM " . PREFIX . "gallery WHERE id = '" . $g_idpics . "'");
 
 	//Aficchage de la photo uploadée.
 	if (!empty($g_idpics))
 	{
-		$imageup = $Sql->query_array(PREFIX . "gallery", "idcat", "name", "path", "WHERE id = '" . $g_idpics . "'", __LINE__, __FILE__);
+		$imageup = $Sql->query_array(PREFIX . "gallery", "idcat", "name", "path", "WHERE id = '" . $g_idpics . "'");
 		$Template->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $g_idpics . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',

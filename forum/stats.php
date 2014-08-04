@@ -43,15 +43,15 @@ $Template->set_filenames(array(
 $total_day = NumberHelper::round((time() - GeneralConfig::load()->get_site_install_date()->get_timestamp())/(3600*24), 0);
 $timestamp_today = @mktime(0, 0, 1, gmdate_format('m'), gmdate_format('d'), gmdate_format('y'));
 
-$sum = $Sql->query_array(PREFIX . "forum_cats", "SUM(nbr_topic) as total_topics", "SUM(nbr_msg) as total_msg", "WHERE level <> 0 AND level < 2 AND aprob = 1", __LINE__, __FILE__);
+$sum = $Sql->query_array(PREFIX . "forum_cats", "SUM(nbr_topic) as total_topics", "SUM(nbr_msg) as total_msg", "WHERE level <> 0 AND level < 2 AND aprob = 1");
 
 $total_day = max(1, $total_day);
 $nbr_topics_day = NumberHelper::round($sum['total_topics']/$total_day, 1);
 $nbr_msg_day = NumberHelper::round($sum['total_msg']/$total_day, 1);
 $nbr_topics_today = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
 JOIN " . PREFIX . "forum_msg m ON m.id = t.first_msg_id
-WHERE m.timestamp > '" . $timestamp_today . "'", __LINE__, __FILE__);
-$nbr_msg_today = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE timestamp > '" . $timestamp_today . "'", __LINE__, __FILE__);
+WHERE m.timestamp > '" . $timestamp_today . "'");
+$nbr_msg_today = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE timestamp > '" . $timestamp_today . "'");
 
 $Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
@@ -92,7 +92,7 @@ FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
 ORDER BY t.last_timestamp DESC
-" . $Sql->limit(0, 10), __LINE__, __FILE__);
+" . $Sql->limit(0, 10));
 while ($row = $Sql->fetch_assoc($result))
 {
 	$Template->assign_block_vars('last_msg', array(
@@ -108,7 +108,7 @@ FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
 ORDER BY t.nbr_views DESC
-" . $Sql->limit(0, 10), __LINE__, __FILE__);
+" . $Sql->limit(0, 10));
 while ($row = $Sql->fetch_assoc($result))
 {
 	$Template->assign_block_vars('popular', array(
@@ -124,7 +124,7 @@ FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
 ORDER BY t.nbr_msg DESC
-" . $Sql->limit(0, 10), __LINE__, __FILE__);
+" . $Sql->limit(0, 10));
 while ($row = $Sql->fetch_assoc($result))
 {
 	$Template->assign_block_vars('answers', array(

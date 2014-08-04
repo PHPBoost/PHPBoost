@@ -37,7 +37,7 @@ $get_id = retrieve(GET, 'id', 0);
 if (!empty($_POST['valid']))
 {
 	$result = $Sql->query_while("SELECT id, special 
-	FROM " . PREFIX . "forum_ranks", __LINE__, __FILE__);
+	FROM " . PREFIX . "forum_ranks");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$name = retrieve(POST, $row['id'] . 'name', '');
@@ -45,9 +45,9 @@ if (!empty($_POST['valid']))
 		$icon = retrieve(POST, $row['id'] . 'icon', '');
 
 		if (!empty($name) && $row['special'] != 1)
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'");
 		else
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_ranks SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_ranks SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'");
 	}
 	$Sql->query_close($result);
 
@@ -58,7 +58,7 @@ if (!empty($_POST['valid']))
 elseif (!empty($_GET['del']) && !empty($get_id)) //Suppression du rang.
 {
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM " . PREFIX . "forum_ranks WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM " . PREFIX . "forum_ranks WHERE id = '" . $get_id . "'");	
 
 	###### Régénération du cache des rangs #######
 	ForumRanksCache::invalidate();

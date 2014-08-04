@@ -109,7 +109,7 @@ if ($action == 'punish')
 		if (!empty($_POST['search_member']))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'");
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish', $user_id));
 			else
@@ -131,7 +131,7 @@ if ($action == 'punish')
 		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_readonly
 		FROM " . PREFIX . "member
 		WHERE user_readonly > " . time() . "
-		ORDER BY user_readonly DESC", __LINE__, __FILE__);
+		ORDER BY user_readonly DESC");
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
@@ -159,7 +159,7 @@ if ($action == 'punish')
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_readonly', "WHERE user_id = '" . $id_get . "'");
 				
 		//On crée le formulaire select
 		$select = '';
@@ -239,7 +239,7 @@ else if ($action == 'warning')
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'");
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
@@ -275,7 +275,7 @@ else if ($action == 'warning')
 		if (!empty($_POST['search_member']))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'");
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning', $user_id));
 			else
@@ -297,7 +297,7 @@ else if ($action == 'warning')
 		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_warning
 		FROM " . PREFIX . "member
 		WHERE user_warning > 0
-		ORDER BY user_warning", __LINE__, __FILE__);
+		ORDER BY user_warning");
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
@@ -325,7 +325,7 @@ else if ($action == 'warning')
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_warning', "WHERE user_id = '" . $id_get . "'");
 					
 		//On crée le formulaire select
 		$select = '';
@@ -370,7 +370,7 @@ else
 	$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
 	if (!empty($_POST['valid_user']) && !empty($id_get)) //On banni le membre
 	{
-		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'");
 
 		MemberSanctionManager::banish($id_get, $user_ban, MemberSanctionManager::SEND_MAIL);
 
@@ -396,7 +396,7 @@ else
 		if (!empty($_POST['search_member']))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'");
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban', $user_id));
 			else
@@ -418,7 +418,7 @@ else
 		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_ban, user_warning
 		FROM " . PREFIX . "member
 		WHERE user_ban > " . time() . " OR user_warning = 100
-		ORDER BY user_ban", __LINE__, __FILE__);
+		ORDER BY user_ban");
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
@@ -446,7 +446,7 @@ else
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'");
 		
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 		

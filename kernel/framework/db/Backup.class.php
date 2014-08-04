@@ -102,7 +102,7 @@ class Backup
 		{
 			if (in_array($properties['name'], $table_list) || $all_tables)
 			{
-				$result = $this->sql_querier->query_while('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
+				$result = $this->sql_querier->query_while('SHOW CREATE TABLE ' . $properties['name']);
 				while ($row = $this->sql_querier->fetch_row($result))
 				{
 					$this->backup_script .=  $row[1] . ';' . "\n\n";
@@ -135,7 +135,7 @@ class Backup
 
 					$i = 1;
 					$list_fields = $this->sql_querier->list_fields($table_info['name']);
-					$result = $this->sql_querier->query_while ('SELECT * FROM ' . $table_info['name'], __LINE__, __FILE__);
+					$result = $this->sql_querier->query_while ('SELECT * FROM ' . $table_info['name']);
 					while ($row = $this->sql_querier->fetch_row($result))
 					{
 						if ($i % 10 == 0) //Toutes les 10 entrées on reforme une requête

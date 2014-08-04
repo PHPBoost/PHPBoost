@@ -79,7 +79,7 @@ class DownloadCats extends DeprecatedCategoriesManager
 				parent::move_into_another($id_cat, $new_id_cat_content);
 		}
 		
-		$Sql->query_inject("UPDATE " . PREFIX . "download SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "download SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'");
 		
 		$this->recount_sub_files();
 		
@@ -93,7 +93,7 @@ class DownloadCats extends DeprecatedCategoriesManager
 		if ($id_parent == 0 || array_key_exists($id_parent, $this->cache_var))
 		{
 			$new_id_cat = parent::add($id_parent, $name);
-			$Sql->query_inject("UPDATE " . PREFIX . "download_cat SET contents = '" . $description . "', icon = '" . $image . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "download_cat SET contents = '" . $description . "', icon = '" . $image . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $new_id_cat . "'");
 			//We don't recount the number of questions because this category is empty
 			return 'e_success';
 		}
@@ -122,7 +122,7 @@ class DownloadCats extends DeprecatedCategoriesManager
 					$this->recount_sub_files(NOT_GENERATE_CACHE);
 				}
 			}
-			$Sql->query_inject("UPDATE " . PREFIX . "download_cat SET name = '" . $name . "', icon = '" . $icon . "', contents = '" . $description . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "download_cat SET name = '" . $name . "', icon = '" . $icon . "', contents = '" . $description . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $id_cat . "'");
 			$Cache->Generate_module_file('download');
 			
 			return 'e_success';
@@ -206,7 +206,7 @@ class DownloadCats extends DeprecatedCategoriesManager
 		if ($test = parent::delete($id))
 		{
 			//We remove its whole content
-			$Sql->query_inject("DELETE FROM " . PREFIX . "download WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "download WHERE idcat = '" . $id . "'");
 			return true;
 		}
 		else
@@ -230,9 +230,9 @@ class DownloadCats extends DeprecatedCategoriesManager
 		if ($cat_id != 0)
 		{
 			//We add to this number the number of questions of this category
-			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "download WHERE idcat = '" . $cat_id . "' AND visible = 1 AND approved = 1", __LINE__, __FILE__);
+			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "download WHERE idcat = '" . $cat_id . "' AND visible = 1 AND approved = 1");
 			
-			$Sql->query_inject("UPDATE " . PREFIX . "download_cat SET num_files = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "' AND visible = 1", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "download_cat SET num_files = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "' AND visible = 1");
 			
 			return $num_subquestions;
 		}

@@ -229,7 +229,7 @@ class Authorizations
 			$sql_querier = PersistenceContext::get_sql();
 			$result = $sql_querier->query_while("SELECT user_id, login
 			FROM " . PREFIX . "member
-			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")", __LINE__, __FILE__);
+			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")");
 			while ($row = $sql_querier->fetch_assoc($result))
 			{
 				 $tpl->assign_block_vars('members_list', array(

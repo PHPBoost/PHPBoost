@@ -37,7 +37,7 @@ define('TITLE' , $LANG['wiki_history']);
 
 if (!empty($id_article))
 {
-	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', 'title', 'auth', 'encoded_title', 'id_cat', 'WHERE id = ' . $id_article, __LINE__, __FILE__);
+	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', 'title', 'auth', 'encoded_title', 'id_cat', 'WHERE id = ' . $id_article);
 }
 
 $bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
@@ -67,7 +67,7 @@ if (!empty($id_article))
 		LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
 		WHERE c.id_article = '" . $id_article . "'
-		ORDER BY c.timestamp DESC", __LINE__, __FILE__);
+		ORDER BY c.timestamp DESC");
 	
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -108,7 +108,7 @@ else //On affiche la liste des modifications
 	$order = $order == 'asc' ? 'asc' : 'desc';
 	
 	//On compte le nombre d'articles
-	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE redirect = '0'", __LINE__, __FILE__);
+	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE redirect = '0'");
 	
 	//On instancie la classe de pagination
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -142,7 +142,7 @@ else //On affiche la liste des modifications
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
 		WHERE a.redirect = 0
 		ORDER BY " . ($field == 'title' ? 'a' : 'c') . "." . $field . " " . $order . "
-		" . $Sql->limit($pagination->get_display_from(), $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
+		" . $Sql->limit($pagination->get_display_from(), $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY));
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);

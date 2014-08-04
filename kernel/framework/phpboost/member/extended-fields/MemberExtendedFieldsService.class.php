@@ -79,7 +79,7 @@ class MemberExtendedFieldsService
 				FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
 				LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = '" . $user_id . "'
 				WHERE exc.display = 1
-				ORDER BY exc.position", __LINE__, __FILE__);
+				ORDER BY exc.position");
 				while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))
 				{
 					$member_extended_field->set_name($extended_field['name']);
@@ -187,7 +187,7 @@ class MemberExtendedFieldsService
 		FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = '" . $user_id . "'
 		WHERE exc.display = 1
-		ORDER BY exc.position", __LINE__, __FILE__);
+		ORDER BY exc.position");
 		while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))
 		{
 			$member_extended_field->set_field_type($extended_field['field_type']);

@@ -44,17 +44,17 @@ class Forum
 
 		##### Insertion message #####
 		$last_timestamp = time();
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_msg (idtopic, user_id, contents, timestamp, timestamp_edit, user_id_edit, user_ip) VALUES ('" . $idtopic . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . FormatingHelper::strparse($contents) . "', '" . $last_timestamp . "', '0', '0', '" . AppContext::get_current_user()->get_ip() . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_msg (idtopic, user_id, contents, timestamp, timestamp_edit, user_id_edit, user_ip) VALUES ('" . $idtopic . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . FormatingHelper::strparse($contents) . "', '" . $last_timestamp . "', '0', '0', '" . AppContext::get_current_user()->get_ip() . "')");
 		$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "forum_msg");
 
 		//Topic
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET " . ($new_topic ? '' : 'nbr_msg = nbr_msg + 1, ') . "last_user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "', last_msg_id = '" . $last_msg_id . "', last_timestamp = '" . $last_timestamp . "' WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET " . ($new_topic ? '' : 'nbr_msg = nbr_msg + 1, ') . "last_user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "', last_msg_id = '" . $last_msg_id . "', last_timestamp = '" . $last_timestamp . "' WHERE id = '" . $idtopic . "'");
 
 		//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté, et le nombre de messages..
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . $idtopic . "', nbr_msg = nbr_msg + 1" . ($new_topic ? ', nbr_topic = nbr_topic + 1' : '') . " WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . $idtopic . "', nbr_msg = nbr_msg + 1" . ($new_topic ? ', nbr_topic = nbr_topic + 1' : '') . " WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
 
 		//Mise à jour du nombre de messages du membre.
-		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_msg = user_msg + 1 WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_msg = user_msg + 1 WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 
 		//On marque le topic comme lu.
 		mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp);
@@ -63,13 +63,13 @@ class Forum
 		if (!$new_topic)
 		{
 			//Message précédent ce nouveau message.
-			$previous_msg_id = $Sql->query("SELECT MAX(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $last_msg_id . "'", __LINE__, __FILE__);
+			$previous_msg_id = $Sql->query("SELECT MAX(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $last_msg_id . "'");
 
 			$title_subject = TextHelper::html_entity_decode($title);
 			$title_subject_pm = '<a href="' . HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id . '">' . $title_subject . '</a>';
 			if (AppContext::get_current_user()->get_attribute('user_id') > 0)
 			{
-				$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 				$pseudo_pm = '<a href="'. UserUrlBuilder::profile(AppContext::get_current_user()->get_attribute('user_id'))->rel() .'">' . $pseudo . '</a>';
 			}
 			else
@@ -87,7 +87,7 @@ class Forum
 			FROM " . PREFIX . "forum_track tr
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = tr.user_id
 			LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = '" . $idtopic . "' AND v.user_id = tr.user_id
-			WHERE tr.idtopic = '" . $idtopic . "' AND v.last_view_id IS NOT NULL AND m.user_id != '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			WHERE tr.idtopic = '" . $idtopic . "' AND v.last_view_id IS NOT NULL AND m.user_id != '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				//Envoi un Mail à ceux dont le last_view_id est le message précedent.
@@ -126,11 +126,11 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_topics (idcat, title, subtitle, user_id, nbr_msg, nbr_views, last_user_id, last_msg_id, last_timestamp, first_msg_id, type, status, aprob, display_msg) VALUES ('" . $idcat . "', '" . $title . "', '" . $subtitle . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', 1, 0, '" . AppContext::get_current_user()->get_attribute('user_id') . "', '0', '" . time() . "', 0, '" . $type . "', 1, 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_topics (idcat, title, subtitle, user_id, nbr_msg, nbr_views, last_user_id, last_msg_id, last_timestamp, first_msg_id, type, status, aprob, display_msg) VALUES ('" . $idcat . "', '" . $title . "', '" . $subtitle . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', 1, 0, '" . AppContext::get_current_user()->get_attribute('user_id') . "', '0', '" . time() . "', 0, '" . $type . "', 1, 0, 0)");
 		$last_topic_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "forum_topics");	//Dernier topic inseré
 
 		$last_msg_id = $this->Add_msg($last_topic_id, $idcat, $contents, $title, 0, 0, true); //Insertion du message.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET first_msg_id = '" . $last_msg_id . "' WHERE id = '" . $last_topic_id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET first_msg_id = '" . $last_msg_id . "' WHERE id = '" . $last_topic_id . "'");
 
 		forum_generate_feeds(); //Regénération des flux flux
 
@@ -144,9 +144,9 @@ class Forum
 
 		//Marqueur d'édition du message?
 		$edit_mark = (!AppContext::get_current_user()->check_auth($CONFIG_FORUM['auth'], EDIT_MARK_FORUM)) ? ", timestamp_edit = '" . time() . "', user_id_edit = '" . AppContext::get_current_user()->get_attribute('user_id') . "'" : '';
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_msg SET contents = '" . FormatingHelper::strparse($contents) . "'" . $edit_mark . " WHERE id = '" . $idmsg . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_msg SET contents = '" . FormatingHelper::strparse($contents) . "'" . $edit_mark . " WHERE id = '" . $idmsg . "'");
 
-		$nbr_msg_before = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "'", __LINE__, __FILE__);
+		$nbr_msg_before = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "'");
 
 		//Calcul de la page sur laquelle se situe le message.
 		$msg_page = ceil( ($nbr_msg_before + 1) / $CONFIG_FORUM['pagination_msg'] );
@@ -166,7 +166,7 @@ class Forum
 		global $Sql;
 
 		//Mise à jour du sujet.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET title = '" . $title . "', subtitle = '" . $subtitle . "', type = '" . $type . "' WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET title = '" . $title . "', subtitle = '" . $subtitle . "', type = '" . $type . "' WHERE id = '" . $idtopic . "'");
 		//Mise à jour du contenu du premier message du sujet.
 		$this->Update_msg($idtopic, $idmsg, $contents, $user_id_msg, NO_HISTORY);
 
@@ -183,32 +183,32 @@ class Forum
 		if ($first_msg_id != $idmsg) //Suppression d'un message.
 		{
 			//On compte le nombre de messages du topic avant l'id supprimé.
-			$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "'", __LINE__, __FILE__);
+			$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "'");
 			//On supprime le message demandé.
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_msg WHERE id = '" . $idmsg . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_msg WHERE id = '" . $idmsg . "'");
 			//On met à jour la table forum_topics.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET nbr_msg = nbr_msg - 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET nbr_msg = nbr_msg - 1 WHERE id = '" . $idtopic . "'");
 			//On retranche d'un messages la catégorie concernée.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
 			//Récupération du message précédent celui supprimé afin de rediriger vers la bonne ancre.
-			$previous_msg_id = $Sql->query("SELECT id FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "' ORDER BY timestamp DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
+			$previous_msg_id = $Sql->query("SELECT id FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "' ORDER BY timestamp DESC " . $Sql->limit(0, 1));
 
 			if ($last_msg_id == $idmsg) //On met à jour le dernier message posté dans la liste des topics.
 			{
 				//On cherche les infos à propos de l'avant dernier message afin de mettre la table forum_topics à jour.
-				$id_before_last = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'timestamp', "WHERE id = '" . $previous_msg_id . "'", __LINE__, __FILE__);
+				$id_before_last = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'timestamp', "WHERE id = '" . $previous_msg_id . "'");
 				$last_timestamp = $id_before_last['timestamp'];
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET last_user_id = '" . $id_before_last['user_id'] . "', last_msg_id = '" . $previous_msg_id . "', last_timestamp = '" . $last_timestamp . "' WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET last_user_id = '" . $id_before_last['user_id'] . "', last_msg_id = '" . $previous_msg_id . "', last_timestamp = '" . $last_timestamp . "' WHERE id = '" . $idtopic . "'");
 
 				//On met maintenant a jour le last_topic_id dans les catégories.
 				$this->Update_last_topic_id($idcat);
 			}
 				
 			//On retire un msg au membre.
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_msg = user_msg - 1 WHERE user_id = '" . $msg_user_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_msg = user_msg - 1 WHERE user_id = '" . $msg_user_id . "'");
 				
 			//Mise à jour du dernier message lu par les membres.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_view SET last_view_id = '" . $previous_msg_id . "' WHERE last_view_id = '" . $idmsg . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_view SET last_view_id = '" . $previous_msg_id . "' WHERE last_view_id = '" . $idmsg . "'");
 			//On marque le topic comme lu, si c'est le dernier du message du topic.
 			if ($last_msg_id == $idmsg)
 			mark_topic_as_read($idtopic, $previous_msg_id, $last_timestamp);
@@ -235,28 +235,28 @@ class Forum
 	{
 		global $Sql,  $CAT_FORUM;
 
-		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'user_id', "WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
+		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'user_id', "WHERE id = '" . $idtopic . "'");
 		$topic['user_id'] = (int)$topic['user_id'];
 
 		//On ne supprime pas de msg aux membres ayant postés dans le topic => trop de requêtes.
 		//On compte le nombre de messages du topic.
-		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "'");
 		$nbr_msg = !empty($nbr_msg) ? NumberHelper::numeric($nbr_msg) : 1;
 
 		//On rippe le topic ainsi que les messages du topic.
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_topics WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "'");
+		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_topics WHERE id = '" . $idtopic . "'");
 		//Suppression du sondage éventuellement associé.
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_poll WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_poll WHERE idtopic = '" . $idtopic . "'");
 
 		//On retranche le nombre de messages et de topic.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic - 1, nbr_msg = nbr_msg - '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$topic['idcat']]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$topic['idcat']]['id_right'] ."' AND level <= '" . $CAT_FORUM[$topic['idcat']]['level'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic - 1, nbr_msg = nbr_msg - '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$topic['idcat']]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$topic['idcat']]['id_right'] ."' AND level <= '" . $CAT_FORUM[$topic['idcat']]['level'] . "'");
 
 		//On met maintenant a jour le last_topic_id dans les catégories.
 		$this->Update_last_topic_id($topic['idcat']);
 
 		//Topic supprimé, on supprime les marqueurs de messages lus pour ce topic.
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_view WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_view WHERE idtopic = '" . $idtopic . "'");
 
 		//On supprime l'alerte.
 		$this->Del_alert_topic($idtopic);
@@ -282,15 +282,15 @@ class Forum
 		elseif ($tracking_type == 2) //Suivi par email.
 			$pm = '1';
 			
-		$exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_track WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+		$exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_track WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'");
 		if ($exist == 0)
-			$Sql->query_inject("INSERT INTO " . PREFIX . "forum_track (idtopic, user_id, track, pm, mail) VALUES('" . $idtopic . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . $track . "', '" . $pm . "', '" . $mail . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "forum_track (idtopic, user_id, track, pm, mail) VALUES('" . $idtopic . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', '" . $track . "', '" . $pm . "', '" . $mail . "')");
 		elseif ($tracking_type == 0)
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 		elseif ($tracking_type == 1)
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 		elseif ($tracking_type == 2)
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 			
 		//Limite de sujets suivis?
 		if (!AppContext::get_current_user()->check_auth($CONFIG_FORUM['auth'], TRACK_TOPIC_FORUM))
@@ -300,10 +300,10 @@ class Forum
 			FROM " . PREFIX . "forum_track
 			WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 			ORDER BY id DESC
-			" . $Sql->limit(0, $CONFIG_FORUM['topic_track']), __LINE__, __FILE__);
+			" . $Sql->limit(0, $CONFIG_FORUM['topic_track']));
 				
 			//Suppression des sujets suivis dépassant le nbr maximum autorisé.
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND id < @compt", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND id < @compt");
 		}
 	}
 
@@ -314,27 +314,27 @@ class Forum
 
 		if ($tracking_type == 1) //Par mail
 		{
-			$info = $Sql->query_array(PREFIX . "forum_track", "pm", "track", "WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+			$info = $Sql->query_array(PREFIX . "forum_track", "pm", "track", "WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'");
 			if ($info['track'] == 0 && $info['pm'] == 0)
-				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 			else
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 		}
 		elseif ($tracking_type == 2) //Par mp
 		{
-			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "track", "WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "track", "WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'");
 			if ($info['mail'] == 0 && $info['track'] == 0)
-				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 			else
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 		}
 		else //Suivi
 		{
-			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "pm", "WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "pm", "WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'");
 			if ($info['mail'] == 0 && $info['pm'] == 0)
-				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 			else
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 		}
 	}
 
@@ -343,7 +343,7 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET status = 0 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET status = 0 WHERE id = '" . $idtopic . "'");
 
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_LOCK_TOPIC, 0, 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
@@ -354,7 +354,7 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET status = 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET status = 1 WHERE id = '" . $idtopic . "'");
 
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_UNLOCK_TOPIC, 0, 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
@@ -366,19 +366,19 @@ class Forum
 		global $Sql,  $CAT_FORUM;
 
 		//On va chercher le nombre de messages dans la table topics
-		$topic = $Sql->query_array(PREFIX . "forum_topics", "user_id", "nbr_msg", "WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
+		$topic = $Sql->query_array(PREFIX . "forum_topics", "user_id", "nbr_msg", "WHERE id = '" . $idtopic . "'");
 		$topic['nbr_msg'] = !empty($topic['nbr_msg']) ? NumberHelper::numeric($topic['nbr_msg']) : 1;
 
 		//On déplace le topic dans la nouvelle catégorie
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET idcat = '" . $idcat_dest . "' WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET idcat = '" . $idcat_dest . "' WHERE id = '" . $idtopic . "'");
 
 		//On met à jour l'ancienne table
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - '" . $topic['nbr_msg'] . "', nbr_topic = nbr_topic - 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - '" . $topic['nbr_msg'] . "', nbr_topic = nbr_topic - 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
 		//On met maintenant a jour le last_topic_id dans les catégories.
 		$this->Update_last_topic_id($idcat);
 
 		//On met à jour la nouvelle table
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg + '" . $topic['nbr_msg'] . "', nbr_topic = nbr_topic + 1 WHERE id_left <= '" . $CAT_FORUM[$idcat_dest]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat_dest]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat_dest]['level'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg + '" . $topic['nbr_msg'] . "', nbr_topic = nbr_topic + 1 WHERE id_left <= '" . $CAT_FORUM[$idcat_dest]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat_dest]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat_dest]['level'] . "'");
 		//On met maintenant a jour le last_topic_id dans les catégories.
 		$this->Update_last_topic_id($idcat_dest);
 
@@ -392,42 +392,42 @@ class Forum
 		global $Sql,  $CAT_FORUM;
 
 		//Calcul du nombre de messages déplacés.
-		$nbr_msg = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id >= '" . $id_msg_cut . "'", __LINE__, __FILE__);
+		$nbr_msg = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id >= '" . $id_msg_cut . "'");
 		$nbr_msg = !empty($nbr_msg) ? NumberHelper::numeric($nbr_msg) : 1;
 
 		//Insertion nouveau topic.
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_topics (idcat, title, subtitle, user_id, nbr_msg, nbr_views, last_user_id, last_msg_id, last_timestamp, first_msg_id, type, status, aprob) VALUES ('" . $idcat_dest . "', '" . $title . "', '" . $subtitle . "', '" . $msg_user_id . "', '" . $nbr_msg . "', 0, '" . $last_user_id . "', '" . $last_msg_id . "', '" . $last_timestamp . "', '" . $id_msg_cut . "', '" . $type . "', 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_topics (idcat, title, subtitle, user_id, nbr_msg, nbr_views, last_user_id, last_msg_id, last_timestamp, first_msg_id, type, status, aprob) VALUES ('" . $idcat_dest . "', '" . $title . "', '" . $subtitle . "', '" . $msg_user_id . "', '" . $nbr_msg . "', 0, '" . $last_user_id . "', '" . $last_msg_id . "', '" . $last_timestamp . "', '" . $id_msg_cut . "', '" . $type . "', 1, 0)");
 		$last_topic_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "forum_topics");	//Dernier topic inseré
 
 		//Mise à jour du message.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_msg SET contents = '" . $contents . "' WHERE id = '" . $id_msg_cut . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_msg SET contents = '" . $contents . "' WHERE id = '" . $id_msg_cut . "'");
 
 		//Déplacement des messages.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_msg SET idtopic = '" . $last_topic_id . "' WHERE idtopic = '" . $idtopic . "' AND id >= '" . $id_msg_cut . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_msg SET idtopic = '" . $last_topic_id . "' WHERE idtopic = '" . $idtopic . "' AND id >= '" . $id_msg_cut . "'");
 
 		//Mise à jour de l'ancien topic
-		$previous_topic = $Sql->query_array(PREFIX . 'forum_msg', 'id', 'user_id', 'timestamp', "WHERE id < '" . $id_msg_cut . "' AND idtopic = '" . $idtopic . "' ORDER BY timestamp DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET last_user_id = '" . $previous_topic['user_id'] . "', last_msg_id = '" . $previous_topic['id'] . "', nbr_msg = nbr_msg - " . $nbr_msg . ", last_timestamp = '" . $previous_topic['timestamp'] . "'  WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
+		$previous_topic = $Sql->query_array(PREFIX . 'forum_msg', 'id', 'user_id', 'timestamp', "WHERE id < '" . $id_msg_cut . "' AND idtopic = '" . $idtopic . "' ORDER BY timestamp DESC " . $Sql->limit(0, 1));
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET last_user_id = '" . $previous_topic['user_id'] . "', last_msg_id = '" . $previous_topic['id'] . "', nbr_msg = nbr_msg - " . $nbr_msg . ", last_timestamp = '" . $previous_topic['timestamp'] . "'  WHERE id = '" . $idtopic . "'");
 
 		//Mise à jour de l'ancienne catégorie, si elle est différente.
 		if ($idcat != $idcat_dest)
 		{
 			//Mise à jour du nombre de messages de la nouvelle catégorie, ainsi que du last_topic_id.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic + 1, nbr_msg = nbr_msg + '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$idcat_dest]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat_dest]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat_dest]['level'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic + 1, nbr_msg = nbr_msg + '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$idcat_dest]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat_dest]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat_dest]['level'] . "'");
 			//On met maintenant a jour le last_topic_id dans les catégories.
 			$this->Update_last_topic_id($idcat_dest);
 
 			//Mise à jour du nombre de messages de l'ancienne catégorie, ainsi que du last_topic_id.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
 		}
 		else //Mise à jour du nombre de messages de la catégorie, ainsi que du last_topic_id.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic + 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic + 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
 
 		//On met maintenant a jour le last_topic_id dans les catégories.
 		$this->Update_last_topic_id($idcat);
 			
 		//On marque comme lu le message avant le message scindé qui est le dernier message de l'ancienne catégorie pour tous les utilisateurs.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_view SET last_view_id = '" . $previous_topic['id'] . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_view SET last_view_id = '" . $previous_topic['id'] . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "'");
 
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_CUT_TOPIC, 0, 'topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
@@ -447,8 +447,8 @@ class Forum
 	{
 		global $Sql,  $CAT_FORUM, $LANG;
 
-		$topic_infos = $Sql->query_array(PREFIX . "forum_topics", "idcat", "title", "WHERE id = '" . $alert_post . "'", __LINE__, __FILE__);
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_alerts (idcat, idtopic, title, contents, user_id, status, idmodo, timestamp) VALUES ('" . $topic_infos['idcat'] . "', '" . $alert_post . "', '" . $alert_title . "', '" . $alert_contents . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', 0, 0, '" . time() . "')", __LINE__, __FILE__);
+		$topic_infos = $Sql->query_array(PREFIX . "forum_topics", "idcat", "title", "WHERE id = '" . $alert_post . "'");
+		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_alerts (idcat, idtopic, title, contents, user_id, status, idmodo, timestamp) VALUES ('" . $topic_infos['idcat'] . "', '" . $alert_post . "', '" . $alert_title . "', '" . $alert_contents . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "', 0, 0, '" . time() . "')");
 
 		$alert_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "forum_alerts");
 
@@ -492,7 +492,7 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_alerts SET status = 1, idmodo = '" . AppContext::get_current_user()->get_attribute('user_id') . "' WHERE id = '" . $id_alert . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_alerts SET status = 1, idmodo = '" . AppContext::get_current_user()->get_attribute('user_id') . "' WHERE id = '" . $id_alert . "'");
 
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_SOLVE_ALERT, 0, 'moderation_forum.php?action=alert&id=' . $id_alert, '', '&');
@@ -518,7 +518,7 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_alerts SET status = 0, idmodo = 0 WHERE id = '" . $id_alert . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_alerts SET status = 0, idmodo = 0 WHERE id = '" . $id_alert . "'");
 
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_WAIT_ALERT, 0, 'moderation_forum.php?action=alert&id=' . $id_alert);
@@ -529,7 +529,7 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_alerts WHERE id = '" . $id_alert . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_alerts WHERE id = '" . $id_alert . "'");
 		
 		//Si la contribution associée n'est pas réglée, on la règle
 		
@@ -553,7 +553,7 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_poll (idtopic, question, answers, voter_id, votes,type) VALUES ('" . $idtopic . "', '" . $question . "', '" . implode('|', $answers) . "', '0', '" . trim(str_repeat('0|', $nbr_votes), '|') . "', '" . NumberHelper::numeric($type) . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_poll (idtopic, question, answers, voter_id, votes,type) VALUES ('" . $idtopic . "', '" . $question . "', '" . implode('|', $answers) . "', '0', '" . trim(str_repeat('0|', $nbr_votes), '|') . "', '" . NumberHelper::numeric($type) . "')");
 	}
 
 	//Edition d'un sondage.
@@ -562,13 +562,13 @@ class Forum
 		global $Sql;
 
 		//Vérification => vérifie si il n'y a pas de nouvelle réponses à ajouter.
-		$previous_votes = explode('|', $Sql->query("SELECT votes FROM " . PREFIX . "forum_poll WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__));
+		$previous_votes = explode('|', $Sql->query("SELECT votes FROM " . PREFIX . "forum_poll WHERE idtopic = '" . $idtopic . "'"));
 
 		$votes = array();
 		foreach ($answers as $key => $answer_value) //Récupération des votes précédents.
 		$votes[$key] = isset($previous_votes[$key]) ? $previous_votes[$key] : 0;
 
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_poll SET question = '" . $question . "', answers = '" . implode('|', $answers) . "', votes = '" . implode('|', $votes) . "', type = '" . $type . "' WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_poll SET question = '" . $question . "', answers = '" . implode('|', $answers) . "', votes = '" . implode('|', $votes) . "', type = '" . $type . "' WHERE idtopic = '" . $idtopic . "'");
 	}
 
 	//Suppression d'un sondage.
@@ -576,7 +576,7 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_poll WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_poll WHERE idtopic = '" . $idtopic . "'");
 	}
 
 
@@ -643,7 +643,7 @@ class Forum
 			$result = $Sql->query_while("SELECT id
 			FROM " . PREFIX . "forum_cats
 			WHERE id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
-			ORDER BY id_left", __LINE__, __FILE__);
+			ORDER BY id_left");
 				
 			while ($row = $Sql->fetch_assoc($result))
 			$list_cats .= $row['id'] . ', ';
@@ -653,16 +653,16 @@ class Forum
 		}
 
 		//Récupération du timestamp du dernier message de la catégorie.
-		$last_timestamp = $Sql->query("SELECT MAX(last_timestamp) FROM " . PREFIX . "forum_topics WHERE " . $clause, __LINE__, __FILE__);
-		$last_topic_id = $Sql->query("SELECT id FROM " . PREFIX . "forum_topics WHERE last_timestamp = '" . $last_timestamp . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . (int)$last_topic_id . "' WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+		$last_timestamp = $Sql->query("SELECT MAX(last_timestamp) FROM " . PREFIX . "forum_topics WHERE " . $clause);
+		$last_topic_id = $Sql->query("SELECT id FROM " . PREFIX . "forum_topics WHERE last_timestamp = '" . $last_timestamp . "'");
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . (int)$last_topic_id . "' WHERE id = '" . $idcat . "'");
 			
 		if ($CAT_FORUM[$idcat]['level'] > 1) //Appel recursif si sous-forum.
 		{
 			//Recherche de l'id du forum parent.
 			$idcat_parent = $Sql->query("SELECT id
 			FROM " . PREFIX . "forum_cats
-			WHERE id_left < '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right > '" . $CAT_FORUM[$idcat]['id_right'] . "' AND level = '" .  ($CAT_FORUM[$idcat]['level'] - 1) . "'", __LINE__, __FILE__);
+			WHERE id_left < '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right > '" . $CAT_FORUM[$idcat]['id_right'] . "' AND level = '" .  ($CAT_FORUM[$idcat]['level'] - 1) . "'");
 
 			$this->Update_last_topic_id($idcat_parent); //Appel recursif.
 		}

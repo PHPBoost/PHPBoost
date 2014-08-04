@@ -47,12 +47,12 @@ if ($id_cat != 0)
 	FROM " . PREFIX . "wiki_cats c
 	LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
 	WHERE c.id_parent = " . $id_cat . "
-	ORDER BY title ASC", __LINE__, __FILE__);
-	$nbr_subcats = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $id_cat. "'", __LINE__, __FILE__);
+	ORDER BY title ASC");
+	$nbr_subcats = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $id_cat. "'");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
-		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'");
 		//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 		if ($sub_cats_number > 0)
 			echo '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>';
@@ -100,7 +100,7 @@ elseif (!empty($open_cat) || $root == 1)
 	FROM " . PREFIX . "wiki_articles a
 	WHERE id_cat = '" . $open_cat . "'
 	AND a.redirect = 0
-	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
+	ORDER BY is_cat DESC, title ASC");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$return .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><i class="fa fa-file"></i>' . $row['title'] . '</a></li>';

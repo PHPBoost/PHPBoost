@@ -47,7 +47,7 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 		$result = $this->sql_querier->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
 		FROM " . PREFIX . "pages_cats c
 		LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
-		ORDER BY p.title", __LINE__, __FILE__);
+		ORDER BY p.title");
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$code .= '$_PAGES_CATS[' . $row['id'] . '] = ' .

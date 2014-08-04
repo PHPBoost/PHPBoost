@@ -47,7 +47,7 @@ $notation->set_notation_scale($web_config->get_note_max());
 
 if (!empty($idweb) && !empty($idcat))
 { 
-	$web = $Sql->query_array(PREFIX . 'web' , '*', "WHERE aprob = 1 AND id = '" . $idweb . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
+	$web = $Sql->query_array(PREFIX . 'web' , '*', "WHERE aprob = 1 AND id = '" . $idweb . "' AND idcat = '" . $idcat . "'");
 	define('TITLE', $LANG['title_web'] . ' - ' . $web['title']);
 }
 elseif (!empty($idcat))

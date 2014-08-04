@@ -39,7 +39,7 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 		
 		$result = $this->sql_querier->query_while("SELECT id, name, secure
 		FROM " . PREFIX . "web_cat
-		WHERE aprob = 1", __LINE__, __FILE__);
+		WHERE aprob = 1");
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{		
 			$code .= '$CAT_WEB[\'' . $row['id'] . '\'][\'secure\'] = ' . var_export($row['secure'], true) . ';' . "\n";

@@ -71,10 +71,10 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		if (retrieve(POST, 'connect', false) && !empty($login) && !empty($password))
 		{
 			//TODO @Régis clean this code. Why it's not in the session class?
-			$user_id = $sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "' AND level = 2", __LINE__, __FILE__);
+			$user_id = $sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "' AND level = 2");
 			if (!empty($user_id)) //Membre existant.
 			{
-				$info_connect = $sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__);
+				$info_connect = $sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id = '" . $user_id . "' AND level = 2");
 				$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
 				$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
 
@@ -89,12 +89,12 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 					}
 					elseif ($delay_connect >= 600 && $info_connect['test_connect'] == '5') //5 nouveau essais, 10 minutes après.
 					{
-						$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+						$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "' AND level = 2"); //Remise à zéro du compteur d'essais.
 						$error_report = $session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
 					}
 					elseif ($delay_connect >= 300 && $info_connect['test_connect'] == '5') //2 essais 5 minutes après
 					{
-						$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Redonne un essai.
+						$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "' AND level = 2"); //Redonne un essai.
 						$error_report = $session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
 					}
 					else //plus d'essais
@@ -119,7 +119,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				if (!empty($error_report)) //Erreur
 				{
 					$info_connect['test_connect']++;
-					$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = test_connect + 1 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+					$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = test_connect + 1 WHERE user_id = '" . $user_id . "'");
 					$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
 					AppContext::get_response()->redirect('/admin/admin_index.php?flood=' . $info_connect['test_connect']);
 				}
@@ -130,7 +130,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				}
 				else //Succès redonne tous les essais.
 				{
-					$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+					$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id='" . $user_id . "'"); //Remise à zéro du compteur d'essais.
 				}
 			}
 			else

@@ -21,12 +21,12 @@ if ($id_cat != 0)
 	$result = $Sql->query_while("SELECT id, id_parent, name
 	FROM " . PREFIX . "upload_cat
 	WHERE id_parent = " . $id_cat . "
-	ORDER BY name ASC", __LINE__, __FILE__);
-	$nbr_subcats = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $id_cat. "'", __LINE__, __FILE__);
+	ORDER BY name ASC");
+	$nbr_subcats = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $id_cat. "'");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
-		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $row['id'] . "'");
 		//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 		if ($sub_cats_number > 0)
 			echo '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';

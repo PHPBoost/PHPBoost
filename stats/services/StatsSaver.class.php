@@ -84,13 +84,13 @@ class StatsSaver
 					preg_match($pattern, $query, $matches);
 					$keyword = TextHelper::strprotect(utf8_decode(urldecode(strtolower($matches[1]))));
 					
-					$check_search_engine = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . StatsSetup::$stats_referer_table . " WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
+					$check_search_engine = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . StatsSetup::$stats_referer_table . " WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'");
 					if (!empty($keyword))
 					{
 						if (!empty($check_search_engine))
-							PersistenceContext::get_sql()->query_inject("UPDATE " . StatsSetup::$stats_referer_table . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
+							PersistenceContext::get_sql()->query_inject("UPDATE " . StatsSetup::$stats_referer_table . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'");
 						else
-							PersistenceContext::get_sql()->query_inject("INSERT INTO " . StatsSetup::$stats_referer_table . " (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $search_engine . "', '" . $keyword . "', 1, 1, 0, 1, '" . time() . "', 1)", __LINE__, __FILE__);
+							PersistenceContext::get_sql()->query_inject("INSERT INTO " . StatsSetup::$stats_referer_table . " (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $search_engine . "', '" . $keyword . "', 1, 1, 0, 1, '" . time() . "', 1)");
 					}
 				}
 			}
@@ -104,11 +104,11 @@ class StatsSaver
 					$referer['path'] = !empty($referer['path']) ? $referer['path'] : '';
 					$relative_url = addslashes(((substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
 					
-					$check_url = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . StatsSetup::$stats_referer_table . " WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);
+					$check_url = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . StatsSetup::$stats_referer_table . " WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'");
 					if (!empty($check_url))
-						PersistenceContext::get_sql()->query_inject("UPDATE " . StatsSetup::$stats_referer_table . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);
+						PersistenceContext::get_sql()->query_inject("UPDATE " . StatsSetup::$stats_referer_table . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'");
 					else
-						PersistenceContext::get_sql()->query_inject("INSERT INTO " . StatsSetup::$stats_referer_table . " (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $url . "', '" . $relative_url . "', 1, 1, 0, 1, '" . time() . "', 0)", __LINE__, __FILE__);
+						PersistenceContext::get_sql()->query_inject("INSERT INTO " . StatsSetup::$stats_referer_table . " (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $url . "', '" . $relative_url . "', 1, 1, 0, 1, '" . time() . "', 0)");
 				}
 			}
 		}

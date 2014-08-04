@@ -45,7 +45,7 @@ if (!empty($_POST['valid']))
 
 	if (!empty($title) && !empty($url) && !empty($idcat) && isset($aprob))
 	{	
-		$Sql->query_inject("INSERT INTO " . PREFIX . "web (idcat,title,contents,url,compt,aprob,timestamp) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "web (idcat,title,contents,url,compt,aprob,timestamp) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "')");
 		
 		AppContext::get_response()->redirect('/web/admin_web.php');
 	}
@@ -69,7 +69,7 @@ elseif (!empty($_POST['previs']))
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
 
-	$cat = $Sql->query("SELECT name FROM " . PREFIX . "web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->query("SELECT name FROM " . PREFIX . "web_cat WHERE id = '" . $idcat . "'");
 	
 	$Template->put_all(array(
 		'C_PREVIEW' => true,
@@ -114,7 +114,7 @@ elseif (!empty($_POST['previs']))
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
 	FROM " . PREFIX . "web_cat
-	ORDER BY class", __LINE__, __FILE__);
+	ORDER BY class");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
@@ -167,7 +167,7 @@ else
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
 	FROM " . PREFIX . "web_cat
-	ORDER BY class", __LINE__, __FILE__);
+	ORDER BY class");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('select', array(

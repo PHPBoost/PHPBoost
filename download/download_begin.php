@@ -47,7 +47,7 @@ $notation->set_notation_scale($config->get_notation_scale());
 if (!empty($file_id))
 {
 	$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE approved = 1 AND id = '" . $file_id . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))", __LINE__, __FILE__);
+	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE approved = 1 AND id = '" . $file_id . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))");
 
 	if (empty($download_info['id']))
 	{

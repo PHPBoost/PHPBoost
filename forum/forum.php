@@ -116,7 +116,7 @@ if (!empty($id_get))
 		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND v.idtopic = t.id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 		WHERE c.aprob = 1 AND c.id_left > '" . $CAT_FORUM[$id_get]['id_left'] . "' AND c.id_right < '" . $CAT_FORUM[$id_get]['id_right'] . "' AND c.level = '" . $CAT_FORUM[$id_get]['level'] . "' + 1  " . $unauth_cats . "
-		ORDER BY c.id_left ASC", __LINE__, __FILE__);
+		ORDER BY c.id_left ASC");
 		while ($row = $Sql->fetch_assoc($result))
 		{	
 			if ($row['nbr_msg'] !== '0')
@@ -218,7 +218,7 @@ if (!empty($id_get))
 		));
 	}
 	
-	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $id_get . "'", __LINE__, __FILE__);
+	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $id_get . "'");
 	
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -292,7 +292,7 @@ if (!empty($id_get))
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
 	WHERE t.idcat = '" . $id_get . "'
 	ORDER BY t.type DESC , t.last_timestamp DESC
-	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']));
 	while ( $row = $Sql->fetch_assoc($result) )
 	{
 		//On définit un array pour l'appellation correspondant au type de champ

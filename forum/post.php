@@ -73,7 +73,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 	$Forumfct = new Forum();
 
 	//Mod anti-flood
-	$check_time = (ContentManagementConfig::load()->is_anti_flood_enabled() && AppContext::get_current_user()->get_attribute('user_id') != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "forum_msg WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__) : false;
+	$check_time = (ContentManagementConfig::load()->is_anti_flood_enabled() && AppContext::get_current_user()->get_attribute('user_id') != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "forum_msg WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'") : false;
 
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
@@ -93,7 +93,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
-		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'");
 
 		if (empty($topic['idcat'])) //Topic inexistant.
 		{
@@ -388,7 +388,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 		//Verrouillé?
-		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'");
 		if (empty($topic['idcat']))
 		{
 			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
@@ -444,8 +444,8 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 
 		$id_m = retrieve(GET, 'idm', 0);
 		$update = retrieve(GET, 'update', false);
-		$id_first = $Sql->query("SELECT MIN(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
-		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'title', 'subtitle', 'type', 'user_id', 'display_msg', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+		$id_first = $Sql->query("SELECT MIN(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idt_get . "'");
+		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'title', 'subtitle', 'type', 'user_id', 'display_msg', "WHERE id = '" . $idt_get . "'");
 
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
@@ -630,7 +630,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 					'forum_bottom'=> 'forum/forum_bottom.tpl'
 				));
 
-				$contents = $Sql->query("SELECT contents FROM " . PREFIX . "forum_msg WHERE id = '" . $id_first . "'", __LINE__, __FILE__);
+				$contents = $Sql->query("SELECT contents FROM " . PREFIX . "forum_msg WHERE id = '" . $id_first . "'");
 
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
@@ -652,7 +652,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				}
 
 				//Récupération des infos du sondage associé si il existe
-				$poll = $Sql->query_array(PREFIX . 'forum_poll', 'question', 'answers', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
+				$poll = $Sql->query_array(PREFIX . 'forum_poll', 'question', 'answers', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'");
 				$array_answer = explode('|', $poll['answers']);
 				$array_votes = explode('|', $poll['votes']);
 
@@ -758,7 +758,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		elseif ($id_m > $id_first)
 		{
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.
-			$user_id_msg = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
+			$user_id_msg = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'");
 			$check_auth = false;
 			if ($user_id_msg == AppContext::get_current_user()->get_attribute('user_id'))
 				$check_auth = true;
@@ -797,7 +797,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 					'forum_bottom'=> 'forum/forum_bottom.tpl'
 				));
 
-				$contents = $Sql->query("SELECT contents FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
+				$contents = $Sql->query("SELECT contents FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'");
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete')
@@ -830,7 +830,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 	{
 		if (!empty($id_get) && !empty($idt_get) && ($error_get === 'flood' || $error_get === 'incomplete' || $error_get === 'locked'))
 		{
-			$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+			$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'");
 			if (empty($topic['idcat'])) //Topic inexistant.
 			{
 				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 

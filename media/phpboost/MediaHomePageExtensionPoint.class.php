@@ -202,7 +202,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON v.id = com.id_in_module AND com.module_id = 'media'
 				WHERE idcat = '" . $id_cat . "' AND infos = '" . MEDIA_STATUS_APROBED . "'
 				ORDER BY " . $sort . " " . $mode .
-				$this->sql_querier->limit($pagination->get_display_from(), $MEDIA_CONFIG['pagin']), __LINE__, __FILE__);
+				$this->sql_querier->limit($pagination->get_display_from(), $MEDIA_CONFIG['pagin']));
 	
 			$notation = new Notation();
 			$notation->set_module_name('media');

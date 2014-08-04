@@ -64,7 +64,7 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
             LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module AND module_name = 'download'
             WHERE d.id IN (" . implode(',', $ids) . ") AND d.visible = 1 AND d.approved = 1";
 
-        $request_results = $this->sql_querier->query_while ($request, __LINE__, __FILE__);
+        $request_results = $this->sql_querier->query_while ($request);
         while ($row = $this->sql_querier->fetch_assoc($request_results))
         {
             $results_data[] = $row;

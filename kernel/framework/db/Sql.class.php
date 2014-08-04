@@ -341,11 +341,11 @@ class Sql
 
 						if (!empty($tableprefix))
 						{
-							$this->query_inject(str_replace('phpboost_', $tableprefix, $req), __LINE__, __FILE__);
+							$this->query_inject(str_replace('phpboost_', $tableprefix, $req));
 						}
 						else
 						{
-							$this->query_inject($req, __LINE__, __FILE__);
+							$this->query_inject($req);
 						}
 						$req = '';
 					}

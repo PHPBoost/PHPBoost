@@ -71,7 +71,7 @@ $clause_cat = !empty($idcat_unread) ? "(c.id_left >= '" . $CAT_FORUM[$idcat_unre
 $nbr_topics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'
-WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats, __LINE__, __FILE__);
+WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats);
 
 $cat_filter = !empty($idcat_unread) ? '&amp;cat=' . $idcat_unread : '';
 
@@ -95,7 +95,7 @@ LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
 WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "
 ORDER BY t.last_timestamp DESC 
-" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
+" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']));
 while ($row = $Sql->fetch_assoc($result))
 {
 	//On définit un array pour l'appelation correspondant au type de champ

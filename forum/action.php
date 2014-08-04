@@ -58,10 +58,10 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	//Info sur le message.
-	$msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'", __LINE__, __FILE__);
+	$msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'");
 
 	//On va chercher les infos sur le topic
-	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'");
 
 	//Si on veut supprimer le premier message, alors son rippe le topic entier (admin et modo seulement).
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] == $idm_get)
@@ -114,7 +114,7 @@ elseif (!empty($idt_get))
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	//On va chercher les infos sur le topic
-	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', "WHERE id = '" . $idt_get . "'");
 
 	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM))
 	{
@@ -130,10 +130,10 @@ elseif (!empty($idt_get))
 	if ($msg_d)
 	{
 		//Vérification de l'appartenance du sujet au membres, ou modo.
-		$check_mbr = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_topics WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+		$check_mbr = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_topics WHERE id = '" . $idt_get . "'");
 		if ((!empty($check_mbr) && AppContext::get_current_user()->get_attribute('user_id') == $check_mbr) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'");
 
 			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
 		}
@@ -145,7 +145,7 @@ elseif (!empty($idt_get))
 	}
 	elseif ($poll && AppContext::get_current_user()->get_attribute('user_id') !== -1) //Enregistrement vote du sondage
 	{
-		$info_poll = $Sql->query_array(PREFIX . 'forum_poll', 'voter_id', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
+		$info_poll = $Sql->query_array(PREFIX . 'forum_poll', 'voter_id', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'");
 		//Si l'utilisateur n'est pas dans le champ on prend en compte le vote.
 		if (!in_array(AppContext::get_current_user()->get_attribute('user_id'), explode('|', $info_poll['voter_id'])))
 		{
@@ -169,7 +169,7 @@ elseif (!empty($idt_get))
 						$array_votes[$i]++;
 				}
 			}
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_poll SET " . $add_voter_id . " votes = '" . implode('|', $array_votes) . "' WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_poll SET " . $add_voter_id . " votes = '" . implode('|', $array_votes) . "' WHERE idtopic = '" . $idt_get . "'");
 		}
 
 		AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get . '&pt=' . $page_get, '-' . $idt_get . '-' . $page_get . $rewrited_title . '.php', '&'));
@@ -261,13 +261,13 @@ elseif ($read) //Marquer comme lu.
 		AppContext::get_response()->redirect(UserUrlBuilder::connect());
 
 	//Calcul du temps de péremption, ou de dernière vue des messages.
-	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 
 	//Modification du last_view_forum, si le membre est déjà dans la table
 	if (!empty($check_last_view_forum))
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET last_view_forum = '" .  time(). "' WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET last_view_forum = '" .  time(). "' WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 	else
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " (user_id,last_view_forum) VALUES ('" . AppContext::get_current_user()->get_attribute('user_id') . "', '" .  time(). "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " (user_id,last_view_forum) VALUES ('" . AppContext::get_current_user()->get_attribute('user_id') . "', '" .  time(). "')");
 
 	AppContext::get_response()->redirect('/forum/index.php' . SID2);
 }

@@ -133,7 +133,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			FROM " . PREFIX . "member member
 			LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
 			GROUP BY ext_field.user_sex
-			ORDER BY compt", __LINE__, __FILE__);
+			ORDER BY compt");
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				switch ($row['user_sex'])
@@ -169,7 +169,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			$result = $this->sql_querier->query_while("SELECT user_id, login, level, user_groups, user_msg
 			FROM " . DB_TABLE_MEMBER . "
 			ORDER BY user_msg DESC
-			" . $this->sql_querier->limit(0, 10), __LINE__, __FILE__);
+			" . $this->sql_querier->limit(0, 10));
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
@@ -191,7 +191,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 		elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		{
 			//On affiche les visiteurs totaux et du jour
-			$compteur = $this->sql_querier->query_array(DB_TABLE_VISIT_COUNTER, 'ip AS nbr_ip', 'total', "WHERE id = 1", __LINE__, __FILE__);
+			$compteur = $this->sql_querier->query_array(DB_TABLE_VISIT_COUNTER, 'ip AS nbr_ip', 'total', "WHERE id = 1");
 			$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 			$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 			
@@ -226,7 +226,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$previous_year = $visit_year - 1;
 
 				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-				$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $visit_year . "' GROUP BY stats_year", __LINE__, __FILE__);
+				$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $visit_year . "' GROUP BY stats_year");
 
 				$tpl->put_all(array(
 					'C_STATS_VISIT' => true,
@@ -243,7 +243,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 
 				//Année maximale
-				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '');
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -265,7 +265,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$result = $this->sql_querier->query_while ("SELECT stats_month, SUM(nbr) AS total
 					FROM " . StatsSetup::$stats_table . "
 					WHERE stats_year = '" . $visit_year . "'
-					GROUP BY stats_month", __LINE__, __FILE__);
+					GROUP BY stats_month");
 					while ($row = $this->sql_querier->fetch_assoc($result))
 					{
 						//On affiche les stats numériquement dans un tableau en dessous
@@ -281,7 +281,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$result = $this->sql_querier->query_while ("SELECT SUM(nbr) AS total
 					FROM " . StatsSetup::$stats_table . "
 					WHERE stats_year = '" . $visit_year . "'
-					GROUP BY stats_month", __LINE__, __FILE__);
+					GROUP BY stats_month");
 					$max_month = 1;
 					while ($row = $this->sql_querier->fetch_assoc($result))
 					{
@@ -298,7 +298,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$result = $this->sql_querier->query_while ("SELECT stats_month, SUM(nbr) AS total
 					FROM " . StatsSetup::$stats_table . "
 					WHERE stats_year = '" . $visit_year . "'
-					GROUP BY stats_month", __LINE__, __FILE__);
+					GROUP BY stats_month");
 					while ($row = $this->sql_querier->fetch_assoc($result))
 					{
 						$diff = 0;
@@ -371,7 +371,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$previous_year = ($month > 1) ? $year : $year - 1;
 				
 				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-				$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr', "WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' GROUP BY stats_month", __LINE__, __FILE__);
+				$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr', "WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' GROUP BY stats_month");
 					
 				$tpl->put_all(array(
 					'C_STATS_VISIT' => true,
@@ -397,7 +397,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				
 				//Année maximale
-				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '');
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -420,7 +420,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					//On fait la liste des visites journalières
 					$result = $this->sql_querier->query_while("SELECT nbr, stats_day AS day
 					FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-					ORDER BY stats_day", __LINE__, __FILE__);
+					ORDER BY stats_day");
 					while ($row = $this->sql_querier->fetch_assoc($result))
 					{
 						$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
@@ -450,7 +450,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$j = 0;
 						$result = $this->sql_querier->query_while("SELECT nbr, stats_day AS day
 						FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-						ORDER BY stats_day", __LINE__, __FILE__);
+						ORDER BY stats_day");
 						while ($row = $this->sql_querier->fetch_assoc($result))
 						{
 							//Complétion des jours précédent le premier enregistrement du mois.
@@ -547,10 +547,10 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			
 			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-			$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages', "WHERE stats_year = '" . $year . "'" . $clause . " AND pages_detail <> '' GROUP BY stats_month", __LINE__, __FILE__);
+			$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages', "WHERE stats_year = '" . $year . "'" . $clause . " AND pages_detail <> '' GROUP BY stats_month");
 
 			//On affiche les visiteurs totaux et du jour
-			$compteur_total = $this->sql_querier->query("SELECT SUM(pages) FROM " . PREFIX . "stats", __LINE__, __FILE__);
+			$compteur_total = $this->sql_querier->query("SELECT SUM(pages) FROM " . PREFIX . "stats");
 			$compteur_day = array_sum(StatsSaver::retrieve_stats('pages')) + 1;
 			$compteur_total = $compteur_total + $compteur_day;
 			$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
@@ -577,7 +577,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$previous_year = $pages_year - 1;
 				
 				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-				$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $pages_year . "' AND pages_detail <> '' GROUP BY stats_year", __LINE__, __FILE__);
+				$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $pages_year . "' AND pages_detail <> '' GROUP BY stats_year");
 			
 				$tpl->put_all(array(
 					'C_STATS_VISIT' => true,
@@ -594,7 +594,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 
 				//Année maximale
-				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '');
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -616,7 +616,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$result = $this->sql_querier->query_while ("SELECT stats_month, SUM(pages) AS total
 					FROM " . StatsSetup::$stats_table . "
 					WHERE stats_year = '" . $pages_year . "'
-					GROUP BY stats_month", __LINE__, __FILE__);
+					GROUP BY stats_month");
 					while ($row = $this->sql_querier->fetch_assoc($result))
 					{
 						//On affiche les stats numériquement dans un tableau en dessous
@@ -632,7 +632,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$result = $this->sql_querier->query_while ("SELECT SUM(nbr) AS total
 					FROM " . StatsSetup::$stats_table . "
 					WHERE stats_year = '" . $visit_year . "'
-					GROUP BY stats_month", __LINE__, __FILE__);
+					GROUP BY stats_month");
 					$max_month = 1;
 					while ($row = $this->sql_querier->fetch_assoc($result))
 					{
@@ -649,7 +649,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$result = $this->sql_querier->query_while ("SELECT stats_month, SUM(pages) AS total
 					FROM " . StatsSetup::$stats_table . "
 					WHERE stats_year = '" . $pages_year . "'
-					GROUP BY stats_month", __LINE__, __FILE__);
+					GROUP BY stats_month");
 					while ($row = $this->sql_querier->fetch_assoc($result))
 					{
 						$diff = 0;
@@ -754,7 +754,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				
 				//Année maximale
-				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '');
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -775,7 +775,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				//On fait la liste des visites journalières
 				$result = $this->sql_querier->query_while("SELECT pages, stats_day, stats_month, stats_year
 				FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-				ORDER BY stats_day", __LINE__, __FILE__);
+				ORDER BY stats_day");
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
 					$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
@@ -824,7 +824,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				
 				//Année maximale
-				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '', __LINE__, __FILE__);
+				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '');
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -847,7 +847,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					//On fait la liste des visites journalières
 					$result = $this->sql_querier->query_while("SELECT pages, stats_day, stats_month, stats_year
 					FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-					ORDER BY stats_day", __LINE__, __FILE__);
+					ORDER BY stats_day");
 					while ($row = $this->sql_querier->fetch_assoc($result))
 					{
 						$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
@@ -877,7 +877,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$j = 0;
 						$result = $this->sql_querier->query_while("SELECT pages, stats_day AS day, stats_month, stats_year
 						FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-						ORDER BY stats_day", __LINE__, __FILE__);
+						ORDER BY stats_day");
 						while ($row = $this->sql_querier->fetch_assoc($result))
 						{
 							//Complétion des jours précédent le premier enregistrement du mois.
@@ -952,7 +952,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
 			
-			$nbr_referer = $this->sql_querier->query("SELECT COUNT(DISTINCT(url)) FROM " . StatsSetup::$stats_referer_table . " WHERE type = 0", __LINE__, __FILE__);
+			$nbr_referer = $this->sql_querier->query("SELECT COUNT(DISTINCT(url)) FROM " . StatsSetup::$stats_referer_table . " WHERE type = 0");
 			
 			$page = AppContext::get_request()->get_getint('p', 1);
 			$pagination = new ModulePagination($page, $nbr_referer, $_NBR_ELEMENTS_PER_PAGE);
@@ -969,7 +969,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			WHERE type = 0
 			GROUP BY url
 			ORDER BY total_visit DESC
-			" . $this->sql_querier->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
+			" . $this->sql_querier->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE));
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
@@ -1004,7 +1004,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
 			
-			$nbr_keyword = $this->sql_querier->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . StatsSetup::$stats_referer_table . " WHERE type = 1", __LINE__, __FILE__);
+			$nbr_keyword = $this->sql_querier->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . StatsSetup::$stats_referer_table . " WHERE type = 1");
 			
 			$page = AppContext::get_request()->get_getint('p', 1);
 			$pagination = new ModulePagination($page, $nbr_keyword, $_NBR_ELEMENTS_PER_PAGE);
@@ -1021,7 +1021,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			WHERE type = 1
 			GROUP BY relative_url
 			ORDER BY total_visit DESC
-			" . $this->sql_querier->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
+			" . $this->sql_querier->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE));
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);

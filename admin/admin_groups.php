@@ -50,7 +50,7 @@ if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
 		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
-	$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET name = '" . $name . "', img = '" . $img . "', color = '" . $color_group . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET name = '" . $name . "', img = '" . $img . "', color = '" . $color_group . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'");
 	
 	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 	
@@ -71,7 +71,7 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 		{
 			//Insertion
 			$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_GROUP . " (name, img, color, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . $color_group . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_GROUP . " (name, img, color, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . $color_group . "', '" . serialize($group_auth) . "', '')");
 			
 			GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 			
@@ -87,13 +87,13 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 }
 elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 {	
-	$array_members = explode('|', $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__));
+	$array_members = explode('|', $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'"));
 	foreach ($array_members as $key => $user_id)
 	{
 		GroupsService::remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
 	}
 
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__); //On supprime dans la bdd.
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'"); //On supprime dans la bdd.
 		
 	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 	
@@ -104,7 +104,7 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$login = retrieve(POST, 'login_mbr', '');
-	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
+	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'");
 	if (!empty($user_id))
 	{
 		if (GroupsService::add_member($user_id, $idgroup)) //Succès.
@@ -162,7 +162,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 {
 	$template = new FileTemplate('admin/admin_groups_management2.tpl');
 	
-	$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', 'color', 'auth', 'members', "WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+	$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', 'color', 'auth', 'members', "WHERE id = '" . $idgroup . "'");
 	if (!empty($group['id']))
 	{
 		//Gestion erreur.
@@ -187,7 +187,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		}
 		$array_group = unserialize($group['auth']);
 	
-		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
+		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_groups = '" . $group['id'] . "'");
 		
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$pagination = new ModulePagination($page, $nbr_member_group, $_NBR_ELEMENTS_PER_PAGE);
@@ -242,7 +242,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		));
 		
 		//Liste des membres du groupe.
-		$members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . NumberHelper::numeric($group['id']) . "'", __LINE__, __FILE__);
+		$members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . NumberHelper::numeric($group['id']) . "'");
 		
 		$number_member = 0;
 		if (!empty($members))
@@ -377,7 +377,7 @@ else //Liste des groupes.
 	$result = $Sql->query_while("SELECT id, name, img
 	FROM " . DB_TABLE_GROUP . "
 	ORDER BY name
-	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE));
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$template->assign_block_vars('group', array(

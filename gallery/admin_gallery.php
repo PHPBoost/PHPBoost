@@ -93,8 +93,8 @@ else
 		$CAT_GALLERY[0]['aprob'] = 1;
 	}
 
-	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
-	$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
+	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $idcat . "'");
+	$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery_cats gc " . $clause_cat);
 
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
@@ -170,7 +170,7 @@ else
 		" . $clause_cat . "
 		GROUP BY gc.id
 		ORDER BY gc.id_left
-		" . $Sql->limit($pagination->get_display_from(), $config->get_pics_number_per_page()), __LINE__, __FILE__);
+		" . $Sql->limit($pagination->get_display_from(), $config->get_pics_number_per_page()));
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On genère le tableau pour $config->get_columns_number() colonnes
@@ -237,7 +237,7 @@ else
 		$array_cat_list = array(0 => '<option value="0" %s>' . $LANG['root'] . '</option>');
 		$result = $Sql->query_while("SELECT id, level, name
 		FROM " . PREFIX . "gallery_cats
-		ORDER BY id_left", __LINE__, __FILE__);
+		ORDER BY id_left");
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
@@ -251,7 +251,7 @@ else
 			FROM " . PREFIX . "gallery g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $idcat . "' AND g.id = '" . $idpics . "'
-			" . $Sql->limit(0, 1), __LINE__, __FILE__);
+			" . $Sql->limit(0, 1));
 			$info_pics = $Sql->fetch_assoc($result);
 			if (!empty($info_pics['id']))
 			{
@@ -266,7 +266,7 @@ else
 				$result = $Sql->query_while("SELECT g.id, g.idcat, g.path
 				FROM " . PREFIX . "gallery g
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-				WHERE g.idcat = '" . $idcat . "'", __LINE__, __FILE__);
+				WHERE g.idcat = '" . $idcat . "'");
 				while ($row = $Sql->fetch_assoc($result))
 				{
 					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
@@ -382,7 +382,7 @@ else
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $idcat . "'
 			ORDER BY g.timestamp
-			" . $Sql->limit($pagination->get_display_from(), $config->get_pics_number_per_page()), __LINE__, __FILE__);
+			" . $Sql->limit($pagination->get_display_from(), $config->get_pics_number_per_page()));
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.

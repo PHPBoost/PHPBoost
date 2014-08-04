@@ -120,7 +120,7 @@ else
 	$cat_list_unselect = '<option value="0" selected="selected">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, level, name
 	FROM " . PREFIX . "gallery_cats
-	ORDER BY id_left", __LINE__, __FILE__);
+	ORDER BY id_left");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
@@ -134,7 +134,7 @@ else
 	if (!empty($add_pic))
 	{
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
-		$imageup = $Sql->query_array(PREFIX . "gallery", "idcat", "name", "path", "WHERE id = '" . $add_pic . "'", __LINE__, __FILE__);
+		$imageup = $Sql->query_array(PREFIX . "gallery", "idcat", "name", "path", "WHERE id = '" . $add_pic . "'");
 		$Template->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
@@ -189,7 +189,7 @@ else
 		if (is_array($array_pics))
 		{
 			$result = $Sql->query_while("SELECT path
-			FROM " . PREFIX . "gallery", __LINE__, __FILE__);
+			FROM " . PREFIX . "gallery");
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				//On recherche les clées correspondante à celles trouvée dans la bdd.

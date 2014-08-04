@@ -43,7 +43,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 	//Récupération de la catégorie d'échange.
 	if (!empty($get_parent_up))
 	{
-		$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats WHERE '" . $CAT_GALLERY[$get_parent_up]['id_left'] . "' - id_right = 1", __LINE__, __FILE__);
+		$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats WHERE '" . $CAT_GALLERY[$get_parent_up]['id_left'] . "' - id_right = 1");
 		if (!empty($switch_id_cat))
 			echo $switch_id_cat;
 		else
@@ -52,7 +52,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 			$list_parent_cats = '';
 			$result = $Sql->query_while("SELECT id 
 			FROM " . PREFIX . "gallery_cats 
-			WHERE id_left < '" . $CAT_GALLERY[$get_parent_up]['id_left'] . "' AND id_right > '" . $CAT_GALLERY[$get_parent_up]['id_right'] . "'", __LINE__, __FILE__);
+			WHERE id_left < '" . $CAT_GALLERY[$get_parent_up]['id_left'] . "' AND id_right > '" . $CAT_GALLERY[$get_parent_up]['id_right'] . "'");
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				$list_parent_cats .= $row['id'] . ', ';
@@ -67,13 +67,13 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 				WHERE id_left < '" . $CAT_GALLERY[$get_parent_up]['id_left'] . "' AND level = '" . ($CAT_GALLERY[$get_parent_up]['level'] - 1) . "' AND
 				id NOT IN (" . $list_parent_cats . ")
 				ORDER BY id_left DESC" . 
-				$Sql->limit(0, 1), __LINE__, __FILE__);
+				$Sql->limit(0, 1));
 				if (isset($CAT_GALLERY[$change_cat]))
 				{	
 					$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats 
 					WHERE id_left > '" . $CAT_GALLERY[$change_cat]['id_right'] . "'
 					ORDER BY id_left" . 
-					$Sql->limit(0, 1), __LINE__, __FILE__);
+					$Sql->limit(0, 1));
 				}
 				if (!empty($switch_id_cat))
 					echo 's' . $switch_id_cat;
@@ -82,7 +82,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 	}
 	elseif (!empty($get_parent_down))
 	{
-		$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats WHERE id_left - '" . $CAT_GALLERY[$get_parent_down]['id_right'] . "' = 1", __LINE__, __FILE__);
+		$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats WHERE id_left - '" . $CAT_GALLERY[$get_parent_down]['id_right'] . "' = 1");
 		if (!empty($switch_id_cat))
 			echo $switch_id_cat;
 		else
@@ -90,13 +90,13 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 			$change_cat = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats
 			WHERE id_left > '" . $CAT_GALLERY[$get_parent_down]['id_left'] . "' AND level = '" . ($CAT_GALLERY[$get_parent_down]['level'] - 1) . "'
 			ORDER BY id_left" . 
-			$Sql->limit(0, 1), __LINE__, __FILE__);
+			$Sql->limit(0, 1));
 			if (isset($CAT_GALLERY[$change_cat]))
 			{	
 				$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats 
 				WHERE id_left < '" . $CAT_GALLERY[$change_cat]['id_right'] . "'
 				ORDER BY id_left DESC" . 
-				$Sql->limit(0, 1), __LINE__, __FILE__);
+				$Sql->limit(0, 1));
 			}
 			if (!empty($switch_id_cat))
 				echo 's' . $switch_id_cat;
@@ -113,7 +113,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 			$list_parent_cats = '';
 			$result = $Sql->query_while("SELECT id 
 			FROM " . PREFIX . "gallery_cats 
-			WHERE id_left < '" . $CAT_GALLERY[$id]['id_left'] . "' AND id_right > '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
+			WHERE id_left < '" . $CAT_GALLERY[$id]['id_left'] . "' AND id_right > '" . $CAT_GALLERY[$id]['id_right'] . "'");
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				$list_parent_cats .= $row['id'] . ', ';
@@ -126,17 +126,17 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 			{	
 				//Même catégorie
 				$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats
-				WHERE '" . $CAT_GALLERY[$id]['id_left'] . "' - id_right = 1", __LINE__, __FILE__);		
+				WHERE '" . $CAT_GALLERY[$id]['id_left'] . "' - id_right = 1");		
 				if (!empty($switch_id_cat))
 				{
 					//On monte la catégorie à déplacer, on lui assigne des id négatifs pour assurer l'unicité.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left + '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right + '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left + '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right + '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'");
 					//On descend la catégorie cible.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "', id_right = id_right + '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$switch_id_cat]['id_left'] . "' AND '" . $CAT_GALLERY[$switch_id_cat]['id_right'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "', id_right = id_right + '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$switch_id_cat]['id_left'] . "' AND '" . $CAT_GALLERY[$switch_id_cat]['id_right'] . "'");
 					
 					//On rétablit les valeurs absolues.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left WHERE id_left < 0", __LINE__, __FILE__);
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = - id_right WHERE id_right < 0", __LINE__, __FILE__);	
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left WHERE id_left < 0");
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = - id_right WHERE id_right < 0");	
 					
 					$Cache->Generate_module_file('gallery');
 				}		
@@ -147,24 +147,24 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 					WHERE id_left < '" . $CAT_GALLERY[$id]['id_left'] . "' AND level = '" . ($CAT_GALLERY[$id]['level'] - 1) . "' AND
 					id NOT IN (" . $list_parent_cats . ")
 					ORDER BY id_left DESC" . 
-					$Sql->limit(0, 1), __LINE__, __FILE__);
+					$Sql->limit(0, 1));
 				}
 			}
 			elseif ($move == 'down')
 			{
 				//Doit-on changer de catégorie parente ou non ?
 				$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats
-				WHERE id_left - '" . $CAT_GALLERY[$id]['id_right'] . "' = 1", __LINE__, __FILE__);
+				WHERE id_left - '" . $CAT_GALLERY[$id]['id_right'] . "' = 1");
 				if (!empty($switch_id_cat))
 				{
 					//On monte la catégorie à déplacer, on lui assigne des id négatifs pour assurer l'unicité.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left - '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right - '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left - '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right - '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'");
 					//On descend la catégorie cible.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left - '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "', id_right = id_right - '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$switch_id_cat]['id_left'] . "' AND '" . $CAT_GALLERY[$switch_id_cat]['id_right'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left - '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "', id_right = id_right - '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$switch_id_cat]['id_left'] . "' AND '" . $CAT_GALLERY[$switch_id_cat]['id_right'] . "'");
 					
 					//On rétablit les valeurs absolues.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left WHERE id_left < 0", __LINE__, __FILE__);
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = - id_right WHERE id_right < 0", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left WHERE id_left < 0");
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = - id_right WHERE id_right < 0");
 					
 					$Cache->Generate_module_file('gallery');
 				}
@@ -174,7 +174,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 					$to = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats
 					WHERE id_left > '" . $CAT_GALLERY[$id]['id_left'] . "' AND level = '" . ($CAT_GALLERY[$id]['level'] - 1) . "'
 					ORDER BY id_left" . 
-					$Sql->limit(0, 1), __LINE__, __FILE__);
+					$Sql->limit(0, 1));
 				}
 			}
 
@@ -188,7 +188,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 				$result = $Sql->query_while("SELECT id
 				FROM " . PREFIX . "gallery_cats 
 				WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'
-				ORDER BY id_left", __LINE__, __FILE__);
+				ORDER BY id_left");
 				while ($row = $Sql->fetch_assoc($result))
 				{
 					$list_cats .= $row['id'] . ', ';
@@ -202,14 +202,14 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 					$clause_cats = " id IN (" . $list_cats . ")";
 					
 				//Récupération du nombre d'images de la galerie.
-				$nbr_pics_aprob = $Sql->query("SELECT nbr_pics_aprob FROM " . PREFIX . "gallery_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
-				$nbr_pics_unaprob = $Sql->query("SELECT nbr_pics_unaprob FROM " . PREFIX . "gallery_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+				$nbr_pics_aprob = $Sql->query("SELECT nbr_pics_aprob FROM " . PREFIX . "gallery_cats WHERE id = '" . $id . "'");
+				$nbr_pics_unaprob = $Sql->query("SELECT nbr_pics_unaprob FROM " . PREFIX . "gallery_cats WHERE id = '" . $id . "'");
 				
 				//Galeries parentes de la galerie cible.
 				$list_parent_cats_to = '';
 				$result = $Sql->query_while("SELECT id, level 
 				FROM " . PREFIX . "gallery_cats 
-				WHERE id_left <= '" . $CAT_GALLERY[$to]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$to]['id_right'] . "'", __LINE__, __FILE__);
+				WHERE id_left <= '" . $CAT_GALLERY[$to]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$to]['id_right'] . "'");
 				while ($row = $Sql->fetch_assoc($result))
 				{
 					$list_parent_cats_to .= $row['id'] . ', ';
@@ -224,30 +224,30 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 					
 				########## Suppression ##########
 				//On supprime virtuellement (changement de signe des bornes) les enfants.
-				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left, id_right = - id_right WHERE " . $clause_cats, __LINE__, __FILE__);					
+				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left, id_right = - id_right WHERE " . $clause_cats);					
 				//On modifie les bornes droites des parents.
 				if (!empty($list_parent_cats))
 				{
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob - '" . $nbr_pics_aprob . "', nbr_pics_unaprob = nbr_pics_unaprob - '" . $nbr_pics_unaprob . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob - '" . $nbr_pics_aprob . "', nbr_pics_unaprob = nbr_pics_unaprob - '" . $nbr_pics_unaprob . "' WHERE id IN (" . $list_parent_cats . ")");
 				}
 				
 				//On réduit la taille de l'arbre du nombre de galeries supprimées à partir de la position de celui-ci.
-				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$id]['id_right'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$id]['id_right'] . "'");
 
 				########## Ajout ##########
 				//On modifie les bornes droites des parents de la cible.
-				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + '" . ($nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob + '" . $nbr_pics_aprob . "', nbr_pics_unaprob = nbr_pics_unaprob + '" . $nbr_pics_unaprob . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + '" . ($nbr_cat*2) . "', nbr_pics_aprob = nbr_pics_aprob + '" . $nbr_pics_aprob . "', nbr_pics_unaprob = nbr_pics_unaprob + '" . $nbr_pics_unaprob . "' WHERE " . $clause_parent_cats_to);
 
 				//On augmente la taille de l'arbre du nombre de galeries supprimées à partir de la position de la galerie cible.
 				if ($CAT_GALLERY[$id]['id_left'] > $CAT_GALLERY[$to]['id_left'] ) //Direction galerie source -> galerie cible.
 				{	
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$to]['id_right'] . "'", __LINE__, __FILE__);						
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$to]['id_right'] . "'");						
 					$limit = $CAT_GALLERY[$to]['id_right'];
 					$end = $limit + ($nbr_cat*2) - 1;
 				}
 				else
 				{	
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2)) . "'");
 					$limit = $CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2);
 					$end = $limit + ($nbr_cat*2) - 1;						
 				}	
@@ -259,7 +259,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 				{
 					$id_left = $limit + ($CAT_GALLERY[$array_sub_cats[$z]]['id_left'] - $CAT_GALLERY[$id]['id_left']);
 					$id_right = $end - ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$array_sub_cats[$z]]['id_right']);
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'");
 					$z++;
 				}
 				
@@ -272,7 +272,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 			$i = 0;
 			$result = $Sql->query_while("SELECT id, id_left, id_right
 			FROM " . PREFIX . "gallery_cats 
-			ORDER BY id_left", __LINE__, __FILE__);
+			ORDER BY id_left");
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				$list_cats_js .= $row['id'] . ', ';		

@@ -302,17 +302,17 @@ class Environment
 	private static function update_visit_counter_table()
 	{
 		//We truncate the table containing the visitors of today
-		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER . " WHERE id <> 1", __LINE__, __FILE__);
+		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER . " WHERE id <> 1");
 		
 		//We update the last changeday date
 		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
 			" SET time = '" . gmdate_format('Y-m-d', time(), Timezone::SERVER_TIMEZONE) .
-				"', total = 1 WHERE id = 1", __LINE__, __FILE__);
+				"', total = 1 WHERE id = 1");
 		
 		//We insert this visitor as a today visitor
 		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
 			" (ip, time, total) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . gmdate_format('Y-m-d', time(),
-		Timezone::SERVER_TIMEZONE) . "', '0')", __LINE__, __FILE__);
+		Timezone::SERVER_TIMEZONE) . "', '0')");
 	}
 
 	private static function remove_old_unactivated_member_accounts()

@@ -41,7 +41,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 {
 	$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat',
 		'hits', 'count_hits', 'activ_com', 'redirect', 'contents', 'display_print_link',
-		"WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+		"WHERE encoded_title = '" . $encoded_title . "'");
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	if ($page_infos['redirect'] > 0)
 	{
@@ -49,7 +49,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 		$redirect_id = $page_infos['id'];
 		$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat',
 			'hits', 'count_hits', 'activ_com', 'redirect', 'contents', 'display_print_link',
-			"WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
+			"WHERE id = '" . $page_infos['redirect'] . "'");
 	}
 	else
 		$redirect_title = '';
@@ -80,7 +80,7 @@ elseif ($id_com > 0)
 		count_hits, activ_com, contents
 		FROM " . PREFIX . "pages
 		WHERE id = '" . $id_com . "'"
-	, __LINE__, __FILE__);
+	);
 	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "pages WHERE id = '" . $id_com . "'");
 	$page_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
@@ -167,7 +167,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	
 	//On compte le nombre de vus
 	if ($page_infos['count_hits'] == 1)
-		$Sql->query_inject("UPDATE " . PREFIX . "pages SET hits = hits + 1 WHERE id = '" . $page_infos['id'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "pages SET hits = hits + 1 WHERE id = '" . $page_infos['id'] . "'");
 	
 	$Template->put_all(array(
 		'TITLE' => $page_infos['title'],

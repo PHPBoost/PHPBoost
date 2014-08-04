@@ -112,8 +112,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			DispatchManager::redirect($error_controller);
 		}
 	
-		$nbr_pics = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $g_idcat . "' AND aprob = 1", __LINE__, __FILE__);
-		$total_cat = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
+		$nbr_pics = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $g_idcat . "' AND aprob = 1");
+		$total_cat = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "gallery_cats gc " . $clause_cat);
 	
 		//Gestion erreur.
 		$get_error = retrieve(GET, 'error', '');
@@ -233,7 +233,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			" . $clause_cat . $clause_unauth_cats . "
 			GROUP BY gc.id
 			ORDER BY gc.id_left
-			" . $this->sql_querier->limit($pagination->get_display_from(), $config->get_pics_number_per_page()), __LINE__, __FILE__);
+			" . $this->sql_querier->limit($pagination->get_display_from(), $config->get_pics_number_per_page()));
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
@@ -312,7 +312,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			$result = $this->sql_querier->query_while("SELECT id, level, name
 			FROM " . PREFIX . "gallery_cats
 			WHERE aprob = 1
-			ORDER BY id_left", __LINE__, __FILE__);
+			ORDER BY id_left");
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				if (!in_array($row['id'], $unauth_cats))
@@ -336,7 +336,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = g.id AND note.module_name = 'gallery' AND note.user_id = " . AppContext::get_current_user()->get_id() . "
 					WHERE g.idcat = '" . $g_idcat . "' AND g.id = '" . $g_idpics . "' AND g.aprob = 1
 					" . $g_sql_sort . "
-					" . $this->sql_querier->limit(0, 1), __LINE__, __FILE__);
+					" . $this->sql_querier->limit(0, 1));
 				$info_pics = $this->sql_querier->fetch_assoc($result);
 				if (!empty($info_pics['id']))
 				{
@@ -351,7 +351,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.path
 					FROM " . PREFIX . "gallery g
 					WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
-					" . $g_sql_sort, __LINE__, __FILE__);
+					" . $g_sql_sort);
 					while ($row = $this->sql_querier->fetch_assoc($result))
 					{
 						//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
@@ -531,7 +531,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = g.id AND note.module_name = 'gallery' AND note.user_id = " . AppContext::get_current_user()->get_id() . "
 				WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
 				" . $g_sql_sort . "
-				" . $this->sql_querier->limit($pagination->get_display_from(), $config->get_pics_number_per_page()), __LINE__, __FILE__);
+				" . $this->sql_querier->limit($pagination->get_display_from(), $config->get_pics_number_per_page()));
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
 					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.

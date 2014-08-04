@@ -61,7 +61,7 @@ else
 	$result = $Sql->query_while("SELECT id, question 
 	FROM " . PREFIX . "poll
 	WHERE archive = 0 AND visible = 1
-	ORDER BY timestamp", __LINE__, __FILE__);
+	ORDER BY timestamp");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = in_array($row['id'], $poll_config->get_displayed_in_mini_module_list()) ? 'selected="selected"' : '';

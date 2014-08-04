@@ -61,7 +61,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$tpl = new FileTemplate('pages/index.tpl');
         
-		$num_pages = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "pages WHERE redirect = '0'", __LINE__, __FILE__);
+		$num_pages = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "pages WHERE redirect = '0'");
 		$num_coms = CommentsService::get_number_and_lang_comments('pages', $pages['id']);
 		
 		$tpl->put_all(array(
@@ -92,7 +92,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		$result = $this->sql_querier->query_while("SELECT title, id, encoded_title, auth
 			FROM " . PREFIX . "pages
 			WHERE id_cat = 0 AND is_cat = 0
-			ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
+			ORDER BY is_cat DESC, title ASC");
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			//Autorisation particulière ?
@@ -122,10 +122,10 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		FROM " . PREFIX . "pages_cats c
 		LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
 		WHERE c.id_parent = 0
-		ORDER BY p.title ASC", __LINE__, __FILE__);
+		ORDER BY p.title ASC");
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
-			$sub_cats_number = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$sub_cats_number = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $row['id'] . "'");
 			if ($sub_cats_number > 0)
 			{	
 				$tpl->assign_block_vars('list', array(

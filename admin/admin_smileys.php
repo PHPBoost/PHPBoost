@@ -42,7 +42,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 	//On met à jour
 	if (!empty($url_smiley) && !empty($code_smiley))
 	{
-		$Sql->query_inject("UPDATE " . DB_TABLE_SMILEYS . " SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_SMILEYS . " SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'");
 					
 		###### Régénération du cache des smileys #######
 		SmileysCache::invalidate();
@@ -57,7 +57,7 @@ elseif (!empty($id) && $del) //Suppression.
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	//On supprime le smiley de la bdd.
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_SMILEYS . " WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_SMILEYS . " WHERE idsmiley = '" . $id . "'");
 	
 	###### Régénération du cache des smileys #######
 	SmileysCache::invalidate();
@@ -68,7 +68,7 @@ elseif (!empty($id) && $edit) //Edition.
 {
 	$template = new FileTemplate('admin/admin_smileys_management2.tpl');
 
-	$info_smiley = $Sql->query_array(DB_TABLE_SMILEYS, 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
+	$info_smiley = $Sql->query_array(DB_TABLE_SMILEYS, 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'");
 	$url_smiley = $info_smiley['url_smiley'];
 	
 	//Gestion erreur.
@@ -78,7 +78,7 @@ elseif (!empty($id) && $edit) //Edition.
 		
 	$smiley_options = '';
 	$result = $Sql->query_while("SELECT url_smiley
-	FROM " . PREFIX . "smileys", __LINE__, __FILE__);
+	FROM " . PREFIX . "smileys");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		if ($row['url_smiley'] == $url_smiley)

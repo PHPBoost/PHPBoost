@@ -56,7 +56,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	FROM " . PREFIX . "forum_msg msg
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
 	JOIN " . PREFIX . "forum_cats c ON t.idcat = c.id AND c.aprob = 1" . $auth_cats . "
-	WHERE msg.user_id = '" . $view_msg . "'", __LINE__, __FILE__);
+	WHERE msg.user_id = '" . $view_msg . "'");
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_msg, $_NBR_ELEMENTS_PER_PAGE, Pagination::LIGHT_PAGINATION);
@@ -85,7 +85,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
 	WHERE msg.user_id = '" . $view_msg . "'" . $auth_cats . "
 	ORDER BY msg.id DESC
-	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE), __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE));
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande

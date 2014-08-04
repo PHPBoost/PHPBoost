@@ -101,7 +101,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		$display_cat = !empty($id_get);
 		if ($display_cat)
 		{
-			$intervall = $this->sql_querier->query_array(PREFIX . "forum_cats", "id_left", "id_right", "level", "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+			$intervall = $this->sql_querier->query_array(PREFIX . "forum_cats", "id_left", "id_right", "level", "WHERE id = '" . $id_get . "'");
 			$display_sub_cat = ' AND c.id_left > \'' . $intervall['id_left'] . '\'
 		   AND c.id_right < \'' . $intervall['id_right'] . '\'
 		   AND c.level = \'' . $intervall['level'] . '\' + 1';
@@ -135,7 +135,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND v.idtopic = t.id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 		WHERE c.aprob = 1 " . $display_sub_cat . " " . $unauth_cats . "
-		ORDER BY c.id_left", __LINE__, __FILE__);
+		ORDER BY c.id_left");
 		$display_sub_cats = false;
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{

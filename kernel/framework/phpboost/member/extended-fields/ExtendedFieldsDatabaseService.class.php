@@ -177,13 +177,13 @@ class ExtendedFieldsDatabaseService
 	
 	private static function add_extended_field_to_member(ExtendedField $extended_field)
 	{
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ADD " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ADD " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field));
 	}
 	
 	private static function change_extended_field_to_member(ExtendedField $extended_field)
 	{
 		$data = self::select_data_field_by_id($extended_field);
-		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " CHANGE " . $data['field_name'] . " " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field), __LINE__, __FILE__);
+		PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " CHANGE " . $data['field_name'] . " " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field));
 	}
 
 	private static function drop_extended_field_to_member(ExtendedField $extended_field)
@@ -191,12 +191,12 @@ class ExtendedFieldsDatabaseService
 		$field_name = $extended_field->get_field_name();
 		if (!empty($field_name))
 		{
-			PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " DROP " . $field_name, __LINE__, __FILE__);	
+			PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " DROP " . $field_name);	
 		}
 		else
 		{
 			$data = self::select_data_field_by_id($extended_field);
-			PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " DROP " . $data['field_name'], __LINE__, __FILE__);	
+			PersistenceContext::get_sql()->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " DROP " . $data['field_name']);	
 		}
 		
 	}

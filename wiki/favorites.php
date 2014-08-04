@@ -47,14 +47,14 @@ $remove_favorite = retrieve(GET, 'del', 0);
 if ($add_favorite > 0)//Ajout d'un favori
 {
 	//on vérifie que l'article existe
-	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "WHERE id = '" . $add_favorite . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "WHERE id = '" . $add_favorite . "'");
 	if (empty($article_infos['encoded_title'])) //L'article n'existe pas
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 	//On regarde que le sujet n'est pas en favoris
-	$is_favorite = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_favorites WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND id_article = '" . $add_favorite . "'", __LINE__, __FILE__);
+	$is_favorite = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_favorites WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND id_article = '" . $add_favorite . "'");
 	if ($is_favorite == 0)
 	{
-		$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_favorites (id_article, user_id) VALUES ('" . $add_favorite . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_favorites (id_article, user_id) VALUES ('" . $add_favorite . "', '" . AppContext::get_current_user()->get_attribute('user_id') . "')");
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
@@ -66,16 +66,16 @@ elseif ($remove_favorite > 0)
     AppContext::get_session()->csrf_get_protect();
     
 	//on vérifie que l'article existe
-	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "WHERE id = '" . $remove_favorite . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "WHERE id = '" . $remove_favorite . "'");
 	if (empty($article_infos['encoded_title'])) //L'article n'existe pas
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 		
 	//On regarde que le sujet n'est pas en favoris
-	$is_favorite = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_favorites WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND id_article = '" . $remove_favorite . "'", __LINE__, __FILE__);
+	$is_favorite = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_favorites WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "' AND id_article = '" . $remove_favorite . "'");
 	//L'article est effectivement en favoris
 	if ($is_favorite > 0)
 	{
-		$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_favorites WHERE id_article = '" . $remove_favorite . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_favorites WHERE id_article = '" . $remove_favorite . "' AND user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
@@ -101,9 +101,9 @@ else
 	FROM " . PREFIX . "wiki_favorites f
 	LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = f.id_article
 	WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'"
-	, __LINE__, __FILE__);
+	);
 	
-	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE user_id = '" . AppContext::get_current_user()->get_attribute('user_id') . "'");
 	
 	if ($num_rows == 0)
 	{

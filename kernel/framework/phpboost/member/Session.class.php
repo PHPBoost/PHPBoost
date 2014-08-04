@@ -78,10 +78,10 @@ class Session
 	
 	public function connect($login, $password, $autoconnexion, $url_to_redirect = '', $already_hashed = false)
 	{
-		$user_id = $this->sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
+		$user_id = $this->sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'");
 		if (!empty($user_id)) //Membre existant.
 		{
-			$info_connect = $this->sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', 'password', "WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
+			$info_connect = $this->sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', 'password', "WHERE user_id='" . $user_id . "'");
 			$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
 			$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
 	
@@ -89,12 +89,12 @@ class Session
 			{
 				if ($delay_connect >= 600) //5 nouveau essais, 10 minutes après.
 				{
-					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'"); //Remise à zéro du compteur d'essais.
 					$error_report = $this->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnexion, $already_hashed); //On lance la session.
 				}
 				elseif ($delay_connect >= 300) //2 essais 5 minutes après
 				{
-					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Redonne 2 essais.
+					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'"); //Redonne 2 essais.
 					$error_report = $this->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnexion, $already_hashed); //On lance la session.
 				}
 				elseif ($info_connect['test_connect'] < 5) //Succès.
@@ -122,14 +122,14 @@ class Session
 
 			if (!empty($error_report)) //Erreur
 			{
-				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
+				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'");
 				$info_connect['test_connect']++;
 				$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
 				AppContext::get_response()->redirect(UserUrlBuilder::connect('flood/'. $info_connect['test_connect']));
 			}
 			elseif ($info_connect['test_connect'] > 0) //Succès redonne tous les essais.
 			{
-				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'"); //Remise à zéro du compteur d'essais.
 			}
 		}
 		else
@@ -176,19 +176,19 @@ class Session
 		$session_script_get = preg_replace('`&token=[^&]+`', '', QUERY_STRING);
 
 		########Insertion dans le compteur si l'ip est inconnue.########
-		$check_ip = $this->sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VISIT_COUNTER . " WHERE ip = '" . AppContext::get_current_user()->get_ip() . "'", __LINE__, __FILE__);
+		$check_ip = $this->sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VISIT_COUNTER . " WHERE ip = '" . AppContext::get_current_user()->get_ip() . "'");
 		$is_robot = Robots::is_robot();
 		
 		if (empty($check_ip) && !$is_robot)
 		{
 			//Récupération forcée de la valeur du total de visites, car problème de CAST avec postgresql.
-			$this->sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time = '" . gmdate_format('Y-m-d', time(), Timezone::SERVER_TIMEZONE) . "', total = total + 1 WHERE id = 1", __LINE__, __FILE__);
-			$this->sql->query_inject("INSERT ".LOW_PRIORITY." INTO " . DB_TABLE_VISIT_COUNTER . " (ip, time, total) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . gmdate_format('Y-m-d', time(), Timezone::SERVER_TIMEZONE) . "', 0)", __LINE__, __FILE__);
+			$this->sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time = '" . gmdate_format('Y-m-d', time(), Timezone::SERVER_TIMEZONE) . "', total = total + 1 WHERE id = 1");
+			$this->sql->query_inject("INSERT ".LOW_PRIORITY." INTO " . DB_TABLE_VISIT_COUNTER . " (ip, time, total) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . gmdate_format('Y-m-d', time(), Timezone::SERVER_TIMEZONE) . "', 0)");
 
 			//Mise à jour du last_connect, pour un membre qui vient d'arriver sur le site.
 			if ($user_id !== '-1')
 			{
-				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "' WHERE user_id = '" . $user_id . "'");
 			}
 		}
 		
@@ -211,17 +211,17 @@ class Session
 		if ($user_id !== '-1')
 		{
 			//Suppression de la session visiteur générée avant l'enregistrement!
-			$this->sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE session_ip = '" . AppContext::get_current_user()->get_ip() . "' AND user_id = -1", __LINE__, __FILE__);
+			$this->sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE session_ip = '" . AppContext::get_current_user()->get_ip() . "' AND user_id = -1");
 
 			//En cas de double connexion, on supprime le cookie et la session associée de la base de données!
 			if (AppContext::get_request()->has_cookieparameter($sessions_config->get_cookie_name() . '_data'))
 			{
 				AppContext::get_response()->set_cookie(new HTTPCookie($sessions_config->get_cookie_name().'_data', null, -1));
 			}
-			$this->sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$this->sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $user_id . "'");
 
 			//Récupération password BDD
-			$password_m = $this->sql->query("SELECT password FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "' AND user_warning < 100 AND '" . time() . "' - user_ban >= 0", __LINE__, __FILE__);
+			$password_m = $this->sql->query("SELECT password FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "' AND user_warning < 100 AND '" . time() . "' - user_ban >= 0");
 			if (!empty($password) && (($password === $password_m))) //Succès!
 			{
 				if (!array_key_exists('modules_parameters', $this->data))
@@ -229,13 +229,13 @@ class Session
 					$this->data['modules_parameters'] = '';
 				}
 				
-				$this->sql->query_inject("INSERT INTO " . DB_TABLE_SESSIONS . " VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . AppContext::get_current_user()->get_ip() . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '', '', '" . addslashes($this->data['modules_parameters']) . "', '" . $this->data['token'] . "')", __LINE__, __FILE__);
+				$this->sql->query_inject("INSERT INTO " . DB_TABLE_SESSIONS . " VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . AppContext::get_current_user()->get_ip() . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '', '', '" . addslashes($this->data['modules_parameters']) . "', '" . $this->data['token'] . "')");
 			}
 			else //Session visiteur, echec!
 			{
-				$this->sql->query_inject("INSERT INTO " . DB_TABLE_SESSIONS . " VALUES('" . $session_uniq_id . "', -1, -1, '" . AppContext::get_current_user()->get_ip() . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '', '', '', '" . $this->data['token'] . "')", __LINE__, __FILE__);
+				$this->sql->query_inject("INSERT INTO " . DB_TABLE_SESSIONS . " VALUES('" . $session_uniq_id . "', -1, -1, '" . AppContext::get_current_user()->get_ip() . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '', '', '', '" . $this->data['token'] . "')");
 
-				$delay_ban = $this->sql->query("SELECT user_ban FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+				$delay_ban = $this->sql->query("SELECT user_ban FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'");
 				if ((time() - $delay_ban) >= 0)
 				{
 					$error = 'echec';
@@ -248,7 +248,7 @@ class Session
 		}
 		else //Session visiteur valide.
 		{
-			$this->sql->query_inject("INSERT INTO " . DB_TABLE_SESSIONS . " VALUES('" . $session_uniq_id . "', -1, -1, '" . AppContext::get_current_user()->get_ip() . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '', '', '', '" . $this->data['token'] . "')", __LINE__, __FILE__);
+			$this->sql->query_inject("INSERT INTO " . DB_TABLE_SESSIONS . " VALUES('" . $session_uniq_id . "', -1, -1, '" . AppContext::get_current_user()->get_ip() . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '', '', '', '" . $this->data['token'] . "')");
 		}
 
 		########Génération du cookie de session########
@@ -360,7 +360,7 @@ class Session
 			}
 			
 			//On modifie le session_flag pour forcer mysql à modifier l'entrée, pour prendre en compte la mise à jour par mysql_affected_rows().
-			$resource = $this->sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_SESSIONS . " SET session_ip = '" . AppContext::get_current_user()->get_ip() . "', session_time = '" . time() . "', " . $location . " session_flag = 1 - session_flag WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'", __LINE__, __FILE__);
+			$resource = $this->sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_SESSIONS . " SET session_ip = '" . AppContext::get_current_user()->get_ip() . "', session_time = '" . time() . "', " . $location . " session_flag = 1 - session_flag WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'");
 			if ($this->sql->affected_rows() == 0) //Aucune session lancée.
 			{
 				if ($this->autoconnect($session_script, '', $session_script_title) === false) //On essaie de lancer la session automatiquement.
@@ -388,7 +388,7 @@ class Session
 			}
 
 			//On modifie le session_flag pour forcer mysql à modifier l'entrée, pour prendre en compte la mise à jour par mysql_affected_rows().
-			$resource = $this->sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_SESSIONS . " SET session_ip = '" . AppContext::get_current_user()->get_ip() . "', session_time = '" . (time() + 1) . "', " . $location . " session_flag = 1 - session_flag WHERE user_id = -1 AND session_ip = '" . AppContext::get_current_user()->get_ip() . "'", __LINE__, __FILE__);
+			$resource = $this->sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_SESSIONS . " SET session_ip = '" . AppContext::get_current_user()->get_ip() . "', session_time = '" . (time() + 1) . "', " . $location . " session_flag = 1 - session_flag WHERE user_id = -1 AND session_ip = '" . AppContext::get_current_user()->get_ip() . "'");
 			if ($this->sql->affected_rows() == 0) //Aucune session lancée.
 			{
 				if (AppContext::get_request()->has_cookieparameter($sessions_config->get_cookie_name() . '_data'))
@@ -409,7 +409,7 @@ class Session
 		$sessions_config = SessionsConfig::load();
 
 		//On supprime la session de la bdd.
-		$this->sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE session_id = '" . $this->data['session_id'] . "'", __LINE__, __FILE__);
+		$this->sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE session_id = '" . $this->data['session_id'] . "'");
 
 		if (AppContext::get_request()->has_cookieparameter($sessions_config->get_cookie_name() . '_data')) //Session cookie?
 		{
@@ -451,7 +451,7 @@ class Session
 		
 		$this->data['modules_parameters'] = $this->sql->query("SELECT modules_parameters 
 			FROM " . DB_TABLE_SESSIONS . " 
-			WHERE " . $sql_condition, __LINE__, __FILE__);
+			WHERE " . $sql_condition);
 		if ($this->data['modules_parameters'] !== false) // test permettant d'ecrire la premiere fois si le contenu est vide
 		{
 			$modules_parameters = unserialize($this->data['modules_parameters']);
@@ -461,7 +461,7 @@ class Session
 
 			$this->sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" .
 			TextHelper::strprotect($this->data['modules_parameters'], false) .
-				"' WHERE " . $sql_condition, __LINE__, __FILE__);
+				"' WHERE " . $sql_condition);
 		}
 		else
 		{
@@ -497,7 +497,7 @@ class Session
 		
 		$this->data['modules_parameters'] = $this->sql->query("SELECT modules_parameters 
 			FROM " . DB_TABLE_SESSIONS . " 
-			WHERE " . $sql_condition, __LINE__, __FILE__);
+			WHERE " . $sql_condition);
 		if ($this->data['modules_parameters'] != false)
 		{
 			$array = unserialize($this->data['modules_parameters']);
@@ -575,7 +575,7 @@ class Session
 			}
 			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? NumberHelper::numeric($session_autoconnect['user_id']) : ''; //Validité user id?.
 			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? TextHelper::strprotect($session_autoconnect['pwd']) : ''; //Validité password.
-			$level = $this->sql->query("SELECT level FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
+			$level = $this->sql->query("SELECT level FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'");
 			if (!empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && $level != '')
 			{
 				$error_report = $this->start($session_autoconnect['user_id'], $session_autoconnect['pwd'], $level, $session_script, $session_script_get, $session_script_title, true, ALREADY_HASHED); //Lancement d'une session utilisateur.
@@ -583,9 +583,9 @@ class Session
 				//Gestion des erreurs pour éviter un brute force.
 				if ($error_report === 'echec')
 				{
-					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
+					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $session_autoconnect['user_id'] . "'");
 
-					$test_connect = $this->sql->query("SELECT test_connect FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
+					$test_connect = $this->sql->query("SELECT test_connect FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $session_autoconnect['user_id'] . "'");
 
 					AppContext::get_response()->set_cookie(new HTTPCookie($sessions_config->get_cookie_name() . '_autoconnect', null, -1)); //Destruction cookie.
 					
@@ -601,7 +601,7 @@ class Session
 				else //Succès on recharge la page.
 				{
 					//On met à jour la date de dernière connexion.
-					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "' WHERE user_id = '" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
+					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "' WHERE user_id = '" . $session_autoconnect['user_id'] . "'");
 
 					AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 				}
@@ -623,7 +623,7 @@ class Session
 		$this->sql->query_inject("DELETE
 		FROM " . DB_TABLE_SESSIONS . "
 		WHERE session_time < '" . (time() - $sessions_config->get_session_duration()) . "'
-		OR (session_time < '" . (time() - $sessions_config->get_active_session_duration()) . "' AND user_id = -1)", __LINE__, __FILE__);
+		OR (session_time < '" . (time() - $sessions_config->get_active_session_duration()) . "' AND user_id = -1)");
 	}
 	
 	/**
@@ -643,7 +643,7 @@ class Session
 		if (empty($this->data['token']))
 		{   // if the token is empty (already connected while updating the website from 2.0 version to 3.0)
 			$this->data['token'] = self::generate_token();
-			$this->sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET token='" . $this->data['token'] . "' WHERE session_id='" . $this->data['session_id']. "'", __LINE__, __FILE__);
+			$this->sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET token='" . $this->data['token'] . "' WHERE session_id='" . $this->data['session_id']. "'");
 
 		}
 		return $this->data['token'];

@@ -37,7 +37,7 @@ $Template->set_filenames(array(
 	'admin_download_management'=> 'download/admin_download_management.tpl'
  ));
 
-$nbr_dl = $Sql->count_table(PREFIX . 'download', __LINE__, __FILE__);
+$nbr_dl = $Sql->count_table(PREFIX . 'download');
 
 //On crée une pagination si le nombre de fichier est trop important.
 $page = AppContext::get_request()->get_getint('p', 1);
@@ -71,7 +71,7 @@ $Template->put_all(array(
 $result = $Sql->query_while("SELECT id, idcat, title, timestamp, approved, start, end, size
 FROM " . PREFIX . "download
 ORDER BY timestamp DESC 
-" . $Sql->limit($pagination->get_display_from(), $config->get_max_files_number_per_page()), __LINE__, __FILE__);
+" . $Sql->limit($pagination->get_display_from(), $config->get_max_files_number_per_page()));
 
 while ($row = $Sql->fetch_assoc($result))
 {

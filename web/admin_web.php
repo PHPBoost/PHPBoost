@@ -46,7 +46,7 @@ if (!empty($id) && !$del)
 		'admin_web_management2'=> 'web/admin_web_management2.tpl'
 	));
 
-	$row = $Sql->query_array(PREFIX . 'web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->query_array(PREFIX . 'web', '*', "WHERE id = '" . $id . "'");
 	
 	$aprob_enabled = ($row['aprob'] == 1) ? 'checked="checked"' : '';
 	$aprob_disabled = ($row['aprob'] == 0) ? 'checked="checked"' : '';
@@ -87,7 +87,7 @@ if (!empty($id) && !$del)
 	//Catégories.
 	$i = 0;	
 	$result = $Sql->query_while("SELECT id, name 
-	FROM " . PREFIX . "web_cat", __LINE__, __FILE__);
+	FROM " . PREFIX . "web_cat");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
@@ -113,7 +113,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'admin_web_management'=> 'web/admin_web_management2.tpl'
 	));
 
-	$row = $Sql->query_array(PREFIX . 'web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->query_array(PREFIX . 'web', '*', "WHERE id = '" . $id . "'");
 	
 	$title = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
 	$contents = retrieve(POST, 'contents', '');
@@ -126,7 +126,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
 
-	$cat = $Sql->query("SELECT name FROM " . PREFIX . "web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->query("SELECT name FROM " . PREFIX . "web_cat WHERE id = '" . $idcat . "'");
 
 	$Template->put_all(array(
 		'C_PREVIEW' => true,
@@ -174,7 +174,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	//Catégories.
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
-	FROM " . PREFIX . "web_cat", __LINE__, __FILE__);
+	FROM " . PREFIX . "web_cat");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
@@ -201,7 +201,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 
 	if (!empty($title) && !empty($url) && !empty($idcat))
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->query_inject("UPDATE " . PREFIX . "web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'");	
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
@@ -212,7 +212,7 @@ elseif ($del && !empty($id)) //Suppresion du lien web.
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM " . PREFIX . "web WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM " . PREFIX . "web WHERE id = '" . $id . "'");	
 
 	//On supprimes les éventuels commentaires associés.
 	CommentsService::delete_comments_topic_module('web', $id);
@@ -229,7 +229,7 @@ else
 		'admin_web_management'=> 'web/admin_web_management.tpl'
 	));
 
-	$nbr_web = $Sql->count_table(PREFIX . 'web', __LINE__, __FILE__);
+	$nbr_web = $Sql->count_table(PREFIX . 'web');
 	
 	//On crée une pagination si le nombre de web est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -267,7 +267,7 @@ else
 	FROM " . PREFIX . "web d 
 	LEFT JOIN " . PREFIX . "web_cat ad ON ad.id = d.idcat
 	ORDER BY timestamp DESC 
-	" . $Sql->limit($pagination->get_display_from(), $web_config->get_max_nbr_weblinks()), __LINE__, __FILE__);
+	" . $Sql->limit($pagination->get_display_from(), $web_config->get_max_nbr_weblinks()));
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$aprob = ($row['aprob'] == 1) ? $LANG['yes'] : $LANG['no'];
