@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           EventsCommentsTopic.class.php
+ *                           UserEventsCommentsTopic.class.php
  *                            -------------------
  *   begin                : September 30, 2011
  *   copyright            : (C) 2011 Kevin MASSY
@@ -25,18 +25,14 @@
  *
  ###################################################*/
 
-class EventsCommentsTopic extends CommentsTopic
+class UserEventsCommentsTopic extends CommentsTopic
 {
+	const TOPIC_IDENTIFIER = 'events';
+	
 	public function __construct()
 	{
-		parent::__construct('events');
+		parent::__construct('user', self::TOPIC_IDENTIFIER);
 	}
-	
-    public function get_authorizations()
-    {
-		$authorizations = new CommentsAuthorizations();
-		return $authorizations;
-    }
 
     public function is_display()
     {

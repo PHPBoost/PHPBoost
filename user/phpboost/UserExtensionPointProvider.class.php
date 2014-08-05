@@ -46,5 +46,12 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/user/index.php', '([\w/-_]*)$')));
 	}
+	
+	public function comments()
+	{
+		return new CommentsTopics(array(
+			new UserEventsCommentsTopic()
+		));
+	}
 }
 ?>
