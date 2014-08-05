@@ -310,164 +310,9 @@ class MenuService
 	/**
 	 * @desc Generate the cache
 	 */
-	public static function generate_cache($return_string = false)
+	public static function generate_cache()
 	{
-		// $MENUS global var initialization
-		$cache_str = '$MENUS = array();';
-		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__HEADER] = \'\';';
-		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__SUB_HEADER] = \'\';';
-		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL] = \'\';';
-		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL] = \'\';';
-		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__TOP_FOOTER] = \'\';';
-		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__FOOTER] = \'\';';
-		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__LEFT] = \'\';';
-		$cache_str .= '$MENUS[Menu::BLOCK_POSITION__RIGHT] = \'\';';
-		$cache_str .= '$columns_disabled;' . "\n";
-		
-		$menus_map = MenuService::get_menus_map();
-		foreach ($menus_map as $block => $block_menus)
-		{
-			if ($block != Menu::BLOCK_POSITION__NOT_ENABLED)
-			{
-				foreach ($block_menus as $menu)
-				{
-					if ($menu->is_enabled())
-					{
-						$cache_filter = '';
-						$has_filter = false;
-						foreach ($menu->get_filters() as $filter) 
-						{
-							$has_filter = ($filter->get_pattern() != '/') ? true : false;
-							$cache_filter .= $filter->get_raw_matcher() .  ' || ';
-						}
-						$cache_filter = trim($cache_filter, '|| ');
-						
-						$cache_str .= ($has_filter) ? 'if (' . $cache_filter . '){' . "\n" : '';
-						$cache_str .= 'if (!$columns_disabled->menus_column_is_disabled(' . $menu->get_block() . ')){' . "\n";
-						$cache_str .= '$__menu=\'' . $menu->cache_export() . '\';' . "\n";
-						$cache_str .= '$MENUS[' . $menu->get_block() . '].=$__menu;' . "\n";
-						$cache_str .= '}' . "\n";
-						$cache_str .= ($has_filter) ? '}' . "\n" : '';
-					}
-				}
-			}
-		}
-
-		// Cache compression
-		$cache_str = preg_replace(
-		array('`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `', '`\'\.\'`', '`\$__menu\.=\'\';`'),
-		array('', "\n", ' ', '> ', "\n", '', ''),
-		$cache_str
-		);
-
-		if ($return_string)
-		{
-			return $cache_str;
-		}
-
-		// TODO replace this old cache system.
-		$Cache = new Cache();
-		$Cache->write('menus', $cache_str);
-		return '';
-
-	}
-
-	## Mini Menus ##
-	/**
-	* @desc Add the menu named in the $menu folder
-	* @param Folder $menu the menu folder
-	* @return bool true if the menu has been installed, else, false
-	*/
-	public static function add_mini_menu($menu, $installed_menus_names)
-	{
-		// Break if no mini menu file found
-		$i = 0;
-		$menu_name = $menu->get_name();
-		$files = $menu->get_files('`.+\.php`');
-
-		foreach ($files as $file)
-		{
-			$file_name = $file->get_name_without_extension();
-			// We do not installed the mini menu if it's already installed or
-			// if it's not correct
-			if (in_array($menu_name . '/' . $file_name, $installed_menus_names) ||
-			!(include $file->get_path()) ||
-			!function_exists('menu_' . $menu_name . '_' . $file_name))
-			{
-				continue;
-			}
-			$menu = new MiniMenu($menu_name, $file_name);
-			MenuService::save($menu);
-
-			$i++;
-		}
-
-		return $i > 0;
-	}
-
-	/**
-	 * @desc delete the mini menu named $menu
-	 * @param string $menu the mini menu name
-	 */
-	public static function delete_mini_menu($menu)
-	{
-		$conditions = 'WHERE class=:class AND title LIKE :like_title';
-		$parameters = array(
-			'class' => strtolower(MiniMenu::MINI_MENU__CLASS),
-			'like_title' => strtolower($menu) . '/%'
-		);
-		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $conditions, $parameters);
-		foreach ($results as $row)
-		{
-			MenuService::delete(MenuService::initialize($row));
-		}
-	}
-
-	/**
-	 * @desc Update the mini menus list by adding new ones and delete old ones
-	 * @param bool $update_cache if true it will also regenerate the cache
-	 */
-	public static function update_mini_menus_list($update_cache = true)
-	{
-		$m_menus_directory = new Folder(PATH_TO_ROOT . '/menus');
-		$m_menus_list = $m_menus_directory->get_folders();
-
-		$menus_names = array();
-		$installed_menus_names = array();
-		$processed_folders = array();
-		foreach ($m_menus_list as $menu)
-		{
-			$menus_names[] = $menu->get_name();
-		}
-		$conditions = 'WHERE class=:class';
-		$parameters = array('class' => strtolower(MiniMenu::MINI_MENU__CLASS));
-		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('title'), $conditions, $parameters);
-		foreach ($results as $row)
-		{
-			$menu_folder = substr($row['title'], 0, strpos($row['title'], '/'));
-			if (!in_array($menu_folder, $processed_folders))
-			{
-				if (!in_array($menu_folder, $menus_names))
-				{
-					MenuService::delete_mini_menu($menu_folder);
-				}
-				else
-				{
-					$installed_menus_names[] = $row['title'];
-				}
-				$processed_folders[] = $menu_folder;
-			}
-		}
-
-		foreach ($m_menus_list as $menu)
-		{
-			MenuService::add_mini_menu($menu, $installed_menus_names);
-		}
-
-		if ($update_cache)
-		{
-			MenuService::generate_cache();
-		}
+		MenusCache::invalidate();
 	}
 
 	## Mini Modules ##
@@ -482,7 +327,7 @@ class MenuService
 		{
 			foreach (MenusProvidersService::get_menus($module_id) as $menu)
 			{
-				if (strpos(get_class($menu), ModuleMiniMenu::MODULE_MINI_MENU__CLASS) !== false)
+				if ($menu instanceof ModuleMiniMenu)
 				{
 					$title = $menu->get_title();
 					$default_block = $menu->get_default_block();
@@ -495,7 +340,7 @@ class MenuService
 				
 			if ($generate_cache)
 			{
-				MenuService::generate_cache();
+				self::generate_cache();
 			}
 			return true;
 		}
@@ -568,7 +413,7 @@ class MenuService
 		
 		if ($update_cache)
 		{
-			MenuService::generate_cache();
+			self::generate_cache();
 		}
 	}
 

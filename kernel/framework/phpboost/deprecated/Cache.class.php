@@ -185,7 +185,6 @@ class Cache
 	{
 		$file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
 
-
 		$cache_file = new File($file_path);
 
 		//Suppression du fichier (si il existe)
@@ -216,23 +215,11 @@ class Cache
 		}
 	}
 
-	## Private Methods ##
-	########## Fonctions de génération des fichiers un à un ##########
-
-	/**
-	 * @desc Method which is called to generate the menus file cache.
-	 * @return The content of the menus file cache.
-	 */
-	function _get_menus()
-	{
-		return MenuService::generate_cache(true);
-	}
-	
 	## Private Attributes ##
 	/**
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('menus');
+	var $files = array();
 }
 ?>

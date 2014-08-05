@@ -47,7 +47,7 @@ class ModuleMiniMenu extends Menu
     	return get_class($this);
     }
     
-    public function display($tpl = false)
+    public function display()
     {
     	return '';
     }
@@ -55,18 +55,6 @@ class ModuleMiniMenu extends Menu
 	public function get_default_block()
     {
     	return self::BLOCK_POSITION__NOT_ENABLED;
-    }
-    
-    /**
-	 * @return string the string the string to write in the cache file
-	 */
-    public function cache_export()
-    {
-    	$load_class = '\'; $class = new '. get_class($this) .'(); 
-        $class->set_block(' . $this->block . '); 
-        $class->set_block_position(' . $this->position . ');';
-        $cache_str = '$__menu.= $class->display(); $__menu.= \'';
-        return $this->cache_export_begin() . $load_class . $cache_str . parent::cache_export_end();
     }
     
 	public function default_is_enabled() { return false; }

@@ -21,6 +21,9 @@
 	</header>
 	
 	<div id="global">
+		# START menus #
+		 {menus.MENU} 
+		# END menus #
 		# IF C_COMPTEUR #
 		<div id="compteur">
 			<span class="text-strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}

@@ -53,31 +53,12 @@ class LinksMenuLink extends LinksMenuElement
 	 */
 	public function display($template = false, $mode = LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
-		// Stop if the user isn't authorised
-		if (!$this->_check_auth())
-		{
-			return '';
-		}
-
 		parent::_assign($template, $mode);
 		$template->put_all(array(
   			'C_LINK' => true
 		));
 
 		return $template->render();
-	}
-
-	/**
-	 * @param Template $template the template to use to display the link
-	 * @return string the string to write in the cache file
-	 */
-	public function cache_export($template = false)
-	{
-		parent::_assign($template);
-		$template->put_all(array(
-            'C_LINK' => true
-		));
-		return parent::cache_export_begin() . $template->render() . parent::cache_export_end();
 	}
 }
 ?>

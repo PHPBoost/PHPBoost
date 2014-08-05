@@ -54,15 +54,6 @@ class FeedMenu extends Menu
 		$this->begin_at = $begin_at;
 	}
 
-	public function cache_export($template = false)
-	{
-        return parent::cache_export_begin() .
-            '\';$__menu=Feed::get_parsed(' .
-		    var_export($this->module_id, true) . ',' . var_export($this->name, true) . ',' .
-		    $this->category . ',FeedMenu::get_template(' . var_export($this->get_title(), true) . ', ' . var_export($this->get_block(), true) . '),' . $this->number . ',' . $this->begin_at . ');' .
-            '$__menu.=\'' . parent::cache_export_end();
-	}
-
 	/**
 	 * @desc Returns the tpl to parse a feed
 	 * @param string $name The feed name
@@ -117,7 +108,7 @@ class FeedMenu extends Menu
 	 */
 	public function set_name($value) { $this->name = $value; }
 
-	public function display($template = false)
+	public function display()
 	{
 		return Feed::get_parsed($this->module_id, $this->name, $this->category,
 		    self::get_template($this->get_title(), $this->get_block()), $this->number, $this->begin_at

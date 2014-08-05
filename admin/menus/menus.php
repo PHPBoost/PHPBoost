@@ -112,8 +112,6 @@ if (!empty($id))
 
 // Try to find out new mini-modules and delete old ones
 MenuService::update_mini_modules_list(false);
-// The same with the mini menus
-MenuService::update_mini_menus_list();
 
 // Retrieves all the menu
 $menus_blocks = MenuService::get_menus_map();
