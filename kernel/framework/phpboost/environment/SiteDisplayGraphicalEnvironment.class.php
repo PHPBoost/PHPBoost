@@ -36,10 +36,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 * @var BreadCrumb The page breadcrumb
 	 */
 	private $breadcrumb = null;
-	/**
-	 * @var ColumnsDisabled
-	 */
-	private $columns_disabled = null;
 	
 	private static $main_lang;
 	
@@ -48,7 +44,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		parent::__construct();
 		$this->load_langs();
 		$this->set_breadcrumb(new BreadCrumb());
-		$this->set_columns_disabled(ThemesManager::get_theme(get_utheme())->get_columns_disabled());
 	}
 	
 	private function load_langs()
@@ -165,60 +160,35 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function display_menus(Template $template)
 	{
-		global $MENUS, $Cache, $columns_disabled;
-
-		$columns_disabled = $this->get_columns_disabled();
-		
-		if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
+		$menus = MenusCache::load()->get_menus();
+		$columns_disabled = ThemesManager::get_theme(get_utheme())->get_columns_disabled();
+		foreach ($menus as $cached_menu)
 		{
-			//En cas d'échec, on régénère le cache
-			$Cache->Generate_file('menus');
-
-			//On inclut une nouvelle fois
-			if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
+			$menu = $cached_menu->get_menu();
+			if ($menu->check_auth() && !$columns_disabled->menus_column_is_disabled($menu->get_block()))
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
-                    $LANG['e_cache_modules'], UserErrorController::FATAL);
-                DispatchManager::redirect($controller);
+				$display = false;
+				$filters = $menu->get_filters();
+				$nbr_filters = count($filters);
+				foreach ($filters as $filter)
+				{
+					if (($nbr_filters > 1 && $filter->get_pattern() != '/') || ($filter->match() && !$display))
+						$display = true;
+				}
+			
+				if ($display)
+				{
+					if ($cached_menu->has_cached_string())
+					{
+						$template->assign_block_vars('menus', array('MENU' => $cached_menu->get_cached_string()));
+					}
+					else
+					{
+						$template->assign_block_vars('menus', array('MENU' => $menu->display()));
+					}
+				}
 			}
 		}
-		
-		$header_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__HEADER]);
-		$sub_header_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]);
-		$left_column_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__LEFT]);
-		$right_column_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__RIGHT]);
-		$top_central_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]);
-		$bottom_top_central_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]);
-		$top_footer_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__TOP_FOOTER]);
-		$footer_is_activated = !empty($MENUS[Menu::BLOCK_POSITION__FOOTER]);
-		
-		$header_content = $header_is_activated ? $MENUS[Menu::BLOCK_POSITION__HEADER] : '';
-		$sub_header_content = $sub_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__SUB_HEADER] : '';
-		$left_content = $left_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__LEFT] : '';
-		$right_content = $right_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__RIGHT] : '';
-		$top_central_content = $top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL] : '';
-		$bottom_top_central_content = $bottom_top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL] : '';
-		$top_footer_content = $top_footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_FOOTER] : '';
-		$footer_content = $footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__FOOTER] : '';
-		
-		$template->put_all(array(
-			'C_MENUS_HEADER_CONTENT' => $header_is_activated,
-		    'MENUS_HEADER_CONTENT' => $header_content,
-			'C_MENUS_SUB_HEADER_CONTENT' => $sub_header_is_activated,
-			'MENUS_SUB_HEADER_CONTENT' => $sub_header_content,
-			'C_MENUS_LEFT_CONTENT' => $left_column_is_activated,
-			'MENUS_LEFT_CONTENT' => $left_content,
-			'C_MENUS_RIGHT_CONTENT' => $right_column_is_activated,
-			'MENUS_RIGHT_CONTENT' => $right_content,
-			'C_MENUS_TOPCENTRAL_CONTENT' => $top_central_is_activated,
-			'MENUS_TOPCENTRAL_CONTENT' => $top_central_content,
-			'C_MENUS_BOTTOM_CENTRAL_CONTENT' => $bottom_top_central_is_activated,
-			'MENUS_BOTTOMCENTRAL_CONTENT' => $bottom_top_central_content,
-			'C_MENUS_TOP_FOOTER_CONTENT' => $top_footer_is_activated,
-			'MENUS_TOP_FOOTER_CONTENT' => $top_footer_content,
-			'C_MENUS_FOOTER_CONTENT' => $footer_is_activated,
-			'MENUS_FOOTER_CONTENT' => $footer_content,
-		));
 	}
 
 	protected function display_site_maintenance()
@@ -319,16 +289,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		$this->breadcrumb = $breadcrumb;
 		$this->breadcrumb->set_graphical_environment($this);
-	}
-	
-	public function get_columns_disabled()
-	{
-		return $this->columns_disabled;
-	}
-	
-	public function set_columns_disabled($columns_disabled)
-	{
-		$this->columns_disabled = $columns_disabled;
 	}
 }
 ?>

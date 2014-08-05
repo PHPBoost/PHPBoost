@@ -119,27 +119,21 @@ class LinksMenu extends LinksMenuElement
 	*/
     public function display($template = false, $mode = LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
     {
-        // Stop if the user isn't authorised
-        if (!$this->_check_auth())
-        {
-            return '';
-        }
-
-        // Get the good Template object
+         // Get the good Template object
         if (!is_object($template) || !($template instanceof Template))
         {
             $tpl = new FileTemplate('framework/menus/links/' . $this->type . '.tpl');
         }
         else
         {
-            $tpl = clone $template;
+            $tpl = $template;
         }
         $original_tpl = clone $tpl;
 
         // Children assignment
         foreach ($this->elements as $element)
         {   // We use a new Tpl to avoid overwrite issues
-            $tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
+            $tpl->assign_block_vars('elements', array('DISPLAY' => $element->display($original_tpl, $mode)));
         }
 
         // Menu assignment

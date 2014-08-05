@@ -30,24 +30,12 @@
  * @desc This class represents a filter based on string comparison
  * @package {@package}
  */
-class MenuStringFilter extends Filter implements MenuFilter
+class MenuStringFilter extends Filter
 {
 	public function __construct($pattern)
     {
        parent::__construct($pattern);
     }
-	
-	public function get_raw_matcher() 
-	{
-		if (substr($this->pattern, -10) == '/index.php')
-		{
-			$pattern = substr($this->pattern, 0, -10);
-			$pattern = empty($pattern) ? $pattern : '/' . $pattern;
-			return 'Url::is_current_url("' . $pattern . '/' . '", true) || Url::is_current_url("' . $pattern . '/index.php' . '", true)';
-		}
-		else
-			return 'Url::is_current_url("' . $this->pattern . '")';
-	}
 	
 	public function match()
 	{
@@ -55,7 +43,7 @@ class MenuStringFilter extends Filter implements MenuFilter
 		{
 			$pattern = substr($this->pattern, 0, -10);
 			$pattern = empty($pattern) ? $pattern : '/' . $pattern;
-			return Url::is_current_url(substr($this->pattern, 0, -10), true);
+			return Url::is_current_url($pattern . '/', true) || Url::is_current_url($pattern . '/index.php', true);
 		}
 		else
 			return Url::is_current_url($this->pattern);

@@ -78,44 +78,6 @@ abstract class LinksMenuElement extends Menu
 	}
 
 	/**
-	 * Displays the menu according to the given template
-	 *
-	 * @param Template $template Template according to which the menu must be displayed.
-	 * If it's not displayed, a default template will be used.
-	 * @return string the HTML code of the menu
-	 * @abstract
-	 */
-	//TODO Loic faire une bidouille pour que la surchage ne pose pas de problème
-	//abstract public function display($template = false, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
-
-	/**
-	 * @desc returns the string to write in the cache file at the beginning of the Menu element
-	 * @return string the string to write in the cache file at the beginning of the Menu element;
-	 */
-	public function cache_export_begin()
-	{
-		return str_replace('\'', '##', parent::cache_export_begin());
-	}
-
-	/**
-	 * @desc returns the string to write in the cache file at the end of the Menu element
-	 * @return string the string to write in the cache file at the end of the Menu element
-	 */
-	public function cache_export_end()
-	{
-		return str_replace('\'', '##', parent::cache_export_end());
-	}
-
-	/**
-	 * @desc returns the string to write in the cache file
-	 * @return string the string to write in the cache file
-	 */
-	public function cache_export($template = false)
-	{
-		return parent::cache_export();
-	}
-
-	/**
 	 * @desc Assign tpl vars
 	 * @access protected
 	 * @param Template $template the template on which we gonna assign vars

@@ -102,15 +102,9 @@ abstract class Menu
     /**
 	 * @desc Display the menu
 	 * @abstract
-	 * @param Template $template the template to use
 	 * @return string the menu parsed in xHTML
 	 */
-    abstract public function display($tpl = false);
-	/**
-	 * @abstract
-	 * @return string the string the string to write in the cache file
-	 */
-    abstract public function cache_export();
+    abstract public function display();
     
     /**
 	 * @desc Display the menu admin gui
@@ -120,29 +114,7 @@ abstract class Menu
     {
         return $this->display();
     }
-    
-    /**
-	 * @return string the string to write in the cache file at the beginning of the Menu element;
-	 */
-    public function cache_export_begin()
-    {
-        if (is_array($this->auth))
-        {
-        	return '\'; $__auth=' . preg_replace('`[\s]+`', '', var_export($this->auth, true)) . ';if (AppContext::get_current_user()->check_auth($__auth,1)){$__menu.=\'';
-        }
-        return '';
-    }
-    
-    /**
-	 * @return string the string to write in the cache file at the end of the Menu element
-	 */
-    public function cache_export_end()
-    {
-        if (is_array($this->auth))
-            return '\';}$__menu.=\'';
-        return '';
-    }
-    
+        
     /**
 	 * @param int $id Set the Menu database id
 	 */
@@ -162,7 +134,7 @@ abstract class Menu
 	 * @desc Check the user authorization to see the LinksMenuElement
 	 * @return bool true if the user is authorised, false otherwise
 	 */
-    protected function _check_auth()
+    public function check_auth()
     {
         return empty($this->auth) || AppContext::get_current_user()->check_auth($this->auth, self::MENU_AUTH_BIT);
     }
