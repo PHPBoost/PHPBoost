@@ -152,7 +152,7 @@ if ($contribution_id > 0)
 		'C_CONSULT_CONTRIBUTION' => true
 	));
 
-	$comments_topic = new EventsCommentsTopic();
+	$comments_topic = new UserEventsCommentsTopic();
 	$comments_topic->set_id_in_module($contribution_id);
 	$comments_topic->set_url(new Url('/user/contribution_panel.php?id='. $contribution_id));
 
