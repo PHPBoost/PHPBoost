@@ -141,6 +141,7 @@ class ErrorHandler
 			}
 			else
 			{
+				Environment::init_output_bufferization();
 				echo self::FATAL_MESSAGE;
 				Environment::destroy();
 				exit;
