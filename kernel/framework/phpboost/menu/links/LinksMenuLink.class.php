@@ -53,6 +53,12 @@ class LinksMenuLink extends LinksMenuElement
 	 */
 	public function display($template = false, $mode = LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
+		// Stop if the user isn't authorised
+        if (!$this->check_auth())
+        {
+            return '';
+        }
+        
 		parent::_assign($template, $mode);
 		$template->put_all(array(
   			'C_LINK' => true
