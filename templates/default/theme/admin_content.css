@@ -669,6 +669,10 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 
 .sortable-block .sortable-title img{ cursor: move; }
 
+.sortable-block fieldset {
+	padding: 0px 30px;
+}
+
 .sortable-block .sortable-actions{
 	float: right;
 	padding: 3px 3px;
