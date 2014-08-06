@@ -1,5 +1,5 @@
 syntax: regexp
-cache/*
+^cache/*
 
 syntax: regexp
 ^sitemap\.xml$
@@ -36,6 +36,9 @@ syntax: regexp
 
 syntax: regexp
 ^update/update_followed\.txt$
+
+syntax: regexp
+^stats/cache/*
 
 syntax: regexp
 ^HomeCustom$
