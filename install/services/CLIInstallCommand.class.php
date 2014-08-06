@@ -88,7 +88,7 @@ class CLIInstallCommand implements CLICommand
 		$this->show_parameter('--ws-server', $this->website_server);
 		$this->show_parameter('--ws-path', $this->website_path);
 		$this->show_parameter('--ws-name', $this->website_name);
-		$this->show_parameter('--ws-name', $this->website_slogan);
+		$this->show_parameter('--ws-slogan', $this->website_slogan);
 		$this->show_parameter('--ws-desc', $this->website_description);
 		$this->show_parameter('--ws-locale', $this->website_locale);
 		$this->show_parameter('--ws-timezone', $this->website_timezone);
