@@ -105,10 +105,10 @@ class Sql
 		$nbr_arg = func_num_args();
 
 		$fields = array();
-		$conditions = func_get_arg($nbr_arg - 3);
+		$conditions = func_get_arg($nbr_arg - 1);
 		if (func_get_arg(1) !== '*')
 		{
-			$nbr_arg_field_end = ($nbr_arg - 4);
+			$nbr_arg_field_end = ($nbr_arg - 2);
 			for ($i = 1; $i <= $nbr_arg_field_end; $i++)
 			{
 				$fields[] = func_get_arg($i);
