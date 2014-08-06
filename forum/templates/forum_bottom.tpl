@@ -1,7 +1,7 @@
 		<div id="forum-bottom">
 			<div class="forum-links">
 				<div style="float:left;">
-					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 
+					&bull; <a href="index.php">{L_FORUM_INDEX}</a> 
 				</div>
 				# IF C_USER_CONNECTED #
 					<div style="float:right;">
@@ -77,7 +77,7 @@
 						{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 					</span>
 					<span style="float:right;">
-						<a href="{PATH_TO_ROOT}/forum/stats.php{SID}"><i class="fa fa-bar-chart-o"></i> {L_STATS}</a>
+						<a href="{PATH_TO_ROOT}/forum/stats.php"><i class="fa fa-bar-chart-o"></i> {L_STATS}</a>
 					</span>
 					<div class="spacer"></div>
 				</div>

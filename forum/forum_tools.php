@@ -81,13 +81,12 @@ if ($CONFIG_FORUM['display_connexion'])
 	));
 }
 
-$sid = (SID != '' ? '?' . SID : '');
 $Template->put_all(array(	
 	'C_DISPLAY_UNREAD_DETAILS' => (AppContext::get_current_user()->get_id() !== -1) ? true : false,
 	'C_MODERATION_PANEL' => AppContext::get_current_user()->check_level(1) ? true : false,
-	'U_TOPIC_TRACK' => '<a class="small" href="../forum/track.php' . $sid . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
-	'U_LAST_MSG_READ' => '<a class="small" href="../forum/lastread.php' . $sid . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',
-	'U_MSG_NOT_READ' => '<a class="small" href="../forum/unread.php' . $sid  . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . (AppContext::get_current_user()->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
+	'U_TOPIC_TRACK' => '<a class="small" href="../forum/track.php" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
+	'U_LAST_MSG_READ' => '<a class="small" href="../forum/lastread.php" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',
+	'U_MSG_NOT_READ' => '<a class="small" href="../forum/unread.php" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . (AppContext::get_current_user()->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
 	'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 	'L_CONFIG' => $LANG['forum_config'],

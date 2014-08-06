@@ -1,7 +1,7 @@
 		<form action="{U_GALLERY_ACTION_ADD}" method="post" enctype="multipart/form-data">
 			<section>					
 				<header>
-					<h1><a href="gallery.php{SID}">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS}</h1>
+					<h1><a href="gallery.php">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS}</h1>
 					<div style="float:right">
 						{PAGINATION}
 					</div>

@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 $Bread_crumb->add($LANG['show_last_read'], '');
 
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_last_read']);
@@ -168,10 +168,10 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 		'PAGINATION' => $pagination->display(),
-		'U_CHANGE_CAT'=> 'unread.php' . SID . '&amp;token=' . AppContext::get_session()->get_token(),
+		'U_CHANGE_CAT'=> 'unread.php' . '&amp;token=' . AppContext::get_session()->get_token(),
 		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-		'U_FORUM_CAT' => '<a href="../forum/lastread.php' . SID . '">' . $LANG['show_last_read'] . '</a>',
+		'U_FORUM_CAT' => '<a href="../forum/lastread.php' . '">' . $LANG['show_last_read'] . '</a>',
 		'U_POST_NEW_SUBJECT' => '',
 		'L_FORUM_INDEX' => $LANG['forum_index'],
 		'L_FORUM' => $LANG['forum'],
@@ -206,7 +206,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	$Template->pparse('forum_topics');
 }
 else
-	AppContext::get_response()->redirect('/forum/index.php' . SID2);
+	AppContext::get_response()->redirect('/forum/index.php');
 
 include('../kernel/footer.php');
 

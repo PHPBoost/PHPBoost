@@ -166,30 +166,13 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
  */
 function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 {
-	$session = AppContext::get_session();
-	if (!is_object($session))
+	if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
 	{
-		$session_mod = 0;
+		return $mod_rewrite;
 	}
 	else
 	{
-		$session_mod = $session->supports_cookies();
-	}
-
-	if ($session_mod == 0)
-	{
-		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
-		{
-			return $mod_rewrite;
-		}
-		else
-		{
-			return $url;
-		}
-	}
-	elseif ($session_mod == 1)
-	{
-		return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $session->data['session_id'] . $ampersand . 'suid=' . $session->data['user_id'];
+		return $url;
 	}
 }
 

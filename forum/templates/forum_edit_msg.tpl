@@ -18,7 +18,7 @@
 		<div class="module-position">
 			<div class="module-top-l"></div>
 			<div class="module-top-r"></div>
-			<div class="module-top"><a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
+			<div class="module-top"><a href="index.php">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
 			<div class="module-contents">
 				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
 					# INCLUDE message_helper #
@@ -89,7 +89,7 @@
 			</div>
 			<div class="module-bottom-l"></div>
 			<div class="module-bottom-r"></div>
-			<div class="module-bottom"><a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
+			<div class="module-bottom"><a href="index.php">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
 		</div>
 		
 		# INCLUDE forum_bottom #

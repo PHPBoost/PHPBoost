@@ -39,7 +39,7 @@
 						# ENDIF #
 					</div>
 				</div>
-				<a class="small" href="{PATH_TO_ROOT}/gallery/gallery.php{SID}">{L_GALLERY}</a>
+				<a class="small" href="{PATH_TO_ROOT}/gallery/gallery.php">{L_GALLERY}</a>
 			</div>
 			<div class="module-mini-bottom">
 			</div>

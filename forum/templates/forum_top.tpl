@@ -103,7 +103,7 @@
                             <div>
                                 <label><input type="text" size="14" id="search" name="search" placeholder="{L_SEARCH}..."></label>
                                 <button type="submit" name="valid_search" value="true"><i class="fa fa-search"></i></button><br/>
-                                <a href="{PATH_TO_ROOT}/forum/search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small">{L_ADVANCED_SEARCH}</a>
+                                <a href="{PATH_TO_ROOT}/forum/search.php" title="{L_ADVANCED_SEARCH}" class="small">{L_ADVANCED_SEARCH}</a>
                                 
                                 <input type="hidden" name="time" value="30000">
                                 <input type="hidden" name="where" value="contents">
@@ -116,7 +116,7 @@
 			</div>
 			<div class="forum-links">
 				<div style="float:left;">
-					&bull; <a href="index.php?{SID}">{L_FORUM_INDEX}</a>
+					&bull; <a href="index.php?">{L_FORUM_INDEX}</a>
 				</div>
 				# IF C_USER_CONNECTED #
 					<div style="float:right;">

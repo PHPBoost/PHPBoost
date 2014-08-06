@@ -166,7 +166,7 @@ class Environment
 
 		AppContext::init_current_user();
 
-		// TODO do we need to keep that feature? It's not supported every where
+		/*// TODO do we need to keep that feature? It's not supported every where
 		if (AppContext::get_session()->supports_cookies())
 		{
 			define('SID', 'sid=' . AppContext::get_current_user()->get_attribute('session_id') .
@@ -179,7 +179,8 @@ class Environment
 			define('SID', '');
 			define('SID2', '');
 		}
-
+		*/
+		
 		$current_user = AppContext::get_current_user();
 		$user_accounts_config = UserAccountsConfig::load();
 

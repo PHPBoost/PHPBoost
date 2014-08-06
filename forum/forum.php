@@ -53,7 +53,7 @@ if (!empty($CAT_FORUM[$id_get]['url']))
 }
 
 //Récupération de la barre d'arborescence.
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 foreach ($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if ($CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'])
@@ -404,7 +404,7 @@ if (!empty($id_get))
 	$Template->pparse('forum_forum');
 }
 else
-	AppContext::get_response()->redirect('/forum/index.php' . SID2);
+	AppContext::get_response()->redirect('/forum/index.php');
 
 include('../kernel/footer.php');
 ?>

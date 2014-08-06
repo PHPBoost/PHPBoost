@@ -66,7 +66,7 @@ if ($add && empty($shout_id)) //Insertion
 			
 			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . AppContext::get_current_user()->get_id() . "', '" . AppContext::get_current_user()->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')");
 				
-			AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
+			AppContext::get_response()->redirect(HOST . SCRIPT);
 		}
 		else //utilisateur non autorisé!
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=auth', '', '&') . '#errorh');
@@ -98,7 +98,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			
 			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'");
 			
-			AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
+			AppContext::get_response()->redirect(HOST . SCRIPT);
 		}
 		elseif ($edit_message)
 		{
@@ -147,16 +147,16 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			
 				$Sql->query_inject("UPDATE " . PREFIX . "shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'");
 			
-				AppContext::get_response()->redirect(HOST . SCRIPT. SID2);
+				AppContext::get_response()->redirect(HOST . SCRIPT);
 			}
 			else //Champs incomplet!
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
 		}
 		else
-			AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
+			AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
-		AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 else //Affichage.
 {
