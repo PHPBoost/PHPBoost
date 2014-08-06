@@ -34,13 +34,6 @@ class Timezone
 	private static $site_timezone;
 	private static $user_timezone;
 	
-	public static function __static()
-	{
-		self::$server_timezone = new DateTimeZone(date_default_timezone_get());
-		self::$site_timezone = new DateTimeZone(GeneralConfig::load()->get_site_timezone());
-		self::$user_timezone = new DateTimeZone(AppContext::get_current_user()->get_timezone());
-	}
-	
 	public static function get_supported_timezones()
 	{
 		return DateTimeZone::listIdentifiers();
@@ -66,16 +59,28 @@ class Timezone
 	
 	public static function get_server_timezone()
 	{
+		if (self::$server_timezone == null)
+		{
+			self::$server_timezone = new DateTimeZone(date_default_timezone_get());
+		}
 		return self::$server_timezone;
 	}
 	
 	public static function get_site_timezone()
 	{
+		if (self::$site_timezone == null)
+		{
+			self::$site_timezone = new DateTimeZone(GeneralConfig::load()->get_site_timezone());
+		}
 		return self::$site_timezone;
 	}
 	
 	public static function get_user_timezone()
 	{
+		if (self::$user_timezone == null)
+		{
+			self::$user_timezone = new DateTimeZone(AppContext::get_current_user()->get_timezone());
+		}
 		return self::$user_timezone;
 	}
 }
