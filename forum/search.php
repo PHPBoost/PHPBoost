@@ -30,7 +30,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 $Bread_crumb->add($LANG['title_search'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['title_search']);
 require_once('../kernel/header.php');
@@ -57,8 +57,8 @@ $Template->put_all(array(
 	'TITLE_CHECKED' => ($where == 'title') ? 'checked="checked"' : '',
 	'ALL_CHECKED' => ($where == 'all' || empty($where)) ? 'checked="checked"' : '',
 	'COLORATE_RESULT' => ($colorate_result || empty($where)) ? 'checked="checked"' : '',
-	'U_FORUM_CAT' => '<a href="search.php' . SID . '">' . $LANG['search'] . '</a>',
-	'U_CHANGE_CAT' => 'search.php' . SID,	
+	'U_FORUM_CAT' => '<a href="search.php' . '">' . $LANG['search'] . '</a>',
+	'U_CHANGE_CAT' => 'search.php',	
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 	'L_FORUM_INDEX' => $LANG['forum_index'],

@@ -15,7 +15,7 @@
 			<div class="module-top-l"></div>
 			<div class="module-top-r"></div>
 			<div class="module-top">
-				&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
+				&bull; <a href="index.php">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
 			</div>
 			<div class="module-contents">
 				<form action="search.php?token={TOKEN}#search_forum" method="post" onsubmit="return check_form();" class="fieldset-content">
@@ -112,7 +112,7 @@
 			<div class="module-bottom-l"></div>
 			<div class="module-bottom-r"></div>
 			<div class="module-bottom">
-				&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
+				&bull; <a href="index.php">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
 			</div>
 		</div>
 		

@@ -3,7 +3,7 @@
 		<div class="module-position">
 			<div class="module-top-l"></div>
 			<div class="module-top-r"></div>
-			<div class="module-top">&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}</div>
+			<div class="module-top">&bull; <a href="index.php">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}</div>
 			<div class="module-contents">
 				<table>
 					<thead>
@@ -410,7 +410,7 @@
 			<div class="module-bottom-r"></div>	
 			<div class="module-bottom-l"></div>
 			<div class="module-bottom text-strong">
-				&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
+				&bull; <a href="index.php">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
 			</div>
 		</div>
 		

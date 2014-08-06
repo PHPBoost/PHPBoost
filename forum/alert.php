@@ -36,7 +36,7 @@ $topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle'
 
 $cat_name = !empty($CAT_FORUM[$topic['idcat']]['name']) ? $CAT_FORUM[$topic['idcat']]['name'] : '';
 $topic_name = !empty($topic['title']) ? $topic['title'] : '';
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 $Bread_crumb->add($cat_name, 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . Url::encode_rewrite($cat_name) . '.php'));
 $Bread_crumb->add($topic['title'], 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'));
 $Bread_crumb->add($LANG['alert_topic'], '');

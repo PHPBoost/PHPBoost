@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 $Bread_crumb->add($LANG['show_topic_track'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_topic_track']);
 require_once('../kernel/header.php');
@@ -62,7 +62,7 @@ if (!empty($_POST['valid']))
 	}
 	$Sql->query_close($result);
 	
-	AppContext::get_response()->redirect('/forum/track.php' . SID2);
+	AppContext::get_response()->redirect('/forum/track.php');
 }
 elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
@@ -203,10 +203,10 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 		'PAGINATION' => $pagination->display(),
 		'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1&amp;favorite=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
-		'U_CHANGE_CAT'=> 'track.php' . SID . '&amp;token=' . AppContext::get_session()->get_token(),
+		'U_CHANGE_CAT'=> 'track.php' . '&amp;token=' . AppContext::get_session()->get_token(),
 		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-		'U_FORUM_CAT' => '<a href="../forum/track.php' . SID . '">' . $LANG['show_topic_track'] . '</a>',
+		'U_FORUM_CAT' => '<a href="../forum/track.php' . '">' . $LANG['show_topic_track'] . '</a>',
 		'U_POST_NEW_SUBJECT' => '',
 		'U_TRACK_ACTION' => url('.php?p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
 		'L_FORUM_INDEX' => $LANG['forum_index'],
@@ -246,7 +246,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	$Template->pparse('forum_track');
 }
 else
-	AppContext::get_response()->redirect('/forum/index.php' . SID2);
+	AppContext::get_response()->redirect('/forum/index.php');
 
 include('../kernel/footer.php');
 

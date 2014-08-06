@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 $Bread_crumb->add($LANG['show_not_reads'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_not_reads']);
 require_once('../kernel/header.php'); 
@@ -176,10 +176,10 @@ $Template->put_all(array(
 	'C_PAGINATION' => $pagination->has_several_pages(),
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'PAGINATION' => $pagination->display(),
-	'U_CHANGE_CAT'=> 'unread.php' . SID . '&amp;token=' . AppContext::get_session()->get_token(),
+	'U_CHANGE_CAT'=> 'unread.php' . '&amp;token=' . AppContext::get_session()->get_token(),
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-	'U_FORUM_CAT' => '<a href="../forum/unread.php' . SID . '">' . $LANG['show_not_reads'] . '</a>',
+	'U_FORUM_CAT' => '<a href="../forum/unread.php' . '">' . $LANG['show_not_reads'] . '</a>',
 	'U_POST_NEW_SUBJECT' => '',
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'L_FORUM' => $LANG['forum'],

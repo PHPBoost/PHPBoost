@@ -55,7 +55,6 @@ interface TemplateData
 	/**
 	 * @desc Loads the most common vars which are useful in the whole PHPBoost templates. The variables are:
 	 * <ul>
-	 * 	<li>SID for the session id</li>
 	 * 	<li>THEME the theme used by the current user</li>
 	 * 	<li>LANG the lang used by the current user</li>
 	 * 	<li>C_USER_CONNECTED tells whether the user is connected (member, moderator or administrator)</li>

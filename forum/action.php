@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
 require_once('../kernel/header_no_display.php');
 
 //Variable GET.
@@ -269,10 +269,10 @@ elseif ($read) //Marquer comme lu.
 	else
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " (user_id,last_view_forum) VALUES ('" . AppContext::get_current_user()->get_id() . "', '" .  time(). "')");
 
-	AppContext::get_response()->redirect('/forum/index.php' . SID2);
+	AppContext::get_response()->redirect('/forum/index.php');
 }
 else
-	AppContext::get_response()->redirect('/forum/index.php' . SID2);
+	AppContext::get_response()->redirect('/forum/index.php');
 
 require_once('../kernel/footer_no_display.php');
 

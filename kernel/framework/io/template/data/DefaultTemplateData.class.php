@@ -60,7 +60,6 @@ class DefaultTemplateData implements TemplateData
 		$user = AppContext::get_current_user();
 		$is_connected = $user->check_level(User::MEMBER_LEVEL);
 		$this->put_all(array(
-			'SID' => SID,
 			'THEME' => $user->get_theme(),
 			'LANG' => $user->get_locale(),
 			'IS_USER_CONNECTED' => $is_connected,

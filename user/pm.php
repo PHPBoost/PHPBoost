@@ -142,7 +142,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != AppContext::get_current_
 	
 	$tpl->assign_block_vars('post_convers', array(
 		'U_ACTION_CONVERS' => url('.php?token=' . AppContext::get_session()->get_token()),
-		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
+		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_USER_VIEW' => '<a href="' . UserUrlBuilder::personnal_message(AppContext::get_current_user()->get_id())->rel() . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => $login
 	));
@@ -203,7 +203,7 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 	
 	$tpl->assign_block_vars('post_convers', array(
 		'U_ACTION_CONVERS' => url('.php?token=' . AppContext::get_session()->get_token()),
-		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
+		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_USER_VIEW' => '<a href="' . MemberUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => !empty($_POST['login']) ? stripslashes($_POST['login']) : '',
 		'TITLE' => !empty($_POST['title']) ? stripslashes($_POST['title']) : '',
@@ -240,7 +240,7 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 	$tpl->assign_block_vars('show_pm', array(
 		'DATE' => gmdate_format('date_format'),
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($_POST['contents']))),
-		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
+		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers_title . '</a>',
 		'U_USER_VIEW' => '<a href="' . UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() . '">' . $LANG['member_area'] . '</a>',
 	));
@@ -381,7 +381,7 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 				elseif ($pm_del == $id_first) //Suppression de la conversation.
 				{
 					PrivateMsg::delete_conversation($pm_to, $pm['idconvers'], $expd, PrivateMsg::DEL_PM_CONVERS, PrivateMsg::UPDATE_MBR_PM);
-					AppContext::get_response()->redirect('/user/pm.php' . SID2);
+					AppContext::get_response()->redirect('/user/pm.php');
 				}
 			}
 			else //Le membre a déjà lu le message on ne peux plus le supprimer.
@@ -480,7 +480,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				$tpl->assign_block_vars('edit_pm', array(
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : FormatingHelper::unparse($pm['contents']),
 					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . AppContext::get_session()->get_token()),
-					'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
+					'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 					'U_USER_VIEW' => '<a href="' . UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() . '">' . $LANG['member_area'] . '</a>'
 				));
 				
@@ -559,7 +559,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	$tpl->assign_block_vars('pm', array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION' => $pagination->display(),
-		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
+		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers['title'] . '</a>',
 		'U_USER_VIEW' => '<a href="' . UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() . '">' . $LANG['member_area'] . '</a>'
 	));
@@ -710,7 +710,7 @@ else //Liste des conversation, dans la boite du membre.
 		'L_MARK_AS_READ' => $LANG['mark_pm_as_read'],
 		'U_USER_ACTION_PM' => url('.php?del_convers=1&amp;p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
 		'U_USER_VIEW' => '<a href="' . UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() . '">' . $LANG['member_area'] . '</a>',
-		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
+		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_POST_NEW_CONVERS' => 'pm' . url('.php?post=1', ''),
 		'L_POST_NEW_CONVERS' => $LANG['post_new_convers']
 	));

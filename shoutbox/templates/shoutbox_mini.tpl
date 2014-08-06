@@ -141,7 +141,7 @@
 						<button onclick="XMLHttpRequest_shoutmsg();" type="button">{L_SUBMIT}</button>
 						<a href="javascript:XMLHttpRequest_shoutrefresh();" title="{L_REFRESH}"><i class="fa fa-refresh" id="shoutimg"></i></a>
 					</p>
-					<a class="small" href="{PATH_TO_ROOT}/shoutbox/shoutbox.php{SID}" title="">{L_ARCHIVES}</a>
+					<a class="small" href="{PATH_TO_ROOT}/shoutbox/shoutbox.php" title="">{L_ARCHIVES}</a>
 				</div>
 				<div class="module-mini-bottom"></div>
 			</div>
@@ -170,7 +170,7 @@
 							<button onclick="XMLHttpRequest_shoutmsg();" type="button">{L_SUBMIT}</button>
 							<a href="javascript:XMLHttpRequest_shoutrefresh();" title="{L_REFRESH}"><i class="fa fa-refresh" id="shoutimg"></i></a>
 						</p>
-						<a class="small" href="{PATH_TO_ROOT}/shoutbox/shoutbox.php{SID}" title="">{L_ARCHIVES}</a>
+						<a class="small" href="{PATH_TO_ROOT}/shoutbox/shoutbox.php" title="">{L_ARCHIVES}</a>
 					</div>
 				</div>
 				<div class="module-mini-bottom"></div>

@@ -6,7 +6,7 @@
 			{L_WEB} - {L_CATEGORIES}
 			<span class="actions">
 				# IF C_IS_ADMIN # 
-				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}" class="fa fa-edit"></a> 
+				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php" title="{L_EDIT}" class="fa fa-edit"></a> 
 				# ENDIF #
 			</span>
 		</h1>
@@ -41,7 +41,7 @@
 			{L_WEB} - {CAT_NAME}
 			<span class="actions">
 				# IF C_IS_ADMIN # 
-				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}" class="fa fa-edit"></a> 
+				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php" title="{L_EDIT}" class="fa fa-edit"></a> 
 				# ENDIF #
 			</span>
 		</h1>
