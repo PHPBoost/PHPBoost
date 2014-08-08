@@ -145,7 +145,7 @@ class MemberSanctionManager
 			self::$sql_querier->update(DB_TABLE_MEMBER, array('user_ban' => 0), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 
 			$row = self::$sql_querier->select_single_row(DB_TABLE_MEMBER, array('user_warning'), "WHERE user_id = '" . $user_id . "'");
-			if ($row['user_warning'] == 100)
+			if ($row['warning_percentage'] == 100)
 			{
 				self::$sql_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = 90 WHERE user_id = :user_id", array('user_id' => $user_id));
 			}

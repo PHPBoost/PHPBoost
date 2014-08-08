@@ -333,7 +333,7 @@ else
 				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 				
-				$group_color = User::get_group_color($info_pics['user_groups'], $info_pics['level']);
+				$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
 				
 				//Affichage de l'image et de ses informations.
 				$Template->assign_block_vars('pics.pics_max', array(
@@ -415,7 +415,7 @@ else
 				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $row['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 				
-				$group_color = User::get_group_color($row['user_groups'], $row['level']);
+				$group_color = User::get_group_color($row['groups'], $row['level']);
 				
 				$Template->assign_block_vars('pics.list', array(
 					'C_APPROVED' => $row['aprob'],

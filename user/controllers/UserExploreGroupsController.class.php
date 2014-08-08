@@ -83,12 +83,12 @@ class UserExploreGroupsController extends AbstractController
 					//Avatar
 					$user_avatar = !empty($user['user_avatar']) ? Url::to_rel($user['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 					
-					$group_color = User::get_group_color($user['user_groups'], $user['level']);
+					$group_color = User::get_group_color($user['groups'], $user['level']);
 					$this->view->assign_block_vars('members_list', array(
 						'C_AVATAR' => $user['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 						'C_GROUP_COLOR' => !empty($group_color),
 						'PSEUDO' => $user['login'],
-						'LEVEL' => ($user['user_warning'] < '100' || (time() - $user['user_ban']) < 0) ? UserService::get_level_lang($user['level']) : $this->lang['banned'],
+						'LEVEL' => ($user['warning_percentage'] < '100' || (time() - $user['delay_banned']) < 0) ? UserService::get_level_lang($user['level']) : $this->lang['banned'],
 						'LEVEL_CLASS' => UserService::get_level_class($user['level']),
 						'GROUP_COLOR' => $group_color,
 						'U_PROFILE' => UserUrlBuilder::profile($user_id)->rel(),

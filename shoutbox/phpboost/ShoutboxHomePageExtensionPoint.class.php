@@ -125,7 +125,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 			//Avatar
 			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 
-			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$tpl->assign_block_vars('messages', array(
 				'C_MODERATOR' => ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== -1),
@@ -139,7 +139,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 				'PSEUDO' => (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']),
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
-				'L_LEVEL' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $LANG['banned']),
+				'L_LEVEL' => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $LANG['banned']),
 				'U_EDIT' => PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?edit=1&amp;id=' . $row['id']),
 				'U_DELETE' => PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),

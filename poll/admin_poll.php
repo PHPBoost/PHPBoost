@@ -306,7 +306,7 @@ else
 		elseif ($row['end'] > 0)
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 		
-		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
 		$Template->assign_block_vars('questions', array(
 			'C_USER_GROUP_COLOR' => !empty($group_color),

@@ -70,7 +70,7 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 	
 	protected static function set_page_localization($page_title)
 	{
-		AppContext::get_session()->check($page_title);
+		AppContext::get_session()->update_location($page_title);
 	}
 }
 ?>

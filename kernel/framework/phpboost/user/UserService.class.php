@@ -45,28 +45,33 @@ class UserService
 	 * @param User $user
 	 * @return InjectQueryResult
 	 */
-	public static function create(UserAuthentification $user_authentification, User $user)
+	public static function create(User $user, AuthenticationMethod $auth_method, $registration_pass = '')
 	{
 		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
-			'login' => TextHelper::htmlspecialchars($user_authentification->get_login()),
-			'password' => $user_authentification->get_password_hashed(),
+			'display_name' => $user->get_display_name(),
 			'level' => $user->get_level(),
-			'user_mail' => $user->get_email(),
-			'user_show_mail' => (int)$user->get_show_email(),
-			'user_groups' => implode('|', $user->get_groups()),
-			'user_lang' => $user->get_locale(),
-			'user_theme' => $user->get_theme(),
-			'user_timezone' => $user->get_timezone(),
-			'user_editor' => $user->get_editor(),
-			'timestamp' => time(),
-			'user_aprob' => (int)$user->get_approbation(),
-			'user_warning' => $user->get_warning_percentage(),
-			'user_readonly' => $user->get_delay_readonly(),
-			'user_ban' => $user->get_delay_banned(),
-			'approbation_pass' => $user->get_approbation_pass()
+			'groups' => implode('|', $user->get_groups()),
+			'email' => $user->get_email(),
+			'show_email' => (int)$user->get_show_email(),
+			'locale' => $user->get_locale(),
+			'timezone' => $user->get_timezone(),
+			'theme' => $user->get_theme(),
+			'editor' => $user->get_editor(),
+			'registration_date' => time()
 		));
+
+		$user_id = $result->get_last_inserted_id();
+		$auth_method->associate($user_id, $registration_pass);
+		self::regenerate_stats_cache();
 		
-		return $result->get_last_inserted_id();
+		return $user_id;
+	}
+	
+	public static function delete_by_id($user_id)
+	{
+		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', $user_id);
+		self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id=:user_id', $user_id);
+		self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', $user_id);
 	}
 	
 	/**
@@ -131,16 +136,16 @@ class UserService
 		$user->set_pseudo($row['login']);
 		$user->set_level($row['level']);
 		$user->set_approbation((bool)$row['user_aprob']);
-		$user->set_email($row['user_mail']);
-		$user->set_show_email((bool)$row['user_show_mail']);
-		$user->set_groups(explode('|', $row['user_groups']));
-		$user->set_locale($row['user_lang']);
-		$user->set_theme($row['user_theme']);
-		$user->set_timezone($row['user_timezone']);
-		$user->set_editor($row['user_editor']);
-		$user->set_warning_percentage($row['user_warning']);
-		$user->set_delay_banned($row['user_ban']);
-		$user->set_delay_readonly($row['user_readonly']);
+		$user->set_email($row['email']);
+		$user->set_show_email((bool)$row['show_email']);
+		$user->set_groups(explode('|', $row['groups']));
+		$user->set_locale($row['locale']);
+		$user->set_theme($row['theme']);
+		$user->set_timezone($row['timezone']);
+		$user->set_editor($row['editor']);
+		$user->set_warning_percentage($row['warning_percentage']);
+		$user->set_delay_banned($row['delay_banned']);
+		$user->set_delay_readonly($row['delay_readonly']);
 		return $user;
 	}
 	
@@ -215,6 +220,26 @@ class UserService
 			default:
 				return '';
 		}
+	}
+	
+	public static function remove_old_unactivated_member_accounts()
+	{
+		$user_account_settings = UserAccountsConfig::load();
+		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
+		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != 2)
+		{	
+			$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_INTERNAL_AUTHENTICATION, array('user_id'), 
+			'WHERE last_connection < :last_connection AND approved = 0', array('last_connection' => (time() - $delay_unactiv_max)));
+			foreach ($result as $row)
+			{
+				self::delete_by_id($row['user_id']);
+			}
+		}
+	}
+	
+	private static function regenerate_stats_cache()
+	{
+		StatsCache::invalidate();
 	}
 }
 ?>

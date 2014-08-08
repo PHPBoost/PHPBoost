@@ -78,14 +78,14 @@ class UserViewProfileController extends AbstractController
 		
 		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], $this->get_level_lang($this->user_informations)));
 
-		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($this->user_informations['user_groups'])));
+		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($this->user_informations['groups'])));
 		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration_date'], gmdate_format('date_format_short', $this->user_informations['timestamp'])));
 		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->rel() . '">'. $this->lang['messages'] .'</a>'));
 		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], gmdate_format('date_format_short', $this->user_informations['last_connect'])));
 		
-		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_informations['user_show_mail'])
+		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_informations['show_email'])
 		{
-			$link_email = '<a href="mailto:'. $this->user_informations['user_mail'] .'" class="basic-button smaller">Mail</a>';
+			$link_email = '<a href="mailto:'. $this->user_informations['email'] .'" class="basic-button smaller">Mail</a>';
 			$fieldset->add_field(new FormFieldFree('email', $this->lang['email'], $link_email));
 		}
 		
@@ -115,7 +115,7 @@ class UserViewProfileController extends AbstractController
 	
 	private function get_level_lang($user_informations)
 	{
-		if ($user_informations['user_warning'] < '100' || (time() - $user_informations['user_ban']) > 0)
+		if ($user_informations['warning_percentage'] < '100' || (time() - $user_informations['delay_banned']) > 0)
 		{
 			return UserService::get_level_lang($user_informations['level']);
 		}

@@ -37,9 +37,7 @@ class UserLoginController extends AbstractController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init($request);
-		$this->build_error_message();
 		$this->build_form();
-		$this->init_vars_template();
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -48,6 +46,8 @@ class UserLoginController extends AbstractController
 			$autoconnect = $this->form->get_value('autoconnect');
 			$this->authenticate($username, $password, $autoconnect);
 		}
+		
+		$this->init_vars_template();
 		
 		return $this->build_view();
 	}
@@ -71,90 +71,51 @@ class UserLoginController extends AbstractController
 		));
 	}
 
-	private function authenticate($login, $password, $autoconnect)
+	private function authenticate($username, $password, $autoconnect)
 	{
-		AppContext::get_session()->connect($login, $password, $autoconnect);
-	}
-	
-	private function build_error_message()
-	{
-		$date_lang = LangLoader::get('date-common');
-		$errors_lang = LangLoader::get('errors');
-		
-		$error_type = $this->request->get_string('error_type', '');
-		$error_value = $this->request->get_string('error_value', '');
-		switch ($error_type) {
-			case 'flood':
-				if (!empty($error_value))
-				{
-					$flood = ($error_value > 0 && $error_value <= 5) ? $error_value : 0;
-					$this->display_error_message($errors_lang['e_wrong_password'] . '. ' . sprintf($errors_lang['e_test_connect'], $flood));
-				}
-				else
-				{
-					$this->display_error_message($errors_lang['e_nomore_test_connect']);
-				}
-			break;
-			case 'not_enabled':
-				$this->display_error_message($errors_lang['e_unactiv_member']);
-			break;
-			case 'wrong_password':
-				$this->display_error_message($errors_lang['e_wrong_password']);
-			break;
-			case 'banned':
-				if (!empty($error_value))
-				{
-					$delay = $error_value;
-					if ($delay > 0)
-					{
-						if ($delay < 60)
-							$message = $delay . ' ' . (($delay > 1) ? $date_lang['minutes'] : $date_lang['minute']);
-						elseif ($delay < 1440)
-						{
-							$delay_ban = NumberHelper::round($delay/60, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['hours'] : $date_lang['hour']);
-						}
-						elseif ($delay < 10080)
-						{
-							$delay_ban = NumberHelper::round($delay/1440, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['days'] : $date_lang['day']);
-						}
-						elseif ($delay < 43200)
-						{
-							$delay_ban = NumberHelper::round($delay/10080, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['weeks'] : $date_lang['week']);
-						}
-						elseif ($delay < 525600)
-						{
-							$delay_ban = NumberHelper::round($delay/43200, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['months'] : $date_lang['month']);
-						}
-						else
-						{
-							$delay_ban = NumberHelper::round($delay/525600, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['years'] : $date_lang['year']);
-						}
-						$message = $errors_lang['e_member_ban'] . ' ' . $message;
-					}
-					$this->display_error_message($message);
-				}
-				else
-				{
-					$this->display_error_message($errors_lang['e_member_ban_w']);
-				}
-			break;
-			case 'unexisting':
-				$this->display_error_message($errors_lang['e_unexist_member']);
-			break;
-			case 'not_authorized':
-				$this->display_error_message($errors_lang['e_auth']);
-			break;
+		$authentication = new PHPBoostAuthenticationMethod($username, $password);
+		if ($authentication->authenticate($autoconnect))
+		{
+			$session = AppContext::get_session();
+			if ($session != null)
+			{
+				Session::delete($session);
+			}
+			AppContext::set_session(Session::create($authentication->get_user_id(), $autoconnect));
+			AppContext::get_response()->redirect($this->request->get_value('redirect', '/'));
+		}
+		else
+		{
+			$this->build_error_message($authentication);
 		}
 	}
 	
-	private function display_error_message($message, $error_type = 'notice')
+	private function build_error_message(PHPBoostAuthenticationMethod $authentication)
 	{
-		$this->view->put('ERROR_MESSAGE', MessageHelper::display($message, $error_type));
+		$errors_lang = LangLoader::get('errors');
+		$error_msg = '';
+		if (!$authentication->has_user_been_found())
+		{
+			$error_msg = $errors_lang['e_unexist_member'];
+		}
+		else
+		{
+			$remaining_attempts = $authentication->get_remaining_attemps();
+			if ($remaining_attempts > 0)
+			{
+				$error_msg = StringVars::replace_vars($this->lang['flood_block'], array('remaining_tries' => $remaining_attempts));
+			}
+			else
+			{
+				$error_msg = $this->lang['flood_max'];
+			}
+		}
+		
+		if (!empty($error_msg))
+		{
+			$error = new FormFieldLabel(MessageHelper::display($error_msg, MessageHelper::NOTICE)->render());
+			$this->fieldset->add_field($error);
+		}
 	}
 
 	private function build_view()
@@ -170,7 +131,7 @@ class UserLoginController extends AbstractController
 	 */
 	private function build_form()
 	{
-		$this->form = new HTMLForm('loginForm', '', false);
+		$this->form = new HTMLForm('loginForm', $this->build_target(), false);
 		$this->form->set_css_class('fieldset-content');
 
 		$this->fieldset = new FormFieldsetHTML('loginFieldset', $this->lang['connect']);
@@ -195,6 +156,12 @@ class UserLoginController extends AbstractController
 		}
 
 		return $this;
+	}
+	
+	private function build_target()
+	{
+		$redirect_url = $this->request->get_value('redirect', '/');
+		return DispatchManager::get_url('/user/index.php', '/connect?redirect=' . urlencode($redirect_url));
 	}
 }
 ?>

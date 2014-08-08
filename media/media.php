@@ -90,7 +90,7 @@ elseif ($id_media > 0)
 	$notation->set_user_already_noted(!empty($media['note']));
 	$nbr_notes = $media['number_notes'];
 	
-	$group_color = User::get_group_color($media['user_groups'], $media['level']);
+	$group_color = User::get_group_color($media['groups'], $media['level']);
 	
 	$tpl->put_all(array(
 		'C_DISPLAY_MEDIA' => true,

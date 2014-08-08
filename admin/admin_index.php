@@ -59,7 +59,7 @@ while ($row = $result->fetch())
 {
 	if (!empty($row['user_id'])) 
 	{
-		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		$group_color = User::get_group_color($row['groups'], $row['level']);
 		$com_pseudo = '<a href="'.  UserUrlBuilder::profile($row['user_id'])->rel() .'" title="' . $row['login'] . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 13) . '</a>';
 	}
 	else
@@ -107,16 +107,15 @@ $Template->put_all(array(
 
 
 //Liste des personnes en lignes.
-$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get, 
-s.session_script_title, m.login, m.user_groups
+$result = $Sql->query_while("SELECT s.user_id, s.ip, s.timestamp, s.location_script, s.location_title, m.display_name, m.groups, m.level
 FROM " . DB_TABLE_SESSIONS . " s
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON s.user_id = m.user_id
-WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-ORDER BY s.session_time DESC");
+WHERE s.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
+ORDER BY s.timestamp DESC");
 while ($row = $Sql->fetch_assoc($result))
 {
 	//On vérifie que la session ne correspond pas à un robot.
-	$robot = Robots::get_robot_by_ip($row['session_ip']);
+	$robot = Robots::get_robot_by_ip($row['ip']);
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{
@@ -137,17 +136,15 @@ while ($row = $Sql->fetch_assoc($result))
 		$login = '<span class="robot">' . ($robot == 'unknow_bot' ? $LANG['unknow_bot'] : $robot) . '</span>';
 	else
 	{
-		$group_color = User::get_group_color($row['user_groups'], $row['level']);
-		$login = !empty($row['login']) ? '<a class="' . $class . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['login'] . '</a>' : $LANG['guest'];
+		$group_color = User::get_group_color($row['groups'], $row['level']);
+		$login = !empty($row['display_name']) ? '<a class="' . $class . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['display_name'] . '</a>' : $LANG['guest'];
 	}
-	
-	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 	
 	$Template->assign_block_vars('user', array(
 		'USER' => !empty($login) ? $login : $LANG['guest'],
-		'USER_IP' => $row['session_ip'],
-		'WHERE' => '<a href="' . HOST . $row['session_script'] . $row['session_script_get'] . '">' . (!empty($row['session_script_title']) ? stripslashes($row['session_script_title']) : $LANG['unknow']) . '</a>',
-		'TIME' => gmdate_format('date_format_long', $row['session_time'])
+		'USER_IP' => $row['ip'],
+		'WHERE' => '<a href="' . $row['location_script'] . '">' . (!empty($row['location_title']) ? stripslashes($row['location_title']) : $LANG['unknow']) . '</a>',
+		'TIME' => gmdate_format('date_format_long', $row['timestamp'])
 	));
 }
 $Sql->query_close($result);

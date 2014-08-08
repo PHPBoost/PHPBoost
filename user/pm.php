@@ -609,7 +609,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text-strong">' . $LANG['quote_last_msg'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
 		$i++;
 		
-		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
 		$tpl->assign_block_vars('pm.msg', array(
 			'C_MODERATION_TOOLS' => ((AppContext::get_current_user()->get_id() === $row['user_id'] && $row['id'] === $convers['last_msg_id']) && ($row['view_status'] === '0')), //Dernier mp éditable. et si le destinataire ne la pas encore lu
@@ -627,7 +627,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 			'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 			
-			'L_LEVEL' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $LANG['banned']),
+			'L_LEVEL' => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $LANG['banned']),
 		));
 		
 		//Marqueur de suivis du sujet.
@@ -813,7 +813,7 @@ else //Liste des conversation, dans la boite du membre.
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? 'p=' . $last_page . '&amp;' : '';
 		
-		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
 		if ($row['user_id'] == -1)
 			$author = $LANG['admin'];

@@ -111,7 +111,6 @@ class Environment
 	public static function init_services()
 	{
 		self::init_http_services();
-		AppContext::init_session();
 		AppContext::init_extension_provider_service();
 	}
 
@@ -161,26 +160,10 @@ class Environment
 
 	public static function init_session()
 	{
-		AppContext::get_session()->load();
-		AppContext::get_session()->act();
-
+		$session_data = Session::start();
+		AppContext::set_session($session_data);
 		AppContext::init_current_user();
 
-		/*// TODO do we need to keep that feature? It's not supported every where
-		if (AppContext::get_session()->supports_cookies())
-		{
-			define('SID', 'sid=' . AppContext::get_current_user()->get_attribute('session_id') .
-				'&amp;suid=' . AppContext::get_current_user()->get_id());
-			define('SID2', 'sid=' . AppContext::get_current_user()->get_attribute('session_id') .
-				'&suid=' . AppContext::get_current_user()->get_id());
-		}
-		else
-		{
-			define('SID', '');
-			define('SID2', '');
-		}
-		*/
-		
 		$current_user = AppContext::get_current_user();
 		$user_accounts_config = UserAccountsConfig::load();
 
@@ -243,8 +226,6 @@ class Environment
 
 	private static function perform_changeday()
 	{
-		self::delete_existing_sessions();
-
 		self::clear_all_temporary_cache_files();
 
 		self::execute_modules_changedays_tasks();
@@ -304,16 +285,7 @@ class Environment
 
 	private static function remove_old_unactivated_member_accounts()
 	{
-		$user_account_settings = UserAccountsConfig::load();
-
-		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
-		//If the user configured a delay and member accounts must be activated
-		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != 2)
-		{
-			PersistenceContext::get_querier()->delete(DB_TABLE_MEMBER, 'WHERE timestamp < :timestamp AND user_aprob = 0', array(
-				'timestamp' => (time() - $delay_unactiv_max
-			)));
-		}
+		UserService::remove_old_unactivated_member_accounts();
 	}
 
 	private static function check_updates()

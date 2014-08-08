@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                            AdminUser.class.php
+ *                            AdminSessionData.class.php
  *                            -------------------
- *   begin                : February 06, 2010
+ *   begin                : September 12, 2010
  *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,25 +25,22 @@
  *
  ###################################################*/
 
-/**
- * @author Régis VIARRE <crowkait@phpboost.com>
- * @desc This class manage user, it provide you methods to get or modify user informations, moreover methods allow you to control user authorizations
- * @package members
- */
-class AdminUser extends CurrentUser
+class AdminSessionData extends SessionData
 {
-	/**
-	 * @desc Sets global authorizations which are given by all the user groups authorizations.
-	 */
 	public function __construct()
 	{
-		parent::__construct(new AdminSessionData());
-	}
-
-	protected function build_groups(SessionData $session)
-	{
-		return array('r2');
+		$this->user_id = 1;
+		$this->session_id = '0123456789';
+		$this->token = '42';
+		$this->expiry = time() + SessionsConfig::load()->get_session_duration();
+		$this->ip = '0000:0000:0000:0000:0000:0000:0000:0001';
+			$user_accounts_config = UserAccountsConfig::load();
+		$this->cached_data = array(
+			'level' => User::ADMIN_LEVEL,
+			'login' => 'Admin',
+			'display_name' => 'Admin',
+		);
+		$this->data = array();
 	}
 }
-
 ?>

@@ -53,7 +53,7 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 		
 		while($row = $result->fetch())
 		{
-			$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$user_group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$tpl->assign_block_vars('results', array(
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),

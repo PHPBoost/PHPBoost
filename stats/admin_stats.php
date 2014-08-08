@@ -185,7 +185,7 @@ else
 		" . $Sql->limit(0, 10));
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$user_group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$Template->assign_block_vars('top_poster', array(
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),

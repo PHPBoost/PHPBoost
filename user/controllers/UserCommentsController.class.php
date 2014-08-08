@@ -111,7 +111,7 @@ class UserCommentsController extends AbstractController
 			
 			$timestamp = new Date(DATE_TIMESTAMP, Timezone::SITE_TIMEZONE, $row['comment_timestamp']);
 
-			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$template->assign_block_vars('comments', array(
 				'C_MODERATOR' => $comments_authorizations->is_authorized_moderation(),

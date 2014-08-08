@@ -100,15 +100,15 @@ class UserUsersListController extends AbstractController
 		while ($row = $result->fetch())
 		{
 			$user_msg = !empty($row['user_msg']) ? $row['user_msg'] : '0';
-			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$this->view->assign_block_vars('member_list', array(
-				'C_MAIL' => $row['user_show_mail'] == 1,
+				'C_MAIL' => $row['show_email'] == 1,
 				'C_GROUP_COLOR' => !empty($group_color),
 				'PSEUDO' => $row['login'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
-				'MAIL' => $row['user_mail'],
+				'MAIL' => $row['email'],
 				'MSG' => $user_msg,
 				'LAST_CONNECT' => !empty($row['last_connect']) ? gmdate_format('date_format_short', $row['last_connect']) : LangLoader::get_message('never', 'main'),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),

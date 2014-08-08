@@ -38,7 +38,7 @@ function forum_list_user_online($sql_condition)
 	ORDER BY s.session_time DESC");
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		$group_color = User::get_group_color($row['groups'], $row['level']);
 		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
 			case -1:

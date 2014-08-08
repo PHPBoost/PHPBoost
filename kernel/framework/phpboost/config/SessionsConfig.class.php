@@ -39,6 +39,10 @@ class SessionsConfig extends AbstractConfigData
 	 * Time during which the sessions is considered as active (the user is online)
 	 */
 	const ACTIVE_SESSION_DURATION = 'active_session_duration';
+	/**
+	 * @desc Duration of autoconnect cookie (in seconds).
+	 */
+	const AUTOCONNECT_DURATION = 'autoconnect_duration';
 	
 	public function get_cookie_name()
 	{
@@ -70,12 +74,23 @@ class SessionsConfig extends AbstractConfigData
 		$this->set_property(self::ACTIVE_SESSION_DURATION, $duration);
 	}
 	
+	public function get_autoconnect_duration()
+	{
+		return $this->get_property(self::AUTOCONNECT_DURATION);
+	}
+
+	public function set_autoconnect_duration($duration)
+	{
+		$this->set_property(self::AUTOCONNECT_DURATION, $duration);
+	}
+	
 	public function get_default_values()
 	{
 		return array(
 			self::COOKIE_NAME => 'session',
 			self::SESSION_DURATION => 3600,
-			self::ACTIVE_SESSION_DURATION => 300
+			self::ACTIVE_SESSION_DURATION => 300,
+			self::AUTOCONNECT_DURATION => 3600 * 24 * 30
 		);
 	}
 

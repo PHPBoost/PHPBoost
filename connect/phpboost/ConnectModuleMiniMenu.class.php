@@ -104,7 +104,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
 				'NUMBER_PM' => $user->get_attribute('user_pm'),
 	    		'NUMBER_TOTAL_ALERT' => $total_alert,
-	    		'PSEUDO' => $user->get_pseudo(),
+	    		'PSEUDO' => $user->get_display_name(),
 				'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 				'USER_GROUP_COLOR' => $user_group_color,
 				'U_USER_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),

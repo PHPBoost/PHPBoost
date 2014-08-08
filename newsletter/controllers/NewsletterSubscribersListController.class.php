@@ -112,7 +112,7 @@ class NewsletterSubscribersListController extends ModuleController
 					'U_EDIT' => $row['user_id'] == User::VISITOR_LEVEL ? NewsletterUrlBuilder::edit_subscriber($row['id'])->rel() : '',
 					'U_DELETE' => NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream->get_id())->rel(),
 					'PSEUDO' => $pseudo,
-					'MAIL' => $row['user_id'] > 0 ? $row['user_mail'] : $row['mail']
+					'MAIL' => $row['user_id'] > 0 ? $row['email'] : $row['mail']
 				));
 			}
 		}

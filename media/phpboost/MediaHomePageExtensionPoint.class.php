@@ -212,7 +212,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			{
 				$notation->set_id_in_module($row['id']);
 				
-				$group_color = User::get_group_color($row['user_groups'], $row['level']);
+				$group_color = User::get_group_color($row['groups'], $row['level']);
 				
 				$tpl->assign_block_vars('file', array(
 					'NAME' => $row['name'],
