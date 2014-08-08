@@ -94,7 +94,7 @@ class Forum
 				if ($row['last_view_id'] == $previous_msg_id && $row['mail'] == '1')
 				{	
 					AppContext::get_mail_service()->send_from_properties(
-						$row['user_mail'], 
+						$row['email'], 
 						$LANG['forum_mail_title_new_post'], 
 						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject, AppContext::get_current_user()->get_attribute('login'), $preview_contents, HOST . DIR . $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1)
 					);

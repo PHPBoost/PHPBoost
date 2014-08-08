@@ -146,7 +146,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 	private function build_table_row(array $row)
 	{
 		$login = new HTMLTableRowCell($row['login']);
-		$user_mail = new HTMLTableRowCell(($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '" class="basic-button smaller">Mail</a>' : '&nbsp;');
+		$user_mail = new HTMLTableRowCell(($row['show_email'] == 1) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '&nbsp;');
 		$user_mail->add_css_style('width:50px');
 		$user_mail->center();
 		$timestamp = new HTMLTableRowCell(gmdate_format('date_format_long', $row['timestamp']));

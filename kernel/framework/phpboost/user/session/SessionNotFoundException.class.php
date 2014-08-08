@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                            AdminUser.class.php
+ *                            SessionNotFoundException.class.php
  *                            -------------------
- *   begin                : February 06, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
- *
+ *   begin                : November 06, 2010
+ *   copyright            : (C) 2010 loic rouchon
+ *   email                : horn@phpboost.com
  *
  ###################################################
  *
@@ -26,23 +25,15 @@
  ###################################################*/
 
 /**
- * @author Régis VIARRE <crowkait@phpboost.com>
- * @desc This class manage user, it provide you methods to get or modify user informations, moreover methods allow you to control user authorizations
- * @package members
+ * @author Loic Rouchon <horn@phpboost.com>
+ * @desc This class manages all sessions for the users.
+ * @package {@package}
  */
-class AdminUser extends CurrentUser
+class SessionNotFoundException extends Exception
 {
-	/**
-	 * @desc Sets global authorizations which are given by all the user groups authorizations.
-	 */
-	public function __construct()
+	public function __construct($user_id, $session_id)
 	{
-		parent::__construct(new AdminSessionData());
-	}
-
-	protected function build_groups(SessionData $session)
-	{
-		return array('r2');
+		parent::__construct('No session found for user ' . $user_id . ' and session ' . $session_id);
 	}
 }
 

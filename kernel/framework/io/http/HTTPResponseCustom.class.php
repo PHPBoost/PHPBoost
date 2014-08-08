@@ -139,6 +139,15 @@ class HTTPResponseCustom
 			$cookie->get_domain(), $cookie->get_secure(), $cookie->get_httponly());
 		}
 	}
+	
+	/**
+	 * @desc Deletes the cookie
+	 * @param string $cookie_name the name of the cookie to delete
+	 */
+	public function delete_cookie($cookie_name)
+	{
+		setcookie($cookie_name, '', time() - 31536000);
+	}
 
 	/**
 	 * @desc Clean the output buffer.

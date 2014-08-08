@@ -87,7 +87,7 @@ class CalendarEventParticipant
 		$this->user_id = $properties['user_id'];
 		$this->login = $properties['login'];
 		$this->level = $properties['level'];
-		$this->user_groups = explode('|', $properties['user_groups']);
+		$this->user_groups = explode('|', $properties['groups']);
 	}
 	
 	public function get_array_tpl_vars()

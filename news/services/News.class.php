@@ -394,7 +394,7 @@ class News
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
 			'STATUS' => $this->get_status(),
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
-			'PSEUDO' => $user->get_pseudo(),
+			'PSEUDO' => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
 		

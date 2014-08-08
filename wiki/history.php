@@ -77,7 +77,7 @@ if (!empty($id_article))
 		//Suppression
 		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="' . $LANG['wiki_confirm_delete_archive'] . '"></a>' : '';
 		
-		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
 		$Template->assign_block_vars('list', array(
 			'TITLE' => $LANG['wiki_consult_article'],
@@ -145,7 +145,7 @@ else //On affiche la liste des modifications
 		" . $Sql->limit($pagination->get_display_from(), $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY));
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
 		$Template->assign_block_vars('list', array(
 			'TITLE' => $row['title'],

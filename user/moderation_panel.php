@@ -134,14 +134,14 @@ if ($action == 'punish')
 		ORDER BY user_readonly DESC");
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$moderation_panel_template->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['login'],
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $group_color,
-				'INFO' => gmdate_format('date_format', $row['user_readonly']),
+				'INFO' => gmdate_format('date_format', $row['delay_readonly']),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('punish', $row['user_id'])->rel() .'" class="fa fa-lock"></a>',
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
@@ -168,7 +168,7 @@ if ($action == 'punish')
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000); 	
 		$array_sanction = array($LANG['no'], '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '10 ' . strtolower($date_lang['years'])); 
 
-		$diff = ($member['user_readonly'] - time());	
+		$diff = ($member['delay_readonly'] - time());	
 		$key_sanction = 0;
 		if ($diff > 0)
 		{
@@ -190,7 +190,7 @@ if ($action == 'punish')
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . strtolower($array_sanction[$key]) . '</option>';
 		}	
 		
-		$group_color = User::get_group_color($member['user_groups'], $member['level']);
+		$group_color = User::get_group_color($member['groups'], $member['level']);
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
@@ -300,14 +300,14 @@ else if ($action == 'warning')
 		ORDER BY user_warning");
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$moderation_panel_template->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['login'],
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $group_color,
-				'INFO' => $row['user_warning'] . '%',
+				'INFO' => $row['warning_percentage'] . '%',
 				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('warning', $row['user_id'])->rel() .'" class="fa fa-warning"></a>',
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel()
@@ -332,13 +332,13 @@ else if ($action == 'warning')
 		$j = 0;
 		for ($j = 0; $j <=10; $j++)
 		{
-			if (10 * $j == $member['user_warning']) 
+			if (10 * $j == $member['warning_percentage']) 
 				$select .= '<option value="' . 10 * $j . '" selected="selected">' . 10 * $j . '%</option>';
 			else
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
 		
-		$group_color = User::get_group_color($member['user_groups'], $member['level']);
+		$group_color = User::get_group_color($member['groups'], $member['level']);
 		
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
@@ -347,8 +347,8 @@ else if ($action == 'warning')
 			'USER_LEVEL_CLASS' => UserService::get_level_class($member['level']),
 			'USER_GROUP_COLOR' => $group_color,
 			'KERNEL_EDITOR' => $editor->display(),
-			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
-			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
+			'ALTERNATIVE_PM' => str_replace('%level%', $member['warning_percentage'], $LANG['user_warning_level_changed']),
+			'INFO' => $LANG['user_warning_level'] . ': ' . $member['warning_percentage'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
 			'REGEX'=> '/ [0-9]+%/',
@@ -374,7 +374,7 @@ else
 
 		MemberSanctionManager::banish($id_get, $user_ban, MemberSanctionManager::SEND_MAIL);
 
-		if ($user_ban == 0 && $info_mbr['user_warning'] == 100)
+		if ($user_ban == 0 && $info_mbr['warning_percentage'] == 100)
 		{
 			MemberSanctionManager::remove_write_permissions($id_get, 90, MemberSanctionManager::NO_SEND_CONFIRMATION);
 		}
@@ -421,14 +421,14 @@ else
 		ORDER BY user_ban");
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$moderation_panel_template->assign_block_vars('member_list', array(
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['login'],
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $group_color,
-				'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
+				'INFO' => ($row['warning_percentage'] != 100) ? gmdate_format('date_format', $row['delay_banned']) : $LANG['illimited'],
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel()  .'" class="fa fa-forbidden"></a>',
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
@@ -448,7 +448,7 @@ else
 	{
 		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'");
 		
-		$group_color = User::get_group_color($member['user_groups'], $member['level']);
+		$group_color = User::get_group_color($member['groups'], $member['level']);
 		
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_BAN' => true,
@@ -471,7 +471,7 @@ else
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
 		$array_sanction = array($LANG['no'], '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], $LANG['illimited']); 
 		
-		$diff = ($member['user_ban'] - time());	
+		$diff = ($member['delay_banned'] - time());	
 		$key_sanction = 0;
 		if ($diff > 0)
 		{
@@ -486,7 +486,7 @@ else
 				}
 			}
 		}
-		if ($member['user_warning'] == 100)
+		if ($member['warning_percentage'] == 100)
 			$key_sanction = 12;
 			
 		//Affichge des sanctions

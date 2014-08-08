@@ -130,7 +130,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $CONFIG_FORUM['pagination_msg'], Pagination::LIGHT_PAGINATION);
 		$topic_pagination->set_url(new Url('/forum/topic.php?id=' . $row['id'] . '&amp;pt=%d'));
 		
-		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
+		$group_color = User::get_group_color($row['groups'], $row['user_level']);
 		
 		$Template->assign_block_vars('topics', array(
 			'C_PAGINATION' => $topic_pagination->has_several_pages(),

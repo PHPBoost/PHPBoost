@@ -42,10 +42,10 @@ class User
 	const ADMIN_LEVEL = 2;
 	
 	protected $id = -1;
-	protected $pseudo = '';
 	protected $level = -1;
 	protected $groups = array();
 
+	protected $display_name;
 	protected $email;
 	protected $show_email = false;
 	protected $approbation = false;
@@ -59,8 +59,6 @@ class User
 	protected $delay_readonly = 0;
 	protected $warning_percentage = 0;
 	
-	protected $approbation_pass = '';
-
 	public function set_id($id)
 	{
 		$this->id = $id;
@@ -70,17 +68,7 @@ class User
 	{
 		return $this->id;
 	}
-	
-	public function set_pseudo($pseudo)
-	{
-		$this->pseudo = $pseudo;
-	}
-	
-	public function get_pseudo()
-	{
-		return $this->pseudo;
-	}
-	
+		
 	public function set_level($level)
 	{
 		$this->level = $level;
@@ -113,6 +101,16 @@ class User
 		return $this->groups;
 	}
 		
+	public function set_display_name($display_name)
+	{
+		$this->display_name = $display_name;
+	}
+	
+	public function get_display_name()
+	{
+		return $this->display_name;
+	}
+	
 	public function set_email($email)
 	{
 		$this->email = $email;
@@ -239,16 +237,6 @@ class User
 		return (time() - $this->delay_readonly) <= 0;
 	}
 	
-	public function set_approbation_pass($approbation_pass)
-	{
-		$this->approbation_pass = $approbation_pass;
-	}
-	
-	public function get_approbation_pass()
-	{
-		return $this->approbation_pass;
-	}
-	
 	public static function get_group_color($user_groups, $level = 0, $is_array = false)
 	{
 		if (!$is_array)
@@ -274,20 +262,20 @@ class User
 		$this->id = $properties['user_id'];
 		$this->level = $properties['level'];
 		
-		$this->email = $properties['user_mail'];
-		$this->show_email = $properties['user_show_mail'];
-		$this->approbation = $properties['user_aprob'];
-		$this->locale = $properties['user_lang'];
-		$this->theme = $properties['user_theme'];
-		$this->timezone = $properties['user_timezone'];
-		$this->editor = $properties['user_editor'];
+		$this->email = $properties['email'];
+		$this->show_email = $properties['show_email'];
+		//TODO $this->approbation = $properties['approbation'];
+		$this->locale = $properties['locale'];
+		$this->theme = $properties['theme'];
+		$this->timezone = $properties['timezone'];
+		$this->editor = $properties['editor'];
 		
-		$this->delay_banned = $properties['user_ban'];
-		$this->delay_readonly = $properties['user_readonly'];
-		$this->warning_percentage = $properties['user_warning'];
+		$this->delay_banned = $properties['delay_banned'];
+		$this->delay_readonly = $properties['delay_readonly'];
+		$this->warning_percentage = $properties['warning_percentage'];
 		
-		$this->pseudo = $properties['login'];
-		$this->set_groups($properties['user_groups']);
+		$this->display_name = $properties['display_name'];
+		$this->set_groups($properties['groups']);
 	}
 	
 	public function init_visitor_user()

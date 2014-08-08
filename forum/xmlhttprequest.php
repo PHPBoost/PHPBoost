@@ -90,7 +90,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 			$last_topic_title = (strlen(TextHelper::html_entity_decode($last_topic_title)) > 25) ? TextHelper::substr_html($last_topic_title, 0, 25) . '...' : $last_topic_title;
 			$last_topic_title = addslashes($last_topic_title);
 			$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
-			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
+			$group_color = User::get_group_color($row['groups'], $row['user_level']);
 			
 			$contents .= '<tr><td class="forum-notread" style="width:100%"><a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '#m' .  $last_msg_id . '"><i class="fa fa-hand-o-right"></i></a> <a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . addslashes(Url::encode_rewrite($row['title']))  . '.php') . '" class="small">' . $last_topic_title . '</a></td><td class="forum-notread" style="white-space:nowrap">' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'" class="small '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . addslashes($row['login']) . '</a>' : '<em>' . addslashes($LANG['guest']) . '</em>') . '</td><td class="forum-notread" style="white-space:nowrap">' . gmdate_format('date_format', $row['last_timestamp']) . '</td></tr>';
 			$nbr_msg_not_read++;
@@ -203,7 +203,7 @@ elseif (retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punis
 		$result = $Sql->query_while ("SELECT user_id, login, level, user_groups FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '" . $login . "%'");
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
+			$group_color = User::get_group_color($row['groups'], $row['user_level']);
 			
 			if (retrieve(GET, 'warning_moderation_panel', false))
 				echo '<a href="moderation_forum.php?action=warning&amp;id=' . $row['user_id'] . '" class="'.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a><br />';

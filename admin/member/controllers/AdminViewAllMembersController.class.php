@@ -126,7 +126,7 @@ class AdminViewAllMembersController extends AdminController
 		
 		while ($row = $result->fetch())
 		{
-			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$this->view->assign_block_vars('member_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
@@ -137,7 +137,7 @@ class AdminViewAllMembersController extends AdminController
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				'APPROBATION' => $row['user_aprob'] == 0 ? $this->lang['no'] : $this->lang['yes'],
-				'MAIL' => $row['user_mail'],
+				'MAIL' => $row['email'],
 				'LAST_CONNECT' => !empty($row['last_connect']) ? gmdate_format('date_format_short', $row['last_connect']) : $this->lang['never'],
 				'REGISTERED' => gmdate_format('date_format_short', $row['timestamp']),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()

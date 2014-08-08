@@ -181,7 +181,7 @@ if ($action == 'alert') //Gestion des alertes
 				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['idmodo'])->rel() .'" class=" '.UserService::get_level_class($row['modo_level']).'"' . (!empty($modo_group_color) ? ' style="color:' . $modo_group_color . '"' : '') . '>' . $row['login_modo'] . '</a>';
 			}
 			
-			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
+			$group_color = User::get_group_color($row['groups'], $row['user_level']);
 			
 			$Template->assign_block_vars('alert_list', array(
 				'TITLE' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '">' . $row['title'] . '</a>',
@@ -245,7 +245,7 @@ if ($action == 'alert') //Gestion des alertes
 				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['idmodo'])->rel() .'" class=" '.UserService::get_level_class($row['modo_level']).'"' . (!empty($modo_group_color) ? ' style="color:' . $modo_group_color . '"' : '') . '>' . $row['login_modo'] . '</a>';
 			}
 			
-			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
+			$group_color = User::get_group_color($row['groups'], $row['user_level']);
 			
 			$Template->put_all(array(
 				'ID' => $id_get,
@@ -351,14 +351,14 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		ORDER BY user_readonly");
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$Template->assign_block_vars('user_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['login'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
-				'INFO' => gmdate_format('date_format', $row['user_readonly']),
+				'INFO' => gmdate_format('date_format', $row['delay_readonly']),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" class="fa fa-lock"></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
@@ -384,7 +384,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
 		$array_sanction = array($LANG['no'], '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], $LANG['life']);
 
-		$diff = ($member['user_readonly'] - time());
+		$diff = ($member['delay_readonly'] - time());
 		$key_sanction = 0;
 		if ($diff > 0)
 		{
@@ -413,7 +413,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('action_contents');
 		
-		$group_color = User::get_group_color($member['user_groups'], $member['level']);
+		$group_color = User::get_group_color($member['groups'], $member['level']);
 		
 		$Template->put_all(array(
 			'C_FORUM_USER_INFO' => true,
@@ -492,7 +492,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 				//Envoi du mail
 
-				AppContext::get_mail_service()->send_from_properties($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes(MailServiceConfig::load()->get_mail_signature())));
+				AppContext::get_mail_service()->send_from_properties($info_mbr['email'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes(MailServiceConfig::load()->get_mail_signature())));
 			}
 		}
 
@@ -540,14 +540,14 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		ORDER BY user_warning");
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$Template->assign_block_vars('user_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['login'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
-				'INFO' => $row['user_warning'] . '%',
+				'INFO' => $row['warning_percentage'] . '%',
 				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=warning&amp;id=' . $row['user_id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" class="fa fa-warning"></a>',
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel()
@@ -572,7 +572,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		$j = 0;
 		for ($j = 0; $j <= 10; $j++) //On crée le formulaire select
 		{
-			if ((10 * $j) == $member['user_warning'])
+			if ((10 * $j) == $member['warning_percentage'])
 				$select .= '<option value="' . 10 * $j . '" selected="selected">' . 10 * $j . '%</option>';
 			else
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
@@ -581,14 +581,14 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('action_contents');
 		
-		$group_color = User::get_group_color($member['user_groups'], $member['level']);
+		$group_color = User::get_group_color($member['groups'], $member['level']);
 		
 		$Template->put_all(array(
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => $editor->display(),
-			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
+			'ALTERNATIVE_PM' => str_replace('%level%', $member['warning_percentage'], $LANG['user_warning_level_changed']),
 			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->rel() .'" class="'.UserService::get_level_class($member['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $member['login'] . '</a>',
-			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
+			'INFO' => $LANG['user_warning_level'] . ': ' . $member['warning_percentage'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
 			'REGEX'=> '/ [0-9]+%/',
@@ -655,7 +655,7 @@ else //Panneau de modération
 	" . $Sql->limit(0, $end));
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
+		$group_color = User::get_group_color($row['groups'], $row['user_level']);
 		$member_group_color = User::get_group_color($row['member_groups'], $row['member_level']);
 		
 		$Template->assign_block_vars('action_list', array(

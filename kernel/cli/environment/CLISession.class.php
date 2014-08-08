@@ -70,14 +70,14 @@ class CLISession extends Session
 		$this->data['token'] = self::generate_token();
 		$this->data['login'] = 'admin';
 		$this->data['level'] = 2;
-		$this->data['user_groups'] = '';
-		$this->data['user_lang'] = 'english';
-		$this->data['user_theme'] = 'base';
-		$this->data['user_mail'] = '';
+		$this->data['groups'] = '';
+		$this->data['locale'] = 'english';
+		$this->data['theme'] = 'base';
+		$this->data['email'] = '';
 		$this->data['user_pm'] = '0';
-		$this->data['user_readonly'] = '0';
-		$this->data['user_editor'] = '';
-		$this->data['user_timezone'] = 0;
+		$this->data['delay_readonly'] = '0';
+		$this->data['editor'] = '';
+		$this->data['timezone'] = 0;
 		$this->data['avatar'] = '';
 		$this->data['modules_parameters'] = '';
 	}

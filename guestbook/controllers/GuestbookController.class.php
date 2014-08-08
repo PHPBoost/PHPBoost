@@ -78,7 +78,7 @@ class GuestbookController extends ModuleController
 			
 			$this->view->assign_block_vars('messages', array_merge($message->get_array_tpl_vars($page), array(
 				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
-				'C_USER_GROUPS' => !empty($row['user_groups']),
+				'C_USER_GROUPS' => !empty($row['groups']),
 				'U_AVATAR' => $user_avatar
 			)));
 			

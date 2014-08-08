@@ -32,39 +32,39 @@
  */
 class CurrentUser extends User
 {
-	private $login;
-	private $user_data;
+	public static function from_session()
+	{
+		return new self(AppContext::get_session());
+	}
+	
 	private $groups_auth;
 	
-	public function __construct()
+	public function __construct(SessionData $session)
 	{
-		$this->user_data = AppContext::get_session()->get_data();
-		$this->set_id($this->user_data['user_id']);
-		$this->set_level($this->user_data['level']);
-		$this->set_email($this->user_data['user_mail']);
-		$this->set_show_email($this->user_data['user_show_mail']);
-		$this->set_locale($this->user_data['user_lang']);
-		$this->set_theme($this->user_data['user_theme']);
-		$this->set_timezone($this->user_data['user_timezone']);
-		$this->set_editor($this->user_data['user_editor']);
-		
-		$this->set_delay_banned($this->user_data['user_ban']);
-		$this->set_delay_readonly($this->user_data['user_readonly']);
-		$this->set_warning_percentage($this->user_data['user_warning']);
-		
-		$this->login = $this->user_data['login'];
-		$this->pseudo = $this->user_data['login'];
+		$this->id = $session->get_user_id();
+		$this->level = $session->get_cached_data('level', -1);
+		$this->is_admin = ($this->level == 2);
 
-		$groups = explode('|', $this->user_data['user_groups']);
+		$this->display_name = $session->get_cached_data('display_name', LangLoader::get_message('guest', 'main'));
+		$this->email = $session->get_cached_data('email', null);
+		$this->show_email = $session->get_cached_data('show_email', false);
+		$this->unread_pm = $session->get_cached_data('unread_pm', 0);
+		$this->timestamp = $session->get_cached_data('timestamp', time());
+		$this->warning_percentage = $session->get_cached_data('warning_percentage', 0);
+		$this->delay_banned = $session->get_cached_data('delay_banned', 0);
+		$this->delay_readonly = $session->get_cached_data('delay_readonly', 0);
+
+		$user_accounts_config = UserAccountsConfig::load();
+		$this->locale = $session->get_cached_data('locale', $user_accounts_config->get_default_lang());
+		$this->theme = $session->get_cached_data('theme', $user_accounts_config->get_default_theme());
+		$this->timezone = $session->get_cached_data('timezone', GeneralConfig::load()->get_site_timezone());
+		$this->editor = $session->get_cached_data('editor', 'bbcode');
+
+		$groups = explode('|', $session->get_cached_data('groups', ''));
 		array_unshift($groups, 'r' . $this->level);
 		$this->set_groups($groups);
 		
 		$this->build_groups_auth();
-	}
-	
-	public function get_login()
-	{
-		return $this->login;
 	}
 
 	public function get_attribute($attribute)
@@ -72,11 +72,9 @@ class CurrentUser extends User
 		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
 	}
 	
-	public function check_level($secure)
+	public function check_level($level)
 	{
-		if (isset($this->user_data['level']) && $this->user_data['level'] >= $secure)
-		return true;
-		return false;
+		return $this->level >= $level;
 	}
 	
 	public function check_auth($array_auth_groups, $authorization_bit)

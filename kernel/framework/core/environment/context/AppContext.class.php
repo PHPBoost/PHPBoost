@@ -153,17 +153,9 @@ class AppContext
 	}
 
 	/**
-	 * Inits the session
-	 */
-	public static function init_session()
-	{
-		self::set_session(new Session());
-	}
-
-	/**
 	 * Sets the session
 	 */
-	public static function set_session(Session $session)
+	public static function set_session(SessionData $session)
 	{
 		self::$session = $session;
 	}
@@ -174,10 +166,6 @@ class AppContext
 	 */
 	public static function get_session()
 	{
-		if (self::$session === null)
-		{
-			self::$session = new Session();
-		}
 		return self::$session;
 	}
 
@@ -186,7 +174,7 @@ class AppContext
 	 */
 	public static function init_current_user()
 	{
-		self::$current_user = new CurrentUser();
+		self::$current_user = CurrentUser::from_session();
 	}
 
 	/**
@@ -197,7 +185,7 @@ class AppContext
 	{
 		if (self::$current_user === null)
 		{
-			self::$current_user = new CurrentUser();
+			self::$current_user = CurrentUser::from_session();
 		}
 		return self::$current_user;
 	}

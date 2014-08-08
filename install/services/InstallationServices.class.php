@@ -378,31 +378,27 @@ class InstallationServices
 	private function create_first_admin($login, $password, $email, $create_session, $auto_connect)
 	{
 		$admin_unlock_code = $this->generate_admin_unlock_code();
-		$this->update_first_admin_account($login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
+		$user_id = $this->create_first_admin_account($login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
 		$this->send_installation_mail($login, $password, $email, $admin_unlock_code);
 		if ($create_session)
 		{
-			$this->connect_admin($password, $auto_connect);
+			$this->connect_admin($user_id, $auto_connect);
 		}
 		StatsCache::invalidate();
 	}
 
-	private function update_first_admin_account($login, $password, $email, $locale, $theme, $timezone)
+	private function create_first_admin_account($username, $password, $email, $locale, $theme, $timezone)
 	{
-		$columns = array(
-            'login' => $login,
-            'password' => KeyGenerator::string_hash($password),
-            'level' => 2,
-            'user_mail' => $email,
-            'user_lang' => $locale,
-            'user_theme' => $theme,
-            'user_show_mail' => 1,
-            'timestamp' => time(),
-            'user_aprob' => 1,
-		);
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, $columns, 'WHERE user_id=1');
+		$user = new User();
+		$user->set_display_name($username);
+		$user->set_level(User::ADMIN_LEVEL);
+		$user->set_email($email);
+		$user->set_locale($locale);
+		$user->set_theme($theme);
+		$auth_method = new PHPBoostAuthenticationMethod($username, $password);
+		return UserService::create($user, $auth_method);
 	}
 
 	private function generate_admin_unlock_code()
@@ -441,10 +437,10 @@ class InstallationServices
 		AppContext::get_mail_service()->try_to_send($mail);
 	}
 
-	private function connect_admin($password, $auto_connect)
+	private function connect_admin($user_id, $auto_connect)
 	{
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('last_connect' => time()), 'WHERE user_id=1');
-		AppContext::get_session()->start(1, $password, 2, '/install/index.php', '', $this->messages['installation.title'], $auto_connect);
+		$session = Session::create($user_id, $auto_connect);
+		AppContext::set_session($session);
 	}
 
 	private function generate_installation_token()

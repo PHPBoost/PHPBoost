@@ -164,7 +164,7 @@ if ($contribution_id > 0)
 		FROM ' . DB_TABLE_MEMBER . ' member
 		WHERE user_id = :user_id', array('user_id' => $contribution->get_poster_id()))->fetch();
 	
-	$contributor_group_color = User::get_group_color($contributor['user_groups'], $contributor['level']);
+	$contributor_group_color = User::get_group_color($contributor['groups'], $contributor['level']);
 	
 	$template->put_all(array(
 		'C_WRITE_AUTH' => AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
@@ -190,7 +190,7 @@ if ($contribution_id > 0)
 			FROM ' . DB_TABLE_MEMBER . ' member
 			WHERE user_id = :user_id', array('user_id' => $contribution->get_fixer_id()))->fetch();
 		
-		$fixer_group_color = User::get_group_color($fixer['user_groups'], $fixer['level']);
+		$fixer_group_color = User::get_group_color($fixer['groups'], $fixer['level']);
 		
 		$template->put_all(array(
 			'C_CONTRIBUTION_FIXED' => true,

@@ -47,7 +47,7 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 			
 			if ($random_message !== null)
 			{
-				$user_group_color = User::get_group_color($random_message['user_groups'], $random_message['level']);
+				$user_group_color = User::get_group_color($random_message['groups'], $random_message['level']);
 				
 				$tpl->put_all(array(
 					'C_ANY_MESSAGE_GUESTBOOK' => true,

@@ -141,7 +141,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	
 	    		if ($row['user_id'] !== -1)
 	    		{
-	    			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+	    			$group_color = User::get_group_color($row['groups'], $row['level']);
 					$style = $group_color ? 'style="color:'.$group_color.'"' : '';
 	    			$row['login'] = $del_message . ' <a '.$style.' class="'. UserService::get_level_class($row['level']) .'" href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . (!empty($row['mlogin']) ? TextHelper::wordwrap_html($row['mlogin'], 16) : $LANG['guest'])  . '</a>';
 	    		}

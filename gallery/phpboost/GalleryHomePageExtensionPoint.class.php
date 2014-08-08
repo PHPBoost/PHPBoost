@@ -415,7 +415,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$comments_topic->set_id_in_module($info_pics['id']);
 					$comments_topic->set_url(new Url('/gallery/gallery.php?cat='. $g_idcat .'&id=' . $g_idpics . '&com=0'));
 					
-					$group_color = User::get_group_color($info_pics['user_groups'], $info_pics['level']);
+					$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
 					
 					//Affichage de l'image et de ses informations.
 					$Template->put_all(array(
@@ -564,7 +564,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$notation->set_average_notes($row['average_notes']);
 					$notation->set_user_already_noted(!empty($row['note']));
 					
-					$group_color = User::get_group_color($row['user_groups'], $row['level']);
+					$group_color = User::get_group_color($row['groups'], $row['level']);
 					
 					$comments_topic->set_id_in_module($row['id']);
 					

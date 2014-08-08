@@ -76,9 +76,9 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			{
 				$info_connect = $sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id = '" . $user_id . "' AND level = 2");
 				$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
-				$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
+				$delay_ban = (time() - $info_connect['delay_banned']); //Vérification si le membre est banni.
 
-				if ($delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['user_warning'] < '100') //Utilisateur non (plus) banni.
+				if ($delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['warning_percentage'] < '100') //Utilisateur non (plus) banni.
 				{
 					$session = AppContext::get_session();
 					
@@ -106,7 +106,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				{
 					DispatchManager::redirect(PHPBoostErrors::member_not_enabled());
 				}
-				elseif ($info_connect['user_warning'] == '100')
+				elseif ($info_connect['warning_percentage'] == '100')
 				{
 					DispatchManager::redirect(PHPBoostErrors::member_banned());
 				}

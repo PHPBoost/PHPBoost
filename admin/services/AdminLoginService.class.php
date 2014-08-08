@@ -92,9 +92,9 @@ class AdminLoginService
 
 	private static function is_admin_allowed()
 	{
-		$is_not_banned = (time() - self::$admin_data['user_ban']) >= 0;
+		$is_not_banned = (time() - self::$admin_data['delay_banned']) >= 0;
 		$is_approved = self::$admin_data['user_aprob'] == '1';
-		$has_not_maximum_warnings = self::$admin_data['user_warning'] < 100;
+		$has_not_maximum_warnings = self::$admin_data['warning_percentage'] < 100;
 		return $is_not_banned && $is_approved && $has_not_maximum_warnings;
 	}
 

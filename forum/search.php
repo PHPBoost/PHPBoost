@@ -199,7 +199,7 @@ if (!empty($valid_search) && !empty($search))
 				}
 			}
 			
-			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
+			$group_color = User::get_group_color($row['groups'], $row['user_level']);
 			
 			$Template->assign_block_vars('list', array(
 				'USER_ONLINE' => '<i class="fa ' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'fa-online' : 'fa-offline') . '"></i>',

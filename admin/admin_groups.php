@@ -258,7 +258,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			
 			while ($row = $result->fetch())
 			{
-				$group_color = User::get_group_color($row['user_groups'], $row['level']);
+				$group_color = User::get_group_color($row['groups'], $row['level']);
 				
 				$template->assign_block_vars('member', array(
 					'C_GROUP_COLOR' => !empty($group_color),

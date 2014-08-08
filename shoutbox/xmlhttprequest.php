@@ -126,7 +126,7 @@ elseif ($refresh)
 		
 		if ($row['user_id'] !== -1) 
 		{
-			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 			$style = $group_color ? 'style="color:'.$group_color.'"' : '';
 			$row['login'] = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . $del . ' <a class="small ' . UserService::get_level_class($row['level']) . '" '.$style.' href="'. UserUrlBuilder::profile($row['user_id'])->rel()  . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . ' </a>';
 		}

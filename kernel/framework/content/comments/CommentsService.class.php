@@ -262,7 +262,7 @@ class CommentsService
 				$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 				
 				$timestamp = new Date(DATE_TIMESTAMP, Timezone::SITE_TIMEZONE, $row['comment_timestamp']);
-				$group_color = User::get_group_color($row['user_groups'], $row['level']);
+				$group_color = User::get_group_color($row['groups'], $row['level']);
 				
 				$template->assign_block_vars('comments', array(
 					'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),

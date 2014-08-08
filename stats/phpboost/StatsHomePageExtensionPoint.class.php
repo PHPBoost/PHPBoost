@@ -172,7 +172,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			" . $this->sql_querier->limit(0, 10));
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
-				$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
+				$user_group_color = User::get_group_color($row['groups'], $row['level']);
 				
 				$tpl->assign_block_vars('top_poster', array(
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
