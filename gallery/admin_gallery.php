@@ -247,7 +247,7 @@ else
 
 		if (!empty($idpics))
 		{
-			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.login, m.level, m.user_groups
+			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.display_name, m.level, m.user_groups
 			FROM " . PREFIX . "gallery g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $idcat . "' AND g.id = '" . $idpics . "'
@@ -377,7 +377,7 @@ else
 		else
 		{
 			$j = 0;
-			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.login, m.user_id, m.level, m.user_groups
+			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.display_name, m.user_id, m.level, m.user_groups
 			FROM " . PREFIX . "gallery g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $idcat . "'

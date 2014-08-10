@@ -584,7 +584,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;
 	$j = 0;
-	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, msg.contents
+	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.display_name, m.level, m.email, m.show_email, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, m.user_warning, m.user_ban, m.groups, s.user_id AS connect, msg.contents
 	FROM " . DB_TABLE_PM_MSG . " msg
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id

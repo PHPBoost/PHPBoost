@@ -50,7 +50,7 @@ elseif ($id_media > 0)
 {
 	$tpl = new FileTemplate('media/media.tpl');
 	
-	$result = $Sql->query_while("SELECT v.*, mb.login, mb.user_groups, mb.level, notes.average_notes, notes.number_notes, note.note
+	$result = $Sql->query_while("SELECT v.*, mb.display_name, mb.groups, mb.level, notes.average_notes, notes.number_notes, note.note
 	FROM " . PREFIX . "media AS v
 	LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
 	LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = v.id AND notes.module_name = 'media'
@@ -112,7 +112,7 @@ elseif ($id_media > 0)
 		'HEIGHT_P' => $media['height'] + 50,
 		'L_VIEWED' => $LANG['view'],
 		'L_BY' => $LANG['by'],
-		'BY' => !empty($media['login']) ? '<a href="' . UserUrlBuilder::profile($media['iduser'])->rel() . '" class="'.UserService::get_level_class($media['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $media['login'] . '</a>' : $LANG['guest'],
+		'BY' => !empty($media['display_name']) ? '<a href="' . UserUrlBuilder::profile($media['iduser'])->rel() . '" class="'.UserService::get_level_class($media['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $media['display_name'] . '</a>' : $LANG['guest'],
 		'U_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 		'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
 		'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),

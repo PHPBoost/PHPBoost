@@ -31,11 +31,11 @@ function forum_list_user_online($sql_condition)
 	global $Sql;
 	
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login, m.user_groups
+	$result = $Sql->query_while("SELECT s.user_id, m.level, m.display_name, m.groups
 	FROM " . DB_TABLE_SESSIONS . " s 
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
-	WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' ". $sql_condition."
-	ORDER BY s.session_time DESC");
+	WHERE s.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' ". $sql_condition."
+	ORDER BY s.timestamp DESC");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$group_color = User::get_group_color($row['groups'], $row['level']);

@@ -83,7 +83,7 @@ class UserService
 	public static function update(User $user, $condition, Array $parameters)
 	{
 		self::$querier->update(DB_TABLE_MEMBER, array(
-			'login' => TextHelper::htmlspecialchars($user->get_pseudo()),
+			'login' => TextHelper::htmlspecialchars($user->get_display_name()),
  			'level' => $user->get_level(),
 			'user_mail' => $user->get_email(),
 			'user_show_mail' => (int)$user->get_show_email(),

@@ -111,7 +111,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			$stats_array = array();
 			foreach (ThemesManager::get_activated_themes_map() as $theme)
 			{
-				$stats_array[$theme->get_id()] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_theme = '" . $theme->get_id() . "'");
+				$stats_array[$theme->get_id()] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE theme = '" . $theme->get_id() . "'");
 			}
 				
 			$Stats = new ImagesStats();
@@ -166,7 +166,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			
 			$i = 1;
-			$result = $this->sql_querier->query_while("SELECT user_id, login, level, user_groups, user_msg
+			$result = $this->sql_querier->query_while("SELECT user_id, display_name, level, groups, user_msg
 			FROM " . DB_TABLE_MEMBER . "
 			ORDER BY user_msg DESC
 			" . $this->sql_querier->limit(0, 10));
@@ -177,7 +177,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->assign_block_vars('top_poster', array(
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
 					'ID' => $i,
-					'LOGIN' => $row['login'],
+					'LOGIN' => $row['display_name'],
 					'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 					'USER_GROUP_COLOR' => $user_group_color,
 					'USER_POST' => $row['user_msg'],

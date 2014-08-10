@@ -77,7 +77,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'U_FORUM_VIEW_MSG' => url('.php?id=' . $view_msg)
 	));
 	
-	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.user_groups, t.title, t.status, t.idcat, c.name, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_msg, m.user_warning, m.user_ban, s.user_id AS connect, msg.contents
+	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.groups, t.title, t.status, t.idcat, c.name, m.display_name, m.level, m.email, m.show_email, m.timestamp AS registered, m.user_msg, m.user_warning, m.user_ban, s.user_id AS connect, msg.contents
 	FROM " . PREFIX . "forum_msg msg
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
 	JOIN " . PREFIX . "forum_cats c ON t.idcat = c.id AND c.aprob = 1
@@ -117,7 +117,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	$Sql->query_close($result);
 	
 	//Listes les utilisateurs en lignes.
-	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '%" ."/forum/membermsg.php%'");
+	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/membermsg.php%'");
 
 	$Template->put_all(array(
 		'TOTAL_ONLINE' => $total_online,

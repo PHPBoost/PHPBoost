@@ -124,7 +124,7 @@ if (!empty($valid_search) && !empty($search))
 	{
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 		
-		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, m.level AS user_level, m.user_groups, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(msg.contents, '" . $search . "') AS relevance, 0 AS relevance2
+		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.display_name, m.level AS user_level, m.groups, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(msg.contents, '" . $search . "') AS relevance, 0 AS relevance2
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
@@ -136,7 +136,7 @@ if (!empty($valid_search) && !empty($search))
 		ORDER BY relevance DESC
 		" . $Sql->limit(0, 24);
 
-		$req_title = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, m.level AS user_level, m.user_groups, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(t.title, '" . $search . "') AS relevance, 0 AS relevance2
+		$req_title = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.display_name, m.level AS user_level, m.groups, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(t.title, '" . $search . "') AS relevance, 0 AS relevance2
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
@@ -148,7 +148,7 @@ if (!empty($valid_search) && !empty($search))
 		ORDER BY relevance DESC
 		" . $Sql->limit(0, 24);
 		
-		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, m.level AS user_level, m.user_groups, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(t.title, '" . $search . "') AS relevance,
+		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.display_name, m.level AS user_level, m.groups, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(t.title, '" . $search . "') AS relevance,
 		FT_SEARCH_RELEVANCE(msg.contents, '" . $search . "') AS relevance2
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
@@ -231,7 +231,7 @@ elseif (!empty($valid_search))
 	$Template->put('message_helper', MessageHelper::display($LANG['invalid_req'], E_USER_WARNING));
 	
 //Listes les utilisateurs en lignes.
-list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '%" ."/forum/search.php%'");
+list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/search.php%'");
 	
 $Template->put_all(array(
 	'TOTAL_ONLINE' => $total_online,

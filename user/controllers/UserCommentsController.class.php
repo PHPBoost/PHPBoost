@@ -83,7 +83,7 @@ class UserCommentsController extends AbstractController
 		$result = PersistenceContext::get_querier()->select('
 			SELECT comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
 			topic.*,
-			member.user_id, member.login, member.level, member.user_groups,
+			member.user_id, member.display_name, member.level, member.groups,
 			ext_field.user_avatar
 			FROM ' . DB_TABLE_COMMENTS . ' comments
 			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' topic ON comments.id_topic = topic.id_topic
@@ -237,7 +237,7 @@ class UserCommentsController extends AbstractController
 		
 		if ($this->user !== null)
 		{
-			$response->add_breadcrumb($this->user->get_pseudo(), UserUrlBuilder::profile($this->user->get_id())->rel());
+			$response->add_breadcrumb($this->user->get_display_name(), UserUrlBuilder::profile($this->user->get_id())->rel());
 			$response->add_breadcrumb(LangLoader::get_message('messages', 'user-common'), UserUrlBuilder::messages($this->user->get_id())->rel());
 			$response->add_breadcrumb($this->lang['comments'], UserUrlBuilder::comments('', $this->user->get_id())->rel());
 		}

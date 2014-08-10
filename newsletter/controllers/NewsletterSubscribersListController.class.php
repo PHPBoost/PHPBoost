@@ -90,7 +90,7 @@ class NewsletterSubscribersListController extends ModuleController
 			'PAGINATION' => $pagination->display()
 		));
 
-		$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.user_id, subscribers.mail, member.login, member.user_mail
+		$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.user_id, subscribers.mail, member.display_name, member.user_mail
 		FROM " . NewsletterSetup::$newsletter_table_subscribers . " subscribers
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON subscribers.user_id = member.user_id
 		ORDER BY ". $field_bdd ." ". $mode ."

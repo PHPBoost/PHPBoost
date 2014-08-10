@@ -62,7 +62,7 @@ if (!empty($id_article))
 	$delete_auth = (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
 	
 	//on va chercher le contenu de la page
-	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.login, m.user_groups, m.level, c.id_article, c.activ
+	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.display_name, m.groups, m.level, c.id_article, c.activ
 		FROM " . PREFIX . "wiki_contents c
 		LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
@@ -136,7 +136,7 @@ else //On affiche la liste des modifications
 		'PAGINATION' => $pagination->display(),
 	));
 
-	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.login, m.user_groups, m.level, c.id_article, c.activ,  a.id_contents
+	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.display_name, m.groups, m.level, c.id_article, c.activ,  a.id_contents
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id

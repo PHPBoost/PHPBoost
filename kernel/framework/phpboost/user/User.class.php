@@ -48,7 +48,7 @@ class User
 	protected $display_name;
 	protected $email;
 	protected $show_email = false;
-	protected $approbation = false;
+	protected $unread_pm = 0;
 	
 	protected $locale;
 	protected $theme;
@@ -131,14 +131,14 @@ class User
 		return $this->show_email;
 	}
 	
-	public function set_approbation($approbation)
+	public function set_unread_pm($unread_pm)
 	{
-		$this->approbation = $approbation;
+		$this->unread_pm = $unread_pm;
 	}
 	
-	public function get_approbation()
+	public function get_unread_pm()
 	{
-		return $this->approbation;
+		return $this->unread_pm;
 	}
 	
 	public function set_locale($locale)
@@ -148,11 +148,13 @@ class User
 	
 	public function get_locale()
 	{
-		if (!empty($this->locale))
+		/* TODO if (!empty($this->locale))
 		{
 			return $this->locale;
 		}
 		return UserAccountsConfig::load()->get_default_lang();
+		*/
+		return $this->locale;
 	}
 	
 	public function set_theme($theme)
@@ -162,11 +164,13 @@ class User
 	
 	public function get_theme()
 	{
-		if (!empty($this->theme))
+		/* TODO if (!empty($this->theme))
 		{
 			return $this->theme;
 		}
 		return UserAccountsConfig::load()->get_default_theme();
+		*/
+		return $this->theme;
 	}
 	
 	public function set_timezone($timezone)
@@ -176,11 +180,13 @@ class User
 	
 	public function get_timezone()
 	{
-		if (!empty($this->timezone))
+		/* TODO if (!empty($this->timezone))
 		{
 			return $this->timezone;
 		}
 		return GeneralConfig::load()->get_site_timezone();
+		*/
+		return $this->timezone;
 	}
 	
 	public function set_editor($editor)
@@ -190,11 +196,13 @@ class User
 	
 	public function get_editor()
 	{
-		if (!empty($this->editor))
+		/* TODO if (!empty($this->editor))
 		{
 			return $this->editor;
 		}
 		return ContentFormattingConfig::load()->get_default_editor();
+		*/
+		return $this->editor;
 	}
 	
 	public function set_warning_percentage($warning_percentage)
@@ -264,7 +272,6 @@ class User
 		
 		$this->email = $properties['email'];
 		$this->show_email = $properties['show_email'];
-		//TODO $this->approbation = $properties['approbation'];
 		$this->locale = $properties['locale'];
 		$this->theme = $properties['theme'];
 		$this->timezone = $properties['timezone'];
@@ -280,16 +287,29 @@ class User
 	
 	public function init_visitor_user()
 	{
-		$this->id = -1;
-		$this->level = self::VISITOR_LEVEL;
-		$this->pseudo = LangLoader::get_message('visitor', 'user-common');
-		
-		$this->approbation = true;
-		$this->delay_banned = 0;
-		$this->delay_readonly = 0;
-		$this->warning_percentage = 0;
-		
-		$this->groups = array();
+		$this->set_properties(self::get_visitor_properties());
+	}
+	
+	public static function get_visitor_properties($display_name = null)
+	{
+		return array(
+			'user_id' => Session::VISITOR_SESSION_ID,
+			'display_name' => $display_name !== null ? $display_name : LangLoader::get_message('guest', 'main'),
+			'level' => self::VISITOR_LEVEL,
+			'email' => null,
+			'show_mail' => false,
+			'locale' => UserAccountsConfig::load()->get_default_lang(),
+			'theme' => UserAccountsConfig::load()->get_default_theme(),
+			'timezone' => GeneralConfig::load()->get_site_timezone(),
+			'editor' => ContentFormattingConfig::load()->get_default_editor(),
+			'unread_pm' => 0,
+			'registration_date' => 0,
+			'last_connection_date' => time(),
+			'groups' => '',
+			'warning_percentage' => 0,
+			'delay_banned' => 0,
+			'delay_readonly' => 0
+		);
 	}
 }
 ?>

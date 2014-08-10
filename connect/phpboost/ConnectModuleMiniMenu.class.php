@@ -88,7 +88,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				$user_avatar = '/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name();
 			}
 			
-			$total_alert = $user->get_attribute('user_pm') + $contribution_number + ($user->check_level(User::ADMIN_LEVEL) ? AdministratorAlertService::get_number_unread_alerts() : 0);
+			$total_alert = $user->get_unread_pm() + $contribution_number + ($user->check_level(User::ADMIN_LEVEL) ? AdministratorAlertService::get_number_unread_alerts() : 0);
 			
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			
@@ -98,11 +98,11 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
 	    		'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
 	    		'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
-	    		'C_HAS_PM' => $user->get_attribute('user_pm') > 0,
+	    		'C_HAS_PM' => $user->get_unread_pm() > 0,
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),
 				'NUMBER_UNREAD_CONTRIBUTIONS' => $contribution_number,
 	    		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
-				'NUMBER_PM' => $user->get_attribute('user_pm'),
+				'NUMBER_PM' => $user->get_unread_pm(),
 	    		'NUMBER_TOTAL_ALERT' => $total_alert,
 	    		'PSEUDO' => $user->get_display_name(),
 				'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
@@ -110,7 +110,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				'U_USER_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 	    		'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_id())->rel(),
 	    		'U_AVATAR_IMG' => Url::to_rel($user_avatar),
-	    		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_attribute('user_pm') . ' ' . (($user->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
+	    		'L_NBR_PM' => ($user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . (($user->get_unread_pm() > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
 	    		'L_PROFIL' => $LANG['profile'],
 	    		'L_MY_PROFIL' => $LANG['my_private_profile'],
 	    		'L_ADMIN_PANEL' => $LANG['admin_panel'],
@@ -132,7 +132,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'L_AUTOCONNECT' => $LANG['autoconnect'],
 	    		'L_FORGOT_PASS' => LangLoader::get_message('forget-password', 'user-common'),
 	    		'L_REGISTER' => $LANG['register'],
-	    		'U_CONNECT' => PATH_TO_ROOT . '/'
+	    		'U_CONNECT' => UserUrlBuilder::connect()->rel()
 	    	));
 	    }
 	

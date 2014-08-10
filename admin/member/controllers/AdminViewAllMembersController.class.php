@@ -69,22 +69,22 @@ class AdminViewAllMembersController extends AdminController
 		switch ($field)
 		{
 			case 'registered' :
-				$field_bdd = 'timestamp';
+				$field_bdd = 'registration_date';
 			break;
 			case 'connect' :
-				$field_bdd = 'last_connect';
+				$field_bdd = 'last_connection_date';
 			break;
 			case 'level' :
 				$field_bdd = 'level';
 			break;
 			case 'login' :
-				$field_bdd = 'login';
+				$field_bdd = 'display_name';
 			break;
 			case 'approbation' :
 				$field_bdd = 'user_aprob';
 			break;
 			default :
-				$field_bdd = 'timestamp';
+				$field_bdd = 'registration_date';
 		}
 		
 		$pagination = $this->get_pagination($page, $field, $sort);
@@ -116,7 +116,7 @@ class AdminViewAllMembersController extends AdminController
 			'FORM' => $this->build_form()->display()
 		));
 		
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, login, user_mail, timestamp, last_connect, level, user_groups, user_aprob
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, email, registration_date, last_connection_date, level, groups
 		FROM " . DB_TABLE_MEMBER . "
 		ORDER BY ". $field_bdd ." ". $mode ."
 		LIMIT :number_items_per_page OFFSET :display_from", array(
@@ -132,14 +132,14 @@ class AdminViewAllMembersController extends AdminController
 				'C_GROUP_COLOR' => !empty($group_color),
 				'DELETE_LINK' => AdminMembersUrlBuilder::delete($row['user_id'])->rel(),
 				'EDIT_LINK' => AdminMembersUrlBuilder::edit($row['user_id'])->rel(),
-				'LOGIN' => $row['login'],
+				'LOGIN' => $row['display_name'],
 				'LEVEL' => UserService::get_level_lang($row['level']),
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				'APPROBATION' => $row['user_aprob'] == 0 ? $this->lang['no'] : $this->lang['yes'],
 				'MAIL' => $row['email'],
-				'LAST_CONNECT' => !empty($row['last_connect']) ? gmdate_format('date_format_short', $row['last_connect']) : $this->lang['never'],
-				'REGISTERED' => gmdate_format('date_format_short', $row['timestamp']),
+				'LAST_CONNECT' => !empty($row['last_connection_date']) ? gmdate_format('date_format_short', $row['last_connection_date']) : $this->lang['never'],
+				'REGISTERED' => gmdate_format('date_format_short', $row['registration_date']),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
 			));
 		}

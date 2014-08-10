@@ -39,6 +39,28 @@ class UserLoginController extends AbstractController
 		$this->init($request);
 		$this->build_form();
 		
+		if ($this->request->get_bool('disconnect', false))
+		{
+			AppContext::get_session()->csrf_get_protect();
+			$session = AppContext::get_session();
+			Session::delete($session);
+			
+			AppContext::get_response()->redirect($this->request->get_value('redirect', '/'));
+		}
+		
+		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+		{
+			AppContext::get_response()->redirect(Environment::get_home_page());
+		}
+		
+		if ($this->request->get_bool('connect', false))
+		{
+			$username = $this->request->get_value('login', '');
+			$password = $this->request->get_value('password', '');
+			$autoconnect = $this->request->get_bool('autoconnect', false);
+			$this->authenticate($username, $password, $autoconnect);
+		}
+		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$username = $this->form->get_value('login');
@@ -82,6 +104,7 @@ class UserLoginController extends AbstractController
 				Session::delete($session);
 			}
 			AppContext::set_session(Session::create($authentication->get_user_id(), $autoconnect));
+			
 			AppContext::get_response()->redirect($this->request->get_value('redirect', '/'));
 		}
 		else
@@ -148,20 +171,10 @@ class UserLoginController extends AbstractController
 		$this->form->add_button($this->submit_button);
 	}
 	
-	public function get_right_controller_regarding_authorizations()
-	{
-		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
-		{
-			AppContext::get_response()->redirect(Environment::get_home_page());
-		}
-
-		return $this;
-	}
-	
 	private function build_target()
 	{
 		$redirect_url = $this->request->get_value('redirect', '/');
-		return DispatchManager::get_url('/user/index.php', '/connect?redirect=' . urlencode($redirect_url));
+		return DispatchManager::get_url('/user/index.php', '/login?redirect=' . urlencode($redirect_url));
 	}
 }
 ?>

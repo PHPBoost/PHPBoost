@@ -31,6 +31,8 @@
  */
 class SessionData
 {
+	const DEFAULT_VISITOR_DISPLAY_NAME = 'visitor';
+	
 	private static $KEY_USER_ID = 'user_id';
 	private static $KEY_SESSION_ID = 'session_id';
 
@@ -44,7 +46,7 @@ class SessionData
 	 */
 	public static function gc()
 	{
-		PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE timestamp < :now', array('now' => time() + SessionsConfig::load()->get_session_duration()));
+		PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE timestamp < :now', array('now' => time() - SessionsConfig::load()->get_session_duration()));
 	}
 
 	/**
@@ -123,7 +125,7 @@ class SessionData
 	{
 		$columns = array(
 			'timestamp' => time() + SessionsConfig::load()->get_session_duration(),
-			'ip' => AppContext::get_request()->get_ip_address()
+			'ip' => AppContext::get_session()->get_ip()
 		);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 	}
@@ -183,24 +185,7 @@ class SessionData
 		}
 		catch (RowNotFoundException $ex)
 		{
-			$config = UserAccountsConfig::load();
-			$data->cached_data = array(
-				'display_name' => LangLoader::get_message('guest', 'main'),
-				'level' => -1,
-				'email' => null,
-				'show_mail' => 0,
-				'locale' => $config->get_default_lang(),
-				'theme' => $config->get_default_theme(),
-				'timezone' => GeneralConfig::load()->get_site_timezone(),
-				'editor' => ContentFormattingConfig::load()->get_default_editor(),
-				'unread_pm' => 0,
-				'registration_date' => 0,
-				'last_connection_date' => time(),
-				'groups' => '',
-				'warning_percentage' => 0,
-				'delay_banned' => 0,
-				'delay_readonly' => 0
-			);
+			$data->cached_data = User::get_visitor_properties(self::DEFAULT_VISITOR_DISPLAY_NAME);
 		}
 	}
 

@@ -93,11 +93,11 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.	
-			$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_current_user()->get_ip() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+			$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_request()->get_ip_address() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 			if (empty($ip))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_current_user()->get_ip() . "', -1, '" . $poll['id'] . "', '" . time() . "')");
+				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_request()->get_ip_address() . "', -1, '" . $poll['id'] . "', '" . time() . "')");
 				$check_bdd = false;
 			}
 		}
@@ -108,7 +108,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			if (empty($user_id))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . AppContext::get_current_user()->get_id() . "', '" . $poll['id'] . "', '" . time() . "')");
+				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_request()->get_ip_address() . "', '" . AppContext::get_current_user()->get_id() . "', '" . $poll['id'] . "', '" . time() . "')");
 				$check_bdd = false;
 			}
 		}
@@ -170,7 +170,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
-		$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_current_user()->get_ip() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+		$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_request()->get_ip_address() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 		if (!empty($ip))
 			$check_bdd = true;
 	}

@@ -55,16 +55,14 @@ class OnlineConfig extends AbstractConfigData
 		switch (self::DISPLAY_ORDER)
 		{
 			case self::LEVEL_DISPLAY_ORDER:
-				return 's.level DESC';
+				return 'm.level DESC';
 			break;
 			case self::SESSION_TIME_DISPLAY_ORDER:
-				return 's.session_time DESC';
+				return 's.timestamp DESC';
 			break;
 			case self::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER:
-				return 's.level DESC, s.session_time DESC';
-			break;
 			default:
-				return 's.level DESC, s.session_time DESC';
+				return 'm.level DESC, s.timestamp DESC';
 		}
 	}
 	

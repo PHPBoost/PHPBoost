@@ -85,7 +85,7 @@ if ($pagination->current_page_is_empty() && $page > 1)
 	DispatchManager::redirect($error_controller);
 }
 
-$result = $Sql->query_while("SELECT c.id as cid, m1.login AS login, m1.level AS user_level, m1.user_groups AS user_groups, m2.login AS last_login, m2.level AS last_user_level, m2.user_groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
+$result = $Sql->query_while("SELECT c.id as cid, m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id	AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'
@@ -192,7 +192,7 @@ $Template->put_all(array(
 ));	
 
 //Listes les utilisateurs en lignes.
-list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '%" ."/forum/unread.php%'");
+list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/unread.php%'");
 
 $Template->put_all(array(
 	'TOTAL_ONLINE' => $total_online,

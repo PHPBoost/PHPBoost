@@ -83,7 +83,7 @@ class AdminMemberEditController extends AdminController
 		$fieldset = new FormFieldsetHTML('edit_member', $this->admin_user_lang['members.edit-member']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->user_lang['pseudo'], $this->user->get_pseudo(), array(
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->user_lang['pseudo'], $this->user->get_display_name(), array(
 			'maxlength' => 25, 'size' => 25, 'required' => true),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist($this->user->get_id()))
 		));		
@@ -199,12 +199,12 @@ class AdminMemberEditController extends AdminController
 				$site_name = GeneralConfig::load()->get_site_name();
 				$subject = StringVars::replace_vars($this->user_lang['registration.subject-mail'], array('site_name' => $site_name));
 				$content = StringVars::replace_vars($this->user_lang['registration.email.mail-administrator-validation'], array(
-					'pseudo' => $this->user->get_pseudo(),
+					'pseudo' => $this->user->get_display_name(),
 					'site_name' => $site_name,
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				));
 				$mail = new Mail();
-				$mail->add_recipient($this->user->get_email(), $this->user->get_pseudo());
+				$mail->add_recipient($this->user->get_email(), $this->user->get_display_name());
 				$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender());
 				$mail->set_subject($subject);
 				$mail->set_content($content);

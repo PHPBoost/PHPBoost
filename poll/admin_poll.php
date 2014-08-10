@@ -279,7 +279,7 @@ else
 		'L_SHOW' => $LANG['show']
 	)); 
 
-	$result = $Sql->query_while("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, p.user_id, m.login, m.user_groups, m.level
+	$result = $Sql->query_while("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, p.user_id, m.display_name, m.groups, m.level
 	FROM " . PREFIX . "poll p
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON p.user_id = m.user_id
 	ORDER BY p.timestamp DESC 
