@@ -46,7 +46,7 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 		# ENDIF #
 		</ul>');
 		
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, login, level, user_groups FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '" . $request->get_value('value', '') . "%'",
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $request->get_value('value', '') . "%'",
 			array(), SelectQueryResult::FETCH_ASSOC);
 		
 		$nb_results = 0;
@@ -57,7 +57,7 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 			
 			$tpl->assign_block_vars('results', array(
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),
-				'NAME' => $row['login'],
+				'NAME' => $row['display_name'],
 				'LEVEL' => $row['level'],
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $user_group_color,

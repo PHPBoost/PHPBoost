@@ -44,8 +44,8 @@ class OnlineService
 		$users = array();
 		
 		$result = self::$querier->select("SELECT 
-		s.user_id, s.level, s.session_time, s.session_script, s.session_script_get, s.session_script_title,
-		m.login, m.user_groups,
+		s.user_id, s.timestamp, s.location_script, s.location_title,
+		m.display_name, m.level, m.groups,
 		f.user_avatar
 		FROM " . DB_TABLE_SESSIONS . " s
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
@@ -54,15 +54,14 @@ class OnlineService
 		
 		while ($row = $result->fetch())
 		{
-			$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 			$user = new OnlineUser();
 			$user->set_id($row['user_id']);
-			$user->set_pseudo($row['login']);
+			$user->set_display_name($row['display_name']);
 			$user->set_level($row['level']);
 			$user->set_groups(explode('|', $row['groups']));
-			$user->set_last_update(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['session_time']));
-			$user->set_location_script($row['session_script'] . $row['session_script_get']);
-			$user->set_location_title(stripslashes($row['session_script_title']));
+			$user->set_last_update(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['timestamp']));
+			$user->set_location_script($row['location_script']);
+			$user->set_location_title(stripslashes($row['location_title']));
 			$user->set_avatar($row['user_avatar']);
 			$users[] = $user;
 		}

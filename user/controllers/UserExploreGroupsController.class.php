@@ -71,7 +71,7 @@ class UserExploreGroupsController extends AbstractController
 			if (!empty($user_id))
 			{
 				$user = PersistenceContext::get_querier()->select('SELECT 
-					member.login, member.level, member.user_groups, member.user_warning, member.user_ban,
+					member.display_name, member.level, member.groups, member.user_warning, member.user_ban,
 					ext_field.user_avatar
 					FROM ' . DB_TABLE_MEMBER . ' member
 					LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id

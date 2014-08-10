@@ -54,8 +54,6 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	private $connection_attempts = 0;
 	private $last_connection_date;
 
-	private $success = false;
-
 	public function __construct($username, $password)
 	{
 		$this->username = $username;

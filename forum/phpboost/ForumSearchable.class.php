@@ -205,7 +205,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
             msg.idtopic AS topic_id,
             msg.timestamp AS date,
             t.title AS title,
-            m.login AS login,
+            m.display_name AS login,
             ext_field.user_avatar AS avatar,
             s.user_id AS connect,
             msg.contents AS contents
@@ -248,7 +248,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$tpl->put_all(array(
             'USER_ONLINE' => '<i class="fa ' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'fa-online' : 'fa-offline') . '"></i>',
             'U_USER_PROFILE' => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
-            'USER_PSEUDO' => !empty($result_data['login']) ? TextHelper::wordwrap_html($result_data['login'], 13) : $LANG['guest'],
+            'USER_PSEUDO' => !empty($result_data['display_name']) ? TextHelper::wordwrap_html($result_data['display_name'], 13) : $LANG['guest'],
             'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
             'TITLE' => ucfirst($result_data['title']),
             'DATE' => gmdate_format('d/m/y', $result_data['date']),

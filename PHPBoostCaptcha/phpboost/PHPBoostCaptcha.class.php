@@ -288,7 +288,7 @@ class PHPBoostCaptcha extends Captcha
 	
 	private function get_user_id() 
 	{
-		return substr(KeyGenerator::string_hash(AppContext::get_current_user()->get_ip()), 0, 13);
+		return substr(KeyGenerator::string_hash(AppContext::get_request()->get_ip_address()), 0, 13);
 	}
 }
 ?>

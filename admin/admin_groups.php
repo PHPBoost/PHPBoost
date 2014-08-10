@@ -248,7 +248,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		if (!empty($members))
 		{
 			$members = explode('|', $members);
-			$result = PersistenceContext::get_querier()->select('SELECT user_id, login, level, user_groups
+			$result = PersistenceContext::get_querier()->select('SELECT user_id, display_name, level, groups
 				FROM ' . DB_TABLE_MEMBER . '
 				WHERE user_id IN (' . implode(',', $members) . ')
 				LIMIT :number_items_per_page OFFSET :display_from', array(
@@ -263,7 +263,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 				$template->assign_block_vars('member', array(
 					'C_GROUP_COLOR' => !empty($group_color),
 					'USER_ID' => $row['user_id'],
-					'LOGIN' => $row['login'],
+					'LOGIN' => $row['display_name'],
 					'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 					'GROUP_COLOR' => $group_color,
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()

@@ -37,7 +37,7 @@ class GuestbookMessagesCache implements CacheData
 		$this->messages = array();
 		$items_number_per_page = GuestbookConfig::load()->get_items_per_page();
 		
-		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.contents, g.timestamp, m.user_id, m.display_name as display_name, m.level, m.groups
+		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.contents, g.timestamp, m.user_id, m.display_name, m.level, m.groups
 		FROM " . GuestbookSetup::$guestbook_table . " g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 		GROUP BY g.id
@@ -54,9 +54,9 @@ class GuestbookMessagesCache implements CacheData
 				'id' => $msg['id'],
 				'contents' => strip_tags(FormatingHelper::second_parse($msg['contents'])),
 				'user_id' => $msg['user_id'],
-				'login' => $msg['mlogin'] ? $msg['mlogin'] : $msg['display_name'],
+				'login' => $msg['display_name'] ? $msg['display_name'] : $msg['login'],
 				'level' => $msg['level'],
-				'user_groups' => $msg['groups'],
+				'groups' => $msg['groups'],
 				'timestamp' => $msg['timestamp'],
 				'page' => $page
 			);

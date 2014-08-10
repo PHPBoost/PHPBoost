@@ -92,7 +92,7 @@ class BugtrackerStatsListController extends ModuleController
 				$this->view->assign_block_vars('top_poster', array(
 					'C_AUTHOR_GROUP_COLOR'	=> !empty($author_group_color),
 					'ID' 					=> $id,
-					'AUTHOR'				=> $poster['user']->get_pseudo(),
+					'AUTHOR'				=> $poster['user']->get_display_name(),
 					'AUTHOR_LEVEL_CLASS'	=> UserService::get_level_class($poster['user']->get_level()),
 					'AUTHOR_GROUP_COLOR'	=> $author_group_color,
 					'LINK_AUTHOR_PROFILE'	=> UserUrlBuilder::profile($poster['user']->get_id())->rel(),

@@ -141,7 +141,7 @@ class BugtrackerHistoryListController extends ModuleController
 				'COMMENT'				=> $row['change_comment'],
 				'UPDATE_DATE_SHORT'		=> $update_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 				'UPDATE_DATE'			=> $update_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-				'UPDATER'				=> $user->get_pseudo(),
+				'UPDATER'				=> $user->get_display_name(),
 				'UPDATER_LEVEL_CLASS'	=> UserService::get_level_class($user->get_level()),
 				'UPDATER_GROUP_COLOR'	=> $user_group_color,
 				'LINK_UPDATER_PROFILE'	=> UserUrlBuilder::profile($user->get_id())->rel(),

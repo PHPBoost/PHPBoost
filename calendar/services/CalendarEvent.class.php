@@ -200,7 +200,7 @@ class CalendarEvent
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('calendar', $this->id),
 			'REPEAT_TYPE' => $lang['calendar.labels.repeat.' . $this->content->get_repeat_type()],
 			'REPEAT_NUMBER' => $this->content->get_repeat_number(),
-			'AUTHOR' => $author->get_pseudo(),
+			'AUTHOR' => $author->get_display_name(),
 			'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($author->get_level()),
 			'AUTHOR_GROUP_COLOR' => $author_group_color,
 			'L_MISSING_PARTICIPANTS' => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.labels.remaining_places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.labels.remaining_place'],

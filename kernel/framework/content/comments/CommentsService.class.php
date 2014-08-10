@@ -243,7 +243,7 @@ class CommentsService
 			$result = PersistenceContext::get_querier()->select("
 				SELECT comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
 				topic.is_locked, topic.path,
-				member.user_id, member.login, member.level, member.user_groups, 
+				member.user_id, member.display_name, member.level, member.groups, 
 				ext_field.user_avatar
 				FROM " . DB_TABLE_COMMENTS . " comments
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
@@ -266,7 +266,7 @@ class CommentsService
 				
 				$template->assign_block_vars('comments', array(
 					'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),
-					'C_VISITOR' => empty($row['login']),
+					'C_VISITOR' => empty($row['display_name']),
 					'C_GROUP_COLOR' => !empty($group_color),
 					'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 					'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->rel(),
@@ -278,7 +278,7 @@ class CommentsService
 					'DATE_ISO8601' => $timestamp->format(Date::FORMAT_ISO8601),
 					'MESSAGE' => FormatingHelper::second_parse($row['message']),
 					'USER_ID' => $row['user_id'],
-					'PSEUDO' => empty($row['login']) ? $row['pseudo'] : $row['login'],
+					'PSEUDO' => empty($row['display_name']) ? $row['pseudo'] : $row['display_name'],
 					'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 					'GROUP_COLOR' => $group_color,
 					'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1'),

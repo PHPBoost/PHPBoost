@@ -143,7 +143,7 @@ class Robots
 		);
 		
 		//Ip de l'utilisateur au format numérique.
-		$user_ip = !empty($user_ip) ? $user_ip : AppContext::get_current_user()->get_ip();
+		$user_ip = !empty($user_ip) ? $user_ip : AppContext::get_request()->get_ip_address();
 		$user_ip = ip2long($user_ip);
 
 		//On explore le tableau pour identifier les robots

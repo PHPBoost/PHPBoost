@@ -146,7 +146,7 @@ class HTTPResponseCustom
 	 */
 	public function delete_cookie($cookie_name)
 	{
-		setcookie($cookie_name, '', time() - 31536000);
+		$this->set_cookie(new HTTPCookie($cookie_name, '', -1));
 	}
 
 	/**

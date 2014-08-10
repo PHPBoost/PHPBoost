@@ -45,7 +45,7 @@ class CurrentUser extends User
 		$this->level = $session->get_cached_data('level', -1);
 		$this->is_admin = ($this->level == 2);
 
-		$this->display_name = $session->get_cached_data('display_name', LangLoader::get_message('guest', 'main'));
+		$this->display_name = $session->get_cached_data('display_name', SessionData::DEFAULT_VISITOR_DISPLAY_NAME);
 		$this->email = $session->get_cached_data('email', null);
 		$this->show_email = $session->get_cached_data('show_email', false);
 		$this->unread_pm = $session->get_cached_data('unread_pm', 0);
@@ -58,7 +58,7 @@ class CurrentUser extends User
 		$this->locale = $session->get_cached_data('locale', $user_accounts_config->get_default_lang());
 		$this->theme = $session->get_cached_data('theme', $user_accounts_config->get_default_theme());
 		$this->timezone = $session->get_cached_data('timezone', GeneralConfig::load()->get_site_timezone());
-		$this->editor = $session->get_cached_data('editor', 'bbcode');
+		$this->editor = $session->get_cached_data('editor', ContentFormattingConfig::load()->get_default_editor());
 
 		$groups = explode('|', $session->get_cached_data('groups', ''));
 		array_unshift($groups, 'r' . $this->level);
@@ -130,11 +130,11 @@ class CurrentUser extends User
 		$db_querier = PersistenceContext::get_querier();
 		if ($this->get_level() > -1)
 		{
-			$db_querier->update(DB_TABLE_MEMBER, array('user_theme' => $theme), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
+			$db_querier->update(DB_TABLE_MEMBER, array('theme' => $theme), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
 		}
 		else
 		{
-			$db_querier->update(DB_TABLE_SESSIONS, array('user_theme' => $theme), 'WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
+			$db_querier->update(DB_TABLE_SESSIONS, array('theme' => $theme), 'WHERE level=-1 AND session_id=session_id', array('session_id' => AppContext::get_session()->get_session_id()));
 		}
 		AppContext::get_current_user()->set_theme($theme);
 	}
@@ -148,58 +148,21 @@ class CurrentUser extends User
 		$db_querier = PersistenceContext::get_querier();
 		if ($this->get_level() > -1)
 		{
-			$db_querier->update(DB_TABLE_MEMBER, array('user_lang' => $lang), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
+			$db_querier->update(DB_TABLE_MEMBER, array('lang' => $lang), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
 		}
 		else
 		{
-			$db_querier->update(DB_TABLE_SESSIONS, array('user_lang' => $lang), 'WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
+			$db_querier->update(DB_TABLE_SESSIONS, array('lang' => $lang), 'WHERE level=-1 AND session_id=session_id', array('session_id' => AppContext::get_session()->get_session_id()));
 		}
 		AppContext::get_current_user()->set_locale($lang);
 	}
 	
-	public function get_ip()
+	public function update_visitor_display_name()
 	{
-		if ($_SERVER)
-		{
-			if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-			{
-				$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			}
-			elseif (isset($_SERVER['HTTP_CLIENT_IP']))
-			{
-				$ip = $_SERVER['HTTP_CLIENT_IP'];
-			}
-			else
-			{
-				$ip = $_SERVER['REMOTE_ADDR'];
-			}
-		}
-		else
-		{
-			if (getenv('HTTP_X_FORWARDED_FOR'))
-			{
-				$ip = getenv('HTTP_X_FORWARDED_FOR');
-			}
-			elseif (getenv('HTTP_CLIENT_IP'))
-			{
-				$ip = getenv('HTTP_CLIENT_IP');
-			}
-			else
-			{
-				$ip = getenv('REMOTE_ADDR');
-			}
-		}
-
-		if (preg_match('`^[a-z0-9:.]{7,}$`', $ip))
-		{
-			return $ip;
-		}
-		else
-		{
-			return '0.0.0.0';
-		}
+		if ($this->id === Session::VISITOR_SESSION_ID)
+			$this->display_name = LangLoader::get_message('guest', 'main');
 	}
-	
+		
 	private function build_groups_auth()
 	{
 		$groups_auth = array();

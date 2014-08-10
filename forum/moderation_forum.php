@@ -163,7 +163,7 @@ if ($action == 'alert') //Gestion des alertes
 		$auth_cats = !empty($auth_cats) ? " WHERE c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
 		$i = 0;
-		$result = $Sql->query_while("SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.login AS login_modo, m2.level AS modo_level, m2.user_groups AS modo_groups, m.login, m.level AS user_level, m.user_groups, t.title AS topic_title, c.id AS cid
+		$result = $Sql->query_while("SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups, m.display_name, m.level AS user_level, m.groups, t.title AS topic_title, c.id AS cid
 		FROM " . PREFIX . "forum_alerts ta
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = ta.idtopic
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
@@ -217,7 +217,7 @@ if ($action == 'alert') //Gestion des alertes
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
 		$result = $Sql->query_while("
-		SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.login AS login_modo, m2.level AS modo_level, m2.user_groups AS modo_groups, m.login, m.level AS user_level, m.user_groups, t.title AS topic_title, t.idcat, c.id AS cid, ta.contents
+		SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups, m.display_name, m.level AS user_level, m.groups, t.title AS topic_title, t.idcat, c.id AS cid, ta.contents
 		FROM " . PREFIX . "forum_alerts ta
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = ta.idtopic
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
@@ -345,7 +345,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		));
 
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_readonly
+		$result = $Sql->query_while("SELECT user_id, login, level, groups, user_readonly
 		FROM " . PREFIX . "member
 		WHERE user_readonly > " . time() . "
 		ORDER BY user_readonly");
@@ -377,7 +377,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_readonly', "WHERE user_id = '" . $id_get . "'");
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'groups', 'user_readonly', "WHERE user_id = '" . $id_get . "'");
 
 		//Durée de la sanction.
 		$date_lang = LangLoader::get('date-common');
@@ -566,7 +566,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_warning', "WHERE user_id = '" . $id_get . "'");
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'groups', 'user_warning', "WHERE user_id = '" . $id_get . "'");
 
 		$select = '';
 		$j = 0;
@@ -647,7 +647,7 @@ else //Panneau de modération
 	$end = !empty($get_more) ? $get_more : 15; //Limit.
 	$i = 0;
 
-	$result = $Sql->query_while("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.login, m.level AS user_level, m.user_groups, m2.login as member, m2.level as member_level, m2.user_groups as member_groups
+	$result = $Sql->query_while("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.display_name, m.level AS user_level, m.groups, m2.display_name as member, m2.level as member_level, m2.user_groups as member_groups
 	FROM " . PREFIX . "forum_history h
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = h.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = h.user_id_action
@@ -681,7 +681,7 @@ else //Panneau de modération
 }
 
 //Listes les utilisateurs en lignes.
-list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '%" ."/forum/moderation_forum.php%'");
+list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/moderation_forum.php%'");
 
 $Template->put_all(array(
 	'TOTAL_ONLINE' => $total_online,

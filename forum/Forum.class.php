@@ -44,7 +44,7 @@ class Forum
 
 		##### Insertion message #####
 		$last_timestamp = time();
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_msg (idtopic, user_id, contents, timestamp, timestamp_edit, user_id_edit, user_ip) VALUES ('" . $idtopic . "', '" . AppContext::get_current_user()->get_id() . "', '" . FormatingHelper::strparse($contents) . "', '" . $last_timestamp . "', '0', '0', '" . AppContext::get_current_user()->get_ip() . "')");
+		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_msg (idtopic, user_id, contents, timestamp, timestamp_edit, user_id_edit, user_ip) VALUES ('" . $idtopic . "', '" . AppContext::get_current_user()->get_id() . "', '" . FormatingHelper::strparse($contents) . "', '" . $last_timestamp . "', '0', '0', '" . AppContext::get_request()->get_ip_address() . "')");
 		$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "forum_msg");
 
 		//Topic
@@ -83,7 +83,7 @@ class Forum
 
 			//Récupération des membres suivant le sujet.
 			$max_time = time() - SessionsConfig::load()->get_active_session_duration();
-			$result = $Sql->query_while("SELECT m.user_id, m.login, m.user_mail, tr.pm, tr.mail, v.last_view_id
+			$result = $Sql->query_while("SELECT m.user_id, m.display_name, m.email, tr.pm, tr.mail, v.last_view_id
 			FROM " . PREFIX . "forum_track tr
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = tr.user_id
 			LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = '" . $idtopic . "' AND v.user_id = tr.user_id

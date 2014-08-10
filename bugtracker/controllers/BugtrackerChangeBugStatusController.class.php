@@ -125,7 +125,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		
 		$user_assigned = UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) : '';
 		
-		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('assigned_to', $this->lang['labels.fields.assigned_to_id'], !empty($user_assigned) ? $user_assigned->get_pseudo() : '', array(
+		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('assigned_to', $this->lang['labels.fields.assigned_to_id'], !empty($user_assigned) ? $user_assigned->get_display_name() : '', array(
 			'maxlength' => 25, 'class' => 'field-large', 'required' => true, 'hidden' => !$this->bug->is_assigned()), array(
 			new FormFieldConstraintLengthRange(3, 25), 
 			new FormFieldConstraintUserExist())
@@ -223,8 +223,8 @@ class BugtrackerChangeBugStatusController extends ModuleController
 					'updater_id'	=> $this->current_user->get_id(),
 					'update_date'	=> $now->get_timestamp(),
 					'updated_field'	=> 'assigned_to_id',
-					'old_value'		=> $old_user_assigned ? $old_user_assigned->get_pseudo() : $this->lang['notice.no_one'],
-					'new_value'		=> $new_user_assigned ? $new_user_assigned->get_pseudo() : $this->lang['notice.no_one']
+					'old_value'		=> $old_user_assigned ? $old_user_assigned->get_display_name() : $this->lang['notice.no_one'],
+					'new_value'		=> $new_user_assigned ? $new_user_assigned->get_display_name() : $this->lang['notice.no_one']
 				));
 				
 				//Bug update

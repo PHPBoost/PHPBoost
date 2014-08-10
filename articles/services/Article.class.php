@@ -447,7 +447,7 @@ class Article
 			'NUMBER_VIEW' => $this->get_number_view(),
 			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
-			'PSEUDO' => $user->get_pseudo(),
+			'PSEUDO' => $user->get_display_name(),
 			'DESCRIPTION' => $this->get_real_description(),
 			'PICTURE' => $this->get_picture()->rel(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),

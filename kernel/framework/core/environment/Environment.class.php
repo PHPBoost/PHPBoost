@@ -197,12 +197,15 @@ class Environment
 
 	public static function load_lang_files()
 	{
-		LangLoader::set_locale(get_ulang());
+		$locale = AppContext::get_current_user()->get_locale();
+		LangLoader::set_locale($locale);
 
 		global $LANG;
 		$LANG = array();
-		require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/main.php');
-		require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php');
+		require_once(PATH_TO_ROOT . '/lang/' . $locale . '/main.php');
+		require_once(PATH_TO_ROOT . '/lang/' . $locale . '/errors.php');
+		
+		AppContext::get_current_user()->update_visitor_display_name();
 	}
 
 	public static function process_changeday_tasks_if_needed()
@@ -226,6 +229,8 @@ class Environment
 
 	private static function perform_changeday()
 	{
+		self::delete_existing_sessions();
+		
 		self::clear_all_temporary_cache_files();
 
 		self::execute_modules_changedays_tasks();
@@ -239,7 +244,7 @@ class Environment
 
 	private static function delete_existing_sessions()
 	{
-		AppContext::get_session()->garbage_collector();
+		Session::gc();
 	}
 
 	private static function clear_all_temporary_cache_files()
@@ -279,7 +284,7 @@ class Environment
 
 		//We insert this visitor as a today visitor
 		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
-			" (ip, time, total) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . gmdate_format('Y-m-d', time(),
+			" (ip, time, total) VALUES('" . AppContext::get_session()->get_ip() . "', '" . gmdate_format('Y-m-d', time(),
 		Timezone::SERVER_TIMEZONE) . "', '0')");
 	}
 

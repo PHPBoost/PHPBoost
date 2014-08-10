@@ -69,7 +69,7 @@ class BugtrackerDetailController extends ModuleController
 			'C_CHANGE_STATUS'				=> BugtrackerAuthorizationsService::check_authorizations()->moderation() || $this->current_user->get_id() == $this->bug->get_assigned_to_id(),
 			'C_USER_ASSIGNED_GROUP_COLOR'	=> !empty($user_assigned_group_color),
 			'C_USER_ASSIGNED'				=> $user_assigned,
-			'USER_ASSIGNED'					=> $user_assigned ? $user_assigned->get_pseudo() : '',
+			'USER_ASSIGNED'					=> $user_assigned ? $user_assigned->get_display_name() : '',
 			'USER_ASSIGNED_LEVEL_CLASS'		=> $user_assigned ? UserService::get_level_class($user_assigned->get_level()) : '',
 			'USER_ASSIGNED_GROUP_COLOR'		=> $user_assigned_group_color,
 			'U_CHANGE_STATUS'				=> BugtrackerUrlBuilder::change_status($this->bug->get_id())->rel(),

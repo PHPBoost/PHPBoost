@@ -404,7 +404,7 @@ class Bug
 			'PROGRESS' => $status_list[$this->status],
 			'STATUS' => LangLoader::get_message('status.' . $this->status, 'common', 'bugtracker'),
 			'REPRODUCTION_METHOD' => FormatingHelper::second_parse($this->reproduction_method),
-			'AUTHOR' => $user->get_pseudo(),
+			'AUTHOR' => $user->get_display_name(),
 			'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'AUTHOR_GROUP_COLOR' => $user_group_color,
 			'NUMBER_COMMENTS' => $number_comments,

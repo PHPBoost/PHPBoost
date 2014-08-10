@@ -129,7 +129,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 
 		//On liste les catégories et sous-catégories.
 		$result = $this->sql_querier->query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.url, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid,
-		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, m.level as user_level, m.user_groups, v.last_view_id
+		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name, m.level as user_level, m.groups, v.last_view_id
 		FROM " . PREFIX . "forum_cats c
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
 		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . AppContext::get_current_user()->get_id() . "' AND v.idtopic = t.id
@@ -271,14 +271,14 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		$site_path = GeneralConfig::get_default_site_path();
 		if (GeneralConfig::load()->get_module_home_page() == 'forum')
 		{
-			list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '". $site_path ."/forum/' OR s.session_script = '". $site_path ."/forum/index.php' OR s.session_script = '". $site_path ."/index.php' OR s.session_script = '". $site_path ."/'");
+			list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script = '". $site_path ."/forum/' OR s.location_script = '". $site_path ."/forum/index.php' OR s.location_script = '". $site_path ."/index.php' OR s.location_script = '". $site_path ."/'");
 		}
 		else
 		{
-			$where = "AND s.session_script LIKE '%". $site_path ."/forum/%'";
+			$where = "AND s.location_script LIKE '%". $site_path ."/forum/%'";
 			if (!empty($id_get))
 			{
-				$where = "AND s.session_script LIKE '%". $site_path . url('/forum/index.php?id=' . $id_get, '/forum/cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php') ."'";
+				$where = "AND s.location_script LIKE '%". $site_path . url('/forum/index.php?id=' . $id_get, '/forum/cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php') ."'";
 			}
 			list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online($where);
 		}

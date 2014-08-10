@@ -153,14 +153,14 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/groups/' . $id);
 	}
 	
-	public static function connect($parameters = '')
+	public static function connect()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/connect/' . $parameters);
+		return DispatchManager::get_url(self::$dispatcher, '/login/');
 	}
 	
 	public static function disconnect()
 	{
-		return new Url('/index.php?disconnect=true&amp;token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/login?disconnect=true&amp;token=' . AppContext::get_session()->get_token());
 	}
 	
 	public static function administration()

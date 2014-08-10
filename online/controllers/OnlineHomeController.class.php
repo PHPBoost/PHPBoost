@@ -45,10 +45,10 @@ class OnlineHomeController extends ModuleController
 	public function build_view()
 	{
 		$active_sessions_start_time = time() - SessionsConfig::load()->get_active_session_duration();
-		$number_users_online = OnlineService::get_number_users_connected('WHERE level <> -1 AND session_time > :time', array('time' => $active_sessions_start_time));
+		$number_users_online = OnlineService::get_number_users_connected('WHERE user_id <> -1 AND timestamp > :time', array('time' => $active_sessions_start_time));
 		$pagination = $this->get_pagination($number_users_online);
 		
-		$users = OnlineService::get_online_users('WHERE s.session_time > :time
+		$users = OnlineService::get_online_users('WHERE s.timestamp > :time
 		ORDER BY '. $this->config->get_display_order_request() .'
 		LIMIT :number_items_per_page OFFSET :display_from',
 			array(
@@ -74,7 +74,7 @@ class OnlineHomeController extends ModuleController
 				$this->view->assign_block_vars('users', array(
 					'C_AVATAR' => $user->has_avatar(),
 					'C_GROUP_COLOR' => !empty($group_color),
-					'PSEUDO' => $user->get_pseudo(),
+					'PSEUDO' => $user->get_display_name(),
 					'LEVEL' => UserService::get_level_lang($user->get_level()),
 					'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 					'GROUP_COLOR' => $group_color,
