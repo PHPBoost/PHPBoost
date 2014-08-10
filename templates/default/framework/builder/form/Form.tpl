@@ -32,6 +32,7 @@ Event.observe(window, 'load', function() {
 		# INCLUDE fieldsets.FIELDSET #
 	# END fieldsets #
 	
+	<input type="hidden" id="${HTML_ID}_token" name="token" value="{TOKEN}">
 	<input type="hidden" id="${HTML_ID}_disabled_fields" name="${HTML_ID}_disabled_fields" value="">
 	<input type="hidden" id="${HTML_ID}_disabled_fieldsets" name="${HTML_ID}_disabled_fieldsets" value="">
 </form>
