@@ -91,16 +91,13 @@ class HTMLForm
 	 * @param bool $enable_captcha_protection True if the CAPTCHA is enabled
 	 * @param bool $enable_csrf_protection True if the form is CSRF protected
 	 */
-	public function __construct($html_id, $target = '', $enable_captcha_protection = true, $enable_csrf_protection = true)
+	public function __construct($html_id, $target = '', $enable_captcha_protection = true)
 	{
 		$this->set_html_id($html_id);
 		$this->set_target($target);
 		
 		if ($enable_captcha_protection)
 			$this->add_catpcha_protection(); //Add captcha protection for visitor
-		
-		if ($enable_csrf_protection)
-			$this->add_csrf_protection();
 		
 		self::$instance_id++;
 	}
