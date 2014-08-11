@@ -29,6 +29,8 @@ define('PATH_TO_ROOT', '../../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
+AppContext::get_session()->no_session_location();
+
 $url_controller_mappers = array(
 	//new UrlControllerMapper('AjaxCommentsNotationController', '`^/comments/notation/?$`'),
 	new UrlControllerMapper('AjaxCommentsDisplayController', '`^/comments/display/?$`'),

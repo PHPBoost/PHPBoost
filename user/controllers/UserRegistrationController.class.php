@@ -157,41 +157,38 @@ class UserRegistrationController extends AbstractController
 	
 	private function save()
 	{
-		$activation_key = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
-		$user_aprobation = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION ? '1' : '0';
+		$registration_pass = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
+		$user_aprobation = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION;
 
-		$user_authentification = new UserAuthentification($this->form->get_value('login'), $this->form->get_value('password'));
 		$user = new User();
+		$user->set_display_name($this->form->get_value('login'));
 		$user->set_level(User::MEMBER_LEVEL);
 		$user->set_email($this->form->get_value('email'));
 		$user->set_show_email(!$this->form->get_value('user_hide_mail'));
 		$user->set_locale($this->form->get_value('lang')->get_raw_value());
 		$user->set_editor($this->form->get_value('text-editor')->get_raw_value());
-		$user->set_approbation($user_aprobation);
-		$user->set_approbation_pass($activation_key);
 		$user->set_timezone($this->form->get_value('timezone')->get_raw_value());
-			
-		$user_id = UserService::create($user_authentification, $user);
 		
 		if ($this->form->has_field('theme'))
 		{
 			$user->set_theme($this->form->get_value('theme')->get_raw_value());
 		}
 		
+		$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('login'), $this->form->get_value('password'));
+		$user_id = UserService::create($user, $auth_method, $user_aprobation, $registration_pass);
+				
 		try {
 			MemberExtendedFieldsService::register_fields($this->form, $user_id);
 			
-			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $user_authentification->get_login(), $user_authentification->get_login(), $this->form->get_value('password'), $activation_key);
+			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $this->form->get_value('login'), $this->form->get_value('login'), $this->form->get_value('password'), $registration_pass);
 			
-			StatsCache::invalidate();
-			
-			$this->confirm_registration($user_id, $user_authentification);
+			$this->confirm_registration($user_id);
 		} catch (MemberExtendedFieldErrorsMessageException $e) {
 			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
 	}
 	
-	private function confirm_registration($user_id, $user_authentification)
+	private function confirm_registration($user_id)
 	{
 		if ($this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION)
 		{
@@ -203,7 +200,7 @@ class UserRegistrationController extends AbstractController
 		}
 		else
 		{
-			UserRegistrationService::connect_user($user_id, $user_authentification->get_password_hashed());
+			UserRegistrationService::connect_user($user_id);
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 	}

@@ -30,23 +30,22 @@ class UserViewProfileController extends AbstractController
 	private $lang;
 	private $form;
 	private $user;
-	private $user_informations;
 	private $tpl;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 
-		$user_id = $request->get_getint('user_id', $this->user->get_id());
-		if (!UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $user_id)))
-		{
+		$user_id = $request->get_getint('user_id', AppContext::get_current_user()->get_id());
+
+		try {
+			$this->user = UserService::get_user_approved($user_id);
+		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$this->user_informations = $this->get_user_informations($user_id);
-		
-		$this->build_form($user_id);
+		$this->build_form();
 
 		$this->tpl->put('FORM', $this->form->display());
 
@@ -60,68 +59,68 @@ class UserViewProfileController extends AbstractController
 		$this->tpl->add_lang($this->lang);
 		$this->user = AppContext::get_current_user();
 	}
-	
-	private function build_form($user_id)
+
+	private function build_form()
 	{
 		$form = new HTMLForm('member-view-profile', '', false);
 
 		$fieldset = new FormFieldsetHTML('profile', $this->lang['profile']);
 		$form->add_fieldset($fieldset);
-		
-		if ($this->user->check_level(User::ADMIN_LEVEL))
+
+		if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$link_edit = '<a href="'. AdminMembersUrlBuilder::edit($user_id)->rel() .'" title="'.$this->lang['profile.edit'].'" class="fa fa-edit"></a>';
+			$link_edit = '<a href="'. AdminMembersUrlBuilder::edit($this->user->get_id())->rel() .'" title="'.$this->lang['profile.edit'].'" class="fa fa-edit"></a>';
 			$fieldset->add_field(new FormFieldFree('profile_edit', $this->lang['profile.edit'], $link_edit));
 		}
 
-		$fieldset->add_field(new FormFieldFree('pseudo', $this->lang['pseudo'], $this->user_informations['login']));
-		
-		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], $this->get_level_lang($this->user_informations)));
+		$fieldset->add_field(new FormFieldFree('pseudo', $this->lang['pseudo'], $this->user->get_login()));
 
-		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($this->user_informations['groups'])));
-		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration_date'], gmdate_format('date_format_short', $this->user_informations['timestamp'])));
-		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->rel() . '">'. $this->lang['messages'] .'</a>'));
-		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], gmdate_format('date_format_short', $this->user_informations['last_connect'])));
+		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], $this->get_level_lang()));
+
+		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($this->user->get_groups())));
 		
-		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_informations['show_email'])
+		$registration_date = $this->user->get_registration_date();
+		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration_date'], $registration_date ? $registration_date->format(Date::FORMAT_DAY_MONTH_YEAR) : ''));
+		
+		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user->get_nbr_messages() . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->rel() . '">'. $this->lang['messages'] .'</a>'));
+		
+		$last_connection_date = $this->user->get_last_connection_date();
+		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], $last_connection_date ? $last_connection_date->format(Date::FORMAT_DAY_MONTH_YEAR) : ''));
+
+		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user->get_show_email())
 		{
-			$link_email = '<a href="mailto:'. $this->user_informations['email'] .'" class="basic-button smaller">Mail</a>';
+			$link_email = '<a href="mailto:'. $this->user->get_email() .'" class="basic-button smaller">Mail</a>';
 			$fieldset->add_field(new FormFieldFree('email', $this->lang['email'], $link_email));
 		}
-		
-		if (!$this->same_user_view_profile($user_id) && $this->user->check_level(User::MEMBER_LEVEL))
+
+		if (!$this->same_user_view_profile($this->user->get_id()) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
-			$link_mp = '<a href="'. UserUrlBuilder::personnal_message($user_id)->rel() .'" class="basic-button smaller">MP</a>';
+			$link_mp = '<a href="'. UserUrlBuilder::personnal_message($this->user->get_id())->rel() .'" class="basic-button smaller">MP</a>';
 			$fieldset->add_field(new FormFieldFree('private_message', $this->lang['private_message'], $link_mp));
 		}
-		
+
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_template($form);
-		$member_extended_field->set_user_id($user_id);
+		$member_extended_field->set_user_id($this->user->get_id());
 		MemberExtendedFieldsService::display_profile_fields($member_extended_field);
-		
+
 		$this->form = $form;
 	}
 
-	private function get_user_informations($user_id)
-	{
-		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('*'), "WHERE user_aprob = 1 AND user_id = '" . $user_id . "' ");
-	}
-	
 	private function same_user_view_profile($user_id)
 	{
-		return $user_id == $this->user->get_id();
+		return $user_id == AppContext::get_current_user()->get_id();
 	}
-	
-	private function get_level_lang($user_informations)
+
+	private function get_level_lang()
 	{
-		if ($user_informations['warning_percentage'] < '100' || (time() - $user_informations['delay_banned']) > 0)
+		if (!$this->user->is_banned())
 		{
-			return UserService::get_level_lang($user_informations['level']);
+			return UserService::get_level_lang($this->user->get_level());
 		}
 		return $this->lang['banned'];
 	}
-	
+
 	private function build_groups($user_groups)
 	{
 		$groups_cache = GroupsCache::load();
@@ -141,7 +140,7 @@ class UserViewProfileController extends AbstractController
 		}
 		return !empty($user_groups_html) ? '<ul style="list-style-type:none;">' . $user_groups_html . '</ul>' : $this->lang['user'];
 	}
-	
+
 	private function build_response(View $view, $user_id)
 	{
 		$response = new UserDisplayResponse();

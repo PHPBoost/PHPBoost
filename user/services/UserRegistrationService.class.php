@@ -24,27 +24,32 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
- 
+
 class UserRegistrationService
 {
 	private static $lang;
-	
+
 	public static function __static()
 	{
 		self::$lang = LangLoader::get('user-common');
 	}
-	
- 	public static function user_registration($login, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email = '1', $activation_key = '', $user_aprobation = '1')
- 	{
- 		return UserService::create($login, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email, $activation_key, $user_aprobation);
- 	}
- 	
-	public static function connect_user($user_id, $password)
+
+	public static function user_registration($login, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email = '1', $activation_key = '', $user_aprobation = '1')
 	{
-		AppContext::get_session()->start($user_id, $password, 0, SCRIPT, QUERY_STRING, self::$lang['registration'], 1, true);
+		return UserService::create($login, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email, $activation_key, $user_aprobation);
 	}
-	
-	public static function send_email_confirmation($user_id, $email, $pseudo, $login, $password, $activation_key)
+
+	public static function connect_user($user_id)
+	{
+		$session = AppContext::get_session();
+		if ($session != null)
+		{
+			Session::delete($session);
+		}
+		AppContext::set_session(Session::create($user_id, true));
+	}
+
+	public static function send_email_confirmation($user_id, $email, $pseudo, $login, $password, $registration_pass)
 	{
 		$user_accounts_config = UserAccountsConfig::load();
 		$site_name = GeneralConfig::load()->get_site_name();
@@ -62,7 +67,7 @@ class UserRegistrationService
 				);
 				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
 				self::send_email_user($email, $login, $subject, $content);
-			break;
+				break;
 			case UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION:
 				$parameters = array(
 					'pseudo' => $pseudo,
@@ -70,18 +75,18 @@ class UserRegistrationService
 					'login' => $login,
 					'password' => $password,
 					'accounts_validation_explain' => 
-						StringVars::replace_vars(
-							self::$lang['registration.email.mail-validation'], 
-							array('validation_link' => UserUrlBuilder::confirm_registration($activation_key)->absolute())
-						),
+				StringVars::replace_vars(
+				self::$lang['registration.email.mail-validation'],
+				array('validation_link' => UserUrlBuilder::confirm_registration($registration_pass)->absolute())
+				),
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
 				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
 				self::send_email_user($email, $login, $subject, $content);
-			break;
+				break;
 			case UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION:
 				self::add_administrator_alert($user_id);
-				
+
 				$parameters = array(
 					'pseudo' => $pseudo,
 					'site_name' => $site_name,
@@ -92,7 +97,7 @@ class UserRegistrationService
 				);
 				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
 				self::send_email_user($email, $login, $subject, $content);
-			break;
+				break;
 		}
 	}
 
@@ -105,7 +110,7 @@ class UserRegistrationService
 		$mail->set_content($content);
 		AppContext::get_mail_service()->try_to_send($mail);
 	}
-	
+
 	private static function add_administrator_alert($user_id)
 	{
 		$alert = new AdministratorAlert();

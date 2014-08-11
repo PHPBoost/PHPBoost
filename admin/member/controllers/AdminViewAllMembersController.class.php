@@ -81,7 +81,7 @@ class AdminViewAllMembersController extends AdminController
 				$field_bdd = 'm.display_name';
 			break;
 			case 'approbation' :
-				$field_bdd = 'm.user_aprob';
+				$field_bdd = 'ia.approved';
 			break;
 			default :
 				$field_bdd = 'm.registration_date';
