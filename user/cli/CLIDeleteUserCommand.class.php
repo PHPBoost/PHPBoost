@@ -67,8 +67,7 @@ class CLIDeleteUserCommand implements CLICommand
 			$this->show_parameter('--id', $this->id);
 			try
 			{
-				UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $this->id));
-				StatsCache::invalidate();
+				UserService::delete_by_id($this->id);
 				$this->write_success_message();
 			}
 			catch (RowNotFoundException $ex) {
@@ -81,8 +80,8 @@ class CLIDeleteUserCommand implements CLICommand
 			$this->show_parameter('--login', $this->login);
 			try
 			{
-				UserService::delete_account('WHERE login=:login', array('login' => $this->login));
-				StatsCache::invalidate();
+				$user = UserService::get_user('WHERE login=:login', array('login' => $this->login));
+				UserService::delete_by_id($user->get_id());
 				$this->write_success_message();
 			}
 			catch (RowNotFoundException $ex) {
@@ -95,8 +94,8 @@ class CLIDeleteUserCommand implements CLICommand
 			$this->show_parameter('--email', $this->email);
 			try
 			{
-				UserService::delete_account('WHERE user_mail=:email', array('email' => $this->email));
-				StatsCache::invalidate();
+				$user = UserService::get_user('WHERE user_mail=:email', array('email' => $this->email));
+				UserService::delete_by_id($user->get_id());
 				$this->write_success_message();
 			}
 			catch (RowNotFoundException $ex) {

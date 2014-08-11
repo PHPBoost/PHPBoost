@@ -60,7 +60,7 @@ class AdminViewAllMembersController extends AdminController
 		$admin_lang = LangLoader::get('admin');
 		$user_common_lang = LangLoader::get('user-common');
 		
-		$field = $request->get_value('field', 'timestamp');
+		$field = $request->get_value('field', 'registered');
 		$sort = $request->get_value('sort', 'top');
 		$page = $request->get_int('page', 1);
 		
@@ -69,22 +69,22 @@ class AdminViewAllMembersController extends AdminController
 		switch ($field)
 		{
 			case 'registered' :
-				$field_bdd = 'registration_date';
+				$field_bdd = 'm.registration_date';
 			break;
 			case 'connect' :
-				$field_bdd = 'last_connection_date';
+				$field_bdd = 'm.last_connection_date';
 			break;
 			case 'level' :
-				$field_bdd = 'level';
+				$field_bdd = 'm.level';
 			break;
 			case 'login' :
-				$field_bdd = 'display_name';
+				$field_bdd = 'm.display_name';
 			break;
 			case 'approbation' :
-				$field_bdd = 'user_aprob';
+				$field_bdd = 'm.user_aprob';
 			break;
 			default :
-				$field_bdd = 'registration_date';
+				$field_bdd = 'm.registration_date';
 		}
 		
 		$pagination = $this->get_pagination($page, $field, $sort);
@@ -116,8 +116,10 @@ class AdminViewAllMembersController extends AdminController
 			'FORM' => $this->build_form()->display()
 		));
 		
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, email, registration_date, last_connection_date, level, groups
-		FROM " . DB_TABLE_MEMBER . "
+		$result = PersistenceContext::get_querier()->select("SELECT m.user_id, m.display_name, m.email, m.registration_date, m.last_connection_date, m.level, m.groups, 
+		ia.approved
+		FROM " . DB_TABLE_MEMBER . " m
+		LEFT JOIN " . DB_TABLE_INTERNAL_AUTHENTICATION ." ia ON ia.user_id = m.user_id
 		ORDER BY ". $field_bdd ." ". $mode ."
 		LIMIT :number_items_per_page OFFSET :display_from", array(
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
@@ -136,7 +138,7 @@ class AdminViewAllMembersController extends AdminController
 				'LEVEL' => UserService::get_level_lang($row['level']),
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
-				'APPROBATION' => $row['user_aprob'] == 0 ? $this->lang['no'] : $this->lang['yes'],
+				'APPROBATION' => $row['approved'] == 0 ? $this->lang['no'] : $this->lang['yes'],
 				'MAIL' => $row['email'],
 				'LAST_CONNECT' => !empty($row['last_connection_date']) ? gmdate_format('date_format_short', $row['last_connection_date']) : $this->lang['never'],
 				'REGISTERED' => gmdate_format('date_format_short', $row['registration_date']),

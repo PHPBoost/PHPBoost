@@ -76,11 +76,7 @@ class User
 	
 	public function get_level()
 	{
-		if (!empty($this->level))
-		{
-			return $this->level;
-		}
-		return User::MEMBER_LEVEL;
+		return $this->level;
 	}
 	
 	public function is_admin()
@@ -148,13 +144,11 @@ class User
 	
 	public function get_locale()
 	{
-		/* TODO if (!empty($this->locale))
+		if (!empty($this->locale))
 		{
 			return $this->locale;
 		}
 		return UserAccountsConfig::load()->get_default_lang();
-		*/
-		return $this->locale;
 	}
 	
 	public function set_theme($theme)
@@ -164,13 +158,11 @@ class User
 	
 	public function get_theme()
 	{
-		/* TODO if (!empty($this->theme))
+		if (!empty($this->theme))
 		{
 			return $this->theme;
 		}
 		return UserAccountsConfig::load()->get_default_theme();
-		*/
-		return $this->theme;
 	}
 	
 	public function set_timezone($timezone)
@@ -180,13 +172,11 @@ class User
 	
 	public function get_timezone()
 	{
-		/* TODO if (!empty($this->timezone))
+		if (!empty($this->timezone))
 		{
 			return $this->timezone;
 		}
 		return GeneralConfig::load()->get_site_timezone();
-		*/
-		return $this->timezone;
 	}
 	
 	public function set_editor($editor)
@@ -196,13 +186,11 @@ class User
 	
 	public function get_editor()
 	{
-		/* TODO if (!empty($this->editor))
+		if (!empty($this->editor))
 		{
 			return $this->editor;
 		}
 		return ContentFormattingConfig::load()->get_default_editor();
-		*/
-		return $this->editor;
 	}
 	
 	public function set_warning_percentage($warning_percentage)

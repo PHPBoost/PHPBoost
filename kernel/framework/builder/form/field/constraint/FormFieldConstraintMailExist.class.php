@@ -58,15 +58,15 @@ class FormFieldConstraintMailExist extends AbstractFormFieldConstraint
 	{
 		if (!empty($this->user_id))
 		{
-			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, 'WHERE user_mail=:user_mail AND user_id != :user_id', array(
-				'user_mail' => $field->get_value(), 
+			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, 'WHERE email=:email AND user_id != :user_id', array(
+				'email' => $field->get_value(), 
 				'user_id' => $this->user_id
 			)) > 0 ? false : true;
 		}
 		else
 		{
-			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, 'WHERE user_mail=:user_mail', array(
-				'user_mail' => $field->get_value()
+			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, 'WHERE email=:email', array(
+				'email' => $field->get_value()
 			)) > 0 ? false : true;
 		}
 	}

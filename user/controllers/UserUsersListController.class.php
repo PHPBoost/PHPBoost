@@ -51,28 +51,28 @@ class UserUsersListController extends AbstractController
 
 	private function build_view($request)
 	{
-		$field = $request->get_value('field', 'login');
+	$field = $request->get_value('field', 'registered');
 		$sort = $request->get_value('sort', 'top');
 		$page = $request->get_int('page', 1);
 		
-		$mode = ($sort == 'top') ? 'DESC' : 'ASC';
+		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
 		
 		switch ($field)
 		{
 			case 'registered' :
-				$field_bdd = 'timestamp';
+				$field_bdd = 'm.registration_date';
 			break;
-			case 'lastconnect' :
-				$field_bdd = 'last_connect';
+			case 'connect' :
+				$field_bdd = 'm.last_connection_date';
 			break;
 			case 'messages' :
-				$field_bdd = 'user_msg';
+				$field_bdd = 'm.user_msg';
 			break;
 			case 'login' :
-				$field_bdd = 'login';
+				$field_bdd = 'm.display_name';
 			break;
 			default :
-				$field_bdd = 'timestamp';
+				$field_bdd = 'm.registration_date';
 		}
 		
 		$pagination = $this->get_pagination($page, $field, $sort);
@@ -85,14 +85,17 @@ class UserUsersListController extends AbstractController
 			'SORT_REGISTERED_BOTTOM' => UserUrlBuilder::users('registered', 'bottom', $page)->rel(),
 			'SORT_MSG_TOP' => UserUrlBuilder::users('messages', 'top', $page)->rel(),
 			'SORT_MSG_BOTTOM' => UserUrlBuilder::users('messages', 'bottom', $page)->rel(),
-			'SORT_LAST_CONNECT_TOP' => UserUrlBuilder::users('lastconnect', 'top', $page)->rel(),
-			'SORT_LAST_CONNECT_BOTTOM' => UserUrlBuilder::users('lastconnect', 'bottom', $page)->rel(),
+			'SORT_LAST_CONNECT_TOP' => UserUrlBuilder::users('connect', 'top', $page)->rel(),
+			'SORT_LAST_CONNECT_BOTTOM' => UserUrlBuilder::users('connect', 'bottom', $page)->rel(),
 			'PAGINATION' => $pagination->display()
 		));
-
-		$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_MEMBER, array('*'), 'WHERE user_aprob = 1
-		ORDER BY '. $field_bdd . ' '. $mode . '
-		LIMIT :number_items_per_page OFFSET :display_from', array(
+		
+		$result = PersistenceContext::get_querier()->select("SELECT m.user_id, m.display_name, m.email, m.show_email, m.registration_date, m.last_connection_date, m.level, m.groups, m.user_msg, 
+		ia.approved
+		FROM " . DB_TABLE_MEMBER . " m
+		LEFT JOIN " . DB_TABLE_INTERNAL_AUTHENTICATION ." ia ON ia.user_id = m.user_id
+		ORDER BY ". $field_bdd ." ". $mode ."
+		LIMIT :number_items_per_page OFFSET :display_from", array(
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		));
@@ -105,13 +108,13 @@ class UserUsersListController extends AbstractController
 			$this->view->assign_block_vars('member_list', array(
 				'C_MAIL' => $row['show_email'] == 1,
 				'C_GROUP_COLOR' => !empty($group_color),
-				'PSEUDO' => $row['login'],
+				'PSEUDO' => $row['display_name'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				'MAIL' => $row['email'],
 				'MSG' => $user_msg,
-				'LAST_CONNECT' => !empty($row['last_connect']) ? gmdate_format('date_format_short', $row['last_connect']) : LangLoader::get_message('never', 'main'),
-				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+				'LAST_CONNECT' => !empty($row['last_connection_date']) ? gmdate_format('date_format_short', $row['last_connection_date']) : LangLoader::get_message('never', 'main'),
+				'DATE' => gmdate_format('date_format_short', $row['registration_date']),
 				'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_USER_PM' => UserUrlBuilder::personnal_message($row['user_id'])->rel()
 			));

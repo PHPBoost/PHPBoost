@@ -182,7 +182,7 @@ class AdminMemberEditController extends AdminController
 		$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
 		$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 		$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
-		UserService::update($this->user, 'WHERE user_id=:id', array('id' => $user_id));
+		UserService::update($this->user);
 		
 		if ($old_approbation != $this->user->get_approbation() && $old_approbation == 0)
 		{
@@ -221,7 +221,7 @@ class AdminMemberEditController extends AdminController
 			
 		if ($this->form->get_value('delete_account'))
 		{
-			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
+			UserService::delete_by_id($user_id);
 		}
 		
 		$password = $this->form->get_value('password');
@@ -261,7 +261,6 @@ class AdminMemberEditController extends AdminController
 			MemberSanctionManager::cancel_banishment($user_id);
 		}
 		
-		StatsCache::invalidate();
 		GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 		
 		if ($redirect)

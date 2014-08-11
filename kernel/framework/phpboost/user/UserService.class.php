@@ -45,10 +45,10 @@ class UserService
 	 * @param User $user
 	 * @return InjectQueryResult
 	 */
-	public static function create(User $user, AuthenticationMethod $auth_method, $registration_pass = '')
+	public static function create(User $user, AuthenticationMethod $auth_method, $approved, $registration_pass = '')
 	{
 		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
-			'display_name' => $user->get_display_name(),
+			'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
 			'level' => $user->get_level(),
 			'groups' => implode('|', $user->get_groups()),
 			'email' => $user->get_email(),
@@ -61,7 +61,7 @@ class UserService
 		));
 
 		$user_id = $result->get_last_inserted_id();
-		$auth_method->associate($user_id, $registration_pass);
+		$auth_method->associate($user_id, $approved, $registration_pass);
 		self::regenerate_stats_cache();
 		
 		return $user_id;
@@ -72,6 +72,11 @@ class UserService
 		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', $user_id);
 		self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id=:user_id', $user_id);
 		self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', $user_id);
+		
+		$upload = new Uploads();
+		$upload->Empty_folder_member($user_id);
+		
+		self::regenerate_stats_cache();
 	}
 	
 	/**
@@ -80,20 +85,21 @@ class UserService
 	 * @param string $condition the SQL condition update user
 	 * @param array $parameters 
 	 */
-	public static function update(User $user, $condition, Array $parameters)
+	public static function update(User $user)
 	{
 		self::$querier->update(DB_TABLE_MEMBER, array(
-			'login' => TextHelper::htmlspecialchars($user->get_display_name()),
- 			'level' => $user->get_level(),
-			'user_mail' => $user->get_email(),
-			'user_show_mail' => (int)$user->get_show_email(),
-			'user_groups' => implode('|', $user->get_groups()),
-			'user_lang' => $user->get_locale(),
-			'user_theme' => $user->get_theme(),
-			'user_timezone' => $user->get_timezone(),
-			'user_editor' => $user->get_editor(),
-			'user_aprob' => (int)$user->get_approbation()
-		), $condition, $parameters);
+			'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
+			'level' => $user->get_level(),
+			'groups' => implode('|', $user->get_groups()),
+			'email' => $user->get_email(),
+			'show_email' => (int)$user->get_show_email(),
+			'locale' => $user->get_locale(),
+			'timezone' => $user->get_timezone(),
+			'theme' => $user->get_theme(),
+			'editor' => $user->get_editor()
+		), 'WHERE user_id=:user_id', $user->get_id());
+		
+		self::regenerate_stats_cache();
 	}
 	
 	public static function update_punishment(User $user, $condition, Array $parameters)
@@ -132,20 +138,7 @@ class UserService
 	{
 		$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), $condition, $parameters);
 		$user = new User();
-		$user->set_id($row['user_id']);
-		$user->set_pseudo($row['login']);
-		$user->set_level($row['level']);
-		$user->set_approbation((bool)$row['user_aprob']);
-		$user->set_email($row['email']);
-		$user->set_show_email((bool)$row['show_email']);
-		$user->set_groups(explode('|', $row['groups']));
-		$user->set_locale($row['locale']);
-		$user->set_theme($row['theme']);
-		$user->set_timezone($row['timezone']);
-		$user->set_editor($row['editor']);
-		$user->set_warning_percentage($row['warning_percentage']);
-		$user->set_delay_banned($row['delay_banned']);
-		$user->set_delay_readonly($row['delay_readonly']);
+		$user->set_properties($row);
 		return $user;
 	}
 	

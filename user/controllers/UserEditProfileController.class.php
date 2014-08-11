@@ -146,9 +146,7 @@ class UserEditProfileController extends AbstractController
 		
 		if ($this->form->get_value('delete_account'))
 		{
-			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
-			$upload = new Uploads();
-			$upload->Empty_folder_member($user_id);
+			UserService::delete_by_id($user_id);
 		}
 		else
 		{
@@ -167,7 +165,7 @@ class UserEditProfileController extends AbstractController
 			$this->user->set_show_email(!$this->form->get_value('user_hide_mail'));
 			$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 			
-			UserService::update($this->user, 'WHERE user_id=:id', array('id' => $user_id));
+			UserService::update($this->user);
 		}
 		
 		try {
@@ -195,8 +193,6 @@ class UserEditProfileController extends AbstractController
 				$this->tpl->put('MSG', MessageHelper::display($this->lang['profile.edit.password.error'], MessageHelper::NOTICE));
 			}
 		}
-		
-		StatsCache::invalidate();
 		
 		if ($redirect)
 		{
