@@ -49,7 +49,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			$tpl->add_lang($lang);
 			
 			$online_config = OnlineConfig::load();
-			$condition = 'WHERE s.session_time > :time ORDER BY '. $online_config->get_display_order_request();
+			$condition = 'WHERE s.timestamp > :time ORDER BY '. $online_config->get_display_order_request();
 			$parameters = array(
 				'time' => (time() - SessionsConfig::load()->get_active_session_duration())
 			);

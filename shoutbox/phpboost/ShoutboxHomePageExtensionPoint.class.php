@@ -108,7 +108,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		//Gestion des rangs.
 		$ranks_cache = ForumRanksCache::load()->get_ranks();
-		$result = $this->sql_querier->query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.display_name as mlogin, m.level, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.unread_pm, m.warning_percentage, m.delay_banned, m.groups, se.user_id AS connect, s.contents
+		$result = $this->sql_querier->query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.display_name as mlogin, m.level, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.warning_percentage, m.delay_banned, m.groups, se.user_id AS connect, s.contents
 		FROM " . PREFIX . "shoutbox s
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 		LEFT JOIN " . DB_TABLE_SESSIONS . " se ON se.user_id = s.user_id AND se.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'

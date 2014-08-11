@@ -73,7 +73,7 @@ class AdminMemberAddController extends AdminController
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
 		));		
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['email'], '', array(
+		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], '', array(
 			'maxlength' => 255, 'required' => true),
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist())
 		));
@@ -94,14 +94,12 @@ class AdminMemberAddController extends AdminController
 
 	private function save()
 	{
-		$user_authentification = new UserAuthentification($this->form->get_value('login'), $this->form->get_value('password'));
 		$user = new User();
+		$user->set_display_name($this->form->get_value('login'));
 		$user->set_level($this->form->get_value('rank')->get_raw_value());
-		$user->set_email($this->form->get_value('mail'));
-		$user->set_approbation(true);
-		UserService::create($user_authentification, $user);
-		
-		StatsCache::invalidate();
+		$user->set_email($this->form->get_value('email'));
+		$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('login'), $this->form->get_value('password'));
+		UserService::create($user, $auth_method, true);
 	}
 }
 ?>

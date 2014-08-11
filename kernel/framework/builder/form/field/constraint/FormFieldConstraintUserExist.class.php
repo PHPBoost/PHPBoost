@@ -50,8 +50,8 @@ class FormFieldConstraintUserExist extends AbstractFormFieldConstraint
  
 	public function user_exists(FormField $field)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, 'WHERE login=:login', array(
-			'login' => $field->get_value()
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, 'WHERE display_name=:display_name', array(
+			'display_name' => $field->get_value()
 		)) > 0;
 	}
  

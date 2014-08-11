@@ -79,7 +79,7 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	/**
 	 * {@inheritDoc}
 	 */
-	public function associate($user_id, $registration_pass = '')
+	public function associate($user_id, $approved, $registration_pass = '')
 	{
 		$internal_authentication_columns = array(
 			'user_id' => $user_id,
@@ -96,7 +96,7 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
             $this->querier->insert(DB_TABLE_INTERNAL_AUTHENTICATION, $internal_authentication_columns);
             $this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
 		} catch (SQLQuerierException $ex) {
-			throw new Exception('User Id ' . $user_id .
+			throw new IllegalArgumentException('User Id ' . $user_id .
 				' is already associated with an authentication method [' . $ex->getMessage . ']');
 		}
 	}

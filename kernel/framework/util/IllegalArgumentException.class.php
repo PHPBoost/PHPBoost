@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                      AdminMemberDeleteController.class.php
+ *                      IllegalArgumentException.class.php
  *                            -------------------
- *   begin                : February 28, 2010
- *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
- *
+ *   begin                : March 12, 2011
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  ###################################################
  *
@@ -25,23 +24,10 @@
  *
  ###################################################*/
 
-class AdminMemberDeleteController extends AdminController
-{
-	public function execute(HTTPRequestCustom $request)
-	{
-		$user_id = $request->get_int('id', null);
-		
-		$lang = LangLoader::get('status-messages-common');
-		try
-		{
-			UserService::delete_by_id($user_id);
-		}
-		catch (RowNotFoundException $ex) {
-			$error_controller = PHPBoostErrors::unexisting_member();
-			DispatchManager::redirect($error_controller);
-		}
-		
-		AppContext::get_response()->redirect(AdminMembersUrlBuilder::management());
-	}
-}
+/**
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
+ * @package {@package}
+ */
+class IllegalArgumentException extends Exception { }
+
 ?>
