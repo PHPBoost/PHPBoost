@@ -32,7 +32,7 @@
 class SessionData
 {
 	const DEFAULT_VISITOR_DISPLAY_NAME = 'visitor';
-	
+
 	private static $KEY_USER_ID = 'user_id';
 	private static $KEY_SESSION_ID = 'session_id';
 
@@ -81,11 +81,16 @@ class SessionData
 		}
 		return $data;
 	}
-	
+
 	public static function update_location($title_page)
 	{
 		$data = AppContext::get_session();
-		$columns = array('timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT);
+		
+		if ($data->no_session_location)
+			$columns = array('timestamp' => $data->timestamp);
+		else
+			$columns = array('timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT);
+			
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
@@ -201,6 +206,12 @@ class SessionData
 
 	protected $cached_data_modified = false;
 	protected $data_modified = false;
+	
+	/**
+	 * True for not updating the location where the user is located
+	 * @var bool
+	 */
+	protected $no_session_location = false;
 
 	protected function __construct($user_id, $session_id)
 	{
@@ -227,7 +238,7 @@ class SessionData
 	{
 		return $this->timestamp + SessionsConfig::load()->get_session_duration();
 	}
-	
+
 	public function get_timestamp()
 	{
 		return $this->timestamp;
@@ -237,12 +248,12 @@ class SessionData
 	{
 		return $this->ip;
 	}
-	
+
 	public function get_location_script()
 	{
 		return $this->location_script;
 	}
-	
+
 	public function get_location_title()
 	{
 		return $this->location_title;
@@ -380,6 +391,11 @@ class SessionData
 		return serialize(array(self::$KEY_USER_ID => $this->user_id, self::$KEY_SESSION_ID => $this->session_id));
 	}
 
+	public function no_session_location()
+	{
+		$this->no_session_location = true;
+	}
+
 	/**
 	 * @desc Check the session against CSRF attacks by POST. Checks that POSTs are done from
 	 * this site. 2 different cases are accepted but the first is safer:
@@ -458,7 +474,7 @@ class SessionData
 	{
 		$bad_token = $this->get_printable_token($this->get_request_token());
 		$good_token = $this->get_printable_token($this->get_token());
-		
+
 		$title = LangLoader::get_message('e_warning', 'errors');
 		$message = empty($message)? LangLoader::get_message('csrf_attack', 'main') : $message;
 		$controller = new UserErrorController($title, $message, UserErrorController::WARNING);

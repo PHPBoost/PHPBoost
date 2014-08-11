@@ -35,11 +35,12 @@ class UserHomeProfileController extends AbstractController
 	{
 		$this->init();
 
-		if (!UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $this->user->get_id())))
+		if (!$this->user->check_level(User::MEMBER_LEVEL))
 		{
-			$error_controller = PHPBoostErrors::unexisting_member();
+			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
+		
 		$this->build_form();
 		return $this->build_response($this->tpl);
 	}

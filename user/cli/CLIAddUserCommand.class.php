@@ -104,22 +104,23 @@ class CLIAddUserCommand implements CLICommand
 	
 	private function add_user()
 	{
-		if (UserService::user_exists('WHERE login=:login', array('login' => $this->login)))
+		if (PersistenceContext::get_querier()->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE username=:username', array('username' => $this->login)) > 0)
 		{
 			throw new Exception($this->login . ' login already use');
 		}
-		else if (UserService::user_exists('WHERE user_mail=:email', array('email' => $this->email)))
+		else if (UserService::user_exists('WHERE email=:email', array('email' => $this->email)))
 		{
 			throw new Exception($this->email . ' email already use');
 		}
 		else
 		{
-			$user_authentification = new UserAuthentification($this->login, $this->password);
 			$user = new User();
+			$user->set_display_name($this->login);
 			$user->set_level($this->get_real_value($this->level, $this->level_possible_values));
 			$user->set_email($this->email);
-			$user->set_approbation($this->get_real_value($this->approbation, $this->approbation_possible_values));
-			UserService::create($user_authentification, $user);
+			$auth_method = new PHPBoostAuthenticationMethod($this->login, $this->password);
+			UserService::create($user, $auth_method, $this->get_real_value($this->approbation, $this->approbation_possible_values));
+			
 			CLIOutput::writeln('User added successfull');
 		}
 	}

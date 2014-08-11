@@ -69,10 +69,12 @@ class UserService
 	
 	public static function delete_by_id($user_id)
 	{
-		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', $user_id);
-		self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id=:user_id', $user_id);
-		self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', $user_id);
-		
+		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		self::$querier->delete(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		self::$querier->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+
 		$upload = new Uploads();
 		$upload->Empty_folder_member($user_id);
 		
@@ -97,7 +99,7 @@ class UserService
 			'timezone' => $user->get_timezone(),
 			'theme' => $user->get_theme(),
 			'editor' => $user->get_editor()
-		), 'WHERE user_id=:user_id', $user->get_id());
+		), 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
 		
 		self::regenerate_stats_cache();
 	}
@@ -130,40 +132,43 @@ class UserService
 	
 	/**
 	 * @desc Returns a user
-	 * @param unknown_type $condition
+	 * @param string $condition
 	 * @param array $parameters
 	 * @return User
 	 */
-	public static function get_user($condition, Array $parameters)
+	public static function get_user($user_id)
 	{
-		$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), $condition, $parameters);
+		$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 		$user = new User();
 		$user->set_properties($row);
 		return $user;
 	}
 	
-	public static function get_user_authentification($condition, Array $parameters)
+	/**
+	 * @desc Returns a approved user
+	 * @param string $condition
+	 * @param array $parameters
+	 * @return User
+	 */
+	public static function get_user_approved($user_id)
 	{
-		$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), $condition, $parameters);
-		return new UserAuthentification($row['login'], $row['password'], true);
+		$row = self::$querier->select_single_row_query('SELECT m.*
+		FROM ' . DB_TABLE_MEMBER . ' m
+		LEFT JOIN ' . DB_TABLE_INTERNAL_AUTHENTICATION .' ia ON ia.user_id = m.user_id
+		WHERE m.user_id=:user_id',
+		array('user_id' => $user_id));
+		
+		$user = new User();
+		$user->set_properties($row);
+		return $user;
 	}
-	
-	public static function delete_account($condition, Array $parameters)
-	{
-		self::$querier->delete(DB_TABLE_MEMBER, $condition, $parameters);
-	}
-	
-	public static function change_password($password, $condition, Array $parameters)
- 	{
- 		self::$querier->update(DB_TABLE_MEMBER, array('password' => $password), $condition, $parameters);
- 	}
         
 	public static function user_exists($condition, Array $parameters)
 	{
 		return self::$querier->count(DB_TABLE_MEMBER, $condition, $parameters) > 0 ? true : false;
 	}
 	
-	public static function approbation_pass_exists($approbation_pass)
+	/*public static function approbation_pass_exists($approbation_pass)
 	{
 		$parameters = array('approbation_pass' => $approbation_pass);
 		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE approbation_pass = :approbation_pass', $parameters) > 0 ? true : false;
@@ -176,6 +181,7 @@ class UserService
 		$parameters = array('new_approbation_pass' => $approbation_pass);
 		self::$querier->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
 	}
+	*/
 	
 	public static function get_level_lang($level)
 	{

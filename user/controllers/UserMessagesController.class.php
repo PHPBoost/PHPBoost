@@ -36,18 +36,21 @@ class UserMessagesController extends AbstractController
 		$this->init();
 
 		$user_id = $request->get_getint('user_id', 0);
+
 		if (empty($user_id))
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::users());
 		}
-		else if (!UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $user_id)))
-		{
+		
+		try {
+			$this->user = UserService::get_user($user_id);
+		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$this->build_form($user_id);
-		return $this->build_response($this->tpl, $user_id);
+		$this->build_form();
+		return $this->build_response($this->tpl);
 	}
 
 	private function init()
@@ -58,7 +61,7 @@ class UserMessagesController extends AbstractController
 		$this->tpl->add_lang($this->lang);
 	}
 	
-	private function build_form($user_id)
+	private function build_form()
 	{
 		$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
 		foreach ($modules as $module)
@@ -68,7 +71,7 @@ class UserMessagesController extends AbstractController
 				'NAME_USER_MSG' => $module->get_messages_list_link_name(),
 				'IMG_USER_MSG' => $img,
 				'C_IMG_USER_MSG' => !empty($img),
-				'U_LINK_USER_MSG' => $module->get_messages_list_url($user_id)
+				'U_LINK_USER_MSG' => $module->get_messages_list_url($this->user->get_id())
 			));
 		}
 		
@@ -77,13 +80,13 @@ class UserMessagesController extends AbstractController
 		));
 	}
 
-	private function build_response(View $view, $user_id)
+	private function build_response(View $view)
 	{
 		$title = $this->lang['messages'];
 		$response = new UserDisplayResponse();
 		$response->set_page_title($title);
 		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
-		$response->add_breadcrumb($title, UserUrlBuilder::messages($user_id)->rel());
+		$response->add_breadcrumb($title, UserUrlBuilder::messages($this->user->get_id())->rel());
 		return $response->display($view);
 	}
 }
