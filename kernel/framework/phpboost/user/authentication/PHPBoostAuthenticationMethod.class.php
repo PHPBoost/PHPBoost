@@ -86,7 +86,7 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 			'username' => $this->username,
             'password' => $this->password,
 			'registration_pass' => $registration_pass,
-			'approved' => UserAccountsConfig::load()->get_member_accounts_validation_method()
+			'approved' => UserAccountsConfig::load()->get_member_accounts_validation_method() == UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION
 		);
 		$authentication_method_columns = array(
 			'user_id' => $user_id,
