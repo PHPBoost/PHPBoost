@@ -5,7 +5,7 @@
 			<li><a href="{PATH_TO_ROOT}/index.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/admin_mini.png"/> {L_INDEX_SITE}</a></li>
 			<li><a href="{PATH_TO_ROOT}/admin/admin_index.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/ranks_mini.png"/> {L_ADMINISTRATION}</a></li>
 			<li class="separator"></li>
-			<li><a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/home_mini.png"/> {L_DISCONNECT}</a></li>
+			<li><a href="${relative_url(UserUrlBuilder::disconnect())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/home_mini.png"/> {L_DISCONNECT}</a></li>
 			# IF C_ADMIN_LINKS_1 #
 			<li class="separator"></li>
 				# START admin_links_1 #
