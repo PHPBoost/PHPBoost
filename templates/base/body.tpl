@@ -9,21 +9,22 @@
 				</div>
 			</div>
 			# IF C_MENUS_HEADER_CONTENT #
-			{MENUS_HEADER_CONTENT}
+				# START menus_header #
+					{menus_header.MENU} 
+				# END menus_header #
 			# ENDIF #
 		</div>
 		<div id="sub-header">
 			# IF C_MENUS_SUB_HEADER_CONTENT #
-			{MENUS_SUB_HEADER_CONTENT}
+				# START menus_sub_header #
+					{menus_sub_header.MENU} 
+				# END menus_sub_header #
 			# ENDIF #
 		</div>
 		<div class="spacer"></div>
 	</header>
 	
 	<div id="global">
-		# START menus #
-		 {menus.MENU} 
-		# END menus #
 		# IF C_COMPTEUR #
 		<div id="compteur">
 			<span class="text-strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
@@ -34,20 +35,26 @@
 		
 		# IF C_MENUS_LEFT_CONTENT #
 		<aside id="menu-left">
-			{MENUS_LEFT_CONTENT}
+			# START menus_left #
+				{menus_left.MENU} 
+			# END menus_left #
 		</aside>
 		# ENDIF #
 		
 		# IF C_MENUS_RIGHT_CONTENT #
 		<aside id="menu-right">
-			{MENUS_RIGHT_CONTENT}
+			# START menus_right #
+				{menus_right.MENU} 
+			# END menus_right #
 		</aside>
 		# ENDIF #
 		
 		<div id="main" role="main">
 			# IF C_MENUS_TOPCENTRAL_CONTENT #
 			<div id="top-content">
-				{MENUS_TOPCENTRAL_CONTENT}
+				# START menus_top_central #
+					{menus_top_central.MENU} 
+				# END menus_top_central #
 			</div>
 			<div class="spacer"></div>
 			# ENDIF #
@@ -77,13 +84,17 @@
 			</div>
 			# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
 	        <div id="bottom-content">
-				{MENUS_BOTTOMCENTRAL_CONTENT}
+				# START menus_bottom_central #
+					{menus_bottom_central.MENU} 
+				# END menus_bottom_central #
 			</div>
 			# ENDIF #
 		</div>
 		# IF C_MENUS_TOP_FOOTER_CONTENT #
 		<div id="top-footer">
-			{MENUS_TOP_FOOTER_CONTENT}
+			# START menus_top_footer #
+				{menus_top_footer.MENU} 
+			# END menus_top_footer #
 			<div class="spacer"></div>
 		</div>
 		# ENDIF #
@@ -93,7 +104,9 @@
 	<footer id="footer">
 		# IF C_MENUS_FOOTER_CONTENT #
 		<div class="footer-content">
-			{MENUS_FOOTER_CONTENT}
+			# START menus_footer #
+				{menus_footer.MENU} 
+			# END menus_footer #
 		</div>
 		# ENDIF #
 		<div class="footer-infos">

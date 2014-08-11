@@ -178,13 +178,47 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			
 				if ($display)
 				{
-					if ($cached_menu->has_cached_string())
-					{
-						$template->assign_block_vars('menus', array('MENU' => $cached_menu->get_cached_string()));
-					}
-					else
-					{
-						$template->assign_block_vars('menus', array('MENU' => $menu->display()));
+					$menu_content = $cached_menu->has_cached_string() ? $cached_menu->get_cached_string() : $menu->display();
+					$block = $menu->get_block();
+					switch ($block) {
+						case Menu::BLOCK_POSITION__HEADER:
+							$template->put('C_MENUS_HEADER_CONTENT', true);
+							$template->assign_block_vars('menus_header', array('MENU' => $menu_content));
+						break;
+						
+						case Menu::BLOCK_POSITION__SUB_HEADER:
+							$template->put('C_MENUS_SUB_HEADER_CONTENT', true);
+							$template->assign_block_vars('menus_sub_header', array('MENU' => $menu_content));
+						break;
+						
+						case Menu::BLOCK_POSITION__LEFT:
+							$template->put('C_MENUS_LEFT_CONTENT', true);
+							$template->assign_block_vars('menus_left', array('MENU' => $menu_content));
+						break;
+						
+						case Menu::BLOCK_POSITION__RIGHT:
+							$template->put('C_MENUS_RIGHT_CONTENT', true);
+							$template->assign_block_vars('menus_right', array('MENU' => $menu_content));
+						break;
+						
+						case Menu::BLOCK_POSITION__TOP_CENTRAL:
+							$template->put('C_MENUS_TOPCENTRAL_CONTENT', true);
+							$template->assign_block_vars('menus_top_central', array('MENU' => $menu_content));
+						break;
+						
+						case Menu::BLOCK_POSITION__BOTTOM_CENTRAL:
+							$template->put('C_MENUS_BOTTOM_CENTRAL_CONTENT', true);
+							$template->assign_block_vars('menus_bottom_central', array('MENU' => $menu_content));
+						break;
+						
+						case Menu::BLOCK_POSITION__TOP_FOOTER:
+							$template->put('C_MENUS_TOP_FOOTER_CONTENT', true);
+							$template->assign_block_vars('menus_top_footer', array('MENU' => $menu_content));
+						break;
+						
+						case Menu::BLOCK_POSITION__FOOTER:
+							$template->put('C_MENUS_FOOTER_CONTENT', true);
+							$template->assign_block_vars('menus_footer', array('MENU' => $menu_content));
 					}
 				}
 			}
