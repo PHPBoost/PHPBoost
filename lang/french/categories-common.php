@@ -38,23 +38,9 @@ $lang['categories.manage'] = 'Gérer les catégories';
 $lang['category.add'] = 'Ajouter une catégorie';
 $lang['category.edit'] = 'Modifier une catégorie';
 $lang['category.delete'] = 'Supprimer une catégorie';
-$lang['category.move_up'] = 'Monter';
-$lang['category.move_down'] = 'Descendre';
-$lang['category.update_position'] = 'Valider les positions';
-
-//Errors
-$lang['errors.unexisting'] = 'La catégorie n\'existe pas.';
-$lang['message.no_element'] = 'Aucun élément';
 
 //Form
-$lang['category.form.name'] = 'Nom';
-$lang['category.form.rewrited_name'] = 'Nom réécrit dans l\'url';
-$lang['category.form.rewrited_name.description'] = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';
-$lang['category.form.rewrited_name.personalize'] = 'Personnaliser le nom dans l\'url';
-$lang['category.form.parent'] = 'Emplacement';
 $lang['category.form.authorizations.description'] = 'Les autorisations générales du module s\'appliquent par défaut. Vous pouvez appliquer des permissions particulières.';
-$lang['category.form.description'] = 'Description';
-$lang['category.form.picture'] = 'Image';
 
 //Delete category
 $lang['delete.description'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (articles et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de la catégorie. <strong>Attention, cette action est irréversible !</strong>';

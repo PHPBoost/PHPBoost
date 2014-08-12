@@ -53,8 +53,8 @@
 					</div>
 				</td>
 				<td class="input-radio">
-					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="1" checked="checked"> {@themes.yes}</label>
-					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="0"> {@themes.no}</label>
+					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="1" checked="checked"> ${LangLoader::get_message('yes', 'common')}</label>
+					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="0"> ${LangLoader::get_message('no', 'common')}</label>
 				</td>
 				<td>
 					<button type="submit" class="submit" name="add-{themes_not_installed.ID}" value="true">{@themes.install_theme}</button>
@@ -65,7 +65,7 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="notice message-helper-small">{@themes.no_theme_to_install}</div>
+	<div class="notice message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 		
 	<fieldset class="fieldset-submit">

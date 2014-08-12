@@ -38,6 +38,6 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="success message-helper-small">{@modules.no_upgradable_module_available}</div>
+	<div class="success message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 </form>

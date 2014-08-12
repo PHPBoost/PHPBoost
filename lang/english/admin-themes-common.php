@@ -55,11 +55,6 @@ $lang['themes.view_real_preview'] = 'View full size';
 $lang['themes.default_theme_explain'] = 'The default theme can not be uninstalled, disabled or reserved';
 $lang['themes.themes_available'] = 'Available themes';
 
-//Others
-$lang['themes.yes'] = 'Yes';
-$lang['themes.no'] = 'No';
-$lang['themes.visitor'] = 'Visitor';
-
 //Themes management
 $lang['themes.activate_theme'] = 'Activate';
 $lang['themes.install_theme'] = 'Install';
@@ -79,7 +74,6 @@ $lang['themes.upload_error'] = 'Error with the upload file';
 $lang['themes.not_compatible'] = 'The theme is apparently incompatible with your current version of PHPBoost, he was anyhow installed. If a problem comes please contact the author of the theme.';
 $lang['themes.old_version'] = 'The theme is incompatible with your current version of PHPBoost, it has not been installed.';
 $lang['themes.install_success'] = 'Theme successfully installed !';
-$lang['themes.no_theme_to_install'] = 'No theme to install !';
 
 //Delete theme
 $lang['themes.drop_files'] = 'Delete all the theme\'s files';

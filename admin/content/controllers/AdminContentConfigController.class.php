@@ -103,8 +103,8 @@ class AdminContentConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldRadioChoice('anti_flood_enabled', $this->lang['content.config.anti-flood-enabled'], $this->content_management_config->is_anti_flood_enabled(),
 			array(
-				new FormFieldRadioChoiceOption($this->lang['enabled'], '1'),
-				new FormFieldRadioChoiceOption($this->lang['disabled'], '0')
+				new FormFieldRadioChoiceOption(LangLoader::get_message('enabled', 'common'), '1'),
+				new FormFieldRadioChoiceOption(LangLoader::get_message('disabled', 'common'), '0')
 			), array('description' => $this->lang['content.config.anti-flood-enabled-explain'])
 		));
 		

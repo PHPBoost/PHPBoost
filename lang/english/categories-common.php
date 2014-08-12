@@ -38,23 +38,9 @@ $lang['categories.manage'] = 'Manage categories';
 $lang['category.add'] = 'Add category';
 $lang['category.edit'] = 'Edit category';
 $lang['category.delete'] = 'Delete category';
-$lang['category.move_up'] = 'Move up';
-$lang['category.move_down'] = 'Move down';
-$lang['category.update_position'] = 'Change positions';
-
-//Errors
-$lang['errors.unexisting'] = 'The category doesn\'t exist.';
-$lang['message.no_element'] = 'No element';
 
 //Form
-$lang['category.form.name'] = 'Name';
-$lang['category.form.rewrited_name'] = 'Rewrited name in the url';
-$lang['category.form.rewrited_name.description'] = 'Only contains lowercase letters, numbers and hyphens.';
-$lang['category.form.rewrited_name.personalize'] = 'Personalize rewrited name in the url';
-$lang['category.form.parent'] = 'Location';
 $lang['category.form.authorizations.description'] = 'General module authorizations are applied per default. You can apply special permissions.';
-$lang['category.form.description'] = 'Description';
-$lang['category.form.picture'] = 'Picture';
 
 //Delete category
 $lang['delete.description'] = 'You are about to delete the category. Two solutions are available to you. You can either move all of its contents (articles and subcategories) in another category or delete the whole category. <strong>Note that this action is irreversible!</ strong>';

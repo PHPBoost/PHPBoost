@@ -100,7 +100,7 @@
 
 		# ELSE #
 	</table>
-	<div class="notice message-helper-small">{@modules.no_deactivated_modules_available}</div>
+	<div class="notice message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 		
 	<table>
@@ -143,8 +143,8 @@
 				-->
 				</script>
 				<td class="input-radio">
-					<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
-					<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
+					<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
+					<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
 				</td>
 				<td>
 					<button type="submit" class="submit" name="delete-{modules_activated.ID}" value="true">{@modules.delete}</button>
@@ -155,7 +155,7 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="notice">{@modules.modules_available}</div>
+	<div class="notice">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 		
 	<fieldset class="fieldset-submit">

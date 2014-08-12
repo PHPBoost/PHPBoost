@@ -19,10 +19,10 @@ Event.observe(window, 'load', function() {
 		# IF C_DESCRIPTION #<span class="cat-desc"> | {DESCRIPTION}</span># ENDIF #
 		<div class="sortable-actions">
 			<div class="sortable-options">
-				<a href="" title="{@category.move_up}" id="move-up-{ID}" onclick="return false;" class="fa fa-arrow-up"></a>
+				<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move-up-{ID}" onclick="return false;" class="fa fa-arrow-up"></a>
 			</div>
 			<div class="sortable-options">
-				<a href="" title="{@category.move_down}" id="move-down-{ID}" onclick="return false;" class="fa fa-arrow-down"></a>
+				<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{ID}" onclick="return false;" class="fa fa-arrow-down"></a>
 			</div>
 			<div class="sortable-options">
 				<a href="{U_EDIT}" title="${LangLoader::get_message('update', 'main')}" class="fa fa-edit"></a>

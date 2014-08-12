@@ -61,7 +61,7 @@ var ExtendedField = Class.create({
 		# ENDIF #
 	},
 	delete_fields : function() {
-		if (confirm(${escapejs(@fields.delete_field.confirm)}))
+		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 		{
 			new Ajax.Request('${relative_url(AdminExtendedFieldsUrlBuilder::delete())}', {
 				method:'post',
@@ -164,21 +164,21 @@ Event.observe(window, 'load', function() {
 						<i class="fa fa-globe"></i>
 						<span class="text-strong">{list_extended_fields.NAME}</span>
 						<div class="sortable-actions">
-							{@field.required} : <span class="text-strong"># IF list_extended_fields.C_REQUIRED #{@field.yes}# ELSE #{@field.no}# ENDIF #</span>
+							{@field.required} : <span class="text-strong"># IF list_extended_fields.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
-								<a href="" title="{@fields.move_field_up}" id="move_up_{list_extended_fields.ID}" onclick="return false;" class="fa fa-arrow-up"></a>
+								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move_up_{list_extended_fields.ID}" onclick="return false;" class="fa fa-arrow-up"></a>
 							</div>
 							<div class="sortable-options">
-								<a href="" title="{@fields.move_field_down}" id="move_down_{list_extended_fields.ID}" onclick="return false;" class="fa fa-arrow-down"></a>
+								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move_down_{list_extended_fields.ID}" onclick="return false;" class="fa fa-arrow-down"></a>
 							</div>
 							# ENDIF #
 							<div class="sortable-options">
-								<a href="{list_extended_fields.U_EDIT}" title="{@fields.action.edit_field}" class="fa fa-edit"></a>
+								<a href="{list_extended_fields.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 							</div>
 							<div class="sortable-options">
 								# IF NOT list_extended_fields.C_FREEZE #
-								<a href="" onclick="return false;" title="{@fields.action.delete_field}" id="delete_{list_extended_fields.ID}" class="fa fa-delete"></a>
+								<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{list_extended_fields.ID}" class="fa fa-delete"></a>
 								# ELSE #
 								&nbsp;
 								# ENDIF #
@@ -221,11 +221,11 @@ Event.observe(window, 'load', function() {
 				</script>
 			# END list_extended_fields #
 		</ul>
-		<div id="no_field" class="center"# IF C_FIELDS # style="display:none;"# ENDIF #>{@fields.no_field}</div>
+		<div id="no_field" class="center"# IF C_FIELDS # style="display:none;"# ENDIF #>${LangLoader::get_message('no_item_now', 'common')}</div>
 	</fieldset>
 	# IF C_MORE_THAN_ONE_FIELD #
 	<fieldset class="fieldset-submit">
-		<button type="submit" class="submit" name="submit" value="true">{@fields.update_fields_position}</button>
+		<button type="submit" class="submit" name="submit" value="true">${LangLoader::get_message('position.update', 'common')}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="position" id="position" value="">
 	</fieldset>

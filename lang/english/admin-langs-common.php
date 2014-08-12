@@ -43,7 +43,6 @@ $lang['langs.installed_langs'] = 'Installed Languages';
 $lang['langs.already_exist'] = 'This language already exists';
 $lang['langs.not_compatible'] = 'This language is not compliant with your version of PHPBoost';
 $lang['langs.install_success'] = 'Language successfully installed !';
-$lang['langs.no_lang_to_install'] = 'No language to add';
 $lang['langs.langs_available'] = 'languages available';
 
 //Themes management
@@ -68,8 +67,4 @@ $lang['langs.activated'] = 'Activated';
 $lang['langs.compatibility'] = 'Compatibility';
 $lang['langs.author'] = 'Author';
 $lang['langs.description'] = 'Description';
-
-$lang['langs.no'] = 'No';
-$lang['langs.yes'] = 'Yes';
-$lang['langs.visitor'] = 'Visitor';
 ?>

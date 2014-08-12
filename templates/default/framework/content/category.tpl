@@ -12,7 +12,7 @@
 				<span id="l{categories.ID}"></span>
 				# IF categories.C_NOT_FIRST_CAT #
 					<div class="sortable-options">
-						<a href="{categories.ACTION_GO_UP}" title="${LangLoader::get_message('category.move_up', 'categories-common')}" class="fa fa-arrow-up"></a>
+						<a href="{categories.ACTION_GO_UP}" title="${LangLoader::get_message('position.move_up', 'common')}" class="fa fa-arrow-up"></a>
 					</div>
 					# IF C_AJAX_MODE #
 						<script>
@@ -23,7 +23,7 @@
 				
 				# IF categories.C_NOT_LAST_CAT #
 					<div class="sortable-options">
-						<a href="{categories.ACTION_GO_DOWN}" title="${LangLoader::get_message('category.move_down', 'categories-common')}" class="fa fa-arrow-down"></a>
+						<a href="{categories.ACTION_GO_DOWN}" title="${LangLoader::get_message('position.move_down', 'common')}" class="fa fa-arrow-down"></a>
 					</div>
 					# IF C_AJAX_MODE #
 						<script>

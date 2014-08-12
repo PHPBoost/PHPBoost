@@ -90,13 +90,6 @@ $lang['extended-fields-error-phpboost-config'] = 'The fields used by default PHP
 
 $lang['fields.management'] = 'Profile field management';
 $lang['fields.action.add_field'] = 'Add a field';
-$lang['fields.action.edit_field'] = 'Edit field';
-$lang['fields.action.delete_field'] = 'Delete field';
-$lang['fields.delete_field.confirm'] = 'Delete this field?';
-$lang['fields.update_fields_position'] = 'Change fields position';
-$lang['fields.no_field'] = 'No field';
-$lang['fields.move_field_up'] = 'Move field up';
-$lang['fields.move_field_down'] = 'Move field down';
 
 //Type 
 $lang['type.short-text'] = 'Short text (max 255 characters)';
@@ -141,15 +134,4 @@ $lang['regex.word'] = 'Word';
 $lang['regex.website'] = 'Website';
 $lang['regex.mail'] = 'Mail';
 $lang['regex.personnal-regex'] = 'Custom regular expression';
-
-
-$lang['field.yes'] = 'Yes';
-$lang['field.no'] = 'No';
-
-$lang['field.success'] = 'Success';
-$lang['field.delete_field'] = 'Do you really want to delete this field?';
-$lang['field.position'] = 'Position';
-
-$lang['field.is-required'] = 'Required';
-$lang['field.is-not-required'] = 'Not required';
 ?>

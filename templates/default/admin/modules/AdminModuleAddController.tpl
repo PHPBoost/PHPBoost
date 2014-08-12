@@ -26,8 +26,8 @@
 					<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {available.COMPATIBILITY}<br />
 				</td>
 				<td class="input-radio">
-					<label><input type="radio" name="activated-{available.ID}" value="1" checked="checked"> {@modules.yes}</label>
-					<label><input type="radio" name="activated-{available.ID}" value="0"> {@modules.no}</label>
+					<label><input type="radio" name="activated-{available.ID}" value="1" checked="checked"> ${LangLoader::get_message('yes', 'common')}</label>
+					<label><input type="radio" name="activated-{available.ID}" value="0"> ${LangLoader::get_message('no', 'common')}</label>
 				</td>
 				<td>
 					<input type="hidden" name="token" value="{TOKEN}">
@@ -39,6 +39,6 @@
 	</table>
 		# ELSE #
 	</table>
-	<div class="notice message-helper-small">{@modules.no_module_to_install}</div>
+	<div class="notice message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 </form>

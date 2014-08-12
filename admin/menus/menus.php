@@ -206,8 +206,8 @@ $tpl = new FileTemplate('admin/menus/menus.tpl');
 
 $menu_template = new FileTemplate('admin/menus/menu.tpl');
 $menu_template->put_all(array(
-    'L_ENABLED' => $LANG['enabled'],
-    'L_DISABLED' => $LANG['disabled'],
+    'L_ENABLED' => LangLoader::get_message('enabled', 'common'),
+    'L_DISABLED' => LangLoader::get_message('disabled', 'common'),
     'I_HEADER' => Menu::BLOCK_POSITION__HEADER,
     'I_SUBHEADER' => Menu::BLOCK_POSITION__SUB_HEADER,
     'I_TOPCENTRAL' => Menu::BLOCK_POSITION__TOP_CENTRAL,

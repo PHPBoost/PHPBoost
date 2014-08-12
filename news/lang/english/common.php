@@ -38,26 +38,18 @@ $lang['news.pending'] = 'Pending news';
 $lang['news.manage'] = 'Manage news';
 $lang['news.management'] = 'News management';
 
-$lang['news.message.no_items'] = 'No news available for the moment';
-
 $lang['news.seo.description.root'] = 'All website :site news.';
 $lang['news.seo.description.tag'] = 'All news on :subject.';
 $lang['news.seo.description.pending'] = 'All pending news.';
 
-$lang['news.form.name'] = 'News name';
-$lang['news.form.rewrited_name'] = 'News name in the url';
-$lang['news.form.rewrited_name.description'] = 'Only contains lowercase letters, numbers and hyphens.';
-$lang['news.form.rewrited_name.personalize'] = 'Personalize news name in url';
+$lang['news.form.approved.not'] = 'Kept in draft';
+$lang['news.form.approved.now'] = 'Published';
+$lang['news.form.approved.date'] = 'Published differed';
 $lang['news.form.short_contents'] = 'News short content';
 $lang['news.form.short_contents.description'] = 'For the short content of the news is displayed, please activate the option in the module configuration';
 $lang['news.form.short_contents.enabled'] = 'Personalize news short content';
 $lang['news.form.short_contents.enabled.description'] = 'If unchecked, the news is automatically cut to :number characters and formatting of the text deleted.';
-$lang['news.form.approved.not'] = 'Kept in draft';
-$lang['news.form.approved.now'] = 'Published';
-$lang['news.form.approved.date'] = 'Published differed';
 $lang['news.form.top_list'] = 'Put the news on the top of the list';
-$lang['news.form.keywords.description'] = 'You can add keywords to your news';
-$lang['news.form.picture'] = 'News picture';
 $lang['news.form.contribution.explain'] = 'You are not authorized to create a news, however you can contribute by submitting one.';
 
 //Administration
