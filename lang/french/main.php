@@ -47,6 +47,7 @@ $LANG['unit_seconds_short'] = 's';
 	
 //Erreurs
 $LANG['error'] = 'Erreur';
+$LANG['unknown'] = 'Inconnu';
 
 //Titres divers
 $LANG['title_pm'] = 'Messages privés';
