@@ -47,13 +47,6 @@ $LANG['unit_seconds_short'] = 's';
 	
 //Erreurs
 $LANG['error'] = 'Erreur';
-$LANG['error_fatal'] = '<strong>Erreur fatale :</strong> %s<br /><br /><br /><strong>Ligne %s : %s</strong>';
-$LANG['error_warning_tiny'] = '<strong>Attention :</strong> %s %s %s';
-$LANG['error_warning'] = '<strong>Attention :</strong> %s<br /><br /><br /><strong>Ligne %s : %s</strong>';
-$LANG['error_notice_tiny'] = '<strong>Remarque :</strong> %s %s %s';
-$LANG['error_notice'] = '<strong>Remarque :</strong> %s<br /><br /><br /><strong>Ligne %s : %s</strong>';
-$LANG['error_success'] = '<strong>Succès :</strong> %s %s %s';
-$LANG['error_unknow'] = '<strong>Erreur :</strong> Cause inconnue %s %s %s';
 
 //Titres divers
 $LANG['title_pm'] = 'Messages privés';
@@ -93,7 +86,6 @@ $LANG['require_password'] = 'Veuillez entrer un mot de passe !';
 $LANG['require_recipient'] = 'Veuillez entrer le destinataire du message !';
 
 //Action
-$LANG['redirect'] = 'Redirection en cours';
 $LANG['delete'] = 'Supprimer';
 $LANG['edit'] = 'Editer';
 $LANG['register'] = 'S\'inscrire';
@@ -214,9 +206,7 @@ $LANG['code_tag'] = 'Code :';
 $LANG['code_langage'] = 'Code %s :';
 $LANG['com'] = 'Commentaire';
 $LANG['com_s'] = 'Commentaires';
-$LANG['no_comment'] = 'Aucun commentaire';
 $LANG['post_com'] = 'Poster commentaire';
-$LANG['com_locked'] = 'Les commentaires sont verrouillés pour cet élément';
 $LANG['add_msg'] = 'Ajout message';
 $LANG['update_msg'] = 'Modifier le message';
 $LANG['category'] = 'Catégorie';
@@ -247,18 +237,11 @@ $LANG['member_area'] = 'Zone membre';
 $LANG['profile'] = 'Profil';
 $LANG['fill_only_if_modified'] = 'Remplir seulement en cas de modification';
 $LANG['mail_track_topic'] = 'Etre averti par email lors d\'une réponse dans un sujet que vous suivez';
-$LANG['web_site'] = 'Site web';
 $LANG['localisation'] = 'Localisation';
-$LANG['job'] = 'Emploi';
-$LANG['hobbies'] = 'Loisirs';
 $LANG['sex'] = 'Sexe';
 $LANG['male'] = 'Homme';
 $LANG['female'] = 'Femme';
-$LANG['age'] = 'Age';
-$LANG['biography'] = 'Biographie';
 $LANG['years_old'] = 'Ans';
-$LANG['sign'] = 'Signature';
-$LANG['sign_where'] = 'Apparaît sous chacun de vos messages';
 $LANG['contact'] = 'Contact';
 $LANG['avatar'] = 'Avatar';
 $LANG['avatar_gestion'] = 'Gestion avatar';
@@ -342,13 +325,6 @@ $LANG['success_upload'] = 'Votre fichier a bien été enregistré !';
 $LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible !';
 $LANG['popup_insert'] = 'Insérer le code dans le formulaire';
 
-//gestion des catégories
-$LANG['cats_managment_could_not_be_moved'] = 'Une erreur est survenue, la catégorie n\'a pas pu être déplacée';
-$LANG['cats_managment_visibility_could_not_be_changed'] = 'Une erreur est survenue, la visibilité de la catégorie n\'a pas pu être changée';
-$LANG['cats_managment_no_category_existing'] = 'Aucune catégorie n\'existe';
-$LANG['cats_management_hide_cat'] = 'Rendre la catégorie invisible';
-$LANG['cats_management_show_cat'] = 'Rendre la catégorie visible';
-
 ##########Panneau de modération##########
 $LANG['moderation_panel'] = 'Panneau de modération';
 $LANG['user_contact_pm'] = 'Contacter par message privé';
@@ -424,13 +400,6 @@ $LANG['contribute_in_modules_explain'] = 'Les modules suivants permettent aux ut
 $LANG['contribute_in_module_name'] = 'Contribuer dans le module %s';
 $LANG['no_module_to_contribute'] = 'Aucun module supportant la contribution n\'est installé.';
 
-//Barre de chargement.
-$LANG['query_loading'] = 'Chargement de la requête au serveur';
-$LANG['query_sent'] = 'Requête envoyée au serveur, attente d\'une réponse';
-$LANG['query_processing'] = 'Traitement de la requête en cours';
-$LANG['query_success'] = 'Traitement terminé';
-$LANG['query_failure'] = 'Traitement échoué';
-
 //Footer
 $LANG['powered_by'] = 'Boosté par';
 $LANG['phpboost_right'] = '';
@@ -446,9 +415,6 @@ $LANG['enabled'] = 'Activé';
 $LANG['disabled'] = 'Désactivé';
 
 //Dictionnaire pour le captcha.
-$LANG['_code_dictionnary'] = array('image', 'php', 'requete', 'azerty', 'exit', 'genre', 'design', 'web', 'inter', 'cache', 'media', 'cms', 'cesar', 'watt', 'site', 'mail', 'email', 'spam', 'index', 'membre',
-'date', 'jour', 'mois', 'nom', 'noter', 'objet', 'options', 'titre', 'valide', 'liste', 'citer', 'fermer', 'minute', 'heure', 'semaine', 'groupe', 'taille', 'modules', 'pendant', 'style', 'divers', 'autre', 'erreur',
-'editer', 'banni', 'niveau', 'dossier', 'fichier', 'racine', 'vider', 'archive', 'boite');
 $LANG['verif_code'] = 'Code de vérification';
 $LANG['verif_code_explain'] = 'Recopier le code sur l\'image, attention aux majuscules';
 $LANG['require_verif_code'] = 'Veuillez saisir le code de vérification !';
@@ -456,4 +422,12 @@ $LANG['require_verif_code'] = 'Veuillez saisir le code de vérification !';
 $LANG['csrf_attack'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
 
 $LANG['forbidden_tags'] = 'Types de formatage interdits';
+
+//@deprecated
+//gestion des catégories
+$LANG['cats_managment_could_not_be_moved'] = 'Une erreur est survenue, la catégorie n\'a pas pu être déplacée';
+$LANG['cats_managment_visibility_could_not_be_changed'] = 'Une erreur est survenue, la visibilité de la catégorie n\'a pas pu être changée';
+$LANG['cats_managment_no_category_existing'] = 'Aucune catégorie n\'existe';
+$LANG['cats_management_hide_cat'] = 'Rendre la catégorie invisible';
+$LANG['cats_management_show_cat'] = 'Rendre la catégorie visible';
 ?>

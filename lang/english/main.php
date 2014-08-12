@@ -48,13 +48,6 @@ $LANG['unit_seconds_short'] = 's';
 
 //Erreurs
 $LANG['error'] = 'Error';
-$LANG['error_fatal'] = '<strong>Fatal error:</strong> %s<br /><br /><br /><strong>Line %s: %s</strong>';
-$LANG['error_warning_tiny'] = '<strong>Warning:</strong> %s %s %s';
-$LANG['error_warning'] = '<strong>Warning:</strong> %s<br /><br /><br /><strong>Line %s: %s</strong>';
-$LANG['error_notice_tiny'] = '<strong>Notice:</strong> %s %s %s';
-$LANG['error_notice'] = '<strong>Notice:</strong> %s<br /><br /><br /><strong>Line %s: %s</strong>';
-$LANG['error_success'] = '<strong>Success:</strong> %s<br />Line %s: %s';
-$LANG['error_unknow'] = '<strong>Error:</strong> Unknow cause %s<br />Line %s: %s';
 
 //Other title
 $LANG['title_pm'] = 'Private messages';
@@ -94,7 +87,6 @@ $LANG['require_password'] = 'Please enter a password !';
 $LANG['require_recipient'] = 'Please enter the recipient !';
 
 //Action
-$LANG['redirect'] = 'Redirection in progress';
 $LANG['delete'] = 'Delete';
 $LANG['edit'] = 'Edit';
 $LANG['register'] = 'Sign up';
@@ -215,9 +207,7 @@ $LANG['code_tag'] = 'Code :';
 $LANG['code_langage'] = 'Code %s :';
 $LANG['com'] = 'Comment';
 $LANG['com_s'] = 'Comments';
-$LANG['no_comment'] = 'No comment';
 $LANG['post_com'] = 'Post a comment';
-$LANG['com_locked'] = 'Comments are locked for this section';
 $LANG['add_msg'] = 'Add a message';
 $LANG['update_msg'] = 'Update the message';
 $LANG['category'] = 'Category';
@@ -248,18 +238,11 @@ $LANG['member_area'] = 'Member Area';
 $LANG['profile'] = 'Profile';
 $LANG['fill_only_if_modified'] = 'Fill only in case of modification';
 $LANG['mail_track_topic'] = 'Send me an email when a reply is posted in a tracked topic';
-$LANG['web_site'] = 'Web site';
 $LANG['localisation'] = 'Location';
-$LANG['job'] = 'Job';
-$LANG['hobbies'] = 'Hobbies';
 $LANG['sex'] = 'Sex';
 $LANG['male'] = 'Male';
 $LANG['female'] = 'Female';
-$LANG['age'] = 'Age';
-$LANG['biography'] = 'Biography';
 $LANG['years_old'] = 'Years old';
-$LANG['sign'] = 'Signature';
-$LANG['sign_where'] = 'Appears under each of your messages';
 $LANG['contact'] = 'Contact';
 $LANG['avatar'] = 'Avatar';
 $LANG['avatar_gestion'] = 'Avatar management';
@@ -343,13 +326,6 @@ $LANG['success_upload'] = 'Your file has been uploaded successfully !';
 $LANG['upload_folder_contains_folder'] = 'You wish to put this category in its subcategory or in itself, that\'s impossible !';
 $LANG['popup_insert'] = 'Insert code into the form';
 
-//gestion des catégories
-$LANG['cats_managment_could_not_be_moved'] = 'An error occurred, the category couldn\'t be moved';
-$LANG['cats_managment_visibility_could_not_be_changed'] = 'An error occurred, the visibility of the category couldn\'t be changed.';
-$LANG['cats_managment_no_category_existing'] = 'No category existing';
-$LANG['cats_management_hide_cat'] = 'Make category unvisible';
-$LANG['cats_management_show_cat'] = 'Make category visible';
-
 ##########Moderation panel##########
 $LANG['moderation_panel'] = 'Moderation panel';
 $LANG['user_contact_pm'] = 'Contact by private message';
@@ -424,13 +400,6 @@ $LANG['contribute_in_modules_explain'] = 'The modules above allow users to contr
 $LANG['contribute_in_module_name'] = 'Contribute in %s';
 $LANG['no_module_to_contribute'] = 'No module in which you can contribute is installed.';
 
-//Loading bar.
-$LANG['query_loading'] = 'Sending the query to server';
-$LANG['query_sent'] = 'Query loaded successful, waiting for the answer of your server';
-$LANG['query_processing'] = 'Proccessing the query';
-$LANG['query_success'] = 'Processing succed';
-$LANG['query_failure'] = 'Processing failed';
-
 //Footer
 $LANG['powered_by'] = 'Boosted by';
 $LANG['phpboost_right'] = '';
@@ -447,7 +416,6 @@ $LANG['enabled'] = 'Enabled';
 $LANG['disabled'] = 'Disabled';
 
 //Dictionnaire pour le captcha.
-$LANG['_code_dictionnary'] = array('image', 'php', 'query', 'azerty', 'exit', 'verif', 'gender', 'search', 'design', 'exec', 'web', 'inter', 'extern', 'cache', 'media', 'cms', 'cesar', 'watt', 'data', 'site', 'mail', 'email', 'spam', 'index', 'rand', 'text', 'inner', 'over', 'under', 'users', 'visitor', 'member', 'home', 'date', 'today', 'month', 'year', 'name', 'picture', 'notes', 'next', 'subject', 'content', 'options', 'title', 'valid', 'list', 'place', 'quote', 'hide', 'default', 'type', 'status', 'replies', 'back', 'close', 'smiley', 'total', 'average', 'page', 'minute', 'week', 'group', 'size', 'theme', 'online', 'modules', 'result', 'during', 'until', 'lock', 'style', 'notice', 'warning', 'success', 'unknow', 'other', 'final', 'code');
 $LANG['verif_code'] = 'Verification code';
 $LANG['verif_code_explain'] = 'Enter the image code, warning for capital letter';
 $LANG['require_verif_code'] = 'Please enter the verification code!';
@@ -455,4 +423,12 @@ $LANG['require_verif_code'] = 'Please enter the verification code!';
 $LANG['csrf_attack'] = 'Invalid session token. Please retry because the operation has not been performed.';
 
 $LANG['forbidden_tags'] = 'Forbidden formatting types';
+
+//@deprecated
+//gestion des catégories
+$LANG['cats_managment_could_not_be_moved'] = 'An error occurred, the category couldn\'t be moved';
+$LANG['cats_managment_visibility_could_not_be_changed'] = 'An error occurred, the visibility of the category couldn\'t be changed.';
+$LANG['cats_managment_no_category_existing'] = 'No category existing';
+$LANG['cats_management_hide_cat'] = 'Make category unvisible';
+$LANG['cats_management_show_cat'] = 'Make category visible';
 ?>

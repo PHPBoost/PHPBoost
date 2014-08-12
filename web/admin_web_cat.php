@@ -165,7 +165,7 @@ else
 		
 	$Template->put_all(array(
 		'IMG_LIST' => $image_list,
-		'L_DEL_ENTRY' => $LANG['del_entry'],
+		'L_DEL_ENTRY' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_CAT' => $LANG['cat_management'],

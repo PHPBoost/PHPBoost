@@ -349,7 +349,7 @@ else
 	));
 
 	$Template->put_all(array(
-		'L_CONFIRM_DEL' => $LANG['del_entry'],
+		'L_CONFIRM_DEL' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],

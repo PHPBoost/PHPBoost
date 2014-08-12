@@ -233,7 +233,7 @@ class PHPBoostCaptcha extends Captcha
 		if ($this->code === null)
 		{
 			$rand = rand(0,1);
-			$words = LangLoader::get_message('_code_dictionnary', 'main');
+			$words = LangLoader::get_message('_code_dictionnary', 'common', 'PHPBoostCaptcha');
 	
 			switch ($this->get_options()->get_difficulty())
 			{

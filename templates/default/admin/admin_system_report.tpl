@@ -53,16 +53,6 @@
 						</div>
 					</div>
 					<div class="form-element">
-						<label>{L_REGISTER_GLOBALS_OPTION}</label>
-						<div class="form-field">
-							# IF C_REGISTER_GLOBALS #
-							<i class="fa fa-success fa-2x" title="{L_YES}"></i>
-							# ELSE #
-							<i class="fa fa-error fa-2x" title="{L_NO}"></i>
-							# ENDIF #
-						</div>
-					</div>
-					<div class="form-element">
 						<label>{L_SERVER_URL}</label>
 						<div class="form-field">{SERV_SERV_URL}</div>
 					</div>

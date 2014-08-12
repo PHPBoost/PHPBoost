@@ -114,7 +114,7 @@ else
 	$template = new FileTemplate('admin/admin_smileys_management.tpl');
 
 	$template->put_all(array(
-		'L_CONFIRM_DEL_SMILEY' => $LANG['confirm_del_smiley'],
+		'L_CONFIRM_DEL_SMILEY' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
 		'L_SMILEY_MANAGEMENT' => $LANG['smiley_management'],
 		'L_ADD_SMILEY' => $LANG['add_smiley'],
 		'L_SMILEY' => $LANG['smiley'],

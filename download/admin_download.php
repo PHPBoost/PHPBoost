@@ -53,7 +53,7 @@ if ($pagination->current_page_is_empty() && $page > 1)
 $Template->put_all(array(
 	'C_PAGINATION' => $pagination->has_several_pages(),
 	'PAGINATION' => $pagination->display(),
-	'L_DEL_ENTRY' => $LANG['del_entry'],
+	'L_DEL_ENTRY' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
 	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['add_file'],
 	'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 	'L_DOWNLOAD_CAT' => $LANG['cat_management'],
