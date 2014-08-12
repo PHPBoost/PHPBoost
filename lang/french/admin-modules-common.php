@@ -50,8 +50,6 @@ $lang['modules.php_version'] = 'Version PHP';
 $lang['modules.url_rewrite_rules'] = 'Règles de réécriture d\'URL';
 $lang['modules.page_admin'] = 'Administration';
 $lang['modules.modules_available'] = 'Modules disponibles';
-$lang['modules.no_modules_available'] = 'Aucun module installé ou activé';
-$lang['modules.no_deactivated_modules_available'] = 'Aucun module désactivé';
 $lang['modules.installed_activated_modules'] = 'Modules installés et activés';
 $lang['modules.installed_not_activated_modules'] = 'Modules désactivés';
 
@@ -77,16 +75,12 @@ $lang['modules.module_not_upgradable'] = 'Ce module ne peut pas être mis à jour'
 $lang['modules.not_installed_module'] = 'Ce module n\'est pas installé';
 $lang['modules.unexisting_module'] = 'Module inexistant';
 $lang['modules.error_id_module'] = 'Aucun module à mettre à jour';
-$lang['modules.no_upgradable_module_available'] = 'Aucune mise à jour de module disponible';
 $lang['modules.updates_are_available'] = 'Des mises à jour des modules sont disponibles!<br />Veuillez les effectuer sans tarder.';
 $lang['modules.updates_available'] = 'Mises à jour disponibles';
 $lang['modules.install_success'] = 'Module installé avec succès !';
-$lang['modules.no_module_to_install'] = 'Aucun module à installer !';
 
 //Delete module
 $lang['modules.drop_files'] = 'Supprimer tous les fichiers du module';
-$lang['modules.yes'] = 'Oui';
-$lang['modules.no'] = 'Non';
 
 //Update
 $lang['modules.upgrade_module'] = 'Mettre à jour';

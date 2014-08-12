@@ -317,7 +317,7 @@ class UserMaintainController extends AbstractController
 				}
 			break;
 			case 'unexisting':
-				$this->display_error_message($errors_lang['e_unexist_member']);
+				$this->display_error_message(LangLoader::get_message('user.not_exists', 'status-messages-common'));
 			break;
 			case 'not_authorized':
 				$this->display_error_message($errors_lang['e_auth']);

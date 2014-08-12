@@ -266,10 +266,10 @@
 							<div class="sortable-actions">
 								<span id="l{list.ID}"></span> 
 								<div class="sortable-options">
-									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');" title="${LangLoader::get_message('category.move_up', 'categories-common')}" class="fa fa-arrow-up"></a>
+									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'up');" title="${LangLoader::get_message('position.move_up', 'common')}" class="fa fa-arrow-up"></a>
 								</div>
 								<div class="sortable-options">
-									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');" title="${LangLoader::get_message('category.move_down', 'categories-common')}" class="fa fa-arrow-down"></a>
+									<a href="javascript:XMLHttpRequest_get_parent('{list.ID}', 'down');" title="${LangLoader::get_message('position.move_down', 'common')}" class="fa fa-arrow-down"></a>
 								</div>
 								<div class="sortable-options">
 									<a href="admin_gallery_cat.php?id={list.ID}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>

@@ -50,8 +50,6 @@ $lang['modules.php_version'] = 'PHP version';
 $lang['modules.url_rewrite_rules'] = 'URL rewrite rules';
 $lang['modules.page_admin'] = 'Administration';
 $lang['modules.modules_available'] = 'Available modules';
-$lang['modules.no_modules_available'] = 'No installed or activated module';
-$lang['modules.no_deactivated_modules_available'] = 'no deactivated module';
 $lang['modules.installed_activated_modules'] = 'Installed and activated modules';
 $lang['modules.installed_not_activated_modules'] = 'Deactivated modules';
 
@@ -77,16 +75,12 @@ $lang['modules.module_not_upgradable'] = 'The module cannot be updated';
 $lang['modules.not_installed_module'] = 'The module is not installed';
 $lang['modules.unexisting_module'] = 'Unexisting module';
 $lang['modules.error_id_module'] = 'No module to update';
-$lang['modules.no_upgradable_module_available'] = 'No module updates available';
 $lang['modules.updates_are_available'] = 'Module updates are available!<br />Please do it as soon as you can.';
 $lang['modules.updates_available'] = 'Module updates available';
 $lang['modules.install_success'] = 'Module successfully installed !';
-$lang['modules.no_module_to_install'] = 'No module to install !';
 
 //Delete module
 $lang['modules.drop_files'] = 'Delete all the module\'s files';
-$lang['modules.yes'] = 'Yes';
-$lang['modules.no'] = 'No';
 
 //Update
 $lang['modules.upgrade_module'] = 'Update';

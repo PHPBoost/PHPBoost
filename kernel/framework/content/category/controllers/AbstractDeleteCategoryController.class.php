@@ -50,7 +50,7 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 		try {
 			$category = $this->get_category();
 		} catch (CategoryNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['errors.unexisting']);
+			$controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($controller);
 		}
 

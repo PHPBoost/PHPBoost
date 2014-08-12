@@ -412,10 +412,6 @@ $LANG['syndication'] = 'Syndication';
 $LANG['rss'] = 'RSS';
 $LANG['atom'] = 'ATOM';
 
-
-$LANG['enabled'] = 'Enabled';
-$LANG['disabled'] = 'Disabled';
-
 //Dictionnaire pour le captcha.
 $LANG['verif_code'] = 'Verification code';
 $LANG['verif_code_explain'] = 'Enter the image code, warning for capital letter';

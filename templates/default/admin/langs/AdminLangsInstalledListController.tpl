@@ -38,20 +38,20 @@
 						# IF NOT langs_installed.C_IS_DEFAULT_LANG #
 							<div id="authorizations_explain-{langs_installed.ID}">{langs_installed.AUTHORIZATIONS}</div>
 						# ELSE #
-							{@langs.visitor}
+							${LangLoader::get_message('visitor', 'user-common')}
 						# ENDIF #
 					</td>
 					# IF NOT langs_installed.C_IS_DEFAULT_LANG #
 					<td class="input-radio# IF langs_installed.C_IS_DEFAULT_LANG # row-disabled # ENDIF #">
-						<label><input type="radio" name="activated-{langs_installed.ID}" value="1" # IF langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@langs.yes}</label>
-						<label><input type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@langs.no}</label>
+						<label><input type="radio" name="activated-{langs_installed.ID}" value="1" # IF langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
+						<label><input type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('no', 'common')}</label>
 					</td>
 					<td>
 						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">{@langs.delete}</button>
 					</td>
 					# ELSE #
 					<td class="row-disabled" style="text-align:center;">
-						{@langs.yes}
+						${LangLoader::get_message('yes', 'common')}
 					</td>
 					<td class="row-disabled">
 					</td>

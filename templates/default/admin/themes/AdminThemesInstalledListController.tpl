@@ -55,21 +55,21 @@
 						# IF NOT themes_installed.C_IS_DEFAULT_THEME #
 							<div id="authorizations_explain-{themes_installed.ID}">{themes_installed.AUTHORIZATIONS}</div>
 						# ELSE #
-							{@themes.visitor}
+							${LangLoader::get_message('visitor', 'user-common')}
 						# ENDIF #
 					</td>
 					
 					# IF NOT themes_installed.C_IS_DEFAULT_THEME #
 					<td class="input-radio">
-						<label><input type="radio" name="activated-{themes_installed.ID}" value="1" # IF themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.yes}</label>
-						<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.no}</label>
+						<label><input type="radio" name="activated-{themes_installed.ID}" value="1" # IF themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
+						<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('no', 'common')}</label>
 					</td>
 					<td>
 						<button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">{@themes.delete}</button>
 					</td>
 					# ELSE #
 					<td class="row-disabled">
-						{@themes.yes}
+						${LangLoader::get_message('yes', 'common')}
 					</td>
 					<td class="row-disabled">
 					</td>

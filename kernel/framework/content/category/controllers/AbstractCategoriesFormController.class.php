@@ -82,9 +82,9 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('category', $this->get_title());
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['category.form.name'], $this->get_category()->get_name(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
 		
-		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', $this->lang['category.form.rewrited_name.personalize'], $this->get_category()->rewrited_name_is_personalized(), array(
+		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', $this->common_lang['form.rewrited_name.personalize'], $this->get_category()->rewrited_name_is_personalized(), array(
 		'events' => array('click' => '
 		if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
 			HTMLForms.getField("rewrited_name").enable();
@@ -93,8 +93,8 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		}'
 		))));
 		
-		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', $this->lang['category.form.rewrited_name'], $this->get_category()->get_rewrited_name(), array(
-			'description' => $this->lang['category.form.rewrited_name.description'], 
+		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', $this->common_lang['form.rewrited_name'], $this->get_category()->get_rewrited_name(), array(
+			'description' => $this->common_lang['form.rewrited_name.description'], 
 			'hidden' => !$this->get_category()->rewrited_name_is_personalized()
 		), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`i'))));
 		
@@ -103,7 +103,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		if ($this->get_category()->get_id())
 			$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
 			
-		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', $this->lang['category.form.parent'], $this->get_category()->get_id_parent(), $search_category_children_options));
+		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', $this->common_lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options));
 		
 		$this->build_fieldset_options($form);
 		

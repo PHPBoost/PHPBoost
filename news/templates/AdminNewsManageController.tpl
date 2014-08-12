@@ -41,8 +41,8 @@
 		# START news #
 			<tr>
 				<td>
-					<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
-					<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+					<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+					<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				</td>
 				<td class="left">
 					<a href="{news.U_LINK}">{news.NAME}</a>
@@ -64,7 +64,7 @@
 		# IF NOT C_NEWS #
 		<tr> 
 			<td colspan="6">
-				{@news.message.no_items}
+				${LangLoader::get_message('no_item_now', 'common')}
 			</td>
 		</tr>
 		# ENDIF #

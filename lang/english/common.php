@@ -34,9 +34,37 @@ $lang['the'] = 'The';
 $lang['in'] = 'In';
 $lang['read-more'] = 'Read more';
 
+$lang['enabled'] = 'Enabled';
+$lang['disabled'] = 'Disabled';
+
+$lang['yes'] = 'Yes';
+$lang['no'] = 'No';
+
+$LANG['delete'] = 'Delete';
+$LANG['edit'] = 'Edit';
+
+$lang['syndication'] = 'Syndication';
+$lang['no_item_now'] = 'No item is available for the moment';
+
+//Position
+$lang['position'] = 'Position';
+$lang['position.move_up'] = 'Move up';
+$lang['position.move_down'] = 'Move down';
+$lang['position.update'] = 'Change positions';
+
+//Constraint
+$lang['constraint.required'] = 'Required';
+$lang['constraint.not_required'] = 'Not required';
+
+//Form
 $lang['form.name'] = 'Name';
 $lang['form.title'] = 'Title';
 $lang['form.contents'] = 'Content';
+$lang['form.description'] = 'Description';
+$lang['form.category'] = 'Location';
+$lang['category.form.rewrited_name'] = 'Rewrited name in the url';
+$lang['category.form.rewrited_name.description'] = 'Only contains lowercase letters, numbers and hyphens.';
+$lang['category.form.rewrited_name.personalize'] = 'Personalize rewrited name in the url';
 $lang['form.approbation'] = 'Publication';
 $lang['form.approbation.not'] = 'Keep in draft';
 $lang['form.approbation.now'] = 'Publish now';
@@ -48,6 +76,8 @@ $lang['form.date.end.enable'] = 'Define a publication end date';
 $lang['form.other'] = 'Other';
 $lang['form.options'] = 'Options';
 $lang['form.keywords'] = 'Keywords';
+$lang['form.keywords.description'] = 'You can add keywords to this element';
+$lang['form.picture'] = 'Picture element';
 $lang['form.picture.preview'] = 'Picture preview';
 $lang['form.sources'] = 'Sources';
 $lang['form.source.name'] = 'Source name';
@@ -55,7 +85,7 @@ $lang['form.source.url'] = 'Source address';
 
 $lang['suggestions'] = 'Suggestions';
 
-//Administration
+//Autorisations
 $lang['authorizations'] = 'Permissions';
 $lang['authorizations.read'] = 'Read permission';
 $lang['authorizations.write'] = 'Write permission';

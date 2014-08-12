@@ -60,7 +60,7 @@ var ContactField = Class.create({
 		# ENDIF #
 	},
 	delete_fields : function() {
-		if (confirm(${escapejs(@fields.delete_field.confirm)}))
+		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 		{
 			new Ajax.Request('${relative_url(ContactUrlBuilder::delete_field())}', {
 				method:'post',
@@ -162,17 +162,17 @@ Event.observe(window, 'load', function() {
 							{@field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
-								<a href="" title="{@fields.move_field_up}" id="move_up_{fields_list.ID}" onclick="return false;" class="fa fa-arrow-up"></a>
+								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move_up_{fields_list.ID}" onclick="return false;" class="fa fa-arrow-up"></a>
 							</div>
 							<div class="sortable-options">
-								<a href="" title="{@fields.move_field_down}" id="move_down_{fields_list.ID}" onclick="return false;" class="fa fa-arrow-down"></a>
+								<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move_down_{fields_list.ID}" onclick="return false;" class="fa fa-arrow-down"></a>
 							</div>
 							# ENDIF #
 							<div class="sortable-options">
-								<a href="{fields_list.U_EDIT}" title="{@fields.action.edit_field}" class="fa fa-edit"></a>
+								<a href="{fields_list.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 							</div>
 							<div class="sortable-options">
-								# IF fields_list.C_DELETE #<a href="" onclick="return false;" title="{@fields.action.delete_field}" id="delete_{fields_list.ID}" class="fa fa-delete"></a># ELSE #&nbsp;# ENDIF #
+								# IF fields_list.C_DELETE #<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{fields_list.ID}" class="fa fa-delete"></a># ELSE #&nbsp;# ENDIF #
 							</div>
 							<div class="sortable-options">
 							# IF NOT fields_list.C_READONLY #<a href="" onclick="return false;" id="change_display_{fields_list.ID}" class="fa fa-eye"></a># ELSE #&nbsp;# ENDIF #
@@ -219,7 +219,7 @@ Event.observe(window, 'load', function() {
 	</fieldset>
 	# IF C_MORE_THAN_ONE_FIELD #
 	<fieldset class="fieldset-submit">
-		<button type="submit" name="submit" value="true" class="submit">{@fields.update_fields_position}</button>
+		<button type="submit" name="submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="position" id="position" value="">
 	</fieldset>

@@ -34,9 +34,37 @@ $lang['the'] = 'Le';
 $lang['in'] = 'Dans';
 $lang['read-more'] = 'Lire la suite';
 
+$lang['enabled'] = 'Activé';
+$lang['disabled'] = 'Désactivé';
+
+$lang['yes'] = 'Oui';
+$lang['no'] = 'Non';
+
+$lang['delete'] = 'Supprimer';
+$lang['edit'] = 'Editer';
+
+$lang['syndication'] = 'Flux RSS';
+$lang['no_item_now'] = 'Aucun élément n\'est disponible pour le moment';
+
+//Position
+$lang['position'] = 'Position';
+$lang['position.move_up'] = 'Monter';
+$lang['position.move_down'] = 'Descendre';
+$lang['position.update'] = 'Valider les positions';
+
+//Constraint
+$lang['constraint.required'] = 'Requis';
+$lang['constraint.not_required'] = 'Non requis';
+
+//Form
 $lang['form.name'] = 'Nom';
 $lang['form.title'] = 'Titre';
 $lang['form.contents'] = 'Contenu';
+$lang['form.description'] = 'Description';
+$lang['form.category'] = 'Emplacement';
+$lang['form.rewrited_name'] = 'Nom réécrit dans l\'url';
+$lang['form.rewrited_name.description'] = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';
+$lang['form.rewrited_name.personalize'] = 'Personnaliser le nom dans l\'url';
 $lang['form.approbation'] = 'Publication';
 $lang['form.approbation.not'] = 'Garder en brouillon';
 $lang['form.approbation.now'] = 'Publier maintenant';
@@ -48,6 +76,8 @@ $lang['form.date.end.enable'] = 'Définir une date de fin de publication';
 $lang['form.other'] = 'Autre';
 $lang['form.options'] = 'Options';
 $lang['form.keywords'] = 'Mots clés';
+$lang['form.keywords.description'] = 'Vous permet d\'ajouter des mots clés à cette élément';
+$lang['form.picture'] = 'Image de l\'élément';
 $lang['form.picture.preview'] = 'Prévisualisation de l\'image';
 $lang['form.sources'] = 'Sources';
 $lang['form.source.name'] = 'Nom de la source';
@@ -55,7 +85,7 @@ $lang['form.source.url'] = 'Adresse de la source';
 
 $lang['suggestions'] = 'Suggestions';
 
-//Administration
+//Autorisations
 $lang['authorizations'] = 'Autorisations';
 $lang['authorizations.read'] = 'Autorisation de lecture';
 $lang['authorizations.write'] = 'Autorisation d\'écriture';

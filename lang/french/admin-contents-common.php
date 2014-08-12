@@ -72,7 +72,5 @@ $lang['comments.config.approbation.auto'] = 'Automatiquement';
 $lang['comments.config.approbation.moderator'] = 'Modérateur';
 $lang['comments.config.approbation.administrator'] = 'Administrateur';
 
-$lang['enabled'] = 'Activé';
-$lang['disabled'] = 'Désactivé';
 $lang['number-required'] = 'La valeur saisie doit être un nombre';
 ?>

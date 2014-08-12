@@ -1,14 +1,14 @@
 <article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="fa fa-syndication"></a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
 			<span itemprop="name">{NAME}</span>
 			<span class="actions">
 				# IF C_EDIT #
-					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 				# ENDIF #
 				# IF C_DELETE #
-					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				# ENDIF #
 			</span>
 		</h1>
