@@ -63,7 +63,7 @@ class BBCodeEditor extends ContentEditor
 
 		$smileys_cache = SmileysCache::load();
 
-		$bbcode_lang = LangLoader::get('editor-common');
+		$bbcode_lang = LangLoader::get('common', 'BBCode');
 		
 		$template->put_all(array(
 			'PAGE_PATH' => $_SERVER['PHP_SELF'],
@@ -114,7 +114,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_MORE' => $bbcode_lang['bb_more'],
 			'L_URL_PROMPT' => $bbcode_lang['bb_url_prompt'],
 			'L_ANCHOR_PROMPT' => $bbcode_lang['bb_anchor_prompt'],
-			'L_TITLE' => $bbcode_lang['format_title'],
+			'L_TITLE' => LangLoader::get_message('format_title', 'editor-common'),
 			'L_CONTAINER' => $bbcode_lang['bb_container'],
 			'L_BLOCK' => $bbcode_lang['bb_block'],
 			'L_FIELDSET' => $bbcode_lang['bb_fieldset'],
@@ -124,7 +124,7 @@ class BBCodeEditor extends ContentEditor
 			'L_WARNING' => $LANG['warning'],
 			'L_ERROR' => $LANG['error'],
 			'L_SUCCESS' => $LANG['success'],
-			'L_SIZE' => $bbcode_lang['format_size'],
+			'L_SIZE' => LangLoader::get_message('format_size', 'editor-common'),
 			'L_CODE' => $bbcode_lang['bb_code'],
 			'L_TEXT' => $bbcode_lang['bb_text'],
 			'L_SCRIPT' => $bbcode_lang['bb_script'],

@@ -55,9 +55,6 @@ $LANG['e_link_pseudo'] = 'Your login can\'t contain weblinks';
 $LANG['e_php_version_conflict'] = 'Inadequate PHP version';
 $LANG['e_phpboost_version_conflict'] = 'Inadequate PHPBoost version';
 
-//Cache
-$LANG['e_cache_modules'] = 'Cache -> Cache module generation has failed!';
-
 //Upload
 $LANG['e_upload_max_dimension'] = 'Max file dimensions exceeded';
 $LANG['e_upload_max_weight'] = 'Maximum file size exceeded';
@@ -92,9 +89,6 @@ $LANG['e_forget_mail_send'] = 'An e-mail has been sent to you with an activation
 $LANG['e_forget_confirm_change'] = 'Password changed successfully!<br /> You can login with the new password.';
 $LANG['e_forget_echec_change'] = 'Failure: password can\'t be changed';
 
-//Register
-$LANG['e_incorrect_verif_code'] = 'Incorrect verification code!';
-
 //Mps
 $LANG['e_pm_full'] = 'Your private message box is full, You have <strong>%d</strong> waiting conversation(s), delete old posts to read it/them';
 $LANG['e_pm_full_post'] = 'Your private message box is full, delete old messages to create new ones';
@@ -108,10 +102,5 @@ $LANG['e_fatal'] = 'Fatal';
 $LANG['e_notice'] = 'Notice';
 $LANG['e_warning'] = 'Warning';
 $LANG['e_unknow'] = 'Unknow';
-$LANG['infile'] = 'in file';
-$LANG['atline'] = 'at line';
 
-// Too Many Connections
-$LANG['too_many_connections'] = 'Too many connections';
-$LANG['too_many_connections_explain'] = 'The maximum number of connections that the database can handle has been reached.<br />Please, try again in a few seconds.';
 ?>
