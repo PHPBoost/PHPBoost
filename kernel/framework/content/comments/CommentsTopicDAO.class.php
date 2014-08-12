@@ -45,7 +45,7 @@ class CommentsTopicDAO
 		$parameters = array(
 			'module_id' => $module_id,
 		);
-		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE module_id = :module_id", $parameters) > 0 ? true : false;
+		return self::$db_querier->row_exists(DB_TABLE_COMMENTS_TOPIC, "WHERE module_id = :module_id", $parameters);
 	}
 	
 	public static function get_id_topic_module($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
@@ -98,7 +98,7 @@ class CommentsTopicDAO
 			'id_in_module' => $id_in_module,
 			'topic_identifier' => $topic_identifier
 		);
-		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters) > 0 ? true : false;
+		return self::$db_querier->row_exists(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters);
 	}
 	
 	public static function delete_topics_module($module_id)

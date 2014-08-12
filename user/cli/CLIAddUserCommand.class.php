@@ -104,7 +104,7 @@ class CLIAddUserCommand implements CLICommand
 	
 	private function add_user()
 	{
-		if (PersistenceContext::get_querier()->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE username=:username', array('username' => $this->login)) > 0)
+		if (PersistenceContext::get_querier()->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE username=:username', array('username' => $this->login)))
 		{
 			throw new Exception($this->login . ' login already use');
 		}
