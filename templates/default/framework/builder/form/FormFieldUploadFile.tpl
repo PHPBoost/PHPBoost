@@ -12,7 +12,7 @@
 	<div class="form-field">
 		<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}" class="field-xlarge ${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY #readonly="readonly"# ENDIF #/>
 		# IF C_AUTH_UPLOAD #
-			<a title="${LangLoader::get_message('bb_upload', 'editor-common')}" href="#" class="fa fa-cloud-upload fa-2x" onclick="$(${escapejs(HTML_ID)}).value='';window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=${escape(NAME)}&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"></a>
+			<a title="${LangLoader::get_message('files_management', 'main')}" href="#" class="fa fa-cloud-upload fa-2x" onclick="$(${escapejs(HTML_ID)}).value='';window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=${escape(NAME)}&amp;parse=true&amp;no_path=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"></a>
 		# ENDIF #
 		&nbsp;
 		<i class="fa picture-status-constraint" id="onblurContainerResponse${escape(HTML_ID)}"></i>

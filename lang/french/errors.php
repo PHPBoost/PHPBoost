@@ -54,9 +54,6 @@ $LANG['e_link_pseudo'] = 'Vous ne pouvez pas mettre de lien dans votre pseudo';
 $LANG['e_php_version_conflict'] = 'Version PHP inadaptée';
 $LANG['e_phpboost_version_conflict'] = 'Version de PHPBoost inadaptée';
 
-//Cache
-$LANG['e_cache_modules'] = 'Cache -> La génération du fichier de cache des modules a échouée !';
-
 //Upload
 $LANG['e_upload_max_dimension'] = 'Dimensions maximales du fichier dépassées';
 $LANG['e_upload_max_weight'] = 'Poids maximum du fichier dépassé';
@@ -91,9 +88,6 @@ $LANG['e_forget_mail_send'] = 'Un mail contenant une clé d\'activation pour chan
 $LANG['e_forget_confirm_change'] = 'Mot de passe changé avec succès !<br />Vous pouvez désormais vous connecter avec le nouveau mot de passe que vous avez choisi.';
 $LANG['e_forget_echec_change'] = 'Echec, le mot de passe ne peut être changé';
 
-//Register
-$LANG['e_incorrect_verif_code'] = 'Le code de vérification entré est incorrect !';
-
 //Mps
 $LANG['e_pm_full'] = 'Votre boite de messages privés est pleine, vous avez <strong>%d</strong> conversation(s) en attente, supprimez d\'anciennes conversations pour pouvoir la/les lire.';
 $LANG['e_pm_full_post'] = 'Votre boite de messages privés est pleine, supprimez d\'anciennes conversations pour pouvoir en envoyer de nouvelles.';
@@ -107,10 +101,5 @@ $LANG['e_fatal'] = 'Fatale';
 $LANG['e_notice'] = 'Suggestion';
 $LANG['e_warning'] = 'Avertissement';
 $LANG['e_unknow'] = 'Inconnue';
-$LANG['infile'] = 'dans le fichier';
-$LANG['atline'] = 'à la ligne';
 
-// Too Many Connections
-$LANG['too_many_connections'] = 'Trop de connexions';
-$LANG['too_many_connections_explain'] = 'Le nombre maximum de connexions simultanées à la base de données à été atteint.<br />Veuillez réessayer dans quelques secondes.';
 ?>
