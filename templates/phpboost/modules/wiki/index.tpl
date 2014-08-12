@@ -191,13 +191,13 @@
 						<ul class="no-list">
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un thème</a>
-								<span class="more"> - De A à Z</span>
+								<a href="{PATH_TO_ROOT}/wiki/personnaliser-un-theme">Personnaliser un thème</a>
+								<span class="more"> - Modifier l'aspect de votre site</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
-								<a href="{PATH_TO_ROOT}/wiki/personnaliser-un-theme">Personnaliser un thème</a>
-								<span class="more"> - Modifier un thème existant</span>
+								<a href="{PATH_TO_ROOT}/wiki/structure-d-un-theme">Structure d'un thème</a>
+								<span class="more"> - Comprendre l'organisation d'un thème</span>
 							</li>
 							<li>
 								<i class="fa fa-folder-open"></i>
