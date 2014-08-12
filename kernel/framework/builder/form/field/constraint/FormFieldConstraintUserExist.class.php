@@ -37,7 +37,7 @@ class FormFieldConstraintUserExist extends AbstractFormFieldConstraint
 	{
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('e_unexist_member', 'errors');
+			$error_message = LangLoader::get_message('user.not_exists', 'status-messages-common');
 		}
 		$this->set_validation_error_message($error_message);
 		$this->error_message = TextHelper::to_js_string($error_message);
@@ -50,9 +50,9 @@ class FormFieldConstraintUserExist extends AbstractFormFieldConstraint
  
 	public function user_exists(FormField $field)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, 'WHERE display_name=:display_name', array(
+		return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE display_name=:display_name', array(
 			'display_name' => $field->get_value()
-		)) > 0;
+		));
 	}
  
 	public function get_js_validation(FormField $field)

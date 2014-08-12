@@ -58,16 +58,16 @@ class FormFieldConstraintLoginExist extends AbstractFormFieldConstraint
 	{
 		if (!empty($this->user_id))
 		{
-			return PersistenceContext::get_querier()->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE username=:username AND user_id != :user_id', array(
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE username=:username AND user_id != :user_id', array(
 				'username' => $field->get_value(), 
 				'user_id' => $this->user_id
-			)) > 0 ? false : true;
+			));
 		}
 		else
 		{
-			return PersistenceContext::get_querier()->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE username=:username', array(
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE username=:username', array(
 				'username' => $field->get_value()
-			)) > 0 ? false : true;
+			));
 		}
 	}
  

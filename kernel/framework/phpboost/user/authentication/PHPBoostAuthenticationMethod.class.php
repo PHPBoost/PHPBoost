@@ -161,7 +161,7 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	{
 		$condition = 'WHERE user_id=:user_id and password=:password';
 		$parameters = array('user_id' => $this->user_id, 'password' => $this->password);
-		$match = $this->querier->count(DB_TABLE_INTERNAL_AUTHENTICATION, $condition, $parameters, '*') == 1;
+		$match = $this->querier->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, $condition, $parameters, '*');
 		if ($match)
 		{
 			$this->connection_attempts = 0;

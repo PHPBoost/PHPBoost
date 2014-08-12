@@ -165,7 +165,7 @@ class UserService
         
 	public static function user_exists($condition, Array $parameters)
 	{
-		return self::$querier->count(DB_TABLE_MEMBER, $condition, $parameters) > 0 ? true : false;
+		return self::$querier->row_exists(DB_TABLE_MEMBER, $condition, $parameters);
 	}
 	
 	/*public static function approbation_pass_exists($approbation_pass)
