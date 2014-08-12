@@ -45,8 +45,7 @@ $get_pages_year = !empty($_GET['pages_year']) ? true : false;
 
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Ne réactualise pas l'emplacement du visiteur/membre
-include_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/stats.php');
-
+load_module_lang('stats'); //Chargement de la langue du module.
 
 $Stats = new ImagesStats();
 

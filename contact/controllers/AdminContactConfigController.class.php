@@ -90,7 +90,7 @@ class AdminContactConfigController extends AdminModuleController
 					HTMLForms.getField("informations_position").disable();
 					HTMLForms.getField("informations").disable();
 				}'))
-		));
+			));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('informations_position', $this->lang['admin.config.informations_position'], $this->config->get_informations_position(),
 			array(
@@ -98,14 +98,14 @@ class AdminContactConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_top'], ContactConfig::TOP),
 				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_right'], ContactConfig::RIGHT),
 				new FormFieldSelectChoiceOption($this->lang['admin.config.informations.position_bottom'], ContactConfig::BOTTOM),
-			),
+				),
 			array('hidden' => !$this->config->are_informations_enabled())
-		));
+			));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('informations', $this->lang['admin.config.informations_content'], 
 			FormatingHelper::unparse($this->config->get_informations()), 
 			array('rows' => 8, 'cols' => 47, 'hidden' => !$this->config->are_informations_enabled())
-		));
+			));
 		
 		$fieldset->add_field(new FormFieldCheckbox('tracking_number_enabled', $this->lang['admin.config.tracking_number_enabled'], $this->config->is_tracking_number_enabled(),
 			array('events' => array('click' => '
@@ -114,7 +114,7 @@ class AdminContactConfigController extends AdminModuleController
 				} else {
 					HTMLForms.getField("date_in_tracking_number_enabled").disable();
 				}'))
-		));
+			));
 		
 		$fieldset->add_field(new FormFieldCheckbox('date_in_tracking_number_enabled', $this->lang['admin.config.date_in_date_in_tracking_number_enabled'], $this->config->is_date_in_tracking_number_enabled(), array('description' => $this->lang['admin.config.date_in_date_in_tracking_number_enabled.explain'], 'hidden' => !$this->config->is_tracking_number_enabled())));
 		
@@ -125,7 +125,7 @@ class AdminContactConfigController extends AdminModuleController
 		
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['admin.authorizations.read'], ContactAuthorizationsService::READ_AUTHORIZATIONS),
-		));
+			));
 		
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));

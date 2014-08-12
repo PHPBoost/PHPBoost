@@ -1053,9 +1053,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			));
 		}
 		elseif ($browser || $os || $user_lang) //Graphiques camenbert.
-		{
-			include_once('../lang/' . get_ulang() . '/stats.php');
-			
+		{		
 			$path = '../images/stats/';
 			if (!empty($browser))
 			{
