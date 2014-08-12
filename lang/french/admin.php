@@ -83,19 +83,6 @@ $LANG['require_weight'] = 'Veuillez entrer un poids maximum pour les avatars !';
 $LANG['require_subcat'] = 'Veuillez sélectionner une sous-catégorie !';
 $LANG['require_file_name'] = 'Vous devez saisir un nom de fichier !';
 
-//Confirmations.
-$LANG['redirect'] = 'Redirection en cours...';
-$LANG['del_entry'] = 'Supprimer l\'entrée ?';
-$LANG['confirm_del_member'] = 'Supprimer le membre ? (définitif)';
-$LANG['confirm_del_admin'] = 'Supprimer l\'admin ? (irréversible)';
-$LANG['confirm_theme'] = 'Supprimer le thème ?';
-$LANG['confirm_del_smiley'] = 'Supprimer le smiley ?';
-$LANG['confirm_del_cat'] = 'Supprimer cette catégorie ?';
-$LANG['confirm_del_article'] = 'Supprimer cet article ?';
-$LANG['confirm_del_rank'] = 'Supprimer ce rang ?';
-$LANG['confirm_del_group'] = 'Supprimer ce groupe ?';
-$LANG['confirm_del_member_group'] = 'Supprimer ce membre du groupe ?';
-
 //Commun
 $LANG['pseudo'] = 'Pseudo';
 $LANG['yes'] = 'Oui';
@@ -111,7 +98,6 @@ $LANG['unaprob'] = 'Désapprobation';
 $LANG['url'] = 'Adresse';
 $LANG['categorie'] = 'Catégorie';
 $LANG['note'] = 'Note';
-$LANG['com'] = 'Commentaires';
 $LANG['size'] = 'Taille';
 $LANG['file'] = 'Fichier';
 $LANG['download'] = 'Téléchargé';
@@ -160,7 +146,6 @@ $LANG['add'] = 'Ajouter';
 $LANG['category'] = 'Catégorie';
 $LANG['site'] = 'Site';
 $LANG['modules'] = 'Modules';
-$LANG['powered_by'] = 'Boosté par';
 $LANG['release_date'] = 'Date de parution jj/mm/aa';
 $LANG['immediate'] = 'Immédiate';
 $LANG['waiting'] = 'En attente';
@@ -177,7 +162,6 @@ $LANG['max_link_explain'] = 'Mettre -1 pour illimité';
 $LANG['generate'] = 'Générer';
 $LANG['or_direct_path'] = 'Ou chemin direct';
 $LANG['unknow_bot'] = 'Bot inconnu';
-$LANG['captcha_difficulty'] = 'Difficulté du code de vérification';
 
 //Connexion
 $LANG['unlock_admin_panel'] = 'Déverrouillage de l\'administration';
@@ -332,41 +316,7 @@ $LANG['edit_smiley'] = 'Edition des smileys';
 $LANG['smiley_management'] = 'Gestion des smileys';
 $LANG['e_smiley_already_exist'] = 'Le smiley existe déjà';
 
-//Thèmes
-$LANG['upload_theme'] = 'Uploader un thème';
-$LANG['theme_on_serv'] = 'Thèmes disponibles sur le serveur';
-$LANG['no_theme_on_serv'] = 'Aucun thème <strong>compatible</strong> n\'est disponible sur le serveur';
-$LANG['theme_management'] = 'Gestion des thèmes';
-$LANG['theme_add'] = 'Ajouter un thème';
-$LANG['theme'] = 'Thème';
-$LANG['e_theme_already_exist'] = 'Le thème existe déjà';
-$LANG['xhtml_version'] = 'Version Html';
-$LANG['css_version'] = 'Version Css';
-$LANG['main_colors'] = 'Couleurs dominantes';
-$LANG['width'] = 'Largeur';
-$LANG['exensible'] = 'Extensible';
-$LANG['del_theme'] = 'Suppression du thème';
-$LANG['del_theme_files'] = 'Supprimer tous les fichiers du thème';
-$LANG['explain_default_theme'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé ou réservé';
-$LANG['activ_left_column'] = 'Activer la colonne de gauche';
-$LANG['activ_right_column'] = 'Activer la colonne de droite';
-$LANG['manage_theme_columns'] = 'Gérer les colonnes du thème';
-
-//Langues
-$LANG['upload_lang'] = 'Uploader une langue';
-$LANG['lang_on_serv'] = 'Langues disponibles sur le serveur';
-$LANG['no_lang_on_serv'] = 'Aucune langue disponible sur le serveur';
-$LANG['lang_management'] = 'Gestion des langues';
-$LANG['lang_add'] = 'Ajouter une langue';
-$LANG['lang'] = 'Langue';
-$LANG['e_lang_already_exist'] = 'La langue existe déjà';
-$LANG['del_lang'] = 'Suppression de la langue';
-$LANG['del_lang_files'] = 'Supprimer les fichiers de la langue';
-$LANG['explain_default_lang'] = 'La langue par défaut ne peut pas être désinstallée, désactivée ou réservée';
-
 //Gestion membre
-$LANG['job'] = 'Emploi';
-$LANG['hobbies'] = 'Loisirs';
 $LANG['members_management'] = 'Gestion des Membres';
 $LANG['members_add'] = 'Ajouter un membre';
 $LANG['members_config'] = 'Configuration des membres';
@@ -381,9 +331,6 @@ $LANG['user_readonly_explain'] = 'Membre en lecture seule, celui-ci peut lire ma
 $LANG['weeks'] = 'semaines';
 $LANG['life'] = 'A vie';
 $LANG['readonly_user'] = 'Membre en lecture seule';
-
-//Règlement
-$LANG['explain_terms'] = 'Entrez ci-dessous le règlement à afficher lors de l\'enregistrement des membres, ils devront l\'accepter pour s\'enregistrer. Laissez vide pour aucun règlement.';
 
 //Gestion des groupes
 $LANG['groups_management'] = 'Gestion des groupes';
@@ -405,35 +352,6 @@ $LANG['auth_read'] = 'Droits de lecture';
 $LANG['auth_write'] = 'Droits d\'écriture';
 $LANG['auth_edit'] = 'Droits de modération';
 $LANG['upload_group'] = 'Uploader une image de groupe';
-
-//Robots
-$LANG['robot'] = 'Robot';
-$LANG['robots'] = 'Robots';
-$LANG['erase_rapport'] = 'Effacer le rapport';
-$LANG['number_r_visit'] = 'Nombre de visite(s)';
-
-//Statistiques
-$LANG['stats'] = 'Statistiques';
-$LANG['more_stats'] = 'Plus de stats';
-$LANG['site'] = 'Site';
-$LANG['browser_s'] = 'Navigateurs';
-$LANG['fai'] = 'Fournisseurs d\'accès Internet';
-$LANG['all_fai'] = 'Voir la liste complète des fournisseurs d\'accès Internet';
-$LANG['10_fai'] = 'Voir les 10 principaux fournisseurs d\'accès Internet';
-$LANG['os'] = 'Systèmes d\'exploitation';
-$LANG['number'] = 'Nombre ';
-$LANG['start'] = 'Création du site';
-$LANG['stat_lang'] = 'Pays des visiteurs';
-$LANG['all_langs'] = 'Voir la liste complète des pays des visiteurs';
-$LANG['10_langs'] = 'Voir les 10 principaux pays des visiteurs';
-$LANG['visits_year'] = 'Voir les statistiques de l\'année';
-$LANG['unknown'] = 'Inconnu';
-$LANG['last_member'] = 'Dernier membre';
-$LANG['top_10_posters'] = 'Top 10 : posteurs';
-$LANG['version'] = 'Version';
-$LANG['colors'] = 'Couleurs';
-$LANG['calendar'] = 'Calendrier';
-$LANG['events'] = 'Evénements';
 
 // Updates
 $LANG['website_updates'] = 'Mises à jour';

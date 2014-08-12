@@ -52,4 +52,8 @@ $lang['form.validation_error'] = 'Veuillez corriger les erreurs du formulaire';
 $lang['form.fields_must_be_equal'] = 'Les champs ":field1" et ":field2" doivent être égaux';
 $lang['form.fields_must_not_be_equal'] = 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes';
 
+//User
+$lang['user.not_exists'] = 'L\'utilisateur n\'existe pas !';
+$lang['user.auth.passwd_flood'] = 'Il vous reste :remaining_tries essai(s) après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5)!';
+$lang['user.auth.passwd_flood_max'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes.';
 ?>

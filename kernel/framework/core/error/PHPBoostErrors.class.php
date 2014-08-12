@@ -125,7 +125,7 @@ class PHPBoostErrors
 	{
 		AppContext::get_response()->set_status_code(404);
 		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], $lang['e_unexist_member']);
+		$controller = new UserErrorController($lang['error'], LangLoader::get_message('user.not_exists', 'status-messages-common'));
 		return $controller;
 	}
 	

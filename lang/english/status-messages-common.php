@@ -52,4 +52,8 @@ $lang['form.validation_error'] = 'Please correct the form errors';
 $lang['form.fields_must_be_equal'] = 'Fields ":field1" and ":field2" must be equal';
 $lang['form.fields_must_not_be_equal'] = 'Fields ":field1" and ":field2" must have different values';
 
+//User
+$lang['user.not_exists'] = 'User not exists !';
+$lang['user.auth.passwd_flood'] = ':remaining_tries tries are remaining. After that, you\'ll have to wait 5 minutes to have 2 more tries (10min for 5)!';
+$lang['user.auth.passwd_flood_max'] = 'You have failed, too many authentication attempts, your account is locked for 5 minutes.';
 ?>

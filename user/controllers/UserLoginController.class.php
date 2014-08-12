@@ -115,22 +115,21 @@ class UserLoginController extends AbstractController
 	
 	private function build_error_message(PHPBoostAuthenticationMethod $authentication)
 	{
-		$errors_lang = LangLoader::get('errors');
 		$error_msg = '';
 		if (!$authentication->has_user_been_found())
 		{
-			$error_msg = $errors_lang['e_unexist_member'];
+			$error_msg = LangLoader::get_message('user.not_exists', 'status-messages-common');
 		}
 		else
 		{
 			$remaining_attempts = $authentication->get_remaining_attemps();
 			if ($remaining_attempts > 0)
 			{
-				$error_msg = StringVars::replace_vars($this->lang['flood_block'], array('remaining_tries' => $remaining_attempts));
+				$error_msg = StringVars::replace_vars(LangLoader::get_message('user.auth.passwd_flood', 'status-messages-common'), array('remaining_tries' => $remaining_attempts));
 			}
 			else
 			{
-				$error_msg = $this->lang['flood_max'];
+				$error_msg = LangLoader::get_message('user.auth.passwd_flood_max', 'status-messages-common');
 			}
 		}
 		

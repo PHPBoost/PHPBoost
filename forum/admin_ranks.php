@@ -72,7 +72,7 @@ else //Sinon on rempli le formulaire
 	$template->put_all(array(
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
-		'L_CONFIRM_DEL_RANK' => $LANG['confirm_del_rank'],
+		'L_CONFIRM_DEL_RANK' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
 		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
 		'L_ADD_CAT' => $LANG['cat_add'],

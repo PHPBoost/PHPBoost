@@ -39,4 +39,34 @@ $LANG['member_registered_s'] = '<strong>%d</strong> registered members';
 $LANG['admin.authorizations'] = 'Permissions';
 $LANG['admin.authorizations.read'] = 'Permission to display the statistics';
 
+
+//Robots
+$LANG['robot'] = 'Robot';
+$LANG['robots'] = 'Robots';
+$LANG['erase_rapport'] = 'Erase rapport';
+$LANG['number_r_visit'] = 'Number of views';
+
+//Stats
+$LANG['stats'] = 'Stats';
+$LANG['more_stats'] = 'More stats';
+$LANG['site'] = 'Site';
+$LANG['browser_s'] = 'Browsers';
+$LANG['os'] = 'Operating systems';
+$LANG['fai'] = 'Internet Access Providers';
+$LANG['all_fai'] = 'See all Internet access providers';
+$LANG['10_fai'] = 'See the 10 principal Internet access providers';
+$LANG['number'] = 'Number of ';
+$LANG['start'] = 'Creation of the website';
+$LANG['stat_lang'] = 'Visitor\'s Countries';
+$LANG['all_langs'] = 'See all visitor\'s countries';
+$LANG['10_langs'] = 'See the 10 most common countries of visitors';
+$LANG['visits_year'] = 'See statistics for the year';
+$LANG['unknown'] = 'Unknown';
+$LANG['last_member'] = 'Last member registered';
+$LANG['top_10_posters'] = 'Top 10: posters';
+$LANG['version'] = 'Version';
+$LANG['colors'] = 'Colors';
+$LANG['calendar'] = 'Calendar';
+$LANG['events'] = 'Events';
+
 ?>

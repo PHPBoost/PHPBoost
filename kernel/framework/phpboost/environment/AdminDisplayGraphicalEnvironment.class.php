@@ -66,7 +66,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
 			'CONTENT' => $content,
 			'L_EXTEND_MENU' => self::$lang_admin['extend_menu'],
-			'L_POWERED_BY' => self::$lang_admin['powered_by'],
+			'L_POWERED_BY' => self::$lang['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
 		));
 	
