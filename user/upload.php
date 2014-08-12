@@ -417,7 +417,7 @@ else
 	$Sql->query_close($result);
 
 	//Affichage des fichiers contenu dans le dossier
-	$result = $Sql->query_while("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.login
+	$result = $Sql->query_while("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id
 	FROM " . DB_TABLE_UPLOAD . " up
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 	WHERE up.idcat = '" . $folder . "' AND up.user_id = '" . AppContext::get_current_user()->get_id() . "'

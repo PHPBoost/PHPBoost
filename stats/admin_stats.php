@@ -29,7 +29,6 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 load_module_lang('stats'); //Chargement de la langue du module.
-include_once('../lang/' . get_ulang() . '/stats.php'); //Chargement de la langue.
 
 if (!empty($_POST['valid']))
 {
@@ -124,7 +123,7 @@ else
 		$stats_array = array();
 		foreach (ThemesManager::get_activated_themes_map() as $theme)
 		{
-			$stats_array[$theme->get_id()] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_theme = '" . $theme->get_id() . "'");
+			$stats_array[$theme->get_id()] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE theme = '" . $theme->get_id() . "'");
 		}
 
 		$Stats = new ImagesStats();
@@ -179,7 +178,7 @@ else
 		}
 
 		$i = 1;
-		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_msg
+		$result = $Sql->query_while("SELECT user_id, display_name, level, groups, user_msg
 		FROM " . DB_TABLE_MEMBER . "
 		ORDER BY user_msg DESC
 		" . $Sql->limit(0, 10));
@@ -190,7 +189,7 @@ else
 			$Template->assign_block_vars('top_poster', array(
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),
 				'ID' => $i,
-				'LOGIN' => $row['login'],
+				'LOGIN' => $row['display_name'],
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $user_group_color,
 				'USER_POST' => $row['user_msg'],
@@ -1062,7 +1061,6 @@ else
 	}
 	elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques camenbert.
 	{
-		include_once('../lang/' . get_ulang() . '/stats.php');
 
 		if (!empty($browser))
 		{
