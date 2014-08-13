@@ -11,7 +11,7 @@
 				<div class="module-top-l"></div>
 				<div class="module-top-r"></div>
 				<div class="module-top">
-					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 					&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
 				</div>
 				<div class="module-contents forum-contents">
@@ -74,7 +74,7 @@
 			<div class="module-top-l"></div>
 			<div class="module-top-r"></div>
 			<div class="module-top">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
+				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> &bull; {U_FORUM_CAT}
 				# IF C_POST_NEW_SUBJECT #
 					&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 				# ENDIF #
@@ -100,7 +100,7 @@
 						<tr>
 							<th colspan="7">
 								<div style="float:left;">
-									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a> &bull; {U_FORUM_CAT}
+									<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a> &bull; {U_FORUM_CAT}
 									# IF C_POST_NEW_SUBJECT #
 										&raquo; <a href="{U_POST_NEW_SUBJECT}" class="basic-button">{L_POST_NEW_SUBJECT}</a>
 									# ENDIF #

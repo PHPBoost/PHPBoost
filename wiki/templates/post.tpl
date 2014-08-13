@@ -83,7 +83,7 @@
 				</div>
 				# IF C_VERIF_CODE #
 				<div class="form-element">
-					<label for="verif_code">* {L_VERIF_CODE}</label>
+					<label for="verif_code">* ${LangLoader::get_message('form.captcha', 'common')}</label>
 					<div class="form-field">
 						{VERIF_CODE}
 					</div>

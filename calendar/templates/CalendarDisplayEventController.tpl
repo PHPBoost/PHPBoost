@@ -1,7 +1,7 @@
 <article itemscope="itemscope" itemtype="http://schema.org/Event">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="fa fa-syndication"></a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
 			<span itemprop="name">{TITLE}</span>
 			<span class="actions">
 				# IF C_EDIT #

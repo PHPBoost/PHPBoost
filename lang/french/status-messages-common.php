@@ -33,6 +33,8 @@ $lang['error.notice'] = 'Suggestion';
 $lang['error.warning'] = 'Avertissement';
 $lang['error.unknow'] = 'Inconnue';
 
+$lang['csrf_invalid_token'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
+
 //Process
 $lang['process.success'] = 'L\'opération s\'est déroulée avec succès';
 $lang['process.error'] = 'Une erreur s\'est produite lors de l\'opération';

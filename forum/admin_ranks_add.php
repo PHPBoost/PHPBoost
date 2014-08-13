@@ -110,7 +110,7 @@ else //Sinon on rempli le formulaire
 		'L_FORUM_RANKS_MANAGEMENT' => $LANG['rank_management'],
 		'L_FORUM_ADD_RANKS' => $LANG['rank_add'],
 		'L_UPLOAD_RANKS' => $LANG['upload_rank'],
-		'L_UPLOAD_FORMAT' => $LANG['upload_rank_format'],
+		'L_UPLOAD_FORMAT' => $LANG['explain_upload_img'],
 		'L_UPLOAD' => $LANG['upload'],
 		'L_RANK_NAME' => $LANG['rank_name'],
 		'L_NBR_MSG' => $LANG['nbr_msg'],

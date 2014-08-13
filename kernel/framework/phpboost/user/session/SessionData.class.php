@@ -404,10 +404,9 @@ class SessionData
 	 *      <li>If the token isn't in the request, we analyse the HTTP referer to be sure that the request comes from the current site and not from another which can be suspect</li>
 	 * </ul>
 	 * If the request doesn't match any of these two cases, this method will consider that it's a CSRF attack.
-	 * @param string $message message display to the error page if the token is wrong
 	 * @return bool true if no csrf attack by post is detected
 	 */
-	public function csrf_post_protect($message = '')
+	public function csrf_post_protect()
 	{
 		//The user sent a POST request
 		if (!empty($_POST))
@@ -424,7 +423,7 @@ class SessionData
 				return true;
 			}
 			//If those two lines are executed, none of the two cases has been matched. Thow it's a potential attack.
-			$this->csrf_attack($message);
+			$this->csrf_attack();
 			return false;
 		}
 		//It's not a POST request, there is no problem.
@@ -437,15 +436,14 @@ class SessionData
 	/**
 	 * @desc Check the session against CSRF attacks by GET. Checks that GETs are done from
 	 * this site with a correct token.
-	 * @param string $message message display to the error page if the token is wrong
 	 * @return true if no csrf attack by get is detected
 	 */
-	public function csrf_get_protect($message = '')
+	public function csrf_get_protect()
 	{
 		$token = $this->get_token();
 		if (empty($token) || $this->get_request_token() !== $token)
 		{
-			$this->csrf_attack($message);
+			$this->csrf_attack();
 			return false;
 		}
 		return true;
@@ -468,17 +466,13 @@ class SessionData
 	/**
 	 * @desc Redirect to the $redirect error page if the token is wrong
 	 * if false, do not redirect
-	 * @param string $message message display to the error page if the token is wrong
 	 */
-	private function csrf_attack($message = '')
+	private function csrf_attack()
 	{
 		$bad_token = $this->get_printable_token($this->get_request_token());
 		$good_token = $this->get_printable_token($this->get_token());
 
-		$title = LangLoader::get_message('e_warning', 'errors');
-		$message = empty($message)? LangLoader::get_message('csrf_attack', 'main') : $message;
-		$controller = new UserErrorController($title, $message, UserErrorController::WARNING);
-		DispatchManager::redirect($controller);
+		DispatchManager::redirect(PHPBoostErrors::CSRF());
 	}
 
 	private function get_request_token()

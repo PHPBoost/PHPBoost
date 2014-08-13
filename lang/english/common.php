@@ -44,6 +44,9 @@ $LANG['delete'] = 'Delete';
 $LANG['edit'] = 'Edit';
 
 $lang['syndication'] = 'Syndication';
+$lang['syndication.rss'] = 'RSS';
+$lang['syndication.atom'] = 'ATOM';
+
 $lang['no_item_now'] = 'No item is available for the moment';
 
 //Position
@@ -92,6 +95,7 @@ $lang['form.picture.preview'] = 'Picture preview';
 $lang['form.sources'] = 'Sources';
 $lang['form.source.name'] = 'Source name';
 $lang['form.source.url'] = 'Source address';
+$lang['form.captcha'] = 'Code de vérification';
 
 $lang['suggestions'] = 'Suggestions';
 

@@ -325,7 +325,6 @@ $Template->put_all(array(
 	'L_DO_NOT_SELECT_ANY_CAT' => $LANG['wiki_do_not_select_any_cat'],
 	'L_PREVIEWING' => $LANG['wiki_previewing'],
 	'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
-	'L_VERIF_CODE' => $LANG['verif_code']
 ));
 
 //outils BBcode en javascript

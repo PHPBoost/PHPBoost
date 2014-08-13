@@ -2,7 +2,7 @@
 			<section>
 				<header>
 					<h1>
-						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 						{TITLE}
 					</h1>
 				</header>

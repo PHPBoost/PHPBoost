@@ -19,7 +19,7 @@
 <section>
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_FAQ))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_FAQ))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 			{TITLE}
 			# IF C_ADMIN #
 			<span class="actions">

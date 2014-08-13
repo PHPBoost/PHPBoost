@@ -2,7 +2,7 @@
 <section>
 	<header>
 		<h1>
-			# IF C_SYNDICATION #<a href="# IF C_UNSOLVED #{U_SYNDICATION_UNSOLVED}# ELSE #{U_SYNDICATION_SOLVED}# ENDIF #" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a># ENDIF #
+			# IF C_SYNDICATION #<a href="# IF C_UNSOLVED #{U_SYNDICATION_UNSOLVED}# ELSE #{U_SYNDICATION_SOLVED}# ENDIF #" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a># ENDIF #
 			{TITLE}
 		</h1>
 	</header>

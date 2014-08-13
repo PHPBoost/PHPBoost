@@ -31,7 +31,7 @@ class PHPBoostErrors
 	{
 		$controller = new UserErrorController(
 		LangLoader::get_message('error', 'errors'),
-		LangLoader::get_message('csrf_attack', 'main'),
+		LangLoader::get_message('csrf_invalid_token', 'errors'),
 		UserErrorController::NOTICE);
 		return $controller;
 	}

@@ -46,7 +46,7 @@ class FormFieldCaptcha extends AbstractFormField
 		$this->captcha = AppContext::get_captcha_service()->get_default_factory();
         
         $field_options = $this->is_enabled() ? array('required' => true) : array();
-        parent::__construct($id, $LANG['verif_code'], false, $field_options);
+        parent::__construct($id, LangLoader::get_message('form.captcha', 'common'), false, $field_options);
     }
 
     /**
