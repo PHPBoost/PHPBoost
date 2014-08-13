@@ -193,8 +193,8 @@ elseif ($del_article > 0)
 	//la page existe bien, on supprime
 	if (!empty($page_infos['title']))
 	{
-		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_article . "'");
-		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE redirect = '" . $del_article . "'");
+		PersistenceContext::get_querier()->delete(PREFIX . 'pages', 'WHERE id=:id', array('id' => $del_article));
+		PersistenceContext::get_querier()->delete(PREFIX . 'pages', 'WHERE redirect=:redirect', array('redirect' => $del_article));
 		CommentsService::delete_comments_topic_module('pages', $del_article);
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=delete_success', '', '&'));
 	}

@@ -56,8 +56,7 @@ elseif (!empty($id) && $del) //Suppression.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	//On supprime le smiley de la bdd.
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_SMILEYS . " WHERE idsmiley = '" . $id . "'");
+	PersistenceContext::get_querier()->delete(DB_TABLE_SMILEYS, 'WHERE idsmiley=:id', array('id' => $id));
 	
 	###### Régénération du cache des smileys #######
 	SmileysCache::invalidate();

@@ -97,7 +97,7 @@ elseif ($delete > 0)
         DispatchManager::redirect($error_controller);
 	}
 
-	$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $delete . "'");
+	PersistenceContext::get_querier()->delete(PREFIX . 'media', 'WHERE id=:id', array('id' => $delete));
 
 	NotationService::delete_notes_id_in_module('media', $delete);
 	

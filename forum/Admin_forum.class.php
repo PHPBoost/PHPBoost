@@ -177,15 +177,16 @@ class Admin_forum
 			$nbr_del = $CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left'] + 1;
 			if (!empty($list_parent_cats))
 				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - '" . $nbr_del . "' WHERE id IN (" . $list_parent_cats . ")");
+
+			PersistenceContext::get_querier()->delete(PREFIX . 'forum_cats', 'WHERE id_left BETWEEN :id_left AND :id_right', array('id_left' => $CAT_FORUM[$idcat]['id_left'], 'id_right' => $CAT_FORUM[$idcat]['id_right']));
 			
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_cats WHERE id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'");	
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . $nbr_del . "', id_right = id_right - '" . $nbr_del . "' WHERE id_left > '" . $CAT_FORUM[$idcat]['id_right'] . "'");
 			
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_msg WHERE idtopic IN (
-			SELECT id FROM " . PREFIX . "forum_topics WHERE idcat = '" . $idcat . "')"); //On supprime les messages de tout les sujets.
+			PersistenceContext::get_querier()->delete(PREFIX . 'forum_msg', 'WHERE idtopic IN (
+			SELECT id FROM ' . PREFIX . 'forum_topics WHERE idcat =:id)', array('id' => $idcat));
 			
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_topics WHERE idcat = '" . $idcat . "'"); //On supprime les topics de la cat�gorie.
-				
+			PersistenceContext::get_querier()->delete(PREFIX . 'forum_topics', 'WHERE idcat=:id', array('id' => $idcat));
+	
 			$Cache->Generate_module_file('forum'); //Reg�n�ration du cache
 			$Cache->load('forum', RELOAD_CACHE); //Rechargement du cache
 			
@@ -218,7 +219,7 @@ class Admin_forum
 				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg + " . $nbr_msg . ", nbr_topic = nbr_topic + " . $nbr_topic . " WHERE id = '" . $t_to . "'");
 				
 				//On supprime l'ancien forum.
-				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_cats WHERE id = '" . $idcat . "'");
+				PersistenceContext::get_querier()->delete(PREFIX . 'forum_cats', 'WHERE id=:id', array('id' => $idcat));
 			}
 			
 			//Pr�sence de sous-forums => d�placement de ceux-ci.
@@ -234,7 +235,7 @@ class Admin_forum
 					
 				########## Suppression ##########
 				//On supprime l'ancien forum.
-				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_cats WHERE id = '" . $idcat . "'");
+				PersistenceContext::get_querier()->delete(PREFIX . 'forum_cats', 'WHERE id=:id', array('id' => $idcat));
 				
 				//On supprime virtuellement (changement de signe des bornes) les enfants.
 				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_sub_cats . ")");					

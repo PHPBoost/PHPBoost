@@ -147,7 +147,7 @@ elseif ($del)
 		$user_id = (int)$Sql->query("SELECT user_id FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'");
 		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($user_id === AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== -1))
 		{
-			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'");
+			PersistenceContext::get_querier()->delete(PREFIX . 'shoutbox', 'WHERE id=:id', array('id' => $shout_id));
 			echo 1;
 		}
 	}

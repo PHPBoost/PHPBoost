@@ -102,7 +102,7 @@ if (!empty($_POST['submit']))
 		{
 			foreach ($delete as $key)
 			{
-				$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $key . "'");
+				PersistenceContext::get_querier()->delete(PREFIX . 'media', 'WHERE id=:id', array('id' => $key));
 				CommentsService::delete_comments_topic_module('media', $key);
 				NotationService::delete_notes_id_in_module('media', $key);
 			}

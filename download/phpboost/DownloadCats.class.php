@@ -206,7 +206,7 @@ class DownloadCats extends DeprecatedCategoriesManager
 		if ($test = parent::delete($id))
 		{
 			//We remove its whole content
-			$Sql->query_inject("DELETE FROM " . PREFIX . "download WHERE idcat = '" . $id . "'");
+			PersistenceContext::get_querier()->delete(PREFIX . 'download', 'WHERE idcat=:id', array('id' => $id));
 			return true;
 		}
 		else

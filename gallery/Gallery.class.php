@@ -290,8 +290,8 @@ class Gallery
 		$info_pics = $Sql->query_array(PREFIX . "gallery", "path", "idcat", "aprob", "WHERE id = '" . $id_pics . "'");
 		if (!empty($info_pics['path']))
 		{
-			$Sql->query_inject("DELETE FROM " . PREFIX . "gallery WHERE id = '" . $id_pics . "'");	
-		
+			PersistenceContext::get_querier()->delete(PREFIX . 'gallery', 'WHERE id=:id', array('id' => $id_pics));
+			
 			//Parent de la catégorie cible
 			$list_parent_cats_to = '';
 			$result = $Sql->query_while("SELECT id 

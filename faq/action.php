@@ -54,7 +54,7 @@ if ($faq_del_id > 0)
 		if (!empty($faq_infos['question'])) //If the id corresponds to a question existing in the database
 		{
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE idcat = '" . $faq_infos['idcat'] . "' AND q_order > '" . $faq_infos['q_order'] . "'"); //Decrementation of the order of every question which are after
-			$Sql->query_inject("DELETE FROM " . PREFIX . "faq WHERE id = '" . $faq_del_id . "'");			 //Updating number of subcategories
+			PersistenceContext::get_querier()->delete(PREFIX . 'faq', 'WHERE id=:id', array('id' => $faq_del_id));
 			if ($faq_infos['idcat'] != 0)
 			{
 				$faq_cats = new FaqCats();

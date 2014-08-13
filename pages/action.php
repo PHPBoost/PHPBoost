@@ -128,7 +128,7 @@ elseif ($del_redirection > 0)
 		
 	//On supprime la redirection
 	if ($page_infos['redirect'] > 0)
-		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_redirection . "' AND redirect > 0");
+		PersistenceContext::get_querier()->delete(PREFIX . 'pages', 'WHERE id=:id AND redirect > 0', array('id' => $del_redirection));
 		
 	AppContext::get_response()->redirect(HOST . DIR . url('/pages/action.php?id=' . $page_infos['redirect'], '', '&'));
 }
@@ -164,8 +164,9 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	if ($remove_action == 'remove_all') //On supprime le contenu de la catégorie
 	{
 		//Suppression des pages contenues par cette catégorie
-		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id_cat IN (" . $id_to_delete . ")");
-		$Sql->query_inject("DELETE FROM " . PREFIX . "pages_cats WHERE id IN (" . $id_to_delete . ")");
+		PersistenceContext::get_querier()->delete(PREFIX . 'pages', 'WHERE id_cat=:id', array('id' => $id_to_delete));
+		PersistenceContext::get_querier()->delete(PREFIX . 'pages_cats', 'WHERE id=:id', array('id' => $id_to_delete));
+		
 		CommentsService::delete_comments_topic_module('pages', $id_to_delete);
 		$Cache->Generate_module_file('pages');
 		
@@ -181,8 +182,8 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	elseif ($remove_action == 'move_all') //On déplace le contenu de la catégorie
 	{
 		//Quoi qu'il arrive on supprime l'article associé
-		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_cat_post . "'");
-		$Sql->query_inject("DELETE FROM " . PREFIX . "pages_cats WHERE id = '" . $page_infos['id_cat'] . "'");
+		PersistenceContext::get_querier()->delete(PREFIX . 'pages', 'WHERE id_cat=:id', array('id' => $del_cat_post));
+		PersistenceContext::get_querier()->delete(PREFIX . 'pages_cats', 'WHERE id_cat=:id', array('id' => $page_infos['id_cat']));
 		
 		$Sql->query_inject("UPDATE " . PREFIX . "pages SET id_cat = '" . $report_cat . "' WHERE id_cat = '" . $page_infos['id_cat'] . "'");
 		$Sql->query_inject("UPDATE " . PREFIX . "pages_cats SET id_parent = '" . $report_cat . "' WHERE id_parent = '" . $page_infos['id_cat'] . "'");

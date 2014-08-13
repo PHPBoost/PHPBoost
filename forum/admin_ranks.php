@@ -58,7 +58,7 @@ if (!empty($_POST['valid']))
 elseif (!empty($_GET['del']) && !empty($get_id)) //Suppression du rang.
 {
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM " . PREFIX . "forum_ranks WHERE id = '" . $get_id . "'");	
+	PersistenceContext::get_querier()->delete(PREFIX . 'forum_ranks', 'WHERE id=:id', array('id' => $get_id));
 
 	###### Régénération du cache des rangs #######
 	ForumRanksCache::invalidate();

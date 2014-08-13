@@ -154,7 +154,8 @@ elseif (!empty($table) && $action == 'delete')
 	$value = retrieve(GET, 'value', '');
 	
 	if (!empty($value) && !empty($field))
-		$Sql->query_inject("DELETE FROM ".$table." WHERE " . $field . " = '" . $value . "'");
+		PersistenceContext::get_querier()->delete($table, 'WHERE '.$field.'=:value', array('value' => $value));
+		
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 }
 elseif (!empty($table) && $action == 'update') //Mise à jour.

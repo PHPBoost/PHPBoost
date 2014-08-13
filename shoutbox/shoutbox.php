@@ -96,7 +96,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		{
 			AppContext::get_session()->csrf_get_protect(); //Protection csrf
 			
-			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'");
+			PersistenceContext::get_querier()->delete(PREFIX . 'shoutbox', 'WHERE id=:id', array('id' => $shout_id));
 			
 			AppContext::get_response()->redirect(HOST . SCRIPT);
 		}
