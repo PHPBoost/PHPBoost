@@ -269,7 +269,7 @@
 		<section>
 			<header>
 				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 					{L_GALLERY} {U_GALLERY_CAT_LINKS}
 				</h1>
 			</header>

@@ -86,6 +86,7 @@ $LANG['require_password'] = 'Please enter a password !';
 $LANG['require_recipient'] = 'Please enter the recipient !';
 
 //Action
+$LANG['add'] = 'Add';
 $LANG['delete'] = 'Delete';
 $LANG['edit'] = 'Edit';
 $LANG['register'] = 'Sign up';
@@ -211,6 +212,7 @@ $LANG['update_msg'] = 'Update the message';
 $LANG['category'] = 'Category';
 $LANG['categories'] = 'Categories';
 $LANG['refresh'] = 'Refresh';
+$LANG['rank'] = 'Rank';
 $LANG['ranks'] = 'Ranks';
 $LANG['previous_page'] = 'Previous page';
 $LANG['next_page'] = 'Next page';
@@ -402,16 +404,6 @@ $LANG['powered_by'] = 'Boosted by';
 $LANG['phpboost_right'] = '';
 $LANG['sql_req'] = ' Requests';
 $LANG['achieved'] = 'Achieved in';
-
-//Feeds
-$LANG['syndication'] = 'Syndication';
-$LANG['rss'] = 'RSS';
-$LANG['atom'] = 'ATOM';
-
-//Dictionnaire pour le captcha.
-$LANG['verif_code'] = 'Verification code';
-
-$LANG['csrf_attack'] = 'Invalid session token. Please retry because the operation has not been performed.';
 
 $LANG['forbidden_tags'] = 'Forbidden formatting types';
 

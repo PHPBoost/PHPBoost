@@ -1,7 +1,7 @@
 		<article>
 			<header>
 				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'main')}" class="fa fa-syndication"></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
 					{TITLE}
 				</h1>
 			</header>
@@ -51,7 +51,7 @@
 					# END cat.no_sub_cat #
 					# END IF #
 					<br />
-					<strong>{L_SUB_ARTICLES}</strong> &nbsp; <a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					<strong>{L_SUB_ARTICLES}</strong> &nbsp; <a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 					<br /><br />
 					# START cat.list_art #
 						<i class="fa fa-file"></i> <a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a><br />

@@ -33,6 +33,8 @@ $lang['error.notice'] = 'Notice';
 $lang['error.warning'] = 'Warning';
 $lang['error.unknow'] = 'Unknow';
 
+$lang['csrf_invalid_token'] = 'Invalid session token. Please retry because the operation has not been performed.';
+
 //Process
 $lang['process.success'] = 'The operation is a success';
 $lang['process.error'] = 'An error occurred during the operation';

@@ -43,7 +43,10 @@ $lang['no'] = 'Non';
 $lang['delete'] = 'Supprimer';
 $lang['edit'] = 'Editer';
 
-$lang['syndication'] = 'Flux RSS';
+$lang['syndication'] = 'Syndication';
+$lang['syndication.rss'] = 'RSS';
+$lang['syndication.atom'] = 'ATOM';
+
 $lang['no_item_now'] = 'Aucun élément n\'est disponible pour le moment';
 
 //Position
@@ -92,6 +95,7 @@ $lang['form.picture.preview'] = 'Prévisualisation de l\'image';
 $lang['form.sources'] = 'Sources';
 $lang['form.source.name'] = 'Nom de la source';
 $lang['form.source.url'] = 'Adresse de la source';
+$lang['form.captcha'] = 'Code de vérification';
 
 $lang['suggestions'] = 'Suggestions';
 

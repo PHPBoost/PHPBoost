@@ -313,8 +313,8 @@ class Feed
 		$feed_menu->put_all(array(
 			'U_FEED' => $feed_absolut_url,
 			'SEPARATOR' => strpos($feed_absolut_url, '?') !== false ? '&amp;' : '?',
-			'L_RSS' => LangLoader::get_message('rss', 'main'),
-			'L_ATOM' => LangLoader::get_message('atom', 'main')
+			'L_RSS' => LangLoader::get_message('syndication.rss', 'common'),
+			'L_ATOM' => LangLoader::get_message('syndication.atom', 'common')
 		));
 
 		return $feed_menu->render();

@@ -85,6 +85,7 @@ $LANG['require_password'] = 'Veuillez entrer un mot de passe !';
 $LANG['require_recipient'] = 'Veuillez entrer le destinataire du message !';
 
 //Action
+$LANG['add'] = 'Ajouter';
 $LANG['delete'] = 'Supprimer';
 $LANG['edit'] = 'Editer';
 $LANG['register'] = 'S\'inscrire';
@@ -210,6 +211,7 @@ $LANG['update_msg'] = 'Modifier le message';
 $LANG['category'] = 'Catégorie';
 $LANG['categories'] = 'Catégories';
 $LANG['refresh'] = 'Rafraichir';
+$LANG['rank'] = 'Rang';
 $LANG['ranks'] = 'Rangs';
 $LANG['previous_page'] = 'Page précédente';
 $LANG['next_page'] = 'Page suivante';
@@ -402,16 +404,6 @@ $LANG['powered_by'] = 'Boosté par';
 $LANG['phpboost_right'] = '';
 $LANG['sql_req'] = 'Requêtes';
 $LANG['achieved'] = 'Exécuté en';
-
-//Flux
-$LANG['syndication'] = 'Syndication';
-$LANG['rss'] = 'RSS';
-$LANG['atom'] = 'ATOM';
-
-//Dictionnaire pour le captcha.
-$LANG['verif_code'] = 'Code de vérification';
-
-$LANG['csrf_attack'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
 
 $LANG['forbidden_tags'] = 'Types de formatage interdits';
 

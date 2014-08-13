@@ -319,7 +319,7 @@ elseif ($add) //Interface d'ajout du groupe.
 		'L_ADD_GROUPS' => $LANG['groups_add'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_UPLOAD_GROUPS' => $LANG['upload_group'],
-		'L_UPLOAD_FORMAT' => $LANG['upload_rank_format'],
+		'L_UPLOAD_FORMAT' => $LANG['explain_upload_img'],
 		'L_UPLOAD' => $LANG['upload'],
 		'L_NAME' => $LANG['name'],
 		'L_IMG_ASSOC_GROUP' => $LANG['img_assoc_group'],

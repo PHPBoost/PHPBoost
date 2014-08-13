@@ -31,34 +31,14 @@
  ####################################################
 
 $LANG['administration'] = 'Administration';
-$LANG['no_administration'] = 'No administration associated with this module !';
 
 $LANG['extend_menu'] = 'Extended menu';
 $LANG['phpinfo'] = 'PHP info';
 
-//Form
-$LANG['add'] = 'Add';
-
-//Alertes formulaires
-$LANG['alert_same_pass'] = 'The passwords are not the same !';
-$LANG['alert_max_dim'] = 'The file exceeds the specified maximum width and height !';
-$LANG['alert_error_avatar'] = 'Error while uploading the avatar !';
-$LANG['alert_error_img'] = 'Error while uploading the picture !';
-$LANG['alert_invalid_file'] = 'The file isn\'t valid (jpg, gif, png !)';
-$LANG['alert_max_weight'] = 'The image is too heavy';
-$LANG['alert_s_already_use'] = 'Smiley code already used !';
-$LANG['alert_no_cat'] = 'No name/category selected';
-$LANG['alert_fct_unlink'] = 'Impossible to delete picture. You must remove it manually using ftp !';
-$LANG['alert_no_login'] = 'The input nickname doesn\'t exist !';
-
 //Requis
 $LANG['require_cat'] = 'Please enter a category !';
 $LANG['require_cat_create'] = 'No category found, please create one';
-$LANG['require_serv'] = 'Please enter a name for the server !';
 $LANG['require_name'] = 'Please enter a name !';
-$LANG['require_cookie_name'] = 'Please enter a cookie name !';
-$LANG['require_session_time'] = 'Please enter a duration for the session! ';
-$LANG['require_session_invit'] = 'Please enter a duration for the guest session !';
 $LANG['require_pass'] = 'Please enter a password !';
 $LANG['require_rank'] = 'Please enter a rank !';
 $LANG['require_code'] = 'Please enter a code for the smiley !';
@@ -69,74 +49,13 @@ $LANG['require_subcat'] = 'Please enter a subcategory !';
 $LANG['require_file_name'] = 'Please enter a file name';
 
 //Common
-$LANG['pseudo'] = 'Nickname';
-$LANG['yes'] = 'Yes';
-$LANG['no'] = 'No';
-$LANG['description'] = 'Description';
-$LANG['view'] = 'View';
-$LANG['views'] = 'Views';
-$LANG['name'] = 'Name';
-$LANG['title'] = 'Title';
-$LANG['message'] = 'Message';
-$LANG['aprob'] = 'Approval';
-$LANG['unaprob'] = 'Disapproval';
-$LANG['url'] = 'Url';
-$LANG['categorie'] = 'Category';
-$LANG['note'] = 'Note';
-$LANG['size'] = 'Size';
-$LANG['file'] = 'File';
-$LANG['download'] = 'Downloaded';
-$LANG['delete'] = 'Delete';
 $LANG['user_ip'] = 'IP address';
-$LANG['localisation'] = 'Localisation';
-$LANG['activate'] = 'Enable';
-$LANG['unactivate'] = 'Disable';
-$LANG['img'] = 'Picture';
-$LANG['activation'] = 'Activation';
-$LANG['position'] = 'Position';
-$LANG['path'] = 'Path';
-$LANG['on'] = 'On';
-$LANG['at'] = 'at';
 $LANG['registered'] = 'Registered';
-$LANG['website'] = 'Website';
-$LANG['search'] = 'Search';
-$LANG['mail'] = 'Mail';
-$LANG['password'] = 'Password';
-$LANG['contact'] = 'Contact';
-$LANG['info'] = 'Informations';
-$LANG['language'] = 'Language';
-$LANG['sanction'] = 'Sanction';
-$LANG['ban'] = 'Ban';
-$LANG['theme'] = 'Theme';
-$LANG['code'] = 'Code';
-$LANG['status'] = 'Status';
-$LANG['question'] = 'Question';
-$LANG['answers'] = 'Answers';
-$LANG['archived'] = 'Archived';
-$LANG['galerie'] = 'Gallery' ;
-$LANG['select'] = 'Select';
-$LANG['pics'] = 'Pictures';
-$LANG['empty'] = 'Empty';
-$LANG['show'] = 'Consult';
-$LANG['link'] = 'Link';
-$LANG['type'] = 'Type';
-$LANG['of'] = 'of';
-$LANG['autoconnect'] = 'Autoconnect';
-$LANG['unspecified'] = 'Unspecified';
 $LANG['configuration'] = 'Configuration';
-$LANG['management'] = 'Management';
-$LANG['add'] = 'Add';
-$LANG['category'] = 'Category';
-$LANG['site'] = 'Site';
-$LANG['modules'] = 'Modules';
-$LANG['release_date'] = 'Release date <span class="smaller">dd/mm/yy</span>';
-$LANG['immediate'] = 'Immediate';
-$LANG['waiting'] = 'Waiting';
 $LANG['stats'] = 'Statistics';
 $LANG['cat_management'] = 'Category management';
 $LANG['cat_add'] = 'Add category';
 $LANG['visible'] = 'Visible';
-$LANG['undefined'] = 'Undefined';
 $LANG['nbr_cat_max'] = 'Number of category displayed';
 $LANG['nbr_column_max'] = 'Number of columns';
 $LANG['note_max'] = 'Notation scale';
@@ -150,17 +69,6 @@ $LANG['unknow_bot'] = 'Unknown bot';
 $LANG['unlock_admin_panel'] = 'Unlock administration panel';
 $LANG['flood_block'] = 'Rest %d test(s) after that you will have to wait 5 minutes to obtain 2 new tests (10min for 5)!';
 $LANG['flood_max'] = 'You exhausted all your tests of connection, your account is locked during 5 minutes';
-
-//Rank
-$LANG['upload_rank_format'] = 'JPG, GIF, PNG, BMP authorized';
-$LANG['rank'] = 'Rank';
-$LANG['guest'] = 'Guest';
-$LANG['a_member'] = 'member';
-$LANG['member'] = 'Member';
-$LANG['a_modo'] = 'mod';
-$LANG['modo'] = 'Moderator';
-$LANG['a_admin'] = 'admin';
-$LANG['admin'] = 'Administrator';
 
 //Index
 $LANG['update_available'] = 'Update available';

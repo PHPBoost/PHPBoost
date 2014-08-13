@@ -44,7 +44,6 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('UserChangeLostPasswordController', '`^/password/change(?:/([a-z0-9]+))?/?$`', array('key')),
 	new UrlControllerMapper('UserError403Controller', '`^/error/403/?$`'),
 	new UrlControllerMapper('UserError404Controller', '`^/error/404/?$`'),
-	new UrlControllerMapper('UserErrorCSRFController', '`^/error/csrf/?$`'),
 	new UrlControllerMapper('UserContributionSuccessController', '`^/contribution/success/?$`'),
 	new UrlControllerMapper('UserUsersListController', '`^(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 );
