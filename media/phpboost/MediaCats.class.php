@@ -298,7 +298,7 @@ class MediaCats extends DeprecatedCategoriesManager
 		if (parent::delete($id))
 		{
 			//We remove its whole content
-			$Sql->query_inject("DELETE FROM ".PREFIX."media WHERE idcat = '" . $id . "'");
+			PersistenceContext::get_querier()->delete(PREFIX . 'media', 'WHERE idcat=:id', array('id' => $id));
 
 			return true;
 		}

@@ -212,7 +212,7 @@ elseif ($del && !empty($id)) //Suppresion du lien web.
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM " . PREFIX . "web WHERE id = '" . $id . "'");	
+	PersistenceContext::get_querier()->delete(PREFIX . 'web', 'WHERE id=:id', array('id' => $id));
 
 	//On supprimes les éventuels commentaires associés.
 	CommentsService::delete_comments_topic_module('web', $id);

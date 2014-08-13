@@ -485,8 +485,8 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			elseif ($new_warning_level == 100) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'");
-				$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $info_mbr['user_id'] . "'");
-
+				PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:id', array('id' => $info_mbr['user_id']));
+				
 				//Insertion de l'action dans l'historique.
 				forum_history_collector(H_BAN_USER, $info_mbr['user_id'], 'moderation_forum.php?action=warning&id=' . $info_mbr['user_id']);
 
@@ -605,7 +605,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 }
 elseif (retrieve(GET, 'del_h', false) && AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Suppression de l'historique.
 {
-	$Sql->query_inject("DELETE FROM " . PREFIX . "forum_history");
+	PersistenceContext::get_dbms_utils()->truncate(PREFIX . 'forum_history');
 
 	AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php', '', '&'));
 }

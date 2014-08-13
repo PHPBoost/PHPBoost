@@ -187,7 +187,7 @@ class FaqCats extends DeprecatedCategoriesManager
 		if ($test = parent::delete($id))
 		{
 			//We remove its whole content
-			$Sql->query_inject("DELETE FROM " . PREFIX . "faq WHERE idcat = '" . $id . "'");
+			PersistenceContext::get_querier()->delete(PREFIX . 'faq', 'WHERE idcat=:id', array('id' => $id));
 			return true;
 		}
 		else

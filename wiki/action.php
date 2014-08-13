@@ -243,7 +243,7 @@ elseif ($del_redirection > 0)//Supprimer une redirection
 			DispatchManager::redirect($error_controller);
 		} 
 		
-		$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_redirection . "'");
+		PersistenceContext::get_querier()->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_redirection));
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 }
@@ -321,7 +321,7 @@ elseif ($del_archive > 0)
 	} 
 	
 	if ($contents_infos['activ'] == 0) //C'est une archive -> on peut supprimer
-		$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_contents = '" . $del_archive . "'");
+		PersistenceContext::get_querier()->delete(PREFIX . 'wiki_contents', 'WHERE id_contents=:id', array('id' => $del_archive));
 	if (!empty($article_infos['encoded_title'])) //on redirige vers l'article
 		AppContext::get_response()->redirect('/wiki/' . url('history.php?id=' . $contents_infos['id_article'], '', '&'));
 }
@@ -342,8 +342,8 @@ elseif ($del_article > 0) //Suppression d'un article
 	} 
 	
 	//On rippe l'article
-	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_article . "'");
-	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_article = '" . $del_article . "'");
+	PersistenceContext::get_querier()->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_article));
+	PersistenceContext::get_querier()->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $del_article));
 	
 	CommentsService::delete_comments_topic_module('wiki', $del_article);
 
@@ -391,10 +391,10 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	}
 
 	//Quoi qu'il arrive on supprime l'article associé
-	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_article = '" . $del_to_remove . "'");	
-	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_to_remove . "'");
-	
-	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_cats WHERE id = '" . $article_infos['id_cat'] . "'");
+	PersistenceContext::get_querier()->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $del_to_remove));
+	PersistenceContext::get_querier()->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_to_remove));
+	PersistenceContext::get_querier()->delete(PREFIX . 'wiki_cats', 'WHERE id=:id', array('id' => $del_to_remove));
+
 	CommentsService::delete_comments_topic_module('wiki', $del_to_remove);
 	
 	if ($remove_action == 'remove_all') //On supprime le contenu de la catégorie
@@ -404,14 +404,14 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 			$result = $Sql->query_while ("SELECT id FROM " . PREFIX . "wiki_articles WHERE id_cat = '" . $id . "'");
 			while ($row = $Sql->fetch_assoc($result)) //On supprime toutes les archives de chaque article avant de le supprimer lui-même
 			{
-				$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_article = '" . $row['id'] . "'");
+				PersistenceContext::get_querier()->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $row['id']));
 				CommentsService::delete_comments_topic_module('wiki', $row['id']);
 			}
 				
 			$Sql->query_close($result);
 			
-			$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id_cat = '" . $id . "'");
-			$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_cats WHERE id = '" . $id . "'");
+			PersistenceContext::get_querier()->delete(PREFIX . 'wiki_articles', 'WHERE id_cat=:id', array('id' => $id));
+			PersistenceContext::get_querier()->delete(PREFIX . 'wiki_cats', 'WHERE id=:id', array('id' => $id));
 		}
 		$Cache->Generate_module_file('wiki');
 

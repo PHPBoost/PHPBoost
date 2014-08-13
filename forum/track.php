@@ -58,7 +58,7 @@ if (!empty($_POST['valid']))
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '" . $mail . "' WHERE idtopic = '" . $row['id'] . "'");
 		$del = (isset($_POST['d' . $row['id']]) && $_POST['d' . $row['id']] == 'on') ? true : false;
 		if ($del)
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $row['id'] . "'");
+			PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id', array('id' => $row['id']));
 	}
 	$Sql->query_close($result);
 	

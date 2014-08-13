@@ -70,7 +70,7 @@ elseif (empty($top) && empty($bottom) && $del && !empty($id)) //Suppression du l
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM " . PREFIX . "web_cat WHERE id = '" . $id . "'");	
+	PersistenceContext::get_querier()->delete(PREFIX . 'web_cat', 'WHERE id=:id', array('id' => $id));
 	$Sql->query_inject("UPDATE " . PREFIX . "web SET idcat = '' WHERE idcat = '" . $id . "'");
 	
 	//Régénération du cache des catégories.

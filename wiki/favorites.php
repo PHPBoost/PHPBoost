@@ -75,7 +75,7 @@ elseif ($remove_favorite > 0)
 	//L'article est effectivement en favoris
 	if ($is_favorite > 0)
 	{
-		$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_favorites WHERE id_article = '" . $remove_favorite . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
+		PersistenceContext::get_querier()->delete(PREFIX . 'wiki_favorites', 'WHERE id_article=:id AND user_id=:user_id', array('id' => $remove_favorite, 'user_id' => AppContext::get_current_user()->get_id()));
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris

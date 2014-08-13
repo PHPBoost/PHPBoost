@@ -93,8 +93,8 @@ elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 		GroupsService::remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
 	}
 
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'"); //On supprime dans la bdd.
-		
+	PersistenceContext::get_querier()->delete(DB_TABLE_GROUP, 'WHERE id=:id', array('id' => $idgroup));
+	
 	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 	
 	AppContext::get_response()->redirect(HOST . DIR . '/admin/admin_groups.php');

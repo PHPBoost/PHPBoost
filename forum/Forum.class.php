@@ -185,7 +185,7 @@ class Forum
 			//On compte le nombre de messages du topic avant l'id supprimé.
 			$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "'");
 			//On supprime le message demandé.
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_msg WHERE id = '" . $idmsg . "'");
+			PersistenceContext::get_querier()->delete(PREFIX . 'forum_msg', 'WHERE id=:id', array('id' => $idmsg));
 			//On met à jour la table forum_topics.
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET nbr_msg = nbr_msg - 1 WHERE id = '" . $idtopic . "'");
 			//On retranche d'un messages la catégorie concernée.
@@ -244,11 +244,10 @@ class Forum
 		$nbr_msg = !empty($nbr_msg) ? NumberHelper::numeric($nbr_msg) : 1;
 
 		//On rippe le topic ainsi que les messages du topic.
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "'");
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_topics WHERE id = '" . $idtopic . "'");
-		//Suppression du sondage éventuellement associé.
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_poll WHERE idtopic = '" . $idtopic . "'");
-
+		PersistenceContext::get_querier()->delete(PREFIX . 'forum_msg', 'WHERE idtopic=:id', array('id' => $idtopic));
+		PersistenceContext::get_querier()->delete(PREFIX . 'forum_topics', 'WHERE id=:id', array('id' => $idtopic));
+		PersistenceContext::get_querier()->delete(PREFIX . 'forum_poll', 'WHERE idtopic=:id', array('id' => $idtopic));
+		
 		//On retranche le nombre de messages et de topic.
 		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic - 1, nbr_msg = nbr_msg - '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$topic['idcat']]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$topic['idcat']]['id_right'] ."' AND level <= '" . $CAT_FORUM[$topic['idcat']]['level'] . "'");
 
@@ -256,7 +255,7 @@ class Forum
 		$this->Update_last_topic_id($topic['idcat']);
 
 		//Topic supprimé, on supprime les marqueurs de messages lus pour ce topic.
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_view WHERE idtopic = '" . $idtopic . "'");
+		PersistenceContext::get_querier()->delete(PREFIX . 'forum_view', 'WHERE idtopic=:id', array('id' => $idtopic));
 
 		//On supprime l'alerte.
 		$this->Del_alert_topic($idtopic);
@@ -303,7 +302,7 @@ class Forum
 			" . $Sql->limit(0, $CONFIG_FORUM['topic_track']));
 				
 			//Suppression des sujets suivis dépassant le nbr maximum autorisé.
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND id < @compt");
+			PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE user_id=:id  AND id < @compt', array('id' => AppContext::get_current_user()->get_id()));
 		}
 	}
 
@@ -316,7 +315,7 @@ class Forum
 		{
 			$info = $Sql->query_array(PREFIX . "forum_track", "pm", "track", "WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idtopic = '" . $idtopic . "'");
 			if ($info['track'] == 0 && $info['pm'] == 0)
-				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
+				PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', array('id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
 			else
 				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
 		}
@@ -324,7 +323,7 @@ class Forum
 		{
 			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "track", "WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idtopic = '" . $idtopic . "'");
 			if ($info['mail'] == 0 && $info['track'] == 0)
-				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
+				PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', array('id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
 			else
 				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
 		}
@@ -332,7 +331,7 @@ class Forum
 		{
 			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "pm", "WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idtopic = '" . $idtopic . "'");
 			if ($info['mail'] == 0 && $info['pm'] == 0)
-				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
+				PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', array('id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
 			else
 				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
 		}
@@ -529,8 +528,8 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_alerts WHERE id = '" . $id_alert . "'");
-		
+		PersistenceContext::get_querier()->delete(PREFIX . 'forum_alerts', 'WHERE id=:id', array('id' => $id_alert));
+
 		//Si la contribution associée n'est pas réglée, on la règle
 		
 		
@@ -576,7 +575,7 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_poll WHERE idtopic = '" . $idtopic . "'");
+		PersistenceContext::get_querier()->delete(PREFIX . 'forum_poll', 'WHERE idtopic=:id', array('id' => $idtopic));
 	}
 
 

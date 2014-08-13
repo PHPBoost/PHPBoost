@@ -88,7 +88,7 @@ if ($delete_file > 0)
 	
 	if ($download_categories->check_auth($file_infos['idcat']))
 	{
-		$Sql->query_inject("DELETE FROM " . PREFIX . "download WHERE id = '" . $delete_file . "'");
+		PersistenceContext::get_querier()->delete(PREFIX . 'download', 'WHERE id=:id', array('id' => $delete_file));
 		
 		CommentsService::delete_comments_topic_module('download', $delete_file);
 

@@ -47,7 +47,7 @@ if ($del && !empty($id)) //Suppresion poll
 	$Cache->load('poll');
 	
 	//On supprime des tables config et reponses des polls.
-	$Sql->query_inject("DELETE FROM " . PREFIX . "poll WHERE id = '" . $id . "'");	
+	PersistenceContext::get_querier()->delete(PREFIX . 'poll', 'WHERE id=:id', array('id' => $id));
 	
 	###### Régénération du cache si le sondage fait parti de la liste des sondages affichés dans le mini-module #######
 	if (in_array($id, $config_displayed_in_mini_module_list))		

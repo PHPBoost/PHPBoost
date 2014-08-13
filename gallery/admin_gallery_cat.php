@@ -334,7 +334,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					}
 					
 					//On supprime l'ancienne galerie.
-					$Sql->query_inject("DELETE FROM " . PREFIX . "gallery_cats WHERE id = '" . $idcat . "'");
+					PersistenceContext::get_querier()->delete(PREFIX . 'gallery_cats', 'WHERE id=:id', array('id' => $idcat));
 					
 					//Présence de sous-galeries => déplacement de celles-ci.
 					if ($nbr_sub_cat > 0)
@@ -390,7 +390,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 							
 						########## Suppression ##########
 						//On supprime l'ancienne galerie.
-						$Sql->query_inject("DELETE FROM " . PREFIX . "gallery_cats WHERE id = '" . $idcat . "'");
+						PersistenceContext::get_querier()->delete(PREFIX . 'gallery_cats', 'WHERE id=:id', array('id' => $idcat));
 						
 						//On supprime virtuellement (changement de signe des bornes) les enfants.
 						$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_sub_cats . ")");					
@@ -497,9 +497,9 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right - '" . $nbr_del . "', nbr_pics_aprob = nbr_pics_aprob - '" . NumberHelper::numeric($nbr_pics_aprob) . "', nbr_pics_unaprob = nbr_pics_unaprob - '" . NumberHelper::numeric($nbr_pics_unaprob) . "' WHERE id IN (" . $list_parent_cats . ")");
 			}		
 			
-			$Sql->query_inject("DELETE FROM " . PREFIX . "gallery_cats WHERE id_left BETWEEN '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND '" . $CAT_GALLERY[$idcat]['id_right'] . "'");	
+			PersistenceContext::get_querier()->delete(PREFIX . 'gallery_cats', 'WHERE id_left BETWEEN :id_left AND :id_right', array('id_left' => $CAT_GALLERY[$idcat]['id_left'], 'id_right' => $CAT_GALLERY[$idcat]['id_right']));
 			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left - '" . $nbr_del . "', id_right = id_right - '" . $nbr_del . "' WHERE id_left > '" . $CAT_GALLERY[$idcat]['id_right'] . "'");
-			$Sql->query_inject("DELETE FROM " . PREFIX . "gallery WHERE idcat = '" . $idcat . "'");	
+			PersistenceContext::get_querier()->delete(PREFIX . 'gallery', 'WHERE idcat=:id', array('id' => $idcat));
 			
 			###### Regénération du cache #######
 			$Cache->Generate_module_file('gallery');
