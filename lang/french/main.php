@@ -46,12 +46,10 @@ $LANG['unit_seconds'] = 'Secondes';
 $LANG['unit_seconds_short'] = 's';
 	
 //Erreurs
-$LANG['error'] = 'Erreur';
 $LANG['unknown'] = 'Inconnu';
 
 //Titres divers
 $LANG['title_pm'] = 'Messages privés';
-$LANG['title_error'] = 'Erreur';
 $LANG['title_com'] = 'Commentaires';
 $LANG['title_register'] = 'S\'enregistrer';
 
@@ -93,7 +91,6 @@ $LANG['register'] = 'S\'inscrire';
 
 //Alertes
 $LANG['alert_delete_msg'] = 'Supprimer le/les message(s) ?';
-$LANG['alert_delete_file'] = 'Supprimer ce fichier ?';
 
 //Impression
 $LANG['printable_version'] = 'Version imprimable';
@@ -394,7 +391,6 @@ $LANG['contribution_fixing_date'] = 'Date de clôture';
 $LANG['contribution_module'] = 'Module';
 $LANG['process_contribution'] = 'Traiter la contribution';
 $LANG['confirm_delete_contribution'] = 'Etes-vous sûr de vouloir supprimer cette contribution ?';
-$LANG['no_contribution'] = 'Aucune contribution à afficher';
 $LANG['contribution_list'] = 'Liste des contributions';
 $LANG['contribute'] = 'Contribuer';
 $LANG['contribute_in_modules_explain'] = 'Les modules suivants permettent aux utilisateurs de contribuer. Cliquez sur un module pour vous rendre dans son interface de contribution.';
@@ -414,8 +410,6 @@ $LANG['atom'] = 'ATOM';
 
 //Dictionnaire pour le captcha.
 $LANG['verif_code'] = 'Code de vérification';
-$LANG['verif_code_explain'] = 'Recopier le code sur l\'image, attention aux majuscules';
-$LANG['require_verif_code'] = 'Veuillez saisir le code de vérification !';
 
 $LANG['csrf_attack'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
 

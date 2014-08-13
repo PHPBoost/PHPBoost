@@ -1,7 +1,7 @@
 <section>
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 			${i18n('articles')}
 		</h1>
 		# IF C_ARTICLES_CAT #
@@ -33,7 +33,7 @@
 	</header>
 	# IF C_NO_ARTICLE_AVAILABLE #
 	<div class="center">
-		{@articles.message.no_items}
+		${LangLoader::get_message('no_item_now', 'main')}
 	</div>
 	# ELSE #
 		# IF C_ARTICLES_FILTERS #
@@ -47,10 +47,10 @@
 							<a itemprop="url" href="{articles.U_ARTICLE}"><span itemprop="name">{articles.TITLE}</span></a>
 							<span class="actions">
 								# IF articles.C_EDIT #
-									<a href="{articles.U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="fa fa-edit"></a>
+									<a href="{articles.U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 								# ENDIF #
 								# IF articles.C_DELETE #
-									<a href="{articles.U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+									<a href="{articles.U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 								# ENDIF #
 							</span>
 						</h1>

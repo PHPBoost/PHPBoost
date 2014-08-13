@@ -10,7 +10,7 @@
 			<div class="spacer">&nbsp;</div>
 		# ENDIF #
 		# IF C_NO_MESSAGE #
-			<div class="notice message-helper-small center">{@guestbook.titles.no_message}</div>
+			<div class="notice message-helper-small center">${LangLoader::get_message('no_item_now', 'common')}</div>
 		# ENDIF #
 		# START messages #
 			<article id="m{messages.ID}" class="message">
@@ -38,10 +38,10 @@
 					<div class="message-date">
 						<span class="actions">
 							# IF messages.C_EDIT #
-							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 							# ENDIF #
 							# IF messages.C_DELETE #
-							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 							# ENDIF #
 						</span>
 						<a href="{messages.U_ANCHOR}"><i class="fa fa-hand-o-right"></i></a> ${LangLoader::get_message('on', 'main')} {messages.DATE}

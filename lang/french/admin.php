@@ -30,22 +30,11 @@
 #                    French                        #
  ####################################################
 
-$LANG['xml_lang'] = 'fr';
 $LANG['administration'] = 'Administration';
 $LANG['no_administration'] = 'Aucune administration n\'est associée à ce module !';
 
 $LANG['extend_menu'] = 'Menu étendu';
 $LANG['phpinfo'] = 'PHP info';
-
-//Config
-$LANG['serv_name'] = 'URL du serveur';
-$LANG['serv_path'] = 'Chemin de PHPBoost';
-$LANG['default_theme'] = 'Thème (par défaut) du site';
-$LANG['default_language'] = 'Langue (par défaut) du site';
-$LANG['start_page'] = 'Page de démarrage du site';
-$LANG['cookie_name'] = 'Nom du cookie des sessions';
-$LANG['session_time'] = 'Durée de la session (en secondes)';
-$LANG['session invit'] = 'Durée utilisateurs actifs (en secondes)';
 
 //Form
 $LANG['add'] = 'Ajouter';
@@ -63,10 +52,6 @@ $LANG['alert_fct_unlink'] = 'Suppression des miniatures impossible. Vous devez l
 $LANG['alert_no_login'] = 'Le pseudo entré n\'existe pas !';
 
 //Requis
-$LANG['require'] = 'Les Champs marqués * sont obligatoires !';
-$LANG['require_title'] = 'Veuillez entrer un titre !';
-$LANG['require_text'] = 'Veuillez entrer un texte !';
-$LANG['require_password'] = 'Veuillez entrer un mot de passe !';
 $LANG['require_cat'] = 'Veuillez entrer une catégorie !';
 $LANG['require_cat_create'] = 'Aucune catégorie trouvée, veuillez d\'abord en créer une';
 $LANG['require_serv'] = 'Veuillez entrer un nom pour le serveur !';

@@ -30,22 +30,11 @@
 #                     English                      #
  ####################################################
 
-$LANG['xml_lang'] = 'en';
 $LANG['administration'] = 'Administration';
 $LANG['no_administration'] = 'No administration associated with this module !';
 
 $LANG['extend_menu'] = 'Extended menu';
 $LANG['phpinfo'] = 'PHP info';
-
-//Config
-$LANG['serv_name'] = 'Server name';
-$LANG['serv_path'] = 'PHPBoost path, empty by default';
-$LANG['default_theme'] = 'Website\'s (default) theme';
-$LANG['default_language'] = 'Language (default) of the website';
-$LANG['start_page'] = 'Website\'s start page';
-$LANG['cookie_name'] = 'Cookie name';
-$LANG['session_time'] = 'Session time';
-$LANG['session invit'] = 'Enable users duration';
 
 //Form
 $LANG['add'] = 'Add';
@@ -63,10 +52,6 @@ $LANG['alert_fct_unlink'] = 'Impossible to delete picture. You must remove it ma
 $LANG['alert_no_login'] = 'The input nickname doesn\'t exist !';
 
 //Requis
-$LANG['require'] = 'The fields marked with a * are required !';
-$LANG['require_title'] = 'Please enter a title !';
-$LANG['require_text'] = 'Please enter content !';
-$LANG['require_password'] = 'Please enter a password !';
 $LANG['require_cat'] = 'Please enter a category !';
 $LANG['require_cat_create'] = 'No category found, please create one';
 $LANG['require_serv'] = 'Please enter a name for the server !';

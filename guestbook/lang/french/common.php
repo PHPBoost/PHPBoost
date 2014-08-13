@@ -34,8 +34,6 @@ $lang['module_title'] = 'Livre d\'or';
 $lang['module_config_title'] = 'Configuration du livre d\'or';
 
 //Title
-$lang['guestbook.titles.more_contents'] = '[Suite...]';
-$lang['guestbook.titles.no_message'] = 'Aucun message';
 $lang['guestbook.add'] = 'Signer le livre d\'or';
 $lang['guestbook.edit'] = 'Edition d\'un message';
 

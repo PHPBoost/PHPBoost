@@ -236,7 +236,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 		else
 		{
 			$tpl->put_all(array(
-				'L_NO_FILE_THIS_CATEGORY' => $MEDIA_LANG['none_media'],
+				'L_NO_FILE_THIS_CATEGORY' => LangLoader::get_message('no_item_now', 'common'),
 				'C_NO_FILE' => $id_cat > 0 ? true : false
 			));
 		}

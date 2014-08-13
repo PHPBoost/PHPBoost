@@ -93,10 +93,10 @@ class AdminLoggedErrorsControllerList extends AdminController
 				@fclose($handle);
 				
 				$types = array(
-					'question' => 'e_unknow',
-					'notice' => 'e_notice',
-					'warning' => 'e_warning',
-					'error' => 'e_fatal' 
+					'question' => 'error.unknow',
+					'notice' => 'error.notice',
+					'warning' => 'error.warning',
+					'error' => 'error.fatal' 
 				);
 				
 				//Tri en sens inverse car enregistrement à la suite dans le fichier de log
@@ -113,7 +113,7 @@ class AdminLoggedErrorsControllerList extends AdminController
 						$this->view->assign_block_vars('errors', array(
 							'DATE' => $array_errinfo[$i]['errdate'],
 							'CLASS' => $array_errinfo[$i]['errclass'],
-							'ERROR_TYPE' => LangLoader::get_message($types[$array_errinfo[$i]['errclass']], 'errors'),
+							'ERROR_TYPE' => LangLoader::get_message($types[$array_errinfo[$i]['errclass']], 'status-messages-common'),
 							'ERROR_MESSAGE' => strip_tags($array_errinfo[$i]['errmsg'], '<br>'),
 							'ERROR_STACKTRACE' => strip_tags($array_errinfo[$i]['errstacktrace'], '<br>')
 						));

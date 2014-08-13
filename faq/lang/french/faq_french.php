@@ -85,7 +85,6 @@ $FAQ_LANG['moving_a_question'] = 'Déplacement d\'une question';
 $FAQ_LANG['target_category'] = 'Catégorie cible';
 
 //Avertissement
-$FAQ_LANG['required_fields'] = 'Les champs marqués * sont obligatoires !';
 $FAQ_LANG['require_entitled'] = 'Veuillez entrer l\'intitulé de la question';
 $FAQ_LANG['require_answer'] = 'Veuillez entrer la réponse';
 $FAQ_LANG['require_cat_name'] = 'Veuillez entrer le nom de la catégorie';

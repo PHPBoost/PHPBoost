@@ -56,6 +56,16 @@ $lang['position.update'] = 'Change positions';
 $lang['constraint.required'] = 'Required';
 $lang['constraint.not_required'] = 'Not required';
 
+//Sort
+$lang['sort'] = 'Trier';
+$lang['sort.asc'] = 'Ascendant';
+$lang['sort.desc'] = 'Descendant';
+
+//Status
+$lang['status.approved.not'] = 'Kept in draft';
+$lang['status.approved.now'] = 'Published';
+$lang['status.approved.date'] = 'Published differed';
+
 //Form
 $lang['form.name'] = 'Name';
 $lang['form.title'] = 'Title';

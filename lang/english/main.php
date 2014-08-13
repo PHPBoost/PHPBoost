@@ -47,12 +47,10 @@ $LANG['unit_seconds'] = 'Seconds';
 $LANG['unit_seconds_short'] = 's';
 
 //Erreurs
-$LANG['error'] = 'Error';
 $LANG['unknown'] = 'Unknown';
 
 //Other title
 $LANG['title_pm'] = 'Private messages';
-$LANG['title_error'] = 'Error';
 $LANG['title_com'] = 'Comments';
 $LANG['title_register'] = 'Sign up';
 
@@ -94,7 +92,6 @@ $LANG['register'] = 'Sign up';
 
 //Alerts
 $LANG['alert_delete_msg'] = 'Delete the message ?';
-$LANG['alert_delete_file'] = 'Delete this file ?';
 
 //Impression
 $LANG['printable_version'] = 'Printable version';
@@ -394,7 +391,6 @@ $LANG['contribution_fixing_date'] = 'Fixing date';
 $LANG['contribution_module'] = 'Module';
 $LANG['process_contribution'] = 'Process the contribution';
 $LANG['confirm_delete_contribution'] = 'Do you really want to delete this contribution?';
-$LANG['no_contribution'] = 'No contribution';
 $LANG['contribution_list'] = 'Contribution list';
 $LANG['contribute'] = 'Contribute';
 $LANG['contribute_in_modules_explain'] = 'The modules above allow users to contribute. Click on one of them to go to its contribution interface.';
@@ -414,8 +410,6 @@ $LANG['atom'] = 'ATOM';
 
 //Dictionnaire pour le captcha.
 $LANG['verif_code'] = 'Verification code';
-$LANG['verif_code_explain'] = 'Enter the image code, warning for capital letter';
-$LANG['require_verif_code'] = 'Please enter the verification code!';
 
 $LANG['csrf_attack'] = 'Invalid session token. Please retry because the operation has not been performed.';
 

@@ -6,10 +6,10 @@
 			<span itemprop="name">{TITLE}</span>
 			<span class="actions">
 				# IF C_EDIT #
-					<a href="{U_EDIT_ARTICLE}" title="${i18n('articles.edit')}" class="fa fa-edit"></a>
+					<a href="{U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 				# ENDIF #
 				# IF C_DELETE #
-					<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+					<a href="{U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				# ENDIF #
 					<a href="{U_PRINT_ARTICLE}" title="${LangLoader::get_message('printable_version', 'main')}" target="blank" class="fa fa-print"></a>
 			</span>

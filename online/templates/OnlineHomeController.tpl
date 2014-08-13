@@ -42,7 +42,7 @@
 			# IF NOT C_USERS #
 			<tr> 
 				<td colspan="3">
-					{@online.no_user_online}
+					${LangLoader::get_message('no_item_now', 'common')}
 				</td>
 			</tr>
 			# ENDIF #

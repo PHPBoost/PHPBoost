@@ -171,7 +171,6 @@ $LANG['upload_img'] = 'Uploader l\'image';
 $LANG['how_photo'] = 'Photo(s) dans la base de donnée !';
 $LANG['actual_note'] = 'Avis actuel';
 $LANG['give_note'] = 'Donner votre avis';
-$LANG['no_note'] = 'Aucun avis';
 $LANG['img_success'] = 'L\'image a bien été uploadée !';
 $LANG['img_format'] = 'Formats d\'image autorisés';
 $LANG['img_delete'] = 'Supprimer cette image';

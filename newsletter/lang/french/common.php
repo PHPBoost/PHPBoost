@@ -112,28 +112,12 @@ $lang['newsletter.view_archives'] = 'Voir les archives';
 $lang['newsletter.view_subscribers'] = 'Voir les inscrits';
 $lang['newsletter.title'] = 'Titre de la newsletter';
 $lang['newsletter.contents'] = 'Contenu';
-$lang['newsletter.visitor'] = 'Visiteur';
-$lang['newsletter.submit'] = 'OK';
 
 //Errors
 $lang['admin.stream-not-existed'] = 'Le flux demandé n\'existe pas';
-$lang['success-subscribe'] = 'Vous vous êtes inscrit au(x) newsletter(s) avec succès';
-$lang['success-unsubscribe'] = 'Vous vous êtes désinscrit des newsletters avec succès';
-$lang['success-delete-subscriber'] = 'Vous avez supprimé la personne inscrite avec succès';
-$lang['success-edit-subscriber'] = 'Vous avez édité la personne inscrite avec succès';
 $lang['error-subscriber-not-existed'] = 'L\'incrit n\'existe pas';
 $lang['error-archive-not-existed'] = 'L\'archive n\'existe pas';
-$lang['newsletter.success-add'] = 'La newsletter a bien été ajoutée et envoyée';
 $lang['newsletter.success-send-test'] = 'Le mail de test a bien été envoyé';
-
-//Authorizations
-$lang['newsletter.not_level'] = 'Vous n\'avez pas les autorisations';
-$lang['errors.not_authorized_read'] = 'Vous n\'avez pas les autorisations nécessaires pour voir cette page';
-$lang['errors.not_authorized_subscribe'] = 'Vous n\'avez pas les autorisations nécessaires pour vous enregistrer';
-$lang['errors.not_authorized_read_subscribers'] = 'Vous n\'avez pas les autorisations nécessaires pour voir les inscrits';
-$lang['errors.not_authorized_moderation_subscribers'] = 'Vous n\'avez pas les autorisations nécessaires pour modérer et gérer les inscrits';
-$lang['errors.not_authorized_create_newsletters'] = 'Vous n\'avez pas les autorisations nécessaires pour créer une newsletter';
-$lang['errors.not_authorized_read_archives'] = 'Vous n\'avez pas les autorisations nécessaires pour voir les archives';
 
 //Register extended field
 $lang['extended_fields.newsletter.name'] = 'Newsletter(s) souscrite(s)';

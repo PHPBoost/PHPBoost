@@ -96,11 +96,4 @@ $LANG['e_unexist_user'] = 'The selected user doesn\'t exist!';
 $LANG['e_pm_del'] = 'The recipient has deleted the conversation, you can\'t post anymore';
 $LANG['e_pm_noedit'] = 'The recipient has already read your message, you can\'t edit it anymore';
 $LANG['e_pm_nodel'] = 'The recipient has already read your message, you can\'t delete it anymore';
-
-//PHP Error Handler
-$LANG['e_fatal'] = 'Fatal';
-$LANG['e_notice'] = 'Notice';
-$LANG['e_warning'] = 'Warning';
-$LANG['e_unknow'] = 'Unknow';
-
 ?>

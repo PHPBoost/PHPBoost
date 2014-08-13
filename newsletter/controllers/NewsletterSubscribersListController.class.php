@@ -105,7 +105,7 @@ class NewsletterSubscribersListController extends ModuleController
 		{
 			if (array_key_exists($row['id'], NewsletterService::list_subscribers_by_stream($this->stream->get_id())))
 			{
-				$pseudo = $row['user_id'] > 0 ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">'. $row['login'] .'</a>' : $this->lang['newsletter.visitor'];
+				$pseudo = $row['user_id'] > 0 ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">'. $row['login'] .'</a>' : LangLoader::get_message('visitor', 'user-common');
 				$this->view->assign_block_vars('subscribers_list', array(
 					'C_AUTH_MODO' => NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers(),
 					'C_EDIT' => $row['user_id'] == User::VISITOR_LEVEL,

@@ -15,7 +15,7 @@
 			</p>
 			<p>
 				<input type="hidden" name="token" value="{TOKEN}">
-				<button type="submit" name="" value="true">{@newsletter.submit}</button>
+				<button type="submit" name="" value="true">OK</button>
 			</p>
 			<p class="newsletter-link">
 				<a href="${relative_url(NewsletterUrlBuilder::archives())}" class="small">{@newsletter.archives}</a>

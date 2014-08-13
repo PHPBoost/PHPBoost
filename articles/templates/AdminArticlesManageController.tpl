@@ -43,8 +43,8 @@
 		# START articles #
 		<tr>
 			<td> 
-				<a href="{articles.U_EDIT_ARTICLE}" title="{@articles.edit}" class="fa fa-edit"></a>
-				<a href="{articles.U_DELETE_ARTICLE}" title="{@articles.delete}" class="fa fa-delete" data-confirmation="delete-element"></a>
+				<a href="{articles.U_EDIT_ARTICLE}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+				<a href="{articles.U_DELETE_ARTICLE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</td>
 			<td class="left">
 				<a href="{articles.U_ARTICLE}">{articles.TITLE}</a>
@@ -59,7 +59,7 @@
 				{articles.DATE_SHORT}
 			</td>
 			<td>
-				# IF articles.C_PUBLISHED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #
+				# IF articles.C_PUBLISHED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
 				<br />
 				<span class="smaller">
 				# IF articles.C_PUBLISHING_START_AND_END_DATE #
@@ -81,7 +81,7 @@
 		# IF NOT C_ARTICLES #
 		<tr> 
 			<td colspan="6">
-				{@articles.no_article}
+				${LangLoader::get_message('no_item_now', 'common')}
 			</td>
 		</tr>
 		# ENDIF #

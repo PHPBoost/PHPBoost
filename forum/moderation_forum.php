@@ -201,7 +201,7 @@ if ($action == 'alert') //Gestion des alertes
 		{
 			$Template->put_all(array(
 				'C_FORUM_NO_ALERT' => true,
-				'L_NO_ALERT' => $LANG['no_alert'],
+				'L_NO_ALERT' => LangLoader::get_message('no_item_now', 'common'),
 			));
 		}
 	}
