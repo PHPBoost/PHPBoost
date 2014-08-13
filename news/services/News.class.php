@@ -156,13 +156,13 @@ class News
 	{
 		switch ($this->approbation_type) {
 			case self::APPROVAL_NOW:
-				return LangLoader::get_message('news.form.approved.now', 'common', 'news');
+				return LangLoader::get_message('status.approved.now', 'common');
 			break;
 			case self::APPROVAL_DATE:
-				return LangLoader::get_message('news.form.approved.date', 'common', 'news');
+				return LangLoader::get_message('status.approved.date', 'common');
 			break;
 			case self::NOT_APPROVAL:
-				return LangLoader::get_message('news.form.approved.not', 'common', 'news');
+				return LangLoader::get_message('status.approved.not', 'common');
 			break;
 		}
 	}

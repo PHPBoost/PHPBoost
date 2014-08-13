@@ -267,7 +267,6 @@ $LANG['alert_not_solved'] = 'Waiting for treatement';
 $LANG['alert_solved'] = 'Resolve by ';
 $LANG['change_status_to_0'] = 'Set in waiting for treatment';
 $LANG['change_status_to_1'] = 'Set in resolved';
-$LANG['no_alert'] = 'There is no alert';
 $LANG['alert_not_auth'] = 'This alert has been posted in a forum in which you haven\'t the moderator\'s rights.';
 $LANG['delete_several_alerts'] = 'Are you sure, delete all this alerts?';
 $LANG['new_alerts'] = 'new alert';

@@ -40,7 +40,6 @@ $lang['online.last_update'] = 'Dernière mise à jour';
 
 $lang['online_user'] = 'utilisateur en ligne';
 $lang['online_users'] = 'utilisateurs en ligne';
-$lang['online.no_user_online'] = 'Aucun utilisateur en ligne';
 
 //Admin
 $lang['admin.nbr-displayed'] = 'Nombre d\'utilisateurs en ligne affichés dans le menu';

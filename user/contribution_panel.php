@@ -329,7 +329,7 @@ else
 	else
 		$template->put_all(array(
 			'C_NO_CONTRIBUTION' => true,
-			'L_NO_CONTRIBUTION_TO_DISPLAY' => $LANG['no_contribution']
+			'L_NO_CONTRIBUTION_TO_DISPLAY' => LangLoader::get_message('no_item_now', 'common')
 		));
 	
 	//Liste des modules proposant de contribuer

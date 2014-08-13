@@ -32,6 +32,7 @@ class ArticlesFormController extends ModuleController
 {
 	private $tpl;
 	private $lang;
+	private $common_lang;
 	private $form;
 	private $submit_button;
 	private $article;
@@ -57,24 +58,23 @@ class ArticlesFormController extends ModuleController
 		$this->lang = LangLoader::get('common', 'articles');
 		$this->tpl = new FileTemplate('articles/ArticlesFormController.tpl');
 		$this->tpl->add_lang($this->lang);
+		$this->common_lang = LangLoader::get('common');
 	}
 	
 	private function build_form($request)
 	{
-		$common_lang = LangLoader::get('common');
-		
 		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('articles', $this->lang['articles']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['articles.form.title'], $this->get_article()->get_title(), 
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->common_lang['form.title'], $this->get_article()->get_title(), 
 			array('required' => true)
 		));
 
 		if (!$this->is_contributor_member())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->lang['articles.form.rewrited_title.personalize'], $this->get_article()->rewrited_title_is_personalized(),
+			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->common_lang['form.rewrited_name.personalize'], $this->get_article()->rewrited_title_is_personalized(),
 				array('events' => array('click' =>'
 					if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
 						HTMLForms.getField("rewrited_title").enable();
@@ -84,8 +84,8 @@ class ArticlesFormController extends ModuleController
 				))
 			));
 
-			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->lang['articles.form.rewrited_title'], $this->get_article()->get_rewrited_title(),
-				array('description' => $this->lang['articles.form.rewrited_title.description'],
+			$fieldset->add_field(new FormFieldTextEditor('rewrited_title', $this->common_lang['form.rewrited_name'], $this->get_article()->get_rewrited_title(),
+				array('description' => $this->common_lang['form.rewrited_name.description'],
 				      'hidden' => !$this->get_article()->rewrited_title_is_personalized()),
 				array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`i'))
 			));
@@ -94,7 +94,7 @@ class ArticlesFormController extends ModuleController
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', LangLoader::get_message('category', 'categories-common'), ($this->article->get_id() === null ? $request->get_getint('id_category', 0) : $this->get_article()->get_id_category()), $search_category_children_options));
+		$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], ($this->article->get_id() === null ? $request->get_getint('id_category', 0) : $this->get_article()->get_id_category()), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.form.description_enabled'], $this->get_article()->get_description_enabled(), 
 			array('description' => StringVars::replace_vars($this->lang['articles.form.description_enabled.description'], 
@@ -112,40 +112,40 @@ class ArticlesFormController extends ModuleController
 			array('rows' => 3, 'hidden' => !$this->get_article()->get_description_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.contents'], $this->get_article()->get_contents(),
+		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.contents'], $this->get_article()->get_contents(),
 			array('rows' => 15, 'required' => true)
 		));
 		
 		$onclick_action = 'javascript:bbcode_page();';
 		$fieldset->add_field(new FormFieldActionLink('add_page', $this->lang['articles.form.add_page'] , $onclick_action, PATH_TO_ROOT . '/articles/templates/images/pagebreak.png'));
 		
-		$other_fieldset = new FormFieldsetHTML('other', $common_lang['form.other']);
+		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
 		$form->add_fieldset($other_fieldset);
 
 		$other_fieldset->add_field(new FormFieldCheckbox('author_name_displayed', $this->lang['articles.form.author_name_displayed'], $this->get_article()->get_author_name_displayed()));
 
 		$other_fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->lang['articles.form.notation_enabled'], $this->get_article()->get_notation_enabled()));
 		
-		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->lang['articles.form.picture'], $this->get_article()->get_picture()->relative(), array('description' => $this->lang['articles.form.picture.description'])));
+		$other_fieldset->add_field(new FormFieldUploadFile('picture', $this->common_lang['form.picture'], $this->get_article()->get_picture()->relative()));
 
-		$other_fieldset->add_field(ArticlesService::get_keywords_manager()->get_form_field($this->get_article()->get_id(), 'keywords', $common_lang['form.keywords'],  
-			array('description' => $this->lang['articles.form.keywords.description'])
+		$other_fieldset->add_field(ArticlesService::get_keywords_manager()->get_form_field($this->get_article()->get_id(), 'keywords', $this->common_lang['form.keywords'],  
+			array('description' => $this->common_lang['form.keywords.description'])
 		));
 
-		$other_fieldset->add_field(new ArticlesFormFieldSelectSources('sources', $common_lang['form.sources'], $this->get_article()->get_sources()));
+		$other_fieldset->add_field(new ArticlesFormFieldSelectSources('sources', $this->common_lang['form.sources'], $this->get_article()->get_sources()));
 
 		if (!$this->is_contributor_member())
 		{
-			$publication_fieldset = new FormFieldsetHTML('publication', $common_lang['form.approbation']);
+			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
 			$form->add_fieldset($publication_fieldset);
 
-			$publication_fieldset->add_field(new FormFieldDateTime('date_created', $common_lang['form.date.creation'], $this->get_article()->get_date_created()));
+			$publication_fieldset->add_field(new FormFieldDateTime('date_created', $this->common_lang['form.date.creation'], $this->get_article()->get_date_created()));
 
-			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('publishing_state', $common_lang['form.approbation'], $this->get_article()->get_publishing_state(),
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('publishing_state', $this->common_lang['form.approbation'], $this->get_article()->get_publishing_state(),
 				array(
-					new FormFieldSelectChoiceOption($common_lang['form.approbation.not'], Article::NOT_PUBLISHED),
-					new FormFieldSelectChoiceOption($common_lang['form.approbation.now'], Article::PUBLISHED_NOW),
-					new FormFieldSelectChoiceOption($common_lang['form.approbation.date'], Article::PUBLISHED_DATE),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], Article::NOT_PUBLISHED),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], Article::PUBLISHED_NOW),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.date'], Article::PUBLISHED_DATE),
 				),
 				array('events' => array('change' => '
 				if (HTMLForms.getField("publishing_state").getValue() == 2) {
@@ -157,12 +157,12 @@ class ArticlesFormController extends ModuleController
 				}'))
 			));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('publishing_start_date', $common_lang['form.date.start'], 
+			$publication_fieldset->add_field(new FormFieldDateTime('publishing_start_date', $this->common_lang['form.date.start'], 
 				($this->get_article()->get_publishing_start_date() === null ? new Date() : $this->get_article()->get_publishing_start_date()), 
 				array('hidden' => ($this->get_article()->get_publishing_state() != Article::PUBLISHED_DATE))
 			));
 
-			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $common_lang['form.date.end.enable'], $this->get_article()->end_date_enabled(), 
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $this->common_lang['form.date.end.enable'], $this->get_article()->end_date_enabled(), 
 				array('hidden' => ($this->get_article()->get_publishing_state() != Article::PUBLISHED_DATE),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enable").getValue()) {
@@ -173,7 +173,7 @@ class ArticlesFormController extends ModuleController
 				))
 			));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('publishing_end_date', $common_lang['form.date.end'], 
+			$publication_fieldset->add_field(new FormFieldDateTime('publishing_end_date', $this->common_lang['form.date.end'], 
 				($this->get_article()->get_publishing_end_date() === null ? new date() : $this->get_article()->get_publishing_end_date()), 
 				array('hidden' => !$this->get_article()->end_date_enabled())
 			));

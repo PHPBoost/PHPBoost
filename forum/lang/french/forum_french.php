@@ -266,7 +266,6 @@ $LANG['alert_not_solved'] = 'En attente de traitement';
 $LANG['alert_solved'] = 'Résolue par ';
 $LANG['change_status_to_0'] = 'Mettre en attente de traitement';
 $LANG['change_status_to_1'] = 'Mettre en résolu';
-$LANG['no_alert'] = 'Il n\'y a aucune alerte pour l\'instant';
 $LANG['alert_not_auth'] = 'Cette alerte a été postée dans un forum dans lequel vous n\'êtes pas modérateur.';
 $LANG['delete_several_alerts'] = 'Etes vous sur de vouloir supprimer les alertes sélectionnées ?';
 $LANG['new_alerts'] = 'nouvelle alerte';

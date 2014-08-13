@@ -42,9 +42,6 @@ $lang['news.seo.description.root'] = 'All website :site news.';
 $lang['news.seo.description.tag'] = 'All news on :subject.';
 $lang['news.seo.description.pending'] = 'All pending news.';
 
-$lang['news.form.approved.not'] = 'Kept in draft';
-$lang['news.form.approved.now'] = 'Published';
-$lang['news.form.approved.date'] = 'Published differed';
 $lang['news.form.short_contents'] = 'News short content';
 $lang['news.form.short_contents.description'] = 'For the short content of the news is displayed, please activate the option in the module configuration';
 $lang['news.form.short_contents.enabled'] = 'Personalize news short content';

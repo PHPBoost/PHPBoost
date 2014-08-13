@@ -28,6 +28,11 @@
 $lang['success'] = 'Success';
 $lang['error'] = 'Error';
 
+$lang['error.fatal'] = 'Fatal';
+$lang['error.notice'] = 'Notice';
+$lang['error.warning'] = 'Warning';
+$lang['error.unknow'] = 'Unknow';
+
 //Process
 $lang['process.success'] = 'The operation is a success';
 $lang['process.error'] = 'An error occurred during the operation';

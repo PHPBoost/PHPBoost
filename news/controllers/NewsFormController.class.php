@@ -37,7 +37,6 @@ class NewsFormController extends ModuleController
 	private $submit_button;
 	
 	private $lang;
-	
 	private $common_lang;
 	
 	private $news;

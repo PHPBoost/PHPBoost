@@ -34,8 +34,6 @@ $lang['module_title'] = 'Guest Book';
 $lang['module_config_title'] = 'Guest Book configuration';
 
 //Title
-$lang['guestbook.titles.more_contents'] = '[Read more...]';
-$lang['guestbook.titles.no_message'] = 'No message';
 $lang['guestbook.add'] = 'Sign the guest book';
 $lang['guestbook.edit'] = 'Message edition';
 

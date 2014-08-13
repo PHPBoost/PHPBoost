@@ -65,7 +65,7 @@ class NewsletterDeleteSubscriberController extends ModuleController
 			
 			NewsletterStreamsCache::invalidate();
 			
-			$controller = new UserErrorController(LangLoader::get_message('success', 'status-messages-common'), LangLoader::get_message('success-delete-subscriber', 'common', 'newsletter'), UserErrorController::SUCCESS);
+			$controller = new UserErrorController(LangLoader::get_message('success', 'status-messages-common'), LangLoader::get_message('process.success', 'status-messages-common'), UserErrorController::SUCCESS);
 			DispatchManager::redirect($controller);
 		}
 		else

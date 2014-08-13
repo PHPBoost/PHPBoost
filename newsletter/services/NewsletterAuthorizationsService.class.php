@@ -180,29 +180,7 @@ class NewsletterAuthorizationsService
 	
 	private function get_error($authorizations_type)
 	{
-		$lang = LangLoader::get('common', 'newsletter');
-		switch ($authorizations_type) {
-			case self::AUTH_READ:
-				$error_message = $lang['errors.not_authorized_read'];
-				break;
-			case self::AUTH_SUBSCRIBE:
-				$error_message = $lang['errors.not_authorized_subscribe'];
-				break;
-			case self::AUTH_READ_SUBSCRIBERS:
-				$error_message = $lang['errors.not_authorized_read_subscribers'];
-				break;
-			case self::AUTH_MODERATION_SUBSCRIBERS:
-				$error_message = $lang['errors.not_authorized_moderation_subscribers'];
-				break;
-			case self::AUTH_CREATE_NEWSLETTERS:
-				$error_message = $lang['errors.not_authorized_create_newsletters'];
-				break;
-			case self::AUTH_READ_ARCHIVES:
-				$error_message = $lang['errors.not_authorized_read_archives'];
-				break;
-		}
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), $error_message);
-		DispatchManager::redirect($controller);
+		DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
 		return;
 	}
 }

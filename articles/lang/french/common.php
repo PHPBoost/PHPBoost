@@ -34,10 +34,6 @@ $lang['articles'] = 'Articles';
 $lang['module_config_title'] = 'Configuration des articles';
 $lang['articles_management'] = 'Gestion des articles';
 $lang['articles.add'] = 'Ajouter un article';
-$lang['articles.edit'] = 'Modifier un article';
-$lang['articles.delete'] = 'Supprimer un article';
-$lang['articles.visitor'] = 'Visiteur';
-$lang['articles.no_article'] = 'Aucun article disponible';
 $lang['articles.no_notes'] = 'Aucun avis';
 $lang['articles.nbr_articles_category'] = ':number article(s) dans la catégorie';
 $lang['articles.sub_categories'] = 'Sous-catégories';
@@ -52,10 +48,7 @@ $lang['articles.summary'] = 'Sommaire :';
 $lang['articles.not_published'] = 'Cet article n\'est pas encore ou n\'est plus publié';
 $lang['articles.print.article'] = 'Impression d\'un article';
 $lang['articles.tags'] = 'Mots clés';
-$lang['articles.read_more'] = 'Lire plus...';
 $lang['articles.date_updated'] = 'Dernière modification : ';
-
-$lang['articles.message.no_items'] = 'Aucun article n\'est disponible pour le moment';
 
 //Articles configuration
 $lang['articles_configuration.number_articles_per_page'] = 'Nombre maximum d\'articles affichés par page';
@@ -70,22 +63,13 @@ $lang['articles_configuration.display_type.block'] = 'Liste sans image';
 $lang['articles_configuration.authorizations.explain'] = 'Vous définissez ici les permissions globales du module. Vous pourrez changer ces permissions localement sur chaque catégorie';
 
 //Form
-$lang['articles.form.title'] = 'Titre';
 $lang['articles.form.description'] = 'Description (maximum :number caractères)';
 $lang['articles.form.description_enabled'] = 'Activer le condensé de l\'article';
 $lang['articles.form.description_enabled.description'] = 'ou laissez PHPBoost couper le contenu à :number caractères';
-$lang['articles.form.rewrited_title'] = 'Titre de l\'article dans l\'url';
-$lang['articles.form.rewrited_title.personalize'] = 'Personnaliser le titre de l\'article dans l\'url';
-$lang['articles.form.rewrited_title.description'] = 'Doit contenir uniquement des lettres minuscules, des chiffres et des traits d\'union.';
 $lang['articles.form.add_page'] = 'Insérer une page';
 $lang['articles.form.add_page.title'] = 'Titre de la nouvelle page';
 $lang['articles.form.author_name_displayed'] = 'Afficher le nom de l\'auteur';
 $lang['articles.form.notation_enabled'] = 'Activer la notation de l\'article';
-$lang['articles.form.picture'] = 'Image de l\'article';
-$lang['articles.form.picture.description'] = 'Sélectionnez l\'image ou entrez une url';
-$lang['articles.form.keywords.description'] = 'Vous permet d\'ajouter des mots clés à votre article';
-$lang['articles.form.source_name'] = 'Nom de la source';
-$lang['articles.form.source_url'] = 'Url de la source';
 $lang['articles.form.contribution_entitled'] = '[Article] :title';
 
 //Sort fields title and mode

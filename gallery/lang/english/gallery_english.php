@@ -171,7 +171,6 @@ $LANG['upload_img'] = 'Upload pics';
 $LANG['how_photo'] = 'Photo(s) in the database!';
 $LANG['actual_note'] = 'Current rating';
 $LANG['give_note'] = 'Give a rating';
-$LANG['no_note'] = 'No rating';
 $LANG['img_success'] = 'The picture was successfully uploaded!';
 $LANG['img_format'] = 'Granted image\'s formats';
 $LANG['img_delete'] = 'Delete this picture';

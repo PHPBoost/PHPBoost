@@ -112,28 +112,12 @@ $lang['newsletter.view_archives'] = 'View Archives';
 $lang['newsletter.view_subscribers'] = 'View record';
 $lang['newsletter.title'] = 'Title of the newsletter';
 $lang['newsletter.contents'] = 'Content';
-$lang['newsletter.visitor'] = 'Visitor';
-$lang['newsletter.submit'] = 'OK';
 
 //Errors
 $lang['admin.stream-not-existed'] = 'The requested stream does not exist';
-$lang['success-subscribe'] = 'You have successfully registered for newsletters';
-$lang['success-unsubscribe'] = 'You have successfully unsubscribed from newsletters';
-$lang['success-delete-subscriber'] = 'You removed the subscriber successfully';
-$lang['success-edit-subscriber'] = 'You have edited the registrant successfully';
 $lang['error-subscriber-not-existed'] = 'This registrant is not exist';
 $lang['error-archive-not-existed'] = 'This archive does not exist';
-$lang['newsletter.success-add'] = 'The newsletter has been added and sent';
 $lang['newsletter.success-send-test'] = 'The test email has been sent';
-
-//Authorizations
-$lang['newsletter.not_level'] = 'You do not have permissions';
-$lang['errors.not_authorized_read'] = 'You do not have permission to view this page';
-$lang['errors.not_authorized_subscribe'] = 'You do not have permissions to register';
-$lang['errors.not_authorized_read_subscribers'] = 'You do not have permissions to view the subscribers';
-$lang['errors.not_authorized_moderation_subscribers'] = 'You do not have permissions to moderate and manage enrollees';
-$lang['errors.not_authorized_create_newsletters'] = 'You do not have permissions to create a newsletter';
-$lang['errors.not_authorized_read_archives'] = 'You do not have permissions to view archived';
 
 //Register extended field
 $lang['extended_fields.newsletter.name'] = 'Subscribe to newsletters';

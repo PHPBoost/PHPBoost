@@ -102,7 +102,6 @@ $DOWNLOAD_LANG['removing_category'] = 'Suppression d\'une catégorie';
 $DOWNLOAD_LANG['explain_removing_category'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (fichiers et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de la catégorie. <strong>Attention, cette action est irréversible !</strong>';
 $DOWNLOAD_LANG['delete_category_and_its_content'] = 'Supprimer la catégorie et tout son contenu';
 $DOWNLOAD_LANG['move_category_content'] = 'Déplacer son contenu dans :';
-$DOWNLOAD_LANG['required_fields'] = 'Les champs marqués * sont obligatoires !';
 $DOWNLOAD_LANG['category_name'] = 'Nom de la catégorie';
 $DOWNLOAD_LANG['category_location'] = 'Emplacement de la catégorie';
 $DOWNLOAD_LANG['cat_description'] = 'Description de la catégorie';
