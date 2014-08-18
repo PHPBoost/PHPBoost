@@ -51,7 +51,7 @@ class FormFieldConstraintLoginExist extends AbstractFormFieldConstraint
  
 	public function validate(FormField $field)
 	{
-		return $this->login_exists($field);
+		return !$this->login_exists($field);
 	}
  
 	public function login_exists(FormField $field)

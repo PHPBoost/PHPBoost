@@ -51,7 +51,7 @@ class FormFieldConstraintMailExist extends AbstractFormFieldConstraint
  
 	public function validate(FormField $field)
 	{
-		return $this->email_exists($field);
+		return !$this->email_exists($field);
 	}
  
 	public function email_exists(FormField $field)
