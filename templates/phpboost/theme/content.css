@@ -545,7 +545,9 @@ textarea {
 	resize: vertical;
 }
 
-.form-element-textarea-small { width: 49%; }
+.form-element-textarea-small {
+	width: 49%;
+}
 
 /* Verification des contraintes */
 .constraint-status-error input,
@@ -555,22 +557,36 @@ form .constraint-status-error textarea {
 	color: #C43C35;
 }
 
-.constraint-status-error input:hover, .constraint-status-error input:focus, 
-.constraint-status-error textarea:hover, form .constraint-status-error textarea:focus {
+.constraint-status-error input:hover, 
+.constraint-status-error input:focus, 
+.constraint-status-error textarea:hover, 
+form .constraint-status-error textarea:focus {
 	border-color: rgba(196, 60, 43, 0.5);
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
 	color: #C43C35;
 }
 
-.constraint-status-right i.picture-status-constraint:before { content: "\f00c"; color: #57A957; }
-.constraint-status-error i.picture-status-constraint:before { content: "\f056"; color: #C43C35; }
+.constraint-status-right i.picture-status-constraint:before {
+	content: "\f00c";
+	color: #57A957;
+}
+.constraint-status-error i.picture-status-constraint:before {
+	content: "\f056";
+	color: #C43C35;
+}
 
-.text-status-constraint { font-weight: bold; }
+.text-status-constraint { 
+	font-weight: bold;
+}
 
-.form-element-textarea .text-status-constraint { display: inline-block; margin-bottom: 5px; }
+.form-element-textarea.constraint-status-error i.picture-status-constraint { 
+	margin-left: 5px;
+}
 
 /* Auto-complétion */
-div.form-autocompleter-container { position: relative;}
+div.form-autocompleter-container {
+	position: relative;
+}
 
 div.form-autocompleter { 
 	position: absolute;
@@ -591,7 +607,11 @@ div.form-autocompleter ul {
 	max-height: 20em;
 	overflow: auto;
 } 
-div.form-autocompleter ul li.selected { background-color: #F0F0F0; }
+
+div.form-autocompleter ul li.selected {
+	background-color: #F0F0F0;
+}
+
 div.form-autocompleter ul li {
 	list-style-type: none;
 	display: block;
@@ -606,7 +626,9 @@ div.form-autocompleter ul li {
 	white-space: nowrap;
 }
 
-.field-button input { border-radius: 4px 0 0 4px; }
+.field-button input {
+	border-radius: 4px 0 0 4px;
+}
 
 .field-button button {
 	font-size: 11px;
@@ -647,10 +669,12 @@ h5.sub-title { /* Titre des modules minis */
 	padding: 5px 4px 0px 4px;
 }
 
-/* Bordure inférieure des modules minis */
-.module-mini-bottom { height: 15px; }
+/* Bordure inferieure des modules minis */
+.module-mini-bottom {
+	height: 15px;
+}
 
-/* Messages postés par les membres (messages privés & commentaires) 
+/* Messages postes par les membres (messages prives & commentaires) 
 --------------------------------------*/
 #comments-list { clear: both; }
 

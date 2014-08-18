@@ -566,12 +566,24 @@ textarea {
 	color: #C43C35;
 }
 
-.constraint-status-right i.picture-status-constraint:before { content: "\f00c"; color: #57A957; }
-.constraint-status-error i.picture-status-constraint:before { content: "\f056"; color: #C43C35; }
-.text-status-constraint { font-weight: bold; }
-.form-element-textarea .text-status-constraint { display: inline-block; margin-bottom: 5px; }
+.constraint-status-right i.picture-status-constraint:before {
+	content: "\f00c";
+	color: #57A957;
+}
+.constraint-status-error i.picture-status-constraint:before {
+	content: "\f056";
+	color: #C43C35;
+}
 
-/* Auto-complétion */
+.text-status-constraint {
+	font-weight: bold;
+}
+
+.form-element-textarea.constraint-status-error i.picture-status-constraint { 
+	margin-left: 5px;
+}
+
+/* Auto-completion */
 div.form-autocompleter-container { position: relative; }
 
 div.form-autocompleter { 
@@ -610,7 +622,7 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 /* --------------------------------------
 --------------------------------------*/
 
-/* Gestion des Catégories */
+/* Gestion des Categories */
 #cats-elements-list {
 	position: relative;
 	padding: 5px;
