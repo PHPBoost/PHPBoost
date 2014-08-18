@@ -386,7 +386,7 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 			}
 			else //Le membre a déjà lu le message on ne peux plus le supprimer.
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                     $LANG['e_pm_nodel']);
                 DispatchManager::redirect($controller);
 			}
@@ -450,7 +450,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				}
 				else //Champs manquants.
 				{
-					$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                         $LANG['e_incomplete']);
                     DispatchManager::redirect($controller);
 				}
@@ -513,7 +513,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 		}
 		else //Le membre a déjà lu le message on ne peux plus éditer.
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 $LANG['e_pm_noedit']);
             DispatchManager::redirect($controller);
 		}

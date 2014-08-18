@@ -126,10 +126,6 @@ $LANG['pages_delete_cat'] = 'Suppression d\'une catégorie';
 $LANG['pages_confirm_remove_cat'] = 'Etes-vous sur de vouloir supprimer cette catégorie ?';
  
 //Erreurs
-$LANG['pages_not_found'] = 'La page que vous demandez n\'existe pas';
-$LANG['pages_error_auth_read'] = 'Vous n\'avez pas l\'autorisation de lire cette page';
-$LANG['pages_error_auth_com'] = 'Vous n\'avez pas l\'autorisation de lire les commentaires liés à cette page';
-$LANG['pages_error_unactiv_com'] = 'Les commentaires ont été désactivés pour cette page';
 $LANG['page_alert_title'] = 'Vous devez entrer un titre';
 $LANG['page_alert_contents'] = 'Vous devez entrer le contenu de votre page';
 $LANG['pages_already_exists'] = 'Le titre que vous avez choisi pour la page existe déjà. Vous devez en choisir un autre, chaque page étant repérée uniquement par son titre, celui-ci doit être unique.';

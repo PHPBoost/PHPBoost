@@ -50,7 +50,7 @@ class AdminMemberEditController extends AdminController
 		try {
 			$this->user = UserService::get_user($user_id);
 		} catch (RowNotFoundException $e) {
-			$error_controller = PHPBoostErrors::unexisting_member();
+			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
 		

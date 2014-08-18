@@ -50,7 +50,10 @@ if (!empty($_POST['add']))
 			AppContext::get_response()->redirect('/admin/admin_smileys.php');
 		}
 		else
-			AppContext::get_response()->redirect('/admin/admin_smileys_add.php?error=e_smiley_already_exist#message_helper');
+		{
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('element.already_exists', 'status-messages-common'));
+			DispatchManager::redirect($controller);
+		}
 	}
 	else
 		AppContext::get_response()->redirect('/admin/admin_smileys_add.php?error=incomplete#message_helper');
@@ -84,7 +87,7 @@ else
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_smiley_already_exist');
+	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable');
 	if (in_array($get_error, $array_error))
 		$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 	if ($get_error == 'incomplete')

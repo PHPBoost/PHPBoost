@@ -59,20 +59,14 @@ $lang['themes.activate_theme'] = 'Activer';
 $lang['themes.install_theme'] = 'Installer';
 $lang['themes.activated_theme'] = 'Activé';
 $lang['themes.delete'] = 'Désinstaller';
-$lang['themes.update'] = 'Modifier';
-$lang['themes.reset'] = 'Défaut';
 
 //Upload
 $lang['themes.upload_theme'] = 'Uploader un thème';
 $lang['themes.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip';
 
 //Messages
-$lang['themes.already_exist'] = 'Le thème existe déjà';
 $lang['themes.upload_invalid_format'] = 'Le format de l\'archive n\'est pas valide';
 $lang['themes.upload_error'] = 'Erreur avec l\'upload du fichier';
-$lang['themes.not_compatible'] = 'Le thème est apparemment incompatible avec votre version actuelle de PHPBoost, il a tout de même été installé. Si un problème survient veuillez contacter l\'auteur du thème.';
-$lang['themes.old_version'] = 'Le thème est incompatible avec votre version actuelle de PHPBoost, il n\'a pas été installé.';
-$lang['themes.install_success'] = 'Thème installé avec succès !';
 
 //Delete theme
 $lang['themes.drop_files'] = 'Supprimer tous les fichiers du thème';

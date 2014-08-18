@@ -207,7 +207,6 @@ $LANG['smiley_code'] = 'Smiley code (ex: :D)';
 $LANG['smiley_available'] = 'Available smileys';
 $LANG['edit_smiley'] = 'Edit smileys';
 $LANG['smiley_management'] = 'Smiley management';
-$LANG['e_smiley_already_exist'] = 'This smiley already exists!';
 
 //Gestion membre
 $LANG['members_management'] = 'Member management';
@@ -261,7 +260,6 @@ $LANG['new_features'] = 'New features';
 $LANG['improvments'] = 'Improvments';
 $LANG['fixed_bugs'] = 'Fixed bugs';
 $LANG['security_improvments'] = 'Security improvements';
-$LANG['unexisting_update'] = 'This update does not exist';
 $LANG['updates_are_available'] = 'Updates are available<br />Please, update quickly';
 $LANG['availables_updates'] = 'Available updates';
 $LANG['details'] = 'Details';

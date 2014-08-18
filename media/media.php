@@ -62,7 +62,7 @@ elseif ($id_media > 0)
 	
 	if (empty($media) || ($media['infos'] & MEDIA_STATUS_UNVISIBLE) !== 0)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
             $LANG['e_unexist_media']);
         DispatchManager::redirect($controller);
 	}

@@ -54,7 +54,7 @@ if ($unvisible > 0)
 	// Gestion des erreurs.
 	if (empty($media))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
             $LANG['e_unexist_media']);
         DispatchManager::redirect($controller);
 	}
@@ -87,7 +87,7 @@ elseif ($delete > 0)
 
 	if (empty($media))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
             $LANG['e_unexist_media']);
         DispatchManager::redirect($controller);
 	}
@@ -295,7 +295,7 @@ elseif (!empty($_POST['submit']))
 			}
 			else
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                     $LANG['e_mime_disable_media']);
                 DispatchManager::redirect($controller);
 			}
@@ -318,14 +318,14 @@ elseif (!empty($_POST['submit']))
 				
 				if (empty($media['mime_type']))
 				{
-					$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                     $LANG['e_mime_disable_media']);
                 DispatchManager::redirect($controller);
 				}
 			}
 			else
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                     $LANG['e_mime_disable_media']);
                 DispatchManager::redirect($controller);
 			}
@@ -336,14 +336,14 @@ elseif (!empty($_POST['submit']))
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 $LANG['e_mime_unknow_media']);
             DispatchManager::redirect($controller);
 		}
 	}
 	else
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
             $LANG['e_link_empty_media']);
         DispatchManager::redirect($controller);
 	}

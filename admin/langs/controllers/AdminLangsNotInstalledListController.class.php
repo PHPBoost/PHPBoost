@@ -118,7 +118,7 @@ class AdminLangsNotInstalledListController extends AdminController
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display($this->lang['langs.install_success'], MessageHelper::SUCCESS, 10));
+						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
 					}
 				}
 			} catch (Exception $e) {
@@ -136,7 +136,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		}
 		else
 		{
-			$this->view->put('MSG', MessageHelper::display($this->lang['langs.install_success'], MessageHelper::SUCCESS, 10));
+			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
 		}
 	}
 	
@@ -205,7 +205,7 @@ class AdminLangsNotInstalledListController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display($this->lang['langs.already_exist'], MessageHelper::NOTICE, 4));
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE, 4));
 				}
 			}
 			else

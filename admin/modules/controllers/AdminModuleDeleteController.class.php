@@ -109,10 +109,9 @@ class AdminModuleDeleteController extends AdminController
 					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('files_del_failed', 'main'), MessageHelper::WARNING, 10));
 					break;
 				case ModulesManager::NOT_INSTALLED_MODULE:
-					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('e_uninstalled_module', 'errors'), MessageHelper::WARNING, 10));
+					$this->tpl->put('MSG', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::WARNING, 10));
 					break;
 				case ModulesManager::MODULE_UNINSTALLED:
-					AppContext::get_cache_service()->clear_css_cache();
 					AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules());
 					break;
 				default: 

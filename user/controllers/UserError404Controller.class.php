@@ -29,7 +29,7 @@ class UserError404Controller extends UserErrorController
 {
 	public function __construct()
 	{
-		$error = LangLoader::get_message('error', 'errors');
+		$error = LangLoader::get_message('error', 'status-messages-common');
 		$unexist_page = LangLoader::get_message('e_unexist_page', 'errors');
 		$message = '<strong>' . $error . ' 404</strong>' . '<br /><br />' . $unexist_page;
 		parent::__construct($error. ' 404', $message, self::WARNING);

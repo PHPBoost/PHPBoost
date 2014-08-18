@@ -41,7 +41,7 @@ if (!empty($poll_id))
 	//Pas de sondage trouvé => erreur.
 	if (empty($poll['id']))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
             $LANG['e_unexist_poll']);
         DispatchManager::redirect($controller);
 	}

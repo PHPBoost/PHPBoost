@@ -68,11 +68,6 @@ if ($add)
 			
 			//Vérifie que le message ne contient pas du flood de lien.
 			$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());
-			if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
-			{	
-				echo -3;
-				exit;
-			}
 			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
 			{	
 				echo -4;

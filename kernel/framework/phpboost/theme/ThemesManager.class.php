@@ -92,7 +92,7 @@ class ThemesManager
 	{
 		if (!file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/config.ini'))
 		{
-			self::$error = LangLoader::get_message('themes.old_version', 'admin-themes-common');
+			self::$error = LangLoader::get_message('misfit.phpboost', 'status-messages-common');
 			$folder = new Folder(PATH_TO_ROOT . '/templates/' . $theme_id);
 			$folder->delete();
 		}
@@ -105,7 +105,7 @@ class ThemesManager
 			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>'))
 			{
-				self::$error = LangLoader::get_message('themes.not_compatible', 'admin-themes-common');
+				self::$error = LangLoader::get_message('misfit.phpboost', 'status-messages-common');
 			}
 			else
 			{

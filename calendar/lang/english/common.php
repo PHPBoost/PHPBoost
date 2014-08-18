@@ -108,7 +108,6 @@ $lang['calendar.seo.description.pending'] = 'All pending events.';
 $lang['calendar.feed.name'] = 'Events';
 
 //Errors
-$lang['calendar.error.e_unexist_event'] = 'The selected event doesn\'t exist';
 $lang['calendar.error.e_invalid_date'] = 'Invalid date';
 $lang['calendar.error.e_invalid_start_date'] = 'Invalid start date';
 $lang['calendar.error.e_invalid_end_date'] = 'Invalid end date';

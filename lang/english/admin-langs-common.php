@@ -40,9 +40,6 @@ $lang['langs.delete_lang'] = 'Delete or Deactivate languages';
 $lang['langs.installed_langs'] = 'Installed Languages';
 
 //Messages
-$lang['langs.already_exist'] = 'This language already exists';
-$lang['langs.not_compatible'] = 'This language is not compliant with your version of PHPBoost';
-$lang['langs.install_success'] = 'Language successfully installed !';
 $lang['langs.langs_available'] = 'languages available';
 
 //Themes management
@@ -50,8 +47,6 @@ $lang['langs.activate_lang'] = 'Activated';
 $lang['langs.install_lang'] = 'Installed';
 $lang['langs.activated_lang'] = 'Activate';
 $lang['langs.delete'] = 'Delete';
-$lang['langs.update'] = 'Modify';
-$lang['langs.reset'] = 'Reset';
 
 //Uninstall
 $lang['langs.drop_files'] = 'Delete all the language\'s files';

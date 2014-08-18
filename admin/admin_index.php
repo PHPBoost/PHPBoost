@@ -88,7 +88,7 @@ $Template->put_all(array(
 	'L_USERS_MANAGMENT' => $LANG['members_managment'],
 	'L_MENUS_MANAGMENT' => $LANG['menus_managment'],
 	'L_MODULES_MANAGMENT' => $LANG['modules_managment'],
-	'L_NO_COMMENT' => LangLoader::get_message('no_comment', 'comments-common'),
+	'L_NO_COMMENT' => LangLoader::get_message('no_item_now', 'common'),
 	'L_LAST_COMMENTS' => $LANG['last_comments'],
 	'L_VIEW_ALL_COMMENTS' => $LANG['view_all_comments'],
 	'L_WRITING_PAD' => $LANG['writing_pad'],

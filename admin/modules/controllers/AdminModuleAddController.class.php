@@ -148,23 +148,23 @@ class AdminModuleAddController extends AdminController
 		switch(ModulesManager::install_module($module_id, $activate))
 		{
 			case ModulesManager::CONFIG_CONFLICT:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_config_conflict', 'errors'), MessageHelper::WARNING, 10));
+				$this->view->put('MSG', MessageHelper::display($this->lang['modules.config_conflict'], MessageHelper::WARNING, 10));
 				break;
 			case ModulesManager::UNEXISTING_MODULE:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_unexist_module', 'errors'), MessageHelper::WARNING, 10));
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.unexist', 'status-messages-common'), MessageHelper::WARNING, 10));
 				break;
 			case ModulesManager::MODULE_ALREADY_INSTALLED:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_already_installed_module', 'errors'), MessageHelper::WARNING, 10));
+				$this->view->put('MSG', MessageHelper::display($this->lang['modules.already_installed'], MessageHelper::WARNING, 10));
 				break;
 			case ModulesManager::PHP_VERSION_CONFLICT:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_php_version_conflict', 'errors'), MessageHelper::WARNING, 10));
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('misfit.php', 'status-messages-common'), MessageHelper::WARNING, 10));
 				break;
 			case ModulesManager::PHPBOOST_VERSION_CONFLICT:
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_phpboost_version_conflict', 'errors'), MessageHelper::WARNING, 10));
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('misfit.phpboost', 'status-messages-common'), MessageHelper::WARNING, 10));
 				break;
 			case ModulesManager::MODULE_INSTALLED:
 			default: 
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.install_success'], MessageHelper::SUCCESS, 10));
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
 		}
 	}
 	

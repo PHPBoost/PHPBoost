@@ -97,7 +97,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 
 		if (empty($topic['idcat'])) //Topic inexistant.
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 $LANG['e_unexist_topic_forum']);
             DispatchManager::redirect($controller);
 		}
@@ -391,7 +391,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'");
 		if (empty($topic['idcat']))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 $LANG['e_topic_lock_forum']);
             DispatchManager::redirect($controller);
 		}
@@ -449,7 +449,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
-            $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 $LANG['e_unexist_topic_forum']);
             DispatchManager::redirect($controller);
 		}
@@ -833,7 +833,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'");
 			if (empty($topic['idcat'])) //Topic inexistant.
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                     $LANG['e_unexist_topic_forum']);
                 DispatchManager::redirect($controller);
 			}

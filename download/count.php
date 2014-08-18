@@ -59,15 +59,14 @@ if (!empty($idurl))
     //Pas l'autorisation de le lire
     if (!$auth_read)
     {
-    	$error_controller = PHPBoostErrors::unexisting_page();
+    	$error_controller = PHPBoostErrors::user_not_authorized();
     	DispatchManager::redirect($error_controller);
     }
     
 	if (empty($info_file['url']))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            $LANG['e_unexist_file_download']);
-        DispatchManager::redirect($controller);
+		$error_controller = PHPBoostErrors::unexisting_page();
+    	DispatchManager::redirect($error_controller);
 	}
     
 	//Si le téléchargement est forcé et que le fichier est local au serveur
@@ -96,8 +95,7 @@ if (!empty($idurl))
 }
 else
 {
-    $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            $LANG['e_unexist_file_download']);
-    DispatchManager::redirect($controller);
+    $error_controller = PHPBoostErrors::unexisting_page();
+    DispatchManager::redirect($error_controller);
 }
 ?>

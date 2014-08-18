@@ -137,7 +137,7 @@ if (!empty($contents)) //On enregistre un article
 			elseif (!$captcha->is_valid() && !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 			{
 				$error_controller = new UserErrorController(
-					LangLoader::get_message('error', 'errors'),
+					LangLoader::get_message('error', 'status-messages-common'),
 					LangLoader::get_message('captcha.validation_error', 'status-messages-common'),
 					UserErrorController::NOTICE
 				);
