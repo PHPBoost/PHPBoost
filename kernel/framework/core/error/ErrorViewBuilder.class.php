@@ -30,11 +30,6 @@
 class ErrorViewBuilder
 {
 	/**
-	 * @var string[string]
-	 */
-	private $lang;
-
-	/**
 	 * @var View
 	 */
 	private $view;
@@ -59,15 +54,13 @@ class ErrorViewBuilder
 	private function init_view()
 	{
 		$this->view = new FileTemplate('user/ErrorViewBuilder.tpl');
-		$this->lang = LangLoader::get(get_class());
-		$this->view->add_lang($this->lang);
 	}
 
 	private function get_title($title)
 	{
 		if (empty($title))
 		{
-			$title= $this->lang['error'];
+			$title = LangLoader::get_message('error', 'status-messages-common');
 		}
 		return $title;
 	}
@@ -85,7 +78,7 @@ class ErrorViewBuilder
 			}
 			else
 			{
-				$message = TextHelper::htmlspecialchars($this->lang['unexpected_error_occurs']);
+				$message = TextHelper::htmlspecialchars(LangLoader::get_message('process.error', 'status-messages-common'));
 			}
 		}
 		return $message;
@@ -116,7 +109,7 @@ class ErrorViewBuilder
 	{
 		if (empty($correction_link_name))
 		{
-			$correction_link_name = $this->lang['back'];
+			$correction_link_name = LangLoader::get_message('back', 'main');
 		}
 		return $correction_link_name;
 	}

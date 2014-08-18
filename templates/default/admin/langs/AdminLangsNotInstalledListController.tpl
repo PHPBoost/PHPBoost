@@ -2,7 +2,7 @@
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	# INCLUDE MSG #
 	<table>
-		<caption>{@langs.langs_available}</caption>
+		<caption>{@langs}</caption>
 		# IF C_LANG_INSTALL #
 		<thead>
 			<tr> 

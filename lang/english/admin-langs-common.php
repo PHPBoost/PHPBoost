@@ -39,9 +39,6 @@ $lang['langs.update_lang'] = 'Update languages';
 $lang['langs.delete_lang'] = 'Delete or Deactivate languages';
 $lang['langs.installed_langs'] = 'Installed Languages';
 
-//Messages
-$lang['langs.langs_available'] = 'languages available';
-
 //Themes management
 $lang['langs.activate_lang'] = 'Activated';
 $lang['langs.install_lang'] = 'Installed';

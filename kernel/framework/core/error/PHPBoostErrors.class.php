@@ -27,12 +27,62 @@
 
 class PHPBoostErrors
 {
-	public static function CSRF()
+	public static function user_not_authorized()
 	{
-		$controller = new UserErrorController(
-		LangLoader::get_message('error', 'status-messages-common'),
-		LangLoader::get_message('csrf_invalid_token', 'errors'),
-		UserErrorController::NOTICE);
+		AppContext::get_response()->set_status_code(401);
+		$lang = LangLoader::get('errors');
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_auth']);
+		return $controller;
+	}
+	
+	public static function unexisting_page()
+    {
+    	AppContext::get_response()->set_status_code(404);
+		$lang = LangLoader::get('errors');
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_unexist_page']);
+		return $controller;
+    }
+
+	public static function unexisting_element()
+	{
+		AppContext::get_response()->set_status_code(404);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('element.unexist', 'status-messages-common'));
+		return $controller;
+	}
+	
+    public static function unexisting_category()
+    {
+    	AppContext::get_response()->set_status_code(404);
+		$lang = LangLoader::get('errors');
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_unexist_cat']);
+		return $controller;
+    }
+    
+	public static function unknow()
+    {
+		$lang = LangLoader::get('errors');
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['unknow_error'], UserErrorController::QUESTION);
+		return $controller;
+    }
+
+	public static function user_in_read_only()
+	{
+		$lang = LangLoader::get('errors');
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_readonly']);
+		return $controller;
+	}
+
+	public static function flood()
+	{
+		$lang = LangLoader::get('errors');
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_flood']);
+		return $controller;
+	}
+	
+	public static function link_flood($max_link)
+	{
+		$lang = LangLoader::get('errors');
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), sprintf($lang['e_l_flood'], $max_link));
 		return $controller;
 	}
 	
@@ -55,105 +105,12 @@ class PHPBoostErrors
 		return $controller;
 	}
 	
-	public static function user_not_authorized()
+	public static function CSRF()
 	{
-		AppContext::get_response()->set_status_code(401);
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_auth']);
-		return $controller;
-	}
-	
-	public static function user_in_read_only()
-	{
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_readonly']);
-		return $controller;
-	}
-	
-    public static function unexisting_page()
-    {
-    	AppContext::get_response()->set_status_code(404);
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_unexist_page']);
-		return $controller;
-    }
-
-	public static function member_banned($delay = 0)
-	{
-		$date_lang = LangLoader::get('date-common');
-		$errors_lang = LangLoader::get('errors');
-		if ($delay > 0)
-		{
-			if ($delay < 60)
-				$message = $delay . ' ' . (($delay > 1) ? $date_lang['minutes'] : $date_lang['minute']);
-			elseif ($delay < 1440)
-			{
-				$delay_ban = NumberHelper::round($delay/60, 0);
-				$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['hours'] : $date_lang['hour']);
-			}
-			elseif ($delay < 10080)
-			{
-				$delay_ban = NumberHelper::round($delay/1440, 0);
-				$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['days'] : $date_lang['day']);
-			}
-			elseif ($delay < 43200)
-			{
-				$delay_ban = NumberHelper::round($delay/10080, 0);
-				$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['weeks'] : $date_lang['week']);
-			}
-			elseif ($delay < 525600)
-			{
-				$delay_ban = NumberHelper::round($delay/43200, 0);
-				$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['months'] : $date_lang['month']);
-			}
-			else
-			{
-				$delay_ban = NumberHelper::round($delay/525600, 0);
-				$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['years'] : $date_lang['year']);
-			}
-			$message = $errors_lang['e_member_ban'] . ' ' . $message;
-		}
-		else
-		{
-			$message = $errors_lang['e_member_ban_w'];
-		}
-		$controller = new UserErrorController($errors_lang['error'], $message);
-		return $controller;
-	}
-
-	public static function unexisting_element()
-	{
-		AppContext::get_response()->set_status_code(404);
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('element.unexist', 'status-messages-common'));
-		return $controller;
-	}
-	
-    public static function unexisting_category()
-    {
-    	AppContext::get_response()->set_status_code(404);
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_unexist_cat']);
-		return $controller;
-    }
-    
-    public static function unknow()
-    {
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['unknow_error'], UserErrorController::QUESTION);
-		return $controller;
-    }
-
-	public static function flood()
-	{
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_flood']);
-		return $controller;
-	}
-	
-	public static function link_flood($max_link)
-	{
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), sprintf($lang['e_l_flood'], $max_link));
+		$controller = new UserErrorController(
+		LangLoader::get_message('error', 'status-messages-common'),
+		LangLoader::get_message('csrf_invalid_token', 'errors'),
+		UserErrorController::NOTICE);
 		return $controller;
 	}
 }

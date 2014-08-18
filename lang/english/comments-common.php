@@ -48,4 +48,6 @@ $lang['comments.user.read-only'] = 'You are currently read-only, you can not pos
 
 $lang['module.choice'] = 'Select a module';
 $lang['view-topic'] = 'View topic';
+
+$lang['no_comment'] = 'No comment';
 ?>
