@@ -41,7 +41,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	
 	if (empty($web['id']))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
             $LANG['e_unexist_link_web']);
         DispatchManager::redirect($controller);
 	}

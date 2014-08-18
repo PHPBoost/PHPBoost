@@ -144,7 +144,6 @@ $DOWNLOAD_LANG['contribution_deadlink'] = 'Lien mort : %s';
 $DOWNLOAD_LANG['contribution_deadlink_explain'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien de la fiche de téléchargement, et modifiez-le si nécessaire.';
 
 //Erreurs
-$LANG['e_unexist_file_download'] = 'Le fichier que vous demandez n\'existe pas !';
 $LANG['e_unexist_category_download'] = 'La catégorie que vous demandez n\'existe pas !';
 
 ?>

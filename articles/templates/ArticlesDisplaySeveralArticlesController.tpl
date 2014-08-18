@@ -33,7 +33,7 @@
 	</header>
 	# IF C_NO_ARTICLE_AVAILABLE #
 	<div class="center">
-		${LangLoader::get_message('no_item_now', 'main')}
+		${LangLoader::get_message('no_item_now', 'common')}
 	</div>
 	# ELSE #
 		# IF C_ARTICLES_FILTERS #

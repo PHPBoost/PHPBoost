@@ -184,7 +184,7 @@ class CommentsService
 		$number_comments = CommentsManager::get_number_comments($module_id, $id_in_module, $topic_identifier);
 		$lang = $number_comments > 1 ? self::$comments_lang['comments'] : self::$comments_lang['comment'];
 	
-		return !empty($number_comments) ? ' ' .$lang : self::$comments_lang['no_comment'];
+		return !empty($number_comments) ? ' ' .$lang : LangLoader::get_message('no_item_now', 'common');
 	}
 
 	/**
@@ -287,7 +287,6 @@ class CommentsService
 				$template->put_all(array(
 					'L_UPDATE' => self::$lang['update'],
 					'L_DELETE' => self::$lang['delete'],
-					'L_CONFIRM_DELETE' => self::$comments_lang['comment.confirm_delete']
 				));
 			}
 			$result->dispose();

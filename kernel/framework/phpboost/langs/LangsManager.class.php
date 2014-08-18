@@ -90,7 +90,7 @@ class LangsManager
 			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>'))
 			{
-				self::$error = LangLoader::get_message('langs.not_compatible', 'admin-langs-common');
+				self::$error = LangLoader::get_message('misfit.phpboost', 'status-messages-common');
 			}
 			else
 			{

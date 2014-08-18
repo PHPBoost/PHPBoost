@@ -8,7 +8,7 @@
 	# INCLUDE COMMENTS #
 	# IF C_NO_COMMENT #
 		<div style="text-align:center;">
-			{@no_comment}
+			${LangLoader::get_message('no_item_now', 'common')}
 		</div>
 		<div class="spacer"></div>
 	# ELSE #

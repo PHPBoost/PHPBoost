@@ -39,8 +39,6 @@ $lang['comment.locked'] = 'Comments blocked, you can not post comments';
 $lang['comment.add'] = 'Add a comment';
 $lang['comment.edit'] = 'Edit a comment';
 
-$lang['comment.confirm_delete'] = 'Delete this comment?';
-
 $lang['lock'] = 'Lock';
 $lang['unlock'] = 'Unlock';
 
@@ -49,6 +47,5 @@ $lang['allComments'] = 'See other comments';
 $lang['comments.user.read-only'] = 'You are currently read-only, you can not post comments for the moment';
 
 $lang['module.choice'] = 'Select a module';
-$lang['no_comment'] = 'No comment';
 $lang['view-topic'] = 'View topic';
 ?>

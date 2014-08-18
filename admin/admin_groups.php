@@ -295,7 +295,7 @@ elseif ($add) //Interface d'ajout du groupe.
 	}
 	elseif ($get_error == 'group_already_exists')
 	{
-		$template->put('message_helper', MessageHelper::display($LANG['e_group_already_exists'], E_USER_NOTICE));
+		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), E_USER_NOTICE));
 	}
 	
 	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.

@@ -149,7 +149,6 @@ $DOWNLOAD_LANG['contribution_deadlink_explain'] = 'One member reported this link
 $LANG['contribution_entitled'] = 'A file has been suggested.';
 
 //Errors
-$LANG['e_unexist_file_download'] = 'The file you asked for does not exist !';
 $LANG['e_unexist_category_download'] = 'The category you asked for does not exist !';
 
 ?>

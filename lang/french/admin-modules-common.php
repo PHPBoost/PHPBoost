@@ -59,25 +59,15 @@ $lang['modules.install_module'] = 'Installer';
 $lang['modules.activated_module'] = 'Activé';
 $lang['modules.authorization'] = 'Autorisation d\'accès';
 $lang['modules.delete'] = 'Désinstaller';
-$lang['modules.update'] = 'Modifier';
-$lang['modules.reset'] = 'Défaut';
 
 //Messages
 $lang['modules.upload_success'] = 'L\'archive a été uploadée avec succès';
 $lang['modules.upload_invalid_format'] = 'Le format de l\'archive n\'est pas valide';
 $lang['modules.already_installed'] = 'Ce module est déjà installé';
 $lang['modules.upload_error'] = 'Il y a eu une erreur lors de l\'upload';
-$lang['modules.delete_success'] = 'Le module a été supprimé avec succès';
-$lang['modules.uninstalled_success'] = 'Le module a été désinstallé avec succès';
-$lang['modules.update_success'] = 'Le module a été mis à jour avec succès';
-$lang['modules.upgrade_failed'] = 'La mise à jour a échouée';
 $lang['modules.module_not_upgradable'] = 'Ce module ne peut pas être mis à jour';
-$lang['modules.not_installed_module'] = 'Ce module n\'est pas installé';
-$lang['modules.unexisting_module'] = 'Module inexistant';
-$lang['modules.error_id_module'] = 'Aucun module à mettre à jour';
-$lang['modules.updates_are_available'] = 'Des mises à jour des modules sont disponibles!<br />Veuillez les effectuer sans tarder.';
 $lang['modules.updates_available'] = 'Mises à jour disponibles';
-$lang['modules.install_success'] = 'Module installé avec succès !';
+$lang['modules.config_conflict'] = 'Conflit avec la configuration du module, installation impossible!';
 
 //Delete module
 $lang['modules.drop_files'] = 'Supprimer tous les fichiers du module';

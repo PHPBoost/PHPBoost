@@ -35,6 +35,13 @@ $lang['error.unknow'] = 'Inconnue';
 
 $lang['csrf_invalid_token'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
 
+//Element
+$lang['element.already_exists'] = 'L\'élément que vous demandez existe déjà.';
+$lang['element.unexist'] = 'L\'élément que vous demandez n\'existe pas.';
+
+$lang['misfit.php'] = 'Version PHP inadaptée';
+$lang['misfit.phpboost'] = 'Version de PHPBoost inadaptée';
+
 //Process
 $lang['process.success'] = 'L\'opération s\'est déroulée avec succès';
 $lang['process.error'] = 'Une erreur s\'est produite lors de l\'opération';

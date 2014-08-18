@@ -38,9 +38,6 @@
 							case '-2': 
 								alert("{L_ALERT_FLOOD}");
 							break;
-							case '-3': 
-								alert("{L_ALERT_LINK_PSEUDO}");
-							break;
 							case '-4': 
 								alert("{L_ALERT_LINK_FLOOD}");
 							break;

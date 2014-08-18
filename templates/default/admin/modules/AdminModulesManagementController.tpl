@@ -160,9 +160,8 @@
 		
 	<fieldset class="fieldset-submit">
 		<legend>{L_SUBMIT}</legend>
-		<button type="submit" class="submit" name="update_modules_configuration" value="true">{@modules.update}</button>
+		<button type="submit" class="submit" name="update_modules_configuration" value="true">{L_SUBMIT}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="update" value="true">
-		<button type="reset" value="true">{@modules.reset}</button>
 	</fieldset>
 </form>

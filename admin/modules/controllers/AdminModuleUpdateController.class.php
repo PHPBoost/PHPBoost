@@ -119,7 +119,7 @@ class AdminModuleUpdateController extends AdminController
 			switch (ModulesManager::upgrade_module($module_id))
 			{
 				case ModulesManager::UPGRADE_FAILED:
-					$this->view->put('MSG', MessageHelper::display($this->lang['modules.upgrade_failed'], MessageHelper::WARNING, 10));
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::WARNING, 10));
 					break;
 				case ModulesManager::MODULE_NOT_UPGRADABLE:
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.module_not_upgradable'], MessageHelper::WARNING, 10));
@@ -128,10 +128,10 @@ class AdminModuleUpdateController extends AdminController
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::WARNING, 10));
 					break;
 				case ModulesManager::UNEXISTING_MODULE:
-					$this->view->put('MSG', MessageHelper::display($this->lang['modules.unexisting_module'], MessageHelper::WARNING, 10));
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.unexist', 'status-messages-common'), MessageHelper::WARNING, 10));
 					break;
 				case ModulesManager::MODULE_UPDATED:
-					$this->view->put('MSG', MessageHelper::display($this->lang['modules.update_success'], MessageHelper::SUCCESS, 10));
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
 					break;
 			}
 		}

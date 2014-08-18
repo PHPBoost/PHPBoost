@@ -274,16 +274,16 @@ else
 	$template = new FileTemplate('admin/admin_files_management.tpl');
 	
 	$sql_request = !empty($folder_member) 
-	? 	("SELECT uc.user_id, m.login
+	? 	("SELECT uc.user_id, m.display_name
 		FROM " . DB_TABLE_UPLOAD_CAT . " uc
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.user_id = '" . $folder_member . "'
 		UNION
-		SELECT u.user_id, m.login
+		SELECT u.user_id, m.display_name
 		FROM " . DB_TABLE_UPLOAD . " u
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
 		WHERE u.user_id = '" . $folder_member . "'")
-	: 	("SELECT uc.user_id, m.login
+	: 	("SELECT uc.user_id, m.display_name
 		FROM " . DB_TABLE_UPLOAD_CAT . " uc
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.id = '" . $folder . "'");
@@ -304,7 +304,7 @@ else
 	if ($show_member)
 		$url = Uploads::get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
 	elseif (!empty($folder_member) || !empty($folder_info['user_id']))
-		$url = Uploads::get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
+		$url = Uploads::get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['display_name'] . '</a>/');
 	elseif (empty($folder))
 		$url = '/';	
 	else
@@ -352,18 +352,18 @@ else
 	
 	$total_folder_size = $total_files = $total_directories = 0;
 
-	$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.login
+	$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name
 	FROM " . DB_TABLE_UPLOAD . " up
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 	WHERE idcat = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND up.user_id = -1' : ' AND up.user_id != -1');
 	
 	if ($show_member)
-		$sql_folder = "SELECT uc.user_id as id, uc.user_id, m.login as name, 0 as id_parent
+		$sql_folder = "SELECT uc.user_id as id, uc.user_id, m.display_name as name, 0 as id_parent
 		FROM " . DB_TABLE_UPLOAD_CAT . " uc
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.id_parent = '" . $folder . "' AND uc.user_id <> -1 
 		UNION
-		SELECT u.user_id as id, u.user_id, m.login as name, 0 as id_parent
+		SELECT u.user_id as id, u.user_id, m.display_name as name, 0 as id_parent
 		FROM " . DB_TABLE_UPLOAD . " u
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
 		WHERE u.user_id <> -1
@@ -374,7 +374,7 @@ else
 		FROM " . DB_TABLE_UPLOAD_CAT . " 
 		WHERE id_parent = 0 AND user_id = '" . $folder_member . "'
 		ORDER BY name";
-		$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.login
+		$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name
 		FROM " . DB_TABLE_UPLOAD . " up
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 		WHERE up.idcat = 0 AND up.user_id = '" . $folder_member . "'";

@@ -113,7 +113,6 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    		'L_ALERT_UNAUTH_POST' => $LANG['e_unauthorized'],
 	    		'L_ALERT_FLOOD' => $LANG['e_flood'],
 	    		'L_ALERT_LINK_FLOOD' => sprintf($LANG['e_l_flood'], $config_shoutbox->get_max_links_number_per_message()),
-	    		'L_ALERT_LINK_PSEUDO' => $LANG['e_link_pseudo'],
 	    		'L_ALERT_INCOMPLETE' => $LANG['e_incomplete'],
 	    		'L_ALERT_READONLY' => $LANG['e_readonly'],
 				'L_DELETE_MSG' => $LANG['alert_delete_msg'],

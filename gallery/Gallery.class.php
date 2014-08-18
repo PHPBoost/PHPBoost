@@ -468,7 +468,7 @@ class Gallery
 		//Vérification du chargement de la librairie GD.
 		if (!@extension_loaded('gd')) 
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 $LANG['e_no_gd'], UserErrorController::FATAL);
             DispatchManager::redirect($controller);
 		}
@@ -488,7 +488,7 @@ class Gallery
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 $LANG['e_no_getimagesize'], UserErrorController::FATAL);
             DispatchManager::redirect($controller);
 		}

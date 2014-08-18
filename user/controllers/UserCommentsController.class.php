@@ -43,7 +43,7 @@ class UserCommentsController extends AbstractController
 			try {
 				$this->user = UserService::get_user('WHERE user_id=:user_id', array('user_id' => $user_id));
 			} catch (Exception $e) {
-				$error_controller = PHPBoostErrors::unexisting_member();
+				$error_controller = PHPBoostErrors::unexisting_element();
 				DispatchManager::redirect($error_controller);
 			}
 		}

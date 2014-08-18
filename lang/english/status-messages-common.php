@@ -35,6 +35,13 @@ $lang['error.unknow'] = 'Unknow';
 
 $lang['csrf_invalid_token'] = 'Invalid session token. Please retry because the operation has not been performed.';
 
+//Element
+$lang['element.already_exists'] = 'The item you request already exists.';
+$lang['element.unexist'] = 'The item you requested does not exist.';
+
+$lang['misfit.php'] = 'Inadequate PHP version';
+$lang['misfit.phpboost'] = 'Inadequate PHPBoost version';
+
 //Process
 $lang['process.success'] = 'The operation is a success';
 $lang['process.error'] = 'An error occurred during the operation';

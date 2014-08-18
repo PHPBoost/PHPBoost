@@ -30,7 +30,7 @@ class PHPBoostErrors
 	public static function CSRF()
 	{
 		$controller = new UserErrorController(
-		LangLoader::get_message('error', 'errors'),
+		LangLoader::get_message('error', 'status-messages-common'),
 		LangLoader::get_message('csrf_invalid_token', 'errors'),
 		UserErrorController::NOTICE);
 		return $controller;
@@ -51,7 +51,7 @@ class PHPBoostErrors
 	{
 		AppContext::get_response()->set_status_code(404);
 		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], $lang['e_unactivated_module']);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_unactivated_module']);
 		return $controller;
 	}
 	
@@ -59,14 +59,14 @@ class PHPBoostErrors
 	{
 		AppContext::get_response()->set_status_code(401);
 		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], $lang['e_auth']);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_auth']);
 		return $controller;
 	}
 	
 	public static function user_in_read_only()
 	{
 		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], $lang['e_readonly']);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_readonly']);
 		return $controller;
 	}
 	
@@ -74,7 +74,7 @@ class PHPBoostErrors
     {
     	AppContext::get_response()->set_status_code(404);
 		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], $lang['e_unexist_page']);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_unexist_page']);
 		return $controller;
     }
 
@@ -121,11 +121,10 @@ class PHPBoostErrors
 		return $controller;
 	}
 
-	public static function unexisting_member()
+	public static function unexisting_element()
 	{
 		AppContext::get_response()->set_status_code(404);
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], LangLoader::get_message('user.not_exists', 'status-messages-common'));
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('element.unexist', 'status-messages-common'));
 		return $controller;
 	}
 	
@@ -133,51 +132,28 @@ class PHPBoostErrors
     {
     	AppContext::get_response()->set_status_code(404);
 		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], $lang['e_unexist_cat']);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_unexist_cat']);
 		return $controller;
     }
     
     public static function unknow()
     {
 		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], $lang['unknow_error'], UserErrorController::QUESTION);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['unknow_error'], UserErrorController::QUESTION);
 		return $controller;
     }
-    
-	public static function member_not_enabled()
-	{
-		AppContext::get_response()->set_status_code(404);
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], $lang['e_unactiv_member']);
-		return $controller;
-	}
-	
-	public static function member_flood($number_test_connection = 0)
-	{
-		$lang = LangLoader::get('errors');
-		$message = $number_test_connection > 0 ? sprintf($lang['e_test_connect'], $number_test_connection) : $lang['e_nomore_test_connect'];
-		$controller = new UserErrorController($lang['error'], $message);
-		return $controller;
-	}
 
 	public static function flood()
 	{
 		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], $lang['e_flood']);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_flood']);
 		return $controller;
 	}
 	
 	public static function link_flood($max_link)
 	{
 		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], sprintf($lang['e_l_flood'], $max_link));
-		return $controller;
-	}
-	
-	public static function link_login_flood()
-	{
-        $lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], $lang['e_link_pseudo']);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), sprintf($lang['e_l_flood'], $max_link));
 		return $controller;
 	}
 }

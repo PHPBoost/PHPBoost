@@ -136,7 +136,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 $LANG['e_incomplete']);
             DispatchManager::redirect($controller);
 		}
@@ -169,7 +169,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	//Scindage du premier message interdite.
 	if ($id_first == $idm)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 $LANG['e_unable_cut_forum']);
         DispatchManager::redirect($controller);
 	}
@@ -361,7 +361,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	//Scindage du premier message interdite.
 	if ($id_first == $id_post_msg)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
             $LANG['e_unable_cut_forum']);
         DispatchManager::redirect($controller);
 	}
@@ -410,7 +410,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	}
 	else
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
             $LANG['e_incomplete']);
         DispatchManager::redirect($controller);
 	}

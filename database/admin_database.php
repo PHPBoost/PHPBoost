@@ -246,12 +246,12 @@ elseif ($action == 'restore')
 				$Template->put('message_helper', MessageHelper::display($LANG['db_restore_success'], MessageHelper::SUCCESS));
 				break;
 			case 'failure' :
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                     $LANG['db_restore_failure'], UserErrorController::FATAL);
                 DispatchManager::redirect($controller);
 				break;
 			case 'upload_failure' :
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                     $LANG['db_upload_failure'], UserErrorController::FATAL);
                 DispatchManager::redirect($controller);
 				break;
@@ -262,7 +262,7 @@ elseif ($action == 'restore')
 				$Template->put('message_helper', MessageHelper::display($LANG['db_unlink_success'], E_USER_NOTICE));
 				break;
 			case 'unlink_failure' :
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                     $LANG['db_unlink_failure'], UserErrorController::FATAL);
                 DispatchManager::redirect($controller);
 				break;

@@ -29,7 +29,7 @@ class UserError403Controller extends UserErrorController
 {
 	public function __construct()
 	{
-		$error = LangLoader::get_message('error', 'errors');
+		$error = LangLoader::get_message('error', 'status-messages-common');
 		$unexist_page = LangLoader::get_message('e_forbidden', 'errors');
 		$message = '<strong>' . $error . ' 403</strong>' . '<br /><br />' . $unexist_page;
 		parent::__construct($error. ' 403', $message, self::WARNING);

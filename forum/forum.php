@@ -34,7 +34,7 @@ $id_get = retrieve(GET, 'id', 0);
 //Vérification de l'existance de la catégorie.
 if (empty($id_get) || !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0)
 {
-	$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+	$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
         $LANG['e_unexist_cat_forum']);
     DispatchManager::redirect($controller);
 }

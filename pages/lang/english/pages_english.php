@@ -126,10 +126,6 @@ $LANG['pages_delete_cat'] = 'Deleting a category';
 $LANG['pages_confirm_remove_cat'] = 'Are you sure you want to delete this category?';
  
 //Errors
-$LANG['pages_not_found'] = 'The page you are asking for doesn\'t exist';
-$LANG['pages_error_auth_read'] = 'You haven\'t got the necessary permissions to read this page';
-$LANG['pages_error_auth_com'] = 'You haven\'t got the necessary permissions to read comments related to this page';
-$LANG['pages_error_unactiv_com'] = 'Comments related to this page have been disabled.';
 $LANG['page_alert_title'] = 'You have to enter a title';
 $LANG['page_alert_contents'] = 'You have to enter a contents for your page';
 $LANG['pages_already_exists'] = 'The title you have chosen already exists. You must choose another one, because titles must be uniques.';

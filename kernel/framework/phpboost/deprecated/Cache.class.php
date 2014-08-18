@@ -53,7 +53,7 @@ class Cache
 		if (!is_dir(PATH_TO_ROOT . '/cache') || !is_writable(PATH_TO_ROOT . '/cache'))
 		{
 			//Enregistrement dans le log d'erreur.
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 'Cache -> Le dossier /cache doit être inscriptible, donc en CHMOD 777', UserErrorController::FATAL);
             DispatchManager::redirect($controller);
 		}
@@ -94,7 +94,7 @@ class Cache
 				$include2 = include($cache_file);
 				if (!$include2)
 				{
-					$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                         'Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', UserErrorController::FATAL);
                     DispatchManager::redirect($controller);
 				}
@@ -107,7 +107,7 @@ class Cache
 				$include3 = include($cache_file);
 				if (!$include3)
 				{
-					$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                          'Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', UserErrorController::FATAL);
                     DispatchManager::redirect($controller);
 				}
@@ -142,7 +142,7 @@ class Cache
 		}
 		elseif (!$no_alert_on_error)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 'Cache -&gt; Le module <strong>' . $module_name . '</strong> n\'a pas de fonction de cache!', UserErrorController::FATAL);
             DispatchManager::redirect($controller);
 		}
@@ -209,7 +209,7 @@ class Cache
 		//Il est l'heure de vérifier si la génération a fonctionné.
 		if (!file_exists($file_path) && filesize($file_path) == 0)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 'Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', UserErrorController::FATAL);
             DispatchManager::redirect($controller);
 		}

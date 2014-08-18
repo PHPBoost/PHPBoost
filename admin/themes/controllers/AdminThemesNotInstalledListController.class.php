@@ -145,7 +145,7 @@ class AdminThemesNotInstalledListController extends AdminController
 		}
 		else
 		{
-			$this->view->put('MSG', MessageHelper::display($this->lang['themes.install_success'], MessageHelper::SUCCESS, 10));
+			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 10));
 		}
 	}
 	
@@ -215,7 +215,7 @@ class AdminThemesNotInstalledListController extends AdminController
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display($this->lang['themes.already_exist'], MessageHelper::NOTICE, 4));
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE, 4));
 				}
 			}
 			else

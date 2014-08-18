@@ -37,7 +37,7 @@ class AdminMemberDeleteController extends AdminController
 			UserService::delete_by_id($user_id);
 		}
 		catch (RowNotFoundException $ex) {
-			$error_controller = PHPBoostErrors::unexisting_member();
+			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
 		
