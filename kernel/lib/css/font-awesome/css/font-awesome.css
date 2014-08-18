@@ -1566,9 +1566,8 @@
 }
 
  /* Config spécifique PHPBoost */
-.fa { vertical-align:middle; }
-.fa:hover { text-decoration:none; }
-.fa:before { font-size:1.167em; }
+.fa:hover { text-decoration: none; }
+.fa:before { font-size: 1.167em; }
 
 /* Alias */
 .fa-move:before { /* copie share */
