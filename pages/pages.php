@@ -191,8 +191,7 @@ elseif ($id_com > 0)
 	//Commentaires activés pour cette page ?
 	if ($page_infos['activ_com'] == 0)
 	{
-		$controller = new UserErrorController($LANG['error'], $LANG['pages_error_unactiv_com']);
-		$controller->set_error_type(UserErrorController::WARNING);
+		DispatchManager::redirect(PHPBoostErrors::unexisting_page());
 	}
 		
 	//Autorisation particulière ?
@@ -201,8 +200,7 @@ elseif ($id_com > 0)
 	//Vérification de l'autorisation de voir la page
 	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_COM)))
 	{
-		$controller = new UserErrorController($LANG['error'], $LANG['pages_error_auth_com']);
-		$controller->set_error_type(UserErrorController::WARNING);
+		DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
 	}
 	
 	$Template = new FileTemplate('pages/com.tpl');
