@@ -81,11 +81,11 @@ class CommentsDAO
 	{
 		if ($user_id !== '-1')
 		{
-			return $this->db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_id=:user_id', array('user_id' => $user_id));
 		}
 		else
 		{
-			return $this->db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_ip=:user_ip', array('user_ip' => AppContext::get_request()->get_ip_address()));
+			return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_ip=:user_ip', array('user_ip' => AppContext::get_request()->get_ip_address()));
 		}
 	}
 
