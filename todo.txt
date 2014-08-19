@@ -59,13 +59,11 @@
 - [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
 - [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification des couleurs du site.
-- Outils avancés de visualisation et gestion du cache.
 - Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
 - Gestion des contraintes asynchrones dans le form builder
 - Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
 + [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 + Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
-+ [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
 - Possibilité de désactiver l'affichage d'un lien dans les menus
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 - Support mobile et version tablette
@@ -124,10 +122,3 @@
 
 [b]Wiki:[/b]
 - [color=red]Nouveauté:[/color] Système d'enregistrement des articles par différences, lignes par lignes pour un encombrement réduit lors des éditions successives.
-
-[b]Nouveau module:[/b]
-- [color=red]Nouveauté:[/color] Module bannière, Bannières aléatoire à afficher sur le site. Possibilité de créer des campagnes d'affichage:
-choix du nombre d'affichage de la bannière, du nombre de clics sur la bannière, etc..
-
-[b]Nouveau module:[/b]
-- [color=red]Nouveauté:[/color] Module tchat, permet de discuter facilement dans une interface prévue à cet effet.

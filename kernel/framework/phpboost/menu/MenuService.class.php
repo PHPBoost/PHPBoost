@@ -246,8 +246,9 @@ class MenuService
         
         if ($direction > 0)
         {   // Moving the menu down
-            $max_position_query = "SELECT MAX(position) FROM " . DB_TABLE_MENUS . " WHERE block='" . $menu->get_block() . "' AND enabled='1'";
-            $max_position = $Sql->query($max_position_query);
+			$parameters = array('block' => $menu->get_block());
+			$max_position = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MENUS, 'MAX(c_order)', 'WHERE block=:block AND enabled=1', $parameters);
+			
             // Getting the max diff
             if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
                 $new_block_position = $max_position;

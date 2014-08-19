@@ -67,7 +67,8 @@ elseif (!empty($id) && $edit) //Edition.
 {
 	$template = new FileTemplate('admin/admin_smileys_management2.tpl');
 
-	$info_smiley = $Sql->query_array(DB_TABLE_SMILEYS, 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'");
+	$info_smiley = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SMILEYS, array('idsmiley', 'code_smiley', 'url_smiley'), 'WHERE idsmiley=:id', array('id' => $id));
+	
 	$url_smiley = $info_smiley['url_smiley'];
 	
 	//Gestion erreur.

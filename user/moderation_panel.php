@@ -159,8 +159,8 @@ if ($action == 'punish')
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'groups', 'delay_readonly', "WHERE user_id = '" . $id_get . "'");
-				
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
+			
 		//On crée le formulaire select
 		$select = '';
 		//Durée de la sanction.
@@ -239,7 +239,7 @@ else if ($action == 'warning')
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'email', "WHERE user_id = '" . $id_get . "'");
+		$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
@@ -325,7 +325,7 @@ else if ($action == 'warning')
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'display_name', 'level', 'groups', 'warning_percentage', "WHERE user_id = '" . $id_get . "'");
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
 					
 		//On crée le formulaire select
 		$select = '';
@@ -370,7 +370,7 @@ else
 	$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
 	if (!empty($_POST['valid_user']) && !empty($id_get)) //On banni le membre
 	{
-		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'display_name', 'warning_percentage', 'email', "WHERE user_id = '" . $id_get . "'");
+		$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'display_name', 'warning_percentage', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
 
 		MemberSanctionManager::banish($id_get, $user_ban, MemberSanctionManager::SEND_MAIL);
 
@@ -446,7 +446,7 @@ else
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'groups', 'delay_banned', 'warning_percentage', "WHERE user_id = '" . $id_get . "'");
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'delay_banned', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
 		
 		$group_color = User::get_group_color($member['groups'], $member['level']);
 		

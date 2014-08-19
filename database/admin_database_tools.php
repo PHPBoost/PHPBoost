@@ -192,7 +192,8 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 		));
 		
 		//On éxécute la requête
-		$row = $Sql->query_array($table, '*', "WHERE " . $field . " = '" . $value . "'");
+		$row = PersistenceContext::get_querier()->select_single_row($table, array('*'), 'WHERE '. $field .'=:value', array('value' => $value));
+
 		//On parse les valeurs de sortie
 		$i = 0;
 		foreach ($row as $field_name => $field_value)

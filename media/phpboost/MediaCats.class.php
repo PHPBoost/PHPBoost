@@ -240,7 +240,7 @@ class MediaCats extends DeprecatedCategoriesManager
 
 			if (!empty($MEDIA_CATS[0]) && $MEDIA_CATS[0]['num_media'] != $num_media[0])
 			{
-				$config = $Sql->query_array(PREFIX . 'configs', 'value', "WHERE name = 'media'");
+				$config = PersistenceContext::get_querier()->select_single_row(PREFIX . 'configs', array('value'), 'WHERE name = \'media\'');
 				$config = unserialize($config['value']);
 				$config['root']['num_media'] = $num_media[0];
 
@@ -271,7 +271,7 @@ class MediaCats extends DeprecatedCategoriesManager
 			}
 			else
 			{
-				$config = $Sql->query_array(PREFIX . 'configs', 'value', "WHERE name = 'media'");
+				$config = PersistenceContext::get_querier()->select_single_row(PREFIX . 'configs', array('value'), 'WHERE name = \'media\'');
 				$config = unserialize($config['value']);
 				$config['root']['num_media'] = $num;
 

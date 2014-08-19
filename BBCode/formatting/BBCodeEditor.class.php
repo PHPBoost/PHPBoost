@@ -57,7 +57,7 @@ class BBCodeEditor extends ContentEditor
 	 */
 	public function display()
 	{
-		global $LANG, $Cache;
+		global $LANG;
 
 		$template = $this->get_template();
 

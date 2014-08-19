@@ -87,7 +87,8 @@ elseif (!empty($shout_id)) //Edition + suppression!
 	$edit_message = retrieve(GET, 'edit', false);
 	$update_message = retrieve(GET, 'update', false);
 	
-	$row = $Sql->query_array(PREFIX . 'shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
+	$row = PersistenceContext::get_querier()->select_single_row(PREFIX . 'shoutbox', array('*'), 'WHERE id=:id', array('id' => $shout_id));
+
 	$row['user_id'] = (int)$row['user_id'];
 	
 	if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== -1))

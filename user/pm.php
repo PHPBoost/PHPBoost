@@ -103,7 +103,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	if (!empty($title) && !empty($contents) && !empty($login))
 	{
 		//On essaye de récupérer le user_id, si le membre n'a pas cliqué une fois la recherche AJAX terminée.
-		$user_id_dest = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'");
+		$user_id_dest = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE display_name = '" . $login . "'");
 		if (!empty($user_id_dest) && $user_id_dest != AppContext::get_current_user()->get_id())
 		{
 			//Envoi de la conversation, vérification de la boite si pleine => erreur
@@ -138,7 +138,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != AppContext::get_current_
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$login = !empty($pm_get) ? $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $pm_get . "'") : '';
+	$login = !empty($pm_get) ? $Sql->query("SELECT display_name FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $pm_get . "'") : '';
 	
 	$tpl->assign_block_vars('post_convers', array(
 		'U_ACTION_CONVERS' => url('.php?token=' . AppContext::get_session()->get_token()),
@@ -600,7 +600,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			$row['level'] = 2;
 		
 		if ( !$is_guest_in_convers )
-			$is_guest_in_convers = empty($row['login']);
+			$is_guest_in_convers = empty($row['display_name']);
 		
 		//Avatar
 		$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
@@ -621,7 +621,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'USER_AVATAR' => $user_avatar,
-			'PSEUDO' => $is_admin ? $LANG['admin'] : (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']),
+			'PSEUDO' => $is_admin ? $LANG['admin'] : (!empty($row['display_name']) ? TextHelper::wordwrap_html($row['display_name'], 13) : $LANG['guest']),
 			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 			'GROUP_COLOR' => $group_color,
 		
@@ -641,7 +641,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	if (!empty($quote_get))
 	{
 		$quote_msg = $Sql->query_array(DB_TABLE_PM_MSG, 'user_id', 'contents', "WHERE id = '" . $quote_get . "'");
-		$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $quote_msg['user_id'] . "'");
+		$pseudo = $Sql->query("SELECT display_name FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $quote_msg['user_id'] . "'");
 		
 		$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
 	}
@@ -755,7 +755,7 @@ else //Liste des conversation, dans la boite du membre.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
 	$i = 0;
 	$j = 0;
-	$result = $Sql->query_while("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.login AS login, m1.login AS login_dest, m2.login AS last_login, m.level AS level, m1.level AS dest_level, m2.level AS last_level, m.user_groups AS user_groups, m1.user_groups AS dest_groups, m2.user_groups AS last_groups
+	$result = $Sql->query_while("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.display_name AS login, m1.display_name AS login_dest, m2.display_name AS last_login, m.level AS level, m1.level AS dest_level, m2.level AS last_level, m.groups AS user_groups, m1.groups AS dest_groups, m2.groups AS last_groups
 	FROM " . DB_TABLE_PM_TOPIC . "  pm
 	LEFT JOIN " . DB_TABLE_PM_MSG . " msg ON msg.id = pm.last_msg_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = pm.user_id

@@ -162,7 +162,8 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 {
 	$template = new FileTemplate('admin/admin_groups_management2.tpl');
 	
-	$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', 'color', 'auth', 'members', "WHERE id = '" . $idgroup . "'");
+	$group = PersistenceContext::get_querier()->select_single_row(DB_TABLE_GROUP, array('id', 'name', 'img', 'color', 'auth', 'members'), 'WHERE id=:id', array('id' => $idgroup));
+	
 	if (!empty($group['id']))
 	{
 		//Gestion erreur.
