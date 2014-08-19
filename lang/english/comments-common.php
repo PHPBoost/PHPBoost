@@ -46,7 +46,6 @@ $lang['allComments'] = 'See other comments';
 
 $lang['comments.user.read-only'] = 'You are currently read-only, you can not post comments for the moment';
 
-$lang['module.choice'] = 'Select a module';
 $lang['view-topic'] = 'View topic';
 
 $lang['no_comment'] = 'No comment';

@@ -46,7 +46,6 @@ $lang['allComments'] = 'Voir les autres commentaires';
 
 $lang['comments.user.read-only'] = 'Vous êtes actuellement en lecture seule, vous ne pouvez pas poster de commentaire pour le moment';
 
-$lang['module.choice'] = 'Choisissez un module';
 $lang['view-topic'] = 'Voir le topic';
 
 $lang['no_comment'] = 'Aucun commentaire';

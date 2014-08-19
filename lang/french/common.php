@@ -60,9 +60,9 @@ $lang['constraint.required'] = 'Requis';
 $lang['constraint.not_required'] = 'Non requis';
 
 //Sort
-$lang['sort'] = 'Sort';
-$lang['sort.asc'] = 'Ascending';
-$lang['sort.desc'] = 'Descending';
+$lang['sort'] = 'Trier';
+$lang['sort.asc'] = 'Ascendant';
+$lang['sort.desc'] = 'Descendant';
 
 //Status
 $lang['status.approved.not'] = 'Gardée en brouillon';
