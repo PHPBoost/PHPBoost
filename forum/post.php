@@ -635,7 +635,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete_t')
-					$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+					$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 
 				if ($is_modo)
 				{
@@ -801,7 +801,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete')
-					$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+					$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 
 				$Template->put_all(array(
 					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
@@ -849,15 +849,15 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			{
 				case 'flood':
 				$errstr = $LANG['e_flood'];
-				$type = E_USER_WARNING;
+				$type = MessageHelper::WARNING;
 				break;
 				case 'incomplete':
 				$errstr = $LANG['e_incomplete'];
-				$type = E_USER_NOTICE;
+				$type = MessageHelper::NOTICE;
 				break;
 				case 'locked':
 				$errstr = $LANG['e_topic_lock_forum'];
-				$type = E_USER_WARNING;
+				$type = MessageHelper::WARNING;
 				break;
 				default:
 				$errstr = '';
@@ -909,19 +909,19 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			{
 				case 'flood_t':
 				$errstr = $LANG['e_flood'];
-				$type = E_USER_WARNING;
+				$type = MessageHelper::WARNING;
 				break;
 				case 'incomplete_t':
 				$errstr = $LANG['e_incomplete'];
-				$type = E_USER_NOTICE;
+				$type = MessageHelper::NOTICE;
 				break;
 				case 'c_locked':
 				$errstr = $LANG['e_cat_lock_forum'];
-				$type = E_USER_WARNING;
+				$type = MessageHelper::WARNING;
 				break;
 				case 'c_write':
 				$errstr = $LANG['e_cat_write'];
-				$type = E_USER_WARNING;
+				$type = MessageHelper::WARNING;
 				break;
 				default:
 				$errstr = '';

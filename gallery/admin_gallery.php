@@ -99,7 +99,7 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'unexist_cat')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], E_USER_NOTICE));
+		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], MessageHelper::NOTICE));
 
 	//On crée une pagination si le nombre de catégories est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);

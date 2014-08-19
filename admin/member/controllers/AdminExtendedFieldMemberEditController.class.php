@@ -79,7 +79,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			$error = ExtendedFieldsService::get_error();
 			if (!empty($error))
 			{
-				$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
+				$this->tpl->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 6));
 			}
 			else
 			{

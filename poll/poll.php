@@ -188,11 +188,11 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	{
 		case 'e_already_vote':
 		$errstr = $LANG['e_already_vote'];
-		$type = E_USER_WARNING;
+		$type = MessageHelper::WARNING;
 		break;
 		case 'e_unauth_poll':
 		$errstr = $LANG['e_unauth_poll'];
-		$type = E_USER_WARNING;
+		$type = MessageHelper::WARNING;
 		break;
 		default:
 		$errstr = '';

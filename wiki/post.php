@@ -233,7 +233,7 @@ else
 	}
 	
 	if (!empty($encoded_title))
-		$Template->put('message_helper', MessageHelper::display($LANG['wiki_article_does_not_exist'], E_USER_WARNING));	
+		$Template->put('message_helper', MessageHelper::display($LANG['wiki_article_does_not_exist'], MessageHelper::WARNING));	
 	
 	if ($id_cat > 0 && array_key_exists($id_cat, $_WIKI_CATS)) //Catégorie préselectionnée
 	{
@@ -332,7 +332,7 @@ include_once('../wiki/post_js_tools.php');
 
 //Eventuelles erreurs
 if (!empty($errstr))
-	$Template->put('message_helper', MessageHelper::display($errstr, E_USER_WARNING));
+	$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 
 $Template->pparse('wiki_edit');
 

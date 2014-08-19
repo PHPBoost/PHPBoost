@@ -62,12 +62,12 @@ class AdminCustomizeFaviconController extends AdminModuleController
 				}
 				else
 				{
-					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), E_USER_ERROR, 4));
+					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'status-messages-common'), MessageHelper::ERROR, 4));
 				}
 			}
 			else
 			{
-				$tpl->put('MSG', MessageHelper::display($this->lang['customization.favicon.error'], E_USER_ERROR, 4));
+				$tpl->put('MSG', MessageHelper::display($this->lang['customization.favicon.error'], MessageHelper::ERROR, 4));
 			}
 		}
 

@@ -274,7 +274,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	));
 	
 	if ($get_error == 'folder_contains_folder')
-		$Template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], MessageHelper::WARNING));
 	
 	//liste des fichiers disponibles
 	include_once('upload_functions.php');
@@ -353,12 +353,12 @@ else
 	//Gestion des erreurs.
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_unlink_disabled', 'e_max_data_reach');
 	if (in_array($get_error, $array_error))
-		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 
 	if (isset($LANG[$get_l_error]))
-		$Template->put('message_helper', MessageHelper::display($LANG[$get_l_error], E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($LANG[$get_l_error], MessageHelper::WARNING));
 
 	$Template->put_all(array(
 		'POPUP' => $popup,

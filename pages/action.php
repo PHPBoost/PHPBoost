@@ -293,7 +293,7 @@ if ($del_cat > 0)
 	else
 		$errstr = '';
 	if (!empty($errstr))
-		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 }
 elseif ($id_rename > 0)
 {
@@ -312,7 +312,7 @@ elseif ($id_rename > 0)
 	//Erreur : la page existe déjà
 	if ($error == 'title_already_exists')
 	{
-		$Template->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
 	}
 }
 //Création d'une redirection
@@ -330,7 +330,7 @@ elseif ($id_new > 0)
 	//Erreur : la page existe déjà
 	if ($error == 'title_already_exists')
 	{
-		$Template->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
 	}
 }
 //Liste des redirections vers cette page

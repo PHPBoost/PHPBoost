@@ -58,7 +58,7 @@ class CalendarDisplayCategoryController extends ModuleController
 		
 		if (!checkdate($month, $day, $year))
 		{
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['calendar.error.e_invalid_date'], E_USER_ERROR));
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['calendar.error.e_invalid_date'], MessageHelper::ERROR));
 			
 			$year = date('Y');
 			$month = date('n');

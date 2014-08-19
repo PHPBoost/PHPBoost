@@ -250,7 +250,7 @@ elseif ($move > 0) //On déplace l'article
 	else
 		$errstr = '';
 	if (!empty($errstr))
-		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 }
 elseif ($rename > 0)//On renomme un article
 {
@@ -269,7 +269,7 @@ elseif ($rename > 0)//On renomme un article
 	else
 		$errstr = '';
 	if (!empty($errstr))
-		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 }
 elseif ($redirect > 0) //Redirections de l'article
 {
@@ -321,7 +321,7 @@ elseif ($create_redirection > 0) //Création d'une redirection
 	else
 		$errstr = '';
 	if (!empty($errstr))
-		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 }
 elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
 {
@@ -382,7 +382,7 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 		else
 			$errstr = '';
 		if (!empty($errstr))
-			$Template->put('message_helper', MessageHelper::display($errstr, E_USER_WARNING));
+			$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 	}
 }
 else
