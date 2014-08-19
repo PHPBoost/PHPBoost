@@ -67,7 +67,7 @@ if (!empty($_POST['valid']) && !empty($id))
 			{
 				$list_cats .= $row['id'] . ', ';
 			}
-			$Sql->query_close($result);
+			$result->dispose();
 			$list_cats = trim($list_cats, ', ');
 			
 			//Galeries parentes de la galerie à supprimer.
@@ -79,7 +79,7 @@ if (!empty($_POST['valid']) && !empty($id))
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
-			$Sql->query_close($result);
+			$result->dispose();
 			$list_parent_cats = trim($list_parent_cats, ', ');
 			
 			//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
@@ -97,7 +97,7 @@ if (!empty($_POST['valid']) && !empty($id))
 				{
 					$list_parent_cats_to .= $row['id'] . ', ';
 				}
-				$Sql->query_close($result);
+				$result->dispose();
 				$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 						
 				if (empty($list_parent_cats_to))
@@ -236,7 +236,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 						$disabled = ($row['level'] > 0) ? '' : ' disabled="disabled"';
 						$subgallery .= '<option value="' . $row['id'] . '"' . $disabled . '>' . $margin . ' ' . $row['name'] . '</option>';
 					}
-					$Sql->query_close($result);
+					$result->dispose();
 					
 					$Template->assign_block_vars('pics', array(
 						'GALLERIES' => $subgallery,
@@ -258,7 +258,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 						$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 						$subgallery .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 					}
-					$Sql->query_close($result);
+					$result->dispose();
 					
 					$Template->assign_block_vars('subgalleries', array(
 						'GALLERIES' => $subgallery,
@@ -312,7 +312,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					{
 						$list_parent_cats .= $row['id'] . ', ';
 					}
-					$Sql->query_close($result);
+					$result->dispose();
 					$list_parent_cats = trim($list_parent_cats, ', ');
 					
 					//On va chercher la somme du nombre d'images
@@ -349,7 +349,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 						{
 							$list_sub_cats .= $row['id'] . ', ';
 						}
-						$Sql->query_close($result);
+						$result->dispose();
 						$list_sub_cats = trim($list_sub_cats, ', ');
 						
 						//Galeries parentes de la galerie à supprimer.
@@ -361,7 +361,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 						{
 							$list_parent_cats .= $row['id'] . ', ';
 						}
-						$Sql->query_close($result);
+						$result->dispose();
 						$list_parent_cats = trim($list_parent_cats, ', ');
 						
 						//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
@@ -379,7 +379,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 							{
 								$list_parent_cats_to .= $row['id'] . ', ';
 							}
-							$Sql->query_close($result);
+							$result->dispose();
 							$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 						
 							if (empty($list_parent_cats_to))
@@ -484,7 +484,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
-			$Sql->query_close($result);
+			$result->dispose();
 			$list_parent_cats = trim($list_parent_cats, ', ');
 			
 			$nbr_del = $CAT_GALLERY[$idcat]['id_right'] - $CAT_GALLERY[$idcat]['id_left'] + 1;
@@ -529,7 +529,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 	{
 		$list_parent_cats .= $row['id'] . ', ';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	$list_parent_cats = trim($list_parent_cats, ', ');
 	
 	$to = 0;
@@ -604,7 +604,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 		{
 			$list_cats .= $row['id'] . ', ';
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 		$list_cats = trim($list_cats, ', ');
 	
 		if (empty($list_cats))
@@ -625,7 +625,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 		{
 			$list_parent_cats_to .= $row['id'] . ', ';
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 	
 		if (empty($list_parent_cats_to))
@@ -704,7 +704,7 @@ elseif (!empty($id)) //Edition des catégories.
 		$selected = ($row['id_left'] < $gallery_info['id_left'] && $row['id_right'] > $gallery_info['id_right'] && ($gallery_info['level'] - 1) == $row['level'] ) ? ' selected="selected"' : '';
 		$galeries .= '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	$array_auth = !empty($gallery_info['auth']) ? unserialize($gallery_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
 	
@@ -847,7 +847,7 @@ else
 		$array_js .= 'array_cats[' . $row['id'] . '][\'i\'] = ' . $i . ";\n";
 		$i++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	$Template->put_all(array(
 		'LIST_CATS' => trim($list_cats_js, ', '),

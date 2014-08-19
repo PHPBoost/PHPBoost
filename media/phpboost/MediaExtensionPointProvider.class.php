@@ -74,7 +74,7 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 			), true) . ';' . "\n\n";
 		}
 
-		$this->sql_querier->query_close($result);
+		$result->dispose();
 
 		return $string;
 	}

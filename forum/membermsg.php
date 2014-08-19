@@ -114,7 +114,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			'U_TITLE_T' => '<a class="forum-mbrmsg-links" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '">' . ucfirst($row['title']) . '</a>'
 		));
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/membermsg.php%'");

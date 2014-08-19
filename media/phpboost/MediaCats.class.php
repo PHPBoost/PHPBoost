@@ -236,7 +236,7 @@ class MediaCats extends DeprecatedCategoriesManager
 				}
 			}
 
-			$Sql->query_close($result);
+			$result->dispose();
 
 			if (!empty($MEDIA_CATS[0]) && $MEDIA_CATS[0]['num_media'] != $num_media[0])
 			{

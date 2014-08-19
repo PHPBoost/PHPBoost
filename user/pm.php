@@ -81,7 +81,7 @@ if ($read)
 			continue;
 		$Sql->query_inject("UPDATE " . DB_TABLE_PM_MSG . " SET view_status = 1 WHERE id = '" . $row['last_msg_id'] . "'");
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = '" . $nbr_waiting_pm . "' WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
 	
@@ -635,7 +635,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			$track = true;
 		$j++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 
 	//Récupération du message quoté.
 	if (!empty($quote_get))
@@ -861,7 +861,7 @@ else //Liste des conversation, dans la boite du membre.
 		));
 		$i++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	$tpl->display();
 }

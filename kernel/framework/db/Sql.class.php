@@ -167,20 +167,6 @@ class Sql
 	}
 
 	/**
-	 * @desc Counts the number of the row contained in a table.
-	 * @param string $table Table name
-	 * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
-	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
-	 * @param int $errfile The file in which you call this method. Use the __FILE__ constant.
-	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
-	 * @return int The rows number of the table.
-	 */
-	public function count_table($table)
-	{
-		return PersistenceContext::get_querier()->count($table);
-	}
-
-	/**
 	 * @desc Browses a MySQL result resource row per row.
 	 * When you call this method on a resource, you get the next row.
 	 * @param resource $result MySQL result resource to browse. The resource is provided by the query_while method.
@@ -247,34 +233,6 @@ class Sql
 	public function insert_id($query = '')
 	{
 		return $this->inject_query_result->get_last_inserted_id();
-	}
-
-	/**
-	 * @desc Generates the MySQL syntax which enables you to compute the number of years separating a date in a data base field and today.
-	 * @param string $field Name of the field against which you want to compute the number of years.
-	 * @return string the syntax which will compute the number of years.
-	 */
-	public function date_diff($field)
-	{
-		return '(YEAR(CURRENT_DATE) - YEAR(' . $field . ')) - (RIGHT(CURRENT_DATE, 5) < RIGHT(' . $field . ', 5))';
-	}
-
-	/**
-	 * @desc Frees the memory allocated for a resource.
-	 * @param resource $resource Resource you want to desallocate.
-	 * @return bool true if the memory could be disallocated and false otherwise.
-	 */
-	public function query_close($resource)
-	{
-		try
-		{
-			$resource->dispose();
-			return true;
-		}
-		catch (SQLQuerierException $exception)
-		{
-			return false;
-		}
 	}
 
 	/**

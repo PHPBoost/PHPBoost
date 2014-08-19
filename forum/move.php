@@ -80,7 +80,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		$disabled = ($row['id'] == $topic['idcat']) ? ' disabled="disabled"' : '';
 		$cat_forum .= ($row['level'] > 0) ? '<option value="' . $row['id'] . '"' . $disabled . '>' . str_repeat('--------', $row['level']) . ' ' . $row['name'] . '</option>' : '<option value="' . $row['id'] . '" disabled="disabled">-- ' . $row['name'] . '</option>';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 
 	$Template->put_all(array(
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['move_topic'],
@@ -198,7 +198,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	{
 		$cat_forum .= ($row['level'] > 0) ? '<option value="' . $row['id'] . '">' . str_repeat('--------', $row['level']) . ' ' . $row['name'] . '</option>' : '<option value="' . $row['id'] . '" disabled="disabled">-- ' . $row['name'] . '</option>';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');

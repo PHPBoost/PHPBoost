@@ -90,7 +90,7 @@ class PagesSearchable extends AbstractSearchableExtensionPoint
                 array_push($results, $row);
             }
         }
-        $this->sql_querier->query_close($result);
+        $result->dispose();
         
         return $results;
     }

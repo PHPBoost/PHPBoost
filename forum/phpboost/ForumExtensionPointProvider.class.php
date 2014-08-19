@@ -72,7 +72,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'url\'] = ' . var_export($row['url'], true) . ';' . "\n";
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
 		}
-		$sql_querier->query_close($result);
+		$result->dispose();
 
 		return $forum_config . "\n" . $forum_cats;
 	}

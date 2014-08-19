@@ -71,7 +71,7 @@ while ($row = $Sql->fetch_assoc($result))
 		$root .= '<li><a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><i class="fa fa-file"></i>' . $row['title'] . '</a></li>';
 	}
 }
-$Sql->query_close($result);
+$result->dispose();
 
 $Template->put_all(array(
 	'PAGES_PATH' => $module_data_path,
@@ -104,7 +104,7 @@ while ($row = $Sql->fetch_assoc($result))
 		));
 	}
 }
-$Sql->query_close($result);
+$result->dispose();
 $Template->put_all(array(
 	'SELECTED_CAT' => 0,
 	'CAT_0' => 'selected',

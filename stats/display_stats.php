@@ -63,7 +63,7 @@ if ($get_visit_month)
     {
         $array_stats[$row['stats_day']] = $row['nbr'];
     }
-    $Sql->query_close($result);
+    $result->dispose();
 
     //Nombre de jours pour chaque mois (gestion des années bissextiles)
     $bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
@@ -93,7 +93,7 @@ elseif ($get_visit_year)
     {
         $array_stats[$row['stats_month']] = $row['total'];
     }
-    $Sql->query_close($result);
+    $result->dispose();
 
     //Complément des mois manquant
     for ($i = 1; $i <= 12; $i++)
@@ -148,7 +148,7 @@ elseif ($get_pages_month)
     {
         $array_stats[$row['stats_day']] = $row['pages'];
     }
-    $Sql->query_close($result);
+    $result->dispose();
 
     //Nombre de jours pour chaque mois (gestion des années bissextiles)
     $bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
@@ -178,7 +178,7 @@ elseif ($get_pages_year)
     {
         $array_stats[$row['stats_month']] = $row['total'];
     }
-    $Sql->query_close($result);
+    $result->dispose();
 
     //Complément des mois manquant
     for ($i = 1; $i <= 12; $i++)
@@ -311,7 +311,7 @@ elseif ($get_sex)
         }
         $array_stats[$name] = $row['compt'];
     }
-    $Sql->query_close($result);
+    $result->dispose();
 
     $Stats->load_data($array_stats, 'ellipse', 5);
     $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/sex.png');

@@ -165,7 +165,7 @@ elseif (!empty($del)) //Suppression de la cat�gorie/sous-cat�gorie.
 						$disabled = ($row['level'] > 0) ? '' : ' disabled="disabled"';
 						$forums .= '<option value="' . $row['id'] . '"' . $disabled . '>' . $margin . ' ' . $row['name'] . '</option>';
 					}
-					$Sql->query_close($result);
+					$result->dispose();
 
 					$Template->assign_block_vars('topics', array(
 						'FORUMS' => $forums,
@@ -187,7 +187,7 @@ elseif (!empty($del)) //Suppression de la cat�gorie/sous-cat�gorie.
 						$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 						$forums .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 					}
-					$Sql->query_close($result);
+					$result->dispose();
 
 					$Template->assign_block_vars('subforums', array(
 						'FORUMS' => $forums,
@@ -273,7 +273,7 @@ elseif (!empty($id))
 		$selected = ($row['id_left'] < $forum_info['id_left'] && $row['id_right'] > $forum_info['id_right'] && ($forum_info['level'] - 1) == $row['level'] ) ? ' selected="selected"' : '';
 		$forums .= '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
@@ -409,7 +409,7 @@ else
 		$array_js .= 'array_cats[' . $row['id'] . '][\'i\'] = ' . $i . ";\n";
 		$i++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 
 	$Template->put_all(array(
 		'LIST_CATS' => trim($list_cats_js, ', '),

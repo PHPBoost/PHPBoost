@@ -107,7 +107,7 @@ class Backup
 				{
 					$this->backup_script .=  $row[1] . ';' . "\n\n";
 				}
-				$this->sql_querier->query_close($result);
+				$result->dispose();
 			}
 		}
 	}
@@ -154,7 +154,7 @@ class Backup
 						$i++;
 					}
 					$this->backup_script .= ";\n";
-					$this->sql_querier->query_close($result);
+					$result->dispose();
 				}
 			}
 		}

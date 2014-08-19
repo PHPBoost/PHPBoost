@@ -99,7 +99,7 @@ class ContributionService
 			$array_result[] = $contri;
 		}
 		
-		self::$sql_querier->query_close($result);
+		self::$result->dispose();
 		
 		return $array_result;
 	}

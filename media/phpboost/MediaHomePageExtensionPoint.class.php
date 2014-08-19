@@ -231,7 +231,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 			}
 	
-			$this->sql_querier->query_close($result);
+			$result->dispose();
 		}
 		else
 		{

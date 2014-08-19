@@ -59,7 +59,7 @@ while ($row = $Sql->fetch_assoc($result))
 {
 	$root .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><i class="fa fa-file"></i>' . $row['title'] . '</a></li>';
 }
-$Sql->query_close($result);
+$result->dispose();
 
 
 $template->put_all(array(
@@ -92,7 +92,7 @@ while ($row = $Sql->fetch_assoc($result))
 		));
 	}
 }
-$Sql->query_close($result);
+$result->dispose();
 $template->put_all(array(
 	'SELECTED_CAT' => 0,
 	'CAT_0' => 'selected',

@@ -88,7 +88,7 @@ if (!empty($id_article))
 			'ACTIONS' => !empty($actions) ? $actions : $LANG['wiki_no_possible_action']
 		));
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	$Template->put_all(array(
 		'L_VERSIONS' => $LANG['wiki_version_list'],

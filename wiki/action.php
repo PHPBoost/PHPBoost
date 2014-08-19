@@ -408,7 +408,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 				CommentsService::delete_comments_topic_module('wiki', $row['id']);
 			}
 				
-			$Sql->query_close($result);
+			$result->dispose();
 			
 			PersistenceContext::get_querier()->delete(PREFIX . 'wiki_articles', 'WHERE id_cat=:id', array('id' => $id));
 			PersistenceContext::get_querier()->delete(PREFIX . 'wiki_cats', 'WHERE id=:id', array('id' => $id));

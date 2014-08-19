@@ -37,7 +37,7 @@ $Template->set_filenames(array(
 	'admin_download_management'=> 'download/admin_download_management.tpl'
  ));
 
-$nbr_dl = $Sql->count_table(PREFIX . 'download');
+$nbr_dl = PersistenceContext::get_querier()->count(PREFIX . 'download');
 
 //On crée une pagination si le nombre de fichier est trop important.
 $page = AppContext::get_request()->get_getint('p', 1);
@@ -97,7 +97,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'U_DEL_FILE' => url('management.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 	));
 }
-$Sql->query_close($result);
+$result->dispose();
 
 include_once('admin_download_menu.php');
 

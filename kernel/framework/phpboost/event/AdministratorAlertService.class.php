@@ -143,7 +143,7 @@ class AdministratorAlertService
             
 			return $alert;
         }
-        self::$sql_querier->query_close($result);
+        self::$result->dispose();
         
         return null;
 	}
@@ -174,7 +174,7 @@ class AdministratorAlertService
 			$array_result[] = $alert;
 		}
 		
-		self::$sql_querier->query_close($result);
+		self::$result->dispose();
 		
 		return $array_result;
 	}

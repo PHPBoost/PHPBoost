@@ -74,7 +74,7 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 			</tbody>
 		</table>';
 	}
-	$sql_querier->query_close($result);
+	$result->dispose();
 }
 elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le mp.
 {
@@ -111,7 +111,7 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
 			</tbody>
 		</table>';
 	}
-	$sql_querier->query_close($result);
+	$result->dispose();
 }
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');

@@ -123,7 +123,7 @@ elseif (!empty($_POST['previs']))
 		));
 		$i++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	if ($i == 0) //Aucune catégorie => alerte.	 
 		$Template->put('message_helper', MessageHelper::display($LANG['require_cat_create'], E_USER_WARNING));
@@ -175,7 +175,7 @@ else
 		));
 		$i++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');

@@ -46,7 +46,7 @@ if ($article_id > 0) //Si on connait son titre
 	GROUP BY a.id");	
 	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE id = '" . $article_id . "'");
 	$article_infos = $Sql->fetch_assoc($result);
-	$Sql->query_close($result);
+	$result->dispose();
 
 	if (!empty($article_infos['redirect']))//Si on est redirigé
 	{
@@ -60,7 +60,7 @@ if ($article_id > 0) //Si on connait son titre
 		WHERE a.id = '" . $article_infos['redirect'] . "'
 		GROUP BY a.id");	
 		$article_infos = $Sql->fetch_assoc($result);
-		$Sql->query_close($result);
+		$result->dispose();
 	}
 }
 

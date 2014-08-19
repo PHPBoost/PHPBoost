@@ -155,7 +155,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    			'CONTENTS' => FormatingHelper::second_parse($row['contents'])
 	    		));
 	    	}
-	    	$Sql->query_close($result);
+	    	$result->dispose();
 	
 	    	return $tpl->render();
 	    }

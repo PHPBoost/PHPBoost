@@ -58,7 +58,7 @@ elseif ($id_media > 0)
 	WHERE v.id = '" . $id_media . "'");
 	
 	$media = $Sql->fetch_assoc($result);
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	if (empty($media) || ($media['infos'] & MEDIA_STATUS_UNVISIBLE) !== 0)
 	{

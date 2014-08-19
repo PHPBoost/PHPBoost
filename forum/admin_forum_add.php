@@ -102,7 +102,7 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
-			$Sql->query_close($result);
+			$result->dispose();
 			$list_parent_cats = trim($list_parent_cats, ', ');
 						
 			if (empty($list_parent_cats))
@@ -150,7 +150,7 @@ else
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$forums .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');

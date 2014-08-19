@@ -33,7 +33,7 @@ if ($id_cat != 0)
 		else //Sinon on n'affiche pas le "+"
 			echo '<li style="padding-left:17px;"><i class="fa fa-folder"></i>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span></li>';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	echo '</ul>';
 }
 //Retour de la localisation du dossier

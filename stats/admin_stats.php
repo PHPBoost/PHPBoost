@@ -162,7 +162,7 @@ else
 			}
 			$stats_array[$name] = $row['compt'];
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 
 		$Stats->color_index = 0;
 		$Stats->load_data($stats_array, 'ellipse');
@@ -198,7 +198,7 @@ else
 
 			$i++;
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 	}
 	elseif ($visit || $visit_year) //Visites par jour classées par mois.
 	{
@@ -286,7 +286,7 @@ else
 						'NBR' => $row['total']
 						));
 					}
-					$Sql->query_close($result);
+					$result->dispose();
 			}
 			else
 			{
@@ -349,7 +349,7 @@ else
 					$last_month = $row['stats_month'];
 					$i++;
 				}
-				$Sql->query_close($result);
+				$result->dispose();
 
 				//Génération des td manquants.
 				$date_day = isset($date_day) ? $date_day : 1;
@@ -444,7 +444,7 @@ else
 						'NBR' => $row['nbr']
 						));
 					}
-					$Sql->query_close($result);
+					$result->dispose();
 				}
 				else
 				{
@@ -512,7 +512,7 @@ else
 
 							$i++;
 						}
-						$Sql->query_close($result);
+						$result->dispose();
 
 						//Génération des td manquants.
 						$date_day = isset($date_day) ? $date_day : 1;
@@ -637,7 +637,7 @@ else
 						'NBR' => $row['total']
 						));
 					}
-					$Sql->query_close($result);
+					$result->dispose();
 			}
 			else
 			{
@@ -700,7 +700,7 @@ else
 					$last_month = $row['stats_month'];
 					$i++;
 				}
-				$Sql->query_close($result);
+				$result->dispose();
 
 				//Génération des td manquants.
 				$date_day = isset($date_day) ? $date_day : 1;
@@ -796,7 +796,7 @@ else
 					'NBR' => $row['pages']
 					));
 				}
-				$Sql->query_close($result);
+				$result->dispose();
 		}
 		else
 		{
@@ -870,7 +870,7 @@ else
 						'NBR' => $row['pages']
 						));
 					}
-					$Sql->query_close($result);
+					$result->dispose();
 				}
 				else
 				{
@@ -938,7 +938,7 @@ else
 
 							$i++;
 						}
-						$Sql->query_close($result);
+						$result->dispose();
 
 						//Génération des td manquants.
 						$date_day = isset($date_day) ? $date_day : 1;
@@ -997,7 +997,7 @@ else
 				'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 
 		$Template->put_all(array(
 			'C_STATS_REFERER' => true,
@@ -1049,7 +1049,7 @@ else
 				'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 
 		$Template->put_all(array(
 			'C_STATS_KEYWORD' => true,

@@ -89,7 +89,7 @@ elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 		$info_cat = $Sql->query_array(PREFIX . "forum_topics", "COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg", "WHERE idcat IN (" . $cat_list . ")");
 		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = '" . $info_cat['nbr_topic'] . "', nbr_msg = '" . $info_cat['nbr_msg'] . "' WHERE id = '" . $row['id'] . "'");
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }

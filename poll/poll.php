@@ -364,7 +364,7 @@ elseif ($archives) //Archives.
 			));
 		}
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 
 	$Template->pparse('poll');
 }

@@ -60,7 +60,7 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
-			$Sql->query_close($result);
+			$result->dispose();
 			$list_parent_cats = trim($list_parent_cats, ', ');
 				
 			if (empty($list_parent_cats))
@@ -107,7 +107,7 @@ else
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$galleries .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';

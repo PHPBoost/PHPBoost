@@ -60,7 +60,7 @@ if (!empty($_POST['valid']))
 		if ($del)
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id', array('id' => $row['id']));
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	AppContext::get_response()->redirect('/forum/track.php');
 }
@@ -184,7 +184,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		));
 		$nbr_topics_compt++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	//Le membre a déjà lu tous les messages.
 	if ($nbr_topics == 0)

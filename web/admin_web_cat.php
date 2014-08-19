@@ -58,7 +58,7 @@ if (!empty($_POST['valid']))
 			$Sql->query_inject("UPDATE " . PREFIX . "web_cat SET name = '" . $cat . "', contents = '" . $contents . "', icon = '" . $icon . "', aprob = '" . $aprob . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'");
 
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	//Régénération du cache des catégories.
 	$Cache->Generate_module_file('web');
@@ -269,7 +269,7 @@ else
 		}
 		$number_cats++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	$Template->put('C_CATS', $number_cats);
 	

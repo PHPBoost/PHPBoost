@@ -431,7 +431,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	$j++;
 	$i++;
 }
-$Sql->query_close($result);
+$result->dispose();
 
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" . url('/forum/topic.php?id=' . $id_get, '/forum/topic-' . $id_get) ."%'");

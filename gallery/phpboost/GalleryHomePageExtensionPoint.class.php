@@ -253,7 +253,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_CAT' => GalleryUrlBuilder::get_link_cat($row['id'],$row['name'])
 				));
 			}
-			$this->sql_querier->query_close($result);
+			$result->dispose();
 	
 			//Création des cellules du tableau si besoin est.
 			while (!is_int($j/$nbr_column_cats))
@@ -321,7 +321,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$array_cat_list[$row['id']] = AppContext::get_current_user()->check_auth($CAT_GALLERY[$row['id']]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS) ? '<option value="' . $row['id'] . '" %s>' . $margin . ' ' . $row['name'] . '</option>' : '';
 				}
 			}
-			$this->sql_querier->query_close($result);
+			$result->dispose();
 	
 	
 	
@@ -385,7 +385,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						$array_js .= 'array_pics[' . $i . '][\'path\'] = \'' . $row['path'] . "';\n";
 						$i++;
 					}
-					$this->sql_querier->query_close($result);
+					$result->dispose();
 	
 					//Liste des catégories.
 					$cat_list = '';
@@ -591,7 +591,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'U_DISPLAY' => $display_link
 					));
 				}
-				$this->sql_querier->query_close($result);
+				$result->dispose();
 	
 				//Création des cellules du tableau si besoin est.
 				while (!is_int($j/$nbr_column_pics))

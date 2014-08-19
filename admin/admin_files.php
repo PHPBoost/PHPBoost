@@ -134,7 +134,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 	while ($row = $Sql->fetch_assoc($result))
 		$move_list_parent[$row['id']] = $row['id_parent'];
 	
-	$Sql->query_close($result);
+	$result->dispose();
 
 	$array_child_folder = array();
 	Uploads::Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
@@ -408,7 +408,7 @@ else
 		));
 		$total_directories++;
 	}	
-	$Sql->query_close($result);
+	$result->dispose();
 		
 	if (!$show_member) //Dossier membres.
 	{
@@ -466,7 +466,7 @@ else
 			$total_folder_size += $row['size'];
 			$total_files++;
 		}	
-		$Sql->query_close($result);
+		$result->dispose();
 	}
 	
 

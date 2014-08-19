@@ -235,7 +235,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('download', $row['id']) . '</a>'
 				));
 			}
-			$this->sql_querier->query_close($result);
+			$result->dispose();
 		}
 		else
 		{

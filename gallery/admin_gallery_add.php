@@ -128,7 +128,7 @@ else
 		$cat_list .= '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 		$cat_list_unselect .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 
 	//Aficchage de la photo uploadée.
 	if (!empty($add_pic))
@@ -197,7 +197,7 @@ else
 				if ($key !== false)
 					unset($array_pics[$key]); //On supprime ces clées du tableau.
 			}
-			$Sql->query_close($result);
+			$result->dispose();
 
 			//Colonnes des images.
 			$nbr_pics = count($array_pics);

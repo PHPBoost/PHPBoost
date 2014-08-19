@@ -146,7 +146,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 				'U_AVATAR' => $user_avatar
 			));
 		}
-		$this->sql_querier->query_close($result);
+		$result->dispose();
 
 		return $tpl;
 	}

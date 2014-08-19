@@ -100,7 +100,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'TITLE' => $row['title']
 	));
 }
-$Sql->query_close($result);
+$result->dispose();
 
 //Les plus vus	
 $result = $Sql->query_while("SELECT t.id, t.title, c.id as cid, c.auth
@@ -116,7 +116,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'TITLE' => $row['title']
 	));
 }
-$Sql->query_close($result);
+$result->dispose();
 
 //Les plus répondus	
 $result = $Sql->query_while("SELECT t.id, t.title, c.id as cid, c.auth
@@ -132,7 +132,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'TITLE' => $row['title']
 	));
 }	
-$Sql->query_close($result);
+$result->dispose();
 	
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script = '" ."/forum/stats.php'");

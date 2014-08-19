@@ -198,7 +198,7 @@ if (!empty($id_get))
 				'U_LAST_TOPIC' => $last
 			));
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 	}
 		
 	//On vérifie si l'utilisateur a les droits d'écritures.
@@ -370,7 +370,7 @@ if (!empty($id_get))
 		));
 		$nbr_topics_display++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 		
 	//Affichage message aucun topics.
 	if ($nbr_topics_display == 0)

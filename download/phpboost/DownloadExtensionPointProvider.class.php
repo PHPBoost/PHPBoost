@@ -131,7 +131,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		while ($row = $this->sql_querier->fetch_assoc($result)) {
 			$data[$row['id']] = $row['name'];
 		}
-		$this->sql_querier->query_close($result);
+		$result->dispose();
 		return $data;
 	}
     

@@ -150,7 +150,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				$stats_array[$name] = $row['compt'];
 			}
-			$this->sql_querier->query_close($result);
+			$result->dispose();
 			
 			$Stats->color_index = 0;
 			$Stats->load_data($stats_array, 'ellipse');
@@ -186,7 +186,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				
 				$i++;
 			}
-			$this->sql_querier->query_close($result);
+			$result->dispose();
 		}
 		elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		{
@@ -274,7 +274,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 							'NBR' => $row['total']
 						));
 					}
-					$this->sql_querier->query_close($result);
+					$result->dispose();
 				}
 				else
 				{
@@ -337,7 +337,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$last_month = $row['stats_month'];
 						$i++;
 					}
-					$this->sql_querier->query_close($result);
+					$result->dispose();
 
 					//Génération des td manquants.
 					$date_day = isset($date_day) ? $date_day : 1;
@@ -431,7 +431,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 							'NBR' => $row['nbr']
 						));
 					}
-					$this->sql_querier->query_close($result);
+					$result->dispose();
 				}
 				else
 				{
@@ -499,7 +499,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 
 							$i++;
 						}
-						$this->sql_querier->query_close($result);
+						$result->dispose();
 						
 						//Génération des td manquants.
 						$date_day = isset($date_day) ? $date_day : 1;
@@ -625,7 +625,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 							'NBR' => $row['total']
 						));
 					}
-					$this->sql_querier->query_close($result);
+					$result->dispose();
 				}
 				else
 				{
@@ -688,7 +688,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						$last_month = $row['stats_month'];
 						$i++;
 					}
-					$this->sql_querier->query_close($result);
+					$result->dispose();
 
 					//Génération des td manquants.
 					$date_day = isset($date_day) ? $date_day : 1;
@@ -786,7 +786,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						'NBR' => $row['pages']
 					));
 				}
-				$this->sql_querier->query_close($result);
+				$result->dispose();
 			}
 			else
 			{
@@ -858,7 +858,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 							'NBR' => $row['pages']
 						));
 					}
-					$this->sql_querier->query_close($result);
+					$result->dispose();
 				}
 				else
 				{
@@ -926,7 +926,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 
 							$i++;
 						}
-						$this->sql_querier->query_close($result);
+						$result->dispose();
 						
 						//Génération des td manquants.
 						$date_day = isset($date_day) ? $date_day : 1;
@@ -985,7 +985,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 			}
-			$this->sql_querier->query_close($result);
+			$result->dispose();
 			
 			$tpl->put_all(array(
 				'C_STATS_REFERER' => true,
@@ -1037,7 +1037,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'TREND' => ($trend_parameters['picture'] ? '<i class="fa fa-trend-' . $trend_parameters['picture'] . '"></i> ' : '') . '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
 				));
 			}
-			$this->sql_querier->query_close($result);
+			$result->dispose();
 			
 			$tpl->put_all(array(
 				'C_STATS_KEYWORD' => true,

@@ -91,7 +91,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 				$line .= '<li style="padding-left:17px;"><i class="fa fa-folder"></i>&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span></li>';
 		}
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	return "\n" . $line;
 }
 
@@ -106,7 +106,7 @@ function upload_find_subcats(&$array, $id_cat, $user_id)
 		//On rappelle la fonction pour la catégorie fille
 		upload_find_subcats($array, $row['id'], $user_id);
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 }
 
 ?>

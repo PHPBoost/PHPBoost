@@ -86,7 +86,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 				'QUESTION' => $row['question']
 			));
 		}
-		$this->sql_querier->query_close($result);	
+		$result->dispose();	
 
 		return $tpl;
 	}

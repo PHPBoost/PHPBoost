@@ -49,7 +49,7 @@ if (!empty($_POST['valid']))
 		else
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_ranks SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'");
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 
 	ForumRanksCache::invalidate();
 		

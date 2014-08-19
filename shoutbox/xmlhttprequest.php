@@ -130,7 +130,7 @@ elseif ($refresh)
 		
 		echo '<p id="shout-container-' . $row['id'] . '">' . $row['login'] . '<span class="small">: ' . FormatingHelper::second_parse($row['contents']) . '</span></p>' . "\n";
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 }
 elseif ($del)
 {
