@@ -153,7 +153,8 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 		}
 		elseif ($this->connection_attempts >= self::$MAX_AUTHORIZED_ATTEMPTS)
 		{
-			AppContext::get_response()->redirect('/member/error.php?e=e_member_flood#errorh');
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('user.auth.passwd_flood_max', 'status-messages-common'));
+			DispatchManager::redirect($controller);
 		}
 	}
 
@@ -186,5 +187,4 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 		$this->querier->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), $condition, $parameters);
 	}
 }
-
 ?>

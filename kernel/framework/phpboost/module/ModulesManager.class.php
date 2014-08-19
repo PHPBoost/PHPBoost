@@ -345,8 +345,6 @@ class ModulesManager
 
 	public static function upgrade_module($module_identifier)
 	{
-		global $Cache;
-		
 		if (!empty($module_identifier) && is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 		{
 			if (self::is_module_installed($module_identifier))
