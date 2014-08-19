@@ -57,7 +57,7 @@ if ($page > 0)
 		'admin_faq_questions'=> 'faq/admin_faq_questions.tpl'
 	));
 	
-	$nbr_questions = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq");
+	$nbr_questions = PersistenceContext::get_querier()->count(PREFIX . "faq");
 	
 	//On instancie la classe de pagination
 	$pagination = new ModulePagination($page, $nbr_questions, $_NBR_QUESTIONS_PER_PAGE);
