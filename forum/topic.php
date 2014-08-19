@@ -372,26 +372,32 @@ while ( $row = $Sql->fetch_assoc($result) )
 	else		
 		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
 	
+	$extended_fields_cache = ExtendedFieldsCache::load();
+	$user_msn_field = $extended_fields_cache->get_extended_field_by_field_name('user_msn');
+	$user_yahoo_field = $extended_fields_cache->get_extended_field_by_field_name('user_yahoo');
+	$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
+	$user_website_field = $extended_fields_cache->get_extended_field_by_field_name('user_website');
+	
 	$Template->assign_block_vars('msg', array(
 		'ID' => $row['id'],
 		'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 		'FORUM_ONLINE_STATUT_USER' => !empty($row['connect']) ? 'online' : 'offline',
-		'FORUM_USER_LOGIN' => TextHelper::wordwrap_html($row['login'], 13),			
+		'FORUM_USER_LOGIN' => TextHelper::wordwrap_html($row['login'], 13),
 		'FORUM_MSG_DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 		'FORUM_MSG_CONTENTS' => FormatingHelper::second_parse($row['contents']),
 		'FORUM_USER_EDITOR_LOGIN' => $row['login_edit'],
 		'FORUM_USER_EDITOR_DATE' => gmdate_format('date_format', $row['timestamp_edit']),
 		'USER_RANK' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
 		'USER_IMG_ASSOC' => $user_assoc_img,
-		'USER_AVATAR' => $user_avatar,			
+		'USER_AVATAR' => $user_avatar,
 		'USER_GROUP' => $user_groups,
 		'USER_DATE' => (!$is_guest) ? $LANG['registered_on'] . ': ' . gmdate_format('date_format_short', $row['registered']) : '',
 		'USER_MSG' => (!$is_guest) ? $user_msg : '',
 		'USER_MAIL' => ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '" class="basic-button smaller">Mail</a>' : '',			
-		'USER_MSN' => (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '" class="basic-button smaller">MSN</a>' : '',
-		'USER_YAHOO' => (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '" class="basic-button smaller">Yahoo</a>' : '',
-		'USER_SIGN' => (!empty($row['user_sign'])) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
-		'USER_WEB' => (!empty($row['user_website'])) ? '<a href="' . $row['user_website'] . '" class="basic-button smaller">Web</a>' : '',
+		'USER_MSN' => (!empty($row['user_msn']) && !empty($user_msn_field) && $user_msn_field['display']) ? '<a href="mailto:' . $row['user_msn'] . '" class="basic-button smaller">MSN</a>' : '',
+		'USER_YAHOO' => (!empty($row['user_yahoo']) && !empty($user_yahoo_field) && $user_yahoo_field['display']) ? '<a href="mailto:' . $row['user_yahoo'] . '" class="basic-button smaller">Yahoo</a>' : '',
+		'USER_SIGN' => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
+		'USER_WEB' => (!empty($row['user_website']) && !empty($user_website_field) && $user_website_field['display']) ? '<a href="' . $row['user_website'] . '" class="basic-button smaller">Web</a>' : '',
 		'USER_WARNING' => $row['user_warning'],
 		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
 		'C_USER_ONLINE' => !empty($row['connect']),
