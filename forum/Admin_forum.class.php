@@ -436,7 +436,7 @@ class Admin_forum
 		while ($row = $Sql->fetch_assoc($result))
 			$list_parent_cats .= $row['id'] . ', ';
 		
-		$Sql->query_close($result);
+		$result->dispose();
 		$list_parent_cats = trim($list_parent_cats, ', ');
 
 		return $list_parent_cats;
@@ -458,7 +458,7 @@ class Admin_forum
 		while ($row = $Sql->fetch_assoc($result))
 			$list_cats .= $row['id'] . ', ';
 		
-		$Sql->query_close($result);
+		$result->dispose();
 		$list_cats = trim($list_cats, ', ');
 		
 		return $list_cats;
@@ -482,7 +482,7 @@ class Admin_forum
 			while ($row = $Sql->fetch_assoc($result))
 				$list_cats .= $row['id'] . ', ';
 			
-			$Sql->query_close($result);
+			$result->dispose();
 
 			$clause = !empty($list_cats) ? "idcat IN (" . trim($list_cats, ', ') . ")" : "1";
 		}

@@ -247,7 +247,7 @@ else
 		'admin_poll_management'=> 'poll/admin_poll_management.tpl'
 	));
 	 
-	$nbr_poll = $Sql->count_table(PREFIX . 'poll');
+	$nbr_poll = PersistenceContext::get_querier()->count(PREFIX . 'poll');
 
 	//On crée une pagination si le nombre de sondages est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -322,7 +322,7 @@ else
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
 		));
 	}
-	$Sql->query_close($result);	
+	$result->dispose();	
 	
 	$Template->pparse('admin_poll_management'); 
 }

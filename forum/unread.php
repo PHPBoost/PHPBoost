@@ -159,7 +159,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'L_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '',
 	));	
 }
-$Sql->query_close($result);
+$result->dispose();
 
 //Le membre a déjà lu tous les messages.
 if ($nbr_topics == 0)

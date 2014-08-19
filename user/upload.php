@@ -414,7 +414,7 @@ else
 		));
 		$total_directories++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 
 	//Affichage des fichiers contenu dans le dossier
 	$result = $Sql->query_while("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id
@@ -481,7 +481,7 @@ else
 		$total_folder_size += $row['size'];
 		$total_files++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	//Autorisation d'uploader sans limite aux groupes.
 	$group_limit = AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());

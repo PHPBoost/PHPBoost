@@ -61,7 +61,7 @@ function forum_list_user_online($sql_condition)
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class="' . $status . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	return array($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_admin + $total_modo + $total_member + $total_visit);
 }

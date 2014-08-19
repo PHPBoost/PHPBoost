@@ -195,7 +195,7 @@ else
 				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info_admin'], $row['nbr_pics'], $row['nbr_pics_unaprob'])
 			));
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 
 		//Création des cellules du tableau si besoin est.
 		while (!is_int($i/$nbr_column_cats))
@@ -243,7 +243,7 @@ else
 			$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 			$array_cat_list[$row['id']] = '<option value="' . $row['id'] . '" %s>' . $margin . ' ' . $row['name'] . '</option>';
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 
 		if (!empty($idpics))
 		{
@@ -302,7 +302,7 @@ else
 					$array_js .= 'array_pics[' . $i . '][\'path\'] = \'' . $row['path'] . "';\n";
 					$i++;
 				}
-				$Sql->query_close($result);
+				$result->dispose();
 
 				if ($thumbnails_before < $nbr_pics_display_before)
 					$end_thumbnails += $nbr_pics_display_before - $thumbnails_before;
@@ -432,7 +432,7 @@ else
 					'U_POSTOR' => $LANG['by'] . ' <a class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['login'] . '</a>',
 				));
 			}
-			$Sql->query_close($result);
+			$result->dispose();
 
 			//Création des cellules du tableau si besoin est.
 			while (!is_int($j/$nbr_column_pics))

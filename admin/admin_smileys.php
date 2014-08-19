@@ -87,7 +87,7 @@ elseif (!empty($id) && $edit) //Edition.
 			$selected = '';
 		$smiley_options .= '<option value="' . $row['url_smiley'] . '" ' . $selected . '>' . $row['url_smiley'] . '</option>';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 
 	$template->put_all(array(
 		'IDSMILEY' => $info_smiley['idsmiley'],

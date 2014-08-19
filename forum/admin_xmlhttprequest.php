@@ -57,7 +57,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 			while ($row = $Sql->fetch_assoc($result))
 				$list_parent_cats .= $row['id'] . ', ';
 			
-			$Sql->query_close($result);
+			$result->dispose();
 			$list_parent_cats = trim($list_parent_cats, ', ');
 			
 			if (!empty($list_parent_cats))
@@ -118,7 +118,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 			while ($row = $Sql->fetch_assoc($result))
 				$list_parent_cats .= $row['id'] . ', ';
 			
-			$Sql->query_close($result);
+			$result->dispose();
 			$list_parent_cats = trim($list_parent_cats, ', ');
 			
 			$to = 0;
@@ -193,7 +193,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 				while ($row = $Sql->fetch_assoc($result))
 					$list_cats .= $row['id'] . ', ';
 				
-				$Sql->query_close($result);
+				$result->dispose();
 				$list_cats = trim($list_cats, ', ');
 			
 				//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
@@ -217,7 +217,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 				while ($row = $Sql->fetch_assoc($result))
 					$list_parent_cats_to .= $row['id'] . ', ';
 				
-				$Sql->query_close($result);
+				$result->dispose();
 				$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 			
 				if (empty($list_parent_cats_to))
@@ -298,7 +298,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 				$array_js .= 'array_cats[' . $row['id'] . '][\'i\'] = ' . $i . ";";
 				$i++;
 			}
-			$Sql->query_close($result);
+			$result->dispose();
 			echo 'list_cats = new Array(' . trim($list_cats_js, ', ') . ');' . $array_js;
 		}	
 	}

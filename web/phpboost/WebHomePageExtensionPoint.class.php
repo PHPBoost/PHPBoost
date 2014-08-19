@@ -118,7 +118,7 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 				'U_WEB_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '.php')
 			));
 		}
-		$this->sql_querier->query_close($result);
+		$result->dispose();
 		return $tpl;
 	}
 	

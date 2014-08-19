@@ -263,7 +263,7 @@ class Gallery
 		{
 			$list_parent_cats_to .= $row['id'] . ', ';
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 		
 		if (empty($list_parent_cats_to))
@@ -301,7 +301,7 @@ class Gallery
 			{
 				$list_parent_cats_to .= $row['id'] . ', ';
 			}
-			$Sql->query_close($result);
+			$result->dispose();
 			$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 			
 			if (empty($list_parent_cats_to))
@@ -354,7 +354,7 @@ class Gallery
 		{
 			$list_parent_cats_to .= $row['id'] . ', ';
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 		
 		if (empty($list_parent_cats_to))
@@ -396,7 +396,7 @@ class Gallery
 		{
 			$list_parent_cats .= $row['id'] . ', ';
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 		$list_parent_cats = trim($list_parent_cats, ', ');
 		
 		if (empty($list_parent_cats))
@@ -413,7 +413,7 @@ class Gallery
 		{
 			$list_parent_cats_to .= $row['id'] . ', ';
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 	
 		if (empty($list_parent_cats_to))
@@ -572,7 +572,7 @@ class Gallery
 		GROUP BY idcat");
 		while ($row = $Sql->fetch_assoc($result))
 			$info_cat[$row['idcat']]['aprob'] = $row['nbr_pics_aprob'];
-		$Sql->query_close($result);
+		$result->dispose();
 		
 		$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_pics_unaprob 
 		FROM " . PREFIX . "gallery 
@@ -580,7 +580,7 @@ class Gallery
 		GROUP BY idcat");
 		while ($row = $Sql->fetch_assoc($result))
 			$info_cat[$row['idcat']]['unaprob'] = $row['nbr_pics_unaprob'];
-		$Sql->query_close($result);
+		$result->dispose();
 		
 		$result = $Sql->query_while("SELECT id, id_left, id_right
 		FROM " . PREFIX . "gallery_cats");
@@ -598,7 +598,7 @@ class Gallery
 			}
 			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = '" . $nbr_pics_aprob . "', nbr_pics_unaprob = '" . $nbr_pics_unaprob . "' WHERE id = '" . $row['id'] . "'");	
 		}
-		$Sql->query_close($result);
+		$result->dispose();
 	}
 	
 	//Vidange des miniatures du FTP et de la bdd => régénérée plus tard lors des affichages..

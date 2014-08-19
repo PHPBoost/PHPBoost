@@ -111,7 +111,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'CAT' => '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>'
 	));	
 }
-$Sql->query_close($result);
+$result->dispose();
 
 require_once('../forum/forum_functions.php');
 
@@ -213,7 +213,7 @@ if (!empty($valid_search) && !empty($search))
 			
 			$check_result = true;
 		}	
-		$Sql->query_close($result);
+		$result->dispose();
 		
 		if ($check_result !== true)
 			$Template->put('message_helper', MessageHelper::display($LANG['no_result'], E_USER_NOTICE));

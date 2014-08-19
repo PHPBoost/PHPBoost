@@ -146,7 +146,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'TIME' => gmdate_format('date_format_long', $row['timestamp'])
 	));
 }
-$Sql->query_close($result);
+$result->dispose();
 
 $Template->pparse('admin_index'); // traitement du modele
 

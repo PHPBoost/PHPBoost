@@ -671,7 +671,7 @@ else //Panneau de modération
 
 		$i++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 
 	$Template->put_all(array(
 		'C_DISPLAY_LINK_MORE_ACTION' => $i == $end,

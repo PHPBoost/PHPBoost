@@ -58,7 +58,7 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 			), true)
 			. ';' . "\n";
 		}
-		$this->sql_querier->query_close($result);
+		$result->dispose();
 		
 		return $code;
 	}

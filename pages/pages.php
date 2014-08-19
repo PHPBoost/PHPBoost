@@ -83,7 +83,7 @@ elseif ($id_com > 0)
 	);
 	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "pages WHERE id = '" . $id_com . "'");
 	$page_infos = $Sql->fetch_assoc($result);
-	$Sql->query_close($result);
+	$result->dispose();
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
 	$Bread_crumb->add($LANG['pages_com'], PagesUrlBuilder::get_link_item_com($id_com));
 	$Bread_crumb->add($page_infos['title'], PagesUrlBuilder::get_link_item($page_infos['encoded_title']));

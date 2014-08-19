@@ -51,7 +51,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	GROUP BY a.id");
 	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'");
 	$article_infos = $Sql->fetch_assoc($result);
-	$Sql->query_close($result);
+	$result->dispose();
 	$id_article = $article_infos['id'];
 
 	if (!empty($article_infos['redirect']))//Si on est redirigé
@@ -67,7 +67,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 		WHERE a.id = '" . $article_infos['redirect'] . "'
 		GROUP BY a.id");
 		$article_infos = $Sql->fetch_assoc($result);
-		$Sql->query_close($result);
+		$result->dispose();
 		$id_article = $article_infos['id'];
 		$parse_redirection = true;
 		
@@ -86,7 +86,7 @@ elseif (!empty($id_contents))
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 	WHERE c.id_contents = '" . $id_contents . "'");
 	$article_infos = $Sql->fetch_assoc($result);
-	$Sql->query_close($result);
+	$result->dispose();
 	$id_article = $article_infos['id'];
 	$num_rows = 1;
 }

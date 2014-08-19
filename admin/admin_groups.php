@@ -388,7 +388,7 @@ else //Liste des groupes.
 			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="" />' : ''
 		));
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	$template->display();
 }

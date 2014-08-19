@@ -109,7 +109,7 @@ else
 		if ($key !== false)
 			unset($smileys_array[$key]); //On supprime ces clées du tableau.
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	$y = 0;
 	$smiley_options = '<option value="" selected="selected">--</option>';

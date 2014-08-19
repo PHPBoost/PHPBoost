@@ -237,7 +237,7 @@ class Authorizations
 					'LOGIN' => $row['login']
 				));
 			}
-			$sql_querier->query_close($result);
+			$result->dispose();
 		}
 
         return $tpl->render();

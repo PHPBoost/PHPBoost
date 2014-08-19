@@ -67,7 +67,7 @@ else
 		$selected = in_array($row['id'], $poll_config->get_displayed_in_mini_module_list()) ? 'selected="selected"' : '';
 		$poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="displayed_in_mini_module_list' . $i++ . '">' . $row['question'] . '</option>';
 	}
-	$Sql->query_close($result); 
+	$result->dispose(); 
 	
 	$Template->put_all(array(
 		'COOKIE_NAME' => $poll_config->get_cookie_name(),

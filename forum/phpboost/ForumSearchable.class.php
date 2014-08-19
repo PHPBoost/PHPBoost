@@ -222,7 +222,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		{
 			$results_data[] = $row;
 		}
-		$this->sql_querier->query_close($request_results);
+		$request_results->dispose();
 
 		return $results_data;
 	}

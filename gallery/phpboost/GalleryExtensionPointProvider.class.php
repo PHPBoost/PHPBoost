@@ -63,7 +63,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
 		}
-		$this->sql_querier->query_close($result);
+		$result->dispose();
 
 		$Gallery = new Gallery;
 
@@ -91,7 +91,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 			'\'idcat\' => ' . var_export($row['idcat'], true) . ',' . "\n" .
 			'\'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
 		}
-		$this->sql_querier->query_close($result);
+		$result->dispose();
 		$_array_random_pics .= ');';
 
 		return $cat_gallery . "\n" . $_array_random_pics;

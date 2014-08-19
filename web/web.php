@@ -205,7 +205,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 			'U_WEB_LINK' => url('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 }
 else
 {

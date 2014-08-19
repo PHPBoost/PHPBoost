@@ -59,7 +59,7 @@ if ($id_cat != 0)
 		else //Sinon on n'affiche pas le "+"
 			echo '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');"><i class="fa fa-folder"></i></span>' . $row['title'] . '</a></li>';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	echo '</ul>';
 }
 //Retour de la localisation du dossier
@@ -105,7 +105,7 @@ elseif (!empty($open_cat) || $root == 1)
 	{
 		$return .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><i class="fa fa-file"></i>' . $row['title'] . '</a></li>';
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	$return .= '</ul>';
 	echo $return;
 }

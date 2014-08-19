@@ -90,7 +90,7 @@ class Search
 			$idsToDelete .= "'" . $row['id_search'] . "'";
 			$nbIdsToDelete++;
 		}
-		$this->sql_querier->query_close($request);
+		$request->dispose();
 
 		// Deletes old results
 		if ($nbIdsToDelete > 0)
@@ -120,7 +120,7 @@ class Search
 				array_push($this->cache, $row['module']);
 				$this->id_search[$row['module']] = $row['id_search'];
 			}
-			$this->sql_querier->query_close($request);
+			$request->dispose();
 
 			// Updates cache results meta-inf
 			if (count($this->id_search) > 0)
@@ -176,7 +176,7 @@ class Search
 				{   // Ajout des résultats s'ils font partie de la liste des modules à traiter
 					$this->id_search[$row['module']] = $row['id_search'];
 				}
-				$this->sql_querier->query_close($request);
+				$request->dispose();
 			}
 		}
 	}
@@ -213,7 +213,7 @@ class Search
 			$results[] = $result;
 		}
 		$nbResults = $this->sql_querier->num_rows($request, "SELECT COUNT(*) " . SearchSetup::$search_results_table . " WHERE id_search = ".$id_search);
-		$this->sql_querier->query_close($request);
+		$request->dispose();
 
 		return $nbResults;
 	}
@@ -273,7 +273,7 @@ class Search
 		}
 		$nbResults = $this->sql_querier->num_rows($request  );
 
-		$this->sql_querier->query_close($request);
+		$request->dispose();
 
 		return $nbResults;
 	}

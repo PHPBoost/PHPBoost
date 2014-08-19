@@ -259,7 +259,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 			}
 		}
-		$this->sql_querier->query_close($result);
+		$result->dispose();
 		if ($i > 0) //Fermeture de la catégorie racine.
 		{
 			$tpl->assign_block_vars('forums_list', array(

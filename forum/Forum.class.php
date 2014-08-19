@@ -647,7 +647,7 @@ class Forum
 			while ($row = $Sql->fetch_assoc($result))
 			$list_cats .= $row['id'] . ', ';
 				
-			$Sql->query_close($result);
+			$result->dispose();
 			$clause = "idcat IN (" . trim($list_cats, ', ') . ")";
 		}
 

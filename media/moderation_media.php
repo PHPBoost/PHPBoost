@@ -207,7 +207,7 @@ else
 		));
 	}
 
-	$Sql->query_close($result);
+	$result->dispose();
 
 	$Template->put_all(array(
 		'C_DISPLAY' => true,

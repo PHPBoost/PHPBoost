@@ -96,7 +96,7 @@ if (!empty($id) && !$del)
 		));
 		$i++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
@@ -183,7 +183,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		));
 		$i++;
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	if ($i == 0) //Aucune catégorie => alerte.	 
 		$Template->put('message_helper', MessageHelper::display($LANG['require_cat_create'], E_USER_WARNING));
@@ -229,7 +229,7 @@ else
 		'admin_web_management'=> 'web/admin_web_management.tpl'
 	));
 
-	$nbr_web = $Sql->count_table(PREFIX . 'web');
+	$nbr_web = PersistenceContext::get_querier()->count(PREFIX . 'web');
 	
 	//On crée une pagination si le nombre de web est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -285,7 +285,7 @@ else
 			'COMPT' => $row['compt']
 		));	
 	}
-	$Sql->query_close($result);
+	$result->dispose();
 	
 	$Template->pparse('admin_web_management'); 
 }

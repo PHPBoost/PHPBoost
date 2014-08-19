@@ -104,7 +104,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 				$root .= '<li><a href="' . PagesUrlBuilder::get_link_item($row['encoded_title']) . '"><i class="fa fa-file"></i>' . $row['title'] . '</a></li>';
 			}
 		}
-		$this->sql_querier->query_close($result);
+		$result->dispose();
 
 		$tpl->put_all(array(
 			'TITLE' => $LANG['pages'],
@@ -139,7 +139,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 			}
 		}
-		$this->sql_querier->query_close($result);
+		$result->dispose();
 
 		return $tpl;
 	}
