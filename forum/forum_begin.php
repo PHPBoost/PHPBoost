@@ -25,16 +25,17 @@
  *
  ###################################################*/
 
-if (defined('PHPBOOST') !== true)	
+if (defined('PHPBOOST') !== true)
     exit;
 
 require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
 
 //Supprime les menus suivant configuration du site.
-if ($CONFIG_FORUM['no_left_column'] == 1) 
-    define('NO_LEFT_COLUMN', true);
-if ($CONFIG_FORUM['no_right_column'] == 1) 
-    define('NO_RIGHT_COLUMN', true);
+$columns_disabled = ThemesManager::get_theme(get_utheme())->get_columns_disabled();
+if ($CONFIG_FORUM['no_left_column']) 
+	$columns_disabled->set_disable_left_columns(true);
+if ($CONFIG_FORUM['no_right_column']) 
+	$columns_disabled->set_disable_right_columns(true);
     
 //Fonction du forum.
 require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
