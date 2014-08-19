@@ -287,7 +287,7 @@
 										<a href="{cat_list.U_CAT}">{cat_list.IMG}</a>
 									</div>
 									
-									<div class="spacer">&nbsp;</div>
+									<div class="spacer"></div>
 									
 									<div>
 										<span class="smaller"><a href="{cat_list.U_CAT}">{cat_list.CAT}</a></span> {cat_list.EDIT}
@@ -338,7 +338,7 @@
 								# ENDIF #
 								<div class="center">
 									# IF C_NOTATION_ENABLED #
-										<span class="text-strong">{KERNEL_NOTATION}</span><br/>
+										<div class="text-strong">{KERNEL_NOTATION}</div><br/>
 									# ENDIF #
 									# IF C_GALLERY_PICS_MODO #
 									<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="basic-button" title="{L_EDIT}"><i class="fa fa-edit"></i></a></span>
@@ -356,8 +356,8 @@
 									<a href="javascript:pics_aprob({ID});" class="basic-button" title="{L_APROB_IMG}"><i id="img_aprob{ID}" class="{IMG_APROB}"></i></a>
 									<span id="img{ID}"></span>
 									<a href="{U_DEL}" title="{L_DELETE}" class="basic-button alt" data-confirmation="delete-element"><i class="fa fa-delete"></i></a>
+									# ENDIF #
 								</div>
-								# ENDIF #
 							</div>
 							<p style="text-align:center;padding:15px 0px;overflow:auto;">{IMG_MAX}</p>
 							<div style="margin:auto;width:640px;height:32px;padding:0;">
@@ -389,7 +389,7 @@
 									</tr>
 								</tbody>
 							</table>
-						{COMMENTS}
+							{COMMENTS}
 						# ENDIF #
 						
 						<table style="table-layout:fixed">
@@ -424,13 +424,13 @@
 										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="fa fa-edit"></a></span>
 										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 										<div style="position:absolute;z-index:100;margin-top:10px;float:left;display:none;" id="move{pics_list.ID}">
-										<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);">
-											<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-											<select class="valign-middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
-												{pics_list.CAT}
-											</select>
+											<div class="bbcode-block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);">
+												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
+												<select class="valign-middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
+													{pics_list.CAT}
+												</select>
+											</div>
 										</div>
-									</div>
 										<a href="javascript:pics_display_block({pics_list.ID});" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" class="fa fa-move" title="{L_MOVETO}"></a>
 										
 										<a id="img_aprob{pics_list.ID}" href="javascript:pics_aprob({pics_list.ID});" class="{pics_list.IMG_APROB}" title="{pics_list.L_APROB_IMG}"></a>
