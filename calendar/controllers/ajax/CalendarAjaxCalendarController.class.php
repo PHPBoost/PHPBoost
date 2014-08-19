@@ -64,14 +64,13 @@ class CalendarAjaxCalendarController extends AbstractController
 	{
 		$config = CalendarConfig::load();
 		$categories = CalendarService::get_categories_manager()->get_categories_cache()->get_categories();
-		$date_lang = LangLoader::get('date-common');
 		
 		$year = $this->year ? $this->year : $request->get_int('calendar_ajax_year', date('Y'));
 		$month = $this->month ? $this->month : $request->get_int('calendar_ajax_month', date('n'));
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-		$array_l_month = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'], $date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
+		$array_l_month = array($this->lang['january'], $this->lang['february'], $this->lang['march'], $this->lang['april'], $this->lang['may'], $this->lang['june'], $this->lang['july'], $this->lang['august'], $this->lang['september'], $this->lang['october'], $this->lang['november'], $this->lang['december']);
 		
 		$month_days = $array_month[$month - 1];
 		
@@ -102,13 +101,6 @@ class CalendarAjaxCalendarController extends AbstractController
 		
 		$this->view->put_all(array(
 			'C_MINI_MODULE' => $this->is_mini_calendar(),
-			'L_MONDAY' => $date_lang['monday_mini'],
-			'L_TUESDAY' => $date_lang['tuesday_mini'],
-			'L_WEDNESDAY' => $date_lang['wednesday_mini'],
-			'L_THURSDAY' => $date_lang['thursday_mini'],
-			'L_FRIDAY' => $date_lang['friday_mini'],
-			'L_SATURDAY' => $date_lang['saturday_mini'],
-			'L_SUNDAY' => $date_lang['sunday_mini'],
 			'DATE' => $array_l_month[$month - 1] . ' ' . $year,
 			'MINI_MODULE' => (int)$this->is_mini_calendar(),
 			'PREVIOUS_MONTH_TITLE' => ($month == 1) ? $array_l_month[11] . ' ' . ($year - 1) : $array_l_month[$month - 2] . ' ' . $year,
@@ -136,7 +128,7 @@ class CalendarAjaxCalendarController extends AbstractController
 					$title = isset($array_events[$j]['title']) ? $array_events[$j]['title']: '';
 					$array_events[$j] = array(
 						'title' => $title . (!empty($title) ? '
-' : '') . ($event['type'] != 'BIRTHDAY' ? ($j == $start_date->get_day() ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : $this->lang['calendar.labels.birthday_title'] . ' ') . $event['title'],
+' : '') . ($event['type'] != 'BIRTHDAY' ? ($j == $start_date->get_day() ? $start_date->get_hours() . 'h' . $start_date->get_minutes() . ' : ' : '') : LangLoader::get_message('calendar.labels.birthday_title', 'common', 'calendar') . ' ') . $event['title'],
 						'type' => $event['type'],
 						'color' => !empty($event['id_category']) ? $categories[$event['id_category']]->get_color() : '',
 						'id_category' => $event['id_category'],
@@ -214,7 +206,7 @@ class CalendarAjaxCalendarController extends AbstractController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'calendar');
+		$this->lang = LangLoader::get('date-common');
 		$this->view = new FileTemplate('calendar/CalendarAjaxCalendarController.tpl');
 		$this->view->add_lang($this->lang);
 		
