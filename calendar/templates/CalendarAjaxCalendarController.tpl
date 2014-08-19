@@ -68,13 +68,13 @@
 					<thead>
 						<tr>
 							<th></th>
-							<th class="text-strong">{L_MONDAY}</th>
-							<th class="text-strong">{L_TUESDAY}</th>
-							<th class="text-strong">{L_WEDNESDAY}</th>
-							<th class="text-strong">{L_THURSDAY}</th>
-							<th class="text-strong">{L_FRIDAY}</th>
-							<th class="text-strong">{L_SATURDAY}</th>
-							<th class="text-strong">{L_SUNDAY}</th>
+							<th class="text-strong">{@monday_mini}</th>
+							<th class="text-strong">{@tuesday_mini}</th>
+							<th class="text-strong">{@wednesday_mini}</th>
+							<th class="text-strong">{@thursday_mini}</th>
+							<th class="text-strong">{@friday_mini}</th>
+							<th class="text-strong">{@saturday_mini}</th>
+							<th class="text-strong">{@sunday_mini}</th>
 						</tr>
 					</thead>
 					<tbody>
