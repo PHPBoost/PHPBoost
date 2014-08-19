@@ -59,7 +59,17 @@ class BugtrackerUnsolvedListController extends ModuleController
 		}
 		
 		$filters = !empty($filter) ? explode('-', $filter) : array();
+		$nb_filters = count($filters);
 		$filters_ids = !empty($filter_id) ? explode('-', $filter_id) : array();
+		$nb_filters_ids = count($filters_ids);
+		
+		if ($nb_filters != $nb_filters_ids)
+		{
+			for ($i = $nb_filters_ids; $i < $nb_filters; $i++)
+			{
+				$filters_ids[] = 0;
+			}
+		}
 		
 		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
 		
