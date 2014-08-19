@@ -71,15 +71,15 @@ class BugtrackerViews
 		}
 		
 		$filters_tmp = $filters = !empty($filter) ? explode('-', $filter) : array();
-		$nb_filters_tmp = count($filters_tmp);
+		$nb_filters = count($filters);
 		$filters_ids_tmp = $filters_ids = !empty($filter_id) ? explode('-', $filter_id) : array();
-		$nb_filters_ids_tmp = count($filters_ids_tmp);
+		$nb_filters_ids = count($filters_ids);
 		
-		if ($nb_filters_tmp != $nb_filters_ids_tmp)
+		if ($nb_filters != $nb_filters_ids)
 		{
-			for ($i = $nb_filters_ids_tmp; $i < $nb_filters_tmp; $i++)
+			for ($i = $nb_filters_ids; $i < $nb_filters; $i++)
 			{
-				$filters_ids_tmp[] = 0;
+				$filters_ids[] = 0;
 			}
 		}
 		
