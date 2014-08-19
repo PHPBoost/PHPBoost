@@ -48,7 +48,7 @@ $to = retrieve(POST, 'new_cat', -1);
 
 if (isset($_GET['fup'])) //Changement de dossier
 {
-	$parent_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'");
+	$parent_folder = PersistenceContext::get_querier()->select_single_row(PREFIX . 'upload_cat', array('id_parent', 'user_id'), 'WHERE id=:id', array('id' => $parent_folder));
 	
 	if (!empty($folder_member)) 
 		AppContext::get_response()->redirect('/admin/admin_files.php?showm=1');
@@ -211,7 +211,8 @@ elseif (!empty($move_folder) || !empty($move_file))
 	//Affichage du dossier/fichier à déplacer
 	if ($is_folder)
 	{
-		$folder_info = $Sql->query_array(PREFIX . "upload_cat", "name", "id_parent", "WHERE id = '" . $move_folder . "'");
+		$folder_info = PersistenceContext::get_querier()->select_single_row(PREFIX . 'upload_cat', array('name', 'id_parent'), 'WHERE id=:id', array('id' => $move_folder));
+	
 		$name = $folder_info['name'];
 		$id_cat = $folder_info['id_parent'];
 		$template->assign_block_vars('folder', array(
@@ -226,7 +227,8 @@ elseif (!empty($move_folder) || !empty($move_file))
 	}
 	else
 	{
-		$info_move = $Sql->query_array(PREFIX . "upload", "path", "name", "type", "size", "idcat", "WHERE id = '" . $move_file . "'");
+		$info_move = PersistenceContext::get_querier()->select_single_row(PREFIX . 'upload_cat', array('path', 'name', 'type', 'size', 'idcat'), 'WHERE id=:id', array('id' => $move_file));
+
 		$get_img_mimetype = Uploads::get_img_mimetype($info_move['type']);
 		$size_img = '';
 		$display_real_img = false;

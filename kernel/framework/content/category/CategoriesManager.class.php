@@ -81,8 +81,9 @@ class CategoriesManager
 	public function add(Category $category)
 	{
 		$id_parent = $category->get_id_parent();
-		$max_order = $this->db_querier->select_single_row_query('SELECT MAX(c_order) FROM '. $this->table_name .' WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
-		$max_order = NumberHelper::numeric($max_order['MAX(c_order)']);
+		
+		$max_order = $this->db_querier->get_column_value($this->table_name, 'MAX(c_order)', 'WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
+		$max_order = NumberHelper::numeric($max_order);
 		
 		if ($this->get_categories_cache()->category_exists($id_parent))
 		{
@@ -154,8 +155,8 @@ class CategoriesManager
 			$childrens[$id] = $category;
 			if (!array_key_exists($id_parent, $childrens))
 			{
-				$max_order = $this->db_querier->select_single_row_query('SELECT MAX(c_order) FROM '. $this->table_name .' WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
-				$max_order = NumberHelper::numeric($max_order['MAX(c_order)']);
+				$max_order = $this->db_querier->get_column_value($this->table_name, 'MAX(c_order)', 'WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
+				$max_order = NumberHelper::numeric($max_order);
 
 				if ($position <= 0 || $position > $max_order)
 				{
@@ -240,9 +241,9 @@ class CategoriesManager
 			$childrens[$id] = $category;
 			if (!array_key_exists($id_parent, $childrens))
 			{
-				$max_order = $this->db_querier->select_single_row_query('SELECT MAX(c_order) FROM '. $this->table_name .' WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
-				$max_order = NumberHelper::numeric($max_order['MAX(c_order)']);
-
+				$max_order = $this->db_querier->get_column_value($this->table_name, 'MAX(c_order)', 'WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
+				$max_order = NumberHelper::numeric($max_order);
+				
 				if ($position <= 0 || $position > $max_order)
 				{
 					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => ($max_order + 1)), 'WHERE id=:id', array('id' => $id));

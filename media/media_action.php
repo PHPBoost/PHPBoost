@@ -49,7 +49,7 @@ if ($unvisible > 0)
 {
 	AppContext::get_session()->csrf_get_protect();
 
-	$media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $unvisible . "'");
+	$media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $unvisible));
 
 	// Gestion des erreurs.
 	if (empty($media))
@@ -83,7 +83,7 @@ elseif ($delete > 0)
 {
 	AppContext::get_session()->csrf_get_protect();
 
-	$media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $delete. "'");
+	$media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $delete));
 
 	if (empty($media))
 	{
@@ -156,7 +156,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	}
 
 	// Édition.
-	if ($edit > 0 && ($media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $edit. "'")) && !empty($media) && AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
+	if ($edit > 0 && ($media = PersistenceContext::get_querier()->select_single_row(PREFIX . 'media', array('*'), 'WHERE id=:id', array('id' => $edit))) && !empty($media) && AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 	{
 		bread_crumb($media['idcat']);
 		

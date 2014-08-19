@@ -40,16 +40,6 @@ if (!defined('TITLE'))
 	define('TITLE', LangLoader::get_message('unknow', 'main'));
 }
 
-//Menus display configuration
-if (defined('NO_LEFT_COLUMN') && NO_LEFT_COLUMN)
-{
-	ThemesManager::get_theme(get_utheme())->get_columns_disabled()->set_disable_left_columns(true);
-}
-if (defined('NO_RIGHT_COLUMN') && NO_RIGHT_COLUMN)
-{
-	ThemesManager::get_theme(get_utheme())->get_columns_disabled()->set_disable_right_columns(true);
-}
-
 $env->set_page_title(TITLE);
 
 ob_start();

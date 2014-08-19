@@ -150,7 +150,7 @@ elseif (!empty($id))
 		'admin_poll_management2'=> 'poll/admin_poll_management2.tpl'
 	));
 
-	$row = $Sql->query_array(PREFIX . 'poll', '*', "WHERE id = '" . $id . "'");
+	$row = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('*'), 'WHERE id=:id', array('id' => $id));
 
 	$Template->put_all(array(
 		'IDPOLL' => $row['id'],
