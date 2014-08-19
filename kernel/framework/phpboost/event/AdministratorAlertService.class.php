@@ -143,7 +143,7 @@ class AdministratorAlertService
             
 			return $alert;
         }
-        self::$result->dispose();
+        $result->dispose();
         
         return null;
 	}
@@ -174,7 +174,7 @@ class AdministratorAlertService
 			$array_result[] = $alert;
 		}
 		
-		self::$result->dispose();
+		$result->dispose();
 		
 		return $array_result;
 	}

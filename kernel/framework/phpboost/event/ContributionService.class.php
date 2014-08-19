@@ -99,7 +99,7 @@ class ContributionService
 			$array_result[] = $contri;
 		}
 		
-		self::$result->dispose();
+		$result->dispose();
 		
 		return $array_result;
 	}

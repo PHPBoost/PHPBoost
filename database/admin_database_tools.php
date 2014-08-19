@@ -61,7 +61,7 @@ if (!empty($table) && $action == 'data')
 {
 	$_NBR_ELEMENTS_PER_PAGE = 30;
 	
-	$nbr_lines = $Sql->query("SELECT COUNT(*) FROM " . $table);
+	$nbr_lines = PersistenceContext::get_querier()->count($table);
 	
 	//On crée une pagination (si activé) si le nombre de news est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
