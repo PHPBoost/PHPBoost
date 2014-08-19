@@ -171,7 +171,7 @@ class CalendarAjaxCalendarController extends AbstractController
 						$class = 'calendar-today';
 					else if (!empty($array_events[$day]))
 					{
-						$birthday_day = ($array_events[$day]['type'] == 'BIRTHDAY' ? true : false);
+						$birthday_day = $array_events[$day]['type'] == 'BIRTHDAY';
 						$color = $array_events[$day]['color'];
 						$class = 'calendar-event';
 					}
@@ -199,7 +199,7 @@ class CalendarAjaxCalendarController extends AbstractController
 			
 			$today = $day - 1;
 			$this->view->assign_block_vars('day', array(
-				'C_MONTH_DAY' => ($i % 8) != 1 && ($i >= $first_day + 1) && $i < $last_day,
+				'C_MONTH_DAY' => ($i % 8) != 1 && $class != 'calendar-none',
 				'C_COLOR' => $color || $birthday_day,
 				'C_WEEK_LABEL' => ($i % 8) == 1,
 				'DAY' => $content,
