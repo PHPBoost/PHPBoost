@@ -62,7 +62,7 @@ class ContactController extends ModuleController
 				$this->view->put('C_MAIL_SENT', true);
 			}
 			else
-				$this->view->put('MSG', MessageHelper::display($this->lang['message.error_mail'], E_USER_ERROR, 5));
+				$this->view->put('MSG', MessageHelper::display($this->lang['message.error_mail'], MessageHelper::ERROR, 5));
 		}
 		
 		$this->view->put('FORM', $this->form->display());

@@ -711,7 +711,7 @@ elseif (!empty($id)) //Edition des catégories.
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 
 	$Template->put_all(array(
 		'ID' => $id,
@@ -771,7 +771,7 @@ elseif (!empty($root)) //Edition de la racine.
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));	
+		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));	
 	
 	$Template->put_all(array(
 		'AUTH_READ' => Authorizations::generate_select(GalleryAuthorizationsService::READ_AUTHORIZATIONS, $config->get_authorizations()),
@@ -805,7 +805,7 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'unexist_cat')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], E_USER_NOTICE));
+		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], MessageHelper::NOTICE));
 		
 	$Template->put_all(array(
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 

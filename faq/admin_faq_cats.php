@@ -228,16 +228,16 @@ else
 		switch ($error)
 		{
 			case 'e_required_fields_empty' :
-				$Template->put('message_helper', MessageHelper::display($FAQ_LANG['required_fields_empty'], E_USER_WARNING));
+				$Template->put('message_helper', MessageHelper::display($FAQ_LANG['required_fields_empty'], MessageHelper::WARNING));
 			break;
 			case 'e_unexisting_category' :
-				$Template->put('message_helper', MessageHelper::display($FAQ_LANG['unexisting_category'], E_USER_WARNING));
+				$Template->put('message_helper', MessageHelper::display($FAQ_LANG['unexisting_category'], MessageHelper::WARNING));
 			break;
 			case 'e_new_cat_does_not_exist' :
-				$Template->put('message_helper', MessageHelper::display($FAQ_LANG['new_cat_does_not_exist'], E_USER_WARNING));
+				$Template->put('message_helper', MessageHelper::display($FAQ_LANG['new_cat_does_not_exist'], MessageHelper::WARNING));
 			break;
 			case 'e_infinite_loop' :
-				$Template->put('message_helper', MessageHelper::display($FAQ_LANG['infinite_loop'], E_USER_WARNING));
+				$Template->put('message_helper', MessageHelper::display($FAQ_LANG['infinite_loop'], MessageHelper::WARNING));
 			break;
 			case 'e_success' :
 				$Template->put('message_helper', MessageHelper::display($FAQ_LANG['successful_operation'], MessageHelper::SUCCESS, 4));

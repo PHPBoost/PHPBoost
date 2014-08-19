@@ -142,7 +142,7 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['incomplete'], E_USER_NOTICE));
+		$Template->put('message_helper', MessageHelper::display($LANG['incomplete'], MessageHelper::NOTICE));
 		
 	$Template->pparse('admin_poll_add'); 
 }

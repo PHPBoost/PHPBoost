@@ -170,11 +170,11 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		$get_error = retrieve(GET, 'error', '');
 		if ($get_error == 'incomplete')
 		{
-			$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+			$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 		}
 		elseif ($get_error == 'already_group')
 		{
-			$template->put('message_helper', MessageHelper::display($LANG['e_already_group'], E_USER_NOTICE));
+			$template->put('message_helper', MessageHelper::display($LANG['e_already_group'], MessageHelper::NOTICE));
 		}
 		
 		//On recupère les dossier des images des groupes.
@@ -292,11 +292,11 @@ elseif ($add) //Interface d'ajout du groupe.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 	{
-		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 	}
 	elseif ($get_error == 'group_already_exists')
 	{
-		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), E_USER_NOTICE));
+		$template->put('message_helper', MessageHelper::display(LangLoader::get_message('element.already_exists', 'status-messages-common'), MessageHelper::NOTICE));
 	}
 	
 	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.

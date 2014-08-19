@@ -150,7 +150,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != AppContext::get_current_
 	$limit_group = AppContext::get_current_user()->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	$nbr_pm = PrivateMsg::count_conversations(AppContext::get_current_user()->get_id());
 	if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group)
-		$tpl->put('message_helper', MessageHelper::display($LANG['e_pm_full_post'], E_USER_WARNING));
+		$tpl->put('message_helper', MessageHelper::display($LANG['e_pm_full_post'], MessageHelper::WARNING));
 	else
 	{
 		//Gestion des erreurs
@@ -159,15 +159,15 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != AppContext::get_current_
 		{
 			case 'e_unexist_user':
 				$errstr = $LANG['e_unexist_member'];
-				$type = E_USER_WARNING;
+				$type = MessageHelper::WARNING;
 				break;
 			case 'e_pm_full_post':
 				$errstr = $LANG['e_pm_full_post'];
-				$type = E_USER_WARNING;
+				$type = MessageHelper::WARNING;
 				break;
 			case 'e_incomplete':
 				$errstr = $LANG['e_incomplete'];
-				$type = E_USER_NOTICE;
+				$type = MessageHelper::NOTICE;
 			break;
 			default:
 				$errstr = '';
@@ -665,11 +665,11 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		{
 			case 'e_incomplete':
 				$errstr = $LANG['e_incomplete'];
-				$type = E_USER_NOTICE;
+				$type = MessageHelper::NOTICE;
 				break;
 			case 'e_pm_del':
 				$errstr = $LANG['e_pm_del'];
-				$type = E_USER_WARNING;
+				$type = MessageHelper::WARNING;
 				break;
 			default:
 				$errstr = '';
@@ -729,7 +729,7 @@ else //Liste des conversation, dans la boite du membre.
 		//Gestion erreur.
 		if ($nbr_waiting_pm > 0)
 		{
-			$tpl->put('message_helper', MessageHelper::display(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), E_USER_WARNING));
+			$tpl->put('message_helper', MessageHelper::display(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), MessageHelper::WARNING));
 		}
 	}
 	

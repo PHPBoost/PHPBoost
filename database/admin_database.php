@@ -254,10 +254,10 @@ elseif ($action == 'restore')
                 DispatchManager::redirect($controller);
 				break;
 			case 'file_already_exists' :
-				$Template->put('message_helper', MessageHelper::display($LANG['db_file_already_exists'], E_USER_WARNING));
+				$Template->put('message_helper', MessageHelper::display($LANG['db_file_already_exists'], MessageHelper::WARNING));
 				break;
 			case 'unlink_success' :
-				$Template->put('message_helper', MessageHelper::display($LANG['db_unlink_success'], E_USER_NOTICE));
+				$Template->put('message_helper', MessageHelper::display($LANG['db_unlink_success'], MessageHelper::NOTICE));
 				break;
 			case 'unlink_failure' :
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
@@ -265,7 +265,7 @@ elseif ($action == 'restore')
                 DispatchManager::redirect($controller);
 				break;
 			case 'file_does_not_exist':
-				$Template->put('message_helper', MessageHelper::display($LANG['db_file_does_not_exist'], E_USER_WARNING));
+				$Template->put('message_helper', MessageHelper::display($LANG['db_file_does_not_exist'], MessageHelper::WARNING));
 				break;
 		}
 	}

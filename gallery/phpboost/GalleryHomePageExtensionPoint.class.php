@@ -118,7 +118,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		//Gestion erreur.
 		$get_error = retrieve(GET, 'error', '');
 		if ($get_error == 'unexist_cat')
-			$Template->put('message_helper', MessageHelper::display(LangLoader::get_message('e_unexist_cat', 'errors'), E_USER_NOTICE));
+			$Template->put('message_helper', MessageHelper::display(LangLoader::get_message('e_unexist_cat', 'errors'), MessageHelper::NOTICE));
 	
 		//On crée une pagination si le nombre de catégories est trop important.
 		$page = AppContext::get_request()->get_getint('p', 1);

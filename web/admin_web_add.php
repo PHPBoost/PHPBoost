@@ -126,7 +126,7 @@ elseif (!empty($_POST['previs']))
 	$result->dispose();
 	
 	if ($i == 0) //Aucune catégorie => alerte.	 
-		$Template->put('message_helper', MessageHelper::display($LANG['require_cat_create'], E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($LANG['require_cat_create'], MessageHelper::WARNING));
 	
 	$Template->pparse('admin_web_add'); 
 }
@@ -180,9 +180,9 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 	elseif ($i == 0) //Aucune catégorie => alerte.	 
-		$Template->put('message_helper', MessageHelper::display($LANG['require_cat_create'], E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($LANG['require_cat_create'], MessageHelper::WARNING));
 	
 	$Template->pparse('admin_web_add'); 
 }
