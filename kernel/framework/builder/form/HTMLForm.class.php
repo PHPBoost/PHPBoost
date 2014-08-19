@@ -119,8 +119,13 @@ class HTMLForm
 	
 	public function move_captcha_protection_in_last_position()
 	{
-		$this->fieldsets[] = $this->fieldsets[0];
-		unset($this->fieldsets[0]);
+		try {
+			$fieldset = $this->get_fieldset_by_id('captcha_fieldset');
+
+			$this->fieldsets[] = $this->fieldsets[0];
+			unset($this->fieldsets[0]);
+		} catch (FormBuilderException $e) {
+		}
 	}
 
 	/**
