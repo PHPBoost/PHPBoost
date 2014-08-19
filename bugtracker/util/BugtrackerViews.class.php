@@ -71,7 +71,17 @@ class BugtrackerViews
 		}
 		
 		$filters_tmp = $filters = !empty($filter) ? explode('-', $filter) : array();
+		$nb_filters_tmp = count($filters_tmp);
 		$filters_ids_tmp = $filters_ids = !empty($filter_id) ? explode('-', $filter_id) : array();
+		$nb_filters_ids_tmp = count($filters_ids_tmp);
+		
+		if ($nb_filters_tmp != $nb_filters_ids_tmp)
+		{
+			for ($i = $nb_filters_ids_tmp; $i < $nb_filters_tmp; $i++)
+			{
+				$filters_ids_tmp[] = 0;
+			}
+		}
 		
 		$display_save_button = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && count($filters) >= 1;
 		
