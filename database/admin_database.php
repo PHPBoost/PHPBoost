@@ -193,7 +193,6 @@ elseif ($action == 'restore')
 			$tables_list = $db_utils->list_tables();
 			$db_utils->optimize($tables_list);
 			$db_utils->repair($tables_list);
-			$Cache->generate_all_files();
 			AppContext::get_cache_service()->clear_cache();
 			
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
@@ -213,7 +212,6 @@ elseif ($action == 'restore')
 				$tables_list = $db_utils->list_tables();
 				$db_utils->optimize($tables_list);
 				$db_utils->repair($tables_list);
-				$Cache->generate_all_files();
 				AppContext::get_cache_service()->clear_cache();
 				
 				AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
