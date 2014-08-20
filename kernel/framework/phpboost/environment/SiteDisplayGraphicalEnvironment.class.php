@@ -142,8 +142,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		//If the counter is to be displayed, we display it
 		if (GraphicalEnvironmentConfig::load()->is_visit_counter_enabled())
 		{
-			$compteur = PersistenceContext::get_sql()->query_array(DB_TABLE_VISIT_COUNTER,
-				'ip AS nbr_ip', 'total', 'WHERE id = "1"');
+			$compteur = PersistenceContext::get_querier()->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id = 1');
 
 			$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 			$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';

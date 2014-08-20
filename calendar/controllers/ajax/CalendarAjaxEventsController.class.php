@@ -103,7 +103,7 @@ class CalendarAjaxEventsController extends AbstractController
 		
 		if (!empty($events_list))
 		{
-			$result = $db_querier->select('SELECT event_id, member.user_id, login, level, user_groups
+			$result = $db_querier->select('SELECT event_id, member.user_id, display_name, level, groups
 			FROM ' . CalendarSetup::$calendar_users_relation_table . ' participants
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = participants.user_id
 			WHERE event_id IN :events_list', array(
@@ -112,7 +112,7 @@ class CalendarAjaxEventsController extends AbstractController
 			
 			while($row = $result->fetch())
 			{
-				if (!empty($row['login']))
+				if (!empty($row['display_name']))
 				{
 					$participant = new CalendarEventParticipant();
 					$participant->set_properties($row);

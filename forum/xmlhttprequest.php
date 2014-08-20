@@ -200,15 +200,15 @@ elseif (retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punis
 	if (!empty($login))
 	{
 		$i = 0;
-		$result = $Sql->query_while ("SELECT user_id, login, level, groups FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '" . $login . "%'");
+		$result = $Sql->query_while ("SELECT user_id, display_name, level, groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $login . "%'");
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$group_color = User::get_group_color($row['groups'], $row['user_level']);
+			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			if (retrieve(GET, 'warning_moderation_panel', false))
-				echo '<a href="moderation_forum.php?action=warning&amp;id=' . $row['user_id'] . '" class="'.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a><br />';
+				echo '<a href="moderation_forum.php?action=warning&amp;id=' . $row['user_id'] . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a><br />';
 			elseif (retrieve(GET, 'punish_moderation_panel', false))
-				echo '<a href="moderation_forum.php?action=punish&amp;id=' . $row['user_id'] . '" class="'.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a><br />';
+				echo '<a href="moderation_forum.php?action=punish&amp;id=' . $row['user_id'] . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a><br />';
 
 			$i++;
 		}

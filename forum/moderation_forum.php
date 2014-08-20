@@ -345,7 +345,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		));
 
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, login, level, groups, user_readonly
+		$result = $Sql->query_while("SELECT user_id, display_name, level, groups, user_readonly
 		FROM " . PREFIX . "member
 		WHERE user_readonly > " . time() . "
 		ORDER BY user_readonly");
@@ -355,7 +355,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			
 			$Template->assign_block_vars('user_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
-				'LOGIN' => $row['login'],
+				'LOGIN' => $row['display_name'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				'INFO' => gmdate_format('date_format', $row['delay_readonly']),
@@ -534,7 +534,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		));
 
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_warning
+		$result = $Sql->query_while("SELECT user_id, display_name, level, groups, warning_percentage
 		FROM " . PREFIX . "member
 		WHERE user_warning > 0
 		ORDER BY user_warning");
@@ -544,7 +544,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			
 			$Template->assign_block_vars('user_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
-				'LOGIN' => $row['login'],
+				'LOGIN' => $row['display_name'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				'INFO' => $row['warning_percentage'] . '%',
