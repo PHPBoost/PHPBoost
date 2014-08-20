@@ -31,7 +31,6 @@ class CalendarUnsuscribeController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		AppContext::get_session()->csrf_post_protect();
 		$event_id = $request->get_getint('event_id', 0);
 		$current_user_id = AppContext::get_current_user()->get_id();
 		
