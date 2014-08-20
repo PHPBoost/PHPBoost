@@ -186,7 +186,7 @@ class CalendarService
 	{
 		$participants = array();
 		
-		$result = self::$db_querier->select('SELECT event_id, member.user_id, login, level, user_groups
+		$result = self::$db_querier->select('SELECT event_id, member.user_id, display_name, level, groups
 		FROM ' . CalendarSetup::$calendar_users_relation_table . ' participants
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = participants.user_id
 		WHERE event_id = :id', array(
@@ -195,7 +195,7 @@ class CalendarService
 		
 		while($row = $result->fetch())
 		{
-			if (!empty($row['login']))
+			if (!empty($row['display_name']))
 			{
 				$participant = new CalendarEventParticipant();
 				$participant->set_properties($row);
@@ -245,7 +245,7 @@ class CalendarService
 		$authorized_categories = CalendarService::get_authorized_categories($id_category);
 		
 		return self::$db_querier->select((CalendarConfig::load()->is_members_birthday_enabled() ? "
-		(SELECT member_extended_fields.user_born AS start_date, member_extended_fields.user_born AS end_date, login AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarEventContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
+		(SELECT member_extended_fields.user_born AS start_date, member_extended_fields.user_born AS end_date, display_name AS title, 'BIRTHDAY' AS type, 0 AS id_category, '" . CalendarEventContent::YEARLY . "' AS repeat_type, 100 AS repeat_number
 		FROM " . DB_TABLE_MEMBER . " member
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " member_extended_fields ON member_extended_fields.user_id = member.user_id
 		WHERE MONTH(FROM_UNIXTIME(member_extended_fields.user_born)) = :month)

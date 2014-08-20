@@ -227,14 +227,14 @@ class Authorizations
 		if ($advanced_auth)
 		{
 			$sql_querier = PersistenceContext::get_sql();
-			$result = $sql_querier->query_while("SELECT user_id, login
+			$result = $sql_querier->query_while("SELECT user_id, display_name
 			FROM " . PREFIX . "member
 			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")");
 			while ($row = $sql_querier->fetch_assoc($result))
 			{
 				 $tpl->assign_block_vars('members_list', array(
 					'USER_ID' => $row['user_id'],
-					'LOGIN' => $row['login']
+					'LOGIN' => $row['display_name']
 				));
 			}
 			$result->dispose();

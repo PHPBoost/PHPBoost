@@ -45,32 +45,32 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
     if (!empty($login))
     {
         $i = 0;
-        $result = $sql_querier->query_while ("SELECT user_id, login FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '" . $login . "%'");
+        $result = $sql_querier->query_while ("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $login . "%'");
         while ($row = $sql_querier->fetch_assoc($result))
         {
             if (!empty($_GET['member']))
             {
-                echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . $row['login'] . '</a><br />';
+                echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . $row['display_name'] . '</a><br />';
             }
             elseif (!empty($_GET['insert_member']))
             {
-                echo '<a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['login']) .'\';return false">' . addslashes($row['login']) . '</a><br />';
+                echo '<a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['display_name']) .'\';return false">' . addslashes($row['display_name']) . '</a><br />';
             }
             elseif (!empty($_GET['add_member_auth']))
             {
-                echo '<a href="javascript:XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['login']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . addslashes($row['login']) . '</a><br />';
+                echo '<a href="javascript:XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['display_name']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . addslashes($row['login']) . '</a><br />';
             }
             elseif (!empty($_GET['admin_member']))
             {
-                echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . addslashes($row['login']) . '</a><br />';
+                echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->rel() . '">' . addslashes($row['display_name']) . '</a><br />';
             }
             if (!empty($_GET['warning_member']))
             {
-                echo '<a href="admin_members_punishment.php?action=users&amp;id=' . $row['user_id'] . '">' . addslashes($row['login']) . '</a><br />';
+                echo '<a href="admin_members_punishment.php?action=users&amp;id=' . $row['user_id'] . '">' . addslashes($row['display_name']) . '</a><br />';
             }
             elseif (!empty($_GET['punish_member']))
             {
-                echo '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . addslashes($row['login']) . '</a><br />';
+                echo '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . addslashes($row['display_name']) . '</a><br />';
             }
             $i++;
         }
