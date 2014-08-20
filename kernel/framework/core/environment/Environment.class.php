@@ -273,7 +273,7 @@ class Environment
 		PersistenceContext::get_querier()->update(DB_TABLE_VISIT_COUNTER, array('time' => $timestamp, 'total' => 1), 'WHERE id = 1');
 		
 		//We insert this visitor as a today visitor
-		PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => AppContext::get_session()->get_ip(), 'time' => $timestamp, 'total' => 0));
+		PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => AppContext::get_request()->get_ip_address(), 'time' => $timestamp, 'total' => 0));
 	}
 
 	private static function remove_old_unactivated_member_accounts()

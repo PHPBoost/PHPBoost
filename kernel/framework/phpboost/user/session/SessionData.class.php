@@ -130,7 +130,7 @@ class SessionData
 	{
 		$columns = array(
 			'timestamp' => time() + SessionsConfig::load()->get_session_duration(),
-			'ip' => AppContext::get_session()->get_ip()
+			'ip' => AppContext::get_request()->get_ip_address()
 		);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 	}
