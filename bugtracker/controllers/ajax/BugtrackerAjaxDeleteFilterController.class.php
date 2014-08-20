@@ -38,8 +38,6 @@ class BugtrackerAjaxDeleteFilterController extends AbstractController
 	
 	private function build_view(HTTPRequestCustom $request)
 	{
-		AppContext::get_session()->csrf_post_protect();
-		
 		$id = $request->get_int('id', 0);
 		
 		if (!empty($id))

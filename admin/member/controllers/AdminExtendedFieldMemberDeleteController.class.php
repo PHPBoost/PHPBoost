@@ -29,8 +29,6 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		AppContext::get_session()->csrf_post_protect();
-		
 		$id = $request->get_int('id', null);
 		
 		if ($id !== null)
