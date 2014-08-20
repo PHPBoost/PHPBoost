@@ -68,12 +68,14 @@ if ($read)
 		$nbr_waiting_pm = $nbr_pm - $limit_group; //Nombre de messages privés non visibles.
 	
 	$j = 0;
-	$result = $Sql->query_while("SELECT pm.last_msg_id, pm.user_view_pm
+	$result = PersistenceContext::get_querier()->select("SELECT pm.last_msg_id, pm.user_view_pm
 	FROM " . DB_TABLE_PM_TOPIC . "  pm
 	LEFT JOIN " . DB_TABLE_PM_MSG . " msg ON msg.idconvers = pm.id AND msg.id = pm.last_msg_id
-	WHERE " . AppContext::get_current_user()->get_id() . " IN (pm.user_id, pm.user_id_dest) AND pm.last_user_id <> '" . AppContext::get_current_user()->get_id() . "' AND msg.view_status = 0
-	ORDER BY pm.last_timestamp DESC ");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE :user_id IN (pm.user_id, pm.user_id_dest) AND pm.last_user_id <> :user_id AND msg.view_status = 0
+	ORDER BY pm.last_timestamp DESC ", array(
+		'user_id' => AppContext::get_current_user()->get_id()
+	));
+	while ($row = $result->fetch())
 	{
 		//On saute l'itération si la limite est dépassé.
 		$j++;
@@ -260,7 +262,7 @@ elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 		//user_view_pm => nombre de messages non lu par l'un des 2 participants.
 		
 		//On récupère les info de la conversation.
-		$convers = $Sql->query_array(DB_TABLE_PM_TOPIC, 'user_id', 'user_id_dest', 'user_convers_status', 'nbr_msg', 'user_view_pm', 'last_user_id', "WHERE id = '" . $pm_id_get . "'");
+		$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('user_id', 'user_id_dest', 'user_convers_status', 'nbr_msg', 'user_view_pm', 'last_user_id'), 'WHERE id = :id', array('id' => $pm_id_get));
 		
 		//Récupération de l'id du destinataire.
 		$user_id_dest = ($convers['user_id_dest'] == AppContext::get_current_user()->get_id()) ? $convers['user_id'] : $convers['user_id_dest'];
@@ -297,25 +299,27 @@ elseif ($pm_del_convers) //Suppression de conversation.
 	//Conversation présente chez les deux membres: user_convers_status => 0.
 	//Conversation supprimée chez l'expediteur: user_convers_status => 1.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
-	$result = $Sql->query_while("SELECT id, user_id, user_id_dest, user_convers_status, last_msg_id
+	$result = PersistenceContext::get_querier()->select("SELECT id, user_id, user_id_dest, user_convers_status, last_msg_id
 	FROM " . DB_TABLE_PM_TOPIC . "
 	WHERE
 	(
-		" . AppContext::get_current_user()->get_id() . " IN (user_id, user_id_dest)
+		:user_id IN (user_id, user_id_dest)
 	)
 	AND
 	(
 		user_convers_status = 0
 		OR
 		(
-			(user_id_dest = '" . AppContext::get_current_user()->get_id() . "' AND user_convers_status = 1)
+			(user_id_dest = :user_id AND user_convers_status = 1)
 			OR
-			(user_id = '" . AppContext::get_current_user()->get_id() . "' AND user_convers_status = 2)
+			(user_id = :user_id AND user_convers_status = 2)
 		)
 	)
-	ORDER BY last_timestamp DESC");
+	ORDER BY last_timestamp DESC", array(
+		'user_id' => AppContext::get_current_user()->get_id()
+	));
 	
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		$del_convers = isset($_POST[$row['id']]) ? trim($_POST[$row['id']]) : '';
 		if ($del_convers == 'on')
@@ -339,6 +343,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 			PrivateMsg::delete_conversation(AppContext::get_current_user()->get_id(), $row['id'], $expd, $del_convers, $update_nbr_pm);
 		}
 	}
+	$result->dispose();
 	
 	AppContext::get_response()->redirect('/user/pm' . url('.php?pm=' . AppContext::get_current_user()->get_id(), '-' . AppContext::get_current_user()->get_id() . '.php', '&'));
 }
@@ -346,13 +351,13 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	$pm = $Sql->query_array(DB_TABLE_PM_MSG, 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_del . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
+	$pm = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('idconvers', 'contents', 'view_status'), 'WHERE id = :id AND user_id = :user_id', array('id' => $pm_del, 'user_id' => AppContext::get_current_user()->get_id()));
 	
 	if (!empty($pm['idconvers'])) //Permet de vérifier si le message appartient bien au membre.
 	{
 		//On récupère les info de la conversation.
-		$convers = $Sql->query_array(DB_TABLE_PM_TOPIC, 'title', 'user_id', 'user_id_dest', 'last_msg_id', "WHERE id = '" . $pm['idconvers'] . "'");
-		if ($pm_del ==  $convers['last_msg_id']) //On édite uniquement le dernier message.
+		$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('title', 'user_id', 'user_id_dest', 'last_msg_id'), 'WHERE id = :id', array('id' => $pm['idconvers']));
+		if ($pm_del == $convers['last_msg_id']) //On édite uniquement le dernier message.
 		{
 			if ($convers['user_id'] == AppContext::get_current_user()->get_id()) //Expediteur.
 			{
@@ -405,12 +410,11 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 }
 elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la pas encore lu.
 {
-	$pm = $Sql->query_array(DB_TABLE_PM_MSG, 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_edit . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
-	
+	$pm = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('idconvers', 'contents', 'view_status'), 'WHERE id = :id AND user_id = :user_id', array('id' => $pm_edit, 'user_id' => AppContext::get_current_user()->get_id()));
 	if (!empty($pm['idconvers'])) //Permet de vérifier si le message appartient bien au membre.
 	{
 		//On récupère les info de la conversation.
-		$convers = $Sql->query_array(DB_TABLE_PM_TOPIC, 'title', 'user_id', 'user_id_dest', "WHERE id = '" . $pm['idconvers'] . "'");
+		$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('title', 'user_id', 'user_id_dest'), 'WHERE id = :id', array('id' => $pm['idconvers']));
 		
 		$view = false;
 		if ($pm['view_status'] == '1') //Le membre a déjà lu le message => échec.
@@ -529,7 +533,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	$tpl = new FileTemplate('user/pm.tpl');
 	
 	//On récupère les info de la conversation.
-	$convers = $Sql->query_array(DB_TABLE_PM_TOPIC, 'id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm', "WHERE id = '" . $pm_id_get . "' AND '" . AppContext::get_current_user()->get_id() . "' IN (user_id, user_id_dest)");
+	$convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array('id', 'title', 'user_id', 'user_id_dest', 'nbr_msg', 'last_msg_id', 'last_user_id', 'user_view_pm'), 'WHERE id = :id AND :user_id IN (user_id, user_id_dest)', array('id' => $pm_id_get, 'user_id' => AppContext::get_current_user()->get_id()));
 
 	//Vérification des autorisations.
 	if (empty($convers['id']) || ($convers['user_id'] != AppContext::get_current_user()->get_id() && $convers['user_id_dest'] != AppContext::get_current_user()->get_id()))
@@ -584,15 +588,23 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;
 	$j = 0;
-	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.display_name, m.level, m.email, m.show_email, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, m.user_warning, m.user_ban, m.groups, s.user_id AS connect, msg.contents
+	$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.display_name, m.level, m.email, m.show_email, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, m.user_warning, m.user_ban, m.groups, s.user_id AS connect, msg.contents
 	FROM " . DB_TABLE_PM_MSG . " msg
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
-	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id <> -1
-	WHERE msg.idconvers = '" . $pm_id_get . "'
+	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > :timestamp AND s.user_id <> -1
+	WHERE msg.idconvers = :idconvers
 	ORDER BY msg.timestamp
-	" . $Sql->limit(($pagination->get_display_from() - $quote_last_msg), ($_NBR_ELEMENTS_PER_PAGE + $quote_last_msg)));
-	while ($row = $Sql->fetch_assoc($result))
+	LIMIT :number_items_per_page OFFSET :display_from",
+		array(
+			'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration()),
+			'idconvers' => $pm_id_get,
+			'number_items_per_page' => ($_NBR_ELEMENTS_PER_PAGE + $quote_last_msg),
+			'display_from' => ($pagination->get_display_from() - $quote_last_msg)
+		)
+	);
+	
+	while ($row = $result->fetch())
 	{
 		$row['user_id'] = (int)$row['user_id'];
 		$is_admin = ($row['user_id'] === -1);
@@ -640,7 +652,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	//Récupération du message quoté.
 	if (!empty($quote_get))
 	{
-		$quote_msg = $Sql->query_array(DB_TABLE_PM_MSG, 'user_id', 'contents', "WHERE id = '" . $quote_get . "'");
+		$quote_msg = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('user_id', 'contents'), 'WHERE id = :id', array('id' => $quote_get));
 		$pseudo = $Sql->query("SELECT display_name FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $quote_msg['user_id'] . "'");
 		
 		$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
@@ -755,7 +767,7 @@ else //Liste des conversation, dans la boite du membre.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
 	$i = 0;
 	$j = 0;
-	$result = $Sql->query_while("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.display_name AS login, m1.display_name AS login_dest, m2.display_name AS last_login, m.level AS level, m1.level AS dest_level, m2.level AS last_level, m.groups AS user_groups, m1.groups AS dest_groups, m2.groups AS last_groups
+	$result = PersistenceContext::get_querier()->select("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.display_name AS login, m1.display_name AS login_dest, m2.display_name AS last_login, m.level AS level, m1.level AS dest_level, m2.level AS last_level, m.groups AS user_groups, m1.groups AS dest_groups, m2.groups AS last_groups
 	FROM " . DB_TABLE_PM_TOPIC . "  pm
 	LEFT JOIN " . DB_TABLE_PM_MSG . " msg ON msg.id = pm.last_msg_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = pm.user_id
@@ -763,21 +775,27 @@ else //Liste des conversation, dans la boite du membre.
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = pm.last_user_id
 	WHERE
 	(
-		" . AppContext::get_current_user()->get_id() . " IN (pm.user_id, pm.user_id_dest)
+		:user_id IN (pm.user_id, pm.user_id_dest)
 	)
 	AND
 	(
 		pm.user_convers_status = 0
 		OR
 		(
-			(pm.user_id_dest = '" . AppContext::get_current_user()->get_id() . "' AND pm.user_convers_status = 1)
+			(pm.user_id_dest = :user_id AND pm.user_convers_status = 1)
 			OR
-			(pm.user_id = '" . AppContext::get_current_user()->get_id() . "' AND pm.user_convers_status = 2)
+			(pm.user_id = :user_id AND pm.user_convers_status = 2)
 		)
 	)
 	ORDER BY pm.last_timestamp DESC
-	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE));
-	while ($row = $Sql->fetch_assoc($result))
+	LIMIT :number_items_per_page OFFSET :display_from",
+		array(
+			'user_id' => AppContext::get_current_user()->get_id(),
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
+		)
+	);
+	while ($row = $result->fetch())
 	{
 		//On saute l'itération si la limite est dépassé, si ce n'est pas un message privé du système.
 		if ($row['user_id'] != -1)

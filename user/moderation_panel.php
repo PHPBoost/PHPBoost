@@ -128,11 +128,13 @@ if ($action == 'punish')
 		));	
 			
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, display_name, level, groups, delay_readonly
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, delay_readonly
 		FROM " . PREFIX . "member
-		WHERE delay_readonly > " . time() . "
-		ORDER BY delay_readonly DESC");
-		while ($row = $Sql->fetch_assoc($result))
+		WHERE delay_readonly > :now
+		ORDER BY delay_readonly DESC", array(
+			'now' => time()
+		));
+		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
@@ -149,6 +151,8 @@ if ($action == 'punish')
 			
 			$i++;
 		}
+		$result->dispose();
+		
 		if ($i === 0)
 		{
 			$moderation_panel_template->put_all(array(
@@ -294,11 +298,11 @@ else if ($action == 'warning')
 		));
 		
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, display_name, level, groups, warning_percentage
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, warning_percentage
 		FROM " . PREFIX . "member
 		WHERE warning_percentage > 0
 		ORDER BY warning_percentage");
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
@@ -315,6 +319,8 @@ else if ($action == 'warning')
 			
 			$i++;
 		}
+		$result->dispose();
+		
 		if ($i === 0)
 		{
 			$moderation_panel_template->put_all(array(
@@ -326,7 +332,7 @@ else if ($action == 'warning')
 	else //On affiche les infos sur l'utilisateur
 	{
 		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
-					
+		
 		//On crée le formulaire select
 		$select = '';
 		$j = 0;
@@ -361,7 +367,7 @@ else if ($action == 'warning')
 			'L_INFO' => $LANG['user_warning_level'],
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO' => $LANG['change_user_warning']
-		));			
+		));
 	}
 }
 else 
@@ -415,11 +421,13 @@ else
 		));	
 			
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, display_name, level, groups, delay_banned, warning_percentage
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, delay_banned, warning_percentage
 		FROM " . PREFIX . "member
-		WHERE delay_banned > " . time() . " OR warning_percentage = 100
-		ORDER BY delay_banned");
-		while ($row = $Sql->fetch_assoc($result))
+		WHERE delay_banned > :now OR warning_percentage = 100
+		ORDER BY delay_banned", array(
+			'now' => time()
+		));
+		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
@@ -436,6 +444,8 @@ else
 			
 			$i++;
 		}
+		$result->dispose();
+		
 		if ($i === 0)
 		{
 			$moderation_panel_template->put_all(array(
@@ -477,10 +487,10 @@ else
 		{
 			//Retourne la sanction la plus proche correspondant au temp de bannissement. 
 			for ($i = 11; $i >= 0; $i--)
-			{					
+			{
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
 				if (($diff - $array_time[$i]) > $avg)  
-				{	
+				{
 					$key_sanction = $i + 1;
 					break;
 				}
@@ -496,7 +506,7 @@ else
 			$moderation_panel_template->assign_block_vars('select_ban', array(
 				'TIME' => '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>'
 			));
-		}	
+		}
 	}
 }
 

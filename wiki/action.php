@@ -175,7 +175,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 		DispatchManager::redirect($error_controller);
 	} 
 	
-	$already_exists = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . Url::encode_rewrite($new_title) . "'");
+	$already_exists = PersistenceContext::get_querier()->count(PREFIX . "wiki_articles", 'WHERE encoded_title = :encoded_title', array('encoded_title' => Url::encode_rewrite($new_title)));
 
 	if (empty($article_infos['encoded_title']))//L'article n'existe pas
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));

@@ -91,7 +91,7 @@ if (!empty($parent_folder)) //Changement de dossier
 	if (empty($parent_folder))
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=0&' . $popup_noamp, '', '&'));
 	
-	$info_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'");
+	$info_folder = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, array('id_parent', 'user_id'), 'WHERE id = :id', array('id' => $parent_folder));
 	if ($info_folder['id_parent'] != 0 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 	{
 		if ($parent_folder['user_id'] == -1)
@@ -227,7 +227,7 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	$file_infos = $Sql->query_array(PREFIX . "upload", "idcat", "user_id", "WHERE id = '" . $move_file . "'");
+	$file_infos = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, array('id_cat', 'user_id'), 'WHERE id = :id', array('id' => $move_file));
 	$id_cat = $file_infos['idcat'];
 	$file_owner = $file_infos['user_id'];
 	//Si le fichier nous appartient alors on peut en faire ce que l'on veut
@@ -284,7 +284,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	//Affichage du dossier/fichier à déplacer
 	if ($is_folder)
 	{
-		$folder_info = $Sql->query_array(PREFIX . "upload_cat", "name", "id_parent", "WHERE id = '" . $move_folder . "'");
+		$folder_info = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, array('name', 'id_parent'), 'WHERE id = :id', array('id' => $move_folder));
 		$name = $folder_info['name'];
 		$id_cat = $folder_info['id_parent'];
 		$Template->assign_block_vars('folder', array(
@@ -299,7 +299,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	}
 	else
 	{
-		$info_move = $Sql->query_array(PREFIX . "upload", "path", "name", "type", "size", "idcat", "WHERE id = '" . $move_file . "'");
+		$info_move = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, array('path', 'name', 'type', 'size', 'idcat'), 'WHERE id = :id', array('id' => $move_file));
 		$get_img_mimetype = Uploads::get_img_mimetype($info_move['type']);
 		$size_img = '';
 		$display_real_img = false;
@@ -396,11 +396,14 @@ else
 	
 	list($total_folder_size, $total_files, $total_directories) = array(0, 0, 0);
 	//Affichage des dossiers
-	$result = $Sql->query_while("SELECT id, name, id_parent, user_id
-	FROM " . PREFIX . "upload_cat
-	WHERE id_parent = '" . $folder . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'
-	ORDER BY name");
-	while ($row = $Sql->fetch_assoc($result))
+	$result = PersistenceContext::get_querier()->select("SELECT id, name, id_parent, user_id
+	FROM " . DB_TABLE_UPLOAD_CAT . "
+	WHERE id_parent = :id_parent AND user_id = :user_id
+	ORDER BY name", array(
+		'id_parent' => $folder,
+		'user_id' => AppContext::get_current_user()->get_id()
+	));
+	while ($row = $result->fetch())
 	{
 		$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
@@ -417,12 +420,15 @@ else
 	$result->dispose();
 
 	//Affichage des fichiers contenu dans le dossier
-	$result = $Sql->query_while("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id
+	$result = PersistenceContext::get_querier()->select("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id
 	FROM " . DB_TABLE_UPLOAD . " up
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
-	WHERE up.idcat = '" . $folder . "' AND up.user_id = '" . AppContext::get_current_user()->get_id() . "'
-	ORDER BY up.name");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE up.idcat = :idcat AND up.user_id = :user_id
+	ORDER BY up.name", array(
+		'idcat' => $folder,
+		'user_id' => AppContext::get_current_user()->get_id()
+	));
+	while ($row = $result->fetch())
 	{
 		$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
