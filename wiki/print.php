@@ -37,29 +37,32 @@ $article_id = retrieve(GET, 'id', 0);
 //Requêtes préliminaires utiles par la suite
 if ($article_id > 0) //Si on connait son titre
 {
-	$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
+	$result = PersistenceContext::get_querier()->select("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 	FROM " . PREFIX . "wiki_articles a
 	LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
-	WHERE a.id = '" . $article_id . "'
-	GROUP BY a.id");	
-	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE id = '" . $article_id . "'");
-	$article_infos = $Sql->fetch_assoc($result);
+	WHERE a.id = :id
+	GROUP BY a.id", array(
+		'id' => $article_id
+	));
+	$article_infos = $result->fetch();
 	$result->dispose();
 
 	if (!empty($article_infos['redirect']))//Si on est redirigé
 	{
 		$id_redirection = $article_infos['id'];
 		
-		$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, com_topic.number_comments, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
+		$result = PersistenceContext::get_querier()->select("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, com_topic.number_comments, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
-		WHERE a.id = '" . $article_infos['redirect'] . "'
-		GROUP BY a.id");	
-		$article_infos = $Sql->fetch_assoc($result);
+		WHERE a.id = :id
+		GROUP BY a.id", array(
+			'id' => $article_infos['redirect']
+		));
+		$article_infos = $result->fetch();
 		$result->dispose();
 	}
 }

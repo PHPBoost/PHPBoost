@@ -46,7 +46,7 @@ $del_article = retrieve(GET, 'del', 0);
 if ($id_auth > 0) //Autorisations de l'article
 {
 	define('TITLE', $LANG['wiki_auth_management']);
-	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', 'id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat', "WHERE id = '" . $id_auth . "'");
+	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat'), 'WHERE id = :id', array('id' => $id_auth));
 	
 	if (!AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RESTRICTION))
 	{
@@ -57,7 +57,7 @@ if ($id_auth > 0) //Autorisations de l'article
 elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
 {
 	define('TITLE', $LANG['wiki_status_management']);
-	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = " . $wiki_status);
+	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $wiki_status));
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -71,7 +71,7 @@ elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
 elseif ($move > 0) //Déplacement d'article
 {
 	define('TITLE', $LANG['wiki_moving_article']);
-	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = " . $move);
+	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $move));
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -85,7 +85,7 @@ elseif ($move > 0) //Déplacement d'article
 elseif ($rename > 0) //Renommer l'article
 {
 	define('TITLE', $LANG['wiki_renaming_article']);
-	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = " . $rename);
+	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $rename));
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -99,9 +99,9 @@ elseif ($rename > 0) //Renommer l'article
 elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 {
 	if ($redirect > 0)
-		$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = '" . $redirect . "'");	
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $redirect));
 	else
-		$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = '" . $create_redirection . "'");	
+		$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $create_redirection));
 	define('TITLE', $LANG['wiki_redirections_management']);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
@@ -115,7 +115,7 @@ elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 }
 elseif (isset($_GET['com']) && $idcom > 0)
 {
-	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = '" . $idcom . "'");	
+	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $id_com));
 	define('TITLE', $LANG['wiki_article_com']);
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -128,7 +128,7 @@ elseif (isset($_GET['com']) && $idcom > 0)
 }
 elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 {
-	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = '" . $del_article . "'");	
+	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('*'), 'WHERE id = :id', array('id' => $del_article));
 	define('TITLE', $LANG['wiki_remove_cat']);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
@@ -277,12 +277,13 @@ elseif ($redirect > 0) //Redirections de l'article
 		'L_TITLE' => sprintf($LANG['wiki_redirections_to_this_article'], $article_infos['title'])
 	));
 	//Liste des redirections
-	$result = $Sql->query_while("SELECT title, id
+	$result = PersistenceContext::get_querier()->select("SELECT title, id
 		FROM " . PREFIX . "wiki_articles
-		WHERE redirect = '" . $redirect . "'
-		ORDER BY title");
-	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE redirect = '" . $redirect . "'");
-	while ($row = $Sql->fetch_assoc($result))
+		WHERE redirect = :redirect
+		ORDER BY title", array(
+			'redirect' => $redirect
+		));
+	while ($row = $result->fetch())
 	{
 		$Template->assign_block_vars('redirect.list', array(
 			'U_REDIRECTION_DELETE' => url('action.php?del_redirection=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
@@ -290,12 +291,9 @@ elseif ($redirect > 0) //Redirections de l'article
 		));
 	}
 	
-	//Aucune redirection
-	if ($num_rows == 0)
-		$Template->assign_block_vars('redirect.no_redirection', array(
-			'L_NO_REDIRECTION' => $LANG['wiki_no_redirection']
-		));
 	$Template->put_all(array(
+		'NO_REDIRECTION' => $result->get_rows_count() == 0,
+		'L_NO_REDIRECTION' => $LANG['wiki_no_redirection'],
 		'L_REDIRECTION_NAME' => $LANG['wiki_redirection_name'],
 		'L_REDIRECTION_ACTIONS' => $LANG['wiki_possible_actions'],
 		'REDIRECTION_DELETE' => $LANG['wiki_redirection_delete'],
@@ -303,6 +301,7 @@ elseif ($redirect > 0) //Redirections de l'article
 		'L_CREATE_REDIRECTION' => $LANG['wiki_create_redirection'],
 		'U_CREATE_REDIRECTION' => url('property.php?create_redirection=' . $redirect)
 	));
+	$result->dispose();
 }
 elseif ($create_redirection > 0) //Création d'une redirection
 {

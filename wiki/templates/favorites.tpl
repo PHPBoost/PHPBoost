@@ -1,9 +1,7 @@
 		# INCLUDE message_helper #
 		
 		# IF NO_FAVORITE #
-			# START no_favorite #
-				<div class="notice">{no_favorite.L_NO_FAVORITE}</div>
-			# END no_favorite #	
+			<div class="notice">{L_NO_FAVORITE}</div>
 		# ELSE #
 		{L_FAVORITES}
 			<table>

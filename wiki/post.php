@@ -91,8 +91,8 @@ if (!empty($contents)) //On enregistre un article
 	else //Sinon on poste
 	{
 		if ($id_edit > 0)//On édite un article
-		{		
-			$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "auth", "WHERE id = '" . $id_edit . "'"); 
+		{
+			$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_edit));
 			//Autorisations
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -188,7 +188,7 @@ $Template->set_filenames(array('wiki_edit'=> 'wiki/post.tpl'));
 
 if ($id_edit > 0)//On édite
 {
-	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = '" . $id_edit . "'");
+	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('*'), 'WHERE id = :id', array('id' => $id_edit));
 	
 	//Autorisations
 	$general_auth = empty($article_infos['auth']) ? true : false;
@@ -199,7 +199,7 @@ if ($id_edit > 0)//On édite
 		DispatchManager::redirect($error_controller);
 	} 
 	
-	$article_contents = $Sql->query_array(PREFIX . 'wiki_contents', '*', "WHERE id_contents = '" . $article_infos['id_contents'] . "'");
+	$article_contents = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_contents', array('*'), 'WHERE id_contents = :id', array('id' => $article_infos['id_contents']));
 	$contents = $article_contents['content'];
 	if (!empty($article_contents['menu'])) //On reforme les paragraphes
 	{
@@ -263,12 +263,12 @@ else
 	{
 		$Template->assign_block_vars('create', array());
 		$contents = '';
-		$result = $Sql->query_while("SELECT c.id, a.title, a.encoded_title
+		$result = PersistenceContext::get_querier()->select("SELECT c.id, a.title, a.encoded_title
 		FROM " . PREFIX . "wiki_cats c
 		LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
 		WHERE c.id_parent = 0
 		ORDER BY title ASC");
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			$module_data_path = PATH_TO_ROOT . '/wiki/templates';
 			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'");
