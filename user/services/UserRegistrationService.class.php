@@ -34,11 +34,6 @@ class UserRegistrationService
 		self::$lang = LangLoader::get('user-common');
 	}
 
-	public static function user_registration($login, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email = '1', $activation_key = '', $user_aprobation = '1')
-	{
-		return UserService::create($login, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email, $activation_key, $user_aprobation);
-	}
-
 	public static function connect_user($user_id)
 	{
 		$session = AppContext::get_session();

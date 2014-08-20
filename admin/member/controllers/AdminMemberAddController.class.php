@@ -99,7 +99,7 @@ class AdminMemberAddController extends AdminController
 		$user->set_level($this->form->get_value('rank')->get_raw_value());
 		$user->set_email($this->form->get_value('email'));
 		$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('login'), $this->form->get_value('password'));
-		UserService::create($user, $auth_method, true);
+		UserService::create($user, $auth_method);
 	}
 }
 ?>

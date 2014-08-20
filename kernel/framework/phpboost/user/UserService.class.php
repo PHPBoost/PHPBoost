@@ -45,7 +45,7 @@ class UserService
 	 * @param User $user
 	 * @return InjectQueryResult
 	 */
-	public static function create(User $user, AuthenticationMethod $auth_method, $approved, $registration_pass = '')
+	public static function create(User $user, AuthenticationMethod $auth_method)
 	{
 		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
 			'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
@@ -61,7 +61,7 @@ class UserService
 		));
 
 		$user_id = $result->get_last_inserted_id();
-		$auth_method->associate($user_id, $approved, $registration_pass);
+		$auth_method->associate($user_id);
 		self::regenerate_stats_cache();
 		
 		return $user_id;

@@ -398,7 +398,7 @@ class InstallationServices
 		$user->set_locale($locale);
 		$user->set_theme($theme);
 		$auth_method = new PHPBoostAuthenticationMethod($username, $password);
-		return UserService::create($user, $auth_method, true);
+		return UserService::create($user, $auth_method);
 	}
 
 	private function generate_admin_unlock_code()

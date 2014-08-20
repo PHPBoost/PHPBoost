@@ -36,6 +36,8 @@
  */
 class PHPBoostAuthenticationMethod implements AuthenticationMethod
 {
+	const AUTHENTICATION_METHOD = 'internal';
+	
 	private static $MAX_AUTHORIZED_ATTEMPTS = 5;
 	private static $MAX_AUTHORIZED_ATTEMPTS_RESET_DELAY = 600;
 	private static $MAX_AUTHORIZED_ATTEMPTS_RESET_ATTEMPS = 0;
@@ -49,6 +51,9 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 
 	private $username;
 	private $password;
+	
+	private $approved = true;
+	private $registration_pass = '';
 
 	private $user_id = null;
 	private $connection_attempts = 0;
@@ -61,6 +66,12 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 		$this->querier = PersistenceContext::get_querier();
 	}
 
+	public function set_association_parameters($approved = true, $registration_pass = '')
+	{
+		$this->approved = $approved;
+		$this->registration_pass = $registration_pass;
+	}
+	
 	public function get_user_id()
 	{
 		return $this->user_id;
@@ -79,18 +90,18 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	/**
 	 * {@inheritDoc}
 	 */
-	public function associate($user_id, $approved = true, $registration_pass = '')
+	public function associate($user_id)
 	{
 		$internal_authentication_columns = array(
 			'user_id' => $user_id,
 			'username' => $this->username,
             'password' => $this->password,
-			'registration_pass' => $registration_pass,
-			'approved' => $approved
+			'registration_pass' => $this->registration_pass,
+			'approved' => $this->approved
 		);
 		$authentication_method_columns = array(
 			'user_id' => $user_id,
-            'method' => 'internal',
+            'method' => self::AUTHENTICATION_METHOD,
 			'identifier' => $user_id
 		);
 		try {

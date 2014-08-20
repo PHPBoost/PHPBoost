@@ -61,7 +61,7 @@ class AutoConnectData
 		$columns = array('autoconnect_key');
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
-		$row = self::$querier->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+		$row = self::$querier->select_single_row(DB_TABLE_AUTHENTICATION_METHOD, $columns, $condition, $parameters);
 		$data = null;
 		if (!empty($row['autoconnect_key']))
 		{
@@ -99,7 +99,7 @@ class AutoConnectData
 	{
 		$condition = 'WHERE user_id=:user_id AND autoconnect_key=:key';
 		$parameters = array('user_id' => $this->user_id, 'key' => $this->key);
-		return self::$querier->row_exists(DB_TABLE_MEMBER, $condition, $parameters);
+		return self::$querier->row_exists(DB_TABLE_AUTHENTICATION_METHOD, $condition, $parameters);
 	}
 
 	public function save()
@@ -113,7 +113,7 @@ class AutoConnectData
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $this->user_id);
 		$columns = array('autoconnect_key' => $this->key);
-		self::$querier->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+		self::$querier->update(DB_TABLE_AUTHENTICATION_METHOD, $columns, $condition, $parameters);
 	}
 
 	private function save_in_cookie()
@@ -128,5 +128,4 @@ class AutoConnectData
 		return serialize(array('user_id' => $this->user_id, 'key' => $this->key));
 	}
 }
-
 ?>
