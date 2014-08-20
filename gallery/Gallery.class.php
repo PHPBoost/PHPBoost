@@ -497,9 +497,7 @@ class Gallery
 	//Compte le nombre d'images uploadée par un membre.
 	public function get_nbr_upload_pics($user_id)
 	{
-		global $Sql;
-		
-		return $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE user_id = '" . $user_id . "'");
+		return PersistenceContext::get_querier()->count(PREFIX . "gallery", 'WHERE user_id=:user_id', array('user_id' => $user_id));
 	}
 	
 	//Calcul des dimensions avec respect des proportions.

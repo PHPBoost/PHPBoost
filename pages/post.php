@@ -147,7 +147,7 @@ if (!empty($contents))
 				AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 			
 			$encoded_title = Url::encode_rewrite($title);
-			$is_already_page = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages WHERE encoded_title = '" . $encoded_title . "'");
+			$is_already_page = PersistenceContext::get_querier()->count(PREFIX . "pages", 'WHERE encoded_title=:encoded_title', array('encoded_title' => $encoded_title));
 			
 			//Si l'article n'existe pas déjà, on enregistre
 			if ($is_already_page == 0)

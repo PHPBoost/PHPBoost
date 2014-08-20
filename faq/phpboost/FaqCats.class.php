@@ -74,7 +74,7 @@ class FaqCats extends DeprecatedCategoriesManager
 				parent::move_into_another($id_cat, $new_id_cat_content);
 		}
 		
-		$max_q_order = $Sql->query("SELECT MAX(q_order) FROM " . PREFIX . "faq WHERE idcat = '" . $new_id_cat_content . "'");
+		$max_q_order = PersistenceContext::get_querier()->get_column_value(PREFIX . 'faq', 'MAX(q_order)', 'WHERE idcat=:idcat', array('id_cat' => $new_id_cat_content));
 		$max_q_order = $max_q_order > 0 ? $max_q_order : 1;
 		$Sql->query_inject("UPDATE " . PREFIX . "faq SET idcat = '" . $new_id_cat_content . "', q_order = q_order + " . $max_q_order . " WHERE idcat = '" . $id_category . "'");
 		
@@ -213,7 +213,7 @@ class FaqCats extends DeprecatedCategoriesManager
 		if ($cat_id != 0)
 		{
 			//We add to this number the number of questions of this category
-			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq WHERE idcat = '" . $cat_id . "'");
+			$num_subquestions += (int)PersistenceContext::get_querier()->count(PREFIX . "faq", 'WHERE idcat=:id_cat', array('id_cat' => $cat_id));
 			
 			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "'");
 			

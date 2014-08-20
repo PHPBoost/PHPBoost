@@ -230,7 +230,7 @@ class DownloadCats extends DeprecatedCategoriesManager
 		if ($cat_id != 0)
 		{
 			//We add to this number the number of questions of this category
-			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "download WHERE idcat = '" . $cat_id . "' AND visible = 1 AND approved = 1");
+			$num_subquestions += (int)PersistenceContext::get_querier()->count(PREFIX . "download", 'WHERE idcat=:id_cat AND visible = 1 AND approved = 1', array('id_cat' => $cat_id));
 			
 			$Sql->query_inject("UPDATE " . PREFIX . "download_cat SET num_files = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "' AND visible = 1");
 			

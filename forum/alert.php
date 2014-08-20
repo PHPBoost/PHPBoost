@@ -63,7 +63,7 @@ $Template->set_filenames(array(
 if (!empty($alert) && empty($alert_post))
 {
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert ."' AND status = 0");
+	$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'forum_alerts', 'WHERE idtopic=:idtopic AND status = 0', array('idtopic' => $alert));
 	if (empty($nbr_alert)) //On affiche le formulaire
 	{
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
@@ -110,7 +110,7 @@ if (!empty($alert_post))
 	));
 
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert_post ."' AND status = 0");
+	$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'forum_alerts', 'WHERE idtopic=:idtopic AND status = 0', array('idtopic' => $alert_post));
 	if (empty($nbr_alert)) //On enregistre
 	{
 		$alert_title = retrieve(POST, 'title', '');

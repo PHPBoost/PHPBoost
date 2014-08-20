@@ -262,7 +262,7 @@ class MediaCats extends DeprecatedCategoriesManager
 		{
 			if (is_null($num))
 			{
-				$num = (int) $Sql->query("SELECT COUNT(*) FROM ".PREFIX."media WHERE idcat = '" . $id . "' AND infos = '" . MEDIA_STATUS_APROBED . "'");
+				$num = (int)PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE idcat=:id_cat AND infos =:infos', array('id_cat' => $id, 'infos' => MEDIA_STATUS_APROBED));
 			}
 
 			if ($id > 0)

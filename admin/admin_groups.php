@@ -87,7 +87,7 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 }
 elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 {	
-	$array_members = explode('|', $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'"));
+	$array_members = explode('|', PersistenceContext::get_querier()->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id=:id', array('id' => $idgroup)));
 	foreach ($array_members as $key => $user_id)
 	{
 		GroupsService::remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
@@ -104,7 +104,7 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
 	$login = retrieve(POST, 'login_mbr', '');
-	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'");
+	$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name=:login', array('login' => $login));
 	if (!empty($user_id))
 	{
 		if (GroupsService::add_member($user_id, $idgroup)) //Succès.
@@ -187,25 +187,11 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			$img_groups .= '<option value="' . $file . '"' . $selected . '>' . $file . '</option>';
 		}
 		$array_group = unserialize($group['auth']);
-	
-		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_groups = '" . $group['id'] . "'");
-		
-		$page = AppContext::get_request()->get_getint('p', 1);
-		$pagination = new ModulePagination($page, $nbr_member_group, $_NBR_ELEMENTS_PER_PAGE);
-		$pagination->set_url(new Url('/admin/admin_groups.php?id=' . $idgroup . '&amp;p=%d'));
-
-		if ($pagination->current_page_is_empty() && $page > 1)
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-		
+			
 		$template->put_all(array(
-			'C_PAGINATION' => $pagination->has_several_pages(),
 			'NAME' => $group['name'],
 			'IMG' => $group['img'],
 			'GROUP_ID' => $idgroup,
-			'PAGINATION' => $pagination->display(),
 			'IMG_GROUPS' => $img_groups,
 			'C_EDIT_GROUP' => true,
 			'AUTH_FLOOD_ENABLED' => $array_group['auth_flood'] == 1 ? 'checked="checked"' : '',
@@ -243,7 +229,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		));
 		
 		//Liste des membres du groupe.
-		$members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . NumberHelper::numeric($group['id']) . "'");
+		$members = PersistenceContext::get_querier()->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id=:id', array('id' => NumberHelper::numeric($group['id'])));
 		
 		$number_member = 0;
 		if (!empty($members))
@@ -251,11 +237,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			$members = explode('|', $members);
 			$result = PersistenceContext::get_querier()->select('SELECT user_id, display_name, level, groups
 				FROM ' . DB_TABLE_MEMBER . '
-				WHERE user_id IN (' . implode(',', $members) . ')
-				LIMIT :number_items_per_page OFFSET :display_from', array(
-					'number_items_per_page' => $pagination->get_number_items_per_page(),
-					'display_from' => $pagination->get_display_from()
-			));
+				WHERE user_id IN (' . implode(',', $members) . ')');
 			
 			while ($row = $result->fetch())
 			{
@@ -350,20 +332,8 @@ else //Liste des groupes.
 	
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
-	
-	$page = AppContext::get_request()->get_getint('p', 1);
-	$pagination = new ModulePagination($page, $nbr_group, $_NBR_ELEMENTS_PER_PAGE);
-	$pagination->set_url(new Url('/admin/admin_groups.php?p=%d'));
-
-	if ($pagination->current_page_is_empty() && $page > 1)
-	{
-		$error_controller = PHPBoostErrors::unexisting_page();
-		DispatchManager::redirect($error_controller);
-	}
-	
+		
 	$template->put_all(array(
-		'C_PAGINATION' => $pagination->has_several_pages(),
-		'PAGINATION' => $pagination->display(),
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_CONFIRM_DEL_GROUP' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
 		'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
@@ -377,8 +347,7 @@ else //Liste des groupes.
   
 	$result = $Sql->query_while("SELECT id, name, img
 	FROM " . DB_TABLE_GROUP . "
-	ORDER BY name
-	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE));
+	ORDER BY name");
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$template->assign_block_vars('group', array(

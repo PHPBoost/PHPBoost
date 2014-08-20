@@ -92,8 +92,8 @@ else
 		$CAT_GALLERY[0]['level'] = -1;
 		$CAT_GALLERY[0]['aprob'] = 1;
 	}
-
-	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $idcat . "'");
+	
+	$nbr_pics = PersistenceContext::get_querier()->count(PREFIX . "gallery", 'WHERE idcat=:idcat', array('idcat' => $idcat));
 	$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery_cats gc " . $clause_cat);
 
 	//Gestion erreur.

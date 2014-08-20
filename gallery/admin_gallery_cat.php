@@ -208,7 +208,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 		//On vérifie si la catégorie contient des sous galeries.
 		$nbr_sub_cat = (($CAT_GALLERY[$idcat]['id_right'] - $CAT_GALLERY[$idcat]['id_left'] - 1) / 2);
 		//On vérifie si la catégorie ne contient pas d'images.
-		$check_pics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $idcat . "'");
+		$check_pics = PersistenceContext::get_querier()->count(PREFIX . "gallery", 'WHERE idcat=:idcat', array('idcat' => $idcat));
 		
 		if ($check_pics == 0 && $nbr_sub_cat == 0) //Si vide on supprime simplement, la catégorie.
 		{

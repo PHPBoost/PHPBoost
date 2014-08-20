@@ -261,7 +261,7 @@ elseif ($read) //Marquer comme lu.
 		AppContext::get_response()->redirect(UserUrlBuilder::connect());
 
 	//Calcul du temps de péremption, ou de dernière vue des messages.
-	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
+	$check_last_view_forum = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'WHERE user_id=:user_id', array('user_id' => AppContext::get_current_user()->get_id()));
 
 	//Modification du last_view_forum, si le membre est déjà dans la table
 	if (!empty($check_last_view_forum))

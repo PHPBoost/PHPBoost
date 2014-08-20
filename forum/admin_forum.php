@@ -132,7 +132,7 @@ elseif (!empty($del)) //Suppression de la cat�gorie/sous-cat�gorie.
 		//On v�rifie si la cat�gorie contient des sous forums.
 		$nbr_sub_cat = (($CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left'] - 1) / 2);
 		//On v�rifie si la cat�gorie ne contient pas de topic.
-		$check_topic = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $idcat . "'");
+		$check_topic = PersistenceContext::get_querier()->count(PREFIX . 'forum_topics', 'WHERE idcat=:idcat', array('idcat' => $idcat));
 
 		if ($check_topic == 0 && $nbr_sub_cat == 0) //Si vide on supprime simplement, la cat�gorie.
 		{
