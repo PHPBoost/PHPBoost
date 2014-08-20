@@ -219,15 +219,6 @@
 						</th>
 					</tr>
 				</thead>
-				# IF C_PAGINATION #
-				<tfoot>
-					<tr>
-						<th colspan="2">
-							# INCLUDE PAGINATION #
-						</th>
-					</tr>
-				</tfoot>
-				# ENDIF #
 				<tbody>
 					# START member #
 					<tr> 

@@ -39,7 +39,7 @@ if (!empty($_POST['add']))
 	
 	if (!empty($code_smiley) && !empty($url_smiley))
 	{
-		$check_smiley = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_SMILEYS . " WHERE code_smiley = '" . $code_smiley . "'");
+		$check_smiley = PersistenceContext::get_querier()->count(DB_TABLE_SMILEYS, 'WHERE code_smiley=:code_smiley', array('code_smiley' => $code_smiley));
 		if (empty($check_smiley))
 		{
 			$Sql->query_inject("INSERT INTO " . DB_TABLE_SMILEYS . " (code_smiley,url_smiley) VALUES('" . $code_smiley . "','" . $url_smiley . "')");

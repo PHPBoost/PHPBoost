@@ -90,7 +90,7 @@ WHERE c.id_parent = 0
 ORDER BY p.title ASC");
 while ($row = $Sql->fetch_assoc($result))
 {
-	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $row['id'] . "'");
+	$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "pages_cats", 'WHERE id_parent=:id_parent', array('id_parent' => $row['id']));
 	if ($sub_cats_number > 0)
 	{	
 		$Template->assign_block_vars('list', array(

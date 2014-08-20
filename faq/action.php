@@ -75,7 +75,7 @@ elseif ($down > 0)
 {
 	$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $down . "'");
 	
-	$num_questions = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq WHERE idcat = '" . $faq_infos['idcat'] . "'");
+	$num_questions = PersistenceContext::get_querier()->count(PREFIX . 'faq', 'WHERE idcat=:idcat', array('idcat' => $faq_infos['idcat']));
 	$id_cat_for_bread_crumb = $faq_infos['idcat'];
 	include('faq_bread_crumb.php');
 	if ($auth_write && !empty($faq_infos['question'])) //If the id corresponds to a question existing in the database
@@ -181,7 +181,7 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 		{
 			if ($target != $question_infos['idcat'])
 			{
-				$max_order = $Sql->query("SELECT MAX(q_order) FROM " . PREFIX . "faq WHERE idcat = '" . $target . "'");
+				$max_order = PersistenceContext::get_querier()->get_column_value(PREFIX . 'faq', 'MAX(q_order)', 'WHERE idcat=:idcat', array('id_cat' => $target));
 				$Sql->query_inject("UPDATE " . PREFIX . "faq SET idcat = '" . $target . "', q_order = '" . ($max_order + 1) . "' WHERE id = '" . $id_question . "'");
 				$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE idcat = '" . $question_infos['idcat'] . "' AND q_order > '" . $question_infos['q_order'] . "'");
 				

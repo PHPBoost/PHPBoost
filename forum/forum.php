@@ -218,7 +218,7 @@ if (!empty($id_get))
 		));
 	}
 	
-	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $id_get . "'");
+	$nbr_topic = PersistenceContext::get_querier()->count(PREFIX . 'forum_topics', 'WHERE idcat=:idcat', array('idcat' => $id_get));
 	
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);

@@ -209,7 +209,7 @@ class Admin_forum
 				$nbr_msg = $Sql->query("SELECT SUM(nbr_msg) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $idcat . "'");
 				$nbr_msg = !empty($nbr_msg) ? $nbr_msg : 0;
 				//Nombre de topics.
-				$nbr_topic = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $idcat . "'"); 
+				$nbr_topic = PersistenceContext::get_querier()->count(PREFIX . 'forum_topics', 'WHERE idcat=:idcat', array('idcat' => $idcat));
 				$nbr_topic = !empty($nbr_topic) ? $nbr_topic : 0;
 				
 				//On d�place les topics dans le nouveau forum.

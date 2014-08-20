@@ -490,7 +490,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 					if (!empty($question) && !$del_poll) //Enregistrement du sondage.
 					{
 						//Mise à jour si le sondage existe, sinon création.
-						$check_poll = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_poll WHERE idtopic = '" . $idt_get . "'",  __LINE__, __FILE__);
+						$check_poll = PersistenceContext::get_querier()->count(PREFIX . 'forum_poll', 'WHERE idtopic=:idtopic', array('idtopic' => $idt_get));
 
 						$poll_type = retrieve(POST, 'poll_type', 0);
 						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
