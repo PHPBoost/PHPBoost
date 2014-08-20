@@ -56,10 +56,14 @@ if ($get_visit_month)
     $month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
 
     $array_stats = array();
-    $result = $Sql->query_while("SELECT nbr, stats_day
-	FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
-	ORDER BY stats_day");
-    while ($row = $Sql->fetch_assoc($result))
+    $result = PersistenceContext::get_querier()->select("SELECT nbr, stats_day
+	FROM " . StatsSetup::$stats_table . "
+	WHERE stats_year = :year AND stats_month = :month
+	ORDER BY stats_day", array(
+		'year' => $year,
+		'month' => $month
+	));
+    while ($row = $result->fetch())
     {
         $array_stats[$row['stats_day']] = $row['nbr'];
     }
@@ -85,11 +89,14 @@ elseif ($get_visit_year)
     $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
 
     $array_stats = array();
-    $result = $Sql->query_while ("SELECT SUM(nbr) as total, stats_month
-	FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "'
+    $result = PersistenceContext::get_querier()->select("SELECT SUM(nbr) as total, stats_month
+	FROM " . StatsSetup::$stats_table . "
+	WHERE stats_year = :year
 	GROUP BY stats_month
-	ORDER BY stats_month");
-    while ($row = $Sql->fetch_assoc($result))
+	ORDER BY stats_month", array(
+		'year' => $year
+	));
+    while ($row = $result->fetch())
     {
         $array_stats[$row['stats_month']] = $row['total'];
     }
@@ -114,7 +121,7 @@ elseif ($get_pages_day)
     $day = !empty($_GET['day']) ? NumberHelper::numeric($_GET['day']) : '1';
 
     $array_stats = array();
-    $pages_details = unserialize((string)$Sql->query("SELECT pages_detail FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'"));
+    $pages_details = unserialize((string)PersistenceContext::get_querier()->get_column_value(StatsSetup::$stats_table, 'pages_detail', 'WHERE stats_year = :year AND stats_month = :month AND stats_day = :day', array('year' => $year, 'month' => $month, 'day' => $day)));
     if (is_array($pages_details))
     {
         foreach ($pages_details as $hour => $pages)
@@ -141,10 +148,14 @@ elseif ($get_pages_month)
     $month = !empty($_GET['month']) ? NumberHelper::numeric($_GET['month']) : '1';
 
     $array_stats = array();
-    $result = $Sql->query_while("SELECT pages, stats_day
-	FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
-	ORDER BY stats_day");
-    while ($row = $Sql->fetch_assoc($result))
+    $result = PersistenceContext::get_querier()->select("SELECT pages, stats_day
+	FROM " . StatsSetup::$stats_table . "
+	WHERE stats_year = :year AND stats_month = :month
+	ORDER BY stats_day", array(
+		'year' => $year,
+		'month' => $month
+	));
+    while ($row = $result->fetch())
     {
         $array_stats[$row['stats_day']] = $row['pages'];
     }
@@ -170,11 +181,14 @@ elseif ($get_pages_year)
     $year = !empty($_GET['year']) ? NumberHelper::numeric($_GET['year']) : '';
 
     $array_stats = array();
-    $result = $Sql->query_while ("SELECT SUM(pages) as total, stats_month
-	FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "'
+    $result = PersistenceContext::get_querier()->select("SELECT SUM(pages) as total, stats_month
+	FROM " . StatsSetup::$stats_table . "
+	WHERE stats_year = :year
 	GROUP BY stats_month
-	ORDER BY stats_month");
-    while ($row = $Sql->fetch_assoc($result))
+	ORDER BY stats_month", array(
+		'year' => $year
+	));
+    while ($row = $result->fetch())
     {
         $array_stats[$row['stats_month']] = $row['total'];
     }
@@ -290,12 +304,12 @@ elseif ($get_sex)
     include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
     $array_stats = array();
-    $result = $Sql->query_while ("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
+    $result = PersistenceContext::get_querier()->select("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
 	FROM " . PREFIX . "member member
 	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
 	GROUP BY ext_field.user_sex
 	ORDER BY compt");
-    while ($row = $Sql->fetch_assoc($result))
+    while ($row = $result->fetch())
     {
         switch ($row['user_sex'])
         {

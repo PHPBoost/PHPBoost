@@ -42,7 +42,7 @@ if (!empty($_POST['valid']))
 else
 {
 	$_NBR_ELEMENTS_PER_PAGE = 15;
-	
+	$db_querier = PersistenceContext::get_querier();
 	
 	$Template->set_filenames(array(
 		'admin_stats_management'=> 'stats/admin_stats_management.tpl'
@@ -123,7 +123,7 @@ else
 		$stats_array = array();
 		foreach (ThemesManager::get_activated_themes_map() as $theme)
 		{
-			$stats_array[$theme->get_id()] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE theme = '" . $theme->get_id() . "'");
+			$stats_array[$theme->get_id()] = $db_querier->count(DB_TABLE_MEMBER, "WHERE theme = '" . $theme->get_id() . "'");
 		}
 
 		$Stats = new ImagesStats();
@@ -141,12 +141,12 @@ else
 		}
 
 		$stats_array = array();
-		$result = $Sql->query_while ("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
+		$result = $db_querier->select("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
 		FROM " . PREFIX . "member member
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
 		GROUP BY ext_field.user_sex
 		ORDER BY compt");
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			switch ($row['user_sex'])
 			{
@@ -178,11 +178,11 @@ else
 		}
 
 		$i = 1;
-		$result = $Sql->query_while("SELECT user_id, display_name, level, groups, user_msg
+		$result = $db_querier->select("SELECT user_id, display_name, level, groups, user_msg
 		FROM " . DB_TABLE_MEMBER . "
 		ORDER BY user_msg DESC
-		" . $Sql->limit(0, 10));
-		while ($row = $Sql->fetch_assoc($result))
+		LIMIT 10 OFFSET 0");
+		while ($row = $result->fetch())
 		{
 			$user_group_color = User::get_group_color($row['groups'], $row['level']);
 			
@@ -203,7 +203,7 @@ else
 	elseif ($visit || $visit_year) //Visites par jour classées par mois.
 	{
 		//On affiche les visiteurs totaux et du jour
-		$compteur = PersistenceContext::get_querier()->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id=1');
+		$compteur = $db_querier->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id=1');
 		$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 		$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 
@@ -238,7 +238,7 @@ else
 			$previous_year = $visit_year - 1;
 
 			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-			$info = PersistenceContext::get_querier()->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year=:year GROUP BY stats_year', array('year' => $visit_year));
+			$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year=:year GROUP BY stats_year', array('year' => $visit_year));
 			
 			$Template->put_all(array(
 				'C_STATS_VISIT' => true,
@@ -255,7 +255,7 @@ else
 			));
 
 			//Année maximale
-			$info_year = PersistenceContext::get_querier()->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+			$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 			$years = '';
 			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 			{
@@ -274,11 +274,13 @@ else
 					));
 						
 					//On fait la liste des visites journalières
-					$result = $Sql->query_while ("SELECT stats_month, SUM(nbr) AS total
-				FROM " . StatsSetup::$stats_table . "
-				WHERE stats_year = '" . $visit_year . "'
-				GROUP BY stats_month");
-					while ($row = $Sql->fetch_assoc($result))
+					$result = $db_querier->select("SELECT stats_month, SUM(nbr) AS total
+					FROM " . StatsSetup::$stats_table . "
+					WHERE stats_year = :stats_year
+					GROUP BY stats_month", array(
+						'stats_year' => $visit_year
+					));
+					while ($row = $result->fetch())
 					{
 						//On affiche les stats numériquement dans un tableau en dessous
 						$Template->assign_block_vars('value', array(
@@ -290,29 +292,23 @@ else
 			}
 			else
 			{
-				$result = $Sql->query_while ("SELECT SUM(nbr) AS total
-				FROM " . StatsSetup::$stats_table . "
-				WHERE stats_year = '" . $visit_year . "'
-				GROUP BY stats_month");
-				$max_month = 1;
-					
-				while ($row = $Sql->fetch_assoc($result))
-				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
-					
-
 				$Template->put_all(array(
 					'C_STATS_NO_GD' => true
 				));
-					
+				
 				$i = 1;
-				$last_month = 1;
+				$last_month = $max_month = 1;
 				$months_not_empty = array();
-				$result = $Sql->query_while ("SELECT stats_month, SUM(nbr) AS total
+				$result = $db_querier->select("SELECT stats_month, SUM(nbr) AS total
 				FROM " . StatsSetup::$stats_table . "
-				WHERE stats_year = '" . $visit_year . "'
-				GROUP BY stats_month");
-				while ($row = $Sql->fetch_assoc($result))
+				WHERE stats_year = :stats_year
+				GROUP BY stats_month", array(
+					'stats_year' => $visit_year
+				));
+				while ($row = $result->fetch())
 				{
+					$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
+					
 					$diff = 0;
 					if ($row['stats_month'] != $i)
 					{
@@ -383,7 +379,7 @@ else
 			$previous_year = ($month > 1) ? $year : $year - 1;
 
 			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-			$info = PersistenceContext::get_querier()->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr'), 'WHERE stats_year=:year AND stats_month=:month GROUP BY stats_month', array('year' => $year, 'month' => $month));
+			$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr'), 'WHERE stats_year=:year AND stats_month=:month GROUP BY stats_month', array('year' => $year, 'month' => $month));
 				
 			$Template->put_all(array(
 				'C_STATS_VISIT' => true,
@@ -409,7 +405,7 @@ else
 				}
 
 				//Année maximale
-				$info_year = PersistenceContext::get_querier()->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+				$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
@@ -431,10 +427,14 @@ else
 					));
 						
 					//On fait la liste des visites journalières
-					$result = $Sql->query_while("SELECT nbr, stats_day AS day
-				FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-				ORDER BY stats_day");
-					while ($row = $Sql->fetch_assoc($result))
+					$result = $db_querier->select("SELECT nbr, stats_day AS day
+					FROM " . StatsSetup::$stats_table . "
+					WHERE stats_year = :year AND stats_month = :month
+					ORDER BY stats_day", array(
+						'year' => $year,
+						'month' => $month
+					));
+					while ($row = $result->fetch())
 					{
 						$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
 
@@ -461,10 +461,14 @@ else
 
 						//On fait la liste des visites journalières
 						$j = 0;
-						$result = $Sql->query_while("SELECT nbr, stats_day AS day
-					FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-					ORDER BY stats_day");
-						while ($row = $Sql->fetch_assoc($result))
+						$result = $db_querier->select("SELECT nbr, stats_day AS day
+						FROM " . StatsSetup::$stats_table . " 
+						WHERE stats_year = :year AND stats_month = :month
+						ORDER BY stats_day", array(
+							'year' => $year,
+							'month' => $month
+						));
+						while ($row = $result->fetch())
 						{
 							//Complétion des jours précédent le premier enregistrement du mois.
 							if ($j == 0)
@@ -560,11 +564,11 @@ else
 		}
 
 		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-		$info = PersistenceContext::get_querier()->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages'), $condition, array('year' => $year, 'month' => $month, 'day' => $day));
+		$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages'), $condition, array('year' => $year, 'month' => $month, 'day' => $day));
 
 		
 		//On affiche les visiteurs totaux et du jour
-		$compteur_total = $Sql->query("SELECT SUM(pages) FROM " . PREFIX . "stats");
+		$compteur_total = $db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)');
 		$compteur_day = array_sum(StatsSaver::retrieve_stats('pages')) + 1;
 		$compteur_total = $compteur_total + $compteur_day;
 		$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
@@ -605,7 +609,7 @@ else
 			));
 
 			//Année maximale
-			$info_year = PersistenceContext::get_querier()->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+			$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 			
 			$years = '';
 			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
@@ -625,11 +629,13 @@ else
 					));
 						
 					//On fait la liste des visites journalières
-					$result = $Sql->query_while ("SELECT stats_month, SUM(pages) AS total
-				FROM " . StatsSetup::$stats_table . "
-				WHERE stats_year = '" . $pages_year . "'
-				GROUP BY stats_month");
-					while ($row = $Sql->fetch_assoc($result))
+					$result = $db_querier->select("SELECT stats_month, SUM(pages) AS total
+					FROM " . StatsSetup::$stats_table . "
+					WHERE stats_year = :year
+					GROUP BY stats_month", array(
+						'year' => $pages_year
+					));
+					while ($row = $result->fetch())
 					{
 						//On affiche les stats numériquement dans un tableau en dessous
 						$Template->assign_block_vars('value', array(
@@ -641,28 +647,20 @@ else
 			}
 			else
 			{
-				$result = $Sql->query_while ("SELECT SUM(nbr) AS total
-				FROM " . StatsSetup::$stats_table . "
-				WHERE stats_year = '" . $visit_year . "'
-				GROUP BY stats_month");
-				$max_month = 1;
-					
-				while ($row = $Sql->fetch_assoc($result))
-				$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
-					
-
 				$Template->put_all(array(
 					'C_STATS_NO_GD' => true
 				));
-					
+				
 				$i = 1;
-				$last_month = 1;
+				$last_month = $max_month = 1;
 				$months_not_empty = array();
-				$result = $Sql->query_while ("SELECT stats_month, SUM(pages) AS total
+				$result = $db_querier->select("SELECT stats_month, SUM(nbr) AS total
 				FROM " . StatsSetup::$stats_table . "
-				WHERE stats_year = '" . $pages_year . "'
-				GROUP BY stats_month");
-				while ($row = $Sql->fetch_assoc($result))
+				WHERE stats_year = :year
+				GROUP BY stats_month", array(
+					'year' => $pages_year
+				));
+				while ($row = $result->fetch())
 				{
 					$diff = 0;
 					if ($row['stats_month'] != $i)
@@ -766,7 +764,7 @@ else
 				}
 
 				//Année maximale
-				$info_year = PersistenceContext::get_querier()->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+				$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 			
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
@@ -783,10 +781,14 @@ else
 				));
 
 				//On fait la liste des visites journalières
-				$result = $Sql->query_while("SELECT pages, stats_day, stats_month, stats_year
-			FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-			ORDER BY stats_day");
-				while ($row = $Sql->fetch_assoc($result))
+				$result = $db_querier->select("SELECT pages, stats_day, stats_month, stats_year
+				FROM " . StatsSetup::$stats_table . "
+				WHERE stats_year = :year AND stats_month = :month
+				ORDER BY stats_day", array(
+					'year' => $year,
+					'month' => $month
+				));
+				while ($row = $result->fetch())
 				{
 					$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 						
@@ -834,7 +836,7 @@ else
 				}
 
 				//Année maximale
-				$info_year = PersistenceContext::get_querier()->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
+				$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 			
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
@@ -857,10 +859,14 @@ else
 					));
 						
 					//On fait la liste des visites journalières
-					$result = $Sql->query_while("SELECT pages, stats_day, stats_month, stats_year
-				FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-				ORDER BY stats_day");
-					while ($row = $Sql->fetch_assoc($result))
+					$result = $db_querier->select("SELECT pages, stats_day, stats_month, stats_year
+					FROM " . StatsSetup::$stats_table . "
+					WHERE stats_year = :year AND stats_month = :month
+					ORDER BY stats_day", array(
+						'year' => $year,
+						'month' => $month
+					));
+					while ($row = $result->fetch())
 					{
 						$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 
@@ -887,10 +893,14 @@ else
 
 						//On fait la liste des visites journalières
 						$j = 0;
-						$result = $Sql->query_while("SELECT pages, stats_day AS day, stats_month, stats_year
-					FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-					ORDER BY stats_day");
-						while ($row = $Sql->fetch_assoc($result))
+						$result = $db_querier->select("SELECT pages, stats_day AS day, stats_month, stats_year
+						FROM " . StatsSetup::$stats_table . "
+						WHERE stats_year = :year AND stats_month = :month
+						ORDER BY stats_day", array(
+							'year' => $year,
+							'month' => $month
+						));
+						while ($row = $result->fetch())
 						{
 							//Complétion des jours précédent le premier enregistrement du mois.
 							if ($j == 0)
@@ -964,7 +974,7 @@ else
 	{
 		include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
 		
-		$nbr_referer = $Sql->query("SELECT COUNT(DISTINCT(url)) FROM " . StatsSetup::$stats_referer_table . " WHERE type = 0");
+		$nbr_referer = $db_querier->count(StatsSetup::$stats_referer_table, 'WHERE type = 0', array(), 'DISTINCT(url)');
 		
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$pagination = new ModulePagination($page, $nbr_referer, $_NBR_ELEMENTS_PER_PAGE);
@@ -976,13 +986,18 @@ else
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$result = $Sql->query_while ("SELECT id, count(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
+		$result = $db_querier->select("SELECT id, count(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 		FROM " . PREFIX . "stats_referer
 		WHERE type = 0
 		GROUP BY url
 		ORDER BY total_visit DESC
-		" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE));
-		while ($row = $Sql->fetch_assoc($result))
+		LIMIT :number_items_per_page OFFSET :display_from",
+			array(
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+			)
+		);
+		while ($row = $result->fetch())
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 			
@@ -1016,7 +1031,7 @@ else
 	{
 		include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
 		
-		$nbr_keyword = $Sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . StatsSetup::$stats_referer_table . " WHERE type = 1");
+		$nbr_keyword = $db_querier->count(StatsSetup::$stats_referer_table, 'WHERE type = 1', array(), 'DISTINCT(relative_url)');
 		
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$pagination = new ModulePagination($page, $nbr_keyword, $_NBR_ELEMENTS_PER_PAGE);
@@ -1028,13 +1043,18 @@ else
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$result = $Sql->query_while ("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
+		$result = $db_querier->select("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 		FROM " . PREFIX . "stats_referer
 		WHERE type = 1
 		GROUP BY relative_url
 		ORDER BY total_visit DESC
-		" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE));
-		while ($row = $Sql->fetch_assoc($result))
+		LIMIT :number_items_per_page OFFSET :display_from",
+			array(
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+			)
+		);
+		while ($row = $result->fetch())
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 			
