@@ -195,7 +195,7 @@ class CategoriesManager
 			}
 			else
 			{
-				// TODO error new id parent is it children
+				throw new IllegalArgumentException('You can not move this category is one of its childs category !');
 			}
 		}
 		else
