@@ -28,7 +28,7 @@
 require_once 'init.php';
 
 $running_module_name = Environment::get_running_module_name();
-if (!in_array($running_module_name, array('user', 'admin', 'kernel', '')))
+if (!in_array($running_module_name, array('user', 'admin', 'kernel')))
 {
 	if (ModulesManager::is_module_installed($running_module_name))
 	{

@@ -94,7 +94,7 @@ class NotationService
 		}
 		else
 		{
-			throw new NotationScaleIsEmptyException();
+			throw new Exception('The notation scale is empty');
 		}
 	}
 	

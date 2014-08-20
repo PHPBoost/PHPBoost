@@ -29,6 +29,7 @@ define('RELOAD_CACHE', true);
 define('NO_FATAL_ERROR_CACHE', true);
 
 /**
+ * @deprecated
  * @package {@package}
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class is the cache manager of PHPBoost.
@@ -38,27 +39,6 @@ define('NO_FATAL_ERROR_CACHE', true);
  */
 class Cache
 {
-	private static $sql;
-	
-	public static function __static()
-	{
-		self::$sql = PersistenceContext::get_sql();
-	}
-	
-	/**
-	 * @desc Builds a Cache object. Check if the directory in which the cache is written is writable.
-	 */
-	function Cache()
-	{
-		if (!is_dir(PATH_TO_ROOT . '/cache') || !is_writable(PATH_TO_ROOT . '/cache'))
-		{
-			//Enregistrement dans le log d'erreur.
-			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                'Cache -> Le dossier /cache doit être inscriptible, donc en CHMOD 777', UserErrorController::FATAL);
-            DispatchManager::redirect($controller);
-		}
-	}
-
 	/**
 	 * @desc Loads a file file.
 	 * @param string $file Identifier of the cache file (for example the name of your module).

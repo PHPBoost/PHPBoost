@@ -33,7 +33,7 @@
 class ImageResizer
 {
 	/**
-	 * @throws GDNotAvailableException if the GD extension is not loaded
+	 * @throws Exception if the GD extension is not loaded
 	 */
 	public function resize(Image $image, $width, $height, $directory = '')
 	{
@@ -101,7 +101,7 @@ class ImageResizer
 					return imagecreatefromgif($Image->get_path());
 				break;
 			default:
-				throw new MimeTypeNotSupportedException($Image->get_mime_type());
+				throw new UnsupportedOperationException($image->get_mime_type() . ' mime type is not supported.');
 		}
 	}
 	
@@ -143,19 +143,19 @@ class ImageResizer
 				return imagegif($create_picture, $directory);
 					break;
 			default:
-				throw new MimeTypeNotSupportedException($image->get_mime_type());
+				throw new UnsupportedOperationException($image->get_mime_type() . ' mime type is not supported.');
 		}
 	}
 	
 	/**
-	 * @throws GDNotAvailableException if the GD extension is not loaded
+	 * @throws Exception if the GD extension is not loaded
 	 */
 	private function assert_gd_extension_is_loaded()
 	{
 		$server_configuration = new ServerConfiguration();
 		if (!$server_configuration->has_gd_library())
 		{
-			throw new GDNotAvailableException();
+			throw new Exception('The GD extension is required but not loaded.');
 		}
 	}
 }
