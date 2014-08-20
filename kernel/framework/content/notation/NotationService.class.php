@@ -191,9 +191,12 @@ class NotationService
 	public static function delete_notes_id_in_module($module_name, $id_in_module)
 	{
 		try {
-			NotationDAO::delete_average_notes_by_id_in_module($module_name, $id_in_module);
-			NotationDAO::delete_notes_by_id_in_module($module_name, $id_in_module);
-		} catch (Exception $e) {
+			$condition = 'WHERE module_name=:module_name AND id_in_module=:id_in_module';
+			$parameters = array('module_name' => $module_name, 'id_in_module' => $id_in_module);
+			
+			self::$db_querier->delete(DB_TABLE_AVERAGE_NOTES, $condition, $parameters);
+			self::$db_querier->delete(DB_TABLE_NOTE, $condition, $parameters);
+		} catch (MySQLQuerierException $e) {
 		}
 	}
 	
@@ -205,9 +208,12 @@ class NotationService
 	public static function delete_notes_module($module_name)
 	{
 		try {
-			NotationDAO::delete_all_notes_by_module($module_name);
-			NotationDAO::delete_all_average_notes_by_module($module_name);
-		} catch (Exception $e) {
+			$condition = 'WHERE module_name=:module_name AND id_in_module=:id_in_module';
+			$parameters = array('module_name' => $module_name, 'id_in_module' => $id_in_module);
+				
+			self::$db_querier->delete(DB_TABLE_AVERAGE_NOTES, $condition, $parameters);
+			self::$db_querier->delete(DB_TABLE_NOTE, $condition, $parameters);
+		} catch (MySQLQuerierException $e) {
 		}
 	}
 	
@@ -265,25 +271,64 @@ class NotationService
 		if (self::$user->check_level(User::MEMBER_LEVEL))
 		{
 			$note_is_valid = $notation->get_note() >= 0 && $notation->get_note() <= $notation->get_notation_scale() ? true : false;
-			$member_already_notation = NotationDAO::get_member_already_noted($notation);
+			$member_already_notation = self::$db_querier->count(DB_TABLE_NOTE, 'WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module', array(
+				'module_name' => $notation->get_module_name(), 
+				'id_in_module' => $notation->get_id_in_module(),
+				'user_id' => $notation->get_user_id()
+			));
 			
 			if (!$member_already_notation && $note_is_valid)
 			{
-				NotationDAO::insert_note($notation);
-				$nbr_notes = NotationDAO::get_count_average_notes_by_id_in_module($notation);
+				self::$db_querier->insert(DB_TABLE_NOTE, array(
+					'module_name' => $notation->get_module_name(),
+					'id_in_module' => $notation->get_id_in_module(),
+					'user_id' => $notation->get_user_id(),
+					'note' => $notation->get_note()
+				));
+				
+				$condition = 'WHERE module_name=:module_name AND id_in_module=:id_in_module';
+				$parameters = array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module());
+				
+				$nbr_notes = self::$db_querier->count(DB_TABLE_AVERAGE_NOTES, $condition, $parameters);
 				if ($nbr_notes == 0)
 				{
-					NotationDAO::insert_average_notes($notation);
+					self::$db_querier->insert(DB_TABLE_AVERAGE_NOTES, array(
+						'module_name' => $notation->get_module_name(),
+						'id_in_module' => $notation->get_id_in_module(),
+						'average_notes' => self::calculates_average_notes($notation),
+						'number_notes' => 1
+					));
 				}
 				else
 				{
-					NotationDAO::update_average_notes($notation);
+					self::$db_querier->update(DB_TABLE_AVERAGE_NOTES, array(
+						'average_notes' => self::calculates_average_notes($notation), 
+						'number_notes' => self::get_number_notes($notation) + 1)
+					, $condition, $parameters);
 				}
 			}
 		}
 		else
 		{
 			DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
+		}
+	}
+	
+	private static function calculates_average_notes(Notation $notation)
+	{
+		try {
+			$result = self::$db_querier->select_rows(DB_TABLE_NOTE, array('note'), 'WHERE module_name=:module_name AND id_in_module=:id_in_module', 
+			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
+			
+			$notes = 0;
+			while ($row = $result->fetch())
+			{
+				$notes += $row['note'];
+			}
+
+			return (round(($notes / $result->get_rows_count()) / 0.25) * 0.25);
+		} catch (RowNotFoundException $e) {
+			return 0;
 		}
 	}
 }
