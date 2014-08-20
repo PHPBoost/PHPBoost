@@ -175,7 +175,8 @@ class UserRegistrationController extends AbstractController
 		}
 		
 		$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('login'), $this->form->get_value('password'));
-		$user_id = UserService::create($user, $auth_method, $user_aprobation, $registration_pass);
+		$auth_method->set_association_parameters($user_aprobation, $registration_pass);
+		$user_id = UserService::create($user, $auth_method);
 				
 		try {
 			MemberExtendedFieldsService::register_fields($this->form, $user_id);

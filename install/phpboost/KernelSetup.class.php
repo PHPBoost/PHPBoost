@@ -354,13 +354,17 @@ class KernelSetup
 			'registration_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'last_connection_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'groups' => array('type' => 'text', 'length' => 65000, 'default' => "''"),
-			'autoconnect_key' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'warning_percentage' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'delay_banned' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'delay_readonly' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 		);
 
-		$options = array('primary' => array('user_id'));
+		$options = array(
+		'primary' => array('user_id'),
+		'indexes' => array(
+			'display_name' => array('type' => 'unique', 'fields' => 'display_name'),
+			'email' => array('type' => 'unique', 'fields' => 'email')
+		));
 		self::$db_utils->create_table(self::$member_table, $fields, $options);
 	}
 
@@ -512,6 +516,7 @@ class KernelSetup
 			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'method' => array('type' => 'string', 'length' => 32, 'default' => "''"),
 			'identifier' => array('type' => 'string', 'length' => 128, 'default' => "''"),
+			'autoconnect_key' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'data' => array('type' => 'text', 'length' => 65000)
 		);
 
