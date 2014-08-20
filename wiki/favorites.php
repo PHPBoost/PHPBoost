@@ -47,7 +47,7 @@ $remove_favorite = retrieve(GET, 'del', 0);
 if ($add_favorite > 0)//Ajout d'un favori
 {
 	//on vérifie que l'article existe
-	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "WHERE id = '" . $add_favorite . "'");
+	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('encoded_title'), 'WHERE id = :id', array('id' => $add_favorite));
 	if (empty($article_infos['encoded_title'])) //L'article n'existe pas
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 	//On regarde que le sujet n'est pas en favoris
@@ -66,7 +66,7 @@ elseif ($remove_favorite > 0)
     AppContext::get_session()->csrf_get_protect();
     
 	//on vérifie que l'article existe
-	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "WHERE id = '" . $remove_favorite . "'");
+	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('encoded_title'), 'WHERE id = :id', array('id' => $remove_favorite));
 	if (empty($article_infos['encoded_title'])) //L'article n'existe pas
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 		
@@ -97,23 +97,23 @@ else
 		$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 	
 	//on liste les favoris
-	$result = $Sql->query_while("SELECT f.id, a.id, a.title, a.encoded_title
+	$result = PersistenceContext::get_querier()->select("SELECT f.id, a.id, a.title, a.encoded_title
 	FROM " . PREFIX . "wiki_favorites f
 	LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = f.id_article
-	WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'"
-	);
-	
-	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
-	
-	if ($num_rows == 0)
-	{
-		$Template->assign_block_vars('no_favorite', array(
-			'L_NO_FAVORITE' => $LANG['wiki_no_favorite']
-		));
-	}
+	WHERE user_id = :id", array(
+		'id' => AppContext::get_current_user()->get_id()
+	));
+
+	$Template->put_all(array(
+		'NO_FAVORITE' => $result->get_rows_count() == 0,
+		'L_FAVORITES' => $LANG['wiki_favorites'],
+		'L_NO_FAVORITE' => $LANG['wiki_no_favorite'],
+		'L_TITLE' => $LANG['title'],
+		'L_UNTRACK' => $LANG['wiki_unwatch']
+	));
 	
 	$module_data_path = $Template->get_pictures_data_path();
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		$Template->assign_block_vars('list', array(
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
@@ -122,13 +122,7 @@ else
 			'ACTIONS' => '<a href="' . url('favorites.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" title="' . $LANG['wiki_unwatch_this_topic'] . '" class="fa fa-delete" data-confirmation="' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '"></a>'
 		));
 	}
-
-	$Template->put_all(array(
-		'NO_FAVORITE' => ($num_rows == 0),
-		'L_FAVORITES' => $LANG['wiki_favorites'],
-		'L_TITLE' => $LANG['title'],
-		'L_UNTRACK' => $LANG['wiki_unwatch']
-	));
+	$result->dispose();
 
 	$Template->display();
 }

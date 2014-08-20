@@ -54,6 +54,8 @@ $del_to_remove = retrieve(POST, 'id_to_remove', 0);
 $report_cat = retrieve(POST, 'report_cat', 0);
 $remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppression
 
+$db_querier = PersistenceContext::get_querier();
+
 if ($id_auth > 0)
 {
 	if (!AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RESTRICTION))
@@ -98,7 +100,7 @@ if ($id_change_status > 0)
 	else
 		$id_status = 0;
 		
-	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "auth", "WHERE id = '" . $id_change_status . "'");
+	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_change_status));
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
@@ -118,7 +120,7 @@ if ($id_change_status > 0)
 }
 elseif ($move > 0) //Déplacement d'un article
 {
-	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "is_cat", "encoded_title", "id_cat", "auth", "WHERE id = '" . $move . "'");
+	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('is_cat', 'encoded_title', 'id_cat', 'auth'), 'WHERE id = :id', array('id' => $move));
 	if ( empty($article_infos['encoded_title']))//Ce n'est pas un article ou une catégorie
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 		
@@ -161,7 +163,7 @@ elseif ($move > 0) //Déplacement d'un article
 }
 elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 {
-	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "*", "WHERE id = '" . $id_to_rename . "'");
+	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('*'), 'WHERE id = :id', array('id' => $id_to_rename));
 		
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -232,7 +234,7 @@ elseif ($del_redirection > 0)//Supprimer une redirection
 	$is_redirection = $Sql->query("SELECT redirect FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_redirection . "'");
 	if ($is_redirection > 0)
 	{
-		$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "auth", "WHERE id = '" . $is_redirection . "'");
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $is_redirection));
 		
 		$general_auth = empty($article_infos['auth']) ? true : false;
 		$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -243,13 +245,13 @@ elseif ($del_redirection > 0)//Supprimer une redirection
 			DispatchManager::redirect($error_controller);
 		} 
 		
-		PersistenceContext::get_querier()->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_redirection));
+		$db_querier->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_redirection));
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 }
 elseif ($create_redirection > 0 && !empty($redirection_title))
 {
-	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = '" . $create_redirection . "'");
+	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('*'), 'WHERE id = :id', array('id' => $create_redirection));
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -281,7 +283,7 @@ elseif (!empty($restore)) //on restaure un ancien article
 	if (!empty($id_article))
 	{
 		//On récupère l'ancien id du contenu
-		$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', 'id_contents', 'encoded_title', 'auth', 'WHERE id = ' . $id_article);
+		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('id_contents', 'encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_article));
 		
 		$general_auth = empty($article_infos['auth']) ? true : false;
 		$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -308,8 +310,8 @@ elseif ($del_archive > 0)
     //Vérification de la validité du jeton
     AppContext::get_session()->csrf_get_protect();
     
-	$contents_infos = $Sql->query_array(PREFIX . "wiki_contents", "activ", "id_article", "WHERE id_contents = '" . $del_archive . "'");
-	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "auth", "WHERE id = '" . $contents_infos['id_article'] . "'");
+	$contents_infos = $db_querier->select_single_row(PREFIX . "wiki_contents", array('activ', 'id_article'), 'WHERE id_contents = :id', array('id' => $del_archive));
+	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $contents_infos['id_article']));
 	
 	$general_auth = empty($article_infos['auth']);
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -321,7 +323,7 @@ elseif ($del_archive > 0)
 	} 
 	
 	if ($contents_infos['activ'] == 0) //C'est une archive -> on peut supprimer
-		PersistenceContext::get_querier()->delete(PREFIX . 'wiki_contents', 'WHERE id_contents=:id', array('id' => $del_archive));
+		$db_querier->delete(PREFIX . 'wiki_contents', 'WHERE id_contents=:id', array('id' => $del_archive));
 	if (!empty($article_infos['encoded_title'])) //on redirige vers l'article
 		AppContext::get_response()->redirect('/wiki/' . url('history.php?id=' . $contents_infos['id_article'], '', '&'));
 }
@@ -330,7 +332,7 @@ elseif ($del_article > 0) //Suppression d'un article
     //Vérification de la validité du jeton
     AppContext::get_session()->csrf_get_protect();
     
-	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "auth", "encoded_title", "id_cat", "WHERE id = '" . $del_article . "'");
+	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('auth', 'encoded_title', 'id_cat'), 'WHERE id = :id', array('id' => $del_article));
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -342,8 +344,8 @@ elseif ($del_article > 0) //Suppression d'un article
 	} 
 	
 	//On rippe l'article
-	PersistenceContext::get_querier()->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_article));
-	PersistenceContext::get_querier()->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $del_article));
+	$db_querier->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_article));
+	$db_querier->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $del_article));
 	
 	CommentsService::delete_comments_topic_module('wiki', $del_article);
 
@@ -360,7 +362,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 {
 	$remove_action = ($remove_action == 'move_all') ? 'move_all' : 'remove_all';
 	
-	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "id_cat", "auth", "WHERE id = '" . $del_to_remove . "'");
+	$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'id_cat', 'auth'), 'WHERE id = :id', array('id' => $del_to_remove));
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -391,9 +393,9 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	}
 
 	//Quoi qu'il arrive on supprime l'article associé
-	PersistenceContext::get_querier()->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $del_to_remove));
-	PersistenceContext::get_querier()->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_to_remove));
-	PersistenceContext::get_querier()->delete(PREFIX . 'wiki_cats', 'WHERE id=:id', array('id' => $del_to_remove));
+	$db_querier->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $del_to_remove));
+	$db_querier->delete(PREFIX . 'wiki_articles', 'WHERE id=:id', array('id' => $del_to_remove));
+	$db_querier->delete(PREFIX . 'wiki_cats', 'WHERE id=:id', array('id' => $del_to_remove));
 
 	CommentsService::delete_comments_topic_module('wiki', $del_to_remove);
 	
@@ -401,17 +403,21 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	{
 		foreach ($sub_cats as $id) //Chaque sous-catégorie
 		{
-			$result = $Sql->query_while ("SELECT id FROM " . PREFIX . "wiki_articles WHERE id_cat = '" . $id . "'");
-			while ($row = $Sql->fetch_assoc($result)) //On supprime toutes les archives de chaque article avant de le supprimer lui-même
+			$result = $db_querier->select("SELECT id
+				FROM " . PREFIX . "wiki_articles
+				WHERE id_cat = :id", array(
+					'id' => $id
+			));
+			
+			while ($row = $result->fetch()) //On supprime toutes les archives de chaque article avant de le supprimer lui-même
 			{
-				PersistenceContext::get_querier()->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $row['id']));
+				$db_querier->delete(PREFIX . 'wiki_contents', 'WHERE id_article=:id', array('id' => $row['id']));
 				CommentsService::delete_comments_topic_module('wiki', $row['id']);
 			}
-				
 			$result->dispose();
 			
-			PersistenceContext::get_querier()->delete(PREFIX . 'wiki_articles', 'WHERE id_cat=:id', array('id' => $id));
-			PersistenceContext::get_querier()->delete(PREFIX . 'wiki_cats', 'WHERE id=:id', array('id' => $id));
+			$db_querier->delete(PREFIX . 'wiki_articles', 'WHERE id_cat=:id', array('id' => $id));
+			$db_querier->delete(PREFIX . 'wiki_cats', 'WHERE id=:id', array('id' => $id));
 		}
 		$Cache->Generate_module_file('wiki');
 

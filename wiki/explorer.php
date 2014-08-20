@@ -50,12 +50,12 @@ foreach ($_WIKI_CATS as $key => $value)
 	if ($value['id_parent'] == 0)
 		$root .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $value['name'] . '</a></li>';
 }
-$result = $Sql->query_while("SELECT title, id, encoded_title
+$result = PersistenceContext::get_querier()->select("SELECT title, id, encoded_title
 	FROM " . PREFIX . "wiki_articles a
 	WHERE id_cat = 0
 	AND a.redirect = 0
 	ORDER BY is_cat DESC, title ASC");
-while ($row = $Sql->fetch_assoc($result))
+while ($row = $result->fetch())
 {
 	$root .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><i class="fa fa-file"></i>' . $row['title'] . '</a></li>';
 }
@@ -71,12 +71,12 @@ $template->put_all(array(
 ));
 
 $contents = '';
-$result = $Sql->query_while("SELECT c.id, a.title, a.encoded_title
+$result = PersistenceContext::get_querier()->select("SELECT c.id, a.title, a.encoded_title
 FROM " . PREFIX . "wiki_cats c
 LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
 WHERE c.id_parent = 0
 ORDER BY title ASC");
-while ($row = $Sql->fetch_assoc($result))
+while ($row = $result->fetch())
 {
 	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'");
 	if ($sub_cats_number > 0)

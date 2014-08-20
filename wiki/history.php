@@ -37,7 +37,7 @@ define('TITLE' , $LANG['wiki_history']);
 
 if (!empty($id_article))
 {
-	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', 'title', 'auth', 'encoded_title', 'id_cat', 'WHERE id = ' . $id_article);
+	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', array('title', 'auth', 'encoded_title', 'id_cat'), 'WHERE id = :id', array('id' => $id_article));
 }
 
 $bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
@@ -62,14 +62,16 @@ if (!empty($id_article))
 	$delete_auth = (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
 	
 	//on va chercher le contenu de la page
-	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.display_name, m.groups, m.level, c.id_article, c.activ
+	$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.display_name, m.groups, m.level, c.id_article, c.activ
 		FROM " . PREFIX . "wiki_contents c
 		LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
-		WHERE c.id_article = '" . $id_article . "'
-		ORDER BY c.timestamp DESC");
+		WHERE c.id_article = :id
+		ORDER BY c.timestamp DESC", array(
+			'id' => $id_article
+		));
 	
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		//Restauration
 		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . AppContext::get_session()->get_token()) . '" class="fa fa-undo" title="' . $LANG['wiki_restore_version'] . '"></a> &nbsp; ' : '';
@@ -136,14 +138,20 @@ else //On affiche la liste des modifications
 		'PAGINATION' => $pagination->display(),
 	));
 
-	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.display_name, m.groups, m.level, c.id_article, c.activ,  a.id_contents
+	$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.display_name, m.groups, m.level, c.id_article, c.activ,  a.id_contents
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
 		WHERE a.redirect = 0
 		ORDER BY " . ($field == 'title' ? 'a' : 'c') . "." . $field . " " . $order . "
-		" . $Sql->limit($pagination->get_display_from(), $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY));
-	while ($row = $Sql->fetch_assoc($result))
+		LIMIT :number_items_per_page OFFSET :display_from",
+			array(
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+			)
+		);
+	
+	while ($row = $result->fetch())
 	{
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
@@ -154,6 +162,7 @@ else //On affiche la liste des modifications
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 		));
 	}
+	$result->dispose();
 	
 	$Template->display();
 }

@@ -261,13 +261,13 @@
 					</td>
 				</tr>
 				# END redirect.list #
-				# START redirect.no_redirection #
+				# IF NO_REDIRECTION #
 				<tr>
 					<td colspan="2">
-						{redirect.no_redirection.L_NO_REDIRECTION}
+						{L_NO_REDIRECTION}
 					</td>
 				</tr>
-				# END redirect.no_redirection #
+				# ENDIF #
 			</tbody>
 		</table>
 		# END redirect #

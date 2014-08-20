@@ -27,13 +27,6 @@
 
 class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 {
-	private $sql_querier;
-
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-	}
-	
 	public function get_home_page()
 	{
 		return new DefaultHomePage($this->get_title(), $this->get_view());
@@ -66,21 +59,22 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 
 		if ($config->get_number_articles_on_index() > 1)
 		{
-			$result = $this->sql_querier->query_while("SELECT a.title, a.encoded_title, a.id
+			$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, a.id
 			FROM " . PREFIX . "wiki_articles a
 			LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 			WHERE a.redirect = 0
 			ORDER BY c.timestamp DESC
-			LIMIT 0, " . $config->get_number_articles_on_index());
-			$articles_number = $this->sql_querier->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'");
+			LIMIT :number_articles_on_index OFFSET 0", array(
+				'number_articles_on_index' => $config->get_number_articles_on_index()
+			));
 
 			$Template->assign_block_vars('last_articles', array(
-				'C_ARTICLES' => $articles_number,
+				'C_ARTICLES' => $result->get_rows_count(),
 				'L_ARTICLES' => $LANG['wiki_last_articles_list'],
 			));
 
 			$i = 0;
-			while ($row = $this->sql_querier->fetch_assoc($result))
+			while ($row = $result->fetch())
 			{
 				$Template->assign_block_vars('last_articles.list', array(
 					'ARTICLE' => $row['title'],
@@ -89,6 +83,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 				$i++;
 			}
+			$result->dispose();
 
 			if ($i == 0)
 			{

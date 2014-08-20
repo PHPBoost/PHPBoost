@@ -43,13 +43,14 @@ if ($id_cat != 0)
 {
 	echo '<ul class="no-list">';
 	//On sélectionne les répetoires dont l'id parent est connu
-	$result = $Sql->query_while("SELECT c.id, a.title, a.encoded_title
+	$result = PersistenceContext::get_querier()->select("SELECT c.id, a.title, a.encoded_title
 	FROM " . PREFIX . "wiki_cats c
 	LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
-	WHERE c.id_parent = " . $id_cat . "
-	ORDER BY title ASC");
-	$nbr_subcats = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $id_cat. "'");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE c.id_parent = :id
+	ORDER BY title ASC", array(
+		'id' => $id_cat
+	));
+	while ($row = $result->fetch())
 	{
 		//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
 		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'");
@@ -96,12 +97,14 @@ elseif (!empty($open_cat) || $root == 1)
 		if ($value['id_parent'] == $open_cat)
 			$return .= '<li><a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);"><i class="fa fa-folder"></i>' . $value['name'] . '</a></li>';
 	}
-	$result = $Sql->query_while("SELECT title, id, encoded_title
+	$result = PersistenceContext::get_querier()->select("SELECT title, id, encoded_title
 	FROM " . PREFIX . "wiki_articles a
-	WHERE id_cat = '" . $open_cat . "'
+	WHERE id_cat = :id
 	AND a.redirect = 0
-	ORDER BY is_cat DESC, title ASC");
-	while ($row = $Sql->fetch_assoc($result))
+	ORDER BY is_cat DESC, title ASC", array(
+		'id' => $open_cat
+	));
+	while ($row = $result->fetch())
 	{
 		$return .= '<li><a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '"><i class="fa fa-file"></i>' . $row['title'] . '</a></li>';
 	}

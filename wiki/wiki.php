@@ -42,15 +42,17 @@ $parse_redirection = false;
 //Requêtes préliminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
-	$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
+	$result = PersistenceContext::get_querier()->select("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 	FROM " . PREFIX . "wiki_articles a
 	LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
-	WHERE a.encoded_title = '" . $encoded_title . "'
-	GROUP BY a.id");
-	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'");
-	$article_infos = $Sql->fetch_assoc($result);
+	WHERE a.encoded_title = :encoded_title
+	GROUP BY a.id", array(
+		'encoded_title' => $encoded_title
+	));
+	$num_rows = $result->get_rows_count();
+	$article_infos = $result->fetch();
 	$result->dispose();
 	$id_article = $article_infos['id'];
 
@@ -59,14 +61,16 @@ if (!empty($encoded_title)) //Si on connait son titre
 		$ex_title = $article_infos['title'];
 		$id_redirection = $article_infos['id'];
 		
-		$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, com_topic.number_comments, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
+		$result = PersistenceContext::get_querier()->select("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, com_topic.number_comments, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
-		WHERE a.id = '" . $article_infos['redirect'] . "'
-		GROUP BY a.id");
-		$article_infos = $Sql->fetch_assoc($result);
+		WHERE a.id = :id
+		GROUP BY a.id", array(
+			'id' => $article_infos['redirect']
+		));
+		$article_infos = $result->fetch();
 		$result->dispose();
 		$id_article = $article_infos['id'];
 		$parse_redirection = true;
@@ -79,13 +83,15 @@ if (!empty($encoded_title)) //Si on connait son titre
 //Sinon on cherche dans les archives
 elseif (!empty($id_contents))
 {
-	$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, com_topic.number_comments, f.id AS id_favorite, c.menu, c.content
+	$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, com_topic.number_comments, f.id AS id_favorite, c.menu, c.content
 	FROM " . PREFIX . "wiki_contents c
 	LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
 	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
-	WHERE c.id_contents = '" . $id_contents . "'");
-	$article_infos = $Sql->fetch_assoc($result);
+	WHERE c.id_contents = :id", array(
+		'id' => $id_contents
+	));
+	$article_infos = $result->fetch();
 	$result->dispose();
 	$id_article = $article_infos['id'];
 	$num_rows = 1;
@@ -172,25 +178,29 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 	if ($article_infos['is_cat'] == 1 && $id_contents == 0) //Catégorie non archivée
 	{
 		//On liste les articles de la catégorie et ses sous catégories
-		$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id
+		$result = PersistenceContext::get_querier()->select("SELECT a.title, a.encoded_title, a.id
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
-		WHERE a.id_cat = '" . $article_infos['id_cat'] . "' AND a.id != '" . $id_article . "' AND a.redirect = 0
-		ORDER BY a.title",
-		__LINE__, __FILE__);
+		WHERE a.id_cat = :id_cat AND a.id != :id AND a.redirect = 0
+		ORDER BY a.title", array (
+			'id_cat' => $article_infos['id_cat'],
+			'id' => $id_article
+		));
 
-		$num_articles = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE a.id_cat = '" . $article_infos['id_cat'] . "' AND a.id <> '" . $id_article . "' AND a.redirect = 0");
+		$num_articles = $result->get_rows_count();
 		
 		$Template->assign_block_vars('cat', array(
 		));
 
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			$Template->assign_block_vars('cat.list_art', array(
 				'TITLE' => $row['title'],
 				'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 			));
 		}
+		$result->dispose();
+		
 		if ($num_articles == 0)
 		$Template->assign_block_vars('cat.no_sub_article', array(
 			'NO_SUB_ARTICLE' => $LANG['wiki_no_sub_article']
