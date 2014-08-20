@@ -110,7 +110,7 @@ else //On affiche la liste des modifications
 	$order = $order == 'asc' ? 'asc' : 'desc';
 	
 	//On compte le nombre d'articles
-	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE redirect = '0'");
+	$nbr_articles = PersistenceContext::get_querier()->count(PREFIX . "wiki_articles", 'WHERE redirect = 0');
 	
 	//On instancie la classe de pagination
 	$page = AppContext::get_request()->get_getint('p', 1);

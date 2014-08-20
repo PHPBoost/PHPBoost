@@ -198,9 +198,8 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 //Fonction récursive pour l'affichage des catégories
 function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 {
-	global $_WIKI_CATS, $Sql, $Template;
+	global $_WIKI_CATS;
 	
-	$module_data_path = PATH_TO_ROOT . '/wiki/templates/';
 	$line = '';
 	foreach ($_WIKI_CATS as $key => $value)
 	{
@@ -216,7 +215,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 			else
 			{
 				//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
-				$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $key . "'");
+				$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $key));
 				//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 				if ($sub_cats_number > 0)
 					$line .= '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><i class="fa fa-plus-square-o" id="img2_' . $key . '"></i><i class="fa fa-folder" id="img_' . $key . '"></i></a><a id="class_' . $key . '" class="' . ($key == $id ? 'selected' : '') . '" href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a><span id="cat_' . $key . '"></span></li>';

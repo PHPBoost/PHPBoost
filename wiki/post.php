@@ -145,8 +145,7 @@ if (!empty($contents)) //On enregistre un article
 			}
 			
 			//On vérifie que le titre n'existe pas
-			$article_exists = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . Url::encode_rewrite($title) . "'");
-			
+			$article_exists = PersistenceContext::get_querier()->count(PREFIX . "wiki_articles", 'WHERE encoded_title = :encoded_title', array('encoded_title' => Url::encode_rewrite($title)));
 			
 			//Si il existe: message d'erreur
 			if ($article_exists > 0)
@@ -271,7 +270,7 @@ else
 		while ($row = $result->fetch())
 		{
 			$module_data_path = PATH_TO_ROOT . '/wiki/templates';
-			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'");
+			$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
 			if ($sub_cats_number > 0)
 			{	
 				$Template->assign_block_vars('create.list', array(

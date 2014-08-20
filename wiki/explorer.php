@@ -78,7 +78,7 @@ WHERE c.id_parent = 0
 ORDER BY title ASC");
 while ($row = $result->fetch())
 {
-	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'");
+	$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
 	if ($sub_cats_number > 0)
 	{	
 		$template->assign_block_vars('list', array(

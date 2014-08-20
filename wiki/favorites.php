@@ -51,7 +51,7 @@ if ($add_favorite > 0)//Ajout d'un favori
 	if (empty($article_infos['encoded_title'])) //L'article n'existe pas
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 	//On regarde que le sujet n'est pas en favoris
-	$is_favorite = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_favorites WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND id_article = '" . $add_favorite . "'");
+	$is_favorite = PersistenceContext::get_querier()->count(PREFIX . "wiki_favorites", 'WHERE user_id = :user_id AND id_article = :id_article', array('user_id' => AppContext::get_current_user()->get_id(), 'id_article' => $add_favorite));
 	if ($is_favorite == 0)
 	{
 		$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_favorites (id_article, user_id) VALUES ('" . $add_favorite . "', '" . AppContext::get_current_user()->get_id() . "')");
@@ -71,7 +71,7 @@ elseif ($remove_favorite > 0)
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 		
 	//On regarde que le sujet n'est pas en favoris
-	$is_favorite = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_favorites WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND id_article = '" . $remove_favorite . "'");
+	$is_favorite = PersistenceContext::get_querier()->count(PREFIX . "wiki_favorites", 'WHERE user_id = :user_id AND id_article = :id_article', array('user_id' => AppContext::get_current_user()->get_id(), 'id_article' => $remove_favorite));
 	//L'article est effectivement en favoris
 	if ($is_favorite > 0)
 	{

@@ -65,14 +65,16 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 //Fonction récursive pour l'affichage des catégories
 function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 {
-	global $Sql;
 	$line = '';
-	$result = $Sql->query_while("SELECT id, name
+	$result = PersistenceContext::get_querier()->select("SELECT id, name
 	FROM " . PREFIX . "upload_cat
-	WHERE user_id = '" . $user_id . "'
-	AND id_parent = '" . $id_cat . "'
-	ORDER BY name");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE user_id = :user_id
+	AND id_parent = :id_parent
+	ORDER BY name", array(
+		'user_id' => $user_id,
+		'id_parent' => $id_cat
+	));
+	while ($row = $result->fetch())
 	{
 		if (in_array($row['id'], $cats)) //Si cette catégorie contient notre catégorie, on l'explore
 		{
@@ -83,7 +85,9 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 		else
 		{
 			//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
-			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $row['id'] . "'");
+			$sub_cats_number = PersistenceContext::get_querier()->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id', array(
+				'id' => $row['id']
+			));
 			//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 			if ($sub_cats_number > 0)
 				$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
@@ -98,9 +102,13 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 //Fonction qui détermine toutes les sous-catégories d'une catégorie (récursive)
 function upload_find_subcats(&$array, $id_cat, $user_id)
 {
-	global $Sql;
-	$result = $Sql->query_while ("SELECT id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $id_cat . "' AND user_id = '" . $user_id . "'");
-	while ($row = $Sql->fetch_assoc($result))
+	$result = PersistenceContext::get_querier()->select("SELECT id
+		FROM " . DB_TABLE_UPLOAD_CAT . "
+		WHERE id_parent = :id_parent AND user_id = :user_id", array(
+			'id_parent' => $id_cat,
+			'user_id' => $user_id
+		));
+	while ($row = $result->fetch())
 	{
 		$array[] = $row['id'];
 		//On rappelle la fonction pour la catégorie fille

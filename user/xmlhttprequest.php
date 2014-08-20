@@ -18,15 +18,18 @@ if ($id_cat != 0)
 {
 	echo '<ul style="margin:0;padding:0;list-style-type:none;padding-left:30px;">';
 	//On sélectionne les répetoires dont l'id parent est connu
-	$result = $Sql->query_while("SELECT id, id_parent, name
+	$result = PersistenceContext::get_querier()->select("SELECT id, id_parent, name
 	FROM " . PREFIX . "upload_cat
-	WHERE id_parent = " . $id_cat . "
-	ORDER BY name ASC");
-	$nbr_subcats = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $id_cat. "'");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE id_parent = :id
+	ORDER BY name ASC", array (
+		'id' => $id_cat
+	));
+	while ($row = $result->fetch())
 	{
 		//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
-		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $row['id'] . "'");
+		$sub_cats_number = PersistenceContext::get_querier()->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id', array(
+			'id' => $row['id']
+		));
 		//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 		if ($sub_cats_number > 0)
 			echo '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
