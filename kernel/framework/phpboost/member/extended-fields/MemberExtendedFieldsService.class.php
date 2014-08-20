@@ -101,7 +101,7 @@ class MemberExtendedFieldsService
 					$template->add_fieldset($fieldset);
 				}
 				
-				PersistenceContext::get_sql()->query_close($result);
+				$result->dispose();
 			}
 		}
 	}
@@ -209,7 +209,7 @@ class MemberExtendedFieldsService
 				MemberExtendedFieldsFactory::display_field_update($member_extended_field);
 			}
 		}
-		PersistenceContext::get_sql()->query_close($result);
+		$result->dispose();
 	}
 	
 	/**
