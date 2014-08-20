@@ -165,7 +165,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
 						$this->delete_old_avatar($member_extended_field);
 						return $directory;
-					} catch (MimeTypeNotSupportedException $e) {
+					} catch (UnsupportedOperationException $e) {
 						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_invalid_format', 'errors'));
 					}
 				}

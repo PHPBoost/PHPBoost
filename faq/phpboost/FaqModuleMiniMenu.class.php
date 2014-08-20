@@ -36,7 +36,7 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
     {
     	if (FaqAuthorizationsService::check_authorizations()->read())
 		{
-			global $Cache, $Template, $FAQ_LANG, $FAQ_CATS, $RANDOM_QUESTIONS;
+			global $Cache, $FAQ_LANG, $FAQ_CATS, $RANDOM_QUESTIONS;
 
 			include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		

@@ -78,19 +78,8 @@ class Environment
 		self::load_static_constants();
 		DBFactory::load_prefix();
 
-		// TODO Suppress uses of $Sql in the framework
-		global $Sql;
-		$Sql = PersistenceContext::get_sql();
-		/* END DEPRECATED */
-
 		self::load_dynamic_constants();
 		self::init_session();
-
-		// TODO move in begin
-		/* DEPRECATED VARS */
-		global $Template;
-		$Template = new DeprecatedTemplate();
-		/* END DEPRECATED */
 
 		self::load_lang_files();
 		self::process_changeday_tasks_if_needed();
@@ -274,18 +263,17 @@ class Environment
 
 	private static function update_visit_counter_table()
 	{
+		$now = new Date(DATE_NOW, Timezone::SERVER_TIMEZONE);
+		$timestamp = $now->format(Date::FORMAT_TIMESTAMP);
+		
 		//We truncate the table containing the visitors of today
-		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER . " WHERE id <> 1");
+		PersistenceContext::get_querier()->delete(DB_TABLE_VISIT_COUNTER, 'WHERE id <> 1');
 
 		//We update the last changeday date
-		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
-			" SET time = '" . gmdate_format('Y-m-d', time(), Timezone::SERVER_TIMEZONE) .
-				"', total = 1 WHERE id = 1");
-
+		PersistenceContext::get_querier()->update(DB_TABLE_VISIT_COUNTER, array('time' => $timestamp, 'total' => 1), 'WHERE id = 1');
+		
 		//We insert this visitor as a today visitor
-		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
-			" (ip, time, total) VALUES('" . AppContext::get_session()->get_ip() . "', '" . gmdate_format('Y-m-d', time(),
-		Timezone::SERVER_TIMEZONE) . "', '0')");
+		PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => AppContext::get_session()->get_ip(), 'time' => $timestamp, 'total' => 0));
 	}
 
 	private static function remove_old_unactivated_member_accounts()
