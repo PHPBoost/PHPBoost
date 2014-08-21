@@ -27,13 +27,6 @@
 
 class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 {
-	private $sql_querier;
-
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-	}
-	
 	public function get_home_page()
 	{
 		return new DefaultHomePage($this->get_title(), $this->get_view());
@@ -63,7 +56,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		//Pseudo du membre connecté.
 		if (AppContext::get_current_user()->get_id() !== -1)
 			$tpl->put_all(array(
-				'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_display_name(),
+				'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_attribute('login'),
 				'C_HIDDEN_SHOUT' => true
 			));
 		else
@@ -108,15 +101,21 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		//Gestion des rangs.
 		$ranks_cache = ForumRanksCache::load()->get_ranks();
-		$result = $this->sql_querier->query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.display_name as mlogin, m.level, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.warning_percentage, m.delay_banned, m.groups, se.user_id AS connect, s.contents
+		$result = PersistenceContext::get_querier()->select("SELECT s.id, s.login, s.user_id, s.timestamp, m.display_name as mlogin, m.level, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.warning_percentage, m.delay_banned, m.groups, se.user_id AS connect, s.contents
 		FROM " . PREFIX . "shoutbox s
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
-		LEFT JOIN " . DB_TABLE_SESSIONS . " se ON se.user_id = s.user_id AND se.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
+		LEFT JOIN " . DB_TABLE_SESSIONS . " se ON se.user_id = s.user_id AND se.timestamp > :timestamp
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = s.user_id
 		GROUP BY s.id
 		ORDER BY s.timestamp DESC 
-		LIMIT " . $pagination->get_number_items_per_page() . " OFFSET " . $pagination->get_display_from());	
-		while ($row = $this->sql_querier->fetch_assoc($result))
+		LIMIT :number_items_per_page OFFSET :display_from",
+			array(
+				'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration()),
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+			)
+		);
+		while ($row = $result->fetch())
 		{
 			$row['user_id'] = (int)$row['user_id'];
 
