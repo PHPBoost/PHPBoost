@@ -58,11 +58,11 @@ else
 	$i = 0;
 	//Liste des sondages
 	$poll_list = '';
-	$result = $Sql->query_while("SELECT id, question 
+	$result = PersistenceContext::get_querier()->select("SELECT id, question 
 	FROM " . PREFIX . "poll
 	WHERE archive = 0 AND visible = 1
 	ORDER BY timestamp");
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		$selected = in_array($row['id'], $poll_config->get_displayed_in_mini_module_list()) ? 'selected="selected"' : '';
 		$poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="displayed_in_mini_module_list' . $i++ . '">' . $row['question'] . '</option>';

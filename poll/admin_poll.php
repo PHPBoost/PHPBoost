@@ -137,7 +137,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		}
 		$votes = trim($votes, '|');
 		
-		$Sql->query_inject("UPDATE " . PREFIX . "poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'");
+		PersistenceContext::get_querier()->update(PREFIX . "poll", array('question' => $question, 'answers' => substr($answers, 0, strlen($answers) - 1), 'votes' => $votes, 'type' => $type, 'archive' => $archive, 'visible' => $visible, 'start' => $start_timestamp, 'end' => $start_timestamp, 'timestamp' => $timestamp), 'WHERE id = :id', array('id' => $id_post));
 		
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
@@ -279,12 +279,17 @@ else
 		'L_SHOW' => $LANG['show']
 	)); 
 
-	$result = $Sql->query_while("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, p.user_id, m.display_name, m.groups, m.level
+	$result = PersistenceContext::get_querier()->select("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, p.user_id, m.display_name, m.groups, m.level
 	FROM " . PREFIX . "poll p
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON p.user_id = m.user_id
 	ORDER BY p.timestamp DESC 
-	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE));
-	while ($row = $Sql->fetch_assoc($result))
+	LIMIT :number_items_per_page OFFSET :display_from",
+		array(
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
+		)
+	);
+	while ($row = $result->fetch())
 	{
 		if ($row['visible'] == 2)
 			$aprob = $LANG['waiting'];

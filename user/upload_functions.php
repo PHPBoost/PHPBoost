@@ -30,18 +30,17 @@ if (defined('PHPBOOST') !== true)	exit;
 //Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
 function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 {
-	global $Sql;
 	if ($id > 0)
 	{
 		$id_cat = $id;
 		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
 		do
 		{
-			$id_cat = $Sql->query("SELECT id_parent FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $id_cat . "' AND user_id = '" . $user_id . "'");
+			$id_cat = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'id_parent', 'WHERE id = :id_cat AND user_id = :user_id', array('id_cat' => $id_cat, 'user_id' => $user_id));
 			$cats[] = $id_cat;
 		}	
 		while ($id_cat > 0);
-	}	
+	}
 
 	//Maintenant qu'on connait l'arborescence on part du début
 	$cats_list = '<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">' . show_cat_contents(0, $cats, $id, $display_select_link, $user_id) . '</ul>';

@@ -81,11 +81,11 @@ if ($read)
 		$j++;
 		if (!$unlimited_pm && ($nbr_waiting_pm - $j) >= 0)
 			continue;
-		$Sql->query_inject("UPDATE " . DB_TABLE_PM_MSG . " SET view_status = 1 WHERE id = '" . $row['last_msg_id'] . "'");
+		PersistenceContext::get_querier()->update(DB_TABLE_PM_MSG, array('view_status' => 1), 'WHERE id = :id', array('id' => $row['last_msg_id']));
 	}
 	$result->dispose();
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = '" . $nbr_waiting_pm . "' WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
+	PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_pm' => $nbr_waiting_pm), 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
 	
 	AppContext::get_response()->redirect(UserUrlBuilder::personnal_message());
 }
@@ -105,7 +105,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	if (!empty($title) && !empty($contents) && !empty($login))
 	{
 		//On essaye de récupérer le user_id, si le membre n'a pas cliqué une fois la recherche AJAX terminée.
-		$user_id_dest = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE display_name = '" . $login . "'");
+		$user_id_dest = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name = :name', array('name' => $login));
 		if (!empty($user_id_dest) && $user_id_dest != AppContext::get_current_user()->get_id())
 		{
 			//Envoi de la conversation, vérification de la boite si pleine => erreur
@@ -140,7 +140,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != AppContext::get_current_
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$login = !empty($pm_get) ? $Sql->query("SELECT display_name FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $pm_get . "'") : '';
+	$login = !empty($pm_get) ? PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $pm_get)) : '';
 	
 	$tpl->assign_block_vars('post_convers', array(
 		'U_ACTION_CONVERS' => url('.php?token=' . AppContext::get_session()->get_token()),
@@ -225,7 +225,7 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisualisation du message.
 {
 	//On récupère les info de la conversation.
-	$convers_title = $Sql->query("SELECT title FROM " . DB_TABLE_PM_TOPIC . "  WHERE id = '" . $pm_id_get . "'");
+	$convers_title = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_TOPIC, 'title', 'WHERE id = :id', array('id' => $pm_id_get));
 	
 	$tpl = new FileTemplate('user/pm.tpl');
 
@@ -338,7 +338,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 					$del_convers = true;
 			}
 			
-			$view_status = $Sql->query("SELECT view_status FROM " . DB_TABLE_PM_MSG . " WHERE id = '" . $row['last_msg_id'] . "'");
+			$view_status = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'view_status', 'WHERE id = :id', array('id' => $row['last_msg_id']));
 			$update_nbr_pm = ($view_status == '0') ? true : false;
 			PrivateMsg::delete_conversation(AppContext::get_current_user()->get_id(), $row['id'], $expd, $del_convers, $update_nbr_pm);
 		}
@@ -377,7 +377,7 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 			//Le destinataire n'a pas lu le message => on peut éditer.
 			if ($view === false)
 			{
-				$id_first = $Sql->query("SELECT MIN(id) FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm['idconvers'] . "'");
+				$id_first = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'MIN(id)', 'WHERE idconvers = :id', array('id' => $pm['idconvers']));
 				if ($pm_del > $id_first) //Suppression du message.
 				{
 					$pm_last_msg = PrivateMsg::delete($pm_to, $pm_del, $pm['idconvers']);
@@ -423,7 +423,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 		//Le destinataire n'a pas lu le message => on peut éditer.
 		if ($view === false)
 		{
-			$id_first = $Sql->query("SELECT MIN(id) as id FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm['idconvers'] . "'");
+			$id_first = PersistenceContext::get_querier()->get_column_value(DB_TABLE_PM_MSG, 'MIN(id)', 'WHERE idconvers = :id', array('id' => $pm['idconvers']));
 			if (!empty($_POST['convers']) XOR !empty($_POST['edit_pm']))
 			{
 				$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -432,7 +432,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				if (!empty($_POST['edit_pm']) && !empty($contents))
 				{
 					if ($pm_edit > $id_first) //Maj du message.
-						$Sql->query_inject("UPDATE " . DB_TABLE_PM_MSG . " SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'");
+						PersistenceContext::get_querier()->update(DB_TABLE_PM_MSG, array('contents' => $contents, 'timestamp' => time()), 'WHERE id = :id', array('id' => $pm_edit));
 					else //Echec.
 					{
 						$error_controller = PHPBoostErrors::unexisting_page();
@@ -443,8 +443,8 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				{
 					if ($pm_edit == $id_first)
 					{
-						$Sql->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET title = '" . $title . "', last_timestamp = '" . time() . "' WHERE id = '" . $pm['idconvers'] . "' AND last_msg_id = '" . $pm_edit . "'");
-						$Sql->query_inject("UPDATE " . DB_TABLE_PM_MSG . " SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'");
+						PersistenceContext::get_querier()->update(DB_TABLE_PM_TOPIC, array('title' => $title, 'last_timestamp' => time()), 'WHERE id = :id AND last_msg_id = :last_msg_id', array('id' => $pm['idconvers'], 'last_msg_id' => $pm_edit));
+						PersistenceContext::get_querier()->update(DB_TABLE_PM_MSG, array('contents' => $contents, 'timestamp' => time()), 'WHERE id = :id', array('id' => $pm_edit));
 					}
 					else //Echec.
 					{
@@ -544,9 +544,9 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	
 	if ($convers['user_view_pm'] > 0 && $convers['last_user_id'] != AppContext::get_current_user()->get_id()) //Membre n'ayant pas encore lu la conversation.
 	{
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER . " SET user_pm = user_pm - " . (int)$convers['user_view_pm'] . " WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_PM_TOPIC . " SET user_view_pm = 0 WHERE id = '" . $pm_id_get . "'");
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_PM_MSG . " SET view_status = 1 WHERE idconvers = '" . $convers['id'] . "' AND user_id <> '" . AppContext::get_current_user()->get_id() . "'");
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_pm' => 'user_pm - ' . (int)$convers['user_view_pm']), 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
+		PersistenceContext::get_querier()->update(DB_TABLE_PM_TOPIC, array('user_view_pm' => 0), 'WHERE idid', array('id' => $pm_id_get));
+		PersistenceContext::get_querier()->update(DB_TABLE_PM_MSG, array('view_status' => 1), 'WHERE idconvers = :id AND user_id <> :user_id', array('id' => $convers['id'], 'user_id' => AppContext::get_current_user()->get_id()));
 	}
 	
 	//On crée une pagination si le nombre de MP est trop important.
@@ -653,7 +653,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	if (!empty($quote_get))
 	{
 		$quote_msg = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('user_id', 'contents'), 'WHERE id = :id', array('id' => $quote_get));
-		$pseudo = $Sql->query("SELECT display_name FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $quote_msg['user_id'] . "'");
+		$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $quote_msg['user_id']));
 		
 		$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
 	}

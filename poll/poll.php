@@ -32,11 +32,11 @@ require_once('../kernel/header.php');
 $poll = array();
 $poll_id = retrieve(GET, 'id', 0);
 
-$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+$now = new Date();
 
 if (!empty($poll_id))
 {
-	$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)");
+	$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('id', 'question', 'votes', 'answers', 'type', 'timestamp'), 'WHERE id=:id AND archive = 0 AND visible = 1 AND start <= :timestamp AND (end >= :timestamp OR end = 0)', array('id' => $poll_id, 'timestamp' => $now->get_timestamp()));
 	
 	//Pas de sondage trouvé => erreur.
 	if (empty($poll['id']))
@@ -92,8 +92,8 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		$check_bdd = true;
 		if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 		{
-			//Injection de l'adresse ip du visiteur dans la bdd.	
-			$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_request()->get_ip_address() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+			//Injection de l'adresse ip du visiteur dans la bdd.
+			$ip = PersistenceContext::get_querier()->count(PREFIX . "poll_ip", 'WHERE ip = :ip AND idpoll = :id', array('ip' => AppContext::get_request()->get_ip_address(), 'id' => $poll['id']);
 			if (empty($ip))
 			{
 				//Insertion de l'adresse ip.

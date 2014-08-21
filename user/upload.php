@@ -139,7 +139,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			}
 			else //Insertion dans la bdd
 			{
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($Upload->get_original_filename()) . "', '" . addslashes($Upload->get_filename()) . "', '" . AppContext::get_current_user()->get_id() . "', '" . $Upload->get_human_readable_size() . "', '" . $Upload->get_extension() . "', '" . time() . "')");
+				PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('idcat' => $folder, 'name' => $Upload->get_original_filename(), 'path' => $Upload->get_filename(), 'user_id' => AppContext::get_current_user()->get_id(), 'size' => $Upload->get_human_readable_size(), 'type' => $Upload->get_extension(), 'timestamp' => time()));
 			}
 		}
 		else
@@ -157,7 +157,7 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 		Uploads::Del_folder($del_folder);
 	else
 	{
-		$check_user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $del_folder . "'");
+		$check_user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $del_folder));
 		//Suppression du dossier et de tout le contenu
 		if ($check_user_id == AppContext::get_current_user()->get_id())
 		{
@@ -196,7 +196,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 	
-	$folder_owner = $Sql->query("SELECT user_id FROM ".DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $move_folder . "'");
+	$folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $move_folder));
 	
 	if ($folder_owner == AppContext::get_current_user()->get_id())
 	{
@@ -207,10 +207,10 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 		//Si on ne déplace pas le dossier dans un de ses fils ou dans lui même
 		if (!in_array($to, $sub_cats))
 		{
-			$new_folder_owner = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'");
+			$new_folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
 			if ($new_folder_owner == AppContext::get_current_user()->get_id() || $to == 0)
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $to . "' WHERE id = '" . $move_folder . "'");
+				PersistenceContext::get_querier()->update(DB_TABLE_UPLOAD_CAT, array('id_parent' => $to), 'WHERE id = :id', array('id' => $move_folder));
 				AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
 			}
 		}
@@ -233,11 +233,11 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 	//Si le fichier nous appartient alors on peut en faire ce que l'on veut
 	if ($file_owner == AppContext::get_current_user()->get_id())
 	{
-		$new_folder_owner = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'");
+		$new_folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
 		//Si le dossier de destination nous appartient
 		if ($new_folder_owner == AppContext::get_current_user()->get_id() || $to == 0)
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET idcat = '" . $to . "' WHERE id = '" . $move_file . "'");
+			PersistenceContext::get_querier()->update(DB_TABLE_UPLOAD, array('idcat' => $to), 'WHERE id = :id', array('id' => $move_file));
 			AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
 		}
 		else
@@ -493,7 +493,7 @@ else
 	$group_limit = AppContext::get_current_user()->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
 	$unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 	
-	$total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : $Sql->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
+	$total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
 	$Template->put_all(array(
 		'PERCENT' => !$unlimited_data ? '(' . NumberHelper::round($total_size/$group_limit, 3) * 100 . '%)' : '',
 		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($group_limit, 0) . ' ' . $LANG['unit_kilobytes']) : $LANG['illimited'],

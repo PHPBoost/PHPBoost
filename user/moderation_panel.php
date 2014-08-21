@@ -109,7 +109,7 @@ if ($action == 'punish')
 		if (!empty($_POST['search_member']))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '%" . $login . "%'");
+			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish', $user_id));
 			else
@@ -279,7 +279,7 @@ else if ($action == 'warning')
 		if (!empty($_POST['search_member']))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '%" . $login . "%'");
+			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning', $user_id));
 			else
@@ -402,7 +402,7 @@ else
 		if (!empty($_POST['search_member']))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '%" . $login . "%'");
+			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban', $user_id));
 			else

@@ -99,8 +99,8 @@ if (!empty($_POST['valid']))
 			}
 		}
 
-		$Sql->query_inject("INSERT INTO " . PREFIX . "poll (question,answers,votes,type,archive,timestamp,visible,start,end,user_id) VALUES ('" . $question . "', '" . substr($answers, 0, strlen($answers) - 1) . "', '" . substr($votes, 0, strlen($votes) - 1) . "', '" . $type . "', '" . $archive . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . AppContext::get_current_user()->get_id() . "')");
-				
+		PersistenceContext::get_querier()->insert(PREFIX . "poll", array('question' => $question, 'answers' => substr($answers, 0, strlen($answers) - 1), 'votes' => substr($votes, 0, strlen($votes) - 1), 'type' => $type, 'archive' => $archive, 'timestamp' => $timestamp, 'visible' => $visible, 'start' => $start_timestamp, 'end' => $start_timestamp, 'user_id' => AppContext::get_current_user()->get_id()));
+		
 		AppContext::get_response()->redirect('/poll/admin_poll.php');
 	}
 	else
