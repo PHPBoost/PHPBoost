@@ -102,16 +102,16 @@ if (!empty($contents)) //On enregistre un article
 				DispatchManager::redirect($error_controller);
 			} 
 			
-			$previous_id_contents = $Sql->query("SELECT id_contents FROM " . PREFIX . "wiki_articles WHERE id = '" . $id_edit . "'");
+			$previous_id_contents = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'id_contents', 'WHERE id = :id', array('id' => $id_edit));
 			//On met à jour l'ancien contenu (comme archive)
-			$Sql->query_inject("UPDATE " . PREFIX . "wiki_contents SET activ = 0 WHERE id_contents = '" . $previous_id_contents . "'");
+			PersistenceContext::get_querier()->update(PREFIX . "wiki_contents", array('activ' => 0), 'WHERE id_contents = :id', array('id' => $previous_id_contents));
 			//On insère le contenu
-			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . AppContext::get_current_user()->get_id() . ", '" . AppContext::get_request()->get_ip_address() . "', " . time() . ")");
+			$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_contents", array('id_article' => $id_edit, 'menu' => $menu, 'content' => $contents, 'activ' => 1, 'user_id' => AppContext::get_current_user()->get_id(), 'user_ip' => AppContext::get_request()->get_ip_address(), 'timestamp' => time()));
 			//Dernier id enregistré
-			$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
+			$id_contents = $result->get_last_inserted_id();
             
 	 		//On donne le nouveau id de contenu
-			$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'");
+			PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('id_contents' => $id_contents), 'WHERE id = :id', array('id' => $id_edit));
         
             // Feeds Regeneration
             
@@ -152,30 +152,30 @@ if (!empty($contents)) //On enregistre un article
 				$errstr = $LANG['wiki_title_already_exists'];
 			else //On enregistre
 			{
-				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (title, encoded_title, id_cat, is_cat, undefined_status, auth) VALUES ('" . $title . "', '" . Url::encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "', '', '')");
+				$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_articles", array('title' => $title, 'encoded_title' => Url::encode_rewrite($title), 'id_cat' => $new_id_cat, 'is_cat' => $is_cat, 'undefined_status' => '', 'auth' => ''));
 				//On récupère le numéro de l'article créé
-				$id_article = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "wiki_articles");
+				$id_article = $result->get_last_inserted_id();
 				//On insère le contenu
-				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . AppContext::get_current_user()->get_id() . ", '" . AppContext::get_request()->get_ip_address() . "', " . time() . ")");
+				$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_contents", array('id_article' => $id_article, 'menu' => $menu, 'content' => $contents, 'activ' => 1, 'user_id' => AppContext::get_current_user()->get_id(), 'user_ip' => AppContext::get_request()->get_ip_address(), 'timestamp' => time()));
 				//On met à jour le numéro du contenu dans la table articles
-				$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
-				$cat_update = '';
+				$id_contents = $result->get_last_inserted_id();
 				if ($is_cat == 1)//si c'est une catégorie, on la crée
 				{
-					$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_cats (id_parent, article_id) VALUES (" . $new_id_cat . ", '" . $id_article . "')");
+					$result = PersistenceContext::get_querier()->insert(PREFIX . "wiki_cats", array('id_parent' => $new_id_cat, 'article_id' => $id_article));
 					//on récupère l'id de la dernière catégorie créée
-					$id_created_cat = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "wiki_articles");
-					$cat_update = ", id_cat = '" . $id_created_cat . "'";
+					$id_created_cat = $result->get_last_inserted_id();
+					PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('id_contents' => $shout_contents, 'id_cat' => $id_created_cat), 'WHERE id = :id', array('id' => $id_article));
 					//On régénère le cache
 					$Cache->Generate_module_file('wiki');
 				}
-				$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article);
+				else
+					PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('id_contents' => $shout_contents), 'WHERE id = :id', array('id' => $id_article));
 				
                 // Feeds Regeneration
                 
                 Feed::clear_cache('wiki');
                 
-				$redirect = $Sql->query("SELECT encoded_title FROM " . PREFIX . "wiki_articles WHERE id = '" . $id_article . "'");
+				$redirect = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE id = :id', array('id' => $id_article));
 				AppContext::get_response()->redirect(url('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}
 		}

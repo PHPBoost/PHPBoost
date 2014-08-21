@@ -64,7 +64,7 @@ if ($id_auth > 0)
 		DispatchManager::redirect($error_controller);
 	} 
 
-	$encoded_title = $Sql->query("SELECT encoded_title FROM " . PREFIX . "wiki_articles WHERE id = '" . $id_auth . "'");
+	$encoded_title = $db_querier->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE id = :id', array('id' => $id_auth));
 	if (empty($encoded_title))
 	{
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
@@ -72,13 +72,13 @@ if ($id_auth > 0)
 		
 	if (!empty($_POST['default'])) //Configuration par défaut
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET auth = '' WHERE id= '" . $id_auth . "'");
+		$db_querier->update(PREFIX . "wiki_articles", array('auth' => ''), 'WHERE id = :id', array('id' => $id_auth));
 	}
 	else
 	{
 		//Génération du tableau des droits.
 		$array_auth_all = Authorizations::build_auth_array_from_form(WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM);
-		$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id= '" . $id_auth . "'");
+		$db_querier->update(PREFIX . "wiki_articles", array('auth' => serialize($array_auth_all)), 'WHERE id = :id', array('id' => $id_auth));
 	}
 
 	//Redirection vers l'article
@@ -113,7 +113,7 @@ if ($id_change_status > 0)
 	if (!empty($article_infos['encoded_title']))//Si l'article existe
 	{
 		//On met à jour dans la base de données
-		$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET defined_status = '" . $id_status . "', undefined_status = '" . $contents . "' WHERE id = '" . $id_change_status . "'");
+		$db_querier->update(PREFIX . "wiki_articles", array('defined_status' => $id_status, 'undefined_status' => $contents), 'WHERE id = :id', array('id' => $id_change_status));
 		//Redirection vers l'article
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
@@ -137,7 +137,7 @@ elseif ($move > 0) //Déplacement d'un article
 	{
 		if (array_key_exists($new_cat, $_WIKI_CATS) || $new_cat == 0)//Si la nouvelle catégorie existe
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET id_cat = '" . $new_cat . "' WHERE id = '" . $move . "'");
+			$db_querier->update(PREFIX . "wiki_articles", array('id_cat' => $new_cat), 'WHERE id = :id', array('id' => $move));
 			$Cache->Generate_module_file('wiki');
 		}
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
@@ -152,7 +152,7 @@ elseif ($move > 0) //Déplacement d'un article
 
 		if (!in_array($new_cat, $sub_cats)) //Si l'ancienne catégorie ne contient pas la nouvelle (sinon boucle infinie)
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "wiki_cats SET id_parent = '" . $new_cat . "' WHERE id = '" . $article_infos['id_cat'] . "'");
+			$db_querier->update(PREFIX . "wiki_cats", array('id_parent' => $new_cat), 'WHERE id = :id', array('id' => $article_infos['id_cat']));
 			$Cache->Generate_module_file('wiki');
 			//on redirige vers l'article
 			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
@@ -175,13 +175,13 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 		DispatchManager::redirect($error_controller);
 	} 
 	
-	$already_exists = PersistenceContext::get_querier()->count(PREFIX . "wiki_articles", 'WHERE encoded_title = :encoded_title', array('encoded_title' => Url::encode_rewrite($new_title)));
+	$already_exists = $db_querier->count(PREFIX . "wiki_articles", 'WHERE encoded_title = :encoded_title', array('encoded_title' => Url::encode_rewrite($new_title)));
 
 	if (empty($article_infos['encoded_title']))//L'article n'existe pas
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php', '', '&'));
 	elseif (Url::encode_rewrite($new_title) == $article_infos['encoded_title'])//Si seul le titre change mais pas le titre encodé
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET title = '" . $new_title . "' WHERE id = '" . $id_to_rename . "'");
+		$db_querier->update(PREFIX . "wiki_articles", array('title' => $new_title), 'WHERE id = :id', array('id' => $id_to_rename));
 		
 		$Cache->Generate_module_file('wiki');
 		Feed::clear_cache('wiki');
@@ -195,19 +195,19 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 		if ($create_redirection_while_renaming) //On crée un nouvel article
 		{
 			//On ajoute un article
-			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (id_contents, title, encoded_title, hits, id_cat, is_cat, defined_status, undefined_status, redirect, auth) VALUES ('" . $article_infos['id_contents'] . "', '" . $new_title . "', '" . Url::encode_rewrite($new_title) . "', '" . $article_infos['hits'] . "', '" . $article_infos['id_cat'] . "', '" . $article_infos['is_cat'] . "', '" . $article_infos['defined_status'] . "', '" . $article_infos['undefined_status'] . "', 0, '" . $article_infos['auth'] . "')");
-			$new_id_article = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
+			$result = $db_querier->insert(PREFIX . "wiki_articles", array('id_contents' => $article_infos['id_contents'], 'title' => $new_title, 'encoded_title' => Url::encode_rewrite($new_title), 'hits' => $article_infos['hits'], 'id_cat' => $article_infos['id_cat'], 'is_cat' => $article_infos['is_cat'], 'defined_status' => $article_infos['defined_status'], 'undefined_status' => $article_infos['undefined_status'], 'redirect' => 0, 'auth' => $article_infos['auth']));
+			$new_id_article = $result->get_last_inserted_id();
 			
 			//On met à jour la table contents
-			$Sql->query_inject("UPDATE " . PREFIX . "wiki_contents SET id_article = '" . $new_id_article . "' WHERE id_article = '" . $id_to_rename . "'");
+			$db_querier->update(PREFIX . "wiki_contents", array('id_article' => $new_id_article), 'WHERE id_article = :id', array('id' => $id_to_rename));
 			//On inscrit la redirection à l'ancien article
-			$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET redirect = '" . $new_id_article . "', id_contents = 0 WHERE id = '" . $id_to_rename . "'");
+			$db_querier->update(PREFIX . "wiki_articles", array('redirect' => $new_id_article, 'id_contents' => 0), 'WHERE id = :id', array('id' => $id_to_rename));
 			//On redirige les éventuelles redirections vers cet article sur son nouveau nom
-			$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET redirect = '" . $new_id_article . "' WHERE redirect = '" . $id_to_rename . "'");
+			$db_querier->update(PREFIX . "wiki_articles", array('redirect' => $new_id_article), 'WHERE redirect = :id', array('id' => $id_to_rename));
 			//Si c'est une catégorie on change l'id d'article associé
 			if ($article_infos['is_cat'] == 1)
 			{
-				$Sql->query_inject("UPDATE " . PREFIX . "wiki_cats SET article_id = '" . $new_id_article . "' WHERE id = '" . $article_infos['id_cat'] . "'");
+				$db_querier->update(PREFIX . "wiki_cats", array('article_id' => $new_id_article), 'WHERE id = :id', array('id' => $article_infos['id_cat']));
 			}
 			$Cache->Generate_module_file('wiki');
     		 // Feeds Regeneration
@@ -216,7 +216,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 		}
 		else //On met à jour l'article
 		{
-            $Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET title = '" . $new_title . "', encoded_title = '" . Url::encode_rewrite($new_title) . "' WHERE id = '" . $id_to_rename . "'");
+			$db_querier->update(PREFIX . "wiki_articles", array('title' => $new_title, 'encoded_title' => Url::encode_rewrite($new_title)), 'WHERE id = :id', array('id' => $id_to_rename));
 			
             //Cache Regeneration
             $Cache->Generate_module_file('wiki');
@@ -231,7 +231,7 @@ elseif ($del_redirection > 0)//Supprimer une redirection
     //Vérification de la validité du jeton
     AppContext::get_session()->csrf_get_protect();
     
-	$is_redirection = $Sql->query("SELECT redirect FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_redirection . "'");
+	$is_redirection = $db_querier->get_column_value(PREFIX . "wiki_articles", 'redirect', 'WHERE id = :id', array('id' => $del_redirection));
 	if ($is_redirection > 0)
 	{
 		$article_infos = $db_querier->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $is_redirection));
@@ -262,13 +262,13 @@ elseif ($create_redirection > 0 && !empty($redirection_title))
 		DispatchManager::redirect($error_controller);
 	} 
 	
-	$num_title = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title =  '" . Url::encode_rewrite($redirection_title) . "'");
+	$num_title = $db_querier->count(PREFIX . "wiki_articles", 'WHERE encoded_title = :encoded_title', array('encoded_title' => Url::encode_rewrite($redirection_title)));
 
 	if (!empty($article_infos['encoded_title']))
 	{
 		if ($num_title == 0) //Si aucun article existe
 		{
-			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (title, encoded_title, redirect, undefined_status, auth) VALUES ('" . $redirection_title . "', '" . Url::encode_rewrite($redirection_title) . "', '" . $create_redirection . "', '', '')");
+			$db_querier->insert(PREFIX . "wiki_articles", array('title' => $redirection_title, 'encoded_title' => Url::encode_rewrite($redirection_title), 'redirect' => $create_redirection, 'undefined_status' => '', 'auth' => ''));
 			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($redirection_title), Url::encode_rewrite($redirection_title), '&'));
 		}
 		else
@@ -279,7 +279,7 @@ elseif ($create_redirection > 0 && !empty($redirection_title))
 elseif (!empty($restore)) //on restaure un ancien article
 {
 	//On cherche l'article correspondant
-	$id_article = $Sql->query("SELECT id_article FROM " . PREFIX . "wiki_contents WHERE id_contents = " . $restore);
+	$id_article = $db_querier->get_column_value(PREFIX . "wiki_contents", 'id_article', 'WHERE id_contents = :id', array('id' => $restore));
 	if (!empty($id_article))
 	{
 		//On récupère l'ancien id du contenu
@@ -295,11 +295,11 @@ elseif (!empty($restore)) //on restaure un ancien article
 		} 
 		
 		//On met à jour la table articles avec le nouvel id
-		$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET id_contents = " . $restore . " WHERE id = " . $id_article);
+		$db_querier->update(PREFIX . "wiki_articles", array('id_contents' => $restore), 'WHERE id = :id', array('id' => $id_article));
 		//On met le nouvel id comme actif
-		$Sql->query_inject("UPDATE " . PREFIX . "wiki_contents SET activ = 1 WHERE id_contents = " . $restore);
+		$db_querier->update(PREFIX . "wiki_contents", array('activ' => 1), 'WHERE id_contents = :id', array('id' => $restore));
 		//L'ancien id devient archive
-		$Sql->query_inject("UPDATE " . PREFIX . "wiki_contents SET activ = 0 WHERE id_contents = " . $article_infos['id_contents']);
+		$db_querier->update(PREFIX . "wiki_contents", array('activ' => 0), 'WHERE id_contents = :id', array('id' => $article_infos['id_contents']));
 	}
 	
 	AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'] , '&'));
@@ -436,8 +436,8 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	}
 	elseif ($remove_action == 'move_all') //On déplace le contenu de la catégorie
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET id_cat = '" . $report_cat . "' WHERE id_cat = '" . $article_infos['id_cat'] . "'");
-		$Sql->query_inject("UPDATE " . PREFIX . "wiki_cats SET id_parent = '" . $report_cat . "' WHERE id_parent = '" . $article_infos['id_cat'] . "'");
+		$db_querier->update(PREFIX . "wiki_articles", array('id_cat' => $report_cat), 'WHERE id_cat = :id', array('id' => $article_infos['id_cat']));
+		$db_querier->update(PREFIX . "wiki_cats", array('id_parent' => $report_cat), 'WHERE id_parent = :id', array('id' => $article_infos['id_cat']));
 		$Cache->Generate_module_file('wiki');
 		
 		if (array_key_exists($report_cat, $_WIKI_CATS))
