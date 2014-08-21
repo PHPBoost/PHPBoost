@@ -34,20 +34,31 @@
  *
  * @package {@package}
  */
-interface AuthenticationMethod
+abstract class AuthenticationMethod
 {
+	protected $error_msg;
+	
 	/**
 	 * @desc associate the current authentication method with the given user_id.
 	 * @param int $user_id
 	 * @throws IllegalArgumentException if the user_id is already associate with an authentication method
 	 */
-	function associate($user_id);
+	abstract public function associate($user_id);
 
 	/**
 	 * @desc Tries to authenticate the user and returns true on success, false otherwise.
 	 * @return bool true, if authentication has been performed successfully
 	 */
-	function authenticate();
+	abstract public function authenticate();
+	
+	public function has_error()
+	{
+		return !empty($this->error_msg);
+	}
+	
+	public function get_error_msg()
+	{
+		return $this->error_msg;
+	}
 }
-
 ?>

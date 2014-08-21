@@ -131,7 +131,7 @@ class BugtrackerRoadmapListController extends ModuleController
 			
 			$result = PersistenceContext::get_querier()->select("SELECT b.*, member.*
 			FROM " . BugtrackerSetup::$bugtracker_table . " b
-			LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id AND member.user_aprob = 1
+			LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id
 			WHERE fixed_in = " . $roadmap_version . "
 			" . ($roadmap_status != 'all' ? ($roadmap_status == Bug::IN_PROGRESS ? "AND (b.status = '" . Bug::IN_PROGRESS . "' OR b.status = '" . Bug::REOPEN . "')" : "AND b.status = '" . Bug::FIXED . "'") : "") . "
 			ORDER BY " . $field_bdd . " " . $mode . "

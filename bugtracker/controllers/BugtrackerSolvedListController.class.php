@@ -101,7 +101,7 @@ class BugtrackerSolvedListController extends ModuleController
 		
 		$result = PersistenceContext::get_querier()->select("SELECT b.*, member.*
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
-		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id AND member.user_aprob = 1
+		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id
 		WHERE (status = '" . Bug::FIXED . "' OR status = '" . Bug::REJECTED . "')" .
 		$select_filters . "
 		ORDER BY " . $field_bdd . " " . $mode . "

@@ -96,46 +96,21 @@ class UserLoginController extends AbstractController
 	private function authenticate($username, $password, $autoconnect)
 	{
 		$authentication = new PHPBoostAuthenticationMethod($username, $password);
-		if ($authentication->authenticate($autoconnect))
+		$user_id = AuthenticationService::authenticate($authentication);
+		
+		if ($user_id)
 		{
-			$session = AppContext::get_session();
-			if ($session != null)
-			{
-				Session::delete($session);
-			}
-			AppContext::set_session(Session::create($authentication->get_user_id(), $autoconnect));
-			
 			AppContext::get_response()->redirect($this->request->get_value('redirect', '/'));
 		}
-		else
-		{
-			$this->build_error_message($authentication);
-		}
+
+		$this->build_error_message($authentication);
 	}
 	
 	private function build_error_message(PHPBoostAuthenticationMethod $authentication)
 	{
-		$error_msg = '';
-		if (!$authentication->has_user_been_found())
+		if ($authentication->has_error())
 		{
-			$error_msg = LangLoader::get_message('user.not_exists', 'status-messages-common');
-		}
-		else
-		{
-			$remaining_attempts = $authentication->get_remaining_attemps();
-			if ($remaining_attempts > 0)
-			{
-				$error_msg = StringVars::replace_vars(LangLoader::get_message('user.auth.passwd_flood', 'status-messages-common'), array('remaining_tries' => $remaining_attempts));
-			}
-			else
-			{
-				$error_msg = LangLoader::get_message('user.auth.passwd_flood_max', 'status-messages-common');
-			}
-		}
-		
-		if (!empty($error_msg))
-		{
-			$error = new FormFieldLabel(MessageHelper::display($error_msg, MessageHelper::NOTICE)->render());
+			$error = new FormFieldLabel(MessageHelper::display($authentication->get_error_msg(), MessageHelper::NOTICE)->render());
 			$this->fieldset->add_field($error);
 		}
 	}
