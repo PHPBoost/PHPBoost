@@ -1,0 +1,125 @@
+<?php
+/*##################################################
+ *                             common.php
+ *                            -------------------
+ *   begin                :  March 11, 2011
+ *   copyright            : (C) 2011 MASSY Kevin
+ *   email                : kevin.massy@phpboost.com
+ *
+ *  
+ ###################################################
+ *
+ *   This program is a free software. You can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
+
+
+ ####################################################
+ #						English						#
+ ####################################################
+
+//Title
+$lang['newsletter.home'] = 'Home';
+$lang['newsletter'] = 'Newsletter';
+$lang['newsletter.archives'] = 'Archive';
+$lang['newsletter.subscribers'] = 'list of subscribers';
+$lang['newsletter.streams'] = 'Feed management';
+$lang['newsletter.streams.manage'] = 'Manage feeds';
+
+//Other title
+$lang['subscribe.newsletter'] = 'Subscribe to newsletters';
+$lang['subscriber.edit'] = 'Post a registrant';
+$lang['archives.list'] = 'Archive List';
+$lang['newsletter-add'] = 'Add newsletter';
+$lang['newsletter.subscribe_newsletters'] = 'Subscribe to a newsletter';
+$lang['newsletter.unsubscribe_newsletters'] = 'Unsubscribe to a newsletter';
+$lang['stream.add'] = 'Add Feed';
+$lang['stream.edit'] = 'Edit Feed';
+$lang['stream.delete'] = 'Delete feed';
+$lang['stream.delete.description'] = 'You are about to delete the stream. Two solutions are available to you. You can either move all of its contents (newsletters and streams) in another stream or delete the whole stream. <strong>Note that this action is irreversible!</ strong>';
+$lang['newsletter.list_newsletters'] = 'List of newsletters';
+
+//Admin
+$lang['admin.mail-sender'] = 'Mailing address';
+$lang['admin.mail-sender-explain'] = 'Valid email Address';
+$lang['admin.newsletter-name'] = 'Name the newsletter';
+$lang['admin.newsletter-name-explain'] = 'Subject of email sent';
+
+//Authorizations
+$lang['admin.newsletter-authorizations'] = 'Authorizations';
+$lang['auth.read'] = 'Read authorizations';
+$lang['auth.archives-read'] = 'Archives read authorizations';
+$lang['auth.subscribers-read'] = 'Subscribers read authorizations';
+$lang['auth.subscribers-moderation'] = 'Subscribers moderation authorizations';
+$lang['auth.subscribe'] = 'Authorizations to register for newsletters';
+$lang['auth.create-newsletter'] = 'Add newsletter authorizations';
+
+//Subscribe
+$lang['subscribe.mail'] = 'Mail';
+$lang['subscribe.newsletter_choice'] = 'Choose which newsletters you wish to subscribe';
+
+//Subscribers
+$lang['subscribers.list'] = 'Subscribers list';
+$lang['subscribers.pseudo'] = 'Username';
+$lang['subscribers.mail'] = 'Mail';
+$lang['subscribers.delete'] = 'Do you really want to delete this person listed ?';
+$lang['subscribers.no_users'] = 'None subscribers';
+
+// Unsubcribe
+$lang['newsletter.delete_all_streams'] = 'Unsubscribe from all streams';
+$lang['unsubscribe.newsletter'] = 'Unsubscribe from newsletters';
+$lang['unsubscribe.newsletter_choice'] = 'Select the newsletters you want to stay or subscribe';
+
+//Archives
+$lang['archives.stream_name'] = 'Feed name';
+$lang['archives.name'] = 'Newsletter name';
+$lang['archives.date'] = 'Publication date';
+$lang['archives.nbr_subscribers'] = 'Number of registered';
+$lang['archives.not_archives'] = 'No archive available';
+
+//Add newsletter
+$lang['add.choice_streams'] = 'Choose the flow or you want to send this newsletter';
+$lang['add.send_test'] = 'Send a test email';
+$lang['add.add_newsletter'] = 'Add newsletter';
+
+//Types newsletters
+$lang['newsletter.types.choice'] = 'Please select a type of message';
+$lang['newsletter.types.null'] = '--';
+$lang['newsletter.types.text'] = 'Text';
+$lang['newsletter.types.text_explain'] = '<span style="color:green;"><strong>Pour tous</strong></span><br />Vous ne pourrez procéder à aucune mise en forme du message.';
+$lang['newsletter.types.bbcode'] = 'BBCode';
+$lang['newsletter.types.bbcode_explain'] = '<span style="color:green;"><strong>Pour tous</strong></span><br />Vous pouvez formater le texte grâce au BBCode, le langage de mise en forme simplifiée adopté sur tout le portail.';
+$lang['newsletter.types.html'] = 'HTML';
+$lang['newsletter.types.html_explain'] = '<span style="color:red;"><strong>Utilisateurs expérimentés seulement</strong></span><br />Vous pouvez mettre en forme le texte à votre guise, mais vous devez connaître le langage html.';
+$lang['newsletter.types.next'] = 'Next';
+
+//Other
+$lang['newsletter.no_newsletters'] = 'No newsletter Available';
+$lang['unsubscribe_newsletter'] = 'Unsubscribe to this newsletter';
+$lang['newsletter.view_archives'] = 'View Archives';
+$lang['newsletter.view_subscribers'] = 'View record';
+$lang['newsletter.title'] = 'Title of the newsletter';
+$lang['newsletter.contents'] = 'Content';
+
+//Errors
+$lang['admin.stream-not-existed'] = 'The requested stream does not exist';
+$lang['error-subscriber-not-existed'] = 'This registrant is not exist';
+$lang['error-archive-not-existed'] = 'This archive does not exist';
+$lang['newsletter.success-send-test'] = 'The test email has been sent';
+
+//Register extended field
+$lang['extended_fields.newsletter.name'] = 'Subscribe to newsletters';
+$lang['extended_fields.newsletter.description'] = 'Select the newsletter you wish to be registered';
+?>

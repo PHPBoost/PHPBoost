@@ -1,0 +1,7 @@
+/* Le positionnement de l editeur tinyMCE */
+span.mceEditor {
+	width: 94%;
+	margin: 0 auto;
+	display: block;	
+}
+span.mceEditor table { border-right: none !important; }
