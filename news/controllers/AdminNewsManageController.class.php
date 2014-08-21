@@ -63,7 +63,7 @@ class AdminNewsManageController extends AdminModuleController
 				$sort_field = 'id_category';
 				break;
 			case 'author':
-				$sort_field = 'login';
+				$sort_field = 'display_name';
 				break;
 			case 'name':
 				$sort_field = 'name';
