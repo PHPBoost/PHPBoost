@@ -69,11 +69,13 @@ class UserService
 	
 	public static function delete_by_id($user_id)
 	{
-		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', array('user_id' => $user_id));
-		self::$querier->delete(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
-		self::$querier->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
-		self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id=:user_id', array('user_id' => $user_id));
-		self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $user_id);
+		self::$querier->delete(DB_TABLE_MEMBER, $condition, $parameters);
+		self::$querier->delete(DB_TABLE_MEMBER_EXTENDED_FIELDS, $condition, $parameters);
+		self::$querier->delete(DB_TABLE_SESSIONS, $condition, $parameters);
+		self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, $condition, $parameters);
+		self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, $condition, $parameters);
 
 		$upload = new Uploads();
 		$upload->Empty_folder_member($user_id);
@@ -101,16 +103,18 @@ class UserService
 			'editor' => $user->get_editor()
 		), 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
 		
+		SessionData::recheck_cached_data_from_user_id($user->get_id());
+		
 		self::regenerate_stats_cache();
 	}
 	
-	public static function update_punishment(User $user, $condition, Array $parameters)
+	public static function update_punishment(User $user)
 	{
 		self::$querier->update(DB_TABLE_MEMBER, array(
-			'user_warning' => $user->get_warning_percentage(),
-			'user_readonly' => $user->get_delay_readonly(),
-			'user_ban' => $user->get_delay_banned(),
-		), $condition, $parameters);
+			'warning_percentage' => $user->get_warning_percentage(),
+			'delay_readonly' => $user->get_delay_readonly(),
+			'delay_banned' => $user->get_delay_banned(),
+		), 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
 	}
 	
 	public static function update_authentification($condition, Array $parameters, UserAuthentification $user_authentification)
@@ -139,25 +143,6 @@ class UserService
 	public static function get_user($user_id)
 	{
 		$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
-		$user = new User();
-		$user->set_properties($row);
-		return $user;
-	}
-	
-	/**
-	 * @desc Returns a approved user
-	 * @param string $condition
-	 * @param array $parameters
-	 * @return User
-	 */
-	public static function get_user_approved($user_id)
-	{
-		$row = self::$querier->select_single_row_query('SELECT m.*
-		FROM ' . DB_TABLE_MEMBER . ' m
-		LEFT JOIN ' . DB_TABLE_INTERNAL_AUTHENTICATION .' ia ON ia.user_id = m.user_id
-		WHERE m.user_id=:user_id',
-		array('user_id' => $user_id));
-		
 		$user = new User();
 		$user->set_properties($row);
 		return $user;

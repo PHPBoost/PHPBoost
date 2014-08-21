@@ -96,6 +96,15 @@ class SessionData
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 		return $data;
 	}
+	
+	public static function recheck_cached_data_from_user_id($user_id)
+	{
+		if ($user_id != Session::VISITOR_SESSION_ID && self::session_exists($user_id))
+		{
+			$data = self::get_existing_session($user_id);
+			$data->recheck_cached_data();
+		}
+	}
 
 	/**
 	 * @desc
@@ -116,22 +125,29 @@ class SessionData
 	 */
 	private static function use_existing_session($user_id)
 	{
-		$parameters = array('user_id' => $user_id);
-		$condition = 'WHERE user_id=:user_id';
-		self::update_existing_session($condition, $parameters);
-		$columns = array('session_id', 'token', 'timestamp', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
-		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
-		$data = self::init_from_row($user_id, $row['session_id'], $row);
+		self::update_existing_session($user_id);
+		$data = self::get_existing_session($user_id);
 		$data->create_cookie();
 		return $data;
 	}
+	
+	private static function get_existing_session($user_id)
+	{
+		$parameters = array('user_id' => $user_id);
+		$condition = 'WHERE user_id=:user_id';
+		$columns = array('session_id', 'token', 'timestamp', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
+		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
+		return self::init_from_row($user_id, $row['session_id'], $row);
+	}
 
-	private static function update_existing_session($condition, $parameters)
+	private static function update_existing_session($user_id)
 	{
 		$columns = array(
 			'timestamp' => time() + SessionsConfig::load()->get_session_duration(),
 			'ip' => AppContext::get_request()->get_ip_address()
 		);
+		$parameters = array('user_id' => $user_id);
+		$condition = 'WHERE user_id=:user_id';
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 	}
 
@@ -321,6 +337,13 @@ class SessionData
 		unset($this->data[$key]);
 	}
 
+	public function recheck_cached_data()
+	{
+		self::fill_user_cached_data($this);
+		$this->cached_data_modified = true;
+		$this->save();
+	}
+	
 	public function save()
 	{
 		if ($this->cached_data_modified || $this->data_modified)
@@ -328,14 +351,14 @@ class SessionData
 			$columns = array();
 			if ($this->cached_data_modified)
 			{
-				$columns['cached_data'] = $this->cached_data;
+				$columns['cached_data'] = serialize($this->cached_data);
 			}
 			if ($this->data_modified)
 			{
-				$columns['data'] = $this->data;
+				$columns['data'] = serialize($this->data);
 			}
 			$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
-			$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
+			$parameters = array('user_id' => $this->user_id, 'session_id' => $this->session_id);
 			PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 			$this->cached_data_modified = false;
 			$this->data_modified = false;
@@ -404,80 +427,28 @@ class SessionData
 	 *      <li>If the token isn't in the request, we analyse the HTTP referer to be sure that the request comes from the current site and not from another which can be suspect</li>
 	 * </ul>
 	 * If the request doesn't match any of these two cases, this method will consider that it's a CSRF attack.
-	 * @return bool true if no csrf attack by post is detected
 	 */
 	public function csrf_post_protect()
 	{
-		//The user sent a POST request
 		if (!empty($_POST))
-		{
-			//First verification: does the token exist?
-			$token = $this->get_token();
-			if (!empty($token) && $this->get_request_token() === $token)
-			{
-				return true;
-			}
-			//Second chance: the referer is correct
-			if (self::check_referer())
-			{
-				return true;
-			}
-			//If those two lines are executed, none of the two cases has been matched. Thow it's a potential attack.
-			$this->csrf_attack();
-			return false;
-		}
-		//It's not a POST request, there is no problem.
-		else
-		{
-			return true;
-		}
+			$this->check_csrf_attack();
 	}
 
 	/**
 	 * @desc Check the session against CSRF attacks by GET. Checks that GETs are done from
 	 * this site with a correct token.
-	 * @return true if no csrf attack by get is detected
 	 */
 	public function csrf_get_protect()
 	{
-		$token = $this->get_token();
-		if (empty($token) || $this->get_request_token() !== $token)
+		$this->check_csrf_attack();
+	}
+
+	private function check_csrf_attack()
+	{
+		if (AppContext::get_request()->get_value('token') !== $this->get_token())
 		{
-			$this->csrf_attack();
-			return false;
+			DispatchManager::redirect(PHPBoostErrors::CSRF());
 		}
-		return true;
-	}
-
-	/**
-	 * @desc check that the operation is done from this site
-	 * @return true if the referer is on this site
-	 */
-	private static function check_referer()
-	{
-		if (empty($_SERVER['HTTP_REFERER']))
-		{
-			return false;
-		}
-		$general_config = GeneralConfig::load();
-		return strpos($_SERVER['HTTP_REFERER'], trim($general_config->get_site_url() . $general_config->get_site_path(), '/')) === 0;
-	}
-
-	/**
-	 * @desc Redirect to the $redirect error page if the token is wrong
-	 * if false, do not redirect
-	 */
-	private function csrf_attack()
-	{
-		$bad_token = $this->get_printable_token($this->get_request_token());
-		$good_token = $this->get_printable_token($this->get_token());
-
-		DispatchManager::redirect(PHPBoostErrors::CSRF());
-	}
-
-	private function get_request_token()
-	{
-		return AppContext::get_request()->get_value('token');
 	}
 }
 ?>

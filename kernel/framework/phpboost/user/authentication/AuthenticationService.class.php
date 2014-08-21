@@ -35,20 +35,24 @@ class AuthenticationService
 {
 	/**
 	 * @desc Tries to authenticate the user using the given authentication method.
-	 * @param AuthenticationMethod $method the authentication method to use
+	 * @param AuthenticationMethod $authentication the authentication method to use
 	 * @param bool $autoconnect If true, an autoconnect cookie will be created
 	 * @return bool true, if authentication has been performed successfully
 	 */
-	public static function authenticate(AuthenticationMethod $method, $autoconnect = false)
+	public static function authenticate(AuthenticationMethod $authentication, $autoconnect = false)
 	{
-		$result = $method->authenticate();
-		if ($result)
+		$user_id = $authentication->authenticate();
+		if ($user_id)
 		{
-			Session::delete();
+			$session = AppContext::get_session();
+			if ($session != null)
+			{
+				Session::delete($session);
+			}
 			$session_data = Session::create($user_id, autoconnect);
 			AppContext::set_session($session_data);
 		}
-		return $result;
+		return $user_id;
 	}
 }
 

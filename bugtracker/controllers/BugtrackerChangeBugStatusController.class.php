@@ -123,7 +123,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 			!$this->bug->is_fixed() && !$this->bug->is_assigned() && !$this->bug->is_in_progress() ? array(new BugtrackerConstraintStatusChanged($this->bug->get_id(), $this->bug->get_status())) : array()
 		));
 		
-		$user_assigned = UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) : '';
+		$user_assigned = UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user('WHERE user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) : '';
 		
 		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('assigned_to', $this->lang['labels.fields.assigned_to_id'], !empty($user_assigned) ? $user_assigned->get_display_name() : '', array(
 			'maxlength' => 25, 'class' => 'field-large', 'required' => true, 'hidden' => !$this->bug->is_assigned()), array(
@@ -210,9 +210,9 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		{
 			$assigned_to = $this->form->get_value('assigned_to');
 			
-			$old_user_assigned = $this->bug->get_assigned_to_id()  && UserService::user_exists("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user("WHERE user_aprob = 1 AND user_id=:id", array('id' => $this->bug->get_assigned_to_id())) : 0;
+			$old_user_assigned = $this->bug->get_assigned_to_id()  && UserService::user_exists("WHERE user_id=:user_id", array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user("WHERE user_id=:id", array('id' => $this->bug->get_assigned_to_id())) : 0;
 			
-			$new_user_assigned = !empty($assigned_to) && UserService::user_exists("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)) ? UserService::get_user("WHERE user_aprob = 1 AND login=:login", array('login' => $assigned_to)) : 0;
+			$new_user_assigned = !empty($assigned_to) && UserService::user_exists("WHERE login=:login", array('login' => $assigned_to)) ? UserService::get_user("WHERE login=:login", array('login' => $assigned_to)) : 0;
 			$new_assigned_to_id = !empty($new_user_assigned) ? $new_user_assigned->get_id() : 0;
 			
 			if ($new_assigned_to_id != $this->bug->get_assigned_to_id())

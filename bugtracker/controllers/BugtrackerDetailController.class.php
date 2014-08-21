@@ -53,7 +53,7 @@ class BugtrackerDetailController extends ModuleController
 		$priorities = $config->get_priorities();
 		$versions = $config->get_versions_detected();
 		
-		$user_assigned = $this->bug->get_assigned_to_id() && UserService::user_exists("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) : '';
+		$user_assigned = $this->bug->get_assigned_to_id() && UserService::user_exists("WHERE user_id=:user_id", array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user('WHERE user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) : '';
 		$user_assigned_group_color = $user_assigned ? User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true) : '';
 		
 		$this->view->put_all($this->bug->get_array_tpl_vars());

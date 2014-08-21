@@ -126,17 +126,18 @@ class CurrentUser extends User
 	 */
 	public function update_theme($theme)
 	{
-		$user_accounts_config = UserAccountsConfig::load();
 		$db_querier = PersistenceContext::get_querier();
-		if ($this->get_level() > -1)
+		if ($this->get_level() != User::VISITOR_LEVEL)
 		{
-			$db_querier->update(DB_TABLE_MEMBER, array('theme' => $theme), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
+			$this->set_theme($theme);
+			UserService::update($this);
 		}
 		else
 		{
-			$db_querier->update(DB_TABLE_SESSIONS, array('theme' => $theme), 'WHERE level=-1 AND session_id=session_id', array('session_id' => AppContext::get_session()->get_session_id()));
+			$session = AppContext::get_session();
+			$session->add_cached_data('theme', $theme);
+			$session->save();
 		}
-		AppContext::get_current_user()->set_theme($theme);
 	}
 	
 	/**
@@ -146,15 +147,17 @@ class CurrentUser extends User
 	public function update_lang($lang)
 	{
 		$db_querier = PersistenceContext::get_querier();
-		if ($this->get_level() > -1)
+		if ($this->get_level() != User::VISITOR_LEVEL)
 		{
-			$db_querier->update(DB_TABLE_MEMBER, array('lang' => $lang), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
+			$this->set_locale($lang);
+			UserService::update($this);
 		}
 		else
 		{
-			$db_querier->update(DB_TABLE_SESSIONS, array('lang' => $lang), 'WHERE level=-1 AND session_id=session_id', array('session_id' => AppContext::get_session()->get_session_id()));
+			$session = AppContext::get_session();
+			$session->add_cached_data('locale', $lang);
+			$session->save();
 		}
-		AppContext::get_current_user()->set_locale($lang);
 	}
 	
 	public function update_visitor_display_name()

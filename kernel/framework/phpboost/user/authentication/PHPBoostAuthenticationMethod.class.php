@@ -34,7 +34,7 @@
  *
  * @package {@package}
  */
-class PHPBoostAuthenticationMethod implements AuthenticationMethod
+class PHPBoostAuthenticationMethod extends AuthenticationMethod
 {
 	const AUTHENTICATION_METHOD = 'internal';
 	
@@ -55,7 +55,6 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	private $approved = true;
 	private $registration_pass = '';
 
-	private $user_id = null;
 	private $connection_attempts = 0;
 	private $last_connection_date;
 
@@ -72,16 +71,6 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 		$this->registration_pass = $registration_pass;
 	}
 	
-	public function get_user_id()
-	{
-		return $this->user_id;
-	}
-
-	public function has_user_been_found()
-	{
-		return $this->user_id != null;
-	}
-
 	public function get_remaining_attemps()
 	{
 		return self::$MAX_AUTHORIZED_ATTEMPTS - $this->connection_attempts;
@@ -119,25 +108,34 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	 */
 	public function authenticate()
 	{
-        $this->user_id = null;
 		try
 		{
 			return $this->try2authenticate();
 		}
-		catch (RowNotFoundException $ex) { }
-		catch (NotASingleRowFoundException $ex) { }
-
-        $this->user_id = null;
-		return false;
+		catch (RowNotFoundException $ex) { 
+			$this->error_msg = LangLoader::get_message('user.not_exists', 'status-messages-common');
+		}
 	}
 
 	private function try2authenticate()
 	{
-		$this->find_user_id_by_username();
+		$user_id = $this->find_user_id_by_username();
 		$this->check_max_authorized_attempts();
-		$match = $this->check_user_password();
-		$this->update_user_info();
-		return $match;
+		$match = $this->check_user_password($user_id);
+		$this->update_user_info($user_id);
+		
+		$remaining_attempts = $this->get_remaining_attemps();
+		if ($remaining_attempts > 0)
+		{
+			$this->error_msg = StringVars::replace_vars(LangLoader::get_message('user.auth.passwd_flood', 'status-messages-common'), array('remaining_tries' => $remaining_attempts));
+		}
+		else
+		{
+			$this->error_msg = LangLoader::get_message('user.auth.passwd_flood_max', 'status-messages-common');
+		}
+		
+		if ($match)
+			return $user_id;
 	}
 
 	private function find_user_id_by_username()
@@ -146,9 +144,9 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 		$condition = 'WHERE username=:username AND approved=1';
 		$parameters = array('username' => $this->username);
 		$row = $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
-		$this->user_id = $row['user_id'];
 		$this->connection_attempts = $row['connection_attemps'];
 		$this->last_connection_date = $row['last_connection'];
+		return $row['user_id'];
 	}
 
 	private function check_max_authorized_attempts()
@@ -169,10 +167,10 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 		}
 	}
 
-	private function check_user_password()
+	private function check_user_password($user_id)
 	{
 		$condition = 'WHERE user_id=:user_id and password=:password';
-		$parameters = array('user_id' => $this->user_id, 'password' => $this->password);
+		$parameters = array('user_id' => $user_id, 'password' => $this->password);
 		$match = $this->querier->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, $condition, $parameters, '*');
 		if ($match)
 		{
@@ -185,7 +183,7 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 		return $match;
 	}
 
-	private function update_user_info()
+	private function update_user_info($user_id)
 	{
 		$this->last_connection_date = time();
 		$columns = array(
@@ -193,9 +191,21 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 			'connection_attemps' => $this->connection_attempts,
 		);
 		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $this->user_id);
+		$parameters = array('user_id' => $user_id);
 		$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 		$this->querier->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), $condition, $parameters);
+	}
+	
+	public static function update_auth_infos($user_id, $username, $password = false)
+	{
+		$columns = array('username' => $username);
+		
+		if ($password)
+			$columns['password'] = $password;
+			
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $user_id);
+		$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 	}
 }
 ?>
