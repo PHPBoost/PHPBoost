@@ -112,7 +112,7 @@
 			<fieldset>
 				<legend>{status.L_TITLE}</legend>
 				
-				<span class="text-blockquote">{L_CURRENT_STATUS} :</span>
+				<span class="formatter-blockquote">{L_CURRENT_STATUS} :</span>
 				<div id="current_status" class="blockquote">{status.CURRENT_STATUS}</div>
 
 				<br />
