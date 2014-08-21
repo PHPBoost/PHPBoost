@@ -93,22 +93,22 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.
-			$ip = PersistenceContext::get_querier()->count(PREFIX . "poll_ip", 'WHERE ip = :ip AND idpoll = :id', array('ip' => AppContext::get_request()->get_ip_address(), 'id' => $poll['id']);
+			$ip = PersistenceContext::get_querier()->count(PREFIX . "poll_ip", 'WHERE ip = :ip AND idpoll = :id', array('ip' => AppContext::get_request()->get_ip_address(), 'id' => $poll['id']));
 			if (empty($ip))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_request()->get_ip_address() . "', -1, '" . $poll['id'] . "', '" . time() . "')");
+				PersistenceContext::get_querier()->insert(PREFIX . "poll_ip", array('ip' => AppContext::get_request()->get_ip_address(), 'user_id' => -1, 'idpoll' => $poll['id'], 'timestamp' => time()));
 				$check_bdd = false;
 			}
 		}
 		else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 		{
-			//Injection de l'adresse ip du visiteur dans la bdd.	
-			$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
-			if (empty($user_id))
+			//Injection de l'adresse ip du visiteur dans la bdd.
+			$nbr_votes = PersistenceContext::get_querier()->count(PREFIX . "poll_ip", 'WHERE user_id = :user_id AND idpoll = :id', array('user_id' => AppContext::get_current_user()->get_id(), 'id' => $poll['id']));
+			if (empty($nbr_votes))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_request()->get_ip_address() . "', '" . AppContext::get_current_user()->get_id() . "', '" . $poll['id'] . "', '" . time() . "')");
+				PersistenceContext::get_querier()->insert(PREFIX . "poll_ip", array('ip' => AppContext::get_request()->get_ip_address(), 'user_id' => AppContext::get_current_user()->get_id(), 'idpoll' => $poll['id'], 'timestamp' => time()));
 				$check_bdd = false;
 			}
 		}
@@ -122,7 +122,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		$array_votes = explode('|', $poll['votes']);
 		if ($poll['type'] == '1') //Réponse unique.
 		{	
-			$id_answer = retrieve(POST, 'radio', -1);		
+			$id_answer = retrieve(POST, 'radio', -1);
 			if (isset($array_votes[$id_answer]))
 			{
 				$array_votes[$id_answer]++;
@@ -145,8 +145,8 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 
 		if ($check_answer) //Enregistrement vote du sondage
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'");
-						
+			PersistenceContext::get_querier()->update(PREFIX . "poll", array('votes' => implode('|', $array_votes)), 'WHERE id = :id', array('id' => $poll['id']));
+			
 			if (in_array($poll['id'], $config_displayed_in_mini_module_list) ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
 				$Cache->Generate_module_file('poll');
 				
@@ -170,15 +170,15 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
-		$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_request()->get_ip_address() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+		$ip = PersistenceContext::get_querier()->count(PREFIX . "poll_ip", 'WHERE ip = :ip AND idpoll = :id', array('ip' => AppContext::get_request()->get_ip_address(), 'id' => $poll['id']));
 		if (!empty($ip))
 			$check_bdd = true;
 	}
 	else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 	{
-		//Injection de l'adresse ip du visiteur dans la bdd.	
-		$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
-		if (!empty($user_id))
+		//Injection de l'adresse ip du visiteur dans la bdd.
+		$nbr_votes = PersistenceContext::get_querier()->count(PREFIX . "poll_ip", 'WHERE user_id = :user_id AND idpoll = :id', array('user_id' => AppContext::get_current_user()->get_id(), 'id' => $poll['id']));
+		if (!empty($nbr_votes))
 			$check_bdd = true;
 	}
 	
@@ -303,7 +303,7 @@ elseif ($archives) //Archives.
 		'poll'=> 'poll/poll.tpl'
 	));
 	
-	$nbrarchives = $Sql->query("SELECT COUNT(*) as id FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1");
+	$nbrarchives = PersistenceContext::get_querier()->count(PREFIX . "poll", 'WHERE archive = 1 AND visible = 1');
 	
 	//On crée une pagination si le nombre de sondages est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -329,12 +329,17 @@ elseif ($archives) //Archives.
 	));	
 	
 	//On recupère les sondages archivés.
-	$result = $Sql->query_while("SELECT id, question, votes, answers, type, timestamp
+	$result = PersistenceContext::get_querier()->select("SELECT id, question, votes, answers, type, timestamp
 	FROM " . PREFIX . "poll
 	WHERE archive = 1 AND visible = 1
 	ORDER BY timestamp DESC
-	" . $Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE)); 
-	while ($row = $Sql->fetch_assoc($result))
+	LIMIT :number_items_per_page OFFSET :display_from",
+		array(
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
+		)
+	);
+	while ($row = $result->fetch())
 	{
 		$array_answer = explode('|', $row['answers']);
 		$array_vote = explode('|', $row['votes']);
