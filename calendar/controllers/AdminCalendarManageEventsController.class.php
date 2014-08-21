@@ -64,7 +64,7 @@ class AdminCalendarManageEventsController extends AdminModuleController
 				$sort_field = 'id_category';
 				break;
 			case 'author':
-				$sort_field = 'login';
+				$sort_field = 'display_name';
 				break;
 			case 'title':
 				$sort_field = 'title';
