@@ -38,7 +38,7 @@ if (!isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FOR
     DispatchManager::redirect($controller);
 }
 
-if (AppContext::get_current_user()->get_attribute('user_readonly') > time()) //Lecture seule.
+if (AppContext::get_current_user()->get_delay_readonly() > time()) //Lecture seule.
 {
 	$controller = PHPBoostErrors::user_in_read_only();
     DispatchManager::redirect($controller);

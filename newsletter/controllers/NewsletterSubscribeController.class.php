@@ -61,7 +61,7 @@ class NewslettersubscribeController extends ModuleController
 		$mail_request = AppContext::get_request()->get_string('mail_newsletter', '');
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && empty($mail_request))
 		{
-			$email = AppContext::get_current_user()->get_attribute('user_mail');
+			$email = AppContext::get_current_user()->get_email();
 		}
 		else
 		{

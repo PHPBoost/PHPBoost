@@ -840,7 +840,7 @@ else //Liste des conversation, dans la boite du membre.
 		else
 			$author = '<strike>' . $LANG['guest'] . '</strike>';
 			
-		$participants = ($row['login_dest'] != AppContext::get_current_user()->get_attribute('login')) ? $row['login_dest'] : $author;
+		$participants = ($row['login_dest'] != AppContext::get_current_user()->get_display_name()) ? $row['login_dest'] : $author;
 		$user_id_dest = $row['user_id_dest'] != AppContext::get_current_user()->get_id() ? $row['user_id_dest'] : $row['user_id'];
 		$participants_group_color = ($participants != $LANG['admin'] && $participants != '<strike>' . $LANG['guest'] . '</strike>') ? User::get_group_color($row['dest_groups'], $row['dest_level']) : '';
 		

@@ -150,7 +150,7 @@ $Template->set_filenames(array('wiki_properties'=> 'wiki/property.tpl'));
 
 if ($random)//Recherche d'une page aléatoire
 {
-	$page = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE redirect = 0 ORDER BY rand() LIMIT 1 OFFSET 0'));
+	$page = PersistenceContext::get_querier()->get_column_value(PREFIX . "wiki_articles", 'encoded_title', 'WHERE redirect = 0 ORDER BY rand() LIMIT 1 OFFSET 0');
 	if (!empty($page)) //On redirige
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $page, $page));
 	else

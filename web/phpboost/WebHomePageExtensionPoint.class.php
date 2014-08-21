@@ -62,8 +62,8 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		$total_link = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "web_cat wc
 		LEFT JOIN " . PREFIX . "web w ON w.idcat = wc.id
-		WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . AppContext::get_current_user()->get_attribute('level') . "'");
-		$total_cat = $this->sql_querier->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . AppContext::get_current_user()->get_attribute('level') . "'");
+		WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . AppContext::get_current_user()->get_level() . "'");
+		$total_cat = $this->sql_querier->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . AppContext::get_current_user()->get_level() . "'");
 		
 		//On créé une pagination si le nombre de catégories est trop important.
 		$page = AppContext::get_request()->get_getint('p', 1);
@@ -103,7 +103,7 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
 		FROM " . PREFIX . "web_cat aw
 		LEFT JOIN " . PREFIX . "web w ON w.idcat = aw.id AND w.aprob = 1
-		WHERE aw.aprob = 1 AND aw.secure <= '" . AppContext::get_current_user()->get_attribute('level') . "'
+		WHERE aw.aprob = 1 AND aw.secure <= '" . AppContext::get_current_user()->get_level() . "'
 		GROUP BY aw.id
 		ORDER BY aw.class
 		" . $this->sql_querier->limit($pagination->get_display_from(), $web_config->get_max_nbr_category()));

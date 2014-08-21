@@ -35,13 +35,13 @@ $add = retrieve(GET, 'add', false);
 if ($add && empty($shout_id)) //Insertion
 {
 	//Membre en lecture seule?
-	if (AppContext::get_current_user()->get_attribute('user_readonly') > time()) 
+	if (AppContext::get_current_user()->get_delay_readonly() > time()) 
 	{
 		$error_controller = PHPBoostErrors::user_in_read_only();
         DispatchManager::redirect($error_controller);
 	}
 	
-	$shout_pseudo = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? AppContext::get_current_user()->get_attribute('login') : substr(retrieve(POST, 'shoutboxform_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
+	$shout_pseudo = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? AppContext::get_current_user()->get_display_name() : substr(retrieve(POST, 'shoutboxform_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
 	$shout_contents = retrieve(POST, 'shoutboxform_shoutbox_contents', '', TSTRING_PARSE);
 	
 	if (!empty($shout_pseudo) && !empty($shout_contents))
@@ -77,7 +77,7 @@ if ($add && empty($shout_id)) //Insertion
 elseif (!empty($shout_id)) //Edition + suppression!
 {
 	//Membre en lecture seule?
-	if (AppContext::get_current_user()->get_attribute('user_readonly') > time()) 
+	if (AppContext::get_current_user()->get_delay_readonly() > time()) 
 	{
 		$error_controller = PHPBoostErrors::user_in_read_only();
         DispatchManager::redirect($error_controller);
@@ -137,7 +137,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		{
 			$shout_contents = retrieve(POST, 'shoutboxform_shoutbox_contents', '', TSTRING_PARSE);
 			$shout_pseudo = retrieve(POST, 'shoutboxform_shoutbox_pseudo', $LANG['guest']);
-			$shout_pseudo = empty($shout_pseudo) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? AppContext::get_current_user()->get_attribute('login') : $shout_pseudo;
+			$shout_pseudo = empty($shout_pseudo) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? AppContext::get_current_user()->get_display_name() : $shout_pseudo;
 			if (!empty($shout_contents) && !empty($shout_pseudo))
 			{
 				//Vérifie que le message ne contient pas du flood de lien.

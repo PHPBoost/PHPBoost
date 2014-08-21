@@ -63,7 +63,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		//Pseudo du membre connecté.
 		if (AppContext::get_current_user()->get_id() !== -1)
 			$tpl->put_all(array(
-				'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_attribute('login'),
+				'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_display_name(),
 				'C_HIDDEN_SHOUT' => true
 			));
 		else
