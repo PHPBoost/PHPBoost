@@ -93,7 +93,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		$form->add_button(new FormButtonReset());
 		
 		//On crée une pagination si le nombre de messages est trop important.
-		$nbr_messages = $this->sql_querier->count_table(PREFIX . 'shoutbox');
+		$nbr_messages = PersistenceContext::get_querier()->count(PREFIX . 'shoutbox');
 		$pagination = new ModulePagination(AppContext::get_request()->get_getint('p', 1), $nbr_messages, 10);
 		$pagination->set_url(new Url('shoutbox' . url('.php?p=%d')));
 		
