@@ -103,7 +103,7 @@ if ($add)
 elseif ($refresh)
 {
 	$array_class = array('member', 'modo', 'admin');
-	$result = PersistenceContext::get_querier()->select("SELECT s.id, s.display_name, s.user_id, s.level, s.contents, s.timestamp, m.user_groups
+	$result = PersistenceContext::get_querier()->select("SELECT s.id, s.login, s.user_id, s.level, s.contents, s.timestamp, m.groups
 	FROM " . PREFIX . "shoutbox s
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 	ORDER BY timestamp DESC 
