@@ -179,7 +179,7 @@ class BugtrackerHistoryListController extends ModuleController
 	private function get_pagination($history_lines_number, $page)
 	{
 		$pagination = new ModulePagination($page, $history_lines_number, (int)BugtrackerConfig::load()->get_items_per_page());
-		$pagination->set_url(BugtrackerUrlBuilder::history($this->bug->get_id() . '/%d'));
+		$pagination->set_url(BugtrackerUrlBuilder::history($this->bug->get_id(), '%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
@@ -213,12 +213,12 @@ class BugtrackerHistoryListController extends ModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.history'] . ' #' . $this->bug->get_id());
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::history($this->bug->get_id() . '/' . $page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::history($this->bug->get_id(), $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
 		$breadcrumb->add($this->lang['titles.detail'] . ' #' . $this->bug->get_id(), BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title()));
-		$breadcrumb->add($this->lang['titles.history'], BugtrackerUrlBuilder::history($this->bug->get_id() . '/' . $page));
+		$breadcrumb->add($this->lang['titles.history'], BugtrackerUrlBuilder::history($this->bug->get_id(), $page));
 		
 		return $response;
 	}

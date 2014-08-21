@@ -92,9 +92,9 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function add($param = '')
+	public static function add()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/add/' . $param);
+		return DispatchManager::get_url(self::$dispatcher, '/add/');
 	}
 	
 	/**
@@ -116,9 +116,10 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function history($param = '')
+	public static function history($id, $page = 1)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/history/' . $param);
+		$page = $page !== 1 ? $page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/history/' . $id .'/' . $page);
 	}
 	
 	/**
