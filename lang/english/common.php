@@ -40,8 +40,8 @@ $lang['disabled'] = 'Disabled';
 $lang['yes'] = 'Yes';
 $lang['no'] = 'No';
 
-$LANG['delete'] = 'Delete';
-$LANG['edit'] = 'Edit';
+$lang['delete'] = 'Delete';
+$lang['edit'] = 'Edit';
 
 $lang['syndication'] = 'Syndication';
 $lang['syndication.rss'] = 'RSS';
