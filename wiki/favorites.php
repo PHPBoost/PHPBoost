@@ -54,7 +54,7 @@ if ($add_favorite > 0)//Ajout d'un favori
 	$is_favorite = PersistenceContext::get_querier()->count(PREFIX . "wiki_favorites", 'WHERE user_id = :user_id AND id_article = :id_article', array('user_id' => AppContext::get_current_user()->get_id(), 'id_article' => $add_favorite));
 	if ($is_favorite == 0)
 	{
-		$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_favorites (id_article, user_id) VALUES ('" . $add_favorite . "', '" . AppContext::get_current_user()->get_id() . "')");
+		PersistenceContext::get_querier()->insert(PREFIX . "wiki_favorites", array('id_article' => $add_favorite, 'user_id' => AppContext::get_current_user()->get_id()));
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris

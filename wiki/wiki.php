@@ -115,7 +115,7 @@ $Template->set_filenames(array(
 if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 {
 	if ($config->is_hits_counter_enabled())//Si on prend en compte le nombre de vus
-		$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "wiki_articles SET hits = hits + 1 WHERE id = '" . $article_infos['id'] . "'");
+		PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('hits' => 'hits + 1'), 'WHERE id = :id', array('id' => $article_infos['id']));
 
 	//Si c'est une archive
 	if ($id_contents > 0)
