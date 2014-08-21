@@ -5,7 +5,7 @@
 			<th></th>
 			<th>
 				<a href="{U_SORT_NAME_ASC}" class="fa fa-table-sort-up"></a>
-				{@news.form.name}
+				${LangLoader::get_message('form.name', 'common')}
 				<a href="{U_SORT_NAME_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
