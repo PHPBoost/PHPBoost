@@ -112,7 +112,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	}
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!$Gallery->auth_upload_pics(AppContext::get_current_user()->get_id(), AppContext::get_current_user()->get_attribute('level')))
+	if (!$Gallery->auth_upload_pics(AppContext::get_current_user()->get_id(), AppContext::get_current_user()->get_level()))
 		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=upload_limit', '-' . $g_idcat . '.php?add=1&error=upload_limit', '&') . '#message_helper');
 
 	$dir = 'pics/';
@@ -233,7 +233,7 @@ elseif ($g_add)
 	$quota = isset($CAT_GALLERY[$g_idcat]['auth']['r-1']) ? ($CAT_GALLERY[$g_idcat]['auth']['r-1'] != '3') : true;
 	if ($quota)
 	{
-		switch (AppContext::get_current_user()->get_attribute('level'))
+		switch (AppContext::get_current_user()->get_level())
 		{
 			case 2:
 			$l_pics_quota = $LANG['illimited'];

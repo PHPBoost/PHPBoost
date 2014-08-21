@@ -67,10 +67,10 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 			}
 			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{
-				if (AppContext::get_current_user()->get_attribute('level') == User::ADMIN_LEVEL)
+				if (AppContext::get_current_user()->get_level() == User::ADMIN_LEVEL)
 				$this_auth = true;
 				else
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_attribute('level'), $config_authorizations, READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_level(), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_level(), $config_authorizations, READ_PAGE);
 			}
 			if ($this_auth && $id != 0 && $properties['id_parent'] == $id_cat)
 			{
@@ -109,10 +109,10 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 			}
 			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{
-				if (AppContext::get_current_user()->get_attribute('level') == User::ADMIN_LEVEL)
+				if (AppContext::get_current_user()->get_level() == User::ADMIN_LEVEL)
 				$this_auth = true;
 				else
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_attribute('level'), $config_authorizations, READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_level(), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, AppContext::get_current_user()->get_level(), $config_authorizations, READ_PAGE);
 			}
 			if ($this_auth && $id != 0 && $properties['id_parent'] == $id_cat)
 			{

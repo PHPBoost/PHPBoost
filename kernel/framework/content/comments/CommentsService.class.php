@@ -112,7 +112,7 @@ class CommentsService
 				if ($authorizations->is_authorized_post() && $authorizations->is_authorized_access_module())
 				{
 					$comments_topic_locked = CommentsManager::comment_topic_locked($module_id, $id_in_module, $topic_identifier);
-					$user_read_only = self::$user->get_attribute('user_readonly');
+					$user_read_only = self::$user->get_delay_readonly();
 					if (!$authorizations->is_authorized_moderation() && $comments_topic_locked)
 					{
 						self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comment.locked'], MessageHelper::NOTICE));

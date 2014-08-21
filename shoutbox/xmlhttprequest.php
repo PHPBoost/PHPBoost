@@ -39,7 +39,7 @@ $config_shoutbox = ShoutboxConfig::load();
 if ($add)
 {
 	//Membre en lecture seule?
-	if (AppContext::get_current_user()->get_attribute('user_readonly') > time()) 
+	if (AppContext::get_current_user()->get_delay_readonly() > time()) 
 	{
 		echo -6;
 		exit;

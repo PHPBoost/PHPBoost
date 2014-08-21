@@ -69,7 +69,7 @@ class GooglePlusOneShare extends AbstractShare
 		else
 		{
 			// TODO change for a new function
-			return substr(AppContext::get_current_user()->get_attribute('user_lang'), 2);
+			return substr(AppContext::get_current_user()->get_locale(), 2);
 		}
 	}
 	

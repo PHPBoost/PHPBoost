@@ -53,7 +53,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			if ($shoutbox)
 			{
 				//Membre en lecture seule?
-				if (AppContext::get_current_user()->get_attribute('user_readonly') > time())
+				if (AppContext::get_current_user()->get_delay_readonly() > time())
 				{
 					$error_controller = PHPBoostErrors::user_in_read_only();
 					DispatchManager::redirect($error_controller);
@@ -98,7 +98,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			//Pseudo du membre connecté.
 			if (AppContext::get_current_user()->get_id() !== -1)
 				$tpl->put_all(array(
-					'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_attribute('login'),
+					'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_display_name(),
 					'C_HIDDEN_SHOUT' => true
 				));
 			else
@@ -125,7 +125,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			));
 	
 			$array_class = array('member', 'modo', 'admin');
-			$result = PersistenceContext::get_querier()->select("SELECT s.id, s.display_name, s.user_id, s.level, s.contents, s.timestamp, m.login as mlogin, m.user_groups
+			$result = PersistenceContext::get_querier()->select("SELECT s.id, s.login, s.user_id, s.level, s.contents, s.timestamp, m.display_name as mlogin, m.groups
 			FROM " . PREFIX . "shoutbox s
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 			ORDER BY s.timestamp DESC
