@@ -197,11 +197,11 @@ class ContentSecondParser extends AbstractParser
 
 		if (!$inline_code && !empty($matches[1]))
 		{
-			$contents = '<span class="text-code">' . sprintf(LangLoader::get_message('code_langage', 'main'), strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
+			$contents = '<span class="formatter-code">' . sprintf(LangLoader::get_message('code_langage', 'main'), strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
 		}
 		else if (!$inline_code && empty($matches[1]))
 		{
-			$contents = '<span class="text-code">' . LangLoader::get_message('code_tag', 'main') . '</span><div class="code">' . $contents . '</div>';
+			$contents = '<span class="formatter-code">' . LangLoader::get_message('code_tag', 'main') . '</span><div class="code">' . $contents . '</div>';
 		}
 			
 		return $contents;
