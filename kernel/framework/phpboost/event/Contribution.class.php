@@ -100,9 +100,6 @@ class Contribution extends Event
 	 */
 	private $fixer_groups = '';
 	
-	private $sql_querier;
-
-
 	/**
 	 * @desc Builds a Contribution object.
 	 */
@@ -113,7 +110,6 @@ class Contribution extends Event
 		$this->creation_date = new Date();
 		$this->fixing_date = new Date();
 		$this->module = Environment::get_running_module_name();
-		$this->sql_querier = PersistenceContext::get_sql();
 	}
 
 	/**
@@ -234,8 +230,8 @@ class Contribution extends Event
 		if ($poster_id  > 0)
 		{
 			$this->poster_id = $poster_id;
-			//Assigning also the associated login
-			$this->poster_login = $this->sql_querier->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $poster_id . "'");
+			//Assigning also the associated display_name
+			$this->poster_login = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $poster_id));
 		}
 	}
 
@@ -249,7 +245,7 @@ class Contribution extends Event
 		{
 			$this->fixer_id = $fixer_id;
 			//Assigning also the associated login
-			$this->fixer_login = $this->sql_querier->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $fixer_id . "'");
+			$this->fixer_login = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $fixer_id));
 		}
 	}
 
