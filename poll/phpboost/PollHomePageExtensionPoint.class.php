@@ -27,13 +27,6 @@
 
 class PollHomePageExtensionPoint implements HomePageExtensionPoint
 {
-	private $sql_querier;
-
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-	}
-	
 	public function get_home_page()
 	{
 		return new DefaultHomePage($this->get_title(), $this->get_view());
@@ -58,9 +51,9 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$tpl = new FileTemplate('poll/poll.tpl');
         
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$now = new Date();
 
-		$show_archives = $this->sql_querier->query("SELECT COUNT(*) as compt FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)");
+		$show_archives = PersistenceContext::get_querier()->count(PREFIX . "poll", 'WHERE archive = 1 AND visible = 1 AND start <= :timestamp AND (end >= :timestamp OR end = 0)', array('timestamp' => $now->get_timestamp()));
 		$show_archives = !empty($show_archives) ? '<a href="poll' . url('.php?archives=1', '.php?archives=1') . '">' . $LANG['archives'] . '</a>' : '';
 	
 		$edit = '';	
@@ -72,14 +65,16 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 			'EDIT' => $edit,
 			'U_ARCHIVE' => $show_archives,
 			'L_POLL' => $LANG['poll'],
-			'L_POLL_MAIN' => $LANG['poll_main']		
+			'L_POLL_MAIN' => $LANG['poll_main']
 		));
 	
-		$result = $this->sql_querier->query_while("SELECT id, question 
+		$result = PersistenceContext::get_querier()->select("SELECT id, question 
 		FROM " . PREFIX . "poll 
-		WHERE archive = 0 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)
-		ORDER BY id DESC");
-		while ($row = $this->sql_querier->fetch_assoc($result))
+		WHERE archive = 0 AND visible = 1 AND start <= :timestamp AND (end >= :timestamp OR end = 0)
+		ORDER BY id DESC", array(
+			'timestamp' => $now->get_timestamp()
+		));
+		while ($row = $result->fetch())
 		{
 			$tpl->assign_block_vars('list', array(
 				'U_POLL_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),

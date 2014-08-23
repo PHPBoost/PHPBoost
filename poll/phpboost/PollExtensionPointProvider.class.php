@@ -27,11 +27,8 @@
 
 class PollExtensionPointProvider extends ExtensionPointProvider
 {
-	private $sql_querier;
-	
 	public function __construct()
 	{
-		$this->sql_querier = PersistenceContext::get_sql();
 		parent::__construct('poll');
 	}
 	
@@ -48,7 +45,7 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 		{
 			foreach ($config_displayed_in_mini_module_list as $key => $idpoll)
 			{
-				$poll = $this->sql_querier->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1");
+				$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('id', 'question', 'votes', 'answers', 'type'), 'WHERE id = :id AND archive = 0 AND visible = 1', array('id' => $idpoll));
 				if (!empty($poll['id'])) //Sondage existant.
 				{
 					$array_answer = explode('|', $poll['answers']);

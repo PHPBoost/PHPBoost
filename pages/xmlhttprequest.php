@@ -24,13 +24,14 @@ if ($id_cat != 0)
 {	
 	echo '<ul>';
 	//On sélectionne les répetoires dont l'id parent est connu
-	$result = $Sql->query_while("SELECT c.id, p.title, p.encoded_title, p.auth
+	$result = PersistenceContext::get_querier()->select("SELECT c.id, p.title, p.encoded_title, p.auth
 	FROM " . PREFIX . "pages_cats c
 	LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
-	WHERE c.id_parent = " . $id_cat . "
-	ORDER BY title ASC");
-	$nbr_subcats = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $id_cat. "'");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE c.id_parent = :id
+	ORDER BY title ASC", array(
+		'id' => $id_cat
+	);
+	while ($row = $result->fetch())
 	{
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
@@ -90,11 +91,13 @@ elseif (!empty($open_cat) || $root == 1)
 			}
 		}
 	}
-	$result = $Sql->query_while("SELECT title, id, encoded_title, auth
+	$result = PersistenceContext::get_querier()->select("SELECT title, id, encoded_title, auth
 	FROM " . PREFIX . "pages
-	WHERE id_cat = '" . $open_cat . "'
-	ORDER BY is_cat DESC, title ASC");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE id_cat = :id
+	ORDER BY is_cat DESC, title ASC", array(
+		'id' => $open_cat
+	);
+	while ($row = $result->fetch())
 	{
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);

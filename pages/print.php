@@ -37,7 +37,7 @@ $Cache->load('pages');
 
 if (!empty($encoded_title)) //Si on connait son titre
 {
-	$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents', "WHERE encoded_title = '" . $encoded_title . "'");
+	$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents'), 'WHERE encoded_title = :encoded_title', array('encoded_title' => $encoded_title));
 	
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	
@@ -45,7 +45,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	{
 		$redirect_title = $page_infos['title'];
 		$redirect_id = $page_infos['id'];
-		$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents', "WHERE id = '" . $page_infos['redirect'] . "'");
+		$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents'), 'WHERE id = :id', array('id' => $page_infos['redirect']));
 	}
 	else
 		$redirect_title = '';

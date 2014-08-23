@@ -67,7 +67,7 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 //Fonction récursive pour l'affichage des catégories
 function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 {
-	global $_PAGES_CATS, $Sql;
+	global $_PAGES_CATS;
 	
 	$Template = new FileTemplate('pages/post.tpl');
 	$module_data_path = $Template->get_pictures_data_path();
