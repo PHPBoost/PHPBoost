@@ -99,10 +99,10 @@ class ArticlesDisplayCategoryController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
 		WHERE (articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
 		AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0))) 
-		AND articles.id_category IN :authorized_categories
+		AND articles.id_category = :id_category
 		ORDER BY ' .$sort_field . ' ' . $sort_mode . ' 
 		LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from(), array(
-			'authorized_categories' => $authorized_categories,
+			'id_category' => $this->get_category()->get_id(),
 			'timestamp_now' => $now->get_timestamp()
 		));
 		
