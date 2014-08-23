@@ -39,17 +39,13 @@ $config_authorizations = $pages_config->get_authorizations();
 //Requêtes préliminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
-	$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat',
-		'hits', 'count_hits', 'activ_com', 'redirect', 'contents', 'display_print_link',
-		"WHERE encoded_title = '" . $encoded_title . "'");
+	$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents', 'display_print_link'), 'WHERE encoded_title = :encoded_title', array('encoded_title' => $encoded_title));
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	if ($page_infos['redirect'] > 0)
 	{
 		$redirect_title = $page_infos['title'];
 		$redirect_id = $page_infos['id'];
-		$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat',
-			'hits', 'count_hits', 'activ_com', 'redirect', 'contents', 'display_print_link',
-			"WHERE id = '" . $page_infos['redirect'] . "'");
+		$page_infos = $db_querier->select_single_row(PREFIX . 'pages', array('id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents', 'display_print_link'), 'WHERE id = :id', array('id' => $page_infos['redirect']));
 	}
 	else
 		$redirect_title = '';
@@ -76,13 +72,14 @@ if (!empty($encoded_title)) //Si on connait son titre
 }
 elseif ($id_com > 0)
 {
-	$result = $Sql->query_while("SELECT id, title, encoded_title, auth, is_cat, id_cat, hits
+	$result = PersistenceContext::get_querier()->select("SELECT id, title, encoded_title, auth, is_cat, id_cat, hits
 		count_hits, activ_com, contents
 		FROM " . PREFIX . "pages
-		WHERE id = '" . $id_com . "'"
-	);
-	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "pages WHERE id = '" . $id_com . "'");
-	$page_infos = $Sql->fetch_assoc($result);
+		WHERE id = :id", array(
+			'id' => $id_com
+	));
+	$num_rows = $result->get_rows_count();
+	$page_infos = $result->fetch();
 	$result->dispose();
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
 	$Bread_crumb->add($LANG['pages_com'], PagesUrlBuilder::get_link_item_com($id_com));
@@ -167,7 +164,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	
 	//On compte le nombre de vus
 	if ($page_infos['count_hits'] == 1)
-		$Sql->query_inject("UPDATE " . PREFIX . "pages SET hits = hits + 1 WHERE id = '" . $page_infos['id'] . "'");
+		PersistenceContext::get_querier()->update(PREFIX . 'pages', array('hits' => 'hits + 1'), 'WHERE id = :id', array('id' => $page_infos['id'] ));
 	
 	$Template->put_all(array(
 		'TITLE' => $page_infos['title'],

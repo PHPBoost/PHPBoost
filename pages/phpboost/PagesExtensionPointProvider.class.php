@@ -31,7 +31,6 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 {
 	public function __construct() //Constructeur de la classe
 	{
-		$this->sql_querier = PersistenceContext::get_sql();
 		parent::__construct('pages');
 	}
 	
@@ -44,11 +43,11 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 		$code = 'global $_PAGES_CATS;' . "\n";
 		$code .= '$_PAGES_CATS = array();' . "\n\n";
 
-		$result = $this->sql_querier->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
+		$result = PersistenceContext::get_querier()->select("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
 		FROM " . PREFIX . "pages_cats c
 		LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
 		ORDER BY p.title");
-		while ($row = $this->sql_querier->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			$code .= '$_PAGES_CATS[' . $row['id'] . '] = ' .
 			var_export(array(

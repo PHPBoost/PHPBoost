@@ -56,11 +56,11 @@ foreach ($_PAGES_CATS as $key => $value)
 	}
 }
 //Liste des fichiers de la racine
-$result = $Sql->query_while("SELECT title, id, encoded_title, auth
+$result = PersistenceContext::get_querier()->select("SELECT title, id, encoded_title, auth
 	FROM " . PREFIX . "pages
 	WHERE id_cat = 0 AND is_cat = 0
 	ORDER BY is_cat DESC, title ASC");
-while ($row = $Sql->fetch_assoc($result))
+while ($row = $result->fetch())
 {
 	//Autorisation particulière ?
 	$special_auth = !empty($row['auth']);
@@ -83,12 +83,12 @@ $Template->put_all(array(
 ));
 
 $contents = '';
-$result = $Sql->query_while("SELECT c.id, p.title, p.encoded_title
+$result = PersistenceContext::get_querier()->select("SELECT c.id, p.title, p.encoded_title
 FROM " . PREFIX . "pages_cats c
 LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
 WHERE c.id_parent = 0
 ORDER BY p.title ASC");
-while ($row = $Sql->fetch_assoc($result))
+while ($row = $result->fetch())
 {
 	$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "pages_cats", 'WHERE id_parent=:id_parent', array('id_parent' => $row['id']));
 	if ($sub_cats_number > 0)

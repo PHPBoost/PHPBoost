@@ -61,7 +61,7 @@ else
 	
 if ($id_edit > 0)
 {
-	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link', "WHERE id = '" . $id_edit . "'");
+	$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link'), 'WHERE id = :id', array('id' => $id_edit));
 	$Bread_crumb->add(TITLE, url('post.php?id=' . $id_edit));
 	$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
@@ -97,7 +97,7 @@ if (!empty($contents))
 		//Edition d'une page
 		if ($id_edit > 0)
 		{
-			$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'contents', 'auth', 'encoded_title', 'is_cat', 'id_cat', 'display_print_link', "WHERE id = '" . $id_edit . "'");
+			$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'contents', 'auth', 'encoded_title', 'is_cat', 'id_cat', 'display_print_link'), 'WHERE id = :id', array('id' => $id_edit));
 			
 			//Autorisation particulière ?
 			$special_auth = !empty($page_infos['auth']);
@@ -120,7 +120,7 @@ if (!empty($contents))
 			if ($page_infos['is_cat'] == 0)
 			{		
 				//On met à jour la table
-				$Sql->query_inject("UPDATE " . PREFIX . "pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "', display_print_link = '" . $display_print_link . "' WHERE id = '" . $id_edit . "'");
+				PersistenceContext::get_querier()->update(PREFIX . 'pages', array('contents' => pages_parse($contents), 'count_hits' => $count_hits, 'activ_com' => $enable_com, 'auth' => $page_auth, 'id_cat' => $id_cat, 'display_print_link' => $display_print_link), 'WHERE id = :id', array('id' => $id_edit));
 				//On redirige vers la page mise à jour
 				AppContext::get_response()->redirect('/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
@@ -130,10 +130,10 @@ if (!empty($contents))
 				//Changement de catégorie mère ? => on met à jour la table catégories
 				if ($id_cat != $page_infos['id_cat'])
 				{
-					$Sql->query_inject("UPDATE " . PREFIX . "pages_cats SET id_parent = '" . $id_cat . "' WHERE id = '" . $page_infos['id_cat'] . "'");
+					PersistenceContext::get_querier()->update(PREFIX . 'pages_cats', array('id_parent' => $id_cat), 'WHERE id = :id', array('id' => $page_infos['id_cat']));
 				}
 				//On met à jour la table
-				$Sql->query_inject("UPDATE " . PREFIX . "pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "', display_print_link = '" . $display_print_link . "'  WHERE id = '" . $id_edit . "'");
+				PersistenceContext::get_querier()->update(PREFIX . 'pages', array('contents' => pages_parse($contents), 'count_hits' => $count_hits, 'activ_com' => $enable_com, 'auth' => $page_auth, 'display_print_link' => $display_print_link), 'WHERE id = :id', array('id' => $id_edit));
 				//Régénération du cache
 				$Cache->Generate_module_file('pages');
 				//On redirige vers la page mise à jour
@@ -152,14 +152,14 @@ if (!empty($contents))
 			//Si l'article n'existe pas déjà, on enregistre
 			if ($is_already_page == 0)
 			{
-				$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, contents, user_id, count_hits, activ_com, timestamp, auth, is_cat, id_cat, display_print_link) VALUES ('" . $title . "', '" . $encoded_title . "', '" .  pages_parse($contents) . "', '" . AppContext::get_current_user()->get_id() . "', '" . $count_hits . "', '" . $enable_com . "', '" . time() . "', '" . $page_auth . "', '" . $is_cat . "', '" . $id_cat . "', '" . $display_print_link . "')");
+				$result = PersistenceContext::get_querier()->insert(PREFIX . 'pages', array('title' => $title, 'encoded_title' => $encoded_title, 'contents' => pages_parse($contents), 'user_id' => AppContext::get_current_user()->get_id(), 'count_hits' => $count_hits, 'activ_com' => $enable_com, 'timestamp' => time(), 'auth' => $page_auth, 'is_cat' => $is_cat, 'id_cat' => $id_cat, 'display_print_link' => $display_print_link));
 				//Si c'est une catégorie
 				if ($is_cat > 0)
 				{
-					$last_id_page = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "pages");  
-					$Sql->query_inject("INSERT INTO " . PREFIX . "pages_cats (id_parent, id_page) VALUES ('" . $id_cat . "', '" . $last_id_page . "')");
-					$last_id_pages_cat = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "pages_cats");
-					$Sql->query_inject("UPDATE " . PREFIX . "pages SET id_cat = '" . $last_id_pages_cat . "' WHERE id = '" . $last_id_page . "'");
+					$last_id_page = $result->get_last_inserted_id();  
+					$result = PersistenceContext::get_querier()->insert(PREFIX . 'pages_cats', array('id_parent' => $id_cat, 'id_page' => $last_id_page));
+					$last_id_pages_cat = $result->get_last_inserted_id();
+					PersistenceContext::get_querier()->update(PREFIX . 'pages', array('id_cat' => $last_id_pages_cat), 'WHERE id = :id', array('id' => $last_id_page));
 					//Régénération du cache
 					$Cache->Generate_module_file('pages');
 				}
@@ -182,7 +182,7 @@ elseif ($del_article > 0)
     //Vérification de la validité du jeton
     AppContext::get_session()->csrf_get_protect();
     
-	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link', "WHERE id = '" . $del_article . "'");
+	$page_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'pages', array('id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', 'display_print_link'), 'WHERE id = :id', array('id' => $del_article));
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);

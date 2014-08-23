@@ -29,13 +29,13 @@
 				</td>
 			</tr>
 			# END redirections.list #
-			# START redirections.no_redirection #
+			# IF C_NO_REDIRECTION #
 			<tr>
 				<td colspan="3">
-					{redirections.no_redirection.MESSAGE}
+					{L_NO_REDIRECTION}
 				</td>
 			</tr>
-			# END redirections.no_redirection #
+			# ENDIF #
 		</tbody>
 	</table>
 	# END redirections #
@@ -73,13 +73,13 @@
 				</td>
 			</tr>
 			# END redirection.list #
-			# START redirection.no_redirection #
+			# IF C_NO_REDIRECTION #
 			<tr>
 				<td colspan="2">
-					{redirection.no_redirection.MESSAGE}
+					{L_NO_REDIRECTION}
 				</td>
 			</tr>
-			# END redirection.no_redirection #
+			# ENDIF #
 		</tbody>
 	</table>
 	# END redirection #

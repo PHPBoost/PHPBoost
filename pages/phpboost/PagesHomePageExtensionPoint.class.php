@@ -27,13 +27,6 @@
 
 class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 {
-	private $sql_querier;
-
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-	}
-	
 	public function get_home_page()
 	{
 		return new DefaultHomePage($this->get_title(), $this->get_view());
@@ -61,7 +54,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$tpl = new FileTemplate('pages/index.tpl');
         
-		$num_pages = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "pages WHERE redirect = '0'");
+		$num_pages = PersistenceContext::get_querier()->count(PREFIX . "pages", 'WHERE redirect = 0');
 		$num_coms = CommentsService::get_number_and_lang_comments('pages', $pages['id']);
 		
 		$tpl->put_all(array(
@@ -89,11 +82,11 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 		}
 		//Liste des fichiers de la racine
-		$result = $this->sql_querier->query_while("SELECT title, id, encoded_title, auth
+		$result = PersistenceContext::get_querier()->select("SELECT title, id, encoded_title, auth
 			FROM " . PREFIX . "pages
 			WHERE id_cat = 0 AND is_cat = 0
 			ORDER BY is_cat DESC, title ASC");
-		while ($row = $this->sql_querier->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			//Autorisation particulière ?
 			$special_auth = !empty($row['auth']);
@@ -118,14 +111,14 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		));
 
 		$contents = '';
-		$result = $this->sql_querier->query_while("SELECT c.id, p.title, p.encoded_title
+		$result = PersistenceContext::get_querier()->select("SELECT c.id, p.title, p.encoded_title
 		FROM " . PREFIX . "pages_cats c
 		LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
 		WHERE c.id_parent = 0
 		ORDER BY p.title ASC");
-		while ($row = $this->sql_querier->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
-			$sub_cats_number = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $row['id'] . "'");
+			$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "pages_cats", 'WHERE id_parent=:id_parent', array('id_parent' => $row['id']));
 			if ($sub_cats_number > 0)
 			{	
 				$tpl->assign_block_vars('list', array(
