@@ -78,6 +78,7 @@ $lang['form.category'] = 'Emplacement';
 $lang['form.rewrited_name'] = 'Nom réécrit dans l\'url';
 $lang['form.rewrited_name.description'] = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';
 $lang['form.rewrited_name.personalize'] = 'Personnaliser le nom dans l\'url';
+$lang['form.approved'] = 'Approuvé';
 $lang['form.approbation'] = 'Publication';
 $lang['form.approbation.not'] = 'Garder en brouillon';
 $lang['form.approbation.now'] = 'Publier maintenant';
@@ -86,6 +87,7 @@ $lang['form.date.start'] = 'A partir du';
 $lang['form.date.end'] = 'Jusqu\'au';
 $lang['form.date.creation'] = 'Date de création';
 $lang['form.date.end.enable'] = 'Définir une date de fin de publication';
+$lang['form.url'] = 'Adresse';
 $lang['form.other'] = 'Autre';
 $lang['form.options'] = 'Options';
 $lang['form.keywords'] = 'Mots clés';
@@ -98,6 +100,11 @@ $lang['form.source.url'] = 'Adresse de la source';
 $lang['form.captcha'] = 'Code de vérification';
 
 $lang['suggestions'] = 'Suggestions';
+
+//Dead links
+$lang['deadlink'] = 'Signaler un lien mort';
+$lang['contribution_deadlink'] = 'Lien mort : %s';
+$lang['contribution_deadlink_explain'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien et modifiez-le si nécessaire.';
 
 //Autorisations
 $lang['authorizations'] = 'Autorisations';

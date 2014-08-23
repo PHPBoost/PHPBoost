@@ -141,10 +141,6 @@ $DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Tell us why you want us to
 $DOWNLOAD_LANG['contribution_entitled'] = 'A file has been submitted: %s';
 $DOWNLOAD_LANG['contribution_success'] = 'Your contribution has been saved.';
 
-// Lien mort
-$DOWNLOAD_LANG['contribution_deadlink'] = 'Dead link : %s';
-$DOWNLOAD_LANG['contribution_deadlink_explain'] = 'One member reported this link as dead. Please check the link to download the plug, and change it if necessary.';
-
 //Errors
 $LANG['contribution_entitled'] = 'A file has been suggested.';
 

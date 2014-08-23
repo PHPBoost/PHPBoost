@@ -70,7 +70,7 @@ if ($file_id > 0) //Contenu
 		'L_INSERTION_DATE' => $DOWNLOAD_LANG['insertion_date'],
 		'L_RELEASE_DATE' => $DOWNLOAD_LANG['last_update_date'],
 		'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
-		'L_DEADLINK' => $DOWNLOAD_LANG['deadlink'],
+		'L_DEADLINK' => LangLoader::get_message('deadlink', 'common'),
 		'U_EDIT_FILE' => url('management.php?edit=' . $file_id),
 		'U_DELETE_FILE' => url('management.php?del=' . $file_id . '&amp;token=' . AppContext::get_session()->get_token()),
 		'U_DOWNLOAD_FILE' => url('count.php?id=' . $file_id, 'file-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php'),
@@ -96,9 +96,9 @@ if ($file_id > 0) //Contenu
 		{
 			$contribution = new Contribution();
 			$contribution->set_id_in_module($file_id);
-			$contribution->set_entitled(sprintf($DOWNLOAD_LANG['contribution_deadlink'], stripslashes($download_info['title'])));
+			$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.deadlink', 'common'), array('link_name' => stripslashes($download_info['title']))));
 			$contribution->set_fixing_url('/download/management.php?edit=' . $file_id . '');
-			$contribution->set_description(stripslashes($DOWNLOAD_LANG['contribution_deadlink_explain']));
+			$contribution->set_description(LangLoader::get_message('contribution.deadlink_explain', 'common'));
 			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 			$contribution->set_module('download');
 			$contribution->set_type('alert');

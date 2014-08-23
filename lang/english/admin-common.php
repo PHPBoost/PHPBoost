@@ -29,6 +29,8 @@
  #                     English                      #
  ####################################################
 
+$lang['config.items_number_per_page'] = 'Items number per page';
+$lang['config.columns_number_per_line'] = 'Categories number per line';
 $lang['config.comments_enabled'] = 'Enable comments';
 $lang['config.notation_enabled'] = 'Enable notation';
 $lang['config.notation_scale'] = 'Notation scale';

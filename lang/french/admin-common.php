@@ -29,6 +29,8 @@
  #                     French                       #
  ####################################################
 
+$lang['config.items_number_per_page'] = 'Nombre d\'éléments affichés par page';
+$lang['config.columns_number_per_line'] = 'Nombre de catégories affichées par ligne';
 $lang['config.comments_enabled'] = 'Activer les commentaires';
 $lang['config.notation_enabled'] = 'Activer la notation';
 $lang['config.notation_scale'] = 'Echelle de notation';
