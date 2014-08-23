@@ -96,9 +96,9 @@ if ($file_id > 0) //Contenu
 		{
 			$contribution = new Contribution();
 			$contribution->set_id_in_module($file_id);
-			$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.deadlink', 'common'), array('link_name' => stripslashes($download_info['title']))));
+			$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution_deadlink', 'common'), array('link_name' => stripslashes($download_info['title']))));
 			$contribution->set_fixing_url('/download/management.php?edit=' . $file_id . '');
-			$contribution->set_description(LangLoader::get_message('contribution.deadlink_explain', 'common'));
+			$contribution->set_description(LangLoader::get_message('contribution_deadlink_explain', 'common'));
 			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 			$contribution->set_module('download');
 			$contribution->set_type('alert');
