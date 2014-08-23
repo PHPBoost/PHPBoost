@@ -78,6 +78,7 @@ $lang['form.category'] = 'Location';
 $lang['category.form.rewrited_name'] = 'Rewrited name in the url';
 $lang['category.form.rewrited_name.description'] = 'Only contains lowercase letters, numbers and hyphens.';
 $lang['category.form.rewrited_name.personalize'] = 'Personalize rewrited name in the url';
+$lang['form.approved'] = 'Approved';
 $lang['form.approbation'] = 'Publication';
 $lang['form.approbation.not'] = 'Keep in draft';
 $lang['form.approbation.now'] = 'Publish now';
@@ -86,6 +87,7 @@ $lang['form.date.start'] = 'From';
 $lang['form.date.end'] = 'Until';
 $lang['form.date.creation'] = 'Creation date';
 $lang['form.date.end.enable'] = 'Define a publication end date';
+$lang['form.url'] = 'Address';
 $lang['form.other'] = 'Other';
 $lang['form.options'] = 'Options';
 $lang['form.keywords'] = 'Keywords';
@@ -98,6 +100,11 @@ $lang['form.source.url'] = 'Source address';
 $lang['form.captcha'] = 'Code de vérification';
 
 $lang['suggestions'] = 'Suggestions';
+
+//Dead links
+$lang['deadlink'] = 'Report a dead link';
+$lang['contribution_deadlink'] = 'Dead link : %s';
+$lang['contribution_deadlink_explain'] = 'One member reported this link as dead. Please check the link and change it if necessary.';
 
 //Autorisations
 $lang['authorizations'] = 'Permissions';

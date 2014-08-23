@@ -32,6 +32,9 @@
 $lang['category'] = 'Category';
 $lang['categories'] = 'Categories';
 
+$lang['sub_category'] = 'Sub-category';
+$lang['sub_categories'] = 'Sub-categories';
+
 //Management
 $lang['categories.management'] = 'Categories management';
 $lang['categories.manage'] = 'Manage categories';
