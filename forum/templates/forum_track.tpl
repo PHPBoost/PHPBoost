@@ -42,7 +42,7 @@
 						<tbody>
 							# IF C_NO_TRACKED_TOPICS #
 							<tr>
-								<td colspan="8" class="forum-sous-cat" style="text-align:center;">
+								<td colspan="10" class="forum-sous-cat" style="text-align:center;">
 									<strong>{L_NO_TRACKED_TOPICS}</strong>
 								</td>
 							</tr>
