@@ -195,7 +195,7 @@ if ($contribution_id > 0)
 		$template->put_all(array(
 			'C_CONTRIBUTION_FIXED' => true,
 			'C_FIXER_GROUP_COLOR' => !empty($fixer_group_color),
-			'FIXER' => $fixer['login'],
+			'FIXER' => $fixer['display_name'],
 			'FIXER_LEVEL_CLASS' => UserService::get_level_class($fixer['level']),
 			'FIXER_GROUP_COLOR' => $fixer_group_color,
 			'FIXING_DATE' => $contribution_fixing_date->format(Date::FORMAT_DAY_MONTH_YEAR),
