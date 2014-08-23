@@ -173,7 +173,7 @@ if ($contribution_id > 0)
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => FormatingHelper::second_parse($contribution->get_description()),
 		'STATUS' => $contribution->get_status_name(),
-		'CONTRIBUTOR' => $contributor['login'],
+		'CONTRIBUTOR' => $contributor['display_name'],
 		'CONTRIBUTOR_LEVEL_CLASS' => UserService::get_level_class($contributor['level']),
 		'CONTRIBUTOR_GROUP_COLOR' => $contributor_group_color,
 		'COMMENTS' => CommentsService::display($comments_topic)->render(),

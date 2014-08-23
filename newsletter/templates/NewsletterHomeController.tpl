@@ -19,10 +19,10 @@
 			<th>
 			</th>
 			<th>
-				${LangLoader::get_message('category.form.name', 'categories-common')}
+				${LangLoader::get_message('form.name', 'common')}
 			</th>
 			<th>
-				${LangLoader::get_message('category.form.description', 'categories-common')}
+				${LangLoader::get_message('form.description', 'common')}
 			</th>
 			<th>
 				{@newsletter.archives}
