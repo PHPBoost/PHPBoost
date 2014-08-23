@@ -203,13 +203,12 @@ class NotationService
 	/**
 	 * @desc This fonction delete all notes by module
 	 * @param string $module_name 
-	 * @param string $id_in_module
 	 */
 	public static function delete_notes_module($module_name)
 	{
 		try {
-			$condition = 'WHERE module_name=:module_name AND id_in_module=:id_in_module';
-			$parameters = array('module_name' => $module_name, 'id_in_module' => $id_in_module);
+			$condition = 'WHERE module_name=:module_name';
+			$parameters = array('module_name' => $module_name);
 				
 			self::$db_querier->delete(DB_TABLE_AVERAGE_NOTES, $condition, $parameters);
 			self::$db_querier->delete(DB_TABLE_NOTE, $condition, $parameters);
