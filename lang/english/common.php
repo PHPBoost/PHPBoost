@@ -103,7 +103,7 @@ $lang['suggestions'] = 'Suggestions';
 
 //Dead links
 $lang['deadlink'] = 'Report a dead link';
-$lang['contribution_deadlink'] = 'Dead link : %s';
+$lang['contribution_deadlink'] = 'Dead link : :link_name';
 $lang['contribution_deadlink_explain'] = 'One member reported this link as dead. Please check the link and change it if necessary.';
 
 //Autorisations
