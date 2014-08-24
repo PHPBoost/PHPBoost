@@ -27,13 +27,6 @@
 
 class CalendarSearchable extends AbstractSearchableExtensionPoint
 {
-	private $sql_querier;
-
-	public function __construct()
-	{
-		$this->sql_querier = PersistenceContext::get_sql();
-	}
-	
 	public function get_search_request($args)
 	{
 		$authorized_categories = CalendarService::get_authorized_categories(Category::ROOT_CATEGORY);
@@ -50,7 +43,8 @@ class CalendarSearchable extends AbstractSearchableExtensionPoint
 			WHERE ( FT_SEARCH(title, '" . $args['search'] . "') OR FT_SEARCH(contents, '" . $args['search'] . "') )
 			AND event_content.approved = 1
 			AND id_category IN(" . implode(", ", $authorized_categories) . ")
-			ORDER BY relevance DESC " . $this->sql_querier->limit(0, 100);
+			ORDER BY relevance DESC
+			LIMIT 100 OFFSET 0";
 	}
 }
 ?>
