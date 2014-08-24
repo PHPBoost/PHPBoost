@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               WebExtensionPointProvider.class.php
+ *                               WebCategoriesFormController.class.php
  *                            -------------------
  *   begin                : August 21, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,48 +29,26 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class WebExtensionPointProvider extends ExtensionPointProvider
+class WebCategoriesFormController extends AbstractRichCategoriesFormController
 {
-	public function __construct()
+	protected function generate_response(View $view)
 	{
-		parent::__construct('web');
+		return new AdminWebDisplayResponse($view, $this->get_title());
 	}
 	
-	public function comments()
+	protected function get_categories_manager()
 	{
-		return new CommentsTopics(array(new WebCommentsTopic()));
+		return WebService::get_categories_manager();
 	}
 	
-	public function css_files()
+	protected function get_id_category()
 	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('web.css');
-		return $module_css_files;
+		return AppContext::get_request()->get_getint('id', 0);
 	}
 	
-	public function home_page()
+	protected function get_categories_management_url()
 	{
-		return new WebHomePageExtensionPoint();
-	}
-	
-	public function menus()
-	{
-		return new ModuleMenus(array(new WebModuleMiniMenu()));
-	}
-	
-	public function sitemap()
-	{
-		return new WebSitemapExtensionPoint();
-	}
-	
-	public function tree_links()
-	{
-		return new WebTreeLinks();
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/web/index.php')));
+		return WebUrlBuilder::manage_categories();
 	}
 }
 ?>

@@ -1,6 +1,10 @@
-button.visit { font-size: 20px; }
+.partner-picture-menu { padding: 5px; }
 
-.status_column {
-	width: 12%;
-	text-align: left;
+.sub_category {
+	float: left;
+	text-align: center;
+	margin-bottom: 20px;
 }
+
+/* Surcharge de la classe options */
+.options { margin-left: 20px; }
