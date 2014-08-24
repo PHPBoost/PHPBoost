@@ -43,15 +43,15 @@
 			<span class="text-strong">{@visits_number} : </span><span>{NUMBER_VIEWS}</span><br/>
 			<span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><span><a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span><br/>
 			# IF C_KEYWORDS #
+				<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>
 				<span>
-					<i title="${LangLoader::get_message('form.keywords', 'common')}" class="fa fa-tags"></i> 
 					# START keywords #
 						<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 					# END keywords #
 				</span><br/>
 			# ENDIF #
 			# IF C_COMMENTS_ENABLED #
-				<span><i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i># IF C_COMMENTS # {NUMBER_COMMENTS} # ENDIF # {L_COMMENTS}</span>
+				<span># IF C_COMMENTS # {NUMBER_COMMENTS} # ENDIF # {L_COMMENTS}</span>
 			# ENDIF #
 			# IF C_APPROVED #
 				# IF C_NOTATION_ENABLED #

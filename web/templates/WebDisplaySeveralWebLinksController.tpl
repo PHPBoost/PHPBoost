@@ -97,15 +97,15 @@
 						<span class="text-strong">{@visits_number} : </span><span>{weblinks.NUMBER_VIEWS}</span><br/>
 						# IF NOT C_CATEGORY #<span class="text-strong">${LangLoader::get_message('category', 'categories-common')} : </span><span><a itemprop="about" class="small" href="{weblinks.U_CATEGORY}">{weblinks.CATEGORY_NAME}</a></span><br/># ENDIF #
 						# IF weblinks.C_KEYWORDS #
+							<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>
 							<span>
-								<i title="${LangLoader::get_message('form.keywords', 'common')}" class="fa fa-tags"></i> 
 								# START weblinks.keywords #
 									<a itemprop="keywords" href="{weblinks.keywords.URL}">{weblinks.keywords.NAME}</a># IF weblinks.keywords.C_SEPARATOR #, # ENDIF #
 								# END weblinks.keywords #
 							</span><br/>
 						# ENDIF #
 						# IF C_COMMENTS_ENABLED #
-							<span><i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i># IF weblinks.C_COMMENTS # {weblinks.NUMBER_COMMENTS} # ENDIF # {weblinks.L_COMMENTS}</span>
+							<span># IF weblinks.C_COMMENTS # {weblinks.NUMBER_COMMENTS} # ENDIF # {weblinks.L_COMMENTS}</span>
 						# ENDIF #
 						# IF weblinks.C_APPROVED #
 							# IF C_NOTATION_ENABLED #
