@@ -114,11 +114,5 @@
 [b]Téléchargements[/b]
 - refonte du module en MVC
 
-[b]Liens web[/b]
-- refonte du module en MVC
-- [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
-- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des liens.
-- Possibilité de signaler les liens cassés.
-
 [b]Wiki:[/b]
 - [color=red]Nouveauté:[/color] Système d'enregistrement des articles par différences, lignes par lignes pour un encombrement réduit lors des éditions successives.
