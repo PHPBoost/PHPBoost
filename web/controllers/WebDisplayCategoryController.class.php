@@ -108,6 +108,7 @@ class WebDisplayCategoryController extends ModuleController
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 		
 		$this->tpl->put_all(array(
+			'C_CATEGORY' => true,
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
