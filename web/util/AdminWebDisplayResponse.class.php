@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               WebExtensionPointProvider.class.php
+ *                               AdminWebDisplayResponse.class.php
  *                            -------------------
  *   begin                : August 21, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,48 +29,24 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class WebExtensionPointProvider extends ExtensionPointProvider
+class AdminWebDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function __construct()
+	public function __construct($view, $title_page)
 	{
-		parent::__construct('web');
-	}
-	
-	public function comments()
-	{
-		return new CommentsTopics(array(new WebCommentsTopic()));
-	}
-	
-	public function css_files()
-	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('web.css');
-		return $module_css_files;
-	}
-	
-	public function home_page()
-	{
-		return new WebHomePageExtensionPoint();
-	}
-	
-	public function menus()
-	{
-		return new ModuleMenus(array(new WebModuleMiniMenu()));
-	}
-	
-	public function sitemap()
-	{
-		return new WebSitemapExtensionPoint();
-	}
-	
-	public function tree_links()
-	{
-		return new WebTreeLinks();
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/web/index.php')));
+		parent::__construct($view);
+		
+		$lang = LangLoader::get('common', 'web');
+		$picture = '/web/web.png';
+		$this->set_title($lang['module_title']);
+		
+		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), WebUrlBuilder::manage_categories(), $picture);
+		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), WebUrlBuilder::add_category(), $picture);
+		$this->add_link($lang['web.management'], WebUrlBuilder::manage(), $picture);
+		$this->add_link($lang['web.add'], WebUrlBuilder::add(), $picture);
+		$this->add_link(LangLoader::get_message('configuration', 'admin'), WebUrlBuilder::configuration(), $picture);
+		
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
 	}
 }
 ?>

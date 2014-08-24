@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               WebExtensionPointProvider.class.php
+ *                               WebCategoriesCache.class.php
  *                            -------------------
  *   begin                : August 21, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,48 +29,32 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class WebExtensionPointProvider extends ExtensionPointProvider
+class WebCategoriesCache extends CategoriesCache
 {
-	public function __construct()
+	public function get_table_name()
 	{
-		parent::__construct('web');
+		return WebSetup::$web_cats_table;
 	}
 	
-	public function comments()
+	public function get_category_class()
 	{
-		return new CommentsTopics(array(new WebCommentsTopic()));
+		return CategoriesManager::RICH_CATEGORY_CLASS;
 	}
 	
-	public function css_files()
+	public function get_module_identifier()
 	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('web.css');
-		return $module_css_files;
+		return 'web';
 	}
 	
-	public function home_page()
+	public function get_root_category()
 	{
-		return new WebHomePageExtensionPoint();
-	}
-	
-	public function menus()
-	{
-		return new ModuleMenus(array(new WebModuleMiniMenu()));
-	}
-	
-	public function sitemap()
-	{
-		return new WebSitemapExtensionPoint();
-	}
-	
-	public function tree_links()
-	{
-		return new WebTreeLinks();
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/web/index.php')));
+		$root = new RichRootCategory();
+		$root->set_authorizations(WebConfig::load()->get_authorizations());
+		$root->set_description(
+			StringVars::replace_vars(LangLoader::get_message('web.seo.description.root', 'common', 'web'), 
+			array('site' => GeneralConfig::load()->get_site_name()
+		)));
+		return $root;
 	}
 }
 ?>
