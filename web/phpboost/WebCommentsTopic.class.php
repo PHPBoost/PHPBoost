@@ -31,7 +31,7 @@
 
 class WebCommentsTopic extends CommentsTopic
 {
-	private $web;
+	private $weblink;
 	
 	public function __construct(WebLink $weblink = null)
 	{
@@ -48,7 +48,7 @@ class WebCommentsTopic extends CommentsTopic
 	
 	public function is_display()
 	{
-		return $this->get_weblink()->is_visible();
+		return $this->get_weblink()->is_approved();
 	}
 	
 	private function get_weblink()
