@@ -60,10 +60,10 @@ while ($row = $result->fetch())
 	if (!empty($row['user_id'])) 
 	{
 		$group_color = User::get_group_color($row['groups'], $row['level']);
-		$com_pseudo = '<a href="'.  UserUrlBuilder::profile($row['user_id'])->rel() .'" title="' . $row['login'] . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 13) . '</a>';
+		$com_pseudo = '<a href="'.  UserUrlBuilder::profile($row['user_id'])->rel() .'" title="' . $row['display_name'] . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['display_name'], 13) . '</a>';
 	}
 	else
-		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
+		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['display_name']) ? TextHelper::wordwrap_html($row['display_name'], 13) : $LANG['guest']) . '</span>';
 	
 	$Template->assign_block_vars('comments_list', array(
 		'CONTENT' => FormatingHelper::second_parse($row['message']),
