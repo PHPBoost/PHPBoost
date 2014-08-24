@@ -367,7 +367,7 @@ class ArticlesFormController extends ModuleController
 			{
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id_article);
-				$contribution->set_description(stripslashes($article->get_description()));
+				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 				$contribution->set_entitled(StringVars::replace_vars($this->lang['articles.form.contribution_entitled'], array('module_name' => $this->lang['articles'], 'title' => $article->get_title())));
 				$contribution->set_fixing_url(ArticlesUrlBuilder::edit_article($id_article)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
