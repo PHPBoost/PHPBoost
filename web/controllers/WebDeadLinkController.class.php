@@ -49,11 +49,11 @@ class WebDeadLinkController extends AbstractController
 		
 		if ($this->weblink !== null && $this->weblink->is_approved())
 		{
-			$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'events', 'WHERE id_in_module=:id_in_module AND module=\'web\' AND current_status = 0', array('id_in_module' => $id));
+			$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'events', 'WHERE id_in_module=:id_in_module AND module=\'web\' AND current_status = 0', array('id_in_module' => $this->weblink->get_id()));
 			if (empty($nbr_alert)) 
 			{
 				$contribution = new Contribution();
-				$contribution->set_id_in_module($id);
+				$contribution->set_id_in_module($this->weblink->get_id());
 				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution_deadlink', 'common'), array('link_name' => $this->weblink->get_name())));
 				$contribution->set_fixing_url(WebUrlBuilder::edit($this->weblink->get_id())->relative());
 				$contribution->set_description(LangLoader::get_message('contribution_deadlink_explain', 'common'));
