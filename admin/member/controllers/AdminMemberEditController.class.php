@@ -83,13 +83,11 @@ class AdminMemberEditController extends AdminController
 		$fieldset = new FormFieldsetHTML('edit_member', $this->admin_user_lang['members.edit-member']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->user_lang['pseudo'], $this->user->get_display_name(), array(
-			'maxlength' => 25, 'size' => 25, 'required' => true),
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->user_lang['pseudo'], $this->user->get_display_name(), array('size' => 25, 'required' => true),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist($this->user->get_id()))
 		));		
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail', $this->user_lang['email'], $this->user->get_email(), array(
-			'maxlength' => 255, 'required' => true),
+		$fieldset->add_field(new FormFieldTextEditor('mail', $this->user_lang['email'], $this->user->get_email(), array('required' => true),
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($this->user->get_id()))
 		));
 		
@@ -102,7 +100,7 @@ class AdminMemberEditController extends AdminController
 		$fieldset = new FormFieldsetHTML('member_management', $this->admin_user_lang['members.member-management']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('approbation', $this->user_lang['approbation'], (bool)$this->user->get_approbation()));
+		$fieldset->add_field(new FormFieldCheckbox('approbation', $this->user_lang['approbation'], $this->user->get_approbation()));
 		
 		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->user_lang['rank'], $this->user->get_level()));
 		
@@ -118,7 +116,7 @@ class AdminMemberEditController extends AdminController
 		if (count(ThemesManager::get_activated_and_authorized_themes_map()) > 1)
 		{
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->user_lang['theme'], $this->user->get_theme(),
-					array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
+				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
 			));
 			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->user_lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($this->user->get_theme()) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
 		}
@@ -138,11 +136,7 @@ class AdminMemberEditController extends AdminController
 		
 		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_ban', $this->user_lang['banned'], $this->user->get_delay_banned()));
 		
-		$member_extended_field = new MemberExtendedField();
-		$member_extended_field->set_template($form);
-		$member_extended_field->set_user_id($this->user->get_id());
-		$member_extended_field->set_is_admin(true);
-		MemberExtendedFieldsService::display_form_fields($member_extended_field);
+		MemberExtendedFieldsService::display_form_fields($form, $this->user->get_id());
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
@@ -154,7 +148,7 @@ class AdminMemberEditController extends AdminController
 
 	private function save($tpl)
 	{
-		$redirect = true;
+		$has_error = false;
 		
 		$user_id = $this->user->get_id();
 		$old_approbation = (int)$this->user->get_approbation();
@@ -182,7 +176,15 @@ class AdminMemberEditController extends AdminController
 		$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
 		$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 		$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
-		UserService::update($this->user);
+		
+		try {
+			$fields_data = MemberExtendedFieldsService::get_data($this->form, $user_id);
+		} catch (MemberExtendedFieldErrorsMessageException $e) {
+			$has_error = true;
+			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
+		}
+		
+		UserService::update($this->user, $fields_data);
 		
 		if ($old_approbation != $this->user->get_approbation() && $old_approbation == 0)
 		{
@@ -212,13 +214,6 @@ class AdminMemberEditController extends AdminController
 			}
 		}
 
-		try {
-			MemberExtendedFieldsService::register_fields($this->form, $user_id);
-		} catch (MemberExtendedFieldErrorsMessageException $e) {
-			$redirect = false;
-			$tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
-		}
-			
 		if ($this->form->get_value('delete_account'))
 		{
 			UserService::delete_by_id($user_id);
@@ -263,7 +258,7 @@ class AdminMemberEditController extends AdminController
 		
 		GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 		
-		if ($redirect)
+		if (!$has_error)
 		{
 			AppContext::get_response()->redirect(AdminMembersUrlBuilder::management());
 		}

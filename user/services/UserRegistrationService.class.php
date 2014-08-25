@@ -34,16 +34,6 @@ class UserRegistrationService
 		self::$lang = LangLoader::get('user-common');
 	}
 
-	public static function connect_user($user_id)
-	{
-		$session = AppContext::get_session();
-		if ($session != null)
-		{
-			Session::delete($session);
-		}
-		AppContext::set_session(Session::create($user_id, true));
-	}
-
 	public static function send_email_confirmation($user_id, $email, $pseudo, $login, $password, $registration_pass)
 	{
 		$user_accounts_config = UserAccountsConfig::load();

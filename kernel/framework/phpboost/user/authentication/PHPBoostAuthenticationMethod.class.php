@@ -196,9 +196,9 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		$this->querier->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), $condition, $parameters);
 	}
 	
-	public static function update_auth_infos($user_id, $username, $password = false)
+	public static function update_auth_infos($user_id, $username, $approved, $password = false)
 	{
-		$columns = array('username' => $username);
+		$columns = array('username' => $username, 'approved' => $approved);
 		
 		if ($password)
 			$columns['password'] = $password;
@@ -206,6 +206,12 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
 		$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
+		
+		if (!$approved)
+		{
+			PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, $condition, $parameters);
+			AutoConnectData::change_key($user_id);
+		}
 	}
 }
 ?>

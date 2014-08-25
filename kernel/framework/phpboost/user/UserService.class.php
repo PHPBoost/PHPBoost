@@ -45,7 +45,7 @@ class UserService
 	 * @param User $user
 	 * @return InjectQueryResult
 	 */
-	public static function create(User $user, AuthenticationMethod $auth_method)
+	public static function create(User $user, AuthenticationMethod $auth_method, $fields_data = array())
 	{
 		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
 			'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
@@ -62,6 +62,10 @@ class UserService
 
 		$user_id = $result->get_last_inserted_id();
 		$auth_method->associate($user_id);
+		
+		$fields_data['user_id'] = $user_id;
+		self::$querier->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data);
+		
 		self::regenerate_stats_cache();
 		
 		return $user_id;
@@ -89,8 +93,10 @@ class UserService
 	 * @param string $condition the SQL condition update user
 	 * @param array $parameters 
 	 */
-	public static function update(User $user)
+	public static function update(User $user, $fields_data = null)
 	{
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $user->get_id());
 		self::$querier->update(DB_TABLE_MEMBER, array(
 			'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
 			'level' => $user->get_level(),
@@ -101,7 +107,12 @@ class UserService
 			'timezone' => $user->get_timezone(),
 			'theme' => $user->get_theme(),
 			'editor' => $user->get_editor()
-		), 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
+		), $condition, $parameters);
+
+		if ($fields_data !== null)
+		{
+			self::$querier->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data, $condition, $parameters);
+		}
 		
 		SessionData::recheck_cached_data_from_user_id($user->get_id());
 		

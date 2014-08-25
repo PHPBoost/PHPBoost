@@ -49,12 +49,7 @@ class MemberHiddenExtendedField extends AbstractMemberExtendedField
 		return;
 	}
 	
-	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
-	{
-		return;
-	}
-	
-	public function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao, HTMLForm $form)
+	public function get_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		return;
 	}

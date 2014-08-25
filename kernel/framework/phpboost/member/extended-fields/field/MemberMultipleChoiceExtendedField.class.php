@@ -67,7 +67,7 @@ class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
 		$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default_values, $options, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
 	}
 	
-	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
+	public function get_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
 		$array = array();

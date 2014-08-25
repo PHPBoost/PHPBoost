@@ -84,18 +84,10 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	/**
 	 * {@inheritdoc}
 	 */
-	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
+	public function get_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
 		return TextHelper::htmlspecialchars($form->get_value($field_name, ''));
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao, HTMLForm $form)
-	{
-		$member_extended_fields_dao->set_request($member_extended_field);
 	}
 	
 	/**

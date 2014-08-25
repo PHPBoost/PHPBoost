@@ -60,16 +60,20 @@ class CurrentUser extends User
 		$this->timezone = $session->get_cached_data('timezone', GeneralConfig::load()->get_site_timezone());
 		$this->editor = $session->get_cached_data('editor', ContentFormattingConfig::load()->get_default_editor());
 
+		$this->build_groups($session);
+	}
+	
+	protected function build_groups(SessionData $session)
+	{
+		$groups = GroupsService::get_groups();
+		foreach ($groups as $idgroup => $array_info)
+		{
+			$this->groups_auth[$idgroup] = $array_info['auth'];
+		}
+
 		$groups = explode('|', $session->get_cached_data('groups', ''));
 		array_unshift($groups, 'r' . $this->level);
 		$this->set_groups($groups);
-		
-		$this->build_groups_auth();
-	}
-
-	public function get_attribute($attribute)
-	{
-		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
 	}
 	
 	public function check_level($level)
@@ -164,17 +168,6 @@ class CurrentUser extends User
 	{
 		if ($this->id === Session::VISITOR_SESSION_ID)
 			$this->display_name = LangLoader::get_message('guest', 'main');
-	}
-		
-	private function build_groups_auth()
-	{
-		$groups_auth = array();
-		$groups = GroupsService::get_groups();
-		foreach ($groups as $idgroup => $array_info)
-		{
-			$groups_auth[$idgroup] = $array_info['auth'];
-		}
-		$this->groups_auth = $groups_auth;
 	}
 	
 	private function sum_auth_groups($array_auth_groups)

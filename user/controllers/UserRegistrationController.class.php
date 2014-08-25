@@ -74,19 +74,19 @@ class UserRegistrationController extends AbstractController
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(
-			'maxlength' => 25, 'description' => $this->lang['pseudo.explain'], 'required' => true),
+			'description' => $this->lang['pseudo.explain'], 'required' => true),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
 		));		
 		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], '', array(
-			'maxlength' => 255, 'description' => LangLoader::get_message('valid', 'main'), 'required' => true),
+			'description' => LangLoader::get_message('valid', 'main'), 'required' => true),
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist())
 		));
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array(
-			'maxlength' => 25, 'description' => $this->lang['password.explain'], 'required' => true),
+			'description' => $this->lang['password.explain'], 'required' => true),
 			array(new FormFieldConstraintLengthRange(6, 12))
 		));
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '', array(
-			'maxlength' => 25, 'required' => true),
+			'required' => true),
 			array(new FormFieldConstraintLengthRange(6, 12))
 		));
 		
@@ -109,9 +109,7 @@ class UserRegistrationController extends AbstractController
 		
 		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user_accounts_config->get_default_lang(), array('check_authorizations' => true)));	
 		
-		$member_extended_field = new MemberExtendedField();
-		$member_extended_field->set_template($form);
-		MemberExtendedFieldsService::display_form_fields($member_extended_field);
+		MemberExtendedFieldsService::display_form_fields($form);
 
     	$agreement_text = FormatingHelper::second_parse($this->user_accounts_config->get_registration_agreement());
     	if (!empty($agreement_text))
@@ -157,6 +155,8 @@ class UserRegistrationController extends AbstractController
 	
 	private function save()
 	{
+		$has_error = false;
+		
 		$registration_pass = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
 		$user_aprobation = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION;
 
@@ -174,18 +174,22 @@ class UserRegistrationController extends AbstractController
 			$user->set_theme($this->form->get_value('theme')->get_raw_value());
 		}
 		
-		$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('login'), $this->form->get_value('password'));
-		$auth_method->set_association_parameters($user_aprobation, $registration_pass);
-		$user_id = UserService::create($user, $auth_method);
-				
 		try {
-			MemberExtendedFieldsService::register_fields($this->form, $user_id);
+			$fields_data = MemberExtendedFieldsService::get_data($this->form);
+		} catch (MemberExtendedFieldErrorsMessageException $e) {
+			$has_error = true;
+			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
+		}
+			
+		if (!$has_error)
+		{
+			$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('login'), $this->form->get_value('password'));
+			$auth_method->set_association_parameters($user_aprobation, $registration_pass);
+			$user_id = UserService::create($user, $auth_method, $fields_data);
 			
 			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $this->form->get_value('login'), $this->form->get_value('login'), $this->form->get_value('password'), $registration_pass);
-			
+				
 			$this->confirm_registration($user_id);
-		} catch (MemberExtendedFieldErrorsMessageException $e) {
-			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
 	}
 	
@@ -201,7 +205,13 @@ class UserRegistrationController extends AbstractController
 		}
 		else
 		{
-			UserRegistrationService::connect_user($user_id);
+			$session = AppContext::get_session();
+			if ($session != null)
+			{
+				Session::delete($session);
+			}
+			AppContext::set_session(Session::create($user_id, true));
+		
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 	}

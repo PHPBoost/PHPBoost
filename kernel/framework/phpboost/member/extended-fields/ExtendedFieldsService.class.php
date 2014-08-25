@@ -45,8 +45,7 @@ class ExtendedFieldsService
 		$type_field = $extended_field->get_field_type();
 		
 		$exit_by_type = ExtendedFieldsDatabaseService::check_field_exist_by_type($extended_field);
-		$name_class = MemberExtendedFieldsFactory::name_class($extended_field);
-		$class = new $name_class();
+		$class = $extended_field->get_instance();
 		if ($exit_by_type && $class->get_field_used_once() || $class->get_field_used_phpboost_configuration() && $extended_field->get_is_not_installer())
 		{
 			self::set_error(LangLoader::get_message('extended-fields-error-phpboost-config', 'admin-user-common'));
@@ -102,8 +101,7 @@ class ExtendedFieldsService
 			if (ExtendedFieldsDatabaseService::check_field_exist_by_id($extended_field))
 			{
 				$data = self::data_field($extended_field, self::SORT_BY_ID);
-				$name_class = MemberExtendedFieldsFactory::name_class($data);
-				$class = new $name_class();
+				$class = $data->get_instance();
 				
 				if (!$class->get_field_used_phpboost_configuration() || !$data->get_is_freeze())
 				{
@@ -128,8 +126,7 @@ class ExtendedFieldsService
 			if (ExtendedFieldsDatabaseService::check_field_exist_by_field_name($extended_field))
 			{
 				$data = self::data_field($extended_field, self::SORT_BY_FIELD_NAME);
-				$name_class = MemberExtendedFieldsFactory::name_class($data);
-				$class = new $name_class();
+				$class = $data->get_instance();
 
 				if (!$class->get_field_used_phpboost_configuration() || !$data->get_is_freeze())
 				{

@@ -202,6 +202,16 @@ class ExtendedField
 		return $this->is_not_installer;
 	}
 	
+	public function get_instance()
+	{
+		$field_type = $this->get_field_type();
+		if (!empty($field_type))
+		{
+			$class = (string)$field_type;
+			return new $class();
+		}
+	}
+	
 	public static function rewrite_field_name($field_name)
 	{
 		$field = strtolower($field_name);

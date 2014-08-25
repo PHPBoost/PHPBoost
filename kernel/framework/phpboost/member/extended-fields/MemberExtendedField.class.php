@@ -42,9 +42,6 @@ class MemberExtendedField
 	private $required;
 	private $regex;
 	
-	private $user_id;
-	private $is_admin;
-	private $template;
 	private $fieldset;
 	
 	public function set_name($name)
@@ -137,36 +134,6 @@ class MemberExtendedField
 		return $this->regex;
 	}
 	
-	public function set_user_id($user_id)
-	{
-		$this->user_id = $user_id;
-	}
-	
-	public function get_user_id()
-	{
-		return $this->user_id;
-	}
-	
-	public function set_is_admin($is_admin)
-	{
-		$this->is_admin = $is_admin;
-	}
-	
-	public function get_is_admin()
-	{
-		return $this->is_admin;
-	}
-	
-	public function set_template($template)
-	{
-		$this->template = $template;
-	}
-	
-	public function get_template()
-	{
-		return $this->template;
-	}
-	
 	public function set_fieldset($fieldset)
 	{
 		$this->fieldset = $fieldset;
@@ -175,6 +142,16 @@ class MemberExtendedField
 	public function get_fieldset()
 	{
 		return $this->fieldset;
+	}
+	
+	public function get_instance()
+	{
+		$field_type = $this->get_field_type();
+		if (!empty($field_type))
+		{
+			$class = (string)$field_type;
+			return new $class();
+		}
 	}
 }
 ?>
