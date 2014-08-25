@@ -268,6 +268,15 @@ class File extends FileSystemElement
 	}
 
 	/**
+	 * @desc Returns the size of the file.
+	 * @return int The size of the file in bytes.
+	 */
+	public function get_file_size()
+	{
+		return filesize($this->get_path());
+	}
+
+	/**
 	 * @desc Opens the file. You cannot read or write a closed file, use this method to open it.
 	 * @throws IOException If the file can neither been read nor created.
 	 */
