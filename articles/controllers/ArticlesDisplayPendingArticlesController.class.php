@@ -196,7 +196,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	{
 		$number_articles = PersistenceContext::get_querier()->count(
 			ArticlesSetup::$articles_table, 
-			'WHERE published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now AND publishing_end_date < :timestamp_now) AND publishing_end_date <> 0) AND id_category IN :authorized_categories', 
+			'WHERE published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))) AND id_category IN :authorized_categories', 
 			array(
 				'timestamp_now' => $now->get_timestamp(),
 				'authorized_categories' => $authorized_categories
