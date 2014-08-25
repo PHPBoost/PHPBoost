@@ -348,7 +348,7 @@ class NewsFormController extends ModuleController
 
 		if ($this->is_contributor_member() && !$news->is_visible())
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success());
+			DispatchManager::redirect(new UserContributionSuccessController());
 		}
 		elseif ($news->is_visible())
 		{

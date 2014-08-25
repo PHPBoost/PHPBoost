@@ -113,7 +113,7 @@ class AdminContactFieldFormController extends AdminModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('regex', $this->admin_user_common_lang['regex.personnal-regex'], $regex, array(
-			'maxlength' => 25, 'hidden' => $field->is_readonly())
+			'hidden' => $field->is_readonly())
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->admin_user_common_lang['field.required'], (int)$field->is_required(), array('disabled' => $field->is_readonly())));

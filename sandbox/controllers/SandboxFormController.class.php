@@ -107,11 +107,11 @@ class SandboxFormController extends ModuleController
 				'maxlength' => 25, 'description' => 'désactivé', 'disabled' => true)
 		));
 		$fieldset->add_field(new FormFieldTextEditor('siteweb', 'Site web', 'http://www.phpboost.com/index.php', array(
-			'maxlength' => 255, 'description' => 'Url valide'),
+			'description' => 'Url valide'),
 			array(new FormFieldConstraintUrl())
 		));
 		$fieldset->add_field(new FormFieldTextEditor('mail', 'Mail', 'team.hein@phpboost.com', array(
-			'maxlength' => 255, 'description' => 'Mail valide'),
+			'description' => 'Mail valide'),
 			array(new FormFieldConstraintMailAddress())
 		));
 		$fieldset->add_field(new FormFieldTextEditor('text2', 'Champ texte2', 'toto2', array(

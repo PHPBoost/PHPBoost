@@ -269,7 +269,7 @@ class WebFormController extends ModuleController
 		
 		if ($this->is_contributor_member() && !$weblink->is_approved())
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success());
+			DispatchManager::redirect(new UserContributionSuccessController());
 		}
 		elseif ($weblink->is_approved())
 		{

@@ -69,7 +69,7 @@ class WebDeadLinkController extends AbstractController
 				ContributionService::save_contribution($contribution);
 			}
 			
-			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success());
+			DispatchManager::redirect(new UserContributionSuccessController());
 		}
 		
 		$category = WebService::get_categories_manager()->get_categories_cache()->get_category($this->weblink->get_id_category());

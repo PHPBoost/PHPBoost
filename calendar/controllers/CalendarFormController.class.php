@@ -471,7 +471,7 @@ class CalendarFormController extends ModuleController
 		
 		if ($this->is_contributor_member() && !$event->get_content()->is_approved())
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success());
+			DispatchManager::redirect(new UserContributionSuccessController());
 		}
 		elseif ($event->get_content()->is_approved())
 		{
