@@ -133,7 +133,7 @@ if (!empty($_GET['query']))
 		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
 			try {
-				$result = $Sql->query_inject($query, __LINE__, __FILE__);
+				$result = $Sql->query_inject(str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);
 				$affected_rows = @$Sql->affected_rows($result, "");
 			} catch (MySQLQuerierException $e) {
 				$Template->assign_block_vars('line', array());
@@ -147,7 +147,7 @@ if (!empty($_GET['query']))
 	
 	$Template->put_all(array(
 		'QUERY' => Sql::indent_query($query),
-		'QUERY_HIGHLIGHT' => Sql::highlight_query($query),
+		'QUERY_HIGHLIGHT' => Sql::highlight_query(str_replace('phpboost_', PREFIX, $query)),
 		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],
