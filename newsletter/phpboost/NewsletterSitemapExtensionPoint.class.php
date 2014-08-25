@@ -25,49 +25,16 @@
 *
 ###################################################*/
 
-class NewsletterSitemapExtensionPoint implements SitemapExtensionPoint
+class NewsletterSitemapExtensionPoint extends SitemapCategoriesModule
 {
-	public function get_public_sitemap()
+	public function __construct()
 	{
-		return $this->get_module_map(Sitemap::AUTH_PUBLIC);
+		parent::__construct(NewsletterService::get_streams_manager());
 	}
-
-	public function get_user_sitemap()
+	
+	protected function get_category_url(Category $category)
 	{
-		return $this->get_module_map(Sitemap::AUTH_USER);
-	}
-
-	private function get_module_map($auth_mode)
-	{
-		$lang = LangLoader::get('common', 'newsletter');
-		
-		$link = new SitemapLink($lang['newsletter'], NewsletterUrlBuilder::home(), Sitemap::FREQ_MONTHLY, Sitemap::PRIORITY_MAX);
-		$module_map = new ModuleMap($link, 'newsletter');
-
-		$streams = NewsletterStreamsCache::load()->get_streams();
-		$config = NewsletterConfig::load();
-		$user = AppContext::get_current_user();
-		
-		foreach ($streams as $id => $stream)
-		{
-			if ($auth_mode == Sitemap::AUTH_PUBLIC)
-			{
-				$is_authorized = is_array($stream->get_authorizations()) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $stream->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $config->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ);
-			}
-			else
-			{
-				$is_authorized = is_array($stream->get_authorizations()) ? $user->check_auth($stream->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ) : $user->check_auth($config->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ);
-			}
-			
-			if ($is_authorized)
-			{
-				$link = new SitemapLink($stream->get_name(), NewsletterUrlBuilder::archives($id));
-				$section = new SitemapSection($link);
-				$module_map->add($section);
-			}
-		}
-
-		return $module_map;
+		return NewsletterUrlBuilder::archives($category->get_id());
 	}
 }
 ?>
