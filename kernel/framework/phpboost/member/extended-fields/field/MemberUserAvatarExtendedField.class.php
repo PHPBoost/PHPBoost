@@ -47,7 +47,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 			));
 		}
 		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['avatar_link'], '', 
-			array('maxlength' => 255, 'description' => $this->lang['avatar_link_where'], 'required' =>(bool)$member_extended_field->get_required())
+			array('description' => $this->lang['avatar_link_where'], 'required' =>(bool)$member_extended_field->get_required())
 		));
 	}
 	
@@ -67,7 +67,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		}
 		
 		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['avatar_link'], '', 
-			array('maxlength' => 255, 'description' => $this->lang['avatar_link_where'], 'required' =>(bool)$member_extended_field->get_required())
+			array('description' => $this->lang['avatar_link_where'], 'required' =>(bool)$member_extended_field->get_required())
 		));
 		$fieldset->add_field(new FormFieldCheckbox('delete_avatar', $this->lang['avatar_del'], FormFieldCheckbox::UNCHECKED));
 	}
@@ -97,7 +97,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		}
 	}
 	
-	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
+	public function get_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$delete = $form->get_value('delete_avatar');
 		if ($delete)

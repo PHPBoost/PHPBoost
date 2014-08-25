@@ -99,10 +99,7 @@ class UserViewProfileController extends AbstractController
 			$fieldset->add_field(new FormFieldFree('private_message', $this->lang['private_message'], $link_mp));
 		}
 
-		$member_extended_field = new MemberExtendedField();
-		$member_extended_field->set_template($form);
-		$member_extended_field->set_user_id($this->user->get_id());
-		MemberExtendedFieldsService::display_profile_fields($member_extended_field);
+		MemberExtendedFieldsService::display_profile_fields($form, $this->user->get_id());
 
 		$this->form = $form;
 	}

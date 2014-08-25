@@ -53,13 +53,24 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		$streams = $this->get_streams();
 		if (!empty($streams))
 		{
-			$newsletter_subscribe = NewsletterService::get_member_id_streams($member_extended_field->get_user_id());
+			$newsletter_subscribe = NewsletterService::get_member_id_streams($user_id);
 			$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $newsletter_subscribe, $streams, array('description' => $member_extended_field->get_description())));
 		}
 	}
 	
-	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
+	public function get_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
+		$streams = array();
+		foreach ($form->get_value($member_extended_field->get_field_name(), array()) as $field => $option)
+		{
+			$streams[] = $option->get_id();
+		}
+		
+		if (is_array($streams))
+		{
+			NewsletterService::update_subscriptions_member_registered($streams, $user_id);
+		}
+		
 		$field_name = $member_extended_field->get_field_name();
 		
 		$streams = $this->get_streams();
@@ -73,22 +84,6 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 			return $this->serialise_value($array);
 		}
 		return '';
-	}
-	
-	public function register(MemberExtendedField $member_extended_field, MemberExtendedFieldsDAO $member_extended_fields_dao, HTMLForm $form)
-	{
-		parent::register($member_extended_field, $member_extended_fields_dao, $form);
-		
-		$streams = array();
-		foreach ($form->get_value($member_extended_field->get_field_name(), array()) as $field => $option)
-		{
-			$streams[] = $option->get_id();
-		}
-		
-		if (is_array($streams))
-		{
-			NewsletterService::update_subscriptions_member_registered($streams, $member_extended_field->get_user_id());
-		}
 	}
 	
 	private function get_streams()

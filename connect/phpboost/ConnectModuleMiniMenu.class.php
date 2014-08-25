@@ -82,11 +82,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    	}
 	    	
 			$user_accounts_config = UserAccountsConfig::load();
-	    	$user_avatar = AppContext::get_current_user()->get_attribute('user_avatar');
-	    	if (empty($user_avatar))
-			{
-				$user_avatar = '/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name();
-			}
+	    	$user_avatar = AppContext::get_session()->get_cached_data('user_avatar', '/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name());
 			
 			$total_alert = $user->get_unread_pm() + $contribution_number + ($user->check_level(User::ADMIN_LEVEL) ? AdministratorAlertService::get_number_unread_alerts() : 0);
 			
