@@ -98,23 +98,6 @@ class AdminWebConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', LangLoader::get_message('config.comments_enabled', 'admin-common'), $this->config->are_comments_enabled()));
-		
-		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', LangLoader::get_message('config.notation_enabled', 'admin-common'), $this->config->is_notation_enabled(), array(
-			'events' => array('click' => '
-				if (HTMLForms.getField("notation_enabled").getValue()) {
-					HTMLForms.getField("notation_scale").enable();
-				} else {
-					HTMLForms.getField("notation_scale").disable();
-				}'
-			)
-		)));
-		
-		$fieldset->add_field(new FormFieldTextEditor('notation_scale', LangLoader::get_message('config.notation_scale', 'admin-common'), $this->config->get_notation_scale(), 
-			array('size' => 6, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
-		)));
-		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['config.sort_type.alphabetic'], WebConfig::SORT_NAME),
@@ -135,6 +118,27 @@ class AdminWebConfigController extends AdminModuleController
 			array('size' => 6, 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
 		)));
+		
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', LangLoader::get_message('config.comments_enabled', 'admin-common'), $this->config->are_comments_enabled()));
+		
+		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', LangLoader::get_message('config.notation_enabled', 'admin-common'), $this->config->is_notation_enabled(), array(
+			'events' => array('click' => '
+				if (HTMLForms.getField("notation_enabled").getValue()) {
+					HTMLForms.getField("notation_scale").enable();
+				} else {
+					HTMLForms.getField("notation_scale").disable();
+				}'
+			)
+		)));
+		
+		$fieldset->add_field(new FormFieldTextEditor('notation_scale', LangLoader::get_message('config.notation_scale', 'admin-common'), $this->config->get_notation_scale(), 
+			array('size' => 6, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
+		)));
+		
+		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['config.root_category_description'], $this->config->get_root_category_description(), 
+			array('rows' => 8, 'cols' => 47)
+		));
 		
 		$common_lang = LangLoader::get('common');
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations']);
@@ -162,6 +166,9 @@ class AdminWebConfigController extends AdminModuleController
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
 		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line'));
 		$this->config->set_category_display_type($this->form->get_value('category_display_type')->get_raw_value());
+		$this->config->set_sort_type($this->form->get_value('sort_type')->get_raw_value());
+		$this->config->set_sort_mode($this->form->get_value('sort_mode')->get_raw_value());
+		$this->config->set_partners_number_in_menu($this->form->get_value('partners_number_in_menu'));
 		
 		if ($this->form->get_value('comments_enabled'))
 			$this->config->enable_comments();
@@ -178,9 +185,7 @@ class AdminWebConfigController extends AdminModuleController
 		else
 			$this->config->disable_notation();
 		
-		$this->config->set_sort_type($this->form->get_value('sort_type')->get_raw_value());
-		$this->config->set_sort_mode($this->form->get_value('sort_mode')->get_raw_value());
-		$this->config->set_partners_number_in_menu($this->form->get_value('partners_number_in_menu'));
+		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
 		WebConfig::save();

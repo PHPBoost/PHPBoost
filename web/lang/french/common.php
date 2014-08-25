@@ -54,10 +54,10 @@ $lang['config.sort_type.alphabetic'] = 'Alphabétique';
 $lang['config.sort_type.notation'] = 'Meilleure note';
 $lang['config.sort_type.visits'] = 'Nombre de visites';
 $lang['config.sort_mode'] = 'Sens d\'affichage';
-$lang['config.partners_number_in_menu'] = 'Nombre de partenaires maximum à afficher dans le menu';
+$lang['config.partners_number_in_menu'] = 'Nombre de partenaires affichés dans le menu maximum';
+$lang['config.root_category_description'] = 'Description de la racine des liens web';
 
 //SEO
-$lang['web.seo.description.root'] = 'Tous les liens du site :site.';
 $lang['web.seo.description.tag'] = 'Tous les liens sur le sujet :subject.';
 $lang['web.seo.description.pending'] = 'Tous les liens en attente.';
 

@@ -4,24 +4,19 @@
 			# IF C_PENDING #{@web.pending}# ELSE #{@module_title} - {CATEGORY_NAME}# ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
-			# IF NOT C_ROOT_CATEGORY #
 			<div class="spacer">&nbsp;</div>
 			{CATEGORY_DESCRIPTION}
 			<div class="spacer">&nbsp;</div>
-			<hr />
-			# ENDIF #
 		# ENDIF #
 		# IF C_SUB_CATEGORIES #
+		<hr />
+		<div class="spacer">&nbsp;</div>
 		<div class="cat">
 			<div class="subcat">
-				<div class="spacer">&nbsp;</div>
-				# IF C_MORE_THAN_ONE_SUB_CATEGORY #${LangLoader::get_message('sub_categories', 'categories-common')}# ELSE #${LangLoader::get_message('sub_category', 'categories-common')}# ENDIF # :
-				<div class="spacer">&nbsp;</div>
 				# START sub_categories_list #
 				<div class="sub-category" style="width:{CATS_COLUMNS_WIDTH}%;">
 				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="" /></a><br />
-				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME} ({sub_categories_list.WEBLINKS_NUMBER})</a>
-				<br />
+				<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME} ({sub_categories_list.WEBLINKS_NUMBER})</a><br />
 				<span class="small">{sub_categories_list.CATEGORY_DESCRIPTION}</span>
 				</div>
 				# END sub_categories_list #
