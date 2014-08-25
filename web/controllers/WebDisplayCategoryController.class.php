@@ -112,7 +112,6 @@ class WebDisplayCategoryController extends ModuleController
 			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
-			'C_MORE_THAN_ONE_SUB_CATEGORY' => $nbr_cat_displayed > 1,
 			'C_WEBLINKS' => $result->get_rows_count() > 0,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),

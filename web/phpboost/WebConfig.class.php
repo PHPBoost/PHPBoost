@@ -34,12 +34,13 @@ class WebConfig extends AbstractConfigData
 	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
 	const COLUMNS_NUMBER_PER_LINE = 'columns_number_per_line';
 	const CATEGORY_DISPLAY_TYPE = 'category_display_type';
-	const COMMENTS_ENABLED = 'comments_enabled';
-	const NOTATION_ENABLED = 'notation_enabled';
-	const NOTATION_SCALE = 'notation_scale';
 	const SORT_TYPE = 'sort_type';
 	const SORT_MODE = 'sort_mode';
 	const PARTNERS_NUMBER_IN_MENU = 'partners_number_in_menu';
+	const COMMENTS_ENABLED = 'comments_enabled';
+	const NOTATION_ENABLED = 'notation_enabled';
+	const NOTATION_SCALE = 'notation_scale';
+	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
 	const AUTHORIZATIONS = 'authorizations';
 	
 	const DISPLAY_SUMMARY = 'summary';
@@ -88,6 +89,36 @@ class WebConfig extends AbstractConfigData
 		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::DISPLAY_SUMMARY;
 	}
 	
+	public function get_sort_type()
+	{
+		return $this->get_property(self::SORT_TYPE);
+	}
+	
+	public function set_sort_type($value)
+	{
+		$this->set_property(self::SORT_TYPE, $value);
+	}
+	
+	public function get_sort_mode()
+	{
+		return $this->get_property(self::SORT_MODE);
+	}
+	
+	public function set_sort_mode($value)
+	{
+		$this->set_property(self::SORT_MODE, $value);
+	}
+	
+	public function get_partners_number_in_menu()
+	{
+		return $this->get_property(self::PARTNERS_NUMBER_IN_MENU);
+	}
+	
+	public function set_partners_number_in_menu($value)
+	{
+		$this->set_property(self::PARTNERS_NUMBER_IN_MENU, $value);
+	}
+	
 	public function enable_comments()
 	{
 		$this->set_property(self::COMMENTS_ENABLED, true);
@@ -128,34 +159,14 @@ class WebConfig extends AbstractConfigData
 		$this->set_property(self::NOTATION_SCALE, $value);
 	}
 	
-	public function get_sort_type()
+	public function get_root_category_description()
 	{
-		return $this->get_property(self::SORT_TYPE);
+		return $this->get_property(self::ROOT_CATEGORY_DESCRIPTION);
 	}
 	
-	public function set_sort_type($value)
+	public function set_root_category_description($value)
 	{
-		$this->set_property(self::SORT_TYPE, $value);
-	}
-	
-	public function get_sort_mode()
-	{
-		return $this->get_property(self::SORT_MODE);
-	}
-	
-	public function set_sort_mode($value)
-	{
-		$this->set_property(self::SORT_MODE, $value);
-	}
-	
-	public function get_partners_number_in_menu()
-	{
-		return $this->get_property(self::PARTNERS_NUMBER_IN_MENU);
-	}
-	
-	public function set_partners_number_in_menu($value)
-	{
-		$this->set_property(self::PARTNERS_NUMBER_IN_MENU, $value);
+		$this->set_property(self::ROOT_CATEGORY_DESCRIPTION, $value);
 	}
 	
 	public function get_authorizations()
@@ -177,12 +188,13 @@ class WebConfig extends AbstractConfigData
 			self::ITEMS_NUMBER_PER_PAGE => 15,
 			self::COLUMNS_NUMBER_PER_LINE => 3,
 			self::CATEGORY_DISPLAY_TYPE => self::DISPLAY_SUMMARY,
-			self::COMMENTS_ENABLED => true,
-			self::NOTATION_ENABLED => true,
-			self::NOTATION_SCALE => 5,
 			self::SORT_TYPE => self::SORT_NAME,
 			self::SORT_MODE => self::ASC,
 			self::PARTNERS_NUMBER_IN_MENU => 5,
+			self::COMMENTS_ENABLED => true,
+			self::NOTATION_ENABLED => true,
+			self::NOTATION_SCALE => 5,
+			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'web'),
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
 		);
 	}
