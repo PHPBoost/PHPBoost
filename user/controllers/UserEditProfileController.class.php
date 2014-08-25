@@ -46,7 +46,7 @@ class UserEditProfileController extends AbstractController
 		$user_id = $request->get_getint('user_id', AppContext::get_current_user()->get_id());
 		
 		try {
-			$this->user = UserService::get_user_approved($user_id);
+			$this->user = UserService::get_user($user_id);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -91,12 +91,12 @@ class UserEditProfileController extends AbstractController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], $this->user->get_email(), array(
-			'required' => true, 'maxlength' => 255, 'description' => LangLoader::get_message('valid', 'main')),
+			'required' => true, 'description' => LangLoader::get_message('valid', 'main')),
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($this->user->get_id()))
 		));
 		
 		$fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
-			'maxlength' => 25, 'description' => $this->lang['password.old.explain']))
+			'description' => $this->lang['password.old.explain']))
 		);
 		
 		$fieldset->add_field($new_password = new FormFieldPasswordEditor('new_password', $this->lang['password.new'], ''));
@@ -125,10 +125,7 @@ class UserEditProfileController extends AbstractController
 		
 		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user->get_locale(), array('check_authorizations' => true)));	
 		
-		$member_extended_field = new MemberExtendedField();
-		$member_extended_field->set_template($form);
-		$member_extended_field->set_user_id($this->user->get_id());
-		MemberExtendedFieldsService::display_form_fields($member_extended_field);
+		MemberExtendedFieldsService::display_form_fields($form, $this->user->get_id());
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($new_password, $new_password_bis));
@@ -140,7 +137,7 @@ class UserEditProfileController extends AbstractController
 	
 	private function save()
 	{
-		$redirect = true;
+		$has_error = false;
 		
 		$user_id = $this->user->get_id();
 		
@@ -153,48 +150,45 @@ class UserEditProfileController extends AbstractController
 			if ($this->form->has_field('theme'))
 			{
 				$this->user->set_theme($this->form->get_value('theme')->get_raw_value());
-				AppContext::get_current_user()->set_theme($this->form->get_value('theme')->get_raw_value());
 			}
 			
 			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
-			AppContext::get_current_user()->set_locale($this->form->get_value('lang')->get_raw_value());
-			
 			$this->user->set_email($this->form->get_value('email'));
 			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
 			$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
 			$this->user->set_show_email(!$this->form->get_value('user_hide_mail'));
 			$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 			
-			UserService::update($this->user);
-		}
-		
-		try {
-			MemberExtendedFieldsService::register_fields($this->form, $user_id);
-		} catch (MemberExtendedFieldErrorsMessageException $e) {
-			$redirect = false;
-			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
-		}
-		
-		$old_password = $this->form->get_value('old_password');
-		$new_password = $this->form->get_value('new_password');
-		if (!empty($old_password) && !empty($new_password))
-		{
-			$old_password_hashed = KeyGenerator::string_hash($old_password);
-			$user_authentification = UserService::get_user_authentification('WHERE user_id=:user_id', array('user_id' => $user_id));
-			if ($old_password_hashed == $user_authentification->get_password_hashed())
-			{
-				UserService::change_password(KeyGenerator::string_hash($new_password), 'WHERE user_id=:user_id', array('user_id' => $user_id));
-				$redirect = false;
-				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 6));
+			try {
+				$fields_data = MemberExtendedFieldsService::get_data($this->form);
+			} catch (MemberExtendedFieldErrorsMessageException $e) {
+				$has_error = true;
+				$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 			}
-			else
+			
+			UserService::update($this->user, $fields_data);
+
+			$old_password = $this->form->get_value('old_password');
+			$new_password = $this->form->get_value('new_password');
+			if (!empty($old_password) && !empty($new_password))
 			{
-				$redirect = false;
-				$this->tpl->put('MSG', MessageHelper::display($this->lang['profile.edit.password.error'], MessageHelper::NOTICE));
+				$old_password_hashed = KeyGenerator::string_hash($old_password);
+				$user_authentification = UserService::get_user_authentification('WHERE user_id=:user_id', array('user_id' => $user_id));
+				if ($old_password_hashed == $user_authentification->get_password_hashed())
+				{
+					UserService::change_password(KeyGenerator::string_hash($new_password), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+					$has_error = true;
+					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 6));
+				}
+				else
+				{
+					$has_error = true;
+					$this->tpl->put('MSG', MessageHelper::display($this->lang['profile.edit.password.error'], MessageHelper::NOTICE));
+				}
 			}
 		}
 		
-		if ($redirect)
+		if (!$has_error)
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id));
 		}

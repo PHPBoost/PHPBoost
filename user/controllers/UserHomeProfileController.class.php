@@ -60,7 +60,7 @@ class UserHomeProfileController extends AbstractController
 		$this->tpl->put_all(array(
 			'C_USER_AUTH_FILES' => $is_authorized_files_panel,
 			'C_USER_INDEX' => true,
-			'C_IS_MODERATOR' => $this->user->get_attribute('level') >= User::MODERATOR_LEVEL,
+			'C_IS_MODERATOR' => $this->user->get_level() >= User::MODERATOR_LEVEL,
 			'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
 			'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
 			'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),

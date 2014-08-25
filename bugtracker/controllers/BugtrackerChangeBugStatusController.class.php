@@ -126,7 +126,7 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		$user_assigned = UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user('WHERE user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) : '';
 		
 		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('assigned_to', $this->lang['labels.fields.assigned_to_id'], !empty($user_assigned) ? $user_assigned->get_display_name() : '', array(
-			'maxlength' => 25, 'class' => 'field-large', 'required' => true, 'hidden' => !$this->bug->is_assigned()), array(
+			'class' => 'field-large', 'required' => true, 'hidden' => !$this->bug->is_assigned()), array(
 			new FormFieldConstraintLengthRange(3, 25), 
 			new FormFieldConstraintUserExist())
 		));
