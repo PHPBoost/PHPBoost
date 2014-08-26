@@ -51,6 +51,9 @@
 			</header>
 			
 			<div class="content">
+				# IF NOT weblinks.C_APPROVED #
+					# INCLUDE NOT_APPROVED_MESSAGE #
+				# ENDIF #
 				# IF C_CATEGORY_DISPLAYED_SUMMARY #
 					<div class="more">
 						<i class="fa fa-eye" title="{weblinks.L_VISITED_TIMES}"></i>&nbsp;<span title="{weblinks.L_VISITED_TIMES}">{weblinks.NUMBER_VIEWS}</span>
@@ -68,13 +71,10 @@
 						# ENDIF #
 					</div>
 				# ELSE #
-					# IF NOT weblinks.C_APPROVED #
-						# INCLUDE NOT_APPROVED_MESSAGE #
-					# ENDIF #
 					<div class="options infos">
 						<div class="center">
 							# IF weblinks.C_HAS_PARTNER_PICTURE #
-								<img src="{weblinks.PARTNER_PICTURE}" alt="" itemprop="image" />
+								<img src="{weblinks.U_PARTNER_PICTURE}" alt="" itemprop="image" />
 								<div class="spacer">&nbsp;</div>
 							# ENDIF #
 							# IF weblinks.C_APPROVED #

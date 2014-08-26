@@ -58,7 +58,6 @@ class WebDisplayCategoryController extends ModuleController
 	{
 		$config = WebConfig::load();
 		$authorized_categories = WebService::get_authorized_categories($this->get_category()->get_id());
-		$pagination = $this->get_pagination($authorized_categories);
 		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= web_cats.id, web_cats.*,
@@ -91,16 +90,19 @@ class WebDisplayCategoryController extends ModuleController
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
+		$pagination = $this->get_pagination($this->get_pagination($this->get_category()->get_id()););
+		
 		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM '. WebSetup::$web_table .' web
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = web.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
-		WHERE web.approved = 1 AND web.id_category = :category
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
+		WHERE web.approved = 1 AND web.id_category = :id_category
 		ORDER BY ' . $config->get_sort_type() . ' ' . $config->get_sort_mode() . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'category' => $this->get_category()->get_id(),
+			'user_id' => AppContext::get_current_user()->get_id(),
+			'id_category' => $this->get_category()->get_id(),
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		));
@@ -118,7 +120,6 @@ class WebDisplayCategoryController extends ModuleController
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'NOT_APPROVED_MESSAGE' => MessageHelper::display($this->lang['web.message.not_approved'], MessageHelper::WARNING),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
@@ -142,12 +143,12 @@ class WebDisplayCategoryController extends ModuleController
 		$result->dispose();
 	}
 	
-	private function get_pagination($authorized_categories)
+	private function get_pagination($id_category)
 	{
 		$weblinks_number = WebService::count(
-			'WHERE approved = 1 AND id_category IN :authorized_categories', 
+			'WHERE approved = 1 AND id_category = :id_category', 
 			array(
-				'authorized_categories' => $authorized_categories
+				'id_category' => $id_category
 		));
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
@@ -219,7 +220,7 @@ class WebDisplayCategoryController extends ModuleController
 		$graphical_environment->set_page_title($this->get_category()->get_name());
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_category()->get_description());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
-	
+		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], WebUrlBuilder::home());
 		
@@ -236,8 +237,8 @@ class WebDisplayCategoryController extends ModuleController
 	public static function get_view()
 	{
 		$object = new self();
-		$object->init();
 		$object->check_authorizations();
+		$object->init();
 		$object->build_view();
 		return $object->tpl;
 	}

@@ -312,7 +312,6 @@ class WebLink
 			'NAME' => $this->name,
 			'URL' => $this->url->absolute(),
 			'CONTENTS' => FormatingHelper::second_parse($this->contents),
-			'PARTNER_PICTURE' => $this->partner_picture->rel(),
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
@@ -341,6 +340,7 @@ class WebLink
 			'U_CATEGORY' => WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_EDIT' => WebUrlBuilder::edit($this->id)->rel(),
 			'U_DELETE' => WebUrlBuilder::delete($this->id)->rel(),
+			'U_PARTNER_PICTURE' => $this->partner_picture->rel(),
 			'U_COMMENTS' => WebUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
 		);
 	}

@@ -63,11 +63,12 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = web.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
-		WHERE approved = 0' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND web.author_user_id = ' . AppContext::get_current_user()->get_id() : '') . '
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
+		WHERE approved = 0' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND web.author_user_id = :user_id' : '') . '
 		AND web.id_category IN :authorized_categories
 		ORDER BY web.creation_date DESC
 		LIMIT :number_items_per_page OFFSET :display_from', array(
+			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories,
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
@@ -104,8 +105,9 @@ class WebDisplayPendingWebLinksController extends ModuleController
 	private function get_pagination($authorized_categories)
 	{
 		$weblinks_number = WebService::count(
-			'WHERE approved = 0 AND id_category IN :authorized_categories', 
+			'WHERE approved = 0 AND ' . (!DownloadAuthorizationsService::check_authorizations()->moderation() ? ' AND download.author_user_id = :user_id' : '') . ' AND id_category IN :authorized_categories', 
 			array(
+				'user_id' => AppContext::get_current_user()->get_id(),
 				'authorized_categories' => $authorized_categories
 		));
 		

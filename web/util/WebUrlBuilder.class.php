@@ -102,7 +102,7 @@ class WebUrlBuilder
 	public static function display_tag($rewrited_name, $page = 1)
 	{
 		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name .'/' . $page);
+		return DispatchManager::get_url(self::$dispatcher, '/tag/' . $rewrited_name . '/' . $page);
 	}
 	
 	/**

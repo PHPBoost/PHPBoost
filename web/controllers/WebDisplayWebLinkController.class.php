@@ -84,8 +84,8 @@ class WebDisplayWebLinkController extends ModuleController
 		$nbr_keywords = count($keywords);
 		
 		$this->tpl->put_all(array_merge($weblink->get_array_tpl_vars(), array(
-			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_KEYWORDS' => $nbr_keywords > 0,
 			'NOT_APPROVED_MESSAGE' => MessageHelper::display($this->lang['web.message.not_approved'], MessageHelper::WARNING)
 		)));

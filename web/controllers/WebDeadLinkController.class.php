@@ -71,9 +71,11 @@ class WebDeadLinkController extends AbstractController
 			
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
-		
-		$category = WebService::get_categories_manager()->get_categories_cache()->get_category($this->weblink->get_id_category());
-		AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->weblink->get_id(), $this->weblink->get_rewrited_name()));
+		else
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

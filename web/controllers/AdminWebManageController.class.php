@@ -85,10 +85,11 @@ class AdminWebManageController extends AdminModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = web.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_per_page OFFSET :start_limit',
 			array(
+				'user_id' => AppContext::get_current_user()->get_id(),
 				'number_per_page' => $pagination->get_number_items_per_page(),
 				'start_limit' => $pagination->get_display_from()
 		));

@@ -25,7 +25,7 @@
 		<div class="options infos">
 			<div class="center">
 				# IF C_HAS_PARTNER_PICTURE #
-					<img src="{PARTNER_PICTURE}" alt="" itemprop="image" />
+					<img src="{U_PARTNER_PICTURE}" alt="" itemprop="image" />
 					<div class="spacer">&nbsp;</div>
 				# ENDIF #
 				# IF C_APPROVED #

@@ -36,11 +36,6 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 		return self::BLOCK_POSITION__RIGHT;
 	}
 	
-	public function default_is_enabled()
-	{
-		return true;
-	}
-	
 	public function display($tpl = false)
 	{
 		if (WebAuthorizationsService::check_authorizations()->read())
@@ -62,7 +57,7 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 			
 			$partners_weblinks = $web_cache->get_partners_weblinks();
 			
-			$tpl->put('C_PARTNERS', $partners_weblinks);
+			$tpl->put('C_PARTNERS', !empty($partners_weblinks));
 			
 			foreach ($partners_weblinks as $partner)
 			{
@@ -72,7 +67,7 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 				$tpl->assign_block_vars('partners', array(
 					'C_HAS_PARTNER_PICTURE' => !empty($picture),
 					'NAME' => $partner['name'],
-					'PARTNER_PICTURE' => $picture,
+					'U_PARTNER_PICTURE' => $picture,
 					'U_VISIT' => WebUrlBuilder::visit($partner['id'])->rel()
 				));
 			}
