@@ -41,7 +41,7 @@ interface ContactFieldType
 	 * @desc This function returned value form fields
 	 * @param instance of HTMLForm $form and instance of ContactField $field.
 	 */
-	public function return_value(HTMLForm $form, ContactField $field);
+	public function get_value(HTMLForm $form, ContactField $field);
 	
 	/**
 	 * @desc Return instanciat constraint depending integer type regex.

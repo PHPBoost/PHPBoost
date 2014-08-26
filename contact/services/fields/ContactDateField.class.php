@@ -43,7 +43,7 @@ class ContactDateField extends AbstractContactField
 		));
 	}
 	
-	public function return_value(HTMLForm $form, ContactField $field)
+	public function get_value(HTMLForm $form, ContactField $field)
 	{
 		$field_name = $field->get_field_name();
 		if ($form->has_field($field_name))

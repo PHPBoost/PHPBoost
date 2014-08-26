@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               ContactFieldsFactory.class.php
+ *                               ContactFieldsService.class.php
  *                            -------------------
  *   begin                : July 31, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
@@ -30,7 +30,7 @@
  * @desc This class is a Factory and return instance class
  * @package {@package}
  */
-class ContactFieldsFactory
+class ContactFieldsService
 {
 	/**
 	 * @desc This function displayed field for form
@@ -38,10 +38,8 @@ class ContactFieldsFactory
 	 */
 	public static function display_field(ContactField $field)
 	{
-		$name_class = self::name_class($field);
-		
-		$instance_class = new $name_class();
-		return $instance_class->display_field($field);
+		$class = $field->get_instance();
+		return $class->display_field($field);
 	}
 	
 	/**
@@ -49,41 +47,10 @@ class ContactFieldsFactory
 	 * @param object $form HTMLForm
 	 * @param object $field ContactField
 	 */
-	public static function return_value(HTMLForm $form, ContactField $field)
+	public static function get_value(HTMLForm $form, ContactField $field)
 	{
-		$name_class = self::name_class($field);
-		
-		$instance_class = new $name_class();
-		return $instance_class->return_value($form, $field);
-	}
-	
-	/**
-	 * @desc This function return Array disable fields in configuration
-	 * @param string $field_type field type.
-	 */
-	public static function get_disable_fields_configuration($field_type)
-	{
-		$field = new ContactField();
-		$field->set_field_type($field_type);
-		
-		$name_class = self::name_class($field);
-		
-		$instance_class = new $name_class();
-		return $instance_class->get_disable_fields_configuration();
-	}
-	
-	/**
-	 * @desc This function determines the class depending on the type of field
-	 * @param object $field ContactField
-	 */
-	public static function name_class(ContactField $field)
-	{
-		$field_type = $field->get_field_type();
-		if (!empty($field_type))
-		{
-			return (string)$field_type;
-		}
-		return '';
+		$class = $field->get_instance();
+		return $class->get_value($form, $field);
 	}
 }
 ?>
