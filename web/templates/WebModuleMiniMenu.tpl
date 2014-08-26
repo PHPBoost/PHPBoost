@@ -8,7 +8,7 @@
 			# START partners #
 			<a href="{partners.U_VISIT}" title="{partners.NAME}">
 				# IF partners.C_HAS_PARTNER_PICTURE #
-				<img src="{partners.PARTNER_PICTURE}" alt="" itemprop="image" class="partner-picture-menu" />
+				<img src="{partners.U_PARTNER_PICTURE}" alt="" itemprop="image" class="partner-picture-menu" />
 				# ELSE #
 				{partners.NAME}
 				# ENDIF #

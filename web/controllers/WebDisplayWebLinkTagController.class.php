@@ -66,10 +66,11 @@ class WebDisplayWebLinkTagController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = web.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
 		WHERE relation.id_keyword = :id_keyword AND web.approved = 1 AND web.id_category IN :authorized_categories
 		ORDER BY ' . $config->get_sort_type() . ' ' . $config->get_sort_mode() . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
+			'user_id' => AppContext::get_current_user()->get_id(),
 			'id_keyword' => $this->get_keyword()->get_id(),
 			'authorized_categories' => $authorized_categories,
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
@@ -83,7 +84,6 @@ class WebDisplayWebLinkTagController extends ModuleController
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'NOT_APPROVED_MESSAGE' => MessageHelper::display($this->lang['web.message.not_approved'], MessageHelper::WARNING),
 			'CATEGORY_NAME' => $this->get_keyword()->get_name()
 		));
 		
