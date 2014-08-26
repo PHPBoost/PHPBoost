@@ -47,7 +47,6 @@ class ContactField
 	private $deletable = true;
 	private $authorization = array('r-1' => 1, 'r0' => 1, 'r1' => 1);
 	
-	private $template;
 	private $fieldset;
 	
 	public function set_name($name)
@@ -195,16 +194,6 @@ class ContactField
 		return AppContext::get_current_user()->check_auth($this->authorization, self::DISPLAY_FIELD_AUTHORIZATION);
 	}
 	
-	public function set_template($template)
-	{
-		$this->template = $template;
-	}
-	
-	public function get_template()
-	{
-		return $this->template;
-	}
-	
 	public function set_fieldset($fieldset)
 	{
 		$this->fieldset = $fieldset;
@@ -213,6 +202,16 @@ class ContactField
 	public function get_fieldset()
 	{
 		return $this->fieldset;
+	}
+	
+	public function get_instance()
+	{
+		$field_type = $this->get_field_type();
+		if (!empty($field_type))
+		{
+			$class = (string)$field_type;
+			return new $class();
+		}
 	}
 	
 	public static function rewrite_field_name($field_name)

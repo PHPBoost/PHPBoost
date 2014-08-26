@@ -56,7 +56,7 @@ class ContactMultipleSelectField extends AbstractContactField
 		$fieldset->add_field(new FormFieldMultipleSelectChoice($field->get_field_name(), $field->get_name(), $default_values, $options, array('required' => (bool)$field->is_required(), 'description' => $field->get_description())));
 	}
 	
-	public function return_value(HTMLForm $form, ContactField $field)
+	public function get_value(HTMLForm $form, ContactField $field)
 	{
 		$field_name = $field->get_field_name();
 		$array = array();

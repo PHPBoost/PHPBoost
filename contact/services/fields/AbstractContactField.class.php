@@ -56,7 +56,7 @@ abstract class AbstractContactField implements ContactFieldType
 	/**
 	 * {@inheritdoc}
 	 */
-	public function return_value(HTMLForm $form, ContactField $field)
+	public function get_value(HTMLForm $form, ContactField $field)
 	{
 		$field_name = $field->get_field_name();
 		return TextHelper::htmlspecialchars($form->get_value($field_name, ''));

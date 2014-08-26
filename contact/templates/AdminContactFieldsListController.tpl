@@ -219,7 +219,7 @@ Event.observe(window, 'load', function() {
 	</fieldset>
 	# IF C_MORE_THAN_ONE_FIELD #
 	<fieldset class="fieldset-submit">
-		<button type="submit" name="submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}}</button>
+		<button type="submit" name="submit" value="true" class="submit">${LangLoader::get_message('position.update', 'common')}</button>
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="position" id="position" value="">
 	</fieldset>

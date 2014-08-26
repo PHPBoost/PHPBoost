@@ -102,7 +102,7 @@ class ContactController extends ModuleController
 				if ($field->get_field_name() == 'f_sender_mail')
 					$field->set_default_value(AppContext::get_current_user()->get_email());
 				$field->set_fieldset($fieldset);
-				ContactFieldsFactory::display_field($field);
+				ContactFieldsService::display_field($field);
 			}
 		}
 		
@@ -159,7 +159,7 @@ class ContactController extends ModuleController
 			if ($field->is_displayed() && $field->is_authorized() && $field->is_deletable())
 			{
 				try{
-					$value = ContactFieldsFactory::return_value($this->form, $field);
+					$value = ContactFieldsService::get_value($this->form, $field);
 						$message .= $field->get_name() . ': ' . $value . '
 
 ';
