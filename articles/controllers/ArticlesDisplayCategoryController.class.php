@@ -96,11 +96,12 @@ class ArticlesDisplayCategoryController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = \'articles\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = :user_id
 		WHERE articles.id_category = :id_category AND (articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
 		AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0))) 
 		ORDER BY ' .$sort_field . ' ' . $sort_mode . ' 
 		LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from(), array(
+			'user_id' => AppContext::get_current_user()->get_id(),
 			'id_category' => $this->get_category()->get_id(),
 			'timestamp_now' => $now->get_timestamp()
 		));
@@ -136,9 +137,10 @@ class ArticlesDisplayCategoryController extends ModuleController
 		WHERE articles.id_category = @id_cat AND (articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
 		AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0)))) AS nbr_articles
 		FROM ' . ArticlesSetup::$articles_cats_table .' ac 
-		WHERE ac.id_parent = :id_category AND ac.id IN (' . implode(', ', $authorized_categories) . ') 
+		WHERE ac.id_parent = :id_category AND ac.id IN :authorized_categories
 		ORDER BY ac.id_parent',	array(
 			'timestamp_now' => $now->get_timestamp(),
+			'authorized_categories' => $authorized_categories,
 			'id_category' => $this->category->get_id()
 		));
 		
