@@ -95,6 +95,8 @@ class SEOMetaData
 	
 	public function get_keywords()
 	{
+		$site_keywords = GeneralConfig::load()->get_site_keywords();
+		
 		if (!empty($this->keywords))
 		{
 			$keywords = '';
@@ -102,9 +104,9 @@ class SEOMetaData
 			{
 				$keywords .= (!empty($keywords) ? ',' : '') . $keyword;
 			}
-			return GeneralConfig::load()->get_site_keywords() . ',' . $keywords;
+			return (!empty($site_keywords) ? $site_keywords . ',' : '') . $keywords;
 		}
-		return GeneralConfig::load()->get_site_keywords();
+		return $site_keywords;
 	}
 	
 	public function set_canonical_url(Url $canonical_url)
