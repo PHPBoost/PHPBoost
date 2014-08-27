@@ -76,7 +76,7 @@ class NewsletterEditSubscriberController extends ModuleController
 
 	private function build_form($id)
 	{
-		$form = new HTMLForm('subscriber');
+		$form = new HTMLForm(__CLASS__);
 		
 		$columns = array('*');
 		$condition = "WHERE id = '". $id ."' AND user_id = -1";

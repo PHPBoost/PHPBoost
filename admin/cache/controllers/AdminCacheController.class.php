@@ -37,7 +37,7 @@ class AdminCacheController extends AbstractAdminFormPageController
 
 	protected function create_form()
 	{
-		$form = new HTMLForm('cache_config');
+		$form = new HTMLForm(__CLASS__);
 		$fieldset = new FormFieldsetHTML('explain', $this->lang['cache']);
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldHTML('exp', $this->lang['explain_data_cache']));

@@ -66,7 +66,7 @@ class UserRegistrationController extends AbstractController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('member-registration');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('registration', $this->lang['registration']);
 		$form->add_fieldset($fieldset);

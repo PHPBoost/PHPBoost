@@ -67,9 +67,7 @@ class AdminMemberConfigController extends AdminController
 
 	private function build_form()
 	{
-		
-		
-		$form = new HTMLForm('members-config');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('members_config', $this->lang['members.config-members']);
 		$form->add_fieldset($fieldset);

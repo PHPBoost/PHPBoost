@@ -37,7 +37,7 @@ class AdminCSSCacheController extends AbstractAdminFormPageController
 
 	protected function create_form()
 	{
-		$form = new HTMLForm('css_cache');
+		$form = new HTMLForm(__CLASS__);
 		$fieldset = new FormFieldsetHTML('css_cache', $this->lang['css_cache']);
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldHTML('explain', $this->lang['explain_css_cache']));

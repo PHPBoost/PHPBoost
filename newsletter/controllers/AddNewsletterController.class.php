@@ -77,7 +77,7 @@ class AddNewsletterController extends ModuleController
 	
 	private function build_form($type)
 	{
-		$form = new HTMLForm('newsletter');
+		$form = new HTMLForm(__CLASS__);
 
 		$fieldset = new FormFieldsetHTML('add-newsletter', $this->lang['newsletter-add']);
 		$form->add_fieldset($fieldset);

@@ -45,7 +45,7 @@ class AdminSyndicationCacheController extends AbstractAdminFormPageController
 
 	protected function create_form()
 	{
-		$form = new HTMLForm('syndication_cache_config');
+		$form = new HTMLForm(__CLASS__);
 		$fieldset = new FormFieldsetHTML('explain', $this->lang['syndication_cache']);
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldHTML('exp', $this->lang['explain_syndication_cache']));

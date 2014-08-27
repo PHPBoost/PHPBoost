@@ -62,7 +62,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 
 	private function build_form()
 	{
-		$form = new HTMLForm('newsletter_admin');
+		$form = new HTMLForm(__CLASS__);
 		$newsletter_config = NewsletterConfig::load();
 
 		$fieldset_config = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin'));

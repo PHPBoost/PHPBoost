@@ -45,7 +45,7 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 
 	protected function create_form()
 	{
-		$form = new HTMLForm('mail_config_mail_sending_config');
+		$form = new HTMLForm(__CLASS__);
 
 		$fieldset = new FormFieldsetHTML('general_config', $this->lang['mail-config.general_mail_config']);
 		$form->add_fieldset($fieldset);

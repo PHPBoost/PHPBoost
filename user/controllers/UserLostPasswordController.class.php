@@ -57,7 +57,7 @@ class UserLostPasswordController extends AbstractController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('send_activation_key');
+		$form = new HTMLForm(__CLASS__);
 		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['forget-password']);
 		$form->add_fieldset($fieldset);
 		

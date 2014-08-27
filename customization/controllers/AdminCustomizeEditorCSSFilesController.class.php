@@ -75,7 +75,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 	
 	private function build_form($theme_selected, $file_selected)
 	{
-		$form = new HTMLForm('file-editor');
+		$form = new HTMLForm(__CLASS__);
 		
 		$theme_choise_fieldset = new FormFieldsetHTML('theme-choise', $this->lang['customization.interface.theme-choice']);
 		$form->add_fieldset($theme_choise_fieldset);

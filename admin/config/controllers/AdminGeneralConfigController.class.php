@@ -83,7 +83,7 @@ class AdminGeneralConfigController extends AdminController
 
 	private function build_form()
 	{
-		$form = new HTMLForm('general-config');
+		$form = new HTMLForm(__CLASS__);
 
 		$fieldset = new FormFieldsetHTML('general-config', $this->lang['general-config']);
 		$form->add_fieldset($fieldset);

@@ -88,7 +88,7 @@ class AdminCustomizeFaviconController extends AdminModuleController
 
 	private function build_form()
 	{
-		$form = new HTMLForm('customize-favicon');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('customize-favicon', $this->lang['customization.favicon']);
 		$form->add_fieldset($fieldset);
