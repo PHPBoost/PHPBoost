@@ -90,7 +90,7 @@ class WebDisplayCategoryController extends ModuleController
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
-		$pagination = $this->get_pagination($this->get_pagination($this->get_category()->get_id()););
+		$pagination = $this->get_pagination($this->get_category()->get_id());
 		
 		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM '. WebSetup::$web_table .' web
