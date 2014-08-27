@@ -63,7 +63,7 @@ class UserChangeLostPasswordController extends AbstractController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('change_password_form');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['change-password']);
 		$form->add_fieldset($fieldset);

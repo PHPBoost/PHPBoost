@@ -67,7 +67,7 @@ class NewsletterUnSubscribeController extends ModuleController
 			$email = $mail_request;
 		}
 		
-		$form = new HTMLForm('newsletter');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('unsubscribe.newsletter', $this->lang['unsubscribe.newsletter']);
 		$form->add_fieldset($fieldset);

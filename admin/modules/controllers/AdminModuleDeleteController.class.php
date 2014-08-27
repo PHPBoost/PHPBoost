@@ -80,7 +80,7 @@ class AdminModuleDeleteController extends AdminController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('delete_module');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('delete_module', $this->lang['modules.delete_module']);
 		$form->add_fieldset($fieldset);

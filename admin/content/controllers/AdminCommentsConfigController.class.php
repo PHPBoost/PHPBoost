@@ -67,7 +67,7 @@ class AdminCommentsConfigController extends AdminController
 
 	private function build_form()
 	{
-		$form = new HTMLForm('comments-config');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('comments-config', $this->lang['comments.config']);
 		$form->add_fieldset($fieldset);

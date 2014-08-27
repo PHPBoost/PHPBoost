@@ -80,7 +80,7 @@ class AdminMemberEditController extends AdminController
 
 	private function build_form()
 	{
-		$form = new HTMLForm('member-edit');
+		$form = new HTMLForm(__CLASS__);
 		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 		
 		$fieldset = new FormFieldsetHTML('edit_member', $this->admin_user_lang['members.edit-member']);

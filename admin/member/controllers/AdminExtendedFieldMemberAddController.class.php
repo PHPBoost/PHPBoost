@@ -82,7 +82,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 
 	private function build_form()
 	{
-		$form = new HTMLForm('extended-fields-add');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('add_fields', $this->lang['extended-field-add']);
 		$form->add_fieldset($fieldset);

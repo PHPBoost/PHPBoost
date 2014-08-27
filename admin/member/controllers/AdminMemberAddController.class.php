@@ -63,7 +63,7 @@ class AdminMemberAddController extends AdminController
 
 	private function build_form()
 	{
-		$form = new HTMLForm('member-add');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-user-common'));
 		$form->add_fieldset($fieldset);

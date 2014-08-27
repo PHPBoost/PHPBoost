@@ -68,7 +68,7 @@ class AdminUninstallLangController extends AdminController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('uninstall_lang');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('uninstall_lang', $this->lang['langs.delete']);
 		$form->add_fieldset($fieldset);

@@ -69,7 +69,7 @@ class AdminThemeDeleteController extends AdminController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('delete_theme');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('delete_theme', $this->lang['themes.delete']);
 		$form->add_fieldset($fieldset);

@@ -101,7 +101,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 
 	private function build_form($theme_selected)
 	{
-		$form = new HTMLForm('customize-interface');
+		$form = new HTMLForm(__CLASS__);
 		
 		$theme_choise_fieldset = new FormFieldsetHTML('theme-choice', $this->lang['customization.interface.theme-choice']);
 		$form->add_fieldset($theme_choise_fieldset);

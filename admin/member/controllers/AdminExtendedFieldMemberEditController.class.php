@@ -99,7 +99,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('extended-fields-edit');
+		$form = new HTMLForm(__CLASS__);
 		
 		$regex_type = is_numeric($this->extended_field['regex']) ? $this->extended_field['regex'] : 0;
 		$regex = is_string($this->extended_field['regex']) ? $this->extended_field['regex'] : '';
