@@ -41,6 +41,8 @@ class AdminMemberEditController extends AdminController
 	private $submit_button;
 	
 	private $user;
+	
+	private $member_extended_fields_service;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -79,6 +81,7 @@ class AdminMemberEditController extends AdminController
 	private function build_form()
 	{
 		$form = new HTMLForm('member-edit');
+		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 		
 		$fieldset = new FormFieldsetHTML('edit_member', $this->admin_user_lang['members.edit-member']);
 		$form->add_fieldset($fieldset);
@@ -136,7 +139,7 @@ class AdminMemberEditController extends AdminController
 		
 		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_ban', $this->user_lang['banned'], $this->user->get_delay_banned()));
 		
-		MemberExtendedFieldsService::display_form_fields($form, $this->user->get_id());
+		$this->member_extended_fields_service->display_form_fields($this->user->get_id());
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
@@ -178,14 +181,12 @@ class AdminMemberEditController extends AdminController
 		$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
 		
 		try {
-			$fields_data = MemberExtendedFieldsService::get_data($this->form, $user_id);
+			UserService::update($this->user, $this->member_extended_fields_service);
 		} catch (MemberExtendedFieldErrorsMessageException $e) {
 			$has_error = true;
 			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
-		
-		UserService::update($this->user, $fields_data);
-		
+
 		if ($old_approbation != $this->user->get_approbation() && $old_approbation == 0)
 		{
 			//Recherche de l'alerte correspondante

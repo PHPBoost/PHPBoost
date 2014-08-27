@@ -67,7 +67,7 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 		}
 	}
 	
-	public function get_value(HTMLForm $form, MemberExtendedField $member_extended_field)
+	public function get_data(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
 		if ($form->has_field($field_name))

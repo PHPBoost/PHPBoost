@@ -53,7 +53,7 @@ interface MemberExtendedFieldType
 	 * @desc This function returned value form fields
 	 * @param instance of HTMLForm $form and instance of MemberExtendedField $member_extended_field.
 	 */
-	public function get_value(HTMLForm $form, MemberExtendedField $member_extended_field);
+	public function get_data(HTMLForm $form, MemberExtendedField $member_extended_field);
 	
 	/**
 	 * @desc Return instanciat constraint depending integer type regex.

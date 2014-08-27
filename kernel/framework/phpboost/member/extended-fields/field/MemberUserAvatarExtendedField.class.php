@@ -97,7 +97,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		}
 	}
 	
-	public function get_value(HTMLForm $form, MemberExtendedField $member_extended_field)
+	public function get_data(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$delete = $form->get_value('delete_avatar');
 		if ($delete)

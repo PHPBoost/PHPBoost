@@ -45,7 +45,7 @@ class UserService
 	 * @param User $user
 	 * @return InjectQueryResult
 	 */
-	public static function create(User $user, AuthenticationMethod $auth_method, $fields_data = array())
+	public static function create(User $user, AuthenticationMethod $auth_method, $extended_fields = array())
 	{
 		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
 			'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
@@ -62,6 +62,15 @@ class UserService
 
 		$user_id = $result->get_last_inserted_id();
 		$auth_method->associate($user_id);
+		
+		if ($extended_fields instanceof MemberExtendedFieldsService)
+		{
+			$fields_data = $extended_fields->get_data($user_id);
+		}
+		elseif (!is_array($extended_fields))
+		{
+			$fields_data = array();
+		}
 		
 		$fields_data['user_id'] = $user_id;
 		self::$querier->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data);
@@ -93,7 +102,7 @@ class UserService
 	 * @param string $condition the SQL condition update user
 	 * @param array $parameters 
 	 */
-	public static function update(User $user, $fields_data = null)
+	public static function update(User $user, $extended_fields = null)
 	{
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user->get_id());
@@ -109,8 +118,15 @@ class UserService
 			'editor' => $user->get_editor()
 		), $condition, $parameters);
 
-		if ($fields_data !== null)
+		if ($extended_fields !== null)
 		{
+			if ($extended_fields instanceof MemberExtendedFieldsService)
+				$fields_data = $extended_fields->get_data($user->get_id());
+			elseif (is_array($extended_fields))
+				$fields_data = $extended_fields;
+			else
+				$fields_data = array();
+				
 			self::$querier->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data, $condition, $parameters);
 		}
 		
