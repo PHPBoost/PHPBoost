@@ -169,7 +169,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 			'CHECKED_MAIL' => ($row['mail'] == 1) ? 'checked="checked"' : '',
 			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
-			'TRACK' => '<i class="icone-msg-track"></i>',
+			'TRACK' => '<i class="fa fa-msg-track"></i>',
 			'DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']) ? '<i class="fa fa-msg-display"></i>' : '',
 			'TYPE' => $type[$row['type']],
 			'TITLE' => ucfirst($row['title']),
