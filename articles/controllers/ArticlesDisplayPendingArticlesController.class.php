@@ -107,7 +107,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				$sort_field = 'average_notes';
 				break;
 			case 'author':
-				$sort_field = 'author_user_id';
+				$sort_field = 'display_name';
 				break;
 			default:
 				$sort_field = 'date_created';
