@@ -61,8 +61,15 @@ $lang['constraint.not_required'] = 'Non requis';
 
 //Sort
 $lang['sort'] = 'Trier';
-$lang['sort.asc'] = 'Ascendant';
-$lang['sort.desc'] = 'Descendant';
+$lang['sort_by'] = 'Trier par';
+$lang['sort.asc'] = 'Croissant';
+$lang['sort.desc'] = 'Décroissant';
+
+//Units
+$lang['unit_gigabytes'] = 'Go';
+$lang['unit_megabytes'] = 'Mo';
+$lang['unit_kilobytes'] = 'Ko';
+$lang['unit_bytes'] = 'Octets';
 
 //Status
 $lang['status.approved.not'] = 'Gardée en brouillon';
