@@ -121,11 +121,12 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = "articles"
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
-		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = :user_id
 		WHERE articles.published = 0 OR (articles.published = 2 AND (articles.publishing_start_date > :timestamp_now OR articles.publishing_end_date < :timestamp_now))
-		AND articles.id_category IN :authorized_categories' . (!ArticlesAuthorizationsService::check_authorizations()->moderation() ? ' AND articles.author_user_id = ' . AppContext::get_current_user()->get_id() : '') . '
+		AND articles.id_category IN :authorized_categories' . (!ArticlesAuthorizationsService::check_authorizations()->moderation() ? ' AND articles.author_user_id = :user_id' : '') . '
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
+			'user_id' => AppContext::get_current_user()->get_id(),
 			'timestamp_now' => $now->get_timestamp(),
 			'authorized_categories' => $authorized_categories,
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
@@ -196,8 +197,9 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	{
 		$number_articles = PersistenceContext::get_querier()->count(
 			ArticlesSetup::$articles_table, 
-			'WHERE published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now AND publishing_end_date < :timestamp_now) AND publishing_end_date <> 0) AND id_category IN :authorized_categories', 
+			'WHERE published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now AND publishing_end_date < :timestamp_now) AND publishing_end_date <> 0) AND id_category IN :authorized_categories' . (!ArticlesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : ''), 
 			array(
+				'user_id' => AppContext::get_current_user()->get_id(),
 				'timestamp_now' => $now->get_timestamp(),
 				'authorized_categories' => $authorized_categories
 		));
