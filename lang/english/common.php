@@ -61,8 +61,15 @@ $lang['constraint.not_required'] = 'Not required';
 
 //Sort
 $lang['sort'] = 'Sort';
+$lang['sort_by'] = 'Sort by';
 $lang['sort.asc'] = 'Ascending';
 $lang['sort.desc'] = 'Descending';
+
+//Units
+$lang['unit_gigabytes'] = 'Gb';
+$lang['unit_megabytes'] = 'Mb';
+$lang['unit_kilobytes'] = 'Kb';
+$lang['unit_bytes'] = 'Bytes';
 
 //Status
 $lang['status.approved.not'] = 'Kept in draft';
