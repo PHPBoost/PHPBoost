@@ -43,20 +43,11 @@ class MemberExtendedField
 	private $regex;
 	
 	private $fieldset;
-	
-	public function set_name($name)
-	{
-		$this->name = $name;
-	}
-	
+	private $user_id;
+			
 	public function get_name()
 	{
 		return $this->name;
-	}
-	
-	public function set_field_name($field_name)
-	{
-		$this->field_name = $field_name;
 	}
 	
 	public function get_field_name()
@@ -64,29 +55,14 @@ class MemberExtendedField
 		return $this->field_name;
 	}
 	
-	public function set_field_type($field_type)
-	{
-		$this->field_type = $field_type;
-	}
-	
 	public function get_field_type()
 	{
 		return $this->field_type;
 	}
 	
-	public function set_value($value)
-	{
-		$this->value = $value;
-	}
-	
 	public function get_value()
 	{
 		return $this->value;
-	}
-
-	public function set_description($description)
-	{
-		$this->description = $description;
 	}
 	
 	public function get_description()
@@ -94,19 +70,9 @@ class MemberExtendedField
 		return $this->description;
 	}
 	
-	public function set_default_value($default_value)
-	{
-		$this->default_value = $default_value;
-	}
-	
 	public function get_default_value()
 	{
 		return $this->default_value;
-	}
-	
-	public function set_possible_values($possible_values)
-	{
-		$this->possible_values = $possible_values;
 	}
 	
 	public function get_possible_values()
@@ -114,34 +80,47 @@ class MemberExtendedField
 		return $this->possible_values;
 	}
 	
-	public function set_required($required)
-	{
-		$this->required = $required;
-	}
-	
 	public function get_required()
 	{
 		return $this->required;
-	}
-	
-	public function set_regex($regex)
-	{
-		$this->regex = $regex;
 	}
 	
 	public function get_regex()
 	{
 		return $this->regex;
 	}
+
+	public function get_fieldset()
+	{
+		return $this->fieldset;
+	}
 	
-	public function set_fieldset($fieldset)
+	public function get_user_id()
+	{
+		return $this->user_id;
+	}
+	
+	public function set_fieldset(FormFieldset $fieldset)
 	{
 		$this->fieldset = $fieldset;
 	}
 	
-	public function get_fieldset()
+	public function set_user_id($user_id)
 	{
-		return $this->fieldset;
+		$this->user_id = $user_id;
+	}
+	
+	public function set_properties($properties)
+	{	
+		$this->name = $properties['name'];
+		$this->field_name = $properties['field_name'];
+		$this->description = $properties['description'];
+		$this->field_type = $properties['field_type'];
+		$this->value = $properties['value'];
+		$this->possible_values = $properties['possible_values'];
+		$this->default_value = $properties['default_value'];
+		$this->required = $properties['required'];
+		$this->regex = $properties['regex'];
 	}
 	
 	public function get_instance()

@@ -49,7 +49,7 @@ class MemberHiddenExtendedField extends AbstractMemberExtendedField
 		return;
 	}
 	
-	public function get_value(HTMLForm $form, MemberExtendedField $member_extended_field)
+	public function get_data(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		return;
 	}

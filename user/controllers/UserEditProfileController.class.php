@@ -38,6 +38,8 @@ class UserEditProfileController extends AbstractController
 	private $submit_button;
 	
 	private $user;
+	
+	private $member_extended_fields_service;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -85,7 +87,8 @@ class UserEditProfileController extends AbstractController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('member_edit_profile');
+		$form = new HTMLForm(__CLASS__);
+		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 		
 		$fieldset = new FormFieldsetHTML('edit_profile', $this->lang['profile.edit']);
 		$form->add_fieldset($fieldset);
@@ -125,7 +128,7 @@ class UserEditProfileController extends AbstractController
 		
 		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user->get_locale(), array('check_authorizations' => true)));	
 		
-		MemberExtendedFieldsService::display_form_fields($form, $this->user->get_id());
+		$this->member_extended_fields_service->display_form_fields($this->user->get_id());
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($new_password, $new_password_bis));
@@ -160,13 +163,11 @@ class UserEditProfileController extends AbstractController
 			$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 			
 			try {
-				$fields_data = MemberExtendedFieldsService::get_data($this->form);
+				UserService::update($this->user, $this->member_extended_fields_service);
 			} catch (MemberExtendedFieldErrorsMessageException $e) {
 				$has_error = true;
 				$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 			}
-			
-			UserService::update($this->user, $fields_data);
 
 			$old_password = $this->form->get_value('old_password');
 			$new_password = $this->form->get_value('new_password');
