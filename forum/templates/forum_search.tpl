@@ -88,7 +88,7 @@
 									{list.USER_ONLINE} {list.USER_PSEUDO}
 								</div>
 								<div class="message-level"></div>
-								{list.USER_AVATAR}
+								<img src="{list.USER_AVATAR}" alt="" class="message-avatar"/>
 							</div>
 						
 							<div class="message-container">

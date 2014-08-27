@@ -124,10 +124,11 @@ if (!empty($valid_search) && !empty($search))
 	{
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 		
-		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, m.level AS user_level, m.user_groups, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(msg.contents, '" . $search . "') AS relevance, 0 AS relevance2
+		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, m.level AS user_level, m.user_groups, ext_field.user_avatar, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(msg.contents, '" . $search . "') AS relevance, 0 AS relevance2
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
 		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 		JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
 		WHERE FT_SEARCH(msg.contents, '" . $search . "') AND msg.timestamp > '" . (time() - $time) . "'
@@ -136,10 +137,11 @@ if (!empty($valid_search) && !empty($search))
 		ORDER BY relevance DESC
 		" . $Sql->limit(0, 24);
 
-		$req_title = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, m.level AS user_level, m.user_groups, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(t.title, '" . $search . "') AS relevance, 0 AS relevance2
+		$req_title = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, m.level AS user_level, m.user_groups, ext_field.user_avatar, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(t.title, '" . $search . "') AS relevance, 0 AS relevance2
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
 		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 		JOIN " . PREFIX . "forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
 		WHERE FT_SEARCH(t.title, '" . $search . "') AND msg.timestamp > '" . (time() - $time) . "'
@@ -148,11 +150,12 @@ if (!empty($valid_search) && !empty($search))
 		ORDER BY relevance DESC
 		" . $Sql->limit(0, 24);
 		
-		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, m.level AS user_level, m.user_groups, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(t.title, '" . $search . "') AS relevance,
+		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, m.level AS user_level, m.user_groups, ext_field.user_avatar, s.user_id AS connect, msg.contents, FT_SEARCH_RELEVANCE(t.title, '" . $search . "') AS relevance,
 		FT_SEARCH_RELEVANCE(msg.contents, '" . $search . "') AS relevance2
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
 		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 		JOIN " . PREFIX . "forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
 		WHERE (FT_SEARCH(t.title, '" . $search . "') OR FT_SEARCH(msg.contents, '" . $search . "')) AND msg.timestamp > '" . (time() - $time) . "'
@@ -198,9 +201,12 @@ if (!empty($valid_search) && !empty($search))
 					$title = preg_replace_callback('`(.*)(' . preg_quote($token) . ')(.*)`isU', 'token_colorate', $title);
 				}
 			}
+
+			//Avatar
+			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 			
 			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
-			
+
 			$Template->assign_block_vars('list', array(
 				'USER_ONLINE' => '<i class="fa ' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'fa-online' : 'fa-offline') . '"></i>',
 				'USER_PSEUDO' => !empty($row['login']) ? '<a class="'.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
@@ -208,7 +214,7 @@ if (!empty($valid_search) && !empty($search))
 				'RELEVANCE' => ($relevance > $max_relevance ) ? '100' : NumberHelper::round(($relevance * 100) / $max_relevance, 2),
 				'DATE' => gmdate_format('d/m/y', $row['timestamp']),
 				'U_TITLE'  => '<a class="small" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '#m' . $row['msgid'] . '">' . ucfirst($title) . '</a>',
-				'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($row['user_avatar']) ? $row['user_avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" class="message-avatar"/>'
+				'USER_AVATAR' => $user_avatar
 			));
 			
 			$check_result = true;
