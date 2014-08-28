@@ -42,8 +42,8 @@ class AdminWebDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), WebUrlBuilder::manage_categories(), $picture);
 		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), WebUrlBuilder::add_category(), $picture);
 		$this->add_link($lang['web.management'], WebUrlBuilder::manage(), $picture);
-		$this->add_link($lang['web.add'], WebUrlBuilder::add(), $picture);
-		$this->add_link(LangLoader::get_message('configuration', 'admin'), WebUrlBuilder::configuration(), $picture);
+		$this->add_link($lang['web.actions.add'], WebUrlBuilder::add(), $picture);
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), WebUrlBuilder::configuration(), $picture);
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

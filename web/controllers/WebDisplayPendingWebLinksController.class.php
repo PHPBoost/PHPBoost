@@ -54,9 +54,10 @@ class WebDisplayPendingWebLinksController extends ModuleController
 	
 	public function build_view()
 	{
+		$now = new Date();
 		$config = WebConfig::load();
 		$authorized_categories = WebService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$pagination = $this->get_pagination($authorized_categories);
+		$pagination = $this->get_pagination($now, $authorized_categories);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM '. WebSetup::$web_table .' web
@@ -64,11 +65,12 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
-		WHERE approved = 0' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND web.author_user_id = :user_id' : '') . '
+		WHERE web.approbation_type = 0 OR (web.approbation_type = 2 AND (web.start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND web.author_user_id = :user_id' : '') . '
 		AND web.id_category IN :authorized_categories
 		ORDER BY web.creation_date DESC
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'user_id' => AppContext::get_current_user()->get_id(),
+			'timestamp_now' => $now->get_timestamp(),
 			'authorized_categories' => $authorized_categories,
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
@@ -78,11 +80,13 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			'C_WEBLINKS' => $result->get_rows_count() > 0,
 			'C_PENDING' => true,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
+			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'NOT_APPROVED_MESSAGE' => MessageHelper::display($this->lang['web.message.not_approved'], MessageHelper::WARNING)
+			'TABLE_COLSPAN' => 3 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled(),
+			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['web.message.not_visible'], MessageHelper::WARNING)
 		));
 		
 		while ($row = $result->fetch())
@@ -102,12 +106,13 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		$result->dispose();
 	}
 	
-	private function get_pagination($authorized_categories)
+	private function get_pagination(Date $now, $authorized_categories)
 	{
 		$weblinks_number = WebService::count(
-			'WHERE approved = 0 AND ' . (!DownloadAuthorizationsService::check_authorizations()->moderation() ? ' AND download.author_user_id = :user_id' : '') . ' AND id_category IN :authorized_categories', 
+			'WHERE approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))' . (!DownloadAuthorizationsService::check_authorizations()->moderation() ? ' AND download.author_user_id = :user_id' : '') . ' AND id_category IN :authorized_categories', 
 			array(
 				'user_id' => AppContext::get_current_user()->get_id(),
+				'timestamp_now' => $now->get_timestamp(),
 				'authorized_categories' => $authorized_categories
 		));
 		

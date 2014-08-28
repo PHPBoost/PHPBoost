@@ -77,7 +77,7 @@ class WebFormController extends ModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('web', $this->lang['module_title']);
+		$fieldset = new FormFieldsetHTML('web', $this->get_weblink()->get_id() === null ? $this->lang['web.add'] : $this->lang['web.edit']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->common_lang['form.name'], $this->get_weblink()->get_name(), array('required' => true)));
@@ -91,7 +91,23 @@ class WebFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.description'], $this->get_weblink()->get_contents(), array('rows' => 15, 'required' => true)));
 		
-		$fieldset->add_field(new FormFieldCheckbox('partner', $this->lang['web.form.partner'], $this->get_weblink()->is_partner(), array(
+		$fieldset->add_field(new FormFieldCheckbox('enable_short_contents', $this->common_lang['form.short_contents.enabled'], $this->get_weblink()->is_short_contents_enabled(), 
+			array('description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => WebConfig::NUMBER_CARACTERS_BEFORE_CUT)), 'events' => array('click' => '
+			if (HTMLForms.getField("enable_short_contents").getValue()) {
+				HTMLForms.getField("short_contents").enable();
+			} else { 
+				HTMLForms.getField("short_contents").disable();
+			}'))
+		));
+		
+		$fieldset->add_field(new FormFieldRichTextEditor('short_contents', $this->common_lang['form.short_contents'], $this->get_weblink()->get_short_contents(), array(
+			'hidden' => !$this->get_weblink()->is_short_contents_enabled(),
+		)));
+		
+		$other_fieldset = new FormFieldsetHTML('other', $this->common_lang['form.other']);
+		$form->add_fieldset($other_fieldset);
+		
+		$other_fieldset->add_field(new FormFieldCheckbox('partner', $this->lang['web.form.partner'], $this->get_weblink()->is_partner(), array(
 			'events' => array('click' => '
 				if (HTMLForms.getField("partner").getValue()) {
 					HTMLForms.getField("partner_picture").enable();
@@ -101,13 +117,50 @@ class WebFormController extends ModuleController
 			)
 		)));
 		
-		$fieldset->add_field(new FormFieldUploadFile('partner_picture', $this->lang['web.form.partner_picture'], $this->get_weblink()->get_partner_picture()->relative(), array(
+		$other_fieldset->add_field(new FormFieldUploadFile('partner_picture', $this->lang['web.form.partner_picture'], $this->get_weblink()->get_partner_picture()->relative(), array(
 			'hidden' => !$this->get_weblink()->is_partner()
 		)));
 		
-		$fieldset->add_field(WebService::get_keywords_manager()->get_form_field($this->get_weblink()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
+		$other_fieldset->add_field(WebService::get_keywords_manager()->get_form_field($this->get_weblink()->get_id(), 'keywords', $this->common_lang['form.keywords'], array('description' => $this->common_lang['form.keywords.description'])));
 		
-		$this->build_approval_field($fieldset);
+		if (!$this->is_contributor_member())
+		{
+			$publication_fieldset = new FormFieldsetHTML('publication', $this->common_lang['form.approbation']);
+			$form->add_fieldset($publication_fieldset);
+			
+			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->common_lang['form.date.creation'], $this->get_weblink()->get_creation_date()));
+			
+			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->common_lang['form.approbation'], $this->get_weblink()->get_approbation_type(),
+				array(
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], WebLink::NOT_APPROVAL),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], WebLink::APPROVAL_NOW),
+					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.date'], WebLink::APPROVAL_DATE),
+				),
+				array('events' => array('change' => '
+				if (HTMLForms.getField("approbation_type").getValue() == 2) {
+					$("' . __CLASS__ . '_start_date_field").appear();
+					HTMLForms.getField("end_date_enabled").enable();
+				} else { 
+					$("' . __CLASS__ . '_start_date_field").fade();
+					HTMLForms.getField("end_date_enabled").disable();
+				}'))
+			));
+			
+			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $this->common_lang['form.date.start'], ($this->get_weblink()->get_start_date() === null ? new Date() : $this->get_weblink()->get_start_date()), array('hidden' => ($this->get_weblink()->get_approbation_type() != WebLink::APPROVAL_DATE))));
+			
+			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->common_lang['form.date.end.enable'], $this->get_weblink()->is_end_date_enabled(), array(
+			'hidden' => ($this->get_weblink()->get_approbation_type() != WebLink::APPROVAL_DATE),
+			'events' => array('click' => '
+			if (HTMLForms.getField("end_date_enabled").getValue()) {
+				HTMLForms.getField("end_date").enable();
+			} else { 
+				HTMLForms.getField("end_date").disable();
+			}'
+			))));
+			
+			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->common_lang['form.date.end'], ($this->get_weblink()->get_end_date() === null ? new Date() : $this->get_weblink()->get_end_date()), array('hidden' => !$this->get_weblink()->is_end_date_enabled())));
+		}
+		
 		$this->build_contribution_fieldset($form);
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -115,14 +168,6 @@ class WebFormController extends ModuleController
 		$form->add_button(new FormButtonReset());
 		
 		$this->form = $form;
-	}
-	
-	private function build_approval_field($fieldset)
-	{
-		if (!$this->is_contributor_member())
-		{
-			$fieldset->add_field(new FormFieldCheckbox('approved', $this->common_lang['form.approved'], $this->get_weblink()->is_approved()));
-		}
 	}
 	
 	private function build_contribution_fieldset($form)
@@ -201,13 +246,38 @@ class WebFormController extends ModuleController
 		$weblink->set_id_category($this->form->get_value('id_category')->get_raw_value());
 		$weblink->set_url(new Url($this->form->get_value('url')));
 		$weblink->set_contents($this->form->get_value('contents'));
+		$weblink->set_short_contents(($this->form->get_value('enable_short_contents') ? $this->form->get_value('short_contents') : ''));
 		$weblink->set_partner($this->form->get_value('partner'));
 		$weblink->set_partner_picture(new Url($this->form->get_value('partner_picture')));
 		
-		if (($this->is_contributor_member() || WebAuthorizationsService::check_authorizations()->moderation()) && $this->form->get_value('approved'))
-			$weblink->approve();
+		if ($this->is_contributor_member())
+		{
+			$weblink->set_approbation_type(WebLink::NOT_APPROVAL);
+			$weblink->set_creation_date(new Date());
+			$weblink->clean_start_and_end_date();
+		}
 		else
-			$weblink->unapprove();
+		{
+			$weblink->set_creation_date($this->form->get_value('creation_date'));
+			$weblink->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
+			if ($weblink->get_approbation_type() == WebLink::APPROVAL_DATE)
+			{
+				$weblink->set_start_date($this->form->get_value('start_date'));
+				
+				if ($this->form->get_value('end_date_enable'))
+				{
+					$weblink->set_end_date($this->form->get_value('end_date'));
+				}
+				else
+				{
+					$weblink->clean_end_date();
+				}
+			}
+			else
+			{
+				$weblink->clean_start_and_end_date();
+			}
+		}
 		
 		if ($weblink->get_id() === null)
 		{
@@ -267,11 +337,11 @@ class WebFormController extends ModuleController
 		$weblink = $this->get_weblink();
 		$category = WebService::get_categories_manager()->get_categories_cache()->get_category($weblink->get_id_category());
 		
-		if ($this->is_contributor_member() && !$weblink->is_approved())
+		if ($this->is_contributor_member() && !$weblink->is_visible())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
-		elseif ($weblink->is_approved())
+		elseif ($weblink->is_visible())
 		{
 			AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()));
 		}

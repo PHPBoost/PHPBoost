@@ -56,9 +56,10 @@ class WebDisplayWebLinkTagController extends ModuleController
 	
 	public function build_view()
 	{
+		$now = new Date();
 		$config = WebConfig::load();
 		$authorized_categories = WebService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$pagination = $this->get_pagination($authorized_categories);
+		$pagination = $this->get_pagination($now, $authorized_categories);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM ' . WebSetup::$web_table . ' web
@@ -67,11 +68,12 @@ class WebDisplayWebLinkTagController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
-		WHERE relation.id_keyword = :id_keyword AND web.approved = 1 AND web.id_category IN :authorized_categories
+		WHERE relation.id_keyword = :id_keyword AND (web.approbation_type = 1 OR (web.approbation_type = 2 AND web.start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND web.id_category IN :authorized_categories
 		ORDER BY ' . $config->get_sort_type() . ' ' . $config->get_sort_mode() . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'id_keyword' => $this->get_keyword()->get_id(),
+			'timestamp_now' => $now->get_timestamp(),
 			'authorized_categories' => $authorized_categories,
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
@@ -80,10 +82,12 @@ class WebDisplayWebLinkTagController extends ModuleController
 		$this->tpl->put_all(array(
 			'C_WEBLINKS' => $result->get_rows_count() > 0,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
+			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
+			'TABLE_COLSPAN' => 3 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled(),
 			'CATEGORY_NAME' => $this->get_keyword()->get_name()
 		));
 		
@@ -127,13 +131,14 @@ class WebDisplayWebLinkTagController extends ModuleController
 		return $this->keyword;
 	}
 	
-	private function get_pagination($authorized_categories)
+	private function get_pagination(Date $now, $authorized_categories)
 	{
 		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS weblinks_number
 		FROM '. WebSetup::$web_table .' web
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'web\' AND relation.id_in_module = web.id 
-		WHERE relation.id_keyword = :id_keyword AND web.approved AND web.id_category IN :authorized_categories', array(
+		WHERE relation.id_keyword = :id_keyword AND (web.approbation_type = 1 OR (web.approbation_type = 2 AND web.start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND web.id_category IN :authorized_categories', array(
 			'id_keyword' => $this->get_keyword()->get_id(),
+			'timestamp_now' => $now->get_timestamp(),
 			'authorized_categories' => $authorized_categories,
 		));
 		

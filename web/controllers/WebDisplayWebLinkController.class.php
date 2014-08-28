@@ -87,7 +87,7 @@ class WebDisplayWebLinkController extends ModuleController
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_KEYWORDS' => $nbr_keywords > 0,
-			'NOT_APPROVED_MESSAGE' => MessageHelper::display($this->lang['web.message.not_approved'], MessageHelper::WARNING)
+			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['web.message.not_visible'], MessageHelper::WARNING)
 		)));
 		
 		if ($config->are_comments_enabled())
@@ -122,21 +122,34 @@ class WebDisplayWebLinkController extends ModuleController
 	{
 		$weblink = $this->get_weblink();
 		
-		if ($weblink->is_approved())
-		{
-			if (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->read())
-			{
-				$error_controller = PHPBoostErrors::user_not_authorized();
+		$not_authorized = !WebAuthorizationsService::check_authorizations($weblink->get_id_category())->moderation() && (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->write() && $weblink->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
+		
+		switch ($weblink->get_approbation_type()) {
+			case WebLink::APPROVAL_NOW:
+				if (!DownloadAuthorizationsService::check_authorizations($weblink->get_id_category())->read() && $not_authorized)
+				{
+					$error_controller = PHPBoostErrors::user_not_authorized();
+					DispatchManager::redirect($error_controller);
+				}
+			break;
+			case WebLink::NOT_APPROVAL:
+				if ($not_authorized)
+				{
+					$error_controller = PHPBoostErrors::user_not_authorized();
+					DispatchManager::redirect($error_controller);
+				}
+			break;
+			case WebLink::APPROVAL_DATE:
+				if (!$weblink->is_visible() && $not_authorized)
+				{
+					$error_controller = PHPBoostErrors::user_not_authorized();
+					DispatchManager::redirect($error_controller);
+				}
+			break;
+			default:
+				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
-			}
-		}
-		else
-		{
-			if (!(WebAuthorizationsService::check_authorizations($weblink->get_id_category())->moderation() || ((WebAuthorizationsService::check_authorizations($weblink->get_id_category())->write() || (WebAuthorizationsService::check_authorizations($weblink->get_id_category())->contribution())) && $weblink->get_author_user()->get_id() == AppContext::get_current_user()->get_id())))
-			{
-				$error_controller = PHPBoostErrors::user_not_authorized();
-				DispatchManager::redirect($error_controller);
-			}
+			break;
 		}
 	}
 	

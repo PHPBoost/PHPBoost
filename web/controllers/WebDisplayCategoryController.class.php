@@ -56,16 +56,18 @@ class WebDisplayCategoryController extends ModuleController
 	
 	private function build_view()
 	{
+		$now = new Date();
 		$config = WebConfig::load();
 		$authorized_categories = WebService::get_authorized_categories($this->get_category()->get_id());
 		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= web_cats.id, web_cats.*,
 		(SELECT COUNT(*) FROM '. WebSetup::$web_table .' web
-		WHERE web.id_category = @id_cat AND web.approved = 1) AS weblinks_number
+		WHERE (web.approbation_type = 1 OR (web.approbation_type = 2 AND web.start_date < :timestamp_now AND (web.end_date > :timestamp_now OR web.end_date = 0))) AND web.id_category = @id_cat) AS weblinks_number
 		FROM ' . WebSetup::$web_cats_table .' web_cats
 		WHERE web_cats.id_parent = :id_category AND web_cats.id IN (' . implode(', ', $authorized_categories) . ') 
 		ORDER BY web_cats.id_parent', array(
+			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id()
 		));
 		
@@ -90,7 +92,7 @@ class WebDisplayCategoryController extends ModuleController
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
-		$pagination = $this->get_pagination($this->get_category()->get_id());
+		$pagination = $this->get_pagination($now, $this->get_category()->get_id());
 		
 		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM '. WebSetup::$web_table .' web
@@ -98,10 +100,11 @@ class WebDisplayCategoryController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
-		WHERE web.approved = 1 AND web.id_category = :id_category
+		WHERE (web.approbation_type = 1 OR (web.approbation_type = 2 AND web.start_date < :timestamp_now AND (web.end_date > :timestamp_now OR web.end_date = 0))) AND web.id_category = :id_category
 		ORDER BY ' . $config->get_sort_type() . ' ' . $config->get_sort_mode() . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'user_id' => AppContext::get_current_user()->get_id(),
+			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->get_category()->get_id(),
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
@@ -116,10 +119,12 @@ class WebDisplayCategoryController extends ModuleController
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_WEBLINKS' => $result->get_rows_count() > 0,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
+			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
+			'TABLE_COLSPAN' => 3 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
@@ -143,11 +148,12 @@ class WebDisplayCategoryController extends ModuleController
 		$result->dispose();
 	}
 	
-	private function get_pagination($id_category)
+	private function get_pagination(Date $now, $id_category)
 	{
 		$weblinks_number = WebService::count(
-			'WHERE approved = 1 AND id_category = :id_category', 
+			'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND id_category = :id_category', 
 			array(
+				'timestamp_now' => $now->get_timestamp(),
 				'id_category' => $id_category
 		));
 		

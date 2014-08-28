@@ -40,15 +40,17 @@ class WebCache implements CacheData
 	{
 		$this->partners_weblinks = array();
 		
+		$now = new Date();
 		$config = WebConfig::load();
 		
 		$result = PersistenceContext::get_querier()->select('
 			SELECT web.id, web.name, web.partner_picture
 			FROM ' . WebSetup::$web_table . ' web
 			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
-			WHERE approved = 1 AND partner = 1
+			WHERE web.approbation_type = 0 OR (web.approbation_type = 2 AND (web.start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))) AND partner = 1
 			ORDER BY ' . $config->get_sort_type() . ' ' . $config->get_sort_mode() . '
 			LIMIT :partners_number_in_menu OFFSET 0', array(
+				'timestamp_now' => $now->get_timestamp(),
 				'partners_number_in_menu' => (int)$config->get_partners_number_in_menu()
 		));
 		

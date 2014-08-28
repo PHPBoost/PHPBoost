@@ -47,7 +47,7 @@ class WebIncreaseNumberViewsController extends AbstractController
 			}
 		}
 		
-		if ($this->weblink !== null && $this->weblink->is_approved())
+		if ($this->weblink !== null && $this->weblink->is_visible())
 		{
 			$this->weblink->set_number_views($this->weblink->get_number_views() + 1);
 			WebService::update_number_views($this->weblink);

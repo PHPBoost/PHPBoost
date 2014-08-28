@@ -48,7 +48,7 @@ class WebCommentsTopic extends CommentsTopic
 	
 	public function is_display()
 	{
-		return $this->get_weblink()->is_approved();
+		return $this->get_weblink()->is_visible();
 	}
 	
 	private function get_weblink()

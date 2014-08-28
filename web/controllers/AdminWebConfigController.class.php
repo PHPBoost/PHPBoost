@@ -41,6 +41,7 @@ class AdminWebConfigController extends AdminModuleController
 	private $submit_button;
 	
 	private $lang;
+	private $admin_common_lang;
 	
 	/**
 	 * @var WebConfig
@@ -70,23 +71,24 @@ class AdminWebConfigController extends AdminModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'web');
 		$this->config = WebConfig::load();
+		$this->lang = LangLoader::get('common', 'web');
+		$this->admin_common_lang = LangLoader::get('admin-common');
 	}
 	
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('config', LangLoader::get_message('configuration', 'admin'));
+		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('items_number_per_page', LangLoader::get_message('config.items_number_per_page', 'admin-common'), $this->config->get_items_number_per_page(), 
+		$fieldset->add_field(new FormFieldTextEditor('items_number_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_items_number_per_page(), 
 			array('size' => 6, 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
 		)));
 		
-		$fieldset->add_field(new FormFieldTextEditor('columns_number_per_line', LangLoader::get_message('config.columns_number_per_line', 'admin-common'), $this->config->get_columns_number_per_line(), 
+		$fieldset->add_field(new FormFieldTextEditor('columns_number_per_line', $this->admin_common_lang['config.columns_number_per_line'], $this->config->get_columns_number_per_line(), 
 			array('size' => 6, 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
 		)));
@@ -94,16 +96,18 @@ class AdminWebConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('category_display_type', $this->lang['config.category_display_type'], $this->config->get_category_display_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['config.category_display_type.display_summary'], WebConfig::DISPLAY_SUMMARY),
-				new FormFieldSelectChoiceOption($this->lang['config.category_display_type.display_all_content'], WebConfig::DISPLAY_ALL_CONTENT)
+				new FormFieldSelectChoiceOption($this->lang['config.category_display_type.display_all_content'], WebConfig::DISPLAY_ALL_CONTENT),
+				new FormFieldSelectChoiceOption($this->lang['config.category_display_type.display_table'], WebConfig::DISPLAY_TABLE)
 			)
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['config.sort_type.alphabetic'], WebConfig::SORT_NAME),
+				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.alphabetic', 'common'), WebConfig::SORT_NAME),
 				new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common'), WebConfig::SORT_CREATION_DATE),
-				new FormFieldSelectChoiceOption($this->lang['config.sort_type.notation'], WebConfig::SORT_NOTATION),
-				new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebConfig::SORT_VIEWS)
+				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), WebConfig::SORT_NOTATION),
+				new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebConfig::SORT_VIEWS),
+				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.number_comments', 'common'), WebConfig::SORT_COMMENTS)
 			)
 		));
 		
@@ -119,9 +123,9 @@ class AdminWebConfigController extends AdminModuleController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
 		)));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', LangLoader::get_message('config.comments_enabled', 'admin-common'), $this->config->are_comments_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->admin_common_lang['config.comments_enabled'], $this->config->are_comments_enabled()));
 		
-		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', LangLoader::get_message('config.notation_enabled', 'admin-common'), $this->config->is_notation_enabled(), array(
+		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->config->is_notation_enabled(), array(
 			'events' => array('click' => '
 				if (HTMLForms.getField("notation_enabled").getValue()) {
 					HTMLForms.getField("notation_scale").enable();
@@ -131,7 +135,7 @@ class AdminWebConfigController extends AdminModuleController
 			)
 		)));
 		
-		$fieldset->add_field(new FormFieldTextEditor('notation_scale', LangLoader::get_message('config.notation_scale', 'admin-common'), $this->config->get_notation_scale(), 
+		$fieldset->add_field(new FormFieldTextEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->config->get_notation_scale(), 
 			array('size' => 6, 'required' => true, 'hidden' => !$this->config->is_notation_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
 		)));

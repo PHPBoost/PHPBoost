@@ -33,8 +33,9 @@
 $lang['module_title'] = 'Web Links';
 $lang['module_config_title'] = 'Links configuration';
 
-$lang['web.add'] = 'Add link';
-$lang['web.edit'] = 'Edit link';
+$lang['web.actions.add'] = 'Add link';
+$lang['web.add'] = 'New link';
+$lang['web.edit'] = 'Link edition';
 $lang['web.pending'] = 'Pending links';
 $lang['web.manage'] = 'Manage links';
 $lang['web.management'] = 'Links management';
@@ -49,9 +50,8 @@ $lang['link_infos'] = 'Link informations';
 $lang['config.category_display_type'] = 'Displayed informations in categories';
 $lang['config.category_display_type.display_summary'] = 'Summary';
 $lang['config.category_display_type.display_all_content'] = 'All content';
+$lang['config.category_display_type.display_table'] = 'Table';
 $lang['config.sort_type'] = 'Links display order';
-$lang['config.sort_type.alphabetic'] = 'Alphabetic';
-$lang['config.sort_type.notation'] = 'Best note';
 $lang['config.sort_type.visits'] = 'Visits number';
 $lang['config.sort_mode'] = 'Sort mode';
 $lang['config.partners_number_in_menu'] = 'Max partners number displayed in the menu';
@@ -69,5 +69,5 @@ $lang['web.form.partner'] = 'Partner site';
 $lang['web.form.partner_picture'] = 'Partner banner';
 
 //message
-$lang['web.message.not_approved'] = 'This link is not yet or is no more approved, it is not displayed for the other users.';
+$lang['web.message.not_visible'] = 'This link is not yet or is no more approved, it is not displayed for the other users.';
 ?>
