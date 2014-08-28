@@ -40,6 +40,8 @@ $lang['disabled'] = 'Disabled';
 $lang['yes'] = 'Yes';
 $lang['no'] = 'No';
 
+$lang['none'] = 'Aucun';
+
 $lang['delete'] = 'Delete';
 $lang['edit'] = 'Edit';
 
@@ -62,6 +64,10 @@ $lang['constraint.not_required'] = 'Not required';
 //Sort
 $lang['sort'] = 'Sort';
 $lang['sort_by'] = 'Sort by';
+$lang['sort_by.author'] = 'Author';
+$lang['sort_by.alphabetic'] = 'Alphabetic';
+$lang['sort_by.best_note'] = 'Best note';
+$lang['sort_by.number_comments'] = 'Comments number';
 $lang['sort.asc'] = 'Ascending';
 $lang['sort.desc'] = 'Descending';
 
@@ -70,6 +76,10 @@ $lang['unit_gigabytes'] = 'Gb';
 $lang['unit_megabytes'] = 'Mb';
 $lang['unit_kilobytes'] = 'Kb';
 $lang['unit_bytes'] = 'Bytes';
+
+//Notes
+$lang['note'] = 'Note';
+$lang['notes'] = 'Notes';
 
 //Status
 $lang['status.approved.not'] = 'Kept in draft';
@@ -81,6 +91,9 @@ $lang['form.name'] = 'Name';
 $lang['form.title'] = 'Title';
 $lang['form.contents'] = 'Content';
 $lang['form.description'] = 'Description';
+$lang['form.short_contents'] = 'Short content';
+$lang['form.short_contents.enabled'] = 'Personalize short content';
+$lang['form.short_contents.enabled.description'] = 'If unchecked, the content is automatically cut to :number characters and formatting of the text deleted.';
 $lang['form.category'] = 'Location';
 $lang['category.form.rewrited_name'] = 'Rewrited name in the url';
 $lang['category.form.rewrited_name.description'] = 'Only contains lowercase letters, numbers and hyphens.';

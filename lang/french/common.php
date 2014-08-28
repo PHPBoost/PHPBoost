@@ -40,6 +40,8 @@ $lang['disabled'] = 'Désactivé';
 $lang['yes'] = 'Oui';
 $lang['no'] = 'Non';
 
+$lang['none'] = 'Aucun';
+
 $lang['delete'] = 'Supprimer';
 $lang['edit'] = 'Editer';
 
@@ -62,6 +64,10 @@ $lang['constraint.not_required'] = 'Non requis';
 //Sort
 $lang['sort'] = 'Trier';
 $lang['sort_by'] = 'Trier par';
+$lang['sort_by.author'] = 'Auteur';
+$lang['sort_by.alphabetic'] = 'Alphabétique';
+$lang['sort_by.best_note'] = 'Meilleure note';
+$lang['sort_by.number_comments'] = 'Nombre de commentaires';
 $lang['sort.asc'] = 'Croissant';
 $lang['sort.desc'] = 'Décroissant';
 
@@ -70,6 +76,10 @@ $lang['unit_gigabytes'] = 'Go';
 $lang['unit_megabytes'] = 'Mo';
 $lang['unit_kilobytes'] = 'Ko';
 $lang['unit_bytes'] = 'Octets';
+
+//Notes
+$lang['note'] = 'Note';
+$lang['notes'] = 'Notes';
 
 //Status
 $lang['status.approved.not'] = 'Gardée en brouillon';
@@ -81,6 +91,9 @@ $lang['form.name'] = 'Nom';
 $lang['form.title'] = 'Titre';
 $lang['form.contents'] = 'Contenu';
 $lang['form.description'] = 'Description';
+$lang['form.short_contents'] = 'Condensé de la description';
+$lang['form.short_contents.enabled'] = 'Personnaliser le condensé de la description';
+$lang['form.short_contents.enabled.description'] = 'Si non coché, la description est automatiquement coupée à :number caractères et le formatage du texte supprimé.';
 $lang['form.category'] = 'Emplacement';
 $lang['form.rewrited_name'] = 'Nom réécrit dans l\'url';
 $lang['form.rewrited_name.description'] = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';
