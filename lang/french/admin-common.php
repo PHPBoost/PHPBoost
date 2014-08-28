@@ -35,4 +35,5 @@ $lang['config.columns_number_per_line'] = 'Nombre de catégories affichées par li
 $lang['config.comments_enabled'] = 'Activer les commentaires';
 $lang['config.notation_enabled'] = 'Activer la notation';
 $lang['config.notation_scale'] = 'Echelle de notation';
+$lang['config.forbidden-tags'] = 'Formats interdits';
 ?>

@@ -34,7 +34,7 @@ class GuestbookTreeLinks implements ModuleTreeLinksExtensionPoint
 	{
 		$tree = new ModuleTreeLinks();
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), GuestbookUrlBuilder::configuration()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), GuestbookUrlBuilder::configuration()));
 		
 		return $tree;
 	}
