@@ -29,6 +29,7 @@
  #                     English                      #
  ####################################################
 
+$lang['configuration'] = 'Configuration';
 $lang['config.items_number_per_page'] = 'Items number per page';
 $lang['config.columns_number_per_line'] = 'Categories number per line';
 $lang['config.comments_enabled'] = 'Enable comments';
