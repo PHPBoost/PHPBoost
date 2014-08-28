@@ -51,5 +51,4 @@ If you had to remember a few key points about the project, it would be these:<br
 	<li class="formatter-li"> Url rewriting</li>
 	<li class="formatter-li"> Help to develop new modules using the PHPBoost framework</li>
 </ul>';
-$lang['default.weblink.url'] = 'http://www.phpboost.com';
 ?>

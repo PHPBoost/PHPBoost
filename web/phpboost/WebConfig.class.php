@@ -45,14 +45,18 @@ class WebConfig extends AbstractConfigData
 	
 	const DISPLAY_SUMMARY = 'summary';
 	const DISPLAY_ALL_CONTENT = 'all_content';
+	const DISPLAY_TABLE = 'table';
 	
 	const SORT_NAME = 'name';
 	const SORT_CREATION_DATE = 'creation_date';
 	const SORT_NOTATION = 'average_notes';
 	const SORT_VIEWS = 'number_views';
+	const SORT_COMMENTS = 'number_comments';
 	
 	const ASC = 'ASC';
 	const DESC = 'DESC';
+	
+	const NUMBER_CARACTERS_BEFORE_CUT = 250;
 	
 	public function get_items_number_per_page()
 	{
@@ -87,6 +91,11 @@ class WebConfig extends AbstractConfigData
 	public function is_category_displayed_summary()
 	{
 		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::DISPLAY_SUMMARY;
+	}
+	
+	public function is_category_displayed_table()
+	{
+		return $this->get_property(self::CATEGORY_DISPLAY_TYPE) == self::DISPLAY_TABLE;
 	}
 	
 	public function get_sort_type()

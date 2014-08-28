@@ -33,8 +33,9 @@
 $lang['module_title'] = 'Liens Web';
 $lang['module_config_title'] = 'Configuration des liens web';
 
-$lang['web.add'] = 'Ajouter un lien';
-$lang['web.edit'] = 'Modifier un lien';
+$lang['web.actions.add'] = 'Ajouter un lien';
+$lang['web.add'] = 'Ajout d\'un lien';
+$lang['web.edit'] = 'Modification d\'un lien';
 $lang['web.pending'] = 'Liens en attente';
 $lang['web.manage'] = 'Gérer les liens';
 $lang['web.management'] = 'Gestion des liens';
@@ -46,13 +47,15 @@ $lang['visits_number'] = 'Nombre de visites';
 $lang['link_infos'] = 'Informations sur le lien';
 
 //config
-$lang['config.category_display_type'] = 'Informations affichées dans les catégories';
+$lang['config.category_display_type'] = 'Affichage des informations dans les catégories';
 $lang['config.category_display_type.display_summary'] = 'Résumé';
 $lang['config.category_display_type.display_all_content'] = 'Tout le contenu';
+$lang['config.category_display_type.display_table'] = 'Tableau';
 $lang['config.sort_type'] = 'Ordre d\'affichage des liens';
 $lang['config.sort_type.alphabetic'] = 'Alphabétique';
 $lang['config.sort_type.notation'] = 'Meilleure note';
 $lang['config.sort_type.visits'] = 'Nombre de visites';
+$lang['config.sort_type.comments'] = 'Nombre de commentaires';
 $lang['config.sort_mode'] = 'Sens d\'affichage';
 $lang['config.partners_number_in_menu'] = 'Nombre de partenaires affichés dans le menu maximum';
 $lang['config.root_category_description'] = 'Description de la racine des liens web';
@@ -69,5 +72,5 @@ $lang['web.form.partner'] = 'Site partenaire';
 $lang['web.form.partner_picture'] = 'Bannière du partenaire';
 
 //message
-$lang['web.message.not_approved'] = 'Ce lien n\'est pas encore ou n\'est plus approuvé, il n\'est pas affiché pour les autres utilisateurs du site.';
+$lang['web.message.not_visible'] = 'Ce lien n\'est pas encore ou n\'est plus approuvé, il n\'est pas affiché pour les autres utilisateurs du site.';
 ?>

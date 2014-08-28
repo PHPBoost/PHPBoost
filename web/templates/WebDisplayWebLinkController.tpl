@@ -19,8 +19,8 @@
 		
 	</header>
 	<div class="content">
-		# IF NOT C_APPROVED #
-			# INCLUDE NOT_APPROVED_MESSAGE #
+		# IF NOT C_VISIBLE #
+			# INCLUDE NOT_VISIBLE_MESSAGE #
 		# ENDIF #
 		<div class="options infos">
 			<div class="center">
@@ -28,7 +28,7 @@
 					<img src="{U_PARTNER_PICTURE}" alt="" itemprop="image" />
 					<div class="spacer">&nbsp;</div>
 				# ENDIF #
-				# IF C_APPROVED #
+				# IF C_VISIBLE #
 					<a href="{U_VISIT}" class="basic-button">
 						<i class="fa fa-globe"></i> {@visit}
 					</a>
@@ -53,7 +53,7 @@
 			# IF C_COMMENTS_ENABLED #
 				<span># IF C_COMMENTS # {NUMBER_COMMENTS} # ENDIF # {L_COMMENTS}</span>
 			# ENDIF #
-			# IF C_APPROVED #
+			# IF C_VISIBLE #
 				# IF C_NOTATION_ENABLED #
 					<div class="spacer">&nbsp;</div>
 					<div class="center">{NOTATION}</div>

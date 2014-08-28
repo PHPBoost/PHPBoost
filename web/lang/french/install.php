@@ -51,5 +51,4 @@ Si vous ne deviez retenir que quelques points essentiels sur le projet, ce serai
 	<li class="formatter-li"> Url rewriting</li>
 	<li class="formatter-li"> Aide au développement de nouveaux modules grâce au framework de PHPBoost</li>
 </ul>';
-$lang['default.weblink.url'] = 'http://www.phpboost.com';
 ?>

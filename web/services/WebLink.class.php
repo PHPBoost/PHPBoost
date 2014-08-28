@@ -37,8 +37,14 @@ class WebLink
 	private $rewrited_name;
 	private $url;
 	private $contents;
+	private $short_contents;
+	
+	private $approbation_type;
+	private $start_date;
+	private $end_date;
+	private $end_date_enabled;
+	
 	private $creation_date;
-	private $approved;
 	private $author_user;
 	private $number_views;
 	private $partner;
@@ -46,6 +52,10 @@ class WebLink
 	
 	private $notation;
 	private $keywords;
+	
+	const NOT_APPROVAL = 0;
+	const APPROVAL_NOW = 1;
+	const APPROVAL_DATE = 2;
 	
 	public function get_id()
 	{
@@ -110,6 +120,87 @@ class WebLink
 		$this->contents = $contents;
 	}
 	
+	public function get_short_contents()
+	{
+		return $this->short_contents;
+	}
+	
+	public function is_short_contents_enabled()
+	{
+		return !empty($this->short_contents);
+	}
+	
+	public function get_real_short_contents()
+	{
+		if ($this->is_short_contents_enabled())
+		{
+			return $this->short_contents;
+		}
+		return substr(@strip_tags($this->contents, '<br>'), 0, WebConfig::NUMBER_CARACTERS_BEFORE_CUT);
+	}
+	
+	public function set_short_contents($short_contents)
+	{
+		$this->short_contents = $short_contents;
+	}
+	
+	public function get_approbation_type()
+	{
+		return $this->approbation_type;
+	}
+	
+	public function set_approbation_type($approbation_type)
+	{
+		$this->approbation_type = $approbation_type;
+	}
+	
+	public function is_visible()
+	{
+		$now = new Date();
+		return $this->get_approbation_type() == self::APPROVAL_NOW || ($this->get_approbation_type() == self::APPROVAL_DATE && $this->get_start_date()->is_anterior_to($now) && ($this->end_date_enabled ? $this->get_end_date()->is_posterior_to($now) : true));
+	}
+	
+	public function get_status()
+	{
+		switch ($this->approbation_type) {
+			case self::APPROVAL_NOW:
+				return LangLoader::get_message('status.approved.now', 'common');
+			break;
+			case self::APPROVAL_DATE:
+				return LangLoader::get_message('status.approved.date', 'common');
+			break;
+			case self::NOT_APPROVAL:
+				return LangLoader::get_message('status.approved.not', 'common');
+			break;
+		}
+	}
+	
+	public function get_start_date()
+	{
+		return $this->start_date;
+	}
+	
+	public function set_start_date(Date $start_date)
+	{
+		$this->start_date = $start_date;
+	}
+	
+	public function get_end_date()
+	{
+		return $this->end_date;
+	}
+	
+	public function set_end_date(Date $end_date)
+	{
+		$this->end_date = $end_date;
+		$this->end_date_enabled = true;
+	}
+	
+	public function is_end_date_enabled()
+	{
+		return $this->end_date_enabled;
+	}
+	
 	public function get_creation_date()
 	{
 		return $this->creation_date;
@@ -128,21 +219,6 @@ class WebLink
 	public function set_author_user(User $user)
 	{
 		$this->author_user = $user;
-	}
-	
-	public function approve()
-	{
-		$this->approved = true;
-	}
-	
-	public function unapprove()
-	{
-		$this->approved = false;
-	}
-	
-	public function is_approved()
-	{
-		return $this->approved;
 	}
 	
 	public function get_number_views()
@@ -215,12 +291,12 @@ class WebLink
 	
 	public function is_authorized_to_edit()
 	{
-		return WebAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((WebAuthorizationsService::check_authorizations($this->id_category)->write() || (WebAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->approved)) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return WebAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((WebAuthorizationsService::check_authorizations($this->id_category)->write() || (WebAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 	
 	public function is_authorized_to_delete()
 	{
-		return WebAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((WebAuthorizationsService::check_authorizations($this->id_category)->write() || (WebAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->approved)) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
+		return WebAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((WebAuthorizationsService::check_authorizations($this->id_category)->write() || (WebAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 	
 	public function get_properties()
@@ -231,11 +307,14 @@ class WebLink
 			'name' => TextHelper::htmlspecialchars($this->get_name()),
 			'url' => TextHelper::htmlspecialchars($this->get_url()->absolute()),
 			'contents' => $this->get_contents(),
+			'short_contents' => $this->get_short_contents(),
+			'approbation_type' => $this->get_approbation_type(),
+			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : '',
+			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : '',
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
-			'approved' => $this->is_approved() ? 1 : 0,
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'number_views' => $this->get_number_views(),
-			'partner' => $this->is_partner() ? 1 : 0,
+			'partner' => (int)$this->is_partner(),
 			'partner_picture' => TextHelper::htmlspecialchars($this->get_partner_picture()->relative())
 		);
 	}
@@ -248,13 +327,13 @@ class WebLink
 		$this->rewrited_name = Url::encode_rewrite($properties['name']);
 		$this->url = new Url($properties['url']);
 		$this->contents = $properties['contents'];
+		$this->short_contents = $properties['short_contents'];
+		$this->contents = $properties['contents'];
+		$this->approbation_type = $properties['approbation_type'];
+		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['start_date']) : null;
+		$this->end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['end_date']) : null;
+		$this->end_date_enabled = !empty($properties['end_date']);
 		$this->creation_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['creation_date']);
-		
-		if ($properties['approved'])
-			$this->approve();
-		else
-			$this->unapprove();
-		
 		$this->number_views = $properties['number_views'];
 		$this->partner = (bool)$properties['partner'];
 		$this->partner_picture = new Url($properties['partner_picture']);
@@ -280,29 +359,43 @@ class WebLink
 	public function init_default_properties()
 	{
 		$this->id_category = Category::ROOT_CATEGORY;
+		$this->approbation_type = self::APPROVAL_NOW;
 		$this->author_user = AppContext::get_current_user();
+		$this->start_date = new Date();
+		$this->end_date = new Date();
 		$this->creation_date = new Date();
+		$this->number_views = 0;
 		$this->url = new Url('');
 		$this->partner_picture = new Url('');
-		$this->number_views = 0;
-		
-		if (WebAuthorizationsService::check_authorizations()->write())
-			$this->approve();
-		else
-			$this->unapprove();
+		$this->end_date_enabled = false;
+	}
+	
+	public function clean_start_and_end_date()
+	{
+		$this->start_date = null;
+		$this->end_date = null;
+		$this->end_date_enabled = false;
+	}
+	
+	public function clean_end_date()
+	{
+		$this->end_date = null;
+		$this->end_date_enabled = false;
 	}
 	
 	public function get_array_tpl_vars()
 	{
 		$category = WebService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
+		$description = $this->get_real_short_contents();
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		$number_comments = CommentsService::get_number_comments('web', $this->id);
 		
 		return array(
-			'C_APPROVED' => $this->is_approved(),
+			'C_VISIBLE' => $this->is_visible(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
+			'C_READ_MORE' => strlen($description) >= WebConfig::NUMBER_CARACTERS_BEFORE_CUT,
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_IS_PARTNER' => $this->is_partner(),
 			'C_HAS_PARTNER_PICTURE' => $this->has_partner_picture(),
@@ -312,8 +405,10 @@ class WebLink
 			'NAME' => $this->name,
 			'URL' => $this->url->absolute(),
 			'CONTENTS' => FormatingHelper::second_parse($this->contents),
+			'DESCRIPTION' => $description,
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
+			'STATUS' => $this->get_status(),
 			'C_AUTHOR_EXIST' => $user->get_id() !== User::VISITOR_LEVEL,
 			'PSEUDO' => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),

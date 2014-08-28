@@ -43,14 +43,14 @@ class WebTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$manage_link = new AdminModuleLink($lang['web.manage'], WebUrlBuilder::manage());
 		$manage_link->add_sub_link(new AdminModuleLink($lang['web.manage'], WebUrlBuilder::manage()));
-		$manage_link->add_sub_link(new AdminModuleLink($lang['web.add'], WebUrlBuilder::add(AppContext::get_request()->get_getstring('id_category', 0))));
+		$manage_link->add_sub_link(new AdminModuleLink($lang['web.actions.add'], WebUrlBuilder::add(AppContext::get_request()->get_getstring('id_category', 0))));
 		$tree->add_link($manage_link);
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), WebUrlBuilder::configuration()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), WebUrlBuilder::configuration()));
 		
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{
-			$tree->add_link(new ModuleLink($lang['web.add'], WebUrlBuilder::add(AppContext::get_request()->get_getstring('id_category', 0)), WebAuthorizationsService::check_authorizations()->write() || WebAuthorizationsService::check_authorizations()->contribution()));
+			$tree->add_link(new ModuleLink($lang['web.actions.add'], WebUrlBuilder::add(AppContext::get_request()->get_getstring('id_category', 0)), WebAuthorizationsService::check_authorizations()->write() || WebAuthorizationsService::check_authorizations()->contribution()));
 		}
 		
 		$tree->add_link(new ModuleLink($lang['web.pending'], WebUrlBuilder::display_pending(), WebAuthorizationsService::check_authorizations()->write() || WebAuthorizationsService::check_authorizations()->moderation()));

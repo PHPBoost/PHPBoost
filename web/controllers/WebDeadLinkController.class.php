@@ -47,7 +47,7 @@ class WebDeadLinkController extends AbstractController
 			}
 		}
 		
-		if ($this->weblink !== null && $this->weblink->is_approved())
+		if ($this->weblink !== null && $this->weblink->is_visible())
 		{
 			if (!PersistenceContext::get_querier()->row_exists(PREFIX . 'events', 'WHERE id_in_module=:id_in_module AND module=\'web\' AND current_status = 0', array('id_in_module' => $this->weblink->get_id())))
 			{
