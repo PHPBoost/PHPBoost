@@ -38,8 +38,6 @@ $lang['guestbook.add'] = 'Sign the guest book';
 $lang['guestbook.edit'] = 'Message edition';
 
 //Administration
-$lang['admin.config.items_per_page'] = 'Messages number per page';
-$lang['admin.config.forbidden-tags'] = 'Forbidden tags';
 $lang['admin.config.max_links'] = 'Max links number in a message';
 $lang['admin.config.max_links_explain'] = '-1 for unlimited';
 $lang['admin.authorizations.read']  = 'Permission to display the guestbook';

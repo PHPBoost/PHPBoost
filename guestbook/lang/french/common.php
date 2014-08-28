@@ -38,8 +38,6 @@ $lang['guestbook.add'] = 'Signer le livre d\'or';
 $lang['guestbook.edit'] = 'Edition d\'un message';
 
 //Administration
-$lang['admin.config.items_per_page'] = 'Nombre de messages par page';
-$lang['admin.config.forbidden-tags'] = 'Formats interdits';
 $lang['admin.config.max_links'] = 'Nombre de liens maximum dans le message';
 $lang['admin.config.max_links_explain'] = 'Mettre -1 pour illimité';
 $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le livre d\'or';

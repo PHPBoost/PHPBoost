@@ -40,6 +40,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 	private $submit_button;
 	
 	private $lang;
+	private $admin_common_lang;
 	
 	/**
 	 * @var GuestbookConfig
@@ -69,23 +70,24 @@ class AdminGuestbookConfigController extends AdminModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('common', 'guestbook');
 		$this->config = GuestbookConfig::load();
+		$this->lang = LangLoader::get('common', 'guestbook');
+		$this->admin_common_lang = LangLoader::get('admin-common');
 	}
 	
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('config', LangLoader::get_message('configuration', 'admin'));
+		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->lang['admin.config.items_per_page'], (int)$this->config->get_items_per_page(), array(
+		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->admin_common_lang['config.items_number_per_page'], (int)$this->config->get_items_per_page(), array(
 			'maxlength' => 2, 'size' => 3, 'required' => true),
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['admin.config.forbidden-tags'], $this->config->get_forbidden_tags(),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->admin_common_lang['config.forbidden-tags'], $this->config->get_forbidden_tags(),
 			$this->generate_forbidden_tags_option(), array('size' => 10)
 		));
 		
