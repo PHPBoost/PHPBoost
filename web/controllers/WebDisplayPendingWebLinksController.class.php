@@ -109,7 +109,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 	private function get_pagination(Date $now, $authorized_categories)
 	{
 		$weblinks_number = WebService::count(
-			'WHERE approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))' . (!DownloadAuthorizationsService::check_authorizations()->moderation() ? ' AND download.author_user_id = :user_id' : '') . ' AND id_category IN :authorized_categories', 
+			'WHERE approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND download.author_user_id = :user_id' : '') . ' AND id_category IN :authorized_categories', 
 			array(
 				'user_id' => AppContext::get_current_user()->get_id(),
 				'timestamp_now' => $now->get_timestamp(),
