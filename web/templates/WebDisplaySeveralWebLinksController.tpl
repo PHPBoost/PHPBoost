@@ -55,6 +55,14 @@
 					<tr>
 						<td>
 							<a href="{weblinks.U_LINK}" itemprop="name">{weblinks.NAME}</a>
+							<span class="float-right">
+								# IF weblinks.C_EDIT #
+									<a href="{weblinks.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+								# ENDIF #
+								# IF weblinks.C_DELETE #
+									<a href="{weblinks.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								# ENDIF #
+							</span>
 						</td>
 						<td>
 							# IF weblinks.C_KEYWORDS #
