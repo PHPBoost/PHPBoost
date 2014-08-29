@@ -126,7 +126,7 @@ class WebDisplayWebLinkController extends ModuleController
 		
 		switch ($weblink->get_approbation_type()) {
 			case WebLink::APPROVAL_NOW:
-				if (!WebAuthorizationsService::check_authorizations($weblink->get_id_category())->read() && $not_authorized)
+				if (!DownloadAuthorizationsService::check_authorizations($weblink->get_id_category())->read() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 					DispatchManager::redirect($error_controller);
