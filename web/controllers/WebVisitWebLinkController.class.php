@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          WebIncreaseNumberViewsController.class.php
+ *                          WebVisitWebLinkController.class.php
  *                            -------------------
  *   begin                : August 21, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,7 +29,7 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
  
-class WebIncreaseNumberViewsController extends AbstractController
+class WebVisitWebLinkController extends AbstractController
 {
 	private $weblink;
 	

@@ -55,7 +55,7 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('WebDisplayPendingWebLinksController', '`^/pending/([0-9]+)?/?$`', array('page')),
 	
-	new UrlControllerMapper('WebIncreaseNumberViewsController', '`^/visit/([0-9]+)/?$`', array('id')),
+	new UrlControllerMapper('WebVisitWebLinkController', '`^/visit/([0-9]+)/?$`', array('id')),
 	new UrlControllerMapper('WebDeadLinkController', '`^/dead_link/([0-9]+)/?$`', array('id')),
 	new UrlControllerMapper('WebDisplayCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?$`', array('id_category', 'rewrited_name', 'page')),
 	
