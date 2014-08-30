@@ -49,6 +49,11 @@ $lang['syndication'] = 'Syndication';
 $lang['syndication.rss'] = 'RSS';
 $lang['syndication.atom'] = 'ATOM';
 
+$lang['author'] = 'Author';
+
+$lang['size'] = 'Size';
+$lang['unknown_size'] = 'Unknown size';
+
 $lang['no_item_now'] = 'No item is available for the moment';
 
 //Position
@@ -64,7 +69,6 @@ $lang['constraint.not_required'] = 'Not required';
 //Sort
 $lang['sort'] = 'Sort';
 $lang['sort_by'] = 'Sort by';
-$lang['sort_by.author'] = 'Author';
 $lang['sort_by.alphabetic'] = 'Alphabetic';
 $lang['sort_by.best_note'] = 'Best note';
 $lang['sort_by.number_comments'] = 'Comments number';
