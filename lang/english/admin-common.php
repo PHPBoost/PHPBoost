@@ -32,8 +32,11 @@
 $lang['configuration'] = 'Configuration';
 $lang['config.items_number_per_page'] = 'Items number per page';
 $lang['config.columns_number_per_line'] = 'Categories number per line';
+$lang['config.author_displayed'] = 'Display author\'s name';
 $lang['config.comments_enabled'] = 'Enable comments';
 $lang['config.notation_enabled'] = 'Enable notation';
 $lang['config.notation_scale'] = 'Notation scale';
 $lang['config.forbidden-tags'] = 'Forbidden tags';
+
+$lang['config.authorizations.explain'] = 'Global module authorizations. You can change these authorizations on each category.';
 ?>

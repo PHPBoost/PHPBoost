@@ -34,24 +34,18 @@ $lang['articles'] = 'Articles';
 $lang['module_config_title'] = 'Configuration des articles';
 $lang['articles_management'] = 'Gestion des articles';
 $lang['articles.add'] = 'Ajouter un article';
-$lang['articles.no_notes'] = 'Aucun avis';
 $lang['articles.nbr_articles_category'] = ':number article(s) dans la catégorie';
-$lang['articles.sub_categories'] = 'Sous-catégories';
-$lang['articles.category'] = 'Catégorie';
 $lang['articles.feed_name'] = 'Derniers articles';
 $lang['articles.pending_articles'] = 'Articles en attente';
 $lang['articles.nbr_articles.pending'] = ':number article(s) en attente';
 $lang['articles.published_articles'] = 'Articles publiés';
 $lang['articles.select_page'] = 'Sélectionnez une page';
-$lang['articles.sources'] = 'Source(s)';
 $lang['articles.summary'] = 'Sommaire :';
 $lang['articles.not_published'] = 'Cet article n\'est pas encore ou n\'est plus publié';
 $lang['articles.print.article'] = 'Impression d\'un article';
-$lang['articles.tags'] = 'Mots clés';
 $lang['articles.date_updated'] = 'Dernière modification : ';
 
 //Articles configuration
-$lang['articles_configuration.number_articles_per_page'] = 'Nombre maximum d\'articles affichés par page';
 $lang['articles_configuration.number_categories_per_page'] = 'Nombre de catégories maximum affichées par page';
 $lang['articles_configuration.display_icon_cats'] = 'Afficher l\'icône des catégories';
 $lang['articles_configuration.number_cols_display_cats'] = 'Nombre de colonnes à afficher pour les catégories';
@@ -60,7 +54,6 @@ $lang['articles_configuration.display_type'] = 'Type d\'affichage des articles';
 $lang['articles_configuration.display_type.mosaic'] = 'Mosaïque';
 $lang['articles_configuration.display_type.list'] = 'Liste';
 $lang['articles_configuration.display_type.block'] = 'Liste sans image';
-$lang['articles_configuration.authorizations.explain'] = 'Vous définissez ici les permissions globales du module. Vous pourrez changer ces permissions localement sur chaque catégorie';
 
 //Form
 $lang['articles.form.description'] = 'Description (maximum :number caractères)';
@@ -70,7 +63,6 @@ $lang['articles.form.add_page'] = 'Insérer une page';
 $lang['articles.form.add_page.title'] = 'Titre de la nouvelle page';
 $lang['articles.form.author_name_displayed'] = 'Afficher le nom de l\'auteur';
 $lang['articles.form.notation_enabled'] = 'Activer la notation de l\'article';
-$lang['articles.form.contribution_entitled'] = '[Article] :title';
 
 //Sort fields title and mode
 $lang['articles.sort_filter_title'] = 'Trier par :';

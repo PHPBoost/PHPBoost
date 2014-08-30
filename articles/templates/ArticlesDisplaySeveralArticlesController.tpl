@@ -2,12 +2,12 @@
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('articles', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-			${i18n('articles')}
+			${@articles}
 		</h1>
 		# IF C_ARTICLES_CAT #
 		<div class="cat">
 			<div class="subcat">
-				${i18n('articles.sub_categories')} :
+				${LangLoader::get_message('sub_categories', 'categories-common')} :
 				<br /><br />
 				# IF C_DISPLAY_CATS_ICON #
 					# START cat_list #
