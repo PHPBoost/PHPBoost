@@ -125,6 +125,11 @@ class WebLink
 		return $this->short_contents;
 	}
 	
+	public function set_short_contents($short_contents)
+	{
+		$this->short_contents = $short_contents;
+	}
+	
 	public function is_short_contents_enabled()
 	{
 		return !empty($this->short_contents);
@@ -137,11 +142,6 @@ class WebLink
 			return $this->short_contents;
 		}
 		return substr(@strip_tags($this->contents, '<br>'), 0, WebConfig::NUMBER_CARACTERS_BEFORE_CUT);
-	}
-	
-	public function set_short_contents($short_contents)
-	{
-		$this->short_contents = $short_contents;
 	}
 	
 	public function get_approbation_type()

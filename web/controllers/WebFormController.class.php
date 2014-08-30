@@ -91,9 +91,9 @@ class WebFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->common_lang['form.description'], $this->get_weblink()->get_contents(), array('rows' => 15, 'required' => true)));
 		
-		$fieldset->add_field(new FormFieldCheckbox('enable_short_contents', $this->common_lang['form.short_contents.enabled'], $this->get_weblink()->is_short_contents_enabled(), 
+		$fieldset->add_field(new FormFieldCheckbox('short_contents_enabled', $this->common_lang['form.short_contents.enabled'], $this->get_weblink()->is_short_contents_enabled(), 
 			array('description' => StringVars::replace_vars($this->common_lang['form.short_contents.enabled.description'], array('number' => WebConfig::NUMBER_CARACTERS_BEFORE_CUT)), 'events' => array('click' => '
-			if (HTMLForms.getField("enable_short_contents").getValue()) {
+			if (HTMLForms.getField("short_contents_enabled").getValue()) {
 				HTMLForms.getField("short_contents").enable();
 			} else { 
 				HTMLForms.getField("short_contents").disable();
@@ -246,7 +246,7 @@ class WebFormController extends ModuleController
 		$weblink->set_id_category($this->form->get_value('id_category')->get_raw_value());
 		$weblink->set_url(new Url($this->form->get_value('url')));
 		$weblink->set_contents($this->form->get_value('contents'));
-		$weblink->set_short_contents(($this->form->get_value('enable_short_contents') ? $this->form->get_value('short_contents') : ''));
+		$weblink->set_short_contents(($this->form->get_value('short_contents_enabled') ? $this->form->get_value('short_contents') : ''));
 		$weblink->set_partner($this->form->get_value('partner'));
 		$weblink->set_partner_picture(new Url($this->form->get_value('partner_picture')));
 		

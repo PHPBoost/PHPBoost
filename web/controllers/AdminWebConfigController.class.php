@@ -145,7 +145,9 @@ class AdminWebConfigController extends AdminModuleController
 		));
 		
 		$common_lang = LangLoader::get('common');
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations'],
+			array('description' => $this->admin_common_lang['config.authorizations.explain'])
+		);
 		$form->add_fieldset($fieldset_authorizations);
 		
 		$auth_settings = new AuthorizationsSettings(array(
