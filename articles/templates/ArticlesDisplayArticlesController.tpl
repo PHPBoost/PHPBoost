@@ -25,9 +25,9 @@
 			# IF C_COMMENTS_ENABLED #
 				&nbsp;|&nbsp;<i class="fa fa-comment" title="${LangLoader::get_message('comments', 'comments-common')}"></i><a itemprop="discussionUrl" class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 			# ENDIF #
-			&nbsp;|&nbsp;<i class="fa fa-folder" title="{@articles.category}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+			&nbsp;|&nbsp;<i class="fa fa-folder" title="${LangLoader::get_message('category', 'categories-common')}"></i>&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 			# IF C_KEYWORDS #
-			&nbsp;|&nbsp;<i title="{@articles.tags}" class="fa fa-tags"></i> 
+			&nbsp;|&nbsp;<i title="${LangLoader::get_message('form.keywords', 'common')}" class="fa fa-tags"></i> 
 				# START keywords #
 					<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 				# END keywords #
@@ -73,7 +73,7 @@
 	<aside>
 		# IF C_SOURCES #
 		<div id="articles_sources_container">
-			<span class="articles_more_title">{@articles.sources}</span> :
+			<span class="articles_more_title">${LangLoader::get_message('form.sources', 'common')}</span> :
 			# START sources #
 			<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small">{sources.NAME}</a># IF sources.C_SEPARATOR #, # ENDIF #
 			# END sources #

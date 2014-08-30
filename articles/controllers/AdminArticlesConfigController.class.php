@@ -40,6 +40,7 @@ class AdminArticlesConfigController extends AdminModuleController
 	private $submit_button;
 	
 	private $lang;
+	private $admin_common_lang;
 	
 	/**
 	 * @var ArticlesConfig
@@ -70,6 +71,7 @@ class AdminArticlesConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'articles');
+		$this->admin_common_lang = LangLoader::get('admin-common');
 		$this->config = ArticlesConfig::load();
 	}
 	
@@ -80,7 +82,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		$fieldset = new FormFieldsetHTML('articles_configuration', LangLoader::get_message('configuration', 'admin'));
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('number_articles_per_page', $this->lang['articles_configuration.number_articles_per_page'], $this->config->get_number_articles_per_page(),
+		$fieldset->add_field(new FormFieldTextEditor('number_articles_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_articles_per_page(),
 			array('maxlength' => 3, 'size' => 4, 'required' => true), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
@@ -102,12 +104,12 @@ class AdminArticlesConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(1, 10)
 		)));
 		
-		$fieldset->add_field(new FormFieldTextEditor('notation_scale', LangLoader::get_message('config.notation_scale', 'admin-common'), $this->config->get_notation_scale(),
+		$fieldset->add_field(new FormFieldTextEditor('notation_scale', $this->admin_common_lang['config.notation_scale'], $this->config->get_notation_scale(),
 			array('maxlength' => 2, 'size' => 4, 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'), new FormFieldConstraintIntegerRange(3, 20))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', LangLoader::get_message('config.comments_enabled', 'admin-common'), $this->config->are_comments_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->admin_common_lang['config.comments_enabled'], $this->config->are_comments_enabled()));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles_configuration.display_type'], $this->config->get_display_type(),
 			array(
@@ -123,7 +125,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		
 		$common_lang = LangLoader::get('common');
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $common_lang['authorizations'],
-			array('description' => $this->lang['articles_configuration.authorizations.explain'])
+			array('description' => $this->admin_common_lang['config.authorizations.explain'])
 		);
 		
 		$form->add_fieldset($fieldset_authorizations);
