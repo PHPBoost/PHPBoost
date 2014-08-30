@@ -273,7 +273,7 @@ class File extends FileSystemElement
 	 */
 	public function get_file_size()
 	{
-		return filesize($this->get_path());
+		return (int)@filesize($this->get_path());
 	}
 
 	/**
