@@ -109,7 +109,9 @@ class AdminCalendarConfigController extends AdminModuleController
 		));
 		
 		$common_lang = LangLoader::get('common');
-		$fieldset = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations']);
+		$fieldset = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations'],
+			array('description' => LangLoader::get_message('config.authorizations.explain', 'admin-common'))
+		);
 		$form->add_fieldset($fieldset);
 		
 		$auth_settings = new AuthorizationsSettings(array(
