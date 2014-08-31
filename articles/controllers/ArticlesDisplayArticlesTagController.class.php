@@ -185,7 +185,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 				new FormFieldSelectChoiceOption($common_lang['form.title'], 'title'),
 				new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], 'view'),
 				new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com'),
-				new FormFieldSelectChoiceOption($common_lang['sort_by.best_note', 'common'), 'note'),
+				new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note'),
 				new FormFieldSelectChoiceOption($common_lang['author'], 'author')
 			),
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))

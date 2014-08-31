@@ -5,10 +5,10 @@
 		# ENDIF #
 			<li><a href="{U_HISTORY}" title="{@actions.history}"><i class="fa fa-history"></i> {@actions.history}</a></li>
 		# IF C_EDIT_BUG #
-			<li><a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}"><i class="fa fa-edit"></i></a></li>
+			<li><a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}"><i class="fa fa-edit"></i></a></li>
 		# ENDIF #
 		# IF C_DELETE_BUG #
-			<li><a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}"><i class="fa fa-delete"></i></a></li>
+			<li><a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}"><i class="fa fa-delete"></i></a></li>
 		# ENDIF #
 	</ul>
 </menu>
