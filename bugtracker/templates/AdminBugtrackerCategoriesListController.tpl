@@ -22,7 +22,7 @@ var BugtrackerFormFieldCategories = Class.create({
 			tr.insert(td);
 			
 			var td = Builder.node('td', {'id' : 'td3_' + id}, [
-				Builder.node('a', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldCategories.delete_category(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'main'))}, className: 'fa fa-delete'}),
+				Builder.node('a', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldCategories.delete_category(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'common'))}, className: 'fa fa-delete'}),
 				' ',
 			]);
 			tr.insert(td);
@@ -62,7 +62,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 				${LangLoader::get_message('name', 'main')}
 			</th>
 			<th class="small-column">
-				${LangLoader::get_message('delete', 'main')}
+				${LangLoader::get_message('delete', 'common')}
 			</th>
 		</tr>
 	</thead>
@@ -72,7 +72,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 				<a href="javascript:BugtrackerFormFieldCategories.add_category();" class="fa fa-plus" title="{@titles.add_category}" id="add_category"></a>
 			</th>
 			<th colspan="2" class="right">
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
 			</th>
 		</tr>
 	</tfoot>
@@ -91,7 +91,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 				<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}" />
 			</td>
 			<td>
-				<a href="{categories.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_category}"></a>
+				<a href="{categories.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_category}"></a>
 			</td>
 		</tr>
 		# END categories #

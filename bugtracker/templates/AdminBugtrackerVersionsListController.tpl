@@ -44,7 +44,7 @@ var BugtrackerFormFieldVersions = Class.create({
 			tr.insert(td);
 			
 			var td = Builder.node('td', {'id' : 'td5_' + id}, [
-				Builder.node('a', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldVersions.delete_version(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'main'))}, className: 'fa fa-delete'}),
+				Builder.node('a', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldVersions.delete_version(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'common'))}, className: 'fa fa-delete'}),
 				' ',
 			]);
 			tr.insert(td);
@@ -101,7 +101,7 @@ function display_default_version_radio(version_id)
 				{@labels.fields.version_detected}
 			</th>
 			<th class="small-column">
-				${LangLoader::get_message('delete', 'main')}
+				${LangLoader::get_message('delete', 'common')}
 			</th>
 		</tr>
 	</thead>
@@ -111,7 +111,7 @@ function display_default_version_radio(version_id)
 				<a href="javascript:BugtrackerFormFieldVersions.add_version();" class="fa fa-plus" title="{@titles.add_version}" id="add_version"></a>
 			</th>
 			<th colspan="4" class="right">
-				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'common')}" data-confirmation="{@actions.confirm.del_default_value}"><i class="fa fa-delete"></i> {@labels.del_default_value}</a># ENDIF #
 			</th>
 		</tr>
 	</tfoot>
@@ -141,7 +141,7 @@ function display_default_version_radio(version_id)
 				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF # />
 			</td> 
 			<td>
-				<a href="{versions.LINK_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_version}"></a>
+				<a href="{versions.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_version}"></a>
 			</td>
 		</tr>
 		# END versions #

@@ -96,7 +96,7 @@ function delete_filter(id) {
 		# START filters #
 		<tr id="filter{filters.ID}">
 			<td colspan="{FILTERS_NUMBER}">
-				<a href="" title="${LangLoader::get_message('delete', 'main')}" id="delete_{filters.ID}" onclick="return false;" class="fa fa-delete"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				<a href="" title="${LangLoader::get_message('delete', 'common')}" id="delete_{filters.ID}" onclick="return false;" class="fa fa-delete"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>
 		<script>
