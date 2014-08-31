@@ -15,7 +15,7 @@ var ContactFormFieldRecipientsPossibleValues = Class.create({
 				' ',
 				Builder.node('input', {type : 'text', id : 'field_email_' + id, name : 'field_email_' + id, class : 'field-large', placeholder : "${LangLoader::get_message('field.possible_values.email', 'common', 'contact')}"}),
 				' ',
-				Builder.node('a', {href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'main')}", class : 'fa fa-delete'}),
+				Builder.node('a', {href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'common')}", class : 'fa fa-delete'}),
 				' ',
 			]);
 			$('input_fields_' + this.id_input).insert(div);
@@ -45,7 +45,7 @@ var ContactFormFieldRecipientsPossibleValues = new ContactFormFieldRecipientsPos
 		<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per-default" />
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.name}"/>
 		<input type="text" name="field_email_${escape(HTML_ID)}_{fieldelements.ID}" id="field_email_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.EMAIL}" placeholder="${LangLoader::get_message('field.possible_values.email', 'common', 'contact')}" class="field-large"# IF NOT fieldelements.C_DELETABLE #disabled="disabled"# ENDIF # />
-		# IF fieldelements.C_DELETABLE #<a href="javascript:ContactFormFieldRecipientsPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a># ENDIF #
+		# IF fieldelements.C_DELETABLE #<a href="javascript:ContactFormFieldRecipientsPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a># ENDIF #
 	</div>
 # END fieldelements #
 </div>

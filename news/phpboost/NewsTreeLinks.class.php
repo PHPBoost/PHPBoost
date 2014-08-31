@@ -45,7 +45,7 @@ class NewsTreeLinks implements ModuleTreeLinksExtensionPoint
 		$manage_news_link->add_sub_link(new AdminModuleLink($lang['news.add'], NewsUrlBuilder::add_news(AppContext::get_request()->get_getstring('id_category', 0))));
 		$tree->add_link($manage_news_link);
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), NewsUrlBuilder::config()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), NewsUrlBuilder::config()));
 	
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{

@@ -77,7 +77,7 @@ class AdminNewsConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('config', LangLoader::get_message('configuration', 'admin'));
+		$fieldset = new FormFieldsetHTML('config', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_news_per_page', $this->lang['admin.config.number_news_per_page'], $this->config->get_number_news_per_page(), 

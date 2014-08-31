@@ -15,7 +15,7 @@
 			</th>
 			<th>
 				<a href="{U_SORT_AUTHOR_ASC}" class="fa fa-table-sort-up"></a>
-				${LangLoader::get_message('pseudo', 'main')}
+				${LangLoader::get_message('author', 'common')}
 				<a href="{U_SORT_AUTHOR_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>

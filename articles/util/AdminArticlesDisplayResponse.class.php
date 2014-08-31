@@ -42,7 +42,7 @@ class AdminArticlesDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), ArticlesUrlBuilder::add_category(), $img);
 		$this->add_link($lang['articles_management'], ArticlesUrlBuilder::manage_articles(), $img);
 		$this->add_link($lang['articles.add'], ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY), $img);
-		$this->add_link(LangLoader::get_message('configuration', 'admin'), ArticlesUrlBuilder::articles_configuration(), $img);
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ArticlesUrlBuilder::articles_configuration(), $img);
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

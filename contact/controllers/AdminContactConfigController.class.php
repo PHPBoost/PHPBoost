@@ -76,7 +76,7 @@ class AdminContactConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin'));
+		$fieldset = new FormFieldsetHTML('configuration', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['admin.config.title'], $this->config->get_title(), array('required' => true)));

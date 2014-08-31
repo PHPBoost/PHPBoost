@@ -79,7 +79,7 @@ class AdminArticlesConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('articles_configuration', LangLoader::get_message('configuration', 'admin'));
+		$fieldset = new FormFieldsetHTML('articles_configuration', LangLoader::get_message('configuration', 'admin-common'));
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_articles_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_articles_per_page(),

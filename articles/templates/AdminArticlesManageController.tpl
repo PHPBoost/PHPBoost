@@ -15,12 +15,12 @@
 			</th>
 			<th>
 				<a href="{U_SORT_AUTHOR_ASC}" class="fa fa-table-sort-up"></a>
-				{@admin.articles.sort_field.author}
+				${LangLoader::get_message('author', 'common')}
 				<a href="{U_SORT_AUTHOR_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
 				<a href="{U_SORT_DATE_ASC}" class="fa fa-table-sort-up"></a>
-				{@admin.articles.sort_field.date}
+				${LangLoader::get_message('form.date.creation', 'common')}
 				<a href="{U_SORT_DATE_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
