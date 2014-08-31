@@ -61,24 +61,9 @@ $lang['articles.form.description_enabled'] = 'Activer le condensé de l\'article'
 $lang['articles.form.description_enabled.description'] = 'ou laissez PHPBoost couper le contenu à :number caractères';
 $lang['articles.form.add_page'] = 'Insérer une page';
 $lang['articles.form.add_page.title'] = 'Titre de la nouvelle page';
-$lang['articles.form.author_name_displayed'] = 'Afficher le nom de l\'auteur';
-$lang['articles.form.notation_enabled'] = 'Activer la notation de l\'article';
 
 //Sort fields title and mode
-$lang['articles.sort_filter_title'] = 'Trier par :';
-$lang['articles.sort_field.date'] = 'Date';
-$lang['articles.sort_field.title'] = 'Titre';
 $lang['articles.sort_field.views'] = 'Vues';
-$lang['articles.sort_field.com'] = 'Commentaire';
-$lang['articles.sort_field.note'] = 'Note';
-$lang['articles.sort_field.author'] = 'Auteur';
-$lang['articles.sort_mode.asc'] = 'Ascendant';
-$lang['articles.sort_mode.desc'] = 'Descendant';
-
-$lang['admin.articles.sort_field.cat'] = 'Catégories';
-$lang['admin.articles.sort_field.title'] = 'Titre';
-$lang['admin.articles.sort_field.author'] = 'Auteur';
-$lang['admin.articles.sort_field.date'] = 'Date de création';
 $lang['admin.articles.sort_field.published'] = 'Publié';
 
 //SEO

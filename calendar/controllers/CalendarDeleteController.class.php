@@ -82,7 +82,7 @@ class CalendarDeleteController extends ModuleController
 		$fieldset = new FormFieldsetHTML('delete_serie', $this->lang['calendar.titles.delete_event']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('delete_serie', LangLoader::get_message('delete', 'main'), 0,
+		$fieldset->add_field(new FormFieldRadioChoice('delete_serie', LangLoader::get_message('delete', 'common'), 0,
 			array(
 				new FormFieldRadioChoiceOption($this->lang['calendar.titles.delete_occurrence'], 0),
 				new FormFieldRadioChoiceOption($this->lang['calendar.titles.delete_all_events_of_the_serie'], 1)

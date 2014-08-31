@@ -5,10 +5,10 @@
 			<span itemprop="name">{TITLE}</span>
 			<span class="actions">
 				# IF C_EDIT #
-					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 				# ENDIF #
 				# IF C_DELETE #
-					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
+					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete"# IF NOT C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
 				# ENDIF #
 			</span>
 		</h1>

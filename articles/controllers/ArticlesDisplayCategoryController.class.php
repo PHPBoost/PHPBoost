@@ -172,28 +172,30 @@ class ArticlesDisplayCategoryController extends ModuleController
 	
 	private function build_sorting_form($field, $mode)
 	{
+		$common_lang = LangLoader::get('common');
+		
 		$form = new HTMLForm(__CLASS__, '', false);
 		$form->set_css_class('options');
 		
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['articles.sort_filter_title']));
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
 		$form->add_fieldset($fieldset);
 				
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
 			array(
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date'),
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.title'], 'title'),
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.views'], 'view'),
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.com'], 'com'),
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note'),
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author')
+				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
+				new FormFieldSelectChoiceOption($common_lang['form.title'], 'title'),
+				new FormFieldSelectChoiceOption($common_lang['sort_by.number_views'], 'view'),
+				new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com'),
+				new FormFieldSelectChoiceOption($common_lang['sort_by.best_note', 'common'), 'note'),
+				new FormFieldSelectChoiceOption($common_lang['author'], 'author')
 			), 
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
 			array(
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
+				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
 			), 
 			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));

@@ -70,6 +70,7 @@ $lang['constraint.not_required'] = 'Non requis';
 $lang['sort'] = 'Trier';
 $lang['sort_by'] = 'Trier par';
 $lang['sort_by.alphabetic'] = 'Alphabétique';
+$lang['sort_by.number_views'] = 'Vues';
 $lang['sort_by.best_note'] = 'Meilleure note';
 $lang['sort_by.number_comments'] = 'Nombre de commentaires';
 $lang['sort.asc'] = 'Croissant';

@@ -15,7 +15,7 @@
 			</th>
 			<th>
 				<a href="{U_SORT_AUTHOR_ASC}" class="fa fa-table-sort-up"></a>
-				{@calendar.labels.created_by}
+				${LangLoader::get_message('author', 'common')}
 				<a href="{U_SORT_AUTHOR_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
@@ -44,8 +44,8 @@
 		# START event #
 		<tr> 
 			<td> 
-				<a href="{event.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
-				<a href="{event.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete"# IF NOT event.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
+				<a href="{event.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+				<a href="{event.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete"# IF NOT event.C_BELONGS_TO_A_SERIE # data-confirmation="delete-element"# ENDIF #></a>
 			</td>
 			<td class="left">
 				<a href="{event.U_LINK}">{event.TITLE}</a>
@@ -61,10 +61,10 @@
 				${LangLoader::get_message('to_date', 'main')} {event.END_DATE}
 			</td>
 			<td>
-				# IF event.C_BELONGS_TO_A_SERIE #{event.REPEAT_TYPE} - {event.REPEAT_NUMBER} {@calendar.labels.repeat_times}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #
+				# IF event.C_BELONGS_TO_A_SERIE #{event.REPEAT_TYPE} - {event.REPEAT_NUMBER} {@calendar.labels.repeat_times}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
 			</td>
 			<td>
-				# IF event.C_APPROVED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #
+				# IF event.C_APPROVED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
 			</td>
 		</tr>
 		# END event #

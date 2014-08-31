@@ -50,7 +50,7 @@ class CalendarTreeLinks implements ModuleTreeLinksExtensionPoint
 		$manage_events_link->add_sub_link(new AdminModuleLink($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event($year . '/' . $month . '/' . $day)));
 		$tree->add_link($manage_events_link);
 		
-		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin'), CalendarUrlBuilder::configuration()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), CalendarUrlBuilder::configuration()));
 		
 		if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 		{

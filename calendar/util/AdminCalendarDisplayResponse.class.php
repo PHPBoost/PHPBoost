@@ -43,7 +43,7 @@ class AdminCalendarDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), CalendarUrlBuilder::add_category(), $picture);
 		$this->add_link($lang['calendar.config.events.management'], CalendarUrlBuilder::manage_events(), $picture);
 		$this->add_link($lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event(), $picture);
-		$this->add_link(LangLoader::get_message('configuration', 'admin'), CalendarUrlBuilder::configuration(), $picture);
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), CalendarUrlBuilder::configuration(), $picture);
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

@@ -159,7 +159,7 @@ Event.observe(window, 'load', function() {
 						<i class="fa fa-globe"></i>
 						<span class="text-strong">{fields_list.NAME}</span>
 						<div class="sortable-actions">
-							{@field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #</span>
+							{@field.required} : <span class="text-strong"># IF fields_list.C_REQUIRED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #</span>
 							# IF C_MORE_THAN_ONE_FIELD #
 							<div class="sortable-options">
 								<a href="" title="${LangLoader::get_message('position.move_up', 'common')}" id="move_up_{fields_list.ID}" onclick="return false;" class="fa fa-arrow-up"></a>
