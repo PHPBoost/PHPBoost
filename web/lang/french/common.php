@@ -51,11 +51,12 @@ $lang['config.category_display_type'] = 'Affichage des informations dans les cat
 $lang['config.category_display_type.display_summary'] = 'Résumé';
 $lang['config.category_display_type.display_all_content'] = 'Tout le contenu';
 $lang['config.category_display_type.display_table'] = 'Tableau';
-$lang['config.sort_type'] = 'Ordre d\'affichage des liens';
-$lang['config.sort_type.visits'] = 'Nombre de visites';
-$lang['config.sort_mode'] = 'Sens d\'affichage';
-$lang['config.partners_number_in_menu'] = 'Nombre de partenaires affichés dans le menu maximum';
 $lang['config.root_category_description'] = 'Description de la racine des liens web';
+$lang['config.partners_menu'] = 'Menu partenaires';
+$lang['config.sort_type'] = 'Ordre d\'affichage des partenaires';
+$lang['config.sort_type.visits'] = 'Nombre de visites';
+$lang['config.sort_mode'] = 'Sens';
+$lang['config.partners_number_in_menu'] = 'Nombre de partenaires affichés maximum';
 
 //SEO
 $lang['web.seo.description.tag'] = 'Tous les liens sur le sujet :subject.';

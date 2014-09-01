@@ -51,11 +51,12 @@ $lang['config.category_display_type'] = 'Displayed informations in categories';
 $lang['config.category_display_type.display_summary'] = 'Summary';
 $lang['config.category_display_type.display_all_content'] = 'All content';
 $lang['config.category_display_type.display_table'] = 'Table';
-$lang['config.sort_type'] = 'Links display order';
-$lang['config.sort_type.visits'] = 'Visits number';
-$lang['config.sort_mode'] = 'Sort mode';
-$lang['config.partners_number_in_menu'] = 'Max partners number displayed in the menu';
 $lang['config.root_category_description'] = 'Web links root category description';
+$lang['config.partners_menu'] = 'Partners menu';
+$lang['config.sort_type'] = 'Partners display order';
+$lang['config.sort_type.visits'] = 'Visits number';
+$lang['config.sort_mode'] = 'Mode';
+$lang['config.partners_number_in_menu'] = 'Max partners displayed number';
 
 //SEO
 $lang['web.seo.description.tag'] = 'All links on :subject.';

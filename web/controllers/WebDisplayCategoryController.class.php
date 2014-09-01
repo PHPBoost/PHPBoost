@@ -42,7 +42,7 @@ class WebDisplayCategoryController extends ModuleController
 		
 		$this->init();
 		
-		$this->build_view();
+		$this->build_view($request);
 		
 		return $this->generate_response();
 	}
@@ -54,11 +54,13 @@ class WebDisplayCategoryController extends ModuleController
 		$this->tpl->add_lang($this->lang);
 	}
 	
-	private function build_view()
+	private function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
 		$config = WebConfig::load();
 		$authorized_categories = WebService::get_authorized_categories($this->get_category()->get_id());
+		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
+		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);
 		
 		//Children categories
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= web_cats.id, web_cats.*,
@@ -92,7 +94,27 @@ class WebDisplayCategoryController extends ModuleController
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$cats_columns_width = floor(100 / $nbr_column_cats);
 		
-		$pagination = $this->get_pagination($now, $this->get_category()->get_id());
+		$pagination = $this->get_pagination($now, $this->get_category()->get_id(), $field, $mode);
+		
+		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
+		switch ($field)
+		{
+			case 'name':
+				$sort_field = WebLink::SORT_ALPHABETIC;
+				break;
+			case 'visits':
+				$sort_field = WebLink::SORT_NUMBER_VISITS;
+				break;
+			case 'com':
+				$sort_field = WebLink::SORT_NUMBER_COMMENTS;
+				break;
+			case 'note':
+				$sort_field = WebLink::SORT_NOTATION;
+				break;
+			default:
+				$sort_field = WebLink::SORT_DATE;
+				break;
+		}
 		
 		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM '. WebSetup::$web_table .' web
@@ -101,7 +123,7 @@ class WebDisplayCategoryController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
 		WHERE (web.approbation_type = 1 OR (web.approbation_type = 2 AND web.start_date < :timestamp_now AND (web.end_date > :timestamp_now OR web.end_date = 0))) AND web.id_category = :id_category
-		ORDER BY ' . $config->get_sort_type() . ' ' . $config->get_sort_mode() . '
+		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'timestamp_now' => $now->get_timestamp(),
@@ -118,6 +140,7 @@ class WebDisplayCategoryController extends ModuleController
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_WEBLINKS' => $result->get_rows_count() > 0,
+			'C_MORE_THAN_ONE_WEBLINK' => $result->get_rows_count() > 1,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
 			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
@@ -146,9 +169,42 @@ class WebDisplayCategoryController extends ModuleController
 			$this->build_keywords_view($keywords);
 		}
 		$result->dispose();
+		$this->build_sorting_form($field, $mode);
 	}
 	
-	private function get_pagination(Date $now, $id_category)
+	private function build_sorting_form($field, $mode)
+	{
+		$common_lang = LangLoader::get('common');
+		
+		$form = new HTMLForm(__CLASS__, '', false);
+		$form->set_css_class('options');
+		
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
+			array(
+				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
+				new FormFieldSelectChoiceOption($common_lang['form.name'], 'name'),
+				new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], 'visits'),
+				new FormFieldSelectChoiceOption($common_lang['sort_by.number_comments'], 'com'),
+				new FormFieldSelectChoiceOption($common_lang['sort_by.best_note'], 'note')
+			), 
+			array('events' => array('change' => 'document.location = "'. WebUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+		));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
+			array(
+				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
+			), 
+			array('events' => array('change' => 'document.location = "' . WebUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+		));
+		
+		$this->tpl->put('SORT_FORM', $form->display());
+	}
+	
+	private function get_pagination(Date $now, $id_category, $field, $mode)
 	{
 		$weblinks_number = WebService::count(
 			'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND id_category = :id_category', 
@@ -159,7 +215,7 @@ class WebDisplayCategoryController extends ModuleController
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $weblinks_number, (int)WebConfig::load()->get_items_number_per_page());
-		$pagination->set_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), '%d'));
+		$pagination->set_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, '%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{

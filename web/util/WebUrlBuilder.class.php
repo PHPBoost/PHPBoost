@@ -31,8 +31,8 @@
 
 class WebUrlBuilder
 {
-	const DEFAULT_SORT_FIELD = 'date';
-	const DEFAULT_SORT_MODE = 'desc';
+	const DEFAULT_SORT_FIELD = 'name';
+	const DEFAULT_SORT_MODE = 'asc';
 	
 	private static $dispatcher = '/web';
 	
@@ -90,28 +90,35 @@ class WebUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_category($id, $rewrited_name, $page = 1)
+	public static function display_category($id, $rewrited_name, $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
-		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name . '/' . $page);
+		$category = $id > 0 ? $id . '-' . $rewrited_name .'/' : '';
+		$page = $page !== 1 ? $page . '/': '';
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $category . $sort_field . $sort_mode . $page);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function display_tag($rewrited_name, $page = 1)
+	public static function display_tag($rewrited_name, $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
-		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/tag/' . $rewrited_name . '/' . $page);
+		$page = $page !== 1 ? $page . '/': '';
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/tag/' . $rewrited_name . '/' . $sort_field . $sort_mode . $page);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function display_pending($page = 1)
+	public static function display_pending($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
-		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $page);
+		$page = $page !== 1 ? $page . '/': '';
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $sort_field . $sort_mode . $page);
 	}
 	
 	/**

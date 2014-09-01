@@ -40,7 +40,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		
 		$this->init();
 		
-		$this->build_view();
+		$this->build_view($request);
 		
 		return $this->generate_response();
 	}
@@ -52,12 +52,26 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		$this->tpl->add_lang($this->lang);
 	}
 	
-	public function build_view()
+	public function build_view(HTTPRequestCustom $request)
 	{
 		$now = new Date();
 		$config = WebConfig::load();
 		$authorized_categories = WebService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$pagination = $this->get_pagination($now, $authorized_categories);
+		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
+		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);
+		
+		$pagination = $this->get_pagination($now, $authorized_categories, $field, $mode);
+		
+		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
+		switch ($field)
+		{
+			case 'name':
+				$sort_field = WebLink::SORT_ALPHABETIC;
+				break;
+			default:
+				$sort_field = WebLink::SORT_DATE;
+				break;
+		}
 		
 		$result = PersistenceContext::get_querier()->select('SELECT web.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM '. WebSetup::$web_table .' web
@@ -67,7 +81,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
 		WHERE web.approbation_type = 0 OR (web.approbation_type = 2 AND (web.start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND web.author_user_id = :user_id' : '') . '
 		AND web.id_category IN :authorized_categories
-		ORDER BY web.creation_date DESC
+		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'timestamp_now' => $now->get_timestamp(),
@@ -78,6 +92,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		
 		$this->tpl->put_all(array(
 			'C_WEBLINKS' => $result->get_rows_count() > 0,
+			'C_MORE_THAN_ONE_WEBLINK' => $result->get_rows_count() > 1,
 			'C_PENDING' => true,
 			'C_CATEGORY_DISPLAYED_SUMMARY' => $config->is_category_displayed_summary(),
 			'C_CATEGORY_DISPLAYED_TABLE' => $config->is_category_displayed_table(),
@@ -104,9 +119,39 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			$this->build_keywords_view($keywords);
 		}
 		$result->dispose();
+		$this->build_sorting_form($field, $mode);
 	}
 	
-	private function get_pagination(Date $now, $authorized_categories)
+	private function build_sorting_form($field, $mode)
+	{
+		$common_lang = LangLoader::get('common');
+		
+		$form = new HTMLForm(__CLASS__, '', false);
+		$form->set_css_class('options');
+		
+		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
+			array(
+				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
+				new FormFieldSelectChoiceOption($common_lang['form.name'], 'name')
+			), 
+			array('events' => array('change' => 'document.location = "'. WebUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+		));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
+			array(
+				new FormFieldSelectChoiceOption($common_lang['sort.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($common_lang['sort.desc'], 'desc')
+			), 
+			array('events' => array('change' => 'document.location = "' . WebUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+		));
+		
+		$this->tpl->put('SORT_FORM', $form->display());
+	}
+	
+	private function get_pagination(Date $now, $authorized_categories, $field, $mode)
 	{
 		$weblinks_number = WebService::count(
 			'WHERE approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND download.author_user_id = :user_id' : '') . ' AND id_category IN :authorized_categories', 
@@ -118,7 +163,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $weblinks_number, (int)WebConfig::load()->get_items_number_per_page());
-		$pagination->set_url(WebUrlBuilder::display_pending('%d'));
+		$pagination->set_url(WebUrlBuilder::display_pending($field, $mode, '%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{

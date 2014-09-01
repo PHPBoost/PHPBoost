@@ -101,28 +101,6 @@ class AdminWebConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(),
-			array(
-				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.alphabetic', 'common'), WebConfig::SORT_NAME),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common'), WebConfig::SORT_CREATION_DATE),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), WebConfig::SORT_NOTATION),
-				new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebConfig::SORT_VIEWS),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.number_comments', 'common'), WebConfig::SORT_COMMENTS)
-			)
-		));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', $this->lang['config.sort_mode'], $this->config->get_sort_mode(),
-			array(
-				new FormFieldSelectChoiceOption(LangLoader::get_message('sort.asc', 'common'), WebConfig::ASC),
-				new FormFieldSelectChoiceOption(LangLoader::get_message('sort.desc', 'common'), WebConfig::DESC)
-			)
-		));
-		
-		$fieldset->add_field(new FormFieldTextEditor('partners_number_in_menu', $this->lang['config.partners_number_in_menu'], $this->config->get_partners_number_in_menu(), 
-			array('size' => 6, 'required' => true),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
-		)));
-		
 		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->admin_common_lang['config.comments_enabled'], $this->config->are_comments_enabled()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->admin_common_lang['config.notation_enabled'], $this->config->is_notation_enabled(), array(
@@ -143,6 +121,31 @@ class AdminWebConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['config.root_category_description'], $this->config->get_root_category_description(), 
 			array('rows' => 8, 'cols' => 47)
 		));
+		
+		$fieldset = new FormFieldsetHTML('menu', $this->lang['config.partners_menu']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['config.sort_type'], $this->config->get_sort_type(),
+			array(
+				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.alphabetic', 'common'), WebLink::SORT_ALPHABETIC),
+				new FormFieldSelectChoiceOption(LangLoader::get_message('form.date.creation', 'common'), WebLink::SORT_DATE),
+				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), WebLink::SORT_NOTATION),
+				new FormFieldSelectChoiceOption($this->lang['config.sort_type.visits'], WebLink::SORT_NUMBER_VISITS),
+				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.number_comments', 'common'), WebLink::SORT_NUMBER_COMMENTS)
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', $this->lang['config.sort_mode'], $this->config->get_sort_mode(),
+			array(
+				new FormFieldSelectChoiceOption(LangLoader::get_message('sort.asc', 'common'), WebLink::ASC),
+				new FormFieldSelectChoiceOption(LangLoader::get_message('sort.desc', 'common'), WebLink::DESC)
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldTextEditor('partners_number_in_menu', $this->lang['config.partners_number_in_menu'], $this->config->get_partners_number_in_menu(), 
+			array('size' => 6, 'required' => true),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
+		)));
 		
 		$common_lang = LangLoader::get('common');
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations'],
@@ -172,9 +175,6 @@ class AdminWebConfigController extends AdminModuleController
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
 		$this->config->set_columns_number_per_line($this->form->get_value('columns_number_per_line'));
 		$this->config->set_category_display_type($this->form->get_value('category_display_type')->get_raw_value());
-		$this->config->set_sort_type($this->form->get_value('sort_type')->get_raw_value());
-		$this->config->set_sort_mode($this->form->get_value('sort_mode')->get_raw_value());
-		$this->config->set_partners_number_in_menu($this->form->get_value('partners_number_in_menu'));
 		
 		if ($this->form->get_value('comments_enabled'))
 			$this->config->enable_comments();
@@ -192,6 +192,9 @@ class AdminWebConfigController extends AdminModuleController
 			$this->config->disable_notation();
 		
 		$this->config->set_root_category_description($this->form->get_value('root_category_description'));
+		$this->config->set_sort_type($this->form->get_value('sort_type')->get_raw_value());
+		$this->config->set_sort_mode($this->form->get_value('sort_mode')->get_raw_value());
+		$this->config->set_partners_number_in_menu($this->form->get_value('partners_number_in_menu'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
 		WebConfig::save();

@@ -30,6 +30,10 @@
 	</header>
 	<div class="content">
 	# IF C_WEBLINKS #
+		# IF C_MORE_THAN_ONE_WEBLINK #
+			# INCLUDE SORT_FORM #
+			<div class="spacer">&nbsp;</div>
+		# ENDIF #
 		# IF C_CATEGORY_DISPLAYED_TABLE #
 			<table>
 				<thead>
