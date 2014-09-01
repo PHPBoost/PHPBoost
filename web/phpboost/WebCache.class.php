@@ -46,6 +46,7 @@ class WebCache implements CacheData
 		$result = PersistenceContext::get_querier()->select('
 			SELECT web.id, web.name, web.partner_picture
 			FROM ' . WebSetup::$web_table . ' web
+			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
 			WHERE web.approbation_type = 0 OR (web.approbation_type = 2 AND (web.start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))) AND partner = 1
 			ORDER BY ' . $config->get_sort_type() . ' ' . $config->get_sort_mode() . '

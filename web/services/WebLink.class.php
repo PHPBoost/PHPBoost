@@ -53,6 +53,15 @@ class WebLink
 	private $notation;
 	private $keywords;
 	
+	const SORT_ALPHABETIC = 'name';
+	const SORT_DATE = 'creation_date';
+	const SORT_NOTATION = 'average_notes';
+	const SORT_NUMBER_VISITS = 'number_views';
+	const SORT_NUMBER_COMMENTS = 'number_comments';
+	
+	const ASC = 'ASC';
+	const DESC = 'DESC';
+	
 	const NOT_APPROVAL = 0;
 	const APPROVAL_NOW = 1;
 	const APPROVAL_DATE = 2;
