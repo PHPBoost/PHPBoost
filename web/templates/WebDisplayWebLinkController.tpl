@@ -46,7 +46,7 @@
 				<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>
 				<span>
 					# START keywords #
-						<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
+						<a itemprop="keywords" class="small" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 					# END keywords #
 				</span><br/>
 			# ENDIF #

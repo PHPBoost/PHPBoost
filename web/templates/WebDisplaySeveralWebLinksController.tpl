@@ -164,7 +164,7 @@
 								<span class="text-strong">${LangLoader::get_message('form.keywords', 'common')} : </span>
 								<span>
 									# START weblinks.keywords #
-										<a itemprop="keywords" href="{weblinks.keywords.URL}">{weblinks.keywords.NAME}</a># IF weblinks.keywords.C_SEPARATOR #, # ENDIF #
+										<a itemprop="keywords" class="small" href="{weblinks.keywords.URL}">{weblinks.keywords.NAME}</a># IF weblinks.keywords.C_SEPARATOR #, # ENDIF #
 									# END weblinks.keywords #
 								</span><br/>
 							# ENDIF #
