@@ -57,6 +57,11 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ModuleMenus(array(new WebModuleMiniMenu()));
 	}
+        
+	public function search()
+	{
+		return new WebSearchable();
+	}
 	
 	public function sitemap()
 	{
