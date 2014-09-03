@@ -63,9 +63,7 @@ class PagesSearchable extends AbstractSearchableExtensionPoint
 		p.auth AS `auth`
 		FROM " . PREFIX . "pages p
 		WHERE ( FT_SEARCH(title, '".$args['search']."') OR FT_SEARCH(contents, '".$args['search']."') )".$auth_cats . "
-		LIMIT :max_search_results OFFSET 0", array(
-			'max_search_result' => PAGES_MAX_SEARCH_RESULTS
-		));
+		LIMIT 100 OFFSET 0");
 
 		while ($row = $result->fetch())
 		{
