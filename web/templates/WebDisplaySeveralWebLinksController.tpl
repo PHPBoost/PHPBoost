@@ -1,6 +1,7 @@
 <section>
 	<header>
 		<h1>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('web', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
 			# IF C_PENDING #{@web.pending}# ELSE #{@module_title} - {CATEGORY_NAME}# ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #

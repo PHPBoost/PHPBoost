@@ -314,6 +314,7 @@ class WebLink
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'name' => TextHelper::htmlspecialchars($this->get_name()),
+			'rewrited_name' => TextHelper::htmlspecialchars($this->get_rewrited_name()),
 			'url' => TextHelper::htmlspecialchars($this->get_url()->absolute()),
 			'contents' => $this->get_contents(),
 			'short_contents' => $this->get_short_contents(),
@@ -333,11 +334,10 @@ class WebLink
 		$this->id = $properties['id'];
 		$this->id_category = $properties['id_category'];
 		$this->name = $properties['name'];
-		$this->rewrited_name = Url::encode_rewrite($properties['name']);
+		$this->rewrited_name = $properties['rewrited_name'];
 		$this->url = new Url($properties['url']);
 		$this->contents = $properties['contents'];
 		$this->short_contents = $properties['short_contents'];
-		$this->contents = $properties['contents'];
 		$this->approbation_type = $properties['approbation_type'];
 		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['start_date']) : null;
 		$this->end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['end_date']) : null;
@@ -437,6 +437,7 @@ class WebLink
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
 			'CATEGORY_IMAGE' => $category->get_image(),
 			
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('web', $this->id_category)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_LINK' => WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel(),
 			'U_VISIT' => WebUrlBuilder::visit($this->id)->rel(),

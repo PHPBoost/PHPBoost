@@ -49,6 +49,9 @@ class WebDeleteController extends ModuleController
 		
 		NotationService::delete_notes_id_in_module('web', $this->weblink->get_id());
 		
+		Feed::clear_cache('web');
+		WebCache::invalidate();
+		
 		AppContext::get_response()->redirect(WebUrlBuilder::home());
 	}
 	
