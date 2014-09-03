@@ -48,6 +48,11 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 		return $module_css_files;
 	}
 	
+	public function feeds()
+	{
+		return new WebFeedProvider();
+	}
+	
 	public function home_page()
 	{
 		return new WebHomePageExtensionPoint();

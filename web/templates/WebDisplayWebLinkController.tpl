@@ -1,6 +1,7 @@
 <article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 	<header>
 		<h1>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'common')}" class="fa fa-syndication"></a>
 			<span id="name" itemprop="name">{NAME}</span>
 			<span class="actions">
 				# IF C_EDIT #

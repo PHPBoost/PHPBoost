@@ -16,6 +16,7 @@
 [*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
 [*] [color=red]Nouveauté :[/color] Refonte graphique
 [*] [color=red]Nouveauté :[/color] Ajout du module dans le plan du site
+[*] [color=red]Nouveauté :[/color] Ajout des flux RSS
 [*] [color=red]Nouveauté :[/color] Ajout de la recherche
 [*] [color=red]Nouveauté :[/color] Possibilité de signaler les liens morts
 [*] [color=red]Nouveauté :[/color] Possibilité de définir des sites partenaires

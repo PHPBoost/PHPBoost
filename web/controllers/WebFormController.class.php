@@ -293,6 +293,7 @@ class WebFormController extends ModuleController
 		
 		WebService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
 		
+		Feed::clear_cache('web');
 		WebCache::invalidate();
 	}
 	
