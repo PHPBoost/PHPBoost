@@ -121,9 +121,6 @@
 				</header>
 				
 				<div class="content">
-					# IF NOT weblinks.C_VISIBLE #
-						# INCLUDE NOT_VISIBLE_MESSAGE #
-					# ENDIF #
 					# IF C_CATEGORY_DISPLAYED_SUMMARY #
 						<div class="more">
 							<i class="fa fa-eye" title="{weblinks.L_VISITED_TIMES}"></i>&nbsp;<span title="{weblinks.L_VISITED_TIMES}">{weblinks.NUMBER_VIEWS}</span>
