@@ -53,7 +53,7 @@ class WebTreeLinks implements ModuleTreeLinksExtensionPoint
 			$tree->add_link(new ModuleLink($lang['web.actions.add'], WebUrlBuilder::add(AppContext::get_request()->get_getstring('id_category', 0)), WebAuthorizationsService::check_authorizations()->write() || WebAuthorizationsService::check_authorizations()->contribution()));
 		}
 		
-		$tree->add_link(new ModuleLink($lang['web.pending'], WebUrlBuilder::display_pending(), WebAuthorizationsService::check_authorizations()->write() || WebAuthorizationsService::check_authorizations()->moderation()));
+		$tree->add_link(new ModuleLink($lang['web.pending'], WebUrlBuilder::display_pending(), WebAuthorizationsService::check_authorizations()->write() || WebAuthorizationsService::check_authorizations()->contribution() || WebAuthorizationsService::check_authorizations()->moderation()));
 		
 		return $tree;
 	}

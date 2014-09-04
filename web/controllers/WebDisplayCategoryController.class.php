@@ -160,13 +160,14 @@ class WebDisplayCategoryController extends ModuleController
 			$weblink->set_properties($row);
 			
 			$keywords = $weblink->get_keywords();
-			$nbr_keywords = count($keywords);
+			$has_keywords = count($keywords) > 0;
 			
 			$this->tpl->assign_block_vars('weblinks', array_merge($weblink->get_array_tpl_vars(), array(
-				'C_KEYWORDS' => $nbr_keywords > 0
+				'C_KEYWORDS' => $has_keywords > 0
 			)));
 			
-			$this->build_keywords_view($keywords);
+			if ($has_keywords)
+				$this->build_keywords_view($keywords);
 		}
 		$result->dispose();
 		$this->build_sorting_form($field, $mode);

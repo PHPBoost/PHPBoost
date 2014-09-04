@@ -100,8 +100,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display(),
-			'TABLE_COLSPAN' => 3 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled(),
-			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['web.message.not_visible'], MessageHelper::WARNING)
+			'TABLE_COLSPAN' => 3 + (int)$config->are_comments_enabled() + (int)$config->is_notation_enabled()
 		));
 		
 		while ($row = $result->fetch())
@@ -110,13 +109,14 @@ class WebDisplayPendingWebLinksController extends ModuleController
 			$weblink->set_properties($row);
 			
 			$keywords = $weblink->get_keywords();
-			$nbr_keywords = count($keywords);
+			$has_keywords = count($keywords) > 0;
 			
 			$this->tpl->assign_block_vars('weblinks', array_merge($weblink->get_array_tpl_vars(), array(
-				'C_KEYWORDS' => $nbr_keywords > 0
+				'C_KEYWORDS' => $has_keywords
 			)));
 			
-			$this->build_keywords_view($keywords);
+			if ($has_keywords)
+				$this->build_keywords_view($keywords);
 		}
 		$result->dispose();
 		$this->build_sorting_form($field, $mode);
@@ -154,7 +154,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 	private function get_pagination(Date $now, $authorized_categories, $field, $mode)
 	{
 		$weblinks_number = WebService::count(
-			'WHERE approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND download.author_user_id = :user_id' : '') . ' AND id_category IN :authorized_categories', 
+			'WHERE approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . ' AND id_category IN :authorized_categories', 
 			array(
 				'user_id' => AppContext::get_current_user()->get_id(),
 				'timestamp_now' => $now->get_timestamp(),
