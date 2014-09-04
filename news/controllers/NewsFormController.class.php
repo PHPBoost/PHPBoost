@@ -46,7 +46,7 @@ class NewsFormController extends ModuleController
 		
 		$this->check_authorizations();
 		
-		$this->build_form($request);
+		$this->build_form();
 		
 		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
@@ -67,7 +67,7 @@ class NewsFormController extends ModuleController
 		$this->lang = LangLoader::get('common', 'news');
 	}
 	
-	private function build_form(HTTPRequestCustom $request)
+	private function build_form()
 	{
 		$common_lang = LangLoader::get('common');
 		$form = new HTMLForm(__CLASS__);
@@ -97,7 +97,7 @@ class NewsFormController extends ModuleController
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', LangLoader::get_message('category', 'categories-common'), ($this->get_news()->get_id() === null ? $request->get_getint('id_category', 0) : $this->get_news()->get_id_cat()), $search_category_children_options));
+		$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', LangLoader::get_message('category', 'categories-common'), $this->get_news()->get_id_cat(), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.contents'], $this->get_news()->get_contents(), array('rows' => 15, 'required' => true)));
 		
@@ -187,8 +187,7 @@ class NewsFormController extends ModuleController
 	
 	private function is_contributor_member()
 	{
-		$id_category = AppContext::get_request()->get_getint('id_category', 0);
-		return (!NewsAuthorizationsService::check_authorizations($id_category)->write() && NewsAuthorizationsService::check_authorizations($id_category)->contribution());
+		return (!NewsAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->write() && NewsAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->contribution());
 	}
 	
 	private function get_news()
@@ -208,7 +207,7 @@ class NewsFormController extends ModuleController
 			else
 			{
 				$this->news = new News();
-				$this->news->init_default_properties();
+				$this->news->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
 		}
 		return $this->news;

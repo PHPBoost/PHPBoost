@@ -59,7 +59,7 @@ class ArticlesFormController extends ModuleController
 		$this->tpl->add_lang($this->lang);
 	}
 	
-	private function build_form($request)
+	private function build_form(HTTPRequestCustom $request)
 	{
 		$common_lang = LangLoader::get('common');
 		
@@ -94,7 +94,7 @@ class ArticlesFormController extends ModuleController
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', LangLoader::get_message('category', 'categories-common'), ($this->article->get_id() === null ? $request->get_getint('id_category', 0) : $this->get_article()->get_id_category()), $search_category_children_options));
+		$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', LangLoader::get_message('category', 'categories-common'), $this->get_article()->get_id_category(), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldCheckbox('enable_description', $this->lang['articles.form.description_enabled'], $this->get_article()->get_description_enabled(), 
 			array('description' => StringVars::replace_vars($this->lang['articles.form.description_enabled.description'], 
@@ -232,8 +232,7 @@ class ArticlesFormController extends ModuleController
 
 	private function is_contributor_member()
 	{
-		$id_category = AppContext::get_request()->get_getint('id_category', 0);
-		return (!ArticlesAuthorizationsService::check_authorizations($id_category)->write() && ArticlesAuthorizationsService::check_authorizations($id_category)->contribution());
+		return (!ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->write() && ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->contribution());
 	}
 
 	private function get_article()
@@ -256,7 +255,7 @@ class ArticlesFormController extends ModuleController
 			else
 			{
 				$this->article = new Article();
-				$this->article->init_default_properties();
+				$this->article->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
 		}
 		return $this->article;
