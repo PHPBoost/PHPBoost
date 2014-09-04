@@ -1,0 +1,26 @@
+#################################################################################
+#                           PHPBoost 4.2 Changelog                              #
+#################################################################################
+
+===================================== Noyau ======================================
+
+
+=================================== Modules =====================================
+
+[b]Liens Web[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
+[*] [color=red]Nouveauté :[/color] Ajout des contributions
+[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
+[*] [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
+[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
+[*] [color=red]Nouveauté :[/color] Refonte graphique
+[*] [color=red]Nouveauté :[/color] Ajout du module dans le plan du site
+[*] [color=red]Nouveauté :[/color] Ajout des flux RSS
+[*] [color=red]Nouveauté :[/color] Ajout de la recherche
+[*] [color=red]Nouveauté :[/color] Possibilité de signaler les liens morts
+[*] [color=red]Nouveauté :[/color] Possibilité de définir des sites partenaires
+[*] [color=red]Nouveauté :[/color] Menu pour afficher la liste des partenaires (possibilité de les classer par note, nombre de visites, nombre de commentaires depuis la configuration)
+[*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires et la notation globalement
+[*] [color=red]Nouveauté :[/color] Possibilité de choisir la date de parution des liens
+[*] Ajout des microdonnées pour améliorer le référencement

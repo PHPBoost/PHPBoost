@@ -1,0 +1,433 @@
+<?php
+/*##################################################
+ *                          Environment.class.php
+ *                            -------------------
+ *   begin                : September 28, 2009
+ *   copyright            : (C) 2009 Benoit Sautel, Loic Rouchon
+ *   email                : ben.popeye@phpboost.com, loic.rouchon@phpboost.com
+ *
+ *
+ ###################################################
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
+
+/**
+ * @package {@package}
+ * This class manages all the environment that PHPBoost need to run.
+ * <p>It's able to initialize the environment that contains services (database,
+ * users management...) as well as the graphical environment.</p>
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ *
+ */
+class Environment
+{
+	private static $running_module_name = '';
+	private static $home_page_running;
+
+	/**
+	 * @var GraphicalEnvironment
+	 */
+	private static $graphical_environment = null;
+
+	/**
+	 * Loads all the files that the environment requires
+	 */
+	public static function load_imports()
+	{
+		require_once PATH_TO_ROOT . '/kernel/framework/helper/deprecated_helper.inc.php';
+
+		include_once(PATH_TO_ROOT . '/kernel/framework/core/ClassLoader.class.php');
+		ClassLoader::init_autoload();
+		AppContext::init_bench();
+	}
+
+	/**
+	 * Inits the environment and all its services.
+	 */
+	public static function init()
+	{
+		try
+		{
+			self::try_init();
+		}
+		catch (PHPBoostNotInstalledException $ex)
+		{
+			AppContext::get_response()->redirect('/install/');
+		}
+	}
+
+	public static function try_init()
+	{
+		self::init_output_bufferization();
+		self::fit_to_php_configuration();
+		self::init_services();
+		self::load_static_constants();
+		DBFactory::load_prefix();
+
+		self::load_dynamic_constants();
+		self::init_session();
+
+		self::load_lang_files();
+		self::process_changeday_tasks_if_needed();
+		self::compute_running_module_name();
+		self::execute_modules_changepage_tasks();
+		self::csrf_protect_post_requests();
+		self::enable_errors_and_exceptions_management();
+	}
+
+	public static function init_http_services()
+	{
+		AppContext::set_request(new HTTPRequestCustom());
+		$response = new HTTPResponseCustom();
+		$response->set_default_attributes();
+		AppContext::set_response($response);
+	}
+
+	public static function init_services()
+	{
+		self::init_http_services();
+		AppContext::init_extension_provider_service();
+	}
+
+	public static function enable_errors_and_exceptions_management()
+	{
+		set_error_handler(array(new IntegratedErrorHandler(), 'handle'));
+		set_exception_handler(array(new ExceptionHandler(), 'handle'));
+	}
+
+	public static function fit_to_php_configuration()
+	{
+		define('ERROR_REPORTING',   E_ALL | E_NOTICE | E_STRICT);
+		@ini_set('display_errors', 'on');
+		@ini_set('display_startup_errors', 'on');
+		@error_reporting(ERROR_REPORTING);
+		set_error_handler(array(new ErrorHandler(), 'handle'));
+		set_exception_handler(array(new RawExceptionHandler(), 'handle'));
+		Date::set_default_timezone();
+
+		@ini_set('open_basedir', NULL);
+	}
+
+	public static function load_static_constants()
+	{
+		//Path from the server root
+		define('SCRIPT', 			$_SERVER['PHP_SELF']);
+		define('REWRITED_SCRIPT', 	$_SERVER['REQUEST_URI']);
+
+		//Get parameters
+		define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING']));
+		define('PHPBOOST', 			true);
+
+		### Authorizations ###
+		define('AUTH_FLOOD', 		'auth_flood');
+		define('PM_GROUP_LIMIT', 	'pm_group_limit');
+		define('DATA_GROUP_LIMIT', 	'data_group_limit');
+	}
+
+	public static function load_dynamic_constants()
+	{
+		$general_config = GeneralConfig::load();
+		$site_path = $general_config->get_site_path();
+		define('DIR', $site_path);
+		define('HOST', $general_config->get_site_url());
+		define('TPL_PATH_TO_ROOT', DIR);
+	}
+
+	public static function init_session()
+	{
+		$session_data = Session::start();
+		AppContext::set_session($session_data);
+		AppContext::init_current_user();
+
+		$current_user = AppContext::get_current_user();
+		$user_accounts_config = UserAccountsConfig::load();
+
+		$user_theme = ThemesManager::get_theme($current_user->get_theme());
+		$default_theme = $user_accounts_config->get_default_theme();
+
+		if ($user_theme === null || (!$user_theme->check_auth() || !$user_theme->is_activated()) && $user_theme->get_id() !== $default_theme)
+		{
+			AppContext::get_current_user()->update_theme($default_theme);
+		}
+
+		$user_lang = LangsManager::get_lang($current_user->get_locale());
+		$default_lang = $user_accounts_config->get_default_lang();
+		if ($user_lang === null || (!$user_lang->check_auth() || !$user_lang->is_activated()) && $user_lang->get_id() !== $default_lang)
+		{
+			AppContext::get_current_user()->update_lang($default_lang);
+		}
+	}
+
+	public static function init_output_bufferization()
+	{
+		if (ServerEnvironmentConfig::load()->is_output_gziping_enabled() && !in_array('ob_gzhandler', ob_list_handlers()))
+		{
+			ob_start('ob_gzhandler');
+		}
+		else
+		{
+			ob_start();
+		}
+	}
+
+	public static function load_lang_files()
+	{
+		$locale = AppContext::get_current_user()->get_locale();
+		LangLoader::set_locale($locale);
+
+		global $LANG;
+		$LANG = array();
+		require_once(PATH_TO_ROOT . '/lang/' . $locale . '/main.php');
+		require_once(PATH_TO_ROOT . '/lang/' . $locale . '/errors.php');
+		
+		AppContext::get_current_user()->update_visitor_display_name();
+	}
+
+	public static function process_changeday_tasks_if_needed()
+	{
+		//If the day changed compared to the last request, we execute the daily tasks
+		$last_use_config = LastUseDateConfig::load();
+		$last_use_date = $last_use_config->get_last_use_date();
+		$current_date = new Date();
+		$current_date->set_hours(0);
+		$current_date->set_minutes(0);
+		$current_date->set_seconds(0);
+
+		if ($last_use_date->is_anterior_to($current_date))
+		{
+			$last_use_config->set_last_use_date($current_date);
+			LastUseDateConfig::save();
+
+			self::perform_changeday();
+		}
+	}
+
+	private static function perform_changeday()
+	{
+		self::delete_existing_sessions();
+		
+		self::clear_all_temporary_cache_files();
+
+		self::execute_modules_changedays_tasks();
+
+		self::update_visit_counter_table();
+
+		self::remove_old_unactivated_member_accounts();
+
+		self::check_updates();
+	}
+
+	private static function delete_existing_sessions()
+	{
+		Session::gc();
+	}
+
+	private static function clear_all_temporary_cache_files()
+	{
+		//We delete all the images generated by the LaTeX formatter
+		$cache_image_folder_path = new Folder(PATH_TO_ROOT . '/images/maths/');
+		$files = $cache_image_folder_path->get_files('`\.png$`');
+		foreach ($files as $image)
+		{
+			if ($image->get_last_modification_date() < self::get_one_week_ago_timestamp())
+			{
+				$image->delete();
+			}
+		}
+	}
+
+	private static function execute_modules_changedays_tasks()
+	{
+		$today = new Date();
+		$yesterday = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, self::get_yesterday_timestamp());
+		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
+		foreach ($jobs as $job)
+		{
+			$job->on_changeday($yesterday, $today);
+		}
+	}
+
+	private static function update_visit_counter_table()
+	{
+		$now = new Date(DATE_NOW, Timezone::SERVER_TIMEZONE);
+		$timestamp = $now->format(Date::FORMAT_TIMESTAMP);
+		
+		//We truncate the table containing the visitors of today
+		PersistenceContext::get_querier()->delete(DB_TABLE_VISIT_COUNTER, 'WHERE id <> 1');
+
+		//We update the last changeday date
+		PersistenceContext::get_querier()->update(DB_TABLE_VISIT_COUNTER, array('time' => $timestamp, 'total' => 1), 'WHERE id = 1');
+		
+		//We insert this visitor as a today visitor
+		PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => AppContext::get_request()->get_ip_address(), 'time' => $timestamp, 'total' => 0));
+	}
+
+	private static function remove_old_unactivated_member_accounts()
+	{
+		UserService::remove_old_unactivated_member_accounts();
+	}
+
+	private static function check_updates()
+	{
+		new Updates();
+	}
+
+	private static function execute_modules_changepage_tasks()
+	{
+		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
+		foreach ($jobs as $job)
+		{
+			$job->on_changepage();
+		}
+	}
+
+	public static function compute_running_module_name()
+	{
+		$path = substr(SCRIPT, strlen(DIR));
+		$path = trim($path, '/');
+		if (strpos($path, '/'))
+		{
+			$module_name = explode('/', $path);
+			self::$running_module_name = $module_name[0];
+			self::$home_page_running = false;
+		}
+		else
+		{
+			self::$home_page_running = true;
+
+			$general_config = GeneralConfig::load();
+			$other_home_page = $general_config->get_other_home_page();
+			$module_home_page = $general_config->get_module_home_page();
+
+			if (empty($other_home_page) && !empty($module_home_page))
+			{
+				self::$running_module_name = $general_config->get_module_home_page();
+			}
+			else
+			self::$running_module_name = '';
+		}
+	}
+
+	/**
+	 * @desc Retrieves the identifier (name of the folder) of the module which is currently executed.
+	 * @return string The module identifier.
+	 */
+	public static function get_running_module_name()
+	{
+		return self::$running_module_name;
+	}
+
+	public static function home_page_running()
+	{
+		return self::$home_page_running;
+	}
+
+	public static function csrf_protect_post_requests()
+	{
+		// Verify that the user really wanted to do this POST (only for the registered ones)
+		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
+		{
+			AppContext::get_session()->csrf_post_protect();
+		}
+	}
+
+	/**
+	 * @desc Retrieves the site start page.
+	 * @return The absolute start page URL.
+	 */
+	public static function get_home_page()
+	{
+		$general_config = GeneralConfig::load();
+		if ($general_config->get_module_home_page())
+		{
+			return Url::to_absolute('/index.php');
+		}
+		return Url::to_absolute($general_config->get_other_home_page());
+	}
+
+	/**
+	 * @desc Returns the full phpboost version with its build number
+	 * @return string the full phpboost version with its build number
+	 */
+	public static function get_phpboost_version()
+	{
+		$major_version = GeneralConfig::load()->get_phpboost_major_version();
+		$minor_version = self::get_phpboost_minor_version();
+		return $major_version . '.' . $minor_version;
+	}
+
+	private static function get_phpboost_minor_version()
+	{
+		$file = new File(PATH_TO_ROOT . '/kernel/.build');
+		$build =  $file->read();
+		$file->close();
+		return trim($build);
+	}
+
+	/**
+	 * Displays the environment with content of the page.
+	 */
+	public static function display($content)
+	{
+		self::get_graphical_environment()->display($content);
+	}
+
+	public static function set_graphical_environment(GraphicalEnvironment $env)
+	{
+		self::$graphical_environment = $env;
+	}
+
+	public static function destroy()
+	{
+		PersistenceContext::close_db_connection();
+
+		@ob_end_flush();
+	}
+
+	private static function get_yesterday_timestamp()
+	{
+		return time() - 86400;
+	}
+
+	private static function get_one_week_ago_timestamp()
+	{
+		return time() - 3600 * 24 * 7;
+	}
+
+	/**
+	 * @return GraphicalEnvironment
+	 */
+	public static function get_graphical_environment()
+	{
+		if (self::$graphical_environment === null)
+		{
+			self::$graphical_environment = new SiteDisplayGraphicalEnvironment();
+		}
+		return self::$graphical_environment;
+	}
+
+	/**
+	 * This method is not called automatically but can be called if you know that an action can
+	 * take a long time. By default, max execution time is 30 seconds.
+	 * Note that according to PHP configuration, this function can fail.
+	 */
+	public static function try_to_increase_max_execution_time()
+	{
+		@set_time_limit(600);
+	}
+}
+?>

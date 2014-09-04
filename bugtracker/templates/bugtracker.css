@@ -1,0 +1,33 @@
+.legend-line {
+    padding: 0 0 8px 0;
+}
+
+.legend-color {
+    font-size: 2em;
+    vertical-align: -1px;
+}
+
+.legend {
+    padding-right: 20px;
+}
+
+.title-column {
+    width: 30%;
+}
+
+.small-column {
+    width: 10%;
+}
+
+.medium-column {
+    width: 20%;
+}
+
+#status-chart {
+    width: 90%;
+}
+
+/* Surcharge de la classe block pour mettre un fond blanc */
+.block {
+    background: #FFFFFF
+}

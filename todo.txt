@@ -1,0 +1,118 @@
+###################################### PHPBoost 4.1 ##################################
+
+## AUTRES ##
+
+
+#################################################################################
+
+
+
+
+#################################################################################
+##                                   KEVIN                                     ##
+#################################################################################
+
+------------------------------------- NOYAU ------------------------------------
+
+
+------------------------------------ MODULES -----------------------------------
+
+#################################################################################
+
+
+
+
+#################################################################################
+##                                   PATRICK                                   ##
+#################################################################################
+
+------------------------------------ MODULES -----------------------------------
+
+#################################################################################
+
+
+
+
+#################################################################################
+##                                   JULIEN                                    ##
+#################################################################################
+
+------------------------------------ MODULES -----------------------------------
+
+#################################################################################
+
+
+
+######################################DOSSIERS##################################
+
+
+###################################### PHPBoost 4.2 ##################################
+
+[b]Structure et fonctionnement:[/b]
+- [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
+- [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
+- [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
+- [color=red]Nouveauté:[/color] Exportation en pdf (articles, wiki, pages).
+- [color=red]Nouveauté:[/color] Editeur d'image avec interface js pour redimensionner, faire des rotations, des mises à l'échelles, etc.
+- [color=red]Nouveauté:[/color] Système de centralisation de mots clés, gestion de nuages de tags... A intégrer peut-être dans le module de recherche.
+- [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés avec contrôles sur les champs.
+- [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
+- [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
+- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification des couleurs du site.
+- Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
+- Gestion des contraintes asynchrones dans le form builder
+- Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
++ [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
++ Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
+- Possibilité de désactiver l'affichage d'un lien dans les menus
+- [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
+- Support mobile et version tablette
+- Refonte du système d'événement et intégration d'un système de notification
+- Suppression de l'ancienne classe SQL
+- Refonte de la gestion des liens : suppression des types de menu de liens et création d'un menu de lien qui s'adapte automatiquement à l'emplacement
+- Filtres d'exclusion pour les menus
+- Nettoyage des variables de langues
+
+[b]Installateur[/b]
+- Ajout d'une option pour supprimer le dossier à la fin de l'installation
+- Possibilité de choisir les modules, thèmes et langues à installer
+
+[b]Script de migration[/b]
+- Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update
+
+[b]Administration[/b]
+- Refonte de la partie Rapport système avec ajout de différentes informations concernant la sécurité, les options APC, des conseils, etc...
+
+[b]Upload[/b]
+- Refonte de l'interface, ajout d'API, ... 
+- Améliorer l'ajout de fichier (drag & drop)
+
+[b]Messages privés[/b]
+- Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
+- Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
+
+[b]Forum[/b]
+- [color=red]Nouveauté:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/édition des messages/sujets appartenant au membre.
+- [color=red]Nouveauté:[/color] Possibilité de créer des messages semi-automatiques pour les modérateurs.
+- [color=red]Nouveauté:[/color] Possibilité de délestage automatique des sujets (configuration).
+- [color=red]Nouveauté:[/color] Possibilité de définir des mots interdits (remplacés par des étoiles).
+- Possibilité de mettre un pseudo lorsque l'on poste en visiteur.
+
+[b]Galerie:[/b]
+- Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
+- Possibilité de télécharger l'image.
+- [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
+- [color=red]Nouveauté:[/color] Possibilité de redimensionnement automatique des images dans la galerie, avec prévisualisation du rendu.
+- [color=red]Nouveauté:[/color] Approbation des photos envoyées par les membres/invités, alerte envoyée à l'administrateur.
+- [color=red]Nouveauté:[/color] Galerie privée pour les membres.
+- [color=red]Nouveauté:[/color] Diaporama sur l'index de la galerie.
+- Possibilité de définir une limite d'upload en fonction des groupes.
+
+[b]FAQ[/b]
+- refonte du module en MVC
+
+[b]Téléchargements[/b]
+- refonte du module en MVC
+
+[b]Wiki:[/b]
+- [color=red]Nouveauté:[/color] Système d'enregistrement des articles par différences, lignes par lignes pour un encombrement réduit lors des éditions successives.

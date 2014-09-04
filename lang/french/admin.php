@@ -1,0 +1,273 @@
+<?php
+/*##################################################
+ *                                admin.php
+ *                            -------------------
+ *   begin                : November 20, 2005
+ *   copyright            : (C) 2005 Viarre Régis
+ *   email                : crowkait@phpboost.com
+ *
+ *
+ ###################################################
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
+
+
+ ####################################################
+#                    French                        #
+ ####################################################
+
+$LANG['administration'] = 'Administration';
+
+$LANG['extend_menu'] = 'Menu étendu';
+$LANG['phpinfo'] = 'PHP info';
+
+//Requis
+$LANG['require_cat'] = 'Veuillez entrer une catégorie !';
+$LANG['require_cat_create'] = 'Aucune catégorie trouvée, veuillez d\'abord en créer une';
+$LANG['require_name'] = 'Veuillez entrer un nom !';
+$LANG['require_pass'] = 'Veuillez entrer un mot de passe !';
+$LANG['require_rank'] = 'Veuillez entrer un rang !';
+$LANG['require_code'] = 'Veuillez entrer un code pour le smiley !';
+$LANG['require_max_width'] = 'Veuillez entrer une largeur maximale pour les avatars !';
+$LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les avatars !';
+$LANG['require_weight'] = 'Veuillez entrer un poids maximum pour les avatars !';
+$LANG['require_subcat'] = 'Veuillez sélectionner une sous-catégorie !';
+$LANG['require_file_name'] = 'Vous devez saisir un nom de fichier !';
+
+//Commun
+$LANG['user_ip'] = 'Adresse ip';
+$LANG['registered'] = 'Enregistré';
+$LANG['link'] = 'Lien';
+$LANG['configuration'] = 'Configuration';
+$LANG['stats'] = 'Statistiques';
+$LANG['cat_management'] = 'Gestion des catégories';
+$LANG['cat_add'] = 'Ajouter une catégorie';
+$LANG['visible'] = 'Visible';
+$LANG['nbr_cat_max'] = 'Nombre de catégories maximum affichées';
+$LANG['nbr_column_max'] = 'Nombre de colonnes';
+$LANG['note_max'] = 'Echelle de notation';
+$LANG['max_link'] = 'Nombre de liens maximum dans le message';
+$LANG['max_link_explain'] = 'Mettre -1 pour illimité';
+$LANG['generate'] = 'Générer';
+$LANG['or_direct_path'] = 'Ou chemin direct';
+$LANG['unknow_bot'] = 'Bot inconnu';
+
+//Connexion
+$LANG['unlock_admin_panel'] = 'Déverrouillage de l\'administration';
+$LANG['flood_block'] = 'Il vous reste %d essai(s). Après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5) !';
+$LANG['flood_max'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes';
+
+//Index
+$LANG['update_available'] = 'Mises à jour disponibles';
+$LANG['core_update_available'] = 'Nouvelle version <strong>%s</strong> du noyau disponible, pensez à mettre à jour PHPBoost ! <a href="http://www.phpboost.com">Plus d\'informations</a>';
+$LANG['no_core_update_available'] = 'Aucune nouvelle version disponible, le système est à jour !';
+$LANG['module_update_available'] = 'Des mises à jour des modules sont disponibles !';
+$LANG['no_module_update_available'] = 'Aucune mise à jour des modules, vous êtes à jour !';
+$LANG['unknow_update'] = 'Impossible de déterminer si une mise à jour est disponible !';
+$LANG['user_online'] = 'Utilisateur(s) en ligne';
+$LANG['last_update'] = 'Dernière mise à jour';
+$LANG['quick_links'] = 'Liens rapides';
+$LANG['members_managment'] = 'Gestion des membres';
+$LANG['menus_managment'] = 'Gestion des menus';
+$LANG['modules_managment'] = 'Gestion des modules';
+$LANG['last_comments'] = 'Derniers commentaires';
+$LANG['view_all_comments'] = 'Voir tous les commentaires';
+$LANG['writing_pad'] = 'Bloc-notes';
+$LANG['writing_pad_explain'] = 'Cet emplacement est réservé pour y saisir vos notes personnelles.';
+
+//Alertes administrateur
+$LANG['administrator_alerts'] = 'Alertes';
+$LANG['administrator_alerts_list'] = 'Liste des alertes';
+$LANG['no_unread_alert'] = 'Aucune alerte en attente';
+$LANG['unread_alerts'] = 'Des alertes non traitées sont en attente.';
+$LANG['no_administrator_alert'] = 'Aucune alerte existante';
+$LANG['display_all_alerts'] = 'Voir toutes les alertes';
+$LANG['priority'] = 'Priorité';
+$LANG['priority_very_high'] = 'Immédiat';
+$LANG['priority_high'] = 'Urgent';
+$LANG['priority_medium'] = 'Moyenne';
+$LANG['priority_low'] = 'Faible';
+$LANG['priority_very_low'] = 'Très faible';
+$LANG['administrator_alerts_action'] = 'Actions';
+$LANG['admin_alert_fix'] = 'Régler';
+$LANG['admin_alert_unfix'] = 'Passer l\'alerte en non réglée';
+$LANG['confirm_delete_administrator_alert'] = 'Etes-vous sûr de vouloir supprimer cette alerte ?';
+
+//Maintain
+$LANG['maintain_auth'] = 'Autorisation d\'accès au site durant la maintenance';
+$LANG['maintain_for'] = 'Mettre le site en maintenance';
+$LANG['maintain_delay'] = 'Afficher la durée de la maintenance';
+$LANG['maintain_display_admin'] = 'Afficher la durée de la maintenance à l\'administrateur';
+$LANG['maintain_text'] = 'Texte à afficher lorsque la maintenance du site est en cours';
+
+//Rapport système
+$LANG['system_report'] = 'Rapport système';
+$LANG['server'] = 'Serveur';
+$LANG['php_version'] = 'Version de PHP';
+$LANG['dbms_version'] = 'Version du SGBD';
+$LANG['dg_library'] = 'Librairie GD';
+$LANG['url_rewriting'] = 'Réécriture des URL';
+$LANG['phpboost_config'] = 'Configuration de PHPBoost';
+$LANG['kernel_version'] = 'Version du noyau';
+$LANG['output_gz'] = 'Compression des pages';
+$LANG['directories_auth'] = 'Autorisation des répertoires';
+$LANG['system_report_summerization'] = 'Récapitulatif';
+$LANG['system_report_summerization_explain'] = 'Ceci est le récapitulatif du rapport. Cela vous sera particulièrement utile lorsqu\'on vous demandera la configuration de votre système pour du support';
+
+//Gestion de l'upload
+$LANG['explain_upload_img'] = 'L\'image uploadée doit être au format jpg, gif, png ou bmp';
+$LANG['explain_archive_upload'] = 'L\'archive uploadée doit être au format zip ou gzip';
+
+//Gestion des fichiers
+$LANG['auth_files'] = 'Autorisation requise pour l\'activation de l\'interface de fichiers';
+$LANG['size_limit'] = 'Taille maximale des uploads autorisés aux membres';
+$LANG['bandwidth_protect'] = 'Protection de la bande passante';
+$LANG['bandwidth_protect_explain'] = 'Interdiction d\'accès aux fichiers du répertoire upload depuis un autre serveur';
+$LANG['auth_extensions'] = 'Extensions autorisées';
+$LANG['extend_extensions'] = 'Extensions autorisées supplémentaires';
+$LANG['extend_extensions_explain'] = 'Séparez les extensions avec des virgules';
+$LANG['files_image'] = 'Images';
+$LANG['files_archives'] = 'Archives';
+$LANG['files_text'] = 'Textes';
+$LANG['files_media'] = 'Media';
+$LANG['files_prog'] = 'Programmation';
+$LANG['files_misc'] = 'Divers';
+
+//Gestion des menus
+$LANG['confirm_del_menu'] = 'Supprimer ce menu ?';
+$LANG['confirm_delete_element'] = 'Voulez vous vraiment supprimer cet élément ?';
+$LANG['menus_management'] = 'Gestion des menus';
+$LANG['menus_content_add'] = 'Menu de contenu';
+$LANG['menus_links_add'] = 'Menu de liens';
+$LANG['menus_feed_add'] = 'Menu de flux';
+$LANG['menus_edit'] = 'Modifier le menu';
+$LANG['menus_add'] = 'Ajouter un menu';
+$LANG['vertical_menu'] = 'Menu vertical';
+$LANG['horizontal_menu'] = 'Menu horizontal';
+$LANG['tree_menu'] = 'Menu arborescent';
+$LANG['vertical_scrolling_menu'] = 'Menu vertical déroulant';
+$LANG['horizontal_scrolling_menu'] = 'Menu horizontal déroulant';
+$LANG['available_menus'] = 'Menus disponibles';
+$LANG['no_available_menus'] = 'Aucun menu disponible';
+$LANG['menu_header'] = 'Tête de page';
+$LANG['menu_subheader'] = 'Sous entête';
+$LANG['menu_left'] = 'Menu gauche';
+$LANG['menu_right'] = 'Menu droit';
+$LANG['menu_top_central'] = 'Menu central haut';
+$LANG['menu_bottom_central'] = 'Menu central bas';
+$LANG['menu_top_footer'] = 'Sur pied de page';
+$LANG['menu_footer'] = 'Pied de page';
+$LANG['location'] = 'Emplacement';
+$LANG['use_tpl'] = 'Utiliser la structure des templates';
+$LANG['add_sub_element'] = 'Ajouter un élément';
+$LANG['add_sub_menu'] = 'Ajouter un sous-menu';
+$LANG['display_title'] = 'Afficher le titre';
+$LANG['choose_feed_in_list'] = 'Veuillez choisir un flux dans la liste';
+$LANG['feed'] = 'flux';
+$LANG['availables_feeds'] = 'Flux disponibles';
+$LANG['valid_position_menus'] = 'Valider la position des menus';
+$LANG['themes_management'] = 'Gérer le thème';
+$LANG['move'] = 'Déplacer';
+$LANG['move_up'] = 'Monter';
+$LANG['move_down'] = 'Descendre';
+
+$LANG['menu_configurations'] = 'Configurations';
+$LANG['menu_configurations_list'] = 'Liste des configurations de menus';
+$LANG['menus'] = 'Menus';
+$LANG['menu_configuration_name'] = 'Nom';
+$LANG['menu_configuration_match_regex'] = 'Correspond à';
+$LANG['menu_configuration_edit'] = 'Editer';
+$LANG['menu_configuration_configure'] = 'Configurer';
+$LANG['menu_configuration_default_name'] = 'Configuration par défaut';
+$LANG['menu_configuration_configure_default_config'] = 'Configurer la configuration par défaut';
+$LANG['menu_configuration_edition'] = 'Edition d\'une configuration de menu';
+$LANG['menu_configuration_edition_name'] = 'Nom de la configuration';
+$LANG['menu_configuration_edition_match_regex'] = 'Expression régulière de correspondance';
+
+//Smiley
+$LANG['upload_smiley'] = 'Uploader un smiley';
+$LANG['smiley'] = 'Smiley';
+$LANG['add_smiley'] = 'Ajouter smiley';
+$LANG['smiley_code'] = 'Code du smiley (ex : :D)';
+$LANG['smiley_available'] = 'Smileys disponibles';
+$LANG['edit_smiley'] = 'Edition des smileys';
+$LANG['smiley_management'] = 'Gestion des smileys';
+
+//Gestion membre
+$LANG['members_management'] = 'Gestion des Membres';
+$LANG['members_add'] = 'Ajouter un membre';
+$LANG['members_config'] = 'Configuration des membres';
+$LANG['members_punishment'] = 'Gestion des sanctions';
+$LANG['members_msg'] = 'Message à tous les membres';
+$LANG['search_member'] = 'Rechercher un membre';
+$LANG['joker'] = 'Utilisez * pour joker';
+$LANG['no_result'] = 'Aucun résultat';
+$LANG['life'] = 'A vie';
+$LANG['user_punish_until'] = 'Sanction jusqu\'au';
+$LANG['user_readonly_explain'] = 'Membre en lecture seule, celui-ci peut lire mais ne peut plus poster sur le site entier (commentaires, etc...)';
+$LANG['weeks'] = 'semaines';
+$LANG['life'] = 'A vie';
+$LANG['readonly_user'] = 'Membre en lecture seule';
+
+//Gestion des groupes
+$LANG['groups_management'] = 'Gestion des groupes';
+$LANG['groups_add'] = 'Ajouter un groupe';
+$LANG['auth_flood'] = 'Autorisation de flooder';
+$LANG['pm_group_limit'] = 'Limite de messages privés';
+$LANG['pm_group_limit_explain'] = 'Mettre -1 pour illimité';
+$LANG['data_group_limit'] = 'Limite de données uploadables';
+$LANG['data_group_limit_explain'] = 'Mettre -1 pour illimité';
+$LANG['color_group'] = 'Couleur';
+$LANG['color_group_explain'] = 'Couleur associée au groupe en hexadécimal (ex: #FF6600)';
+$LANG['img_assoc_group'] = 'Image associée au groupe';
+$LANG['img_assoc_group_explain'] = 'Mettre dans le dossier images/group/';
+$LANG['add_mbr_group'] = 'Ajouter un membre au groupe';
+$LANG['mbrs_group'] = 'Membres du groupe';
+$LANG['auths'] = 'Autorisations';
+$LANG['auth_access'] = 'Autorisation d\'accès';
+$LANG['auth_read'] = 'Droits de lecture';
+$LANG['auth_write'] = 'Droits d\'écriture';
+$LANG['auth_edit'] = 'Droits de modération';
+$LANG['upload_group'] = 'Uploader une image de groupe';
+
+// Updates
+$LANG['website_updates'] = 'Mises à jour';
+$LANG['kernel'] = 'Noyau';
+$LANG['themes'] = 'Thèmes';
+$LANG['update_available'] = 'Le %1$s %2$s est disponible dans sa version %3$s';
+$LANG['kernel_update_available'] = 'PHPBoost est disponible dans sa nouvelle version %s';
+$LANG['app_update__download'] = 'Téléchargement';
+$LANG['app_update__download_pack'] = 'Pack complet';
+$LANG['app_update__update_pack'] = 'Pack de mise à jour';
+$LANG['author'] = 'Auteur';
+$LANG['authors'] = 'Auteurs';
+$LANG['new_features'] = 'Nouvelles Fonctionnalités';
+$LANG['improvments'] = 'Améliorations';
+$LANG['fixed_bugs'] = 'Corrections de bugs';
+$LANG['security_improvments'] = 'Améliorations de sécurité';
+$LANG['updates_are_available'] = 'Des mises à jours sont disponibles.<br />Veuillez les effectuer au plus vite.';
+$LANG['availables_updates'] = 'Mises à jour disponibles';
+$LANG['details'] = 'Détails';
+$LANG['more_details'] = 'Plus de détails';
+$LANG['download_the_complete_pack'] = 'Téléchargez le pack complet';
+$LANG['download_the_update_pack'] = 'Téléchargez le pack de mise à jour';
+$LANG['no_available_update'] = 'Aucune mise à jour n\'est disponible pour l\'instant.';
+$LANG['incompatible_php_version'] = 'Impossible de vérifier la présence de mise à jour.
+Veuillez utiliser la version %s ou ultérieure de PHP.<br />Si vous ne pouvez utiliser PHP5,
+veuillez vérifier la présence de ces mises à jour sur notre <a href="http://www.phpboost.com">site officiel</a>.';
+$LANG['check_for_updates_now'] = 'Vérifier la présence de mises à jour';
+?>
