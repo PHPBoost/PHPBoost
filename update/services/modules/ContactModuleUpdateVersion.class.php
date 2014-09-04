@@ -35,6 +35,8 @@ class ContactModuleUpdateVersion extends ModuleUpdateVersion
 	public function execute()
 	{
 		$this->delete_old_files();
+		ModulesManager::uninstall_module('contact');
+		ModulesManager::install_module('contact');
 	}
 	
 	private function delete_old_files()
