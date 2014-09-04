@@ -175,7 +175,7 @@ class CalendarFormController extends ModuleController
 	
 	private function build_contribution_fieldset($form)
 	{
-		if ($this->is_contributor_member())
+		if ($this->get_event()->get_id() === null && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
 			$fieldset->set_description(MessageHelper::display($this->lang['calendar.labels.contribution.explain'] . ' ' . LangLoader::get_message('contribution.explain', 'user-common'), MessageHelper::WARNING)->render());
@@ -187,7 +187,7 @@ class CalendarFormController extends ModuleController
 	
 	private function is_contributor_member()
 	{
-		return ($this->get_event()->get_id() === null && !CalendarAuthorizationsService::check_authorizations()->write() && CalendarAuthorizationsService::check_authorizations()->contribution());
+		return (!CalendarAuthorizationsService::check_authorizations()->write() && CalendarAuthorizationsService::check_authorizations()->contribution());
 	}
 	
 	private function get_event()
@@ -469,7 +469,7 @@ class CalendarFormController extends ModuleController
 		$event = $this->get_event();
 		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
 		
-		if ($this->is_contributor_member() && !$event->get_content()->is_approved())
+		if ($event->get_id() === null && $this->is_contributor_member() && !$event->get_content()->is_approved())
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success());
 		}

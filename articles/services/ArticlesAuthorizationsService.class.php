@@ -62,6 +62,8 @@ class ArticlesAuthorizationsService
 	private function is_authorized($bit)
 	{
 		$auth = ArticlesService::get_categories_manager()->get_heritated_authorizations($this->id_category, $bit, Authorizations::AUTH_PARENT_PRIORITY);
+		print_r($auth);
+echo		'<br/>';
 		return AppContext::get_current_user()->check_auth($auth, $bit);
 	}
 }
