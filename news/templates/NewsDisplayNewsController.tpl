@@ -20,13 +20,15 @@
 			# ENDIF #
 			${TextHelper::lowercase_first(LangLoader::get_message('the', 'common'))} <time datetime="{DATE_ISO8601}" itemprop="datePublished">{DATE}</time>
 			${TextHelper::lowercase_first(LangLoader::get_message('in', 'common'))} <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
-			- # IF C_COMMENTS # {NUMBER_COMMENTS} # ENDIF #	{L_COMMENTS}
+			# IF C_COMMENTS_ENABLED #- # IF C_COMMENTS # {NUMBER_COMMENTS} # ENDIF #	{L_COMMENTS}# ENDIF #
 		</div>
 		
 		<meta itemprop="url" content="{U_LINK}">
 		<meta itemprop="description" content="${escape(DESCRIPTION)}" />
+		# IF C_COMMENTS_ENABLED #
 		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
+		# ENDIF #
 		
 	</header>
 	<div class="content">
