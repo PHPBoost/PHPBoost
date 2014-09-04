@@ -76,6 +76,7 @@ class NewsDisplayNewsController extends ModuleController
 	private function build_view()
 	{
 		$news = $this->get_news();
+		$news_config = NewsConfig::load();
 		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
 		
 		$this->tpl->put_all($news->get_array_tpl_vars());
@@ -86,7 +87,10 @@ class NewsDisplayNewsController extends ModuleController
 			$comments_topic->set_id_in_module($news->get_id());
 			$comments_topic->set_url(NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
 			
-			$this->tpl->put('COMMENTS', $comments_topic->display());
+			$this->tpl->put_all(array(
+				'C_COMMENTS_ENABLED' => $news_config->get_comments_enabled(),
+				'COMMENTS' => $comments_topic->display()
+			));
 		}
 		$this->build_sources_view($news);
 		$this->build_keywords_view($news);
