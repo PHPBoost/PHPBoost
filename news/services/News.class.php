@@ -346,9 +346,9 @@ class News
 		$this->set_author_user($user);
 	}
 	
-	public function init_default_properties()
+	public function init_default_properties($id_cat = Category::ROOT_CATEGORY)
 	{
-		$this->id_cat = Category::ROOT_CATEGORY;
+		$this->id_cat = $id_cat;
 		$this->approbation_type = self::APPROVAL_NOW;
 		$this->start_date = new Date();
 		$this->end_date = new Date();

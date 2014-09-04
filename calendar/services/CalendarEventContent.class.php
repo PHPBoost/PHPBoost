@@ -307,7 +307,7 @@ class CalendarEventContent
 		$this->set_author_user($user);
 	}
 	
-	public function init_default_properties($category_id)
+	public function init_default_properties($category_id = Category::ROOT_CATEGORY)
 	{
 		$this->category_id = $category_id;
 		$this->author_user = AppContext::get_current_user();

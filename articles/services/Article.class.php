@@ -385,9 +385,9 @@ class Article
 		$this->notation = $notation;
 	}
 
-	public function init_default_properties()
+	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
 	{
-		$this->id_category = Category::ROOT_CATEGORY;
+		$this->id_category = $id_category;
 		$this->author_name_displayed = self::AUTHOR_NAME_DISPLAYED;
 		$this->published = self::PUBLISHED_NOW;
 		$this->publishing_start_date = new Date();
