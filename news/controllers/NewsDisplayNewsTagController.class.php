@@ -82,7 +82,8 @@ class NewsDisplayNewsTagController extends ModuleController
 			'C_DISPLAY_BLOCK_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_BLOCK,
 			'C_DISPLAY_LIST_TYPE' => $news_config->get_display_type() == NewsConfig::DISPLAY_LIST,
 			'C_DISPLAY_CONDENSED_CONTENT' => $news_config->get_display_condensed_enabled(),
-		
+			'C_COMMENTS_ENABLED' => $news_config->get_comments_enabled(),
+			
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_PAGINATION' => $pagination->has_several_pages(),
 		

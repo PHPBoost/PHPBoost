@@ -33,13 +33,15 @@
 						# ENDIF #
 						${TextHelper::lowercase_first(LangLoader::get_message('the', 'common'))} <time datetime="{news.DATE_ISO8601}" itemprop="datePublished">{news.DATE}</time> 
 						${TextHelper::lowercase_first(LangLoader::get_message('in', 'common'))} <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
-						- # IF news.C_COMMENTS # {news.NUMBER_COMMENTS} # ENDIF #	{news.L_COMMENTS}
+						# IF C_COMMENTS_ENABLED #- # IF news.C_COMMENTS # {news.NUMBER_COMMENTS} # ENDIF #	{news.L_COMMENTS}# ENDIF #
 					</div>
 					
 					<meta itemprop="url" content="{news.U_LINK}">
 					<meta itemprop="description" content="${escape(news.DESCRIPTION)}"/>
+					# IF C_COMMENTS_ENABLED #
 					<meta itemprop="discussionUrl" content="{news.U_COMMENTS}">
 					<meta itemprop="interactionCount" content="{news.NUMBER_COMMENTS} UserComments">
+					# ENDIF #
 					
 				</header>
 				
