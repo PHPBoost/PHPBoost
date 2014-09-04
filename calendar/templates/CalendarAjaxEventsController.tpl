@@ -26,8 +26,10 @@
 						<div class="content">
 							<div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 								<meta itemprop="about" content="{event.CATEGORY_NAME}">
+								# IF C_COMMENTS_ENABLED #
 								<meta itemprop="discussionUrl" content="{event.U_COMMENTS}">
 								<meta itemprop="interactionCount" content="{event.NUMBER_COMMENTS} UserComments">
+								# ENDIF #
 								<span itemprop="text">{event.CONTENTS}</span>
 								
 								# IF event.C_LOCATION #
