@@ -1,7 +1,7 @@
 /* --------------------------------------
 		global.css
  Contient les classes globales au site, peuvent être utilisées partout.
---------------------------------------*/ 
+--------------------------------------*/
 
 
 /* La mise en forme du texte
@@ -24,24 +24,24 @@ a.modo { color: #006699; }
 a.member { color: #000000; }
 
 /* --- Les differentes tailles de polices --- */
-.smaller { font-size: 10px; }
-.small { font-size: 12px; }
-.big { font-size: 16px; }
-.bigger { font-size: 18px; }
-.biggest { font-size: 20px; }
+.smaller { font-size: 0.869em; }
+.small { font-size: 0.923em; }
+.big { font-size: 1.231em; }
+.bigger { font-size: 1.385em; }
+.biggest { font-size: 1.538em; }
 
 /* --- Les titres (balise h) --- */
-h1 { font-size: 21px; }
-h2 { font-size: 19px; }
-h3 { font-size: 18px; }
-h4 { font-size: 17px; }
-h5 { font-size: 16px; }
-h6 { font-size: 15px; }
+h1 { font-size: 1.615em; }
+h2 { font-size: 1.462em; }
+h3 { font-size: 1.385em; }
+h4 { font-size: 1.308em; }
+h5 { font-size: 1.231em; }
+h6 { font-size: 1.154em; }
 
 /* --- Les sous titres --- */
 .formatter-title { display: inline; }
 h3.formatter-title, h4.formatter-title { border-bottom: 1px solid #366393; }
-	
+
 /* Titre 1 */
 h1.formatter-title { }
 /* Titre 2 */
@@ -78,7 +78,7 @@ h4.formatter-title { margin-left: 60px; }
 }
 
 .calendar-block .date-picker select,
-.calendar-block .date-picker select:focus { 
+.calendar-block .date-picker select:focus {
 	box-shadow: none;
 	max-width: 75px;
 }
@@ -115,7 +115,7 @@ h4.formatter-title { margin-left: 60px; }
 	position: absolute;
 	text-align: center;
 	padding: 6px 4px;
-	bottom: 2px; 
+	bottom: 2px;
 	z-index: 100;
 	background: #F3F3F3;
 	border-radius: 3px;
@@ -172,13 +172,13 @@ h4.formatter-title { margin-left: 60px; }
 	margin: 0px 25px;
 }
 
-.hide {	
-	cursor: pointer;	
-	height: 10px; 
+.hide {
+	cursor: pointer;
+	height: 10px;
 	overflow: hidden;
 }
 
-.hide2 { 
+.hide2 {
 	visibility: hidden;
 	overflow: auto;
 }
@@ -188,9 +188,9 @@ h4.formatter-title { margin-left: 60px; }
 
 .formatter-acronym { cursor: help; }
 
-.formatter-block {	
-	margin: 5px 20px; 
-	padding: 5px; 
+.formatter-block {
+	margin: 5px 20px;
+	padding: 5px;
 	border: 1px solid #C4CED6;
 	display: block;
 	overflow: hidden;
@@ -210,7 +210,7 @@ h4.formatter-title { margin-left: 60px; }
 	width: 100px;
 	overflow: auto;
 	background-color: #FFFFFF;
-	border: 1px solid #CCCCCC;  
+	border: 1px solid #CCCCCC;
 	padding: 2px;
 	margin: 2px 0px 0px 0px;
 	border-radius: 4px;
@@ -239,7 +239,7 @@ h4.formatter-title { margin-left: 60px; }
 }
 .progressbar[style*="width: 100"] {
 	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;	
+	border-bottom-right-radius: 3px;
 }
 
 .progressbar-container .progressbar {
@@ -253,10 +253,10 @@ h4.formatter-title { margin-left: 60px; }
 .static-notation { display: inline-block; }
 
 .notation .star,
-.static-notation .star { 
-	color: #E3CF7A; 
-	font-size: 14px; 
-	padding-right: 5px; 
+.static-notation .star {
+	color: #E3CF7A;
+	font-size: 14px;
+	padding-right: 5px;
 	text-decoration: none;
 }
 
@@ -628,7 +628,7 @@ ul.menu-vertical-3 li span {
 
 div.message-helper-small { width: 50% }
 
-.error, .notice, .warning, .success, .question { 
+.error, .notice, .warning, .success, .question {
 	height: auto;
 	padding: 10px 10px 10px 40px;
 	margin: 5px auto 15px auto;
@@ -640,7 +640,7 @@ div.message-helper-small { width: 50% }
 	text-align: left;
 	overflow: hidden;
 }
-			
+
 .error:before, .notice:before, .warning:before, .success:before, .question:before {
 	font-family: FontAwesome;
 	font-style: normal;
@@ -655,7 +655,7 @@ div.message-helper-small { width: 50% }
 	width: 28px;
 	text-align: center;
 }
-			
+
 .error:before { content: "\f00d"; }
 .error, .error:before { color: #BA4B49; }
 .notice:before { content: "\f12a"; }
@@ -666,9 +666,9 @@ div.message-helper-small { width: 50% }
 .success, .success:before { color: #478948; }
 .question:before { content: "\f128"; }
 .question, .question:before { color: #3B88AE; }
-			
+
 .question { background-color: #DAEEF8; border-color: #BDE9F2; }
-.notice { background-color: #F0F0F0; border-color: #E2E2E2; }		
+.notice { background-color: #F0F0F0; border-color: #E2E2E2; }
 .warning { background-color: #FDF9E4; border-color: #FBECCD; }
 .error { background-color: #F3DFDF; border-color: #ECCDD2; }
 .success { background-color: #E0F1D9; border-color: #D7EAC7; }
@@ -696,7 +696,7 @@ div#release { margin-top: 20px; }
 	border: 1px solid #DDDDDD;
 	border-radius: 3px;
 	color: #444444;
-	margin: 0px 25px; 
+	margin: 0px 25px;
 	padding: 6px;
 }
 
@@ -706,17 +706,17 @@ div#release { margin-top: 20px; }
 }
 
 .upload-address-bar-links a { margin-left: 10px; }
-			
+
 #empty-folder { width: 70%; }
-			
+
 .upload-elements-container { margin: 0 0 0 20px; }
-			
+
 .upload-elements-file,
-.upload-elements-repertory { 
-	float: left; 
+.upload-elements-repertory {
+	float: left;
 	margin: 10px;
 }
-			
+
 .upload-elements-repertory { height: 60px; }
 
 /* --- Deplacement des fichiers --- */
