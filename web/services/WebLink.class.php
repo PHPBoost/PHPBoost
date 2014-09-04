@@ -365,9 +365,9 @@ class WebLink
 		$this->notation = $notation;
 	}
 	
-	public function init_default_properties()
+	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
 	{
-		$this->id_category = Category::ROOT_CATEGORY;
+		$this->id_category = $id_category;
 		$this->approbation_type = self::APPROVAL_NOW;
 		$this->author_user = AppContext::get_current_user();
 		$this->start_date = new Date();

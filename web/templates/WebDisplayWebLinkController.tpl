@@ -15,8 +15,10 @@
 		
 		<meta itemprop="url" content="{U_LINK}">
 		<meta itemprop="description" content="${escape(DESCRIPTION)}" />
+		# IF C_COMMENTS_ENABLED #
 		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
+		# ENDIF #
 		
 	</header>
 	<div class="content">
