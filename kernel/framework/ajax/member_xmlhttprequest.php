@@ -58,7 +58,7 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
             }
             elseif (!empty($_GET['add_member_auth']))
             {
-                echo '<a href="javascript:XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['display_name']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . addslashes($row['login']) . '</a><br />';
+                echo '<a href="javascript:XMLHttpRequest_add_member_auth(\'' . addslashes($divid) . '\', ' . $row['user_id'] . ', \'' . addslashes($row['display_name']) . '\', \'' . addslashes($LANG['alert_member_already_auth']) . '\');">' . addslashes($row['display_name']) . '</a><br />';
             }
             elseif (!empty($_GET['admin_member']))
             {
@@ -92,7 +92,7 @@ elseif (!empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty(
     if (!empty($login))
     {
         $i = 0;
-        $result = $sql_querier->query_while ("SELECT user_id, login FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '" . $login . "%'");
+        $result = $sql_querier->query_while ("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $login . "%'");
         while ($row = $sql_querier->fetch_assoc($result))
         {
             $url_warn = ($admin) ? 'admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=warning&amp;id=' . $row['user_id']);
@@ -101,15 +101,15 @@ elseif (!empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty(
             	
             if (!empty($_GET['warning_user']))
             {
-                echo '<a href="' . $url_warn . '">' . $row['login'] . '</a><br />';
+                echo '<a href="' . $url_warn . '">' . $row['display_name'] . '</a><br />';
             }
             elseif (!empty($_GET['punish_user']))
             {
-                echo '<a href="' . $url_punish . '">' . $row['login'] . '</a><br />';
+                echo '<a href="' . $url_punish . '">' . $row['display_name'] . '</a><br />';
             }
             elseif (!empty($_GET['ban_user']))
             {
-                echo '<a href="' . $url_ban . '">' . $row['login'] . '</a><br />';
+                echo '<a href="' . $url_ban . '">' . $row['display_name'] . '</a><br />';
             }
             $i++;
         }
