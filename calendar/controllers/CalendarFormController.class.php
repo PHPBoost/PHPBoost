@@ -187,7 +187,7 @@ class CalendarFormController extends ModuleController
 	
 	private function is_contributor_member()
 	{
-		return (!CalendarAuthorizationsService::check_authorizations()->write() && CalendarAuthorizationsService::check_authorizations()->contribution());
+		return (!CalendarAuthorizationsService::check_authorizations($this->get_event()->get_category_id())->write() && CalendarAuthorizationsService::check_authorizations($this->get_event()->get_category_id())->contribution());
 	}
 	
 	private function get_event()
