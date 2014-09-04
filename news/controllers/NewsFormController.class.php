@@ -176,7 +176,7 @@ class NewsFormController extends ModuleController
 	
 	private function build_contribution_fieldset($form)
 	{
-		if ($this->is_contributor_member())
+		if ($this->get_news()->get_id() === null && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
 			$fieldset->set_description(MessageHelper::display($this->lang['news.form.contribution.explain'] . ' ' . LangLoader::get_message('contribution.explain', 'user-common'), MessageHelper::WARNING)->render());
@@ -188,7 +188,7 @@ class NewsFormController extends ModuleController
 	
 	private function is_contributor_member()
 	{
-		return ($this->get_news()->get_id() === null && !NewsAuthorizationsService::check_authorizations()->write() && NewsAuthorizationsService::check_authorizations()->contribution());
+		return (!NewsAuthorizationsService::check_authorizations()->write() && NewsAuthorizationsService::check_authorizations()->contribution());
 	}
 	
 	private function get_news()
@@ -253,7 +253,7 @@ class NewsFormController extends ModuleController
 		
 		$news->set_sources($this->form->get_value('sources'));
 		
-		if ($this->is_contributor_member())
+		if ($news->get_id() === null && $this->is_contributor_member())
 		{
 			$news->set_rewrited_name(Url::encode_rewrite($news->get_name()));
 			$news->set_approbation_type(News::NOT_APPROVAL);
@@ -346,7 +346,7 @@ class NewsFormController extends ModuleController
 		$news = $this->get_news();
 		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
 
-		if ($this->is_contributor_member() && !$news->is_visible())
+		if ($news->get_id() === null && $this->is_contributor_member() && !$news->is_visible())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}

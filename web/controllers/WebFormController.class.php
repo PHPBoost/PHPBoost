@@ -172,7 +172,7 @@ class WebFormController extends ModuleController
 	
 	private function build_contribution_fieldset($form)
 	{
-		if ($this->is_contributor_member())
+		if ($this->get_weblink()->get_id() === null && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
 			$fieldset->set_description(MessageHelper::display($this->lang['web.form.contribution.explain'] . ' ' . LangLoader::get_message('contribution.explain', 'user-common'), MessageHelper::WARNING)->render());
@@ -184,7 +184,7 @@ class WebFormController extends ModuleController
 	
 	private function is_contributor_member()
 	{
-		return ($this->get_weblink()->get_id() === null && !WebAuthorizationsService::check_authorizations()->write() && WebAuthorizationsService::check_authorizations()->contribution());
+		return (!WebAuthorizationsService::check_authorizations()->write() && WebAuthorizationsService::check_authorizations()->contribution());
 	}
 	
 	private function get_weblink()
@@ -250,7 +250,7 @@ class WebFormController extends ModuleController
 		$weblink->set_partner($this->form->get_value('partner'));
 		$weblink->set_partner_picture(new Url($this->form->get_value('partner_picture')));
 		
-		if ($this->is_contributor_member())
+		if ($weblink->get_id() === null && $this->is_contributor_member())
 		{
 			$weblink->set_approbation_type(WebLink::NOT_APPROVAL);
 			$weblink->set_creation_date(new Date());
@@ -338,7 +338,7 @@ class WebFormController extends ModuleController
 		$weblink = $this->get_weblink();
 		$category = WebService::get_categories_manager()->get_categories_cache()->get_category($weblink->get_id_category());
 		
-		if ($this->is_contributor_member() && !$weblink->is_visible())
+		if ($weblink->get_id() === null && $this->is_contributor_member() && !$weblink->is_visible())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}

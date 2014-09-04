@@ -219,7 +219,7 @@ class ArticlesFormController extends ModuleController
 
 	private function build_contribution_fieldset($form)
 	{
-		if ($this->is_contributor_member())
+		if ($this->get_article()->get_id() === null && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', LangLoader::get_message('contribution', 'user-common'));
 			$fieldset->set_description(MessageHelper::display(LangLoader::get_message('contribution.explain', 'user-common'), MessageHelper::WARNING)->render());
@@ -232,7 +232,7 @@ class ArticlesFormController extends ModuleController
 
 	private function is_contributor_member()
 	{
-		return ($this->get_article()->get_id() === null && !ArticlesAuthorizationsService::check_authorizations()->write() && ArticlesAuthorizationsService::check_authorizations()->contribution());
+		return (!ArticlesAuthorizationsService::check_authorizations()->write() && ArticlesAuthorizationsService::check_authorizations()->contribution());
 	}
 
 	private function get_article()
@@ -305,7 +305,7 @@ class ArticlesFormController extends ModuleController
 		
 		$article->set_sources($this->form->get_value('sources'));
 		
-		if ($this->is_contributor_member())
+		if ($article->get_id() === null && $this->is_contributor_member())
 		{
 			$article->set_rewrited_title(Url::encode_rewrite($article->get_title()));
 			$article->set_publishing_state(Article::NOT_PUBLISHED);
@@ -400,7 +400,7 @@ class ArticlesFormController extends ModuleController
 		$article = $this->get_article();
 		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
 
-		if ($this->is_contributor_member() && !$article->is_published())
+		if ($article->get_id() === null && $this->is_contributor_member() && !$article->is_published())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
