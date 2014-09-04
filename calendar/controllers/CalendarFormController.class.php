@@ -155,22 +155,18 @@ class CalendarFormController extends ModuleController
 		$auth_setter = new FormFieldAuthorizationsSetter('register_authorizations', $auth_settings, array('hidden' => !$event_content->is_registration_authorized()));
 		$fieldset->add_field($auth_setter);
 		
-		$this->build_approval_field($fieldset);
+		if (!$this->is_contributor_member())
+		{
+			$fieldset->add_field(new FormFieldCheckbox('approved', $this->lang['calendar.labels.approved'], $event_content->is_approved()));
+		}
+		
 		$this->build_contribution_fieldset($form);
-				
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
 		
 		$this->form = $form;
-	}
-	
-	private function build_approval_field($fieldset)
-	{
-		if (!$this->is_contributor_member())
-		{
-			$fieldset->add_field(new FormFieldCheckbox('approved', $this->lang['calendar.labels.approved'], $this->get_event()->get_content()->is_approved()));
-		}
 	}
 	
 	private function build_contribution_fieldset($form)

@@ -41,7 +41,7 @@ class ArticlesAuthorizationsService
 		
 	public function read()
 	{
-		return $this->is_authorized(Category::READ_AUTHORIZATIONS);
+		return $this->is_authorized(Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
 	}
 	
 	public function contribution()
@@ -59,9 +59,9 @@ class ArticlesAuthorizationsService
 		return $this->is_authorized(Category::MODERATION_AUTHORIZATIONS);
 	}
 	
-	private function is_authorized($bit)
+	private function is_authorized($bit, $mode = Authorizations::AUTH_CHILD_PRIORITY)
 	{
-		$auth = ArticlesService::get_categories_manager()->get_heritated_authorizations($this->id_category, $bit, Authorizations::AUTH_PARENT_PRIORITY);
+		$auth = ArticlesService::get_categories_manager()->get_heritated_authorizations($this->id_category, $bit, $mode);
 		return AppContext::get_current_user()->check_auth($auth, $bit);
 	}
 }

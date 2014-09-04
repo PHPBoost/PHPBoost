@@ -51,7 +51,7 @@ class WebFormController extends ModuleController
 		
 		$this->check_authorizations();
 		
-		$this->build_form($request);
+		$this->build_form();
 		
 		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
@@ -73,7 +73,7 @@ class WebFormController extends ModuleController
 		$this->common_lang = LangLoader::get('common');
 	}
 	
-	private function build_form(HTTPRequestCustom $request)
+	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -85,7 +85,7 @@ class WebFormController extends ModuleController
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(WebService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], ($this->get_weblink()->get_id() === null ? $request->get_getint('id_category', 0) : $this->get_weblink()->get_id_category()), $search_category_children_options));
+		$fieldset->add_field(WebService::get_categories_manager()->get_select_categories_form_field('id_category', $this->common_lang['form.category'], $this->get_weblink()->get_id_category(), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldTextEditor('url', $this->common_lang['form.url'], $this->get_weblink()->get_url()->absolute(), array('required' => true), array(new FormFieldConstraintUrl())));
 		
@@ -184,8 +184,7 @@ class WebFormController extends ModuleController
 	
 	private function is_contributor_member()
 	{
-		$id_category = AppContext::get_request()->get_getint('id_category', 0);
-		return (!WebAuthorizationsService::check_authorizations($id_category)->write() && WebAuthorizationsService::check_authorizations($id_category)->contribution());
+		return (!WebAuthorizationsService::check_authorizations($this->get_weblink()->get_id_category())->write() && WebAuthorizationsService::check_authorizations($this->get_weblink()->get_id_category())->contribution());
 	}
 	
 	private function get_weblink()
@@ -205,7 +204,7 @@ class WebFormController extends ModuleController
 			else
 			{
 				$this->weblink = new WebLink();
-				$this->weblink->init_default_properties();
+				$this->weblink->init_default_properties(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
 		}
 		return $this->weblink;
