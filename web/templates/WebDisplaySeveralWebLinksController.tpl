@@ -113,8 +113,10 @@
 					
 					<meta itemprop="url" content="{weblinks.U_LINK}">
 					<meta itemprop="description" content="${escape(weblinks.DESCRIPTION)}"/>
+					# IF C_COMMENTS_ENABLED #
 					<meta itemprop="discussionUrl" content="{weblinks.U_COMMENTS}">
 					<meta itemprop="interactionCount" content="{weblinks.NUMBER_COMMENTS} UserComments">
+					# ENDIF #
 					
 				</header>
 				
