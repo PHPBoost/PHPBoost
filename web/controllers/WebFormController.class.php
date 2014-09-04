@@ -184,7 +184,8 @@ class WebFormController extends ModuleController
 	
 	private function is_contributor_member()
 	{
-		return (!WebAuthorizationsService::check_authorizations()->write() && WebAuthorizationsService::check_authorizations()->contribution());
+		$id_category = AppContext::get_request()->get_getint('id_category', 0);
+		return (!WebAuthorizationsService::check_authorizations($id_category)->write() && WebAuthorizationsService::check_authorizations($id_category)->contribution());
 	}
 	
 	private function get_weblink()

@@ -232,7 +232,8 @@ class ArticlesFormController extends ModuleController
 
 	private function is_contributor_member()
 	{
-		return (!ArticlesAuthorizationsService::check_authorizations()->write() && ArticlesAuthorizationsService::check_authorizations()->contribution());
+		$id_category = AppContext::get_request()->get_getint('id_category', 0);
+		return (!ArticlesAuthorizationsService::check_authorizations($id_category)->write() && ArticlesAuthorizationsService::check_authorizations($id_category)->contribution());
 	}
 
 	private function get_article()
