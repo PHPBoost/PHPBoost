@@ -187,7 +187,7 @@ class NewsFormController extends ModuleController
 	
 	private function is_contributor_member()
 	{
-		return (!NewsAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->write() && NewsAuthorizationsService::check_authorizations($this->get_news()->get_id_cat())->contribution());
+		return (!NewsAuthorizationsService::check_authorizations()->write() && NewsAuthorizationsService::check_authorizations()->contribution());
 	}
 	
 	private function get_news()
