@@ -38,6 +38,7 @@ $lang['csrf_invalid_token'] = 'Jeton de session invalide. Veuillez réessayer car
 //Element
 $lang['element.already_exists'] = 'L\'élément que vous demandez existe déjà.';
 $lang['element.unexist'] = 'L\'élément que vous demandez n\'existe pas.';
+$lang['element.not_visible'] = 'Cet élément n\'est pas encore ou n\'est plus approuvé, il n\'est pas affiché pour les autres utilisateurs du site.';
 
 $lang['misfit.php'] = 'Version PHP inadaptée';
 $lang['misfit.phpboost'] = 'Version de PHPBoost inadaptée';

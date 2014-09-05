@@ -79,7 +79,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	{
 		if (!$this->article->is_published())
 		{
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['articles.not_published'], MessageHelper::WARNING));
+			$this->tpl->put('NOT_VISIBLE_MESSAGE', MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING));
 		}
 		else
 		{
