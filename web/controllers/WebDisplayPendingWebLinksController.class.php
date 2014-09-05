@@ -79,7 +79,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
-		WHERE web.approbation_type = 0 OR (web.approbation_type = 2 AND (web.start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND web.author_user_id = :user_id' : '') . '
+		WHERE (web.approbation_type = 0 OR (web.approbation_type = 2 AND (web.start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND web.author_user_id = :user_id' : '') . '
 		AND web.id_category IN :authorized_categories
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
@@ -154,7 +154,7 @@ class WebDisplayPendingWebLinksController extends ModuleController
 	private function get_pagination(Date $now, $authorized_categories, $field, $mode)
 	{
 		$weblinks_number = WebService::count(
-			'WHERE approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . ' AND id_category IN :authorized_categories', 
+			'WHERE (approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . ' AND id_category IN :authorized_categories', 
 			array(
 				'user_id' => AppContext::get_current_user()->get_id(),
 				'timestamp_now' => $now->get_timestamp(),
