@@ -68,7 +68,4 @@ $lang['web.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à ajouter un
 //form
 $lang['web.form.partner'] = 'Site partenaire';
 $lang['web.form.partner_picture'] = 'Bannière du partenaire';
-
-//message
-$lang['web.message.not_visible'] = 'Ce lien n\'est pas encore ou n\'est plus approuvé, il n\'est pas affiché pour les autres utilisateurs du site.';
 ?>

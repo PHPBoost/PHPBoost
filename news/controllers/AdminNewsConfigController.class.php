@@ -40,6 +40,7 @@ class AdminNewsConfigController extends AdminModuleController
 	private $submit_button;
 	
 	private $lang;
+	private $admin_common_lang;
 	
 	/**
 	 * @var NewsConfig
@@ -70,6 +71,7 @@ class AdminNewsConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'news');
+		$this->admin_common_lang = LangLoader::get('admin-common');
 		$this->config = NewsConfig::load();
 	}
 	
@@ -77,10 +79,10 @@ class AdminNewsConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('config', LangLoader::get_message('configuration', 'admin-common'));
+		$fieldset = new FormFieldsetHTML('config', $this->admin_common_lang['configuration']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('number_news_per_page', $this->lang['admin.config.number_news_per_page'], $this->config->get_number_news_per_page(), 
+		$fieldset->add_field(new FormFieldTextEditor('number_news_per_page', $this->admin_common_lang['config.items_number_per_page'], $this->config->get_number_news_per_page(), 
 			array('size' => 6), array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 		
@@ -107,22 +109,22 @@ class AdminNewsConfigController extends AdminModuleController
 			array(new FormFieldConstraintIntegerRange(20, 1000)
 		)));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', LangLoader::get_message('config.comments_enabled', 'admin-common'), $this->config->get_comments_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->admin_common_lang['config.comments_enabled'], $this->config->get_comments_enabled()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('news_suggestions_enabled', $this->lang['admin.config.news_suggestions_enabled'], $this->config->get_news_suggestions_enabled()));
 		
-		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['admin.config.display_author'], $this->config->get_author_displayed()));
+		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->admin_common_lang['config.author_displayed'], $this->config->get_author_displayed()));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['admin.config.display_type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display_type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['admin.config.display_type.block'], NewsConfig::DISPLAY_BLOCK),
-				new FormFieldSelectChoiceOption($this->lang['admin.config.display_type.list'], NewsConfig::DISPLAY_LIST),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display_type.block'], NewsConfig::DISPLAY_BLOCK),
+				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display_type.list'], NewsConfig::DISPLAY_LIST),
 			)
 		));
 		
 		$common_lang = LangLoader::get('common');
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $common_lang['authorizations'],
-			array('description' => LangLoader::get_message('config.authorizations.explain', 'admin-common'))
+			array('description' => $this->admin_common_lang['config.authorizations.explain'])
 		);
 		$form->add_fieldset($fieldset_authorizations);
 		

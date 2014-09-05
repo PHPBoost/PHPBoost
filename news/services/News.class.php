@@ -379,6 +379,7 @@ class News
 		$number_comments = CommentsService::get_number_comments('news', $this->id);
 		
 		return array(
+			'C_VISIBLE' => $this->is_visible(),
 			'C_EDIT' => $this->is_authorized_edit(),
 			'C_DELETE' => $this->is_authorized_delete(),
 			'C_PICTURE' => $this->has_picture(),

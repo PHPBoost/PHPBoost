@@ -81,13 +81,13 @@ class WebDisplayWebLinkController extends ModuleController
 		$category = WebService::get_categories_manager()->get_categories_cache()->get_category($weblink->get_id_category());
 		
 		$keywords = $weblink->get_keywords();
-		$nbr_keywords = count($keywords);
+		$has_keywords = count($keywords) > 0;
 		
 		$this->tpl->put_all(array_merge($weblink->get_array_tpl_vars(), array(
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 			'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
-			'C_KEYWORDS' => $nbr_keywords > 0,
-			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['web.message.not_visible'], MessageHelper::WARNING)
+			'C_KEYWORDS' => $has_keywords,
+			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING)
 		)));
 		
 		if ($config->are_comments_enabled())
@@ -99,7 +99,8 @@ class WebDisplayWebLinkController extends ModuleController
 			$this->tpl->put('COMMENTS', $comments_topic->display());
 		}
 		
-		$this->build_keywords_view($keywords);
+		if ($has_keywords)
+			$this->build_keywords_view($keywords);
 	}
 	
 	private function build_keywords_view($keywords)

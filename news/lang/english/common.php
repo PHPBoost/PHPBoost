@@ -50,15 +50,10 @@ $lang['news.form.top_list'] = 'Put the news on the top of the list';
 $lang['news.form.contribution.explain'] = 'You are not authorized to create a news, however you can contribute by submitting one.';
 
 //Administration
-$lang['admin.config.number_news_per_page'] = 'Number news per page';
 $lang['admin.config.number_columns_display_news'] = 'Number columns to display news';
 $lang['admin.config.display_condensed'] = 'Display the condensed news instead of the all news';
 $lang['admin.config.number_character_to_cut'] = 'Caracters number to cut the news';
 $lang['admin.config.news_suggestions_enabled'] = 'Enable suggestions display';
-$lang['admin.config.display_author'] = 'Enable the display of the author';
-$lang['admin.config.display_type'] = 'News display type';
-$lang['admin.config.display_type.block'] = 'Display bloc';
-$lang['admin.config.display_type.list'] = 'Display list';
 
 //Feed name
 $lang['feed.name'] = 'News';

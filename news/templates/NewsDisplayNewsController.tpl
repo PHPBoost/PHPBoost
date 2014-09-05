@@ -1,3 +1,6 @@
+# IF NOT C_VISIBLE #
+	# INCLUDE NOT_VISIBLE_MESSAGE #
+# ENDIF #
 <article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 	<header>
 		<h1>
