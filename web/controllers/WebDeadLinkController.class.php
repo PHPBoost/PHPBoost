@@ -53,9 +53,9 @@ class WebDeadLinkController extends AbstractController
 			{
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($this->weblink->get_id());
-				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution_deadlink', 'common'), array('link_name' => $this->weblink->get_name())));
+				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.deadlink', 'common'), array('link_name' => $this->weblink->get_name())));
 				$contribution->set_fixing_url(WebUrlBuilder::edit($this->weblink->get_id())->relative());
-				$contribution->set_description(LangLoader::get_message('contribution_deadlink_explain', 'common'));
+				$contribution->set_description(LangLoader::get_message('contribution.deadlink_explain', 'common'));
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('web');
 				$contribution->set_type('alert');
