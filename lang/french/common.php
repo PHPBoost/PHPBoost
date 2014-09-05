@@ -77,10 +77,10 @@ $lang['sort.asc'] = 'Croissant';
 $lang['sort.desc'] = 'Décroissant';
 
 //Units
-$lang['unit_gigabytes'] = 'Go';
-$lang['unit_megabytes'] = 'Mo';
-$lang['unit_kilobytes'] = 'Ko';
-$lang['unit_bytes'] = 'Octets';
+$lang['unit.gigabytes'] = 'Go';
+$lang['unit.megabytes'] = 'Mo';
+$lang['unit.kilobytes'] = 'Ko';
+$lang['unit.bytes'] = 'Octets';
 
 //Notes
 $lang['note'] = 'Note';
@@ -128,8 +128,8 @@ $lang['suggestions'] = 'Suggestions';
 
 //Dead links
 $lang['deadlink'] = 'Signaler un lien mort';
-$lang['contribution_deadlink'] = 'Lien mort : :link_name';
-$lang['contribution_deadlink_explain'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien et modifiez-le si nécessaire.';
+$lang['contribution.deadlink'] = 'Lien mort : :link_name';
+$lang['contribution.deadlink_explain'] = 'Un membre a signalé ce lien comme étant mort. Veuillez vérifier le lien et modifiez-le si nécessaire.';
 
 //Autorisations
 $lang['authorizations'] = 'Autorisations';
