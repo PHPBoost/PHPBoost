@@ -61,7 +61,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		WHERE news.approbation_type = 0 OR (news.approbation_type = 2 AND (news.start_date > :timestamp_now OR end_date < :timestamp_now)) 
+		WHERE (news.approbation_type = 0 OR (news.approbation_type = 2 AND (news.start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))
 		AND news.id_category IN :authorized_categories' . (!NewsAuthorizationsService::check_authorizations()->moderation() ? ' AND news.author_user_id = :user_id' : '') . '
 		ORDER BY top_list_enabled DESC, news.creation_date DESC
 		LIMIT :number_items_per_page OFFSET :display_from', array(
@@ -102,7 +102,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 	{
 		$number_news = PersistenceContext::get_querier()->count(
 			NewsSetup::$news_table, 
-			'WHERE approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR end_date < :timestamp_now) AND end_date <> 0) AND id_category IN :authorized_categories' . (!NewsAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : ''), 
+			'WHERE (approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))) AND id_category IN :authorized_categories' . (!NewsAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : ''), 
 			array(
 				'timestamp_now' => $now->get_timestamp(),
 				'user_id' => AppContext::get_current_user()->get_id(),

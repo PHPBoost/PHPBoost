@@ -232,7 +232,7 @@ class ArticlesFormController extends ModuleController
 
 	private function is_contributor_member()
 	{
-		return (!ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->write() && ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->contribution());
+		return (!ArticlesAuthorizationsService::check_authorizations()->write() && ArticlesAuthorizationsService::check_authorizations()->contribution());
 	}
 
 	private function get_article()
