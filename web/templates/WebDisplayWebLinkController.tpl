@@ -1,3 +1,6 @@
+# IF NOT C_VISIBLE #
+	# INCLUDE NOT_VISIBLE_MESSAGE #
+# ENDIF #
 <article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 	<header>
 		<h1>
@@ -22,9 +25,6 @@
 		
 	</header>
 	<div class="content">
-		# IF NOT C_VISIBLE #
-			# INCLUDE NOT_VISIBLE_MESSAGE #
-		# ENDIF #
 		<div class="options infos">
 			<div class="center">
 				# IF C_HAS_PARTNER_PICTURE #

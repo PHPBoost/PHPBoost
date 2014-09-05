@@ -38,6 +38,7 @@ $lang['csrf_invalid_token'] = 'Invalid session token. Please retry because the o
 //Element
 $lang['element.already_exists'] = 'The item you request already exists.';
 $lang['element.unexist'] = 'The item you requested does not exist.';
+$lang['element.not_visible'] = 'This element is not yet or is no more approved, it is not displayed for the other users.';
 
 $lang['misfit.php'] = 'Inadequate PHP version';
 $lang['misfit.phpboost'] = 'Inadequate PHPBoost version';

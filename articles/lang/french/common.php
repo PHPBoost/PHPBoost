@@ -41,7 +41,6 @@ $lang['articles.nbr_articles.pending'] = ':number article(s) en attente';
 $lang['articles.published_articles'] = 'Articles publiés';
 $lang['articles.select_page'] = 'Sélectionnez une page';
 $lang['articles.summary'] = 'Sommaire :';
-$lang['articles.not_published'] = 'Cet article n\'est pas encore ou n\'est plus publié';
 $lang['articles.print.article'] = 'Impression d\'un article';
 $lang['articles.date_updated'] = 'Dernière modification : ';
 

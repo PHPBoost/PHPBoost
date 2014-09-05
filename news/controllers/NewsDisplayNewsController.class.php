@@ -79,7 +79,10 @@ class NewsDisplayNewsController extends ModuleController
 		$news_config = NewsConfig::load();
 		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
 		
-		$this->tpl->put_all($news->get_array_tpl_vars());
+		$this->tpl->put_all(array_merge($news->get_array_tpl_vars(), array(
+			'C_COMMENTS_ENABLED' => $news_config->get_comments_enabled(),
+			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING)
+		)));
 		
 		if (NewsConfig::load()->get_comments_enabled())
 		{
@@ -88,10 +91,10 @@ class NewsDisplayNewsController extends ModuleController
 			$comments_topic->set_url(NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
 			
 			$this->tpl->put_all(array(
-				'C_COMMENTS_ENABLED' => $news_config->get_comments_enabled(),
 				'COMMENTS' => $comments_topic->display()
 			));
 		}
+		
 		$this->build_sources_view($news);
 		$this->build_keywords_view($news);
 		$this->build_suggested_news($news);

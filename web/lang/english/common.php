@@ -68,7 +68,4 @@ $lang['web.form.contribution.explain'] = 'You are not authorized to create a new
 //form
 $lang['web.form.partner'] = 'Partner site';
 $lang['web.form.partner_picture'] = 'Partner banner';
-
-//message
-$lang['web.message.not_visible'] = 'This link is not yet or is no more approved, it is not displayed for the other users.';
 ?>
