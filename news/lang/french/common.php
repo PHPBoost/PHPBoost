@@ -50,15 +50,10 @@ $lang['news.form.top_list'] = 'Placer la news en tête de liste';
 $lang['news.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer une news, cependant vous pouvez en proposer une.';
 
 //Administration
-$lang['admin.config.number_news_per_page'] = 'Nombre de news par page';
 $lang['admin.config.number_columns_display_news'] = 'Nombre de colonnes pour afficher les news';
 $lang['admin.config.display_condensed'] = 'Afficher le condensé de la news et non la news entière';
 $lang['admin.config.number_character_to_cut'] = 'Nombre de caractères pour couper la news';
 $lang['admin.config.news_suggestions_enabled'] = 'Activer l\'affichage des suggestions';
-$lang['admin.config.display_author'] = 'Activer l\'affichage de l\'auteur';
-$lang['admin.config.display_type'] = 'Type d\'affichage des news';
-$lang['admin.config.display_type.block'] = 'Affichage en bloc';
-$lang['admin.config.display_type.list'] = 'Affichage en liste';
 
 //Feed name
 $lang['feed.name'] = 'Actualités';

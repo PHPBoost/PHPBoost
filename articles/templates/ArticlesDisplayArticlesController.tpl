@@ -1,4 +1,4 @@
-# INCLUDE MSG #
+# INCLUDE NOT_VISIBLE_MESSAGE #
 <article itemscope="itemscope" itemtype="http://schema.org/Article">
 	<header>
 		<h1>
