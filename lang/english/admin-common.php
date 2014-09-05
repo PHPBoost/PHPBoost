@@ -37,6 +37,10 @@ $lang['config.comments_enabled'] = 'Enable comments';
 $lang['config.notation_enabled'] = 'Enable notation';
 $lang['config.notation_scale'] = 'Notation scale';
 $lang['config.forbidden-tags'] = 'Forbidden tags';
+$lang['config.display_type'] = 'Display type';
+$lang['config.display_type.block'] = 'Display bloc';
+$lang['config.display_type.list'] = 'Display list';
+$lang['config.display_type.inline'] = 'Display inline';
 
 $lang['config.authorizations.explain'] = 'Global module authorizations. You can change these authorizations on each category.';
 ?>
