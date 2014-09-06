@@ -61,13 +61,14 @@ class NewsDisplayPendingNewsController extends ModuleController
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		WHERE (news.approbation_type = 0 OR (news.approbation_type = 2 AND (news.start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))
-		AND news.id_category IN :authorized_categories' . (!NewsAuthorizationsService::check_authorizations()->moderation() ? ' AND news.author_user_id = :user_id' : '') . '
+		WHERE news.id_category IN :authorized_categories
+		' . (!NewsAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
+		AND (approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))
 		ORDER BY top_list_enabled DESC, news.creation_date DESC
 		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'timestamp_now' => $now->get_timestamp(),
 			'authorized_categories' => $authorized_categories,
 			'user_id' => AppContext::get_current_user()->get_id(),
+			'timestamp_now' => $now->get_timestamp(),
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		));
@@ -102,11 +103,13 @@ class NewsDisplayPendingNewsController extends ModuleController
 	{
 		$number_news = PersistenceContext::get_querier()->count(
 			NewsSetup::$news_table, 
-			'WHERE (approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now)))) AND id_category IN :authorized_categories' . (!NewsAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : ''), 
+			'WHERE id_category IN :authorized_categories
+			' . (!NewsAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
+			AND (approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))', 
 			array(
-				'timestamp_now' => $now->get_timestamp(),
+				'authorized_categories' => $authorized_categories,
 				'user_id' => AppContext::get_current_user()->get_id(),
-				'authorized_categories' => $authorized_categories
+				'timestamp_now' => $now->get_timestamp()
 		));
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
