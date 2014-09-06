@@ -63,10 +63,11 @@ class WebFeedProvider implements FeedProvider
 			$results = $querier->select('SELECT web.id, web.id_category, web.name, web.rewrited_name, web.contents, web.short_contents, web.creation_date, web.partner_picture, cat.rewrited_name AS rewrited_name_cat
 				FROM ' . WebSetup::$web_table . ' web
 				LEFT JOIN '. WebSetup::$web_cats_table .' cat ON cat.id = web.id_category
-				WHERE (web.approbation_type = 1 OR (web.approbation_type = 2 AND web.start_date < :timestamp_now AND (web.end_date > :timestamp_now OR web.end_date = 0))) AND web.id_category IN :ids_categories
+				WHERE web.id_category IN :ids_categories
+				AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
 				ORDER BY web.creation_date DESC', array(
-				'ids_categories' => $ids_categories,
-				'timestamp_now' => $now->get_timestamp()
+					'ids_categories' => $ids_categories,
+					'timestamp_now' => $now->get_timestamp()
 			));
 	
 			foreach ($results as $row)

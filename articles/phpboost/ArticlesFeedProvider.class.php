@@ -64,8 +64,8 @@ class ArticlesFeedProvider implements FeedProvider
 			articles.contents, articles.description, articles.date_created, cat.rewrited_name AS rewrited_name_cat
 			FROM ' . ArticlesSetup::$articles_table . ' articles
 			LEFT JOIN '. ArticlesSetup::$articles_cats_table .' cat ON cat.id = articles.id_category
-			WHERE (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
-			AND articles.publishing_end_date = 0) OR articles.publishing_end_date > :timestamp_now)) AND articles.id_category IN :cats_ids
+			WHERE articles.id_category IN :cats_ids
+			AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 			ORDER BY articles.date_created DESC', 
 			array(
 				'cats_ids' => $ids_categories,

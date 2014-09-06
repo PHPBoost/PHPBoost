@@ -253,9 +253,9 @@ class CalendarService
 		" : "") . "(SELECT start_date, end_date, title, 'EVENT' AS type, id_category, repeat_type, repeat_number
 		FROM " . CalendarSetup::$calendar_events_table . " event
 		LEFT JOIN " . CalendarSetup::$calendar_events_content_table . " event_content ON event_content.id = event.content_id
-		WHERE approved = 1 AND ((start_date BETWEEN :first_month_day AND :last_month_day)
-		OR (end_date BETWEEN :first_month_day AND :last_month_day)
-		OR (:first_month_day BETWEEN start_date AND end_date)) AND id_category IN :authorized_categories)
+		WHERE approved = 1
+		AND ((start_date BETWEEN :first_month_day AND :last_month_day) OR (end_date BETWEEN :first_month_day AND :last_month_day) OR (:first_month_day BETWEEN start_date AND end_date)) 
+		AND id_category IN :authorized_categories)
 		ORDER BY start_date ASC", array(
 			'month' => $month,
 			'first_month_day' => mktime(0, 0, 0, $month, 1, $year),
