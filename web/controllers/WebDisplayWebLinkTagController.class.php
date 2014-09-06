@@ -91,13 +91,15 @@ class WebDisplayWebLinkTagController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
-		WHERE relation.id_keyword = :id_keyword AND (web.approbation_type = 1 OR (web.approbation_type = 2 AND web.start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND web.id_category IN :authorized_categories
+		WHERE relation.id_keyword = :id_keyword
+		AND web.id_category IN :authorized_categories
+		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'id_keyword' => $this->get_keyword()->get_id(),
-			'timestamp_now' => $now->get_timestamp(),
 			'authorized_categories' => $authorized_categories,
+			'timestamp_now' => $now->get_timestamp(),
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		));
@@ -194,10 +196,12 @@ class WebDisplayWebLinkTagController extends ModuleController
 		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS weblinks_number
 		FROM '. WebSetup::$web_table .' web
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'web\' AND relation.id_in_module = web.id 
-		WHERE relation.id_keyword = :id_keyword AND (web.approbation_type = 1 OR (web.approbation_type = 2 AND web.start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND web.id_category IN :authorized_categories', array(
+		WHERE relation.id_keyword = :id_keyword
+		AND web.id_category IN :authorized_categories
+		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))', array(
 			'id_keyword' => $this->get_keyword()->get_id(),
-			'timestamp_now' => $now->get_timestamp(),
 			'authorized_categories' => $authorized_categories,
+			'timestamp_now' => $now->get_timestamp()
 		));
 		
 		$page = AppContext::get_request()->get_getint('page', 1);

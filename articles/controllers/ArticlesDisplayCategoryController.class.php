@@ -88,7 +88,6 @@ class ArticlesDisplayCategoryController extends ModuleController
 				break;
 		}
 
-		$authorized_categories = ArticlesService::get_authorized_categories($this->get_category()->get_id());
 		$pagination = $this->get_pagination($now, $field, $mode);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
@@ -97,9 +96,9 @@ class ArticlesDisplayCategoryController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = \'articles\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = :user_id
-		WHERE articles.id_category = :id_category AND (articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
-		AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0))) 
-		ORDER BY ' .$sort_field . ' ' . $sort_mode . ' 
+		WHERE articles.id_category = :id_category 
+		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
+		ORDER BY ' .$sort_field . ' ' . $sort_mode . '
 		LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from(), array(
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'id_category' => $this->get_category()->get_id(),
@@ -134,14 +133,15 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$authorized_categories = ArticlesService::get_authorized_categories($this->get_category()->get_id());
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.id, ac.name, ac.description, ac.image, ac.rewrited_name,
 		(SELECT COUNT(*) FROM '. ArticlesSetup::$articles_table .' articles 
-		WHERE articles.id_category = @id_cat AND (articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
-		AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0)))) AS nbr_articles
+		WHERE articles.id_category = @id_cat
+		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
+		) AS nbr_articles
 		FROM ' . ArticlesSetup::$articles_cats_table .' ac 
 		WHERE ac.id_parent = :id_category AND ac.id IN :authorized_categories
 		ORDER BY ac.id_parent',	array(
 			'timestamp_now' => $now->get_timestamp(),
-			'authorized_categories' => $authorized_categories,
-			'id_category' => $this->category->get_id()
+			'id_category' => $this->category->get_id(),
+			'authorized_categories' => $authorized_categories
 		));
 		
 		$nbr_cat_displayed = 0;
@@ -247,7 +247,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 	{
 		$number_articles = PersistenceContext::get_querier()->count(
 			ArticlesSetup::$articles_table, 
-			'WHERE id_category = :id_category AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))', 
+			'WHERE id_category = :id_category
+			AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))', 
 			array(
 				'id_category' => $this->get_category()->get_id(),
 				'timestamp_now' => $now->get_timestamp()

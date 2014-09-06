@@ -45,8 +45,8 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
 			FROM " . NewsSetup::$news_table . " n
 			LEFT JOIN ". NewsSetup::$news_cats_table ." cat ON n.id_category = cat.id
 			WHERE ( FT_SEARCH(n.name, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR FT_SEARCH_RELEVANCE(n.short_contents, '" . $args['search'] . "') )
-			AND (n.approbation_type = 1 OR (n.approbation_type = 2 AND n.start_date < '" . $now->get_timestamp() . "' AND (end_date > '" . $now->get_timestamp() . "' OR end_date = 0)))
 			AND id_category IN(" . implode(", ", $authorized_categories) . ")
+			AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < '" . $now->get_timestamp() . "' AND (end_date > '" . $now->get_timestamp() . "' OR end_date = 0)))
 			ORDER BY relevance DESC
 			LIMIT 100 OFFSET 0";
 	}

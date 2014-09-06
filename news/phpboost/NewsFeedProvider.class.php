@@ -63,7 +63,8 @@ class NewsFeedProvider implements FeedProvider
 			$results = $querier->select('SELECT news.id, news.id_category, news.name, news.rewrited_name, news.contents, news.short_contents, news.creation_date, news.picture_url, cat.rewrited_name AS rewrited_name_cat
 				FROM ' . NewsSetup::$news_table . ' news
 				LEFT JOIN '. NewsSetup::$news_cats_table .' cat ON cat.id = news.id_category
-				WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now OR news.end_date = 0))) AND news.id_category IN :cats_ids
+				WHERE id_category IN :cats_ids
+				AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) 
 				ORDER BY news.creation_date DESC', array(
 				'cats_ids' => $ids_categories,
 				'timestamp_now' => $now->get_timestamp()
