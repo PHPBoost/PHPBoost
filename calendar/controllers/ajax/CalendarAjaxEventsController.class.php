@@ -75,9 +75,8 @@ class CalendarAjaxEventsController extends AbstractController
 		LEFT JOIN " . CalendarSetup::$calendar_events_content_table . " event_content ON event_content.id = event.content_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = event_content.author_id
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = event.id_event AND com.module_id = 'calendar'
-		WHERE approved = 1 AND ((start_date BETWEEN :first_day_hour AND :last_day_hour)
-		OR (end_date BETWEEN :first_day_hour AND :last_day_hour)
-		OR (:first_day_hour BETWEEN start_date AND end_date))
+		WHERE approved = 1
+		AND ((start_date BETWEEN :first_day_hour AND :last_day_hour) OR (end_date BETWEEN :first_day_hour AND :last_day_hour) OR (:first_day_hour BETWEEN start_date AND end_date))
 		ORDER BY start_date ASC", array(
 			'first_day_hour' => mktime(0, 0, 0, $month, $day, $year),
 			'last_day_hour' => mktime(23, 59, 59, $month, $day, $year)

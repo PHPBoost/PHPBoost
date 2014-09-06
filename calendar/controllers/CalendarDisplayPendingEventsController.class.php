@@ -64,7 +64,10 @@ class CalendarDisplayPendingEventsController extends ModuleController
 		LEFT JOIN " . CalendarSetup::$calendar_events_content_table . " event_content ON event_content.id = event.content_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = event_content.author_id
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = event.id_event AND com.module_id = 'calendar'
-		WHERE approved = 0 AND parent_id = 0 AND id_category IN :authorized_categories" . (!CalendarAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : '') . "
+		WHERE approved = 0
+		AND parent_id = 0
+		AND id_category IN :authorized_categories
+		" . (!CalendarAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : '') . "
 		ORDER BY start_date DESC
 		LIMIT :number_items_per_page OFFSET :display_from", array(
 			'authorized_categories' => $authorized_categories,
@@ -111,7 +114,10 @@ class CalendarDisplayPendingEventsController extends ModuleController
 		$row = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS events_number
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
-		WHERE approved = 0 AND parent_id = 0 AND id_category IN :authorized_categories' . (!CalendarAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : ''), array(
+		WHERE approved = 0
+		AND parent_id = 0
+		AND id_category IN :authorized_categories
+		' . (!CalendarAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : ''), array(
 			'authorized_categories' => $authorized_categories,
 			'user_id' => AppContext::get_current_user()->get_id()
 		));
