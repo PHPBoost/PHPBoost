@@ -199,7 +199,7 @@ class CalendarAjaxCalendarController extends AbstractController
 				'COLOR' => !empty($color) ? $color : $config->get_birthday_color(),
 				'CLASS' => $class,
 				'CHANGE_LINE' => (($i % 8) == 0 && $i != 56),
-				'U_DAY_EVENTS' => CalendarUrlBuilder::home($year . '/' . $month . '/' . $today . '#calendar')->rel()
+				'U_DAY_EVENTS' => CalendarUrlBuilder::home($year, $month, $today, true)->rel()
 			));
 		}
 	}

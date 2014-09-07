@@ -171,7 +171,7 @@ class CalendarDeleteController extends ModuleController
 		if ($request->get_getvalue('return', '') == 'admin')
 			AppContext::get_response()->redirect(CalendarUrlBuilder::manage_events($request->get_getvalue('field', ''), $request->get_getvalue('sort', ''), $request->get_getint('page', 1)));
 		else
-			AppContext::get_response()->redirect(CalendarUrlBuilder::home($this->event->get_start_date()->get_year() . '/'. $this->event->get_start_date()->get_month()));
+			AppContext::get_response()->redirect(CalendarUrlBuilder::home($this->event->get_start_date()->get_year(), $this->event->get_start_date()->get_month()));
 	}
 	
 	private function generate_response(View $tpl)

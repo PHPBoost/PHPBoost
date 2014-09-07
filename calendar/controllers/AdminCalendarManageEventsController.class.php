@@ -53,8 +53,8 @@ class AdminCalendarManageEventsController extends AdminModuleController
 	
 	private function build_view(HTTPRequestCustom $request)
 	{
-		$mode = $request->get_getvalue('sort', 'desc');
-		$field = $request->get_getvalue('field', 'date');
+		$mode = $request->get_getvalue('sort', CalendarUrlBuilder::DEFAULT_SORT_MODE);
+		$field = $request->get_getvalue('field', CalendarUrlBuilder::DEFAULT_SORT_FIELD);
 		
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 		
