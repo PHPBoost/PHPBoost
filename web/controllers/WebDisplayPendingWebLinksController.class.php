@@ -60,7 +60,16 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);
 		
-		$pagination = $this->get_pagination($now, $authorized_categories, $field, $mode);
+		$condition = 'WHERE id_category IN :authorized_categories
+		' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
+		AND (approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))';
+		$parameters = array(
+			'user_id' => AppContext::get_current_user()->get_id(),
+			'authorized_categories' => $authorized_categories,
+			'timestamp_now' => $now->get_timestamp()
+		);
+		
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode);
 		
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 		switch ($field)
@@ -79,17 +88,12 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
-		WHERE web.id_category IN :authorized_categories
-		' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
-		AND (approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))
+		' . $condition . '
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'user_id' => AppContext::get_current_user()->get_id(),
-			'authorized_categories' => $authorized_categories,
-			'timestamp_now' => $now->get_timestamp(),
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		));
+		)));
 		
 		$this->tpl->put_all(array(
 			'C_WEBLINKS' => $result->get_rows_count() > 0,
@@ -152,17 +156,9 @@ class WebDisplayPendingWebLinksController extends ModuleController
 		$this->tpl->put('SORT_FORM', $form->display());
 	}
 	
-	private function get_pagination(Date $now, $authorized_categories, $field, $mode)
+	private function get_pagination($condition, $parameters, $field, $mode)
 	{
-		$weblinks_number = WebService::count(
-			'WHERE web.id_category IN :authorized_categories
-			' . (!WebAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
-			AND (approbation_type = 0 OR (approbation_type = 2 AND (start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))', 
-			array(
-				'authorized_categories' => $authorized_categories,
-				'user_id' => AppContext::get_current_user()->get_id(),
-				'timestamp_now' => $now->get_timestamp()
-		));
+		$weblinks_number = WebService::count($condition, $parameters);
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $weblinks_number, (int)WebConfig::load()->get_items_number_per_page());

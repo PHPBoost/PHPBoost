@@ -42,7 +42,7 @@ class NewsDisplayCategoryController extends ModuleController
 		$this->init();
 		
 		$this->build_view();
-					
+		
 		return $this->generate_response();
 	}
 	
@@ -54,24 +54,29 @@ class NewsDisplayCategoryController extends ModuleController
 	}
 		
 	private function build_view()
-	{	
+	{
 		$now = new Date();
 		$authorized_categories = NewsService::get_authorized_categories($this->get_category()->get_id());
 		$news_config = NewsConfig::load();
-		$pagination = $this->get_pagination($now, $authorized_categories);
-
+		
+		$condition = 'WHERE id_category IN :authorized_categories
+		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
+		$parameters = array(
+			'authorized_categories' => $authorized_categories,
+			'timestamp_now' => $now->get_timestamp()
+		);
+		
+		$pagination = $this->get_pagination($condition, $parameters);
+		
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		WHERE news.id_category IN :authorized_categories
-		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
+		' . $condition . '
 		ORDER BY top_list_enabled DESC, news.creation_date DESC
-		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'authorized_categories' => $authorized_categories,
-			'timestamp_now' => $now->get_timestamp(),
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		));
+		)));
 		
 		$number_columns_display_news = $news_config->get_number_columns_display_news();
 		$this->tpl->put_all(array(
@@ -97,17 +102,10 @@ class NewsDisplayCategoryController extends ModuleController
 		}
 		$result->dispose();
 	}
-		
-	private function get_pagination(Date $now, $authorized_categories)
+	
+	private function get_pagination($condition, $parameters)
 	{
-		$number_news = PersistenceContext::get_querier()->count(
-			NewsSetup::$news_table, 
-			'WHERE id_category IN :authorized_categories
-			AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))', 
-			array(
-				'authorized_categories' => $authorized_categories,
-				'timestamp_now' => $now->get_timestamp()
-		));
+		$number_news = PersistenceContext::get_querier()->count(NewsSetup::$news_table, $condition, $parameters);
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $number_news, (int)NewsConfig::load()->get_number_news_per_page());
