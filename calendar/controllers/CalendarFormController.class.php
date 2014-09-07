@@ -471,7 +471,7 @@ class CalendarFormController extends ModuleController
 		}
 		elseif ($event->get_content()->is_approved())
 		{
-			AppContext::get_response()->redirect(CalendarUrlBuilder::home($event->get_start_date()->get_year() . '/' . $event->get_start_date()->get_month() . '/' . $event->get_start_date()->get_day() . '#calendar'));
+			AppContext::get_response()->redirect(CalendarUrlBuilder::home($event->get_start_date()->get_year(), $event->get_start_date()->get_month(), $event->get_start_date()->get_day() , true));
 		}
 		elseif (!$event->get_content()->is_approved())
 		{

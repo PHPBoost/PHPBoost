@@ -31,6 +31,9 @@
  */
 class CalendarUrlBuilder
 {
+	const DEFAULT_SORT_FIELD = 'date';
+	const DEFAULT_SORT_MODE = 'desc';
+	
 	private static $dispatcher = '/calendar';
 	
 	/**
@@ -44,11 +47,11 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function manage_events($sort_field = null, $sort_mode = null, $page = 1)
+	public static function manage_events($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
 		$page = $page !== 1 ? $page . '/': '';
-		$sort_field = $sort_field !== null ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== null ? $sort_mode . '/' : '';
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/' . $sort_field . $sort_mode . $page);
 	}
 	
@@ -112,25 +115,28 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function add_event($param = '')
+	public static function add_event($year = null, $month = null, $day = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/add/' . $param);
+		$year = $year !== null ? $year . '/' : '';
+		$month = $month !== null ? $month . '/' : '';
+		$day = $day !== null ? $day . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/add/' . $year . $month . $day);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function edit_event($param = '')
+	public static function edit_event($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/edit/' . $param);
+		return DispatchManager::get_url(self::$dispatcher, '/edit/' . $id);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function delete_event($param = '')
+	public static function delete_event($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $param . '/?token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $id . '/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
@@ -152,25 +158,29 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function ajax_month_calendar($param = '')
+	public static function ajax_month_calendar()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/ajax_month_calendar/' . $param);
+		return DispatchManager::get_url(self::$dispatcher, '/ajax_month_calendar/');
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function ajax_month_events($param = '')
+	public static function ajax_month_events()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/ajax_month_events/' . $param);
+		return DispatchManager::get_url(self::$dispatcher, '/ajax_month_events/');
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function home($param = '')
+	public static function home($year = null, $month = null, $day = null, $calendar_anchor = false)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $param);
+		$year = $year !== null ? $year . '/' : '';
+		$month = $month !== null ? $month . '/' : '';
+		$day = $day !== null ? $day . '/' : '';
+		$calendar_anchor = $calendar_anchor !== false ? '#calendar' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $year . $month . $day . $calendar_anchor);
 	}
 }
 ?>
