@@ -78,7 +78,9 @@ class CalendarDisplayEventController extends ModuleController
 		$event = $this->get_event();
 		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
 		
-		$this->tpl->put_all($event->get_array_tpl_vars());
+		$this->tpl->put_all(array_merge($event->get_array_tpl_vars(), array(
+			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('element.not_visible', 'status-messages-common'), MessageHelper::WARNING)
+		)));
 		
 		$participants_number = count($event->get_participants());
 		$i = 0;

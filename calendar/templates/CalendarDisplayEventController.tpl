@@ -1,3 +1,6 @@
+# IF NOT C_APPROVED #
+	# INCLUDE NOT_VISIBLE_MESSAGE #
+# ENDIF #
 <article itemscope="itemscope" itemtype="http://schema.org/Event">
 	<header>
 		<h1>
