@@ -119,7 +119,7 @@ class BugtrackerUrlBuilder
 	public static function history($id, $page = 1)
 	{
 		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/history/' . $id .'/' . $page);
+		return DispatchManager::get_url(self::$dispatcher, '/history/' . $id . '/' . $page);
 	}
 	
 	/**
