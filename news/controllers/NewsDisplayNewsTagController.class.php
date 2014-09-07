@@ -61,23 +61,28 @@ class NewsDisplayNewsTagController extends ModuleController
 		$now = new Date();
 		$authorized_categories = NewsService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$news_config = NewsConfig::load();
-		$pagination = $this->get_pagination($now, $authorized_categories);
+		
+		$condition = 'WHERE relation.id_keyword = :id_keyword
+		AND id_category IN :authorized_categories
+		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
+		$parameters = array(
+			'id_keyword' => $this->get_keyword()->get_id(),
+			'authorized_categories' => $authorized_categories,
+			'timestamp_now' => $now->get_timestamp()
+		);
+		
+		$pagination = $this->get_pagination($condition, $parameters);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'news\' AND relation.id_in_module = news.id 
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		WHERE relation.id_keyword = :id_keyword
-		AND news.id_category IN :authorized_categories
-		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
+		' . $condition . '
 		ORDER BY top_list_enabled DESC, news.creation_date DESC
-		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'id_keyword' => $this->get_keyword()->get_id(),
-			'authorized_categories' => $authorized_categories,
-			'timestamp_now' => $now->get_timestamp(),
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		));
+		)));
 		
 		$number_columns_display_news = $news_config->get_number_columns_display_news();
 		$this->tpl->put_all(array(
@@ -130,18 +135,12 @@ class NewsDisplayNewsTagController extends ModuleController
 		return $this->keyword;
 	}
 	
-	private function get_pagination(Date $now, $authorized_categories)
+	private function get_pagination($condition, $parameters)
 	{
 		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS nbr_news
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'news\' AND relation.id_in_module = news.id 
-		WHERE relation.id_keyword = :id_keyword
-		AND news.id_category IN :authorized_categories
-		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))', array(
-			'id_keyword' => $this->get_keyword()->get_id(),
-			'authorized_categories' => $authorized_categories,
-			'timestamp_now' => $now->get_timestamp()
-		));
+		' . $condition, $parameters);
 
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $result['nbr_news'], (int)NewsConfig::load()->get_number_news_per_page());

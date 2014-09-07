@@ -87,8 +87,15 @@ class ArticlesDisplayCategoryController extends ModuleController
 				$sort_field = 'date_created';
 				break;
 		}
-
-		$pagination = $this->get_pagination($now, $field, $mode);
+		
+		$condition = 'WHERE id_category = :id_category 
+		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
+		$parameters = array(
+			'id_category' => $this->get_category()->get_id(),
+			'timestamp_now' => $now->get_timestamp()
+		);
+		
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM ' . ArticlesSetup::$articles_table . ' articles
@@ -96,14 +103,13 @@ class ArticlesDisplayCategoryController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = \'articles\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = :user_id
-		WHERE articles.id_category = :id_category 
-		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
-		ORDER BY ' .$sort_field . ' ' . $sort_mode . '
-		LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from(), array(
-			'id_category' => $this->category->get_id(),
-			'authorized_categories' => $authorized_categories,
-			'timestamp_now' => $now->get_timestamp()
-		));
+		' . $condition . '
+		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+			'user_id' => AppContext::get_current_user()->get_id(),
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
+		)));
 		
 		$this->view->put_all(array(
 			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
@@ -240,17 +246,10 @@ class ArticlesDisplayCategoryController extends ModuleController
 			$i++;
 		}
 	}
-		
-	private function get_pagination(Date $now, $field, $mode)
+	
+	private function get_pagination($condition, $parameters, $field, $mode)
 	{
-		$number_articles = PersistenceContext::get_querier()->count(
-			ArticlesSetup::$articles_table, 
-			'WHERE id_category = :id_category
-			AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))', 
-			array(
-				'id_category' => $this->get_category()->get_id(),
-				'timestamp_now' => $now->get_timestamp()
-		));
+		$number_articles = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, $condition, $parameters);
 		
 		$current_page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($current_page, $number_articles, (int)ArticlesConfig::load()->get_number_articles_per_page());
