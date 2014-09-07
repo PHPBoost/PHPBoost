@@ -57,24 +57,29 @@ class CalendarDisplayPendingEventsController extends ModuleController
 	public function build_view(HTTPRequestCustom $request)
 	{
 		$authorized_categories = CalendarService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$pagination = $this->get_pagination($authorized_categories);
 		
-		$result = PersistenceContext::get_querier()->select("SELECT *
-		FROM " . CalendarSetup::$calendar_events_table . " event
-		LEFT JOIN " . CalendarSetup::$calendar_events_content_table . " event_content ON event_content.id = event.content_id
-		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = event_content.author_id
-		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = event.id_event AND com.module_id = 'calendar'
-		WHERE approved = 0
+		$condition = 'WHERE approved = 0
 		AND parent_id = 0
 		AND id_category IN :authorized_categories
-		" . (!CalendarAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : '') . "
-		ORDER BY start_date DESC
-		LIMIT :number_items_per_page OFFSET :display_from", array(
+		' . (!CalendarAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : '');
+		$parameters = array(
 			'authorized_categories' => $authorized_categories,
-			'user_id' => AppContext::get_current_user()->get_id(),
+			'user_id' => AppContext::get_current_user()->get_id()
+		);
+		
+		$pagination = $this->get_pagination($condition, $parameters);
+		
+		$result = PersistenceContext::get_querier()->select('SELECT *
+		FROM ' . CalendarSetup::$calendar_events_table . ' event
+		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = event_content.author_id
+		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = event.id_event AND com.module_id = \'calendar\'
+		' . $condition . '
+		ORDER BY start_date DESC
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		));
+		)));
 		
 		$this->events_view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
@@ -109,18 +114,12 @@ class CalendarDisplayPendingEventsController extends ModuleController
 		}
 	}
 	
-	private function get_pagination($authorized_categories)
+	private function get_pagination($condition, $parameters)
 	{
 		$row = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS events_number
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
-		WHERE approved = 0
-		AND parent_id = 0
-		AND id_category IN :authorized_categories
-		' . (!CalendarAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_id = :user_id' : ''), array(
-			'authorized_categories' => $authorized_categories,
-			'user_id' => AppContext::get_current_user()->get_id()
-		));
+		' . $condition, $parameters);
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $row['events_number'], (int)CalendarConfig::load()->get_items_number_per_page());

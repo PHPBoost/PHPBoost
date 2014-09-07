@@ -62,7 +62,16 @@ class WebDisplayWebLinkTagController extends ModuleController
 		$mode = $request->get_getstring('sort', WebUrlBuilder::DEFAULT_SORT_MODE);
 		$field = $request->get_getstring('field', WebUrlBuilder::DEFAULT_SORT_FIELD);
 		
-		$pagination = $this->get_pagination($now, $authorized_categories, $field, $mode);
+		$condition = 'WHERE relation.id_keyword = :id_keyword
+		AND id_category IN :authorized_categories
+		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
+		$parameters = array(
+			'id_keyword' => $this->get_keyword()->get_id(),
+			'authorized_categories' => $authorized_categories,
+			'timestamp_now' => $now->get_timestamp()
+		);
+		
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode);
 		
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 		switch ($field)
@@ -95,14 +104,11 @@ class WebDisplayWebLinkTagController extends ModuleController
 		AND web.id_category IN :authorized_categories
 		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_items_per_page OFFSET :display_from', array(
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
 			'user_id' => AppContext::get_current_user()->get_id(),
-			'id_keyword' => $this->get_keyword()->get_id(),
-			'authorized_categories' => $authorized_categories,
-			'timestamp_now' => $now->get_timestamp(),
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		));
+		)));
 		
 		$this->tpl->put_all(array(
 			'C_WEBLINKS' => $result->get_rows_count() > 0,
@@ -191,18 +197,12 @@ class WebDisplayWebLinkTagController extends ModuleController
 		return $this->keyword;
 	}
 	
-	private function get_pagination(Date $now, $authorized_categories, $field, $mode)
+	private function get_pagination($condition, $parameters, $field, $mode)
 	{
 		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS weblinks_number
 		FROM '. WebSetup::$web_table .' web
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'web\' AND relation.id_in_module = web.id 
-		WHERE relation.id_keyword = :id_keyword
-		AND web.id_category IN :authorized_categories
-		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))', array(
-			'id_keyword' => $this->get_keyword()->get_id(),
-			'authorized_categories' => $authorized_categories,
-			'timestamp_now' => $now->get_timestamp()
-		));
+		' . $condition, $parameters);
 		
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $result['weblinks_number'], (int)WebConfig::load()->get_items_number_per_page());

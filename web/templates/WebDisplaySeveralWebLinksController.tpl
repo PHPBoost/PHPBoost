@@ -171,11 +171,9 @@
 							# IF C_COMMENTS_ENABLED #
 								<span># IF weblinks.C_COMMENTS # {weblinks.NUMBER_COMMENTS} # ENDIF # {weblinks.L_COMMENTS}</span>
 							# ENDIF #
-							# IF weblinks.C_VISIBLE #
-								# IF C_NOTATION_ENABLED #
-									<div class="spacer">&nbsp;</div>
-									<div class="center">{weblinks.NOTATION}</div>
-								# ENDIF #
+							# IF C_NOTATION_ENABLED #
+								<div class="spacer">&nbsp;</div>
+								<div class="center">{weblinks.NOTATION}</div>
 							# ENDIF #
 						</div>
 						
