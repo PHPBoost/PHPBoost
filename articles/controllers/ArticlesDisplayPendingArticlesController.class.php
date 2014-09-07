@@ -113,8 +113,17 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				$sort_field = 'date_created';
 				break;
 		}
-
-		$pagination = $this->get_pagination($now, $authorized_categories, $field, $mode);
+		
+		$condition = 'WHERE id_category IN :authorized_categories
+		' . (!ArticlesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
+		AND (published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))';
+		$parameters = array(
+			'authorized_categories' => $authorized_categories,
+			'user_id' => AppContext::get_current_user()->get_id(),
+			'timestamp_now' => $now->get_timestamp()
+		);
+		
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note 
 		FROM '. ArticlesSetup::$articles_table .' articles
@@ -122,17 +131,12 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = "articles"
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = :user_id
-		WHERE articles.id_category IN :authorized_categories
-		' . (!ArticlesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
-		AND (published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))
+		' . $condition . '
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'authorized_categories' => $authorized_categories,
-			'user_id' => AppContext::get_current_user()->get_id(),
-			'timestamp_now' => $now->get_timestamp(),
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		));
+		)));
 		
 		$nbr_articles_pending = $result->get_rows_count();
 		
@@ -194,18 +198,9 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		}
 	}
 	
-	private function get_pagination(Date $now, $authorized_categories, $field, $mode)
+	private function get_pagination($condition, $parameters, $field, $mode)
 	{
-		$number_articles = PersistenceContext::get_querier()->count(
-			ArticlesSetup::$articles_table, 
-			'WHERE id_category IN :authorized_categories
-			' . (!ArticlesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
-			AND (published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))', 
-			array(
-				'authorized_categories' => $authorized_categories,
-				'user_id' => AppContext::get_current_user()->get_id(),
-				'timestamp_now' => $now->get_timestamp()
-		));
+		$number_articles = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, $condition, $parameters);
 		
 		$current_page = AppContext::get_request()->get_getint('page', 1);
 		

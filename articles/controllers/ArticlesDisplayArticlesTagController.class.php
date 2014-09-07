@@ -108,9 +108,19 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_COMMENTS_ENABLED' => ArticlesConfig::load()->are_comments_enabled(),
 			'C_ARTICLES_FILTERS' => true,
 		));
-	
+		
 		$authorized_categories = ArticlesService::get_authorized_categories(Category::ROOT_CATEGORY);
-		$pagination = $this->get_pagination($now, $authorized_categories, $field, $mode);
+		
+		$condition = 'WHERE relation.id_keyword = :id_keyword
+		AND id_category IN :authorized_categories
+		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
+		$parameters = array(
+			'id_keyword' => $this->get_keyword()->get_id(),
+			'authorized_categories' => $authorized_categories,
+			'timestamp_now' => $now->get_timestamp()
+		);
+		
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note 
 		FROM ' . ArticlesSetup::$articles_table . ' articles
@@ -119,17 +129,12 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = \'articles\'
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = \'articles\' AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
-		WHERE relation.id_keyword = :id_keyword AND (articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
-		AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0))) 
-		AND articles.id_category IN :authorized_categories
+		' . $condition . '
 		ORDER BY ' .$sort_field . ' ' . $sort_mode . ' 
-		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'id_keyword' => $this->keyword->get_id(),
-			'timestamp_now' => $now->get_timestamp(),
-			'authorized_categories' => $authorized_categories,
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		));
+		)));
 
 		$this->build_sorting_form($field, $mode);
 		
@@ -201,23 +206,12 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$this->view->put('FORM', $form->display());
 	}
 	
-	private function get_pagination(Date $now, $authorized_categories, $field, $mode)
+	private function get_pagination($condition, $parameters, $field, $mode)
 	{
 		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS nbr_articles
 		FROM '. ArticlesSetup::$articles_table .' articles
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'articles\' AND relation.id_in_module = articles.id 
-		WHERE relation.id_keyword = :id_keyword
-		AND articles.id_category IN :authorized_categories
-		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
-		ORDER BY ' . $sort_field . ' ' . $sort_mode . ' 
-		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'user_id' => AppContext::get_current_user()->get_id(),
-			'id_keyword' => $this->keyword->get_id(),
-			'authorized_categories' => $authorized_categories,
-			'timestamp_now' => $now->get_timestamp(),
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
-		));
+		' . $condition, $parameters);
 		
 		$current_page = AppContext::get_request()->get_getint('page', 1);
 		
