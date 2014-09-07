@@ -96,7 +96,6 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form = new HTMLForm(__CLASS__);
 		
 		$severities = $this->config->get_severities();
-		$main_lang = LangLoader::get('main');
 		
 		$fieldset = new FormFieldsetHTML('config', $this->lang['titles.admin.config']);
 		$form->add_fieldset($fieldset);
@@ -279,19 +278,9 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_description($this->lang['explain.type'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('type_mandatory', $this->lang['labels.type_mandatory'], $this->config->is_type_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('type_mandatory', $this->lang['labels.type_mandatory'], $this->config->is_type_mandatory()));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('display_type_column', $this->lang['config.display_type_column'], $this->config->is_type_column_displayed(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('display_type_column', $this->lang['config.display_type_column'], $this->config->is_type_column_displayed()));
 		
 		$fieldset->add_field(new FormFieldHTML('types_table', $this->build_types_table()->render()));
 		
@@ -299,19 +288,9 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_description($this->lang['explain.category'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('category_mandatory', $this->lang['labels.category_mandatory'], $this->config->is_category_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('category_mandatory', $this->lang['labels.category_mandatory'], $this->config->is_category_mandatory()));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('display_category_column', $this->lang['config.display_category_column'], $this->config->is_category_column_displayed(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('display_category_column', $this->lang['config.display_category_column'], $this->config->is_category_column_displayed()));
 		
 		$fieldset->add_field(new FormFieldHTML('categories_table', $this->build_categories_table()->render()));
 		
@@ -319,12 +298,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_description($this->lang['explain.severity'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('severity_mandatory', $this->lang['labels.severity_mandatory'], $this->config->is_severity_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('severity_mandatory', $this->lang['labels.severity_mandatory'], $this->config->is_severity_mandatory()));
 		
 		$fieldset->add_field(new FormFieldHTML('severities_table', $this->build_severities_table()->render()));
 		
@@ -332,19 +306,9 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_description($this->lang['explain.priority'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('priority_mandatory', $this->lang['labels.priority_mandatory'], $this->config->is_priority_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('priority_mandatory', $this->lang['labels.priority_mandatory'], $this->config->is_priority_mandatory()));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('display_priority_column', $this->lang['config.display_priority_column'], $this->config->is_priority_column_displayed(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('display_priority_column', $this->lang['config.display_priority_column'], $this->config->is_priority_column_displayed()));
 		
 		$fieldset->add_field(new FormFieldHTML('priorities_table', $this->build_priorities_table()->render()));
 		
@@ -352,19 +316,9 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_description($this->lang['explain.version'] . '<br /><br />' . $this->lang['explain.remarks']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('detected_in_version_mandatory', $this->lang['labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('detected_in_version_mandatory', $this->lang['labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory()));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('display_detected_in_column', $this->lang['config.display_detected_in_column'], $this->config->is_detected_in_column_displayed(),
-			array(
-				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
-				new FormFieldRadioChoiceOption($main_lang['no'], 0)
-			)
-		));
+		$fieldset->add_field(new FormFieldCheckbox('display_detected_in_column', $this->lang['config.display_detected_in_column'], $this->config->is_detected_in_column_displayed()));
 		
 		$fieldset->add_field(new FormFieldHTML('versions_table', $this->build_versions_table()->render()));
 		
@@ -744,12 +698,12 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$this->config->set_contents_value($this->form->get_value('contents_value'));
 		
-		if ($this->form->get_value('type_mandatory')->get_raw_value())
+		if ($this->form->get_value('type_mandatory'))
 			$this->config->type_mandatory();
 		else
 			$this->config->type_not_mandatory();
 		
-		if ($this->form->get_value('display_type_column')->get_raw_value())
+		if ($this->form->get_value('display_type_column'))
 			$this->config->display_type_column();
 		else
 			$this->config->hide_type_column();
@@ -757,12 +711,12 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$this->config->set_types($types);
 		$this->config->set_default_type($request->get_value('default_type', 0));
 		
-		if ($this->form->get_value('category_mandatory')->get_raw_value())
+		if ($this->form->get_value('category_mandatory'))
 			$this->config->category_mandatory();
 		else
 			$this->config->category_not_mandatory();
 		
-		if ($this->form->get_value('display_category_column')->get_raw_value())
+		if ($this->form->get_value('display_category_column'))
 			$this->config->display_category_column();
 		else
 			$this->config->hide_category_column();
@@ -770,7 +724,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$this->config->set_categories($categories);
 		$this->config->set_default_category($request->get_value('default_category', 0));
 		
-		if ($this->form->get_value('severity_mandatory')->get_raw_value())
+		if ($this->form->get_value('severity_mandatory'))
 			$this->config->severity_mandatory();
 		else
 			$this->config->severity_not_mandatory();
@@ -778,12 +732,12 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$this->config->set_severities($severities);
 		$this->config->set_default_severity($request->get_value('default_severity', 0));
 		
-		if ($this->form->get_value('priority_mandatory')->get_raw_value())
+		if ($this->form->get_value('priority_mandatory'))
 			$this->config->priority_mandatory();
 		else
 			$this->config->priority_not_mandatory();
 		
-		if ($this->form->get_value('display_priority_column')->get_raw_value())
+		if ($this->form->get_value('display_priority_column'))
 			$this->config->display_priority_column();
 		else
 			$this->config->hide_priority_column();
@@ -791,12 +745,12 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$this->config->set_priorities($priorities);
 		$this->config->set_default_priority($request->get_value('default_priority', 0));
 		
-		if ($this->form->get_value('detected_in_version_mandatory')->get_raw_value())
+		if ($this->form->get_value('detected_in_version_mandatory'))
 			$this->config->detected_in_version_mandatory();
 		else
 			$this->config->detected_in_version_not_mandatory();
 		
-		if ($this->form->get_value('display_detected_in_column')->get_raw_value())
+		if ($this->form->get_value('display_detected_in_column'))
 			$this->config->display_detected_in_column();
 		else
 			$this->config->hide_detected_in_column();
