@@ -101,7 +101,6 @@ class WebDisplayCategoryController extends ModuleController
 		$condition = 'WHERE id_category = :id_category
 		AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))';
 		$parameters = array(
-			'user_id' => AppContext::get_current_user()->get_id(),
 			'id_category' => $this->get_category()->get_id(),
 			'timestamp_now' => $now->get_timestamp()
 		);
@@ -137,6 +136,7 @@ class WebDisplayCategoryController extends ModuleController
 		' . $condition . '
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
 		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+			'user_id' => AppContext::get_current_user()->get_id(),
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
 		)));
