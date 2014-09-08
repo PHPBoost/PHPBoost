@@ -545,7 +545,7 @@ class BugtrackerFormController extends ModuleController
 		
 		if ($bug->get_id() === null)
 		{
-			$redirect = BugtrackerUrlBuilder::unsolved_success('add/'. $id);
+			$redirect = BugtrackerUrlBuilder::unsolved_success('add', $id);
 		}
 		else
 		{
@@ -561,13 +561,13 @@ class BugtrackerFormController extends ModuleController
 				switch ($back_page)
 				{
 					case 'detail' :
-						$redirect = BugtrackerUrlBuilder::detail_success('edit/' . $bug->get_id());
+						$redirect = BugtrackerUrlBuilder::detail_success('edit', $bug->get_id());
 						break;
 					case 'solved' :
-						$redirect = BugtrackerUrlBuilder::solved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+						$redirect = BugtrackerUrlBuilder::solved_success('edit', $bug->get_id(), $page, $back_filter, $filter_id);
 						break;
 					default :
-						$redirect = BugtrackerUrlBuilder::unsolved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+						$redirect = BugtrackerUrlBuilder::unsolved_success('edit', $bug->get_id(), $page, $back_filter, $filter_id);
 						break;
 				}
 			}
@@ -622,11 +622,11 @@ class BugtrackerFormController extends ModuleController
 			$response = new SiteDisplayResponse($body_view);
 			$graphical_environment = $response->get_graphical_environment();
 			$graphical_environment->set_page_title($this->lang['titles.edit'] . ' #' . $bug->get_id());
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::edit($bug->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::edit($bug->get_id(), $back_page));
 			
 			$breadcrumb = $graphical_environment->get_breadcrumb();
 			$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
-			$breadcrumb->add($this->lang['titles.edit'] . ' #' . $bug->get_id(), BugtrackerUrlBuilder::edit(!empty($back_page) ? $bug->get_id() . '/' . $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : $bug->get_id()));
+			$breadcrumb->add($this->lang['titles.edit'] . ' #' . $bug->get_id(), BugtrackerUrlBuilder::edit($bug->get_id(), $back_page, $page, $back_filter, $filter_id));
 		}
 		
 		return $response;

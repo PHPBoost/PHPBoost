@@ -78,7 +78,7 @@ class BugtrackerStatsListController extends ModuleController
 			$this->view->assign_block_vars('fixed_version', array(
 				'NAME'					=> stripslashes($versions[$version_id]['name']),
 				'RELEASE_DATE'			=> !empty($release_date) ? $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['notice.not_defined_e_date'],
-				'LINK_VERSION_ROADMAP'	=> BugtrackerUrlBuilder::roadmap($version_id . '-' . Url::encode_rewrite($versions[$version_id]['name']))->rel(),
+				'LINK_VERSION_ROADMAP'	=> BugtrackerUrlBuilder::roadmap($version_id, Url::encode_rewrite($versions[$version_id]['name']))->rel(),
 				'NUMBER'				=> $bugs_number['all']
 			));
 		}
@@ -151,11 +151,11 @@ class BugtrackerStatsListController extends ModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.stats']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::stats($bug_id ? $bug_id : ''));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::stats($bug_id));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$breadcrumb->add($this->lang['titles.stats'], BugtrackerUrlBuilder::stats($bug_id ? $bug_id : ''));
+		$breadcrumb->add($this->lang['titles.stats'], BugtrackerUrlBuilder::stats($bug_id));
 		
 		return $response;
 	}
