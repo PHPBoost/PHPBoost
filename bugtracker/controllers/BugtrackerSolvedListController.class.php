@@ -125,8 +125,8 @@ class BugtrackerSolvedListController extends ModuleController
 				'C_LINE_COLOR'		=> true,
 				'LINE_COLOR' 		=> $bug->is_fixed() ? $config->get_fixed_bug_color() : $config->get_rejected_bug_color(),
 				'U_CHANGE_STATUS'	=> BugtrackerUrlBuilder::change_status($bug->get_id())->rel(),
-				'U_EDIT'			=> BugtrackerUrlBuilder::edit($bug->get_id() . '/solved/' . $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-				'U_DELETE'			=> BugtrackerUrlBuilder::delete($bug->get_id(), 'solved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
+				'U_EDIT'			=> BugtrackerUrlBuilder::edit($bug->get_id(), 'solved', $current_page, $filter, $filter_id)->rel(),
+				'U_DELETE'			=> BugtrackerUrlBuilder::delete($bug->get_id(), 'solved', $current_page, $filter, $filter_id)->rel(),
 			)));
 		}
 		$result->dispose();

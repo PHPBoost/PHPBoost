@@ -31,6 +31,9 @@
  */
 class BugtrackerUrlBuilder
 {
+	const DEFAULT_SORT_FIELD = 'date';
+	const DEFAULT_SORT_MODE = 'desc';
+	
 	private static $dispatcher = '/bugtracker';
 	
 	/**
@@ -100,17 +103,21 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function edit($param = '')
+	public static function edit($id, $back_page = null, $page = 1, $back_filter = null, $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/edit/' . $param);
+		$back_page = $back_page !== null ? $back_page . '/' : '';
+		$page = $back_page !== null && $page !== 1 ? $page . '/' : '';
+		$back_filter = $back_filter !== null ? $back_filter . '/' : '';
+		$filter_id = $back_filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/edit/' . $id . '/' . $back_page . $page . $back_filter . $filter_id);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function detail_success($param = '')
+	public static function detail_success($success, $id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/detail/success/' . $param);
+		return DispatchManager::get_url(self::$dispatcher, '/detail/success/' . $success . '/' . $id);
 	}
 	
 	/**
@@ -125,33 +132,47 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function roadmap($param = '')
+	public static function roadmap($version = 0, $version_name = null, $status = null, $sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/roadmap/' . $param);
+		$version = $version !== 0 ? $version . '-' : '';
+		$version_name = $version_name !== null ? $version_name . '/' : '';
+		$status = $status !== null ? $status . '/' : '';
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		$page = $page !== 1 ? $page . '/': '';
+		return DispatchManager::get_url(self::$dispatcher, '/roadmap/' . $version . $version_name . $status . $sort_field . $sort_mode . $page);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function stats($param = '')
+	public static function stats($id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/stats/' . $param);
+		$id = $id !== 0 ? $id . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/stats/' . $id);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function delete($id = '', $back_page = '', $page = 1, $back_filter = '', $filter_id = 0)
+	public static function delete($id, $back_page = null, $page = 1, $back_filter = null, $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $id . ($back_page ? '/' . $back_page : '') . ($page > 1 ? '/' . $page : '') . ($back_filter ? '/' . $back_filter . '/' . $filter_id : '') . '/?token=' . AppContext::get_session()->get_token());
+		$back_page = $back_page !== null ? $back_page . '/' : '';
+		$page = $back_page !== null && $page !== 1 ? $page . '/' : '';
+		$back_filter = $back_filter !== null ? $back_filter . '/' : '';
+		$filter_id = $back_filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $id . '/' . $back_page . $page . $back_filter . $filter_id . '/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function add_filter($param = '')
+	public static function add_filter($back_page, $page = 1, $back_filter = null, $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/add_filter/' . $param);
+		$page = $page !== 1 ? $page . '/' : '';
+		$back_filter = $back_filter !== null ? $back_filter . '/' : '';
+		$filter_id = $back_filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/add_filter/' . $back_page . '/' . $page . $back_filter . $filter_id);
 	}
 	
 	/**
@@ -189,9 +210,12 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function unsolved_success($param = '')
+	public static function unsolved_success($success, $id, $page = 1, $back_filter = null, $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/unsolved/success/' . $param);
+		$page = $page !== 1 ? $page . '/' : '';
+		$back_filter = $back_filter !== null ? $back_filter . '/' : '';
+		$filter_id = $back_filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/unsolved/success/' . $success . '/' . $id . '/' . $page . $back_filter . $filter_id);
 	}
 	
 	/**
@@ -205,9 +229,12 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function solved_success($param = '')
+	public static function solved_success($success, $id, $page = 1, $back_filter = null, $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/solved/success/' . $param);
+		$page = $page !== 1 ? $page . '/' : '';
+		$back_filter = $back_filter !== null ? $back_filter . '/' : '';
+		$filter_id = $back_filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/solved/success/' . $success . '/' . $id . '/' . $page . $back_filter . $filter_id);
 	}
 }
 ?>

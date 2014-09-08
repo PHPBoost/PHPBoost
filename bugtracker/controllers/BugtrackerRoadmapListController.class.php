@@ -99,8 +99,8 @@ class BugtrackerRoadmapListController extends ModuleController
 				DispatchManager::redirect($error_controller);
 			}
 			
-			$field = $request->get_value('field', 'date');
-			$sort = $request->get_value('sort', 'desc');
+			$field = $request->get_value('field', BugtrackerUrlBuilder::DEFAULT_SORT_FIELD);
+			$sort = $request->get_value('sort', BugtrackerUrlBuilder::DEFAULT_SORT_MODE);
 			$current_page = $request->get_int('page', 1);
 			
 			$mode = ($sort == 'top') ? 'ASC' : 'DESC';
@@ -175,37 +175,37 @@ class BugtrackerRoadmapListController extends ModuleController
 				'C_PAGINATION'					=> $pagination->has_several_pages(),
 				'PAGINATION' 					=> $pagination->display(),
 				'BUGS_COLSPAN' 					=> $bugs_colspan,
-				'SELECT_VERSION'				=> $this->build_form(isset($versions[$roadmap_version]) ? $roadmap_version . '-' . Url::encode_rewrite($versions[$roadmap_version]['name']) : '', $roadmap_status, (int)$bugs_number[$roadmap_status], isset($versions[$roadmap_version]) ? $versions[$roadmap_version]['release_date'] : 0)->display(),
+				'SELECT_VERSION'				=> $this->build_form(isset($versions[$roadmap_version]) ? $roadmap_version : 0, isset($versions[$roadmap_version]) ? Url::encode_rewrite($versions[$roadmap_version]['name']) : '', $roadmap_status, (int)$bugs_number[$roadmap_status], isset($versions[$roadmap_version]) ? $versions[$roadmap_version]['release_date'] : 0)->display(),
 				'LEGEND'						=> BugtrackerViews::build_legend($displayed_severities, 'roadmap'),
-				'LINK_BUG_ID_TOP' 				=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/id/top/'. $current_page)->rel(),
-				'LINK_BUG_ID_BOTTOM' 			=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/id/bottom/'. $current_page)->rel(),
-				'LINK_BUG_TITLE_TOP' 			=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/title/top/'. $current_page)->rel(),
-				'LINK_BUG_TITLE_BOTTOM' 		=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/title/bottom/'. $current_page)->rel(),
-				'LINK_BUG_SEVERITY_TOP' 		=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/severity/top/'. $current_page)->rel(),
-				'LINK_BUG_SEVERITY_BOTTOM'		=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/severity/bottom/'. $current_page)->rel(),
-				'LINK_BUG_STATUS_TOP'			=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/status/top/'. $current_page)->rel(),
-				'LINK_BUG_STATUS_BOTTOM'		=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/status/bottom/'. $current_page)->rel(),
-				'LINK_BUG_DATE_TOP' 			=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/date/top/'. $current_page)->rel(),
-				'LINK_BUG_DATE_BOTTOM'			=> BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/date/bottom/'. $current_page)->rel()
+				'LINK_BUG_ID_TOP' 				=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'id', 'top', $current_page)->rel(),
+				'LINK_BUG_ID_BOTTOM' 			=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'id', 'bottom', $current_page)->rel(),
+				'LINK_BUG_TITLE_TOP' 			=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'title', 'top', $current_page)->rel(),
+				'LINK_BUG_TITLE_BOTTOM' 		=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'title', 'bottom', $current_page)->rel(),
+				'LINK_BUG_SEVERITY_TOP' 		=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'severity', 'top', $current_page)->rel(),
+				'LINK_BUG_SEVERITY_BOTTOM'		=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'severity', 'bottom', $current_page)->rel(),
+				'LINK_BUG_STATUS_TOP'			=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'status', 'top', $current_page)->rel(),
+				'LINK_BUG_STATUS_BOTTOM'		=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'status', 'bottom', $current_page)->rel(),
+				'LINK_BUG_DATE_TOP' 			=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'date', 'top', $current_page)->rel(),
+				'LINK_BUG_DATE_BOTTOM'			=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'date', 'bottom', $current_page)->rel()
 			));
 		}
 		
 		return $this->view;
 	}
 	
-	private function build_form($requested_version, $requested_status, $nbr_bugs, $requested_version_release_date = 0)
+	private function build_form($requested_version_id, $requested_version_name, $requested_status, $nbr_bugs, $requested_version_release_date = 0)
 	{
 		$form = new HTMLForm('version', '', false);
 		
 		$fieldset = new FormFieldsetHorizontal('choose-version');
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('roadmap_version', $this->lang['titles.choose_version'], $requested_version, $this->build_select_versions(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('roadmap_version', $this->lang['titles.choose_version'], $requested_version_id . '-' . $requested_version_id, $this->build_select_versions(),
 			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap()->rel() .'" + HTMLForms.getField("roadmap_version").getValue()' . ($requested_status != 'all' ? ' + "/" + HTMLForms.getField("status").getValue()' : '') . ';')
 		)));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('status', $this->lang['labels.fields.status'], $requested_status, $this->build_select_status(),
-			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap($requested_version)->rel() .'" + "/" + HTMLForms.getField("status").getValue();')
+			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap($requested_version_id, $requested_version_name)->rel() .'" + "/" + HTMLForms.getField("status").getValue();')
 		)));
 		
 		$release_date = !empty($requested_version_release_date) && is_numeric($requested_version_release_date) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $requested_version_release_date) : null;
@@ -243,7 +243,7 @@ class BugtrackerRoadmapListController extends ModuleController
 	private function get_pagination($bugs_number, $page, $roadmap_version, $roadmap_version_name, $roadmap_status, $field, $sort)
 	{
 		$pagination = new ModulePagination($page, $bugs_number, (int)$this->config->get_items_per_page());
-		$pagination->set_url(BugtrackerUrlBuilder::roadmap($roadmap_version . '-' . $roadmap_version_name . '/' . $roadmap_status . '/' . $field . '/' . $sort . '/%d'));
+		$pagination->set_url(BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, $field, $sort, '%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
@@ -286,11 +286,11 @@ class BugtrackerRoadmapListController extends ModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.roadmap']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::roadmap($roadmap_id_version . '-' . $roadmap_version . '/' . $roadmap_status . '/' . $field . '/' . $sort . '/' . $page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::roadmap($roadmap_id_version, $roadmap_version, $roadmap_status, $field, $sort, $page));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$breadcrumb->add($this->lang['titles.roadmap'], BugtrackerUrlBuilder::roadmap($roadmap_id_version . '-' . $roadmap_version . '/' . $roadmap_status . '/' . $field . '/' . $sort . '/' . $page));
+		$breadcrumb->add($this->lang['titles.roadmap'], BugtrackerUrlBuilder::roadmap($roadmap_id_version, $roadmap_version, $roadmap_status, $field, $sort, $page));
 		
 		return $response;
 	}

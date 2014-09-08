@@ -160,7 +160,7 @@ class BugtrackerViews
 			'C_HAS_SELECTED_FILTERS'=> $filters,
 			'FILTERS_NUMBER'		=> $filters_number,
 			'BUGS_NUMBER'			=> $nbr_bugs,
-			'LINK_FILTER_SAVE'		=> BugtrackerUrlBuilder::add_filter($current_page . '/' . $page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_FILTER_SAVE'		=> BugtrackerUrlBuilder::add_filter($current_page, $page, $filter, $filter_id)->rel(),
 			'SELECT_TYPE'			=> $object->build_types_form($current_page,($filter == 'type') ? $filter_id : (in_array('type', $filters) ? $filters_ids[array_search('type', $filters)] : 0), $filters, $filters_ids)->display(),
 			'SELECT_CATEGORY'		=> $object->build_categories_form($current_page, ($filter == 'category') ? $filter_id : (in_array('category', $filters) ? $filters_ids[array_search('category', $filters)] : 0), $filters, $filters_ids)->display(),
 			'SELECT_SEVERITY'		=> $object->build_severities_form($current_page, ($filter == 'severity') ? $filter_id : (in_array('severity', $filters) ? $filters_ids[array_search('severity', $filters)] : 0), $filters, $filters_ids)->display(),
