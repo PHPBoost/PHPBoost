@@ -37,18 +37,20 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 include_once(PATH_TO_ROOT . '/stats/stats_functions.php');
 
-$sql_querier = PersistenceContext::get_sql();
+$db_querier = PersistenceContext::get_querier();
 
 if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 {
 	$idurl = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
-	$url = $sql_querier->query("SELECT url FROM " . StatsSetup::$stats_referer_table . " WHERE id = '" . $idurl . "'");
-
-	$result = $sql_querier->query_while("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
-	FROM " . PREFIX . "stats_referer
-	WHERE url = '" . addslashes($url) . "' AND type = 0
-	ORDER BY total_visit DESC");
-	while ($row = $sql_querier->fetch_assoc($result))
+	$url = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'url', 'WHERE id = :id', array('id' => $idurl));
+	
+	$result = $db_querier->select("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
+		FROM " . StatsSetup::$stats_referer_table . "
+		WHERE url = :url AND type = 0
+		ORDER BY total_visit DESC", array(
+			'url' => $url
+	));
+	while ($row = $result->fetch())
 	{
 		$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 		
@@ -79,13 +81,15 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le mp.
 {
 	$idkeyword = !empty($_GET['id']) ? NumberHelper::numeric($_GET['id']) : '';
-	$keyword = $sql_querier->query("SELECT relative_url FROM " . StatsSetup::$stats_referer_table . " WHERE id = '" . $idkeyword . "'");
-
-	$result = $sql_querier->query_while("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
-	FROM " . PREFIX . "stats_referer
-	WHERE relative_url = '" . addslashes($keyword) . "' AND type = 1
-	ORDER BY total_visit DESC");
-	while ($row = $sql_querier->fetch_assoc($result))
+	$keyword = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'relative_url', 'WHERE id = :id', array('id' => $idkeyword));
+	
+	$result = $db_querier->select("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
+		FROM " . StatsSetup::$stats_referer_table. "
+		WHERE relative_url = :url AND type = 1
+		ORDER BY total_visit DESC", array(
+			'url' => $keyword
+	));
+	while ($row = $result->fetch())
 	{
 		$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 		

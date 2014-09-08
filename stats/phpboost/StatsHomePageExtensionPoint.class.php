@@ -27,10 +27,14 @@
 
 class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 {
+	private $db_querier;
+	// @TOTO : supprimer
 	private $sql_querier;
-
+	
 	public function __construct()
 	{
+		$this->db_querier = PersistenceContext::get_querier();
+		// @TOTO : supprimer
 		$this->sql_querier = PersistenceContext::get_sql();
 	}
 	
@@ -129,12 +133,12 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 
 			$stats_array = array();
-			$result = $this->sql_querier->query_while ("SELECT count(ext_field.user_sex) as compt, ext_field.user_sex
+			$result = $this->db_querier->select("SELECT count(ext_field.user_sex) as compt, ext_field.user_sex
 			FROM " . PREFIX . "member member
 			LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
 			GROUP BY ext_field.user_sex
 			ORDER BY compt");
-			while ($row = $this->sql_querier->fetch_assoc($result))
+			while ($row = $result->fetch())
 			{
 				switch ($row['user_sex'])
 				{
@@ -166,11 +170,11 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			
 			$i = 1;
-			$result = $this->sql_querier->query_while("SELECT user_id, display_name, level, groups, user_msg
+			$result = $this->db_querier->select("SELECT user_id, display_name, level, groups, user_msg
 			FROM " . DB_TABLE_MEMBER . "
 			ORDER BY user_msg DESC
-			" . $this->sql_querier->limit(0, 10));
-			while ($row = $this->sql_querier->fetch_assoc($result))
+			LIMIT 10 OFFSET 0");
+			while ($row = $result->fetch())
 			{
 				$user_group_color = User::get_group_color($row['groups'], $row['level']);
 				
@@ -191,7 +195,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 		elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		{
 			//On affiche les visiteurs totaux et du jour
-			$compteur = $this->sql_querier->query_array(DB_TABLE_VISIT_COUNTER, 'ip AS nbr_ip', 'total', "WHERE id = 1");
+			$compteur = $this->db_querier->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id = :id', array('id' => 1));
+			
 			$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 			$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 			
@@ -226,8 +231,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$previous_year = $visit_year - 1;
 
 				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-				$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $visit_year . "' GROUP BY stats_year");
-
+				$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year = :stats_year GROUP BY stats_year', array('stats_year' => $visit_year));
+				
 				$tpl->put_all(array(
 					'C_STATS_VISIT' => true,
 					'TYPE' => 'visit',
@@ -243,7 +248,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 
 				//Année maximale
-				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '');
+				$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'));
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -262,11 +267,13 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					));
 					
 					//On fait la liste des visites journalières
-					$result = $this->sql_querier->query_while ("SELECT stats_month, SUM(nbr) AS total
-					FROM " . StatsSetup::$stats_table . "
-					WHERE stats_year = '" . $visit_year . "'
-					GROUP BY stats_month");
-					while ($row = $this->sql_querier->fetch_assoc($result))
+					$result = $this->db_querier->select("SELECT stats_month, SUM(nbr) AS total
+						FROM " . StatsSetup::$stats_table . "
+						WHERE stats_year = :stats_year
+						GROUP BY stats_month", array(
+							'stats_year' => $visit_year
+					));
+					while ($row = $result->fetch())
 					{
 						//On affiche les stats numériquement dans un tableau en dessous
 						$tpl->assign_block_vars('value', array(
@@ -278,16 +285,19 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				else
 				{
-					$result = $this->sql_querier->query_while ("SELECT SUM(nbr) AS total
-					FROM " . StatsSetup::$stats_table . "
-					WHERE stats_year = '" . $visit_year . "'
-					GROUP BY stats_month");
 					$max_month = 1;
-					while ($row = $this->sql_querier->fetch_assoc($result))
+					$result = $this->db_querier->select("SELECT SUM(nbr) AS total
+						FROM " . StatsSetup::$stats_table . "
+						WHERE stats_year = :stats_year
+						GROUP BY stats_month", array(
+							'stats_year' => $visit_year
+					));
+					while ($row = $result->fetch())
 					{
 						$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 					}
-						
+					$result->dispose();
+					
 					$tpl->put_all(array(
 						'C_STATS_NO_GD' => true
 					));
@@ -295,11 +305,13 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$i = 1;
 					$last_month = 1;
 					$months_not_empty = array();
-					$result = $this->sql_querier->query_while ("SELECT stats_month, SUM(nbr) AS total
+					$result = $this->db_querier->select("SELECT stats_month, SUM(nbr) AS total
 					FROM " . StatsSetup::$stats_table . "
-					WHERE stats_year = '" . $visit_year . "'
-					GROUP BY stats_month");
-					while ($row = $this->sql_querier->fetch_assoc($result))
+						WHERE stats_year = :stats_year
+						GROUP BY stats_month", array(
+							'stats_year' => $visit_year
+					));
+					while ($row = $result->fetch())
 					{
 						$diff = 0;
 						if ($row['stats_month'] != $i)
@@ -371,8 +383,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$previous_year = ($month > 1) ? $year : $year - 1;
 				
 				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-				$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr', "WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' GROUP BY stats_month");
-					
+				$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr'), 'WHERE stats_year = :year AND stats_month = :month GROUP BY stats_month', array('year' => $year, 'month' => $month));
+				
 				$tpl->put_all(array(
 					'C_STATS_VISIT' => true,
 					'TYPE' => 'visit',
@@ -397,7 +409,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				
 				//Année maximale
-				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '');
+				$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'));
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -418,10 +430,14 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					));
 					
 					//On fait la liste des visites journalières
-					$result = $this->sql_querier->query_while("SELECT nbr, stats_day AS day
-					FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-					ORDER BY stats_day");
-					while ($row = $this->sql_querier->fetch_assoc($result))
+					$result = $this->db_querier->select("SELECT nbr, stats_day AS day
+						FROM " . StatsSetup::$stats_table . "
+						WHERE stats_year = :year AND stats_month = :month
+						GROUP BY stats_day", array(
+							'year' => $year,
+							'month' => $month
+					));
+					while ($row = $result->fetch())
 					{
 						$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
 						
@@ -448,10 +464,14 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						
 						//On fait la liste des visites journalières
 						$j = 0;
-						$result = $this->sql_querier->query_while("SELECT nbr, stats_day AS day
-						FROM " . StatsSetup::$stats_table . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "'
-						ORDER BY stats_day");
-						while ($row = $this->sql_querier->fetch_assoc($result))
+						$result = $this->db_querier->select("SELECT nbr, stats_day AS day
+							FROM " . StatsSetup::$stats_table . "
+							WHERE stats_year = :year AND stats_month = :month
+							ORDER BY stats_day", array(
+								'year' => $year,
+								'month' => $month
+						));
+						while ($row = $result->fetch())
 						{
 							//Complétion des jours précédent le premier enregistrement du mois.
 							if ($j == 0)
@@ -537,20 +557,20 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			elseif (retrieve(GET, 'd', false))
 			{
-				$clause = " AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'";
+				$clause = " AND stats_month = :month AND stats_day = :day";
 				$year = retrieve(GET, 'y', (int)$current_year);
 			}
 			else
 			{
-				$clause = " AND stats_month = '" . $month . "'";
+				$clause = " AND stats_month = :month";
 				$year = retrieve(GET, 'y', (int)$current_year);
 			}
 			
 			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-			$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages', "WHERE stats_year = '" . $year . "'" . $clause . " AND pages_detail <> '' GROUP BY stats_month");
-
+			$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages'), 'WHERE stats_year = :year' . $clause . ' AND pages_detail <> \'\' GROUP BY stats_month', array('year' => $year, 'month' => $month, 'day' => $day));
+			
 			//On affiche les visiteurs totaux et du jour
-			$compteur_total = $this->sql_querier->query("SELECT SUM(pages) FROM " . PREFIX . "stats");
+			$compteur_total = $this->db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)');
 			$compteur_day = array_sum(StatsSaver::retrieve_stats('pages')) + 1;
 			$compteur_total = $compteur_total + $compteur_day;
 			$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
@@ -577,8 +597,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				$previous_year = $pages_year - 1;
 				
 				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-				$info = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', "WHERE stats_year = '" . $pages_year . "' AND pages_detail <> '' GROUP BY stats_year");
-			
+				$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year = :year AND pages_detail <> \'\' GROUP BY stats_year', array('year' => $pages_year));
+				
 				$tpl->put_all(array(
 					'C_STATS_VISIT' => true,
 					'TYPE' => 'pages',
@@ -594,7 +614,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 
 				//Année maximale
-				$info_year = $this->sql_querier->query_array(StatsSetup::$stats_table, 'MAX(stats_year) as max_year', 'MIN(stats_year) as min_year', '');
+				$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'));
+				
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -613,11 +634,13 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					));
 					
 					//On fait la liste des visites journalières
-					$result = $this->sql_querier->query_while ("SELECT stats_month, SUM(pages) AS total
-					FROM " . StatsSetup::$stats_table . "
-					WHERE stats_year = '" . $pages_year . "'
-					GROUP BY stats_month");
-					while ($row = $this->sql_querier->fetch_assoc($result))
+					$result = $this->db_querier->select("SELECT  stats_month, SUM(pages) AS total
+						FROM " . StatsSetup::$stats_table . "
+						WHERE stats_year = :stats_year
+						GROUP BY stats_month", array(
+							'stats_year' => $pages_year
+					));
+					while ($row = $result->fetch())
 					{
 						//On affiche les stats numériquement dans un tableau en dessous
 						$tpl->assign_block_vars('value', array(
@@ -629,16 +652,18 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				else
 				{
-					$result = $this->sql_querier->query_while ("SELECT SUM(nbr) AS total
-					FROM " . StatsSetup::$stats_table . "
-					WHERE stats_year = '" . $visit_year . "'
-					GROUP BY stats_month");
+					$result = $this->db_querier->select("SELECT SUM(nbr) AS total
+						FROM " . StatsSetup::$stats_table . "
+						WHERE stats_year = :stats_year
+						GROUP BY stats_month", array(
+							'stats_year' => $visit_year
+					));
 					$max_month = 1;
-					while ($row = $this->sql_querier->fetch_assoc($result))
+					while ($row = $result->fetch())
 					{
 						$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
 					}
-								
+					
 					$tpl->put_all(array(
 						'C_STATS_NO_GD' => true
 					));
@@ -646,11 +671,13 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					$i = 1;
 					$last_month = 1;
 					$months_not_empty = array();
-					$result = $this->sql_querier->query_while ("SELECT stats_month, SUM(pages) AS total
-					FROM " . StatsSetup::$stats_table . "
-					WHERE stats_year = '" . $pages_year . "'
-					GROUP BY stats_month");
-					while ($row = $this->sql_querier->fetch_assoc($result))
+					$result = $this->db_querier->select("SELECT stats_month, SUM(pages) AS total
+						FROM " . StatsSetup::$stats_table . "
+						WHERE stats_year = :stats_year
+						GROUP BY stats_month", array(
+							'stats_year' => $visit_year
+					));
+					while ($row = $result->fetch())
 					{
 						$diff = 0;
 						if ($row['stats_month'] != $i)
