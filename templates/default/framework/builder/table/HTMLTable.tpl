@@ -82,10 +82,7 @@ function {SUBMIT_FUNCTION}() {
     var filters = new Array();
 	var filtersObjects = new Array();
 	# START filterElt #
-	filtersObjects.push({
-		formId: {filterElt.J_FORM_ID},
-		tableId: {filterElt.J_TABLE_ID}
-	});
+	filtersObjects.push({formId: ${escapejs(filterElt.FORM_ID)}, tableId: ${escapejs(filterElt.TABLE_ID)}});
 	# END filterElt #
 	for (var i = 0; i < filtersObjects.length; i++) {
 		var filter = filtersObjects[i];
@@ -98,8 +95,7 @@ function {SUBMIT_FUNCTION}() {
 		}
 	}
     var serializer = new UrlSerializedParameterEncoder();
-	var submitUrl = {J_SUBMIT_URL} + ',filters:{' + serializer.encode(filters) + '}';
-	//window.alert('URL: ' + submitUrl);
+	var submitUrl = ${escapejs(SUBMIT_URL)} + ',filters:{' + serializer.encode(filters) + '}';
 	window.location = submitUrl;
     return false;
 }

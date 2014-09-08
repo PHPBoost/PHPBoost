@@ -48,8 +48,7 @@ class SandboxTableController extends ModuleController
 	
 	private function build_table()
 	{
-		$table = new HTMLTable(new SandboxHTMLTableModel());
-		return $table;
+		return new HTMLTable(new SandboxHTMLTableModel());
 	}
 	
 	private function generate_response()
