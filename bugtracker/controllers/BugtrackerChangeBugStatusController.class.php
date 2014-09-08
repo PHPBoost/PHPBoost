@@ -210,9 +210,9 @@ class BugtrackerChangeBugStatusController extends ModuleController
 		{
 			$assigned_to = $this->form->get_value('assigned_to');
 			
-			$old_user_assigned = $this->bug->get_assigned_to_id()  && UserService::user_exists("WHERE user_id=:user_id", array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user("WHERE user_id=:id", array('id' => $this->bug->get_assigned_to_id())) : 0;
+			$old_user_assigned = $this->bug->get_assigned_to_id()  && UserService::user_exists("WHERE user_id = :user_id", array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user("WHERE user_id = :id", array('id' => $this->bug->get_assigned_to_id())) : 0;
 			
-			$new_user_assigned = !empty($assigned_to) && UserService::user_exists("WHERE login=:login", array('login' => $assigned_to)) ? UserService::get_user("WHERE login=:login", array('login' => $assigned_to)) : 0;
+			$new_user_assigned = !empty($assigned_to) && UserService::user_exists("WHERE display_name = :display_name", array('display_name' => $assigned_to)) ? UserService::get_user("WHERE display_name = :display_name", array('display_name' => $assigned_to)) : 0;
 			$new_assigned_to_id = !empty($new_user_assigned) ? $new_user_assigned->get_id() : 0;
 			
 			if ($new_assigned_to_id != $this->bug->get_assigned_to_id())

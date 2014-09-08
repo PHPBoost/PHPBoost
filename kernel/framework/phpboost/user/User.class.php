@@ -285,7 +285,7 @@ class User
 			'display_name' => $display_name !== null ? $display_name : LangLoader::get_message('guest', 'main'),
 			'level' => self::VISITOR_LEVEL,
 			'email' => null,
-			'show_mail' => false,
+			'show_email' => false,
 			'locale' => UserAccountsConfig::load()->get_default_lang(),
 			'theme' => UserAccountsConfig::load()->get_default_theme(),
 			'timezone' => GeneralConfig::load()->get_site_timezone(),
