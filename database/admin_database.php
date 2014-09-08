@@ -97,9 +97,9 @@ if (!empty($_GET['query']))
 		{
 			//On éxécute la requête
 			try {
-				$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query));
+				$result = PersistenceContext::get_querier()->select(str_replace('phpboost_', PREFIX, $query));
 				$i = 1;
-				while ($row = $Sql->fetch_assoc($result))
+				while ($row = $result->fetch())
 				{
 					$Template->assign_block_vars('line', array());
 					//Premier passage: on liste le nom des champs sélectionnés
@@ -121,6 +121,7 @@ if (!empty($_GET['query']))
 					
 					$i++;
 				}
+				$result->dispose();
 			} catch (MySQLQuerierException $e) {
 				$Template->assign_block_vars('line', array());
 				$Template->assign_block_vars('line.field', array(
