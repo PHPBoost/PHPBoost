@@ -54,7 +54,7 @@ function move_category_down(parent_id, id){
 		<legend>{FIELDSET_TITLE}</legend>
 			<ul id="categories" class="sortable-block">
 				# IF C_NO_CATEGORIES #
-					<div class="center">{@message.no_element}</div>
+					<div class="center">${LangLoader::get_message('no_item_now', 'common')}</div>
 				# ELSE #
 					# START childrens #
 						{childrens.child}
