@@ -141,7 +141,7 @@ class BugtrackerViews
 			$filters_view->assign_block_vars('filters', array(
 				'ID'					=> $row['id'],
 				'FILTER'				=> '|	' . $filter_type_value . '	|	' . $filter_category_value . '	|	' . $filter_severity_value . '	|	' . $filter_status_value . '	|	' . $filter_version_value . '	|',
-				'LINK_FILTER'			=> ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . $row['filters'] . '/' . $row['filters_ids'])->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . $row['filters'] . '/' . $row['filters_ids'])->rel()),
+				'LINK_FILTER'			=> ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, $row['filters'], $row['filters_ids'])->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, $row['filters'], $row['filters_ids'])->rel()),
 			));
 			$saved_filters = true;
 		}
@@ -222,9 +222,9 @@ class BugtrackerViews
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('filter_type', '', $requested_type, $this->build_select_types(),
 			array('events' => array('change' => 'if (HTMLForms.getField("filter_type").getValue() > 0) {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . (!empty($filter) ? $filter . '-' : '') . 'type/' . (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . (!empty($filter) ? $filter . '-' : '') . 'type/' . (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_type").getValue();
+				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'type', (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'type', (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_type").getValue();
 			} else {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . (!empty($filter) ? $filter : '') . '/' . (!empty($filter_id) ? $filter_id : ''))->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . (!empty($filter) ? $filter : '') . '/' . (!empty($filter_id) ? $filter_id : ''))->rel()) .'";
+				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, $filter, $filter_id)->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, $filter, $filter_id)->rel()) .'";
 			}')
 		)));
 		
@@ -263,9 +263,9 @@ class BugtrackerViews
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('filter_category', '', $requested_category, $this->build_select_categories(),
 			array('events' => array('change' => 'if (HTMLForms.getField("filter_category").getValue() > 0) {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . (!empty($filter) ? $filter . '-' : '') . 'category/' . (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . (!empty($filter) ? $filter . '-' : '') . 'category/' . (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_category").getValue();
+				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'category', (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'category', (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_category").getValue();
 			} else {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . (!empty($filter) ? $filter : '') . '/' . (!empty($filter_id) ? $filter_id : ''))->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . (!empty($filter) ? $filter : '') . '/' . (!empty($filter_id) ? $filter_id : ''))->rel()) .'";
+				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, $filter, $filter_id)->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, $filter, $filter_id)->rel()) .'";
 			}')
 		)));
 		
@@ -304,9 +304,9 @@ class BugtrackerViews
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('filter_severity', '', $requested_severity, $this->build_select_severities(),
 			array('events' => array('change' => 'if (HTMLForms.getField("filter_severity").getValue() > 0) {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . (!empty($filter) ? $filter . '-' : '') . 'severity/' . (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . (!empty($filter) ? $filter . '-' : '') . 'severity/' . (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_severity").getValue();
+				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'severity', (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'severity', (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_severity").getValue();
 			} else {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . (!empty($filter) ? $filter : '') . '/' . (!empty($filter_id) ? $filter_id : ''))->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . (!empty($filter) ? $filter : '') . '/' . (!empty($filter_id) ? $filter_id : ''))->rel()) .'";
+				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, $filter, $filter_id)->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, $filter, $filter_id)->rel()) .'";
 			}')
 		)));
 		
@@ -345,9 +345,9 @@ class BugtrackerViews
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('filter_status', '', $requested_status, $this->build_select_status($current_page, $lang),
 			array('events' => array('change' => 'if (HTMLForms.getField("filter_status").getValue()) {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . (!empty($filter) ? $filter . '-' : '') . 'status/' . (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . (!empty($filter) ? $filter . '-' : '') . 'status/' . (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_status").getValue();
+				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'status', (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'status', (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_status").getValue();
 			} else {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . (!empty($filter) ? $filter : '') . '/' . (!empty($filter_id) ? $filter_id : ''))->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . (!empty($filter) ? $filter : '') . '/' . (!empty($filter_id) ? $filter_id : ''))->rel()) .'";
+				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, $filter, $filter_id)->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, $filter, $filter_id)->rel()) .'";
 			}')
 		)));
 		
@@ -389,9 +389,9 @@ class BugtrackerViews
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('filter_version', '', $requested_version, $this->build_select_versions($current_page),
 			array('events' => array('change' => 'if (HTMLForms.getField("filter_version").getValue() > 0) {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . (!empty($filter) ? $filter . '-' : '') . 'detected_in/' . (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . (!empty($filter) ? $filter . '-' : '') . 'fixed_in/' . (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_version").getValue();
+				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'fixed_in', (!empty($filter_id) ? $filter_id . '-' : ''))->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, (!empty($filter) ? $filter . '-' : '') . 'fixed_in', (!empty($filter_id) ? $filter_id . '-' : ''))->rel()) .'" + HTMLForms.getField("filter_version").getValue();
 			} else {
-				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name/desc/1/' . (!empty($filter) ? $filter : '') . '/' . (!empty($filter_id) ? $filter_id : ''))->rel() : BugtrackerUrlBuilder::solved('name/desc/1/' . (!empty($filter) ? $filter : '') . '/' . (!empty($filter_id) ? $filter_id : ''))->rel()) .'";
+				document.location = "'. ($current_page == 'unsolved' ? BugtrackerUrlBuilder::unsolved('name', 'desc', 1, $filter, $filter_id)->rel() : BugtrackerUrlBuilder::solved('name', 'desc', 1, $filter, $filter_id)->rel()) .'";
 			}')
 		)));
 		

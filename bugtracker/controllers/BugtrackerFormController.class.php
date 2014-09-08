@@ -579,10 +579,10 @@ class BugtrackerFormController extends ModuleController
 						$redirect = BugtrackerUrlBuilder::detail($bug->get_id() . '-' . $bug->get_rewrited_title());
 						break;
 					case 'solved' :
-						$redirect = BugtrackerUrlBuilder::solved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+						$redirect = BugtrackerUrlBuilder::solved(BugtrackerUrlBuilder::DEFAULT_SORT_FIELD, BugtrackerUrlBuilder::DEFAULT_SORT_MODE, $page, $back_filter, $filter_id);
 						break;
 					default :
-						$redirect = BugtrackerUrlBuilder::unsolved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
+						$redirect = BugtrackerUrlBuilder::unsolved(BugtrackerUrlBuilder::DEFAULT_SORT_FIELD, BugtrackerUrlBuilder::DEFAULT_SORT_MODE, $page, $back_filter, $filter_id);
 						break;
 				}
 			}

@@ -153,14 +153,14 @@ class BugtrackerUnsolvedListController extends ModuleController
 			'L_NO_BUG' 						=> empty($filters) ? $this->lang['notice.no_bug'] : (count($filters) > 1 ? $this->lang['notice.no_bug_matching_filters'] : $this->lang['notice.no_bug_matching_filter']),
 			'FILTER_LIST'					=> BugtrackerViews::build_filters('unsolved', $bugs_number),
 			'LEGEND'						=> BugtrackerViews::build_legend($displayed_severities, 'unsolved'),
-			'LINK_BUG_ID_TOP' 				=> BugtrackerUrlBuilder::unsolved('id/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_ID_BOTTOM' 			=> BugtrackerUrlBuilder::unsolved('id/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_TITLE_TOP' 			=> BugtrackerUrlBuilder::unsolved('title/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_TITLE_BOTTOM' 		=> BugtrackerUrlBuilder::unsolved('title/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_STATUS_TOP'			=> BugtrackerUrlBuilder::unsolved('status/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_STATUS_BOTTOM'		=> BugtrackerUrlBuilder::unsolved('status/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_DATE_TOP' 			=> BugtrackerUrlBuilder::unsolved('date/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-			'LINK_BUG_DATE_BOTTOM' 			=> BugtrackerUrlBuilder::unsolved('date/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel()
+			'LINK_BUG_ID_TOP' 				=> BugtrackerUrlBuilder::unsolved('id', 'top', $current_page, $filter, $filter_id)->rel(),
+			'LINK_BUG_ID_BOTTOM' 			=> BugtrackerUrlBuilder::unsolved('id', 'bottom', $current_page, $filter, $filter_id)->rel(),
+			'LINK_BUG_TITLE_TOP' 			=> BugtrackerUrlBuilder::unsolved('title', 'top', $current_page, $filter, $filter_id)->rel(),
+			'LINK_BUG_TITLE_BOTTOM' 		=> BugtrackerUrlBuilder::unsolved('title', 'bottom', $current_page, $filter, $filter_id)->rel(),
+			'LINK_BUG_STATUS_TOP'			=> BugtrackerUrlBuilder::unsolved('status', 'top', $current_page, $filter, $filter_id)->rel(),
+			'LINK_BUG_STATUS_BOTTOM'		=> BugtrackerUrlBuilder::unsolved('status', 'bottom', $current_page, $filter, $filter_id)->rel(),
+			'LINK_BUG_DATE_TOP' 			=> BugtrackerUrlBuilder::unsolved('date', 'top', $current_page, $filter, $filter_id)->rel(),
+			'LINK_BUG_DATE_BOTTOM' 			=> BugtrackerUrlBuilder::unsolved('date', 'bottom', $current_page, $filter, $filter_id)->rel()
 		));
 		
 		return $this->view;
@@ -185,7 +185,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 	private function get_pagination($bugs_number, $page, $field, $sort, $filter, $filter_id)
 	{
 		$pagination = new ModulePagination($page, $bugs_number, (int)BugtrackerConfig::load()->get_items_per_page());
-		$pagination->set_url(BugtrackerUrlBuilder::unsolved($field . '/' . $sort . '/%d' . (!empty($filter) ? '/' . $filter . '/' . $filter_id : '')));
+		$pagination->set_url(BugtrackerUrlBuilder::unsolved($field , $sort, '%d', $filter, $filter_id));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
 		{
@@ -240,11 +240,11 @@ class BugtrackerUnsolvedListController extends ModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.unsolved']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::unsolved($field . '/' . $sort . '/' . $page));
+		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::unsolved($field, $sort, $page, $filter, $filter_id));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], BugtrackerUrlBuilder::home());
-		$breadcrumb->add($this->lang['titles.unsolved'], BugtrackerUrlBuilder::unsolved($field . '/' . $sort . '/' . $page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : '')));
+		$breadcrumb->add($this->lang['titles.unsolved'], BugtrackerUrlBuilder::unsolved($field, $sort, $page, $filter, $filter_id));
 		
 		return $response;
 	}

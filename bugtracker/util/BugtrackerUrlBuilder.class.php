@@ -202,9 +202,14 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function unsolved($param = '')
+    public static function unsolved($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1, $back_filter = null, $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/unsolved/' . $param);
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
+		$back_filter = $back_filter !== null ? $back_filter . '/' : '';
+		$filter_id = $back_filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/unsolved/' . $sort_field . $sort_mode . $page . $back_filter . $filter_id);
 	}
 	
 	/**
@@ -221,9 +226,14 @@ class BugtrackerUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function solved($param = '')
+    public static function solved($sort_field = self::DEFAULT_SORT_FIELD, $sort_mode = self::DEFAULT_SORT_MODE, $page = 1, $back_filter = null, $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/solved/' . $param);
+		$sort_field = $sort_field !== self::DEFAULT_SORT_FIELD ? $sort_field . '/' : '';
+		$sort_mode = $sort_mode !== self::DEFAULT_SORT_MODE ? $sort_mode . '/' : '';
+		$page = $page !== 1 ? $page . '/' : '';
+		$back_filter = $back_filter !== null ? $back_filter . '/' : '';
+		$filter_id = $back_filter !== null && $filter_id !== 0 ? $filter_id . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/solved/' . $sort_field . $sort_mode . $page . $back_filter . $filter_id);
 	}
 	
 	/**
