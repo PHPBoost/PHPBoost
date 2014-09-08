@@ -92,10 +92,14 @@ if (!empty($table) && $action == 'data')
 	}
 
 	//On éxécute la requête
-	$query = "SELECT * FROM ".$table.$Sql->limit($pagination->get_display_from(), $_NBR_ELEMENTS_PER_PAGE);
-	$result = $Sql->query_while ($query);
+	$result = PersistenceContext::get_querier()->select('SELECT *
+		FROM ' . $table . '
+		LIMIT :number_items_per_page OFFSET :display_from', array(
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
+	));
 	$i = 1;
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		$Template->assign_block_vars('line', array());
 		//Premier passage: on liste le nom des champs sélectionnés
@@ -129,6 +133,7 @@ if (!empty($table) && $action == 'data')
 		}
 		$i++;
 	}
+	$result->dispose();
 	
 	$Template->put_all(array(
 		'C_DATABASE_TABLE_DATA' => true,
@@ -314,9 +319,9 @@ elseif (!empty($table) && $action == 'query')
 		if (strtolower(substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
 			//On éxécute la requête
-			$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query));
+			$result = PersistenceContext::get_querier()->select(str_replace('phpboost_', PREFIX, $query));
 			$i = 1;
-			while ($row = $Sql->fetch_assoc($result))
+			while ($row = $result->fetch())
 			{
 				$Template->assign_block_vars('line', array());
 				//Premier passage: on liste le nom des champs sélectionnés
@@ -336,6 +341,7 @@ elseif (!empty($table) && $action == 'query')
 				
 				$i++;
 			}
+			$result->dispose();
 		}
 		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
