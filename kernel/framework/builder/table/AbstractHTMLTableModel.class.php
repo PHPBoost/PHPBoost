@@ -46,8 +46,7 @@ abstract class AbstractHTMLTableModel implements HTMLTableModel
 	 */
 	private $columns;
 
-	public function __construct(array $columns, HTMLTableSortingRule $default_sorting_rule,
-	$rows_per_page = self::NO_PAGINATION)
+	public function __construct(array $columns, HTMLTableSortingRule $default_sorting_rule, $rows_per_page = self::NO_PAGINATION)
 	{
 		foreach ($columns as $column)
 		{
@@ -203,5 +202,4 @@ abstract class AbstractHTMLTableModel implements HTMLTableModel
 		}
 	}
 }
-
 ?>

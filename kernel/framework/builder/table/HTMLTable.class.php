@@ -68,7 +68,7 @@ class HTMLTable extends HTMLElement
 		}
 		$this->tpl = new FileTemplate($tpl_path);
 		$this->model = $model;
-		$this->get_columns();
+		$this->columns = $this->model->get_columns();
 		$this->parameters = new HTMLTableParameters($this->model);
 	}
 
@@ -87,11 +87,6 @@ class HTMLTable extends HTMLElement
 		return $this->tpl;
 	}
 
-	private function get_columns()
-	{
-		$this->columns = $this->model->get_columns();
-	}
-
 	private function extract_parameters()
 	{
 		$this->nb_rows = $this->model->get_number_of_matching_rows($this->parameters->get_filters());
@@ -101,11 +96,12 @@ class HTMLTable extends HTMLElement
 
 	private function get_rows()
 	{
-		$nb_rows_per_page = $this->get_nb_rows_per_page();
-		$first_row_index = $this->get_first_row_index();
-		$sorting_rule = $this->parameters->get_sorting_rule();
-		$filters = $this->parameters->get_filters();
-		$this->rows = $this->model->get_rows($nb_rows_per_page, $first_row_index, $sorting_rule, $filters);
+		$this->rows = $this->model->get_rows(
+			$this->get_nb_rows_per_page(), 
+			$this->get_first_row_index(), 
+			$this->parameters->get_sorting_rule(), 
+			$this->parameters->get_filters()
+		);
 	}
 
 	private function get_first_row_index()
@@ -120,7 +116,6 @@ class HTMLTable extends HTMLElement
 		if ($filters)
 		{
 			$form_id = 'filters_form_' . $this->arg_id;
-			$this->tpl->put_all(array('C_FILTERS' => $has_filters));
 			$fieldset = new FormFieldsetHorizontal('filters');
 			$fieldset->set_description(LangLoader::get_class_message('filters', __CLASS__));
 			foreach ($filters as $filter)
@@ -135,19 +130,20 @@ class HTMLTable extends HTMLElement
 			$form->add_fieldset($fieldset);
 			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
 			// TODO translate submit button label
-            $submit = new FormButtonButton('Soumettre', 'return ' . $submit_function . '()', 'submit');
-            $form->add_button($submit);
-			$this->tpl->put('filters', $form->display());
+            $form->add_button(new FormButtonButton('Soumettre', 'return ' . $submit_function . '()', 'submit'));
+
 			$this->tpl->put_all(array(
+				'C_FILTERS' => $has_filters,
 				'SUBMIT_FUNCTION' => $submit_function,
-				'SUBMIT_URL' => $this->parameters->get_js_submit_url()
+				'SUBMIT_URL' => $this->parameters->get_js_submit_url(),
+				'filters' => $form->display()
 			));
 		}
 	}
 
 	private function generate_table_structure()
 	{
-		$tpl_vars = array(
+		$this->tpl->put_all(array(
 			'TABLE_ID' => $this->arg_id,
 			'C_PAGINATION_ACTIVATED' => $this->is_pagination_activated(),
 			'NUMBER_OF_COLUMNS' => count($this->columns),
@@ -155,8 +151,7 @@ class HTMLTable extends HTMLElement
 			'CAPTION' => $this->model->get_caption(),
 			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url(),
 			'C_NB_ROWS_OPTIONS' => $this->model->has_nb_rows_options()
-		);
-		$this->tpl->put_all($tpl_vars);
+		));
 
 		if ($this->model->has_nb_rows_options())
 		{
@@ -267,5 +262,4 @@ class HTMLTable extends HTMLElement
 		return $nb_rows_per_page;
 	}
 }
-
 ?>
