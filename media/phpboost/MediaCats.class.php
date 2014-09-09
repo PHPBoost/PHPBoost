@@ -91,8 +91,6 @@ class MediaCats extends DeprecatedCategoriesManager
 	//Function which adds a category
 	public function add_category($id_parent, $name, $description, $image, $new_auth, $mime_type, $activ)
 	{
-		global $Sql;
-
 		if (array_key_exists($id_parent, $this->cache_var))
 		{
 			if (empty($image))
@@ -112,7 +110,7 @@ class MediaCats extends DeprecatedCategoriesManager
 			}
 
 			$new_id_cat = parent::add($id_parent, $name);
-			$Sql->query_inject("UPDATE ".PREFIX."media_cat SET description = '" . $description . "', image = '" . $image . "', auth = '" . $new_auth . "', mime_type = '" . $mime_type . "', active = '" . $activ . "' WHERE id = '" . $new_id_cat . "'");
+			PersistenceContext::get_querier()->update(PREFIX . 'media_cat', array('description' => $description, 'image' => $image, 'auth' => $new_auth, 'mime_type' => $mime_type, 'active' => $activ), 'WHERE id=:id', array('id' => $new_id_cat));
 			//We don't recount the number of questions because this category is empty
 			return 'e_success';
 		}
@@ -125,7 +123,7 @@ class MediaCats extends DeprecatedCategoriesManager
 	//Function which updates a category
 	public function Update_category($id_cat, $id_parent, $name, $description, $image, $new_auth, $mime_type, $activ)
 	{
-		global $Sql, $Cache;
+		global $Cache;
 
 		if (array_key_exists($id_cat, $this->cache_var))
 		{
@@ -165,7 +163,7 @@ class MediaCats extends DeprecatedCategoriesManager
 				}
 			}
 
-			$Sql->query_inject("UPDATE ".PREFIX."media_cat SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "', auth = '" . $new_auth . "', mime_type = '" . $mime_type . "', active = '" . $activ . "' WHERE id = '" . $id_cat . "'");
+			PersistenceContext::get_querier()->update(PREFIX . 'media_cat', array('name' => $name, 'image' => $image, 'description' => $description, 'auth' => $new_auth, 'mime_type' => $mime_type, 'active' => $activ), 'WHERE id=:id', array('id' => $id_cat));
 			$Cache->Generate_module_file('media');
 
 			return 'e_success';
