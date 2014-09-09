@@ -81,6 +81,7 @@
 function {SUBMIT_FUNCTION}() {
     var filters = new Array();
 	var filtersObjects = new Array();
+	var has_filter = false;
 	# START filterElt #
 	filtersObjects.push({formId: ${escapejs(filterElt.FORM_ID)}, tableId: ${escapejs(filterElt.TABLE_ID)}});
 	# END filterElt #
@@ -91,14 +92,14 @@ function {SUBMIT_FUNCTION}() {
 			var filterValue = $F(domFilter);
 			if (filterValue) {
 				filters[filter.tableId] = filterValue;
+				has_filter = true;
 			}
 		} else {
 			window.alert('element ' + filter.formId + ' not found');
 		}
 	}
-	
     var serializer = new UrlSerializedParameterEncoder();
-    var filtersUrl = filters.size() > 0 ? ',filters:{' + serializer.encode(filters) + '}' : '';
+    var filtersUrl = has_filter ? ',filters:{' + serializer.encode(filters) + '}' : '';
 	var submitUrl = ${escapejs(SUBMIT_URL)} + filtersUrl;
 	window.location = submitUrl;
     return false;
