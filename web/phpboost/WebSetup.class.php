@@ -58,9 +58,6 @@ class WebSetup extends DefaultModuleSetup
 		ConfigManager::delete('web', 'config');
 		CacheManager::invalidate('module', 'web');
 		WebService::get_keywords_manager()->delete_module_relations();
-		PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module', array('module' => 'web'));
-		CommentsService::delete_comments_module('web');
-		NotationService::delete_notes_module('web');
 	}
 	
 	private function drop_tables()
