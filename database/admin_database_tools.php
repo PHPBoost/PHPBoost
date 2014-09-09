@@ -92,12 +92,8 @@ if (!empty($table) && $action == 'data')
 	}
 
 	//On éxécute la requête
-	$result = PersistenceContext::get_querier()->select('SELECT *
-		FROM ' . $table . '
-		LIMIT :number_items_per_page OFFSET :display_from', array(
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
-	));
+	$query = 'SELECT * FROM ' . $table . ' LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from();
+	$result = PersistenceContext::get_querier()->select($query);
 	$i = 1;
 	while ($row = $result->fetch())
 	{
@@ -174,11 +170,11 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 	$submit = retrieve(POST, 'submit', '');
 	if (!empty($submit)) //On exécute une requête
 	{
-		$request = '';
+		$infos = array();
 		foreach ($table_structure['fields'] as $fields_info)
-			$request .= $fields_info['name'] . " = '" . retrieve(POST, $fields_info['name'], '', TSTRING_HTML) . "', ";
+			$infos[$fields_info['name']] = retrieve(POST, $fields_info['name'], '', TSTRING_HTML);
 		
-		$Sql->query_inject("UPDATE ".$table." SET " . trim($request, ', ') . " WHERE " . $field . " = '" . $value . "'");
+		PersistenceContext::get_querier()->update($table, $infos, 'WHERE ' . $field . ' = :value', array('value' => $value));
 		AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
 	elseif (!empty($field) && !empty($value))
@@ -236,18 +232,16 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 				}
 			}
 		}
-			
-		$values = '';
-		$fields = '';
+		
+		$infos = array();
 		foreach ($table_structure['fields'] as $fields_info)
 		{
 			if ($fields_info['name'] == $primary_key  && empty($field_value)) //Clée primaire vide => on ignore.
 				continue;
-			$values .= "'" . retrieve(POST, $fields_info['name'], '', TSTRING_HTML) . "', ";
-			$fields .= $fields_info['name'] . ', ';
+			$infos[$fields_info['name']] = retrieve(POST, $fields_info['name'], '', TSTRING_HTML);
 		}
 		
-		$Sql->query_inject("INSERT INTO ".$table." (" . trim($fields, ', ') . ") VALUES (" . trim($values, ', ') . ")");
+		PersistenceContext::get_querier()->insert($table, $infos);
 		AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
 	else
