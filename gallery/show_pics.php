@@ -53,10 +53,9 @@ if (!empty($g_idpics))
 	}
 
 	//Mise à jour du nombre de vues.
-	$Sql->query_inject("UPDATE LOW_PRIORITY " . PREFIX . "gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'");
+	PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $g_idcat, 'id' => $g_idpics));
 
-	$clause_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL) ? '' : ' AND aprob = 1';
-	$path = $Sql->query("SELECT path FROM " . PREFIX . "gallery WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'" . $clause_admin);
+	$path = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'path', 'WHERE idcat = :idcat AND id = :id' . (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL) ? '' : ' AND aprob = 1'), array('idcat' => $g_idcat, 'id' => $g_idpics));
 	if (empty($path))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();

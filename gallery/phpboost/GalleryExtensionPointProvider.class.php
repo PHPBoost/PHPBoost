@@ -29,11 +29,11 @@ if (defined('PHPBOOST') !== true) exit;
 
 class GalleryExtensionPointProvider extends ExtensionPointProvider
 {
-	private $sql_querier;
+	private $db_querier;
 
 	public function __construct()
 	{
-		$this->sql_querier = PersistenceContext::get_sql();
+		$this->db_querier = PersistenceContext::get_querier();
 		parent::__construct('gallery');
 	}
 
@@ -48,10 +48,10 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		//Racine
 		$cat_gallery .= '$CAT_GALLERY[0] = ' . var_export(array('name' => $LANG['root'], 'id_left' => 0, 'id_right' => 0, 'level' => -1, 'auth' => $config->get_authorizations()), true) . ';' . "\n\n";
 		
-		$result = $this->sql_querier->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
+		$result = $this->db_querier->select("SELECT id, id_left, id_right, level, name, aprob, auth
 		FROM " . PREFIX . "gallery_cats
 		ORDER BY id_left");
-		while ($row = $this->sql_querier->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			if (empty($row['auth']))
 				$row['auth'] = serialize($config->get_authorizations());
@@ -68,13 +68,13 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		$Gallery = new Gallery;
 
 		$_array_random_pics = 'global $_array_random_pics;' . "\n" . '$_array_random_pics = array(';
-		$result = $this->sql_querier->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
+		$result = $this->db_querier->select("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
 		FROM " . PREFIX . "gallery g
 		LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
 		WHERE g.aprob = 1 AND (gc.aprob = 1 OR g.idcat = 0)
 		ORDER BY RAND()
-		" . $this->sql_querier->limit(0, 30));
-		while ($row = $this->sql_querier->fetch_assoc($result))
+		LIMIT 30");
+		while ($row = $result->fetch())
 		{
 			if ($row['idcat'] == 0)
 				$row['auth'] = serialize($config->get_authorizations());

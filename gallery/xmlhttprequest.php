@@ -58,7 +58,7 @@ if (!empty($_GET['increment_view']))
 		exit;
 
 	//Mise à jour du nombre de vues.
-	$Sql->query_inject("UPDATE LOW_PRIORITY " . PREFIX . "gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'");
+	PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery SET views = views + 1 WHERE idcat = :idcat AND id = :id", array('idcat' => $g_idcat, 'id' => $g_idpics));
 }
 else
 {	
@@ -67,7 +67,7 @@ else
 	if (!empty($_GET['rename_pics'])) //Renomme une image.
 	{
 		$id_file = retrieve(POST, 'id_file', 0);
-		$id_cat = $Sql->query("SELECT idcat FROM " . PREFIX . "gallery WHERE id = " .$id_file. " ");
+		$id_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'idcat', 'WHERE id = :id', array('id' => $id_file));
 		
 		if (empty($id_cat))
 		{
@@ -94,7 +94,7 @@ else
 	elseif (!empty($_GET['aprob_pics']))
 	{
 		$id_file = retrieve(POST, 'id_file', 0);
-		$id_cat = $Sql->query("SELECT idcat FROM " . PREFIX . "gallery WHERE id = " .$id_file. " ");
+		$id_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'idcat', 'WHERE id = :id', array('id' => $id_file));
 		
 		if (empty($id_cat))
 		{
