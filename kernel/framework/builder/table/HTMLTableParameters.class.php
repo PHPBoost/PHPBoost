@@ -97,25 +97,25 @@ class HTMLTableParameters
 
 	public function get_default_table_url()
 	{
-		$default_options = array('page' => 1);
-		$params_to_remove = array('sort', 'filters', 'items');
+		$default_options = array();
+		$params_to_remove = array('page', 'sort', 'filters', 'items');
 		return $this->url_parameters->get_url($default_options, $params_to_remove);
 	}
 
 	public function get_ascending_sort_url($sort_identifier)
 	{
-		return $this->url_parameters->get_url(array('sort' => HTMLTableSortingRule::ASC . $sort_identifier, 'page' => 1));
+		return $this->url_parameters->get_url(array('sort' => HTMLTableSortingRule::ASC . $sort_identifier), array('page'));
 	}
 
 	public function get_descending_sort_url($sort_identifier)
 	{
-		return $this->url_parameters->get_url(array('sort' => HTMLTableSortingRule::DESC . $sort_identifier, 'page' => 1));
+		return $this->url_parameters->get_url(array('sort' => HTMLTableSortingRule::DESC . $sort_identifier), array('page'));
 	}
 
 	public function get_js_submit_url()
 	{
-		$default_options = array('page' => 1);
-		$params_to_remove = array('filters');
+		$default_options = array();
+		$params_to_remove = array('page', 'filters');
 		return $this->url_parameters->get_url($default_options, $params_to_remove);
 	}
 
