@@ -33,7 +33,7 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 		$tpl = new StringTemplate('<ul>
 		# IF C_RESULTS #
 			# START results #
-			<li>
+			<li onclick="window.location.href=${escapejs(results.U_PROFILE)};">
 				# IF IS_ADMIN #
 				<a href="{results.U_EDIT}" title="{L_EDIT}" class="fa fa-edit"></a>&nbsp;
 				<a href="{results.U_DELETE}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>&nbsp;

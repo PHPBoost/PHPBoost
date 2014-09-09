@@ -172,7 +172,6 @@ $tpl->put_all(array(
 	'L_AUTHS' => $LANG['auths'],
 	'L_ENABLED' => LangLoader::get_message('enabled', 'common'),
 	'L_DISABLED' => LangLoader::get_message('disabled', 'common'),
-	'L_ACTIVATION' => $LANG['activation'],
 	'L_GUEST' => $LANG['guest'],
 	'L_USER' => $LANG['member'],
 	'L_MODO' => $LANG['modo'],

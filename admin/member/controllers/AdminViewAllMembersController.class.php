@@ -101,7 +101,6 @@ class AdminViewAllMembersController extends AdminController
 			'SORT_LAST_CONNECT_BOTTOM' => AdminMembersUrlBuilder::management('connect/bottom'. $page)->rel(),
 			'SORT_APPROBATION_TOP' => AdminMembersUrlBuilder::management('approbation/top/'. $page)->rel(),
 			'SORT_APPROBATION_BOTTOM' => AdminMembersUrlBuilder::management('approbation/bottom/'. $page)->rel(),
-			'L_CONFIRM_DEL_USER' => $admin_lang['confirm_del_member'],
 			'L_CONFIRM_DEL_ADMIN' => $admin_lang['confirm_del_admin'],
 			'L_USERS_MANAGEMENT' => $admin_lang['members_management'],
 			'L_LOGIN' => $user_common_lang['pseudo'],
