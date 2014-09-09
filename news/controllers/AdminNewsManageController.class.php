@@ -50,8 +50,6 @@ class AdminNewsManageController extends AdminModuleController
 	
 	private function build_view(HTTPRequestCustom $request)
 	{
-		$categories = NewsService::get_categories_manager()->get_categories_cache()->get_categories();
-		
 		$mode = $request->get_getvalue('sort', 'desc');
 		$field = $request->get_getvalue('field', 'date');
 		

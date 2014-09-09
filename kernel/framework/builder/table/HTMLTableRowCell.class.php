@@ -59,11 +59,5 @@ class HTMLTableRowCell extends HTMLElement
 	{
 		$this->colspan = $colspan;
 	}
-	
-	public function center()
-	{
-		$this->add_css_style('text-align:center;');
-	}
 }
-
 ?>
