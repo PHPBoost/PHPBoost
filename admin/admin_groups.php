@@ -50,7 +50,7 @@ if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
 		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
-	$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET name = '" . $name . "', img = '" . $img . "', color = '" . $color_group . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'");
+	PersistenceContext::get_querier()->update(DB_TABLE_GROUP, array('name' => $name, 'img' => $img, 'color' => $color_group, 'auth' => serialize($group_auth)), 'WHERE id = :id', array('id' => $idgroup_post));
 	
 	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 	
@@ -71,11 +71,11 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 		{
 			//Insertion
 			$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_GROUP . " (name, img, color, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . $color_group . "', '" . serialize($group_auth) . "', '')");
+			$result = PersistenceContext::get_querier()->insert(DB_TABLE_GROUP, array('name' => $name, 'img' => $img, 'color' => $color_group, 'auth' => serialize($group_auth), 'members' => ''));
 			
 			GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 			
-			AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "group"));
+			AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $result->get_last_inserted_id());
 		}
 		else
 			AppContext::get_response()->redirect('/admin/admin_groups.php?add=1&error=group_already_exists#message_helper');
@@ -345,10 +345,10 @@ else //Liste des groupes.
 	));
 	  
   
-	$result = $Sql->query_while("SELECT id, name, img
+	PersistenceContext::get_querier()->select("SELECT id, name, img
 	FROM " . DB_TABLE_GROUP . "
 	ORDER BY name");
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		$template->assign_block_vars('group', array(
 			'U_USER_GROUP' => UserUrlBuilder::group($row['id'])->rel(),

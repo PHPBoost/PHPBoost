@@ -42,8 +42,8 @@ if (!empty($_POST['add']))
 		$check_smiley = PersistenceContext::get_querier()->count(DB_TABLE_SMILEYS, 'WHERE code_smiley=:code_smiley', array('code_smiley' => $code_smiley));
 		if (empty($check_smiley))
 		{
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_SMILEYS . " (code_smiley,url_smiley) VALUES('" . $code_smiley . "','" . $url_smiley . "')");
-		
+			PersistenceContext::get_querier()->insert(DB_TABLE_SMILEYS, array('code_smiley' => $code_smiley, 'url_smiley' => $url_smiley));
+			
 			###### Régénération du cache des smileys #######	
 			SmileysCache::invalidate();
 		
@@ -100,9 +100,9 @@ else
 	foreach ($smileys_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $smileys)
 		$smileys_array[] = $smileys->get_name();
 	
-	$result = $Sql->query_while("SELECT url_smiley
+	$result = PersistenceContext::get_querier()->select("SELECT url_smiley
 	FROM " . PREFIX . "smileys");
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		//On recherche les clées correspondante à celles trouvée dans la bdd.
 		$key = array_search($row['url_smiley'], $smileys_array);

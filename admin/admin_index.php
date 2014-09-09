@@ -106,12 +106,14 @@ $Template->put_all(array(
 
 
 //Liste des personnes en lignes.
-$result = $Sql->query_while("SELECT s.user_id, s.ip, s.timestamp, s.location_script, s.location_title, m.display_name, m.groups, m.level
+$result = PersistenceContext::get_querier()->select("SELECT s.user_id, s.ip, s.timestamp, s.location_script, s.location_title, m.display_name, m.groups, m.level
 FROM " . DB_TABLE_SESSIONS . " s
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON s.user_id = m.user_id
-WHERE s.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-ORDER BY s.timestamp DESC");
-while ($row = $Sql->fetch_assoc($result))
+WHERE s.timestamp > :timestamp
+ORDER BY s.timestamp DESC", array(
+	'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration())
+));
+while ($row = $result->fetch())
 {
 	//On vérifie que la session ne correspond pas à un robot.
 	$robot = Robots::get_robot_by_ip($row['ip']);

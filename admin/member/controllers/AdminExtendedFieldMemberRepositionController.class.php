@@ -35,20 +35,11 @@ class AdminExtendedFieldMemberRepositionController extends AdminController
 		$extended_field->set_id($request->get_getint('id'));
 		$data = ExtendedFieldsDatabaseService::select_data_field_by_id($extended_field);
 		
-		if ($type == 'top')
-		{
-			$idbottom = ($data['position'] - 1);
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position = 0 WHERE position='" . $data['position'] . "'");
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position=" . $data['position'] . " WHERE position = '" . $idbottom . "'");
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position=" . $idbottom . " WHERE position = 0");
-		}
-		elseif ($type == 'bottom')
-		{
-			$idtop = ($data['position'] + 1);
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position = 0 WHERE position = '" . $data['position'] . "'");
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position = " . $data['position'] . " WHERE position = '" . $idtop . "'");
-			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position = " . $idtop . " WHERE position = 0");
-		}
+		$new_position = $type == 'top' ? ($data['position'] - 1) : ($data['position'] + 1);
+		
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('position' => 0), 'WHERE position = :position', array('position' => $data['position']));
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('position' => $data['position']), 'WHERE position = :position', array('position' => $new_position));
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('position' => $new_position), 'WHERE position = :position', array('position' => 0));
 		
 		ExtendedFieldsCache::invalidate();
 		AppContext::get_response()->redirect(AdminExtendedFieldsUrlBuilder::fields_list());
