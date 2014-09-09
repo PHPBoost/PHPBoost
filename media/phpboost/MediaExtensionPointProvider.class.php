@@ -32,10 +32,12 @@ define('MEDIA_MAX_SEARCH_RESULTS', 100);
 
 class MediaExtensionPointProvider extends ExtensionPointProvider
 {
+	private $db_querier;
+
 	## Public Methods ##
-	function __construct() //Constructeur de la classe ForumInterface
+	function __construct()
 	{
-		$this->sql_querier = PersistenceContext::get_sql();
+		$this->db_querier = PersistenceContext::get_querier();
 		parent::__construct('media');
 	}
 
@@ -47,7 +49,7 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		//Configuration
 		$i = 0;
 		$config = array();
-		$config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'media'"));
+		$config = unserialize($this->db_querier->select_single_row(DB_TABLE_CONFIGS, 'value', 'WHERE name = \'media\''));
 		$root_config = $config['root'];
 		unset($config['root']);
 
@@ -56,9 +58,9 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 
 		//List of categories and their own properties
 		$string .= '$MEDIA_CATS[0] = ' . var_export($root_config, true) . ';' . "\n\n";
-		$result = $this->sql_querier->query_while("SELECT * FROM " . PREFIX . "media_cat ORDER BY id_parent, c_order ASC");
+		$result = $this->db_querier->select("SELECT * FROM " . PREFIX . "media_cat ORDER BY id_parent, c_order ASC");
 
-		while ($row = $this->sql_querier->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			$string .= '$MEDIA_CATS[' . $row['id'] . '] = ' . var_export(array(
 				'id_parent' => (int)$row['id_parent'],

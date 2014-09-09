@@ -351,7 +351,7 @@ elseif (!empty($_POST['submit']))
 	// Édition
 	if ($media['idedit'] && AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . FormatingHelper::strparse($media['contents']) . "', infos = '" . (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'");
+		PersistenceContext::get_querier()->update(PREFIX . "media", array('idcat' => $media['idcat'], 'name' => $media['name'], 'url' => $media['url'], 'contents' => FormatingHelper::strparse($media['contents']), 'infos' => (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']), 'WHERE id = :id', array('id' => $media['idedit']));
 
 		$media_categories->recount_media_per_cat();
 
@@ -377,9 +377,9 @@ elseif (!empty($_POST['submit']))
 	// Ajout
 	elseif (!$media['idedit'] && (($auth_write = AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
 	{
-		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height) VALUES ('" . $media['idcat'] . "', '" . AppContext::get_current_user()->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . FormatingHelper::strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "')");
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "media", array('idcat' => $media['idcat'], 'iduser' => AppContext::get_current_user()->get_id(), 'timestamp' => time(), 'name' => $media['name'], 'contents' => FormatingHelper::strparse($media['contents']), 'url' => $media['url'], 'mime_type' => $media['mime_type'], 'infos' => (AppContext::get_current_user()->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0), 'width' => $media['width'], 'height' => $media['height']));
 
-		$new_id_media = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "media");
+		$new_id_media = $result->get_last_inserted_id();
 		$media_categories->recount_media_per_cat($media['idcat']);
 		// Feeds Regeneration
 		

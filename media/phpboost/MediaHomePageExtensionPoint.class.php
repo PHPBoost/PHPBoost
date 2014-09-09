@@ -27,11 +27,11 @@
 
 class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 {
-	private $sql_querier;
+	private $db_querier;
 
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
+	public function __construct()
+	{
+		$this->db_querier = PersistenceContext::get_querier();
 	}
 	
 	public function get_home_page()
@@ -194,21 +194,26 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				'PAGINATION' => $pagination->display(),
 				'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $id_cat . '.php?' : 'media.php?cat=' . $id_cat . '&'
 			));
-	
-			$result = $this->sql_querier->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.contents, mb.display_name, mb.groups, mb.level, notes.average_notes, com.number_comments
-				FROM " . PREFIX . "media AS v
-				LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
-				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.id_in_module AND notes.module_name = 'media'
-				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON v.id = com.id_in_module AND com.module_id = 'media'
-				WHERE idcat = '" . $id_cat . "' AND infos = '" . MEDIA_STATUS_APROBED . "'
-				ORDER BY " . $sort . " " . $mode .
-				$this->sql_querier->limit($pagination->get_display_from(), $MEDIA_CONFIG['pagin']));
-	
+			
 			$notation = new Notation();
 			$notation->set_module_name('media');
 			$notation->set_notation_scale($MEDIA_CONFIG['note_max']);
 			
-			while ($row = $this->sql_querier->fetch_assoc($result))
+			$result = $this->db_querier->select("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.contents, mb.display_name, mb.groups, mb.level, notes.average_notes, com.number_comments
+				FROM " . PREFIX . "media AS v
+				LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
+				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.id_in_module AND notes.module_name = 'media'
+				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON v.id = com.id_in_module AND com.module_id = 'media'
+				WHERE idcat = :idcat AND infos = :infos
+				ORDER BY " . $sort . " " . $mode . "
+				LIMIT :number_items_per_page OFFSET :display_from", array(
+					'idcat' => $id_cat,
+					'infos' => MEDIA_STATUS_APROBED,
+					'number_items_per_page' => $pagination->get_number_items_per_page(),
+					'display_from' => $pagination->get_display_from()
+			));
+			
+			while ($row = $result->fetch())
 			{
 				$notation->set_id_in_module($row['id']);
 				
@@ -230,7 +235,6 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('media', $row['id']) . '</a>'
 				));
 			}
-	
 			$result->dispose();
 		}
 		else

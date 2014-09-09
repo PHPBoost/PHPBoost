@@ -169,8 +169,7 @@ else
 		$media_categories->build_children_id_list(0, $array_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST, MEDIA_AUTH_READ);
 	}
 	
-	$nbr_media = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "media
-	WHERE " . (!empty($array_cats) ? 'idcat IN (' . "'" . implode("', '", $array_cats) . "'" . ')' : 'idcat=' . (!empty($cat) ? $cat : 0)) . (is_null($db_where) ? '' : ' AND infos=' . $db_where));
+	$nbr_media = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . (!empty($array_cats) ? 'idcat IN :array_cats' : 'idcat = :idcat') . (is_null($db_where) ? '' : ' AND infos = :infos'), array('array_cats' => $array_cats, 'idcat' => (!empty($cat) ? $cat : 0), 'infos' => $db_where));
 	
 	//On crée une pagination si le nombre de fichier est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -183,13 +182,19 @@ else
 		DispatchManager::redirect($error_controller);
 	}
 
-	$result = $Sql->query_while("SELECT *
+	$result = PersistenceContext::get_querier()->select("SELECT *
 		FROM " . PREFIX . "media
-		WHERE " . (!empty($array_cats) ? 'idcat IN (' . "'" . implode("', '", $array_cats) . "'" . ')' : 'idcat=' . (!empty($cat) ? $cat : 0)) . (is_null($db_where) ? '' : ' AND infos=' . $db_where) . "
+		WHERE " . (!empty($array_cats) ? 'idcat IN :array_cats' : 'idcat = :idcat') . (is_null($db_where) ? '' : ' AND infos = :infos') . "
 		ORDER BY infos ASC, timestamp DESC
-		" . $Sql->limit($pagination->get_display_from(), NUM_MODO_MEDIA));
+		LIMIT :number_items_per_page OFFSET :display_from", array(
+			'array_cats' => $array_cats,
+			'idcat' => (!empty($cat) ? $cat : 0),
+			'infos' => $db_where,
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
+	));
 
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		$js_array[] = $row['id'];
 
@@ -206,7 +211,6 @@ else
 			'UNAPROBED' => $row['infos'] == MEDIA_STATUS_UNAPROBED ? ' checked="checked"' : '',
 		));
 	}
-
 	$result->dispose();
 
 	$Template->put_all(array(
