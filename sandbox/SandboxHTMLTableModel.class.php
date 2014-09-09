@@ -80,7 +80,14 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$result = PersistenceContext::get_querier()->select($query, $this->parameters);
 		foreach ($result as $row)
 		{
-			$results[] = $this->build_table_row($row);
+			$results[] = new HTMLTableRow(array(
+				new HTMLTableRowCell($row['display_name']),
+				new HTMLTableRowCell(($row['show_email'] == 1) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '&nbsp;'),
+				new HTMLTableRowCell(gmdate_format('date_format_long', $row['registration_date'])),
+				new HTMLTableRowCell(!empty($row['user_msg']) ? $row['user_msg'] : '0'),
+				new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connection_date']) ? $row['last_connection_date'] : $row['registration_date'])),
+				new HTMLTableRowCell('<a href="' . Url::to_rel('/user/pm.php?pm=' . $row['user_id']) . '" class="basic-button smaller">MP</a>')
+			));
 		}
 		return $results;
 	}
@@ -133,25 +140,6 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$values = array('pseudo' => 'display_name', 'register_date' => 'registration_date');
 		$default = 'user_id';
 		return Arrays::find($rule->get_sort_parameter(), $values, $default);
-	}
-
-	/**
-	 * @param array $row
-	 * @return HTMLTableRow
-	 */
-	private function build_table_row(array $row)
-	{
-		$login = new HTMLTableRowCell($row['display_name']);
-		$user_mail = new HTMLTableRowCell(($row['show_email'] == 1) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '&nbsp;');
-		$user_mail->center();
-		$timestamp = new HTMLTableRowCell(gmdate_format('date_format_long', $row['registration_date']));
-		$user_msg = new HTMLTableRowCell(!empty($row['user_msg']) ? $row['user_msg'] : '0');
-		$user_msg->center();	
-		$last_connect = new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connection_date']) ? $row['last_connection_date'] : $row['registration_date']));
-		$pm = new HTMLTableRowCell('<a href="' . Url::to_rel('/user/pm.php?pm=' . $row['user_id']) . '" class="basic-button smaller">MP</a>');
-		$pm->center();
-
-		return new HTMLTableRow(array($login, $user_mail, $timestamp, $user_msg, $last_connect, $pm));
 	}
 }
 ?>
