@@ -36,7 +36,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
     {
     	if (GalleryAuthorizationsService::check_authorizations()->read())
 		{
-			global $Cache,  $CAT_GALLERY, $LANG, $_array_random_pics, $Sql;
+			global $Cache,  $CAT_GALLERY, $LANG, $_array_random_pics;
 			$tpl = new FileTemplate('gallery/gallery_mini.tpl');
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
 			
@@ -74,13 +74,13 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				if (count($gallery_mini) == 0)
 				{
 					$_array_random_pics = array();
-					$result = $Sql->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
+					$result = PersistenceContext::get_querier()->select("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
 					FROM " . PREFIX . "gallery g
 					LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
 					WHERE g.aprob = 1 AND gc.aprob = 1
 					ORDER BY RAND()
-					" . $Sql->limit(0, $config->get_pics_number_in_mini()));
-					while($row = $Sql->fetch_assoc($result))
+					LIMIT " . $config->get_pics_number_in_mini());
+					while($row = $result->fetch())
 					{
 						$_array_random_pics[] = $row;
 					}

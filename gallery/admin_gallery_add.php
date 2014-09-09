@@ -118,10 +118,10 @@ else
 	//Création de la liste des catégories.
 	$cat_list = '<option value="0">' . $LANG['root'] . '</option>';
 	$cat_list_unselect = '<option value="0" selected="selected">' . $LANG['root'] . '</option>';
-	$result = $Sql->query_while("SELECT id, level, name
+	$result = PersistenceContext::get_querier()->select("SELECT id, level, name
 	FROM " . PREFIX . "gallery_cats
 	ORDER BY id_left");
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
@@ -134,7 +134,7 @@ else
 	if (!empty($add_pic))
 	{
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
-		$imageup = $Sql->query_array(PREFIX . "gallery", "idcat", "name", "path", "WHERE id = '" . $add_pic . "'");
+		$imageup = $db_querier->select_single_row(PREFIX . "gallery", array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
 		$Template->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
@@ -188,9 +188,9 @@ else
 
 		if (is_array($array_pics))
 		{
-			$result = $Sql->query_while("SELECT path
+			$result = PersistenceContext::get_querier()->select("SELECT path
 			FROM " . PREFIX . "gallery");
-			while ($row = $Sql->fetch_assoc($result))
+			while ($row = $result->fetch())
 			{
 				//On recherche les clées correspondante à celles trouvée dans la bdd.
 				$key = array_search($row['path'], $array_pics);
