@@ -104,11 +104,6 @@ class HTMLTable extends HTMLElement
 		);
 	}
 
-	private function get_first_row_index()
-	{
-		return ($this->page_number - 1) * $this->get_nb_rows_per_page();
-	}
-
 	private function generate_filters_form()
 	{
 		$filters = $this->model->get_filters();
@@ -173,13 +168,18 @@ class HTMLTable extends HTMLElement
 
 	private function generate_headers()
 	{
+		$sorting_rules = $this->parameters->get_sorting_rule();
+		$sorted = $sorting_rules->get_order_way() . $sorting_rules->get_sort_parameter();
 		foreach ($this->model->get_columns() as $column)
 		{
+			$sortable_parameter = $column->get_sortable_parameter();
 			$values = array(
 				'NAME' => $column->get_value(),
 				'C_SORTABLE' => $column->is_sortable(),
-				'U_SORT_ASC' => $this->parameters->get_ascending_sort_url($column->get_sortable_parameter()),
-				'U_SORT_DESC' => $this->parameters->get_descending_sort_url($column->get_sortable_parameter())
+				'C_SORT_ASC_SELECTED' => $sorted == HTMLTableSortingRule::ASC . $sortable_parameter,
+				'C_SORT_DESC_SELECTED' => $sorted == HTMLTableSortingRule::DESC . $sortable_parameter,
+				'U_SORT_ASC' => $this->parameters->get_ascending_sort_url($sortable_parameter),
+				'U_SORT_DESC' => $this->parameters->get_descending_sort_url($sortable_parameter)
 			);
 			$this->add_css_vars($column, $values);
 			$this->tpl->assign_block_vars('header_column', $values);
@@ -262,6 +262,11 @@ class HTMLTable extends HTMLElement
 			$nb_rows_per_page = $this->model->get_nb_rows_per_page();
 		}
 		return $nb_rows_per_page;
+	}
+
+	private function get_first_row_index()
+	{
+		return ($this->page_number - 1) * $this->get_nb_rows_per_page();
 	}
 }
 ?>
