@@ -89,13 +89,17 @@ function {SUBMIT_FUNCTION}() {
 		var domFilter = $(filter.formId);
 		if (domFilter) {
 			var filterValue = $F(domFilter);
-			filters[filter.tableId] = filterValue;
+			if (filterValue) {
+				filters[filter.tableId] = filterValue;
+			}
 		} else {
 			window.alert('element ' + filter.formId + ' not found');
 		}
 	}
+	
     var serializer = new UrlSerializedParameterEncoder();
-	var submitUrl = ${escapejs(SUBMIT_URL)} + ',filters:{' + serializer.encode(filters) + '}';
+    var filtersUrl = filters.size() > 0 ? ',filters:{' + serializer.encode(filters) + '}' : '';
+	var submitUrl = ${escapejs(SUBMIT_URL)} + filtersUrl;
 	window.location = submitUrl;
     return false;
 }

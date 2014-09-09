@@ -32,7 +32,7 @@
 class HTMLTable extends HTMLElement
 {
 	private $arg_id = 1;
-	private $nb_of_pages = 1;
+	private $nb_rows = 0;
 	private $page_number = 1;
 
 	/**
@@ -143,30 +143,32 @@ class HTMLTable extends HTMLElement
 
 	private function generate_table_structure()
 	{
+		$has_nb_rows_options = $this->model->has_nb_rows_options();
+		
 		$this->tpl->put_all(array(
 			'TABLE_ID' => $this->arg_id,
-			'C_PAGINATION_ACTIVATED' => $this->is_pagination_activated(),
+			'C_PAGINATION_ACTIVATED' => $this->model->is_pagination_activated(),
 			'NUMBER_OF_COLUMNS' => count($this->columns),
 			'C_CAPTION' => $this->model->has_caption(),
 			'CAPTION' => $this->model->get_caption(),
 			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url(),
-			'C_NB_ROWS_OPTIONS' => $this->model->has_nb_rows_options()
+			'C_NB_ROWS_OPTIONS' => $has_nb_rows_options
 		));
 
-		if ($this->model->has_nb_rows_options())
+		if ($has_nb_rows_options)
 		{
+			$first_row_index = $this->get_first_row_index();
+			$nb_rows_per_page = $this->get_nb_rows_per_page();
+			
 			foreach ($this->model->get_nb_rows_options() as $value)
 			{
-				$url = $this->parameters->get_nb_items_per_page_url($value, $this->get_first_row_index());
-				$selected = $value == $this->get_nb_rows_per_page();
-				$this->tpl->assign_block_vars('nbItemsOption', array('URL' => $url, 'VALUE' => $value, 'C_SELECTED' => $selected));
+				$this->tpl->assign_block_vars('nbItemsOption', array(
+					'URL' => $this->parameters->get_nb_items_per_page_url($value, $first_row_index), 
+					'VALUE' => $value, 
+					'C_SELECTED' => $value == $nb_rows_per_page
+				));
 			}
 		}
-	}
-
-	public function is_pagination_activated()
-	{
-		return $this->model->get_nb_rows_per_page() > 0;
 	}
 
 	private function generate_headers()
@@ -186,7 +188,7 @@ class HTMLTable extends HTMLElement
 
 	private function generate_rows_stats()
 	{
-		if ($this->is_pagination_activated())
+		if ($this->model->is_pagination_activated())
 		{
 			$this->generate_stats();
 			$this->generate_pagination();
