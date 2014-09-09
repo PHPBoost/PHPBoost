@@ -75,7 +75,7 @@ class UserService
 		$fields_data['user_id'] = $user_id;
 		self::$querier->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data);
 		
-		self::regenerate_stats_cache();
+		self::regenerate_cache();
 		
 		return $user_id;
 	}
@@ -93,7 +93,7 @@ class UserService
 		$upload = new Uploads();
 		$upload->Empty_folder_member($user_id);
 		
-		self::regenerate_stats_cache();
+		self::regenerate_cache();
 	}
 	
 	/**
@@ -132,7 +132,7 @@ class UserService
 		
 		SessionData::recheck_cached_data_from_user_id($user->get_id());
 		
-		self::regenerate_stats_cache();
+		self::regenerate_cache();
 	}
 	
 	public static function update_punishment(User $user)
@@ -248,7 +248,7 @@ class UserService
 		}
 	}
 	
-	private static function regenerate_stats_cache()
+	private static function regenerate_cache()
 	{
 		StatsCache::invalidate();
 	}
