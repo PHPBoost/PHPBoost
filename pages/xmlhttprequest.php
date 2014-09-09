@@ -30,7 +30,7 @@ if ($id_cat != 0)
 	WHERE c.id_parent = :id
 	ORDER BY title ASC", array(
 		'id' => $id_cat
-	);
+	));
 	while ($row = $result->fetch())
 	{
 		//Autorisation particulière ?
@@ -96,7 +96,7 @@ elseif (!empty($open_cat) || $root == 1)
 	WHERE id_cat = :id
 	ORDER BY is_cat DESC, title ASC", array(
 		'id' => $open_cat
-	);
+	));
 	while ($row = $result->fetch())
 	{
 		//Autorisation particulière ?
