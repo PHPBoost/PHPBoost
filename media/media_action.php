@@ -70,7 +70,7 @@ if ($unvisible > 0)
 
 	define('TITLE', $MEDIA_LANG['media_moderation']);
 
-	$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_UNVISIBLE . "' WHERE id = '" . $unvisible . "'");
+	PersistenceContext::get_querier()->update(PREFIX . 'media', array('infos' => MEDIA_STATUS_UNVISIBLE), 'WHERE id=:id', array('id' => $unvisible));
 
 	require_once('../kernel/header.php');
 
@@ -357,9 +357,6 @@ elseif (!empty($_POST['submit']))
 
 		if ($media['approved'])
 		{
-			
-			
-
 			$corresponding_contributions = ContributionService::find_by_criteria('media', $media['idedit']);
 
 			if (count($corresponding_contributions) > 0)

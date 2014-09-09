@@ -66,7 +66,7 @@ if (!empty($_POST['valid']))
 		NotationService::update_notation_scale('media', $MEDIA_CONFIG['note_max'], $config_media['note_max']);
 	}
 
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_media)) . "' WHERE name = 'media'");
+	PersistenceContext::get_querier()->update(DB_TABLE_CONFIGS, array('value' => addslashes(serialize($config_media))), 'WHERE name = \'media\'');
 
 	$Cache->Generate_module_file('media');
 
