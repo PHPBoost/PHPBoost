@@ -82,7 +82,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			$user_id = ($check_user_folder <= 0) ? -1 : AppContext::get_current_user()->get_id();
 			$user_id = max($user_id, $folder_member);
 			
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($Upload->get_original_filename()) . "', '" . addslashes($Upload->get_filename()) . "', '" . $user_id . "', '" . $Upload->get_human_readable_size() . "', '" . $Upload->get_extension() . "', '" . time() . "')");
+			PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('idcat' => $folder, 'name' => $Upload->get_original_filename(), 'path' => $Upload->get_filename(), 'user_id' => $user_id, 'size' => $Upload->get_human_readable_size(), 'type' => $Upload->get_extension(), 'timestamp' => time()));
 		}
 	}
 	else
@@ -127,11 +127,13 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 
 	$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', array('id' => $move_folder));
 	$move_list_parent = array();
-	$result = $Sql->query_while("SELECT id, id_parent, name
+	$result = PersistenceContext::get_querier()->select("SELECT id, id_parent, name
 	FROM " . PREFIX . "upload_cat
-	WHERE user_id = '" . $user_id . "'
-	ORDER BY id");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE user_id = :user_id
+	ORDER BY id", array(
+		'user_id' => $user_id
+	));
+	while ($row = $result->fetch())
 		$move_list_parent[$row['id']] = $row['id_parent'];
 	
 	$result->dispose();
@@ -158,23 +160,32 @@ elseif (!empty($move_folder) || !empty($move_file))
 {
 	$template = new FileTemplate('admin/admin_files_move.tpl');
 	
-	$sql_request = !empty($folder_member) 
-	? 	("SELECT uc.user_id, m.login
-		FROM " . DB_TABLE_UPLOAD_CAT . " uc
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
-		WHERE uc.user_id = '" . $folder_member . "'
-		UNION
-		SELECT u.user_id, m.login
-		FROM " . DB_TABLE_UPLOAD . " u
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
-		WHERE u.user_id = '" . $folder_member . "'")
-	: 	("SELECT uc.user_id, m.login
-		FROM " . DB_TABLE_UPLOAD_CAT . " uc
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
-		WHERE uc.id = '" . $folder . "'");
-
-	$result = $Sql->query_while ($sql_request);
-	$folder_info = $Sql->fetch_assoc($result);
+	if (!empty($folder_member))
+	{
+		$result = PersistenceContext::get_querier()->select("SELECT uc.user_id, m.display_name
+			FROM " . DB_TABLE_UPLOAD_CAT . " uc
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
+			WHERE uc.user_id = :user_id
+			UNION
+			SELECT u.user_id, m.display_name
+			FROM " . DB_TABLE_UPLOAD . " u
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
+			WHERE u.user_id = :user_id", array(
+				'user_id' => $folder_member
+		));
+	}
+	else
+	{
+		$result = PersistenceContext::get_querier()->select("SELECT uc.user_id, m.display_name
+			FROM " . DB_TABLE_UPLOAD_CAT . " uc
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
+			WHERE uc.id = :id", array(
+				'id' => $folder
+		));
+	}
+	
+	$folder_info = $result->fetch();
+	$result->dispose();
 	
 	if ($show_member)
 		$url = Uploads::get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
@@ -275,24 +286,33 @@ else
 {
 	$template = new FileTemplate('admin/admin_files_management.tpl');
 	
-	$sql_request = !empty($folder_member) 
-	? 	("SELECT uc.user_id, m.display_name
-		FROM " . DB_TABLE_UPLOAD_CAT . " uc
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
-		WHERE uc.user_id = '" . $folder_member . "'
-		UNION
-		SELECT u.user_id, m.display_name
-		FROM " . DB_TABLE_UPLOAD . " u
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
-		WHERE u.user_id = '" . $folder_member . "'")
-	: 	("SELECT uc.user_id, m.display_name
-		FROM " . DB_TABLE_UPLOAD_CAT . " uc
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
-		WHERE uc.id = '" . $folder . "'");
-
-	$result = $Sql->query_while ($sql_request);
-	$folder_info = $Sql->fetch_assoc($result);
-		
+	if (!empty($folder_member))
+	{
+		$result = PersistenceContext::get_querier()->select("SELECT uc.user_id, m.display_name
+			FROM " . DB_TABLE_UPLOAD_CAT . " uc
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
+			WHERE uc.user_id = :user_id
+			UNION
+			SELECT u.user_id, m.display_name
+			FROM " . DB_TABLE_UPLOAD . " u
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
+			WHERE u.user_id = :user_id", array(
+				'user_id' => $folder_member
+		));
+	}
+	else
+	{
+		$result = PersistenceContext::get_querier()->select("SELECT uc.user_id, m.display_name
+			FROM " . DB_TABLE_UPLOAD_CAT . " uc
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
+			WHERE uc.id = :id", array(
+				'id' => $folder
+		));
+	}
+	
+	$folder_info = $result->fetch();
+	$result->dispose();
+	
 	//Gestion des erreurs.
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
@@ -354,42 +374,42 @@ else
 	
 	$total_folder_size = $total_files = $total_directories = 0;
 
-	$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name
-	FROM " . DB_TABLE_UPLOAD . " up
-	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
-	WHERE idcat = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND up.user_id = -1' : ' AND up.user_id != -1');
-	
 	if ($show_member)
-		$sql_folder = "SELECT uc.user_id as id, uc.user_id, m.display_name as name, 0 as id_parent
-		FROM " . DB_TABLE_UPLOAD_CAT . " uc
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
-		WHERE uc.id_parent = '" . $folder . "' AND uc.user_id <> -1 
-		UNION
-		SELECT u.user_id as id, u.user_id, m.display_name as name, 0 as id_parent
-		FROM " . DB_TABLE_UPLOAD . " u
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
-		WHERE u.user_id <> -1
-		ORDER BY name";
+	{
+		$result = PersistenceContext::get_querier()->select("SELECT uc.user_id as id, uc.user_id, m.display_name as name, 0 as id_parent
+			FROM " . DB_TABLE_UPLOAD_CAT . " uc
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
+			WHERE uc.id_parent = :id AND uc.user_id <> -1 
+			UNION
+			SELECT u.user_id as id, u.user_id, m.display_name as name, 0 as id_parent
+			FROM " . DB_TABLE_UPLOAD . " u
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
+			WHERE u.user_id <> -1
+			ORDER BY name", array(
+				'id' => $folder
+		));
+	}
 	elseif (!empty($folder_member) && empty($folder))
-	{	
-		$sql_folder = "SELECT id, name, id_parent, user_id
-		FROM " . DB_TABLE_UPLOAD_CAT . " 
-		WHERE id_parent = 0 AND user_id = '" . $folder_member . "'
-		ORDER BY name";
-		$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name
-		FROM " . DB_TABLE_UPLOAD . " up
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
-		WHERE up.idcat = 0 AND up.user_id = '" . $folder_member . "'";
+	{
+		$result = PersistenceContext::get_querier()->select("SELECT id, name, id_parent, user_id
+			FROM " . DB_TABLE_UPLOAD_CAT . " 
+			WHERE id_parent = 0 AND user_id = :user_id
+			ORDER BY name", array(
+				'user_id' => $folder_member
+		));
 	}
 	else
-		$sql_folder = "SELECT id, name, id_parent, user_id
-		FROM " . DB_TABLE_UPLOAD_CAT . " 
-		WHERE id_parent = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND user_id = -1' : ' AND user_id <> -1') . "
-		ORDER BY name";
-
+	{
+		$result = PersistenceContext::get_querier()->select("SELECT id, name, id_parent, user_id
+			FROM " . DB_TABLE_UPLOAD_CAT . " 
+			WHERE id_parent = :id" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND user_id = -1' : ' AND user_id <> -1') . "
+			ORDER BY name", array(
+				'id' => $folder
+		));
+	}
+	
 	//Affichage des dossiers
-	$result = $Sql->query_while ($sql_folder);
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
@@ -407,14 +427,31 @@ else
 			'U_MOVE' => '.php?movefd=' . $row['id'] . '&amp;f=' . $folder . ($row['user_id'] > 0 ? '&amp;fm=' . $row['user_id'] : '')
 		));
 		$total_directories++;
-	}	
+	}
 	$result->dispose();
-		
+	
 	if (!$show_member) //Dossier membres.
 	{
+		if (!empty($folder_member) && empty($folder))
+		{
+			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name
+			FROM " . DB_TABLE_UPLOAD . " up
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
+			WHERE up.idcat = 0 AND up.user_id = :user_id", array(
+				'user_id' => $folder_member
+			));
+		}
+		else
+		{
+			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name
+			FROM " . DB_TABLE_UPLOAD . " up
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
+			WHERE idcat = :id" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND up.user_id = -1' : ' AND up.user_id != -1'), array(
+				'id' => $folder
+			));
+		}
 		//Affichage des fichiers contenu dans le dossier
-		$result = $Sql->query_while ($sql_files);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
@@ -465,12 +502,12 @@ else
 			
 			$total_folder_size += $row['size'];
 			$total_files++;
-		}	
+		}
 		$result->dispose();
 	}
 	
 
-	$total_size = PersistenceContext::get_querier()->get_column_value(PREFIX . "upload", 'SUM(size)');
+	$total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', '');
 	$template->put_all(array(
 		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_folder_size, 0) . ' ' . $LANG['unit_kilobytes'],

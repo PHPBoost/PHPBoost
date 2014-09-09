@@ -42,8 +42,8 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 	//On met à jour
 	if (!empty($url_smiley) && !empty($code_smiley))
 	{
-		$Sql->query_inject("UPDATE " . DB_TABLE_SMILEYS . " SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'");
-					
+		PersistenceContext::get_querier()->update(DB_TABLE_SMILEYS, array('url_smiley' => $url_smiley, 'code_smiley' => $code_smiley), 'WHERE idsmiley = :id', array('id' => $id_post));
+		
 		###### Régénération du cache des smileys #######
 		SmileysCache::invalidate();
 		
@@ -77,9 +77,9 @@ elseif (!empty($id) && $edit) //Edition.
 		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 		
 	$smiley_options = '';
-	$result = $Sql->query_while("SELECT url_smiley
+	$result = PersistenceContext::get_querier()->select("SELECT url_smiley
 	FROM " . PREFIX . "smileys");
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		if ($row['url_smiley'] == $url_smiley)
 			$selected = 'selected="selected"';
