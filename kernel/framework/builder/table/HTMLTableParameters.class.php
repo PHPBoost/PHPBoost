@@ -104,12 +104,12 @@ class HTMLTableParameters
 
 	public function get_ascending_sort_url($sort_identifier)
 	{
-		return $this->url_parameters->get_url(array('sort' => '!' . $sort_identifier, 'page' => 1));
+		return $this->url_parameters->get_url(array('sort' => HTMLTableSortingRule::ASC . $sort_identifier, 'page' => 1));
 	}
 
 	public function get_descending_sort_url($sort_identifier)
 	{
-		return $this->url_parameters->get_url(array('sort' => '-' . $sort_identifier, 'page' => 1));
+		return $this->url_parameters->get_url(array('sort' => HTMLTableSortingRule::DESC . $sort_identifier, 'page' => 1));
 	}
 
 	public function get_js_submit_url()

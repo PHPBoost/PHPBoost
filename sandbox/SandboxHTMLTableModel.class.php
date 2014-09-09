@@ -27,34 +27,36 @@
 
 class SandboxHTMLTableModel extends AbstractHTMLTableModel
 {
-	private $query;
 	private $parameters;
 
 	public function __construct()
 	{
 		$columns = array(
-		new HTMLTableColumn('pseudo', 'pseudo'),
-		new HTMLTableColumn('email'),
-		new HTMLTableColumn('inscrit le', 'register_date'),
-		new HTMLTableColumn('messages'),
-		new HTMLTableColumn('dernière connexion'),
-		new HTMLTableColumn('messagerie')
+			new HTMLTableColumn('pseudo', 'pseudo'),
+			new HTMLTableColumn('email'),
+			new HTMLTableColumn('inscrit le', 'register_date'),
+			new HTMLTableColumn('messages'),
+			new HTMLTableColumn('dernière connexion'),
+			new HTMLTableColumn('messagerie')
 		);
+		
 		$default_sorting_rule = new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC);
 		$nb_items_per_page = 3;
+		
 		parent::__construct($columns, $default_sorting_rule, $nb_items_per_page);
+		
 		$this->set_caption('Liste des membres');
-		$this->set_nb_rows_options(array(1, 2, 4, 8, 10, 15));
+		//$this->set_nb_rows_options(array(1, 2, 4, 8, 10, 15));
 		$this->set_id('t42');
 
 		$options = array('horn' => 'Horn', 'coucou' => 'Coucou', 'teston' => 'teston');
-		$this->add_filter(new HTMLTableEqualsFromListSQLFilter('login', 'filter1', 'login Equals', $options));
-        $this->add_filter(new HTMLTableBeginsWithTextSQLFilter('login', 'filter2', 'login Begins with (regex)', '`^(?!%).+$`'));
-        $this->add_filter(new HTMLTableBeginsWithTextSQLFilter('login', 'filter3', 'login Begins with (no regex)'));
-        $this->add_filter(new HTMLTableEndsWithTextSQLFilter('login', 'filter4', 'login Ends with (regex)', '`^(?!%).+$`'));
-        $this->add_filter(new HTMLTableEndsWithTextSQLFilter('login', 'filter5', 'login Ends with (no regex)'));
-        $this->add_filter(new HTMLTableLikeTextSQLFilter('login', 'filter6', 'login Like (regex)', '`^toto`'));
-        $this->add_filter(new HTMLTableLikeTextSQLFilter('login', 'filter7', 'login Like (no regex)'));
+		$this->add_filter(new HTMLTableEqualsFromListSQLFilter('display_name', 'filter1', 'login Equals', $options));
+        $this->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter2', 'login Begins with (regex)', '`^(?!%).+$`'));
+        $this->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter3', 'login Begins with (no regex)'));
+        $this->add_filter(new HTMLTableEndsWithTextSQLFilter('display_name', 'filter4', 'login Ends with (regex)', '`^(?!%).+$`'));
+        $this->add_filter(new HTMLTableEndsWithTextSQLFilter('display_name', 'filter5', 'login Ends with (no regex)'));
+        $this->add_filter(new HTMLTableLikeTextSQLFilter('display_name', 'filter6', 'login Like (regex)', '`^toto`'));
+        $this->add_filter(new HTMLTableLikeTextSQLFilter('display_name', 'filter7', 'login Like (no regex)'));
         $this->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter8', 'id >'));
         $this->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter9', 'id > (lower=3)', 3));
         $this->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter10', 'id > (upper=3)', HTMLTableNumberComparatorSQLFilter::NOT_BOUNDED, 3));
@@ -68,52 +70,46 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 
 	public function get_number_of_matching_rows(array $filters)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER,
-		$this->get_filtered_clause($filters), $this->parameters);
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, $this->get_filtered_clause($filters), $this->parameters);
 	}
 
 	public function get_rows($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters)
 	{
 		$results = array();
-		$this->build_query($limit, $offset, $sorting_rule, $filters);
-		$result = PersistenceContext::get_querier()->select($this->query, $this->parameters);
+		$query = $this->build_query($limit, $offset, $sorting_rule, $filters);
+		$result = PersistenceContext::get_querier()->select($query, $this->parameters);
 		foreach ($result as $row)
 		{
-			$table_row = $this->build_table_row($row);
-			$results[] = $table_row;
+			$results[] = $this->build_table_row($row);
 		}
 		return $results;
 	}
 
 	private function build_query($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters)
 	{
-		$this->query = 'SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect ' .
+		$query = 'SELECT user_id, display_name, email, show_email, registration_date, last_connection_date ' .
 		'FROM ' . DB_TABLE_MEMBER;
-		$this->query .= $this->get_filtered_clause($filters);
-		$this->query .= $this->get_order_clause($sorting_rule);
-		$this->query .= ' LIMIT ' . $limit . ' OFFSET ' . $offset;
+		$query .= $this->get_filtered_clause($filters);
+		$query .= $this->get_order_clause($sorting_rule);
+		$query .= ' LIMIT ' . $limit . ' OFFSET ' . $offset;
+		return $query;
 	}
 
 	private function get_filtered_clause(array $filters)
 	{
 		$this->parameters = array();
-		$clause = ' WHERE user_aprob=1';
+		$clause = ' WHERE 1';
 		if (!empty($filters))
 		{
 			$sql_filters = array();
 			foreach ($filters as $filter)
 			{
 				$query_fragment = $filter->get_sql();
-//                Debug::dump($filter->get_id());
-//                Debug::dump($query_fragment->get_query());
-//                Debug::dump($query_fragment->get_parameters());
-//                Debug::dump('<hr />');
 				$query_fragment->add_parameters_to_map($this->parameters);
 				$sql_filters[] = $query_fragment->get_query();
 			}
 			$clause .= ' AND ' . implode(' AND ', $sql_filters);
 		}
-//		Debug::dump('<br /><br /><br />');
 		return $clause;
 	}
 
@@ -134,7 +130,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 
 	private function get_sort_parameter_column(HTMLTableSortingRule $rule)
 	{
-		$values = array('pseudo' => 'login', 'register_date' => 'timestamp');
+		$values = array('pseudo' => 'display_name', 'register_date' => 'registration_date');
 		$default = 'user_id';
 		return Arrays::find($rule->get_sort_parameter(), $values, $default);
 	}
@@ -145,19 +141,16 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 	 */
 	private function build_table_row(array $row)
 	{
-		$login = new HTMLTableRowCell($row['login']);
+		$login = new HTMLTableRowCell($row['display_name']);
 		$user_mail = new HTMLTableRowCell(($row['show_email'] == 1) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '&nbsp;');
-		$user_mail->add_css_style('width:50px');
 		$user_mail->center();
-		$timestamp = new HTMLTableRowCell(gmdate_format('date_format_long', $row['timestamp']));
+		$timestamp = new HTMLTableRowCell(gmdate_format('date_format_long', $row['registration_date']));
 		$user_msg = new HTMLTableRowCell(!empty($row['user_msg']) ? $row['user_msg'] : '0');
-		$user_msg->center();
-		$last_connect = new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']));
-		$pm_url = new Url('/user/pm.php?pm=' . $row['user_id']);
-		$pm = new HTMLTableRowCell('<a href="' . $pm_url->rel() . '" class="basic-button smaller">MP</a>');
+		$user_msg->center();	
+		$last_connect = new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connection_date']) ? $row['last_connection_date'] : $row['registration_date']));
+		$pm = new HTMLTableRowCell('<a href="' . Url::to_rel('/user/pm.php?pm=' . $row['user_id']) . '" class="basic-button smaller">MP</a>');
 		$pm->center();
-		$pm->add_css_style('width:50px');
-			
+
 		return new HTMLTableRow(array($login, $user_mail, $timestamp, $user_msg, $last_connect, $pm));
 	}
 }
