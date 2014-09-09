@@ -134,8 +134,8 @@ if (!empty($_GET['query']))
 		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
 			try {
-				$result = $Sql->query_inject(str_replace('phpboost_', PREFIX, $query));
-				$affected_rows = @$Sql->affected_rows($result, "");
+				$result = PersistenceContext::get_querier()->inject(str_replace('phpboost_', PREFIX, $query));
+				$affected_rows = $result->get_affected_rows();
 			} catch (MySQLQuerierException $e) {
 				$Template->assign_block_vars('line', array());
 				$Template->assign_block_vars('line.field', array(

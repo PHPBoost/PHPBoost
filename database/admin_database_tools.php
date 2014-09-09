@@ -339,8 +339,8 @@ elseif (!empty($table) && $action == 'query')
 		}
 		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
-			$result = $Sql->query_inject($query);
-			$affected_rows = @$Sql->affected_rows($result, "");
+			$result = PersistenceContext::get_querier()->inject(str_replace('phpboost_', PREFIX, $query));
+			$affected_rows = $result->get_affected_rows();
 		}
 	}	
 	elseif (!empty($table))

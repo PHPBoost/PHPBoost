@@ -78,7 +78,7 @@ if (!empty($_POST['submit']))
 		{
 			foreach ($show as $key)
 			{
-				$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_APROBED . "' WHERE id = '" . $key . "'");
+				PersistenceContext::get_querier()->update(PREFIX . 'media', array('infos' => MEDIA_STATUS_APROBED), 'WHERE id=:id', array('id' => $key));
 			}
 		}
 		
@@ -86,7 +86,7 @@ if (!empty($_POST['submit']))
 		{
 			foreach ($hide as $key)
 			{
-				$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_UNVISIBLE . "' WHERE id = '" . $key . "'");
+				PersistenceContext::get_querier()->update(PREFIX . 'media', array('infos' => MEDIA_STATUS_UNVISIBLE), 'WHERE id=:id', array('id' => $key));
 			}
 		}
 		
@@ -94,7 +94,7 @@ if (!empty($_POST['submit']))
 		{
 			foreach ($unaprobed as $key)
 			{
-				$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_UNAPROBED . "' WHERE id = '" . $key . "'");
+				PersistenceContext::get_querier()->update(PREFIX . 'media', array('infos' => MEDIA_STATUS_UNAPROBED), 'WHERE id=:id', array('id' => $key));
 			}
 		}
 

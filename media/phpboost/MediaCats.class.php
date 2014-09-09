@@ -66,8 +66,6 @@ class MediaCats extends DeprecatedCategoriesManager
 	//Method which deletes a category and move its content in another category
 	public function Delete_category_and_move_content($id_category, $new_id_cat_content)
 	{
-		global $Sql;
-
 		if (!array_key_exists($id_category, $this->cache_var))
 		{
 			parent::_add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
@@ -83,7 +81,7 @@ class MediaCats extends DeprecatedCategoriesManager
 			}
 		}
 
-		$Sql->query_inject("UPDATE ".PREFIX."media SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'");
+		PersistenceContext::get_querier()->update(PREFIX . 'media', array('idcat' => $new_id_cat_content), 'WHERE idcat=:id', array('id' => $id_category));
 
 		$this->recount_media_per_cat();
 
@@ -204,7 +202,7 @@ class MediaCats extends DeprecatedCategoriesManager
 	//Recursive function which counts for all category or for one category
 	public function recount_media_per_cat($id = null, $num = null, $generate_cache = true)
 	{
-		global $Sql, $Cache, $MEDIA_CATS;
+		global $Cache, $MEDIA_CATS;
 
 		if (!empty($MEDIA_CATS))
 		{
@@ -226,9 +224,8 @@ class MediaCats extends DeprecatedCategoriesManager
 
 		if (is_null($id))
 		{
-			$result = $Sql->query_while("SELECT id, idcat FROM ".PREFIX."media WHERE infos = '" . MEDIA_STATUS_APROBED . "' ORDER BY idcat");
-
-			while ($row = $Sql->fetch_assoc($result))
+			$result = PersistenceContext::get_querier()->select_rows(PREFIX.'media', array('id', 'idcat', 'WHERE infos=:infos ORDER BY idcat', array('infos' => MEDIA_STATUS_APROBED)));
+			while ($row = $result->fetch())
 			{
 				if (!empty($MEDIA_CATS[$row['idcat']]))
 				{
@@ -244,7 +241,7 @@ class MediaCats extends DeprecatedCategoriesManager
 				$config = unserialize($config['value']);
 				$config['root']['num_media'] = $num_media[0];
 
-				$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'media'");
+				PersistenceContext::get_querier()->update(DB_TABLE_CONFIGS, array('value' => addslashes(serialize($config))), 'WHERE name = \'media\'');
 			}
 
 			if (!empty($num_media))
@@ -253,7 +250,7 @@ class MediaCats extends DeprecatedCategoriesManager
 				{
 					if ($idcat != 0 && $MEDIA_CATS[$idcat] != $number)
 					{
-						$Sql->query_inject("UPDATE ".PREFIX."media_cat SET num_media = '" . $number . "' WHERE id = '" . $idcat . "'");
+						PersistenceContext::get_querier()->update(PREFIX . 'media_cat', array('num_media' => $number), 'WHERE id=:id', array('id' => $idcat));
 					}
 				}
 			}
@@ -267,7 +264,7 @@ class MediaCats extends DeprecatedCategoriesManager
 
 			if ($id > 0)
 			{
-				$Sql->query_inject("UPDATE ".PREFIX."media_cat SET num_media = '" . $num . "' WHERE id = '" . $id . "'");
+				PersistenceContext::get_querier()->update(PREFIX . 'media_cat', array('num_media' => $num), 'WHERE id=:id', array('id' => $id));
 			}
 			else
 			{
@@ -275,7 +272,7 @@ class MediaCats extends DeprecatedCategoriesManager
 				$config = unserialize($config['value']);
 				$config['root']['num_media'] = $num;
 
-				$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'media'");
+				PersistenceContext::get_querier()->update(DB_TABLE_CONFIGS, array('value' => addslashes(serialize($config))), 'WHERE name = \'media\'');
 			}
 		}
 
@@ -292,8 +289,6 @@ class MediaCats extends DeprecatedCategoriesManager
 	//method which deletes a category and its content (not recursive)
 	public function delete_category_with_content($id)
 	{
-		global $Sql;
-
 		//If the category is successfully deleted
 		if (parent::delete($id))
 		{
