@@ -136,9 +136,7 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_forum_add'=> 'forum/admin_forum_add.tpl'
-	));
+	$tpl = new FileTemplate('forum/admin_forum_add.tpl');
 			
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$forums = '<option value="0" checked="checked" disabled="disabled">' . $LANG['root'] . '</option>';
@@ -155,9 +153,9 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+		$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'CATEGORIES' => $forums,
 		'AUTH_READ' => Authorizations::generate_select(READ_CAT_FORUM, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_FORUM, array(), array(0 => true, 1 => true, 2 => true)),
@@ -199,7 +197,7 @@ else
 		'L_AUTH_EDIT' => $LANG['auth_edit']
 	));
 	
-	$Template->pparse('admin_forum_add'); // traitement du modele
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

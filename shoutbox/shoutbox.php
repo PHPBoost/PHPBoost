@@ -103,7 +103,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		}
 		elseif ($edit_message)
 		{
-			$Template = new StringTemplate('# INCLUDE SHOUTBOX_FORM #');
+			$tpl = new StringTemplate('# INCLUDE SHOUTBOX_FORM #');
 			
 			$formatter = AppContext::get_content_formatting_service()->create_factory();
 			$formatter->set_forbidden_tags($config_shoutbox->get_forbidden_formatting_tags());
@@ -129,9 +129,9 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			$form->add_button(new FormButtonSubmit($LANG['update'], $LANG['update']));
 			$form->add_button(new FormButtonReset());
 
-			$Template->put('SHOUTBOX_FORM', $form->display());
+			$tpl->put('SHOUTBOX_FORM', $form->display());
 			
-			$Template->display(); 
+			$tpl->display(); 
 		}
 		elseif ($update_message)
 		{

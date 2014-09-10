@@ -58,16 +58,14 @@ if (!empty($_POST['update']))  //Mise à jour
 
 $Cache->load('wiki');
 
-$Template->set_filenames(array(
-	'wiki_config'=> 'wiki/admin_wiki.tpl'
-));
+$tpl = new FileTemplate('wiki/admin_wiki.tpl');
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
 $content_editor = AppContext::get_content_formatting_service()->get_default_factory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 
-$Template->put_all(array(
+$tpl->put_all(array(
 	'KERNEL_EDITOR' => $editor->display(),
 	'HITS_SELECTED' => $config->is_hits_counter_enabled() ? 'checked="checked"' : '',
 	'WIKI_NAME' => $config->get_wiki_name(),
@@ -92,8 +90,8 @@ $Template->put_all(array(
 	'L_NUMBER_ARTICLES_ON_INDEX_EXPLAIN' => $LANG['wiki_last_articles_explain'],
 	'L_DESCRIPTION' => $LANG['wiki_desc']
 ));
-	
-$Template->pparse('wiki_config');
+
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 

@@ -65,9 +65,7 @@ elseif (!empty($del)) //Suppression d'une image.
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_gallery_management'=> 'gallery/admin_gallery_management.tpl'
-	));
+	$tpl = new FileTemplate('gallery/admin_gallery_management.tpl');
 
 	if (!empty($idcat) && !isset($CAT_GALLERY[$idcat]))
 		AppContext::get_response()->redirect('/gallery/admin_gallery.php?error=unexist_cat');
@@ -99,7 +97,7 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'unexist_cat')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], MessageHelper::NOTICE));
+		$tpl->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], MessageHelper::NOTICE));
 
 	//On crée une pagination si le nombre de catégories est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -122,7 +120,7 @@ else
 	$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 	$column_width_pics = floor(100/$nbr_column_pics);
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION' => $pagination->display(),
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
@@ -160,7 +158,7 @@ else
 	##### Catégorie disponibles #####
 	if ($total_cat > 0)
 	{
-		$Template->assign_block_vars('cat', array(
+		$tpl->assign_block_vars('cat', array(
 		));
 
 		$i = 0;
@@ -184,7 +182,7 @@ else
 			if (!file_exists('pics/thumbnails/' . $row['path']))
 				$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
-			$Template->assign_block_vars('cat.list', array(
+			$tpl->assign_block_vars('cat.list', array(
 				'C_IMG' => !empty($row['path']),
 				'IDCAT' => $row['id'],
 				'CAT' => $row['name'],
@@ -201,7 +199,7 @@ else
 		while (!is_int($i/$nbr_column_cats))
 		{
 			$i++;
-			$Template->assign_block_vars('cat.end_td', array(
+			$tpl->assign_block_vars('cat.end_td', array(
 				'TD_END' => '<td style="width:' . $column_width_cats . '%">&nbsp;</td>',
 				'TR_END' => (is_int($i/$nbr_column_cats)) ? '</tr>' : ''
 			));
@@ -209,7 +207,7 @@ else
 	}
 
 	##### Affichage des photos #####
-	$Template->assign_block_vars('pics', array(
+	$tpl->assign_block_vars('pics', array(
 		'C_PICTURES' => $nbr_pics > 0,
 		'C_PICS_MAX' => $nbr_pics == 0 || !empty($idpics),
 		'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>',
@@ -229,7 +227,7 @@ else
 			DispatchManager::redirect($error_controller);
 		}
 		
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display()
 		));
@@ -309,7 +307,7 @@ else
 				if ($thumbnails_after < $nbr_pics_display_after)
 					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;
 
-				$Template->put_all(array(
+				$tpl->put_all(array(
 					'ARRAY_JS' => $array_js,
 					'NBR_PICS' => ($i - 1),
 					'MAX_START' => ($i - 1) - $nbr_column_pics,
@@ -336,7 +334,7 @@ else
 				$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
 				
 				//Affichage de l'image et de ses informations.
-				$Template->assign_block_vars('pics.pics_max', array(
+				$tpl->assign_block_vars('pics.pics_max', array(
 					'C_APPROVED' => $info_pics['aprob'],
 					'C_PREVIOUS' => ($pos_pics > 0),
 					'C_NEXT' => ($pos_pics < ($i - 1)),
@@ -366,7 +364,7 @@ else
 				{
 					if ($i >= ($pos_pics - $start_thumbnails) && $i <= ($pos_pics + $end_thumbnails))
 					{
-						$Template->assign_block_vars('pics.pics_max.list_preview_pics', array(
+						$tpl->assign_block_vars('pics.pics_max.list_preview_pics', array(
 							'PICS' => $pics
 						));
 					}
@@ -417,7 +415,7 @@ else
 				
 				$group_color = User::get_group_color($row['groups'], $row['level']);
 				
-				$Template->assign_block_vars('pics.list', array(
+				$tpl->assign_block_vars('pics.list', array(
 					'C_APPROVED' => $row['aprob'],
 					'ID' => $row['id'],
 					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $name . '" />',
@@ -438,7 +436,7 @@ else
 			while (!is_int($j/$nbr_column_pics))
 			{
 				$j++;
-				$Template->assign_block_vars('pics.end_td_pics', array(
+				$tpl->assign_block_vars('pics.end_td_pics', array(
 					'TD_END' => '<td style="width:' . $column_width_pics . '%">&nbsp;</td>',
 					'TR_END' => (is_int($j/$nbr_column_pics)) ? '</tr>' : ''
 				));
@@ -446,7 +444,7 @@ else
 		}
 	}
 
-	$Template->pparse('admin_gallery_management');
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

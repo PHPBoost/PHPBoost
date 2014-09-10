@@ -48,14 +48,12 @@ if (!empty($_POST['update']))  //Mise à jour
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 
-$Template->set_filenames(array(
-	'pages_config'=> 'pages/admin_pages.tpl'
-));
+$tpl = new FileTemplate('pages/admin_pages.tpl');
 
 //Configuration des authorisations
 $config_authorizations = $pages_config->get_authorizations();
 
-$Template->put_all(array(
+$tpl->put_all(array(
 	'HITS_CHECKED' => ($pages_config->get_count_hits_activated() == true) ? 'checked="checked"' : '',
 	'COM_CHECKED' => ($pages_config->get_comments_activated() == true) ? 'checked="checked"' : '',
 	'SELECT_READ_PAGE' => Authorizations::generate_select(READ_PAGE, $config_authorizations),
@@ -78,7 +76,7 @@ $Template->put_all(array(
 	'L_PAGES_MANAGEMENT' => $LANG['pages_management'],
 ));
 
-$Template->pparse('pages_config');
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 

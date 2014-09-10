@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true)	exit;
 $config = WikiConfig::load();
 
 //On charge le template associé
-$Template->set_filenames(array('wiki_tools'=> 'wiki/wiki_tools.tpl'));
+$tools_tpl = new FileTemplate('wiki/wiki_tools.tpl');
 
 //Définition du tableau comprenant les autorisation de chaque groupe
 if (!empty($article_infos['auth']))
@@ -44,7 +44,7 @@ else
 	$article_auth = array();
 }
 	
-$Template->put_all(array(
+$tools_tpl->put_all(array(
 	'C_INDEX_PAGE' => $page_type == 'index',
 	
 	'L_OTHER_TOOLS' => $LANG['wiki_other_tools'],
@@ -96,7 +96,7 @@ $Template->put_all(array(
 //Discussion
 if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_COM)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_COM)))
 {
-	$Template->put_all(array(
+	$tools_tpl->put_all(array(
 		'C_ACTIV_COM' => true,
 		'U_COM' => url('property.php?idcom=' . $id_article . '&amp;com=0'),
 		'L_COM' => $LANG['wiki_article_com_article'] . ($article_infos['number_comments'] > 0 ? ' (' . $article_infos['number_comments'] . ')' : '')

@@ -44,9 +44,7 @@ else
 	$_NBR_ELEMENTS_PER_PAGE = 15;
 	$db_querier = PersistenceContext::get_querier();
 	
-	$Template->set_filenames(array(
-		'admin_stats_management'=> 'stats/admin_stats_management.tpl'
-	));
+	$tpl = new FileTemplate('stats/admin_stats_management.tpl');
 
 	$visit = !empty($_GET['visit']) ? true : false;
 	$visit_year = retrieve(GET, 'year', 0);
@@ -74,7 +72,7 @@ else
 		}
 	}
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'L_SITE' => $LANG['site'],
 		'L_STATS' => $LANG['stats'],
 		'L_USERS' => $LANG['member_s'],
@@ -100,7 +98,7 @@ else
 		$stats_cache = StatsCache::load();
 		$last_user_group_color = User::get_group_color($stats_cache->get_stats_properties('last_member_groups'), $stats_cache->get_stats_properties('last_member_level'));
 		
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_STATS_USERS' => true,
 			'C_LAST_USER_GROUP_COLOR' => !empty($last_user_group_color),
 			'LAST_USER' => $stats_cache->get_stats_properties('last_member_login'),
@@ -132,7 +130,7 @@ else
 		foreach ($Stats->data_stats as $name => $angle_value)
 		{
 			$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-			$Template->assign_block_vars('templates', array(
+			$tpl->assign_block_vars('templates', array(
 				'NBR_THEME' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
 				'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
 				'THEME' => ($name == 'Other') ? $LANG['other'] : $name,
@@ -169,7 +167,7 @@ else
 		foreach ($Stats->data_stats as $name => $angle_value)
 		{
 			$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-			$Template->assign_block_vars('sex', array(
+			$tpl->assign_block_vars('sex', array(
 				'NBR_MBR' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
 				'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
 				'SEX' => ($name == 'Other') ? $LANG['other'] : $name,
@@ -186,7 +184,7 @@ else
 		{
 			$user_group_color = User::get_group_color($row['groups'], $row['level']);
 			
-			$Template->assign_block_vars('top_poster', array(
+			$tpl->assign_block_vars('top_poster', array(
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),
 				'ID' => $i,
 				'LOGIN' => $row['display_name'],
@@ -207,7 +205,7 @@ else
 		$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 		$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'L_TODAY' => $date_lang['today'],
 			'L_TOTAL' => $LANG['total'],
 			'L_AVERAGE' => $LANG['average'],
@@ -240,7 +238,7 @@ else
 			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 			$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year=:year GROUP BY stats_year', array('year' => $visit_year));
 			
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'visit',
 				'VISIT_TOTAL' => $compteur_total,
@@ -262,14 +260,14 @@ else
 				$selected = ($i == $year) ? ' selected="selected"' : '';
 				$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 			}
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_STATS_YEAR' => true,
 				'STATS_YEAR' => $years
 			));
 
 			if (@extension_loaded('gd'))
 			{
-				$Template->put_all(array(
+				$tpl->put_all(array(
 					'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
 					));
 						
@@ -283,7 +281,7 @@ else
 					while ($row = $result->fetch())
 					{
 						//On affiche les stats numériquement dans un tableau en dessous
-						$Template->assign_block_vars('value', array(
+						$tpl->assign_block_vars('value', array(
 						'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 						'NBR' => $row['total']
 						));
@@ -292,7 +290,7 @@ else
 			}
 			else
 			{
-				$Template->put_all(array(
+				$tpl->put_all(array(
 					'C_STATS_NO_GD' => true
 				));
 				
@@ -315,7 +313,7 @@ else
 						$diff = $row['stats_month'] - $i;
 						for ($j = 0; $j < $diff; $j++)
 						{
-							$Template->assign_block_vars('values', array(
+							$tpl->assign_block_vars('values', array(
 								'HEIGHT' => 0
 							));
 						}
@@ -329,15 +327,15 @@ else
 					//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 					$height = $row['total'] / $max_month * 200;
 
-					$Template->assign_block_vars('values', array(
+					$tpl->assign_block_vars('values', array(
 						'HEIGHT' => ceil($height)
 					));
 
-					$Template->assign_block_vars('values.head', array(
+					$tpl->assign_block_vars('values.head', array(
 					));
 						
 					//On affiche les stats numériquement dans un tableau en dessous
-					$Template->assign_block_vars('value', array(
+					$tpl->assign_block_vars('value', array(
 						'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 						'NBR' => $row['total']
 					));
@@ -351,7 +349,7 @@ else
 				$date_day = isset($date_day) ? $date_day : 1;
 				for	($i = $last_month; $i < 12; $i++)
 				{
-					$Template->assign_block_vars('end_td', array(
+					$tpl->assign_block_vars('end_td', array(
 						'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 						));
 				}
@@ -359,7 +357,7 @@ else
 				$i = 1;
 				foreach ($array_l_months as $value)
 				{
-					$Template->assign_block_vars('legend', array(
+					$tpl->assign_block_vars('legend', array(
 						'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="admin_stats' . url('.php?m=' . $i . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
 					));
 					$i++;
@@ -381,7 +379,7 @@ else
 			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
 			$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr'), 'WHERE stats_year=:year AND stats_month=:month GROUP BY stats_month', array('year' => $year, 'month' => $month));
 				
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'visit',
 				'VISIT_TOTAL' => $compteur_total,
@@ -413,17 +411,17 @@ else
 					$selected = ($i == $year) ? ' selected="selected"' : '';
 					$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 				}
-				$Template->put_all(array(
-				'C_STATS_MONTH' => true,
-				'C_STATS_YEAR' => true,
-				'STATS_MONTH' => $months,
-				'STATS_YEAR' => $years
+				$tpl->put_all(array(
+					'C_STATS_MONTH' => true,
+					'C_STATS_YEAR' => true,
+					'STATS_MONTH' => $months,
+					'STATS_YEAR' => $years
 				));
 
 				if (@extension_loaded('gd'))
 				{
-					$Template->put_all(array(
-					'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
+					$tpl->put_all(array(
+						'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 					));
 						
 					//On fait la liste des visites journalières
@@ -439,9 +437,9 @@ else
 						$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
 
 						//On affiche les stats numériquement dans un tableau en dessous
-						$Template->assign_block_vars('value', array(
-						'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
-						'NBR' => $row['nbr']
+						$tpl->assign_block_vars('value', array(
+							'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
+							'NBR' => $row['nbr']
 						));
 					}
 					$result->dispose();
@@ -451,8 +449,8 @@ else
 					//Mois selectionné.
 					if (!empty($month) && !empty($year))
 					{
-						$Template->put_all(array(
-						'C_STATS_NO_GD' => true
+						$tpl->put_all(array(
+							'C_STATS_NO_GD' => true
 						));
 
 						//On rajoute un 0 devant tous les mois plus petits que 10
@@ -475,8 +473,8 @@ else
 							{
 								for ($z = 1; $z < $row['day']; $z++)
 								{
-									$Template->assign_block_vars('values', array(
-									'HEIGHT' => 0
+									$tpl->assign_block_vars('values', array(
+										'HEIGHT' => 0
 									));
 								}
 								$j++;
@@ -489,8 +487,8 @@ else
 								$diff = $row['day'] - $i;
 								for ($j = 0; $j < $diff; $j++)
 								{
-									$Template->assign_block_vars('values', array(
-									'HEIGHT' => 0
+									$tpl->assign_block_vars('values', array(
+										'HEIGHT' => 0
 									));
 								}
 							}
@@ -499,19 +497,19 @@ else
 							//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 							$height = ($row['nbr'] / $info['max_nbr']) * 200;
 								
-							$Template->assign_block_vars('values', array(
-							'HEIGHT' => ceil($height)
+							$tpl->assign_block_vars('values', array(
+								'HEIGHT' => ceil($height)
 							));
 								
-							$Template->assign_block_vars('values.head', array(
+							$tpl->assign_block_vars('values.head', array(
 							));
 
 							$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
 
 							//On affiche les stats numériquement dans un tableau en dessous
-							$Template->assign_block_vars('value', array(
-							'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
-							'NBR' => $row['nbr']
+							$tpl->assign_block_vars('value', array(
+								'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
+								'NBR' => $row['nbr']
 							));
 
 							$i++;
@@ -522,7 +520,7 @@ else
 						$date_day = isset($date_day) ? $date_day : 1;
 						for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
 						{
-							$Template->assign_block_vars('end_td', array(
+							$tpl->assign_block_vars('end_td', array(
 							'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 							));
 						}
@@ -530,7 +528,7 @@ else
 						//On liste les jours en dessous du graphique
 						for ($i = 1; $i <= $array_month[$month - 1]; $i++)
 						{
-							$Template->assign_block_vars('legend', array(
+							$tpl->assign_block_vars('legend', array(
 							'LEGEND' => $i
 							));
 						}
@@ -573,7 +571,7 @@ else
 		$compteur_total = $compteur_total + $compteur_day;
 		$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
 
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'L_TODAY' => $date_lang['today'],
 			'L_TOTAL' => $LANG['total'],
 			'L_AVERAGE' => $LANG['average'],
@@ -594,7 +592,7 @@ else
 			$next_year = $pages_year + 1;
 			$previous_year = $pages_year - 1;
 				
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'pages',
 				'VISIT_TOTAL' => $compteur_total,
@@ -617,15 +615,15 @@ else
 				$selected = ($i == $year) ? ' selected="selected"' : '';
 				$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 			}
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_STATS_YEAR' => true,
 				'STATS_YEAR' => $years
 			));
 
 			if (@extension_loaded('gd'))
 			{
-				$Template->put_all(array(
-					'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
+					$tpl->put_all(array(
+						'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
 					));
 						
 					//On fait la liste des visites journalières
@@ -638,16 +636,16 @@ else
 					while ($row = $result->fetch())
 					{
 						//On affiche les stats numériquement dans un tableau en dessous
-						$Template->assign_block_vars('value', array(
-						'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
-						'NBR' => $row['total']
+						$tpl->assign_block_vars('value', array(
+							'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
+							'NBR' => $row['total']
 						));
 					}
 					$result->dispose();
 			}
 			else
 			{
-				$Template->put_all(array(
+				$tpl->put_all(array(
 					'C_STATS_NO_GD' => true
 				));
 				
@@ -668,7 +666,7 @@ else
 						$diff = $row['stats_month'] - $i;
 						for ($j = 0; $j < $diff; $j++)
 						{
-							$Template->assign_block_vars('values', array(
+							$tpl->assign_block_vars('values', array(
 								'HEIGHT' => 0
 							));
 						}
@@ -682,15 +680,15 @@ else
 					//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 					$height = $row['total'] / $info['max_month'] * 200;
 
-					$Template->assign_block_vars('months', array(
+					$tpl->assign_block_vars('months', array(
 						'HEIGHT' => ceil($height)
 					));
 
-					$Template->assign_block_vars('values.head', array(
+					$tpl->assign_block_vars('values.head', array(
 					));
 
 					//On affiche les stats numériquement dans un tableau en dessous
-					$Template->assign_block_vars('value', array(
+					$tpl->assign_block_vars('value', array(
 						'U_DETAILS' => '<a href="admin_stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 						'NBR' => $row['total']
 					));
@@ -704,7 +702,7 @@ else
 				$date_day = isset($date_day) ? $date_day : 1;
 				for	($i = $last_month; $i < 12; $i++)
 				{
-					$Template->assign_block_vars('end_td', array(
+					$tpl->assign_block_vars('end_td', array(
 						'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 						));
 				}
@@ -712,7 +710,7 @@ else
 				$i = 1;
 				foreach ($array_l_months as $value)
 				{
-					$Template->assign_block_vars('legend', array(
+					$tpl->assign_block_vars('legend', array(
 						'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="admin_stats' . url('.php?m=' . $i . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
 					));
 					$i++;
@@ -734,7 +732,7 @@ else
 			$previous_month = ($month > 1) ? ($day == 1 ? $month - 1 : $month) : 12;
 			$previous_year = ($month > 1) ? $year : $year - 1;
 
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'pages',
 				'VISIT_TOTAL' => $compteur_total,
@@ -773,7 +771,7 @@ else
 					$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 				}
 
-				$Template->put_all(array(
+				$tpl->put_all(array(
 				'STATS_DAY' => $days,
 				'STATS_MONTH' => $months,
 				'STATS_YEAR' => $years,
@@ -793,7 +791,7 @@ else
 					$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 						
 					//On affiche les stats numériquement dans un tableau en dessous
-					$Template->assign_block_vars('value', array(
+					$tpl->assign_block_vars('value', array(
 					'U_DETAILS' => '<a href="admin_stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1') . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
 					'NBR' => $row['pages']
 					));
@@ -812,7 +810,7 @@ else
 			$previous_month = ($month > 1) ? $month - 1 : 12;
 			$previous_year = ($month > 1) ? $year : $year - 1;
 
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_STATS_VISIT' => true,
 				'TYPE' => 'pages',
 				'VISIT_TOTAL' => $compteur_total,
@@ -845,7 +843,7 @@ else
 					$years .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 				}
 
-				$Template->put_all(array(
+				$tpl->put_all(array(
 				'C_STATS_YEAR' => true,
 				'C_STATS_MONTH' => true,
 				'STATS_YEAR' => $years,
@@ -854,7 +852,7 @@ else
 
 				if (@extension_loaded('gd'))
 				{
-					$Template->put_all(array(
+					$tpl->put_all(array(
 					'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 					));
 						
@@ -871,7 +869,7 @@ else
 						$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
 
 						//On affiche les stats numériquement dans un tableau en dessous
-						$Template->assign_block_vars('value', array(
+						$tpl->assign_block_vars('value', array(
 						'U_DETAILS' => '<a href="admin_stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1') . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
 						'NBR' => $row['pages']
 						));
@@ -883,7 +881,7 @@ else
 					//Mois selectionné.
 					if (!empty($month) && !empty($year))
 					{
-						$Template->put_all(array(
+						$tpl->put_all(array(
 						'C_STATS_NO_GD' => true
 						));
 
@@ -907,7 +905,7 @@ else
 							{
 								for ($z = 1; $z < $row['day']; $z++)
 								{
-									$Template->assign_block_vars('days', array(
+									$tpl->assign_block_vars('days', array(
 									'HEIGHT' => 0
 									));
 								}
@@ -921,7 +919,7 @@ else
 								$diff = $row['day'] - $i;
 								for ($j = 0; $j < $diff; $j++)
 								{
-									$Template->assign_block_vars('days', array(
+									$tpl->assign_block_vars('days', array(
 									'HEIGHT' => 0
 									));
 								}
@@ -931,17 +929,17 @@ else
 							//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
 							$height = ($row['pages'] / $info['max_nbr']) * 200;
 								
-							$Template->assign_block_vars('values', array(
+							$tpl->assign_block_vars('values', array(
 							'HEIGHT' => ceil($height)
 							));
 								
-							$Template->assign_block_vars('values.head', array(
+							$tpl->assign_block_vars('values.head', array(
 							));
 
 							$date_day = ($row['day'] < 10) ? '0' . $row['day'] : $row['day'];
 
 							//On affiche les stats numériquement dans un tableau en dessous
-							$Template->assign_block_vars('value', array(
+							$tpl->assign_block_vars('value', array(
 							'U_DETAILS' => $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'],
 							'NBR' => $row['pages']
 							));
@@ -954,7 +952,7 @@ else
 						$date_day = isset($date_day) ? $date_day : 1;
 						for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
 						{
-							$Template->assign_block_vars('end_td', array(
+							$tpl->assign_block_vars('end_td', array(
 							'END_TD' => '<td style="width:13px;">&nbsp;</td>'
 							));
 						}
@@ -962,7 +960,7 @@ else
 						//On liste les jours en dessous du graphique
 						for ($i = 1; $i <= $array_month[$month - 1]; $i++)
 						{
-							$Template->assign_block_vars('legend', array(
+							$tpl->assign_block_vars('legend', array(
 							'LEGEND' => $i
 							));
 						}
@@ -1001,7 +999,7 @@ else
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 			
-			$Template->assign_block_vars('referer_list', array(
+			$tpl->assign_block_vars('referer_list', array(
 				'ID' => $row['id'],
 				'URL' => $row['url'],
 				'IMG_MORE' => '<a class="fa fa-plus-square-o" style="cursor:pointer;" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
@@ -1014,7 +1012,7 @@ else
 		}
 		$result->dispose();
 
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_STATS_REFERER' => true,
 			'C_REFERERS' => $nbr_referer,
 			'C_PAGINATION' => $pagination->has_several_pages(),
@@ -1058,7 +1056,7 @@ else
 		{
 			$trend_parameters = get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 			
-			$Template->assign_block_vars('keyword_list', array(
+			$tpl->assign_block_vars('keyword_list', array(
 				'ID' => $row['id'],
 				'KEYWORD' => $row['relative_url'],
 				'IMG_MORE' => '<a class="fa fa-plus-square-o" style="cursor:pointer;" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" id="img_url' . $row['id'] . '"></a>',
@@ -1071,7 +1069,7 @@ else
 		}
 		$result->dispose();
 
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_STATS_KEYWORD' => true,
 			'C_KEYWORDS' => $nbr_keyword,
 			'C_PAGINATION' => $pagination->has_several_pages(),
@@ -1089,7 +1087,7 @@ else
 
 		if (!empty($browser))
 		{
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_STATS_BROWSERS' => true,
 				'GRAPH_RESULT' => '<img src="display_stats.php?browsers=1" alt="" />',
 				'L_BROWSERS' => $LANG['browser_s']
@@ -1100,7 +1098,7 @@ else
 		}
 		elseif (!empty($os))
 		{
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_STATS_OS' => true,
 				'GRAPH_RESULT' => '<img src="display_stats.php?os=1" alt="" />',
 				'L_OS' => $LANG['os']
@@ -1111,7 +1109,7 @@ else
 		}
 		elseif (!empty($user_lang))
 		{
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_STATS_LANG' => true,
 				'GRAPH_RESULT' => '<img src="display_stats.php?lang=1" alt="" />',
 				'L_LANG' => $LANG['stat_lang']
@@ -1160,7 +1158,7 @@ else
 		//Affichage.
 		foreach ($array_order as $value_name => $angle_value)
 		{
-			$Template->assign_block_vars('list', array(
+			$tpl->assign_block_vars('list', array(
 				'COLOR' => 'RGB(' . trim(implode(', ', $array_stats_tmp[$value_name][1]), ', ') . ')',
 				'IMG' => $array_stats_tmp[$value_name][2],
 				'L_NAME' => $array_stats_tmp[$value_name][0],
@@ -1170,7 +1168,7 @@ else
 	}
 	elseif ($bot)
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_STATS_ROBOTS' => true,
 			'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
 			'L_ERASE' => $LANG['erase'],
@@ -1220,7 +1218,7 @@ else
 		{
 				$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 				$name = ucfirst($key);
-				$Template->assign_block_vars('list', array(
+				$tpl->assign_block_vars('list', array(
 					'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
 					'VIEWS' => NumberHelper::round(($angle_value * $Stats->nbr_entry)/360, 0),
 					'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
@@ -1230,7 +1228,7 @@ else
 	}
 	else
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_STATS_SITE' => true,
 			'START' => GeneralConfig::load()->get_site_install_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'VERSION' => Environment::get_phpboost_version(),
@@ -1240,7 +1238,7 @@ else
 		));
 	}
 
-	$Template->pparse('admin_stats_management');
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

@@ -74,12 +74,12 @@ if (!empty($_POST['valid']))
 }
 else
 {
-	$Template->Set_filenames(array('admin_media_config'=> 'media/admin_media_config.tpl'));
+	$tpl = new FileTemplate('media/admin_media_config.tpl');
 
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 	
-	$Template->Assign_vars(array(
+	$tpl->Assign_vars(array(
 		'L_CONFIG_GENERAL' => $MEDIA_LANG['config_general'],
 		'L_MODULE_NAME' => $MEDIA_LANG['module_name'],
 		'L_MODULE_NAME_EXPLAIN' => $MEDIA_LANG['module_name_explain'],
@@ -141,8 +141,9 @@ else
 	));
 
 	require_once('admin_media_menu.php');
+	$tpl->put('admin_media_menu', $menu_tpl);
 	
-	$Template->Pparse('admin_media_config');
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

@@ -15,10 +15,6 @@ $root = !empty($_GET['root']) ? 1 : 0;
 //Configuration des authorisations
 $config_authorizations = $pages_config->get_authorizations();
 
-//Chargement d'un fichier template pour connaître l'emplacement du template
-$Template = new FileTemplate('pages/page.tpl');
-$pages_data_path = $Template->get_pictures_data_path();
-
 //Listage des répertoires dont le répertoire parent est connu
 if ($id_cat != 0)
 {	

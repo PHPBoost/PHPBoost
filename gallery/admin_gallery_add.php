@@ -105,15 +105,13 @@ elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'imag
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_gallery_add'=> 'gallery/admin_gallery_add.tpl'
-	));
+	$tpl = new FileTemplate('gallery/admin_gallery_add.tpl');
 
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails');
 	if (in_array($get_error, $array_error))
-		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
 
 	//Création de la liste des catégories.
 	$cat_list = '<option value="0">' . $LANG['root'] . '</option>';
@@ -135,7 +133,7 @@ else
 	{
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 		$imageup = $db_querier->select_single_row(PREFIX . "gallery", array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
-		$Template->assign_block_vars('image_up', array(
+		$tpl->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
@@ -143,7 +141,7 @@ else
 		));
 	}
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'WIDTH_MAX' => $config->get_max_width(),
 		'HEIGHT_MAX' => $config->get_max_height(),
 		'WEIGHT_MAX' => $config->get_max_weight(),
@@ -206,7 +204,7 @@ else
 			$column_width_pics = floor(100/$nbr_column_pics);
 			$selectbox_width = floor(100-(10*$nbr_column_pics));
 
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'NBR_PICS' => $nbr_pics,
 				'COLUMN_WIDTH_PICS' => $column_width_pics,
 				'SELECTBOX_WIDTH' => $selectbox_width,
@@ -260,7 +258,7 @@ else
 				if (!file_exists('pics/thumbnails/' . $pics) && file_exists('pics/' . $pics))
 					$Gallery->Resize_pics('pics/' . $pics); //Redimensionnement + création miniature
 
-				$Template->assign_block_vars('list', array(
+				$tpl->assign_block_vars('list', array(
 					'ID' => $j,
 					'THUMNAILS' => '<img src="pics/thumbnails/' .  $pics . '" alt="" />',
 					'NAME' => $pics,
@@ -275,7 +273,7 @@ else
 			while (!is_int($j/$nbr_column_pics))
 			{
 				$j++;
-				$Template->assign_block_vars('end_td_pics', array(
+				$tpl->assign_block_vars('end_td_pics', array(
 					'TD_END' => '<td style="width:' . $column_width_pics . '%;padding:0">&nbsp;</td>',
 					'TR_END' => (is_int($j/$nbr_column_pics)) ? '</tr>' : ''
 				));
@@ -283,9 +281,9 @@ else
 		}
 	}
 
-	$Template->put('C_IMG', $j);
+	$tpl->put('C_IMG', $j);
 
-	$Template->pparse('admin_gallery_add');
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

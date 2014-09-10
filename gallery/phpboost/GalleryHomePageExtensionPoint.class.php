@@ -72,7 +72,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		else
 			list($g_type, $g_mode) = array('date', 'desc');
 			
-		$Template = new FileTemplate('gallery/gallery.tpl');
+		$tpl = new FileTemplate('gallery/gallery.tpl');
 
 		$comments_topic = new GalleryCommentsTopic();
 		$config = GalleryConfig::load();
@@ -118,7 +118,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		//Gestion erreur.
 		$get_error = retrieve(GET, 'error', '');
 		if ($get_error == 'unexist_cat')
-			$Template->put('message_helper', MessageHelper::display(LangLoader::get_message('e_unexist_cat', 'errors'), MessageHelper::NOTICE));
+			$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('e_unexist_cat', 'errors'), MessageHelper::NOTICE));
 	
 		//On crée une pagination si le nombre de catégories est trop important.
 		$page = AppContext::get_request()->get_getint('p', 1);
@@ -144,10 +144,10 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL) ? true : false;
 		$is_modo = (AppContext::get_current_user()->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS)) ? true : false;
 	
-		$module_data_path = $Template->get_pictures_data_path();
+		$module_data_path = $tpl->get_pictures_data_path();
 		$rewrite_title = Url::encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
 	
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'ARRAY_JS' => '',
 			'NBR_PICS' => 0,
@@ -224,7 +224,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		##### Catégorie disponibles #####
 		if ($total_cat > 0 && $nbr_unauth_cats < $total_cat && empty($g_idpics))
 		{
-			$Template->put('C_GALLERY_CATS', true);
+			$tpl->put('C_GALLERY_CATS', true);
 			
 			$j = 0;
 			$result = $this->sql_querier->query_while ("SELECT gc.id, gc.name, gc.contents, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path
@@ -240,7 +240,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				if (!file_exists('pics/thumbnails/' . $row['path']))
 					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 	
-				$Template->assign_block_vars('cat_list', array(
+				$tpl->assign_block_vars('cat_list', array(
 					'IDCAT' => $row['id'],
 					'CAT' => $row['name'],
 					'DESC' => $row['contents'],
@@ -258,7 +258,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			//Création des cellules du tableau si besoin est.
 			while (!is_int($j/$nbr_column_cats))
 			{
-				$Template->assign_block_vars('end_table_cats', array(
+				$tpl->assign_block_vars('end_table_cats', array(
 					'TD_END' => '<td style="margin:15px 0px;width:' . $nbr_column_cats . '%">&nbsp;</td>',
 					'TR_END' => (is_int(++$j/$nbr_column_cats)) ? '</tr>' : ''
 				));
@@ -305,7 +305,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			elseif ($g_notes)
 				$g_sql_sort = ' ORDER BY notes.average_notes DESC';
 	
-			$Template->put('C_GALLERY_PICS', true);
+			$tpl->put('C_GALLERY_PICS', true);
 			
 			//Liste des catégories.
 			$array_cat_list = array(0 => '<option value="-1" %s>' . $LANG['root'] . '</option>');
@@ -418,7 +418,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$group_color = User::get_group_color($info_pics['groups'], $info_pics['level']);
 					
 					//Affichage de l'image et de ses informations.
-					$Template->put_all(array(
+					$tpl->put_all(array(
 						'C_GALLERY_PICS_MAX' => true,
 						'C_GALLERY_PICS_MODO' => $is_modo ? true : false,
 						'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
@@ -473,7 +473,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					{
 						if ($i >= ($pos_pics - $start_thumbnails) && $i <= ($pos_pics + $end_thumbnails))
 						{
-							$Template->assign_block_vars('list_preview_pics', array(
+							$tpl->assign_block_vars('list_preview_pics', array(
 								'PICS' => $pics
 							));
 						}
@@ -485,7 +485,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					{
 						if ($config->are_comments_enabled())
 						{
-							$Template->put_all(array(
+							$tpl->put_all(array(
 								'COMMENTS' => CommentsService::display($comments_topic)->render()
 							));
 						}
@@ -512,7 +512,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					DispatchManager::redirect($error_controller);
 				}
 				
-				$Template->put_all(array(
+				$tpl->put_all(array(
 					'C_GALLERY_MODO' => $is_modo,
 					'C_PAGINATION' => $pagination->has_several_pages(),
 					'PAGINATION' => $pagination->display(),
@@ -569,7 +569,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$comments_topic->set_id_in_module($row['id']);
 					
 					$html_protected_name = $row['name'];
-					$Template->assign_block_vars('pics_list', array(
+					$tpl->assign_block_vars('pics_list', array(
 						'ID' => $row['id'],
 						'APROB' => $row['aprob'],
 						'IMG' => '<img src="'. PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'] . '" alt="' . str_replace('"', '', stripslashes($row['name'])) . '" class="gallery_image" />',
@@ -596,7 +596,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				//Création des cellules du tableau si besoin est.
 				while (!is_int($j/$nbr_column_pics))
 				{
-					$Template->assign_block_vars('end_table', array(
+					$tpl->assign_block_vars('end_table', array(
 						'TD_END' => '<td style="margin:15px 0px;width:' . $column_width_pics . '%">&nbsp;</td>',
 						'TR_END' => (is_int(++$j/$nbr_column_pics)) ? '</tr>' : ''
 					));
@@ -604,7 +604,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 		}
 	
-		return $Template;
+		return $tpl;
 	}
 	
 	private function check_authorizations()

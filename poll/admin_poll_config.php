@@ -47,9 +47,7 @@ if (!empty($_POST['valid']))
 }
 else	
 {		
-	$Template->set_filenames(array(
-	'admin_poll_config'=> 'poll/admin_poll_config.tpl'
-	));
+	$tpl = new FileTemplate('poll/admin_poll_config.tpl');
 
 	$Cache->load('poll');
 	
@@ -69,7 +67,7 @@ else
 	}
 	$result->dispose(); 
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'COOKIE_NAME' => $poll_config->get_cookie_name(),
 		'COOKIE_LENGHT' => $poll_config->get_cookie_lenght(),
 		'POLL_LIST' => $poll_list,
@@ -96,7 +94,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	 
-	$Template->pparse('admin_poll_config');	
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

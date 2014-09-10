@@ -47,9 +47,9 @@ require_once('../kernel/header.php');
 
 if (!empty($id_article))
 {
-	$Template = new FileTemplate('wiki/history.tpl');
+	$tpl = new FileTemplate('wiki/history.tpl');
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_ARTICLE' => true,
 		'L_HISTORY' => $LANG['wiki_history'],
 		'TITLE' => $article_infos['title'],
@@ -81,7 +81,7 @@ if (!empty($id_article))
 		
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
-		$Template->assign_block_vars('list', array(
+		$tpl->assign_block_vars('list', array(
 			'TITLE' => $LANG['wiki_consult_article'],
 			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
@@ -92,14 +92,14 @@ if (!empty($id_article))
 	}
 	$result->dispose();
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'L_VERSIONS' => $LANG['wiki_version_list'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_AUTHOR' => $LANG['wiki_author'],
 		'L_ACTIONS' => $LANG['wiki_possible_actions'],
 		));
 	
-	$Template->display();
+	$tpl->display();
 }
 else //On affiche la liste des modifications 
 {
@@ -123,9 +123,9 @@ else //On affiche la liste des modifications
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$Template = new FileTemplate('wiki/history.tpl');
+	$tpl = new FileTemplate('wiki/history.tpl');
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'L_HISTORY' => $LANG['wiki_history'],
 		'L_TITLE' => $LANG['wiki_article_title'],
@@ -155,7 +155,7 @@ else //On affiche la liste des modifications
 	{
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
-		$Template->assign_block_vars('list', array(
+		$tpl->assign_block_vars('list', array(
 			'TITLE' => $row['title'],
 			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
@@ -164,7 +164,7 @@ else //On affiche la liste des modifications
 	}
 	$result->dispose();
 	
-	$Template->display();
+	$tpl->display();
 }
 
 require_once('../kernel/footer.php'); 

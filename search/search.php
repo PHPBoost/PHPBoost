@@ -35,10 +35,7 @@ if (!SearchAuthorizationsService::check_authorizations()->read())
 	DispatchManager::redirect($error_controller);
 }
 
-$Template->set_filenames(array(
-	'search_forms' => 'search/search_forms.tpl',
-	'search_results' => 'search/search_results.tpl'
-));
+$tpl = new FileTemplate('search/search_forms.tpl');
 
 //--------------------------------------------------------------------- Params
 // A protéger impérativement;
@@ -63,7 +60,7 @@ else if (count($selected_modules) == 1)
 define('TITLE', $LANG['title_search']);
 
 require_once('../kernel/header.php');
-$Template->assign_vars(Array(
+$tpl->assign_vars(Array(
 	'L_TITLE_SEARCH' => TITLE,
 	'L_SEARCH' => $LANG['title_search'],
 	'TEXT_SEARCHED' => $unsecure_search,
@@ -128,7 +125,7 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 					}
 				}
 
-				$Template->assign_block_vars('forms', array(
+				$tpl->assign_block_vars('forms', array(
 					'MODULE_NAME' => $module->get_id(),
 					'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
 					'C_SEARCH_FORM' => true,
@@ -138,7 +135,7 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 			}
 			else
 			{
-				$Template->assign_block_vars('forms', array(
+				$tpl->assign_block_vars('forms', array(
 					'MODULE_NAME' => $module->get_id(),
 					'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
 					'C_SEARCH_FORM' => false,
@@ -159,7 +156,7 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 				$selected = '';
 			}
 			
-			$Template->assign_block_vars('searched_modules', array(
+			$tpl->assign_block_vars('searched_modules', array(
 				'MODULE' => $module->get_id(),
 				'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
 				'SELECTED' => $selected
@@ -168,11 +165,12 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 	}
 }
 
-// parsage des formulaires de recherches
-$Template->pparse('search_forms');
+$tpl->display();
 
 if (!empty($search))
 {
+	$tpl = new FileTemplate('search/search_results.tpl');
+	
 	$results = array();
 	$idsSearch = array();
 	
@@ -206,7 +204,7 @@ if (!empty($search))
 
 	foreach ($used_modules as $module_id => $extension_point)
 	{
-		$Template->assign_block_vars('results', array(
+		$tpl->assign_block_vars('results', array(
 			'MODULE_NAME' => $module_id,
 			'L_MODULE_NAME' => ucfirst(ModulesManager::get_module($module_id)->get_configuration()->get_name()),
 			'ID_SEARCH' => $idsSearch[$module_id]
@@ -217,7 +215,7 @@ if (!empty($search))
 	if ( $nbResults > 0 )
 		get_html_results($results, $all_html_result, $search_in);
 	
-	$Template->assign_vars(Array(
+	$tpl->assign_vars(Array(
 		'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,
 		'L_TITLE_ALL_RESULTS' => $LANG['title_all_results'],
 		'L_RESULTS' => $LANG['results'],
@@ -231,8 +229,7 @@ if (!empty($search))
 		'C_SIMPLE_SEARCH' => ($search_in == 'all')
 	));
 	
-	// parsage des résultats de la recherche
-	$Template->pparse('search_results');
+	$tpl->display();
 }
 
 //--------------------------------------------------------------------- Footer

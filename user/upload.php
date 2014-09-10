@@ -254,11 +254,9 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 }
 elseif (!empty($move_folder) || !empty($move_file))
 {
-	$Template->set_filenames(array(
-		'upload_move'=> 'user/upload_move.tpl'
-	));
+	$tpl = new FileTemplate('user/upload_move.tpl');
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'POPUP' => $popup,
 		'HEADER' => $header,
 		'FOOTER' => $footer,
@@ -274,7 +272,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	));
 	
 	if ($get_error == 'folder_contains_folder')
-		$Template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], MessageHelper::WARNING));
 	
 	//liste des fichiers disponibles
 	include_once('upload_functions.php');
@@ -287,10 +285,10 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$folder_info = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, array('name', 'id_parent'), 'WHERE id = :id', array('id' => $move_folder));
 		$name = $folder_info['name'];
 		$id_cat = $folder_info['id_parent'];
-		$Template->assign_block_vars('folder', array(
+		$tpl->assign_block_vars('folder', array(
 			'NAME' => $name
 		));
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'SELECTED_CAT' => $id_cat,
 			'ID_FILE' => $move_folder,
 			'TARGET' => url('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token() . $popup)
@@ -322,45 +320,43 @@ elseif (!empty($move_folder) || !empty($move_file))
 		
 		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, AppContext::get_current_user()->get_id());
 		
-		$Template->assign_block_vars('file', array(
+		$tpl->assign_block_vars('file', array(
 			'C_DISPLAY_REAL_IMG' => $display_real_img,	
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
 			'FILE_ICON' => $display_real_img ? $info_move['path'] : $get_img_mimetype['img']
 		));
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'SELECTED_CAT' => $info_move['idcat'],
 			'TARGET' => url('upload.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token() . $popup)
 		));
 	}
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'FOLDERS' => $cat_explorer,
 		'ID_FILE' => $move_file
 	));
 	
-	$Template->pparse('upload_move');
+	$tpl->display();
 }
 else
 {
 	$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 	
-	$Template->set_filenames(array(
-		'upload' => 'user/upload.tpl'
-	));
+	$tpl = new FileTemplate('user/upload.tpl');
 
 	//Gestion des erreurs.
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_unlink_disabled', 'e_max_data_reach');
 	if (in_array($get_error, $array_error))
-		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($LANG[$get_error], MessageHelper::WARNING));
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+		$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 
 	if (isset($LANG[$get_l_error]))
-		$Template->put('message_helper', MessageHelper::display($LANG[$get_l_error], MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($LANG[$get_l_error], MessageHelper::WARNING));
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'POPUP' => $popup,
 		'HEADER' => $header,
 		'FOOTER' => $footer,
@@ -407,7 +403,7 @@ else
 	{
 		$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
-		$Template->assign_block_vars('folder', array(
+		$tpl->assign_block_vars('folder', array(
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
 			'RENAME_FOLDER' => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="fa fa-edit"></a></span>',
@@ -469,7 +465,7 @@ else
 		$is_bbcode_editor = ($editor == 'BBCode');
 		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
 		$inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlentities($tinymce));
-		$Template->assign_block_vars('files', array(
+		$tpl->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'IMG' => $get_img_mimetype['img'],
 			'URL' => PATH_TO_ROOT . $link,
@@ -494,7 +490,7 @@ else
 	$unlimited_data = ($group_limit === -1) || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 	
 	$total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'PERCENT' => !$unlimited_data ? '(' . NumberHelper::round($total_size/$group_limit, 3) * 100 . '%)' : '',
 		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($group_limit, 0) . ' ' . $LANG['unit_kilobytes']) : $LANG['illimited'],
 		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
@@ -505,13 +501,13 @@ else
 
 	if ($total_directories == 0 && $total_files == 0)
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_EMPTY_FOLDER' => true,
 			'L_EMPTY_FOLDER' => $LANG['empty_folder']
 		));
 	}
 	
-	$Template->pparse('upload');
+	$tpl->display();
 }
 
 if (empty($popup))

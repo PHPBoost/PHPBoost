@@ -43,7 +43,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $Template, $Cache, $Bread_crumb, $_WIKI_CATS, $LANG, $encoded_title, $id_article, $article_infos, $id_cat;
+		global $Cache, $Bread_crumb, $_WIKI_CATS, $LANG, $encoded_title, $id_article, $article_infos, $id_cat;
 
 		load_module_lang('wiki');
 		include_once(PATH_TO_ROOT . '/wiki/wiki_functions.php');
@@ -52,10 +52,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		$config = WikiConfig::load();
 		
-		$Template->set_filenames(array(
-			'wiki'=> 'wiki/wiki.tpl',
-			'index'=> 'wiki/index.tpl'
-		));
+		$tpl = new FileTemplate('wiki/index.tpl');
 
 		if ($config->get_number_articles_on_index() > 1)
 		{
@@ -68,7 +65,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 				'number_articles_on_index' => $config->get_number_articles_on_index()
 			));
 
-			$Template->assign_block_vars('last_articles', array(
+			$tpl->assign_block_vars('last_articles', array(
 				'C_ARTICLES' => $result->get_rows_count(),
 				'L_ARTICLES' => $LANG['wiki_last_articles_list'],
 			));
@@ -76,7 +73,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			$i = 0;
 			while ($row = $result->fetch())
 			{
-				$Template->assign_block_vars('last_articles.list', array(
+				$tpl->assign_block_vars('last_articles.list', array(
 					'ARTICLE' => $row['title'],
 					'TR' => ($i > 0 && ($i%2 == 0)) ? '</tr><tr>' : '',
 					'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
@@ -87,7 +84,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 
 			if ($i == 0)
 			{
-				$Template->put_all(array(
+				$tpl->put_all(array(
 					'L_NO_ARTICLE' => '<td class="center" colspan="2">' . $LANG['wiki_no_article'] . '</td>',
 				));
 			}
@@ -95,7 +92,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 		//Affichage de toutes les catégories si c'est activé
 		if ($config->are_categories_displayed_on_index())
 		{
-			$Template->assign_block_vars('cat_list', array(
+			$tpl->assign_block_vars('cat_list', array(
 			'L_CATS' => $LANG['wiki_cats_list']
 			));
 			$i = 0;
@@ -104,7 +101,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 				//Si c'est une catégorie mère
 				if ($infos['id_parent'] == 0)
 				{
-					$Template->assign_block_vars('cat_list.list', array(
+					$tpl->assign_block_vars('cat_list.list', array(
 						'CAT' => $infos['name'],
 						'U_CAT' => url('wiki.php?title=' . $infos['encoded_title'], $infos['encoded_title'])
 					));
@@ -112,12 +109,12 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 			}
 			if ($i == 0)
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'L_NO_CAT' => $LANG['wiki_no_cat'],
 			));
 		}
 
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'TITLE' => $config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki'],
 			'INDEX_TEXT' => $config->get_index_text() ? FormatingHelper::second_parse(wiki_no_rewrite($config->get_index_text())) : $LANG['wiki_empty_index'],
 			'L_EXPLORER' => $LANG['wiki_explorer'],
@@ -126,8 +123,9 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$page_type = 'index';
 		include(PATH_TO_ROOT . '/wiki/wiki_tools.php');
+		$tpl->put('wiki_tools', $tools_tpl);
 
-		return new StringTemplate($Template->get_data()->get('index')->render());
+		return new StringTemplate($tpl->render());
 	}
 }
 ?>

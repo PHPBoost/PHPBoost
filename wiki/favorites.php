@@ -83,7 +83,7 @@ elseif ($remove_favorite > 0)
 }
 else
 {
-	$Template = new FileTemplate('wiki/favorites.tpl');
+	$tpl = new FileTemplate('wiki/favorites.tpl');
 	
 	//Gestion des erreurs
 	$error = !empty($_GET['error']) ? TextHelper::strprotect($_GET['error']) : '';
@@ -94,7 +94,7 @@ else
 	else
 		$errstr = '';
 	if (!empty($errstr))
-		$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 	
 	//on liste les favoris
 	$result = PersistenceContext::get_querier()->select("SELECT f.id, a.id, a.title, a.encoded_title
@@ -104,7 +104,7 @@ else
 		'id' => AppContext::get_current_user()->get_id()
 	));
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'NO_FAVORITE' => $result->get_rows_count() == 0,
 		'L_FAVORITES' => $LANG['wiki_favorites'],
 		'L_NO_FAVORITE' => $LANG['wiki_no_favorite'],
@@ -112,10 +112,10 @@ else
 		'L_UNTRACK' => $LANG['wiki_unwatch']
 	));
 	
-	$module_data_path = $Template->get_pictures_data_path();
+	$module_data_path = $tpl->get_pictures_data_path();
 	while ($row = $result->fetch())
 	{
-		$Template->assign_block_vars('list', array(
+		$tpl->assign_block_vars('list', array(
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 			'ARTICLE' => $row['title'],
 			'ID' => $row['id'],
@@ -124,7 +124,7 @@ else
 	}
 	$result->dispose();
 
-	$Template->display();
+	$tpl->display();
 }
 
 require_once('../kernel/footer.php'); 

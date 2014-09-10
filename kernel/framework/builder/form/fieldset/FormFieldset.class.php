@@ -62,7 +62,7 @@ interface FormFieldset
 
     /**
      * @desc Return the form
-     * @param Template $Template Optionnal template
+     * @param Template $template Optionnal template
      * @return string
      */
     function display();

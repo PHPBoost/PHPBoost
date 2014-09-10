@@ -109,9 +109,8 @@ elseif (!empty($_POST['gallery_cache'])) //Suppression des miniatures.
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_gallery_config'=> 'gallery/admin_gallery_config.tpl'
-	));
+	
+	$tpl = new FileTemplate('gallery/admin_gallery_config.tpl');
 
 	$Cache->load('gallery');
 
@@ -138,7 +137,7 @@ else
 		$scroll_types .= '<option value="' . $key . '"' . $selected . '>' . $name . '</option>';
 	}
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_LOGO_ENABLED' => $config->is_logo_enabled(),
 		'C_TITLE_ENABLED' => $config->is_title_enabled(),
 		'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
@@ -258,7 +257,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 
-	$Template->pparse('admin_gallery_config');
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');
