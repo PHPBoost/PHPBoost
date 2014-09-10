@@ -90,7 +90,7 @@ function forum_limit_time_msg()
 {
 	global $CONFIG_FORUM;
 	
-	$last_view_forum = AppContext::get_current_user()->get_attribute('last_view_forum');
+	$last_view_forum = AppContext::get_session()->get_cached_data('last_view_forum');
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
 	
@@ -103,7 +103,7 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 	global $Sql,  $CONFIG_FORUM;
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
-	$last_view_forum = (AppContext::get_current_user()->get_attribute('last_view_forum') > 0) ? AppContext::get_current_user()->get_attribute('last_view_forum') : 0;
+	$last_view_forum = AppContext::get_session()->get_cached_data('last_view_forum', 0);
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
 	if (AppContext::get_current_user()->get_id() !== -1 && $last_timestamp >= $max_time_msg)
