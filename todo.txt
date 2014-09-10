@@ -111,8 +111,5 @@
 [b]FAQ[/b]
 - refonte du module en MVC
 
-[b]Téléchargements[/b]
-- refonte du module en MVC
-
 [b]Wiki:[/b]
 - [color=red]Nouveauté:[/color] Système d'enregistrement des articles par différences, lignes par lignes pour un encombrement réduit lors des éditions successives.
