@@ -56,6 +56,7 @@ class WebVisitWebLinkController extends AbstractController
 		{
 			$this->weblink->set_number_views($this->weblink->get_number_views() + 1);
 			WebService::update_number_views($this->weblink);
+			WebCache::invalidate();
 			
 			AppContext::get_response()->redirect($this->weblink->get_url()->absolute());
 		}
