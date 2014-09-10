@@ -85,7 +85,6 @@ class WebDisplayCategoryController extends ModuleController
 			$this->tpl->assign_block_vars('sub_categories_list', array(
 				'CATEGORY_NAME' => $row['name'],
 				'CATEGORY_IMAGE' => $category_image->rel(),
-				'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 				'WEBLINKS_NUMBER' => $row['weblinks_number'],
 				'U_CATEGORY' => WebUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel()
 			));
