@@ -69,9 +69,6 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 {
 	global $_PAGES_CATS;
 	
-	$Template = new FileTemplate('pages/post.tpl');
-	$module_data_path = $Template->get_pictures_data_path();
-	
 	$line = '';
 	foreach ($_PAGES_CATS as $key => $value)
 	{

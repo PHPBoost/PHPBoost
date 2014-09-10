@@ -33,15 +33,13 @@ require_once('../admin/admin_header.php');
 $table = retrieve(GET, 'table', '');
 $action = retrieve(GET, 'action', '');
 
-$Template->set_filenames(array(
-	'admin_database_tools'=> 'database/admin_database_tools.tpl'
-));
+$tpl = new FileTemplate('database/admin_database_tools.tpl');
 
 //outils de sauvegarde de la base de données
 
 $backup = new Backup();
 
-$Template->put_all(array(
+$tpl->put_all(array(
 	'TABLE_NAME' => $table,
 	'L_CONFIRM_DELETE_TABLE' => $LANG['db_confirm_delete_table'],
 	'L_CONFIRM_TRUNCATE_TABLE' => $LANG['db_confirm_truncate_table'],
@@ -97,13 +95,13 @@ if (!empty($table) && $action == 'data')
 	$i = 1;
 	while ($row = $result->fetch())
 	{
-		$Template->assign_block_vars('line', array());
+		$tpl->assign_block_vars('line', array());
 		//Premier passage: on liste le nom des champs sélectionnés
 		if ($i == 1)
 		{
 			foreach ($row as $field_name => $field_value)
 			{
-				$Template->assign_block_vars('head', array(
+				$tpl->assign_block_vars('head', array(
 					'FIELD_NAME' => $field_name
 				));
 			}
@@ -115,13 +113,13 @@ if (!empty($table) && $action == 'data')
 		{
 			if ($j == 0)
 			{
-				$Template->assign_block_vars('line.field', array(
+				$tpl->assign_block_vars('line.field', array(
 					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['update'] . '" class="fa fa-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="delete-element"></a></span>',
 					'STYLE' => ''
 				));
 			}
 			
-			$Template->assign_block_vars('line.field', array(
+			$tpl->assign_block_vars('line.field', array(
 				'FIELD_NAME' => str_replace("\n", '<br />', TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE)),
 				'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 			));
@@ -131,7 +129,7 @@ if (!empty($table) && $action == 'data')
 	}
 	$result->dispose();
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_DATABASE_TABLE_DATA' => true,
 		'C_DATABASE_TABLE_STRUCTURE' => false,
 		'C_PAGINATION' => $pagination->has_several_pages(),
@@ -179,7 +177,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 	}
 	elseif (!empty($field) && !empty($value))
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_DATABASE_UPDATE_FORM' => true,
 			'FIELD_NAME' => $field,
 			'FIELD_VALUE' => $value,
@@ -199,7 +197,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 		$i = 0;
 		foreach ($row as $field_name => $field_value)
 		{
-			$Template->assign_block_vars('fields', array(
+			$tpl->assign_block_vars('fields', array(
 				'FIELD_NAME' => $field_name,
 				'FIELD_TYPE' => $table_structure['fields'][$i]['type'],
 				'FIELD_NULL' => $table_structure['fields'][$i]['null'] ? $LANG['yes'] : $LANG['no'],
@@ -246,7 +244,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 	}
 	else
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_DATABASE_UPDATE_FORM' => true,
 			'FIELD_NAME' => '',
 			'FIELD_VALUE' => '',
@@ -261,7 +259,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 		
 		foreach ($table_structure['fields'] as $fields_info)
 		{
-			$Template->assign_block_vars('fields', array(
+			$tpl->assign_block_vars('fields', array(
 				'FIELD_NAME' => $fields_info['name'],
 				'FIELD_TYPE' => $fields_info['type'],
 				'FIELD_NULL' => $fields_info['null'] ? $LANG['yes'] : $LANG['no'],
@@ -297,7 +295,7 @@ elseif (!empty($table) && $action == 'query')
 {
 	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_DATABASE_TABLE_QUERY' => true
 	));
 
@@ -305,7 +303,7 @@ elseif (!empty($table) && $action == 'query')
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_QUERY_RESULT' => true
 		));
 		
@@ -317,18 +315,18 @@ elseif (!empty($table) && $action == 'query')
 			$i = 1;
 			while ($row = $result->fetch())
 			{
-				$Template->assign_block_vars('line', array());
+				$tpl->assign_block_vars('line', array());
 				//Premier passage: on liste le nom des champs sélectionnés
 				if ($i == 1)
 				{
 					foreach ($row as $field_name => $field_value)
-						$Template->assign_block_vars('head', array(
+						$tpl->assign_block_vars('head', array(
 							'FIELD_NAME' => $field_name
 						));
 				}
 				//On parse les valeurs de sortie
 				foreach ($row as $field_name => $field_value)
-				$Template->assign_block_vars('line.field', array(
+				$tpl->assign_block_vars('line.field', array(
 					'FIELD_NAME' => TextHelper::strprotect($field_value),
 					'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 				));
@@ -346,7 +344,7 @@ elseif (!empty($table) && $action == 'query')
 	elseif (!empty($table))
 		$query = "SELECT * FROM " . $table . " WHERE 1";
 		
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'QUERY' => Sql::indent_query($query),
 		'QUERY_HIGHLIGHT' => Sql::highlight_query($query),
 		'L_REQUIRE' => $LANG['require'],
@@ -376,7 +374,7 @@ elseif (!empty($table))
 		}
 		
 		//Champs.
-		$Template->assign_block_vars('field', array(
+		$tpl->assign_block_vars('field', array(
 			'FIELD_NAME' => ($primary_key) ? '<span style="text-decoration:underline">' . $fields_info['name'] . '<span>' : $fields_info['name'],
 			'FIELD_TYPE' => $fields_info['type'],
 			'FIELD_ATTRIBUTE' => $fields_info['attribute'],
@@ -389,7 +387,7 @@ elseif (!empty($table))
 	//index
 	foreach ($table_structure['index'] as $index_info)
 	{
-		$Template->assign_block_vars('index', array(
+		$tpl->assign_block_vars('index', array(
 			'INDEX_NAME' => $index_info['name'],
 			'INDEX_TYPE' => $index_info['type'],
 			'INDEX_FIELDS' => str_replace(',', '<br />', $index_info['fields'])
@@ -406,7 +404,7 @@ elseif (!empty($table))
 	$data = ($data > 1024) ? NumberHelper::round($data/1024, 1) . ' MB' : $data . ' kB';
 	$index = ($index > 1024) ? NumberHelper::round($index/1024, 1) . ' MB' : $index . ' kB';
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_DATABASE_TABLE_STRUCTURE' => true,
 		'C_DATABASE_TABLE_DATA' => false,
 		'C_AUTOINDEX' => !empty($backup->tables[$table]['auto_increment']) ? true : false,
@@ -449,7 +447,7 @@ elseif (!empty($table))
 else
 	AppContext::get_response()->redirect('/database/admin_database.php');
 
-$Template->pparse('admin_database_tools');
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 

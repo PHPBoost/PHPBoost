@@ -202,7 +202,7 @@ elseif ($del_article > 0)
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=delete_failure', '', '&'));
 }
 
-$Template = new FileTemplate('pages/post.tpl');
+$tpl = new FileTemplate('pages/post.tpl');
 
 if ($id_edit > 0)
 {
@@ -215,11 +215,11 @@ if ($id_edit > 0)
 	
 	//Erreur d'enregistrement ?
 	if ($error == 'cat_contains_cat')
-		$Template->put('message_helper', MessageHelper::display($LANG['pages_cat_contains_cat'], MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($LANG['pages_cat_contains_cat'], MessageHelper::WARNING));
 	elseif ($error == 'preview')
 	{
-		$Template->put('message_helper', MessageHelper::display($LANG['pages_notice_previewing'], MessageHelper::NOTICE));
-		$Template->assign_block_vars('previewing', array(
+		$tpl->put('message_helper', MessageHelper::display($LANG['pages_notice_previewing'], MessageHelper::NOTICE));
+		$tpl->assign_block_vars('previewing', array(
 			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
 			'TITLE' => stripslashes($title)
 		));
@@ -231,7 +231,7 @@ if ($id_edit > 0)
 	$id_cat_display = $page_infos['is_cat'] == 1 ? $_PAGES_CATS[$page_infos['id_cat']]['id_parent'] : $page_infos['id_cat'];
 	$cat_list = display_cat_explorer($id_cat_display, $cats, 1);
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'CONTENTS' => !empty($error) ? stripslashes($contents) : pages_unparse($page_infos['contents']),
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($page_infos['count_hits'] == 1 ? 'checked="checked"' : ''),
 		'COMMENTS_ACTIVATED_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') : ($page_infos['activ_com'] == 1 ? 'checked="checked"' : ''),
@@ -251,29 +251,29 @@ else
 		
 	//La page existe déjà !
 	if ($error == 'page_already_exists')
-		$Template->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
 	elseif ($error == 'preview')
 	{
-		$Template->put('message_helper', MessageHelper::display($LANG['pages_notice_previewing'], MessageHelper::NOTICE));
-		$Template->assign_block_vars('previewing', array(
+		$tpl->put('message_helper', MessageHelper::display($LANG['pages_notice_previewing'], MessageHelper::NOTICE));
+		$tpl->assign_block_vars('previewing', array(
 			'PREVIEWING' => pages_second_parse(stripslashes(pages_parse($contents))),
 			'TITLE' => stripslashes($title)
 		));
 	}
 	if (!empty($error))
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'CONTENTS' => stripslashes($contents),
 			'PAGE_TITLE' => stripslashes($title)
 		));
 	
-	$Template->assign_block_vars('create', array());
+	$tpl->assign_block_vars('create', array());
 	
 	//Génération de l'arborescence des catégories
 	$cats = array();
 	$cat_list = display_cat_explorer(0, $cats, 1);
 	$current_cat = $LANG['pages_root'];
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($pages_config->get_count_hits_activated() == true ? 'checked="checked"' : ''),
 		'COMMENTS_ACTIVATED_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') :($pages_config->get_comments_activated() == true ? 'checked="checked"' : ''),
 		'DISPLAY_PRINT_LINK_CHECKED' => !empty($error) ? ($display_print_link == 1 ? 'checked="checked"' : '') : 'checked="checked"',
@@ -292,7 +292,7 @@ else
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
 
-$Template->put_all(array(
+$tpl->put_all(array(
 	'ID_EDIT' => $id_edit,
 	'SELECT_READ_PAGE' => Authorizations::generate_select(READ_PAGE, $array_auth),
 	'SELECT_EDIT_PAGE' => Authorizations::generate_select(EDIT_PAGE, $array_auth),
@@ -329,7 +329,7 @@ $Template->put_all(array(
 	'TARGET' => url('post.php?token=' . AppContext::get_session()->get_token())
 ));
 
-$Template->display();
+$tpl->display();
 
 require_once('../kernel/footer.php'); 
 

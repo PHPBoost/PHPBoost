@@ -32,7 +32,7 @@ require_once('../admin/admin_header.php');
 require_once('media_begin.php');
 $media_categories = new MediaCats();
 
-$Template->set_filenames(array('admin_media_cat'=> 'media/admin_media_cats.tpl'));
+$tpl = new FileTemplate('media/admin_media_cats.tpl');
 
 $id_up = retrieve(GET, 'id_up', 0);
 $id_down = retrieve(GET, 'id_down', 0);
@@ -66,7 +66,7 @@ elseif ($id_hide > 0)
 }
 elseif ($cat_to_del > 0)
 {
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'L_REMOVING_CATEGORY' => $MEDIA_LANG['removing_category'],
 		'L_EXPLAIN_REMOVING' => $MEDIA_LANG['removing_category_explain'],
 		'L_DELETE_CATEGORY_AND_CONTENT' => $MEDIA_LANG['remove_category_and_its_content'],
@@ -74,7 +74,7 @@ elseif ($cat_to_del > 0)
 		'L_SUBMIT' => $LANG['delete']
 	));
 
-	$Template->assign_block_vars('removing_interface', array(
+	$tpl->assign_block_vars('removing_interface', array(
 		'CATEGORY_TREE' => $media_categories->build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
 		'IDCAT' => $cat_to_del
 	));
@@ -135,7 +135,7 @@ elseif ($new_cat XOR $id_edit > 0)
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_CATEGORY' => $MEDIA_LANG['category'],
 		'L_REQUIRED_FIELDS' => $MEDIA_LANG['required_fields'],
@@ -171,7 +171,7 @@ elseif ($new_cat XOR $id_edit > 0)
 	{
 		$default_auth = !empty($MEDIA_CATS[$id_edit]['auth']) ? $MEDIA_CATS[$id_edit]['auth'] : $MEDIA_CATS[0]['auth'];
 
-		$Template->assign_block_vars('edition_interface', array(
+		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $MEDIA_CATS[$id_edit]['name'],
 			'DESCRIPTION' => FormatingHelper::unparse($MEDIA_CATS[$id_edit]['desc']),
 			'IMAGE' => $MEDIA_CATS[$id_edit]['image'],
@@ -200,7 +200,7 @@ elseif ($new_cat XOR $id_edit > 0)
 	}
 	else
 	{
-		$Template->assign_block_vars('edition_interface', array(
+		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'IMAGE' => '',
@@ -235,19 +235,19 @@ else
 		switch ($error)
 		{
 			case 'e_required_fields_empty':
-				$Template->put('message_helper', MessageHelper::display($MEDIA_LANG['required_fields_empty'], MessageHelper::WARNING));
+				$tpl->put('message_helper', MessageHelper::display($MEDIA_LANG['required_fields_empty'], MessageHelper::WARNING));
 				break;
 			case 'e_unexisting_category':
-				$Template->put('message_helper', MessageHelper::display($MEDIA_LANG['unexisting_category'], MessageHelper::WARNING));
+				$tpl->put('message_helper', MessageHelper::display($MEDIA_LANG['unexisting_category'], MessageHelper::WARNING));
 				break;
 			case 'e_new_cat_does_not_exist':
-				$Template->put('message_helper', MessageHelper::display($MEDIA_LANG['new_cat_does_not_exist'], MessageHelper::WARNING));
+				$tpl->put('message_helper', MessageHelper::display($MEDIA_LANG['new_cat_does_not_exist'], MessageHelper::WARNING));
 				break;
 				case 'e_infinite_loop':
-				$Template->put('message_helper', MessageHelper::display($MEDIA_LANG['infinite_loop'], MessageHelper::WARNING));
+				$tpl->put('message_helper', MessageHelper::display($MEDIA_LANG['infinite_loop'], MessageHelper::WARNING));
 				break;
 			case 'e_success':
-				$Template->put('message_helper', MessageHelper::display($MEDIA_LANG['successful_operation'], MessageHelper::SUCCESS, 4));
+				$tpl->put('message_helper', MessageHelper::display($MEDIA_LANG['successful_operation'], MessageHelper::SUCCESS, 4));
 				break;
 		}
 	}
@@ -263,15 +263,16 @@ else
 
 	$media_categories->set_display_config($cat_config);
 
-	$Template->assign_block_vars('categories_management', array('CATEGORIES' => $media_categories->build_administration_interface()));
-	$Template->put_all(array(
+	$tpl->assign_block_vars('categories_management', array('CATEGORIES' => $media_categories->build_administration_interface()));
+	$tpl->put_all(array(
 		'L_MANAGEMENT_CATS' => $MEDIA_LANG['management_cat'],
 	));
 }
 
 require_once('admin_media_menu.php');
+$tpl->put('admin_media_menu', $menu_tpl);
 
-$Template->pparse('admin_media_cat');
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 

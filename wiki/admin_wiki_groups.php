@@ -50,11 +50,9 @@ if (!empty($_POST['valid']))
 }
 else	
 {		
-	$Template->set_filenames(array(
-		'admin_wiki_groups'=> 'wiki/admin_wiki_groups.tpl'
-	));
+	$tpl = new FileTemplate('wiki/admin_wiki_groups.tpl');
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'SELECT_CREATE_ARTICLE' => Authorizations::generate_select(WIKI_CREATE_ARTICLE, $config->get_authorizations()),
 		'SELECT_CREATE_CAT' => Authorizations::generate_select(WIKI_CREATE_CAT, $config->get_authorizations()),
 		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $config->get_authorizations()),
@@ -87,7 +85,7 @@ else
 		'L_RESTRICTION' => $LANG['wiki_auth_restriction'],
 	));
 
-	$Template->pparse('admin_wiki_groups'); // traitement du modele	
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

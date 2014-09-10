@@ -160,7 +160,7 @@ elseif ($g_add)
 		DispatchManager::redirect($controller);
 	}
 	
-	$Template = new FileTemplate('gallery/gallery_add.tpl');
+	$tpl = new FileTemplate('gallery/gallery_add.tpl');
 
 	if (!empty($g_idcat))
 	{
@@ -210,18 +210,18 @@ elseif ($g_add)
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
 	if (in_array($get_error, $array_error))
-		$Template->put('message_helper', MessageHelper::display(LangLoader::get_message($get_error, 'errors'), MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message($get_error, 'errors'), MessageHelper::WARNING));
 	elseif ($get_error == 'unexist_cat')
-		$Template->put('message_helper', MessageHelper::display(LangLoader::get_message('e_unexist_cat', 'errors'), MessageHelper::NOTICE));
+		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('e_unexist_cat', 'errors'), MessageHelper::NOTICE));
 
-	$module_data_path = $Template->get_pictures_data_path();
+	$module_data_path = $tpl->get_pictures_data_path();
 	$path_pics = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'path', 'WHERE id = :id', array('id' => $g_idpics));
 
 	//Aficchage de la photo uploadée.
 	if (!empty($g_idpics))
 	{
 		$imageup = PersistenceContext::get_querier()->select_single_row(PREFIX . "gallery", array('idcat', 'name', 'path'), 'WHERE id = :id', array('id' => $g_idpics));
-		$Template->assign_block_vars('image_up', array(
+		$tpl->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $g_idpics . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
@@ -246,12 +246,12 @@ elseif ($g_add)
 		}
 		$nbr_upload_pics = $Gallery->get_nbr_upload_pics(AppContext::get_current_user()->get_id());
 
-		$Template->assign_block_vars('image_quota', array(
+		$tpl->assign_block_vars('image_quota', array(
 			'L_IMAGE_QUOTA' => sprintf($LANG['image_quota'], $nbr_upload_pics, $l_pics_quota)
 		));
 	}
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'CAT_ID' => $g_idcat,
 		'GALLERY' => !empty($g_idcat) ? $CAT_GALLERY[$g_idcat]['name'] : $LANG['gallery'],
 		'CATEGORIES' => $auth_cats,
@@ -276,7 +276,7 @@ elseif ($g_add)
 		'U_INDEX' => url('.php')
 	));
 
-	$Template->display();
+	$tpl->display();
 }
 else
 {

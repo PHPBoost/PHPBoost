@@ -95,16 +95,14 @@ elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 }
 else	
 {	
-	$Template->set_filenames(array(
-		'admin_forum_config'=> 'forum/admin_forum_config.tpl'
-	));
+	$tpl = new FileTemplate('forum/admin_forum_config.tpl');
 
 	$Cache->load('forum');
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+		$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 	
 	$CONFIG_FORUM['edit_mark'] = isset($CONFIG_FORUM['edit_mark']) ? $CONFIG_FORUM['edit_mark'] : 0;
 	$CONFIG_FORUM['display_connexion'] = isset($CONFIG_FORUM['display_connexion']) ? $CONFIG_FORUM['display_connexion'] : 0;
@@ -113,7 +111,7 @@ else
 	$CONFIG_FORUM['activ_display_msg'] = isset($CONFIG_FORUM['activ_display_msg']) ? $CONFIG_FORUM['activ_display_msg'] : 0;
 	$CONFIG_FORUM['icon_display_msg'] = isset($CONFIG_FORUM['icon_display_msg']) ? $CONFIG_FORUM['icon_display_msg'] : 1;
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'FORUM_NAME' => !empty($CONFIG_FORUM['forum_name']) ? $CONFIG_FORUM['forum_name'] : '',
 		'PAGINATION_TOPIC' => !empty($CONFIG_FORUM['pagination_topic']) ? $CONFIG_FORUM['pagination_topic'] : '20',
 		'PAGINATION_MSG' => !empty($CONFIG_FORUM['pagination_msg']) ? $CONFIG_FORUM['pagination_msg'] : '15',
@@ -178,7 +176,7 @@ else
 		'L_UPDATE_DATA_CACHED' => $LANG['update_data_cached']
 	));
 
-	$Template->pparse('admin_forum_config');
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

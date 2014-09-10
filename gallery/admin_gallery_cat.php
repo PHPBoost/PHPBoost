@@ -218,9 +218,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 		{
 			if (empty($_POST['del_cat']))
 			{
-				$Template->set_filenames(array(
-					'admin_gallery_cat_del'=> 'gallery/admin_gallery_cat_del.tpl'
-				));
+				$tpl = new FileTemplate('gallery/admin_gallery_cat_del.tpl');
 
 				if ($check_pics > 0) //Conserve les images.
 				{
@@ -238,7 +236,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					}
 					$result->dispose();
 					
-					$Template->assign_block_vars('pics', array(
+					$tpl->assign_block_vars('pics', array(
 						'GALLERIES' => $subgallery,
 						'L_KEEP' => $LANG['keep_pics'],
 						'L_MOVE_PICS' => $LANG['move_pics_to'],
@@ -260,7 +258,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					}
 					$result->dispose();
 					
-					$Template->assign_block_vars('subgalleries', array(
+					$tpl->assign_block_vars('subgalleries', array(
 						'GALLERIES' => $subgallery,
 						'L_KEEP' => $LANG['keep_subgallery'],
 						'L_MOVE_GALLERIES' => $LANG['move_subgalleries_to'],
@@ -269,7 +267,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 				}
 		
 				$gallery_name = $Sql->query("SELECT name FROM " . PREFIX . "gallery_cats WHERE id = '" . $idcat . "'");
-				$Template->put_all(array(
+				$tpl->put_all(array(
 					'IDCAT' => $idcat,
 					'GALLERY_NAME' => $gallery_name,
 					'L_REQUIRE_SUBCAT' => $LANG['require_subcat'],
@@ -284,7 +282,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					'L_SUBMIT' => $LANG['submit'],
 				));
 				
-				$Template->pparse('admin_gallery_cat_del'); //Traitement du modele	
+				$tpl->display();
 			}
 			else //Traitements.
 			{			
@@ -683,9 +681,7 @@ elseif (!empty($id)) //Edition des catégories.
 {
 	$Cache->load('gallery');
 	
-	$Template->set_filenames(array(
-		'admin_gallery_cat_edit'=> 'gallery/admin_gallery_cat_edit.tpl'
-	));
+	$tpl = new FileTemplate('gallery/admin_gallery_cat_edit.tpl');
 	
 	$gallery_info = $Sql->query_array(PREFIX . "gallery_cats", "id_left", "id_right", "level", "name", "contents", "status", "aprob", "auth", "WHERE id = '" . $id . "'");
 	
@@ -711,9 +707,9 @@ elseif (!empty($id)) //Edition des catégories.
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+		$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'ID' => $id,
 		'CATEGORIES' => $galeries,
 		'NAME' => $gallery_info['name'],
@@ -758,22 +754,20 @@ elseif (!empty($id)) //Edition des catégories.
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 	
-	$Template->pparse('admin_gallery_cat_edit'); // traitement du modele
+	$tpl->display();
 }
 elseif (!empty($root)) //Edition de la racine.
 {
 	$Cache->load('gallery');
 	
-	$Template->set_filenames(array(
-		'admin_gallery_cat_edit2'=> 'gallery/admin_gallery_cat_edit2.tpl'
-	));
+	$tpl = new FileTemplate('gallery/admin_gallery_cat_edit2.tpl');
 			
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));	
+		$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));	
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'AUTH_READ' => Authorizations::generate_select(GalleryAuthorizationsService::READ_AUTHORIZATIONS, $config->get_authorizations()),
 		'AUTH_WRITE' => Authorizations::generate_select(GalleryAuthorizationsService::WRITE_AUTHORIZATIONS, $config->get_authorizations()),
 		'AUTH_EDIT' => Authorizations::generate_select(GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS, $config->get_authorizations()),
@@ -794,20 +788,18 @@ elseif (!empty($root)) //Edition de la racine.
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 	
-	$Template->pparse('admin_gallery_cat_edit2'); // traitement du modele
+	$tpl->display();
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_gallery_cat'=> 'gallery/admin_gallery_cat.tpl'
-	));
+	$tpl = new FileTemplate('gallery/admin_gallery_cat.tpl');
 		
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'unexist_cat')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], MessageHelper::NOTICE));
+		$tpl->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], MessageHelper::NOTICE));
 		
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 
 		'L_GALLERY_CAT_MANAGEMENT' => $LANG['gallery_cats_management'], 
@@ -826,7 +818,7 @@ else
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On assigne les variables pour le POST en précisant l'idurl.
-		$Template->assign_block_vars('list', array(
+		$tpl->assign_block_vars('list', array(
 			'C_DESC' => !empty($row['contents']),
 			'C_LOCK' => ($row['status'] == 0),
 			'I' => $i,
@@ -849,13 +841,13 @@ else
 	}
 	$result->dispose();
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'LIST_CATS' => trim($list_cats_js, ', '),
 		'ARRAY_JS' => $array_js,
 		'ID_END' => ($i - 1)
 	));
 
-	$Template->pparse('admin_gallery_cat'); // traitement du modele	
+	$tpl->display();
 }
 	
 require_once('../admin/admin_footer.php');

@@ -106,21 +106,18 @@ define('TITLE', $page_title);
 
 require_once('../kernel/header.php');
 
-$Template->set_filenames(array(
-	'wiki'=> 'wiki/wiki.tpl',
-	'index'=> 'wiki/index.tpl'
-));
-
 //Si il s'agit d'un article
 if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 {
+	$tpl = new FileTemplate('wiki/wiki.tpl');
+	
 	if ($config->is_hits_counter_enabled())//Si on prend en compte le nombre de vus
 		PersistenceContext::get_querier()->update(PREFIX . "wiki_articles", array('hits' => 'hits + 1'), 'WHERE id = :id', array('id' => $article_infos['id']));
 
 	//Si c'est une archive
 	if ($id_contents > 0)
 	{
-		$Template->assign_block_vars('warning', array(
+		$tpl->assign_block_vars('warning', array(
 			'UPDATED_ARTICLE' => $LANG['wiki_warning_updated_article']
 		));
 		$id_article = $article_infos['id'];
@@ -131,14 +128,14 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		/*
 		if ($parse_redirection)
 		{
-			$Template->assign_block_vars('redirect', array(
+			$tpl->assign_block_vars('redirect', array(
 				'REDIRECTED' => sprintf($LANG['wiki_redirecting_from'], '<a href="' . url('wiki.php?title=' . $encoded_title, $encoded_title) . '">' . $ex_title . '</a>')
 			));
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			
 			if (((!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_REDIRECT))))
 			{
-				$Template->assign_block_vars('redirect.remove_redirection', array(
+				$tpl->assign_block_vars('redirect.remove_redirection', array(
 					'L_REMOVE_REDIRECTION' => $LANG['wiki_remove_redirection'],
 					'U_REMOVE_REDIRECTION' => url('action.php?del_redirection=' . $id_redirection . '&amp;token=' . AppContext::get_session()->get_token()),
 					'L_ALERT_REMOVE_REDIRECTION' => str_replace('\'', '\\\'', $LANG['wiki_alert_delete_redirection'])
@@ -151,22 +148,22 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		if ($article_infos['defined_status'] != 0)
 		{
 			if ($article_infos['defined_status'] < 0 && !empty($article_infos['undefined_status']))
-			$Template->assign_block_vars('status', array(
+			$tpl->assign_block_vars('status', array(
 				'ARTICLE_STATUS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['undefined_status']))
 			));
 			elseif ($article_infos['defined_status'] > 0 && is_array($LANG['wiki_status_list'][$article_infos['defined_status'] - 1]))
-			$Template->assign_block_vars('status', array(
+			$tpl->assign_block_vars('status', array(
 				'ARTICLE_STATUS' => $LANG['wiki_status_list'][$article_infos['defined_status'] - 1][1]
 			));
 		}
 	}
 	
 	if (!empty($article_infos['menu']))
-	$Template->assign_block_vars('menu', array(
+	$tpl->assign_block_vars('menu', array(
 		'MENU' => $article_infos['menu']
 	));
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'ID_CAT' => $article_infos['id_cat'],
 		'TITLE' => $article_infos['title'],
 		'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
@@ -189,12 +186,12 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 
 		$num_articles = $result->get_rows_count();
 		
-		$Template->assign_block_vars('cat', array(
+		$tpl->assign_block_vars('cat', array(
 		));
 
 		while ($row = $result->fetch())
 		{
-			$Template->assign_block_vars('cat.list_art', array(
+			$tpl->assign_block_vars('cat.list_art', array(
 				'TITLE' => $row['title'],
 				'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 			));
@@ -202,7 +199,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		$result->dispose();
 		
 		if ($num_articles == 0)
-		$Template->assign_block_vars('cat.no_sub_article', array(
+		$tpl->assign_block_vars('cat.no_sub_article', array(
 			'NO_SUB_ARTICLE' => $LANG['wiki_no_sub_article']
 		));
 		
@@ -211,7 +208,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		{
 			if ($value['id_parent'] == $id_cat)
 			{
-				$Template->assign_block_vars('cat.list_cats', array(
+				$tpl->assign_block_vars('cat.list_cats', array(
 					'NAME' => $value['name'],
 					'U_CAT' => url('wiki.php?title=' . $value['encoded_title'], $value['encoded_title'])
 				));
@@ -219,15 +216,16 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			}
 		}
 		if ($i == 0)
-		$Template->assign_block_vars('cat.no_sub_cat', array(
+		$tpl->assign_block_vars('cat.no_sub_cat', array(
 			'NO_SUB_CAT' => $LANG['wiki_no_sub_cat']
 		));
 	}
 	
 	$page_type = $article_infos['is_cat']  == 1 ? 'cat' : 'article';
 	include('../wiki/wiki_tools.php');
+	$tpl->put('wiki_tools', $tools_tpl);
 	
-	$Template->pparse('wiki');
+	$tpl->display();
 }
 //Si l'article n'existe pas
 elseif (!empty($encoded_title) && $num_rows == 0)

@@ -236,7 +236,7 @@ else
 
 require_once('../kernel/header.php');
 
-$Template = new FileTemplate('pages/action.tpl');
+$tpl = new FileTemplate('pages/action.tpl');
 
 if ($del_cat > 0)
 {
@@ -267,7 +267,7 @@ if ($del_cat > 0)
 	else
 		$current_cat = $LANG['pages_no_selected_cat'];
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'L_TITLE' => sprintf($LANG['pages_remove_this_cat'], $page_infos['title']),
 		'L_REMOVE_ALL_CONTENTS' => $LANG['pages_remove_all_contents'],
 		'L_MOVE_ALL_CONTENTS' => $LANG['pages_move_all_contents'],
@@ -277,7 +277,7 @@ if ($del_cat > 0)
 		'L_ROOT' => $LANG['pages_root'],
 		'L_ALERT_REMOVING_CAT' => $LANG['pages_confirm_remove_cat']
 	));
-	$Template->assign_block_vars('remove', array(
+	$tpl->assign_block_vars('remove', array(
 		'ID_ARTICLE' => $del_cat,
 		'CATS' => $cat_list,
 		'CURRENT_CAT' => $current_cat,
@@ -295,11 +295,11 @@ if ($del_cat > 0)
 	else
 		$errstr = '';
 	if (!empty($errstr))
-		$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 }
 elseif ($id_rename > 0)
 {
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'ID_RENAME' => $id_rename,
 		'L_SUBMIT' => $LANG['submit'],
 		'TARGET' => url('action.php?token=' . AppContext::get_session()->get_token()),
@@ -309,18 +309,18 @@ elseif ($id_rename > 0)
 		'L_EXPLAIN_RENAME' => $LANG['pages_explain_rename'],
 		'FORMER_TITLE' => $page_infos['title']
 	));
-	$Template->assign_block_vars('rename', array());
+	$tpl->assign_block_vars('rename', array());
 	
 	//Erreur : la page existe déjà
 	if ($error == 'title_already_exists')
 	{
-		$Template->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
 	}
 }
 //Création d'une redirection
 elseif ($id_new > 0)
 {
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'ID_NEW' => $id_new,
 		'TARGET' => url('action.php?token=' . AppContext::get_session()->get_token()),
 		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], $page_infos['title']),
@@ -328,17 +328,17 @@ elseif ($id_new > 0)
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
 		'L_SUBMIT' => $LANG['submit'],
 	));
-	$Template->assign_block_vars('new', array());
+	$tpl->assign_block_vars('new', array());
 	//Erreur : la page existe déjà
 	if ($error == 'title_already_exists')
 	{
-		$Template->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($LANG['pages_already_exists'], MessageHelper::WARNING));
 	}
 }
 //Liste des redirections vers cette page
 elseif ($id_redirection > 0)
 {
-	$Template->assign_block_vars('redirection', array());
+	$tpl->assign_block_vars('redirection', array());
 	
 	$result = $db_querier->select("SELECT id, title, auth
 	FROM " . PREFIX . "pages
@@ -347,7 +347,7 @@ elseif ($id_redirection > 0)
 		'redirect' => $id_redirection
 	));
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_NO_REDIRECTION' => $result->get_rows_count() == 0,
 		'U_CREATE_REDIRECTION' => url('action.php?new=' . $id_redirection),
 		'L_REDIRECTIONS' => $LANG['pages_redirections'],
@@ -360,7 +360,7 @@ elseif ($id_redirection > 0)
 	
 	while ($row = $result->fetch())
 	{
-		$Template->assign_block_vars('redirection.list', array(
+		$tpl->assign_block_vars('redirection.list', array(
 			'REDIRECTION_TITLE' => $row['title'],
 			'ACTIONS' => '<a href="action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="fa fa-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>'
 		));
@@ -373,7 +373,7 @@ else
 	if (!AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 
-	$Template->assign_block_vars('redirections', array());
+	$tpl->assign_block_vars('redirections', array());
 	
 	$result = $db_querier->select("SELECT r.title, r.encoded_title AS encoded_title, r.id, p.id AS page_id, p.title AS page_title, p.encoded_title AS page_encoded_title, p.auth AS auth
 	FROM " . PREFIX . "pages r
@@ -381,7 +381,7 @@ else
 	WHERE r.redirect > 0
 	ORDER BY r.title ASC");
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_NO_REDIRECTION' => $result->get_rows_count() == 0,
 		'L_REDIRECTIONS' => $LANG['pages_redirections'],
 		'L_REDIRECTION_TITLE' => $LANG['pages_redirection_title'],
@@ -396,7 +396,7 @@ else
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
 		$array_auth = unserialize($row['auth']);
-		$Template->assign_block_vars('redirections.list', array(
+		$tpl->assign_block_vars('redirections.list', array(
 			'REDIRECTION_TITLE' => '<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a>',
 			'REDIRECTION_TARGET' => '<a href="' . url('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',
 			'ACTIONS' => ( ($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="fa fa-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '" class="fa fa-fast-forward"></a>' : ''		));
@@ -404,7 +404,7 @@ else
 	$result->dispose();
 }
 
-$Template->display();
+$tpl->display();
 
 
 require_once('../kernel/footer.php');

@@ -96,9 +96,7 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 }
 else	
 {		
-	$Template->set_filenames(array(
-		'admin_gallery_cat_add'=> 'gallery/admin_gallery_cat_add.tpl'
-	));
+	$tpl = new FileTemplate('gallery/admin_gallery_cat_add.tpl');
 			
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$galleries = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
@@ -115,9 +113,9 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));	
+		$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));	
 		
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'CATEGORIES' => $galleries,
 		'AUTH_READ' => Authorizations::generate_select(GalleryAuthorizationsService::READ_AUTHORIZATIONS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'AUTH_WRITE' => Authorizations::generate_select(GalleryAuthorizationsService::WRITE_AUTHORIZATIONS, array(), array(1 => true, 2 => true)),
@@ -151,7 +149,7 @@ else
 		'L_AUTH_EDIT' => $LANG['auth_edit']
 	));
 	
-	$Template->pparse('admin_gallery_cat_add'); // traitement du modele	
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

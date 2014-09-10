@@ -146,13 +146,11 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 }	
 elseif (!empty($id))
 {
-	$Template->set_filenames(array(
-		'admin_poll_management2'=> 'poll/admin_poll_management2.tpl'
-	));
+	$tpl = new FileTemplate('poll/admin_poll_management2.tpl');
 
 	$row = PersistenceContext::get_querier()->select_single_row(PREFIX . 'poll', array('*'), 'WHERE id=:id', array('id' => $id));
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'IDPOLL' => $row['id'],
 		'QUESTIONS' => $row['question'],	
 		'TYPE_UNIQUE' => ($row['type'] == '1') ? 'checked="checked"' : '',
@@ -207,7 +205,7 @@ elseif (!empty($id))
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-		$Template->put('message_helper', MessageHelper::display($LANG['incomplete'], MessageHelper::NOTICE));
+		$tpl->put('message_helper', MessageHelper::display($LANG['incomplete'], MessageHelper::NOTICE));
 	
 	$array_answer = explode('|', $row['answers']);
 	$array_vote = explode('|', $row['votes']);
@@ -221,11 +219,11 @@ elseif (!empty($id))
 	foreach ($array_poll as $answer => $nbrvote)
 	{
 		$percent = NumberHelper::round(($nbrvote * 100 / $sum_vote), 1);
-		$Template->assign_block_vars('answers', array(
+		$tpl->assign_block_vars('answers', array(
 			'ID' => $i,
 			'ANSWER' => !empty($answer) ? $answer : ''
 		));
-		$Template->assign_block_vars('votes', array(
+		$tpl->assign_block_vars('votes', array(
 			'ID' => $i,
 			'VOTES' => isset($nbrvote) ? $nbrvote : '',
 			'PERCENT' => isset($percent) ? $percent . '%' : ''
@@ -233,19 +231,17 @@ elseif (!empty($id))
 		$i++;
 	}
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'MAX_ID' => $i
 	));
 	
-	$Template->pparse('admin_poll_management2'); 
+	$tpl->display();
 }
 else
 {
 	$_NBR_ELEMENTS_PER_PAGE = 20;
 	
-	$Template->set_filenames(array(
-		'admin_poll_management'=> 'poll/admin_poll_management.tpl'
-	));
+	$tpl = new FileTemplate('poll/admin_poll_management.tpl');
 	 
 	$nbr_poll = PersistenceContext::get_querier()->count(PREFIX . 'poll');
 
@@ -260,7 +256,7 @@ else
 		DispatchManager::redirect($error_controller);
 	}
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION' => $pagination->display(),
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
@@ -313,7 +309,7 @@ else
 		
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
-		$Template->assign_block_vars('questions', array(
+		$tpl->assign_block_vars('questions', array(
 			'C_USER_GROUP_COLOR' => !empty($group_color),
 			'QUESTIONS' => $question,
 			'IDPOLL' => $row['id'],
@@ -329,7 +325,7 @@ else
 	}
 	$result->dispose();	
 	
-	$Template->pparse('admin_poll_management'); 
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

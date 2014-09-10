@@ -161,9 +161,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 }
 elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 {
-	$Template->set_filenames(array(
-		'poll'=> 'poll/poll.tpl'
-	));
+	$tpl = new FileTemplate('poll/poll.tpl');
 
 	//Résultats
 	$check_bdd = false;
@@ -198,7 +196,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$errstr = '';
 	}
 	if (!empty($errstr))
-		$Template->put('message_helper', MessageHelper::display($errstr, $type));
+		$tpl->put('message_helper', MessageHelper::display($errstr, $type));
 	
 	//Si le cookie existe, ou l'ip est connue on redirige vers les resulats, sinon on prend en compte le vote.
 	$array_cookie = array();
@@ -212,7 +210,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$array_vote = explode('|', $poll['votes']);
 		
 		$sum_vote = array_sum($array_vote);
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_POLL_VIEW' => true,
 			'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 			'IDPOLL' => $poll['id'],
@@ -231,7 +229,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$array_poll = array_combine($array_answer, $array_vote);
 		foreach ($array_poll as $answer => $nbrvote)
 		{
-			$Template->assign_block_vars('result', array(
+			$tpl->assign_block_vars('result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => (int)$nbrvote,
 				'WIDTH' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
@@ -239,11 +237,11 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			));
 		}
 
-		$Template->pparse('poll');
+		$tpl->display();
 	}
 	else //Questions.
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_POLL_VIEW' => true,
 			'C_POLL_QUESTION' => true,
 			'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
@@ -271,7 +269,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		{
 			foreach ($array_answer as $answer)
 			{						
-				$Template->assign_block_vars('radio', array(
+				$tpl->assign_block_vars('radio', array(
 					'NAME' => $z,
 					'TYPE' => 'radio',
 					'ANSWERS' => $answer
@@ -284,7 +282,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			
 			foreach ($array_answer as $answer)
 			{						
-				$Template->assign_block_vars('checkbox', array(
+				$tpl->assign_block_vars('checkbox', array(
 					'NAME' => $z,
 					'TYPE' => 'checkbox',
 					'ANSWERS' => $answer
@@ -292,16 +290,14 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 				$z++;	
 			}
 		}		
-		$Template->pparse('poll');
+		$tpl->display();
 	}
 }
 elseif ($archives) //Archives.
 {
 	$_NBR_ELEMENTS_PER_PAGE = 10;
 	
-	$Template->set_filenames(array(
-		'poll'=> 'poll/poll.tpl'
-	));
+	$tpl = new FileTemplate('poll/poll.tpl');
 	
 	$nbrarchives = PersistenceContext::get_querier()->count(PREFIX . "poll", 'WHERE archive = 1 AND visible = 1');
 	
@@ -316,7 +312,7 @@ elseif ($archives) //Archives.
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_POLL_ARCHIVES' => true,
 		'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 		'C_PAGINATION' => $pagination->has_several_pages(),
@@ -347,7 +343,7 @@ elseif ($archives) //Archives.
 		$sum_vote = array_sum($array_vote);
 		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 
-		$Template->assign_block_vars('list', array(
+		$tpl->assign_block_vars('list', array(
 			'ID' => $row['id'],
 			'QUESTION' => $row['question'],
 			'EDIT' => '<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>',
@@ -360,7 +356,7 @@ elseif ($archives) //Archives.
 		$array_poll = array_combine($array_answer, $array_vote);
 		foreach ($array_poll as $answer => $nbrvote)
 		{
-			$Template->assign_block_vars('list.result', array(
+			$tpl->assign_block_vars('list.result', array(
 				'ANSWERS' => $answer, 
 				'NBRVOTE' => $nbrvote,
 				'WIDTH' => NumberHelper::round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
@@ -371,7 +367,7 @@ elseif ($archives) //Archives.
 	}
 	$result->dispose();
 
-	$Template->pparse('poll');
+	$tpl->display();
 }
 else
 {

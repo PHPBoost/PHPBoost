@@ -112,7 +112,7 @@ require_once('../kernel/header.php');
 
 if (!empty($encoded_title) && $num_rows == 1)
 {
-	$Template = new FileTemplate('pages/page.tpl');
+	$tpl = new FileTemplate('pages/page.tpl');
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -126,7 +126,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	}
 	
 	$auth = ($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE));
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_TOOLS_AUTH' => $auth,
 		'C_PRINT' => $page_infos['display_print_link'],
 	
@@ -144,7 +144,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	//Redirections
 	if (!empty($redirect_title))
 	{
-		$Template->assign_block_vars('redirect', array(
+		$tpl->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
 			'DELETE_REDIRECTION' => (($special_auth && AppContext::get_current_user()->check_auth($array_auth, EDIT_PAGE)) ||
 				(!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['pages_delete_redirection'] . '" class="fa fa-delete" data-confirmation="' . $LANG['pages_confirm_delete_redirection'] . '"></a>' : ''
@@ -155,7 +155,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	if ($page_infos['activ_com'] == 1 && (($special_auth && AppContext::get_current_user()->check_auth($array_auth, READ_COM)) || (!$special_auth && AppContext::get_current_user()->check_auth($config_authorizations, READ_COM))))
 	{	
 		$number_comments = CommentsService::get_number_comments('pages', $page_infos['id']);
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_ACTIV_COM' => true,
 			'U_COM' => PagesUrlBuilder::get_link_item_com($page_infos['id']),
 			'L_COM' => $number_comments > 0 ? sprintf($LANG['pages_display_coms'], $number_comments) : $LANG['pages_post_com']
@@ -164,9 +164,9 @@ if (!empty($encoded_title) && $num_rows == 1)
 	
 	//On compte le nombre de vus
 	if ($page_infos['count_hits'] == 1)
-		PersistenceContext::get_querier()->inject('UPDATE ' . PREFIX . 'pages SET hits = hits + 1 WHERE id = :id', array('id' => $page_infos['id']));
+		PersistenceContext::get_querier()->update(PREFIX . 'pages', array('hits' => 'hits + 1'), 'WHERE id = :id', array('id' => $page_infos['id'] ));
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'TITLE' => $page_infos['title'],
 		'CONTENTS' => pages_second_parse($page_infos['contents']),
 		'COUNT_HITS' => $page_infos['count_hits'] ? sprintf($LANG['page_hits'], $page_infos['hits'] + 1) : '&nbsp;',
@@ -174,7 +174,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 		'L_PAGE_OUTILS' => $LANG['pages_links_list']
 	));
 	
-	$Template->display();
+	$tpl->display();
 }
 //Page non trouvée
 elseif ((!empty($encoded_title) || $id_com > 0) && $num_rows == 0)
@@ -200,16 +200,16 @@ elseif ($id_com > 0)
 		DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
 	}
 	
-	$Template = new FileTemplate('pages/com.tpl');
+	$tpl = new FileTemplate('pages/com.tpl');
 	
 	$comments_topic = new PagesCommentsTopic();
 	$comments_topic->set_id_in_module($id_com);
 	$comments_topic->set_url(new Url(PagesUrlBuilder::get_link_item_com($id_com,'%s')));
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'COMMENTS' => CommentsService::display($comments_topic)->render()
 	));
 	
-	$Template->display();
+	$tpl->display();
 }
 else
 {

@@ -43,8 +43,8 @@ $input_field = !empty($_GET['input_field']) ? trim($_GET['input_field']) : '';
 $lyear = !empty($_GET['lyear']) ? '&amp;lyear=1' : '';
 
 $date_lang = LangLoader::get('date-common');
-$Template = new FileTemplate('framework/util/mini_calendar_response.tpl');
-$Template->add_lang($date_lang);;
+$tpl = new FileTemplate('framework/util/mini_calendar_response.tpl');
+$tpl->add_lang($date_lang);;
 
 //Type date.
 if ($calendar_type == 'date')
@@ -71,7 +71,7 @@ if ($calendar_type == 'date')
 	$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
 	$month_day = $array_month[$month - 1];
 		
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'FIELD' => $field,
 		'INPUT_FIELD' => $input_field,
 		'LYEAR' => $lyear,
@@ -85,14 +85,14 @@ if ($calendar_type == 'date')
 	for ($i = 1; $i <= 12; $i++)
 	{
 		$selected = ($month == $i) ? 'selected="selected"' : '';
-		$Template->assign_block_vars('month', array(
+		$tpl->assign_block_vars('month', array(
 			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . TextHelper::htmlentities($array_l_month[$i - 1]) . '</option>'
 		));
 	}
 	for ($i = 1900; $i <= 2037; $i++)
 	{
 		$selected = ($year == $i) ? 'selected="selected"' : '';
-		$Template->assign_block_vars('year', array(
+		$tpl->assign_block_vars('year', array(
 			'YEAR' => '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>'
 		));
 	}
@@ -155,7 +155,7 @@ if ($calendar_type == 'date')
 			$class = 'calendar-none';
 		}
 
-		$Template->assign_block_vars('day', array(
+		$tpl->assign_block_vars('day', array(
 			'DAY' => $contents,
 			'CLASS' => $class,
 			'CHANGE_LINE' => (($i % 7) == 0 && $i != 42),
@@ -169,7 +169,7 @@ else
 	//Non supporté
 }
 
-$Template->display();
+$tpl->display();
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>

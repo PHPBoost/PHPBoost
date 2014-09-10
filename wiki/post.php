@@ -61,6 +61,8 @@ require_once('../kernel/header.php');
 //Variable d'erreur
 $error = '';
 
+$tpl = new FileTemplate('wiki/post.tpl');
+
 $captcha = AppContext::get_captcha_service()->get_default_factory();
 if (!empty($contents)) //On enregistre un article
 {
@@ -77,13 +79,13 @@ if (!empty($contents)) //On enregistre un article
 	
 	if ($preview)//Prévisualisation
 	{
-		$Template->assign_block_vars('preview', array(
+		$tpl->assign_block_vars('preview', array(
 			'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite(stripslashes($contents))),
 			'TITLE' => stripslashes($title)
 		));
 		if (!empty($menu))
 		{
-			$Template->assign_block_vars('preview.menu', array(
+			$tpl->assign_block_vars('preview.menu', array(
 				'MENU' => $menu
 			));
 		}
@@ -182,9 +184,6 @@ if (!empty($contents)) //On enregistre un article
 	}
 }
 
-//On propose le formulaire
-$Template->set_filenames(array('wiki_edit'=> 'wiki/post.tpl'));
-
 if ($id_edit > 0)//On édite
 {
 	$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('*'), 'WHERE id = :id', array('id' => $id_edit));
@@ -213,7 +212,7 @@ if ($id_edit > 0)//On édite
 	
 	$l_action_submit = $LANG['update'];
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'SELECTED_CAT' => $id_edit,
 	));
 }
@@ -232,11 +231,11 @@ else
 	}
 	
 	if (!empty($encoded_title))
-		$Template->put('message_helper', MessageHelper::display($LANG['wiki_article_does_not_exist'], MessageHelper::WARNING));	
+		$tpl->put('message_helper', MessageHelper::display($LANG['wiki_article_does_not_exist'], MessageHelper::WARNING));	
 	
 	if ($id_cat > 0 && array_key_exists($id_cat, $_WIKI_CATS)) //Catégorie préselectionnée
 	{
-		$Template->assign_block_vars('create', array());
+		$tpl->assign_block_vars('create', array());
 		$cats = array();
 		$cat_list = display_cat_explorer($id_cat, $cats, 1);
 		$cats = array_reverse($cats);
@@ -251,7 +250,7 @@ else
 			$i++;
 		}
 		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $_WIKI_CATS[$id_cat]['name'];
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'SELECTED_CAT' => $id_cat,
 			'CAT_0' => '',
 			'CAT_LIST' => $cat_list,
@@ -260,7 +259,7 @@ else
 	}
 	else //Si il n'a pas de catégorie parente
 	{
-		$Template->assign_block_vars('create', array());
+		$tpl->assign_block_vars('create', array());
 		$contents = '';
 		$result = PersistenceContext::get_querier()->select("SELECT c.id, a.title, a.encoded_title
 		FROM " . PREFIX . "wiki_cats c
@@ -273,19 +272,19 @@ else
 			$sub_cats_number = PersistenceContext::get_querier()->count(PREFIX . "wiki_cats", 'WHERE id_parent = :id', array('id' => $row['id']));
 			if ($sub_cats_number > 0)
 			{	
-				$Template->assign_block_vars('create.list', array(
+				$tpl->assign_block_vars('create.list', array(
 					'DIRECTORY' => '<li class="sub"><a class="parent" href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><i class="fa fa-plus-square-o" id="img2_' . $row['id'] . '"></i><i class="fa fa-folder" id ="img_' . $row['id'] . '"></i></a><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 			else
 			{
-				$Template->assign_block_vars('create.list', array(
+				$tpl->assign_block_vars('create.list', array(
 					'DIRECTORY' => '<li class="sub"><a id="class_' . $row['id'] . '" href="javascript:select_cat(' . $row['id'] . ');"><i class="fa fa-folder"></i>' . $row['title'] . '</a><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 		}
 		$result->dispose();
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'SELECTED_CAT' => 0,
 			'CAT_0' => 'selected',
 			'CAT_LIST' => '',
@@ -300,7 +299,7 @@ $content_editor = AppContext::get_content_formatting_service()->get_default_fact
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 
-$Template->put_all(array(
+$tpl->put_all(array(
 	'C_VERIF_CODE' => !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 	'TITLE' => $is_cat == 1 ? ($id_edit == 0 ? $LANG['wiki_create_cat'] : sprintf($LANG['wiki_edit_cat'], $article_infos['title'])) : ($id_edit == 0 ? $LANG['wiki_create_article'] : sprintf($LANG['wiki_edit_article'], $article_infos['title'])),
 	'KERNEL_EDITOR' => $editor->display(),
@@ -328,12 +327,13 @@ $Template->put_all(array(
 
 //outils BBcode en javascript
 include_once('../wiki/post_js_tools.php');
+$tpl->put('post_js_tools', $jstools_tpl);
 
 //Eventuelles erreurs
 if (!empty($errstr))
-	$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
+	$tpl->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 
-$Template->pparse('wiki_edit');
+$tpl->display();
 
 
 require_once('../kernel/footer.php');

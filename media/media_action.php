@@ -37,7 +37,7 @@ if (AppContext::get_current_user()->is_readonly())
 
 $media_categories = new MediaCats();
 
-$Template->set_filenames(array('media_action' => 'media/media_action.tpl'));
+$tpl = new FileTemplate('media/media_action.tpl');
 
 $unvisible = retrieve(GET, 'unvisible', 0, TINTEGER);
 $add = retrieve(GET, 'add', 0, TINTEGER);
@@ -122,7 +122,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_ADD_MEDIA' => true,
 		'U_TARGET' => url('media_action.php'),
 		'L_TITLE' => $MEDIA_LANG['media_name'],
@@ -169,7 +169,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			$auth = MEDIA_TYPE_VIDEO;
 		}
 
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'L_PAGE_TITLE' => $MEDIA_LANG['edit_media'],
 			'C_CONTRIBUTION' => 0,
 			'IDEDIT' => $media['id'],
@@ -193,7 +193,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('counterpart');
 	
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'L_PAGE_TITLE' => $write ? $MEDIA_LANG['add_media'] : $MEDIA_LANG['contribute_media'],
 			'C_CONTRIBUTION' => !$write,
 			'CONTRIBUTION_COUNTERPART_EDITOR' => $editor->display(),
@@ -417,7 +417,7 @@ else
     DispatchManager::redirect($error_controller);
 }
 
-$Template->pparse('media_action');
+$tpl->display();
 
 require_once('../kernel/footer.php');
 

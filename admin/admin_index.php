@@ -42,9 +42,7 @@ if (!empty($writingpad))
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 
-$Template->set_filenames(array(
-	'admin_index'=> 'admin/admin_index.tpl'
-));
+$tpl = new FileTemplate('admin/admin_index.tpl');
 
 $result = PersistenceContext::get_querier()->select("
 	SELECT comments.*, topic.*, member.*
@@ -65,7 +63,7 @@ while ($row = $result->fetch())
 	else
 		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['display_name']) ? TextHelper::wordwrap_html($row['display_name'], 13) : $LANG['guest']) . '</span>';
 	
-	$Template->assign_block_vars('comments_list', array(
+	$tpl->assign_block_vars('comments_list', array(
 		'CONTENT' => FormatingHelper::second_parse($row['message']),
 		'U_PSEUDO' => $com_pseudo,
 		'U_LINK' => Url::to_rel($row['path']) . '#com' . $row['id'],
@@ -74,7 +72,7 @@ while ($row = $result->fetch())
 }
 $result->dispose();
 
-$Template->put_all(array(
+$tpl->put_all(array(
 	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),
 	'C_NO_COM' => $i == 0,
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
@@ -141,7 +139,7 @@ while ($row = $result->fetch())
 		$login = !empty($row['display_name']) ? '<a class="' . $class . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['display_name'] . '</a>' : $LANG['guest'];
 	}
 	
-	$Template->assign_block_vars('user', array(
+	$tpl->assign_block_vars('user', array(
 		'USER' => !empty($login) ? $login : $LANG['guest'],
 		'USER_IP' => $row['ip'],
 		'WHERE' => '<a href="' . $row['location_script'] . '">' . (!empty($row['location_title']) ? stripslashes($row['location_title']) : $LANG['unknow']) . '</a>',
@@ -150,7 +148,7 @@ while ($row = $result->fetch())
 }
 $result->dispose();
 
-$Template->pparse('admin_index'); // traitement du modele
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 ?>

@@ -146,7 +146,7 @@ $bread_crumb_key = 'wiki_property';
 require_once('../wiki/wiki_bread_crumb.php');
 require_once('../kernel/header.php');
 
-$Template->set_filenames(array('wiki_properties'=> 'wiki/property.tpl'));
+$tpl = new FileTemplate('wiki/property.tpl');
 
 if ($random)//Recherche d'une page aléatoire
 {
@@ -160,13 +160,13 @@ elseif ($id_auth > 0) //gestion du niveau d'autorisation
 {
 	$array_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : $config->get_authorizations(); //Récupération des tableaux des autorisations et des groupes.
 	
-	$Template->assign_block_vars('auth', array(
+	$tpl->assign_block_vars('auth', array(
 		'L_TITLE' => sprintf($LANG['wiki_auth_management_article'], $article_infos['title']),
 		'ID' => $id_auth
 	));
 	
 	//On assigne les variables pour le POST en précisant l'idurl.	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $array_auth),
 		'SELECT_DELETE_ARCHIVE' => Authorizations::generate_select(WIKI_DELETE_ARCHIVE, $array_auth),
 		'SELECT_EDIT' => Authorizations::generate_select(WIKI_EDIT, $array_auth),
@@ -182,7 +182,7 @@ elseif ($id_auth > 0) //gestion du niveau d'autorisation
 }
 elseif ($wiki_status > 0)
 {
-	$Template->assign_block_vars('status', array(
+	$tpl->assign_block_vars('status', array(
 		'L_TITLE' => sprintf($LANG['wiki_status_management_article'], $article_infos['title']),
 		'UNDEFINED_STATUS' => ($article_infos['defined_status'] < 0 ) ? wiki_unparse($article_infos['undefined_status']) : '',
 		'ID_ARTICLE' => $wiki_status,
@@ -195,19 +195,19 @@ elseif ($wiki_status > 0)
 	));
 	
 	//On fait une liste des statuts définis
-	$Template->assign_block_vars('status.list', array(
+	$tpl->assign_block_vars('status.list', array(
 		'L_STATUS' => $LANG['wiki_no_status'],
 		'ID_STATUS' => 0,
 		'SELECTED' => ($article_infos['defined_status'] == 0) ? 'selected = "selected"' : '',
 	));
 	foreach ($LANG['wiki_status_list'] as $key => $value)
 	{
-		$Template->assign_block_vars('status.list', array(
+		$tpl->assign_block_vars('status.list', array(
 			'L_STATUS' => $value[0],
 			'ID_STATUS' => $key + 1,
 			'SELECTED' => ($article_infos['defined_status'] == $key + 1) ? 'selected = "selected"' : '',
 		));
-		$Template->assign_block_vars('status.status_array', array(
+		$tpl->assign_block_vars('status.status_array', array(
 			'ID' => $key + 1,
 			'TEXT' => str_replace('"', '\"', $value[1]),
 		));
@@ -233,7 +233,7 @@ elseif ($move > 0) //On déplace l'article
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
 			
-	$Template->assign_block_vars('move', array(
+	$tpl->assign_block_vars('move', array(
 		'L_TITLE' => sprintf($LANG['wiki_moving_this_article'], $article_infos['title']),
 		'ID_ARTICLE' => $move,
 		'CATS' => $cat_list,
@@ -250,11 +250,11 @@ elseif ($move > 0) //On déplace l'article
 	else
 		$errstr = '';
 	if (!empty($errstr))
-		$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 }
 elseif ($rename > 0)//On renomme un article
 {
-	$Template->assign_block_vars('rename', array(
+	$tpl->assign_block_vars('rename', array(
 		'L_TITLE' => sprintf($LANG['wiki_renaming_this_article'], $article_infos['title']),
 		'L_RENAMING_ARTICLE' => $LANG['wiki_explain_renaming'],
 		'L_CREATE_REDIRECTION' => $LANG['wiki_create_redirection_after_renaming'],
@@ -269,11 +269,11 @@ elseif ($rename > 0)//On renomme un article
 	else
 		$errstr = '';
 	if (!empty($errstr))
-		$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 }
 elseif ($redirect > 0) //Redirections de l'article
 {
-	$Template->assign_block_vars('redirect', array(
+	$tpl->assign_block_vars('redirect', array(
 		'L_TITLE' => sprintf($LANG['wiki_redirections_to_this_article'], $article_infos['title'])
 	));
 	//Liste des redirections
@@ -285,13 +285,13 @@ elseif ($redirect > 0) //Redirections de l'article
 		));
 	while ($row = $result->fetch())
 	{
-		$Template->assign_block_vars('redirect.list', array(
+		$tpl->assign_block_vars('redirect.list', array(
 			'U_REDIRECTION_DELETE' => url('action.php?del_redirection=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 			'REDIRECTION_NAME' => $row['title'],
 		));
 	}
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'NO_REDIRECTION' => $result->get_rows_count() == 0,
 		'L_NO_REDIRECTION' => $LANG['wiki_no_redirection'],
 		'L_REDIRECTION_NAME' => $LANG['wiki_redirection_name'],
@@ -305,10 +305,10 @@ elseif ($redirect > 0) //Redirections de l'article
 }
 elseif ($create_redirection > 0) //Création d'une redirection
 {
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'L_REDIRECTION_NAME' => $LANG['wiki_redirection_name'],
 	));
-	$Template->assign_block_vars('create', array(
+	$tpl->assign_block_vars('create', array(
 		'L_TITLE' => sprintf($LANG['wiki_create_redirection_to_this'], $article_infos['title']),
 		'ID_ARTICLE' => $create_redirection
 	));
@@ -320,7 +320,7 @@ elseif ($create_redirection > 0) //Création d'une redirection
 	else
 		$errstr = '';
 	if (!empty($errstr))
-		$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
+		$tpl->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 }
 elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
 {
@@ -328,7 +328,7 @@ elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
 	$comments_topic->set_id_in_module($idcom);
 	$comments_topic->set_url(new Url('/wiki/property.php?idcom=' . $idcom . '&com=0'));
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_COMMENTS' => true,
 		'COMMENTS' => CommentsService::display($comments_topic)->render()
 	));
@@ -360,7 +360,7 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
 				
-		$Template->assign_block_vars('remove', array(
+		$tpl->assign_block_vars('remove', array(
 			'L_TITLE' => sprintf($LANG['wiki_remove_this_cat'], $article_infos['title']),
 			'L_REMOVE_ALL_CONTENTS' => $LANG['wiki_remove_all_contents'],
 			'L_MOVE_ALL_CONTENTS' => $LANG['wiki_move_all_contents'],
@@ -381,7 +381,7 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 		else
 			$errstr = '';
 		if (!empty($errstr))
-			$Template->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
+			$tpl->put('message_helper', MessageHelper::display($errstr, MessageHelper::WARNING));
 	}
 }
 else
@@ -392,7 +392,7 @@ $content_editor = AppContext::get_content_formatting_service()->get_default_fact
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 	
-$Template->put_all(array(
+$tpl->put_all(array(
 	'KERNEL_EDITOR' => $editor->display(),
 	'EXPLAIN_WIKI_GROUPS' => $LANG['explain_wiki_groups'],
 	'L_SUBMIT' => $LANG['submit'],
@@ -429,7 +429,7 @@ $Template->put_all(array(
 	'L_COM' => $LANG['wiki_auth_com'],
 	));
 
-$Template->pparse('wiki_properties');
+$tpl->display();
 
 require_once('../kernel/footer.php');
 

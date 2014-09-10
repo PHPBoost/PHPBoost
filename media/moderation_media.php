@@ -37,7 +37,7 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 require_once('media_begin.php');
 $media_categories = new MediaCats();
 
-$Template->set_filenames(array('media_moderation' => 'media/moderation_media.tpl'));
+$tpl = new FileTemplate('media/moderation_media.tpl');
 
 $Bread_crumb->add($MEDIA_CATS[0]['name'], url('media.php'));
 $Bread_crumb->add($LANG['modo_panel'], url('moderation_media.php'));
@@ -198,7 +198,7 @@ else
 	{
 		$js_array[] = $row['id'];
 
-		$Template->assign_block_vars('files', array(
+		$tpl->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'U_FILE' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['idcat'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
@@ -213,7 +213,7 @@ else
 	}
 	$result->dispose();
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_DISPLAY' => true,
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'L_FILTER' => $MEDIA_LANG['filter'],
@@ -253,7 +253,7 @@ else
 	));
 }
 
-$Template->pparse('media_moderation');
+$tpl->display();
 
 require_once('../kernel/footer.php');
 

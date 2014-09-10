@@ -53,13 +53,11 @@ if (!empty($_POST['valid']))
 }
 else	
 {		
-	$Template->set_filenames(array(
-		'admin_forum_groups'=> 'forum/admin_forum_groups.tpl'
-	));
+	$tpl = new FileTemplate('forum/admin_forum_groups.tpl');
 	
 	$array_auth = isset($CONFIG_FORUM['auth']) ? $CONFIG_FORUM['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'FLOOD_AUTH' => Authorizations::generate_select(FLOOD_FORUM, $array_auth),
 		'EDIT_MARK_AUTH' => Authorizations::generate_select(EDIT_MARK_FORUM, $array_auth),
 		'TRACK_TOPIC_AUTH' => Authorizations::generate_select(TRACK_TOPIC_FORUM, $array_auth),
@@ -78,7 +76,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 
-	$Template->pparse('admin_forum_groups'); // traitement du modele	
+	$tpl->display();
 }
 
 require_once('../admin/admin_footer.php');

@@ -56,11 +56,9 @@ if ($action == 'backup_table' && !empty($table)) //Sauvegarde pour une table uni
 	$_POST['table_' . $table] = 'on';
 }
 
-$Template->set_filenames(array(
-	'admin_database_management' => 'database/admin_database_management.tpl'
-));
+$tpl = new FileTemplate('database/admin_database_management.tpl');
 
-$Template->put_all(array(
+$tpl->put_all(array(
 	'TABLE_NAME' => $table,
 	'L_CONFIRM_DELETE_TABLE' => $LANG['db_confirm_delete_table'],
 	'L_CONFIRM_TRUNCATE_TABLE' => $LANG['db_confirm_truncate_table'],
@@ -80,7 +78,7 @@ if (!empty($_GET['query']))
 	
 	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_DATABASE_QUERY' => true
 	));
 
@@ -88,7 +86,7 @@ if (!empty($_GET['query']))
 	{
 		AppContext::get_session()->csrf_get_protect(); //Protection csrf
 		
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_QUERY_RESULT' => true
 		));
 	
@@ -101,20 +99,20 @@ if (!empty($_GET['query']))
 				$i = 1;
 				while ($row = $result->fetch())
 				{
-					$Template->assign_block_vars('line', array());
+					$tpl->assign_block_vars('line', array());
 					//Premier passage: on liste le nom des champs sélectionnés
 					if ($i == 1)
 					{
-						$Template->put('C_HEAD', true);
+						$tpl->put('C_HEAD', true);
 						
 						foreach ($row as $field_name => $field_value)
-							$Template->assign_block_vars('head', array(
+							$tpl->assign_block_vars('head', array(
 								'FIELD_NAME' => $field_name
 							));
 					}
 					//On parse les valeurs de sortie
 					foreach ($row as $field_name => $field_value)
-					$Template->assign_block_vars('line.field', array(
+					$tpl->assign_block_vars('line.field', array(
 						'FIELD_NAME' => TextHelper::strprotect($field_value),
 						'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 					));
@@ -123,8 +121,8 @@ if (!empty($_GET['query']))
 				}
 				$result->dispose();
 			} catch (MySQLQuerierException $e) {
-				$Template->assign_block_vars('line', array());
-				$Template->assign_block_vars('line.field', array(
+				$tpl->assign_block_vars('line', array());
+				$tpl->assign_block_vars('line.field', array(
 					'FIELD_NAME' => $e->GetMessage(),
 					'STYLE' => ''
 				));
@@ -137,8 +135,8 @@ if (!empty($_GET['query']))
 				$result = PersistenceContext::get_querier()->inject(str_replace('phpboost_', PREFIX, $query));
 				$affected_rows = $result->get_affected_rows();
 			} catch (MySQLQuerierException $e) {
-				$Template->assign_block_vars('line', array());
-				$Template->assign_block_vars('line.field', array(
+				$tpl->assign_block_vars('line', array());
+				$tpl->assign_block_vars('line.field', array(
 					'FIELD_NAME' => $e->GetMessage(),
 					'STYLE' => ''
 				));
@@ -146,7 +144,7 @@ if (!empty($_GET['query']))
 		}
 	}	
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'QUERY' => Sql::indent_query($query),
 		'QUERY_HIGHLIGHT' => Sql::highlight_query(str_replace('phpboost_', PREFIX, $query)),
 		'L_REQUIRE' => $LANG['require'],
@@ -226,7 +224,7 @@ elseif ($action == 'restore')
 			AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=failure', '', '&'));
 	}
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_DATABASE_FILES' => true,
 		'L_LIST_FILES' => $LANG['db_file_list'],
 		'L_CONFIRM_RESTORE' => $LANG['db_confirm_restore'],
@@ -242,7 +240,7 @@ elseif ($action == 'restore')
 		switch ($_GET['error'])
 		{
 			case 'success' :
-				$Template->put('message_helper', MessageHelper::display($LANG['db_restore_success'], MessageHelper::SUCCESS));
+				$tpl->put('message_helper', MessageHelper::display($LANG['db_restore_success'], MessageHelper::SUCCESS));
 				break;
 			case 'failure' :
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
@@ -255,10 +253,10 @@ elseif ($action == 'restore')
                 DispatchManager::redirect($controller);
 				break;
 			case 'file_already_exists' :
-				$Template->put('message_helper', MessageHelper::display($LANG['db_file_already_exists'], MessageHelper::WARNING));
+				$tpl->put('message_helper', MessageHelper::display($LANG['db_file_already_exists'], MessageHelper::WARNING));
 				break;
 			case 'unlink_success' :
-				$Template->put('message_helper', MessageHelper::display($LANG['db_unlink_success'], MessageHelper::NOTICE));
+				$tpl->put('message_helper', MessageHelper::display($LANG['db_unlink_success'], MessageHelper::NOTICE));
 				break;
 			case 'unlink_failure' :
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
@@ -266,7 +264,7 @@ elseif ($action == 'restore')
                 DispatchManager::redirect($controller);
 				break;
 			case 'file_does_not_exist':
-				$Template->put('message_helper', MessageHelper::display($LANG['db_file_does_not_exist'], MessageHelper::WARNING));
+				$tpl->put('message_helper', MessageHelper::display($LANG['db_file_does_not_exist'], MessageHelper::WARNING));
 				break;
 		}
 	}
@@ -296,19 +294,19 @@ elseif ($action == 'restore')
 	
 	if ($i == 0)
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'L_INFO' => $LANG['db_empty_dir'],
 		));
 	}
 	else
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'L_INFO' => $LANG['db_restore_file'],
 		));
 		
 		foreach ($filelist as $file)
 		{
-			$Template->assign_block_vars('file', array(
+			$tpl->assign_block_vars('file', array(
 				'FILE_NAME' => $file['file_name'],
 				'WEIGHT' => $file['weight'],
 				'FILE_DATE' => $file['file_date']
@@ -340,7 +338,7 @@ else
 	if ($tables_backup) //Liste des tables pour les sauvegarder
 	{
 		$tables = PersistenceContext::get_dbms_utils()->list_tables(true);
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_DATABASE_BACKUP' => true,
 			'NBR_TABLES' => count($tables),
 			'TARGET' => url('admin_database.php?token=' . AppContext::get_session()->get_token()),
@@ -362,7 +360,7 @@ else
 			if (!empty($_POST['table_' . $table]) && $_POST['table_' . $table] == 'on')
 				$selected_tables[] = $table;
 			
-			$Template->assign_block_vars('table_list', array(
+			$tpl->assign_block_vars('table_list', array(
 				'NAME' => $table,
 				'SELECTED' => in_array($table, $selected_tables) ? 'selected="selected"' : '',
 				'I' => $i
@@ -386,12 +384,12 @@ else
 				if ($repair)
 				{
 					PersistenceContext::get_dbms_utils()->repair($selected_tables);
-					$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), MessageHelper::SUCCESS));
+					$tpl->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), MessageHelper::SUCCESS));
 				}
 				else
 				{
 					PersistenceContext::get_dbms_utils()->optimize($selected_tables);
-					$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), MessageHelper::SUCCESS));
+					$tpl->put('message_helper', MessageHelper::display(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), MessageHelper::SUCCESS));
 				}
 			}
 		}
@@ -399,7 +397,7 @@ else
 		if (!empty($_GET['error']))
 		{
 			if (trim($_GET['error']) == 'backup_success' && !empty($_GET['file']))
-				$Template->put('message_helper', MessageHelper::display(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), MessageHelper::SUCCESS));
+				$tpl->put('message_helper', MessageHelper::display(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), MessageHelper::SUCCESS));
 		}
 		
 		//liste des tables
@@ -413,7 +411,7 @@ else
 			$free = ($free > 1024) ? NumberHelper::round($free/1024, 1) . ' MB' : $free . ' kB';
 			$data = ($data > 1024) ? NumberHelper::round($data/1024, 1) . ' MB' : $data . ' kB';
 			
-			$Template->assign_block_vars('table_list', array(
+			$tpl->assign_block_vars('table_list', array(
 				'TABLE_NAME' => $table_info['name'],
 				'TABLE_ENGINE' => $table_info['engine'],
 				'TABLE_ROWS' => $table_info['rows'],
@@ -434,7 +432,7 @@ else
 		$nbr_free = ($nbr_free > 1024) ? NumberHelper::round($nbr_free/1024, 1) . ' Mo' : $nbr_free . ' Ko';
 		$nbr_data = ($nbr_data > 1024) ? NumberHelper::round($nbr_data/1024, 1) . ' Mo' : $nbr_data . ' Ko';
 		
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_DATABASE_INDEX' => true,
 			'TARGET' => url('admin_database.php?token=' . AppContext::get_session()->get_token()),
 			'NBR_TABLES' => count(PersistenceContext::get_dbms_utils()->list_tables()),
@@ -465,7 +463,7 @@ else
 	}
 }
 
-$Template->pparse('admin_database_management');
+$tpl->display();
 
 require_once('../admin/admin_footer.php');
 
