@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               DownloadExtensionPointProvider.class.php
+ *                               DownloadAuthorizationsService.class.php
  *                            -------------------
  *   begin                : August 24, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,58 +29,41 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class DownloadExtensionPointProvider extends ExtensionPointProvider
+class DownloadAuthorizationsService
 {
-	public function __construct()
+	public $id_category;
+	
+	public static function check_authorizations($id_category = Category::ROOT_CATEGORY)
 	{
-		parent::__construct('download');
+		$instance = new self();
+		$instance->id_category = $id_category;
+		return $instance;
 	}
 	
-	public function comments()
+	public function read()
 	{
-		return new CommentsTopics(array(new DownloadCommentsTopic()));
+		return $this->is_authorized(Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY);
 	}
 	
-	public function css_files()
+	public function write()
 	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('download.css');
-		return $module_css_files;
+		return $this->is_authorized(Category::WRITE_AUTHORIZATIONS);
 	}
 	
-	public function feeds()
+	public function contribution()
 	{
-		return new DownloadFeedProvider();
+		return $this->is_authorized(Category::CONTRIBUTION_AUTHORIZATIONS);
 	}
 	
-	public function home_page()
+	public function moderation()
 	{
-		return new DownloadHomePageExtensionPoint();
+		return $this->is_authorized(Category::MODERATION_AUTHORIZATIONS);
 	}
 	
-	public function menus()
+	private function is_authorized($bit, $mode = Authorizations::AUTH_CHILD_PRIORITY)
 	{
-		return new ModuleMenus(array(new DownloadModuleMiniMenu()));
-	}
-        
-	public function search()
-	{
-		return new DownloadSearchable();
-	}
-	
-	public function sitemap()
-	{
-		return new DownloadSitemapExtensionPoint();
-	}
-	
-	public function tree_links()
-	{
-		return new DownloadTreeLinks();
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/download/index.php')));
+		$auth = DownloadService::get_categories_manager()->get_heritated_authorizations($this->id_category, $bit, $mode);
+		return AppContext::get_current_user()->check_auth($auth, $bit);
 	}
 }
 ?>

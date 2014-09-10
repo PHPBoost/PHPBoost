@@ -1,116 +1,55 @@
 <?php
+/*##################################################
+ *                               DownloadSearchable.class.php
+ *                            -------------------
+ *   begin                : August 24, 2014
+ *   copyright            : (C) 2014 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
+ *
+ *
+ ###################################################
+ *
+ * This program is a free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
+
+ /**
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ */
+
 class DownloadSearchable extends AbstractSearchableExtensionPoint
 {
-	private $sql_querier;
-
-	public function __construct()
-	{
-		$this->sql_querier = PersistenceContext::get_sql();
-		parent::__construct(false, true);
-	}
-	
 	public function get_search_request($args)
-    /**
-     *  Renvoie la requête de recherche
-     */
-    {
-        global $Cache;
-        $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-
-		$Cache->load('download');
-
-        $cats = new DownloadCats();
-        $auth_cats = array();
-        $cats->build_children_id_list(0, $auth_cats);
-
-        $auth_cats = !empty($auth_cats) ? " AND d.idcat IN (" . implode($auth_cats, ',') . ") " : '';
-
-        $request = "SELECT " . $args['id_search'] . " AS id_search,
-            d.id AS id_content,
-            d.title AS title,
-            ( 3 * FT_SEARCH(d.title, '" . $args['search'] . "') +
-            2 * FT_SEARCH_RELEVANCE(d.short_contents, '" . $args['search'] . "') +
-            FT_SEARCH_RELEVANCE(d.contents, '" . $args['search'] . "') ) / 6 * " . $weight . " AS relevance, "
-            . $this->sql_querier->concat("'" . PATH_TO_ROOT . "/download/download.php?id='","d.id") . " AS link
-            FROM " . PREFIX . "download d
-            WHERE ( FT_SEARCH(d.title, '" . $args['search'] . "') OR
-            FT_SEARCH(d.short_contents, '" . $args['search'] . "') OR
-            FT_SEARCH(d.contents, '" . $args['search'] . "') )" . $auth_cats
-            . " ORDER BY relevance DESC " . $this->sql_querier->limit(0, DOWNLOAD_MAX_SEARCH_RESULTS);
-
-        return $request;
-
-    }
-
-    /**
-     * @desc Return the array containing the result's data list
-     * @param &string[][] $args The array containing the result's id list
-     * @return string[] The array containing the result's data list
-     */
-    public function compute_search_results($args)
-    {
-        $results_data = array();
-
-        $results =& $args['results'];
-        $nb_results = count($results);
-
-        $ids = array();
-        for ($i = 0; $i < $nb_results; $i++)
-            $ids[] = $results[$i]['id_content'];
-
-        $request = "SELECT d.id, d.idcat, d.title, d.short_contents, d.url, d.image, d.count, d.timestamp, d.approved, d.visible, notes.average_notes, com.number_comments
-            FROM " . PREFIX . "download d
-            LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON d.id = com.id_in_module AND com.module_id = 'download'
-            LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module AND module_name = 'download'
-            WHERE d.id IN (" . implode(',', $ids) . ") AND d.visible = 1 AND d.approved = 1";
-
-        $request_results = $this->sql_querier->query_while ($request);
-        while ($row = $this->sql_querier->fetch_assoc($request_results))
-        {
-            $results_data[] = $row;
-        }
-        $request_results->dispose();
-
-        return $results_data;
-    }
-
-    /**
-     *  @desc Return the string to print the result
-     *  @param &string[] $result_data the result's data
-     *  @return string[] The string to print the result of a search element
-     */
-    public function parse_search_result($result_data)
-    {
-        global $Cache, $LANG, $DOWNLOAD_LANG;
-        $Cache->load('download');
-
-        load_module_lang('download'); //Chargement de la langue du module.
-        $tpl = new FileTemplate('download/download_generic_results.tpl');
-
-
-        $date = new Date(DATE_TIMESTAMP, Timezone::USER_TIMEZONE, $result_data['timestamp']);
-         //Notes
-         
-        $notation = new Notation();
-		$notation->set_module_name('download');
-		$notation->set_id_in_module($result_data['id']);
-		$notation->set_notation_scale(DownloadConfig::load()->get_notation_scale());
-		$notation->set_average_notes($result_data['average_notes']);
+	{
+		$now = new Date();
+		$authorized_categories = DownloadService::get_authorized_categories(Category::ROOT_CATEGORY);
+		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		
-        $tpl->put_all(array(
-            'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(Date::FORMAT_DAY_MONTH)),
-            'U_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $result_data['id']),
-        	'C_IMG' => !empty($result_data['image']),
-            'U_IMG' => $result_data['image'],
-            'E_TITLE' => TextHelper::strprotect($result_data['title']),
-            'TITLE' => $result_data['title'],
-            'SHORT_DESCRIPTION' => FormatingHelper::second_parse($result_data['short_contents']),
-            'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result_data['count']),
-            'L_NB_COMMENTS' => $result_data['number_comments'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result_data['number_comments']) : sprintf($DOWNLOAD_LANG['num_coms'], $result_data['number_comments']),
-            'L_MARK' => $result_data['average_notes'] > 0 ? NotationService::display_static_image($notation) : ('<em>' . $LANG['no_note'] . '</em>')
-        ));
-
-        return $tpl->render();
-    }
+		return "SELECT " . $args['id_search'] . " AS id_search,
+			d.id AS id_content,
+			d.name AS title,
+			( 2 * FT_SEARCH_RELEVANCE(d.name, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(d.contents, '" . $args['search'] . "') +
+			FT_SEARCH_RELEVANCE(d.short_contents, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance,
+			CONCAT('" . PATH_TO_ROOT . "/download/index.php?url=/', id_category, '-', cat.rewrited_name, '/', d.id, '-', d.rewrited_name) AS link
+			FROM " . DownloadSetup::$download_table . " d
+			LEFT JOIN ". DownloadSetup::$download_cats_table ." cat ON d.id_category = cat.id
+			WHERE ( FT_SEARCH(d.name, '" . $args['search'] . "') OR FT_SEARCH(d.contents, '" . $args['search'] . "') OR FT_SEARCH_RELEVANCE(d.short_contents, '" . $args['search'] . "') )
+			AND id_category IN (" . implode(", ", $authorized_categories) . ")
+			AND (approbation_type = 1 OR (approbation_type = 2 AND start_date < '" . $now->get_timestamp() . "' AND (end_date > '" . $now->get_timestamp() . "' OR end_date = 0)))
+			ORDER BY relevance DESC
+			LIMIT 100 OFFSET 0";
+	}
 }
 ?>

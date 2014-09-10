@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               DownloadExtensionPointProvider.class.php
+ *                               AdminDownloadDisplayResponse.class.php
  *                            -------------------
  *   begin                : August 24, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,58 +29,24 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class DownloadExtensionPointProvider extends ExtensionPointProvider
+class AdminDownloadDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function __construct()
+	public function __construct($view, $title_page)
 	{
-		parent::__construct('download');
-	}
-	
-	public function comments()
-	{
-		return new CommentsTopics(array(new DownloadCommentsTopic()));
-	}
-	
-	public function css_files()
-	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('download.css');
-		return $module_css_files;
-	}
-	
-	public function feeds()
-	{
-		return new DownloadFeedProvider();
-	}
-	
-	public function home_page()
-	{
-		return new DownloadHomePageExtensionPoint();
-	}
-	
-	public function menus()
-	{
-		return new ModuleMenus(array(new DownloadModuleMiniMenu()));
-	}
-        
-	public function search()
-	{
-		return new DownloadSearchable();
-	}
-	
-	public function sitemap()
-	{
-		return new DownloadSitemapExtensionPoint();
-	}
-	
-	public function tree_links()
-	{
-		return new DownloadTreeLinks();
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/download/index.php')));
+		parent::__construct($view);
+		
+		$lang = LangLoader::get('common', 'download');
+		$picture = '/download/download.png';
+		$this->set_title($lang['module_title']);
+		
+		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), DownloadUrlBuilder::manage_categories(), $picture);
+		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), DownloadUrlBuilder::add_category(), $picture);
+		$this->add_link($lang['download.management'], DownloadUrlBuilder::manage(), $picture);
+		$this->add_link($lang['download.actions.add'], DownloadUrlBuilder::add(), $picture);
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), DownloadUrlBuilder::configuration(), $picture);
+		
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
 	}
 }
 ?>
