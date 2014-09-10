@@ -164,7 +164,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	
 	//On compte le nombre de vus
 	if ($page_infos['count_hits'] == 1)
-		PersistenceContext::get_querier()->update(PREFIX . 'pages', array('hits' => 'hits + 1'), 'WHERE id = :id', array('id' => $page_infos['id'] ));
+		PersistenceContext::get_querier()->inject('UPDATE ' . PREFIX . 'pages SET hits = hits + 1 WHERE id = :id', array('id' => $page_infos['id']));
 	
 	$Template->put_all(array(
 		'TITLE' => $page_infos['title'],
