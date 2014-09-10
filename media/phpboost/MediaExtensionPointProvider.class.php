@@ -49,7 +49,7 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		//Configuration
 		$i = 0;
 		$config = array();
-		$config = unserialize($this->db_querier->select_single_row(DB_TABLE_CONFIGS, 'value', 'WHERE name = \'media\''));
+		$config = unserialize($this->db_querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = \'media\''));
 		$root_config = $config['root'];
 		unset($config['root']);
 
