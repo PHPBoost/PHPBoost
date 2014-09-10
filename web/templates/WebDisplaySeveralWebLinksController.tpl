@@ -18,7 +18,6 @@
 				<div class="sub-category" style="width:{CATS_COLUMNS_WIDTH}%;">
 					<a itemprop="about" href="{sub_categories_list.U_CATEGORY}"><img itemprop="thumbnailUrl" src="{sub_categories_list.CATEGORY_IMAGE}" alt="" /></a><br />
 					<a itemprop="about" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME} ({sub_categories_list.WEBLINKS_NUMBER})</a><br />
-					<span class="small">{sub_categories_list.CATEGORY_DESCRIPTION}</span>
 				</div>
 				# END sub_categories_list #
 			</div>
