@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               DownloadExtensionPointProvider.class.php
+ *                               DownloadCategoriesCache.class.php
  *                            -------------------
  *   begin                : August 24, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,58 +29,29 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class DownloadExtensionPointProvider extends ExtensionPointProvider
+class DownloadCategoriesCache extends CategoriesCache
 {
-	public function __construct()
+	public function get_table_name()
 	{
-		parent::__construct('download');
+		return DownloadSetup::$download_cats_table;
 	}
 	
-	public function comments()
+	public function get_category_class()
 	{
-		return new CommentsTopics(array(new DownloadCommentsTopic()));
+		return CategoriesManager::RICH_CATEGORY_CLASS;
 	}
 	
-	public function css_files()
+	public function get_module_identifier()
 	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('download.css');
-		return $module_css_files;
+		return 'download';
 	}
 	
-	public function feeds()
+	public function get_root_category()
 	{
-		return new DownloadFeedProvider();
-	}
-	
-	public function home_page()
-	{
-		return new DownloadHomePageExtensionPoint();
-	}
-	
-	public function menus()
-	{
-		return new ModuleMenus(array(new DownloadModuleMiniMenu()));
-	}
-        
-	public function search()
-	{
-		return new DownloadSearchable();
-	}
-	
-	public function sitemap()
-	{
-		return new DownloadSitemapExtensionPoint();
-	}
-	
-	public function tree_links()
-	{
-		return new DownloadTreeLinks();
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/download/index.php')));
+		$root = new RichRootCategory();
+		$root->set_authorizations(DownloadConfig::load()->get_authorizations());
+		$root->set_description(DownloadConfig::load()->get_root_category_description());
+		return $root;
 	}
 }
 ?>

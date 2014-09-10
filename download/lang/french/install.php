@@ -1,10 +1,11 @@
 <?php
+
 /*##################################################
  *                              install.php
  *                            -------------------
  *   begin                : January 17, 2010
- *   copyright            : (C) 2010 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -29,11 +30,8 @@
  #                    French                        #
  ####################################################
 
-$lang = array(
-    'download_title' => 'Affiche PHPBoost',
-    'download_short_contents' => '',
-    'download_contents' => 'Présentation de l\'affiche de PHPBoost.',
-    'download_cats_title' => 'Catégorie de test',
-    'download_cats_desc' => 'Test des téléchargements'
-);
+$lang['default.cat.name'] = 'Catégorie de test';
+$lang['default.cat.description'] = 'Fichiers de test';
+$lang['default.downloadfile.name'] = 'Logo du module téléchargements';
+$lang['default.downloadfile.content'] = 'Logo du module téléchargements de PHPBoost.';
 ?>

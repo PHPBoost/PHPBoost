@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               DownloadExtensionPointProvider.class.php
+ *                               DownloadDeleteCategoryController.class.php
  *                            -------------------
  *   begin                : August 24, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,58 +29,26 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class DownloadExtensionPointProvider extends ExtensionPointProvider
+class DownloadDeleteCategoryController extends AbstractDeleteCategoryController
 {
-	public function __construct()
+	protected function generate_response(View $view)
 	{
-		parent::__construct('download');
+		return new AdminDownloadDisplayResponse($view, $this->get_title());
 	}
 	
-	public function comments()
+	protected function get_categories_manager()
 	{
-		return new CommentsTopics(array(new DownloadCommentsTopic()));
+		return DownloadService::get_categories_manager();
 	}
 	
-	public function css_files()
+	protected function get_id_category()
 	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('download.css');
-		return $module_css_files;
+		return AppContext::get_request()->get_getint('id', 0);
 	}
 	
-	public function feeds()
+	protected function get_categories_management_url()
 	{
-		return new DownloadFeedProvider();
-	}
-	
-	public function home_page()
-	{
-		return new DownloadHomePageExtensionPoint();
-	}
-	
-	public function menus()
-	{
-		return new ModuleMenus(array(new DownloadModuleMiniMenu()));
-	}
-        
-	public function search()
-	{
-		return new DownloadSearchable();
-	}
-	
-	public function sitemap()
-	{
-		return new DownloadSitemapExtensionPoint();
-	}
-	
-	public function tree_links()
-	{
-		return new DownloadTreeLinks();
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/download/index.php')));
+		return DownloadUrlBuilder::manage_categories();
 	}
 }
 ?>
