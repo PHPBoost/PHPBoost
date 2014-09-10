@@ -36,18 +36,18 @@ $get_id = retrieve(GET, 'id', 0);
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
-	$result = $Sql->query_while("SELECT id, special 
+	$result = PersistenceContext::get_querier()->select("SELECT id, special 
 	FROM " . PREFIX . "forum_ranks");
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		$name = retrieve(POST, $row['id'] . 'name', '');
 		$msg = retrieve(POST, $row['id'] . 'msg', 0);
 		$icon = retrieve(POST, $row['id'] . 'icon', '');
 
 		if (!empty($name) && $row['special'] != 1)
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'");
+			PersistenceContext::get_querier()->update(PREFIX . "forum_ranks", array('name' => $name, 'msg' => $msg, 'icon' => $icon), ' WHERE id = :id', array('id' => $row['id']));
 		else
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_ranks SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'");
+			PersistenceContext::get_querier()->update(PREFIX . "forum_ranks", array('name' => $name, 'icon' => $icon), ' WHERE id = :id', array('id' => $row['id']));
 	}
 	$result->dispose();
 

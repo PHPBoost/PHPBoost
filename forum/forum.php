@@ -97,28 +97,33 @@ if (!empty($id_get))
 		));
 		
 		//Vérification des autorisations.
-		$unauth_cats = '';
+		$unauth_cats = array();
 		if (is_array($AUTH_READ_FORUM))
 		{
 			foreach ($AUTH_READ_FORUM as $idcat => $auth)
 			{
 				if ($auth === false)
-					$unauth_cats .= $idcat . ',';
+					$unauth_cats[] = $idcat;
 			}
-			$unauth_cats = !empty($unauth_cats) ? " AND c.id NOT IN (" . trim($unauth_cats, ',') . ")" : '';
 		}
 		
 		//On liste les sous-catégories.
-		$result = $Sql->query_while("SELECT c.id AS cid, c.name, c.subname, c.url, c.nbr_topic, c.nbr_msg, c.status, t.id AS tid, 
+		$result = PersistenceContext::get_querier()->select("SELECT c.id AS cid, c.name, c.subname, c.url, c.nbr_topic, c.nbr_msg, c.status, t.id AS tid, 
 		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name, m.level AS user_level, m.groups, v.last_view_id 
 		FROM " . PREFIX . "forum_cats c
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
-		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . AppContext::get_current_user()->get_id() . "' AND v.idtopic = t.id
+		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = :user_id AND v.idtopic = t.id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
-		WHERE c.aprob = 1 AND c.id_left > '" . $CAT_FORUM[$id_get]['id_left'] . "' AND c.id_right < '" . $CAT_FORUM[$id_get]['id_right'] . "' AND c.level = '" . $CAT_FORUM[$id_get]['level'] . "' + 1  " . $unauth_cats . "
-		ORDER BY c.id_left ASC");
-		while ($row = $Sql->fetch_assoc($result))
-		{	
+		WHERE c.aprob = 1 AND c.id_left > :id_left AND c.id_right < :id_right AND c.level = :level + 1  " . (!empty($unauth_cats) ? " AND c.id NOT IN :unauth_cats" : '') . "
+		ORDER BY c.id_left ASC", array(
+			'user_id' => AppContext::get_current_user()->get_id(),
+			'id_left' => $CAT_FORUM[$id_get]['id_left'],
+			'id_right' => $CAT_FORUM[$id_get]['id_right'],
+			'level' => $CAT_FORUM[$id_get]['level'],
+			'unauth_cats' => $unauth_cats,
+		));
+		while ($row = $result->fetch())
+		{
 			if ($row['nbr_msg'] !== '0')
 			{
 				//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
@@ -283,17 +288,22 @@ if (!empty($id_get))
 	));
 
 	$nbr_topics_display = 0;
-	$result = $Sql->query_while("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
+	$result = PersistenceContext::get_querier()->select("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 	FROM " . PREFIX . "forum_topics t
-	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . AppContext::get_current_user()->get_id() . "' AND v.idtopic = t.id
+	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = :user_id AND v.idtopic = t.id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
 	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
-	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . AppContext::get_current_user()->get_id() . "'
-	WHERE t.idcat = '" . $id_get . "'
+	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = :user_id
+	WHERE t.idcat = :idcat
 	ORDER BY t.type DESC , t.last_timestamp DESC
-	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']));
-	while ( $row = $Sql->fetch_assoc($result) )
+	LIMIT :number_items_per_page OFFSET :display_from", array(
+		'user_id' => AppContext::get_current_user()->get_id(),
+		'idcat' => $id_get,
+		'number_items_per_page' => $pagination->get_number_items_per_page(),
+		'display_from' => $pagination->get_display_from()
+	));
+	while ($row = $result->fetch())
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
