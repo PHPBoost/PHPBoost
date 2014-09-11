@@ -95,10 +95,13 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 		{
 			//Forums parent du forum cible.
 			$list_parent_cats = '';
-			$result = $Sql->query_while("SELECT id
+			$result = PersistenceContext::get_querier()->select("SELECT id
 			FROM " . PREFIX . "forum_cats
-			WHERE id_left <= '" . $CAT_FORUM[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$parent_category]['id_right'] . "'");
-			while ($row = $Sql->fetch_assoc($result))
+			WHERE id_left <= :id_left AND id_right >= :id_right", array(
+				'id_left' => $CAT_FORUM[$parent_category]['id_left'],
+				'id_right' => $CAT_FORUM[$parent_category]['id_right']
+			));
+			while ($row = $result->fetch())
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
@@ -106,24 +109,24 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 			$list_parent_cats = trim($list_parent_cats, ', ');
 						
 			if (empty($list_parent_cats))
-				$clause_parent = "id = '" . $parent_category . "'";
+				$clause_parent = $parent_category;
 			else
-				$clause_parent = "id IN (" . $list_parent_cats . ")";
+				$clause_parent = $list_parent_cats;
 			
 			$id_left = $CAT_FORUM[$parent_category]['id_right'];
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2 WHERE " . $clause_parent);
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2 WHERE id " . (empty($list_parent_cats) ? "=" : "IN") . " :id_cat", array('id_cat' => $clause_parent));
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > :id_left", array('id_left' => $id_left));
 			$level = $CAT_FORUM[$parent_category]['level'] + 1;
 
 		}
 		else //Insertion forum niveau 0.
 		{
-			$id_left = $Sql->query("SELECT MAX(id_right) FROM " . PREFIX . "forum_cats");
+			$id_left = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'MAX(id_right)');
 			$id_left++;
 			$level = 0;
 		}
 		
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_cats (id_left, id_right, level, name, subname, url, nbr_topic, nbr_msg, last_topic_id, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', '" . $url . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . addslashes(serialize($array_auth_all)) . "')");
+		PersistenceContext::get_querier()->insert(PREFIX . "forum_cats", array('id_left' => $id_left, 'id_right' => ($id_left + 1), 'level' => $level, 'name' => $name, 'subname' => $subname, 'url' => $url, 'nbr_topic' => 0, 'nbr_msg' => 0, 'last_topic_id' => 0, 'status' => $status, 'aprob' => $aprob, 'auth' => addslashes(serialize($array_auth_all))));
 
 		###### Regénération du cache des catégories (liste déroulante dans le forum) #######
 		$Cache->Generate_module_file('forum');
@@ -140,10 +143,10 @@ else
 			
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$forums = '<option value="0" checked="checked" disabled="disabled">' . $LANG['root'] . '</option>';
-	$result = $Sql->query_while("SELECT id, name, level
+	$result = PersistenceContext::get_querier()->select("SELECT id, name, level
 	FROM " . PREFIX . "forum_cats
 	ORDER BY id_left");
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$forums .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
