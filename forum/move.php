@@ -43,11 +43,7 @@ $preview_topic = retrieve(POST, 'prw_t', ''); //Prévisualisation du topic scindé
 
 if (!empty($id_get)) //Déplacement du sujet.
 {
-	$Template->set_filenames(array(
-		'forum_move'=> 'forum/forum_move.tpl',
-		'forum_top'=> 'forum/forum_top.tpl',
-		'forum_bottom'=> 'forum/forum_bottom.tpl'
-	));
+	$tpl = new FileTemplate('forum/forum_move.tpl');
 
 	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'");
 	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
@@ -82,25 +78,10 @@ if (!empty($id_get)) //Déplacement du sujet.
 	}
 	$result->dispose();
 
-	$Template->put_all(array(
-		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['move_topic'],
-		'ID' => $id_get,
-		'TITLE' => $topic['title'],
-		'U_MOVE' => url('.php?token=' . AppContext::get_session()->get_token()),
-		'CATEGORIES' => $cat_forum,
-		'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php') . '">' . $cat['name'] . '</a>',
-		'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $topic['title'] . '</a>',
-		'L_SELECT_SUBCAT' => $LANG['require_subcat'],
-		'L_MOVE_SUBJECT' => $LANG['forum_move_subject'],
-		'L_CAT' => $LANG['category'],
-		'L_FORUM_INDEX' => $LANG['forum_index'],
-		'L_SUBMIT' => $LANG['submit']
-	));
-
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '" ."/forum/%'");
 
-	$Template->put_all(array(
+	$vars_tpl = array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -114,9 +95,29 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => strtolower($LANG['online']),
-	));
+	
+		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['move_topic'],
+		'ID' => $id_get,
+		'TITLE' => $topic['title'],
+		'U_MOVE' => url('.php?token=' . AppContext::get_session()->get_token()),
+		'CATEGORIES' => $cat_forum,
+		'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php') . '">' . $cat['name'] . '</a>',
+		'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $topic['title'] . '</a>',
+		'L_SELECT_SUBCAT' => $LANG['require_subcat'],
+		'L_MOVE_SUBJECT' => $LANG['forum_move_subject'],
+		'L_CAT' => $LANG['category'],
+		'L_FORUM_INDEX' => $LANG['forum_index'],
+		'L_SUBMIT' => $LANG['submit']
+	);
 
-	$Template->pparse('forum_move');
+	$tpl->put_all($vars_tpl);
+	$tpl_top->put_all($vars_tpl);
+	$tpl_bottom->put_all($vars_tpl);
+		
+	$tpl->put('forum_top', $tpl_top);
+	$tpl->put('forum_bottom', $tpl_bottom);
+		
+	$tpl->display();
 }
 elseif (!empty($id_post)) //Déplacement du topic
 {
@@ -149,11 +150,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 }
 elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //Choix de la nouvelle catégorie, titre, sous-titre du topic à scinder.
 {
-	$Template->set_filenames(array(
-		'forum_move'=> 'forum/forum_post.tpl',
-		'forum_top'=> 'forum/forum_top.tpl',
-		'forum_bottom'=> 'forum/forum_bottom.tpl'
-	));
+	$tpl = new FileTemplate('forum/forum_move.tpl');
 
 	$idm = !empty($id_get_msg) ? $id_get_msg : $id_post_msg;
 	$msg =  $Sql->query_array(PREFIX . 'forum_msg', 'idtopic', 'contents', "WHERE id = '" . $idm . "'");
@@ -203,7 +200,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 		
-	$Template->put_all(array(
+	$vars_tpl = array(
 		'C_FORUM_CUT_CAT' => true,
 		'CATEGORIES' => $cat_forum,
 		'KERNEL_EDITOR' => $editor->display(),
@@ -228,7 +225,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'L_POLL_TYPE' => $LANG['poll_type'],
 		'L_SINGLE' => $LANG['simple_answer'],
 		'L_MULTIPLE' => $LANG['multiple_answer']
-	));
+	);
 
 	if (empty($post_topic) && empty($preview_topic))
 	{
@@ -236,14 +233,14 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		$nbr_poll_field = 0;
 		for ($i = 0; $i < 5; $i++)
 		{
-			$Template->assign_block_vars('answers_poll', array(
+			$tpl->assign_block_vars('answers_poll', array(
 				'ID' => $i,
 				'ANSWER' => ''
 			));
 			$nbr_poll_field++;
 		}
 
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'TITLE' => '',
 			'DESC' => '',
 			'CONTENTS' => FormatingHelper::unparse($msg['contents']),
@@ -279,7 +276,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			$answer = retrieve(POST, 'a'.$i, '', TSTRING_UNCHANGE);
 			if (!empty($answer))
 			{
-				$Template->assign_block_vars('answers_poll', array(
+				$tpl->assign_block_vars('answers_poll', array(
 					'ID' => $i,
 					'ANSWER' => $answer
 				));
@@ -287,7 +284,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			}
 			elseif ($i <= 5) //On complète s'il y a moins de 5 réponses.
 			{
-				$Template->assign_block_vars('answers_poll', array(
+				$tpl->assign_block_vars('answers_poll', array(
 					'ID' => $i,
 					'ANSWER' => ''
 				));
@@ -298,7 +295,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		//Type de réponses du sondage.
 		$poll_type = retrieve(POST, 'poll_type', 0);
 
-		$Template->put_all(array(
+		$vars_tpl = array_merge($vars_tpl, array(
 			'TITLE' => $title,
 			'DESC' => $subtitle,
 			'CONTENTS' => $contents,
@@ -327,7 +324,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '" ."/forum/%'");
 
-	$Template->put_all(array(
+	$vars_tpl = array_merge($vars_tpl, array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -343,7 +340,14 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'L_ONLINE' => strtolower($LANG['online'])
 	));
 
-	$Template->pparse('forum_move');
+	$tpl->put_all($vars_tpl);
+	$tpl_top->put_all($vars_tpl);
+	$tpl_bottom->put_all($vars_tpl);
+		
+	$tpl->put('forum_top', $tpl_top);
+	$tpl->put('forum_bottom', $tpl_bottom);
+		
+	$tpl->display();
 }
 elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 {

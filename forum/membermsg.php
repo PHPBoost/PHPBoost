@@ -38,11 +38,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 {
 	$_NBR_ELEMENTS_PER_PAGE = 10;
 	
-	$Template->set_filenames(array(
-		'membermsg'=> 'forum/forum_membermsg.tpl',
-		'forum_top'=> 'forum/forum_top.tpl',
-		'forum_bottom'=> 'forum/forum_bottom.tpl'
-	));
+	$tpl = new FileTemplate('forum/forum_membermsg.tpl');
 	
 	$auth_cats = '';
 	foreach ($CAT_FORUM as $idcat => $key)
@@ -67,7 +63,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['show_member_msg'],
 		'PAGINATION' => $pagination->display(),
@@ -98,7 +94,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
-		$Template->assign_block_vars('list', array(
+		$tpl->assign_block_vars('list', array(
 			'C_GROUP_COLOR' => !empty($group_color),
 			'C_GUEST' => empty($row['login']),
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
@@ -119,7 +115,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/membermsg.php%'");
 
-	$Template->put_all(array(
+	$vars_tpl = array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -133,9 +129,16 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => strtolower($LANG['online'])
-	));
+	);
 		
-	$Template->pparse('membermsg');
+	$tpl->put_all($vars_tpl);
+	$tpl_top->put_all($vars_tpl);
+	$tpl_bottom->put_all($vars_tpl);
+		
+	$tpl->put('forum_top', $tpl_top);
+	$tpl->put('forum_bottom', $tpl_bottom);
+		
+	$tpl->display();
 }
 else
 	AppContext::get_response()->redirect('/forum/index.php');

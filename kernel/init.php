@@ -37,7 +37,6 @@ Environment::init();
 
 /* DEPRECATED VARS */
 $Sql = PersistenceContext::get_sql();
-$Template = new DeprecatedTemplate();
 $Bread_crumb = new BreadCrumb();
 /* END DEPRECATED */
 ?>

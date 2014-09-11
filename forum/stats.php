@@ -34,11 +34,7 @@ $Bread_crumb->add($LANG['stats'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['stats']);
 require_once('../kernel/header.php'); 
 
-$Template->set_filenames(array(
-	'forum_stats'=> 'forum/forum_stats.tpl',
-	'forum_top'=> 'forum/forum_top.tpl',
-	'forum_bottom'=> 'forum/forum_bottom.tpl'
-));
+$tpl = new FileTemplate('forum/forum_stats.tpl');
 
 $total_day = NumberHelper::round((time() - GeneralConfig::load()->get_site_install_date()->get_timestamp())/(3600*24), 0);
 $timestamp_today = @mktime(0, 0, 1, gmdate_format('m'), gmdate_format('d'), gmdate_format('y'));
@@ -53,7 +49,7 @@ JOIN " . PREFIX . "forum_msg m ON m.id = t.first_msg_id
 WHERE m.timestamp > '" . $timestamp_today . "'");
 $nbr_msg_today = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE timestamp > '" . $timestamp_today . "'");
 
-$Template->put_all(array(
+$vars_tpl = array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'NBR_TOPICS' => $sum['total_topics'],
 	'NBR_MSG' => $sum['total_msg'],
@@ -73,7 +69,7 @@ $Template->put_all(array(
 	'L_LAST_MSG' => $LANG['forum_last_msg'],
 	'L_POPULAR' => $LANG['forum_popular'],				
 	'L_ANSWERS' => $LANG['forum_nbr_answers'],
-));
+);
 
 $auth_cats = '';
 if (is_array($CAT_FORUM))
@@ -95,7 +91,7 @@ ORDER BY t.last_timestamp DESC
 " . $Sql->limit(0, 10));
 while ($row = $Sql->fetch_assoc($result))
 {
-	$Template->assign_block_vars('last_msg', array(
+	$tpl->assign_block_vars('last_msg', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
@@ -111,7 +107,7 @@ ORDER BY t.nbr_views DESC
 " . $Sql->limit(0, 10));
 while ($row = $Sql->fetch_assoc($result))
 {
-	$Template->assign_block_vars('popular', array(
+	$tpl->assign_block_vars('popular', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
@@ -127,7 +123,7 @@ ORDER BY t.nbr_msg DESC
 " . $Sql->limit(0, 10));
 while ($row = $Sql->fetch_assoc($result))
 {
-	$Template->assign_block_vars('answers', array(
+	$tpl->assign_block_vars('answers', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
@@ -137,7 +133,7 @@ $result->dispose();
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script = '" ."/forum/stats.php'");
 
-$Template->put_all(array(
+$vars_tpl = array_merge($vars_tpl, array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
@@ -152,8 +148,15 @@ $Template->put_all(array(
 	'L_AND' => $LANG['and'],
 	'L_ONLINE' => strtolower($LANG['online'])
 ));
-
-$Template->pparse('forum_stats');	
+Debug::dump($vars_tpl);
+$tpl->put_all($vars_tpl);
+$tpl_top->put_all($vars_tpl);
+$tpl_bottom->put_all($vars_tpl);
+	
+$tpl->put('forum_top', $tpl_top);
+$tpl->put('forum_bottom', $tpl_bottom);
+	
+$tpl->display();
 
 include('../kernel/footer.php');
 

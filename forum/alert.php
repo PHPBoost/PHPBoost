@@ -53,11 +53,7 @@ if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Si c'est
 	DispatchManager::redirect($error_controller);
 }
 
-$Template->set_filenames(array(
-	'forum_alert'=> 'forum/forum_alert.tpl',
-	'forum_top'=> 'forum/forum_top.tpl',
-	'forum_bottom'=> 'forum/forum_bottom.tpl'
-));
+$tpl = new FileTemplate('forum/forum_alert.tpl');
 
 //On fait un formulaire d'alerte
 if (!empty($alert) && empty($alert_post))
@@ -69,7 +65,7 @@ if (!empty($alert) && empty($alert_post))
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('contents');
 	
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'KERNEL_EDITOR' => $editor->display(),
 			'L_ALERT' => $LANG['alert_topic'],
 			'L_ALERT_EXPLAIN' => $LANG['alert_modo_explain'],
@@ -80,7 +76,7 @@ if (!empty($alert) && empty($alert_post))
 			'L_REQUIRE_TITLE' => $LANG['require_title']
 		));
 
-		$Template->assign_block_vars('alert_form', array(
+		$tpl->assign_block_vars('alert_form', array(
 			'TITLE' => $topic_name,
 			'U_TOPIC' => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'),
 			'ID_ALERT' => $alert,
@@ -88,13 +84,13 @@ if (!empty($alert) && empty($alert_post))
 	}
 	else //Une alerte a déjà été postée
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'L_ALERT' => $LANG['alert_topic'],
 			'L_BACK_TOPIC' => $LANG['alert_back'],
 			'URL_TOPIC' => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php')
 		));
 
-		$Template->assign_block_vars('alert_confirm', array(
+		$tpl->assign_block_vars('alert_confirm', array(
 			'MSG' => $LANG['alert_topic_already_done']
 		));
 	}
@@ -103,7 +99,7 @@ if (!empty($alert) && empty($alert_post))
 //Si on enregistre une alerte
 if (!empty($alert_post))
 {
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'L_ALERT' => $LANG['alert_topic'],
 		'L_BACK_TOPIC' => $LANG['alert_back'],
 		'URL_TOPIC' => 'topic' . url('.php?id=' . $alert_post, '-' . $alert_post . '-' . Url::encode_rewrite($topic_name) . '.php')
@@ -121,13 +117,13 @@ if (!empty($alert_post))
 
 		$Forumfct->Alert_topic($alert_post, $alert_title, $alert_contents);
 
-		$Template->assign_block_vars('alert_confirm', array(
+		$tpl->assign_block_vars('alert_confirm', array(
 			'MSG' => str_replace('%title', $topic_name, $LANG['alert_success'])
 		));
 	}
 	else //Une alerte a déjà été postée
 	{
-		$Template->assign_block_vars('alert_confirm', array(
+		$tpl->assign_block_vars('alert_confirm', array(
 			'MSG' => $LANG['alert_topic_already_done']
 		));
 	}
@@ -137,7 +133,7 @@ if (!empty($alert_post))
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '/forum/%'");
 
-$Template->put_all(array(
+$vars_tpl = array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['alert_topic'],
 	'DESC' => $topic['subtitle'],
 	'TOTAL_ONLINE' => $total_online,
@@ -159,9 +155,16 @@ $Template->put_all(array(
 	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 	'L_AND' => $LANG['and'],
 	'L_ONLINE' => strtolower($LANG['online'])
-));
+);
 
-$Template->pparse('forum_alert');
+$tpl->put_all($vars_tpl);
+$tpl_top->put_all($vars_tpl);
+$tpl_bottom->put_all($vars_tpl);
+	
+$tpl->put('forum_top', $tpl_top);
+$tpl->put('forum_bottom', $tpl_bottom);
+	
+$tpl->display();
 
 include('../kernel/footer.php');
 

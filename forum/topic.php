@@ -81,11 +81,7 @@ if (!empty($CAT_FORUM[$topic['idcat']]['url']))
 	DispatchManager::redirect($error_controller);
 }
 
-$Template->set_filenames(array(
-	'forum_topic'=> 'forum/forum_topic.tpl',
-	'forum_top'=> 'forum/forum_top.tpl',
-	'forum_bottom'=> 'forum/forum_bottom.tpl'
-));
+$tpl = new FileTemplate('forum/forum_topic.tpl');
 
 $TmpTemplate = new FileTemplate('forum/forum_generic_results.tpl');
 $module_data_path = $TmpTemplate->get_pictures_data_path();
@@ -94,7 +90,7 @@ $module_data_path = $TmpTemplate->get_pictures_data_path();
 $check_group_edit_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM);
 if ($check_group_edit_auth)
 {
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_FORUM_MODERATOR' => true,
 		'C_FORUM_LOCK_TOPIC' => ($topic['status'] == '1') ? true : false,
 		'U_TOPIC_LOCK' => url('.php?id=' . $id_get . '&amp;lock=true&amp;token=' . AppContext::get_session()->get_token()),
@@ -111,7 +107,7 @@ if ($check_group_edit_auth)
 }
 else
 {
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_FORUM_MODERATOR' => false
 	));
 }
@@ -161,7 +157,7 @@ foreach ($Bread_crumb->get_links() as $key => $array)
 	$i++;
 }
 
-$Template->put_all(array(
+$vars_tpl = array(
 	'C_PAGINATION' => $pagination->has_several_pages(),
 	'C_FOCUS_CONTENT' => !empty($quote_get),
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
@@ -196,7 +192,7 @@ $Template->put_all(array(
 	'L_SUBMIT' => $LANG['submit'],
 	'L_PREVIEW' => $LANG['preview'],
 	'L_RESET' => $LANG['reset']
-));
+);
 
 //Création du tableau des rangs.
 $array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG['modo_s'], 2 => $LANG['admin_s']);
@@ -240,7 +236,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	//Gestion des sondages => executé une seule fois.
 	if (!empty($row['question']) && $poll_done === false)
 	{
-		$Template->put_all(array(				
+		$tpl->put_all(array(				
 			'C_POLL_EXIST' => true,
 			'QUESTION' => $row['question'],				
 			'U_POLL_RESULT' => url('.php?id=' . $id_get . '&amp;r=1&amp;pt=' . $page),
@@ -261,7 +257,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 
 			foreach ($array_answer as $key => $answer)
 			{
-				$Template->assign_block_vars('poll_result', array(
+				$tpl->assign_block_vars('poll_result', array(
 					'ANSWERS' => $answer, 
 					'NBRVOTE' => $array_vote[$key],
 					'WIDTH' => NumberHelper::round(($array_vote[$key] * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
@@ -271,7 +267,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		}
 		else //Affichage des formulaires (radio/checkbox) pour voter.
 		{
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_POLL_QUESTION' => true
 			));
 			
@@ -281,7 +277,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 			{
 				foreach ($array_answer as $answer)
 				{						
-					$Template->assign_block_vars('poll_radio', array(
+					$tpl->assign_block_vars('poll_radio', array(
 						'NAME' => $z,
 						'TYPE' => 'radio',
 						'ANSWERS' => $answer
@@ -293,7 +289,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 			{
 				foreach ($array_answer as $answer)
 				{						
-					$Template->assign_block_vars('poll_checkbox', array(
+					$tpl->assign_block_vars('poll_checkbox', array(
 						'NAME' => 'forumpoll' . $z,
 						'TYPE' => 'checkbox',
 						'ANSWERS' => $answer
@@ -378,7 +374,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
 	$user_website_field = $extended_fields_cache->get_extended_field_by_field_name('user_website');
 	
-	$Template->assign_block_vars('msg', array(
+	$tpl->assign_block_vars('msg', array(
 		'ID' => $row['id'],
 		'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 		'FORUM_ONLINE_STATUT_USER' => !empty($row['connect']) ? 'online' : 'offline',
@@ -436,7 +432,7 @@ $result->dispose();
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" . url('/forum/topic.php?id=' . $id_get, '/forum/topic-' . $id_get) ."%'");
 
-$Template->put_all(array(
+$vars_tpl = array_merge($vars_tpl, array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
@@ -483,14 +479,14 @@ if (!empty($quote_get))
 //Formulaire de réponse, non présent si verrouillé.
 if ($topic['status'] == '0' && !$check_group_edit_auth)
 {
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,
 		'L_ERROR_AUTH_WRITE' => $LANG['e_topic_lock_forum']
 	));
 }	
 elseif (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM)) //On vérifie si l'utilisateur a les droits d'écritures.
 {
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_ERROR_AUTH_WRITE' => true,
 		'L_ERROR_AUTH_WRITE' => $LANG['e_cat_write']
 	));
@@ -504,7 +500,7 @@ else
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 	
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
 		'KERNEL_EDITOR' => $editor->display(),
@@ -518,7 +514,7 @@ else
 	if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || AppContext::get_current_user()->get_id() == $topic['user_id']))
 	{
 		$img_msg_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_DISPLAY_MSG' => true,
 			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<i class="fa ' . $img_msg_display . '"></i>' : '',
 			'L_DISPLAY_MSG' => $CONFIG_FORUM['display_msg'],
@@ -530,7 +526,14 @@ else
 	}
 }
 
-$Template->pparse('forum_topic');
+$tpl->put_all($vars_tpl);
+$tpl_top->put_all($vars_tpl);
+$tpl_bottom->put_all($vars_tpl);
+	
+$tpl->put('forum_top', $tpl_top);
+$tpl->put('forum_bottom', $tpl_bottom);
+	
+$tpl->display();
 
 include('../kernel/footer.php');
 

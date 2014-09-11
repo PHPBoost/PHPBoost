@@ -29,10 +29,8 @@ if (defined('PHPBOOST') !== true)
 	exit;
 
 ############### Header du forum ################
-$Template->set_filenames(array(
-	'forum_top'=> 'forum/forum_top.tpl',
-	'forum_bottom'=> 'forum/forum_bottom.tpl'
-));
+$tpl_top = new FileTemplate('forum/forum_top.tpl');
+$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 $is_guest = (AppContext::get_current_user()->get_id() !== -1) ? false : true;
 $nbr_msg_not_read = 0;
@@ -72,16 +70,16 @@ if (!$is_guest)
 //Formulaire de connexion sur le forum.
 if ($CONFIG_FORUM['display_connexion'])
 {
-	$Template->put_all(array(	
+	$vars_tpl = array(	
 		'C_FORUM_CONNEXION' => true,
 		'L_CONNECT' => $LANG['connect'],
 		'L_DISCONNECT' => $LANG['disconnect'],
 		'L_AUTOCONNECT' => $LANG['autoconnect'],
 		'L_REGISTER' => $LANG['register']
-	));
+	);
 }
 
-$Template->put_all(array(	
+$vars_tpl = array(	
 	'C_DISPLAY_UNREAD_DETAILS' => (AppContext::get_current_user()->get_id() !== -1) ? true : false,
 	'C_MODERATION_PANEL' => AppContext::get_current_user()->check_level(1) ? true : false,
 	'U_TOPIC_TRACK' => '<a class="small" href="../forum/track.php" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
@@ -94,5 +92,9 @@ $Template->put_all(array(
 	'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search']
-));
+);
+
+$tpl_top->put_all($vars_tpl);
+$tpl_bottom->put_all($vars_tpl);
+	
 ?>

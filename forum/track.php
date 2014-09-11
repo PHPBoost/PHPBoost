@@ -66,11 +66,7 @@ if (!empty($_POST['valid']))
 }
 elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
-	$Template->set_filenames(array(
-		'forum_track'=> 'forum/forum_track.tpl',
-		'forum_top'=> 'forum/forum_top.tpl',
-		'forum_bottom'=> 'forum/forum_bottom.tpl'
-	));
+	$tpl = new FileTemplate('forum/forum_track.tpl');
 
 	$nbr_topics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
@@ -159,7 +155,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		
 		$group_color = User::get_group_color($row['groups'], $row['user_level']);
 		
-		$Template->assign_block_vars('topics', array(
+		$tpl->assign_block_vars('topics', array(
 			'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg'])),
 			'C_POLL' => !empty($row['question']),
 			'C_BLINK' => $blink,
@@ -189,7 +185,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	//Le membre a déjà lu tous les messages.
 	if ($nbr_topics == 0)
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_NO_TRACKED_TOPICS' => true,
 			'L_NO_TRACKED_TOPICS' => '0 ' . $LANG['show_topic_track']
 		));
@@ -197,7 +193,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 
 	$l_topic = ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'];
 	
-	$Template->put_all(array(
+	$vars_tpl = array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'NBR_TOPICS' => $nbr_topics,
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
@@ -221,12 +217,12 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'L_VIEW' => $LANG['views'],
 		'L_LAST_MESSAGE' => $LANG['last_message'],
 		'L_SUBMIT' => $LANG['submit']
-	));
+	);
 	
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/track.php%'");
 
-	$Template->put_all(array(
+	$vars_tpl = array_merge($vars_tpl, array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -243,7 +239,14 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'L_ONLINE' => strtolower($LANG['online'])
 	));
 	
-	$Template->pparse('forum_track');
+	$tpl->put_all($vars_tpl);
+	$tpl_top->put_all($vars_tpl);
+	$tpl_bottom->put_all($vars_tpl);
+		
+	$tpl->put('forum_top', $tpl_top);
+	$tpl->put('forum_bottom', $tpl_bottom);
+	
+	$tpl->display();
 }
 else
 	AppContext::get_response()->redirect('/forum/index.php');
