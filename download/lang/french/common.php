@@ -42,7 +42,6 @@ $lang['download.management'] = 'Gestion des fichiers';
 
 $lang['most_downloaded_files'] = 'Meilleurs téléchargements';
 $lang['last_download_files'] = 'Derniers fichiers en téléchargement';
-$lang['best_rated_files'] = 'Téléchargements les mieux notés';
 $lang['download'] = 'Télécharger';
 $lang['downloaded_times'] = 'Téléchargé :number_downloads fois';
 $lang['downloads_number'] = 'Nombre de téléchargements';

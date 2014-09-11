@@ -42,7 +42,6 @@ $lang['download.management'] = 'Files management';
 
 $lang['most_downloaded_files'] = 'Most downloaded files';
 $lang['last_download_files'] = 'Last download files';
-$lang['best_rated_files'] = 'Best rated files';
 $lang['download'] = 'Download';
 $lang['downloaded_times'] = 'Downloaded :number_visits times';
 $lang['downloads_number'] = 'Downloads number';

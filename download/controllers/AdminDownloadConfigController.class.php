@@ -111,6 +111,9 @@ class AdminDownloadConfigController extends AdminModuleController
 					HTMLForms.getField("notation_scale").enable();
 				} else {
 					HTMLForms.getField("notation_scale").disable();
+					if (HTMLForms.getField("sort_type").getValue() == \'' . DownloadFile::SORT_NOTATION . '\') {
+						HTMLForms.getField("sort_type").setValue(\'' . DownloadFile::SORT_NUMBER_DOWNLOADS . '\');
+					}
 				}'
 			)
 		)));
@@ -133,7 +136,12 @@ class AdminDownloadConfigController extends AdminModuleController
 				new FormFieldSelectChoiceOption(LangLoader::get_message('sort_by.best_note', 'common'), DownloadFile::SORT_NOTATION),
 				new FormFieldSelectChoiceOption($this->lang['downloads_number'], DownloadFile::SORT_NUMBER_DOWNLOADS)
 			),
-			array('description' => $this->lang['config.sort_type.explain'])
+			array('description' => $this->lang['config.sort_type.explain'], 'events' => array('change' => '
+				if (HTMLForms.getField("sort_type").getValue() == \'' . DownloadFile::SORT_NOTATION . '\') {
+					HTMLForms.getField("notation_enabled").setValue(true);
+					HTMLForms.getField("notation_scale").enable();
+				}'
+			))
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('files_number_in_menu', $this->lang['config.files_number_in_menu'], $this->config->get_files_number_in_menu(), 
