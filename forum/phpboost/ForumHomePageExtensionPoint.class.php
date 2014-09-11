@@ -323,8 +323,8 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		$tpl_top->put_all($vars_tpl);
 		$tpl_bottom->put_all($vars_tpl);
 		
-		$tpl->add_subtemplate('forum_top', $tpl_top);
-		$tpl->add_subtemplate('forum_bottom', $tpl_bottom);
+		$tpl->put('forum_top', $tpl_top);
+		$tpl->put('forum_bottom', $tpl_bottom);
 
 		return $tpl;
 	}

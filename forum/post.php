@@ -101,12 +101,10 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
                 $LANG['e_unexist_topic_forum']);
             DispatchManager::redirect($controller);
 		}
-
-		$Template->set_filenames(array(
-			'edit_msg'=> 'forum/forum_edit_msg.tpl',
-			'forum_top'=> 'forum/forum_top.tpl',
-			'forum_bottom'=> 'forum/forum_bottom.tpl'
-		));
+		
+		$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
+		$tpl_top = new FileTemplate('forum/forum_top.tpl');
+		$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 		$contents = retrieve(POST, 'contents', '', TSTRING);
 		$post_update = retrieve(POST, 'p_update', '', TSTRING_UNCHANGE);
@@ -114,7 +112,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		$update = !empty($post_update) ? $post_update : url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token());
 		$submit = !empty($post_update) ? $LANG['update'] : $LANG['submit'];
 
-		$Template->put_all(array(
+		$vars_tpl = array(
 			'P_UPDATE' => $post_update,
 			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 			'KERNEL_EDITOR' => $editor->display(),
@@ -135,9 +133,16 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			'L_SUBMIT' => $submit,
 			'L_PREVIEW' => $LANG['preview'],
 			'L_RESET' => $LANG['reset']
-		));
+		);
 
-		$Template->pparse('edit_msg');
+		$tpl->put_all($vars_tpl);
+		$tpl_top->put_all($vars_tpl);
+		$tpl_bottom->put_all($vars_tpl);
+		
+		$tpl->put('forum_top', $tpl_top);
+		$tpl->put('forum_bottom', $tpl_bottom);
+		
+		$tpl->display();
 	}
 	elseif ($new_get === 'topic' && empty($error_get)) //Nouveau topic.
 	{
@@ -213,11 +218,9 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
-			$Template->set_filenames(array(
-				'forum_post'=> 'forum/forum_post.tpl',
-				'forum_top'=> 'forum/forum_top.tpl',
-				'forum_bottom'=> 'forum/forum_bottom.tpl'
-			));
+			$tpl = new FileTemplate('forum/forum_post.tpl');
+			$tpl_top = new FileTemplate('forum/forum_top.tpl');
+			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 			$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 			$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
@@ -231,7 +234,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				$type = ( $type == 1 || $type == 0 ) ? $type : 0;
 			else
 			{
-				$Template->put_all(array(
+				$tpl->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL' => (($type == '0') ? 'checked="ckecked"' : ''),
 					'CHECKED_POSTIT' => (($type == '1') ? 'checked="ckecked"' : ''),
@@ -250,7 +253,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				$answer = retrieve(POST, 'a'.$i, '');
 				if (!empty($answer))
 				{
-					$Template->assign_block_vars('answers_poll', array(
+					$tpl->assign_block_vars('answers_poll', array(
 						'ID' => $i,
 						'ANSWER' => stripslashes($answer)
 					));
@@ -259,7 +262,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			}
 			for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
 			{
-				$Template->assign_block_vars('answers_poll', array(
+				$tpl->assign_block_vars('answers_poll', array(
 					'ID' => $i,
 					'ANSWER' => ''
 				));
@@ -269,7 +272,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			//Type de réponses du sondage.
 			$poll_type = retrieve(POST, 'poll_type', 0);
 
-			$Template->put_all(array(
+			$vars_tpl = array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'TITLE' => $title,
 				'DESC' => $subtitle,
@@ -307,24 +310,29 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				'L_ANSWERS' => $LANG['answers'],
 				'L_SINGLE' => $LANG['simple_answer'],
 				'L_MULTIPLE' => $LANG['multiple_answer']
-			));
+			);
 
-			$Template->pparse('forum_post');
+			$tpl->put_all($vars_tpl);
+			$tpl_top->put_all($vars_tpl);
+			$tpl_bottom->put_all($vars_tpl);
+			
+			$tpl->put('forum_top', $tpl_top);
+			$tpl->put('forum_bottom', $tpl_bottom);
+			
+			$tpl->display();
 		}
 		else
 		{
 			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
-			$Template->set_filenames(array(
-				'forum_post'=> 'forum/forum_post.tpl',
-				'forum_top'=> 'forum/forum_top.tpl',
-				'forum_bottom'=> 'forum/forum_bottom.tpl'
-			));
+			$tpl = new FileTemplate('forum/forum_post.tpl');
+			$tpl_top = new FileTemplate('forum/forum_top.tpl');
+			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 			if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
 			{
-				$Template->put_all(array(
+				$tpl->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL' => 'checked="ckecked"',
 					'L_TYPE' => '* ' . $LANG['type'],
@@ -338,14 +346,14 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			$nbr_poll_field = 0;
 			for ($i = 0; $i < 5; $i++)
 			{
-				$Template->assign_block_vars('answers_poll', array(
+				$tpl->assign_block_vars('answers_poll', array(
 					'ID' => $i,
 					'ANSWER' => ''
 				));
 				$nbr_poll_field++;
 			}
 
-			$Template->put_all(array(
+			$vars_tpl = array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'TITLE' => '',
 				'DESC' => '',
@@ -377,9 +385,16 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				'L_ANSWERS' => $LANG['answers'],
 				'L_SINGLE' => $LANG['simple_answer'],
 				'L_MULTIPLE' => $LANG['multiple_answer']
-			));
+			);
 
-			$Template->pparse('forum_post');
+			$tpl->put_all($vars_tpl);
+			$tpl_top->put_all($vars_tpl);
+			$tpl_bottom->put_all($vars_tpl);
+			
+			$tpl->put('forum_top', $tpl_top);
+			$tpl->put('forum_bottom', $tpl_bottom);
+			
+			$tpl->display();
 		}
 	}
 	elseif ($new_get === 'n_msg' && empty($error_get)) //Nouveau message
@@ -523,12 +538,10 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			}
 			elseif (!empty($preview_topic))
 			{
-				$Template->set_filenames(array(
-					'forum_post'=> 'forum/forum_post.tpl',
-					'forum_top'=> 'forum/forum_top.tpl',
-					'forum_bottom'=> 'forum/forum_bottom.tpl'
-				));
-
+				$tpl = new FileTemplate('forum/forum_post.tpl');
+				$tpl_top = new FileTemplate('forum/forum_top.tpl');
+				$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
+				
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 				$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
 				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
@@ -539,7 +552,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 					$type = ($type == 1 || $type == 0) ? $type : 0;
 				else
 				{
-					$Template->put_all(array(
+					$tpl->put_all(array(
 						'C_FORUM_POST_TYPE' => true,
 						'CHECKED_NORMAL' => (($type == 0) ? 'checked="ckecked"' : ''),
 						'CHECKED_POSTIT' => (($type == 1) ? 'checked="ckecked"' : ''),
@@ -558,7 +571,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 					$answer = retrieve(POST, 'a'.$i, '');
 					if (!empty($anwser))
 					{
-						$Template->assign_block_vars('answers_poll', array(
+						$tpl->assign_block_vars('answers_poll', array(
 							'ID' => $i,
 							'ANSWER' => stripslashes($anwser)
 						));
@@ -567,7 +580,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				}
 				for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
 				{
-					$Template->assign_block_vars('answers_poll', array(
+					$tpl->assign_block_vars('answers_poll', array(
 						'ID' => $i,
 						'ANSWER' => ''
 					));
@@ -577,7 +590,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				//Type de réponses du sondage.
 				$poll_type = retrieve(POST, 'poll_type', 0);
 
-				$Template->put_all(array(
+				$vars_tpl = array(
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'TITLE' => $title,
 					'DESC' => $subtitle,
@@ -618,28 +631,33 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 					'L_SINGLE' => $LANG['simple_answer'],
 					'L_MULTIPLE' => $LANG['multiple_answer'],
 					'L_DELETE_POLL' => $LANG['delete_poll']
-				));
+				);
 
-				$Template->pparse('forum_post');
+				$tpl->put_all($vars_tpl);
+				$tpl_top->put_all($vars_tpl);
+				$tpl_bottom->put_all($vars_tpl);
+				
+				$tpl->put('forum_top', $tpl_top);
+				$tpl->put('forum_bottom', $tpl_bottom);
+				
+				$tpl->display();
 			}
 			else
 			{
-				$Template->set_filenames(array(
-					'forum_post'=> 'forum/forum_post.tpl',
-					'forum_top'=> 'forum/forum_top.tpl',
-					'forum_bottom'=> 'forum/forum_bottom.tpl'
-				));
+				$tpl = new FileTemplate('forum/forum_post.tpl');
+				$tpl_top = new FileTemplate('forum/forum_top.tpl');
+				$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 				$contents = $Sql->query("SELECT contents FROM " . PREFIX . "forum_msg WHERE id = '" . $id_first . "'");
 
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete_t')
-					$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+					$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 
 				if ($is_modo)
 				{
-					$Template->put_all(array(
+					$tpl->put_all(array(
 						'C_FORUM_POST_TYPE' => true,
 						'CHECKED_NORMAL' => (($topic['type'] == '0') ? 'checked="ckecked"' : ''),
 						'CHECKED_POSTIT' => (($topic['type'] == '1') ? 'checked="ckecked"' : ''),
@@ -663,7 +681,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || AppContext::get_current_user()->get_id() == $topic['user_id']))
 				{
 					$img_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
-					$Template->put_all(array(
+					$tpl->put_all(array(
 						'C_DISPLAY_MSG' => true,
 						'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<i class="fa ' . $img_display . '"></i>' : '',
 						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
@@ -680,7 +698,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 					if (!empty($answer))
 					{
 						$nbr_votes = isset($array_votes[$key]) ? $array_votes[$key] : 0;
-						$Template->assign_block_vars('answers_poll', array(
+						$tpl->assign_block_vars('answers_poll', array(
 							'ID' => $nbr_poll_field,
 							'ANSWER' => $answer,
 							'NBR_VOTES' => $nbr_votes,
@@ -691,14 +709,14 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				}
 				for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
 				{
-					$Template->assign_block_vars('answers_poll', array(
+					$tpl->assign_block_vars('answers_poll', array(
 						'ID' => $i,
 						'ANSWER' => ''
 					));
 					$nbr_poll_field++;
 				}
 
-				$Template->put_all(array(
+				$vars_tpl = array(
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'TITLE' => $topic['title'],
 					'DESC' => $topic['subtitle'],
@@ -735,23 +753,30 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 					'L_SINGLE' => $LANG['simple_answer'],
 					'L_MULTIPLE' => $LANG['multiple_answer'],
 					'L_DELETE_POLL' => $LANG['delete_poll']
-				));
+				);
 
 				//Type de réponses du sondage.
 				if (isset($poll['type']) && $poll['type'] == '0')
 				{
-					$Template->put_all(array(
+					$tpl->put_all(array(
 						'SELECTED_SIMPLE' => 'checked="ckecked"'
 					));
 				}
 				elseif (isset($poll['type']) && $poll['type'] == '1')
 				{
-					$Template->put_all(array(
+					$tpl->put_all(array(
 						'SELECTED_MULTIPLE' => 'checked="ckecked"'
 					));
 				}
 
-				$Template->pparse('forum_post');
+				$tpl->put_all($vars_tpl);
+				$tpl_top->put_all($vars_tpl);
+				$tpl_bottom->put_all($vars_tpl);
+				
+				$tpl->put('forum_top', $tpl_top);
+				$tpl->put('forum_bottom', $tpl_bottom);
+				
+				$tpl->display();
 			}
 		}
 		//Sinon on édite simplement le message
@@ -791,19 +816,17 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			}
 			else
 			{
-				$Template->set_filenames(array(
-					'edit_msg'=> 'forum/forum_edit_msg.tpl',
-					'forum_top'=> 'forum/forum_top.tpl',
-					'forum_bottom'=> 'forum/forum_bottom.tpl'
-				));
+				$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
+				$tpl_top = new FileTemplate('forum/forum_top.tpl');
+				$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 				$contents = $Sql->query("SELECT contents FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'");
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete')
-					$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
+					$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
 
-				$Template->put_all(array(
+				$vars_tpl = array(
 					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'DESC' => $topic['subtitle'],
@@ -820,9 +843,16 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 					'L_SUBMIT' => $LANG['update'],
 					'L_PREVIEW' => $LANG['preview'],
 					'L_RESET' => $LANG['reset'],
-				));
+				);
 
-				$Template->pparse('edit_msg');
+				$tpl->put_all($vars_tpl);
+				$tpl_top->put_all($vars_tpl);
+				$tpl_bottom->put_all($vars_tpl);
+				
+				$tpl->put('forum_top', $tpl_top);
+				$tpl->put('forum_bottom', $tpl_bottom);
+				
+				$tpl->display();
 			}
 		}
 	}
@@ -838,11 +868,9 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
                 DispatchManager::redirect($controller);
 			}
 
-			$Template->set_filenames(array(
-				'error_post'=> 'forum/forum_edit_msg.tpl',
-				'forum_top'=> 'forum/forum_top.tpl',
-				'forum_bottom'=> 'forum/forum_bottom.tpl'
-			));
+			$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
+			$tpl_top = new FileTemplate('forum/forum_top.tpl');
+			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 			//Gestion erreur.
 			switch ($error_get)
@@ -863,9 +891,9 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				$errstr = '';
 			}
 			if (!empty($errstr))
-				$Template->put('message_helper', MessageHelper::display($errstr, $type));
+				$tpl->put('message_helper', MessageHelper::display($errstr, $type));
 
-			$Template->put_all(array(
+			$vars_tpl = array(
 				'P_UPDATE' => '',
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'DESC' => $topic['subtitle'],
@@ -882,19 +910,17 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				'L_SUBMIT' => $LANG['submit'],
 				'L_PREVIEW' => $LANG['preview'],
 				'L_RESET' => $LANG['reset']
-			));
+			);
 		}
 		elseif (!empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t'))
 		{
-			$Template->set_filenames(array(
-				'error_post'=> 'forum/forum_post.tpl',
-				'forum_top'=> 'forum/forum_top.tpl',
-				'forum_bottom'=> 'forum/forum_bottom.tpl'
-			));
+			$tpl = new FileTemplate('forum/forum_post.tpl');
+			$tpl_top = new FileTemplate('forum/forum_top.tpl');
+			$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 
 			if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
 			{
-				$Template->put_all(array(
+				$tpl->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL' => 'checked="ckecked"',
 					'L_TYPE' => '* ' . $LANG['type'],
@@ -927,20 +953,20 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				$errstr = '';
 			}
 			if (!empty($errstr))
-				$Template->put('message_helper', MessageHelper::display($errstr, $type));
+				$tpl->put('message_helper', MessageHelper::display($errstr, $type));
 
 			//Liste des choix des sondages => 20 maxi
 			$nbr_poll_field = 0;
 			for ($i = 0; $i < 5; $i++)
 			{
-				$Template->assign_block_vars('answers_poll', array(
+				$tpl->assign_block_vars('answers_poll', array(
 					'ID' => $i,
 					'ANSWER' => ''
 				));
 				$nbr_poll_field++;
 			}
 
-			$Template->put_all(array(
+			$vars_tpl = array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'TITLE' => '',
 				'SELECTED_SIMPLE' => 'checked="checked"',
@@ -971,7 +997,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				'L_ANSWERS' => $LANG['answers'],
 				'L_SINGLE' => $LANG['simple_answer'],
 				'L_MULTIPLE' => $LANG['multiple_answer']
-			));
+			);
 		}
 		else
 		{
@@ -979,7 +1005,14 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
             DispatchManager::redirect($controller);
 		}
 
-		$Template->pparse('error_post');
+		$tpl->put_all($vars_tpl);
+		$tpl_top->put_all($vars_tpl);
+		$tpl_bottom->put_all($vars_tpl);
+		
+		$tpl->put('forum_top', $tpl_top);
+		$tpl->put('forum_bottom', $tpl_bottom);
+		
+		$tpl->display();
 	}
 	else
 	{

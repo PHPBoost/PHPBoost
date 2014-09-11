@@ -64,19 +64,16 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL) && $chec
 	DispatchManager::redirect($error_controller);
 }
 
-$Template->set_filenames(array(
-	'forum_moderation_panel'=> 'forum/forum_moderation_panel.tpl',
-	'forum_top'=> 'forum/forum_top.tpl',
-	'forum_bottom'=> 'forum/forum_bottom.tpl'
-));
-$Template->put_all(array(
+$tpl = new FileTemplate('forum/forum_moderation_panel.tpl');
+
+$vars_tpl = array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 	'L_USERS_WARNING' => $LANG['warning_management'],
 	'L_ALERT_MANAGEMENT' => $LANG['alert_management'],
-));
+);
 
 //Redirection changement de catégorie.
 $id_topic_get = retrieve(POST, 'change_cat', '');
@@ -130,7 +127,7 @@ if ($action == 'alert') //Gestion des alertes
 		AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=alert' . $get_id, '', '&'));
 	}
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
 		'L_FORUM' => $LANG['forum'],
@@ -142,7 +139,7 @@ if ($action == 'alert') //Gestion des alertes
 
 	if (empty($id_get)) //On liste les alertes
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_FORUM_ALERTS' => true,
 			'L_TITLE' => $LANG['alert_title'],
 			'L_TOPIC' => $LANG['alert_concerned_topic'],
@@ -183,7 +180,7 @@ if ($action == 'alert') //Gestion des alertes
 			
 			$group_color = User::get_group_color($row['groups'], $row['user_level']);
 			
-			$Template->assign_block_vars('alert_list', array(
+			$tpl->assign_block_vars('alert_list', array(
 				'TITLE' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '">' . $row['title'] . '</a>',
 				'EDIT' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '" class="fa fa-edit"></a>',
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
@@ -199,7 +196,7 @@ if ($action == 'alert') //Gestion des alertes
 
 		if ($i === 0)
 		{
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_FORUM_NO_ALERT' => true,
 				'L_NO_ALERT' => LangLoader::get_message('no_item_now', 'common'),
 			));
@@ -247,7 +244,7 @@ if ($action == 'alert') //Gestion des alertes
 			
 			$group_color = User::get_group_color($row['groups'], $row['user_level']);
 			
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'ID' => $id_get,
 				'TITLE' => $row['title'],
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
@@ -271,7 +268,7 @@ if ($action == 'alert') //Gestion des alertes
 		}
 		else //Groupe, modérateur partiel qui n'a pas accès à cette alerte car elle ne concerne pas son forum
 		{
-			$Template->put_all(array(
+			$tpl->put_all(array(
 				'C_FORUM_ALERT_NOT_AUTH' => true,
 				'L_NO_ALERT' => $LANG['alert_not_auth']
 			));
@@ -309,7 +306,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
 	}
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'L_FORUM' => $LANG['forum'],
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
@@ -332,7 +329,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
 		}
 
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_FORUM_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_punish_until'],
@@ -353,7 +350,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
-			$Template->assign_block_vars('user_list', array(
+			$tpl->assign_block_vars('user_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['display_name'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
@@ -369,7 +366,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 
 		if ($i === 0)
 		{
-			$Template->put_all( array(
+			$tpl->put_all( array(
 				'C_FORUM_NO_USER' => true,
 				'L_NO_USER' => $LANG['no_punish'],
 			));
@@ -415,7 +412,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		
 		$group_color = User::get_group_color($member['groups'], $member['level']);
 		
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . LangLoader::get_message('minute', 'date-common'), $LANG['user_readonly_changed']),
@@ -499,7 +496,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
 	}
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'L_FORUM' => $LANG['forum'],
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
@@ -522,7 +519,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
 		}
 
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_FORUM_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_warning_level'],
@@ -542,7 +539,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
-			$Template->assign_block_vars('user_list', array(
+			$tpl->assign_block_vars('user_list', array(
 				'C_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['display_name'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
@@ -558,7 +555,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 		if ($i === 0)
 		{
-			$Template->put_all( array(
+			$tpl->put_all( array(
 				'C_FORUM_NO_USER' => true,
 				'L_NO_USER' => $LANG['no_user_warning'],
 			));
@@ -583,7 +580,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		
 		$group_color = User::get_group_color($member['groups'], $member['level']);
 		
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['warning_percentage'], $LANG['user_warning_level_changed']),
@@ -613,7 +610,7 @@ else //Panneau de modération
 {
 	$get_more = retrieve(GET, 'more', 0);
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_FORUM_MODO_MAIN' => true,
 		'U_ACTION_HISTORY' => url('.php?del_h=1&amp;token=' . AppContext::get_session()->get_token()),
 		'U_MORE_ACTION' => !empty($get_more) ? url('.php?more=' . ($get_more + 100)) : url('.php?more=100')
@@ -622,12 +619,12 @@ else //Panneau de modération
 	//Bouton de suppression de l'historique, visible uniquement pour l'admin.
 	if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_FORUM_ADMIN' => true
 		));
 	}
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'L_DEL_HISTORY' => $LANG['alert_history'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
@@ -658,7 +655,7 @@ else //Panneau de modération
 		$group_color = User::get_group_color($row['groups'], $row['user_level']);
 		$member_group_color = User::get_group_color($row['member_groups'], $row['member_level']);
 		
-		$Template->assign_block_vars('action_list', array(
+		$tpl->assign_block_vars('action_list', array(
 			'C_GROUP_COLOR' => !empty($group_color),
 			'LOGIN' => !empty($row['login']) ? $row['login'] : $LANG['guest'],
 			'LEVEL_CLASS' => UserService::get_level_class($row['user_level']),
@@ -673,7 +670,7 @@ else //Panneau de modération
 	}
 	$result->dispose();
 
-	$Template->put_all(array(
+	$tpl->put_all(array(
 		'C_DISPLAY_LINK_MORE_ACTION' => $i == $end,
 		'C_FORUM_NO_ACTION' => $i == 0,
 		'L_NO_ACTION' => $LANG['no_action']
@@ -683,7 +680,7 @@ else //Panneau de modération
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/moderation_forum.php%'");
 
-$Template->put_all(array(
+$vars_tpl = array_merge($vars_tpl, array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
@@ -703,7 +700,14 @@ $Template->put_all(array(
 	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 ));
 
-$Template->pparse('forum_moderation_panel');
+$tpl->put_all($vars_tpl);
+$tpl_top->put_all($vars_tpl);
+$tpl_bottom->put_all($vars_tpl);
+	
+$tpl->put('forum_top', $tpl_top);
+$tpl->put('forum_bottom', $tpl_bottom);
+	
+$tpl->display();
 
 include('../kernel/footer.php');
 

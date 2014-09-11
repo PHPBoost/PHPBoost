@@ -77,12 +77,8 @@ if (!empty($change_cat))
 	
 if (!empty($id_get))
 {
-	$Template->set_filenames(array(
-		'forum_forum'=> 'forum/forum_forum.tpl',
-		'forum_top'=> 'forum/forum_top.tpl',
-		'forum_bottom'=> 'forum/forum_bottom.tpl'
-	));
-	
+	$tpl = new FileTemplate('forum/forum_forum.tpl');
+
 	//Invité?	
 	$is_guest = (AppContext::get_current_user()->get_id() !== -1) ? false : true;
 	
@@ -92,7 +88,7 @@ if (!empty($id_get))
 	//Affichage des sous forums s'il y en a.
 	if (($CAT_FORUM[$id_get]['id_right'] - $CAT_FORUM[$id_get]['id_left']) > 1) //Intervalle > 1 => sous forum présent.
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_FORUM_SUB_CATS' => true
 		));
 		
@@ -190,7 +186,7 @@ if (!empty($id_get))
 			}
 			$img_announce .= ($row['status'] == '0') ? '-lock' : '';
 			
-			$Template->assign_block_vars('subcats', array(
+			$tpl->assign_block_vars('subcats', array(
 				'C_BLINK' => $blink,
 				'IMG_ANNOUNCE' => $img_announce,
 				'NAME' => $row['name'],
@@ -211,14 +207,14 @@ if (!empty($id_get))
 	$locked_cat = ($CAT_FORUM[$id_get]['status'] == 1 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) ? false : true;
 	if (!$check_group_write_auth)
 	{
-		$Template->assign_block_vars('error_auth_write', array(
+		$tpl->assign_block_vars('error_auth_write', array(
 			'L_ERROR_AUTH_WRITE' => $LANG['e_cat_write']
 		));
 	}
 	//Catégorie verrouillée?
 	elseif ($locked_cat)
 	{
-		$Template->assign_block_vars('error_auth_write', array(
+		$tpl->assign_block_vars('error_auth_write', array(
 			'L_ERROR_AUTH_WRITE' => $LANG['e_cat_lock_forum']
 		));
 	}
@@ -251,7 +247,7 @@ if (!empty($id_get))
 	//Si l'utilisateur a les droits d'édition.	
 	$check_group_edit_auth = AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 
-	$Template->put_all(array(
+	$vars_tpl = array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 		'PAGINATION' => $pagination->display(),
@@ -285,7 +281,7 @@ if (!empty($id_get))
 		'L_LOCK' => $LANG['forum_lock'],
 		'L_UNLOCK' => $LANG['forum_unlock'],
 		'L_GO' => $LANG['go']
-	));
+	);
 
 	$nbr_topics_display = 0;
 	$result = PersistenceContext::get_querier()->select("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
@@ -358,7 +354,7 @@ if (!empty($id_get))
 		
 		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 		
-		$Template->assign_block_vars('topics', array(
+		$tpl->assign_block_vars('topics', array(
 			'C_PAGINATION' => $topic_pagination->has_several_pages(),
 			'C_IMG_POLL' => !empty($row['question']),
 			'C_IMG_TRACK' => !empty($row['idtrack']),
@@ -385,7 +381,7 @@ if (!empty($id_get))
 	//Affichage message aucun topics.
 	if ($nbr_topics_display == 0)
 	{
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_NO_TOPICS' => true,
 			'L_NO_TOPICS' => $LANG['no_topics']
 		));
@@ -394,7 +390,7 @@ if (!empty($id_get))
 	//Listes les utilisateurs en lignes.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" . url('/forum/forum.php?id=' . $id_get, '/forum/forum-' . $id_get) . "%'");
 
-	$Template->put_all(array(
+	$vars_tpl = array_merge($vars_tpl, array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -411,7 +407,14 @@ if (!empty($id_get))
 		'L_ONLINE' => strtolower($LANG['online'])
 	));
 	
-	$Template->pparse('forum_forum');
+	$tpl->put_all($vars_tpl);
+	$tpl_top->put_all($vars_tpl);
+	$tpl_bottom->put_all($vars_tpl);
+		
+	$tpl->put('forum_top', $tpl_top);
+	$tpl->put('forum_bottom', $tpl_bottom);
+		
+	$tpl->display();
 }
 else
 	AppContext::get_response()->redirect('/forum/index.php');
