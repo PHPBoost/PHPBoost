@@ -644,7 +644,7 @@ else //Panneau de modération
 	$end = !empty($get_more) ? $get_more : 15; //Limit.
 	$i = 0;
 
-	$result = $Sql->query_while("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.display_name, m.level AS user_level, m.groups, m2.display_name as member, m2.level as member_level, m2.user_groups as member_groups
+	$result = $Sql->query_while("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.display_name, m.level AS user_level, m.groups, m2.display_name as member, m2.level as member_level, m2.groups as member_groups
 	FROM " . PREFIX . "forum_history h
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = h.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = h.user_id_action

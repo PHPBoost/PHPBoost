@@ -148,7 +148,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'L_AND' => $LANG['and'],
 	'L_ONLINE' => strtolower($LANG['online'])
 ));
-Debug::dump($vars_tpl);
+
 $tpl->put_all($vars_tpl);
 $tpl_top->put_all($vars_tpl);
 $tpl_bottom->put_all($vars_tpl);
