@@ -65,7 +65,6 @@ class DownloadModuleMiniMenu extends ModuleMiniMenu
 			
 			$tpl->put_all(array(
 				'C_FILES' => !empty($downloadfiles),
-				'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 				'C_SORT_BY_DATE' => $config->is_sort_type_date(),
 				'C_SORT_BY_NUMBER_DOWNLOADS' => $config->is_sort_type_number_downloads()
 			));

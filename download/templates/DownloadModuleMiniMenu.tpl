@@ -15,7 +15,11 @@
 					<a href="{downloadfiles.U_LINK}" title="{downloadfiles.NAME}">
 						{downloadfiles.NAME}
 					</a><br/>
+					# IF C_SORT_BY_NUMBER_DOWNLOADS #
 					<span class="smaller">{downloadfiles.L_DOWNLOADED_TIMES}</span><br/>
+					# ELSE #
+					{downloadfiles.STATIC_NOTATION}<br/>
+					# ENDIF #
 				# ENDIF #
 			# END downloadfiles #
 		# ELSE #
