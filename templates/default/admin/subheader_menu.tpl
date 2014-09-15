@@ -33,7 +33,7 @@
 					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template">{L_THEMES}</a></li>
 				</ul>
 			</li>
-			<li><a href="{PATH_TO_ROOT}/admin/admin_maintain.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/maintain_mini.png"/> {L_MAINTAIN}</a></li>
+			<li><a href="${relative_url(AdminMaintainUrlBuilder::maintain())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/maintain_mini.png"/> {L_MAINTAIN}</a></li>
 			<li class="extend">
 				<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/themes_mini.png"/> {L_THEMES}</a>
 				<ul>

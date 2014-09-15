@@ -63,9 +63,9 @@
 					<a href="{PATH_TO_ROOT}/admin/updates">{L_WEBSITE_UPDATES}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/admin_maintain.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/maintain.png" alt="" /></a>
+					<a href="${relative_url(AdminMaintainUrlBuilder::maintain())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/maintain.png" alt="" /></a>
 					<br />
-					<a href="{PATH_TO_ROOT}/admin/admin_maintain.php">{L_MAINTAIN}</a>
+					<a href="${relative_url(AdminMaintainUrlBuilder::maintain())}">{L_MAINTAIN}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">
 					<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/cache.png" alt="" /></a>
