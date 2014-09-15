@@ -107,13 +107,6 @@ $LANG['admin_alert_fix'] = 'Régler';
 $LANG['admin_alert_unfix'] = 'Passer l\'alerte en non réglée';
 $LANG['confirm_delete_administrator_alert'] = 'Etes-vous sûr de vouloir supprimer cette alerte ?';
 
-//Maintain
-$LANG['maintain_auth'] = 'Autorisation d\'accès au site durant la maintenance';
-$LANG['maintain_for'] = 'Mettre le site en maintenance';
-$LANG['maintain_delay'] = 'Afficher la durée de la maintenance';
-$LANG['maintain_display_admin'] = 'Afficher la durée de la maintenance à l\'administrateur';
-$LANG['maintain_text'] = 'Texte à afficher lorsque la maintenance du site est en cours';
-
 //Rapport système
 $LANG['system_report'] = 'Rapport système';
 $LANG['server'] = 'Serveur';

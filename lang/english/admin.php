@@ -106,13 +106,6 @@ $LANG['admin_alert_fix'] = 'Fix';
 $LANG['admin_alert_unfix'] = 'Consider the alert as not fixed';
 $LANG['confirm_delete_administrator_alert'] = 'Are you sure you want to delete this alert?';
 
-//Maintenance
-$LANG['maintain_auth'] = 'Leave access to the website during maintenance';
-$LANG['maintain_for'] = 'Set website in maintenance';
-$LANG['maintain_delay'] = 'Display maintenance delay';
-$LANG['maintain_display_admin'] = 'Display maintenance delay to the administrator';
-$LANG['maintain_text'] = 'Display text, when site maintenance is in progress';
-
 //System report
 $LANG['system_report'] = 'System report';
 $LANG['server'] = 'Server';

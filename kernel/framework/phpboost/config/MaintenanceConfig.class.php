@@ -37,7 +37,9 @@ class MaintenanceConfig extends AbstractConfigData
 	const AUTH = 'auth';
 	const DISPLAY_DURATION = 'display_duration';
 	const DISPLAY_DURATION_FOR_ADMIN = 'display_duration_admin';
-
+	
+	const ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS = 1;
+	
 	public function is_maintenance_enabled()
 	{
 		return $this->get_property(self::ENABLED);
