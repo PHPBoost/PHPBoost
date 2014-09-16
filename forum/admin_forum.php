@@ -86,22 +86,22 @@ if (!empty($_POST['valid']) && !empty($id))
 	elseif ($type == 3)
 	{
 		$status = 1;
-		if (empty($url)) //Ne doit pas ï¿½tre vide dans tout les cas.
-			$url = $Sql->query("SELECT url FROM " . PREFIX . "forum_cats WHERE id = '" . $id . "'");
+		if (empty($url)) //Ne doit pas etre vide dans tout les cas.
+			$url = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'url', 'WHERE id=:id', array('id' => $id));
 	}
 
-	//Gï¿½nï¿½ration du tableau des droits.
+	//Generation du tableau des droits.
 	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 	if (!empty($name))
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET name = '" . $name . "', subname = '" . $subname . "', url = '" . $url . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $id . "'");
+		PersistenceContext::get_querier()->update(PREFIX . "forum_cats", array('name' => $name, 'subname' => $subname, 'url' => $url, 'status' => $status, 'aprob' => $aprob, 'auth' => serialize($array_auth_all)), 'WHERE id = :id', array('id' => $id));
 
 		if ($type != 3 || !empty($to))
 		{
-			//Empï¿½che le dï¿½placement dans une catï¿½gorie fille.
-			$to = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'");
+			//Empeche le deplacement dans une categorie fille.
+			$to = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id=:id AND id_left NOT BETWEEN :id_left AND :id_right', array('id' => $to, 'id_left' => $CAT_FORUM[$id]['id_left'], 'id_right' => $CAT_FORUM[$id]['id_right']));
 
-			//Catï¿½gorie parente changï¿½e?
+			//Categorie parente changee?
 			$change_cat = !empty($to) ? !($CAT_FORUM[$to]['id_left'] < $CAT_FORUM[$id]['id_left'] && $CAT_FORUM[$to]['id_right'] > $CAT_FORUM[$id]['id_right'] && ($CAT_FORUM[$id]['level'] - 1) == $CAT_FORUM[$to]['level']) : $CAT_FORUM[$id]['level'] > 0;
 			if ($change_cat)
 			{
@@ -109,10 +109,10 @@ if (!empty($_POST['valid']) && !empty($id))
 				$admin_forum->move_cat($id, $to);
 			}
 			else
-				$Cache->Generate_module_file('forum'); //Rï¿½gï¿½nï¿½ration du cache.
+				$Cache->Generate_module_file('forum'); //Regeneration du cache.
 		}
 		else
-			$Cache->Generate_module_file('forum'); //Rï¿½gï¿½nï¿½ration du cache.
+			$Cache->Generate_module_file('forum'); //Regeneration du cache.
 	}
 	else
 		AppContext::get_response()->redirect('/forum/admin_forum.php?id=' . $id . '&error=incomplete');
@@ -120,13 +120,13 @@ if (!empty($_POST['valid']) && !empty($id))
     forum_generate_feeds();
 	AppContext::get_response()->redirect('/forum/admin_forum.php');
 }
-elseif (!empty($del)) //Suppression de la catï¿½gorie/sous-catï¿½gorie.
+elseif (!empty($del)) //Suppression de la categorie/sous-categorie.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	$Cache->load('forum');
 	$confirm_delete = false;
-	$idcat = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats WHERE id = '" . $del . "'");
+	$idcat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id=:id', array('id' => $del));
 	if (!empty($idcat) && isset($CAT_FORUM[$idcat]))
 	{
 		//On vï¿½rifie si la catï¿½gorie contient des sous forums.
@@ -143,7 +143,7 @@ elseif (!empty($del)) //Suppression de la catï¿½gorie/sous-catï¿½gorie.
 			forum_generate_feeds();
 			AppContext::get_response()->redirect(HOST . SCRIPT);
 		}
-		else //Sinon on propose de déplacer les topics existants dans une autre catï¿½gorie.
+		else //Sinon on propose de deplacer les topics existants dans une autre categorie.
 		{
 			if (empty($_POST['del_cat']))
 			{
@@ -151,13 +151,16 @@ elseif (!empty($del)) //Suppression de la catï¿½gorie/sous-catï¿½gorie.
 
 				if ($check_topic > 0) //Conserve les topics.
 				{
-					//Listing des catï¿½gories disponibles, sauf celle qui va ï¿½tre supprimï¿½e.
+					//Listing des categories disponibles, sauf celle qui va ï¿½tre supprimï¿½e.
 					$forums = '';
-					$result = $Sql->query_while("SELECT id, name, level
+					$result = PersistenceContext::get_querier()->select("SELECT id, name, level
 					FROM " . PREFIX . "forum_cats
-					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "' AND url = ''
-					ORDER BY id_left");
-					while ($row = $Sql->fetch_assoc($result))
+					WHERE id_left NOT BETWEEN :id_left AND :id_right AND url = ''
+					ORDER BY id_left", array(
+						'id_left' => $CAT_FORUM[$idcat]['id_left'],
+						'id_left' => $CAT_FORUM[$idcat]['id_right']
+					));
+					while ($row = $result->fetch())
 					{
 						$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 						$disabled = ($row['level'] > 0) ? '' : ' disabled="disabled"';
@@ -174,13 +177,16 @@ elseif (!empty($del)) //Suppression de la catï¿½gorie/sous-catï¿½gorie.
 				}
 				if ($nbr_sub_cat > 0) //Concerne uniquement les sous-forums.
 				{
-					//Listing des catï¿½gories disponibles, sauf celle qui va ï¿½tre supprimï¿½e.
+					//Listing des categories disponibles, sauf celle qui va etre supprimee.
 					$forums = '<option value="0">' . $LANG['root'] . '</option>';
-					$result = $Sql->query_while("SELECT id, name, level
+					$result = PersistenceContext::get_querier()->select("SELECT id, name, level
 					FROM " . PREFIX . "forum_cats
-					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "' AND url = ''
-					ORDER BY id_left");
-					while ($row = $Sql->fetch_assoc($result))
+					WHERE id_left NOT BETWEEN :id_left AND :id_right AND url = ''
+					ORDER BY id_left", array(
+						'id_left' => $CAT_FORUM[$idcat]['id_left'],
+						'id_left' => $CAT_FORUM[$idcat]['id_right']
+					));
+					while ($row = $result->fetch())
 					{
 						$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 						$forums .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
@@ -195,7 +201,7 @@ elseif (!empty($del)) //Suppression de la catï¿½gorie/sous-catï¿½gorie.
 					));
 				}
 
-				$forum_name = $Sql->query("SELECT name FROM " . PREFIX . "forum_cats WHERE id = '" . $idcat . "'");
+				$forum_name = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'name', 'WHERE id = :id', array('id' => $idcat));
 				$tpl->put_all(array(
 					'IDCAT' => $idcat,
 					'FORUM_NAME' => $forum_name,
@@ -255,15 +261,18 @@ elseif (!empty($id))
 
 	$tpl = new FileTemplate('forum/admin_forum_cat_edit.tpl');
 
-	$forum_info = $Sql->query_array(PREFIX . "forum_cats", "id_left", "id_right", "level", "name", "subname", "url", "status", "aprob", "auth", "WHERE id = '" . $id . "'");
+	$forum_info = PersistenceContext::get_querier()->select_single_row(PREFIX . "forum_cats", array("id_left", "id_right", "level", "name", "subname", "url", "status", "aprob", "auth"), 'WHERE id = :id', array('id' => $id));
 
-	//Listing des catï¿½gories disponibles, sauf celle qui va ï¿½tre supprimï¿½e.
+	//Listing des categories disponibles, sauf celle qui va etre supprimee.
 	$forums = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
-	$result = $Sql->query_while("SELECT id, id_left, id_right, name, level
+	$result = PersistenceContext::get_querier()->select("SELECT id, id_left, id_right, name, level
 	FROM " . PREFIX . "forum_cats
-	WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'
-	ORDER BY id_left");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE id_left NOT BETWEEN :id_left AND :id_right
+	ORDER BY id_left", array(
+		'id_left' => $CAT_FORUM[$idcat]['id_left'],
+		'id_left' => $CAT_FORUM[$idcat]['id_right']
+	));
+	while ($row = $result->fetch())
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id_left'] < $forum_info['id_left'] && $row['id_right'] > $forum_info['id_right'] && ($forum_info['level'] - 1) == $row['level'] ) ? ' selected="selected"' : '';
@@ -374,16 +383,16 @@ else
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 
-	$max_cat = $Sql->query("SELECT MAX(id_left) FROM " . PREFIX . "forum_cats");
+	$max_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'MAX(id_left)');
 	$list_cats_js = '';
 	$array_js = '';
 	$i = 0;
-	$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, subname, url, status
+	$result = PersistenceContext::get_querier()->select("SELECT id, id_left, id_right, level, name, subname, url, status
 	FROM " . PREFIX . "forum_cats
 	ORDER BY id_left");
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
-		//On assigne les variables pour le POST en prï¿½cisant l'idurl.
+		//On assigne les variables pour le POST en precisant l'idurl.
 		$tpl->assign_block_vars('list', array(
 			'I' => $i,
 			'ID' => $row['id'],
