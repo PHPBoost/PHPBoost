@@ -79,20 +79,17 @@ else
 			if ($CAT_GALLERY[$idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$idcat]['level'])
 				$cat_links .= ' <a href="admin_gallery.php?cat=' . $id . '">' . $array_info_cat['name'] . '</a> &raquo;';
 		}
-
-		$clause_cat = " WHERE gc.id_left > '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right < '" . $CAT_GALLERY[$idcat]['id_right'] . "' AND level = '" . $CAT_GALLERY[$idcat]['level'] . "' + 1";
 	}
 	else
 	{
 		$cat_links = '';
-		$clause_cat = " WHERE level = '0'";
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 		$CAT_GALLERY[0]['level'] = -1;
 		$CAT_GALLERY[0]['aprob'] = 1;
 	}
 	
 	$nbr_pics = PersistenceContext::get_querier()->count(PREFIX . "gallery", 'WHERE idcat=:idcat', array('idcat' => $idcat));
-	$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery_cats gc " . $clause_cat);
+	$total_cat = PersistenceContext::get_querier()->count(PREFIX . 'gallery_cats', 'WHERE ' . (!empty($idcat) ? 'id_left > :id_left AND id_right < :id_right AND level = :level + 1' : 'level = 0'), array('id_left' => $CAT_GALLERY[$idcat]['id_left'], 'id_right' => $CAT_GALLERY[$idcat]['id_right'], 'level' => $CAT_GALLERY[$idcat]['level']));
 
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
@@ -162,14 +159,21 @@ else
 		));
 
 		$i = 0;
-		$result = $Sql->query_while ("SELECT gc.id, gc.name, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path
+		$result = PersistenceContext::get_querier()->select("SELECT gc.id, gc.name, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path
 		FROM " . PREFIX . "gallery_cats gc
 		LEFT JOIN " . PREFIX . "gallery g ON g.idcat = gc.id
-		" . $clause_cat . "
+		WHERE " . (!empty($idcat) ? 'id_left > :id_left AND id_right < :id_right AND level = :level + 1' : 'level = 0') . "
 		GROUP BY gc.id
 		ORDER BY gc.id_left
-		" . $Sql->limit($pagination->get_display_from(), $config->get_pics_number_per_page()));
-		while ($row = $Sql->fetch_assoc($result))
+		LIMIT :number_items_per_page OFFSET :display_from", array(
+			'id_left' => $CAT_GALLERY[$idcat]['id_left'],
+			'id_right' => $CAT_GALLERY[$idcat]['id_right'],
+			'level' => $CAT_GALLERY[$idcat]['level'],
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
+		));
+		
+		while ($row = $result->fetch())
 		{
 			//On genère le tableau pour $config->get_columns_number() colonnes
 			$multiple_x = $i / $nbr_column_cats;
@@ -233,10 +237,10 @@ else
 		));
 
 		$array_cat_list = array(0 => '<option value="0" %s>' . $LANG['root'] . '</option>');
-		$result = $Sql->query_while("SELECT id, level, name
+		$result = PersistenceContext::get_querier()->select("SELECT id, level, name
 		FROM " . PREFIX . "gallery_cats
 		ORDER BY id_left");
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 			$array_cat_list[$row['id']] = '<option value="' . $row['id'] . '" %s>' . $margin . ' ' . $row['name'] . '</option>';
@@ -245,12 +249,14 @@ else
 
 		if (!empty($idpics))
 		{
-			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.display_name, m.level, m.user_groups
+			$info_pics = PersistenceContext::get_querier()->select_single_row_query("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.display_name, m.level, m.user_groups
 			FROM " . PREFIX . "gallery g
-			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-			WHERE g.idcat = '" . $idcat . "' AND g.id = '" . $idpics . "'
-			" . $Sql->limit(0, 1));
-			$info_pics = $Sql->fetch_assoc($result);
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id",
+			"WHERE g.idcat = :idcat AND g.id = :id", array(
+				'idcat' => $idcat,
+				'id' => $idpics
+			));
+			
 			if (!empty($info_pics['id']))
 			{
 				//Affichage miniatures.
@@ -261,11 +267,13 @@ else
 				list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = array(0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after);
 				$array_pics = array();
 				$array_js = 'var array_pics = new Array();';
-				$result = $Sql->query_while("SELECT g.id, g.idcat, g.path
+				$result = PersistenceContext::get_querier()->select("SELECT g.id, g.idcat, g.path
 				FROM " . PREFIX . "gallery g
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-				WHERE g.idcat = '" . $idcat . "'");
-				while ($row = $Sql->fetch_assoc($result))
+				WHERE g.idcat = :idcat", array(
+					'idcat' => $idcat
+				));
+				while ($row = $result->fetch())
 				{
 					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 					if (!file_exists('pics/thumbnails/' . $row['path']))
@@ -375,13 +383,17 @@ else
 		else
 		{
 			$j = 0;
-			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.display_name, m.user_id, m.level, m.user_groups
+			$result = PersistenceContext::get_querier()->select("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.display_name, m.user_id, m.level, m.user_groups
 			FROM " . PREFIX . "gallery g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-			WHERE g.idcat = '" . $idcat . "'
+			WHERE g.idcat = :idcat
 			ORDER BY g.timestamp
-			" . $Sql->limit($pagination->get_display_from(), $config->get_pics_number_per_page()));
-			while ($row = $Sql->fetch_assoc($result))
+			LIMIT :number_items_per_page OFFSET :display_from", array(
+				'idcat' => $idcat,
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+			));
+			while ($row = $result->fetch())
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 				if (!file_exists('pics/thumbnails/' . $row['path']))
