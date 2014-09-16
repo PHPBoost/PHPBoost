@@ -73,9 +73,9 @@
 					<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}">{L_CACHE}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">
-					<a href="{PATH_TO_ROOT}/admin/admin_errors.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/errors.png" alt="" /></a>
+					<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}"><img src="{PATH_TO_ROOT}/templates/default/images/admin/errors.png" alt="" /></a>
 					<br />
-					<a href="{PATH_TO_ROOT}/admin/admin_errors.php">{L_ERRORS}</a>
+					<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">{L_ERRORS}</a>
 				</td>
 				<td class="no-separator" style="width:20%;">
 					<a href="{PATH_TO_ROOT}/admin/admin_system_report.php"><img src="{PATH_TO_ROOT}/templates/default/images/admin/server.png" alt="" /></a>
