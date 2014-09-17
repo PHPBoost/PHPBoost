@@ -203,6 +203,7 @@ if (!empty($valid_search) && !empty($search))
 			}
 
 			//Avatar
+			$user_accounts_config = UserAccountsConfig::load();
 			$user_avatar = !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : ($user_accounts_config->is_default_avatar_enabled() ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '');
 			
 			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
