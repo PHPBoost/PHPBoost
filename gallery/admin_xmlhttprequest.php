@@ -124,51 +124,55 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 				if (!empty($switch_id_cat))
 				{
 					//On monte la catégorie à déplacer, on lui assigne des id négatifs pour assurer l'unicité.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left + '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right + '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'");
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left + :diff, id_right = - id_right + :diff WHERE id_left BETWEEN :id_left AND :id_right", array('diff' => ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1), 'id_left' => $CAT_GALLERY[$id]['id_left'], 'id_right' => $CAT_GALLERY[$id]['id_right']));
 					//On descend la catégorie cible.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "', id_right = id_right + '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$switch_id_cat]['id_left'] . "' AND '" . $CAT_GALLERY[$switch_id_cat]['id_right'] . "'");
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + :diff, id_right = id_right + :diff WHERE id_left BETWEEN :id_left AND :id_right", array('diff' => ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1), 'id_left' => $CAT_GALLERY[$switch_id_cat]['id_left'], 'id_right' => $CAT_GALLERY[$switch_id_cat]['id_right']));
 					
 					//On rétablit les valeurs absolues.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left WHERE id_left < 0");
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = - id_right WHERE id_right < 0");	
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left WHERE id_left < 0");
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_right = - id_right WHERE id_right < 0");
 					
 					$Cache->Generate_module_file('gallery');
-				}		
+				}
 				elseif (!empty($list_parent_cats) )
 				{
 					//Changement de catégorie.
-					$to = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats
-					WHERE id_left < '" . $CAT_GALLERY[$id]['id_left'] . "' AND level = '" . ($CAT_GALLERY[$id]['level'] - 1) . "' AND
-					id NOT IN (" . $list_parent_cats . ")
-					ORDER BY id_left DESC" . 
-					$Sql->limit(0, 1));
+					$to = PersistenceContext::get_querier()->select_single_row_query("SELECT id FROM " . PREFIX . "gallery_cats
+					WHERE id_left < :id_left AND level = :level AND
+					id NOT IN :ids_list
+					ORDER BY id_left DESC", array(
+						'id_left' => $CAT_GALLERY[$id]['id_left'],
+						'level' => ($CAT_GALLERY[$id]['level'] - 1),
+						'ids_list' => $list_parent_cats
+					));
 				}
 			}
 			elseif ($move == 'down')
 			{
 				//Doit-on changer de catégorie parente ou non ?
-				$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats
-				WHERE id_left - '" . $CAT_GALLERY[$id]['id_right'] . "' = 1");
+				$switch_id_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery_cats", 'id', 'WHERE id_left - :id_right = 1', array('id_right' => $CAT_GALLERY[$get_parent_up]['id_right']));
 				if (!empty($switch_id_cat))
 				{
 					//On monte la catégorie à déplacer, on lui assigne des id négatifs pour assurer l'unicité.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left - '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right - '" . ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$id]['id_left'] . "' AND '" . $CAT_GALLERY[$id]['id_right'] . "'");
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left - :diff, id_right = - id_right - :diff WHERE id_left BETWEEN :id_left AND :id_right", array('diff' => ($CAT_GALLERY[$switch_id_cat]['id_right'] - $CAT_GALLERY[$switch_id_cat]['id_left'] + 1), 'id_left' => $CAT_GALLERY[$id]['id_left'], 'id_right' => $CAT_GALLERY[$id]['id_right']));
 					//On descend la catégorie cible.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left - '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "', id_right = id_right - '" . ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_GALLERY[$switch_id_cat]['id_left'] . "' AND '" . $CAT_GALLERY[$switch_id_cat]['id_right'] . "'");
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left - :diff, id_right = id_right - :diff WHERE id_left BETWEEN :id_left AND :id_right", array('diff' => ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$id]['id_left'] + 1), 'id_left' => $CAT_GALLERY[$switch_id_cat]['id_left'], 'id_right' => $CAT_GALLERY[$switch_id_cat]['id_right']));
 					
 					//On rétablit les valeurs absolues.
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left WHERE id_left < 0");
-					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = - id_right WHERE id_right < 0");
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left WHERE id_left < 0");
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_right = - id_right WHERE id_right < 0");
 					
 					$Cache->Generate_module_file('gallery');
 				}
 				elseif (!empty($list_parent_cats) )
 				{
 					//Changement de catégorie.
-					$to = $Sql->query("SELECT id FROM " . PREFIX . "gallery_cats
-					WHERE id_left > '" . $CAT_GALLERY[$id]['id_left'] . "' AND level = '" . ($CAT_GALLERY[$id]['level'] - 1) . "'
-					ORDER BY id_left" . 
-					$Sql->limit(0, 1));
+					$to = PersistenceContext::get_querier()->select_single_row_query("SELECT id FROM " . PREFIX . "gallery_cats
+					WHERE id_left > :id_left AND level = :level
+					ORDER BY id_left DESC", array(
+						'id_left' => $CAT_GALLERY[$id]['id_left'],
+						'level' => ($CAT_GALLERY[$id]['level'] - 1)
+					));
 				}
 			}
 
@@ -199,15 +203,18 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 					$clause_cats = " id IN (" . $list_cats . ")";
 					
 				//Récupération du nombre d'images de la galerie.
-				$nbr_pics_aprob = $Sql->query("SELECT nbr_pics_aprob FROM " . PREFIX . "gallery_cats WHERE id = '" . $id . "'");
-				$nbr_pics_unaprob = $Sql->query("SELECT nbr_pics_unaprob FROM " . PREFIX . "gallery_cats WHERE id = '" . $id . "'");
+				$nbr_pics_aprob = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery_cats", 'nbr_pics_aprob', 'WHERE id = :id', array('id' => $id));
+				$nbr_pics_unaprob = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery_cats", 'nbr_pics_unaprob', 'WHERE id = :id', array('id' => $id));
 				
 				//Galeries parentes de la galerie cible.
 				$list_parent_cats_to = '';
-				$result = $Sql->query_while("SELECT id, level 
+				$result = PersistenceContext::get_querier()->select("SELECT id, level 
 				FROM " . PREFIX . "gallery_cats 
-				WHERE id_left <= '" . $CAT_GALLERY[$to]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$to]['id_right'] . "'");
-				while ($row = $Sql->fetch_assoc($result))
+				WHERE id_left <= :id_left AND id_right >= :id_right", array(
+					'id_left' => $CAT_GALLERY[$to]['id_left'],
+					'id_right' => $CAT_GALLERY[$to]['id_right'],
+				));
+				while ($row = $result->fetch())
 				{
 					$list_parent_cats_to .= $row['id'] . ', ';
 				}
@@ -221,7 +228,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 					
 				########## Suppression ##########
 				//On supprime virtuellement (changement de signe des bornes) les enfants.
-				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left, id_right = - id_right WHERE " . $clause_cats);					
+				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = - id_left, id_right = - id_right WHERE " . $clause_cats);
 				//On modifie les bornes droites des parents.
 				if (!empty($list_parent_cats))
 				{
@@ -237,17 +244,17 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 
 				//On augmente la taille de l'arbre du nombre de galeries supprimées à partir de la position de la galerie cible.
 				if ($CAT_GALLERY[$id]['id_left'] > $CAT_GALLERY[$to]['id_left'] ) //Direction galerie source -> galerie cible.
-				{	
+				{
 					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_GALLERY[$to]['id_right'] . "'");						
 					$limit = $CAT_GALLERY[$to]['id_right'];
 					$end = $limit + ($nbr_cat*2) - 1;
 				}
 				else
-				{	
+				{
 					$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2)) . "'");
 					$limit = $CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2);
-					$end = $limit + ($nbr_cat*2) - 1;						
-				}	
+					$end = $limit + ($nbr_cat*2) - 1;
+				}
 
 				//On replace les galeries supprimées virtuellement.
 				$array_sub_cats = explode(', ', $list_cats);
@@ -267,12 +274,12 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 			$list_cats_js = '';
 			$array_js = '';	
 			$i = 0;
-			$result = $Sql->query_while("SELECT id, id_left, id_right
+			$result = PersistenceContext::get_querier()->select("SELECT id, id_left, id_right
 			FROM " . PREFIX . "gallery_cats 
 			ORDER BY id_left");
-			while ($row = $Sql->fetch_assoc($result))
+			while ($row = $result->fetch())
 			{
-				$list_cats_js .= $row['id'] . ', ';		
+				$list_cats_js .= $row['id'] . ', ';
 				$array_js .= 'array_cats[' . $row['id'] . '][\'id\'] = ' . $row['id'] . ";";
 				$array_js .= 'array_cats[' . $row['id'] . '][\'id_left\'] = ' . $row['id_left'] . ";";
 				$array_js .= 'array_cats[' . $row['id'] . '][\'id_right\'] = ' . $row['id_right'] . ";";
