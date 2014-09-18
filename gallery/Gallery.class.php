@@ -249,70 +249,63 @@ class Gallery
 	//Insertion base de donnée
 	public function Add_pics($idcat, $name, $path, $user_id)
 	{
-		global $CAT_GALLERY, $Sql;
+		global $CAT_GALLERY;
 		
 		$CAT_GALLERY[0]['id_left'] = 0;
 		$CAT_GALLERY[0]['id_right'] = 0;
 		
 		//Parent de la catégorie cible
-		$list_parent_cats_to = '';
-		$result = $Sql->query_while("SELECT id 
+		$list_parent_cats_to = array();
+		$result = PersistenceContext::get_querier()->select("SELECT id 
 		FROM " . PREFIX . "gallery_cats 
-		WHERE id_left <= '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$idcat]['id_right'] . "'");
-		while ($row = $Sql->fetch_assoc($result))
+		WHERE id_left <= :id_left AND id_right >= :id_right", array(
+			'id_left' => $CAT_GALLERY[$idcat]['id_left'],
+			'id_right' => $CAT_GALLERY[$idcat]['id_right']
+		));
+		while ($row = $result->fetch())
 		{
-			$list_parent_cats_to .= $row['id'] . ', ';
+			$list_parent_cats_to[] = $row['id'];
 		}
 		$result->dispose();
-		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 		
-		if (empty($list_parent_cats_to))
-			$clause_parent_cats_to = " id = '" . $idcat . "'";
-		else
-			$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
 		
-		$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE " . $clause_parent_cats_to);		
-		
-		list($width, $height, $weight, $ext) = $this->Arg_pics('pics/' . $path);	
-		$Sql->query_inject("INSERT INTO " . PREFIX . "gallery (idcat, name, path, width, height, weight, user_id, aprob, views, timestamp) VALUES('" . $idcat . "', '" .TextHelper::strprotect($name, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE). "', '" . $path . "', '" . $width . "', '" . $height . "', '" . $weight ."', '" . $user_id . "', 1, 0, '" . time() . "')");
-		
-		return $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "gallery");
+		list($width, $height, $weight, $ext) = $this->Arg_pics('pics/' . $path);
+		$result = PersistenceContext::get_querier()->insert(PREFIX . "gallery", array('idcat' => $idcat, 'name' => $name, 'path' => $path, 'width' => $width, 'height' => $height, 'weight' => $weight, 'user_id' => $user_id, 'aprob' => 1, 'views' => 0, 'timestamp' => time()));
+		return $result->get_last_inserted_id();
 	}
 	
 	//Supprime une image
 	public function Del_pics($id_pics)
 	{
-		global $CAT_GALLERY, $Sql;
+		global $CAT_GALLERY;
 		
 		$CAT_GALLERY[0]['id_left'] = 0;
 		$CAT_GALLERY[0]['id_right'] = 0;
 		
-		$info_pics = $Sql->query_array(PREFIX . "gallery", "path", "idcat", "aprob", "WHERE id = '" . $id_pics . "'");
+		$info_pics = PersistenceContext::get_querier()->select_single_row(PREFIX . "gallery", array('path', 'idcat', 'aprob'), "WHERE id = :id", array('id' => $id_pics));
 		if (!empty($info_pics['path']))
 		{
 			PersistenceContext::get_querier()->delete(PREFIX . 'gallery', 'WHERE id=:id', array('id' => $id_pics));
 			
 			//Parent de la catégorie cible
-			$list_parent_cats_to = '';
-			$result = $Sql->query_while("SELECT id 
+			$list_parent_cats_to = array();
+			$result = PersistenceContext::get_querier()->select("SELECT id 
 			FROM " . PREFIX . "gallery_cats 
-			WHERE id_left <= '" . $CAT_GALLERY[$info_pics['idcat']]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$info_pics['idcat']]['id_right'] . "'");
-			while ($row = $Sql->fetch_assoc($result))
+			WHERE id_left <= :id_left AND id_right >= :id_right", array(
+				'id_left' => $CAT_GALLERY[$idcat]['id_left'],
+				'id_right' => $CAT_GALLERY[$idcat]['id_right']
+			));
+			while ($row = $result->fetch())
 			{
-				$list_parent_cats_to .= $row['id'] . ', ';
+				$list_parent_cats_to[] = $row['id'];
 			}
 			$result->dispose();
-			$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 			
-			if (empty($list_parent_cats_to))
-				$clause_parent_cats_to = " id = '" . $info_pics['idcat'] . "'";
-			else
-				$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
-				
 			if ($info_pics['aprob'])
-				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE " . $clause_parent_cats_to);
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $info_pics['idcat'], 'ids_list' => $list_parent_cats_to));
 			else
-				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE " . $clause_parent_cats_to);
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $info_pics['idcat'], 'ids_list' => $list_parent_cats_to));
 		}
 
 		//Suppression physique.
@@ -330,48 +323,43 @@ class Gallery
 	//Renomme une image.
 	public function Rename_pics($id_pics, $name, $previous_name)
 	{
-		global $Sql;
-		
-		$Sql->query_inject("UPDATE " . PREFIX . "gallery SET name = '" . TextHelper::strprotect($name, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE). "' WHERE id = '" . $id_pics . "'");
+		PersistenceContext::get_querier()->update(PREFIX . "gallery", array('name' => $name), 'WHERE id = :id', array('id' => $id_pics));
 		return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
 	}
 	
 	//Approuve une image.
 	public function Aprob_pics($id_pics)
 	{
-		global $CAT_GALLERY, $Sql;
+		global $CAT_GALLERY;
 		
 		$CAT_GALLERY[0]['id_left'] = 0;
 		$CAT_GALLERY[0]['id_right'] = 0;
 		
-		$idcat = $Sql->query("SELECT idcat FROM " . PREFIX . "gallery WHERE id = '" . $id_pics . "'");
+		$idcat = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'idcat', "WHERE id = :id", array('id' => $id_pics));
 		//Parent de la catégorie cible
-		$list_parent_cats_to = '';
-		$result = $Sql->query_while("SELECT id 
+		$list_parent_cats_to = array();
+		$result = PersistenceContext::get_querier()->select("SELECT id 
 		FROM " . PREFIX . "gallery_cats 
-		WHERE id_left <= '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$idcat]['id_right'] . "'");
-		while ($row = $Sql->fetch_assoc($result))
+		WHERE id_left <= :id_left AND id_right >= :id_right", array(
+			'id_left' => $CAT_GALLERY[$idcat]['id_left'],
+			'id_right' => $CAT_GALLERY[$idcat]['id_right']
+		));
+		while ($row = $result->fetch())
 		{
-			$list_parent_cats_to .= $row['id'] . ', ';
+			$list_parent_cats_to[] = $row['id'];
 		}
 		$result->dispose();
-		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 		
-		if (empty($list_parent_cats_to))
-			$clause_parent_cats_to = " id = '" . $idcat . "'";
-		else
-			$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
-			
-		$aprob = $Sql->query("SELECT aprob FROM " . PREFIX . "gallery WHERE id = '" . $id_pics . "'");
+		$aprob = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'aprob', "WHERE id = :id", array('id' => $id_pics));
 		if ($aprob)
-		{	
-			$Sql->query_inject("UPDATE " . PREFIX . "gallery SET aprob = 0 WHERE id = '" . $id_pics . "'");
-			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob + 1, nbr_pics_aprob = nbr_pics_aprob - 1 WHERE " . $clause_parent_cats_to);
+		{
+			PersistenceContext::get_querier()->update(PREFIX . "gallery", array('aprob' => 0), 'WHERE id = :id', array('id' => $id_pics));
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob + 1, nbr_pics_aprob = nbr_pics_aprob - 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
 		}
 		else
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "gallery SET aprob = 1 WHERE id = '" . $id_pics . "'");
-			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1, nbr_pics_aprob = nbr_pics_aprob + 1 WHERE " . $clause_parent_cats_to);
+			PersistenceContext::get_querier()->update(PREFIX . "gallery", array('aprob' => 1), 'WHERE id = :id', array('id' => $id_pics));
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1, nbr_pics_aprob = nbr_pics_aprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
 		}
 		
 		return $aprob;
@@ -386,7 +374,7 @@ class Gallery
 		$CAT_GALLERY[0]['id_left'] = 0;
 		$CAT_GALLERY[0]['id_right'] = 0;
 		
-		$idcat = $Sql->query("SELECT idcat FROM " . PREFIX . "gallery WHERE id = '" . $id_pics . "'");
+		$idcat = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'idcat', "WHERE id = :id", array('id' => $id_pics));
 		//Parent de la catégorie parente
 		$list_parent_cats = '';
 		$result = $Sql->query_while("SELECT id 
