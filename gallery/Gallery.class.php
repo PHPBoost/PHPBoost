@@ -549,43 +549,43 @@ class Gallery
 	//Recompte le nombre d'images de chaque catégories
 	public function Count_cat_pics()
 	{
-		global $CAT_GALLERY, $Sql;
+		global $CAT_GALLERY;
 		
 		$CAT_GALLERY[0]['id_left'] = 0;
 		$CAT_GALLERY[0]['id_right'] = 0;
 		
 		$info_cat = array();
-		$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_pics_aprob 
+		$result = PersistenceContext::get_querier()->select("SELECT idcat, COUNT(*) as nbr_pics_aprob 
 		FROM " . PREFIX . "gallery 
 		WHERE aprob = 1 AND idcat > 0
 		GROUP BY idcat");
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $result->fetch())
 			$info_cat[$row['idcat']]['aprob'] = $row['nbr_pics_aprob'];
 		$result->dispose();
 		
-		$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_pics_unaprob 
+		$result = PersistenceContext::get_querier()->select("SELECT idcat, COUNT(*) as nbr_pics_unaprob 
 		FROM " . PREFIX . "gallery 
 		WHERE aprob = 0 AND idcat > 0
 		GROUP BY idcat");
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $result->fetch())
 			$info_cat[$row['idcat']]['unaprob'] = $row['nbr_pics_unaprob'];
 		$result->dispose();
 		
-		$result = $Sql->query_while("SELECT id, id_left, id_right
+		$result = PersistenceContext::get_querier()->select("SELECT id, id_left, id_right
 		FROM " . PREFIX . "gallery_cats");
-		while ($row = $Sql->fetch_assoc($result))
-		{			
+		while ($row = $result->fetch())
+		{
 			$nbr_pics_aprob = 0;
 			$nbr_pics_unaprob = 0;
 			foreach ($info_cat as $key => $value)
-			{			
+			{
 				if ($CAT_GALLERY[$key]['id_left'] >= $row['id_left'] && $CAT_GALLERY[$key]['id_right'] <= $row['id_right'])
-				{	
+				{
 					$nbr_pics_aprob += isset($info_cat[$key]['aprob']) ? $info_cat[$key]['aprob'] : 0;
 					$nbr_pics_unaprob += isset($info_cat[$key]['unaprob']) ? $info_cat[$key]['unaprob'] : 0; 
 				}
 			}
-			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = '" . $nbr_pics_aprob . "', nbr_pics_unaprob = '" . $nbr_pics_unaprob . "' WHERE id = '" . $row['id'] . "'");	
+			PersistenceContext::get_querier()->update(PREFIX . "gallery_cats", array('nbr_pics_aprob' => $nbr_pics_aprob, 'nbr_pics_unaprob' => $nbr_pics_unaprob), 'WHERE id = :id', array('id' => $row['id']));
 		}
 		$result->dispose();
 	}
