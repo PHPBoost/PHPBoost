@@ -49,7 +49,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 		else
 		{
 			//Galeries parentes de la galerie à supprimer.
-			$list_parent_cats = '';
+			$list_parent_cats = array();
 			$result = PersistenceContext::get_querier()->select("SELECT id 
 			FROM " . PREFIX . "gallery_cats 
 			WHERE id_left < :id_left AND id_right > :id_right", array(
@@ -58,10 +58,9 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 			));
 			while ($row = $result->fetch())
 			{
-				$list_parent_cats .= $row['id'] . ', ';
+				$list_parent_cats[] = $row['id'];
 			}
 			$result->dispose();
-			$list_parent_cats = trim($list_parent_cats, ', ');
 			
 			if (!empty($list_parent_cats))
 			{
@@ -223,7 +222,7 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 				}
 				
 				//On réduit la taille de l'arbre du nombre de galeries supprimées à partir de la position de celui-ci.
-				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left - :new_number_cats, , id_right = id_right - :new_number_cats WHERE id_left > :id_right", array('new_number_cats' => ($nbr_cat*2), 'id_right' => $CAT_GALLERY[$id]['id_right']));
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left - :new_number_cats, id_right = id_right - :new_number_cats WHERE id_left > :id_right", array('new_number_cats' => ($nbr_cat*2), 'id_right' => $CAT_GALLERY[$id]['id_right']));
 				
 				########## Ajout ##########
 				//On modifie les bornes droites des parents de la cible.
@@ -235,17 +234,16 @@ if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)) //Admin
 				else
 					$limit = $CAT_GALLERY[$to]['id_right'] - ($nbr_cat*2);
 				
-				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + :new_number_cats, , id_right + id_right - :new_number_cats WHERE id_left > :id_right", array('new_number_cats' => ($nbr_cat*2), 'id_right' => $limit));
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET id_left = id_left + :new_number_cats, id_right + id_right - :new_number_cats WHERE id_left > :id_right", array('new_number_cats' => ($nbr_cat*2), 'id_right' => $limit));
 				$end = $limit + ($nbr_cat*2) - 1;
 				
 				//On replace les galeries supprimées virtuellement.
-				$array_sub_cats = explode(', ', $list_cats);
 				$z = 0;
 				for ($i = $limit; $i <= $end; $i = $i + 2)
 				{
-					$id_left = $limit + ($CAT_GALLERY[$array_sub_cats[$z]]['id_left'] - $CAT_GALLERY[$id]['id_left']);
-					$id_right = $end - ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$array_sub_cats[$z]]['id_right']);
-					PersistenceContext::get_querier()->update(PREFIX . "gallery_cats", array('id_left' => $id_left, 'id_right' => $id_right), 'WHERE id = :id', array('id' => $array_sub_cats[$z]));
+					$id_left = $limit + ($CAT_GALLERY[$list_cats[$z]]['id_left'] - $CAT_GALLERY[$id]['id_left']);
+					$id_right = $end - ($CAT_GALLERY[$id]['id_right'] - $CAT_GALLERY[$list_cats[$z]]['id_right']);
+					PersistenceContext::get_querier()->update(PREFIX . "gallery_cats", array('id_left' => $id_left, 'id_right' => $id_right), 'WHERE id = :id', array('id' => $list_cats[$z]));
 					$z++;
 				}
 				
