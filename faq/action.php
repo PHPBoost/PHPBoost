@@ -142,7 +142,7 @@ elseif (!empty($entitled) && !empty($answer))
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE idcat = '" . $id_cat . "' AND q_order > '" . $FAQ_CATS[$id_cat]['num_questions'] . "'");
 			$Sql->query_inject("INSERT INTO " . PREFIX . "faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $id_cat . "', '" . ($FAQ_CATS[$id_cat]['num_questions'] + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . AppContext::get_current_user()->get_id() . "', '" . time() . "')");
 			
-			$new_question_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "faq");
+			$new_question_id = $Sql->insert_id();
 			
 			//Updating number of subcategories
 			if ($id_cat != 0)

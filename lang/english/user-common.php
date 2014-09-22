@@ -171,4 +171,28 @@ $lang['extended-field.field.date-birth-explain'] = 'MM/DD/YYYY';
 
 $lang['extended-field.field.avatar'] = 'Avatar';
 $lang['extended-field.field.avatar-explain'] = '';
+
+$lang['extended-field.field.website'] = 'Website';
+$lang['extended-field.field.website-explain'] = 'Please enter a valid url (ex : http://www.phpboost.com)';
+
+$lang['extended-field.field.location'] = 'Location';
+$lang['extended-field.field.location-explain'] = '';
+
+$lang['extended-field.field.job'] = 'Job';
+$lang['extended-field.field.job-explain'] = '';
+
+$lang['extended-field.field.entertainement'] = 'Hobbies';
+$lang['extended-field.field.entertainement-explain'] = '';
+
+$lang['extended-field.field.signing'] = 'Signature';
+$lang['extended-field.field.signing-explain'] = 'The signature appears beyond all your messages';
+
+$lang['extended-field.field.biography'] = 'Biography';
+$lang['extended-field.field.biography-explain'] = 'A few lines describing you';
+
+$lang['extended-field.field.msn'] = 'MSN';
+$lang['extended-field.field.msn-explain'] = '';
+
+$lang['extended-field.field.yahoo'] = 'Yahoo';
+$lang['extended-field.field.yahoo-explain'] = '';
 ?>

@@ -197,7 +197,7 @@ class SessionData
 	private static function fill_user_cached_data(SessionData $data)
 	{
 		$columns = array('display_name', 'level', 'email', 'show_email', 'locale', 'theme', 'timezone', 'editor',
-			'unread_pm', 'registration_date', 'last_connection_date', 'groups', 'warning_percentage', 'delay_banned', 'delay_readonly');
+			'unread_pm', 'posted_msg', 'registration_date', 'last_connection_date', 'groups', 'warning_percentage', 'delay_banned', 'delay_readonly');
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $data->user_id);
 		try

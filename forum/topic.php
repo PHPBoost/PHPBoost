@@ -202,7 +202,7 @@ $ranks_cache = ForumRanksCache::load()->get_ranks(); //Récupère les rangs en cac
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;	
 $j = 0;	
-$result = $Sql->query_while("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, m.groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.user_msg, ext_field.user_website, ext_field.user_sign, ext_field.user_msn, ext_field.user_yahoo, m.warning_percentage, m.delay_readonly, m.delay_banned, m2.display_name as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
+$result = $Sql->query_while("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, m.groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.posted_msg, ext_field.user_website, ext_field.user_sign, ext_field.user_msn, ext_field.user_yahoo, m.warning_percentage, m.delay_readonly, m.delay_banned, m2.display_name as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
 FROM " . PREFIX . "forum_msg msg
 LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = '" . $id_get . "'
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
@@ -321,7 +321,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	{
 		foreach ($ranks_cache as $msg => $ranks_info)
 		{
-			if ($msg >= 0 && $msg <= $row['user_msg'])
+			if ($msg >= 0 && $msg <= $row['posted_msg'])
 			{ 
 				$user_rank = $ranks_info['name'];
 				$user_rank_icon = $ranks_info['icon'];
@@ -363,10 +363,10 @@ while ( $row = $Sql->fetch_assoc($result) )
 		$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt=""	/>';
 		
 	//Affichage du nombre de message.
-	if ($row['user_msg'] >= 1)
-		$user_msg = '<a href="'. UserUrlBuilder::messages($row['user_id'])->rel() . '" class="small">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
+	if ($row['posted_msg'] >= 1)
+		$posted_msg = '<a href="'. UserUrlBuilder::messages($row['user_id'])->rel() . '" class="small">' . $LANG['message_s'] . '</a>: ' . $row['posted_msg'];
 	else		
-		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
+		$posted_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
 	
 	$extended_fields_cache = ExtendedFieldsCache::load();
 	$user_msn_field = $extended_fields_cache->get_extended_field_by_field_name('user_msn');
@@ -388,7 +388,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'USER_AVATAR' => $user_avatar,
 		'USER_GROUP' => $user_groups,
 		'USER_DATE' => (!$is_guest) ? $LANG['registered_on'] . ': ' . gmdate_format('date_format_short', $row['registered']) : '',
-		'USER_MSG' => (!$is_guest) ? $user_msg : '',
+		'USER_MSG' => (!$is_guest) ? $posted_msg : '',
 		'USER_MAIL' => ( !empty($row['email']) && ($row['show_email'] == '1' ) ) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '',			
 		'USER_MSN' => (!empty($row['user_msn']) && !empty($user_msn_field) && $user_msn_field['display']) ? '<a href="mailto:' . $row['user_msn'] . '" class="basic-button smaller">MSN</a>' : '',
 		'USER_YAHOO' => (!empty($row['user_yahoo']) && !empty($user_yahoo_field) && $user_yahoo_field['display']) ? '<a href="mailto:' . $row['user_yahoo'] . '" class="basic-button smaller">Yahoo</a>' : '',
@@ -397,7 +397,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'USER_WARNING' => $row['warning_percentage'],
 		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
 		'C_USER_ONLINE' => !empty($row['connect']),
-		'C_FORUM_USER_LOGIN' => !empty($row['login']),
+		'C_FORUM_USER_LOGIN' => !empty($row['display_name']),
 		'C_FORUM_MSG_EDIT' => $edit,
 		'C_FORUM_MSG_DEL' => $del,
 		'C_FORUM_MSG_DEL_MSG' => (!$first_message),

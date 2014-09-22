@@ -43,7 +43,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$default_sorting_rule = new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC);
 		$nb_items_per_page = 3;
 		
-		parent::__construct($columns, $default_sorting_rule, $nb_items_per_page);
+		parent::__construct($columns, $default_sorting_rule);
 		
 		$this->set_caption('Liste des membres');
 		$this->set_nb_rows_options(array(1, 2, 4, 8, 10, 15));
@@ -84,7 +84,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 				new HTMLTableRowCell($row['display_name']),
 				new HTMLTableRowCell(($row['show_email'] == 1) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '&nbsp;'),
 				new HTMLTableRowCell(gmdate_format('date_format_long', $row['registration_date'])),
-				new HTMLTableRowCell(!empty($row['user_msg']) ? $row['user_msg'] : '0'),
+				new HTMLTableRowCell(!empty($row['posted_msg']) ? $row['posted_msg'] : '0'),
 				new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connection_date']) ? $row['last_connection_date'] : $row['registration_date'])),
 				new HTMLTableRowCell('<a href="' . Url::to_rel('/user/pm.php?pm=' . $row['user_id']) . '" class="basic-button smaller">MP</a>')
 			));
@@ -94,11 +94,13 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 
 	private function build_query($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters)
 	{
-		$query = 'SELECT user_id, display_name, email, show_email, registration_date, last_connection_date ' .
+		Debug::dump($limit);
+		Debug::dump($offset);
+		$query = 'SELECT user_id, display_name, email, show_email, registration_date, last_connection_date, posted_msg ' .
 		'FROM ' . DB_TABLE_MEMBER;
 		$query .= $this->get_filtered_clause($filters);
 		$query .= $this->get_order_clause($sorting_rule);
-		$query .= ' LIMIT ' . $limit . ' OFFSET ' . $offset;
+		$query .= $limit !== AbstractHTMLTableModel::NO_PAGINATION ? ' LIMIT ' . $limit . ' OFFSET ' . $offset : '';
 		return $query;
 	}
 

@@ -62,14 +62,14 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		$contents = '';
 		//Requête pour compter le nombre de messages non lus.
 		$nbr_msg_not_read = 0;
-		$result = $Sql->query_while("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name, m.level as user_level, m.groups, v.last_view_id
+		$result = PersistenceContext::get_querier()->select("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name, m.level as user_level, m.groups, v.last_view_id
 		FROM " . PREFIX . "forum_topics t
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 		WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $unauth_cats . "
 		ORDER BY t.last_timestamp DESC");
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 			if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
@@ -116,9 +116,9 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 
 	$idm_get = retrieve(GET, 'idm', '');
 	//Info sur le message.
-	$msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'");
+	$msg = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_msg', array('user_id', 'idtopic'), 'WHERE id=:id', array('id' => $idm_get));
 	//On va chercher les infos sur le topic
-	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'id', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'");
+	$topic = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_topics', array('id', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{
 		if (!empty($topic['idcat']) && (AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
@@ -186,7 +186,7 @@ elseif (!empty($msg_d))
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	//Vérification de l'appartenance du sujet au membres, ou modo.
-	$topic = $Sql->query_array(PREFIX . "forum_topics", "idcat", "user_id", "display_msg", "WHERE id = '" . $msg_d . "'");
+	$topic = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_topics', array("idcat", "user_id", "display_msg"), 'WHERE id=:id', array('id' => $msg_d));
 	if ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $msg_d . "'");
@@ -200,8 +200,8 @@ elseif (retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punis
 	if (!empty($login))
 	{
 		$i = 0;
-		$result = $Sql->query_while ("SELECT user_id, display_name, level, groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $login . "%'");
-		while ($row = $Sql->fetch_assoc($result))
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $login . "%'");
+		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
