@@ -66,7 +66,7 @@ class UserUsersListController extends AbstractController
 				$field_bdd = 'm.last_connection_date';
 			break;
 			case 'messages' :
-				$field_bdd = 'm.user_msg';
+				$field_bdd = 'm.posted_msg';
 			break;
 			case 'login' :
 				$field_bdd = 'm.display_name';
@@ -90,7 +90,7 @@ class UserUsersListController extends AbstractController
 			'PAGINATION' => $pagination->display()
 		));
 		
-		$result = PersistenceContext::get_querier()->select("SELECT m.user_id, m.display_name, m.email, m.show_email, m.registration_date, m.last_connection_date, m.level, m.groups, m.user_msg, 
+		$result = PersistenceContext::get_querier()->select("SELECT m.user_id, m.display_name, m.email, m.show_email, m.registration_date, m.last_connection_date, m.level, m.groups, m.posted_msg, 
 		ia.approved
 		FROM " . DB_TABLE_MEMBER . " m
 		LEFT JOIN " . DB_TABLE_INTERNAL_AUTHENTICATION ." ia ON ia.user_id = m.user_id
@@ -102,7 +102,7 @@ class UserUsersListController extends AbstractController
 		
 		while ($row = $result->fetch())
 		{
-			$user_msg = !empty($row['user_msg']) ? $row['user_msg'] : '0';
+			$posted_msg = !empty($row['posted_msg']) ? $row['posted_msg'] : '0';
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
 			$this->view->assign_block_vars('member_list', array(
@@ -112,7 +112,7 @@ class UserUsersListController extends AbstractController
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				'MAIL' => $row['email'],
-				'MSG' => $user_msg,
+				'MSG' => $posted_msg,
 				'LAST_CONNECT' => !empty($row['last_connection_date']) ? gmdate_format('date_format_short', $row['last_connection_date']) : LangLoader::get_message('never', 'main'),
 				'DATE' => gmdate_format('date_format_short', $row['registration_date']),
 				'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->rel(),

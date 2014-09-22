@@ -47,7 +47,7 @@ $nbr_msg_day = NumberHelper::round($sum['total_msg']/$total_day, 1);
 $nbr_topics_today = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
 JOIN " . PREFIX . "forum_msg m ON m.id = t.first_msg_id
 WHERE m.timestamp > '" . $timestamp_today . "'");
-$nbr_msg_today = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE timestamp > '" . $timestamp_today . "'");
+$nbr_msg_today = PersistenceContext::get_querier()->count(PREFIX . 'forum_msg', 'WHERE timestamp > :timestamp', array('timestamp' => $timestamp_today));
 
 $vars_tpl = array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],

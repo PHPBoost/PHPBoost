@@ -44,18 +44,18 @@ if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé 
 	
 if (!empty($_POST['valid']))
 {
-	$result = $Sql->query_while("SELECT t.id, tr.pm, tr.mail
-	FROM " . PREFIX . "forum_topics t
-	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
-	WHERE tr.user_id = '" . AppContext::get_current_user()->get_id() . "'");
-	while ($row = $Sql->fetch_assoc($result))
+	$result = PersistenceContext::get_querier()->select('SELECT t.id, tr.pm, tr.mail
+	FROM ' . PREFIX . 'forum_topics t
+	LEFT JOIN ' . PREFIX . 'forum_track tr ON tr.idtopic = t.id
+	WHERE tr.user_id =:user_id', array('user_id' => AppContext::get_current_user()->get_id()));
+	while ($row = $result->fetch())
 	{
 		$pm = (isset($_POST['p' . $row['id']]) && $_POST['p' . $row['id']] == 'on') ? 1 : 0;
 		if ($row['pm'] != $pm)
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '" . $pm . "' WHERE idtopic = '" . $row['id'] . "'");
+			PersistenceContext::get_querier()->update(PREFIX . 'forum_track', array('pm' => $pm), 'WHERE idtopic =:id', array('id' => $row['id']));
 		$mail = (isset($_POST['m' . $row['id']]) && $_POST['m' . $row['id']] == 'on') ? 1 : 0;
 		if ($row['mail'] != $mail)
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '" . $mail . "' WHERE idtopic = '" . $row['id'] . "'");
+			PersistenceContext::get_querier()->update(PREFIX . 'forum_track', array('mail' => $mail), 'WHERE idtopic =:id', array('id' => $row['id']));
 		$del = (isset($_POST['d' . $row['id']]) && $_POST['d' . $row['id']] == 'on') ? true : false;
 		if ($del)
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id', array('id' => $row['id']));

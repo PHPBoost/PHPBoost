@@ -166,9 +166,9 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			
 			$i = 1;
-			$result = $this->db_querier->select("SELECT user_id, display_name, level, groups, user_msg
+			$result = $this->db_querier->select("SELECT user_id, display_name, level, groups, posted_msg
 			FROM " . DB_TABLE_MEMBER . "
-			ORDER BY user_msg DESC
+			ORDER BY posted_msg DESC
 			LIMIT 10 OFFSET 0");
 			while ($row = $result->fetch())
 			{
@@ -180,7 +180,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					'LOGIN' => $row['display_name'],
 					'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 					'USER_GROUP_COLOR' => $user_group_color,
-					'USER_POST' => $row['user_msg'],
+					'USER_POST' => $row['posted_msg'],
 					'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				));
 				

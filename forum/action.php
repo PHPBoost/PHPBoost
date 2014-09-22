@@ -58,10 +58,10 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	//Info sur le message.
-	$msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'");
+	$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'idtopic'), 'WHERE id=:id', array('id' => $idm_get));
 
 	//On va chercher les infos sur le topic
-	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'");
+	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
 
 	//Si on veut supprimer le premier message, alors son rippe le topic entier (admin et modo seulement).
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] == $idm_get)
@@ -114,7 +114,7 @@ elseif (!empty($idt_get))
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	//On va chercher les infos sur le topic
-	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', "WHERE id = '" . $idt_get . "'");
+	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status'), 'WHERE id=:id', array('id' => $idt_get));
 
 	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM))
 	{
@@ -130,7 +130,7 @@ elseif (!empty($idt_get))
 	if ($msg_d)
 	{
 		//Vérification de l'appartenance du sujet au membres, ou modo.
-		$check_mbr = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_topics WHERE id = '" . $idt_get . "'");
+		$check_mbr = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_topics', 'user_id', 'WHERE id=:id', array('id' => $idt_get));
 		if ((!empty($check_mbr) && AppContext::get_current_user()->get_id() == $check_mbr) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
 		{
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'");
@@ -145,12 +145,14 @@ elseif (!empty($idt_get))
 	}
 	elseif ($poll && AppContext::get_current_user()->get_id() !== -1) //Enregistrement vote du sondage
 	{
-		$info_poll = $Sql->query_array(PREFIX . 'forum_poll', 'voter_id', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'");
+		$info_poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('voter_id', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
+
 		//Si l'utilisateur n'est pas dans le champ on prend en compte le vote.
-		if (!in_array(AppContext::get_current_user()->get_id(), explode('|', $info_poll['voter_id'])))
+		$voter_id = explode('|', $info_poll['voter_id']);
+		if (!in_array(AppContext::get_current_user()->get_id(), $voter_id))
 		{
 			//On concatène avec les votans existants.
-			$add_voter_id = "voter_id = CONCAT(voter_id, '|" . AppContext::get_current_user()->get_id() . "'),";
+			$voter_id[] = AppContext::get_current_user()->get_id();
 			$array_votes = explode('|', $info_poll['votes']);
 
 			if ($info_poll['type'] == 0) //Réponse simple.
@@ -169,7 +171,7 @@ elseif (!empty($idt_get))
 						$array_votes[$i]++;
 				}
 			}
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_poll SET " . $add_voter_id . " votes = '" . implode('|', $array_votes) . "' WHERE idtopic = '" . $idt_get . "'");
+			PersistenceContext::get_querier()->update(PREFIX . 'forum_poll', array('voter_id' =>  implode('|', $$voter_id), 'votes' =>  implode('|', $array_votes)), 'WHERE idtopic=:id', array('id' => $idt_get));
 		}
 
 		AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get . '&pt=' . $page_get, '-' . $idt_get . '-' . $page_get . $rewrited_title . '.php', '&'));
@@ -265,9 +267,9 @@ elseif ($read) //Marquer comme lu.
 
 	//Modification du last_view_forum, si le membre est déjà dans la table
 	if (!empty($check_last_view_forum))
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET last_view_forum = '" .  time(). "' WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('last_view_forum' => time()), 'WHERE user_id=:id', array('id' => AppContext::get_current_user()->get_id()));
 	else
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " (user_id,last_view_forum) VALUES ('" . AppContext::get_current_user()->get_id() . "', '" .  time(). "')");
+		PersistenceContext::get_querier()->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('user_id' => AppContext::get_current_user()->get_id(), 'last_view_forum' =>  time()));
 
 	AppContext::get_response()->redirect('/forum/index.php');
 }

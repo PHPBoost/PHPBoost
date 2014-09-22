@@ -93,15 +93,14 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
-		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'");
-
-		if (empty($topic['idcat'])) //Topic inexistant.
-		{
+		try {
+			$topic = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_topics', array('idcat', 'title', 'subtitle'), 'WHERE id=:id', array('id' => $idt_get));
+		} catch (RowNotFoundException $e) {
 			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 $LANG['e_unexist_topic_forum']);
             DispatchManager::redirect($controller);
 		}
-		
+
 		$tpl = new FileTemplate('forum/forum_edit_msg.tpl');
 		$tpl_top = new FileTemplate('forum/forum_top.tpl');
 		$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
@@ -402,10 +401,9 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
-		//Verrouillé?
-		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'");
-		if (empty($topic['idcat']))
-		{
+		try {
+			$topic = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_topics', array('idcat', 'title', 'nbr_msg', 'last_user_id', 'status'), 'WHERE id=:id', array('id' => $idt_get));
+		} catch (RowNotFoundException $e) {
 			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
                 $LANG['e_topic_lock_forum']);
             DispatchManager::redirect($controller);

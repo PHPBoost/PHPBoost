@@ -73,7 +73,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'U_FORUM_VIEW_MSG' => url('.php?id=' . $view_msg)
 	));
 	
-	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.groups, t.title, t.status, t.idcat, c.name, m.display_name, m.level, m.email, m.show_email, m.timestamp AS registered, m.user_msg, m.user_warning, m.user_ban, s.user_id AS connect, msg.contents
+	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.groups, t.title, t.status, t.idcat, c.name, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, m.posted_msg, m.warning_percentage, m.delay_banned, s.user_id AS connect, msg.contents
 	FROM " . PREFIX . "forum_msg msg
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
 	JOIN " . PREFIX . "forum_cats c ON t.idcat = c.id AND c.aprob = 1
@@ -96,12 +96,12 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		
 		$tpl->assign_block_vars('list', array(
 			'C_GROUP_COLOR' => !empty($group_color),
-			'C_GUEST' => empty($row['login']),
+			'C_GUEST' => empty($row['display_name']),
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'ID' => $row['id'],
 			'USER_ONLINE' => '<i class="fa ' . (!empty($row['connect']) ? 'fa-online' : 'fa-offline') . '"></i>',
-			'USER_PSEUDO' => !empty($row['login']) ? wordwrap(TextHelper::html_entity_decode($row['login']), 13, '<br />', 1) : $LANG['guest'],
+			'USER_PSEUDO' => !empty($row['display_name']) ? wordwrap(TextHelper::html_entity_decode($row['display_name']), 13, '<br />', 1) : $LANG['guest'],
 			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 			'GROUP_COLOR' => $group_color,
 			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),

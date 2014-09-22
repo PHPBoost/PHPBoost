@@ -351,6 +351,7 @@ class KernelSetup
 			'timezone' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
 			'editor' => array('type' => 'string', 'length' => 15, 'default' => "''"),
 			'unread_pm' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
+			'posted_msg' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'registration_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'last_connection_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'groups' => array('type' => 'text', 'length' => 65000, 'default' => "''"),
