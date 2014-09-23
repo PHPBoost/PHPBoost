@@ -471,7 +471,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 $contents = '';
 if (!empty($quote_get))
 {	
-	$quote_msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'contents', "WHERE id = '" . $quote_get . "'");
+	$quote_msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'contents'), 'WHERE id=:id', array('id' => $quote_get));
 	$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $quote_msg['user_id'] . "'");	
 	$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
 }

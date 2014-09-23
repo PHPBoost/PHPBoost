@@ -86,8 +86,8 @@ elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 				$cat_list .=  ', ' . $row2['id'];
 		}
 		
-		$info_cat = $Sql->query_array(PREFIX . "forum_topics", "COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg", "WHERE idcat IN (" . $cat_list . ")");
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = '" . $info_cat['nbr_topic'] . "', nbr_msg = '" . $info_cat['nbr_msg'] . "' WHERE id = '" . $row['id'] . "'");
+		$info_cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array("COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg"), "WHERE idcat IN (" . $cat_list . ")");
+		PersistenceContext::get_querier()->update(PREFIX . 'forum_cats', array('nbr_topic' => $info_cat['nbr_topic'], 'nbr_msg' => $info_cat['nbr_msg']), 'WHERE id=:id', array('id' => $row['id']));
 	}
 	$result->dispose();
 	

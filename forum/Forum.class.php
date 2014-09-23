@@ -44,17 +44,18 @@ class Forum
 
 		##### Insertion message #####
 		$last_timestamp = time();
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_msg (idtopic, user_id, contents, timestamp, timestamp_edit, user_id_edit, user_ip) VALUES ('" . $idtopic . "', '" . AppContext::get_current_user()->get_id() . "', '" . FormatingHelper::strparse($contents) . "', '" . $last_timestamp . "', '0', '0', '" . AppContext::get_request()->get_ip_address() . "')");
-		$last_msg_id = $Sql->insert_id();
+		$result = PersistenceContext::get_querier()->insert(PREFIX . 'forum_msg', array('idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id(), 'contents' => FormatingHelper::strparse($contents), 
+			'timestamp' => $last_timestamp, 'timestamp_edit' => 0, 'user_id_edit' => 0, 'user_ip' => AppContext::get_request()->get_ip_address()));
+		$last_msg_id = $result->get_last_inserted_id();
 
 		//Topic
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET " . ($new_topic ? '' : 'nbr_msg = nbr_msg + 1, ') . "last_user_id = '" . AppContext::get_current_user()->get_id() . "', last_msg_id = '" . $last_msg_id . "', last_timestamp = '" . $last_timestamp . "' WHERE id = '" . $idtopic . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET " . ($new_topic ? '' : 'nbr_msg = nbr_msg + 1, ') . "last_user_id = '" . AppContext::get_current_user()->get_id() . "', last_msg_id = '" . $last_msg_id . "', last_timestamp = '" . $last_timestamp . "' WHERE id = '" . $idtopic . "'");
 
 		//On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté, et le nombre de messages..
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . $idtopic . "', nbr_msg = nbr_msg + 1" . ($new_topic ? ', nbr_topic = nbr_topic + 1' : '') . " WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . $idtopic . "', nbr_msg = nbr_msg + 1" . ($new_topic ? ', nbr_topic = nbr_topic + 1' : '') . " WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
 
 		//Mise à jour du nombre de messages du membre.
-		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg + 1 WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg + 1 WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
 
 		//On marque le topic comme lu.
 		mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp);
@@ -130,7 +131,7 @@ class Forum
 		$last_topic_id = $Sql->insert_id();	//Dernier topic inseré
 
 		$last_msg_id = $this->Add_msg($last_topic_id, $idcat, $contents, $title, 0, 0, true); //Insertion du message.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET first_msg_id = '" . $last_msg_id . "' WHERE id = '" . $last_topic_id . "'");
+		PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', array('first_msg_id' => $last_msg_id), 'WHERE id=:id', array('id' => $last_topic_id));
 
 		forum_generate_feeds(); //Regénération des flux flux
 
@@ -166,7 +167,7 @@ class Forum
 		global $Sql;
 
 		//Mise à jour du sujet.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET title = '" . $title . "', subtitle = '" . $subtitle . "', type = '" . $type . "' WHERE id = '" . $idtopic . "'");
+		PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', array('title' => $title, 'subtitle' => $subtitle, 'type' => $type), 'WHERE id=:id', array('id' => $idtopic));
 		//Mise à jour du contenu du premier message du sujet.
 		$this->Update_msg($idtopic, $idmsg, $contents, $user_id_msg, NO_HISTORY);
 
@@ -187,28 +188,28 @@ class Forum
 			//On supprime le message demandé.
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_msg', 'WHERE id=:id', array('id' => $idmsg));
 			//On met à jour la table forum_topics.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET nbr_msg = nbr_msg - 1 WHERE id = '" . $idtopic . "'");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_msg = nbr_msg - 1 WHERE id = '" . $idtopic . "'");
 			//On retranche d'un messages la catégorie concernée.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
 			//Récupération du message précédent celui supprimé afin de rediriger vers la bonne ancre.
 			$previous_msg_id = $Sql->query("SELECT id FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "' ORDER BY timestamp DESC " . $Sql->limit(0, 1));
 
 			if ($last_msg_id == $idmsg) //On met à jour le dernier message posté dans la liste des topics.
 			{
 				//On cherche les infos à propos de l'avant dernier message afin de mettre la table forum_topics à jour.
-				$id_before_last = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'timestamp', "WHERE id = '" . $previous_msg_id . "'");
-				$last_timestamp = $id_before_last['timestamp'];
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET last_user_id = '" . $id_before_last['user_id'] . "', last_msg_id = '" . $previous_msg_id . "', last_timestamp = '" . $last_timestamp . "' WHERE id = '" . $idtopic . "'");
+				$id_before_last = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'timestamp'), 'WHERE id=:id', array('id' => $previous_msg_id));
+				
+				PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', array('last_user_id' => $id_before_last['user_id'], 'last_msg_id' => $previous_msg_id, 'last_timestamp' => $id_before_last['timestamp']), 'WHERE id=:id', array('id' => $idtopic));
 
 				//On met maintenant a jour le last_topic_id dans les catégories.
 				$this->Update_last_topic_id($idcat);
 			}
 				
 			//On retire un msg au membre.
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg - 1 WHERE user_id = '" . $msg_user_id . "'");
+			PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg - 1 WHERE user_id = '" . $msg_user_id . "'");
 				
 			//Mise à jour du dernier message lu par les membres.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_view SET last_view_id = '" . $previous_msg_id . "' WHERE last_view_id = '" . $idmsg . "'");
+			PersistenceContext::get_querier()->update(PREFIX . 'forum_view', array('last_view_id' => $previous_msg_id), 'WHERE last_view_id=:id', array('id' => $idmsg));
 			//On marque le topic comme lu, si c'est le dernier du message du topic.
 			if ($last_msg_id == $idmsg)
 			mark_topic_as_read($idtopic, $previous_msg_id, $last_timestamp);
@@ -235,7 +236,7 @@ class Forum
 	{
 		global $Sql,  $CAT_FORUM;
 
-		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'user_id', "WHERE id = '" . $idtopic . "'");
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'user_id'), 'WHERE id=:id', array('id' => $idtopic));
 		$topic['user_id'] = (int)$topic['user_id'];
 
 		//On ne supprime pas de msg aux membres ayant postés dans le topic => trop de requêtes.
@@ -249,7 +250,7 @@ class Forum
 		PersistenceContext::get_querier()->delete(PREFIX . 'forum_poll', 'WHERE idtopic=:id', array('id' => $idtopic));
 		
 		//On retranche le nombre de messages et de topic.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic - 1, nbr_msg = nbr_msg - '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$topic['idcat']]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$topic['idcat']]['id_right'] ."' AND level <= '" . $CAT_FORUM[$topic['idcat']]['level'] . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic - 1, nbr_msg = nbr_msg - '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$topic['idcat']]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$topic['idcat']]['id_right'] ."' AND level <= '" . $CAT_FORUM[$topic['idcat']]['level'] . "'");
 
 		//On met maintenant a jour le last_topic_id dans les catégories.
 		$this->Update_last_topic_id($topic['idcat']);
@@ -372,12 +373,12 @@ class Forum
 		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET idcat = '" . $idcat_dest . "' WHERE id = '" . $idtopic . "'");
 
 		//On met à jour l'ancienne table
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - '" . $topic['nbr_msg'] . "', nbr_topic = nbr_topic - 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - '" . $topic['nbr_msg'] . "', nbr_topic = nbr_topic - 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
 		//On met maintenant a jour le last_topic_id dans les catégories.
 		$this->Update_last_topic_id($idcat);
 
 		//On met à jour la nouvelle table
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg + '" . $topic['nbr_msg'] . "', nbr_topic = nbr_topic + 1 WHERE id_left <= '" . $CAT_FORUM[$idcat_dest]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat_dest]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat_dest]['level'] . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg + '" . $topic['nbr_msg'] . "', nbr_topic = nbr_topic + 1 WHERE id_left <= '" . $CAT_FORUM[$idcat_dest]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat_dest]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat_dest]['level'] . "'");
 		//On met maintenant a jour le last_topic_id dans les catégories.
 		$this->Update_last_topic_id($idcat_dest);
 
@@ -412,15 +413,15 @@ class Forum
 		if ($idcat != $idcat_dest)
 		{
 			//Mise à jour du nombre de messages de la nouvelle catégorie, ainsi que du last_topic_id.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic + 1, nbr_msg = nbr_msg + '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$idcat_dest]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat_dest]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat_dest]['level'] . "'");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic + 1, nbr_msg = nbr_msg + '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$idcat_dest]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat_dest]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat_dest]['level'] . "'");
 			//On met maintenant a jour le last_topic_id dans les catégories.
 			$this->Update_last_topic_id($idcat_dest);
 
 			//Mise à jour du nombre de messages de l'ancienne catégorie, ainsi que du last_topic_id.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg - '" . $nbr_msg . "' WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
 		}
 		else //Mise à jour du nombre de messages de la catégorie, ainsi que du last_topic_id.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic + 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = nbr_topic + 1 WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] ."' AND level <= '" . $CAT_FORUM[$idcat]['level'] . "'");
 
 		//On met maintenant a jour le last_topic_id dans les catégories.
 		$this->Update_last_topic_id($idcat);
@@ -517,7 +518,7 @@ class Forum
 	{
 		global $Sql;
 
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_alerts SET status = 0, idmodo = 0 WHERE id = '" . $id_alert . "'");
+		PersistenceContext::get_querier()->update(PREFIX . 'forum_alerts', array('status' => 0, 'idmodo' => 0), 'WHERE id=:id', array('id' => $id_alert));
 
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_WAIT_ALERT, 0, 'moderation_forum.php?action=alert&id=' . $id_alert);
