@@ -39,7 +39,7 @@ $tpl = new FileTemplate('forum/forum_stats.tpl');
 $total_day = NumberHelper::round((time() - GeneralConfig::load()->get_site_install_date()->get_timestamp())/(3600*24), 0);
 $timestamp_today = @mktime(0, 0, 1, gmdate_format('m'), gmdate_format('d'), gmdate_format('y'));
 
-$sum = $Sql->query_array(PREFIX . "forum_cats", "SUM(nbr_topic) as total_topics", "SUM(nbr_msg) as total_msg", "WHERE level <> 0 AND level < 2 AND aprob = 1");
+$sum = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array("SUM(nbr_topic) as total_topics", "SUM(nbr_msg) as total_msg"), "WHERE level <> 0 AND level < 2 AND aprob = 1");
 
 $total_day = max(1, $total_day);
 $nbr_topics_day = NumberHelper::round($sum['total_topics']/$total_day, 1);

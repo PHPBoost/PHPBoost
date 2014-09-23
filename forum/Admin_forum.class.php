@@ -46,13 +46,13 @@ class Admin_forum
 			if (!empty($switch_id_cat))
 			{
 				//On monte la catï¿½gorie ï¿½ dï¿½placer, on lui assigne des id nï¿½gatifs pour assurer l'unicitï¿½.
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left + '" . ($CAT_FORUM[$switch_id_cat]['id_right'] - $CAT_FORUM[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right + '" . ($CAT_FORUM[$switch_id_cat]['id_right'] - $CAT_FORUM[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left + '" . ($CAT_FORUM[$switch_id_cat]['id_right'] - $CAT_FORUM[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right + '" . ($CAT_FORUM[$switch_id_cat]['id_right'] - $CAT_FORUM[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'");
 				//On descend la catï¿½gorie cible.
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] + 1) . "', id_right = id_right + '" . ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_FORUM[$switch_id_cat]['id_left'] . "' AND '" . $CAT_FORUM[$switch_id_cat]['id_right'] . "'");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] + 1) . "', id_right = id_right + '" . ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_FORUM[$switch_id_cat]['id_left'] . "' AND '" . $CAT_FORUM[$switch_id_cat]['id_right'] . "'");
 				
 				//On rï¿½tablit les valeurs absolues.
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left WHERE id_left < 0");
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = - id_right WHERE id_right < 0");	
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left WHERE id_left < 0");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = - id_right WHERE id_right < 0");	
 				
 				$Cache->Generate_module_file('forum');
 			}		
@@ -74,13 +74,13 @@ class Admin_forum
 			if (!empty($switch_id_cat))
 			{
 				//On monte la catï¿½gorie ï¿½ dï¿½placer, on lui assigne des id nï¿½gatifs pour assurer l'unicitï¿½.
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left - '" . ($CAT_FORUM[$switch_id_cat]['id_right'] - $CAT_FORUM[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right - '" . ($CAT_FORUM[$switch_id_cat]['id_right'] - $CAT_FORUM[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left - '" . ($CAT_FORUM[$switch_id_cat]['id_right'] - $CAT_FORUM[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right - '" . ($CAT_FORUM[$switch_id_cat]['id_right'] - $CAT_FORUM[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'");
 				//On descend la catï¿½gorie cible.
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] + 1) . "', id_right = id_right - '" . ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_FORUM[$switch_id_cat]['id_left'] . "' AND '" . $CAT_FORUM[$switch_id_cat]['id_right'] . "'");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] + 1) . "', id_right = id_right - '" . ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_FORUM[$switch_id_cat]['id_left'] . "' AND '" . $CAT_FORUM[$switch_id_cat]['id_right'] . "'");
 				
 				//On rï¿½tablit les valeurs absolues.
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left WHERE id_left < 0");
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = - id_right WHERE id_right < 0");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left WHERE id_left < 0");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = - id_right WHERE id_right < 0");
 				
 				$Cache->Generate_module_file('forum');
 			}
@@ -114,29 +114,29 @@ class Admin_forum
 				
 			########## Suppression ##########
 			//On supprime virtuellement (changement de signe des bornes) les enfants.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_cats . ")");								
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_cats . ")");								
 			//On modifie les bornes droites des parents.
 			if (!empty($list_parent_cats))
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")");
 			
 			//On rï¿½duit la taille de l'arbre du nombre de forum supprimï¿½ ï¿½ partir de la position de celui-ci.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$id]['id_right'] . "'");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$id]['id_right'] . "'");
 
 			########## Ajout ##########
 			//On modifie les bornes droites des parents de la cible.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + '" . ($nbr_cat*2) . "' WHERE " . $clause_parent_cats_to);
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + '" . ($nbr_cat*2) . "' WHERE " . $clause_parent_cats_to);
 
 			//On augmente la taille de l'arbre du nombre de forum supprimï¿½ ï¿½ partir de la position du forum cible.
 			$array_parents_cats = explode(', ', $list_parent_cats);
 			if ($CAT_FORUM[$id]['id_left'] > $CAT_FORUM[$to]['id_left'] && !in_array($f_to, $array_parents_cats) ) //Direction forum source -> forum cible, et source non incluse dans la cible.
 			{	
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$to]['id_right'] . "'");						
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$to]['id_right'] . "'");						
 				$limit = $CAT_FORUM[$to]['id_right'];
 				$end = $limit + ($nbr_cat*2) - 1;
 			}
 			else
 			{	
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_FORUM[$to]['id_right'] - ($nbr_cat*2)) . "'");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_FORUM[$to]['id_right'] - ($nbr_cat*2)) . "'");
 				$limit = $CAT_FORUM[$to]['id_right'] - ($nbr_cat*2);
 				$end = $limit + ($nbr_cat*2) - 1;						
 			}	
@@ -148,7 +148,7 @@ class Admin_forum
 			{
 				$id_left = $limit + ($CAT_FORUM[$array_sub_cats[$z]]['id_left'] - $CAT_FORUM[$id]['id_left']);
 				$id_right = $end - ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$array_sub_cats[$z]]['id_right']);
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'");
 				$z++;
 			}
 					
@@ -176,11 +176,11 @@ class Admin_forum
 			
 			$nbr_del = $CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left'] + 1;
 			if (!empty($list_parent_cats))
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - '" . $nbr_del . "' WHERE id IN (" . $list_parent_cats . ")");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - '" . $nbr_del . "' WHERE id IN (" . $list_parent_cats . ")");
 
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_cats', 'WHERE id_left BETWEEN :id_left AND :id_right', array('id_left' => $CAT_FORUM[$idcat]['id_left'], 'id_right' => $CAT_FORUM[$idcat]['id_right']));
 			
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . $nbr_del . "', id_right = id_right - '" . $nbr_del . "' WHERE id_left > '" . $CAT_FORUM[$idcat]['id_right'] . "'");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . $nbr_del . "', id_right = id_right - '" . $nbr_del . "' WHERE id_left > '" . $CAT_FORUM[$idcat]['id_right'] . "'");
 			
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_msg', 'WHERE idtopic IN (
 			SELECT id FROM ' . PREFIX . 'forum_topics WHERE idcat =:id)', array('id' => $idcat));
@@ -212,24 +212,24 @@ class Admin_forum
 				$nbr_topic = PersistenceContext::get_querier()->count(PREFIX . 'forum_topics', 'WHERE idcat=:idcat', array('idcat' => $idcat));
 				$nbr_topic = !empty($nbr_topic) ? $nbr_topic : 0;
 				
-				//On dï¿½place les topics dans le nouveau forum.
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET idcat = '" . $t_to . "' WHERE idcat = '" . $idcat . "'");
+				//On deplace les topics dans le nouveau forum.
+				PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', array('idcat' => $t_to), 'WHERE idcat=:id', array('id' => $idcat));
 
-				//On met ï¿½ jour le nouveau forum.
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg + " . $nbr_msg . ", nbr_topic = nbr_topic + " . $nbr_topic . " WHERE id = '" . $t_to . "'");
+				//On met a jour le nouveau forum.
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET nbr_msg = nbr_msg + " . $nbr_msg . ", nbr_topic = nbr_topic + " . $nbr_topic . " WHERE id=:id", array('id' => $t_to));
 				
 				//On supprime l'ancien forum.
 				PersistenceContext::get_querier()->delete(PREFIX . 'forum_cats', 'WHERE id=:id', array('id' => $idcat));
 			}
 			
-			//Prï¿½sence de sous-forums => dï¿½placement de ceux-ci.
+			//Prï¿½sence de sous-forums => deplacement de ceux-ci.
 			if ($nbr_sub_cat > 0)
 			{
 				$list_sub_cats = $this->get_child_list($idcat, FORUM_CAT_NO_INCLUDED); //Sous forums du forum.
 				$list_parent_cats = $this->get_parent_list($idcat);  //Forums parent du forum.
 				$list_parent_cats_to = $this->get_parent_list($f_to, FORUM_CAT_INCLUDED);  //Forums parents du forum cible.
 				
-				//Prï¿½caution pour ï¿½viter erreur fatale, cas impossible si cohï¿½rence de l'arbre respectï¿½e.
+				//Prï¿½caution pour eviter erreur fatale, cas impossible si coherence de l'arbre respecte.
 				if (empty($list_sub_cats))
 					return false;
 					
@@ -238,14 +238,14 @@ class Admin_forum
 				PersistenceContext::get_querier()->delete(PREFIX . 'forum_cats', 'WHERE id=:id', array('id' => $idcat));
 				
 				//On supprime virtuellement (changement de signe des bornes) les enfants.
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_sub_cats . ")");					
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_sub_cats . ")");					
 				
 				//On modifie les bornes droites des parents.
 				if (!empty($list_parent_cats))
-					$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")");
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")");
 				
 				//On rï¿½duit la taille de l'arbre du nombre de forum supprimï¿½ ï¿½ partir de la position de celui-ci.
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . (2 + $nbr_sub_cat*2) . "', id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$idcat]['id_right'] . "'");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . (2 + $nbr_sub_cat*2) . "', id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$idcat]['id_right'] . "'");
 			
 				########## Ajout ##########
 				if (!empty($f_to)) //Forum cible diffï¿½rent de la racine.
@@ -256,19 +256,19 @@ class Admin_forum
 						$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
 					
 					//On modifie les bornes droites des parents de la cible.
-					$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE " . $clause_parent_cats_to);
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE " . $clause_parent_cats_to);
 					
 					//On augmente la taille de l'arbre du nombre de forum supprimï¿½ ï¿½ partir de la position du forum cible.
 					$array_parents_cats = explode(', ', $list_parent_cats);
 					if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$f_to]['id_left'] && !in_array($f_to, $array_parents_cats)) //Direction forum source -> forum cible, et source non incluse dans la cible.
 					{	
-						$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$f_to]['id_right'] . "'");						
+						PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$f_to]['id_right'] . "'");						
 						$limit = $CAT_FORUM[$f_to]['id_right'];
 						$end = $limit + ($nbr_sub_cat*2) - 1;
 					}
 					else
 					{	
-						$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . ($CAT_FORUM[$f_to]['id_right'] - (2 + $nbr_sub_cat*2)) . "'");
+						PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . ($CAT_FORUM[$f_to]['id_right'] - (2 + $nbr_sub_cat*2)) . "'");
 						$limit = $CAT_FORUM[$f_to]['id_right'] - (2 + $nbr_sub_cat*2);
 						$end = $limit + ($nbr_sub_cat*2) - 1;						
 					}
@@ -280,12 +280,12 @@ class Admin_forum
 					{
 						$id_left = $limit + ($CAT_FORUM[$array_sub_cats[$z]]['id_left'] - $CAT_FORUM[$idcat]['id_left']) - 1;
 						$id_right = $end - ($CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$array_sub_cats[$z]]['id_right']) + 1;
-						$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'");
+						PersistenceContext::get_querier()->update(PREFIX . 'forum_cats', array('id_left' => $id_left, 'id_right' => $id_right), 'WHERE id=:id', array('id' => $array_sub_cats[$z]));
 						$z++;
 					}								
 
 					//On met ï¿½ jour le nouveau forum.
-					$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . ($CAT_FORUM[$idcat]['level'] - $CAT_FORUM[$f_to]['level']) . "' WHERE id IN (" . $list_sub_cats . ")");
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . ($CAT_FORUM[$idcat]['level'] - $CAT_FORUM[$f_to]['level']) . "' WHERE id IN (" . $list_sub_cats . ")");
 				}
 				else //Racine
 				{
@@ -299,16 +299,16 @@ class Admin_forum
 					{
 						$id_left = $limit + ($CAT_FORUM[$array_sub_cats[$z]]['id_left'] - $CAT_FORUM[$idcat]['id_left']) - 1;
 						$id_right = $end - ($CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$array_sub_cats[$z]]['id_right']) + 1;
-						$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'");
+						PersistenceContext::get_querier()->update(PREFIX . 'forum_cats', array('id_left' => $id_left, 'id_right' => $id_right), 'WHERE id=:id', array('id' => $array_sub_cats[$z]));
 						$z++;
 					}		
-					$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . ($CAT_FORUM[$idcat]['level'] - $CAT_FORUM[$f_to]['level'] + 1) . "' WHERE id IN (" . $list_sub_cats . ")");
+					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . ($CAT_FORUM[$idcat]['level'] - $CAT_FORUM[$f_to]['level'] + 1) . "' WHERE id IN (" . $list_sub_cats . ")");
 				}
 			}
 			else //On rï¿½tabli l'arbre intervallaire.
 			{
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - 2 WHERE id_left < '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right > '" . $CAT_FORUM[$idcat]['id_right'] . "'");
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - 2, id_right = id_right - 2 WHERE id_left > '" . $CAT_FORUM[$idcat]['id_right'] . "'");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - 2 WHERE id_left < '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right > '" . $CAT_FORUM[$idcat]['id_right'] . "'");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - 2, id_right = id_right - 2 WHERE id_left > '" . $CAT_FORUM[$idcat]['id_right'] . "'");
 			}
 			
 			$Cache->Generate_module_file('forum'); //Regï¿½nï¿½ration du cache
@@ -339,13 +339,13 @@ class Admin_forum
 
 		########## Suppression ##########
 		//On supprime virtuellement (changement de signe des bornes) les enfants.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_cats . ")");	
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_cats . ")");	
 		//On modifie les bornes droites des parents.
 		if (!empty($list_parent_cats))
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "' WHERE id IN (" . $list_parent_cats . ")");
 		
 		//On rï¿½duit la taille de l'arbre du nombre de forum supprimï¿½ ï¿½ partir de la position de celui-ci.
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$id]['id_right'] . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$id]['id_right'] . "'");
 		
 		########## Ajout ##########
 		if (!empty($to)) //Forum cible différent de la racine.
@@ -354,13 +354,13 @@ class Admin_forum
 			$array_parents_cats = explode(', ', $list_parent_cats);
 			if ($CAT_FORUM[$id]['id_left'] > $CAT_FORUM[$to]['id_left'] && !in_array($to, $array_parents_cats)) //Direction forum source -> forum cible, et source non incluse dans la cible.
 			{	
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$to]['id_right'] . "'");						
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$to]['id_right'] . "'");						
 				$limit = $CAT_FORUM[$to]['id_right'];
 				$end = $limit + ($nbr_cat*2) - 1;
 			}
 			else
 			{	
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_FORUM[$to]['id_right'] - ($nbr_cat*2)) . "'");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_FORUM[$to]['id_right'] - ($nbr_cat*2)) . "'");
 				$limit = $CAT_FORUM[$to]['id_right'] - ($nbr_cat*2);
 				$end = $limit + ($nbr_cat*2) - 1;
 			}	
@@ -372,7 +372,7 @@ class Admin_forum
 			{
 				$id_left = $limit + ($CAT_FORUM[$array_sub_cats[$z]]['id_left'] - $CAT_FORUM[$id]['id_left']);
 				$id_right = $end - ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$array_sub_cats[$z]]['id_right']);
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'");
+				PersistenceContext::get_querier()->update(PREFIX . 'forum_cats', array('id_left' => $id_left, 'id_right' => $id_right), 'WHERE id=:id', array('id' => $array_sub_cats[$z]));
 				$z++;
 			}
 			
@@ -387,10 +387,10 @@ class Admin_forum
 				$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
 			
 			//On modifie les bornes droites des parents de la cible.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + '" . ($nbr_cat*2) . "' WHERE " . $clause_parent_cats_to);
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + '" . ($nbr_cat*2) . "' WHERE " . $clause_parent_cats_to);
 			
 			//On met à jour le nouveau forum.
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . (($CAT_FORUM[$id]['level'] - $CAT_FORUM[$to]['level']) - 1) . "' WHERE id IN (" . $list_cats . ")");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . (($CAT_FORUM[$id]['level'] - $CAT_FORUM[$to]['level']) - 1) . "' WHERE id IN (" . $list_cats . ")");
 			
 			$Cache->Generate_module_file('forum');
 			$Cache->load('forum', RELOAD_CACHE); //Rechargement du cache
@@ -412,10 +412,10 @@ class Admin_forum
 			{
 				$id_left = $limit + ($CAT_FORUM[$array_sub_cats[$z]]['id_left'] - $CAT_FORUM[$id]['id_left']);
 				$id_right = $end - ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$array_sub_cats[$z]]['id_right']);
-				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'");
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'");
 				$z++;
 			}		
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . ($CAT_FORUM[$id]['level'] - $CAT_FORUM[$to]['level']) . "' WHERE id IN (" . $list_cats . ")");		
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . ($CAT_FORUM[$id]['level'] - $CAT_FORUM[$to]['level']) . "' WHERE id IN (" . $list_cats . ")");		
 		}
 		
 		$Cache->Generate_module_file('forum');
@@ -491,7 +491,7 @@ class Admin_forum
 		$last_timestamp = $Sql->query("SELECT MAX(last_timestamp) FROM " . PREFIX . "forum_topics WHERE " . $clause);
 		$last_topic_id = $Sql->query("SELECT id FROM " . PREFIX . "forum_topics WHERE last_timestamp = '" . $last_timestamp . "'");
 		if (!empty($last_topic_id))
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET last_topic_id = '" . $last_topic_id . "' WHERE id = '" . $idcat . "'");
+			PersistenceContext::get_querier()->update(PREFIX . 'forum_cats', array('last_topic_id' => $last_topic_id), 'WHERE id=:id', array('id' => $idcat));
 		
 		if ($CAT_FORUM[$idcat]['level'] > 1) //Appel recursif si sous-forum.
 		{	

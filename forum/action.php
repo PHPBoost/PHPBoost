@@ -133,7 +133,7 @@ elseif (!empty($idt_get))
 		$check_mbr = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_topics', 'user_id', 'WHERE id=:id', array('id' => $idt_get));
 		if ((!empty($check_mbr) && AppContext::get_current_user()->get_id() == $check_mbr) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'");
 
 			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
 		}

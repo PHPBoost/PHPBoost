@@ -374,7 +374,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'groups', 'user_readonly', "WHERE user_id = '" . $id_get . "'");
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'user_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
 
 		//Durée de la sanction.
 		$date_lang = LangLoader::get('date-common');
@@ -563,7 +563,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'groups', 'user_warning', "WHERE user_id = '" . $id_get . "'");
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'user_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
 
 		$select = '';
 		$j = 0;

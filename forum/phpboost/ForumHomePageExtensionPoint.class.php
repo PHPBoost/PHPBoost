@@ -101,7 +101,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		$display_cat = !empty($id_get);
 		if ($display_cat)
 		{
-			$intervall = $this->sql_querier->query_array(PREFIX . "forum_cats", "id_left", "id_right", "level", "WHERE id = '" . $id_get . "'");
+			$intervall = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array("id_left", "id_right", "level"), 'WHERE id=:id', array('id' => $id_get));
 			$display_sub_cat = ' AND c.id_left > \'' . $intervall['id_left'] . '\'
 		   AND c.id_right < \'' . $intervall['id_right'] . '\'
 		   AND c.level = \'' . $intervall['level'] . '\' + 1';

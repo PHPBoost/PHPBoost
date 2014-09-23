@@ -63,7 +63,7 @@ class PHPBoostCaptcha extends Captcha
 		}
 
 		$get_code = retrieve(POST, $this->get_html_id(), '', TSTRING_UNCHANGE);
-		$captcha = $this->sql_querier->query_array(PHPBoostCaptchaSetup::$verif_code_table, 'code', 'difficulty', "WHERE user_id = '" . $this->user_id . "'");
+		$captcha = PersistenceContext::get_querier()->select_single_row(PHPBoostCaptchaSetup::$verif_code_table, array('code', 'difficulty'), 'WHERE user_id =:id', array('id' => $this->user_id));
 
 		$this->sql_querier->query_inject("DELETE FROM " . PHPBoostCaptchaSetup::$verif_code_table . " WHERE user_id = '" . $this->user_id . "'");
 

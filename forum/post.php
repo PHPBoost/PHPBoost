@@ -458,7 +458,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		$id_m = retrieve(GET, 'idm', 0);
 		$update = retrieve(GET, 'update', false);
 		$id_first = $Sql->query("SELECT MIN(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idt_get . "'");
-		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'title', 'subtitle', 'type', 'user_id', 'display_msg', "WHERE id = '" . $idt_get . "'");
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('title', 'subtitle', 'type', 'user_id', 'display_msg'), 'WHERE id=:id', array('id' => $idt_get));
 
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
@@ -668,7 +668,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				}
 
 				//Récupération des infos du sondage associé si il existe
-				$poll = $Sql->query_array(PREFIX . 'forum_poll', 'question', 'answers', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'");
+				$poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('question', 'answers', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
 				$array_answer = explode('|', $poll['answers']);
 				$array_votes = explode('|', $poll['votes']);
 
@@ -858,7 +858,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 	{
 		if (!empty($id_get) && !empty($idt_get) && ($error_get === 'flood' || $error_get === 'incomplete' || $error_get === 'locked'))
 		{
-			$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'");
+			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'title', 'subtitle'), 'WHERE id=:id', array('id' => $idt_get));
 			if (empty($topic['idcat'])) //Topic inexistant.
 			{
 				$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
