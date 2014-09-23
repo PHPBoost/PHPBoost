@@ -90,8 +90,16 @@ class HTMLTable extends HTMLElement
 	private function extract_parameters()
 	{
 		$this->nb_rows = $this->model->get_number_of_matching_rows($this->parameters->get_filters());
-		$last_page_number = ceil($this->nb_rows / $this->get_nb_rows_per_page());
-		$this->page_number = max(1, min($this->parameters->get_page_number(), $last_page_number));
+		$nb_rows_per_page = $this->get_nb_rows_per_page();
+		if ($nb_rows_per_page !== AbstractHTMLTableModel::NO_PAGINATION)
+		{
+			$last_page_number = ceil($this->nb_rows / $this->get_nb_rows_per_page());
+			$this->page_number = max(1, min($this->parameters->get_page_number(), $last_page_number));
+		}
+		else
+		{
+			$this->page_number = 1;
+		}
 	}
 
 	private function get_rows()
@@ -110,19 +118,20 @@ class HTMLTable extends HTMLElement
 		$has_filters = !empty($filters);
 		if ($filters)
 		{
-			$form_id = 'filters_form_' . $this->arg_id;
+			$form = new HTMLForm('filters_form_' . $this->arg_id, '#');
 			$fieldset = new FormFieldsetHorizontal('filters');
 			$fieldset->set_description(LangLoader::get_class_message('filters', __CLASS__));
+			$form->add_fieldset($fieldset);
+
 			foreach ($filters as $filter)
 			{
 				$fieldset->add_field($filter->get_form_field());
 				$this->tpl->assign_block_vars('filterElt', array(
-					'FORM_ID' => $form_id . '_' . $filter->get_id(),
+					'FORM_ID' => $filter->get_form_field()->get_html_id(),
 					'TABLE_ID' => $filter->get_id()
 				));
 			}
-			$form = new HTMLForm($form_id, '#');
-			$form->add_fieldset($fieldset);
+
 			$submit_function = str_replace('-', '_', 'submit_filters_' . $this->arg_id);
 			// TODO translate submit button label
             $form->add_button(new FormButtonButton('Soumettre', 'return ' . $submit_function . '()', 'submit'));
@@ -147,7 +156,8 @@ class HTMLTable extends HTMLElement
 			'C_CAPTION' => $this->model->has_caption(),
 			'CAPTION' => $this->model->get_caption(),
 			'U_TABLE_DEFAULT_OPIONS' => $this->parameters->get_default_table_url(),
-			'C_NB_ROWS_OPTIONS' => $has_nb_rows_options
+			'C_NB_ROWS_OPTIONS' => $has_nb_rows_options,
+			'HAS_ROWS' => !empty($this->rows)
 		));
 
 		if ($has_nb_rows_options)
