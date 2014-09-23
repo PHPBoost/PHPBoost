@@ -32,6 +32,7 @@
 abstract class AbstractHTMLTableModel implements HTMLTableModel
 {
 	const NO_PAGINATION = 0;
+	const DEFAULT_PAGINATION = 25;
 
 	private $id = 'table';
 	private $caption = '';
@@ -46,7 +47,7 @@ abstract class AbstractHTMLTableModel implements HTMLTableModel
 	 */
 	private $columns;
 
-	public function __construct(array $columns, HTMLTableSortingRule $default_sorting_rule, $rows_per_page = self::NO_PAGINATION)
+	public function __construct(array $columns, HTMLTableSortingRule $default_sorting_rule, $rows_per_page = self::DEFAULT_PAGINATION)
 	{
 		foreach ($columns as $column)
 		{

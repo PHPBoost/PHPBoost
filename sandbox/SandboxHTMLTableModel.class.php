@@ -41,12 +41,10 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		);
 		
 		$default_sorting_rule = new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC);
-		$nb_items_per_page = 3;
 		
 		parent::__construct($columns, $default_sorting_rule);
 		
 		$this->set_caption('Liste des membres');
-		$this->set_nb_rows_options(array(1, 2, 4, 8, 10, 15));
 		$this->set_id('t42');
 
 		$options = array('horn' => 'Horn', 'coucou' => 'Coucou', 'teston' => 'teston');
@@ -94,8 +92,6 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 
 	private function build_query($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters)
 	{
-		Debug::dump($limit);
-		Debug::dump($offset);
 		$query = 'SELECT user_id, display_name, email, show_email, registration_date, last_connection_date, posted_msg ' .
 		'FROM ' . DB_TABLE_MEMBER;
 		$query .= $this->get_filtered_clause($filters);

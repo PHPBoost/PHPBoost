@@ -73,6 +73,13 @@
 			# END row.cell #
 		</tr>
 		# END row #
+		# IF NOT HAS_ROWS #
+		<tr> 
+			<td colspan="6">
+				${LangLoader::get_message('no_item_now', 'common')}
+			</td>
+		</tr>
+		# ENDIF #
 	</tbody>
 </table>
 # IF C_FILTERS #
