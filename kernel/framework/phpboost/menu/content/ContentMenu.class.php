@@ -56,6 +56,7 @@ class ContentMenu extends Menu
     public function display()
     {
 		$tpl = new FileTemplate('framework/menus/content/display.tpl');
+        parent::_assign($tpl);
         $tpl->put_all(array(
             'C_DISPLAY_TITLE' => $this->display_title,
 			'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
