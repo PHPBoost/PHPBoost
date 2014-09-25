@@ -33,7 +33,7 @@
 class FeedMenu extends Menu
 {
 	const FEED_MENU__CLASS = 'FeedMenu';
-	
+
 	/**
 	 * @var string the feed url
 	 */
@@ -43,7 +43,7 @@ class FeedMenu extends Menu
 	public $category = 0;
 	public $number = 10;
 	public $begin_at = 0;
-	
+
 	public function __construct($title, $module_id, $category = 0, $name = Feed::DEFAULT_FEED_NAME, $number = 10, $begin_at = 0)
 	{
 		parent::__construct($title);
@@ -73,13 +73,13 @@ class FeedMenu extends Menu
 	public static function get_template($name = '', $block_position = Menu::BLOCK_POSITION__LEFT)
 	{
 		$tpl = new FileTemplate('framework/menus/feed/feed.tpl');
-
+		parent::_assign($tpl);
 		$tpl->put_all(array(
 			'NAME' => $name,
 			'C_NAME' => !empty($name),
 			'C_VERTICAL_BLOCK' => ($block_position == Menu::BLOCK_POSITION__LEFT || $block_position == Menu::BLOCK_POSITION__RIGHT)
 		));
-			
+
 		return $tpl;
 	}
 
@@ -88,7 +88,7 @@ class FeedMenu extends Menu
 	 * @return string the feed menu module id
 	 */
 	public function get_module_id() { return $this->module_id; }
-	
+
 	/**
 	* @param bool $relative If false, compute the absolute url, else, returns the relative one
 	* @return Return the absolute feed Url
