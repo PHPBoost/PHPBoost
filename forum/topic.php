@@ -33,7 +33,7 @@ $id_get = retrieve(GET, 'id', 0);
 $quote_get = retrieve(GET, 'quote', 0);	
 
 //On va chercher les infos sur le topic	
-$topic = !empty($id_get) ? $Sql->query_array(PREFIX . 'forum_topics', 'id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg', "WHERE id = '" . $id_get . "'") : '';
+$topic = !empty($id_get) ? PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $id_get)) : '';
 //Existance du topic.
 if (empty($topic['id']))
 {

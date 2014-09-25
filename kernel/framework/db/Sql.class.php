@@ -86,56 +86,6 @@ class Sql
 	}
 
 	/**
-	 * @desc This method makes automatically a query on several fields of a row.
-	 * You tell it in which table you want to select, which row you want to use, and it will return you the values.
-	 * It takes a variable number of parameters.
-	 * @param string $table Name of the table in which you want to select the values
-	 * @param string $field Name of the field for which you want to retrieve the value. If you want to work on several fields, you have to
-	 * repeat this parameter for each field you want to select.
-	 * @param string $clause Where clause which will enable the method to know in which row it must select the values.
-	 * It must respect the MySQL syntax and start off with 'WHERE '.
-	 * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
-	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
-	 * @param int $errfile The file in which you call this method. Use the __FILE__ constant.
-	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
-	 */
-	public function query_array()
-	{
-		$table = func_get_arg(0);
-		$nbr_arg = func_num_args();
-
-		$fields = array();
-		$conditions = func_get_arg($nbr_arg - 1);
-		if (func_get_arg(1) !== '*')
-		{
-			$nbr_arg_field_end = ($nbr_arg - 2);
-			for ($i = 1; $i <= $nbr_arg_field_end; $i++)
-			{
-				$fields[] = func_get_arg($i);
-			}
-		}
-		else
-		{
-			$fields = array('*');
-		}
-
-		try
-		{
-			$query_conditions = new SqlParameterExtractor($conditions);
-			return PersistenceContext::get_querier()->select_single_row(
-			$table, $fields, $query_conditions->get_query(), $query_conditions->get_parameters());
-		}
-		catch (RowNotFoundException $exception)
-		{
-			return false;
-		}
-		catch (NotASingleRowFoundException $exception)
-		{
-			return false;
-		}
-	}
-
-	/**
 	 * @desc This method enables you to execute CUD (Create Update Delete) queries in the database, and more generally,
 	 * any query which has not any return value.
 	 * @param string $query The query you want to execute

@@ -115,7 +115,7 @@ class PrivateMsg
 		//On vérifie qu'un message n'a pas été posté entre temps.
         if ($check_pm_before_send)
         {
-            $info_convers =	self::$sql_querier->query_array(DB_TABLE_PM_TOPIC . " ", "last_user_id", "user_view_pm", "WHERE id = '" . $pm_idconvers . "'");
+        	$info_convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array("last_user_id", "user_view_pm"), 'WHERE id=:id', array('id' => $pm_idconvers));
             if ($info_convers['last_user_id'] != $pm_from && $info_convers['user_view_pm'] > 0) //Nouveau message
             {
                 self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = user_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_from . "'");
@@ -146,7 +146,7 @@ class PrivateMsg
 	 */
 	public static function delete_conversation($pm_userid, $pm_idconvers, $pm_expd, $pm_del, $pm_update)
 	{
-		$info_convers = self::$sql_querier->query_array(DB_TABLE_PM_TOPIC . " ", "user_view_pm", "last_user_id", "WHERE id = '" . $pm_idconvers . "'");
+		$info_convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array("user_view_pm", "last_user_id"), 'WHERE id=:id', array('id' => $pm_idconvers));
 		if ($pm_update && $info_convers['last_user_id'] != $pm_userid)
 		{
 			//Mise à jour du compteur de mp du destinataire.
@@ -189,7 +189,7 @@ class PrivateMsg
 		self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_PM_MSG . " WHERE id = '" . $pm_idmsg . "' AND idconvers = '" . $pm_idconvers . "'");
 		
 		$pm_max_id = self::$sql_querier->query("SELECT MAX(id) FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm_idconvers . "'");
-		$pm_last_msg = self::$sql_querier->query_array(DB_TABLE_PM_MSG, 'user_id', 'timestamp', "WHERE id = '" . $pm_max_id . "'");
+		$pm_last_msg = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('user_id', 'timestamp'), 'WHERE id=:id', array('id' => $pm_max_id));
 		
 		if (!empty($pm_max_id))
 		{

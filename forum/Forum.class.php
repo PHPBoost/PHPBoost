@@ -314,7 +314,7 @@ class Forum
 
 		if ($tracking_type == 1) //Par mail
 		{
-			$info = $Sql->query_array(PREFIX . "forum_track", "pm", "track", "WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idtopic = '" . $idtopic . "'");
+			$info = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_track', array("pm", "track"), 'WHERE user_id=:user_id AND idtopic=:idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
 			if ($info['track'] == 0 && $info['pm'] == 0)
 				PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', array('id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
 			else
@@ -322,7 +322,8 @@ class Forum
 		}
 		elseif ($tracking_type == 2) //Par mp
 		{
-			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "track", "WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idtopic = '" . $idtopic . "'");
+			$info = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_track', array("mail", "track"), 'WHERE user_id=:user_id AND idtopic=:idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
+			
 			if ($info['mail'] == 0 && $info['track'] == 0)
 				PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', array('id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
 			else
@@ -330,7 +331,8 @@ class Forum
 		}
 		else //Suivi
 		{
-			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "pm", "WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idtopic = '" . $idtopic . "'");
+			$info = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_track', array("mail", "pm"), 'WHERE user_id=:user_id AND idtopic=:idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
+			
 			if ($info['mail'] == 0 && $info['pm'] == 0)
 				PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', array('id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
 			else
@@ -366,7 +368,7 @@ class Forum
 		global $Sql,  $CAT_FORUM;
 
 		//On va chercher le nombre de messages dans la table topics
-		$topic = $Sql->query_array(PREFIX . "forum_topics", "user_id", "nbr_msg", "WHERE id = '" . $idtopic . "'");
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array("user_id", "nbr_msg"), 'WHERE id=:id', array('id' => $idtopic));
 		$topic['nbr_msg'] = !empty($topic['nbr_msg']) ? NumberHelper::numeric($topic['nbr_msg']) : 1;
 
 		//On déplace le topic dans la nouvelle catégorie
@@ -406,7 +408,7 @@ class Forum
 		$Sql->query_inject("UPDATE " . PREFIX . "forum_msg SET idtopic = '" . $last_topic_id . "' WHERE idtopic = '" . $idtopic . "' AND id >= '" . $id_msg_cut . "'");
 
 		//Mise à jour de l'ancien topic
-		$previous_topic = $Sql->query_array(PREFIX . 'forum_msg', 'id', 'user_id', 'timestamp', "WHERE id < '" . $id_msg_cut . "' AND idtopic = '" . $idtopic . "' ORDER BY timestamp DESC " . $Sql->limit(0, 1));
+		$previous_topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('id', 'user_id', 'timestamp'), 'WHERE id<:id AND idtopic =:idtopic ORDER BY timestamp DESC LIMIT 0, 1', array('id' => $id_msg_cut, 'idtopic' => $idtopic));
 		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET last_user_id = '" . $previous_topic['user_id'] . "', last_msg_id = '" . $previous_topic['id'] . "', nbr_msg = nbr_msg - " . $nbr_msg . ", last_timestamp = '" . $previous_topic['timestamp'] . "'  WHERE id = '" . $idtopic . "'");
 
 		//Mise à jour de l'ancienne catégorie, si elle est différente.
@@ -447,7 +449,7 @@ class Forum
 	{
 		global $Sql,  $CAT_FORUM, $LANG;
 
-		$topic_infos = $Sql->query_array(PREFIX . "forum_topics", "idcat", "title", "WHERE id = '" . $alert_post . "'");
+		$topic_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array("idcat", "title"), 'WHERE id=:id', array('id' => $alert_post));
 		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_alerts (idcat, idtopic, title, contents, user_id, status, idmodo, timestamp) VALUES ('" . $topic_infos['idcat'] . "', '" . $alert_post . "', '" . $alert_title . "', '" . $alert_contents . "', '" . AppContext::get_current_user()->get_id() . "', 0, 0, '" . time() . "')");
 
 		$alert_id = $Sql->insert_id();

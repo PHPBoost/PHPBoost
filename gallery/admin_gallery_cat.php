@@ -681,7 +681,7 @@ elseif (!empty($id)) //Edition des catégories.
 	
 	$tpl = new FileTemplate('gallery/admin_gallery_cat_edit.tpl');
 	
-	$gallery_info = $Sql->query_array(PREFIX . "gallery_cats", "id_left", "id_right", "level", "name", "contents", "status", "aprob", "auth", "WHERE id = '" . $id . "'");
+	$gallery_info = PersistenceContext::get_querier()->select_single_row(PREFIX . "gallery_cats", array("id_left", "id_right", "level", "name", "contents", "status", "aprob", "auth"), 'WHERE id=:id AND user_id <> -1', array('id' => $id));
 	
 	if (!isset($CAT_GALLERY[$id]))
 		AppContext::get_response()->redirect('/gallery/admin_gallery_cat.php?error=unexist_cat');
