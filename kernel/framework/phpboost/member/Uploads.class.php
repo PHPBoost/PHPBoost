@@ -134,7 +134,7 @@ class Uploads
 	public static function Rename_folder($id_folder, $name, $previous_name, $user_id, $admin = false)
 	{		
 		//Vérification de l'unicité du nom du dossier.
-		$info_folder = self::$sql_querier->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $id_folder . "'");
+		$info_folder = PersistenceContext::get_querier()->select_single_row(PREFIX . "upload_cat", array("id_parent", "user_id"), 'WHERE id=:id', array('id' => $id_folder));
 		$check_folder = self::$sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $info_folder['id_parent'] . "' AND name = '" . $name . "' AND id <> '" . $id_folder . "' AND user_id = '" . $user_id . "'");
 		if ($check_folder > 0 || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return '';
@@ -159,7 +159,7 @@ class Uploads
 	public static function Rename_file($id_file, $name, $previous_name, $user_id, $admin = false)
 	{		
 		//Vérification de l'unicité du nom du fichier.
-		$info_cat = self::$sql_querier->query_array(PREFIX . "upload", "idcat", "user_id", "WHERE id = '" . $id_file . "'");
+		$info_cat = PersistenceContext::get_querier()->select_single_row(PREFIX . "upload", array("idcat", "user_id"), 'WHERE id=:id', array('id' => $id_file));
 		$check_file = self::$sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD . " WHERE idcat = '" . $info_cat['idcat'] . "' AND name = '" . $name . "' AND id <> '" . $id_file . "' AND user_id = '" . $user_id . "'");
 		if ($check_file > 0 || preg_match('`/|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return '/';
@@ -267,7 +267,7 @@ class Uploads
 	//Récupération du répertoire courant (administration).
 	public static function get_admin_url($id_folder, $pwd, $member_link = '')
 	{		
-		$parent_folder = self::$sql_querier->query_array(PREFIX . "upload_cat", "id_parent", "name", "user_id", "WHERE id = '" . $id_folder . "'");
+		$parent_folder = PersistenceContext::get_querier()->select_single_row(PREFIX . "upload_cat", array("id_parent", "name", "user_id"), 'WHERE id=:id', array('id' => $id_folder));
 		if (!empty($parent_folder['id_parent']))
 		{	
 			$pwd .= self::get_admin_url($parent_folder['id_parent'], $pwd, $member_link);	
@@ -280,7 +280,7 @@ class Uploads
 	//Récupération du répertoire courant.
 	public static function get_url($id_folder, $pwd, $popup)
 	{		
-		$parent_folder = self::$sql_querier->query_array(PREFIX . "upload_cat", "id_parent", "name", "WHERE id = '" . $id_folder . "' AND user_id <> -1");
+		$parent_folder = PersistenceContext::get_querier()->select_single_row(PREFIX . "upload_cat", array("id_parent", "name"), 'WHERE id=:id AND user_id <> -1', array('id' => $id_folder));
 		if (!empty($parent_folder['id_parent']))
 		{	
 			$pwd .= self::get_url($parent_folder['id_parent'], $pwd, $popup);	
