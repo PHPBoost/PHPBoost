@@ -507,9 +507,7 @@ class CalendarFormController extends ModuleController
 		{
 			$graphical_environment->set_page_title($this->lang['calendar.titles.event_edition']);
 			
-			$categories = array_reverse(CalendarService::get_categories_manager()->get_parents($event->get_content()->get_category_id(), true));
-			
-			$category = $categories[$event->get_content()->get_category_id()];
+			$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
 			$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 			
 			$breadcrumb->add($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id()));
