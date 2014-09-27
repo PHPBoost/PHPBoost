@@ -126,9 +126,7 @@ class CalendarDisplayEventController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());
 		
-		$categories = array_reverse(CalendarService::get_categories_manager()->get_parents($event->get_content()->get_category_id(), true));
-		
-		$category = $categories[$event->get_content()->get_category_id()];
+		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
 		$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 		
