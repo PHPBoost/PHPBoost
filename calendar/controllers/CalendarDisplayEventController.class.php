@@ -108,7 +108,7 @@ class CalendarDisplayEventController extends ModuleController
 	private function check_authorizations()
 	{
 		$event = $this->get_event();
-		if (!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->read() || (!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->write() && $event->get_content()->get_author_user()->get_id() != AppContext::get_current_user()->get_id()))
+		if (!CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->read() && (!(CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->write() || (CalendarAuthorizationsService::check_authorizations($event->get_content()->get_category_id())->contribution() && !$event->get_content()->is_approved())) && $event->get_content()->get_author_user()->get_id() != AppContext::get_current_user()->get_id()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
