@@ -68,6 +68,7 @@ class GuestbookFormController extends ModuleController
 	{
 		$object = new self();
 		$object->init();
+		$object->check_authorizations();
 		$object->build_form();
 		if ($object->submit_button->has_been_submited() && $object->form->validate())
 		{
