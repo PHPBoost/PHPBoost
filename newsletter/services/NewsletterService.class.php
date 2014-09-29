@@ -163,6 +163,7 @@ class NewsletterService
 			$categories_items_parameters = new CategoriesItemsParameters();
 			$categories_items_parameters->set_table_name_contains_items(NewsletterSetup::$newsletter_table_archives);
 			self::$streams_manager = new CategoriesManager(NewsletterStreamsCache::load(), $categories_items_parameters);
+			self::$streams_manager->get_categories_items_parameters()->set_field_name_id_category('stream_id');
 		}
 		return self::$streams_manager;
 	}
