@@ -439,7 +439,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						
 						//On affiche les stats numériquement dans un tableau en dessous
 						$tpl->assign_block_vars('value', array(
-							'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
+							'U_DETAILS' => $date_day . '/' . sprintf('%02d', $month) . '/' . $year,
 							'NBR' => $row['nbr']
 						));
 					}
@@ -509,7 +509,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 								
 							//On affiche les stats numériquement dans un tableau en dessous
 							$tpl->assign_block_vars('value', array(
-								'U_DETAILS' => $date_day . '/' . $month . '/' . $year,
+								'U_DETAILS' => $date_day . '/' . sprintf('%02d', $month) . '/' . $year,
 								'NBR' => $row['nbr']
 							));
 
@@ -809,7 +809,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 					
 					//On affiche les stats numériquement dans un tableau en dessous
 					$tpl->assign_block_vars('value', array(
-						'U_DETAILS' => '<a href="stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
+						'U_DETAILS' => '<a href="stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'] . '</a>',
 						'NBR' => $row['pages']
 					));
 				}
@@ -885,7 +885,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 						
 						//On affiche les stats numériquement dans un tableau en dessous
 						$tpl->assign_block_vars('value', array(
-							'U_DETAILS' => '<a href="stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
+							'U_DETAILS' => '<a href="stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'] . '</a>',
 							'NBR' => $row['pages']
 						));
 					}
@@ -955,7 +955,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 								
 							//On affiche les stats numériquement dans un tableau en dessous
 							$tpl->assign_block_vars('value', array(
-								'U_DETAILS' => $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'],
+								'U_DETAILS' => $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'],
 								'NBR' => $row['pages']
 							));
 
