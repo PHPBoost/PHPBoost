@@ -566,7 +566,7 @@ else
 
 		
 		//On affiche les visiteurs totaux et du jour
-		$compteur_total = $db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)');
+		$compteur_total = $db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)', '');
 		$compteur_day = array_sum(StatsSaver::retrieve_stats('pages')) + 1;
 		$compteur_total = $compteur_total + $compteur_day;
 		$compteur_day = !empty($compteur_day) ? $compteur_day : '1';

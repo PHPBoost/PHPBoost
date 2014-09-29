@@ -383,7 +383,7 @@ else
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 
-	$max_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'MAX(id_left)');
+	$max_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'MAX(id_left)', '');
 	$list_cats_js = '';
 	$array_js = '';
 	$i = 0;
