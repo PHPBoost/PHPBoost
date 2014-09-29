@@ -106,9 +106,13 @@ class GuestbookController extends ModuleController
 		$this->view->put_all(array(
 			'C_NO_MESSAGE' => $result->get_rows_count() == 0,
 			'C_PAGINATION' => $messages_number > GuestbookConfig::load()->get_items_per_page(),
-			'PAGINATION' => $pagination->display(),
-			'FORM' => GuestbookFormController::get_view()
+			'PAGINATION' => $pagination->display()
 		));
+		
+		if (!AppContext::get_current_user()->is_readonly())
+		{
+			$this->view->put('FORM', GuestbookFormController::get_view());
+		}
 		
 		return $this->view;
 	}
