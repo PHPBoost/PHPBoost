@@ -121,7 +121,7 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 		}
 		else //Insertion forum niveau 0.
 		{
-			$id_left = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'MAX(id_right)');
+			$id_left = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'MAX(id_right)', '');
 			$id_left++;
 			$level = 0;
 		}

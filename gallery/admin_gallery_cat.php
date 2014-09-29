@@ -154,7 +154,7 @@ if (!empty($_POST['valid']) && !empty($id))
 			}
 			else //Racine
 			{
-				$max_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery_cats", 'MAX(id_right)');
+				$max_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery_cats", 'MAX(id_right)', '');
 				//On replace les galeries supprimées virtuellement.
 				$z = 0;
 				$limit = $max_id + 1;
@@ -441,7 +441,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 						}
 						else //Racine
 						{
-							$max_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery_cats", 'MAX(id_right)');
+							$max_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery_cats", 'MAX(id_right)', '');
 							//On replace les galeries supprimées virtuellement.
 							$z = 0;
 							$limit = $max_id + 1;
@@ -792,7 +792,7 @@ else
 		'L_ROOT' => $LANG['root']
 	));
 
-	$max_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery_cats", 'MAX(id_left)');
+	$max_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery_cats", 'MAX(id_left)', '');
 	$list_cats_js = '';
 	$array_js = '';	
 	$i = 0;
