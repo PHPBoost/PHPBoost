@@ -163,7 +163,7 @@ if ($action == 'punish')
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
 			
 		//On crée le formulaire select
 		$select = '';
@@ -198,7 +198,7 @@ if ($action == 'punish')
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
-			'LOGIN' => $member['login'],
+			'LOGIN' => $member['display_name'],
 			'USER_LEVEL_CLASS' => UserService::get_level_class($member['level']),
 			'USER_GROUP_COLOR' => $group_color,
 			'KERNEL_EDITOR' => $editor->display(),
@@ -456,14 +456,14 @@ else
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login', 'level', 'groups', 'delay_banned', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'groups', 'delay_banned', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
 		
 		$group_color = User::get_group_color($member['groups'], $member['level']);
 		
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_BAN' => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
-			'LOGIN' => $member['login'],
+			'LOGIN' => $member['display_name'],
 			'USER_LEVEL_CLASS' => UserService::get_level_class($member['level']),
 			'USER_GROUP_COLOR' => $group_color,
 			'KERNEL_EDITOR' => $editor->display(),
