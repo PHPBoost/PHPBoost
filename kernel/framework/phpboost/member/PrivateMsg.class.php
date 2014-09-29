@@ -118,7 +118,7 @@ class PrivateMsg
         	$info_convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array("last_user_id", "user_view_pm"), 'WHERE id=:id', array('id' => $pm_idconvers));
             if ($info_convers['last_user_id'] != $pm_from && $info_convers['user_view_pm'] > 0) //Nouveau message
             {
-                self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = user_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_from . "'");
+                self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_from . "'");
                 self::$sql_querier->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_view_pm = 0 WHERE id = '" . $pm_idconvers . "'");
             }
         }
@@ -131,7 +131,7 @@ class PrivateMsg
 		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_view_pm = user_view_pm + 1, nbr_msg = nbr_msg + 1, last_user_id = '" . $pm_from . "', last_msg_id = '" . $pm_msg_id . "', last_timestamp = '" . time() . "' WHERE id = '" . $pm_idconvers . "'");
 		
 		//Mise à jour du compteur de mp du destinataire.
-		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = user_pm + 1 WHERE user_id = '" . $pm_to . "'");
+		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm + 1 WHERE user_id = '" . $pm_to . "'");
 		
 		return $pm_msg_id;
 	}
@@ -151,7 +151,7 @@ class PrivateMsg
 		{
 			//Mise à jour du compteur de mp du destinataire.
 			if ($info_convers['user_view_pm'] > 0)
-				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = user_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_userid . "'");
+				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_userid . "'");
 		}
 		
 		if ($pm_expd) //Expediteur.
@@ -198,7 +198,7 @@ class PrivateMsg
 			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET nbr_msg = nbr_msg - 1, user_view_pm = '" . ($user_view_pm - 1) . "', last_user_id = '" . $pm_last_msg['user_id'] . "', last_msg_id = '" . $pm_max_id . "', last_timestamp = '" . $pm_last_msg['timestamp'] . "' WHERE id = '" . $pm_idconvers . "'");
 		
 			//Mise à jour du compteur de mp du destinataire.
-			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = user_pm - 1 WHERE user_id = '" . $pm_to . "'");
+			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - 1 WHERE user_id = '" . $pm_to . "'");
 		}
 		
 		return $pm_max_id;
