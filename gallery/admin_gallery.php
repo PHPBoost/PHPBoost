@@ -383,7 +383,7 @@ else
 		else
 		{
 			$j = 0;
-			$result = PersistenceContext::get_querier()->select("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.display_name, m.user_id, m.level, m.user_groups
+			$result = PersistenceContext::get_querier()->select("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.display_name, m.user_id, m.level, m.groups
 			FROM " . PREFIX . "gallery g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = :idcat
@@ -439,7 +439,7 @@ else
 					'TR_END' => $tr_end,
 					'CAT' => $cat_list,
 					'U_DISPLAY' => $display_link,
-					'U_POSTOR' => $LANG['by'] . ' <a class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['login'] . '</a>',
+					'U_POSTOR' => $LANG['by'] . ' <a class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'">' . $row['display_name'] . '</a>',
 				));
 			}
 			$result->dispose();

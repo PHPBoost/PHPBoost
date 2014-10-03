@@ -111,7 +111,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 	
 		$nbr_pics = $this->db_querier->count(PREFIX . "gallery", 'WHERE idcat=:idcat AND aprob = 1', array('idcat' => $g_idcat));
-		$total_cat = $this->db_querier->count(PREFIX . 'gallery_cats gc', 'WHERE ' . (!empty($idcat) ? 'id_left > :id_left AND id_right < :id_right AND level = :level + 1 AND gc.aprob = 1' : 'level = 0 AND gc.aprob = 1'), array('id_left' => $CAT_GALLERY[$idcat]['id_left'], 'id_right' => $CAT_GALLERY[$idcat]['id_right'], 'level' => $CAT_GALLERY[$idcat]['level']));
+		$total_cat = $this->db_querier->count(PREFIX . 'gallery_cats gc', 'WHERE ' . (!empty($g_idcat) ? 'id_left > :id_left AND id_right < :id_right AND level = :level + 1 AND gc.aprob = 1' : 'level = 0 AND gc.aprob = 1'), array('id_left' => $CAT_GALLERY[$g_idcat]['id_left'], 'id_right' => $CAT_GALLERY[$g_idcat]['id_right'], 'level' => $CAT_GALLERY[$g_idcat]['level']));
 		
 		//Gestion erreur.
 		$get_error = retrieve(GET, 'error', '');
