@@ -82,11 +82,20 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		if (!isset($columns['notation_enabled']))
 			$this->db_utils->add_column(PREFIX .'articles', 'notation_enabled', array('type' => 'boolean', 'notnull' => 1, 'default' => 1));
 		
-		$result = $this->querier->select_rows(PREFIX .'articles', array('id', 'title'));
+		$result = $this->querier->select_rows(PREFIX .'articles', array('id', 'title', 'sources'));
 		while ($row = $result->fetch())
 		{
+			$old_sources = unserialize($row['sources']);
+			$new_sources = array();
+			
+			foreach ($old_sources as $id => $source)
+			{
+				$new_sources[$source['sources']] = $source['url'];
+			}
+			
 			$this->querier->update(PREFIX . 'articles', array(
-				'rewrited_title' => Url::encode_rewrite($row['title'])
+				'rewrited_title' => Url::encode_rewrite($row['title']),
+				'sources' => serialize($new_sources)
 			), 'WHERE id=:id', array('id' => $row['id']));
 		}
 	}
