@@ -84,11 +84,20 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		if (!isset($columns['top_list_enabled']))
 			$this->db_utils->add_column(PREFIX .'news', 'top_list_enabled', array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0));
 		
-		$result = $this->querier->select_rows(PREFIX .'news', array('id', 'name'));
+		$result = $this->querier->select_rows(PREFIX .'news', array('id', 'name', 'sources'));
 		while ($row = $result->fetch())
 		{
+			$old_sources = unserialize($row['sources']);
+			$new_sources = array();
+			
+			foreach ($old_sources as $id => $source)
+			{
+				$new_sources[$source['sources']] = $source['url'];
+			}
+			
 			$this->querier->update(PREFIX . 'news', array(
-				'rewrited_name' => Url::encode_rewrite($row['name'])
+				'rewrited_name' => Url::encode_rewrite($row['name']),
+				'sources' => serialize($new_sources)
 			), 'WHERE id=:id', array('id' => $row['id']));
 		}
 	}
