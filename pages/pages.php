@@ -36,6 +36,8 @@ include_once('pages_functions.php');
 //Configuration des authorisations
 $config_authorizations = $pages_config->get_authorizations();
 
+$db_querier = PersistenceContext::get_querier();
+
 //Requêtes préliminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {

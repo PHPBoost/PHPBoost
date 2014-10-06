@@ -167,7 +167,7 @@ else
 		'L_SELECT' => $LANG['select'],
 		'L_GLOBAL_CAT_SELECTION' => $LANG['global_cat_selection'],
 		'L_GLOBAL_CAT_SELECTION_EXPLAIN' => $LANG['global_cat_selection_explain'],
-		'L_CAT' => $LANG['categorie'],
+		'L_CAT' => $LANG['category'],
 		'L_DELETE' => $LANG['delete'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_NO_IMG' => $LANG['no_pics']
