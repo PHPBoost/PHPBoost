@@ -141,7 +141,7 @@ class Updates
 			$alert = new AdministratorAlert();
 			require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
 			
-			if ($app->get_type() == Application::MODULE_TYPE)
+			if ($app->get_type() == Application::KERNEL_TYPE)
 				$alert->set_entitled(sprintf(LangLoader::get_message('kernel_update_available', 'admin'), $app->get_version()));
 			else
 				$alert->set_entitled(sprintf(LangLoader::get_message('update_available', 'admin'), $app->get_type(), $app->get_name(), $app->get_version()));
