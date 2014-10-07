@@ -72,6 +72,12 @@
 - Refonte de la gestion des liens : suppression des types de menu de liens et création d'un menu de lien qui s'adapte automatiquement à l'emplacement
 - Filtres d'exclusion pour les menus
 - Nettoyage des variables de langues
+- Stocker les dates sous un format ISO en BDD plutôt qu'en timestamp
+- Revoir la balise Title HTML (créer un format standardisé dans PHPBoost :
+	- Titre de la page - Nom du module - Nom du site
+	- Titre de la page - Nom du site (dans le cas ou c'est une page sans module)
+- Voir pour comptabiliser correctement le nombre d'élement dans les catégories s'il y a des sous catégories dedans (http://www.phpboost.com/bugtracker/detail/1182-videos-non-comptabilisees-sur-les-sous-categories)
+
 
 [b]Installateur[/b]
 - Ajout d'une option pour supprimer le dossier à la fin de l'installation
