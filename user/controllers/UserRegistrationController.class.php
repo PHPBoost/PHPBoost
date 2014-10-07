@@ -41,6 +41,8 @@ class UserRegistrationController extends AbstractController
 	
 	private $user_accounts_config;
 
+	private $member_extended_fields_service;
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->get_right_controller_regarding_authorizations();
@@ -67,7 +69,8 @@ class UserRegistrationController extends AbstractController
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
-		
+		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
+
 		$fieldset = new FormFieldsetHTML('registration', $this->lang['registration']);
 		$form->add_fieldset($fieldset);
 		
@@ -109,7 +112,7 @@ class UserRegistrationController extends AbstractController
 		
 		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user_accounts_config->get_default_lang(), array('check_authorizations' => true)));	
 		
-		MemberExtendedFieldsService::display_form_fields($form);
+		$this->member_extended_fields_service->display_form_fields();
 
     	$agreement_text = FormatingHelper::second_parse($this->user_accounts_config->get_registration_agreement());
     	if (!empty($agreement_text))
@@ -174,8 +177,11 @@ class UserRegistrationController extends AbstractController
 			$user->set_theme($this->form->get_value('theme')->get_raw_value());
 		}
 		
+		$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('login'), $this->form->get_value('password'));
+		$auth_method->set_association_parameters($user_aprobation, $registration_pass);
+
 		try {
-			$fields_data = MemberExtendedFieldsService::get_data($this->form);
+			$user_id = UserService::create($user, $auth_method, $this->member_extended_fields_service);
 		} catch (MemberExtendedFieldErrorsMessageException $e) {
 			$has_error = true;
 			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
@@ -183,10 +189,6 @@ class UserRegistrationController extends AbstractController
 			
 		if (!$has_error)
 		{
-			$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('login'), $this->form->get_value('password'));
-			$auth_method->set_association_parameters($user_aprobation, $registration_pass);
-			$user_id = UserService::create($user, $auth_method, $fields_data);
-			
 			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $this->form->get_value('login'), $this->form->get_value('login'), $this->form->get_value('password'), $registration_pass);
 				
 			$this->confirm_registration($user_id);

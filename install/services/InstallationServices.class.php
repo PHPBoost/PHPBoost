@@ -427,14 +427,8 @@ class InstallationServices
 
 	private function send_installation_mail($login, $password, $email, $unlock_admin)
 	{
-		$general_config = GeneralConfig::load();
-		$mail = new Mail();
-		$mail->set_sender($email, Mail::SENDER_ADMIN);
-		$mail->add_recipient($email);
-		$mail->set_subject($this->messages['admin.created.email.object']);
-		$mail->set_content(sprintf($this->messages['admin.created.email.unlockCode'], stripslashes($login),
+		AppContext::get_mail_service()->send_from_properties($email, $this->messages['admin.created.email.object'], sprintf($this->messages['admin.created.email.unlockCode'], stripslashes($login),
 		stripslashes($login), $password, $unlock_admin, $general_config->get_site_url() . $general_config->get_site_path()));
-		AppContext::get_mail_service()->try_to_send($mail);
 	}
 
 	private function connect_admin($user_id, $auto_connect)

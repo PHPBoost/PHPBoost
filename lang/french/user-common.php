@@ -51,6 +51,8 @@ et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.<
 
 
 //User fields
+$lang['display_name'] = 'Nom d\'affichage';
+$lang['display_name.explain'] = 'Nom affiché sur chacun des éléments que vous ajoutez.';
 $lang['pseudo'] = 'Pseudo';
 $lang['pseudo.explain'] = 'Longueur minimale du pseudo : 3 caractères';
 $lang['password'] = 'Mot de passe';

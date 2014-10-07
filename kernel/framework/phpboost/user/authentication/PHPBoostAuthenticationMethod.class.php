@@ -196,6 +196,14 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		$this->querier->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), $condition, $parameters);
 	}
 	
+	public static function get_auth_infos($user_id)
+	{	
+		$columns = array('username', 'password', 'approved');
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $user_id);
+		return $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
+	}
+
 	public static function update_auth_infos($user_id, $username, $approved, $password = false)
 	{
 		$columns = array('username' => $username, 'approved' => $approved);
@@ -212,6 +220,19 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, $condition, $parameters);
 			AutoConnectData::change_key($user_id);
 		}
+	}
+
+	public static function change_password_pass_exists($change_password_pass)
+	{
+		return self::$querier->row_exists(DB_TABLE_MEMBER, 'WHERE change_password_pass=:change_password_pass', array('change_password_pass' => $change_password_pass));
+	}
+
+	public static function update_change_password_pass($user_id, $change_password_pass)
+	{
+		$columns = array('change_password_pass' => $change_password_pass);
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = array('user_id' => $user_id);
+		self::$querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 	}
 }
 ?>

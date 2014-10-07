@@ -144,23 +144,6 @@ class UserService
 		), 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
 	}
 	
-	public static function update_authentification($condition, Array $parameters, UserAuthentification $user_authentification)
-	{
-		if ($user_authentification->get_password_hashed() !== null)
-		{
-			self::$querier->update(DB_TABLE_MEMBER, array(
-				'login' => $user_authentification->get_login(),
-				'password' => $user_authentification->get_password_hashed()
-			), $condition, $parameters);
-		}
-		else
-		{
-			self::$querier->update(DB_TABLE_MEMBER, array(
-				'login' => $user_authentification->get_login(),
-			), $condition, $parameters);
-		}
-	}
-	
 	/**
 	 * @desc Returns a user
 	 * @param string $condition
@@ -179,21 +162,6 @@ class UserService
 	{
 		return self::$querier->row_exists(DB_TABLE_MEMBER, $condition, $parameters);
 	}
-	
-	/*public static function approbation_pass_exists($approbation_pass)
-	{
-		$parameters = array('approbation_pass' => $approbation_pass);
-		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE approbation_pass = :approbation_pass', $parameters) > 0 ? true : false;
-	}
-	
-	public static function update_approbation_pass($approbation_pass)
-	{
-		$columns = array('user_aprob' => 1, 'approbation_pass' => '');
-		$condition = 'WHERE approbation_pass = :new_approbation_pass';
-		$parameters = array('new_approbation_pass' => $approbation_pass);
-		self::$querier->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
-	}
-	*/
 	
 	public static function get_level_lang($level)
 	{
@@ -250,6 +218,7 @@ class UserService
 	
 	private static function regenerate_cache()
 	{
+		GroupsCache::invalidate();
 		StatsCache::invalidate();
 	}
 }

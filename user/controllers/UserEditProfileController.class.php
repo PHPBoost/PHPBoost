@@ -93,22 +93,29 @@ class UserEditProfileController extends AbstractController
 		$fieldset = new FormFieldsetHTML('edit_profile', $this->lang['profile.edit']);
 		$form->add_fieldset($fieldset);
 		
+		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(), array('description'=> $this->lang['display_name.explain'], 'required' => true),
+			array(new FormFieldConstraintLengthRange(3, 20)
+		)));	
+
 		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], $this->user->get_email(), array(
 			'required' => true, 'description' => LangLoader::get_message('valid', 'main')),
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($this->user->get_id()))
 		));
-		
-		$fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
-			'description' => $this->lang['password.old.explain']))
-		);
-		
-		$fieldset->add_field($new_password = new FormFieldPasswordEditor('new_password', $this->lang['password.new'], ''));
-		$fieldset->add_field($new_password_bis = new FormFieldPasswordEditor('new_password_bis', $this->lang['password.confirm'], ''));
-		
+				
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], !$this->user->get_show_email()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('delete_account', $this->lang['delete-account'], FormFieldCheckbox::UNCHECKED));
 		
+		$connect_fieldset = new FormFieldsetHTML('connect', $this->lang['connect']);
+		$form->add_fieldset($connect_fieldset);
+
+		$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
+			'description' => $this->lang['password.old.explain']))
+		);
+		
+		$connect_fieldset->add_field($new_password = new FormFieldPasswordEditor('new_password', $this->lang['password.new'], ''));
+		$connect_fieldset->add_field($new_password_bis = new FormFieldPasswordEditor('new_password_bis', $this->lang['password.confirm'], ''));
+
 		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
 		$form->add_fieldset($options_fieldset);
 		
@@ -156,6 +163,7 @@ class UserEditProfileController extends AbstractController
 			}
 			
 			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
+			$this->user->set_display_name($this->form->get_value('display_name'));
 			$this->user->set_email($this->form->get_value('email'));
 			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
 			$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
@@ -174,10 +182,11 @@ class UserEditProfileController extends AbstractController
 			if (!empty($old_password) && !empty($new_password))
 			{
 				$old_password_hashed = KeyGenerator::string_hash($old_password);
-				$user_authentification = UserService::get_user_authentification('WHERE user_id=:user_id', array('user_id' => $user_id));
-				if ($old_password_hashed == $user_authentification->get_password_hashed())
+				$auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
+
+				if ($old_password_hashed == $auth_infos['password'])
 				{
-					UserService::change_password(KeyGenerator::string_hash($new_password), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+					PHPBoostAuthenticationMethod::update_auth_infos($user_id, $auth_infos['username'], $auth_infos['approved'], KeyGenerator::string_hash($new_password));
 					$has_error = true;
 					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 6));
 				}
