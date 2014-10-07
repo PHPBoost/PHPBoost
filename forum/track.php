@@ -68,9 +68,11 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 {
 	$tpl = new FileTemplate('forum/forum_track.tpl');
 
-	$nbr_topics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
+	$nbr_topics = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
-	WHERE tr.user_id = '" . AppContext::get_current_user()->get_id() . "'");
+	WHERE tr.user_id = :user_id", array(
+		'user_id' => AppContext::get_current_user()->get_id()
+	));
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topics, $CONFIG_FORUM['pagination_topic'], Pagination::LIGHT_PAGINATION);
@@ -89,18 +91,21 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	$module_data_path = $TmpTemplate->get_pictures_data_path();
 
 	$nbr_topics_compt = 0;
-	$result = $Sql->query_while("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id , t.title , t.subtitle , t.user_id , t.nbr_msg , t.nbr_views , t.last_user_id , t.last_msg_id , t.last_timestamp , t.type , t.status, t.display_msg, v.last_view_id, p.question, me.last_view_forum, tr.pm, tr.mail, me.last_view_forum
+	$result = PersistenceContext::get_querier()->select("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS user_groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id , t.title , t.subtitle , t.user_id , t.nbr_msg , t.nbr_views , t.last_user_id , t.last_msg_id , t.last_timestamp , t.type , t.status, t.display_msg, v.last_view_id, p.question, me.last_view_forum, tr.pm, tr.mail, me.last_view_forum
 	FROM " . PREFIX . "forum_topics t
-	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . AppContext::get_current_user()->get_id() . "' AND v.idtopic = t.id
+	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = :user_id AND v.idtopic = t.id
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
 	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
-	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " me ON me.user_id = '" . AppContext::get_current_user()->get_id() . "'
-	WHERE tr.user_id = '" . AppContext::get_current_user()->get_id() . "'
-	ORDER BY t.last_timestamp DESC
-	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']));
-	while ($row = $Sql->fetch_assoc($result))
+	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " me ON me.user_id = :user_id
+	WHERE tr.user_id = :user_id
+	ORDER BY t.last_timestamp DESC", array(
+		'user_id' => AppContext::get_current_user()->get_id(),
+		'number_items_per_page' => $pagination->get_number_items_per_page(),
+		'display_from' => $pagination->get_display_from()
+	));
+	while ($row = $result->fetch())
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
