@@ -189,7 +189,7 @@ elseif (!empty($msg_d))
 	$topic = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_topics', array("idcat", "user_id", "display_msg"), 'WHERE id=:id', array('id' => $msg_d));
 	if ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $msg_d . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = :id", array('id' => $msg_d));
 		echo ($topic['display_msg']) ? 2 : 1;
 	}
 }

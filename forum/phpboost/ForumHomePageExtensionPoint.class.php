@@ -27,13 +27,6 @@
 
 class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 {
-	private $sql_querier;
-
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-	}
-	
 	public function get_home_page()
 	{
 		return new DefaultHomePage($this->get_title(), $this->get_view());
@@ -108,15 +101,14 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 
 		//Vérification des autorisations.
-		$unauth_cats = '';
+		$unauth_cats = array();
 		if (is_array($AUTH_READ_FORUM))
 		{
 			foreach ($AUTH_READ_FORUM as $idcat => $auth)
 			{
 				if ($auth === false)
-					$unauth_cats .= $idcat . ',';
+					$unauth_cats[] = $idcat;
 			}
-			$unauth_cats = !empty($unauth_cats) ? " AND c.id NOT IN (" . trim($unauth_cats, ',') . ")" : '';
 		}
 
 		//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
@@ -128,16 +120,19 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		$i = 0;
 
 		//On liste les catégories et sous-catégories.
-		$result = $this->sql_querier->query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.url, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid,
+		$result = PersistenceContext::get_querier()->select("SELECT c.id AS cid, c.level, c.name, c.subname, c.url, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid,
 		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.display_name, m.level as user_level, m.groups, v.last_view_id
 		FROM " . PREFIX . "forum_cats c
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
-		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . AppContext::get_current_user()->get_id() . "' AND v.idtopic = t.id
+		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = :user_id AND v.idtopic = t.id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
-		WHERE c.aprob = 1 " . $display_sub_cat . " " . $unauth_cats . "
-		ORDER BY c.id_left");
+		WHERE c.aprob = 1 " . $display_sub_cat . (!empty($unauth_cats) ? " AND c.id NOT IN :unauth_cats" : '') . "
+		ORDER BY c.id_left", array(
+			'user_id' => AppContext::get_current_user()->get_id(),
+			'unauth_cats' => $unauth_cats,
+		));
 		$display_sub_cats = false;
-		while ($row = $this->sql_querier->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			
 			$tpl->assign_block_vars('forums_list', array());

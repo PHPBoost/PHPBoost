@@ -120,7 +120,7 @@ $idm = retrieve(GET, 'idm', 0);
 if (!empty($idm))
 {
 	//Calcul de la page sur laquelle se situe le message.
-	$nbr_msg_before = $Sql->query("SELECT COUNT(*) as nbr_msg_before FROM " . PREFIX . "forum_msg WHERE idtopic = " . $id_get . " AND id < '" . $idm . "'"); //Nombre de message avant le message de destination.
+	$nbr_msg_before = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $id_get, 'id' => $idm)); //Nombre de message avant le message de destination.
 	
 	//Dernier message de la page? Redirection vers la page suivante pour prendre en compte la reprise du message précédent.
 	if (is_int(($nbr_msg_before + 1) / $CONFIG_FORUM['pagination_msg'])) 
@@ -200,20 +200,26 @@ $array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG[
 list($track, $track_pm, $track_mail, $poll_done) = array(false, false, false, false);
 $ranks_cache = ForumRanksCache::load()->get_ranks(); //Récupère les rangs en cache.
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
-$i = 0;	
-$j = 0;	
-$result = $Sql->query_while("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, m.groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.posted_msg, ext_field.user_website, ext_field.user_sign, ext_field.user_msn, ext_field.user_yahoo, m.warning_percentage, m.delay_readonly, m.delay_banned, m2.display_name as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
+$i = 0;
+$j = 0;
+$result = PersistenceContext::get_querier()->select("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, m.groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.display_name, m.level, m.email, m.show_email, m.registration_date AS registered, ext_field.user_avatar, m.posted_msg, ext_field.user_website, ext_field.user_sign, ext_field.user_msn, ext_field.user_yahoo, m.warning_percentage, m.delay_readonly, m.delay_banned, m2.display_name as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
 FROM " . PREFIX . "forum_msg msg
-LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = '" . $id_get . "'
+LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = :idtopic
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = msg.user_id_edit
 LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
-LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = '" . $id_get . "' AND tr.user_id = '" . AppContext::get_current_user()->get_id() . "'
-LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
-WHERE msg.idtopic = '" . $id_get . "'
+LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = :idtopic AND tr.user_id = :user_id
+LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > :timestamp AND s.user_id != -1
+WHERE msg.idtopic = :idtopic
 ORDER BY msg.timestamp 
-" . $Sql->limit(($pagination->get_display_from() - $quote_last_msg), ($CONFIG_FORUM['pagination_msg'] + $quote_last_msg)));
-while ( $row = $Sql->fetch_assoc($result) )
+LIMIT :number_items_per_page OFFSET :display_from", array(
+	'idtopic' => $id_get,
+	'user_id' => AppContext::get_current_user()->get_id(),
+	'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration()),
+	'number_items_per_page' => $pagination->get_number_items_per_page() + $quote_last_msg,
+	'display_from' => $pagination->get_display_from() - $quote_last_msg
+));
+while ( $row = $result->fetch() )
 {
 	//Invité?
 	$is_guest = empty($row['user_id']);
@@ -236,9 +242,9 @@ while ( $row = $Sql->fetch_assoc($result) )
 	//Gestion des sondages => executé une seule fois.
 	if (!empty($row['question']) && $poll_done === false)
 	{
-		$tpl->put_all(array(				
+		$tpl->put_all(array(
 			'C_POLL_EXIST' => true,
-			'QUESTION' => $row['question'],				
+			'QUESTION' => $row['question'],
 			'U_POLL_RESULT' => url('.php?id=' . $id_get . '&amp;r=1&amp;pt=' . $page),
 			'U_POLL_ACTION' => url('.php?id=' . $id_get . '&amp;p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
 			'L_POLL' => $LANG['poll'], 
@@ -470,9 +476,9 @@ $vars_tpl = array_merge($vars_tpl, array(
 //Récupération du message quoté.
 $contents = '';
 if (!empty($quote_get))
-{	
+{
 	$quote_msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'contents'), 'WHERE id=:id', array('id' => $quote_get));
-	$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $quote_msg['user_id'] . "'");	
+	$pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id=:id', array('id' => $quote_msg['user_id']));
 	$contents = '[quote=' . $pseudo . ']' . FormatingHelper::unparse($quote_msg['contents']) . '[/quote]';
 }
 

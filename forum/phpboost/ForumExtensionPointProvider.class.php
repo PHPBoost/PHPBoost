@@ -37,11 +37,11 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	//Récupération du cache.
 	function get_cache()
 	{
-		$sql_querier = PersistenceContext::get_sql();
+		$db_querier = PersistenceContext::get_querier();
 		//Configuration du forum
 		$forum_config = 'global $CONFIG_FORUM;' . "\n";
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_FORUM = unserialize($sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'forum'"));
+		$CONFIG_FORUM = unserialize($db_querier->get_column_value(DB_TABLE_CONFIGS, 'value', "WHERE name = 'forum'"));
 		$CONFIG_FORUM['auth'] = unserialize($CONFIG_FORUM['auth']);
 
 		$forum_config .= '$CONFIG_FORUM = ' . var_export($CONFIG_FORUM, true) . ';' . "\n";
@@ -50,11 +50,11 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		$i = 0;
 		$forum_cats = 'global $CAT_FORUM;' . "\n";
 		$forum_cats .= '$CAT_FORUM = array();' . "\n";
-		$result = $sql_querier->query_while("SELECT child.*, parent.id as id_parent
+		$result = $db_querier->select("SELECT child.*, parent.id as id_parent
 		FROM " . PREFIX . "forum_cats child
 		LEFT JOIN " . PREFIX . "forum_cats parent ON child.id_left > parent.id_left AND child.id_right < parent.id_right
 		ORDER BY child.id_left");
-		while ($row = $sql_querier->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			if (empty($row['id_parent']))
 			$row['id_parent'] = 0;
