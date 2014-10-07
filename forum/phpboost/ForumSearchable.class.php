@@ -27,11 +27,11 @@
 
 class ForumSearchable extends AbstractSearchableExtensionPoint
 {
-	private $sql_querier;
+	private $db_querier;
 
 	public function __construct()
 	{
-		$this->sql_querier = PersistenceContext::get_sql();
+		$this->db_querier = PersistenceContext::get_querier();
 		parent::__construct(true, true);
 	}
 	
@@ -57,30 +57,30 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 		$date_lang = LangLoader::get('date-common');
 		$Tpl->put_all(Array(
-            'L_DATE' => $date_lang['date'],
-            'L_DAY' => $date_lang['day'],
-            'L_DAYS' => $date_lang['days'],
-            'L_MONTH' => $date_lang['month'],
-            'L_MONTHS' => $date_lang['month'],
-            'L_YEAR' => $date_lang['year'],
-            'IS_SELECTED_30000' => $time == 30000 ? ' selected="selected"' : '',
-            'IS_SELECTED_1' => $time == 1 ? ' selected="selected"' : '',
-            'IS_SELECTED_7' => $time == 7 ? ' selected="selected"' : '',
-            'IS_SELECTED_15' => $time == 15 ? ' selected="selected"' : '',
-            'IS_SELECTED_30' => $time == 30 ? ' selected="selected"' : '',
-            'IS_SELECTED_180' => $time == 180 ? ' selected="selected"' : '',
-            'IS_SELECTED_360' => $time == 360 ? ' selected="selected"' : '',
-            'L_OPTIONS' => $LANG['options'],
-            'L_TITLE' => $LANG['title'],
-            'L_CONTENTS' => $LANG['content'],
-            'IS_TITLE_CHECKED' => $where == 'title' ? ' checked="checked"' : '' ,
-            'IS_CONTENTS_CHECKED' => $where == 'contents' ? ' checked="checked"' : '' ,
-            'IS_ALL_CHECKED' => $where == 'all' ? ' checked="checked"' : '' ,
-            'L_COLORATE_RESULTS' => $LANG['colorate_result'],
-            'IS_COLORATION_CHECKED' => $colorate_result ? 'checked="checked"' : '',
-            'L_CATEGORY' => $LANG['category'],
-            'L_ALL_CATS' => $LANG['all'],
-            'IS_ALL_CATS_SELECTED' => ($idcat == '-1') ? ' selected="selected"' : '',
+			'L_DATE' => $date_lang['date'],
+			'L_DAY' => $date_lang['day'],
+			'L_DAYS' => $date_lang['days'],
+			'L_MONTH' => $date_lang['month'],
+			'L_MONTHS' => $date_lang['month'],
+			'L_YEAR' => $date_lang['year'],
+			'IS_SELECTED_30000' => $time == 30000 ? ' selected="selected"' : '',
+			'IS_SELECTED_1' => $time == 1 ? ' selected="selected"' : '',
+			'IS_SELECTED_7' => $time == 7 ? ' selected="selected"' : '',
+			'IS_SELECTED_15' => $time == 15 ? ' selected="selected"' : '',
+			'IS_SELECTED_30' => $time == 30 ? ' selected="selected"' : '',
+			'IS_SELECTED_180' => $time == 180 ? ' selected="selected"' : '',
+			'IS_SELECTED_360' => $time == 360 ? ' selected="selected"' : '',
+			'L_OPTIONS' => $LANG['options'],
+			'L_TITLE' => $LANG['title'],
+			'L_CONTENTS' => $LANG['content'],
+			'IS_TITLE_CHECKED' => $where == 'title' ? ' checked="checked"' : '' ,
+			'IS_CONTENTS_CHECKED' => $where == 'contents' ? ' checked="checked"' : '' ,
+			'IS_ALL_CHECKED' => $where == 'all' ? ' checked="checked"' : '' ,
+			'L_COLORATE_RESULTS' => $LANG['colorate_result'],
+			'IS_COLORATION_CHECKED' => $colorate_result ? 'checked="checked"' : '',
+			'L_CATEGORY' => $LANG['category'],
+			'L_ALL_CATS' => $LANG['all'],
+			'IS_ALL_CATS_SELECTED' => ($idcat == '-1') ? ' selected="selected"' : '',
 		));
 		if (is_array($CAT_FORUM))
 		{
@@ -89,11 +89,11 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 				if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM))
 				{
 					$Tpl->assign_block_vars('cats', array(
-                        'MARGIN' => ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----',
-                        'ID' => $id,
-                        'L_NAME' => $key['name'],
-                        'IS_SELECTED' => ($id == $idcat) ? ' selected="selected"' : ''
-                        ));
+						'MARGIN' => ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----',
+						'ID' => $id,
+						'L_NAME' => $key['name'],
+						'IS_SELECTED' => ($id == $idcat) ? ' selected="selected"' : ''
+						));
 				}
 			}
 		}
@@ -136,48 +136,49 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
 		if ($where == 'all')         // All
-		return "SELECT ".
-		$args['id_search']." AS `id_search`,
-                MIN(msg.id) AS `id_content`,
-                t.title AS `title`,
-                MAX(( 2 * FT_SEARCH_RELEVANCE(t.title, '" . $search."') + FT_SEARCH_RELEVANCE(msg.contents, '" . $search."') ) / 3) * " . $weight . " AS `relevance`,
-                " . $this->sql_querier->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
-            FROM " . PREFIX . "forum_msg msg
-            JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
-            JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE ( FT_SEARCH(t.title, '" . $search."') OR FT_SEARCH(msg.contents, '" . $search."') ) AND msg.timestamp > '" . (time() - $time) . "'
-            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
-            GROUP BY t.id
-            ORDER BY relevance DESC" . $this->sql_querier->limit(0, FORUM_MAX_SEARCH_RESULTS);
+			return "SELECT ".
+			$args['id_search']." AS `id_search`,
+				MIN(msg.id) AS `id_content`,
+				t.title AS `title`,
+				MAX(( 2 * FT_SEARCH_RELEVANCE(t.title, '" . $search."') + FT_SEARCH_RELEVANCE(msg.contents, '" . $search."') ) / 3) * " . $weight . " AS `relevance`,
+				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS `link`
+			FROM " . PREFIX . "forum_msg msg
+			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
+			JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
+			WHERE ( FT_SEARCH(t.title, '" . $search."') OR FT_SEARCH(msg.contents, '" . $search."') ) AND msg.timestamp > '" . (time() - $time) . "'
+			".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
+			GROUP BY t.id
+			ORDER BY relevance DESC
+			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 
 		if ($where == 'contents')    // Contents
-		return "SELECT ".
-		$args['id_search']." AS `id_search`,
-                MIN(msg.id) AS `id_content`,
-                t.title AS `title`,
-                MAX(FT_SEARCH_RELEVANCE(msg.contents, '" . $search."')) * " . $weight . " AS `relevance`,
-                " . $this->sql_querier->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
-            FROM " . PREFIX . "forum_msg msg
-            JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
-            JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE FT_SEARCH(msg.contents, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
-            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
-            GROUP BY t.id
-            ORDER BY relevance DESC" . $this->sql_querier->limit(0, FORUM_MAX_SEARCH_RESULTS);
+			return "SELECT ".
+			$args['id_search']." AS `id_search`,
+				MIN(msg.id) AS `id_content`,
+				t.title AS `title`,
+				MAX(FT_SEARCH_RELEVANCE(msg.contents, '" . $search."')) * " . $weight . " AS `relevance`,
+				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS `link`
+			FROM " . PREFIX . "forum_msg msg
+			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
+			JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
+			WHERE FT_SEARCH(msg.contents, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
+			".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
+			GROUP BY t.id
+			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 		else                                         // Title only
 		return "SELECT ".
 		$args['id_search']." AS `id_search`,
-                msg.id AS `id_content`,
-                t.title AS `title`,
-                FT_SEARCH_RELEVANCE(t.title, '" . $search."') * " . $weight . " AS `relevance`,
-                " . $this->sql_querier->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
-            FROM " . PREFIX . "forum_msg msg
-            JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
-            JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE FT_SEARCH(t.title, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
-            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
-            GROUP BY t.id
-            ORDER BY relevance DESC" . $this->sql_querier->limit(0, FORUM_MAX_SEARCH_RESULTS);
+				msg.id AS `id_content`,
+				t.title AS `title`,
+				FT_SEARCH_RELEVANCE(t.title, '" . $search."') * " . $weight . " AS `relevance`,
+				CONCAT('" . PATH_TO_ROOT . "/forum/topic.php?id=', t.id, '#m', msg.id) AS `link`
+			FROM " . PREFIX . "forum_msg msg
+			JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
+			JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
+			WHERE FT_SEARCH(t.title, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
+			".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
+			GROUP BY t.id
+			LIMIT " . FORUM_MAX_SEARCH_RESULTS;
 	}
 
 
@@ -199,26 +200,26 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$ids[] = $results[$i]['id_content'];
 
 		$request = "
-        SELECT
-            msg.id AS msg_id,
-            msg.user_id AS user_id,
-            msg.idtopic AS topic_id,
-            msg.timestamp AS date,
-            t.title AS title,
-            m.display_name AS login,
-            ext_field.user_avatar AS avatar,
-            s.user_id AS connect,
-            msg.contents AS contents
-        FROM " . PREFIX . "forum_msg msg
-        LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
-        LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
-        LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
-        JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
-        WHERE msg.id IN (".implode(',', $ids).")
-        GROUP BY t.id";
+		SELECT
+			msg.id AS msg_id,
+			msg.user_id AS user_id,
+			msg.idtopic AS topic_id,
+			msg.timestamp AS date,
+			t.title AS title,
+			m.display_name AS login,
+			ext_field.user_avatar AS avatar,
+			s.user_id AS connect,
+			msg.contents AS contents
+		FROM " . PREFIX . "forum_msg msg
+		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
+		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
+		WHERE msg.id IN (".implode(',', $ids).")
+		GROUP BY t.id";
 
-		$request_results = $this->sql_querier->query_while ($request);
-		while ($row = $this->sql_querier->fetch_assoc($request_results))
+		$request_results = $this->db_querier->select($request);
+		while ($row = $result->fetch())
 		{
 			$results_data[] = $row;
 		}
@@ -241,22 +242,22 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$tpl = new FileTemplate('forum/forum_generic_results.tpl');
 
 		$tpl->put_all(Array(
-            'L_ON' => $LANG['on'],
-            'L_TOPIC' => $LANG['topic']
+			'L_ON' => $LANG['on'],
+			'L_TOPIC' => $LANG['topic']
 		));
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($result_data['title']) : '';
 		$tpl->put_all(array(
-            'USER_ONLINE' => '<i class="fa ' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'fa-online' : 'fa-offline') . '"></i>',
-            'U_USER_PROFILE' => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
-            'USER_PSEUDO' => !empty($result_data['display_name']) ? TextHelper::wordwrap_html($result_data['display_name'], 13) : $LANG['guest'],
-            'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
-            'TITLE' => ucfirst($result_data['title']),
-            'DATE' => gmdate_format('d/m/y', $result_data['date']),
-            'CONTENTS' => FormatingHelper::second_parse($result_data['contents']),
-            'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" class="message-avatar"/>'
+			'USER_ONLINE' => '<i class="fa ' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'fa-online' : 'fa-offline') . '"></i>',
+			'U_USER_PROFILE' => !empty($result_data['user_id']) ? UserUrlBuilder::profile($result_data['user_id'])->rel() : '',
+			'USER_PSEUDO' => !empty($result_data['display_name']) ? TextHelper::wordwrap_html($result_data['display_name'], 13) : $LANG['guest'],
+			'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
+			'TITLE' => ucfirst($result_data['title']),
+			'DATE' => gmdate_format('d/m/y', $result_data['date']),
+			'CONTENTS' => FormatingHelper::second_parse($result_data['contents']),
+			'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" class="message-avatar"/>'
 		));
 
-            return $tpl->render();
+			return $tpl->render();
 	}
 }
 ?>

@@ -40,15 +40,14 @@ if (!$is_guest)
 	$max_time_msg = forum_limit_time_msg();
 	
 	//Vérification des autorisations.
-	$unauth_cats = '';
+	$unauth_cats = array();
 	if (is_array($AUTH_READ_FORUM))
 	{
 		foreach ($AUTH_READ_FORUM as $idcat => $auth)
 		{
 			if (!$auth)
-				$unauth_cats .= $idcat . ',';
+				$unauth_cats[] = $idcat;
 		}
-		$unauth_cats = !empty($unauth_cats) ? " AND c.id NOT IN (" . trim($unauth_cats, ',') . ")" : '';
 	}
 
 	//Si on est sur un topic, on le supprime dans la requête => si ce topic n'était pas lu il ne sera plus dans la liste car désormais lu.
@@ -60,11 +59,15 @@ if (!$is_guest)
 	}
 	
 	//Requête pour compter le nombre de messages non lus.
-	$nbr_msg_not_read = $Sql->query("SELECT COUNT(*)
+	$nbr_msg_not_read = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*)
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-	LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'
-	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . $unauth_cats);
+	LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
+	WHERE t.last_timestamp >= :last_timestamp AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . (!empty($unauth_cats) ? " AND c.id NOT IN :unauth_cats" : ''), array(
+		'unauth_cats' => $unauth_cats,
+		'last_timestamp' => $max_time_msg,
+		'user_id' => AppContext::get_current_user()->get_id()
+	));
 }
 
 //Formulaire de connexion sur le forum.

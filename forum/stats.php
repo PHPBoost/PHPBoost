@@ -44,9 +44,12 @@ $sum = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats
 $total_day = max(1, $total_day);
 $nbr_topics_day = NumberHelper::round($sum['total_topics']/$total_day, 1);
 $nbr_msg_day = NumberHelper::round($sum['total_msg']/$total_day, 1);
-$nbr_topics_today = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
+$nbr_topics_today = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*)
+FROM " . PREFIX . "forum_topics t
 JOIN " . PREFIX . "forum_msg m ON m.id = t.first_msg_id
-WHERE m.timestamp > '" . $timestamp_today . "'");
+WHERE m.timestamp > :timestamp", array(
+	'timestamp' => $timestamp_today
+));
 $nbr_msg_today = PersistenceContext::get_querier()->count(PREFIX . 'forum_msg', 'WHERE timestamp > :timestamp', array('timestamp' => $timestamp_today));
 
 $vars_tpl = array(
@@ -57,7 +60,7 @@ $vars_tpl = array(
 	'NBR_MSG_DAY' => $nbr_msg_day,
 	'NBR_TOPICS_TODAY' => $nbr_topics_today,
 	'NBR_MSG_TODAY' => $nbr_msg_today,
-	'L_FORUM_INDEX' => $LANG['forum_index'],		
+	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'L_FORUM' => $LANG['forum'],
 	'L_STATS' => $LANG['stats'],
 	'L_NBR_TOPICS' => ($sum['total_topics'] > 1) ? $LANG['topic_s'] : $LANG['topic'],
@@ -67,29 +70,30 @@ $vars_tpl = array(
 	'L_NBR_TOPICS_TODAY' => $LANG['nbr_topics_today'],
 	'L_NBR_MSG_TODAY' => $LANG['nbr_msg_today'],
 	'L_LAST_MSG' => $LANG['forum_last_msg'],
-	'L_POPULAR' => $LANG['forum_popular'],				
+	'L_POPULAR' => $LANG['forum_popular'],
 	'L_ANSWERS' => $LANG['forum_nbr_answers'],
 );
 
-$auth_cats = '';
+$auth_cats = array();
 if (is_array($CAT_FORUM))
 {
 	foreach ($CAT_FORUM as $idcat => $key)
 	{
 		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
-			$auth_cats .= $idcat . ',';
+			$auth_cats[] = $idcat;
 	}
-	$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 }
 
-//Dernières réponses	
-$result = $Sql->query_while("SELECT t.id, t.title, c.id as cid, c.auth
+//Dernières réponses
+$result = PersistenceContext::get_querier()->select("SELECT t.id, t.title, c.id as cid, c.auth
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
+WHERE c.level != 0 AND c.aprob = 1 " . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : '') . "
 ORDER BY t.last_timestamp DESC
-" . $Sql->limit(0, 10));
-while ($row = $Sql->fetch_assoc($result))
+LIMIT 10", array(
+	'auth_cats' => $auth_cats
+));
+while ($row = $result->fetch())
 {
 	$tpl->assign_block_vars('last_msg', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
@@ -98,14 +102,16 @@ while ($row = $Sql->fetch_assoc($result))
 }
 $result->dispose();
 
-//Les plus vus	
-$result = $Sql->query_while("SELECT t.id, t.title, c.id as cid, c.auth
+//Les plus vus
+$result = PersistenceContext::get_querier()->select("SELECT t.id, t.title, c.id as cid, c.auth
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
+WHERE c.level != 0 AND c.aprob = 1 " . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : '') . "
 ORDER BY t.nbr_views DESC
-" . $Sql->limit(0, 10));
-while ($row = $Sql->fetch_assoc($result))
+LIMIT 10", array(
+	'auth_cats' => $auth_cats
+));
+while ($row = $result->fetch())
 {
 	$tpl->assign_block_vars('popular', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
@@ -114,22 +120,24 @@ while ($row = $Sql->fetch_assoc($result))
 }
 $result->dispose();
 
-//Les plus répondus	
-$result = $Sql->query_while("SELECT t.id, t.title, c.id as cid, c.auth
+//Les plus répondus
+$result = PersistenceContext::get_querier()->select("SELECT t.id, t.title, c.id as cid, c.auth
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
+WHERE c.level != 0 AND c.aprob = 1 " . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : '') . "
 ORDER BY t.nbr_msg DESC
-" . $Sql->limit(0, 10));
-while ($row = $Sql->fetch_assoc($result))
+LIMIT 10", array(
+	'auth_cats' => $auth_cats
+));
+while ($row = $result->fetch())
 {
 	$tpl->assign_block_vars('answers', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
-}	
+}
 $result->dispose();
-	
+
 //Listes les utilisateurs en lignes.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script = '" ."/forum/stats.php'");
 
@@ -152,10 +160,10 @@ $vars_tpl = array_merge($vars_tpl, array(
 $tpl->put_all($vars_tpl);
 $tpl_top->put_all($vars_tpl);
 $tpl_bottom->put_all($vars_tpl);
-	
+
 $tpl->put('forum_top', $tpl_top);
 $tpl->put('forum_bottom', $tpl_bottom);
-	
+
 $tpl->display();
 
 include('../kernel/footer.php');
