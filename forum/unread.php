@@ -50,24 +50,27 @@ $idcat_unread = retrieve(GET, 'cat', 0);
 $max_time_msg = forum_limit_time_msg();
 
 //Vérification des autorisations.
-$auth_cats = '';
+$auth_cats = array();
 if (is_array($CAT_FORUM))
 {
 	foreach ($CAT_FORUM as $idcat => $key)
 	{
 		if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) || !$CAT_FORUM[$idcat]['aprob'])
-			$auth_cats .= $idcat . ',';
+			$auth_cats[] = $idcat;
 	}
-	$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 }
 
-//Catégorie pour laquelle il faut afficher les messages non lus.
-$clause_cat = !empty($idcat_unread) ? "(c.id_left >= '" . $CAT_FORUM[$idcat_unread]['id_left'] . "' AND c.id_right <= '" . $CAT_FORUM[$idcat_unread]['id_right'] . "') AND " : '';
-
-$nbr_topics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
+$nbr_topics = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*)
+FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'
-WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats);
+LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
+WHERE " . (!empty($idcat_unread) ? "(c.id_left >= :id_left AND c.id_right <= :id_right) AND " : '') . "t.last_timestamp >= :max_time_msg AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : ''), array(
+	'user_id' => AppContext::get_current_user()->get_id(),
+	'id_left' => $CAT_FORUM[$idcat_unread]['id_left'],
+	'id_right' => $CAT_FORUM[$idcat_unread]['id_right'],
+	'max_time_msg' => $max_time_msg,
+	'auth_cats' => $auth_cats,
+));
 
 $cat_filter = !empty($idcat_unread) ? '&amp;cat=' . $idcat_unread : '';
 
@@ -81,18 +84,26 @@ if ($pagination->current_page_is_empty() && $page > 1)
 	DispatchManager::redirect($error_controller);
 }
 
-$result = $Sql->query_while("SELECT c.id as cid, m1.display_name AS login, m1.level AS user_level, m1.groups AS groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
+$result = PersistenceContext::get_querier()->select("SELECT c.id as cid, m1.display_name AS login, m1.level AS user_level, m1.groups AS groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id	AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'
+LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
 LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
-LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . AppContext::get_current_user()->get_id() . "'
+LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = :user_id
 LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
-WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "
-ORDER BY t.last_timestamp DESC 
-" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']));
-while ($row = $Sql->fetch_assoc($result))
+WHERE " . (!empty($idcat_unread) ? "(c.id_left >= :id_left AND c.id_right <= :id_right) AND " : '') . "t.last_timestamp >= :max_time_msg AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : '') . "
+ORDER BY t.last_timestamp DESC
+LIMIT :number_items_per_page OFFSET :display_from", array(
+	'user_id' => AppContext::get_current_user()->get_id(),
+	'id_left' => $CAT_FORUM[$idcat_unread]['id_left'],
+	'id_right' => $CAT_FORUM[$idcat_unread]['id_right'],
+	'max_time_msg' => $max_time_msg,
+	'auth_cats' => $auth_cats,
+	'number_items_per_page' => $pagination->get_number_items_per_page(),
+	'display_from' => $pagination->get_display_from()
+));
+while ($row = $result->fetch())
 {
 	//On définit un array pour l'appelation correspondant au type de champ
 	$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
