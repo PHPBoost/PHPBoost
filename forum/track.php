@@ -68,11 +68,13 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 {
 	$tpl = new FileTemplate('forum/forum_track.tpl');
 
-	$nbr_topics = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics t
+	$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics
+	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id
 	WHERE tr.user_id = :user_id", array(
 		'user_id' => AppContext::get_current_user()->get_id()
 	));
+	$nbr_topics = $row['nbr_topics'];
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topics, $CONFIG_FORUM['pagination_topic'], Pagination::LIGHT_PAGINATION);

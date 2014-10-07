@@ -44,12 +44,13 @@ $sum = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats
 $total_day = max(1, $total_day);
 $nbr_topics_day = NumberHelper::round($sum['total_topics']/$total_day, 1);
 $nbr_msg_day = NumberHelper::round($sum['total_msg']/$total_day, 1);
-$nbr_topics_today = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*)
+$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics_today
 FROM " . PREFIX . "forum_topics t
 JOIN " . PREFIX . "forum_msg m ON m.id = t.first_msg_id
 WHERE m.timestamp > :timestamp", array(
 	'timestamp' => $timestamp_today
 ));
+$nbr_topics_today = $row['nbr_topics_today'];
 $nbr_msg_today = PersistenceContext::get_querier()->count(PREFIX . 'forum_msg', 'WHERE timestamp > :timestamp', array('timestamp' => $timestamp_today));
 
 $vars_tpl = array(

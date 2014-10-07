@@ -50,13 +50,14 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = forum_limit_time_msg();
 	
-	$nbr_topics = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*)
+	$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics
 	FROM " . PREFIX . "forum_view v
 	LEFT JOIN " . PREFIX . "forum_topics t ON t.id = v.idtopic
 	WHERE t.last_timestamp >= :timestamp AND v.user_id = :user_id", array(
 		'timestamp' => $max_time,
 		'user_id' => AppContext::get_current_user()->get_id()
 	));
+	$nbr_topics = $row['nbr_topics'];
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topics, $CONFIG_FORUM['pagination_topic'], Pagination::LIGHT_PAGINATION);
