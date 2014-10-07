@@ -35,7 +35,7 @@ include_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$sql_querier = PersistenceContext::get_sql();
+$db_querier = PersistenceContext::get_querier();
 
 if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['add_member_auth']) || !empty($_GET['admin_member']) || !empty($_GET['warning_member']) || !empty($_GET['punish_member'])) //Recherche d'un membre
 {
@@ -45,8 +45,8 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
     if (!empty($login))
     {
         $i = 0;
-        $result = $sql_querier->query_while ("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $login . "%'");
-        while ($row = $sql_querier->fetch_assoc($result))
+        $result = $db_querier->select("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE :login", array('login' => $login . '%'));
+        while ($row = $result->fetch())
         {
             if (!empty($_GET['member']))
             {
@@ -92,13 +92,13 @@ elseif (!empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty(
     if (!empty($login))
     {
         $i = 0;
-        $result = $sql_querier->query_while ("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . $login . "%'");
-        while ($row = $sql_querier->fetch_assoc($result))
+        $result = $db_querier->select("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE :login", array('login' => $login . '%'));
+        while ($row = $result->fetch())
         {
             $url_warn = ($admin) ? 'admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=warning&amp;id=' . $row['user_id']);
             $url_punish = ($admin) ? 'admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=punish&amp;id=' . $row['user_id']);
             $url_ban = ($admin) ? 'admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=ban&amp;id=' . $row['user_id']);
-            	
+            
             if (!empty($_GET['warning_user']))
             {
                 echo '<a href="' . $url_warn . '">' . $row['display_name'] . '</a><br />';

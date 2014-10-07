@@ -54,24 +54,25 @@ if (!empty($id_get)) //Déplacement du sujet.
 
 	$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array('id', 'name'), 'WHERE id=:id', array('id' => $topic['idcat']));
 
-	$auth_cats = '';
+	$auth_cats = array();
 	if (is_array($CAT_FORUM))
 	{
 		foreach ($CAT_FORUM as $idcat => $key)
 		{
 			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
-				$auth_cats .= $idcat . ',';
+				$auth_cats[] = $idcat;
 		}
-		$auth_cats = !empty($auth_cats) ? "AND id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 	}
 
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$cat_forum = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
-	$result = $Sql->query_while("SELECT id, name, level
+	$result = PersistenceContext::get_querier()->select("SELECT id, name, level
 	FROM " . PREFIX . "forum_cats
-	WHERE url = '' " . $auth_cats . "
-	ORDER BY id_left");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE url = '' " . (!empty($auth_cats) ? "AND id NOT IN :auth_cats" : '') . "
+	ORDER BY id_left", array(
+		'auth_cats' => $auth_cats
+	));
+	while ($row = $result->fetch())
 	{
 		$disabled = ($row['id'] == $topic['idcat']) ? ' disabled="disabled"' : '';
 		$cat_forum .= ($row['level'] > 0) ? '<option value="' . $row['id'] . '"' . $disabled . '>' . str_repeat('--------', $row['level']) . ' ' . $row['name'] . '</option>' : '<option value="' . $row['id'] . '" disabled="disabled">-- ' . $row['name'] . '</option>';
@@ -121,11 +122,11 @@ if (!empty($id_get)) //Déplacement du sujet.
 }
 elseif (!empty($id_post)) //Déplacement du topic
 {
-	$idcat = $Sql->query("SELECT idcat FROM " . PREFIX . "forum_topics WHERE id = '" . $id_post . "'");
+	$idcat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'idcat', 'WHERE id = :id', array('id' => $id_post));
 	if (AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 	{
 		$to = retrieve(POST, 'to', $idcat); //Catégorie cible.
-		$level = $Sql->query("SELECT level FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "'");
+		$level = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'level', 'WHERE id = :id', array('id' => $to));
 		if (!empty($to) && $level > 0 && $idcat != $to)
 		{
 			//Instanciation de la class du forum.
@@ -159,39 +160,39 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
-    	DispatchManager::redirect($error_controller);
-    }
+		DispatchManager::redirect($error_controller);
+	}
 
-	$id_first = $Sql->query("SELECT MIN(id) as id FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'");
+	$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :id', array('id' => $msg['idtopic']));
 	//Scindage du premier message interdite.
 	if ($id_first == $idm)
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), 
-                $LANG['e_unable_cut_forum']);
-        DispatchManager::redirect($controller);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $LANG['e_unable_cut_forum']);
+		DispatchManager::redirect($controller);
 	}
 
 	$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array('id', 'name'), 'WHERE id=:id', array('id' => $topic['idcat']));
 	$to = retrieve(POST, 'to', $cat['id']); //Catégorie cible.
 
-	$auth_cats = '';
+	$auth_cats = array();
 	if (is_array($CAT_FORUM))
 	{
 		foreach ($CAT_FORUM as $idcat => $key)
 		{
 			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
-				$auth_cats .= $idcat . ',';
+				$auth_cats[] = $idcat;
 		}
-		$auth_cats = !empty($auth_cats) ? "AND id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 	}
 
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$cat_forum = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
-	$result = $Sql->query_while("SELECT id, name, level
+	$result = PersistenceContext::get_querier()->select("SELECT id, name, level
 	FROM " . PREFIX . "forum_cats
-	WHERE url = '' " . $auth_cats . "
-	ORDER BY id_left");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE url = '' " . (!empty($auth_cats) ? "AND id NOT IN :auth_cats" : '') . "
+	ORDER BY id_left", array(
+		'auth_cats' => $auth_cats
+	));
+	while ($row = $result->fetch())
 	{
 		$cat_forum .= ($row['level'] > 0) ? '<option value="' . $row['id'] . '">' . str_repeat('--------', $row['level']) . ' ' . $row['name'] . '</option>' : '<option value="' . $row['id'] . '" disabled="disabled">-- ' . $row['name'] . '</option>';
 	}
@@ -361,7 +362,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 		DispatchManager::redirect($error_controller);
 	}
 
-	$id_first = $Sql->query("SELECT MIN(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'");
+	$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :id', array('id' => $msg['idtopic']));
 	//Scindage du premier message interdite.
 	if ($id_first == $id_post_msg)
 	{
@@ -370,7 +371,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
         DispatchManager::redirect($controller);
 	}
 
-	$level = $Sql->query("SELECT level FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "'");
+	$level = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'level', 'WHERE id = :id', array('id' => $to));
 	if (!empty($to) && $level > 0)
 	{
 		$title = retrieve(POST, 'title', '');
