@@ -100,7 +100,8 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
 	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " me ON me.user_id = :user_id
 	WHERE tr.user_id = :user_id
-	ORDER BY t.last_timestamp DESC", array(
+	ORDER BY t.last_timestamp DESC
+	LIMIT :number_items_per_page OFFSET :display_from", array(
 		'user_id' => AppContext::get_current_user()->get_id(),
 		'number_items_per_page' => $pagination->get_number_items_per_page(),
 		'display_from' => $pagination->get_display_from()

@@ -50,10 +50,13 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = forum_limit_time_msg();
 	
-	$nbr_topics = $Sql->query("SELECT COUNT(*)
+	$nbr_topics = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*)
 	FROM " . PREFIX . "forum_view v
 	LEFT JOIN " . PREFIX . "forum_topics t ON t.id = v.idtopic
-	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'");
+	WHERE t.last_timestamp >= :timestamp AND v.user_id = :user_id", array(
+		'timestamp' => $max_time,
+		'user_id' => AppContext::get_current_user()->get_id()
+	));
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topics, $CONFIG_FORUM['pagination_topic'], Pagination::LIGHT_PAGINATION);
@@ -65,18 +68,23 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$result = $Sql->query_while("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
+	$result = PersistenceContext::get_querier()->select("SELECT m1.display_name AS login, m1.level AS user_level, m1.groups AS groups, m2.display_name AS last_login, m2.level AS last_user_level, m2.groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id, t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 	FROM " . PREFIX . "forum_view v
 	LEFT JOIN " . PREFIX . "forum_topics t ON t.id = v.idtopic
 	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat 
 	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
-	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . AppContext::get_current_user()->get_id() . "'
+	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = :user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
-	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'
+	WHERE t.last_timestamp >= :timestamp AND v.user_id = :user_id
 	ORDER BY t.last_timestamp DESC
-	" . $Sql->limit($pagination->get_display_from(), $CONFIG_FORUM['pagination_topic']));
-	while ($row = $Sql->fetch_assoc($result))
+	LIMIT :number_items_per_page OFFSET :display_from", array(
+		'user_id' => AppContext::get_current_user()->get_id(),
+		'timestamp' => $max_time,
+		'number_items_per_page' => $pagination->get_number_items_per_page(),
+		'display_from' => $pagination->get_display_from()
+	));
+	while ($row = $result->fetch())
 	{
 		$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
 		$last_msg = $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' <a class="small '.UserService::get_level_class($row['last_user_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['last_user_id'])->rel() .'">' . $row['last_login'] . '</a>';
