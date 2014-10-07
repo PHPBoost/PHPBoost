@@ -60,17 +60,18 @@ if (is_array($CAT_FORUM))
 	}
 }
 
-$nbr_topics = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*)
+$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics
 FROM " . PREFIX . "forum_topics t
 LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
 WHERE " . (!empty($idcat_unread) ? "(c.id_left >= :id_left AND c.id_right <= :id_right) AND " : '') . "t.last_timestamp >= :max_time_msg AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : ''), array(
 	'user_id' => AppContext::get_current_user()->get_id(),
-	'id_left' => $CAT_FORUM[$idcat_unread]['id_left'],
-	'id_right' => $CAT_FORUM[$idcat_unread]['id_right'],
+	'id_left' => !empty($idcat_unread) ? $CAT_FORUM[$idcat_unread]['id_left'] : '',
+	'id_right' => !empty($idcat_unread) ? $CAT_FORUM[$idcat_unread]['id_right'] : '',
 	'max_time_msg' => $max_time_msg,
 	'auth_cats' => $auth_cats,
 ));
+$nbr_topics  = $row['nbr_topics'];
 
 $cat_filter = !empty($idcat_unread) ? '&amp;cat=' . $idcat_unread : '';
 
@@ -96,8 +97,8 @@ WHERE " . (!empty($idcat_unread) ? "(c.id_left >= :id_left AND c.id_right <= :id
 ORDER BY t.last_timestamp DESC
 LIMIT :number_items_per_page OFFSET :display_from", array(
 	'user_id' => AppContext::get_current_user()->get_id(),
-	'id_left' => $CAT_FORUM[$idcat_unread]['id_left'],
-	'id_right' => $CAT_FORUM[$idcat_unread]['id_right'],
+	'id_left' => !empty($idcat_unread) ? $CAT_FORUM[$idcat_unread]['id_left'] : '',
+	'id_right' => !empty($idcat_unread) ? $CAT_FORUM[$idcat_unread]['id_right'] : '',
 	'max_time_msg' => $max_time_msg,
 	'auth_cats' => $auth_cats,
 	'number_items_per_page' => $pagination->get_number_items_per_page(),

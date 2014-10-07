@@ -47,7 +47,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			$auth_cats[] = $idcat;
 	}
 	
-	$nbr_msg = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*)
+	$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_msg
 	FROM " . PREFIX . "forum_msg msg
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
 	JOIN " . PREFIX . "forum_cats c ON t.idcat = c.id AND c.aprob = 1" . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : '') . "
@@ -55,6 +55,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'auth_cats' => $auth_cats,
 		'user_id' => $view_msg
 	));
+	$nbr_msg = $row['nbr_msg'];
 	
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_msg, $_NBR_ELEMENTS_PER_PAGE, Pagination::LIGHT_PAGINATION);
