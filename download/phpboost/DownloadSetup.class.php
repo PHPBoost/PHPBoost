@@ -149,7 +149,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'author_display_name' => '',
 			'author_user_id' => 1,
 			'number_downloads' => 0,
-			'picture_url' => '/download/download.png',
+			'picture_url' => '/download/download.png'
 		));
 	}
 }
