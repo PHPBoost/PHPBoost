@@ -206,12 +206,7 @@ class AdminMemberEditController extends AdminController
 					'site_name' => $site_name,
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				));
-				$mail = new Mail();
-				$mail->add_recipient($this->user->get_email(), $this->user->get_display_name());
-				$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender());
-				$mail->set_subject($subject);
-				$mail->set_content($content);
-				AppContext::get_mail_service()->try_to_send($mail);
+				AppContext::get_mail_service()->send_from_properties($this->user->get_email(), $subject, $content);
 			}
 		}
 
@@ -224,7 +219,8 @@ class AdminMemberEditController extends AdminController
 		$password_bis = $this->form->get_value('password_bis');
 		if (!empty($password) && !empty($password_bis))
 		{
-			UserService::change_password(KeyGenerator::string_hash($password), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			$auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
+			PHPBoostAuthenticationMethod::update_auth_infos($user_id, $auth_infos['username'], $auth_infos['approved'], KeyGenerator::string_hash($password));
 		}
 		
 		$user_warning = $this->form->get_value('user_warning')->get_raw_value();
@@ -256,8 +252,6 @@ class AdminMemberEditController extends AdminController
 		{
 			MemberSanctionManager::cancel_banishment($user_id);
 		}
-		
-		GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 		
 		if (!$has_error)
 		{

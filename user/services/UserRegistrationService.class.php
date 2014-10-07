@@ -27,18 +27,13 @@
 
 class UserRegistrationService
 {
-	private static $lang;
-
-	public static function __static()
-	{
-		self::$lang = LangLoader::get('user-common');
-	}
-
 	public static function send_email_confirmation($user_id, $email, $pseudo, $login, $password, $registration_pass)
 	{
+		$lang = LangLoader::get('user-common');
 		$user_accounts_config = UserAccountsConfig::load();
 		$site_name = GeneralConfig::load()->get_site_name();
-		$subject = StringVars::replace_vars(self::$lang['registration.subject-mail'], array('site_name' => $site_name));
+		$subject = StringVars::replace_vars($lang['registration.subject-mail'], array('site_name' => $site_name));
+
 		switch ($user_accounts_config->get_member_accounts_validation_method())
 		{
 			case UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION:
@@ -47,10 +42,10 @@ class UserRegistrationService
 					'site_name' => $site_name,
 					'login' => $login,
 					'password' => $password,
-					'accounts_validation_explain' => self::$lang['registration.email.automatic-validation'],
+					'accounts_validation_explain' => $lang['registration.email.automatic-validation'],
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
-				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
+				$content = StringVars::replace_vars($lang['registration.content-mail'], $parameters);
 				self::send_email_user($email, $login, $subject, $content);
 				break;
 			case UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION:
@@ -61,50 +56,36 @@ class UserRegistrationService
 					'password' => $password,
 					'accounts_validation_explain' => 
 				StringVars::replace_vars(
-				self::$lang['registration.email.mail-validation'],
+				$lang['registration.email.mail-validation'],
 				array('validation_link' => UserUrlBuilder::confirm_registration($registration_pass)->absolute())
 				),
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
-				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
+				$content = StringVars::replace_vars($lang['registration.content-mail'], $parameters);
 				self::send_email_user($email, $login, $subject, $content);
 				break;
 			case UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION:
-				self::add_administrator_alert($user_id);
+				
+				$alert = new AdministratorAlert();
+				$alert->set_entitled($lang['registration.pending-approval']);
+				$alert->set_fixing_url(AdminMembersUrlBuilder::edit($user_id)->relative());
+				$alert->set_priority(AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
+				$alert->set_id_in_module($user_id);
+				$alert->set_type('member_account_to_approbate');
+				AdministratorAlertService::save_alert($alert);
 
 				$parameters = array(
 					'pseudo' => $pseudo,
 					'site_name' => $site_name,
 					'login' => $login,
 					'password' => $password,
-					'accounts_validation_explain' => self::$lang['registration.email.administrator-validation'],
+					'accounts_validation_explain' => $lang['registration.email.administrator-validation'],
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
-				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
-				self::send_email_user($email, $login, $subject, $content);
+				$content = StringVars::replace_vars($lang['registration.content-mail'], $parameters);
+				AppContext::get_mail_service()->send_from_properties($email, $subject, $content);
 				break;
 		}
-	}
-
-	private static function send_email_user($email, $login, $subject, $content)
-	{
-		$mail = new Mail();
-		$mail->add_recipient($email, $login);
-		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender());
-		$mail->set_subject($subject);
-		$mail->set_content($content);
-		AppContext::get_mail_service()->try_to_send($mail);
-	}
-
-	private static function add_administrator_alert($user_id)
-	{
-		$alert = new AdministratorAlert();
-		$alert->set_entitled(self::$lang['registration.pending-approval']);
-		$alert->set_fixing_url(AdminMembersUrlBuilder::edit($user_id)->relative());
-		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
-		$alert->set_id_in_module($user_id);
-		$alert->set_type('member_account_to_approbate');
-		AdministratorAlertService::save_alert($alert);
 	}
 }
 ?>

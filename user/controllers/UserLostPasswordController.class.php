@@ -93,7 +93,7 @@ class UserLostPasswordController extends AbstractController
 		$change_password_pass = KeyGenerator::generate_key(15);
 		$user = $this->get_user();
 
-		UserLostPasswordService::update_change_password_pass($change_password_pass, $user->get_email());
+		PHPBoostAuthenticationMethod::update_change_password_pass($user->get_id(), $change_password_pass);
 		
 		$general_config = GeneralConfig::load();
 		$parameters = array(
@@ -104,7 +104,7 @@ class UserLostPasswordController extends AbstractController
 		);
 		$subject = $general_config->get_site_name() . ' : ' . $this->lang['forget-password'];
 		$content = StringVars::replace_vars($this->lang['forget-password.mail.content'], $parameters);
-		UserLostPasswordService::send_mail($user->get_email(), $subject, $content);
+		AppContext::get_mail_service()->send_from_properties($user->get_email(), $subject, $content);
 		
 		$this->tpl->put('MSG', MessageHelper::display($this->lang['forget-password.success'], MessageHelper::SUCCESS));
 	}
@@ -115,7 +115,7 @@ class UserLostPasswordController extends AbstractController
 		{
 			case UserLostPasswordService::LOST_PASSWORD_BY_EMAIL:
 				try {
-				return UserService::get_user('WHERE user_mail=:email', array('email' => $this->form->get_value('information')));
+				return UserService::get_user('WHERE email=:email', array('email' => $this->form->get_value('information')));
 				} catch (Exception $e) {
 					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['forget-password.error'], MessageHelper::NOTICE);
 					DispatchManager::redirect($controller);
