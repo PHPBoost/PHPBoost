@@ -53,15 +53,14 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		ORDER BY id_left");
 		while ($row = $result->fetch())
 		{
-			if (empty($row['auth']))
-				$row['auth'] = serialize($config->get_authorizations());
+			$row['auth'] = empty($row['auth']) ? $config->get_authorizations() : unserialize(stripslashes($row['auth']));
 
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'id_right\'] = ' . var_export($row['id_right'], true) . ';' . "\n";
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'level\'] = ' . var_export($row['level'], true) . ';' . "\n";
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
-			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
+			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export($row['auth'], true) . ';' . "\n";
 		}
 		$result->dispose();
 
@@ -76,8 +75,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		LIMIT 30");
 		while ($row = $result->fetch())
 		{
-			if ($row['idcat'] == 0)
-				$row['auth'] = serialize($config->get_authorizations());
+			$row['auth'] = ($row['idcat'] == 0) ? $config->get_authorizations() : unserialize(stripslashes($row['auth']));
 
 			//Calcul des dimensions avec respect des proportions.
 			list($width, $height) = $Gallery->get_resize_properties($row['width'], $row['height']);
@@ -89,7 +87,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 			'\'width\' => ' . var_export($width, true) . ',' . "\n" .
 			'\'height\' => ' . var_export($height, true) . ',' . "\n" .
 			'\'idcat\' => ' . var_export($row['idcat'], true) . ',' . "\n" .
-			'\'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
+			'\'auth\' => ' . var_export($row['auth'], true) . '),' . "\n";
 		}
 		$result->dispose();
 		$_array_random_pics .= ');';
