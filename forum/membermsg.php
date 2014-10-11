@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($config->get_forum_name(), 'index.php');
 define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php'); 
 
@@ -68,7 +68,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	}
 	$tpl->put_all(array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
-		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['show_member_msg'],
+		'FORUM_NAME' => $config->get_forum_name() . ' : ' . $LANG['show_member_msg'],
 		'PAGINATION' => $pagination->display(),
 		'L_BACK' => $LANG['back'],
 		'L_VIEW_MSG_USER' => $LANG['show_member_msg'],
@@ -100,7 +100,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 		
 		//Ajout du marqueur d'édition si activé.
-		$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '0') ? '<br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' <a class="edit_pseudo" href="'. UserUrlBuilder::profile($row['user_id_edit'])->rel() .'">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span><br />' : '';
+		$edit_mark = ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()) ? '<br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' <a class="edit_pseudo" href="'. UserUrlBuilder::profile($row['user_id_edit'])->rel() .'">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span><br />' : '';
 		
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		

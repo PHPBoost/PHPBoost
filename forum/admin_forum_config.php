@@ -31,42 +31,55 @@ load_module_lang('forum'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$get_id = retrieve(GET, 'id', 0);	
-$id_post = retrieve(POST, 'idc', 0);  
-$update_cached = !empty($_GET['upd']) ? true : false;	
-
-$Cache->load('forum');
+$update_cached = !empty($_GET['upd']);
+$config = ForumConfig::load();
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
-	$CONFIG_FORUM['forum_name'] = stripslashes(retrieve(POST, 'forum_name', GeneralConfig::load()->get_site_name() . ' forum'));  
-	$CONFIG_FORUM['pagination_topic'] = retrieve(POST, 'pagination_topic', 20);  
-	$CONFIG_FORUM['pagination_msg'] = retrieve(POST, 'pagination_msg', 15);
-	$CONFIG_FORUM['view_time'] = retrieve(POST, 'view_time', 30) * 3600 * 24;
-	$CONFIG_FORUM['topic_track'] = retrieve(POST, 'topic_track', 40);
-	$CONFIG_FORUM['edit_mark'] = retrieve(POST, 'edit_mark', 0);
-	$CONFIG_FORUM['display_connexion'] = retrieve(POST, 'display_connexion', 0);
-	$CONFIG_FORUM['no_left_column'] = retrieve(POST, 'no_left_column', 0);
-	$CONFIG_FORUM['no_right_column'] = retrieve(POST, 'no_right_column', 0);
-	$CONFIG_FORUM['activ_display_msg']  = retrieve(POST, 'activ_display_msg', 0);
-	$CONFIG_FORUM['display_msg'] = stripslashes(retrieve(POST, 'display_msg', ''));
-	$CONFIG_FORUM['explain_display_msg'] = stripslashes(retrieve(POST, 'explain_display_msg', ''));	
-	$CONFIG_FORUM['explain_display_msg_bis'] = stripslashes(retrieve(POST, 'explain_display_msg_bis', ''));
-	$CONFIG_FORUM['icon_activ_display_msg'] = retrieve(POST, 'icon_activ_display_msg', 0);
-	$CONFIG_FORUM['auth'] = serialize($CONFIG_FORUM['auth']);
-		
-	if (!empty($CONFIG_FORUM['forum_name']) && !empty($CONFIG_FORUM['pagination_topic']) && !empty($CONFIG_FORUM['pagination_msg']) && !empty($CONFIG_FORUM['view_time']))
-	{
-		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'");
-			
-		###### Régénération du cache du forum ###### 
-		$Cache->Generate_module_file('forum');
-				
-		AppContext::get_response()->redirect(HOST . SCRIPT);	
-	}
+	$config->set_forum_name(retrieve(POST, 'forum_name', ''));
+	$config->set_number_topics_per_page(retrieve(POST, 'number_topics_per_page', 20));
+	$config->set_number_messages_per_page(retrieve(POST, 'number_messages_per_page', 15));
+	$config->set_read_messages_storage_duration(retrieve(POST, 'read_messages_storage_duration', 30));
+	$config->set_max_topic_number_in_favorite(retrieve(POST, 'max_topic_number_in_favorite', 40));
+	
+	if (retrieve(POST, 'edit_mark_enabled', ''))
+		$config->enable_edit_mark();
 	else
-		AppContext::get_response()->redirect('/forum/admin_forum_config.php?error=incomplete#message_helper');
+		$config->disable_edit_mark();
+	
+	if (retrieve(POST, 'connexion_form_displayed', ''))
+		$config->display_connexion_form();
+	else
+		$config->hide_connexion_form();
+	
+	if (retrieve(POST, 'left_column_disabled', ''))
+		$config->disable_left_column();
+	else
+		$config->enable_left_column();
+	
+	if (retrieve(POST, 'right_column_disabled', ''))
+		$config->disable_right_column();
+	else
+		$config->enable_right_column();
+	
+	if (retrieve(POST, 'message_before_topic_title_displayed', ''))
+		$config->display_message_before_topic_title();
+	else
+		$config->hide_message_before_topic_title();
+	
+	$config->set_message_before_topic_title(retrieve(POST, 'message_before_topic_title', ''));
+	$config->set_message_when_topic_is_unsolved(retrieve(POST, 'message_when_topic_is_unsolved', ''));
+	$config->set_message_when_topic_is_solved(retrieve(POST, 'message_when_topic_is_solved', ''));
+	
+	if (retrieve(POST, 'message_before_topic_title_icon_displayed', ''))
+		$config->display_message_before_topic_title_icon();
+	else
+		$config->hide_message_before_topic_title_icon();
+	
+	ForumConfig::save();
+	
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 {
@@ -74,7 +87,7 @@ elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 	FROM " . PREFIX . "forum_cats
 	WHERE level > 0");
 	while ($row = $Sql->fetch_assoc($result))
-	{	
+	{
 		$cat_list = $row['id'];
 		if (($row['id_right'] - $row['id_left']) > 1)
 		{
@@ -91,47 +104,27 @@ elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 	}
 	$result->dispose();
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);	
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
-else	
-{	
+else
+{
 	$tpl = new FileTemplate('forum/admin_forum_config.tpl');
-
-	$Cache->load('forum');
 	
-	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
-	if ($get_error == 'incomplete')
-		$tpl->put('message_helper', MessageHelper::display($LANG['e_incomplete'], MessageHelper::NOTICE));
-	
-	$CONFIG_FORUM['edit_mark'] = isset($CONFIG_FORUM['edit_mark']) ? $CONFIG_FORUM['edit_mark'] : 0;
-	$CONFIG_FORUM['display_connexion'] = isset($CONFIG_FORUM['display_connexion']) ? $CONFIG_FORUM['display_connexion'] : 0;
-	$CONFIG_FORUM['no_left_column'] = isset($CONFIG_FORUM['no_left_column']) ? $CONFIG_FORUM['no_left_column'] : 0;
-	$CONFIG_FORUM['no_right_column'] = isset($CONFIG_FORUM['no_right_column']) ? $CONFIG_FORUM['no_right_column'] : 0;
-	$CONFIG_FORUM['activ_display_msg'] = isset($CONFIG_FORUM['activ_display_msg']) ? $CONFIG_FORUM['activ_display_msg'] : 0;
-	$CONFIG_FORUM['icon_display_msg'] = isset($CONFIG_FORUM['icon_display_msg']) ? $CONFIG_FORUM['icon_display_msg'] : 1;
-
 	$tpl->put_all(array(
-		'FORUM_NAME' => !empty($CONFIG_FORUM['forum_name']) ? $CONFIG_FORUM['forum_name'] : '',
-		'PAGINATION_TOPIC' => !empty($CONFIG_FORUM['pagination_topic']) ? $CONFIG_FORUM['pagination_topic'] : '20',
-		'PAGINATION_MSG' => !empty($CONFIG_FORUM['pagination_msg']) ? $CONFIG_FORUM['pagination_msg'] : '15',
-		'VIEW_TIME' => !empty($CONFIG_FORUM['view_time']) ? $CONFIG_FORUM['view_time']/(3600*24) : '30',
-		'TOPIC_TRACK_MAX' => !empty($CONFIG_FORUM['topic_track']) ? $CONFIG_FORUM['topic_track'] : '40',	
-		'EDIT_MARK_ENABLED' => ($CONFIG_FORUM['edit_mark'] == 1) ? 'checked="checked"' : '',
-		'EDIT_MARK_DISABLED' => ($CONFIG_FORUM['edit_mark'] == 0) ? 'checked="checked"' : '',
-		'DISPLAY_CONNEXION_ENABLED' => ($CONFIG_FORUM['display_connexion'] == 1) ? 'checked="checked"' : '',
-		'DISPLAY_CONNEXION_DISABLED' => ($CONFIG_FORUM['display_connexion'] == 0) ? 'checked="checked"' : '',
-		'NO_LEFT_COLUMN_ENABLED' => ($CONFIG_FORUM['no_left_column'] == 1) ? 'checked="checked"' : '',
-		'NO_LEFT_COLUMN_DISABLED' => ($CONFIG_FORUM['no_left_column'] == 0) ? 'checked="checked"' : '',
-		'NO_RIGHT_COLUMN_ENABLED' => ($CONFIG_FORUM['no_right_column'] == 1) ? 'checked="checked"' : '',
-		'NO_RIGHT_COLUMN_DISABLED' => ($CONFIG_FORUM['no_right_column'] == 0) ? 'checked="checked"' : '',
-		'DISPLAY_MSG_ENABLED' => ($CONFIG_FORUM['activ_display_msg'] == 1) ? 'checked="checked"' : '',
-		'DISPLAY_MSG_DISABLED' => ($CONFIG_FORUM['activ_display_msg'] == 0) ? 'checked="checked"' : '',
-		'DISPLAY_MSG' => !empty($CONFIG_FORUM['display_msg']) ? $CONFIG_FORUM['display_msg'] : '',
-		'EXPLAIN_DISPLAY_MSG' => !empty($CONFIG_FORUM['explain_display_msg']) ? $CONFIG_FORUM['explain_display_msg'] : '',
-		'EXPLAIN_DISPLAY_MSG_BIS' => !empty($CONFIG_FORUM['explain_display_msg_bis']) ? $CONFIG_FORUM['explain_display_msg_bis'] : '',
-		'ICON_DISPLAY_MSG_ENABLED' => ($CONFIG_FORUM['icon_activ_display_msg'] == 1) ? 'checked="checked"' : '',
-		'ICON_DISPLAY_MSG_DISABLED' => ($CONFIG_FORUM['icon_activ_display_msg'] == 0) ? 'checked="checked"' : '',
+		'FORUM_NAME' => $config->get_forum_name(),
+		'NUMBER_TOPICS_PER_PAGE' => $config->get_number_topics_per_page(),
+		'NUMBER_MESSAGES_PER_PAGE' => $config->get_number_messages_per_page(),
+		'READ_MESSAGES_STORAGE_DURATION' => $config->get_read_messages_storage_duration(),
+		'MAX_TOPIC_NUMBER_IN_FAVORITE' => $config->get_max_topic_number_in_favorite(),
+		'C_EDIT_MARK_ENABLED' => $config->is_edit_mark_enabled(),
+		'C_CONNEXION_FORM_DISPLAYED' => $config->is_connexion_form_displayed(),
+		'C_LEFT_COLUMN_DISABLED' => $config->is_left_column_disabled(),
+		'C_RIGHT_COLUMN_DISABLED' => $config->is_right_column_disabled(),
+		'C_MESSAGE_BEFORE_TOPIC_TITLE_DISPLAYED' => $config->is_message_before_topic_title_displayed(),
+		'MESSAGE_BEFORE_TOPIC_TITLE' => $config->get_message_before_topic_title(),
+		'MESSAGE_WHEN_TOPIC_IS_UNSOLVED' => $config->get_message_when_topic_is_unsolved(),
+		'MESSAGE_WHEN_TOPIC_IS_SOLVED' => $config->get_message_when_topic_is_solved(),
+		'C_MESSAGE_BEFORE_TOPIC_TITLE_ICON_DISPLAYED' => $config->is_message_before_topic_title_icon_displayed(),
 		'L_REQUIRE' => $LANG['require'],
 		'L_REQUIRE_NAME' => $LANG['require_name'],
 		'L_REQUIRE_TOPIC_P' => $LANG['require_topic_p'],
@@ -162,15 +155,10 @@ else
 		'L_DISPLAY_MSG' => $LANG['display_msg'],
 		'L_EXPLAIN_DISPLAY_MSG' => $LANG['explain_display_msg'],
 		'L_EXPLAIN_DISPLAY_MSG_EXPLAIN' => $LANG['explain_display_msg_explain'],
-		'L_EXPLAIN_DISPLAY_MSG_BIS' => $LANG['explain_display_msg'],		
-		'L_EXPLAIN_DISPLAY_MSG_BIS_EXPLAIN' => $LANG['explain_display_msg_bis_explain'],		
+		'L_EXPLAIN_DISPLAY_MSG_BIS' => $LANG['explain_display_msg'],
+		'L_EXPLAIN_DISPLAY_MSG_BIS_EXPLAIN' => $LANG['explain_display_msg_bis_explain'],
 		'L_ICON_DISPLAY_MSG' => $LANG['icon_display_msg'],
-		'L_ACTIV' => LangLoader::get_message('enabled', 'common'),
-		'L_UNACTIVE' => LangLoader::get_message('disabled', 'common'),
 		'L_DAYS' => LangLoader::get_message('days', 'date-common'),
-		'L_YES' => $LANG['yes'],
-		'L_NO' => $LANG['no'],
-		'L_DELETE' => $LANG['delete'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
 		'L_UPDATE_DATA_CACHED' => $LANG['update_data_cached']

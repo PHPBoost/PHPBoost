@@ -29,88 +29,90 @@
 class ForumFeedProvider implements FeedProvider
 {
 	public function get_feeds_list()
-    {
-        global $LANG;
-        $feed = array();
-        $forum = new Forum();
-        $categories = $forum->get_cats_tree();
-        $cat_tree = new FeedsCat('forum', 0, $LANG['root']);
+	{
+		global $LANG;
+		$feed = array();
+		$forum = new Forum();
+		$categories = $forum->get_cats_tree();
+		$cat_tree = new FeedsCat('forum', 0, $LANG['root']);
 
-        $this->feeds_add_category($cat_tree, $categories);
+		$this->feeds_add_category($cat_tree, $categories);
 
-        $children = $cat_tree->get_children();
-        $feeds = new FeedsList();
-        if (count($children) > 0)
-        {
-            $feeds->add_feed($children[0], Feed::DEFAULT_FEED_NAME);
-        }
-        return $feeds;
-    }
+		$children = $cat_tree->get_children();
+		$feeds = new FeedsList();
+		if (count($children) > 0)
+		{
+			$feeds->add_feed($children[0], Feed::DEFAULT_FEED_NAME);
+		}
+		return $feeds;
+	}
 
-    public function get_feed_data_struct($idcat = 0, $name = '')
-    {
-    	$querier = PersistenceContext::get_querier();
-        global $Cache, $LANG, $CONFIG_FORUM, $CAT_FORUM;
+	public function get_feed_data_struct($idcat = 0, $name = '')
+	{
+		$querier = PersistenceContext::get_querier();
+		$config = ForumConfig::load();
 
-        $_idcat = $idcat;
-        require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
-        $idcat = $_idcat;   // Because <$idcat> is overwritten in /forum/forum_init_auth_cats.php
+		global $Cache, $LANG, $CAT_FORUM;
 
-        $data = new FeedData();
-        $data->set_title($LANG['xml_forum_desc']);
-        $data->set_date(new Date());
-        $data->set_link(DispatchManager::get_url('/syndication', '/rss/forum/'. $idcat . '/'));
-        $data->set_host(HOST);
-        $data->set_desc($LANG['xml_forum_desc']);
-        $data->set_lang($LANG['xml_lang']);
-        $data->set_auth_bit(READ_CAT_FORUM);
+		$_idcat = $idcat;
+		require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
+		$idcat = $_idcat;   // Because <$idcat> is overwritten in /forum/forum_init_auth_cats.php
 
-        $req_cats = (($idcat > 0) && isset($CAT_FORUM[$idcat])) ? ' AND c.id_left >= :forum_cats_left AND id_right <= :forum_cats_right' : '';
-        $parameters = array('limit' => 2 * $CONFIG_FORUM['pagination_msg']);
-        if ($idcat > 0)
-        {
-        	$parameters['forum_cats_left'] = $CAT_FORUM[$idcat]['id_left'];
-            $parameters['forum_cats_right'] = $CAT_FORUM[$idcat]['id_right'];
-        }
-        $req = 'SELECT t.id, t.title, t.last_timestamp, t.last_msg_id, t.display_msg, t.nbr_msg AS t_nbr_msg, msg.id mid, msg.contents, c.auth
-        FROM ' . PREFIX . 'forum_topics t
-        LEFT JOIN ' . PREFIX . 'forum_cats c ON c.id = t.idcat
-        LEFT JOIN ' . PREFIX . 'forum_msg msg ON msg.id = t.last_msg_id
-        WHERE c.level != 0 AND c.aprob = 1 ' . $req_cats . '
-        ORDER BY t.last_timestamp DESC LIMIT :limit OFFSET 0';
-        $results = $querier->select($req, $parameters);
+		$data = new FeedData();
+		$data->set_title($LANG['xml_forum_desc']);
+		$data->set_date(new Date());
+		$data->set_link(DispatchManager::get_url('/syndication', '/rss/forum/'. $idcat . '/'));
+		$data->set_host(HOST);
+		$data->set_desc($LANG['xml_forum_desc']);
+		$data->set_lang($LANG['xml_lang']);
+		$data->set_auth_bit(READ_CAT_FORUM);
 
-        foreach ($results as $row)
-        {
-            $item = new FeedItem();
+		$req_cats = (($idcat > 0) && isset($CAT_FORUM[$idcat])) ? ' AND c.id_left >= :forum_cats_left AND id_right <= :forum_cats_right' : '';
+		$parameters = array('limit' => 2 * $config->get_number_messages_per_page());
+		if ($idcat > 0)
+		{
+			$parameters['forum_cats_left'] = $CAT_FORUM[$idcat]['id_left'];
+			$parameters['forum_cats_right'] = $CAT_FORUM[$idcat]['id_right'];
+		}
+		$req = 'SELECT t.id, t.title, t.last_timestamp, t.last_msg_id, t.display_msg, t.nbr_msg AS t_nbr_msg, msg.id mid, msg.contents, c.auth
+		FROM ' . PREFIX . 'forum_topics t
+		LEFT JOIN ' . PREFIX . 'forum_cats c ON c.id = t.idcat
+		LEFT JOIN ' . PREFIX . 'forum_msg msg ON msg.id = t.last_msg_id
+		WHERE c.level != 0 AND c.aprob = 1 ' . $req_cats . '
+		ORDER BY t.last_timestamp DESC LIMIT :limit OFFSET 0';
+		$results = $querier->select($req, $parameters);
 
-            //Link
-            $last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
-            $last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
-            $last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
+		foreach ($results as $row)
+		{
+			$item = new FeedItem();
 
-            $link = new Url('/forum/topic' . url(
-                    '.php?' . $last_page .  'id=' . $row['id'],
-                    '-' . $row['id'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php'
-                    ) . '#m' .  $row['last_msg_id']
-                    );
-            $item->set_title(
-                (($CONFIG_FORUM['activ_display_msg'] && !empty($row['display_msg'])) ?
-                TextHelper::html_entity_decode($CONFIG_FORUM['display_msg'], ENT_NOQUOTES) . ' ' : '') .
-                ucfirst($row['title'])
-            );
-            $item->set_link($link);
-            $item->set_guid($link);
-            $item->set_desc(FormatingHelper::second_parse($row['contents']));
-            $item->set_date(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['last_timestamp']));
-            $item->set_auth(unserialize($row['auth']));
+			//Link
+			$last_page = ceil($row['t_nbr_msg'] / $config->get_number_messages_per_page());
+			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
+			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 
-            $data->add_item($item);
-        }
-        $results->dispose();
+			$link = new Url('/forum/topic' . url(
+					'.php?' . $last_page .  'id=' . $row['id'],
+					'-' . $row['id'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php'
+					) . '#m' .  $row['last_msg_id']
+					);
+			$item->set_title(
+				(($config->is_message_before_topic_title_displayed() && !empty($row['display_msg'])) ?
+				TextHelper::html_entity_decode($config->get_message_before_topic_title(), ENT_NOQUOTES) . ' ' : '') .
+				ucfirst($row['title'])
+			);
+			$item->set_link($link);
+			$item->set_guid($link);
+			$item->set_desc(FormatingHelper::second_parse($row['contents']));
+			$item->set_date(new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['last_timestamp']));
+			$item->set_auth(unserialize($row['auth']));
 
-        return $data;
-    }
+			$data->add_item($item);
+		}
+		$results->dispose();
+
+		return $data;
+	}
 
 	private function feeds_add_category($cat_tree, $category)
 	{

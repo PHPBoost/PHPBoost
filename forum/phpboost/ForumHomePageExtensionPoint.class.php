@@ -43,7 +43,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $Cache, $LANG, $CONFIG_FORUM,  $auth_write, $CAT_FORUM, $AUTH_READ_FORUM, $nbr_msg_not_read, $sid;
+		global $Cache, $LANG, $config,  $auth_write, $CAT_FORUM, $AUTH_READ_FORUM, $nbr_msg_not_read, $sid;
 		
 		require_once(PATH_TO_ROOT . '/forum/forum_begin.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_tools.php');
@@ -60,7 +60,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		$tpl_top = new FileTemplate('forum/forum_top.tpl');
 		$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
 		
-		if ($CONFIG_FORUM['display_connexion'])
+		if ($config->is_connexion_form_displayed())
 		{
 			$display_connexion = array(	
 				'C_FORUM_CONNEXION' => true,
@@ -203,12 +203,12 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 						else
 						{
 							$last_msg_id = $row['last_msg_id'];
-							$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
+							$last_page = ceil($row['t_nbr_msg'] / $config->get_number_messages_per_page());
 							$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 							$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 						}
 	
-						$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);
+						$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . ucfirst($row['title']);
 						$last_topic_title = (strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;
 						$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
 						$group_color = User::get_group_color($row['groups'], $row['user_level']);
@@ -279,7 +279,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		
 		$vars_tpl = array_merge($vars_tpl, array(
-			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+			'FORUM_NAME' => $config->get_forum_name(),
 			'NBR_MSG' => $total_msg,
 			'NBR_TOPIC' => $total_topic,
 			'TOTAL_ONLINE' => $total_online,

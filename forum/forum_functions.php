@@ -88,10 +88,8 @@ function forum_list_cat($id_select, $level)
 //Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 function forum_limit_time_msg()
 {
-	global $CONFIG_FORUM;
-	
 	$last_view_forum = AppContext::get_session()->get_cached_data('last_view_forum');
-	$max_time = (time() - $CONFIG_FORUM['view_time']);
+	$max_time = (time() - (ForumConfig::load()->get_read_messages_storage_duration() * 3600 * 24));
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
 	
 	return $max_time_msg;
@@ -100,11 +98,11 @@ function forum_limit_time_msg()
 //Marque un topic comme lu.
 function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 {
-	global $Sql,  $CONFIG_FORUM;
+	global $Sql;
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$last_view_forum = AppContext::get_session()->get_cached_data('last_view_forum', 0);
-	$max_time = (time() - $CONFIG_FORUM['view_time']);
+	$max_time = (time() - (ForumConfig::load()->get_read_messages_storage_duration() * 3600 * 24));
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
 	if (AppContext::get_current_user()->get_id() !== -1 && $last_timestamp >= $max_time_msg)
 	{

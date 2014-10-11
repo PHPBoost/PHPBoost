@@ -40,7 +40,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	 *  Renvoie le formulaire de recherche du forum
 	 */
 	{
-		global $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG;
+		global $Cache, $CAT_FORUM, $LANG;
 
 		$Tpl = new FileTemplate('forum/forum_search_form.tpl');
 
@@ -53,7 +53,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$idcat = !empty($args['ForumIdcat']) ? NumberHelper::numeric($args['ForumIdcat']) : -1;
 		$time = !empty($args['ForumTime']) ? NumberHelper::numeric($args['ForumTime']) : 0;
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
-		$colorate_result = !empty($args['ForumColorate_result']) ? true : false;
+		$colorate_result = !empty($args['ForumColorate_result']);
 
 		$date_lang = LangLoader::get('date-common');
 		$Tpl->put_all(Array(

@@ -4,31 +4,25 @@
 				if(document.getElementById('forum_name').value == "") {
 					alert("{L_REQUIRE_NAME}");
 					return false;
-			    }
-				if(document.getElementById('pagination_topic').value == "") {
+				}
+				if(document.getElementById('number_topics_per_page').value == "") {
 					alert("{L_REQUIRE_TOPIC_P}");
 					return false;
-			    }
-				if(document.getElementById('pagination_msg').value == "") {
+				}
+				if(document.getElementById('number_messages_per_page').value == "") {
 					alert("{L_REQUIRE_NBR_MSG_P}");
 					return false;
-			    }
-				if(document.getElementById('view_time').value == "") {
+				}
+				if(document.getElementById('read_messages_storage_duration').value == "") {
 					alert("{L_REQUIRE_TIME_NEW_MSG}");
 					return false;
-			    }
-				if(document.getElementById('topic_track').value == "") {
+				}
+				if(document.getElementById('max_topic_number_in_favorite').value == "") {
 					alert("{L_REQUIRE_TOPIC_TRACK_MAX}");
 					return false;
-			    }
-			
+				}
+				
 				return true;
-			}
-			
-			function img_change(id, url)
-			{
-				if( document.images )
-					document.images[id].src = "{PICTURES_DATA_PATH}/images/" + url;
 			}
 		-->
 		</script>
@@ -82,84 +76,77 @@
 						<div class="form-field"><label><input type="text" maxlength="255" size="40" id="forum_name" name="forum_name" value="{FORUM_NAME}"></label></div>
 					</div>
 					<div class="form-element">
-						<label for="pagination_topic">* {L_NBR_TOPIC_P} <span class="field-description">{L_NBR_TOPIC_P_EXPLAIN}</span></label>
-						<div class="form-field"><label><input type="text" maxlength="3" size="3" id="pagination_topic" name="pagination_topic" value="{PAGINATION_TOPIC}"></label></div>
+						<label for="number_topics_per_page">* {L_NBR_TOPIC_P} <span class="field-description">{L_NBR_TOPIC_P_EXPLAIN}</span></label>
+						<div class="form-field"><label><input type="text" maxlength="3" size="3" id="number_topics_per_page" name="number_topics_per_page" value="{NUMBER_TOPICS_PER_PAGE}"></label></div>
 					</div>
 					<div class="form-element">
-						<label for="pagination_msg">* {L_NBR_MSG_P} <span class="field-description">{L_NBR_MSG_P_EXPLAIN}</span></label>
-						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="pagination_msg" name="pagination_msg" value="{PAGINATION_MSG}"></label></div>
+						<label for="number_messages_per_page">* {L_NBR_MSG_P} <span class="field-description">{L_NBR_MSG_P_EXPLAIN}</span></label>
+						<div class="form-field"><label><input type="text" size="3" maxlength="3" id="number_messages_per_page" name="number_messages_per_page" value="{NUMBER_MESSAGES_PER_PAGE}"></label></div>
 					</div>
 					<div class="form-element">
-						<label for="view_time">* {L_TIME_NEW_MSG} <span class="field-description">{L_TIME_NEW_MSG_EXPLAIN}</span></label>
-						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="view_time" name="view_time" value="{VIEW_TIME}"> {L_DAYS}</label></div>
+						<label for="read_messages_storage_duration">* {L_TIME_NEW_MSG} <span class="field-description">{L_TIME_NEW_MSG_EXPLAIN}</span></label>
+						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="read_messages_storage_duration" name="read_messages_storage_duration" value="{READ_MESSAGES_STORAGE_DURATION}"> {L_DAYS}</label></div>
 					</div>
 					<div class="form-element">
-						<label for="topic_track">* {L_TOPIC_TRACK_MAX} <span class="field-description">{L_TOPIC_TRACK_MAX_EXPLAIN}</span></label>
-						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="topic_track" name="topic_track" value="{TOPIC_TRACK_MAX}"></label></div>
+						<label for="max_topic_number_in_favorite">* {L_TOPIC_TRACK_MAX} <span class="field-description">{L_TOPIC_TRACK_MAX_EXPLAIN}</span></label>
+						<div class="form-field"><label><input type="text" size="4" maxlength="6" id="max_topic_number_in_favorite" name="max_topic_number_in_favorite" value="{MAX_TOPIC_NUMBER_IN_FAVORITE}"></label></div>
 					</div>
 					<div class="form-element">
-						<label for="edit_mark">{L_EDIT_MARK}</label>
+						<label for="edit_mark_enabled">{L_EDIT_MARK}</label>
 						<div class="form-field">
-							<label><input type="radio" {EDIT_MARK_ENABLED} name="edit_mark" id="edit_mark" value="1"> {L_ACTIV}</label>
-
-							<label><input type="radio" {EDIT_MARK_DISABLED} name="edit_mark" value="0"> {L_UNACTIVE}</label>
+							<label><input type="checkbox" name="edit_mark_enabled"# IF C_EDIT_MARK_ENABLED # checked="checked"# ENDIF #></label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="display_connexion">{L_DISPLAY_CONNEXION}</label>
+						<label for="connexion_form_displayed">{L_DISPLAY_CONNEXION}</label>
 						<div class="form-field">
-							<label><input type="radio" {DISPLAY_CONNEXION_ENABLED} name="display_connexion" id="display_connexion" value="1"> {L_YES}</label>
-							<label><input type="radio" {DISPLAY_CONNEXION_DISABLED} name="display_connexion" value="0"> {L_NO}</label>
+							<label><input type="checkbox" name="connexion_form_displayed"# IF C_CONNEXION_FORM_DISPLAYED # checked="checked"# ENDIF #></label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="no_left_column">{L_NO_LEFT_COLUMN}</label>
+						<label for="left_column_disabled">{L_NO_LEFT_COLUMN}</label>
 						<div class="form-field">
-							<label><input type="radio" {NO_LEFT_COLUMN_ENABLED} name="no_left_column" id="no_left_column" value="1"> {L_YES}</label>
-							<label><input type="radio" {NO_LEFT_COLUMN_DISABLED} name="no_left_column" value="0"> {L_NO}</label>
+							<label><input type="checkbox" name="left_column_disabled"# IF C_LEFT_COLUMN_DISABLED # checked="checked"# ENDIF #></label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="no_right_column">{L_NO_RIGHT_COLUMN}</label>
+						<label for="right_column_disabled">{L_NO_RIGHT_COLUMN}</label>
 						<div class="form-field">
-							<label><input type="radio" {NO_RIGHT_COLUMN_ENABLED} name="no_right_column" id="no_right_column" value="1"> {L_YES}</label>
-							<label><input type="radio" {NO_RIGHT_COLUMN_DISABLED} name="no_right_column" value="0"> {L_NO}</label>
+							<label><input type="checkbox" name="right_column_disabled"# IF C_RIGHT_COLUMN_DISABLED # checked="checked"# ENDIF #></label>
 						</div>
 					</div>
 				</fieldset>
-										
+				
 				<fieldset>
 					<legend>{L_ACTIV_DISPLAY_MSG}</legend>
 					<div class="form-element">
-						<label for="activ_display_msg">{L_ACTIV_DISPLAY_MSG}</label>
+						<label for="message_before_topic_title_displayed">{L_ACTIV_DISPLAY_MSG}</label>
 						<div class="form-field">
-							<label><input type="radio" {DISPLAY_MSG_ENABLED} name="activ_display_msg" id="activ_display_msg" value="1"> {L_ACTIV}</label>
-							<label><input type="radio" {DISPLAY_MSG_DISABLED} name="activ_display_msg" value="0"> {L_UNACTIVE}</label>
+							<label><input type="checkbox" name="message_before_topic_title_displayed"# IF C_MESSAGE_BEFORE_TOPIC_TITLE_DISPLAYED # checked="checked"# ENDIF #></label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="display_msg">{L_DISPLAY_MSG}</label>
+						<label for="message_before_topic_title">{L_DISPLAY_MSG}</label>
 						<div class="form-field">
-							<label><input type="text" size="25" name="display_msg" id="display_msg" value="{DISPLAY_MSG}"></label>
+							<label><input type="text" size="25" name="message_before_topic_title" id="message_before_topic_title" value="{MESSAGE_BEFORE_TOPIC_TITLE}"></label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="explain_display_msg">{L_EXPLAIN_DISPLAY_MSG} <span class="field-description">{L_EXPLAIN_DISPLAY_MSG_EXPLAIN}</span></label>
+						<label for="message_when_topic_is_unsolved">{L_EXPLAIN_DISPLAY_MSG} <span class="field-description">{L_EXPLAIN_DISPLAY_MSG_EXPLAIN}</span></label>
 						<div class="form-field">
-							<label><input type="text" size="40" name="explain_display_msg" id="explain_display_msg" value="{EXPLAIN_DISPLAY_MSG}"></label>
+							<label><input type="text" size="40" name="message_when_topic_is_unsolved" id="message_when_topic_is_unsolved" value="{MESSAGE_WHEN_TOPIC_IS_UNSOLVED}"></label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="explain_display_msg_bis">{L_EXPLAIN_DISPLAY_MSG_BIS} <span class="field-description">{L_EXPLAIN_DISPLAY_MSG_BIS_EXPLAIN}</span></label>
+						<label for="message_when_topic_is_solved">{L_EXPLAIN_DISPLAY_MSG_BIS} <span class="field-description">{L_EXPLAIN_DISPLAY_MSG_BIS_EXPLAIN}</span></label>
 						<div class="form-field">
-							<label><input type="text" size="40" name="explain_display_msg_bis" id="explain_display_msg_bis" value="{EXPLAIN_DISPLAY_MSG_BIS}"></label>
+							<label><input type="text" size="40" name="message_when_topic_is_solved" id="message_when_topic_is_solved" value="{MESSAGE_WHEN_TOPIC_IS_SOLVED}"></label>
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="icon_activ_display_msg">{L_ICON_DISPLAY_MSG}</label>
+						<label for="message_before_topic_title_icon_displayed">{L_ICON_DISPLAY_MSG} <span class="field-description"><i class="fa fa-msg-display"></i> / <i class="fa fa-msg-not-display"></i></span></label>
 						<div class="form-field">
-							<label><input type="radio" {ICON_DISPLAY_MSG_ENABLED} name="icon_activ_display_msg" id="icon_activ_display_msg" value="1"> {L_ACTIV} <i class="fa fa-msg-display"></i> / <i class="fa fa-msg-not-display"></i></label>
-							<label><input type="radio" {ICON_DISPLAY_MSG_DISABLED} name="icon_activ_display_msg" value="0"> {L_UNACTIVE}</label>
+							<label><input type="checkbox" name="message_before_topic_title_icon_displayed"# IF C_MESSAGE_BEFORE_TOPIC_TITLE_ICON_DISPLAYED # checked="checked"# ENDIF #></label>
 						</div>
 					</div>
 				</fieldset>
@@ -174,7 +161,7 @@
 			<form action="admin_forum_config.php?upd=1&amp;token={TOKEN}" name="form" method="post" class="fieldset-content">
 				<fieldset>
 					<legend>{L_UPDATE_DATA_CACHED}</legend>
-					<p style="text-align:center;">
+					<p class="center">
 						<a href="admin_forum_config.php?upd=1" title="{L_UPDATE_DATA_CACHED}">
 							<i class="fa fa-refresh fa-2x"></i>
 						</a>

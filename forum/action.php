@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($config->get_forum_name(), 'index.php');
 require_once('../kernel/header_no_display.php');
 
 //Variable GET.
@@ -97,7 +97,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 		}
 
 		//On compte le nombre de messages du topic avant l'id supprimé.
-		$last_page = ceil( $nbr_msg/ $CONFIG_FORUM['pagination_msg'] );
+		$last_page = ceil( $nbr_msg/ $config->get_number_messages_per_page() );
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
 

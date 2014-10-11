@@ -38,14 +38,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	function get_cache()
 	{
 		$db_querier = PersistenceContext::get_querier();
-		//Configuration du forum
-		$forum_config = 'global $CONFIG_FORUM;' . "\n";
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_FORUM = unserialize($db_querier->get_column_value(DB_TABLE_CONFIGS, 'value', "WHERE name = 'forum'"));
-		$CONFIG_FORUM['auth'] = unserialize($CONFIG_FORUM['auth']);
-
-		$forum_config .= '$CONFIG_FORUM = ' . var_export($CONFIG_FORUM, true) . ';' . "\n";
-
+		
 		//Liste des catégories du forum
 		$i = 0;
 		$forum_cats = 'global $CAT_FORUM;' . "\n";
@@ -74,7 +67,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		}
 		$result->dispose();
 
-		return $forum_config . "\n" . $forum_cats;
+		return $forum_cats;
 	}
 	
 	public function css_files()

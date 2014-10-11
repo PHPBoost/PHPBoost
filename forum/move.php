@@ -28,7 +28,7 @@
 require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($config->get_forum_name(), 'index.php');
 define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php');
 
@@ -97,7 +97,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => strtolower($LANG['online']),
 	
-		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['move_topic'],
+		'FORUM_NAME' => $config->get_forum_name() . ' : ' . $LANG['move_topic'],
 		'ID' => $id_get,
 		'TITLE' => $topic['title'],
 		'U_MOVE' => url('.php?token=' . AppContext::get_session()->get_token()),
@@ -205,7 +205,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'C_FORUM_CUT_CAT' => true,
 		'CATEGORIES' => $cat_forum,
 		'KERNEL_EDITOR' => $editor->display(),
-		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['cut_topic'],
+		'FORUM_NAME' => $config->get_forum_name() . ' : ' . $LANG['cut_topic'],
 		'IDTOPIC' => 0,
 		'U_ACTION' => url('move.php?token=' . AppContext::get_session()->get_token()),
 		'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php') . '">' . ucfirst($topic['title']) . '</a>',

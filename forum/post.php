@@ -45,7 +45,7 @@ if (AppContext::get_current_user()->get_delay_readonly() > time()) //Lecture seu
 }
 
 //Récupération de la barre d'arborescence.
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($config->get_forum_name(), 'index.php');
 foreach ($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if ($CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'])
@@ -113,7 +113,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 
 		$vars_tpl = array(
 			'P_UPDATE' => $post_update,
-			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+			'FORUM_NAME' => $config->get_forum_name(),
 			'KERNEL_EDITOR' => $editor->display(),
 			'DESC' => $topic['subtitle'],
 			'CONTENTS' => $contents,
@@ -173,7 +173,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				$delay_expire = time() - $delay_flood; //On calcul la fin du delai.
 
 				//Droit de flooder?.
-				if ($check_time >= $delay_expire && !AppContext::get_current_user()->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM)) //Flood
+				if ($check_time >= $delay_expire && !AppContext::get_current_user()->check_auth($config->get_authorizations(), FLOOD_FORUM)) //Flood
 					AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=flood_t&id=' . $id_get, '', '&') . '#message_helper');
 			}
 
@@ -272,7 +272,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			$poll_type = retrieve(POST, 'poll_type', 0);
 
 			$vars_tpl = array(
-				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+				'FORUM_NAME' => $config->get_forum_name(),
 				'TITLE' => $title,
 				'DESC' => $subtitle,
 				'CONTENTS' => $contents,
@@ -353,7 +353,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			}
 
 			$vars_tpl = array(
-				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+				'FORUM_NAME' => $config->get_forum_name(),
 				'TITLE' => '',
 				'DESC' => '',
 				'SELECTED_SIMPLE' => 'checked="ckecked"',
@@ -424,7 +424,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		{
 			$delay_expire = time() - ContentManagementConfig::load()->get_anti_flood_duration(); //On calcul la fin du delai.
 			//Droit de flooder?
-			if ($check_time >= $delay_expire && !AppContext::get_current_user()->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM)) //Ok
+			if ($check_time >= $delay_expire && !AppContext::get_current_user()->check_auth($config->get_authorizations(), FLOOD_FORUM)) //Ok
 				AppContext::get_response()->redirect( url(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#message_helper');
 		}
 
@@ -435,7 +435,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 		{
 			if (!empty($contents) && !empty($idt_get) && empty($update)) //Nouveau message.
 			{
-				$last_page = ceil( ($topic['nbr_msg'] + 1) / $CONFIG_FORUM['pagination_msg'] );
+				$last_page = ceil( ($topic['nbr_msg'] + 1) / $config->get_number_messages_per_page() );
 				$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 				$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
 
@@ -589,7 +589,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				$poll_type = retrieve(POST, 'poll_type', 0);
 
 				$vars_tpl = array(
-					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+					'FORUM_NAME' => $config->get_forum_name(),
 					'TITLE' => $title,
 					'DESC' => $subtitle,
 					'CONTENTS' => $contents,
@@ -676,15 +676,15 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				$module_data_path = $TmpTemplate->get_pictures_data_path();
 
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
-				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || AppContext::get_current_user()->get_id() == $topic['user_id']))
+				if ($config->is_message_before_topic_title_displayed() && ($is_modo || AppContext::get_current_user()->get_id() == $topic['user_id']))
 				{
 					$img_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
 					$tpl->put_all(array(
 						'C_DISPLAY_MSG' => true,
-						'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<i class="fa ' . $img_display . '"></i>' : '',
-						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
-						'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
-						'L_EXPLAIN_DISPLAY_MSG_BIS' => $CONFIG_FORUM['explain_display_msg_bis'],
+						'ICON_DISPLAY_MSG' => $config->is_message_before_topic_title_icon_displayed() ? '<i class="fa ' . $img_display . '"></i>' : '',
+						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
+						'L_EXPLAIN_DISPLAY_MSG' => $config->get_message_when_topic_is_unsolved(),
+						'L_EXPLAIN_DISPLAY_MSG_BIS' => $config->get_message_when_topic_is_solved(),
 						'U_ACTION_MSG_DISPLAY' => url('.php?msg_d=1&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token())
 					));
 				}
@@ -715,7 +715,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 				}
 
 				$vars_tpl = array(
-					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+					'FORUM_NAME' => $config->get_forum_name(),
 					'TITLE' => $topic['title'],
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => FormatingHelper::unparse($contents),
@@ -802,7 +802,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 					$nbr_msg_before = $Forumfct->Update_msg($idt_get, $id_m, $contents, $user_id_msg);
 
 					//Calcul de la page sur laquelle se situe le message.
-					$msg_page = ceil( ($nbr_msg_before + 1) / $CONFIG_FORUM['pagination_msg'] );
+					$msg_page = ceil( ($nbr_msg_before + 1) / $config->get_number_messages_per_page() );
 					$msg_page_rewrite = ($msg_page > 1) ? '-' . $msg_page : '';
 					$msg_page = ($msg_page > 1) ? '&pt=' . $msg_page : '';
 
@@ -826,7 +826,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 
 				$vars_tpl = array(
 					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
-					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+					'FORUM_NAME' => $config->get_forum_name(),
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => FormatingHelper::unparse($contents),
 					'KERNEL_EDITOR' => $editor->display(),
@@ -893,7 +893,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 
 			$vars_tpl = array(
 				'P_UPDATE' => '',
-				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+				'FORUM_NAME' => $config->get_forum_name(),
 				'DESC' => $topic['subtitle'],
 				'KERNEL_EDITOR' => $editor->display(),
 				'U_ACTION' => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
@@ -965,7 +965,7 @@ if (AppContext::get_current_user()->check_auth($CAT_FORUM[$id_get]['auth'], READ
 			}
 
 			$vars_tpl = array(
-				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+				'FORUM_NAME' => $config->get_forum_name(),
 				'TITLE' => '',
 				'SELECTED_SIMPLE' => 'checked="checked"',
 				'IDTOPIC' => 0,

@@ -33,29 +33,21 @@ define('TITLE', $LANG['administration']);
 require_once('../forum/forum_begin.php');
 require_once('../admin/admin_header.php');
 
-$class = retrieve(GET, 'id', 0);
-$top = retrieve(GET, 'top', '');
-$bottom = retrieve(GET, 'bot', '');
-
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::build_auth_array_from_form(FLOOD_FORUM, EDIT_MARK_FORUM, TRACK_TOPIC_FORUM, ADMIN_NOAUTH_DEFAULT);
-		
-	$CONFIG_FORUM['auth'] = serialize($array_auth_all);
-	PersistenceContext::get_querier()->update(DB_TABLE_CONFIGS, array('value' => addslashes(serialize($CONFIG_FORUM))), 'WHERE name = \'forum\'');
-
-	###### Regénération du cache des catégories (liste déroulante dans le forum) #######
-	$Cache->Generate_module_file('forum');
-
+	$config->set_authorizations(Authorizations::build_auth_array_from_form(FLOOD_FORUM, EDIT_MARK_FORUM, TRACK_TOPIC_FORUM, ADMIN_NOAUTH_DEFAULT));
+	
+	ForumConfig::save();
+	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
-else	
-{		
+else
+{
 	$tpl = new FileTemplate('forum/admin_forum_groups.tpl');
 	
-	$array_auth = isset($CONFIG_FORUM['auth']) ? $CONFIG_FORUM['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
+	$array_auth = $config->get_authorizations(); //Récupération des tableaux des autorisations et des groupes.
 	
 	$tpl->put_all(array(
 		'FLOOD_AUTH' => Authorizations::generate_select(FLOOD_FORUM, $array_auth),
