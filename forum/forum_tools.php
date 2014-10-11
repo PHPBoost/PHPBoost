@@ -72,7 +72,7 @@ if (!$is_guest)
 }
 
 //Formulaire de connexion sur le forum.
-if ($CONFIG_FORUM['display_connexion'])
+if ($config->is_connexion_form_displayed())
 {
 	$vars_tpl = array(	
 		'C_FORUM_CONNEXION' => true,

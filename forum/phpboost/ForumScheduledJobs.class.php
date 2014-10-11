@@ -32,11 +32,9 @@ class ForumScheduledJobs extends AbstractScheduledJobExtensionPoint
 	 */
 	public function on_changeday(Date $yesterday, Date $today)
 	{
-		global $Cache, $CONFIG_FORUM;
 		//Suppression des marqueurs de vue du forum trop anciens.
-		$Cache->load('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.
 		PersistenceContext::get_querier()->delete(PREFIX . 'forum_view',
-			'WHERE timestamp < :limit', array('limit' => time() - $CONFIG_FORUM['view_time']));
+			'WHERE timestamp < :limit', array('limit' => time() - (ForumConfig::load()->get_read_messages_storage_duration() * 3600 * 24)));
 	}
 }
 ?>

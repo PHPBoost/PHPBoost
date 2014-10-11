@@ -31,7 +31,7 @@ require_once('../forum/forum_tools.php');
 
 $id_get = retrieve(GET, 'id', 0);
 $cat_name = !empty($CAT_FORUM[$id_get]['name']) ? $CAT_FORUM[$id_get]['name'] : '';
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($cat_name, '');
 
 if (!empty($id_get) && !empty($CAT_FORUM[$id_get]['name']))

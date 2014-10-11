@@ -48,7 +48,7 @@ if (!isset($CAT_FORUM[$topic['idcat']]) || $CAT_FORUM[$topic['idcat']]['aprob'] 
 }
 
 //Récupération de la barre d'arborescence.
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($config->get_forum_name(), 'index.php');
 foreach ($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if ($CAT_FORUM[$topic['idcat']]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$topic['idcat']]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$topic['idcat']]['level'])
@@ -123,19 +123,19 @@ if (!empty($idm))
 	$nbr_msg_before = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $id_get, 'id' => $idm)); //Nombre de message avant le message de destination.
 	
 	//Dernier message de la page? Redirection vers la page suivante pour prendre en compte la reprise du message précédent.
-	if (is_int(($nbr_msg_before + 1) / $CONFIG_FORUM['pagination_msg'])) 
+	if (is_int(($nbr_msg_before + 1) / $config->get_number_messages_per_page())) 
 	{	
 		//On redirige vers la page suivante, seulement si ce n'est pas la dernière.
 		if ($topic['nbr_msg'] != ($nbr_msg_before + 1))
 			$nbr_msg_before++;
 	}
 	
-	$_GET['pt'] = ceil(($nbr_msg_before + 1) / $CONFIG_FORUM['pagination_msg']); //Modification de la page affichée.
+	$_GET['pt'] = ceil(($nbr_msg_before + 1) / $config->get_number_messages_per_page()); //Modification de la page affichée.
 }
 
 //On crée une pagination si le nombre de msg est trop important.
 $page = AppContext::get_request()->get_getint('pt', 1);
-$pagination = new ModulePagination($page, $topic['nbr_msg'], $CONFIG_FORUM['pagination_msg'], Pagination::LIGHT_PAGINATION);
+$pagination = new ModulePagination($page, $topic['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 $pagination->set_url(new Url('/forum/topic.php?id=' . $id_get . '&amp;pt=%d'));
 
 if ($pagination->current_page_is_empty() && $page > 1)
@@ -160,7 +160,7 @@ foreach ($Bread_crumb->get_links() as $key => $array)
 $vars_tpl = array(
 	'C_PAGINATION' => $pagination->has_several_pages(),
 	'C_FOCUS_CONTENT' => !empty($quote_get),
-	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+	'FORUM_NAME' => $config->get_forum_name(),
 	'MODULE_DATA_PATH' => $module_data_path,
 	'DESC' => !empty($topic['subtitle']) ? $topic['subtitle'] : '',
 	'PAGINATION' => $pagination->display(),
@@ -169,7 +169,7 @@ $vars_tpl = array(
 	'IDTOPIC' => $id_get,
 	'PAGE' => $page,
 	'TITLE_T' => ucfirst($topic['title']),
-	'DISPLAY_MSG' => (($CONFIG_FORUM['activ_display_msg'] && $topic['display_msg']) ? $CONFIG_FORUM['display_msg'] . ' ' : '') ,
+	'DISPLAY_MSG' => (($config->is_message_before_topic_title_displayed() && $topic['display_msg']) ? $config->get_message_before_topic_title() . ' ' : '') ,
 	'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'U_CHANGE_CAT'=> 'topic' . url('.php?id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token(), '-' . $id_get . $rewrited_cat_title . '.php?token=' . AppContext::get_session()->get_token()),
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),		
@@ -408,7 +408,7 @@ while ( $row = $result->fetch() )
 		'C_FORUM_MSG_DEL' => $del,
 		'C_FORUM_MSG_DEL_MSG' => (!$first_message),
 		'C_FORUM_MSG_CUT' => $cut,
-		'C_FORUM_USER_EDITOR' => ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '1'), //Ajout du marqueur d'édition si activé.
+		'C_FORUM_USER_EDITOR' => ($row['timestamp_edit'] > 0 && $config->is_edit_mark_enabled()), //Ajout du marqueur d'édition si activé.
 		'C_FORUM_USER_EDITOR_LOGIN' => !empty($row['login_edit']),
 		'C_FORUM_MODERATOR' => $moderator,
 		'U_FORUM_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
@@ -517,16 +517,16 @@ else
 	));
 
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
-	if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || AppContext::get_current_user()->get_id() == $topic['user_id']))
+	if ($config->is_message_before_topic_title_displayed() && ($check_group_edit_auth || AppContext::get_current_user()->get_id() == $topic['user_id']))
 	{
 		$img_msg_display = $topic['display_msg'] ? 'fa-msg-not-display' : 'fa-msg-display';
 		$tpl->put_all(array(
 			'C_DISPLAY_MSG' => true,
-			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<i class="fa ' . $img_msg_display . '"></i>' : '',
-			'L_DISPLAY_MSG' => $CONFIG_FORUM['display_msg'],
-			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
-			'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
-			'L_EXPLAIN_DISPLAY_MSG_BIS' => $CONFIG_FORUM['explain_display_msg_bis'],
+			'ICON_DISPLAY_MSG' => $config->is_message_before_topic_title_icon_displayed() ? '<i class="fa ' . $img_msg_display . '"></i>' : '',
+			'L_DISPLAY_MSG' => $config->get_message_before_topic_title(),
+			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
+			'L_EXPLAIN_DISPLAY_MSG' => $config->get_message_when_topic_is_unsolved(),
+			'L_EXPLAIN_DISPLAY_MSG_BIS' => $config->get_message_when_topic_is_solved(),
 			'U_ACTION_MSG_DISPLAY' => url('.php?msg_d=1&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token())
 		));
 	}

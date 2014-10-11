@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                             forum_begin.php
+ *                                 config.php
  *                            -------------------
- *   begin                : October 18, 2007
- *   copyright            : (C) 2007 Viarre régis
- *   email                : crowkait@phpboost.com
+ *   begin                : October 11, 2014
+ *   copyright            : (C) 2014 Julien BRISWALTER
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,21 +25,13 @@
  *
  ###################################################*/
 
-if (defined('PHPBOOST') !== true)
-    exit;
 
-require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
+ ####################################################
+ #                     French                       #
+ ####################################################
 
-$config = ForumConfig::load();
-
-//Supprime les menus suivant configuration du site.
-$columns_disabled = ThemesManager::get_theme(get_utheme())->get_columns_disabled();
-if ($config->is_left_column_disabled()) 
-	$columns_disabled->set_disable_left_columns(true);
-if ($config->is_right_column_disabled()) 
-	$columns_disabled->set_disable_right_columns(true);
-    
-//Fonction du forum.
-require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
-
+$lang['default.forum_name'] = GeneralConfig::load()->get_site_name() . ' forum';
+$lang['default.message_before_topic_title'] = '[Réglé]';
+$lang['default.message_when_topic_is_unsolved'] = 'Sujet réglé ?';
+$lang['default.message_when_topic_is_solved'] = 'Sujet non réglé ?';
 ?>

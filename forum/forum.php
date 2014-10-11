@@ -53,7 +53,7 @@ if (!empty($CAT_FORUM[$id_get]['url']))
 }
 
 //Récupération de la barre d'arborescence.
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($config->get_forum_name(), 'index.php');
 foreach ($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if ($CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'])
@@ -132,12 +132,12 @@ if (!empty($id_get))
 				else
 				{
 					$last_msg_id = $row['last_msg_id']; 
-					$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
+					$last_page = ceil($row['t_nbr_msg'] / $config->get_number_messages_per_page());
 					$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 					$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';					
 				}		
 							
-				$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);
+				$last_topic_title = (($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '') . ' ' . ucfirst($row['title']);
 				$last_topic_title = (strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;
 				
 				$group_color = User::get_group_color($row['groups'], $row['user_level']);
@@ -223,7 +223,7 @@ if (!empty($id_get))
 	
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
-	$pagination = new ModulePagination($page, $nbr_topic, $CONFIG_FORUM['pagination_topic'], Pagination::LIGHT_PAGINATION);
+	$pagination = new ModulePagination($page, $nbr_topic, $config->get_number_topics_per_page(), Pagination::LIGHT_PAGINATION);
 	$pagination->set_url(new Url('/forum/forum.php?id=' . $id_get . '&amp;p=%d'));
 
 	if ($pagination->current_page_is_empty() && $page > 1)
@@ -249,7 +249,7 @@ if (!empty($id_get))
 
 	$vars_tpl = array(
 		'C_PAGINATION' => $pagination->has_several_pages(),
-		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+		'FORUM_NAME' => $config->get_forum_name(),
 		'PAGINATION' => $pagination->display(),
 		'IDCAT' => $id_get,
 		//'C_MASS_MODO_CHECK' => $check_group_edit_auth ? true : false,
@@ -274,7 +274,7 @@ if (!empty($id_get))
 		'L_LAST_MESSAGE' => $LANG['last_messages'],
 		'L_POST_NEW_SUBJECT' => $LANG['post_new_subject'],
 		'L_FOR_SELECTION' => $LANG['for_selection'],
-		'L_CHANGE_STATUT_TO' => sprintf($LANG['change_status_to'], $CONFIG_FORUM['display_msg']),
+		'L_CHANGE_STATUT_TO' => sprintf($LANG['change_status_to'], $config->get_message_before_topic_title()),
 		'L_CHANGE_STATUT_TO_DEFAULT' => $LANG['change_status_to_default'],
 		'L_MOVE_TO' => $LANG['move_to'],
 		'L_DELETE' => $LANG['delete'],
@@ -332,7 +332,7 @@ if (!empty($id_get))
 		else
 		{
 			$last_msg_id = $row['last_msg_id']; 
-			$last_page = ceil( $row['nbr_msg'] / $CONFIG_FORUM['pagination_msg'] );
+			$last_page = ceil( $row['nbr_msg'] / $config->get_number_messages_per_page() );
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 		}
@@ -349,7 +349,7 @@ if (!empty($id_get))
 		
 		//On crée une pagination (si activé) si le nombre de topics est trop important.
 		$page = AppContext::get_request()->get_getint('pt', 1);
-		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $CONFIG_FORUM['pagination_msg'], Pagination::LIGHT_PAGINATION);
+		$topic_pagination = new ModulePagination($page, $row['nbr_msg'], $config->get_number_messages_per_page(), Pagination::LIGHT_PAGINATION);
 		$topic_pagination->set_url(new Url('/forum/topic.php?id=' . $row['id'] . '&amp;pt=%d'));
 		
 		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
@@ -358,8 +358,8 @@ if (!empty($id_get))
 			'C_PAGINATION' => $topic_pagination->has_several_pages(),
 			'C_IMG_POLL' => !empty($row['question']),
 			'C_IMG_TRACK' => !empty($row['idtrack']),
-			'C_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']),
-			'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg'])),
+			'C_DISPLAY_MSG' => ($config->is_message_before_topic_title_displayed() && $config->is_message_before_topic_title_icon_displayed() && $row['display_msg']),
+			'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $config->get_number_messages_per_page())),
 			'C_BLINK' => $blink,
 			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
@@ -370,7 +370,7 @@ if (!empty($id_get))
 			'PAGINATION' => $topic_pagination->display(),
 			'MSG' => ($row['nbr_msg'] - 1),
 			'VUS' => $row['nbr_views'],
-			'L_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '', 
+			'L_DISPLAY_MSG' => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '', 
 			'U_TOPIC_VARS' => url('.php?id=' . $row['id'], '-' . $row['id'] . $rewrited_title_topic . '.php'),
 			'U_LAST_MSG' => $last_msg
 		));

@@ -34,7 +34,7 @@ $id_get = retrieve(GET, 'id', 0);
 $new_status = retrieve(GET, 'new_status', '');
 $get_del = retrieve(GET, 'del', '');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($config->get_forum_name(), 'index.php');
 if ($action == 'alert')
 	$Bread_crumb->add($LANG['alert_management'], url('moderation_forum.php?action=alert'));
 elseif ($action == 'users')
@@ -67,7 +67,7 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL) && $chec
 $tpl = new FileTemplate('forum/forum_moderation_panel.tpl');
 
 $vars_tpl = array(
-	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+	'FORUM_NAME' => $config->get_forum_name(),
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],

@@ -40,7 +40,7 @@ class Forum
 	//Ajout d'un message.
 	function Add_msg($idtopic, $idcat, $contents, $title, $last_page, $last_page_rewrite, $new_topic = false)
 	{
-		global $Sql,  $CAT_FORUM, $LANG;
+		global $Sql, $CAT_FORUM, $LANG;
 
 		##### Insertion message #####
 		$last_timestamp = time();
@@ -141,16 +141,18 @@ class Forum
 	//Edition d'un message.
 	function Update_msg($idtopic, $idmsg, $contents, $user_id_msg, $history = true)
 	{
-		global $Sql,  $CONFIG_FORUM;
-
+		global $Sql;
+		
+		$config = ForumConfig::load();
+		
 		//Marqueur d'édition du message?
-		$edit_mark = (!AppContext::get_current_user()->check_auth($CONFIG_FORUM['auth'], EDIT_MARK_FORUM)) ? ", timestamp_edit = '" . time() . "', user_id_edit = '" . AppContext::get_current_user()->get_id() . "'" : '';
+		$edit_mark = (!AppContext::get_current_user()->check_auth(ForumConfig::load()->get_authorizations(), EDIT_MARK_FORUM)) ? ", timestamp_edit = '" . time() . "', user_id_edit = '" . AppContext::get_current_user()->get_id() . "'" : '';
 		$Sql->query_inject("UPDATE " . PREFIX . "forum_msg SET contents = '" . FormatingHelper::strparse($contents) . "'" . $edit_mark . " WHERE id = '" . $idmsg . "'");
 
 		$nbr_msg_before = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "'");
 
 		//Calcul de la page sur laquelle se situe le message.
-		$msg_page = ceil( ($nbr_msg_before + 1) / $CONFIG_FORUM['pagination_msg'] );
+		$msg_page = ceil( ($nbr_msg_before + 1) / $config->get_number_messages_per_page() );
 		$msg_page_rewrite = ($msg_page > 1) ? '-' . $msg_page : '';
 		$msg_page = ($msg_page > 1) ? '&pt=' . $msg_page : '';
 			
@@ -179,8 +181,10 @@ class Forum
 	//Supression d'un message.
 	function Del_msg($idmsg, $idtopic, $idcat, $first_msg_id, $last_msg_id, $last_timestamp, $msg_user_id)
 	{
-		global $Sql,  $CAT_FORUM, $CONFIG_FORUM;
-
+		global $Sql,  $CAT_FORUM;
+		
+		$config = ForumConfig::load();
+		
 		if ($first_msg_id != $idmsg) //Suppression d'un message.
 		{
 			//On compte le nombre de messages du topic avant l'id supprimé.
@@ -218,7 +222,7 @@ class Forum
 			if ($msg_user_id != AppContext::get_current_user()->get_id())
 			{
 				//Calcul de la page sur laquelle se situe le message.
-				$msg_page = ceil($nbr_msg / $CONFIG_FORUM['pagination_msg']);
+				$msg_page = ceil($nbr_msg / $config->get_number_messages_per_page());
 				$msg_page_rewrite = ($msg_page > 1) ? '-' . $msg_page : '';
 				$msg_page = ($msg_page > 1) ? '&pt=' . $msg_page : '';
 				forum_history_collector(H_DELETE_MSG, $msg_user_id, 'topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $previous_msg_id);
@@ -272,8 +276,10 @@ class Forum
 	//Suivi d'un sujet.
 	function Track_topic($idtopic, $tracking_type = 0)
 	{
-		global $Sql,  $CONFIG_FORUM;
-
+		global $Sql;
+		
+		$config = ForumConfig::load();
+		
 		list($mail, $pm, $track) = array(0, 0, 0);
 		if ($tracking_type == 0) //Suivi par email.
 			$track = '1';
@@ -293,14 +299,14 @@ class Forum
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
 			
 		//Limite de sujets suivis?
-		if (!AppContext::get_current_user()->check_auth($CONFIG_FORUM['auth'], TRACK_TOPIC_FORUM))
+		if (!AppContext::get_current_user()->check_auth($config->get_authorizations(), TRACK_TOPIC_FORUM))
 		{
 			//Récupère par la variable @compt l'id du topic le plus vieux autorisé par la limite de sujet suivis.
 			$Sql->query("SELECT @compt := id
 			FROM " . PREFIX . "forum_track
 			WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'
 			ORDER BY id DESC
-			" . $Sql->limit(0, $CONFIG_FORUM['topic_track']));
+			" . $Sql->limit(0, $config->get_max_topic_number_in_favorite()));
 				
 			//Suppression des sujets suivis dépassant le nbr maximum autorisé.
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE user_id=:id  AND id < @compt', array('id' => AppContext::get_current_user()->get_id()));

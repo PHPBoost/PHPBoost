@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($LANG['stats'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['stats']);
 require_once('../kernel/header.php'); 
@@ -54,7 +54,7 @@ $nbr_topics_today = $row['nbr_topics_today'];
 $nbr_msg_today = PersistenceContext::get_querier()->count(PREFIX . 'forum_msg', 'WHERE timestamp > :timestamp', array('timestamp' => $timestamp_today));
 
 $vars_tpl = array(
-	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+	'FORUM_NAME' => $config->get_forum_name(),
 	'NBR_TOPICS' => $sum['total_topics'],
 	'NBR_MSG' => $sum['total_msg'],
 	'NBR_TOPICS_DAY' => $nbr_topics_day,
