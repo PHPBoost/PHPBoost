@@ -29,20 +29,19 @@ define('FORUM_CAT_INCLUDED', true);
 define('FORUM_CAT_NO_INCLUDED', false);
 
 class Admin_forum
-{	
-	//D�placement vers le haut/bas de la cat�gorie.
+{
+	//Déplacement vers le haut/bas de la cat�gorie.
 	function move_updown_cat($id, $move)
 	{
-		global $Sql, $CAT_FORUM, $Cache;
+		global $CAT_FORUM, $Cache;
 		
 		$list_parent_cats = $this->get_parent_list($idcat); //R�cup�re la liste des parents de la cat�gorie.
 		
 		$to = 0;
 		if ($move == 'up')
-		{	
-			//M�me cat�gorie
-			$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats
-			WHERE '" . $CAT_FORUM[$id]['id_left'] . "' - id_right = 1");		
+		{
+			//Même catégorie
+			$switch_id_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE :id_left - id_right = 1', array('id_left' => $CAT_FORUM[$id]['id_left']));
 			if (!empty($switch_id_cat))
 			{
 				//On monte la cat�gorie � d�placer, on lui assigne des id n�gatifs pour assurer l'unicit�.
@@ -55,25 +54,20 @@ class Admin_forum
 				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = - id_right WHERE id_right < 0");	
 				
 				$Cache->Generate_module_file('forum');
-			}		
+			}
 			elseif (!empty($list_parent_cats) )
 			{
-				//Changement de cat�gorie.
-				$to = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats
-				WHERE id_left < '" . $CAT_FORUM[$id]['id_left'] . "' AND level = '" . ($CAT_FORUM[$id]['level'] - 1) . "' AND
-				id NOT IN (" . $list_parent_cats . ")
-				ORDER BY id_left DESC" . 
-				$Sql->limit(0, 1));
+				//Changement de catégorie.
+				$to = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id_left < :id_left AND level = :level AND id NOT IN :ids_list ORDER BY id_left DESC', array('id_left' => $CAT_FORUM[$id]['id_left'], 'level' => ($CAT_FORUM[$id]['level'] - 1), 'ids_list' => $list_parent_cats));
 			}
 		}
 		elseif ($move == 'down')
 		{
-			//Doit-on changer de cat�gorie parente ou non ?
-			$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats
-			WHERE id_left - '" . $CAT_FORUM[$id]['id_right'] . "' = 1");
+			//Doit-on changer de catégorie parente ou non ?
+			$switch_id_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id_left - :id_right = 1', array('id_right' => $CAT_FORUM[$id]['id_right']));
 			if (!empty($switch_id_cat))
 			{
-				//On monte la cat�gorie � d�placer, on lui assigne des id n�gatifs pour assurer l'unicit�.
+				//On monte la catégorie à déplacer, on lui assigne des id négatifs pour assurer l'unicité.
 				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = - id_left - '" . ($CAT_FORUM[$switch_id_cat]['id_right'] - $CAT_FORUM[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right - '" . ($CAT_FORUM[$switch_id_cat]['id_right'] - $CAT_FORUM[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'");
 				//On descend la cat�gorie cible.
 				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] + 1) . "', id_right = id_right - '" . ($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_FORUM[$switch_id_cat]['id_left'] . "' AND '" . $CAT_FORUM[$switch_id_cat]['id_right'] . "'");
@@ -86,26 +80,22 @@ class Admin_forum
 			}
 			elseif (!empty($list_parent_cats) )
 			{
-				//Changement de cat�gorie.
-				$to = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats
-				WHERE id_left > '" . $CAT_FORUM[$id]['id_left'] . "' AND level = '" . ($CAT_FORUM[$id]['level'] - 1) . "'
-				ORDER BY id_left" . 
-				$Sql->limit(0, 1));
-				
+				//Changement de catégorie.
+				$to = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id_left > :id_left AND level = :level ORDER BY id_left DESC', array('id_left' => $CAT_FORUM[$id]['id_left'], 'level' => ($CAT_FORUM[$id]['level'] - 1)));
 			}
 		}
 
-		if (!empty($to)) //Changement de cat�gorie possible?
+		if (!empty($to)) //Changement de catégorie possible?
 		{
-			//On v�rifie si la cat�gorie contient des sous forums.
+			//On vérifie si la cat�gorie contient des sous forums.
 			$nbr_cat = (($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] - 1) / 2) + 1;
-			$list_cats = $this->get_child_list($id); //Sous forums du forum � d�placer.
+			$list_cats = $this->get_child_list($id); //Sous forums du forum à déplacer.
 	
-			//Pr�caution pour �viter erreur fatale, cas impossible si coh�rence de l'arbre respect�e.
+			//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 			if (empty($list_cats))
 				return false;
 						
-			## Dernier topic des enfants du forum � supprimer ##
+			## Dernier topic des enfants du forum à supprimer ##
 			$list_parent_cats_to = $this->get_parent_list($to, FORUM_CAT_INCLUDED); //Forums parent du forum cible.
 			if (empty($list_parent_cats_to))
 				$clause_parent_cats_to = " id = '" . $to . "'";
@@ -152,27 +142,27 @@ class Admin_forum
 				$z++;
 			}
 					
-			$Cache->Generate_module_file('forum'); //R�g�n�ration du cache.
+			$Cache->Generate_module_file('forum'); //Régénération du cache.
 			
-			$this->update_last_topic_id($id); //On met � jour l'id du dernier topic.
-			$this->update_last_topic_id($to); //On met � jour l'id du dernier topic.
+			$this->update_last_topic_id($id); //On met à jour l'id du dernier topic.
+			$this->update_last_topic_id($to); //On met à jour l'id du dernier topic.
 		}
 		
 		return true;
 	}
 	
-	//Suppression d'une cat�gorie.
+	//Suppression d'une catégorie.
 	function del_cat($idcat, $confirm_delete)
 	{
-		global $Sql, $CAT_FORUM, $Cache;
+		global $CAT_FORUM, $Cache;
 		
-		//On v�rifie si la cat�gorie contient des sous forums.
+		//On vérifie si la catégorie contient des sous forums.
 		$nbr_sub_cat = (($CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left'] - 1) / 2);
 		
-		if ($confirm_delete) //Confirmation de suppression, on supprime dans la bdd et on r�tabli l'arbre intervallaire.
+		if ($confirm_delete) //Confirmation de suppression, on supprime dans la bdd et on rétabli l'arbre intervallaire.
 		{
-			$first_parent = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats WHERE id_left < '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right > " . $CAT_FORUM[$idcat]['id_right'] . " ORDER BY id_left DESC " . $Sql->limit(0, 1));
-			$list_parent_cats = $this->get_parent_list($idcat); //R�cup�re la liste des parents de la cat�gorie.
+			$first_parent = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id_left < :id_left AND id_right > :id_right ORDER BY id_left DESC', array('id_left' => $CAT_FORUM[$idcat]['id_left'], 'id_right' => $CAT_FORUM[$idcat]['id_right']));
+			$list_parent_cats = $this->get_parent_list($idcat); //Récupère la liste des parents de la catégorie.
 			
 			$nbr_del = $CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left'] + 1;
 			if (!empty($list_parent_cats))
@@ -190,23 +180,23 @@ class Admin_forum
 			$Cache->Generate_module_file('forum'); //Reg�n�ration du cache
 			$Cache->load('forum', RELOAD_CACHE); //Rechargement du cache
 			
-			$this->update_last_topic_id($first_parent); //On met � jour l'id du dernier topic.
+			$this->update_last_topic_id($first_parent); //On met à jour l'id du dernier topic.
 		}
-		else //D�placement.
+		else //Déplacement.
 		{
-			//D�placement de sous forums.
+			//Déplacement de sous forums.
 			$f_to = retrieve(POST, 'f_to', 0);
-			$f_to = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats WHERE id = '" . $f_to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'");
+			$f_to = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id = :id AND id_left NOT BETWEEN :id_left AND :id_right', array('id' => $f_to, 'id_left' => $CAT_FORUM[$idcat]['id_left'], 'id_right' => $CAT_FORUM[$idcat]['id_right']));
 			
-			//D�placement de topics.
+			//Déplacement de topics.
 			$t_to = retrieve(POST, 't_to', 0);
-			$t_to = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats WHERE id = '" . $t_to . "' AND id <> '" . $idcat . "'");
+			$t_to = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id = :id AND id <> :idcat', array('id' => $t_to, 'idcat' => $idcat));
 			
-			//D�placement des topics dans la cat�gorie s�lectionn�e.
+			//Déplacement des topics dans la catégorie sélectionnée.
 			if (!empty($t_to))
 			{
 				//On va chercher la somme du nombre de messages dans la table topics
-				$nbr_msg = $Sql->query("SELECT SUM(nbr_msg) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $idcat . "'");
+				$nbr_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'SUM(nbr_msg)', 'WHERE idcat = :idcat', array('idcat' => $idcat));
 				$nbr_msg = !empty($nbr_msg) ? $nbr_msg : 0;
 				//Nombre de topics.
 				$nbr_topic = PersistenceContext::get_querier()->count(PREFIX . 'forum_topics', 'WHERE idcat=:idcat', array('idcat' => $idcat));
@@ -262,7 +252,7 @@ class Admin_forum
 					$array_parents_cats = explode(', ', $list_parent_cats);
 					if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$f_to]['id_left'] && !in_array($f_to, $array_parents_cats)) //Direction forum source -> forum cible, et source non incluse dans la cible.
 					{	
-						PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$f_to]['id_right'] . "'");						
+						PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$f_to]['id_right'] . "'");
 						$limit = $CAT_FORUM[$f_to]['id_right'];
 						$end = $limit + ($nbr_sub_cat*2) - 1;
 					}
@@ -270,7 +260,7 @@ class Admin_forum
 					{	
 						PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . ($CAT_FORUM[$f_to]['id_right'] - (2 + $nbr_sub_cat*2)) . "'");
 						$limit = $CAT_FORUM[$f_to]['id_right'] - (2 + $nbr_sub_cat*2);
-						$end = $limit + ($nbr_sub_cat*2) - 1;						
+						$end = $limit + ($nbr_sub_cat*2) - 1;
 					}
 					
 					//On replace les forums supprim�s virtuellement.
@@ -282,15 +272,15 @@ class Admin_forum
 						$id_right = $end - ($CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$array_sub_cats[$z]]['id_right']) + 1;
 						PersistenceContext::get_querier()->update(PREFIX . 'forum_cats', array('id_left' => $id_left, 'id_right' => $id_right), 'WHERE id=:id', array('id' => $array_sub_cats[$z]));
 						$z++;
-					}								
+					}
 
-					//On met � jour le nouveau forum.
+					//On met à jour le nouveau forum.
 					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . ($CAT_FORUM[$idcat]['level'] - $CAT_FORUM[$f_to]['level']) . "' WHERE id IN (" . $list_sub_cats . ")");
 				}
 				else //Racine
 				{
-					$max_id = $Sql->query("SELECT MAX(id_right) FROM " . PREFIX . "forum_cats");
-					//On replace les forums supprim�s virtuellement.
+					$max_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'MAX(id_right)', '');
+					//On replace les forums supprimés virtuellement.
 					$array_sub_cats = explode(', ', $list_sub_cats);
 					$z = 0;
 					$limit = $max_id + 1;
@@ -305,35 +295,35 @@ class Admin_forum
 					PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . ($CAT_FORUM[$idcat]['level'] - $CAT_FORUM[$f_to]['level'] + 1) . "' WHERE id IN (" . $list_sub_cats . ")");
 				}
 			}
-			else //On r�tabli l'arbre intervallaire.
+			else //On rétabli l'arbre intervallaire.
 			{
 				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right - 2 WHERE id_left < '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right > '" . $CAT_FORUM[$idcat]['id_right'] . "'");
 				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - 2, id_right = id_right - 2 WHERE id_left > '" . $CAT_FORUM[$idcat]['id_right'] . "'");
 			}
 			
-			$Cache->Generate_module_file('forum'); //Reg�n�ration du cache
+			$Cache->Generate_module_file('forum'); //Regénération du cache
 			$Cache->load('forum', RELOAD_CACHE); //Rechargement du cache
 			
-			$this->update_last_topic_id($idcat); //On met � jour l'id du dernier topic.
-			$this->update_last_topic_id($f_to); //On met � jour l'id du dernier topic.
-			$this->update_last_topic_id($t_to); //On met � jour l'id du dernier topic.
+			$this->update_last_topic_id($idcat); //On met à jour l'id du dernier topic.
+			$this->update_last_topic_id($f_to); //On met à jour l'id du dernier topic.
+			$this->update_last_topic_id($t_to); //On met à jour l'id du dernier topic.
 		}
 		
 		return true;
 	}
 	
-	//D�placement d'une cat�gorie.
+	//Déplacement d'une catégorie.
 	function move_cat($id, $to)
 	{
-		global $Sql, $CAT_FORUM, $Cache;
+		global $CAT_FORUM, $Cache;
 		
-		//On v�rifie si la cat�gorie contient des sous forums.
+		//On vérifie si la catégorie contient des sous forums.
 		$nbr_cat = (($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] - 1) / 2) + 1;
 		
-		$list_cats = $this->get_child_list($id); //Sous forums du forum � supprimer..
-		$list_parent_cats = $this->get_parent_list($id);  //Forums parent du forum � supprimer.
+		$list_cats = $this->get_child_list($id); //Sous forums du forum à supprimer..
+		$list_parent_cats = $this->get_parent_list($id);  //Forums parent du forum à supprimer.
 		
-		//Pr�aution pour �viter erreur fatale, cas impossible si coh�rence de l'arbre respect�e.
+		//Préaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 		if (empty($list_cats))
 			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 
@@ -354,7 +344,7 @@ class Admin_forum
 			$array_parents_cats = explode(', ', $list_parent_cats);
 			if ($CAT_FORUM[$id]['id_left'] > $CAT_FORUM[$to]['id_left'] && !in_array($to, $array_parents_cats)) //Direction forum source -> forum cible, et source non incluse dans la cible.
 			{	
-				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$to]['id_right'] . "'");						
+				PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$to]['id_right'] . "'");
 				$limit = $CAT_FORUM[$to]['id_right'];
 				$end = $limit + ($nbr_cat*2) - 1;
 			}
@@ -402,7 +392,7 @@ class Admin_forum
 		}
 		else //Racine
 		{
-			$max_id = $Sql->query("SELECT MAX(id_right) FROM " . PREFIX . "forum_cats");
+			$max_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'MAX(id_right)', '');
 			//On replace les forums supprim�s virtuellement.
 			$array_sub_cats = explode(', ', $list_cats);
 			$z = 0;
@@ -425,41 +415,41 @@ class Admin_forum
 	//Recupere la liste des parents d'une categorie.
 	function get_parent_list($idcat, $cat_include = false)
 	{
-		global $Sql, $CAT_FORUM;
+		global $CAT_FORUM;
 		
-		$clause = $cat_include ? "WHERE id_left <= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$idcat]['id_right'] . "'" : "WHERE id_left < '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right > '" . $CAT_FORUM[$idcat]['id_right'] . "'";
-		
-		$list_parent_cats = '';
-		$result = $Sql->query_while("SELECT id
+		$list_parent_cats = array();
+		$result = PersistenceContext::get_querier()->select("SELECT id
 		FROM " . PREFIX . "forum_cats 
-		" . $clause);
-		while ($row = $Sql->fetch_assoc($result))
-			$list_parent_cats .= $row['id'] . ', ';
+		" . ($cat_include ? "WHERE id_left <= :id_left AND id_right >= :id_right" : "WHERE id_left < :id_left AND id_right > :id_right"), array(
+			'id_left' => $CAT_FORUM[$idcat]['id_left'],
+			'id_right' => $CAT_FORUM[$idcat]['id_right']
+		));
+		while ($row = $result->fetch())
+			$list_parent_cats[] = $row['id'];
 		
 		$result->dispose();
-		$list_parent_cats = trim($list_parent_cats, ', ');
 
 		return $list_parent_cats;
 	}
 	
-	//R�cup�re les enfants d'une cat�gorie
+	//Récupère les enfants d'une catégorie
 	function get_child_list($id, $cat_include = true)
 	{
-		global $Sql, $CAT_FORUM;
+		global $CAT_FORUM;
 		
-		$clause = $cat_include ? "WHERE id_left BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'" : "WHERE id_left BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "' AND id != '" . $id . "'";
-		
-		$list_cats = '';
-		$result = $Sql->query_while("SELECT id
+		$list_cats = array();
+		$result = PersistenceContext::get_querier()->select("SELECT id
 		FROM " . PREFIX . "forum_cats 
-		" . $clause . "
-		ORDER BY id_left");
+		WHERE id_left BETWEEN :id_left AND :id_right" . ($cat_include ? " AND id != :id" : ''), array(
+			'id_left' => $CAT_FORUM[$id]['id_left'],
+			'id_right' => $CAT_FORUM[$id]['id_right'],
+			'id' => $id
+		));
 		
-		while ($row = $Sql->fetch_assoc($result))
-			$list_cats .= $row['id'] . ', ';
+		while ($row = $result->fetch())
+			$list_cats[] = $row['id'];
 		
 		$result->dispose();
-		$list_cats = trim($list_cats, ', ');
 		
 		return $list_cats;
 	}
@@ -467,39 +457,39 @@ class Admin_forum
 	//Met � jour chaque cat�gories quelque soit le niveau de profondeur de la cat�gorie source. Cas le plus favorable et courant seulement 3 requ�tes.
 	function update_last_topic_id($idcat)
 	{
-		global $Sql, $CAT_FORUM;
+		global $CAT_FORUM;
 		
 		$clause = "idcat = '" . $idcat . "'";
 		if (($CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left']) > 1) //Sous forums pr�sents.
 		{
-			//Sous forums du forum � mettre � jour.
+			//Sous forums du forum à mettre à jour.
 			$list_cats = '';
-			$result = $Sql->query_while("SELECT id
+			$result = PersistenceContext::get_querier()->select("SELECT id
 			FROM " . PREFIX . "forum_cats 
-			WHERE id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
-			ORDER BY id_left");
+			WHERE id_left BETWEEN :id_left AND :id_right
+			ORDER BY id_left", array(
+				'id_left' => $CAT_FORUM[$idcat]['id_left'],
+				'id_right' => $CAT_FORUM[$idcat]['id_right']
+			));
 			
-			while ($row = $Sql->fetch_assoc($result))
-				$list_cats .= $row['id'] . ', ';
+			while ($row = $result->fetch())
+				$list_cats[] = $row['id'];
 			
 			$result->dispose();
 
-			$clause = !empty($list_cats) ? "idcat IN (" . trim($list_cats, ', ') . ")" : "1";
+			$clause = !empty($list_cats) ? "idcat IN (" . implode(', ', $list_cats) . ")" : "1";
 		}
 		
-		//R�cup�ration du timestamp du dernier message de la cat�gorie.		
-		$last_timestamp = $Sql->query("SELECT MAX(last_timestamp) FROM " . PREFIX . "forum_topics WHERE " . $clause);
-		$last_topic_id = $Sql->query("SELECT id FROM " . PREFIX . "forum_topics WHERE last_timestamp = '" . $last_timestamp . "'");
+		//Récupération du timestamp du dernier message de la catégorie.
+		$last_timestamp = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'MAX(last_timestamp)', 'WHERE' . $clause);
+		$last_topic_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id', 'WHERE last_timestamp = :timestamp', array('timestamp' => $last_timestamp));
 		if (!empty($last_topic_id))
 			PersistenceContext::get_querier()->update(PREFIX . 'forum_cats', array('last_topic_id' => $last_topic_id), 'WHERE id=:id', array('id' => $idcat));
 		
 		if ($CAT_FORUM[$idcat]['level'] > 1) //Appel recursif si sous-forum.
-		{	
+		{
 			//Recherche de l'id du forum parent.
-			$idcat_parent = $Sql->query("SELECT id 
-			FROM " . PREFIX . "forum_cats 
-			WHERE id_left < '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right > '" . $CAT_FORUM[$idcat]['id_right'] . "' AND level = '" .  ($CAT_FORUM[$idcat]['level'] - 1) . "'");
-
+			$idcat_parent = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_cats", 'id', 'WHERE id_left < :id_left AND id_right > :id_right AND level = :level', array('id_left' => $CAT_FORUM[$idcat]['id_left'], 'id_right' => $CAT_FORUM[$idcat]['id_right'], 'level' => ($CAT_FORUM[$idcat]['level'] - 1)));
 			$this->update_last_topic_id($idcat_parent); //Appel recursif.
 		}
 	}

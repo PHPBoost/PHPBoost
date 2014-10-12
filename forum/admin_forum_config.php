@@ -83,23 +83,26 @@ if (!empty($_POST['valid']))
 }
 elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 {
-	$result = $Sql->query_while("SELECT id, id_left, id_right
+	$result = PersistenceContext::get_querier()->select("SELECT id, id_left, id_right
 	FROM " . PREFIX . "forum_cats
 	WHERE level > 0");
-	while ($row = $Sql->fetch_assoc($result))
+	while ($row = $result->fetch())
 	{
-		$cat_list = $row['id'];
+		$cat_list = array($row['id']);
 		if (($row['id_right'] - $row['id_left']) > 1)
 		{
-			$result2 = $Sql->query_while("SELECT id
+			$result2 = PersistenceContext::get_querier()->select("SELECT id
 			FROM " . PREFIX . "forum_cats
-			WHERE id_left >= '" . $row['id_left'] . "' AND id_right <= '" . $row['id_right'] ."'");
+			WHERE id_left >= :id_left AND id_right <= :id_right", array(
+				'id_left' => $row['id_left'],
+				'id_right' => $row['id_right']
+			));
 			
-			while ($row2 = $Sql->fetch_assoc($result2))
-				$cat_list .=  ', ' . $row2['id'];
+			while ($row2 = $result2->fetch())
+				$cat_list[] = $row2['id'];
 		}
 		
-		$info_cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array("COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg"), "WHERE idcat IN (" . $cat_list . ")");
+		$info_cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array("COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg"), "WHERE idcat IN :ids_list", array('ids_list' => $cat_list));
 		PersistenceContext::get_querier()->update(PREFIX . 'forum_cats', array('nbr_topic' => $info_cat['nbr_topic'], 'nbr_msg' => $info_cat['nbr_msg']), 'WHERE id=:id', array('id' => $row['id']));
 	}
 	$result->dispose();
