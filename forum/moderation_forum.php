@@ -151,24 +151,25 @@ if ($action == 'alert') //Gestion des alertes
 		));
 
 		//Vérification des autorisations.
-		$auth_cats = '';
+		$auth_cats = array();
 		foreach ($CAT_FORUM as $idcat => $key)
 		{
 			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM))
-				$auth_cats .= $idcat . ',';
+				$auth_cats[] = $idcat;
 		}
-		$auth_cats = !empty($auth_cats) ? " WHERE c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
 		$i = 0;
-		$result = $Sql->query_while("SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups, m.display_name, m.level AS user_level, m.groups, t.title AS topic_title, c.id AS cid
+		$result = PersistenceContext::get_querier()->select("SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups, m.display_name, m.level AS user_level, m.groups, t.title AS topic_title, c.id AS cid
 		FROM " . PREFIX . "forum_alerts ta
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = ta.idtopic
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = ta.idmodo
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-		" . $auth_cats . "
-		ORDER BY ta.status ASC, ta.timestamp DESC");
-		while ($row = $Sql->fetch_assoc($result))
+		" . (!empty($auth_cats) ? " WHERE c.id NOT IN :auth_cats" : '') . "
+		ORDER BY ta.status ASC, ta.timestamp DESC", array(
+			'auth_cats' => $auth_cats
+		));
+		while ($row = $result->fetch())
 		{
 			if ($row['status'] == 0)
 				$status = $LANG['alert_not_solved'];
@@ -193,6 +194,7 @@ if ($action == 'alert') //Gestion des alertes
 
 			$i++;
 		}
+		$result->dispose();
 
 		if ($i === 0)
 		{
@@ -205,23 +207,26 @@ if ($action == 'alert') //Gestion des alertes
 	else //On affiche les informations sur une alerte
 	{
 		//Vérification des autorisations.
-		$auth_cats = '';
+		$auth_cats = array();
 		foreach ($CAT_FORUM as $idcat => $key)
 		{
 			if (!AppContext::get_current_user()->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM))
-				$auth_cats .= $idcat . ',';
+				$auth_cats[] = $idcat;
 		}
-		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
-
-		$result = $Sql->query_while("
+		
+		$result = PersistenceContext::get_querier()->select("
 		SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.display_name AS login_modo, m2.level AS modo_level, m2.groups AS modo_groups, m.display_name, m.level AS user_level, m.groups, t.title AS topic_title, t.idcat, c.id AS cid, ta.contents
 		FROM " . PREFIX . "forum_alerts ta
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = ta.idtopic
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = ta.idmodo
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
-		WHERE ta.id = '" . $id_get . "'" . $auth_cats);
-		$row = $Sql->fetch_assoc($result);
+		WHERE ta.id = :id" . (!empty($auth_cats) ? " AND c.id NOT IN :auth_cats" : ''), array(
+			'id' => $id_get,
+			'auth_cats' => $auth_cats
+		));
+		$row = $result->fetch();
+		$result->dispose();
 		if (!empty($row))
 		{
 			//Le sujet n'existe plus, on vire l'alerte.
