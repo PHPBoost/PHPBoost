@@ -50,6 +50,11 @@ class NewsletterStreamsFormController extends AbstractRichCategoriesFormControll
 		return NewsletterUrlBuilder::manage_streams();
 	}
 	
+	protected function get_title()
+	{
+		return $this->get_id_category() == 0 ? LangLoader::get_message('stream.add', 'common', 'newsletter') : LangLoader::get_message('stream.edit', 'common', 'newsletter');
+	}
+	
 	/**
 	 * @return AuthorizationsSettings
 	 */
