@@ -100,6 +100,8 @@ elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 			
 			while ($row2 = $result2->fetch())
 				$cat_list[] = $row2['id'];
+			
+			$result2->dispose();
 		}
 		
 		$info_cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array("COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg"), "WHERE idcat IN :ids_list", array('ids_list' => $cat_list));

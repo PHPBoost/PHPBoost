@@ -26,33 +26,33 @@
  ###################################################*/
 
 //Listes les utilisateurs en lignes.
-function forum_list_user_online($sql_condition)
+function forum_list_user_online($condition)
 {
-	global $Sql;
-	
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $Sql->query_while("SELECT s.user_id, m.level, m.display_name, m.groups
+	$result = PersistenceContext::get_querier()->select("SELECT s.user_id, m.level, m.display_name, m.groups
 	FROM " . DB_TABLE_SESSIONS . " s 
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
-	WHERE s.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' ". $sql_condition."
-	ORDER BY s.timestamp DESC");
-	while ($row = $Sql->fetch_assoc($result))
+	WHERE s.timestamp > :timestamp " . $condition . "
+	ORDER BY s.timestamp DESC", array(
+		'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration())
+	));
+	while ($row = $result->fetch())
 	{
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
-		{ 		
+		{
 			case -1:
 			$status = 'visiteur';
 			$total_visit++;
-			break;			
+			break;
 			case 0:
 			$status = 'member';
 			$total_member++;
-			break;			
+			break;
 			case 1: 
 			$status = 'modo';
 			$total_modo++;
-			break;			
+			break;
 			case 2: 
 			$status = 'admin';
 			$total_admin++;
@@ -98,38 +98,34 @@ function forum_limit_time_msg()
 //Marque un topic comme lu.
 function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 {
-	global $Sql;
-	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$last_view_forum = AppContext::get_session()->get_cached_data('last_view_forum', 0);
 	$max_time = (time() - (ForumConfig::load()->get_read_messages_storage_duration() * 3600 * 24));
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
 	if (AppContext::get_current_user()->get_id() !== -1 && $last_timestamp >= $max_time_msg)
 	{
-		$check_view_id = $Sql->query("SELECT last_view_id FROM " . PREFIX . "forum_view WHERE user_id = '" . AppContext::get_current_user()->get_id() . "' AND idtopic = '" . $idtopic . "'");
+		$check_view_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_view", 'last_view_id', 'WHERE user_id = :user_id AND idtopic = :idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
 		if (!empty($check_view_id) && $check_view_id != $last_msg_id) 
 		{
-			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
-			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_view SET last_view_id = '" . $last_msg_id . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . AppContext::get_current_user()->get_id() . "'");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
+			PersistenceContext::get_querier()->update(PREFIX . "forum_view", array('last_view_id' => $last_msg_id, 'timestamp' => time()), 'WHERE idtopic = :idtopic AND user_id = :user_id', array('idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
 		}
 		elseif (empty($check_view_id))
-		{			
-			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
-			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO " . PREFIX . "forum_view (idtopic, last_view_id, user_id, timestamp) VALUES('" . $idtopic . "', '" . $last_msg_id . "', '" . AppContext::get_current_user()->get_id() . "', '" . time() . "')");			
+		{
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
+			PersistenceContext::get_querier()->insert(PREFIX . "forum_view", array('idtopic' => $idtopic, 'last_view_id' => $last_msg_id, 'user_id' => AppContext::get_current_user()->get_id(), 'timestamp' => time()));
 		}
 		else
-			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
+			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
 	}
 	else
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
 }
-	
+
 //Gestion de l'historique des actions sur le forum.
 function forum_history_collector($type, $user_id_action = '', $url_action = '')
 {
-	global $Sql;
-	
-	$Sql->query_inject("INSERT INTO " . PREFIX . "forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . TextHelper::strprotect($type) . "', '" . AppContext::get_current_user()->get_id() . "', '" . NumberHelper::numeric($user_id_action) . "', '" . TextHelper::strprotect($url_action) . "', '" . time() . "')");
+	PersistenceContext::get_querier()->insert(PREFIX . "forum_history", array('action' => $type, 'user_id' => AppContext::get_current_user()->get_id(), 'user_id_action' => NumberHelper::numeric($user_id_action), 'url' => $url_action, 'timestamp' => time()));
 }
 
 //Gestion du rss du forum.
