@@ -215,7 +215,7 @@ class User
 	
 	public function is_banned()
 	{
-		return (time() - $this->is_banned) <= 0 || $this->warning_percentage >= '100';
+		return (time() - $this->delay_banned) <= 0 || $this->warning_percentage >= '100';
 	}
 	
 	public function set_delay_readonly($delay_readonly)
