@@ -292,7 +292,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'");
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_readonly' => $readonly), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
 
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 			if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
@@ -327,7 +327,8 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		if (retrieve(POST, 'search_member', false))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'");
+			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE login LIKE :login', array('login' => '%' . $login .'%'));
+
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish&id=' . $user_id, '', '&'));
 			else
@@ -347,11 +348,13 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		));
 
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, display_name, level, groups, user_readonly
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, user_readonly
 		FROM " . PREFIX . "member
-		WHERE user_readonly > " . time() . "
-		ORDER BY user_readonly");
-		while ($row = $Sql->fetch_assoc($result))
+		WHERE user_readonly > :timestamp_now
+		ORDER BY user_readonly", array(
+			'timestamp_now' => time()
+		));
+		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
@@ -368,7 +371,8 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 
 			$i++;
 		}
-
+		$result->dispose();
+		
 		if ($i === 0)
 		{
 			$tpl->put_all( array(
@@ -469,8 +473,8 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		{
 			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'");
-
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_warning' => $new_warning_level), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
+				
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 				if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
 				{
@@ -486,7 +490,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			}
 			elseif ($new_warning_level == 100) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'");
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_warning' => 100), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
 				PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:id', array('id' => $info_mbr['user_id']));
 				
 				//Insertion de l'action dans l'historique.
@@ -517,7 +521,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		if (retrieve(POST, 'search_member', false))
 		{
 			$login = retrieve(POST, 'login_member', '');
-			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'");
+			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE login LIKE :login', array('login' => '%' . $login .'%'));
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning&id=' . $user_id, '', '&'));
 			else
@@ -536,11 +540,11 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		));
 
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, display_name, level, groups, warning_percentage
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, groups, warning_percentage
 		FROM " . PREFIX . "member
 		WHERE user_warning > 0
 		ORDER BY user_warning");
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['groups'], $row['level']);
 			
@@ -557,7 +561,8 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 			$i++;
 		}
-
+		$result->dispose();
+		
 		if ($i === 0)
 		{
 			$tpl->put_all( array(
@@ -649,13 +654,15 @@ else //Panneau de modération
 	$end = !empty($get_more) ? $get_more : 15; //Limit.
 	$i = 0;
 
-	$result = $Sql->query_while("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.display_name, m.level AS user_level, m.groups, m2.display_name as member, m2.level as member_level, m2.groups as member_groups
+	$result = PersistenceContext::get_querier()->select("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.display_name, m.level AS user_level, m.groups, m2.display_name as member, m2.level as member_level, m2.groups as member_groups
 	FROM " . PREFIX . "forum_history h
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = h.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = h.user_id_action
 	ORDER BY h.timestamp DESC
-	" . $Sql->limit(0, $end));
-	while ($row = $Sql->fetch_assoc($result))
+	LIMIT :limit", array(
+		'limit' => $end
+	));
+	while ($row = $result->fetch())
 	{
 		$group_color = User::get_group_color($row['groups'], $row['user_level']);
 		$member_group_color = User::get_group_color($row['member_groups'], $row['member_level']);
