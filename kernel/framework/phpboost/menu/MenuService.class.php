@@ -238,8 +238,6 @@ class MenuService
 	*/
 	public static function change_position($menu, $direction = self::MOVE_UP)
     {
-        global $Sql;
-        
         $block_position = $menu->get_block_position();
         $new_block_position = $block_position;
         $update_query = '';
@@ -278,7 +276,7 @@ class MenuService
         
         if ($block_position != $new_block_position)
         {   // Updating other menus
-            $Sql->query_inject($update_query);
+            PersistenceContext::get_querier()->inject($update_query);
             
             // Updating the current menu
             $menu->set_block_position($new_block_position);
