@@ -141,13 +141,11 @@ class Forum
 	//Edition d'un message.
 	function Update_msg($idtopic, $idmsg, $contents, $user_id_msg, $history = true)
 	{
-		global $Sql;
-		
 		$config = ForumConfig::load();
 		
 		//Marqueur d'édition du message?
 		$edit_mark = (!AppContext::get_current_user()->check_auth(ForumConfig::load()->get_authorizations(), EDIT_MARK_FORUM)) ? ", timestamp_edit = '" . time() . "', user_id_edit = '" . AppContext::get_current_user()->get_id() . "'" : '';
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_msg SET contents = '" . FormatingHelper::strparse($contents) . "'" . $edit_mark . " WHERE id = '" . $idmsg . "'");
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_msg SET contents = '" . FormatingHelper::strparse($contents) . "'" . $edit_mark . " WHERE id = '" . $idmsg . "'");
 
 		$nbr_msg_before = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "'");
 
@@ -166,8 +164,6 @@ class Forum
 	//Edition d'un sujet.
 	function Update_topic($idtopic, $idmsg, $title, $subtitle, $contents, $type, $user_id_msg)
 	{
-		global $Sql;
-
 		//Mise à jour du sujet.
 		PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', array('title' => $title, 'subtitle' => $subtitle, 'type' => $type), 'WHERE id=:id', array('id' => $idtopic));
 		//Mise à jour du contenu du premier message du sujet.
@@ -181,14 +177,14 @@ class Forum
 	//Supression d'un message.
 	function Del_msg($idmsg, $idtopic, $idcat, $first_msg_id, $last_msg_id, $last_timestamp, $msg_user_id)
 	{
-		global $Sql,  $CAT_FORUM;
+		global $CAT_FORUM;
 		
 		$config = ForumConfig::load();
 		
 		if ($first_msg_id != $idmsg) //Suppression d'un message.
 		{
 			//On compte le nombre de messages du topic avant l'id supprimé.
-			$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $idmsg . "'");
+			$nbr_msg = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $idtopic, 'id' => $idmsg));
 			//On supprime le message demandé.
 			PersistenceContext::get_querier()->delete(PREFIX . 'forum_msg', 'WHERE id=:id', array('id' => $idmsg));
 			//On met à jour la table forum_topics.
@@ -238,14 +234,14 @@ class Forum
 	//Suppresion d'un sujet.
 	function Del_topic($idtopic, $generate_rss = true)
 	{
-		global $Sql,  $CAT_FORUM;
+		global $CAT_FORUM;
 
 		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('idcat', 'user_id'), 'WHERE id=:id', array('id' => $idtopic));
 		$topic['user_id'] = (int)$topic['user_id'];
 
 		//On ne supprime pas de msg aux membres ayant postés dans le topic => trop de requêtes.
 		//On compte le nombre de messages du topic.
-		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "'");
+		$nbr_msg = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic', array('idtopic' => $idtopic));
 		$nbr_msg = !empty($nbr_msg) ? NumberHelper::numeric($nbr_msg) : 1;
 
 		//On rippe le topic ainsi que les messages du topic.
@@ -443,13 +439,6 @@ class Forum
 		return $last_topic_id;
 	}
 
-	//Fusion de deux sujets.
-	function Merge_topic($idtopic, $idtopic_merge)
-	{
-		global $Sql;
-
-	}
-
 	//Ajoute une alerte sur un sujet.
 	function Alert_topic($alert_post, $alert_title, $alert_contents)
 	{
@@ -524,8 +513,6 @@ class Forum
 	//Passe en attente une alerte sur un sujet.
 	function Wait_alert_topic($id_alert)
 	{
-		global $Sql;
-
 		PersistenceContext::get_querier()->update(PREFIX . 'forum_alerts', array('status' => 0, 'idmodo' => 0), 'WHERE id=:id', array('id' => $id_alert));
 
 		//Insertion de l'action dans l'historique.
@@ -535,14 +522,9 @@ class Forum
 	//Supprime une alerte sur un sujet.
 	function Del_alert_topic($id_alert)
 	{
-		global $Sql;
-
 		PersistenceContext::get_querier()->delete(PREFIX . 'forum_alerts', 'WHERE id=:id', array('id' => $id_alert));
 
 		//Si la contribution associée n'est pas réglée, on la règle
-		
-		
-		 
 		$corresponding_contributions = ContributionService::find_by_criteria('forum', $id_alert, 'alert');
 		if (count($corresponding_contributions) > 0)
 		{
@@ -582,11 +564,8 @@ class Forum
 	//Suppression d'un sondage.
 	function Del_poll($idtopic)
 	{
-		global $Sql;
-
 		PersistenceContext::get_querier()->delete(PREFIX . 'forum_poll', 'WHERE idtopic=:id', array('id' => $idtopic));
 	}
-
 
 	/**
 	 * @desc Returns an ordered tree with all categories informations
