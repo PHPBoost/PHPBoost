@@ -40,11 +40,6 @@ class GuestbookSetup extends DefaultModuleSetup
 		$this->create_tables();
 	}
 	
-	public function upgrade($installed_version)
-	{
-		return '4.1.0';
-	}
-	
 	public function uninstall()
 	{
 		$this->drop_tables();
