@@ -56,12 +56,12 @@ class GuestbookController extends ModuleController
 		$pagination = $this->get_pagination($messages_number, $page);
 		$is_guest = !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
 		
-		$result = PersistenceContext::get_querier()->select("SELECT member.*, guestbook.*, guestbook.login as glogin, ext_field.user_avatar
-		FROM " . PREFIX . "guestbook guestbook
-		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = guestbook.user_id
-		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
+		$result = PersistenceContext::get_querier()->select('SELECT member.*, guestbook.*, guestbook.login as glogin, ext_field.user_avatar
+		FROM ' . GuestbookSetup::$guestbook_table . ' guestbook
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = guestbook.user_id
+		LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
 		ORDER BY guestbook.timestamp DESC
-		LIMIT :number_items_per_page OFFSET :display_from",
+		LIMIT :number_items_per_page OFFSET :display_from',
 			array(
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
