@@ -62,7 +62,7 @@ class GuestbookDeleteController extends ModuleController
 	
 	private function check_authorizations($message)
 	{
-		if (!(GuestbookAuthorizationsService::check_authorizations()->moderation() || (GuestbookAuthorizationsService::check_authorizations()->write() && $message->get_author_user()->get_id() == AppContext::get_current_user()->get_id())))
+		if (!$message->is_authorized_delete())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
