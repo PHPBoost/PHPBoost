@@ -32,7 +32,7 @@
  */
 class MemberSanctionManager
 {
-	private static $sql_querier;
+	private static $db_querier;
 	private static $lang;
 	const NO_SEND_CONFIRMATION = 'no_send_confirmation';
 	const SEND_MAIL = 'send_mail';
@@ -41,7 +41,7 @@ class MemberSanctionManager
 	
 	public static function __static()
 	{
-		self::$sql_querier = PersistenceContext::get_querier();
+		self::$db_querier = PersistenceContext::get_querier();
 		self::$lang = LangLoader::get('main');
 	}
 	
@@ -52,7 +52,7 @@ class MemberSanctionManager
 	{
 		if (self::verificate_user_id($user_id))
 		{
-			self::$sql_querier->update(DB_TABLE_MEMBER, array('delay_readonly' => $punish_duration), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+			self::$db_querier->update(DB_TABLE_MEMBER, array('delay_readonly' => $punish_duration), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 			
 			if ($send_confirmation == self::SEND_MP || $send_confirmation == self::SEND_MP_AND_MAIL && !empty($content_to_send))
 			{
@@ -72,9 +72,9 @@ class MemberSanctionManager
 	{
 		if (self::verificate_user_id($user_id))
 		{
-			self::$sql_querier->update(DB_TABLE_MEMBER, array('delay_banned' => $punish_duration), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+			self::$db_querier->update(DB_TABLE_MEMBER, array('delay_banned' => $punish_duration), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 			
-			self::$sql_querier->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			self::$db_querier->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
 			
 			if ($send_confirmation == self::SEND_MAIL)
 			{
@@ -91,11 +91,11 @@ class MemberSanctionManager
 	{
 		if (self::verificate_user_id($user_id))
 		{
-			self::$sql_querier->update(DB_TABLE_MEMBER, array('warning_percentage' => $level_punish), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+			self::$db_querier->update(DB_TABLE_MEMBER, array('warning_percentage' => $level_punish), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 			
 			if ($level_punish == 100)
 			{
-				self::$sql_querier->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+				self::$db_querier->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
 		
 				self::send_mail($user_id, self::$lang['ban_title_mail'], self::$lang['ban_mail']);
 			}
@@ -120,7 +120,7 @@ class MemberSanctionManager
 	{
 		if (self::verificate_user_id($user_id))
 		{
-			self::$sql_querier->update(DB_TABLE_MEMBER, array('warning_percentage' => 0), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+			self::$db_querier->update(DB_TABLE_MEMBER, array('warning_percentage' => 0), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 		}
 	}
 	
@@ -131,7 +131,7 @@ class MemberSanctionManager
 	{
 		if (self::verificate_user_id($user_id))
 		{
-			self::$sql_querier->update(DB_TABLE_MEMBER, array('delay_readonly' => 0), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+			self::$db_querier->update(DB_TABLE_MEMBER, array('delay_readonly' => 0), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 		}
 	}
 	
@@ -142,12 +142,12 @@ class MemberSanctionManager
 	{
 		if (self::verificate_user_id($user_id))
 		{
-			self::$sql_querier->update(DB_TABLE_MEMBER, array('delay_banned' => 0), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+			self::$db_querier->update(DB_TABLE_MEMBER, array('delay_banned' => 0), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 
-			$row = self::$sql_querier->select_single_row(DB_TABLE_MEMBER, array('warning_percentage'), "WHERE user_id = '" . $user_id . "'");
+			$row = self::$db_querier->select_single_row(DB_TABLE_MEMBER, array('warning_percentage'), "WHERE user_id = '" . $user_id . "'");
 			if ($row['warning_percentage'] == 100)
 			{
-				self::$sql_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET warning_percentage = 90 WHERE user_id = :user_id", array('user_id' => $user_id));
+				self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET warning_percentage = 90 WHERE user_id = :user_id", array('user_id' => $user_id));
 			}
 		}
 	}
@@ -164,12 +164,12 @@ class MemberSanctionManager
 	
 	private static function verificate_user_id($user_id)
 	{
-		return self::$sql_querier->count(DB_TABLE_MEMBER, "WHERE user_id = '" . $user_id . "'") > 0 ? true : false;
+		return self::$db_querier->count(DB_TABLE_MEMBER, "WHERE user_id = '" . $user_id . "'") > 0 ? true : false;
 	}
 	
 	private static function get_member_mail($user_id)
 	{
-		return self::$sql_querier->get_column_value(DB_TABLE_MEMBER, 'user_mail', 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		return self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'user_mail', 'WHERE user_id=:user_id', array('user_id' => $user_id));
 	}
 }
 ?>

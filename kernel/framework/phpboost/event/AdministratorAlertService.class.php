@@ -36,11 +36,11 @@ define('ADMINISTRATOR_ALERT_TYPE', 1);
  */
 class AdministratorAlertService
 {
-	private static $sql_querier;
+	private static $db_querier;
 	
 	public static function __static()
 	{
-		self::$sql_querier = PersistenceContext::get_sql();
+		self::$db_querier = PersistenceContext::get_querier();
 	}
 	/**
 	 * @desc Builds an alert knowing its id.
@@ -50,12 +50,16 @@ class AdministratorAlertService
 	public static function find_by_id($alert_id)
 	{
 		//Selection query
-		$result = self::$sql_querier->query_while("SELECT id, entitled, fixing_url, current_status, id_in_module, identifier, type, priority, creation_date, description
+		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, id_in_module, identifier, type, priority, creation_date, description
 		FROM " . DB_TABLE_EVENTS  . "
-		WHERE id = '" . $alert_id . "'
-		ORDER BY creation_date DESC");
+		WHERE id = :alert_id
+		ORDER BY creation_date DESC", array(
+			'alert_id' => $alert_id
+		));
 		
-		$properties = self::$sql_querier->fetch_assoc($result);
+		$properties = $result->fetch();
+		
+		$result->dispose();
 		
 		if ((int)$properties['id'] > 0)
 		{
@@ -89,7 +93,7 @@ class AdministratorAlertService
 		
 		if ($type != null)
 		{
-		    $criterias[] = "type = '" . TextHelper::strprotect($type) . "'";
+			$criterias[] = "type = '" . TextHelper::strprotect($type) . "'";
 		}
 			
 		if ($identifier != null)
@@ -101,17 +105,17 @@ class AdministratorAlertService
 		if (!empty($criterias))
 		{
 			$array_result = array();
-			$where_clause = "contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . implode($criterias, " AND ");
-			$result = self::$sql_querier->query_while("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
+			$result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
 			FROM " . DB_TABLE_EVENTS  . "
-			WHERE " . $where_clause);
+			WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . implode($criterias, " AND "));
 			
-			while ($row = self::$sql_querier->fetch_assoc($result))
+			while ($row = $result->fetch())
 			{
 				$alert = new AdministratorAlert();
 				$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
 				$array_result[] = $alert;
 			}
+			$result->dispose();
 			
 			return $array_result;
 		}
@@ -122,30 +126,32 @@ class AdministratorAlertService
 		}
 	}
 	
- 	/**
+	/**
 	 * @desc Finds an alert knowing its identifier and maybe its type.
 	 * @param string $identifier The identifier of the alerts you look for.
 	 * @param string $type The type of the alert you look for.
 	 * @return AdministratorAlert[] The list of the matching alerts.
- 	 */
+	 */
 	public static function find_by_identifier($identifier, $type = '')
 	{        
-        $result = self::$sql_querier->query_while(
-            "SELECT id, entitled, fixing_url, current_status, creation_date, id_in_module, priority, identifier, type, description
-    		FROM " . DB_TABLE_EVENTS  . "
-    		WHERE identifier = '" . addslashes($identifier) . "'" . (!empty($type) ? " AND type = '" . addslashes($type) . "'" : '') . " ORDER BY creation_date DESC " . self::$sql_querier->limit(0, 1) . ";"
-            );
-            
-		if ($row = self::$sql_querier->fetch_assoc($result))
+		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, id_in_module, priority, identifier, type, description
+			FROM " . DB_TABLE_EVENTS  . "
+			WHERE identifier = :identifier" . (!empty($type) ? " AND type = :type" : '') . " ORDER BY creation_date DESC
+			LIMIT 1;", array(
+				'identifier' => $identifier,
+				'type' => $type
+			));
+			
+		if ($row = $result->fetch())
 		{
-            $alert = new AdministratorAlert();
+			$alert = new AdministratorAlert();
 			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
-            
+			
 			return $alert;
-        }
-        $result->dispose();
-        
-        return null;
+		}
+		$result->dispose();
+		
+		return null;
 	}
 	
 	/**
@@ -162,28 +168,30 @@ class AdministratorAlertService
 		$array_result = array();
 		
 		//On liste les alertes
-		$result = self::$sql_querier->query_while("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
+		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
 		FROM " . DB_TABLE_EVENTS  . "
 		WHERE contribution_type = " . ADMINISTRATOR_ALERT_TYPE . "
-		ORDER BY " . $criteria . " " . strtoupper($order) . " " . 
-		self::$sql_querier->limit($begin, $number));
-		while ($row = self::$sql_querier->fetch_assoc($result))
+		ORDER BY " . $criteria . " " . strtoupper($order) . "
+		LIMIT :pagination_number OFFSET :display_from", array(
+			'pagination_number' => $number,
+			'display_from' => $begin
+		));
+		while ($row = $result->fetch())
 		{
 			$alert = new AdministratorAlert();
 			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
 			$array_result[] = $alert;
 		}
-		
 		$result->dispose();
 		
 		return $array_result;
 	}
 	
 	/**
-     * @desc Create or updates an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
-     * @param AdministratorAlert $alert The alert to create or update.
+	 * @desc Create or updates an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
+	 * @param AdministratorAlert $alert The alert to create or update.
 	 */
-    public static function save_alert($alert)
+	public static function save_alert($alert)
 	{
 		// If it exists already in the data base
 		if ($alert->get_id() > 0)
@@ -191,7 +199,7 @@ class AdministratorAlertService
 			//This line exists only to be compatible with PHP 4 (we cannot use $var->get_var()->method(), whe have to use a temp var)
 			$creation_date = $alert->get_creation_date();
 			
-			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_EVENTS  . " SET entitled = '" . addslashes($alert->get_entitled()) . "', description = '" . addslashes($alert->get_properties()) . "', fixing_url = '" . addslashes($alert->get_fixing_url()) . "', current_status = '" . $alert->get_status() . "', creation_date = '" . $creation_date->get_timestamp() . "', id_in_module = '" . $alert->get_id_in_module() . "', identifier = '" . addslashes($alert->get_identifier()) . "', type = '" . addslashes($alert->get_type()) . "', priority = '" . $alert->get_priority() . "' WHERE id = '" . $alert->get_id() . "'");
+			self::$db_querier->update(DB_TABLE_EVENTS, array('entitled' => $alert->get_entitled(), 'description' => $alert->get_properties(), 'fixing_url' => $alert->get_fixing_url(), 'current_status' => $alert->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()), 'WHERE id = :id', array('id' => $alert->get_id()));
 			
 			//Regeneration of the member cache file
 			if ($alert->get_must_regenerate_cache())
@@ -203,8 +211,8 @@ class AdministratorAlertService
 		else //We create it
 		{
 			$creation_date = new Date();
-			self::$sql_querier->query_inject("INSERT INTO " . DB_TABLE_EVENTS  . " (entitled, description, fixing_url, current_status, creation_date, id_in_module, identifier, type, priority) VALUES ('" . addslashes($alert->get_entitled()) . "', '" . addslashes($alert->get_properties()) . "', '" . addslashes($alert->get_fixing_url()) . "', '" . $alert->get_status() . "', '" . $creation_date->get_timestamp() . "', '" . $alert->get_id_in_module() . "', '" . addslashes($alert->get_identifier()) . "', '" . addslashes($alert->get_type()) . "', '" . $alert->get_priority() . "')");
-			$alert->set_id(self::$sql_querier->insert_id("SELECT MAX(id) FROM " . DB_TABLE_EVENTS ));
+			$result = self::$db_querier->insert(DB_TABLE_EVENTS, array('entitled' => $alert->get_entitled(), 'description' => $alert->get_properties(), 'fixing_url' => $alert->get_fixing_url(), 'current_status' => $alert->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()));
+			$alert->set_id($result->get_last_inserted_id());
 
 			//Cache regeneration
 			AdministratorAlertCache::invalidate();
@@ -212,15 +220,15 @@ class AdministratorAlertService
 	}
 	
 	/** 
- 	 * @desc Deletes an alert from the database.
- 	 * @param AdministratorAlert $alert The alert to delete.
+	 * @desc Deletes an alert from the database.
+	 * @param AdministratorAlert $alert The alert to delete.
 	 */
 	public static function delete_alert($alert)
 	{
 		// If it exists in the data base
 		if ($alert->get_id() > 0)
-		{			
-			self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_EVENTS  . " WHERE id = '" . $alert->get_id() . "'");
+		{
+			self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE id = :id', array('id' => $alert->get_id()));
 			$alert->set_id(0);
 			AdministratorAlertCache::invalidate();
 		}

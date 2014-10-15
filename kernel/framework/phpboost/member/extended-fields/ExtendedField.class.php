@@ -79,7 +79,7 @@ class ExtendedField
 	{
 		if (empty($this->position))
 		{
-			$request = PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "");
+			$request = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, 'MAX(position) + 1', '');
 			$this->position = !empty($request) ? $request : 1;
 		}
 		return $this->position;
