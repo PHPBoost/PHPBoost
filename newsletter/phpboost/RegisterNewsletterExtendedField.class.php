@@ -60,21 +60,8 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 	
 	public function display_field_profile(MemberExtendedField $member_extended_field)
 	{
-		$fieldset = $member_extended_field->get_fieldset();
-		
-		$streams = NewsletterStreamsCache::load()->get_streams();
-		$value = $member_extended_field->get_value();
-		
-		if (!empty($value))
-		{
-			$newsletter_subscribe = explode('|', $value);
-			$streams_suscribed_list = array();
-			foreach ($newsletter_subscribe as $id)
-			{
-				$streams_suscribed_list[] = $streams[$id]->get_name();
-			}
-			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), implode(', ', $streams_suscribed_list)));
-		}
+		//The field is not displayed in the member profile
+		return false;
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
