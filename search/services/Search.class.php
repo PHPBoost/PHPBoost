@@ -41,7 +41,7 @@ class Search
 	private $modules_conditions;
 	private $id_user;
 	private $errors;
-	private $sql_querier;
+	private $db_querier;
 	
 	//----------------------------------------------------------------- PUBLIC
 	//---------------------------------------------------------- Constructeurs
@@ -66,7 +66,7 @@ class Search
 		$this->id_user = AppContext::get_current_user()->get_id();
 		$this->modules_conditions = $this->get_modules_conditions($this->modules);
 
-		$this->sql_querier = PersistenceContext::get_sql();
+		$this->db_querier = PersistenceContext::get_querier();
 
 		// Deletes old results from cache
 
@@ -74,20 +74,17 @@ class Search
 		// or 2 queries with a NOT IN (a bit long)
 
 		// Lists old results to delete
-		$reqOldIndex = "SELECT id_search FROM " . PREFIX . "search_index
-						WHERE  last_search_use <= '".(time() - (CACHE_TIME * 60))."'
-							OR times_used >= '".CACHE_TIMES_USED."'";
-
 		$nbIdsToDelete = 0;
-		$idsToDelete = '';
-		$request = $this->sql_querier->query_while ($reqOldIndex);
-		while ($row = $this->sql_querier->fetch_assoc($request))
+		$idsToDelete = array();
+		$idsToDelete = $this->db_querier->select('SELECT id_search
+		FROM ' . SearchSetup::$search_index_table . '
+		WHERE last_search_use <= :time OR times_used >= :times_used', array(
+			'time' => (time() - (CACHE_TIME * 60)),
+			'times_used' => CACHE_TIMES_USED
+		));
+		while ($row = $result->fetch())
 		{
-			if ($nbIdsToDelete > 0)
-			{
-				$idsToDelete .= ',';
-			}
-			$idsToDelete .= "'" . $row['id_search'] . "'";
+			$idsToDelete[] = $row['id_search'];
 			$nbIdsToDelete++;
 		}
 		$request->dispose();
@@ -95,11 +92,8 @@ class Search
 		// Deletes old results
 		if ($nbIdsToDelete > 0)
 		{
-			$reqDeleteIdx = "DELETE FROM " . SearchSetup::$search_index_table . " WHERE id_search IN (".$idsToDelete.")";
-			$reqDeleteRst = "DELETE FROM " . SearchSetup::$search_results_table . " WHERE id_search IN (".$idsToDelete.")";
-
-			$this->sql_querier->query_inject($reqDeleteIdx);
-			$this->sql_querier->query_inject($reqDeleteRst);
+			$this->db_querier->delete(SearchSetup::$search_index_table, 'WHERE id_search IN :ids_list', array('ids_list' => $idsToDelete));
+			$this->db_querier->delete(SearchSetup::$search_results_table, 'WHERE id_search IN :ids_list', array('ids_list' => $idsToDelete));
 		}
 
 		// Don't compute anything if no text is searched
@@ -107,15 +101,13 @@ class Search
 		if ($this->search != '')
 		{
 			// Checks cache results meta-inf
-			$reqCache  = "SELECT id_search, module FROM " . SearchSetup::$search_index_table . " WHERE ";
-			$reqCache .= "search='" . $this->search . "' AND id_user='" . $this->id_user . "'";
-			if ($this->modules_conditions != '')
-			{
-				$reqCache .= " AND " . $this->modules_conditions;
-			}
-
-			$request = $this->sql_querier->query_while ($reqCache);
-			while ($row = $this->sql_querier->fetch_assoc($request))
+			$request = $this->db_querier->select("SELECT id_search, module
+			FROM " . SearchSetup::$search_index_table . "
+			WHERE search=:search AND id_user=:id_user" . ($this->modules_conditions != '' ? " AND " . $this->modules_conditions : ''), array(
+				'search' => $this->search,
+				'id_user' => $this->id_user
+			));
+			while ($row = $result->fetch())
 			{   // retrieves cache result meta-inf
 				array_push($this->cache, $row['module']);
 				$this->id_search[$row['module']] = $row['id_search'];
@@ -125,9 +117,7 @@ class Search
 			// Updates cache results meta-inf
 			if (count($this->id_search) > 0)
 			{
-				$reqUpdate  = "UPDATE " . SearchSetup::$search_index_table . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
-				$reqUpdate .= "id_search IN (" . implode(',', $this->id_search) . ");";
-				$this->sql_querier->query_inject($reqUpdate);
+				$this->db_querier->inject("UPDATE " . SearchSetup::$search_index_table . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE id_search IN (" . implode(',', $this->id_search) . ");");
 			}
 
 			// Adds modules missing in cache
@@ -146,7 +136,7 @@ class Search
 						{
 							$reqInsert = "INSERT INTO " . SearchSetup::$search_index_table .
 								" (id_user, module, search, options, last_search_use, times_used) VALUES " . rtrim($reqInsert, ',');
-							$this->sql_querier->query_inject($reqInsert);
+							$this->db_querier->inject($reqInsert);
 							$reqInsert = '';
 							$nbReqInsert = 0;
 						}
@@ -160,19 +150,17 @@ class Search
 				// Executes last insertions queries
 				if ($nbReqInsert > 0)
 				{
-					$this->sql_querier->query_inject("INSERT INTO " . SearchSetup::$search_index_table . " (id_user, module, search, options, last_search_use, times_used) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "");
+					$this->db_querier->inject("INSERT INTO " . SearchSetup::$search_index_table . " (id_user, module, search, options, last_search_use, times_used) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "");
 				}
 
 				// Checks and retrieves cache meta-informations
-				$reqCache  = "SELECT id_search, module FROM " . SearchSetup::$search_index_table . " WHERE ";
-				$reqCache .= "search='" . $this->search . "' AND id_user='" . $this->id_user . "'";
-				if ($this->modules_conditions != '')
-				{
-					$reqCache .= " AND " . $this->modules_conditions;
-				}
-
-				$request = $this->sql_querier->query_while ($reqCache);
-				while ($row = $this->sql_querier->fetch_assoc($request))
+				$request = $this->db_querier->select("SELECT id_search, module
+				FROM " . SearchSetup::$search_index_table . "
+				WHERE search=:search AND id_user=:id_user" . ($this->modules_conditions != '' ? " AND " . $this->modules_conditions : ''), array(
+					'search' => $this->search,
+					'id_user' => $this->id_user
+				));
+				while ($row = $result->fetch())
 				{   // Ajout des résultats s'ils font partie de la liste des modules à traiter
 					$this->id_search[$row['module']] = $row['id_search'];
 				}
@@ -203,16 +191,16 @@ class Search
 						AND id_user = '".$this->id_user."' ORDER BY relevance DESC ";
 		if ($nb_lines > 0)
 		{
-			$reqResults .= $this->sql_querier->limit($offset, $nb_lines);
+			$reqResults .= 'LIMIT ' . $nb_lines . ' OFFSET ' . $offset;
 		}
 
 		// Retrieves results
-		$request = $this->sql_querier->query_while ($reqResults);
-		while ($result = $this->sql_querier->fetch_assoc($request))
+		$request = $this->db_querier->select($reqResults);
+		while ($result = $result->fetch())
 		{
 			$results[] = $result;
 		}
-		$nbResults = $this->sql_querier->num_rows($request, "SELECT COUNT(*) " . SearchSetup::$search_results_table . " WHERE id_search = ".$id_search);
+		$nbResults = $result->get_rows_count();
 		$request->dispose();
 
 		return $nbResults;
@@ -262,16 +250,16 @@ class Search
 		$reqResults .= " ORDER BY relevance DESC ";
 		if ( $nb_lines > 0 )
 		{
-			$reqResults .= $this->sql_querier->limit($offset, $nb_lines);
+			$reqResults .= 'LIMIT ' . $nb_lines . ' OFFSET ' . $offset;
 		}
 
 		// Executes search
-		$request = $this->sql_querier->query_while ($reqResults);
-		while ($result = $this->sql_querier->fetch_assoc($request))
+		$request = $this->db_querier->select($reqResults);
+		while ($result = $result->fetch())
 		{
 			$results[] = $result;
 		}
-		$nbResults = $this->sql_querier->num_rows($request  );
+		$nbResults = $result->get_rows_count();
 
 		$request->dispose();
 
@@ -334,8 +322,8 @@ class Search
 
 			if (!empty($reqSEARCH))
 			{   // Inserts results
-				$request = $this->sql_querier->query_while($reqSEARCH);
-				while ($row = $this->sql_querier->fetch_assoc($request))
+				$request = $this->db_querier->select($reqSEARCH);
+				while ($row = $result->fetch())
 				{
 					if ($nbReqInsert > 0)
 					{
@@ -345,12 +333,13 @@ class Search
 					$reqInsert .= "'".$row['relevance']."','".$row['link']."')";
 					$nbReqInsert++;
 				}
+				$result->dispose();
 			}
 
 			// Executes last insertions
 			if ($nbReqInsert > 0)
 			{
-				$this->sql_querier->query_inject("INSERT INTO " . SearchSetup::$search_results_table . " VALUES ".$reqInsert);
+				$this->db_querier->inject("INSERT INTO " . SearchSetup::$search_results_table . " VALUES ".$reqInsert);
 			}
 		}
 	}
@@ -368,13 +357,12 @@ class Search
 			return true;
 		}
 
-		$id = $this->sql_querier->query("SELECT COUNT(*) FROM " . SearchSetup::$search_index_table . " WHERE id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';");
+		$id = $this->db_querier->count(SearchSetup::$search_index_table, 'WHERE id_search = :id_search AND id_user = :id_user', array('id_search' => $id_search, 'id_user' => $this->id_user));
 		if ($id == 1)
 		{
 			// Search is already in cache, we update it.
-			$reqUpdate  = "UPDATE " . SearchSetup::$search_index_table . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
-			$reqUpdate .= "id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';";
-			$this->sql_querier->query_inject($reqUpdate);
+			$reqUpdate  = "UPDATE " . SearchSetup::$search_index_table . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';";
+			$this->db_querier->inject($reqUpdate);
 
 			return true;
 		}
