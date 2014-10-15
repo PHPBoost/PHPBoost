@@ -37,28 +37,33 @@ class ContributionService
 {
 	const CONTRIBUTION_TYPE = 0;
 	
-	private static $sql_querier;
+	private static $db_querier;
 	
 	public static function __static()
 	{
-		self::$sql_querier = PersistenceContext::get_sql();
+		self::$db_querier = PersistenceContext::get_querier();
 	}
 	
 	/**
-     * @desc Finds a contribution with its identifier.
-     * @param int $id_contrib Id of the contribution.
-     * @return Contribution The contribution you wanted. If it doesn't exist, it will return null.
+	 * @desc Finds a contribution with its identifier.
+	 * @param int $id_contrib Id of the contribution.
+	 * @return Contribution The contribution you wanted. If it doesn't exist, it will return null.
 	 */
-    public static function find_by_id($id_contrib)
+	public static function find_by_id($id_contrib)
 	{
-		$result = self::$sql_querier->query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type, poster_member.display_name poster_login, poster_member.level poster_level, poster_member.groups poster_groups, fixer_member.display_name fixer_login, fixer_member.level fixer_level, fixer_member.groups fixer_groups, description
+		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type, poster_member.display_name poster_login, poster_member.level poster_level, poster_member.groups poster_groups, fixer_member.display_name fixer_login, fixer_member.level fixer_level, fixer_member.groups fixer_groups, description
 		FROM " . DB_TABLE_EVENTS  . " c
 		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.poster_id
-		WHERE id = '" . $id_contrib . "' AND contribution_type = '" . self::CONTRIBUTION_TYPE . "'
-		ORDER BY creation_date DESC");
+		WHERE id = :id AND contribution_type = :contribution_type
+		ORDER BY creation_date DESC", array(
+			'id' => $id_contrib,
+			'contribution_type' => self::CONTRIBUTION_TYPE
+		));
 		
-		$properties = self::$sql_querier->fetch_assoc($result);
+		$properties = $result->fetch();
+		
+		$result->dispose();
 		
 		if ((int)$properties['id'] > 0)
 		{
@@ -85,20 +90,21 @@ class ContributionService
 		$array_result = array();
 		
 		//On liste les contributions
-		$result = self::$sql_querier->query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.display_name poster_login, poster_member.level poster_level, poster_member.groups poster_groups, fixer_member.display_name fixer_login, fixer_member.level fixer_level, fixer_member.groups fixer_groups, identifier, id_in_module, type, description
+		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.display_name poster_login, poster_member.level poster_level, poster_member.groups poster_groups, fixer_member.display_name fixer_login, fixer_member.level fixer_level, fixer_member.groups fixer_groups, identifier, id_in_module, type, description
 		FROM " . DB_TABLE_EVENTS  . " c
 		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.fixer_id
-		WHERE contribution_type = " . self::CONTRIBUTION_TYPE . "
-		ORDER BY " . $criteria . " " . strtoupper($order));
-		while ($row = self::$sql_querier->fetch_assoc($result))
+		WHERE contribution_type = :contribution_type
+		ORDER BY " . $criteria . " " . strtoupper($order), array(
+			'contribution_type' => self::CONTRIBUTION_TYPE
+		));
+		while ($row = $result->fetch())
 		{
 			$contri = new Contribution();
 			
 			$contri->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['fixing_date']), unserialize($row['auth']), $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type'], $row['poster_login'], $row['fixer_login'], $row['poster_level'], $row['fixer_level'], $row['poster_groups'], $row['fixer_groups']);
 			$array_result[] = $contri;
 		}
-		
 		$result->dispose();
 		
 		return $array_result;
@@ -153,27 +159,27 @@ class ContributionService
 		}
 		
 		$array_result = array();
-		$where_clause = "contribution_type = '" . self::CONTRIBUTION_TYPE . "' AND " . implode(" AND ", $criterias);
 		
-		$result = self::$sql_querier->query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.display_name poster_login, fixer_member.display_name fixer_login, identifier, id_in_module, type, description
+		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.display_name poster_login, fixer_member.display_name fixer_login, identifier, id_in_module, type, description
 		FROM " . DB_TABLE_EVENTS  . " c
 		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.fixer_id
-		WHERE " . $where_clause);
+		WHERE contribution_type = '" . self::CONTRIBUTION_TYPE . "' AND " . implode(" AND ", $criterias));
 		
-		while ($row = self::$sql_querier->fetch_assoc($result))
+		while ($row = $result->fetch())
 		{
 			$contri = new Contribution();
 			$contri->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['fixing_date']), unserialize($row['auth']), $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type'], $row['poster_login'], $row['fixer_login']);
 			$array_result[] = $contri;
 		}
+		$result->dispose();
 		
 		return $array_result;
 	}
 	
 	/**
-     * @desc Create or update a contribution in the database.
-     * @param Contribution $contribution The contribution to synchronize with the data base.
+	 * @desc Create or update a contribution in the database.
+	 * @param Contribution $contribution The contribution to synchronize with the data base.
 	 */
 	public static function save_contribution($contribution)
 	{		
@@ -184,14 +190,13 @@ class ContributionService
 			$creation_date = $contribution->get_creation_date();
 			$fixing_date = $contribution->get_fixing_date();
 			
-			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_EVENTS  . " SET entitled = '" . addslashes($contribution->get_entitled()) . "', description = '" . addslashes($contribution->get_description()) . "', fixing_url = '" . addslashes($contribution->get_fixing_url()) . "', module = '" . addslashes($contribution->get_module()) . "', current_status = '" . $contribution->get_status() . "', creation_date = '" . $creation_date->get_timestamp() . "', fixing_date = '" . $fixing_date->get_timestamp() . "', auth = '" . addslashes(serialize($contribution->get_auth())) . "', poster_id = '" . $contribution->get_poster_id() . "', fixer_id = '" . $contribution->get_fixer_id() . "', id_in_module = '" . $contribution->get_id_in_module() . "', identifier = '" . addslashes($contribution->get_identifier()) . "', type = '" . addslashes($contribution->get_type()) . "' WHERE id = '" . $contribution->get_id() . "'");
+			self::$db_querier->update(DB_TABLE_EVENTS, array('entitled' => $contribution->get_entitled(), 'description' => $contribution->get_description(), 'fixing_url' => $contribution->get_fixing_url(), 'module' => $contribution->get_module(), 'current_status' => $contribution->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'fixing_date' => $fixing_date->get_timestamp(), 'auth' => serialize($contribution->get_auth()), 'poster_id' => $contribution->get_poster_id(), 'fixer_id' => $contribution->get_fixer_id(), 'id_in_module' => $contribution->get_id_in_module(), 'identifier' => $contribution->get_identifier(), 'type' => $contribution->get_type()), 'WHERE id = :id', array('id' => $contribution->get_id()));
 		}
 		else //We create it
 		{
-			$contribution_auth = $contribution->get_auth();
 			$creation_date = $contribution->get_creation_date();
-			self::$sql_querier->query_inject("INSERT INTO " . DB_TABLE_EVENTS  . " (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type, contribution_type) VALUES ('" . addslashes($contribution->get_entitled()) . "', '" . addslashes($contribution->get_description()) . "', '" . addslashes($contribution->get_fixing_url()) . "', '" . addslashes($contribution->get_module()) . "', '" . $contribution->get_status() . "', '" . $creation_date->get_timestamp() . "', 0, '" . (!empty($contribution_auth) ? addslashes(serialize($contribution_auth)) : '') . "', '" . $contribution->get_poster_id() . "', '" . $contribution->get_fixer_id() . "', '" . $contribution->get_id_in_module() . "', '" . addslashes($contribution->get_identifier()) . "', '" . addslashes($contribution->get_type()) . "', '" . self::CONTRIBUTION_TYPE . "')");
-			$contribution->set_id(self::$sql_querier->insert_id("SELECT MAX(id) FROM " . DB_TABLE_EVENTS));	
+			$result = self::$db_querier->insert(DB_TABLE_EVENTS, array('entitled' => $contribution->get_entitled(), 'description' => $contribution->get_description(), 'fixing_url' => $contribution->get_fixing_url(), 'module' => $contribution->get_module(), 'current_status' => $contribution->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'fixing_date' => 0, 'auth' => serialize($contribution->get_auth()), 'poster_id' => $contribution->get_poster_id(), 'fixer_id' => $contribution->get_fixer_id(), 'id_in_module' => $contribution->get_id_in_module(), 'identifier' => $contribution->get_identifier(), 'type' => $contribution->get_type(), 'contribution_type' => self::CONTRIBUTION_TYPE));
+			$contribution->set_id($result->get_last_inserted_id());
 		}
 		
 		//Regeneration of the member cache file
@@ -203,15 +208,15 @@ class ContributionService
 	}
 	
 	/**
-     * @desc Deletes a contribution in the database.
-     * @param Contribution $contribution The contribution to delete in the data base.
+	 * @desc Deletes a contribution in the database.
+	 * @param Contribution $contribution The contribution to delete in the data base.
 	 */
 	public static function delete_contribution($contribution)
 	{
 		//If it exists in database
 		if ($contribution->get_id() > 0)
 		{
-			self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_EVENTS  . " WHERE id = '" . $contribution->get_id() . "'");
+			self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE id = :id', array('id' => $contribution->get_id()));
 			//We reset the id
 			$contribution->set_id(0);
 			
@@ -226,7 +231,7 @@ class ContributionService
 	 */
 	public static function delete_contribution_module($module_id)
 	{
-		self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_EVENTS  . " WHERE module = '" . $module_id . "'");
+		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module = :module_id', array('module_id' => $module_id));
 	}
 	
 	/**
@@ -253,8 +258,12 @@ class ContributionService
 	{
 		$array_result = array('r2' => 0, 'r1' => 0, 'r0' => 0);
 		
-		$result = self::$sql_querier->query_while ("SELECT auth FROM " . DB_TABLE_EVENTS  . " WHERE current_status = '" . Event::EVENT_STATUS_UNREAD . "' AND contribution_type = '" . self::CONTRIBUTION_TYPE . "'");
-		while ($row = self::$sql_querier->fetch_assoc($result))
+		$result = self::$db_querier->select("SELECT auth FROM " . DB_TABLE_EVENTS  . "
+		WHERE current_status = :current_status AND contribution_type = :contribution_type", array(
+			'current_status' => Event::EVENT_STATUS_UNREAD,
+			'contribution_type' => self::CONTRIBUTION_TYPE
+		));
+		while ($row = $result->fetch())
 		{
 			if (!($this_auth = @unserialize($row['auth'])))
 			{
@@ -300,6 +309,7 @@ class ContributionService
 				}
 			}
 		}
+		$result->dispose();
 		
 		return $array_result;
 	}

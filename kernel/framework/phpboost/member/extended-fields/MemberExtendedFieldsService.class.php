@@ -74,12 +74,14 @@ class MemberExtendedFieldsService
 			$fieldset = new FormFieldsetHTML('other', LangLoader::get_message('other', 'main'));
 			
 			$nbr_field = 0;
-			$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
+			$result = PersistenceContext::get_querier()->select("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
 			FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
-			LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = '" . $user_id . "'
+			LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
 			WHERE exc.display = 1
-			ORDER BY exc.position");
-			while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))
+			ORDER BY exc.position", array(
+				'user_id' => $user_id
+			));
+			while ($extended_field = $result->fetch())
 			{
 				if (AppContext::get_current_user()->check_auth(unserialize($extended_field['auth']), ExtendedField::READ_PROFILE_AUTHORIZATION))
 				{
@@ -162,12 +164,14 @@ class MemberExtendedFieldsService
 	 */
 	private function display_update_form(FormFieldset $fieldset, $user_id)
 	{
-		$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
+		$result = PersistenceContext::get_querier()->select("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
 		FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
-		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = '" . $user_id . "'
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
 		WHERE exc.display = 1
-		ORDER BY exc.position");
-		while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))
+		ORDER BY exc.position", array(
+			'user_id' => $user_id
+		));
+		while ($extended_field = $result->fetch())
 		{
 			if (AppContext::get_current_user()->check_auth(unserialize($extended_field['auth']), ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
 			{

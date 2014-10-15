@@ -125,7 +125,7 @@ class DeprecatedCategoriesManager
 	 */
 	protected $cache_var = array();
 	
-	private $sql_querier;
+	private $db_querier;
 	private $user;
 	
 	
@@ -142,7 +142,7 @@ class DeprecatedCategoriesManager
 		// this is a pointer to the cache variable. We always refer to it, even if it's updated we will have always the good values.
 		$this->cache_var =& $cache_var;
 		
-		$this->sql_querier = PersistenceContext::get_sql();
+		$this->db_querier = PersistenceContext::get_querier();
 		$this->user = AppContext::get_current_user();
 	}
 
@@ -164,20 +164,20 @@ class DeprecatedCategoriesManager
 		if (!is_int($visible))
 			$visible = (int)$visible;
 
-		$max_order = $this->sql_querier->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $id_parent . "'");
+		$max_order = $this->db_querier->get_column_value(PREFIX . $this->table, 'MAX(c_order)', 'WHERE id_parent = :id', array('id' => $id_parent));
 		$max_order = NumberHelper::numeric($max_order);
 
 		if ($id_parent == 0 || array_key_exists($id_parent, $this->cache_var))
 		{
 			//Whe add it at the end of the parent category
 			if ($order <= 0 || $order > $max_order)
-				$this->sql_querier->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . ($max_order + 1) . "', '" . $id_parent . "', '" . $visible . "')");
+				$result = $this->db_querier->insert(PREFIX . $this->table, array('name' => $name, 'c_order' => ($max_order + 1), 'id_parent' => $id_parent, 'visible' => $visible));
 			else
 			{
-				$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $id_parent . "' AND c_order >= '" . $order . "'");
-				$this->sql_querier->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . $order . "', '" . $id_parent . "', '" . $visible . "')");
+				$this->db_querier->inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $id_parent . "' AND c_order >= '" . $order . "'");
+				$result = $this->db_querier->insert(PREFIX . $this->table, array('name' => $name, 'c_order' => $order, 'id_parent' => $id_parent, 'visible' => $visible));
 			}
-			return $this->sql_querier->insert_id("SELECT MAX(id) FROM " . PREFIX . $this->table);
+			return $result->get_last_inserted_id();
 		}
 		else
 		{
@@ -217,14 +217,14 @@ class DeprecatedCategoriesManager
 			if ($way == MOVE_CATEGORY_DOWN)
 			{
 				//Query which allows us to check if we don't want to move down the downest category
-				$max_order = $this->sql_querier->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $cat_info['id_parent'] . "'");
+				$max_order = $this->db_querier->get_column_value(PREFIX . $this->table, 'MAX(c_order)', 'WHERE id_parent = :id', array('id' => $cat_info['id_parent']));
 				if ($cat_info['c_order'] < $max_order)
 				{
 					//Switching category with that which is upper
 					//Updating other category
-					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] + 1) . "'");
+					$this->db_querier->inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] + 1) . "'");
 					//Updating current category
-					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id = '" . $id . "'");
+					$this->db_querier->inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id = '" . $id . "'");
 					//Regeneration of the cache file of the module
 					$this->regenerate_cache();
 
@@ -242,9 +242,9 @@ class DeprecatedCategoriesManager
 				{
 					//Switching category with that which is upper
 					//Updating other category
-					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] - 1) . "'");
+					$this->db_querier->inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] - 1) . "'");
 					//Updating current category
-					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id = '" . $id . "'");
+					$this->db_querier->inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id = '" . $id . "'");
 					//Regeneration of the cache file of the module
 					$this->regenerate_cache();
 					return true;
@@ -289,24 +289,24 @@ class DeprecatedCategoriesManager
 			$this->build_children_id_list($id, $subcats_list);
 			if (!in_array($new_id_cat, $subcats_list))
 			{
-				$max_new_cat_order = $this->sql_querier->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'");
+				$max_new_cat_order = $this->db_querier->get_column_value(PREFIX . $this->table, 'MAX(c_order)', 'WHERE id_parent = :id', array('id' => $new_id_cat));
 				//Default : inserting at the end of the list
 				if ($position <= 0 || $position > $max_new_cat_order)
 				{
 					//Moving the category $id
-					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . ($max_new_cat_order + 1). "' WHERE id = '" . $id . "'");
+					$this->db_querier->update(PREFIX . $this->table, array('id_parent' => $new_id_cat, 'c_order' => ($max_new_cat_order + 1)), 'WHERE id = :id', array('id' => $id));
 					//Updating ex parent category
-					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'");
+					$this->db_querier->inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'");
 				}
 				//Inserting at a precise position
 				else
 				{
 					//Preparing the new parent category to receive a category at this position
-					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $position . "'");
+					$this->db_querier->inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $position . "'");
 					//Moving the category $id
-					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $position . "' WHERE id = '" . $id . "'");
+					$this->db_querier->update(PREFIX . $this->table, array('id_parent' => $new_id_cat, 'c_order' => $position), 'WHERE id = :id', array('id' => $id));
 					//Updating ex category
-					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'");
+					$this->db_querier->inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'");
 				}
 
 				//Regeneration of the cache file of the module
@@ -351,10 +351,10 @@ class DeprecatedCategoriesManager
 		$cat_infos = $this->cache_var[$id];
 
 		//Deleting the category
-		$this->sql_querier->query_inject("DELETE FROM " . PREFIX . $this->table . " WHERE id = '" . $id . "'");
+		$this->db_querier->delete(PREFIX . $this->table, 'WHERE id = :id', array('id' => $id));
 
 		//Decrementing all following categories
-		$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '". $cat_infos['id_parent'] . "' AND c_order > '" . $cat_infos['order'] . "'");
+		$this->db_querier->inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '". $cat_infos['id_parent'] . "' AND c_order > '" . $cat_infos['order'] . "'");
 
 		//Regeneration of the cache file
 		$this->regenerate_cache();
@@ -386,7 +386,7 @@ class DeprecatedCategoriesManager
 
 		if ($category_id > 0 && array_key_exists($category_id, $this->cache_var))
 		{
-			$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET visible = '" . (int)$visibility . "' WHERE id = '" . $category_id . "'");
+			$this->db_querier->update(PREFIX . $this->table, array('visible' => (int)$visibility), 'WHERE id = :id', array('id' => $category_id));
 
 			//Regeneration of the cache file
 			if ($generate_cache)

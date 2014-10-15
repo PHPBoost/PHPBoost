@@ -38,11 +38,11 @@ class PrivateMsg
 	const DEL_PM_CONVERS = true; //Suppression de la conversation complète.
 	const UPDATE_MBR_PM = false;  //Met à jour le nombre de mp du membre.
 
-	private static $sql_querier;
+	private static $db_querier;
 	
 	public static function __static()
 	{
-		self::$sql_querier = PersistenceContext::get_sql();
+		self::$db_querier = PersistenceContext::get_querier();
 	}
 	
 	/**
@@ -52,23 +52,25 @@ class PrivateMsg
 	 */
 	public static function count_conversations($userid)
 	{
-		$total_pm = self::$sql_querier->query("SELECT COUNT(*)
-		FROM " . DB_TABLE_PM_TOPIC . "
+		$total_pm = self::$db_querier->count(DB_TABLE_PM_TOPIC, "
 		WHERE
 		(
-			'" . $userid . "' IN (user_id, user_id_dest)
+			:user_id IN (user_id, user_id_dest)
 		)
 		AND
 		(
 			user_convers_status = 0
 			OR
 			(
-				(user_id_dest = '" . $userid . "' AND user_convers_status = 1)
+				(user_id_dest = :user_id AND user_convers_status = 1)
 				OR
-				(user_id = '" . $userid . "' AND user_convers_status = 2)
+				(user_id = :user_id AND user_convers_status = 2)
 			)
 		)
-		");
+		", array(
+			'user_id' => $userid
+		));
+		
 		return $total_pm;
 	}
 	
@@ -93,10 +95,10 @@ class PrivateMsg
 			$user_convers_status = '0';
 			
 		//Insertion de la conversation.
-		self::$sql_querier->query_inject("INSERT INTO " . DB_TABLE_PM_TOPIC . "  (title, user_id, user_id_dest, user_convers_status, user_view_pm, nbr_msg, last_user_id, last_msg_id, last_timestamp) VALUES ('" . $pm_objet . "', '" . $pm_from . "', '" . $pm_to . "', '" . $user_convers_status . "', 0, 0, '" . $pm_from . "', 0, '" . time() . "')");
-		$pm_convers_id = self::$sql_querier->insert_id("SELECT MAX(id) FROM " . DB_TABLE_PM_TOPIC . " ");
-        
-        $pm_msg_id = self::send($pm_to, $pm_convers_id, $pm_contents, $pm_from, $user_convers_status, false);
+		$result = self::$db_querier->insert(DB_TABLE_PM_TOPIC, array('title' => $pm_objet, 'user_id' => $pm_from, 'user_id_dest' =>$pm_to, 'user_convers_status' => $user_convers_status, 'user_view_pm' => 0, 'nbr_msg' => 0, 'last_user_id' => $pm_from, 'last_msg_id' => 0, 'last_timestamp' => time()));
+		$pm_convers_id = $result->get_last_inserted_id();
+		
+		$pm_msg_id = self::send($pm_to, $pm_convers_id, $pm_contents, $pm_from, $user_convers_status, false);
 		
 		return array($pm_convers_id, $pm_msg_id);
 	}
@@ -113,25 +115,25 @@ class PrivateMsg
 	public static function send($pm_to, $pm_idconvers, $pm_contents, $pm_from, $pm_status, $check_pm_before_send = true)
 	{		
 		//On vérifie qu'un message n'a pas été posté entre temps.
-        if ($check_pm_before_send)
-        {
-        	$info_convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array("last_user_id", "user_view_pm"), 'WHERE id=:id', array('id' => $pm_idconvers));
-            if ($info_convers['last_user_id'] != $pm_from && $info_convers['user_view_pm'] > 0) //Nouveau message
-            {
-                self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_from . "'");
-                self::$sql_querier->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_view_pm = 0 WHERE id = '" . $pm_idconvers . "'");
-            }
-        }
+		if ($check_pm_before_send)
+		{
+			$info_convers = self::$db_querier->select_single_row(DB_TABLE_PM_TOPIC, array("last_user_id", "user_view_pm"), 'WHERE id=:id', array('id' => $pm_idconvers));
+			if ($info_convers['last_user_id'] != $pm_from && $info_convers['user_view_pm'] > 0) //Nouveau message
+			{
+				self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_from . "'");
+				self::$db_querier->update(DB_TABLE_PM_TOPIC, array('user_view_pm' => 0), 'WHERE id = :id', array('id' => $pm_idconvers));
+			}
+		}
 		
 		//Insertion du message.
-		self::$sql_querier->query_inject("INSERT INTO " . DB_TABLE_PM_MSG . " (idconvers, user_id, contents, timestamp, view_status) VALUES('" . $pm_idconvers . "', '" . $pm_from . "', '" . addslashes($pm_contents) . "', '" . time() . "', 0)");
-		$pm_msg_id = self::$sql_querier->insert_id("SELECT MAX(id) FROM " . PREFIX . "pm_msg");
+		$result = self::$db_querier->insert(DB_TABLE_PM_MSG, array('idconvers' => $pm_idconvers, 'user_id' => $pm_from, 'contents' => $pm_contents, 'timestamp' => time(), 'view_status' => 0));
+		$pm_msg_id = $result->get_last_inserted_id();
 		
 		//On modifie le statut de la conversation.
-		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_view_pm = user_view_pm + 1, nbr_msg = nbr_msg + 1, last_user_id = '" . $pm_from . "', last_msg_id = '" . $pm_msg_id . "', last_timestamp = '" . time() . "' WHERE id = '" . $pm_idconvers . "'");
+		self::$db_querier->inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_view_pm = user_view_pm + 1, nbr_msg = nbr_msg + 1, last_user_id = '" . $pm_from . "', last_msg_id = '" . $pm_msg_id . "', last_timestamp = '" . time() . "' WHERE id = '" . $pm_idconvers . "'");
 		
 		//Mise à jour du compteur de mp du destinataire.
-		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm + 1 WHERE user_id = '" . $pm_to . "'");
+		self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm + 1 WHERE user_id = '" . $pm_to . "'");
 		
 		return $pm_msg_id;
 	}
@@ -146,33 +148,33 @@ class PrivateMsg
 	 */
 	public static function delete_conversation($pm_userid, $pm_idconvers, $pm_expd, $pm_del, $pm_update)
 	{
-		$info_convers = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_TOPIC, array("user_view_pm", "last_user_id"), 'WHERE id=:id', array('id' => $pm_idconvers));
+		$info_convers = self::$db_querier->select_single_row(DB_TABLE_PM_TOPIC, array("user_view_pm", "last_user_id"), 'WHERE id=:id', array('id' => $pm_idconvers));
 		if ($pm_update && $info_convers['last_user_id'] != $pm_userid)
 		{
 			//Mise à jour du compteur de mp du destinataire.
 			if ($info_convers['user_view_pm'] > 0)
-				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_userid . "'");
+				self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_userid . "'");
 		}
 		
 		if ($pm_expd) //Expediteur.
 		{
 			if ($pm_del) //Supprimé par les deux membres => Supprime la conversation et les messages associés.
 			{
-				self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_PM_TOPIC . "  WHERE id = '" . $pm_idconvers . "'");
-				self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm_idconvers . "'");
+				self::$db_querier->delete(DB_TABLE_PM_TOPIC, 'WHERE id = :id', array('id' => $pm_idconvers));
+				self::$db_querier->delete(DB_TABLE_PM_MSG . 'WHERE idconvers = :id', array('id' => $pm_idconvers));
 			}
 			else //Mise à jour du statut de la conversation, afin de ne plus l'afficher au membre ayant décidé de la supprimer.
-				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_convers_status = 1 WHERE id = '" . $pm_idconvers . "'");
+				self::$db_querier->update(DB_TABLE_PM_TOPIC , array('user_convers_status' => 1), 'WHERE id = :id', array('id' => $pm_idconvers));
 		}
 		else //Destinataire
 		{
 			if ($pm_del) //Supprimé par les deux membres => Supprime la conversation et les messages associés.
 			{
-				self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_PM_TOPIC . "  WHERE id = '" . $pm_idconvers . "'");
-				self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm_idconvers . "'");
+				self::$db_querier->delete(DB_TABLE_PM_TOPIC, 'WHERE id = :id', array('id' => $pm_idconvers));
+				self::$db_querier->delete(DB_TABLE_PM_MSG . 'WHERE idconvers = :id', array('id' => $pm_idconvers));
 			}
 			else //Mise à jour du statut de la conversation, afin de ne plus l'afficher au membre ayant décidé de la supprimer.
-				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_convers_status = 2 WHERE id = '" . $pm_idconvers . "'");
+				self::$db_querier->update(DB_TABLE_PM_TOPIC , array('user_convers_status' => 2), 'WHERE id = :id', array('id' => $pm_idconvers));
 		}
 	}
 	
@@ -186,19 +188,19 @@ class PrivateMsg
 	public static function delete($pm_to, $pm_idmsg, $pm_idconvers)
 	{
 		//Suppression du message.
-		self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_PM_MSG . " WHERE id = '" . $pm_idmsg . "' AND idconvers = '" . $pm_idconvers . "'");
+		self::$db_querier->delete(DB_TABLE_PM_MSG, 'WHERE id = :id AND idconvers = :idconvers', array('id' => $pm_idmsg, 'idconvers' => $pm_idconvers));
 		
-		$pm_max_id = self::$sql_querier->query("SELECT MAX(id) FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm_idconvers . "'");
-		$pm_last_msg = PersistenceContext::get_querier()->select_single_row(DB_TABLE_PM_MSG, array('user_id', 'timestamp'), 'WHERE id=:id', array('id' => $pm_max_id));
+		$pm_max_id = self::$db_querier->get_column_value(DB_TABLE_PM_MSG, 'MAX(id)', 'WHERE idconvers = :idconvers', array('idconvers' => $pm_idconvers));
+		$pm_last_msg = self::$db_querier->select_single_row(DB_TABLE_PM_MSG, array('user_id', 'timestamp'), 'WHERE id=:id', array('id' => $pm_max_id));
 		
 		if (!empty($pm_max_id))
 		{
 			//Mise à jour de la conversation.
-			$user_view_pm = self::$sql_querier->query("SELECT user_view_pm FROM " . DB_TABLE_PM_TOPIC . " WHERE id = '" . $pm_idconvers . "'");
-			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET nbr_msg = nbr_msg - 1, user_view_pm = '" . ($user_view_pm - 1) . "', last_user_id = '" . $pm_last_msg['user_id'] . "', last_msg_id = '" . $pm_max_id . "', last_timestamp = '" . $pm_last_msg['timestamp'] . "' WHERE id = '" . $pm_idconvers . "'");
+			$user_view_pm = self::$db_querier->get_column_value(DB_TABLE_PM_TOPIC, 'user_view_pm', 'WHERE id = :id', array('id' => $pm_idconvers));
+			self::$db_querier->inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET nbr_msg = nbr_msg - 1, user_view_pm = '" . ($user_view_pm - 1) . "', last_user_id = '" . $pm_last_msg['user_id'] . "', last_msg_id = '" . $pm_max_id . "', last_timestamp = '" . $pm_last_msg['timestamp'] . "' WHERE id = '" . $pm_idconvers . "'");
 		
 			//Mise à jour du compteur de mp du destinataire.
-			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - 1 WHERE user_id = '" . $pm_to . "'");
+			self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET unread_pm = unread_pm - 1 WHERE user_id = '" . $pm_to . "'");
 		}
 		
 		return $pm_max_id;

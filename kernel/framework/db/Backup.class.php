@@ -43,7 +43,7 @@ class Backup
 	 */
 	public $backup_script = '';
 
-	private $sql_querier;
+	private $db_querier;
 	
 	/**
 	 * @desc Builds a Backup object
@@ -55,7 +55,7 @@ class Backup
 		//parce que les opérations sont longues
 		Environment::try_to_increase_max_execution_time();
 		
-		$this->sql_querier = PersistenceContext::get_sql();
+		$this->db_querier = PersistenceContext::get_querier();
 	}
 
 	/**
@@ -102,8 +102,8 @@ class Backup
 		{
 			if (in_array($properties['name'], $table_list) || $all_tables)
 			{
-				$result = $this->sql_querier->query_while('SHOW CREATE TABLE ' . $properties['name']);
-				while ($row = $this->sql_querier->fetch_row($result))
+				$result = $this->db_querier->select('SHOW CREATE TABLE ' . $properties['name']);
+				while ($row = $result->fetch())
 				{
 					$this->backup_script .=  $row[1] . ';' . "\n\n";
 				}
@@ -130,13 +130,13 @@ class Backup
 				if ($rows_number > 0)
 				{
 					$this->backup_script .= "INSERT INTO " . $table_info['name'] . " (`";
-					$this->backup_script .= implode('`, `', $this->sql_querier->list_fields($table_info['name']));
+					$this->backup_script .= implode('`, `', PersistenceContext::get_dbms_utils()->desc_table($table_info['name']));
 					$this->backup_script .= "`) VALUES ";
 
 					$i = 1;
-					$list_fields = $this->sql_querier->list_fields($table_info['name']);
-					$result = $this->sql_querier->query_while ('SELECT * FROM ' . $table_info['name']);
-					while ($row = $this->sql_querier->fetch_row($result))
+					$list_fields = PersistenceContext::get_dbms_utils()->desc_table($table_info['name']);
+					$result = $this->db_querier->select('SELECT * FROM ' . $table_info['name']);
+					while ($row = $result->fetch())
 					{
 						if ($i % 10 == 0) //Toutes les 10 entrées on reforme une requête
 						{
