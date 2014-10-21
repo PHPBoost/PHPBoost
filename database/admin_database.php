@@ -34,8 +34,14 @@ if (!empty($read_file) && substr($read_file, -4) == '.sql')
 	//Si le fichier existe on le lit
 	if (is_file(PATH_TO_ROOT .'/cache/backup/' . $read_file))
 	{
+		ini_set('memory_limit', '500M');
+		
 		header('Content-Type: text/sql');
 		header('Content-Disposition: attachment; filename="' . $read_file . '"');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate');
+		header('Pragma: public');
+		header('Content-Length: ' . filesize(PATH_TO_ROOT .'/cache/backup/' . $read_file));
 		readfile(PATH_TO_ROOT .'/cache/backup/' . $read_file) or die("File not found.");
 	}
 	exit;
