@@ -241,6 +241,8 @@ elseif ($action == 'restore')
 		'L_NAME' => $LANG['db_file_name'],
 		'L_WEIGHT' => $LANG['db_file_weight'],
 		'L_DELETE' => $LANG['delete'],
+		'L_DOWNLOAD' => $LANG['db_download'],
+		'L_RESTORE' => $LANG['db_restore'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common')
 	));
 	
