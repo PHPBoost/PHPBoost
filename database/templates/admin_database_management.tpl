@@ -394,9 +394,7 @@
 							<th style="width:140px;">
 								<span class="text-strong">{L_DATE}</span>
 							</th>
-							<th style="width:120px;">
-								<span class="text-strong">{L_DELETE}</span>
-							</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -411,8 +409,8 @@
 							<td style="width:120px;">
 								{file.FILE_DATE}
 							</td>
-							<td style="width:120px;">
-								<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" class="fa fa-delete" data-confirmation="delete-element"></a>
+							<td>
+								<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" class="fa fa-download"></a> <a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" class="fa fa-delete" data-confirmation="delete-element"></a>
 							</td>
 						</tr>
 						# END file #
