@@ -401,7 +401,7 @@
 						# START file #
 						<tr class="center">
 							<td style="text-align:left;padding-left:20px;">
-								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_RESTORE}"><img src="./database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" data-confirmation="{L_CONFIRM_RESTORE}">{file.FILE_NAME}</a>
+								<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}"><img src="./database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_RESTORE}" data-confirmation="{L_CONFIRM_RESTORE}">{file.FILE_NAME}</a>
 							</td>
 							<td style="width:120px;">
 								{file.WEIGHT}
@@ -410,7 +410,7 @@
 								{file.FILE_DATE}
 							</td>
 							<td>
-								<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" class="fa fa-download"></a> <a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" class="fa fa-delete" data-confirmation="delete-element"></a>
+								<a href="admin_database.php?read_file={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DOWNLOAD}" class="fa fa-download"></a> <a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 							</td>
 						</tr>
 						# END file #
