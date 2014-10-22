@@ -68,6 +68,7 @@ $LANG['db_optimize'] = 'Optimize';
 $LANG['db_repair'] = 'Repair';
 $LANG['db_insert'] = 'Insert';
 $LANG['db_backup'] = 'Save';
+$LANG['db_download'] = 'Download';
 $LANG['db_succes_repair_tables'] = 'The repair query has been executed successfully on the following tables :<br /><br /><em>%s</em>';
 $LANG['db_succes_optimize_tables'] = 'The optimized query has been executed successfully on the following tables :<br /><br /><em>%s</em>)';
 $LANG['db_backup_database'] = 'Save the database';
