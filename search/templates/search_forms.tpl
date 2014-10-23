@@ -3,21 +3,21 @@
 			const FORM = 'form-';
 			const SPECIALIZED_FORM_LINK = 'specialize-form-link-';
 			var LastSpecializedFormUsed = '{SEARCH_MODE_MODULE}';
-			
+
 			function ChangeForm(module)
 			// Change le cadre des résultats
 			{
 				hide_div(FORM + LastSpecializedFormUsed);
 				show_div(FORM + module);
-				
+
 				document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).className = '';
 
 				LastSpecializedFormUsed = module;
 				document.getElementById('search-in').value = module;
-				
+
 				document.getElementById(SPECIALIZED_FORM_LINK + module).className = 'SFL-current';
 			}
-			
+
 			function check_search_form_post()
 			// Vérifie la validité du formulaire
 			{
@@ -36,7 +36,7 @@
 		-->
 		</script>
 
-	   <section>
+	   <section id="module-search">
 		   <header>
 				<h1>{L_TITLE_SEARCH}</h1>
 			</header>

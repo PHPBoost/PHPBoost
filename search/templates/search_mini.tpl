@@ -16,10 +16,10 @@
 	}
 -->
 </script>
- 
+
 # IF C_VERTICAL #
 <form action="{U_FORM_VALID}" onsubmit="return check_search_mini_form_post();" method="post">
-	<div class="module-mini-container">
+	<div id="module-mini-search-form" class="module-mini-container">
 		<div class="module-mini-top"><h5 class="sub-title">{SEARCH}</h5></div>
 		<div class="module-mini-contents">
 			<div id="mini-search-form" class="input-element-button">
