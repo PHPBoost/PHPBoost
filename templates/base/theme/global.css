@@ -4,8 +4,8 @@
 --------------------------------------*/
 
 
-/* La mise en forme du texte
--------------------------------------------*/
+/* -- La mise en forme du texte --
+--------------------------------------*/
 
 /* --- Les liens du site --- */
 a {
@@ -19,41 +19,45 @@ a:hover {
 }
 
 /* --- Les liens des utilisateurs --- */
-a.admin { color: #FFA34F; }
-a.modo { color: #006699; }
+a.admin  { color: #FFA34F; }
+a.modo   { color: #006699; }
 a.member { color: #000000; }
 
 /* --- Les differentes tailles de polices --- */
-.smaller { font-size: 0.869em; }
-.small { font-size: 0.923em; }
-.big { font-size: 1.231em; }
-.bigger { font-size: 1.385em; }
-.biggest { font-size: 1.538em; }
+.smaller { font-size: 0.8rem; }
+.small   { font-size: 0.9rem; }
+.normal  { font-size: 1.0rem; }
+.big     { font-size: 1.2rem; }
+.bigger  { font-size: 1.5rem; }
+.biggest { font-size: 2.0rem; }
 
 /* --- Les titres (balise h) --- */
-h1 { font-size: 1.615em; }
-h2 { font-size: 1.462em; }
-h3 { font-size: 1.385em; }
-h4 { font-size: 1.308em; }
-h5 { font-size: 1.231em; }
-h6 { font-size: 1.154em; }
+h1 { font-size: 2.2rem; }
+h2 { font-size: 2.0rem; }
+h3 { font-size: 1.9rem; }
+h4 { font-size: 1.8rem; }
+h5 { font-size: 1.6rem; }
+h6 { font-size: 1.4rem; }
 
 /* --- Les Titres bbcode --- */
-.formatter-title { display: inline; }
-h3.formatter-title, h4.formatter-title { border-bottom: 1px solid #366393; }
+.formatter-title {
+	display: inline-block;
+	margin: 0.5rem 0;
+}
 
-/* Titre 1 */
-h1.formatter-title { }
-/* Titre 2 */
-h2.formatter-title { margin-left: 20px; }
-/* Sous titre 1 */
-h3.formatter-title { margin-left: 40px; }
-/* Sous titre 2 */
-h4.formatter-title { margin-left: 60px; }
+h1.formatter-title {  }
+h2.formatter-title { margin-left: 1.5rem; }
+h3.formatter-title { margin-left: 3rem; }
+h4.formatter-title { margin-left: 5rem; }
+
+h3.formatter-title,
+h4.formatter-title {
+	border-bottom: 1px solid #366393;
+}
+
 
 /* -- Mise en forme du contenu --
 --------------------------------------*/
-
 /* --- Affichage du mini calendrier --- */
 .calendar-block {
 	position: absolute;
@@ -61,19 +65,19 @@ h4.formatter-title { margin-left: 60px; }
 	bottom: 0;
 	left: 100px;
 	z-index: 100;
-	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	border-radius: 3px;
 }
 
 .calendar-block .date-picker {
-	margin: 0px;
+	margin: 0;
 	width: 172px;
 	table-layout: fixed;
 }
 
 .calendar-block .date-picker select {
 	border: none;
-	font-size: 10px;
+	font-size: 0.8em;
 	padding: 3px 0px;
 }
 
@@ -88,11 +92,15 @@ h4.formatter-title { margin-left: 60px; }
 	background: #FFFFFF;
 }
 
-.calendar-block .date-picker th a { color: #666666; }
+.calendar-block .date-picker th a {
+	color: #666666;
+}
+
 .calendar-block .date-picker tbody tr {
 	text-align: center;
 	padding: 0px;
 }
+
 .calendar-block .date-picker td {
 	height: 23px;
 	padding: 1px 2px;
@@ -101,7 +109,10 @@ h4.formatter-title { margin-left: 60px; }
 .calendar-block .date-picker tbody tr:first-child { font-weight: bold; }
 .calendar-block .date-picker tbody tr:last-child { border-bottom: none; }
 
-.calendar-block .date-picker tbody tr:first-child td { border-top: 1px solid #999999; }
+.calendar-block .date-picker tbody tr:first-child td {
+	border-top: 1px solid #999999;
+}
+
 .calendar-block .date-picker tbody tr td:first-child { border-left: none; }
 .calendar-block .date-picker tbody tr td:last-child { border-right: none; }
 
@@ -134,7 +145,9 @@ h4.formatter-title { margin-left: 60px; }
 	z-index: 100;
 }
 
-.color-picker .bbcode-block { left: 80px; }
+.color-picker .bbcode-block {
+	left: 80px;
+}
 
 .color-picker .bbcode-block table {
 	border-collapse: collapse;
@@ -161,6 +174,7 @@ h4.formatter-title { margin-left: 60px; }
 	font-weight: bold;
 	margin: auto;
 }
+
 .blockquote, .code, .hide {
 	overflow: auto;
 	max-height: 500px;
@@ -184,9 +198,13 @@ h4.formatter-title { margin-left: 60px; }
 }
 
 /* --- les autres element bbcode --- */
-.indent { margin-left: 30px; }
+.indent {
+	margin-left: 30px;
+}
 
-.formatter-acronym { cursor: help; }
+.formatter-acronym {
+	cursor: help;
+}
 
 .formatter-block {
 	margin: 5px 20px;
@@ -196,12 +214,18 @@ h4.formatter-title { margin-left: 60px; }
 	overflow: hidden;
 }
 
-.formatter-fieldset { margin: 10px; }
+.formatter-fieldset {
+	margin: 10px;
+}
 
-.formatter-ul { text-align: left; }
+.formatter-ul {
+	text-align: left;
+}
 
 /* --- les listes numerotees --- */
-.code ol { margin-left: 3em; }
+.code ol {
+	margin-left: 3em;
+}
 
 /* --- La recherche de membre (AJAX) --- */
 .xmlhttprequest-result-search {
@@ -225,6 +249,7 @@ h4.formatter-title { margin-left: 60px; }
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 	position: relative;
 }
+
 .progressbar-container .progressbar-infos {
 	line-height: 13px;
 	font-size: 11px;
@@ -232,12 +257,14 @@ h4.formatter-title { margin-left: 60px; }
 	width: 100%;
 	position: absolute;
 }
+
 .progressbar {
 	border-top-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
-.progressbar[style*="width: 100"] {
+
+.progressbar[style*="100"] {
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
@@ -250,7 +277,9 @@ h4.formatter-title { margin-left: 60px; }
 
 /* --- Le systeme de notation --- */
 .notation,
-.static-notation { display: inline-block; }
+.static-notation {
+	display: inline-block;
+}
 
 .notation .star,
 .static-notation .star {
@@ -263,7 +292,7 @@ h4.formatter-title { margin-left: 60px; }
 
 /* -- Les Icones specifiques PHPBoost de FontAwesome --
 -------------------------------------------*/
-
+/* --- les couleurs d icones --- */
 .fa-syndication:before { color: #F57900; }
 .fa-success:before { color: #478948; }
 .fa-forbidden:before { color: #BA4B49; }
@@ -278,6 +307,7 @@ h4.formatter-title { margin-left: 60px; }
 .fa-trend-up:before { color: #478948; }
 .fa-trend-down:before { color: #BA4B49; }
 
+/* --- Les alertes --- */
 li.small-block .fa-stack { height: 2.34em; }
 
 .fa-circle-alert {
@@ -303,8 +333,9 @@ li.small-block .fa-stack { height: 2.34em; }
 
 /* -- Les differents menus --
 --------------------------------------*/
-
-.dynamic-menu { position: relative; }
+.dynamic-menu {
+	position: relative;
+}
 
 /* --- Niveau 1 --- */
 .dynamic-menu ul {
@@ -391,7 +422,9 @@ li.small-block .fa-stack { height: 2.34em; }
 }
 
 .dynamic-menu ul li.extend > a,
-.dynamic-menu ul li.extend > span { padding-right: 18px; }
+.dynamic-menu ul li.extend > span {
+	padding-right: 18px;
+}
 
 .dynamic-menu ul li.extend > a:after,
 .dynamic-menu ul li.extend > span:after {
@@ -420,7 +453,9 @@ li.small-block .fa-stack { height: 2.34em; }
 	z-index: 101;
 }
 
-.dynamic-menu li li:hover > ul { top: -6px; }
+.dynamic-menu li li:hover > ul {
+	top: -6px;
+}
 
 /* --- Menus groupes --- */
 .dynamic-menu.group > ul {
@@ -463,13 +498,19 @@ nav.dynamic-menu h5:hover {
 	cursor: default;
 }
 
-nav.dynamic-menu li ul { min-width: 160px; }
+nav.dynamic-menu li ul {
+	min-width: 160px;
+}
 
 nav.dynamic-menu li ul li a,
-nav.dynamic-menu li ul li span { color: #0578CC; }
+nav.dynamic-menu li ul li span {
+	color: #0578CC;
+}
 
 /* --- Menus des modules --- */
-menu.dynamic-menu { margin: 5px; }
+menu.dynamic-menu {
+	margin: 5px;
+}
 
 menu.dynamic-menu ul li ul {
 	margin-left: 0 !important;
@@ -491,8 +532,9 @@ menu.dynamic-menu > ul > li {
 	cursor: pointer;
 	text-align: center;
 }
-
-menu.dynamic-menu > ul > li:hover { background-color: #EEEEEE; }
+menu.dynamic-menu > ul > li:hover {
+	background-color: #EEEEEE;
+}
 
 menu.dynamic-menu > ul > li.current {
 	background-image: linear-gradient(to top,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.18) 100%);
@@ -500,10 +542,16 @@ menu.dynamic-menu > ul > li.current {
 	border-top-color: #B3B3B3;
 }
 
-menu.dynamic-menu > ul > li > a { padding: 4px 12px; }
-menu.dynamic-menu > ul > li > a > i { font-size: 1.1em; }
+menu.dynamic-menu > ul > li > a {
+	padding: 4px 12px;
+}
+menu.dynamic-menu > ul > li > a > i {
+	font-size: 1.1em;
+}
 
-menu.dynamic-menu li li:hover > ul { top: -7px; }
+menu.dynamic-menu li li:hover > ul {
+	top: -7px;
+}
 
 menu.dynamic-menu li ul li a, menu.dynamic-menu li ul li span {
 	color: #666666;
@@ -528,7 +576,9 @@ menu.dynamic-menu li ul li span i:before {
 }
 
 menu.dynamic-menu ul li.extend > a:after,
-menu.dynamic-menu ul li.extend > span:after { margin-top: -6px; }
+menu.dynamic-menu ul li.extend > span:after {
+	margin-top: -6px;
+}
 
 /* --- Menu de droite --- */
 .dynamic-menu.right ul {
@@ -548,11 +598,17 @@ menu.dynamic-menu ul li.extend > span:after { margin-top: -6px; }
 }
 
 /* --- Menu Vertical - Scrolling ---*/
-ul.vertical-scrolling-menu li { padding: 0px 5px 0px 5px; }
+ul.vertical-scrolling-menu li {
+	padding: 0px 5px 0px 5px;
+}
 
-ul.vertical-scrolling-menu li ul { margin-left: 155px; }
+ul.vertical-scrolling-menu li ul {
+	margin-left: 155px;
+}
 
-ul.vertical-scrolling-menu li.first-level { padding-left: 20px; }
+ul.vertical-scrolling-menu li.first-level {
+	padding-left: 20px;
+}
 
 /* --- Menu Horizontal - Scrolling --- */
 ul.horizontal-scrolling-menu li {
@@ -561,35 +617,45 @@ ul.horizontal-scrolling-menu li {
 }
 
 /* --- Menu Horizontal --- */
-nav.menu-horizontal { padding: 10px; }
+nav.menu-horizontal {
+	padding: 10px;
+}
 
 nav.menu-horizontal ul li {
 	display: inline;
 	margin-right: 8px;
 }
 
-nav.menu-horizontal ul img { margin-right: 5px; }
+nav.menu-horizontal ul img {
+	margin-right: 5px;
+}
 
 /* --- Menu Vertical --- */
 h3.menu-vertical-0 {
+	font-size: 1.6rem;
 	text-align: center;
-	font-size: 12px;
 	font-weight: bold;
 	margin-top: -2px;
 	padding-bottom: 2px;
 }
 
 ul.menu-vertical a,
-ul.menu-vertical span { color: #445766; }
+ul.menu-vertical span {
+	color: #445766;
+}
 
 ul.menu-vertical {
 	text-align: left;
 	margin: 0 !important;
 }
 
-ul.menu-vertical li { list-style-type: none; }
+ul.menu-vertical li {
+	list-style-type: none;
+}
 
-ul.menu-vertical img { margin-right: 5px; }
+ul.menu-vertical img {
+	margin-right: 5px;
+}
 
 ul.menu-vertical li a,
 ul.menu-vertical li span {
@@ -599,18 +665,26 @@ ul.menu-vertical li span {
 	margin-left: 10px;
 }
 
-ul.menu-vertical-0 li a,ul.menu-vertical-0 li span { color: #334455; }
+ul.menu-vertical-0 li a,
+ul.menu-vertical-0 li span {
+	color: #334455;
+}
 
-ul.menu-vertical-1 li a,ul.menu-vertical-1 li span { color: #445566; }
+ul.menu-vertical-1 li a,ul.menu-vertical-1 li span {
+	color: #445566;
+}
 
 ul.menu-vertical-2 li a,ul.menu-vertical-2 li span {
 	color: #556677;
 	font-style: italic;
 }
 
-ul.menu-vertical-3 li { font-style: normal; }
+ul.menu-vertical-3 li {
+	font-style: normal;
+}
 
-ul.menu-vertical-3 li a,ul.menu-vertical-3 li span {
+ul.menu-vertical-3 li a,
+ul.menu-vertical-3 li span {
 	color: #778899;
 	font-size: 80%;
 }
@@ -625,8 +699,9 @@ ul.menu-vertical-3 li a,ul.menu-vertical-3 li span {
 
 /* -- Les message d erreurs --
 --------------------------------------*/
-
-div.message-helper-small { width: 50% }
+div.message-helper-small {
+	width: 50%
+}
 
 .error, .notice, .warning, .success, .question {
 	height: auto;
@@ -657,26 +732,26 @@ div.message-helper-small { width: 50% }
 }
 
 .error:before { content: "\f00d"; }
-.error, .error:before { color: #BA4B49; }
 .notice:before { content: "\f12a"; }
-.notice, .notice:before { color: #888888; }
 .warning:before { content: "\f071"; }
-.warning, .warning:before { color: #C19954; }
 .success:before { content: "\f00c"; }
-.success, .success:before { color: #478948; }
 .question:before { content: "\f128"; }
+
+.error, .error:before { color: #BA4B49; }
+.notice, .notice:before { color: #888888; }
+.warning, .warning:before { color: #C19954; }
+.success, .success:before { color: #478948; }
 .question, .question:before { color: #3B88AE; }
 
-.question { background-color: #DAEEF8; border-color: #BDE9F2; }
+.error { background-color: #F3DFDF; border-color: #ECCDD2; }
 .notice { background-color: #F0F0F0; border-color: #E2E2E2; }
 .warning { background-color: #FDF9E4; border-color: #FBECCD; }
-.error { background-color: #F3DFDF; border-color: #ECCDD2; }
 .success { background-color: #E0F1D9; border-color: #D7EAC7; }
+.question { background-color: #DAEEF8; border-color: #BDE9F2; }
 
 
 /* -- Le maintenance --
 --------------------------------------*/
-
 div#message-maintain {
 	top: 5px;
 	width: 100%;
@@ -685,9 +760,13 @@ div#message-maintain {
 	text-align: center;
 }
 
-div#message-maintain > div { margin: 0px auto;}
+div#message-maintain > div {
+	margin: 0px auto;
+}
 
-div#release { margin-top: 20px; }
+div#release {
+	margin-top: 20px;
+}
 
 
 /* -- Systeme d Upload --
@@ -706,11 +785,17 @@ div#release { margin-top: 20px; }
 	margin: 0 25px 25px 25px;
 }
 
-.upload-address-bar-links a { margin-left: 10px; }
+.upload-address-bar-links a {
+	margin-left: 10px;
+}
 
-#empty-folder { width: 70%; }
+#empty-folder {
+	width: 70%;
+}
 
-.upload-elements-container { margin: 0 0 0 20px; }
+.upload-elements-container {
+	margin: 0 0 0 20px;
+}
 
 .upload-elements-file,
 .upload-elements-repertory {
@@ -718,7 +803,9 @@ div#release { margin-top: 20px; }
 	margin: 10px;
 }
 
-.upload-elements-repertory { height: 60px; }
+.upload-elements-repertory {
+	height: 60px;
+}
 
 /* --- Deplacement des fichiers --- */
 .upload-selected-cat {

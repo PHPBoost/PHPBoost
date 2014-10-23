@@ -3,68 +3,111 @@
 Contient les formulaires, les modules (et modules minis), messages.
 --------------------------------------*/
 
-/* Conteneurs, 閘閙ents de module, ... */
-section, article {
-	width: 96%;
-	margin: auto;
-	margin-bottom: 10px;
+/* -- Conteneurs, 茅l茅ments de module, ... --
+--------------------------------------*/
+section,
+article {
+	width: 98%;
+	margin: 1em auto;
 	vertical-align: top;
 }
 
-aside#menu-left + aside#menu-right + div#main section .content { padding: 0px 5px; }
-aside#menu-left + aside#menu-right + div#main section .form-element,
-aside#menu-left + aside#menu-right + div#main section .form-element-textarea { margin: 5px 0px; }
+div#main.main-with-left.main-with-right section .content {
+	padding: 0 5px;
+}
 
-section header, article header { margin: 0 0 20px 0; }
+div#main.main-with-left.main-with-right section .form-element,
+div#main.main-with-left.main-with-right section .form-element-textarea {
+	margin: 5px 0;
+}
 
-/* Titre d'une page ou d'un element d'un module */
-section header h1, article header h1 { border-bottom: 1px solid #336397; }
+section header,
+article header {
+	margin: 0 0 1em 0;
+}
 
-section header h2, article header h2 { 
+/* --- Titre d'une page ou d'un element d'un module --- */
+section header h1,
+article header h1 {
+	border-bottom: 1px solid #336397;
+}
+
+section header h1 a:hover {
+	text-decoration: none;
+}
+
+section header h2,
+article header h2 {
 	border-bottom: 1px solid #336397;
 	margin-left: 15px;
 }
 
-section header h3, article header h3 {
+section header h3,
+article header h3 {
 	border-bottom: 1px solid #336397;
 	margin-left: 15px;
 }
 
-/* Icones avec les actions (edition, suppression, etc) */
-span.actions { float: right; }
-span.actions a { font-size: 12px; }
+/* --- Icones avec les actions (edition, suppression, etc) --- */
+span.actions {
+	float: right;
+}
+
+span.actions a {
+	font-size: 12px;
+}
 
 .more {
 	font-size: 11px;
 	font-style: italic;
 }
 
-/* Contenu */
+/* --- Contenu --- */
 .content {
-	padding: 0 15px;
+	padding: 0 1.5em;
 	overflow: hidden;
 	text-align: justify;
 }
 
 section footer,
-article footer { margin-bottom: 15px; }
-
-/* Block */
-.block, .medium-block, .small-block {
-	border: 1px solid #CCCCCC;
-	border-top: 2px solid #366393;
-	border-bottom: 1px solid #99B1CB;
-	background: #F2F8FF;
-	padding: 10px;
+article footer {
+	margin-bottom: 1.5em;
 }
 
-.block .content, .medium-block .content, .small-block .content { margin: 0; }
+/* --- Block --- */
+.block,
+.medium-block,
+.small-block {
+	border-style: solid;
+	border-width: 2px 1px 1px 1px;
+	border-color: #366393 #CCCCCC #99B1CB #CCCCCC;
+	background: #F2F8FF;
+	padding: 0.8em;
+}
 
-.block h1, .medium-block h1, .small-block h1 { border: none; }
+.block .content,
+.medium-block .content,
+.small-block .content {
+	margin: 0;
+}
 
-.block { width: auto; }
-.block header {	margin-bottom: 10px; }
-.block footer {	margin: 0; }
+.block h1,
+.medium-block h1,
+.small-block h1 {
+	border: none;
+}
+
+.block {
+	width: auto;
+}
+
+.block header {
+	margin: 0 0 1% 0;
+}
+
+.block footer {
+	margin: 0;
+}
 
 .medium-block,
 .small-block {
@@ -74,24 +117,40 @@ article footer { margin-bottom: 15px; }
 
 /* Fix to the spaces between the blocks */
 .medium-block,
-.small-block { margin-right: -0.29em; }
+.small-block {
+	margin-right: -0.29em;
+}
 
-/* Affiche 2 blocs c魌e犩 c魌e */
-.medium-block { width: 48.7%; }
+/* Affiche 2 blocs c么te聽脿 c么te */
+.medium-block {
+	width: 48.7%;
+}
 
-/* Affiche 3 blocs c魌e犩 c魌e */
-.small-block { width: 31.96%; }
+/* Affiche 3 blocs c么te聽脿 c么te */
+.small-block {
+	width: 31.96%;
+}
 
-/* Pagination */
-section footer ul.pagination {	text-align: center; }
+/* --- Pagination des pages --- */
+section footer ul.pagination {
+	text-align: center;
+}
 
-ul.pagination { margin: 0px; }
+ul.pagination {
+	margin: 0px;
+}
 
-ul.pagination .fa:before { font-size: 12px; }
+ul.pagination .fa:before {
+	font-size: 12px;
+}
 
-ul.pagination-block { margin: 5px 0px; }
+ul.pagination-block {
+	margin: 5px 0px;
+}
 
-ul.pagination-block li { padding: 2px 2px; }
+ul.pagination-block li {
+	padding: 2px 2px;
+}
 
 ul.pagination-block li a {
 	display: inline-block;
@@ -100,7 +159,7 @@ ul.pagination-block li a {
 	text-decoration: none;
 	outline: none;
 	font-weight: bold;
-	font-size: 12px;	
+	font-size: 12px;
 }
 
 ul.pagination-block li a {
@@ -113,27 +172,24 @@ ul.pagination-block li a {
 	border-radius: 4px;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
-
 ul.pagination-block li a:hover {
 	background-color: #FDFDFD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
 	transition: all 0.1s linear;
 }
-
-ul.pagination-block li a:active { 
+ul.pagination-block li a:active {
 	background-color: #F1F1F1;
 	border: 1px solid #DDDDDD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
 
-ul.pagination-block li a.current-page { 
+ul.pagination-block li a.current-page {
 	color: #FEFEFE;
 	background-color: #3B6B9F;
 	border-color: #366393;
 	text-decoration: none;
 }
-ul.pagination-block li a.current-page:hover,
-ul.pagination-block li a.current-page:hover{ 
+ul.pagination-block li a.current-page:hover {
 	background-color: #366393;
 	border-color: #315A86;
 }
@@ -147,10 +203,12 @@ ul.pagination-block-bis li a.next-page {
 }
 
 ul.pagination-block-bis li a.prev-page:hover,
-ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
+ul.pagination-block-bis li a.next-page:hover {
+	text-decoration: underline;
+}
 
-/* Exploreur des cat間ories
--------------------------------------- */
+/* -- Exploreur des cat茅gories --
+--------------------------------------*/
 .explorer .cats,
 .explorer .files {
 	display: inline-block;
@@ -182,9 +240,13 @@ ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
 	margin: 0;
 	padding: 0;
 }
-.explorer .content ul ul { margin-left: 22px; }
+.explorer .content ul ul {
+	margin-left: 22px;
+}
 
-.explorer .content ul a.parent { float: left; }
+.explorer .content ul a.parent {
+	float: left;
+}
 
 .explorer .content ul a {
 	padding: 3px 0px;
@@ -193,27 +255,38 @@ ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
 	color: #666666;
 }
 
-.explorer .content > ul > li > a { padding: 3px 5px; }
+.explorer .content > ul > li > a {
+	padding: 3px 5px;
+}
 
-.explorer .content ul .fa { 
+.explorer .content ul .fa {
 	width: 20px;
 	vertical-align: top;
 }
-.explorer .content ul .fa:before { vertical-align: middle; }
+.explorer .content ul .fa:before {
+	vertical-align: middle;
+}
 
-.explorer .content ul a.parent .fa:first-child { width: 14px; }
-
+.explorer .content ul a.parent .fa:first-child {
+	width: 14px;
+}
 .explorer .content ul a.parent .fa:first-child:before {
 	width: 14px;
 	font-size: 11px;
 }
 
 .explorer .content ul a:hover,
-.explorer .content ul a:hover+a { background-color: #EEEEEE; }
+.explorer .content ul a:hover+a {
+	background-color: #EEEEEE;
+}
 
-.explorer .content ul .sub a.parent { padding-left: 4px; }
+.explorer .content ul .sub a.parent {
+	padding-left: 4px;
+}
 
-.explorer .selected { background-color: #DDDDDD; }
+.explorer .selected {
+	background-color: #DDDDDD;
+}
 
 .options {
 	margin: 5px;
@@ -229,8 +302,8 @@ ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
 	font-size: 14px;
 }
 
-/* Tableaux
--------------------------------------- */
+/* -- Affichage des tableaux HTML --
+--------------------------------------*/
 table {
 	width: 100%;
 	padding: 0px;
@@ -238,7 +311,7 @@ table {
 	border-spacing: 0;
 }
 
-/* Entete */
+/* --- Entete du tableau --- */
 table caption {
 	color: #757679;
 	font-size: 13px;
@@ -256,12 +329,21 @@ table thead th {
 	font-weight: normal;
 }
 
-table thead th:first-child { border-top-left-radius: 3px; }
-table thead th:last-child {	border-top-right-radius: 3px; }
-table thead th a { color: #E5E6E6; }
-table thead th a:hover { color: #FFFFFF; }
+table thead th:first-child {
+	border-top-left-radius: 3px;
+}
+table thead th:last-child {
+	border-top-right-radius: 3px;
+}
 
-/* Contenu */
+table thead th a {
+	color: #E5E6E6;
+}
+table thead th a:hover {
+	color: #FFFFFF;
+}
+
+/* --- Contenu du tableau --- */
 table tbody td {
 	background-color: #F5F5F5;
 	border-top: 1px solid #D1D2D4;
@@ -271,15 +353,28 @@ table tbody td {
 	text-align: center;
 }
 
-table tbody tr:nth-child(even) td {	background-color: #FFFFFF; }
-table tbody tr:last-child td { border-bottom: 1px solid #D1D2D4; }
-table tbody tr td:last-child { border-right: 1px solid #D1D2D4; }
+table tbody tr:nth-child(even) td {
+	background-color: #FFFFFF;
+}
+table tbody tr:last-child td {
+	border-bottom: 1px solid #D1D2D4;
+}
+table tbody tr td:last-child {
+	border-right: 1px solid #D1D2D4;
+}
 
-table tbody tr.no-separator td { border-top: none; }
-table tbody tr td.no-separator { border-left: none; }
-table tbody tr td.no-separator:first-child { border-left: 1px solid #D1D2D4; }
+table tbody tr.no-separator td {
+	border-top: none;
+}
 
-/* Pied */
+table tbody tr td.no-separator {
+	border-left: none;
+}
+table tbody tr td.no-separator:first-child {
+	border-left: 1px solid #D1D2D4;
+}
+
+/* --- Pied de tableau --- */
 table tfoot tr th {
 	color: #AAAAAA;
 	background-color: #F0F0F0;
@@ -287,15 +382,30 @@ table tfoot tr th {
 	border-bottom: 1px solid #D1D2D4;
 }
 
-table tfoot tr th:first-child { border-left: 1px solid #D1D2D4; border-bottom-left-radius: 3px; }
-table tfoot tr th:last-child { border-right: 1px solid #D1D2D4; border-bottom-right-radius: 3px; }
-table tfoot tr th:only-child { text-align: right; }
+table tfoot tr th:first-child {
+	border-left: 1px solid #D1D2D4;
+	border-bottom-left-radius: 3px;
+}
+table tfoot tr th:last-child {
+	border-right: 1px solid #D1D2D4;
+	border-bottom-right-radius: 3px;
+}
+table tfoot tr th:only-child {
+	text-align: right;
+}
 
-table tfoot tr th * { vertical-align: middle; }
-table tfoot tr th a { color: #676A74; }
-table tfoot tr th select { padding: 2px 5px; }
+table tfoot tr th * {
+	vertical-align: middle;
+}
 
-/* Patch thead Tableaux format閟 */
+table tfoot tr th a {
+	color: #676A74;
+}
+table tfoot tr th select {
+	padding: 2px 5px;
+}
+
+/* --- Patch thead tableaux formates --- */
 table.formatter-table th.formatter-table-head {
 	padding: 8px;
 	background-color: #4D4C50;
@@ -304,15 +414,25 @@ table.formatter-table th.formatter-table-head {
 	text-align: center;
 	font-weight: normal;
 }
-table.formatter-table th.formatter-table-head:first-child { border-top-left-radius: 3px; }
-table.formatter-table th.formatter-table-head:last-child { border-top-right-radius: 3px; }
+table.formatter-table th.formatter-table-head:first-child {
+	border-top-left-radius: 3px;
+}
+table.formatter-table th.formatter-table-head:last-child {
+	border-top-right-radius: 3px;
+}
 
-table.formatter-table th.formatter-table-head a { color: #E5E6E6; }
-table.formatter-table th.formatter-table-head a:hover { color: #FFFFFF; }
+table.formatter-table th.formatter-table-head a {
+	color: #E5E6E6;
+}
+table.formatter-table th.formatter-table-head a:hover {
+	color: #FFFFFF;
+}
 
-table.formatter-table th.formatter-table-head p { margin-bottom: 0px; }
+table.formatter-table th.formatter-table-head p {
+	margin-bottom: 0px;
+}
 
-/* Mini tableaux */
+/* --- mini tableaux --- */
 table.mini th,
 table.mini td {
 	padding: 3px 1px;
@@ -320,14 +440,16 @@ table.mini td {
 }
 
 table.mini th a,
-table.mini td a { font-size: 11px; }
+table.mini td a {
+	font-size: 11px;
+}
 
-/* Pagination footer tableaux */
+/* --- Pagination footer tableaux --- */
 table tfoot nav.pagination a {
 	color: #8B8D90;
 	text-decoration: none;
 	padding: 3px 3px;
-	
+
 }
 
 table tfoot nav.pagination a span.current-page {
@@ -335,16 +457,18 @@ table tfoot nav.pagination a span.current-page {
 	text-decoration: none;
 }
 
-/* Deprecated */
-.row-disabled { background: #E1E1E1 !important; }
+/* --- Deprecated --- */
+.row-disabled {
+	background: #E1E1E1 !important;
+}
 
-/* Boutons
+/* -- Boutons et class boutons --
 ------------------------------------ */
-/* Normal */
-
-button, .button {
+/* --- Normal --- */
+button,
+.button {
 	height: auto;
-	padding: 4px 12px;
+	padding: 0.3em 1em;
 	color: #333333;
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
@@ -355,24 +479,28 @@ button, .button {
 	border-radius: 4px;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
-
-button:hover, .button-hover {
+button:hover,
+.button-hover {
 	background-color: #FDFDFD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
 	transition: all 0.1s linear;
 }
-
-button:active, .button-active { 
+button:active,
+.button-active {
 	background-color: #F1F1F1;
 	border: 1px solid #DDDDDD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
 
-button.small, .button-small {
-	font-size: 11px;
-	padding: 2px 6px;
+/* --- Petit bouton --- */
+button.small,
+.button-small {
+	font-size: 11px\0/;
+	font-size: 1.1rem;
+	padding: 0.2em 0.5em;
 }
 
+/* --- Bouton de formulaire --- */
 button.submit {
 	color: #FEFEFE;
 	background-color: #3B6B9F;
@@ -383,7 +511,7 @@ button.submit:hover {
 	border-color: #315A86;
 }
 
-/* Bouton basic */
+/* --- Bouton basic --- */
 .basic-button {
 	display: inline-block;
 	padding: 1px 6px;
@@ -394,19 +522,23 @@ button.submit:hover {
 	color: #FFFFFF;
 	margin: 1px;
 }
-
 .basic-button:hover {
 	background: #3D6997;
 	color: #FFFFFF;
 	text-decoration: none;
 }
 
-.basic-button.alt { background: #AAAAAA; }
-.basic-button.alt:hover { background: #BBBBBB; }
+/* --- Bouton basic avec couleur alternative --- */
+.basic-button.alt {
+	background: #AAAAAA;
+}
+.basic-button.alt:hover {
+	background: #BBBBBB;
+}
 
-/* Formulaires 
+
+/* -- Formulaires --
 --------------------------------------*/
-
 .fieldset-mini {
 	width: 540px;
 	margin: auto;
@@ -428,7 +560,9 @@ fieldset.fieldset-submit {
 	border: none;
 }
 
-fieldset.fieldset-submit legend { display: none; }
+fieldset.fieldset-submit legend {
+	display: none;
+}
 
 optgroup {
 	font-weight: bold;
@@ -436,21 +570,25 @@ optgroup {
 	border-bottom: 1px solid #5B5A5A;
 }
 
-option { padding: 0px 3px; }
+option {
+	padding: 0px 3px;
+}
 
-/* Previsualition */
+/* --- Previsualisation --- */
 .xmlhttprequest-preview {
 	font-size: 11px;
 	border-left: 1px solid #99b1cb;
 	border-top: 1px solid #99b1cb;
 	border-right: 1px solid #CCCCCC;
 	border-bottom: 1px solid #CCCCCC;
-	background-color: #FFFFFF;	
+	background-color: #FFFFFF;
 	color: #2E3B5F;
 	padding: 0px 2px;
 }
 
-.xmlhttprequest-preview img { max-width: 600px; }
+.xmlhttprequest-preview img {
+	max-width: 600px;
+}
 
 legend {
 	display: block;
@@ -462,7 +600,12 @@ legend {
 	border-bottom: 1px solid #DDDDDD;
 }
 
-input[type=text], input[type=password], textarea, input[type=file], select {
+/* --- Elements de saisie --- */
+input[type=text],
+input[type=password],
+input[type=file],
+textarea,
+select {
 	padding: 4px 6px;
 	color: #555555;
 	background-color: #FFFFFF;
@@ -470,14 +613,20 @@ input[type=text], input[type=password], textarea, input[type=file], select {
 	border-radius: 4px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
 }
-
-input[type=text]:hover, input[type=password]:hover, textarea:hover, input[type=file]:hover, select:hover {
+input[type=text]:hover,
+input[type=password]:hover,
+input[type=file]:hover,
+textarea:hover,
+select:hover {
 	color: #333333;
 	border: 1px solid #BBBBBB;
-	background-color: #FFFFFF; 
+	background-color: #FFFFFF;
 }
-
-input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=file]:focus, select:focus {
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=file]:focus,
+textarea:focus,
+select:focus {
 	color: #222222;
 	border-color: #BBBBBB;
 	outline: 0;
@@ -489,25 +638,29 @@ input.field-small {  width: 77px; }
 input.field-large { width: 200px; }
 input.field-xlarge { width: 300px; }
 
-/* Element du formulaire (englobe le label et l'input d'un champ) */
+/* --- Element du formulaire (englobe le label et l'input d'un champ) --- */
 .form-element,
-.form-element-textarea { margin: 0px 15px 10px 15px; }
+.form-element-textarea {
+	margin: 0px 15px 10px 15px;
+}
 
-.fieldset-description { margin: 0px 15px 10px 15px; }
+.fieldset-description {
+	margin: 0px 15px 10px 15px;
+}
 
-.form-field { 
+.form-field {
 	display: inline-block;
 	width: 58%;
 	max-width: 600px;
 }
 
-/* Label pour les checkbox et radio */
+/* --- Label pour les checkbox et radio --- */
 .form-field label {
 	margin: 0 10px 0 0;
 	display: block;
 }
 
-/* Label pour les inputs [for] et pour les 茅lements sans associations */
+/* --- Label pour les inputs [for] et pour les elements sans associations --- */
 .form-element > label {
 	display: inline-block;
 	width: 40%;
@@ -523,24 +676,36 @@ input.field-xlarge { width: 300px; }
 	line-height: 12px;
 }
 
-input[disabled=disabled], input[disabled=disabled]:hover, input[disabled=disabled]:focus,
-textarea[disabled=disabled], textarea[disabled=disabled]:hover, textarea[disabled=disabled]:focus,
-select[disabled=disabled], select[disabled=disabled]:hover, select[disabled=disabled]:focus {
+input[disabled=disabled],
+input[disabled=disabled]:hover,
+input[disabled=disabled]:focus,
+textarea[disabled=disabled],
+textarea[disabled=disabled]:hover,
+textarea[disabled=disabled]:focus,
+select[disabled=disabled],
+select[disabled=disabled]:hover,
+select[disabled=disabled]:focus {
 	cursor: not-allowed;
 	background: #F1F1F1;
 	color: #AAAAAA;
 	border: 1px solid #CCCCCC;
 }
 
-input[readonly=readonly], input[readonly=readonly]:hover, input[readonly=readonly]:focus,
-textarea[readonly=readonly], textarea[readonly=readonly]:hover, textarea[readonly=readonly]:focus,
-select[readonly=readonly], select[readonly=readonly]:hover, select[readonly=readonly]:focus {
+input[readonly=readonly],
+input[readonly=readonly]:hover,
+input[readonly=readonly]:focus,
+textarea[readonly=readonly],
+textarea[readonly=readonly]:hover,
+textarea[readonly=readonly]:focus,
+select[readonly=readonly],
+select[readonly=readonly]:hover,
+select[readonly=readonly]:focus {
 	background: #FAFAFA;
 	color: #888888;
 	border: 1px solid #CCCCCC;
 }
 
-/* Textarea */
+/* --- Textarea --- */
 textarea {
 	overflow: auto;
 	display: block;
@@ -550,10 +715,10 @@ textarea {
 }
 
 .form-element-textarea-small {
-	width: 49%;	
+	width: 49%;
 }
 
-/* Verification des contraintes */
+/* --- Verification des contraintes de formulaire --- */
 .constraint-status-error input,
 form .constraint-status-error textarea {
 	border-color: rgba(196, 60, 43, 0.3);
@@ -561,14 +726,16 @@ form .constraint-status-error textarea {
 	color: #C43C35;
 }
 
-.constraint-status-error input:hover, .constraint-status-error input:focus, 
-.constraint-status-error textarea:hover, form .constraint-status-error textarea:focus {
+.constraint-status-error input:hover,
+.constraint-status-error input:focus,
+.constraint-status-error textarea:hover,
+form .constraint-status-error textarea:focus {
 	border-color: rgba(196, 60, 43, 0.5);
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
 	color: #C43C35;
 }
 
-.constraint-status-right i.picture-status-constraint:before { 
+.constraint-status-right i.picture-status-constraint:before {
 	content: "\f00c";
 	color: #57A957;
 }
@@ -581,16 +748,16 @@ form .constraint-status-error textarea {
 	font-weight: bold;
 }
 
-.form-element-textarea.constraint-status-error i.picture-status-constraint { 
+.form-element-textarea.constraint-status-error i.picture-status-constraint {
 	margin-left: 5px;
 }
 
-/* Auto-completion */
+/* --- Auto-completion --- */
 div.form-autocompleter-container {
 	position: relative;
 }
 
-div.form-autocompleter { 
+div.form-autocompleter {
 	position: absolute;
 	top: -999999em;
 	padding: 5px 0;
@@ -603,9 +770,24 @@ div.form-autocompleter {
 	z-index: 102;
 }
 
-div.form-autocompleter ul { margin: 0px; padding: 0px; max-height: 20em; overflow: auto; } 
-div.form-autocompleter ul li.selected { background-color: #F0F0F0; }
-div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0; padding: 5px 15px; cursor: pointer; }
+div.form-autocompleter ul {
+	margin: 0px;
+	padding: 0px;
+	max-height: 20em;
+	overflow: auto;
+}
+
+div.form-autocompleter ul li.selected {
+	background-color: #F0F0F0;
+}
+
+div.form-autocompleter ul li {
+	list-style-type: none;
+	display: block;
+	margin: 0;
+	padding: 5px 15px;
+	cursor: pointer;
+}
 
 .field-button {
 	display: inline-block;
@@ -624,9 +806,9 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 	padding: 4px 8px;
 }
 
-/* Modules minis
+
+/* -- Modules minis --
 --------------------------------------*/
-/* Placement des mini modules */
 .module-mini-container {
 	margin: 0px 0px 10px 0px;
 	border: 1px #bebebe solid;
@@ -638,14 +820,15 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 }
 
 .module-mini-top {
-	height: 24px;
-	font-weight: bold;
+	min-height: 24px;
 	text-align: center;
 	border-bottom: 2px #336397 solid;
+	padding: 0.2em 0 0.2em 0;
 }
 
-h5.sub-title { /* Titre des modules minis */
-	font-size: 13px;
+.module-mini-container h5,
+.module-mini-container h3 {
+
 	color: #515C68;
 }
 
@@ -656,20 +839,31 @@ h5.sub-title { /* Titre des modules minis */
 	padding: 5px 4px 0px 4px;
 }
 
-/* Bordure inferieure des modules minis */
-.module-mini-bottom { height: 15px; }
+.module-mini-bottom {
+	height: 15px;
+}
 
-/* Messages postes par les membres (messages prives & commentaires) 
+
+/* -- Messages postes par les membres (messages prives & commentaires) --
 --------------------------------------*/
-#comments-list { clear: both; }
+#comments-list {
+	clear: both;
+}
 
-.message { 
-	width: 98%; 
-	margin-bottom: 20px; 
+.message {
+	width: 98%;
+	margin-bottom: 20px;
 	overflow: auto;
 }
 
-.message-date {	margin-left: 10px; }
+.view-topic {
+	margin-top: 10px;
+}
+
+/* --- infos du message --- */
+.message-date {
+	margin-left: 10px;
+}
 
 .message-user-infos {
 	text-align: center;
@@ -677,9 +871,9 @@ h5.sub-title { /* Titre des modules minis */
 	float: left;
 }
 
-.message-container { margin-left: 180px; }
-
-.view-topic { margin-top: 10px; }
+.message-container {
+	margin-left: 180px;
+}
 
 .message-message {
 	position: relative;
@@ -699,7 +893,7 @@ h5.sub-title { /* Titre des modules minis */
 	left: -25px;
 	position: absolute;
 	border-width: 15px 25px 15px 0;
-	border-color: transparent #D6DEE7;	
+	border-color: transparent #D6DEE7;
 	border-style: solid;
 	display: block;
 	width: 0;
@@ -712,17 +906,26 @@ h5.sub-title { /* Titre des modules minis */
 	left: -24px;
 	position: absolute;
 	border-width: 14px 24px 14px 0;
-	border-color: transparent #ECEFFA;	
+	border-color: transparent #ECEFFA;
 	border-style: solid;
 	display: block;
 	width: 0;
 }
 
-.message-avatar { width: 80px; }
-.message-content {}
-.message-pseudo a {}
-.message-user-infos img{ padding: 10px 0px; }
+.message-avatar {
+	width: 80px;
+}
 
+.message-content {
+}
+
+.message-pseudo a {
+}
+.message-user-infos img {
+	padding: 10px 0px;
+}
+
+/* --- Moderation des messages --- */
 .message-moderate {
 	background: #ECEFFA;
 	border: 1px solid #D6DEE7;
@@ -734,17 +937,26 @@ h5.sub-title { /* Titre des modules minis */
 	vertical-align: middle;
 }
 
-.message-moderate a { vertical-align: top; }
+.message-moderate a {
+	vertical-align: top;
+}
 
 i.message-announce,
 i.message-announce-new,
-i.message-announce-track { font-size: 1.6em; }
+i.message-announce-track {
+	font-size: 1.6em;
+}
 
-i.message-announce { color: #D1D2D4; }
-i.message-announce-new { color: #4372AA; }
+i.message-announce {
+	color: #D1D2D4;
+}
+
+i.message-announce-new {
+	color: #4372AA;
+}
 
 
-/* Profile User
+/* -- Profile User --
 --------------------------------------*/
 ul#profile-container {
 	width: 99%;
