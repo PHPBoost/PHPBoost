@@ -13,7 +13,7 @@
 			<h5>h5. {@css.title} 5</h5>
 			<h6>h6. {@css.title} 6</h6><br />
 		</div>
-		
+
 		<h5>{@css.styles}</h5><br />
 		<div class="content">
 			<strong>{@css.text_bold}</strong><br />
@@ -21,7 +21,7 @@
 			<span style="text-decoration: underline;">{@css.text_underline}</span><br />
 			<strike>{@css.text_strike}</strike><br /><br />
 		</div>
-		
+
 		<h5>{@css.sizes}</h5><br />
 		<div class="content">
 			<a href="#">{@css.link}</a> <br />
@@ -31,14 +31,14 @@
 			<a href="#" class="bigger">{@css.link_bigger}</a> <br />
 			<a href="#" class="biggest">{@css.link_biggest}</a> <br /><br />
 		</div>
-		
+
 		<h5>{@css.rank_color}</h5><br />
 		<div class="content">
 			<a href="#" class="admin">{@css.admin}</a> <br />
 			<a href="#" class="modo">{@css.modo}</a> <br />
 			<a href="#" class="member">{@css.member}</a> <br />
 		</div>
-		
+
 	</div>
 	<footer></footer>
 </section>
@@ -47,7 +47,7 @@
 	<header>
 		<h1>{@css.miscellaneous}</h1>
 	</header>
-	
+
 	<div class="content">
 		<h5>{@css.main_actions_icons}</h5><br />
 		<div class="content">
@@ -59,7 +59,7 @@
 				<li>{@css.delete.confirm.custom} : <a href="#" class="fa fa-delete" data-confirmation="{@css.delete.custom_message}"></a></li>
 			</ul>
 		</div>
-		
+
 		<br />
 		<h5>{@css.lists}</h5><br />
 		<div class="content">
@@ -68,7 +68,7 @@
 				<li>{@css.element} 2</li>
 				<li>{@css.element} 3</li>
 			</ul>
-		
+
 			<ol>
 				<li>{@css.element} 1</li>
 				<li>{@css.element} 2</li>
@@ -76,33 +76,33 @@
 			</ol>
 		</div>
 		<br />
-		
+
 		<h5>{@css.progress_bar}</h5><br />
 		<div class="content">
-			<h6>25%</h6> 
+			<h6>25%</h6>
 			<div class="progressbar-container" style="width:35%;">
 				<div class="progressbar-infos">25%</div>
 				<div class="progressbar" style="width:25%;"></div>
 			</div><br />
-			
+
 			<h6>50%</h6>
 			<div class="progressbar-container" style="width:35%">
 				<div class="progressbar-infos">50%</div>
 				<div class="progressbar" style="width:50%"></div>
 			</div><br />
-			
-			<h6>75%</h6> 
+
+			<h6>75%</h6>
 			<div class="progressbar-container" style="width:35%">
 				<div class="progressbar-infos">75%</div>
 				<div class="progressbar" style="width:75%"></div>
 			</div><br />
-			
-			<h6>100%</h6> 
+
+			<h6>100%</h6>
 			<div class="progressbar-container" style="width:35%">
 				<div class="progressbar-infos">100%</div>
 				<div class="progressbar" style="width:100%"></div>
 			</div><br />
-			
+
 		<h5>{@css.modules_menus}</h5><br />
 		<div class="content" style="height:200px;">
 			<menu class="dynamic-menu">
@@ -168,7 +168,7 @@
 			<menu class="dynamic-menu group center">
 				<ul>
 					<li>
-						<a href="#">{@css.modules_menus.unsolved_bugs}</a> 
+						<a href="#">{@css.modules_menus.unsolved_bugs}</a>
 					</li>
 					<li class="current">
 						<a href="#">{@css.modules_menus.solved_bugs}</a>
@@ -183,7 +183,7 @@
 			</menu>
 		</div>
 		</div>
-		
+
 		<h5>{@css.explorer}</h5>
 		<div class="content">
 			<div class="explorer">
@@ -361,7 +361,7 @@
 				{@css.table_description}
 			</caption>
 			<thead>
-				<tr> 
+				<tr>
 					<th>
 						<a href="#" class="fa fa-table-sort-up"></a>
 						{@css.table.name}
@@ -384,7 +384,7 @@
 			</tfoot>
 			<tbody>
 				<tr>
-					<td> 
+					<td>
 						{@css.table.test}
 					</td>
 					<td>
@@ -395,7 +395,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td> 
+					<td>
 						{@css.table.test}
 					</td>
 					<td>
@@ -406,7 +406,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td> 
+					<td>
 						{@css.table.test}
 					</td>
 					<td>
@@ -439,7 +439,7 @@
 				<div class="message-date">
 					<span class="actions">
 						<a itemprop="url" href="#com2">#2</a>
-							<a href="#comments_message" class="fa fa-edit"></a> 
+							<a href="#comments_message" class="fa fa-edit"></a>
 							<a href="#comments_message" class="fa fa-delete" data-confirmation="delete-element"></a>
 					</span>
 					<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">{@css.messages.date}</span>
@@ -459,10 +459,10 @@
 	</header>
 	<br />
 	<div class="content">
-		<h1 class="bb-title">{@css.title} 1</h1><br />
-		<h2 class="bb-title">{@css.title} 2</h2><br />
-		<h3 class="bb-title">{@css.title} 3</h3><br />
-		<h4 class="bb-title">{@css.title} 4</h4>
+		<h1 class="formatter-title">{@css.title} 1</h1><br />
+		<h2 class="formatter-title">{@css.title} 2</h2><br />
+		<h3 class="formatter-title">{@css.title} 3</h3><br />
+		<h4 class="formatter-title">{@css.title} 4</h4>
 	</div>
 	<footer></footer>
 </section>
