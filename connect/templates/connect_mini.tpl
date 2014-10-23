@@ -17,6 +17,21 @@
 	-->
 	</script>
 # ENDIF #
+<script>
+	<!--
+	function open_submenu(idelement)
+	{
+		if ($(idelement).hasClassName("active")) {
+			$(idelement).removeClassName ("active");
+		}
+		else {
+			$(idelement).addClassName ("active");
+		}
+	}
+	-->
+</script>
+
+
 # IF C_VERTICAL #
 	# IF C_USER_NOTCONNECTED #
 		<div id="connect-menu" class="module-mini-container">
@@ -33,8 +48,8 @@
 					<button type="submit" name="connect" value="true" class="submit">{L_CONNECT}</button>
 				</form>
 				<div class="connect-register">
-					# IF C_USER_REGISTER # 
-					<a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a> 
+					# IF C_USER_REGISTER #
+					<a class="small" href="${relative_url(UserUrlBuilder::registration())}"><i class="fa fa-ticket"></i> {L_REGISTER}</a>
 					# ENDIF #
 					<br />
 					<a class="small" href="${relative_url(UserUrlBuilder::forget_password())}"><i class="fa fa-question-circle"></i> {L_FORGOT_PASS}</a>
@@ -60,8 +75,8 @@
 					</li>
 					# IF C_ADMIN_AUTH #
 					<li>
-						<i class="fa fa-wrench# IF C_UNREAD_ALERT # blink# ENDIF #"></i> 
-						<a href="${relative_url(UserUrlBuilder::administration())}" class="small"> {L_ADMIN_PANEL}</a> 
+						<i class="fa fa-wrench# IF C_UNREAD_ALERT # blink# ENDIF #"></i>
+						<a href="${relative_url(UserUrlBuilder::administration())}" class="small"> {L_ADMIN_PANEL}</a>
 					</li>
 					# ENDIF #
 					# IF C_MODERATOR_AUTH #
@@ -69,7 +84,7 @@
 						<i class="fa fa-legal"></i>
 						<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small"> {L_MODO_PANEL}</a>
 					</li>
-					# ENDIF #	
+					# ENDIF #
 					<li>
 						<i class="fa fa-file-text# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # blink# ENDIF #"></i>
 						<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small"> {L_CONTRIBUTION_PANEL}</a>
@@ -105,9 +120,10 @@
 	# ELSE #
 	<div id="connect-menu">
 		<div class="horizontal-fieldset">
+			<a href="#" class="fa fa-bars" style="display: none;" onClick="open_submenu('connect-menu');"></a>
 			<ul class="connect-content">
 				<li>
-					<i class="fa fa-user"></i> 
+					<i class="fa fa-user"></i>
 					<a href="${relative_url(UserUrlBuilder::home_profile())}" class="small"> {L_PRIVATE_PROFIL}</a>
 				</li>
 				<li>
@@ -116,8 +132,8 @@
 				</li>
 				# IF C_ADMIN_AUTH #
 				<li>
-					<i class="fa fa-wrench# IF C_UNREAD_ALERT # blink# ENDIF #"></i> 
-					<a href="${relative_url(UserUrlBuilder::administration())}" class="small"> {L_ADMIN_PANEL}# IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS})# ENDIF #</a> 
+					<i class="fa fa-wrench# IF C_UNREAD_ALERT # blink# ENDIF #"></i>
+					<a href="${relative_url(UserUrlBuilder::administration())}" class="small"> {L_ADMIN_PANEL}# IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS})# ENDIF #</a>
 				</li>
 				# ENDIF #
 				# IF C_MODERATOR_AUTH #
@@ -125,7 +141,7 @@
 					<i class="fa fa-legal"></i>
 					<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small"> {L_MODO_PANEL}</a>
 				</li>
-				# ENDIF #	
+				# ENDIF #
 				<li>
 					<i class="fa fa-file-text# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # blink# ENDIF #"></i>
 					<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="small"> {L_CONTRIBUTION_PANEL}# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION # ({NUMBER_UNREAD_CONTRIBUTIONS})# ENDIF #</a>
