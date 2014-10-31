@@ -21,7 +21,7 @@
 				alert("{L_REQUIRE}{L_PAGINATION}");
 				return false;
 			}
-			if(document.getElementById('note').value == "") {
+			if(document.getElementById('note').value == "" || document.getElementById('note').value == "0") {
 				new Effect.ScrollTo('note',{duration:1.2});
 				alert("{L_REQUIRE}{L_NOTE}");
 				return false;
