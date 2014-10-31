@@ -57,7 +57,7 @@
 				alert("{L_REQUIRE_IMG_P}");
 				return false;
 			}
-			if(document.getElementById('notation_scale').value == "") {
+			if(document.getElementById('notation_scale').value == "" || document.getElementById('notation_scale').value == "0") {
 				alert("{L_REQUIRE_NOTATION_SCALE}");
 				return false;
 			}
