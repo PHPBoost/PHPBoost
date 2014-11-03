@@ -487,7 +487,7 @@ class DownloadFile
 			'CATEGORY_ID' => $category->get_id(),
 			'CATEGORY_NAME' => $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
-			'CATEGORY_IMAGE' => $category->get_image(),
+			'CATEGORY_IMAGE' => $category->get_image()->rel(),
 			
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('download', $this->id_category)->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
