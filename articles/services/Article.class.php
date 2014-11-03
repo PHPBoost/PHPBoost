@@ -457,7 +457,7 @@ class Article
 			'CATEGORY_ID' => $category->get_id(),
 			'CATEGORY_NAME' => $category->get_name(),
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
-			'CATEGORY_IMAGE' => $category->get_image(),
+			'CATEGORY_IMAGE' => $category->get_image()->rel(),
 			
 			//Links
 			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
