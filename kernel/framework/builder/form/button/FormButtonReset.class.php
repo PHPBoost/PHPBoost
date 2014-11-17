@@ -54,5 +54,7 @@ class FormButtonReset implements FormButton
 
 		return $template;
 	}
+
+	public function set_form_id($form_id) {}
 }
 ?>
