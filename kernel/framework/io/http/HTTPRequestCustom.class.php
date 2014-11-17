@@ -252,7 +252,7 @@ class HTTPRequestCustom
 
 	private function get_raw_bool($value)
 	{
-		return $value === 'true' || $value === '1' || $value === true;
+		return $value === 'true' || $value === '1' || $value === 'on' || $value === true;
 	}
 
 	private function get_raw_int($value, $varname, $default_value)
