@@ -97,11 +97,12 @@ class UserUrlBuilder
 	
 	public static function edit_profile($user_id = '')
 	{
-		if (!empty($user_id))
+		if (empty($user_id))
 		{
-			return DispatchManager::get_url(self::$dispatcher, '/profile/'. $user_id .'/edit/');
+			$user_id = AppContext::get_current_user()->get_id();
 		}
-		return DispatchManager::get_url(self::$dispatcher, '/profile/'. AppContext::get_current_user()->get_id() .'/edit/');
+
+		return DispatchManager::get_url(self::$dispatcher, '/profile/'. $user_id .'/edit/');
 	}
 	
 	public static function users($field = '', $sort = '', $page = '')
@@ -143,14 +144,14 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/groups/' . $id);
 	}
 	
-	public static function connect()
+	public static function connect($authenticate_type = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/login/');
+		return DispatchManager::get_url(self::$dispatcher, '/login/' . ($authenticate_type !== null ? '?authenticate=' . $authenticate_type : ''));
 	}
 	
 	public static function disconnect()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/login?disconnect=true&amp;token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/login/?disconnect=true&amp;token=' . AppContext::get_session()->get_token());
 	}
 	
 	public static function administration()

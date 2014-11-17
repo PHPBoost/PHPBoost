@@ -52,21 +52,30 @@ class UserLoginController extends AbstractController
 		{
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
-		
-		if ($this->request->get_bool('connect', false))
+
+		$authenticate_type = $this->request->get_value('authenticate', false);
+		if ($authenticate_type)
 		{
-			$username = $this->request->get_value('login', '');
-			$password = $this->request->get_value('password', '');
-			$autoconnect = $this->request->get_bool('autoconnect', false);
-			$this->authenticate($username, $password, $autoconnect);
+			if ($authenticate_type == PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD)
+			{
+				$login = $this->request->get_value('login', '');
+				$password = $this->request->get_value('password', '');
+				$autoconnect = $this->request->get_bool('autoconnect', false);
+				$this->phpboost_authenticate($login, $password, $autoconnect);
+			}
+			else
+			{
+				$authentication = AuthenticationService::get_authentication_method($authenticate_type);
+				$this->authenticate($authentication, true);
+			}
 		}
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$username = $this->form->get_value('login');
+			$login = $this->form->get_value('login');
 			$password = $this->form->get_value('password');
 			$autoconnect = $this->form->get_value('autoconnect');
-			$this->authenticate($username, $password, $autoconnect);
+			$this->phpboost_authenticate($login, $password, $autoconnect);
 		}
 		
 		$this->init_vars_template();
@@ -93,21 +102,21 @@ class UserLoginController extends AbstractController
 		));
 	}
 
-	private function authenticate($username, $password, $autoconnect)
+	private function phpboost_authenticate($login, $password, $autoconnect)
 	{
-		$authentication = new PHPBoostAuthenticationMethod($username, $password);
-		$user_id = AuthenticationService::authenticate($authentication);
+		$authentication = new PHPBoostAuthenticationMethod($login, $password);
+		$this->authenticate($authentication, $autoconnect);
+	}
+
+	private function authenticate(AuthenticationMethod $authentication, $autoconnect)
+	{
+		$user_id = AuthenticationService::authenticate($authentication, $autoconnect);
 		
 		if ($user_id)
 		{
 			AppContext::get_response()->redirect($this->request->get_value('redirect', '/'));
 		}
 
-		$this->build_error_message($authentication);
-	}
-	
-	private function build_error_message(PHPBoostAuthenticationMethod $authentication)
-	{
 		if ($authentication->has_error())
 		{
 			$error = new FormFieldLabel(MessageHelper::display($authentication->get_error_msg(), MessageHelper::NOTICE)->render());

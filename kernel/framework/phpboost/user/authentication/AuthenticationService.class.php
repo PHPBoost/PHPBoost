@@ -34,10 +34,32 @@
 class AuthenticationService
 {
 	/**
+	 * @desc associate the current authentication method with the given user_id.
+	 * @param AuthenticationMethod $authentication the authentication method to use
+	 * @param int $user_id
+	 * @throws IllegalArgumentException if the user_id is already associate with an authentication method
+	 */
+	public static function associate(AuthenticationMethod $authentication, $user_id)
+	{
+		$authentication->associate($user_id);
+	}
+
+	/**
+	 * @desc dissociate the current authentication method with the given user_id.
+	 * @param AuthenticationMethod $authentication the authentication method to use
+	 * @param int $user_id
+	 * @throws IllegalArgumentException if the user_id is already dissociate with an authentication method
+	 */
+	public static function dissociate(AuthenticationMethod $authentication, $user_id)
+	{
+		$authentication->dissociate($user_id);
+	}
+
+	/**
 	 * @desc Tries to authenticate the user using the given authentication method.
 	 * @param AuthenticationMethod $authentication the authentication method to use
 	 * @param bool $autoconnect If true, an autoconnect cookie will be created
-	 * @return bool true, if authentication has been performed successfully
+	 * @return int $user_id, if authentication has been performed successfully
 	 */
 	public static function authenticate(AuthenticationMethod $authentication, $autoconnect = false)
 	{
@@ -49,10 +71,46 @@ class AuthenticationService
 			{
 				Session::delete($session);
 			}
-			$session_data = Session::create($user_id, autoconnect);
+			$session_data = Session::create($user_id, $autoconnect);
 			AppContext::set_session($session_data);
 		}
 		return $user_id;
+	}
+
+	public static function get_user_types_authentication($user_id)
+	{
+		$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_AUTHENTICATION_METHOD, array('method'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		
+		$types = array();
+		foreach ($result as $row) {
+			$types[] = $row['method'];
+		}
+		return $types;
+	}
+
+	public static function get_activated_types_authentication()
+	{
+		$types[] = PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD; 
+
+		$types[] = FacebookAuthenticationMethod::AUTHENTICATION_METHOD;
+
+	}
+
+	public static function get_authentication_method($method_identifier)
+	{
+		switch ($method_identifier) {
+			case PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD:
+				return new PHPBoostAuthenticationMethod();
+				break;
+			
+			case FacebookAuthenticationMethod::AUTHENTICATION_METHOD:
+				return new FacebookAuthenticationMethod();
+				break;
+
+			default:
+				throw new IllegalArgumentException('Method ' . $method_identifier .	' not exists');
+				break;
+		}
 	}
 }
 

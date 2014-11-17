@@ -45,13 +45,24 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	 * @var DBQuerier
 	 */
 	private $querier;
-	
-	protected $fb_user_data = array();
+	private $facebook;
 	
 	public function __construct()
 	{
 		$this->querier = PersistenceContext::get_querier();
-		
+
+	//TODO
+	$cache = AuthenticationConfig::load();
+	$cache->set_fb_app_id('837719939581007');
+	$cache->set_fb_app_key('86eff183d82a1e225cda0a535f5a137f');
+	AuthenticationConfig::save();
+
+		$config = AuthenticationConfig::load();
+		$this->facebook = new Facebook(array(
+			'appId'  => $config->get_fb_app_id(),
+			'secret' => $config->get_fb_app_key(),
+			'cookie' => true
+		));
 	}
 	
 	/**
@@ -59,11 +70,13 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	 */
 	public function associate($user_id)
 	{
+		$data = $this->get_fb_user_data();
+
 		$authentication_method_columns = array(
 			'user_id' => $user_id,
             'method' => self::AUTHENTICATION_METHOD,
-			'identifier' => $this->fb_user_data['id'],
-			'data' => serialize($this->fb_user_data)
+			'identifier' => $data['id'],
+			'data' => serialize($data)
 		);
 		try {
             $this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
@@ -73,57 +86,67 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public function dissociate($user_id)
+	{
+		try {
+            $this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
+            	'user_id' => $user_id,
+          		'method' => self::AUTHENTICATION_METHOD
+          	));
+		} catch (SQLQuerierException $ex) {
+			throw new IllegalArgumentException('User Id ' . $user_id .
+				' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
+		}
+	}
+
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function authenticate()
 	{
-		$config = AuthenticationConfig::load();
-		
-		$facebook = new Facebook(array(
-			'appId'  => $config->get_fb_app_id(),
-			'secret' => $config->get_fb_app_key(),
-			'cookie' => true
-		));
-		
-		$fb_id = $facebook->getUser();
+		$data = $this->get_fb_user_data();
+		$fb_id = $data['id'];
+
+		try {
+			
+			$condition = 'WHERE method=:method AND identifier=:identifier';
+			$parameters = array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $fb_id);
+			return $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', $condition, $parameters);
+			
+		} catch (RowNotFoundException $e) {
+			
+			$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
+			if (!$email_exists)
+			{
+				$user = new User();
+				$user->set_display_name(utf8_decode($data['name']));
+				$user->set_level(User::MEMBER_LEVEL);
+				$user->set_email($data['email']);
+				
+				$auth_method = new FacebookAuthenticationMethod();
+				$fields_data = array('user_avatar' => 'https://graph.facebook.com/'. $fb_id .'/picture');
+				return UserService::create($user, $auth_method, $fields_data);
+			}
+			else
+			{
+				$this->error_msg = 'Account to this email already exists';
+			}
+			
+		}
+	}
+
+	private function get_fb_user_data()
+	{
+		$fb_id = $this->facebook->getUser();
 		if (!$fb_id)
 		{
-			AppContext::get_response()->redirect($facebook->getLoginUrl(array('scope' => 'email')));
+			AppContext::get_response()->redirect($this->facebook->getLoginUrl(array('scope' => 'email')));
 		}
-		else
-		{
-			$data = $facebook->api('/me');
-
-			try {
-				
-				$condition = 'WHERE method=:method AND identifier=:identifier';
-				$parameters = array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $fb_id);
-				return $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', $condition, $parameters);
-				
-			} catch (RowNotFoundException $e) {
-				
-				$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
-				if (!$email_exists)
-				{
-					$user = new User();
-					$user->set_display_name(utf8_decode($data['name']));
-					$user->set_level(User::MEMBER_LEVEL);
-					$user->set_email($data['email']);
-					
-					$auth_method = new FacebookAuthenticationMethod();
-					$auth_method->fb_user_data = $data;
-					$fields_data = array('user_avatar' => 'https://graph.facebook.com/'. $fb_id .'/picture');
-					return UserService::create($user, $auth_method, $fields_data);
-				}
-				else
-				{
-					$this->error_msg = 'Account to this email already exists';
-				}
-				
-			}
-		}
+		return $this->facebook->api('/me');
 	}
 }
 ?>

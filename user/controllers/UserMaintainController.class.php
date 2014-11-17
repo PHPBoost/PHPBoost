@@ -47,10 +47,10 @@ class UserMaintainController extends AbstractController
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$username = $this->form->get_value('login');
+			$login = $this->form->get_value('login');
 			$password = $this->form->get_value('password');
 			$autoconnect = $this->form->get_value('autoconnect');
-			$this->authenticate($username, $password, $autoconnect);
+			$this->authenticate($login, $password, $autoconnect);
 		}
 		
 		return $this->build_reponse();

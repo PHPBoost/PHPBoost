@@ -69,7 +69,7 @@ class AdminMemberAddController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array('size' => 25, 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));		
 		
 		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], '', array('required' => true),

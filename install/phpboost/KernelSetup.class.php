@@ -358,6 +358,7 @@ class KernelSetup
 			'warning_percentage' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'delay_banned' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'delay_readonly' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'autoconnect_key' => array('type' => 'string', 'length' => 64, 'default' => "''")
 		);
 
 		$options = array(
@@ -495,7 +496,7 @@ class KernelSetup
 	{
 		$fields = array(
 			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'username' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'login' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'password' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'registration_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
 			'change_password_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
@@ -506,7 +507,7 @@ class KernelSetup
 
 		$options = array(
 			'primary' => array('user_id'),
-			'indexes' => array('login' => array('type' => 'unique', 'fields' => 'username'))
+			'indexes' => array('login' => array('type' => 'unique', 'fields' => 'login'))
 		);
 		self::$db_utils->create_table(self::$internal_authentication_table, $fields, $options);
 	}
@@ -514,15 +515,13 @@ class KernelSetup
 	private function create_authentication_method_table()
 	{
 		$fields = array(
-			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
 			'method' => array('type' => 'string', 'length' => 32, 'default' => "''"),
 			'identifier' => array('type' => 'string', 'length' => 128, 'default' => "''"),
-			'autoconnect_key' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'data' => array('type' => 'text', 'length' => 65000)
 		);
 
 		$options = array(
-			'primary' => array('user_id'),
 			'indexes' => array(
 				'method' => array('type' => 'unique', 'fields' => array('method', 'identifier'))
 		));

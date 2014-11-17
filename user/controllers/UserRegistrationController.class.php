@@ -76,14 +76,15 @@ class UserRegistrationController extends AbstractController
 		
 		$fieldset->add_field(new FormFieldHTML('validation_method', $this->get_accounts_validation_method_explain()));
 		
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(
-			'description' => $this->lang['pseudo.explain'], 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
-		));		
+		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '', array('description'=> $this->lang['display_name.explain'], 'required' => true),
+			array(new FormFieldConstraintLengthRange(3, 20))
+		));	
+
 		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], '', array(
 			'description' => LangLoader::get_message('valid', 'main'), 'required' => true),
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist())
 		));
+
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array(
 			'description' => $this->lang['password.explain'], 'required' => true),
 			array(new FormFieldConstraintLengthRange(6, 12))
@@ -94,6 +95,18 @@ class UserRegistrationController extends AbstractController
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], FormFieldCheckbox::CHECKED));
+
+		$fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false, array('description'=> $this->lang['login.custom.explain'], 'events' => array('click' => '
+			if (HTMLForms.getField("custom_login").getValue()) {
+				HTMLForms.getField("login").enable();
+			} else { 
+				HTMLForms.getField("login").disable();
+			}'
+		))));
+
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], '', array('hidden' => true),
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
+		));
 		
 		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
 		$form->add_fieldset($options_fieldset);
@@ -164,7 +177,7 @@ class UserRegistrationController extends AbstractController
 		$user_aprobation = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION;
 
 		$user = new User();
-		$user->set_display_name($this->form->get_value('login'));
+		$user->set_display_name($this->form->get_value('display_name'));
 		$user->set_level(User::MEMBER_LEVEL);
 		$user->set_email($this->form->get_value('email'));
 		$user->set_show_email(!$this->form->get_value('user_hide_mail'));
@@ -177,7 +190,13 @@ class UserRegistrationController extends AbstractController
 			$user->set_theme($this->form->get_value('theme')->get_raw_value());
 		}
 		
-		$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('login'), $this->form->get_value('password'));
+		$login = $this->form->get_value('email');
+		if ($this->form->get_value('custom_login'))
+		{
+			$login = $this->form->get_value('login');
+		}
+
+		$auth_method = new PHPBoostAuthenticationMethod($login, $this->form->get_value('password'));
 		$auth_method->set_association_parameters($user_aprobation, $registration_pass);
 
 		try {
@@ -189,7 +208,7 @@ class UserRegistrationController extends AbstractController
 			
 		if (!$has_error)
 		{
-			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $this->form->get_value('login'), $this->form->get_value('login'), $this->form->get_value('password'), $registration_pass);
+			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $this->form->get_value('display_name'), $login, $this->form->get_value('password'), $registration_pass);
 				
 			$this->confirm_registration($user_id);
 		}

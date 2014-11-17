@@ -53,8 +53,9 @@ et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.<
 //User fields
 $lang['display_name'] = 'Nom d\'affichage';
 $lang['display_name.explain'] = 'Nom affiché sur chacun des éléments que vous ajoutez.';
-$lang['pseudo'] = 'Pseudo';
-$lang['pseudo.explain'] = 'Longueur minimale du pseudo : 3 caractères';
+$lang['login'] = 'Identifiant de connexion';
+$lang['login.custom'] = 'Choisir un identifiant de connexion';
+$lang['login.custom.explain'] = 'Par défaut, vous devez vous connecter avec votre adresse email.';
 $lang['password'] = 'Mot de passe';
 $lang['password.new'] = 'Nouveau mot de passe';
 $lang['password.old'] = 'Ancien mot de passe';

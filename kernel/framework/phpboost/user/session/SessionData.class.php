@@ -78,8 +78,32 @@ class SessionData
 			$data->ip = AppContext::get_request()->get_ip_address();
 			self::fill_user_cached_data($data);
 			$data->create();
+
+			self::add_in_visit_counter();
 		}
 		return $data;
+	}
+
+	public static function add_in_visit_counter()
+	{
+		$ip_address = AppContext::get_request()->get_ip_address();
+		$has_already_visited = PersistenceContext::get_querier()->row_exists(DB_TABLE_VISIT_COUNTER, 'WHERE ip=:ip', array('ip' => $ip_address));
+		$is_robot = Robots::is_robot();
+		
+		if (!$has_already_visited && !$is_robot)
+		{
+			$now = new Date(DATE_NOW, Timezone::SERVER_TIMEZONE);
+			$time = $now->format('Y-m-d');
+
+			PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time=:time, total = total + 1 WHERE id = 1", array('time' => $time));
+			PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => $ip_address, 'time' => $time, 'total' => 0));
+		}
+		
+		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
+		foreach ($jobs as $job)
+		{
+			$job->on_new_session(!$has_already_visited, $is_robot);
+		}
 	}
 
 	public static function update_location($title_page)
