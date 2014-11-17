@@ -386,18 +386,17 @@ class InstallationServices
 		{
 			$this->connect_admin($user_id, $auto_connect);
 		}
-		StatsCache::invalidate();
 	}
 
-	private function create_first_admin_account($username, $password, $email, $locale, $theme, $timezone)
+	private function create_first_admin_account($login, $password, $email, $locale, $theme, $timezone)
 	{
 		$user = new User();
-		$user->set_display_name($username);
+		$user->set_display_name($login);
 		$user->set_level(User::ADMIN_LEVEL);
 		$user->set_email($email);
 		$user->set_locale($locale);
 		$user->set_theme($theme);
-		$auth_method = new PHPBoostAuthenticationMethod($username, $password);
+		$auth_method = new PHPBoostAuthenticationMethod($login, $password);
 		return UserService::create($user, $auth_method);
 	}
 
@@ -427,6 +426,7 @@ class InstallationServices
 
 	private function send_installation_mail($login, $password, $email, $unlock_admin)
 	{
+		$general_config = GeneralConfig::load();
 		AppContext::get_mail_service()->send_from_properties($email, $this->messages['admin.created.email.object'], sprintf($this->messages['admin.created.email.unlockCode'], stripslashes($login),
 		stripslashes($login), $password, $unlock_admin, $general_config->get_site_url() . $general_config->get_site_path()));
 	}

@@ -49,7 +49,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	 */
 	private $querier;
 
-	private $username;
+	private $login;
 	private $password;
 	
 	private $approved = true;
@@ -58,9 +58,9 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	private $connection_attempts = 0;
 	private $last_connection_date;
 
-	public function __construct($username, $password)
+	public function __construct($login, $password)
 	{
-		$this->username = $username;
+		$this->login = $login;
 		$this->password = KeyGenerator::string_hash($password);
 		$this->querier = PersistenceContext::get_querier();
 	}
@@ -83,7 +83,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	{
 		$internal_authentication_columns = array(
 			'user_id' => $user_id,
-			'username' => $this->username,
+			'login' => $this->login,
             'password' => $this->password,
 			'registration_pass' => $this->registration_pass,
 			'approved' => $this->approved
@@ -99,6 +99,22 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		} catch (SQLQuerierException $ex) {
 			throw new IllegalArgumentException('User Id ' . $user_id .
 				' is already associated with an authentication method [' . $ex->getMessage() . ']');
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function dissociate($user_id)
+	{
+		try {
+            $this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
+            	'user_id' => $user_id,
+          		'method' => self::AUTHENTICATION_METHOD
+          	));
+		} catch (SQLQuerierException $ex) {
+			throw new IllegalArgumentException('User Id ' . $user_id .
+				' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
 		}
 	}
 
@@ -141,8 +157,8 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	private function find_user_id_by_username()
 	{
 		$columns = array('user_id', 'last_connection', 'connection_attemps');
-		$condition = 'WHERE username=:username AND approved=1';
-		$parameters = array('username' => $this->username);
+		$condition = 'WHERE login=:login AND approved=1';
+		$parameters = array('login' => $this->login);
 		$row = $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 		$this->connection_attempts = $row['connection_attemps'];
 		$this->last_connection_date = $row['last_connection'];
@@ -198,22 +214,25 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	
 	public static function get_auth_infos($user_id)
 	{	
-		$columns = array('username', 'password', 'approved');
+		$columns = array('login', 'password', 'approved');
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
-		return $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
+		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 	}
 
-	public static function update_auth_infos($user_id, $username, $approved, $password = false)
+	public static function update_auth_infos($user_id, $login, $approved = null, $password = null)
 	{
-		$columns = array('username' => $username, 'approved' => $approved);
+		$columns = array('login' => $login);
 		
+		if ($approved)
+			$columns['approved'] = $approved;
+
 		if ($password)
 			$columns['password'] = $password;
 			
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
-		$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
+		PersistenceContext::get_querier()->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 		
 		if (!$approved)
 		{
@@ -224,7 +243,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 
 	public static function change_password_pass_exists($change_password_pass)
 	{
-		return self::$querier->row_exists(DB_TABLE_MEMBER, 'WHERE change_password_pass=:change_password_pass', array('change_password_pass' => $change_password_pass));
+		return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE change_password_pass=:change_password_pass', array('change_password_pass' => $change_password_pass));
 	}
 
 	public static function update_change_password_pass($user_id, $change_password_pass)
@@ -232,7 +251,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		$columns = array('change_password_pass' => $change_password_pass);
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
-		self::$querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
+		PersistenceContext::get_querier()->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 	}
 }
 ?>

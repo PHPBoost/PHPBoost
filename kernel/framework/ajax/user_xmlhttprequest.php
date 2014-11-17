@@ -38,11 +38,11 @@ $user_id = retrieve(POST, 'user_id', '');
 $db_querier = PersistenceContext::get_querier();
 
 if (!empty($login) && !empty($user_id))
-	echo $db_querier->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE username=:username AND user_id != :user_id', array('username' => $login, 'user_id' => $user_id));
+	echo $db_querier->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login AND user_id != :user_id', array('login' => $login, 'user_id' => $user_id));
 elseif (!empty($email) && !empty($user_id))
 	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE email=:email AND user_id != :user_id', array('email' => $email, 'user_id' => $user_id));
 elseif (!empty($login))
-	echo $db_querier->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE username=:username', array('username' => $login));
+	echo $db_querier->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login', array('login' => $login));
 elseif (!empty($email))
 	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $email));
 else

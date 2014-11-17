@@ -42,10 +42,10 @@
 				<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="form-element">
 					<label>{L_PSEUDO}<br /><input type="text" id="login" name="login" maxlength="25"></label>
 					<label>{L_PASSWORD}<br /><input type="password" id="password" name="password" maxlength="30"></label>
-					<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto"></label>
+					<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="autoconnect"></label>
 					<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
 					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" name="connect" value="true" class="submit">{L_CONNECT}</button>
+					<button type="submit" name="authenticate" value="internal" class="submit">{L_CONNECT}</button>
 				</form>
 				<div class="connect-register">
 					# IF C_USER_REGISTER #
@@ -106,15 +106,16 @@
 			<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
 				<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25">
 				<input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
-				<input checked="checked" type="checkbox" name="auto">
+				<input checked="checked" type="checkbox" name="autoconnect">
 				<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
-				<button type="submit" name="connect" value="true" class="submit">{L_CONNECT}</button>
+				<button type="submit" name="authenticate" value="internal" class="submit">{L_CONNECT}</button>
 			</form>
 			# IF C_USER_REGISTER #
 			<form action="${relative_url(UserUrlBuilder::registration())}" method="post">
 				<button type="submit" name="register" value="true" class="submit">{L_REGISTER}</button>
 			</form>
 			# ENDIF #
+			<a href="${relative_url(UserUrlBuilder::connect('fb'))}"><i class="fa fa-facebook-square biggest"></i></a>
 		</div>
 	</div>
 	# ELSE #

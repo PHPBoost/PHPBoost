@@ -162,7 +162,7 @@ class AppContext
 
 	/**
 	 * Returns the current user's session
-	 * @return Session
+	 * @return SessionData
 	 */
 	public static function get_session()
 	{

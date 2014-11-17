@@ -38,6 +38,8 @@ class UserEditProfileController extends AbstractController
 	private $submit_button;
 	
 	private $user;
+	private $internal_auth_infos;
+	private $user_auth_types;
 	
 	private $member_extended_fields_service;
 
@@ -53,11 +55,40 @@ class UserEditProfileController extends AbstractController
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
+
+		try {
+			$this->internal_auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
+		} catch (RowNotFoundException $e) {
+		}
+
+		$this->user_auth_types = AuthenticationService::get_user_types_authentication($this->user->get_id());
 		
 		if (!$this->check_authorizations($user_id))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
+		}
+
+		$associate_type = $request->get_getvalue('associate', false);
+		if ($associate_type)
+		{
+			if (!in_array($associate_type, $this->user_auth_types))
+			{
+				$authentication_method = AuthenticationService::get_authentication_method($associate_type);
+				AuthenticationService::associate($authentication_method, $user_id);
+				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id));
+			}
+		}
+
+		$dissociate_type = $request->get_getvalue('dissociate', false);
+		if ($dissociate_type)
+		{
+			if (in_array($associate_type, $this->user_auth_types) && count($this->user_auth_types) > 1)
+			{
+				$authentication_method = AuthenticationService::get_authentication_method($dissociate_type);
+				AuthenticationService::dissociate($authentication_method, $user_id);
+				AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id));
+			}
 		}
 		
 		$this->build_form();
@@ -87,6 +118,8 @@ class UserEditProfileController extends AbstractController
 	
 	private function build_form()
 	{
+		$auth_types = AuthenticationService::get_activated_types_authentication();
+		
 		$form = new HTMLForm(__CLASS__);
 		$this->member_extended_fields_service = new MemberExtendedFieldsService($form);
 		
@@ -94,8 +127,8 @@ class UserEditProfileController extends AbstractController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], $this->user->get_display_name(), array('description'=> $this->lang['display_name.explain'], 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 20)
-		)));	
+			array(new FormFieldConstraintLengthRange(3, 20))
+		));	
 
 		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], $this->user->get_email(), array(
 			'required' => true, 'description' => LangLoader::get_message('valid', 'main')),
@@ -103,18 +136,64 @@ class UserEditProfileController extends AbstractController
 		));
 				
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], !$this->user->get_show_email()));
-		
+
 		$fieldset->add_field(new FormFieldCheckbox('delete_account', $this->lang['delete-account'], FormFieldCheckbox::UNCHECKED));
 		
-		$connect_fieldset = new FormFieldsetHTML('connect', $this->lang['connect']);
+
+
+		/* ************* */
+
+
+		$connect_fieldset = new FormFieldsetHTML('connect', 'connect');
 		$form->add_fieldset($connect_fieldset);
 
+		if (in_array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
+		{
+			$connect_fieldset->add_field(new FormFieldFree('internal_auth', 'internal <i class="fa fa-success"></i>', '<a onclick="javascript:HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();HTMLForms.getField(\'old_password\').enable();">Modifier</a>'));
+		}
+		else
+		{
+			$connect_fieldset->add_field(new FormFieldFree('internal_auth', 'internal <i class="fa fa-error"></i>', '<a onclick="javascript:HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();">Créer une authentification interne</a>'));
+		}
+
+		$connect_fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false, array('description'=> $this->lang['login.custom.explain'], 'hidden' => true, 'events' => array('click' => '
+			if (HTMLForms.getField("custom_login").getValue()) {
+				HTMLForms.getField("login").enable();
+			} else { 
+				HTMLForms.getField("login").disable();
+			}'
+		))));
+
+		$connect_fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], $this->internal_auth_infos['login'], array('hidden' => true),
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
+		));
+
 		$connect_fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['password.old'], '', array(
-			'description' => $this->lang['password.old.explain']))
+			'description' => $this->lang['password.old.explain'], 'hidden' => true))
 		);
-		
-		$connect_fieldset->add_field($new_password = new FormFieldPasswordEditor('new_password', $this->lang['password.new'], ''));
-		$connect_fieldset->add_field($new_password_bis = new FormFieldPasswordEditor('new_password_bis', $this->lang['password.confirm'], ''));
+
+		$connect_fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array(
+			'description' => $this->lang['password.explain'], 'hidden' => true),
+			array(new FormFieldConstraintLengthRange(6, 12))
+		));
+		$connect_fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '', array('hidden' => true),
+			array(new FormFieldConstraintLengthRange(6, 12))
+		));
+
+		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
+
+		if (in_array(FacebookAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
+		{
+			$connect_fieldset->add_field(new FormFieldFree('fb_auth', 'FB <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id())->absolute() .'?dissociate=fb">dissocier votre compte Facebook</a>'));
+		}
+		else
+		{
+			$connect_fieldset->add_field(new FormFieldFree('fb_auth', 'FB <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id())->absolute() .'?associate=fb">associer votre compte Facebook</a>'));
+		}
+
+
+		/* ************* */
+
 
 		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
 		$form->add_fieldset($options_fieldset);
@@ -138,7 +217,6 @@ class UserEditProfileController extends AbstractController
 		$this->member_extended_fields_service->display_form_fields($this->user->get_id());
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_constraint(new FormConstraintFieldsEquality($new_password, $new_password_bis));
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
 
@@ -177,24 +255,40 @@ class UserEditProfileController extends AbstractController
 				$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 			}
 
-			$old_password = $this->form->get_value('old_password');
-			$new_password = $this->form->get_value('new_password');
-			if (!empty($old_password) && !empty($new_password))
+			$login = $this->form->get_value('email');
+			if ($this->form->get_value('custom_login', false))
 			{
-				$old_password_hashed = KeyGenerator::string_hash($old_password);
-				$auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
+				$login = $this->form->get_value('login');
+			}
 
-				if ($old_password_hashed == $auth_infos['password'])
+			$password = $this->form->get_value('password');
+			if ($this->internal_auth_infos === null && !empty($password))
+			{
+				$authentication_method = new PHPBoostAuthenticationMethod($login, $password);
+				AuthenticationService::associate($authentication_method, $user_id);
+			}
+			elseif (!empty($password))
+			{
+				$old_password = $this->form->get_value('old_password');
+				if (!empty($old_password))
 				{
-					PHPBoostAuthenticationMethod::update_auth_infos($user_id, $auth_infos['username'], $auth_infos['approved'], KeyGenerator::string_hash($new_password));
-					$has_error = true;
-					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'status-messages-common'), MessageHelper::SUCCESS, 6));
+					$old_password_hashed = KeyGenerator::string_hash($old_password);
+
+					if ($old_password_hashed == $this->internal_auth_infos['password'])
+					{
+						PHPBoostAuthenticationMethod::update_auth_infos($user_id, $login, $this->internal_auth_infos['approved'], KeyGenerator::string_hash($password));
+						$has_error = false;
+					}
+					else
+					{
+						$has_error = true;
+						$this->tpl->put('MSG', MessageHelper::display($this->lang['profile.edit.password.error'], MessageHelper::NOTICE));
+					}
 				}
-				else
-				{
-					$has_error = true;
-					$this->tpl->put('MSG', MessageHelper::display($this->lang['profile.edit.password.error'], MessageHelper::NOTICE));
-				}
+			}
+			else
+			{
+				PHPBoostAuthenticationMethod::update_auth_infos($user_id, $login);
 			}
 		}
 		

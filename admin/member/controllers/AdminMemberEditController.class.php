@@ -3,7 +3,7 @@
  *                       AdminMemberEditController.class.php
  *                            -------------------
  *   begin                : February 28, 2010
- *   copyright            : (C) 2010 K�vin MASSY
+ *   copyright            : (C) 2010 Kï¿½vin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -87,7 +87,7 @@ class AdminMemberEditController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->user_lang['pseudo'], $this->user->get_display_name(), array('size' => 25, 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist($this->user->get_id()))
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
 		));		
 		
 		$fieldset->add_field(new FormFieldTextEditor('mail', $this->user_lang['email'], $this->user->get_email(), array('required' => true),
@@ -192,7 +192,7 @@ class AdminMemberEditController extends AdminController
 			//Recherche de l'alerte correspondante
 			$matching_alerts = AdministratorAlertService::find_by_criteria($user_id, 'member_account_to_approbate');
 		
-			//L'alerte a �t� trouv�e
+			//L'alerte a été trouvée
 			if (count($matching_alerts) == 1)
 			{
 				$alert = $matching_alerts[0];
@@ -220,7 +220,7 @@ class AdminMemberEditController extends AdminController
 		if (!empty($password) && !empty($password_bis))
 		{
 			$auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
-			PHPBoostAuthenticationMethod::update_auth_infos($user_id, $auth_infos['username'], $auth_infos['approved'], KeyGenerator::string_hash($password));
+			PHPBoostAuthenticationMethod::update_auth_infos($user_id, $auth_infos['login'], $auth_infos['approved'], KeyGenerator::string_hash($password));
 		}
 		
 		$user_warning = $this->form->get_value('user_warning')->get_raw_value();

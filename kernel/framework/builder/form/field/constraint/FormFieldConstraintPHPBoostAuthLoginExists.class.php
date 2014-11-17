@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         FormFieldConstraintLoginExist.class.php
+ *                         FormFieldConstraintPHPBoostAuthLoginExists.class.php
  *                            -------------------
  *   begin                : March 13, 2011
  *   copyright            : (C) 2011 Kevin MASSY
@@ -29,7 +29,7 @@
  * @desc
  * @package {@package}
  */
-class FormFieldConstraintLoginExist extends AbstractFormFieldConstraint
+class FormFieldConstraintPHPBoostAuthLoginExists extends AbstractFormFieldConstraint
 {
 	private $user_id = 0;
 	private $error_message;
@@ -58,15 +58,15 @@ class FormFieldConstraintLoginExist extends AbstractFormFieldConstraint
 	{
 		if (!empty($this->user_id))
 		{
-			return PersistenceContext::get_querier()->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE username=:username AND user_id != :user_id', array(
-				'username' => $field->get_value(), 
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login AND user_id != :user_id', array(
+				'login' => $field->get_value(), 
 				'user_id' => $this->user_id
 			));
 		}
 		else
 		{
-			return PersistenceContext::get_querier()->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE username=:username', array(
-				'username' => $field->get_value()
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login', array(
+				'login' => $field->get_value()
 			));
 		}
 	}

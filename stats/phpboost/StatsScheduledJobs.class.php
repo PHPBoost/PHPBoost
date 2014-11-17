@@ -41,12 +41,10 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 		//We retrieve the id we just come to create
 		$last_stats = $result->get_last_inserted_id();
 
-		PersistenceContext::get_sql()->query_inject("UPDATE " . StatsSetup::$stats_referer_table .
-			" SET yesterday_visit = today_visit, today_visit = 0, nbr_day = nbr_day + 1");
+		PersistenceContext::get_querier()->inject("UPDATE " . StatsSetup::$stats_referer_table . " SET yesterday_visit = today_visit, today_visit = 0, nbr_day = nbr_day + 1");
 		
 		//We delete the referer entries older than one week
-		PersistenceContext::get_sql()->query_inject("DELETE FROM " . StatsSetup::$stats_referer_table .
-		" WHERE last_update < '" . (time() - 604800) . "'");
+		PersistenceContext::get_querier()->delete(StatsSetup::$stats_referer_table, 'WHERE last_update < :last_update', array('last_update' => time() - 604800));
 
 		//We retrieve the number of pages seen until now
 		$pages_displayed = StatsSaver::retrieve_stats('pages');
@@ -56,14 +54,12 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 		$pages_file->delete();
 
 		//How much visitors were there today?
-		$total_visit = PersistenceContext::get_sql()->query("SELECT total FROM " . DB_TABLE_VISIT_COUNTER .
-			" WHERE id = 1");
+		$total_visit = PersistenceContext::get_querier()->get_column_value(DB_TABLE_VISIT_COUNTER, 'total', 'WHERE id = 1');
 		
 		//We update the stats table: the number of visits today
-		PersistenceContext::get_sql()->query_inject("UPDATE " . StatsSetup::$stats_table . " SET nbr = '" . $total_visit .
-		"', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" .
-		addslashes(serialize($pages_displayed)) . "' WHERE id = '" . $last_stats . "'",
-		__LINE__, __FILE__);
+		PersistenceContext::get_querier()->update(StatsSetup::$stats_table, 
+			array('nbr' => $total_visit, 'pages' => array_sum($pages_displayed), 'pages_detail' => serialize($pages_displayed)), 
+		'WHERE id=:id', array('id' => $last_stats));
 	}
 	
 	public function on_changepage()

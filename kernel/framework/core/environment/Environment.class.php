@@ -149,6 +149,7 @@ class Environment
 
 	public static function init_session()
 	{
+		Session::gc();
 		$session_data = Session::start();
 		AppContext::set_session($session_data);
 		AppContext::init_current_user();
@@ -218,8 +219,6 @@ class Environment
 
 	private static function perform_changeday()
 	{
-		self::delete_existing_sessions();
-		
 		self::clear_all_temporary_cache_files();
 
 		self::execute_modules_changedays_tasks();
@@ -229,11 +228,6 @@ class Environment
 		self::remove_old_unactivated_member_accounts();
 
 		self::check_updates();
-	}
-
-	private static function delete_existing_sessions()
-	{
-		Session::gc();
 	}
 
 	private static function clear_all_temporary_cache_files()
@@ -264,16 +258,16 @@ class Environment
 	private static function update_visit_counter_table()
 	{
 		$now = new Date(DATE_NOW, Timezone::SERVER_TIMEZONE);
-		$timestamp = $now->format(Date::FORMAT_TIMESTAMP);
+		$time = $now->format('Y-m-d');
 		
 		//We truncate the table containing the visitors of today
 		PersistenceContext::get_querier()->delete(DB_TABLE_VISIT_COUNTER, 'WHERE id <> 1');
 
 		//We update the last changeday date
-		PersistenceContext::get_querier()->update(DB_TABLE_VISIT_COUNTER, array('time' => $timestamp, 'total' => 1), 'WHERE id = 1');
+		PersistenceContext::get_querier()->update(DB_TABLE_VISIT_COUNTER, array('time' => $time, 'total' => 1), 'WHERE id = 1');
 		
 		//We insert this visitor as a today visitor
-		PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => AppContext::get_request()->get_ip_address(), 'time' => $timestamp, 'total' => 0));
+		PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => AppContext::get_request()->get_ip_address(), 'time' => $time, 'total' => 0));
 	}
 
 	private static function remove_old_unactivated_member_accounts()
@@ -318,7 +312,7 @@ class Environment
 				self::$running_module_name = $general_config->get_module_home_page();
 			}
 			else
-			self::$running_module_name = '';
+				self::$running_module_name = '';
 		}
 	}
 

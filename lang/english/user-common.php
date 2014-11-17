@@ -53,8 +53,9 @@ and possibly discuss with the validators if their choice is not straightforward.
 //User fields
 $lang['display_name'] = 'Display name';
 $lang['display_name.explain'] = 'Display name on each item you add.';
-$lang['pseudo'] = 'Login';
-$lang['pseudo.explain'] = 'Minimum length of the login: 3 characters';
+$lang['login'] = 'Login';
+$lang['login.custom'] = 'Choice a login';
+$lang['login.custom.explain'] = 'Default, you must log in with your email address.';
 $lang['password'] = 'Password';
 $lang['password.new'] = 'New password';
 $lang['password.old'] = 'Old password';
