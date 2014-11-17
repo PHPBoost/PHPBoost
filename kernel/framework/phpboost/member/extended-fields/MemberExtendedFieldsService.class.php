@@ -122,6 +122,7 @@ class MemberExtendedFieldsService
 			{
 				if ($extended_field['display'] == 1 && AppContext::get_current_user()->check_auth($extended_field['auth'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
 				{
+					$extended_field['value'] = '';
 					$member_extended_field = new MemberExtendedField();
 					$member_extended_field->set_properties($extended_field);
 					$member_extended_field->set_user_id($user_id);
