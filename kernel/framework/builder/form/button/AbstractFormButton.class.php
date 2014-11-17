@@ -31,6 +31,7 @@
  */
 abstract class AbstractFormButton implements FormButton
 {
+    private $form_id = '';
     private $name = '';
     private $label = '';
     private $type = '';
@@ -54,7 +55,7 @@ abstract class AbstractFormButton implements FormButton
         $template = $this->get_template();
         $template->put_all(array(
 			'LABEL' => $this->label,
-			'BUTTON_NAME' => $this->name,
+			'HTML_NAME' => $this->get_html_name(),
         	'CSS_CLASS' => $this->css_class,
 			'TYPE' => $this->type,
 			'ONCLICK_ACTION' => $this->onclick_action
@@ -65,6 +66,11 @@ abstract class AbstractFormButton implements FormButton
     public function get_name()
     {
         return $this->name;
+    }
+
+    public function get_html_name()
+    {
+        return $this->form_id . '_' . $this->name;
     }
 
     public function set_name($name)
@@ -84,7 +90,7 @@ abstract class AbstractFormButton implements FormButton
 
     protected function get_template()
     {
-    	return new StringTemplate('<button type="${TYPE}" name="${BUTTON_NAME}" class="${CSS_CLASS}" onclick="${escape(ONCLICK_ACTION)}" value="true">{LABEL}</button>');
+    	return new StringTemplate('<button type="${TYPE}" name="${HTML_NAME}" class="${CSS_CLASS}" onclick="${escape(ONCLICK_ACTION)}" value="true">{LABEL}</button>');
     }
     
     public function set_css_class($css_class)
@@ -95,6 +101,11 @@ abstract class AbstractFormButton implements FormButton
     public function get_css_class()
     {
     	return $this->css_class;
+    }
+
+    public function set_form_id($form_id)
+    {
+        $this->form_id = $form_id;
     }
 }
 ?>

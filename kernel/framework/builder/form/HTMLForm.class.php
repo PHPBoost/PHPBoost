@@ -152,6 +152,7 @@ class HTMLForm
 	 */
 	public function add_button(FormButton $button)
 	{
+		$button->set_form_id($this->html_id);
 		$this->buttons[] = $button;
 	}
 

@@ -119,9 +119,16 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 			
 		} catch (RowNotFoundException $e) {
 			
-			$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
-			if (!$email_exists)
-			{
+			try {
+
+				$condition = 'WHERE email=:email';
+				$parameters = array('email' => $data['email']);
+				$user_id = $this->querier->get_column_value(DB_TABLE_MEMBER, 'user_id', $condition, $parameters);
+				AuthenticationService::associate($this, $user_id);
+				return $user_id;
+				
+			} catch (RowNotFoundException $e) {
+
 				$user = new User();
 				$user->set_display_name(utf8_decode($data['name']));
 				$user->set_level(User::MEMBER_LEVEL);
@@ -131,11 +138,6 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 				$fields_data = array('user_avatar' => 'https://graph.facebook.com/'. $fb_id .'/picture');
 				return UserService::create($user, $auth_method, $fields_data);
 			}
-			else
-			{
-				$this->error_msg = 'Account to this email already exists';
-			}
-			
 		}
 	}
 

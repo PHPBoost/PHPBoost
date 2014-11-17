@@ -39,7 +39,7 @@ class FormButtonSubmit extends AbstractFormButton
     public function has_been_submited()
     {
         $request = AppContext::get_request();
-        $button_attribute = $request->get_string($this->get_name(), '');
+        $button_attribute = $request->get_string($this->get_html_name(), '');
         return !empty($button_attribute);
     }
 }

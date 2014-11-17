@@ -83,7 +83,7 @@ class UserEditProfileController extends AbstractController
 		$dissociate_type = $request->get_getvalue('dissociate', false);
 		if ($dissociate_type)
 		{
-			if (in_array($associate_type, $this->user_auth_types) && count($this->user_auth_types) > 1)
+			if (in_array($dissociate_type, $this->user_auth_types) && count($this->user_auth_types) > 1)
 			{
 				$authentication_method = AuthenticationService::get_authentication_method($dissociate_type);
 				AuthenticationService::dissociate($authentication_method, $user_id);
