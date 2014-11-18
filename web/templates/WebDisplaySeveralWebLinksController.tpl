@@ -2,7 +2,7 @@
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('web', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
-			# IF C_PENDING #{@web.pending}# ELSE #{@module_title} - {CATEGORY_NAME}# ENDIF #
+			# IF C_PENDING #{@web.pending}# ELSE #{@module_title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF ## ENDIF #
 		</h1>
 		# IF C_CATEGORY_DESCRIPTION #
 			<div class="spacer">&nbsp;</div>
