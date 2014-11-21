@@ -45,7 +45,7 @@ class UserLoginController extends AbstractController
 			$session = AppContext::get_session();
 			Session::delete($session);
 			
-			AppContext::get_response()->redirect($this->request->get_value('redirect', '/'));
+			AppContext::get_response()->redirect($this->get_redirect_url());
 		}
 		
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
@@ -114,7 +114,7 @@ class UserLoginController extends AbstractController
 		
 		if ($user_id)
 		{
-			AppContext::get_response()->redirect($this->request->get_value('redirect', '/'));
+			AppContext::get_response()->redirect($this->get_redirect_url());
 		}
 
 		if ($authentication->has_error())
@@ -158,6 +158,13 @@ class UserLoginController extends AbstractController
 	{
 		$redirect_url = $this->request->get_value('redirect', '/');
 		return DispatchManager::get_url('/user/index.php', '/login?redirect=' . urlencode($redirect_url));
+	}
+
+	private function get_redirect_url()
+	{
+		$redirect = $this->request->get_value('redirect', '/');
+		$redirect = $redirect !== '/' ? HOST . $redirect : $redirect;
+		return new Url($redirect);
 	}
 }
 ?>
