@@ -57,7 +57,7 @@ class NewsletterDAO
 		);
 		self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscribers, $columns);
 
-		$subscriber_id = PersistenceContext::get_sql()->query("SELECT MAX(id) FROM " . NewsletterSetup::$newsletter_table_subscribers);
+		$subscriber_id = self::$db_querier->get_column_value(NewsletterSetup::$newsletter_table_subscribers, 'MAX(id)', '');
 		
 		//Delete all entries in subscriber id
 		$condition = "WHERE subscriber_id = :subscriber_id";
@@ -104,7 +104,7 @@ class NewsletterDAO
 		);
 		self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscribers, $columns);
 
-		$subscriber_id = PersistenceContext::get_sql()->query("SELECT MAX(id) FROM " . NewsletterSetup::$newsletter_table_subscribers);
+		$subscriber_id = self::$db_querier->get_column_value(NewsletterSetup::$newsletter_table_subscribers, 'MAX(id)', '');
 		
 		//Delete all entries in subscriber id
 		$condition = "WHERE subscriber_id = :subscriber_id";

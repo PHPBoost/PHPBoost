@@ -46,7 +46,7 @@ class UserRegistrationService
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
 				$content = StringVars::replace_vars($lang['registration.content-mail'], $parameters);
-				self::send_email_user($email, $login, $subject, $content);
+				AppContext::get_mail_service()->send_from_properties($email, $subject, $content);
 				break;
 			case UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION:
 				$parameters = array(
@@ -62,7 +62,7 @@ class UserRegistrationService
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
 				$content = StringVars::replace_vars($lang['registration.content-mail'], $parameters);
-				self::send_email_user($email, $login, $subject, $content);
+				AppContext::get_mail_service()->send_from_properties($email, $subject, $content);
 				break;
 			case UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION:
 				
