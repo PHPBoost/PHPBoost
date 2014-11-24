@@ -102,7 +102,7 @@ class Backup
 		{
 			if (in_array($properties['name'], $table_list) || $all_tables)
 			{
-				$result = $this->db_querier->select('SHOW CREATE TABLE ' . $properties['name']);
+				$result = $this->db_querier->select('SHOW CREATE TABLE ' . $properties['name'], array(), SelectQueryResult::FETCH_NUM);
 				while ($row = $result->fetch())
 				{
 					$this->backup_script .=  $row[1] . ';' . "\n\n";

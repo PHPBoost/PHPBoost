@@ -45,77 +45,93 @@
 
 ######################################DOSSIERS##################################
 
-
 ###################################### PHPBoost 4.2 ##################################
 
 [b]Structure et fonctionnement:[/b]
-- [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
-- [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
-- [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
-- [color=red]Nouveauté:[/color] Exportation en pdf (articles, wiki, pages).
-- [color=red]Nouveauté:[/color] Editeur d'image avec interface js pour redimensionner, faire des rotations, des mises à l'échelles, etc.
-- [color=red]Nouveauté:[/color] Système de centralisation de mots clés, gestion de nuages de tags... A intégrer peut-être dans le module de recherche.
-- [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés avec contrôles sur les champs.
-- [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
-- [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
-- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification des couleurs du site.
-- Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
-- Gestion des contraintes asynchrones dans le form builder
-- Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
-+ [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
-+ Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
-- Possibilité de désactiver l'affichage d'un lien dans les menus
-- [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
-- Support mobile et version tablette
-- Refonte du système d'événement et intégration d'un système de notification
-- Suppression de l'ancienne classe SQL
-- Refonte de la gestion des liens : suppression des types de menu de liens et création d'un menu de lien qui s'adapte automatiquement à l'emplacement
-- Filtres d'exclusion pour les menus
-- Nettoyage des variables de langues
-- Stocker les dates sous un format ISO en BDD plutôt qu'en timestamp
-- Revoir la balise Title HTML (créer un format standardisé dans PHPBoost :
++ [color=red]NouveautÃ©:[/color] GÃ©nÃ©rateur automatique de tableaux avec gestion de la pagination, filtres, tris.
++ Nouveau systÃ¨me de session et de connexion :
+	- Suppression du champ Pseudo, remplacÃ© par Nom d'affichage
+	- Connexion interne avec l'adresse email ou un login que l'on peut choisir
+	- Connexion avec un compte Facebook (et d'autre) paramÃ¨trable dans l'administration
+	- PossibilitÃ© de gÃ©rer ses types de connexion dans le profil
++ Suppression de l'ancienne classe SQL
+[*] Suppression de l'ancien systÃ¨me de Tpl
++ Nettoyage des variables de langues
+- Revoir la balise Title HTML (crÃ©er un format standardisÃ© dans PHPBoost :
 	- Titre de la page - Nom du module - Nom du site
 	- Titre de la page - Nom du site (dans le cas ou c'est une page sans module)
-- Voir pour comptabiliser correctement le nombre d'élement dans les catégories s'il y a des sous catégories dedans (http://www.phpboost.com/bugtracker/detail/1182-videos-non-comptabilisees-sur-les-sous-categories)
 
-
-[b]Installateur[/b]
-- Ajout d'une option pour supprimer le dossier à la fin de l'installation
-- Possibilité de choisir les modules, thèmes et langues à installer
-
-[b]Script de migration[/b]
-- Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update
-
-[b]Administration[/b]
-- Refonte de la partie Rapport système avec ajout de différentes informations concernant la sécurité, les options APC, des conseils, etc...
-
-[b]Upload[/b]
-- Refonte de l'interface, ajout d'API, ... 
-- Améliorer l'ajout de fichier (drag & drop)
-
-[b]Messages privés[/b]
-- Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
-- Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
-
-[b]Forum[/b]
-- [color=red]Nouveauté:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/édition des messages/sujets appartenant au membre.
-- [color=red]Nouveauté:[/color] Possibilité de créer des messages semi-automatiques pour les modérateurs.
-- [color=red]Nouveauté:[/color] Possibilité de délestage automatique des sujets (configuration).
-- [color=red]Nouveauté:[/color] Possibilité de définir des mots interdits (remplacés par des étoiles).
-- Possibilité de mettre un pseudo lorsque l'on poste en visiteur.
-
-[b]Galerie:[/b]
-- Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
-- Possibilité de télécharger l'image.
-- [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
-- [color=red]Nouveauté:[/color] Possibilité de redimensionnement automatique des images dans la galerie, avec prévisualisation du rendu.
-- [color=red]Nouveauté:[/color] Approbation des photos envoyées par les membres/invités, alerte envoyée à l'administrateur.
-- [color=red]Nouveauté:[/color] Galerie privée pour les membres.
-- [color=red]Nouveauté:[/color] Diaporama sur l'index de la galerie.
-- Possibilité de définir une limite d'upload en fonction des groupes.
+[b]Graphique[/b]
+- Support mobile et version tablette
+- Refonte de la gestion des liens : suppression des types de menu de liens et crÃ©ation d'un menu de lien qui s'adapte automatiquement Ã  l'emplacement
 
 [b]FAQ[/b]
 - refonte du module en MVC
 
+###################################### PHPBoost ##################################
+
+[b]Structure et fonctionnement:[/b]
+- [color=red]NouveautÃ©:[/color] PossibilitÃ© d'associer un template Ã  un menu pour pouvoir le personnaliser.
+- [color=red]NouveautÃ©:[/color] Pose de verrous sur les contenus lors de leur Ã©dition afin de faciliter le travail collaboratif.
+- [color=red]NouveautÃ©:[/color] Exportation en pdf (articles, wiki, pages).
+- [color=red]NouveautÃ©:[/color] Editeur d'image avec interface js pour redimensionner, faire des rotations, des mises Ã  l'Ã©chelles, etc.
+- [color=red]NouveautÃ©:[/color] SystÃ¨me de centralisation de mots clÃ©s, gestion de nuages de tags... A intÃ©grer peut-Ãªtre dans le module de recherche.
+- [color=red]NouveautÃ©:[/color] Interface de visualisation des valeurs des champs supplÃ©mentaires saisies par les membres.
+- [color=red]NouveautÃ©:[/color] Compression de la base de donnÃ©es Ã  l'exportation, importation en fichier compressÃ© ou non.
+- [color=red]NouveautÃ©:[/color] Interface de personnalisation graphique du site, modification des couleurs du site.
+- Etudier la possibilitÃ© de mettre les smileys dans une catÃ©gorie et pouvoir en importer par lot facilement.
+- Gestion des contraintes asynchrones dans le form builder
+- Revoir la faÃ§on dont est stockÃ© les inscrits aux groupes (actuellement c'est stockÃ© dans la table member et groups, faire une table de jointure)
+- [color=red]NouveautÃ©:[/color] Gestion des menus avec arborescence repliable
+- PossibilitÃ© de dÃ©sactiver l'affichage d'un lien dans les menus
+- [color=red]NouveautÃ©:[/color] SystÃ¨me d'alertes (javascript) utilisateur Ã©voluÃ©.
+- Refonte du systÃ¨me d'Ã©vÃ©nement et intÃ©gration d'un systÃ¨me de notification
+- Filtres d'exclusion pour les menus
+- Stocker les dates sous un format ISO en BDD plutÃ´t qu'en timestamp
+- Voir pour comptabiliser correctement le nombre d'Ã©lement dans les catÃ©gories s'il y a des sous catÃ©gories dedans (http://www.phpboost.com/bugtracker/detail/1182-videos-non-comptabilisees-sur-les-sous-categories)
+
+[b]Upload[/b]
+- Refonte de l'interface et du fonctionnement de l'interface d'upload
+- Ajout du drag&drop
+- PossibilitÃ© de tÃ©lÃ©charger plusieurs fichier en mÃªme temps
+- PossibilitÃ© de placer les fichiers dans le gestionnaire d'upload ou dans un dossier spÃ©cifique
+- CrÃ©ation d'un FormField tout en ajax pour directement choisir ses fichiers sans passer par une popup
+- TÃ©lÃ©chargement des fichiers en AJAX avec barre de progression
+
+[b]Installateur[/b]
+- Ajout d'une option pour supprimer le dossier Ã  la fin de l'installation
+- PossibilitÃ© de choisir les modules, thÃ¨mes et langues Ã  installer
+
+[b]Script de migration[/b]
+- VÃ©rification automatique de la prÃ©sence de la nouvelle version par le noyau, et redirection vers le script d'update
+
+[b]Administration[/b]
+- Refonte de la partie Rapport systÃ¨me avec ajout de diffÃ©rentes informations concernant la sÃ©curitÃ©, les options APC, des conseils, etc...
+
+[b]Upload[/b]
+- Refonte de l'interface, ajout d'API, ... 
+- AmÃ©liorer l'ajout de fichier (drag & drop)
+
+[b]Messages privÃ©s[/b]
+- PossibilitÃ© d'envoyer des messages privÃ©s Ã  tous les membres d'un groupe ou Ã  tous les membres pour l'administrateur.
+- PossibilitÃ© de demander l'envoi d'un mail lors de l'envoi d'un mp.
+
+[b]Forum[/b]
+- [color=red]NouveautÃ©:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/Ã©dition des messages/sujets appartenant au membre.
+- [color=red]NouveautÃ©:[/color] PossibilitÃ© de crÃ©er des messages semi-automatiques pour les modÃ©rateurs.
+- [color=red]NouveautÃ©:[/color] PossibilitÃ© de dÃ©lestage automatique des sujets (configuration).
+- [color=red]NouveautÃ©:[/color] PossibilitÃ© de dÃ©finir des mots interdits (remplacÃ©s par des Ã©toiles).
+- PossibilitÃ© de mettre un pseudo lorsque l'on poste en visiteur.
+
+[b]Galerie:[/b]
+- Voir les images plus vues/mieux notÃ©es, affichage sur l'ensemble de la galerie et non sur une catÃ©gorie.
+- PossibilitÃ© de tÃ©lÃ©charger l'image.
+- [color=red]NouveautÃ©:[/color] Gestion des catÃ©gories infinies, droits de lecture/ecriture sur les catÃ©gories.
+- [color=red]NouveautÃ©:[/color] PossibilitÃ© de redimensionnement automatique des images dans la galerie, avec prÃ©visualisation du rendu.
+- [color=red]NouveautÃ©:[/color] Approbation des photos envoyÃ©es par les membres/invitÃ©s, alerte envoyÃ©e Ã  l'administrateur.
+- [color=red]NouveautÃ©:[/color] Galerie privÃ©e pour les membres.
+- [color=red]NouveautÃ©:[/color] Diaporama sur l'index de la galerie.
+- PossibilitÃ© de dÃ©finir une limite d'upload en fonction des groupes.
+
 [b]Wiki:[/b]
-- [color=red]Nouveauté:[/color] Système d'enregistrement des articles par différences, lignes par lignes pour un encombrement réduit lors des éditions successives.
+- [color=red]NouveautÃ©:[/color] SystÃ¨me d'enregistrement des articles par diffÃ©rences, lignes par lignes pour un encombrement rÃ©duit lors des Ã©ditions successives.
