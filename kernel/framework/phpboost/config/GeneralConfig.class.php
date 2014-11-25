@@ -41,7 +41,6 @@ class GeneralConfig extends AbstractConfigData
 	const PHPBOOST_VERSION = 'phpboost_version';
 	const SITE_INSTALL_DATE = 'site_install_date';
 	const SITE_TIMEZONE = 'timezone';
-	const ADMIN_UNLOCKING_KEY = 'admin_unlocking_key';
 
 	public function get_site_url()
 	{
@@ -122,7 +121,6 @@ class GeneralConfig extends AbstractConfigData
 			self::PHPBOOST_VERSION => '4.1',
 			self::SITE_INSTALL_DATE => new Date(),
 			self::SITE_TIMEZONE => 'Europe/Paris',
-			self::ADMIN_UNLOCKING_KEY => ''
 		);
 	}
 
@@ -216,16 +214,6 @@ class GeneralConfig extends AbstractConfigData
 	public function set_other_home_page($start_page)
 	{
 		$this->set_property(self::OTHER_HOME_PAGE, $start_page);
-	}
-	
-	public function get_admin_unlocking_key()
-	{
-		return $this->get_property(self::ADMIN_UNLOCKING_KEY);
-	}
-
-	public function set_admin_unlocking_key($unlocking_key)
-	{
-		$this->set_property(self::ADMIN_UNLOCKING_KEY, $unlocking_key);
 	}
 
 	/**

@@ -345,7 +345,7 @@ else //Liste des groupes.
 	));
 	  
   
-	PersistenceContext::get_querier()->select("SELECT id, name, img
+	$result = PersistenceContext::get_querier()->select("SELECT id, name, img
 	FROM " . DB_TABLE_GROUP . "
 	ORDER BY name");
 	while ($row = $result->fetch())

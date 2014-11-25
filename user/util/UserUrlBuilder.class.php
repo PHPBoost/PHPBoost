@@ -34,7 +34,7 @@ class UserUrlBuilder
 
 	public static function maintain($parameters = '')
     {
-    	return DispatchManager::get_url(self::$dispatcher, '/maintain/' . $parameters);
+    	return DispatchManager::get_url(self::$dispatcher, '/login/' . $parameters);
     }
     
     public static function forget_password()

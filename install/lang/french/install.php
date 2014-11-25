@@ -197,10 +197,6 @@ Voici vos identifiants (ne les perdez pas, ils vous seront utiles pour administr
 Identifiant: %s
 Password: %s
 
-A conserver ce code (Il ne vous sera plus délivré) : %s
-
-Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné, il vous sera demandé dans le formulaire de connexion directe à l\'administration (%s/admin/admin_index.php)
-
 Cordialement l\'équipe PHPBoost.',
 
 //Fin de l'installation

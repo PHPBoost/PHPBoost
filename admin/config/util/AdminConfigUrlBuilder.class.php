@@ -48,14 +48,6 @@ class AdminConfigUrlBuilder
 	/*
 	 * @ return Url
 	 */
-	public static function unlock_administration()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/advanced/unlock');
-	}
-	
-	/*
-	 * @ return Url
-	 */
 	public static function mail_config()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/mail/');

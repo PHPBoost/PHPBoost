@@ -196,10 +196,6 @@ Here is your login and password (don\'t lose them, you will need them to setup y
 Login: %s
 Password: %s
 
-Please note the following code (It won\'t be delivered anymore unless you ask to in the administration panel) : %s
-
-If your website undergoes a hacking attempt, you will have to use this security code to unlock the administration panel. You will be asked to enter the security code when you log in to the administration panel.  (%s/admin/admin_index.php)
-
 Best regards,
 The PHPBoost Team.',
 

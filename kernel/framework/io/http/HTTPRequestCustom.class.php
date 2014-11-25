@@ -310,6 +310,22 @@ class HTTPRequestCustom
 		}
 		return $array;
 	}
+
+
+	public function get_is_ajax_request()
+	{
+		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+	}
+
+	public function get_user_agent()
+	{
+		return isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	}
+
+	public function get_url_referrer()
+	{
+		return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+	}
 	
 	public function get_ip_address()
 	{

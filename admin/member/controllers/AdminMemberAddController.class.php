@@ -68,7 +68,7 @@ class AdminMemberAddController extends AdminController
 		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-user-common'));
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array('size' => 25, 'required' => true),
+		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['display_name'], '', array('size' => 25, 'required' => true),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
 		));		
 		
@@ -93,10 +93,10 @@ class AdminMemberAddController extends AdminController
 	private function save()
 	{
 		$user = new User();
-		$user->set_display_name($this->form->get_value('login'));
+		$user->set_display_name($this->form->get_value('display_name'));
 		$user->set_level($this->form->get_value('rank')->get_raw_value());
 		$user->set_email($this->form->get_value('email'));
-		$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('login'), $this->form->get_value('password'));
+		$auth_method = new PHPBoostAuthenticationMethod($this->form->get_value('email'), $this->form->get_value('password'));
 		UserService::create($user, $auth_method);
 	}
 }

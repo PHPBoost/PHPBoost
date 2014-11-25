@@ -33,7 +33,6 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminMailConfigController', '`^/mail/?$`'),
 	new UrlControllerMapper('AdminGeneralConfigController', '`^(?:/general/?)?$`'),
 	new UrlControllerMapper('AdminAdvancedConfigController', '`^/advanced/?$`'),
-	new UrlControllerMapper('SendMailUnlockAdminController', '`^/advanced/unlock/?$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

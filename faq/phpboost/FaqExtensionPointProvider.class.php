@@ -40,7 +40,7 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	//Récupération du cache.
 	public function get_cache()
 	{
-		$string = 'global $FAQ_CATS, $RANDOM_QUESTIONS;' . "\n\n";
+		/*$string = 'global $FAQ_CATS, $RANDOM_QUESTIONS;' . "\n\n";
 		
 		$root = array('name' => '', 'id_parent' => 0, 'auth' => FaqConfig::load()->get_authorizations());
 		//List of categories and their own properties
@@ -76,6 +76,7 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 		$string .= "\n" . '$RANDOM_QUESTIONS = ' . var_export($questions, true) . ';';
 
 		return $string;
+		*/
 	}
 	
 	public function feeds()
