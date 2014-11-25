@@ -73,7 +73,7 @@ class UserViewProfileController extends AbstractController
 			$fieldset->add_field(new FormFieldFree('profile_edit', $this->lang['profile.edit'], $link_edit));
 		}
 
-		$fieldset->add_field(new FormFieldFree('pseudo', $this->lang['pseudo'], $this->user_infos['display_name']));
+		$fieldset->add_field(new FormFieldFree('display_name', $this->lang['display_name'], $this->user_infos['display_name']));
 
 		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], $this->get_level_lang()));
 

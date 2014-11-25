@@ -36,7 +36,6 @@ $Cache = new Cache();
 Environment::init();
 
 /* DEPRECATED VARS */
-$Sql = PersistenceContext::get_sql();
 $Bread_crumb = new BreadCrumb();
 /* END DEPRECATED */
 ?>

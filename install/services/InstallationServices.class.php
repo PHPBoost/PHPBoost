@@ -377,11 +377,10 @@ class InstallationServices
 
 	private function create_first_admin($login, $password, $email, $create_session, $auto_connect)
 	{
-		$admin_unlock_code = $this->generate_admin_unlock_code();
 		$user_id = $this->create_first_admin_account($login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
-		$this->send_installation_mail($login, $password, $email, $admin_unlock_code);
+		$this->send_installation_mail($login, $password, $email);
 		if ($create_session)
 		{
 			$this->connect_admin($user_id, $auto_connect);
@@ -400,15 +399,6 @@ class InstallationServices
 		return UserService::create($user, $auth_method);
 	}
 
-	private function generate_admin_unlock_code()
-	{
-		$admin_unlock_code = KeyGenerator::generate_key(12);
-		$general_config = GeneralConfig::load();
-		$general_config->set_admin_unlocking_key($admin_unlock_code);
-		GeneralConfig::save();
-		return $admin_unlock_code;
-	}
-
 	private function configure_mail_sender_system($administrator_email)
 	{
 		$mail_config = MailServiceConfig::load();
@@ -424,11 +414,11 @@ class InstallationServices
 		UserAccountsConfig::save();
 	}
 
-	private function send_installation_mail($login, $password, $email, $unlock_admin)
+	private function send_installation_mail($login, $password, $email)
 	{
 		$general_config = GeneralConfig::load();
 		AppContext::get_mail_service()->send_from_properties($email, $this->messages['admin.created.email.object'], sprintf($this->messages['admin.created.email.unlockCode'], stripslashes($login),
-		stripslashes($login), $password, $unlock_admin, $general_config->get_site_url() . $general_config->get_site_path()));
+		stripslashes($login), $password, $general_config->get_site_url() . $general_config->get_site_path()));
 	}
 
 	private function connect_admin($user_id, $auto_connect)

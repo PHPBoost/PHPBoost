@@ -46,7 +46,7 @@ class AdminError404Service
 		if (!empty($_SERVER['REQUEST_URI']))
 		{
 			$requested_url = substr($_SERVER['REQUEST_URI'], 0, 255);
-			$from_url = !empty($_SERVER['HTTP_REFERER']) ? substr($_SERVER['HTTP_REFERER'], 0, 255) : '';
+			$from_url = substr(AppContext::get_request()->get_url_referrer(), 0, 255);
 			$error_404 = null;
 			$result = AdminError404DAO::instance()->find_by_criteria(
 				    'WHERE requested_url=:requested_url AND from_url=:from_url',

@@ -91,8 +91,8 @@ class AdminViewAllMembersController extends AdminController
 		
 		$this->view->put_all(array(
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'SORT_LOGIN_TOP' => AdminMembersUrlBuilder::management('login/top/'. $page)->rel(),
-			'SORT_LOGIN_BOTTOM' => AdminMembersUrlBuilder::management('login/bottom/'. $page)->rel(),
+			'SORT_DISPLAY_NAME_TOP' => AdminMembersUrlBuilder::management('login/top/'. $page)->rel(),
+			'SORT_DISPLAY_NAME_BOTTOM' => AdminMembersUrlBuilder::management('login/bottom/'. $page)->rel(),
 			'SORT_LEVEL_TOP' => AdminMembersUrlBuilder::management('level/top/'. $page)->rel(),
 			'SORT_LEVEL_BOTTOM' => AdminMembersUrlBuilder::management('level/bottom/'. $page)->rel(),
 			'SORT_REGISTERED_TOP' => AdminMembersUrlBuilder::management('registered/top/'. $page)->rel(),
@@ -103,7 +103,7 @@ class AdminViewAllMembersController extends AdminController
 			'SORT_APPROBATION_BOTTOM' => AdminMembersUrlBuilder::management('approbation/bottom/'. $page)->rel(),
 			'L_CONFIRM_DEL_ADMIN' => $admin_lang['confirm_del_admin'],
 			'L_USERS_MANAGEMENT' => $admin_lang['members_management'],
-			'L_LOGIN' => $user_common_lang['pseudo'],
+			'L_DISPLAY_NAME' => $user_common_lang['display_name'],
 			'L_MAIL' => $user_common_lang['email'],
 			'L_LEVEL' => $user_common_lang['level'],
 			'L_APPROBATION' => $user_common_lang['approbation'],
@@ -133,7 +133,7 @@ class AdminViewAllMembersController extends AdminController
 				'C_GROUP_COLOR' => !empty($group_color),
 				'DELETE_LINK' => AdminMembersUrlBuilder::delete($row['user_id'])->rel(),
 				'EDIT_LINK' => AdminMembersUrlBuilder::edit($row['user_id'])->rel(),
-				'LOGIN' => $row['display_name'],
+				'DISPLAY_NAME' => $row['display_name'],
 				'LEVEL' => UserService::get_level_lang($row['level']),
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,

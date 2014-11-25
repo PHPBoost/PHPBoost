@@ -54,6 +54,7 @@ et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.<
 $lang['display_name'] = 'Nom d\'affichage';
 $lang['display_name.explain'] = 'Nom affiché sur chacun des éléments que vous ajoutez.';
 $lang['login'] = 'Identifiant de connexion';
+$lang['login.explain'] = 'Adresse email ou votre login personnalisé si vous en avez choisi un.';
 $lang['login.custom'] = 'Choisir un identifiant de connexion';
 $lang['login.custom.explain'] = 'Par défaut, vous devez vous connecter avec votre adresse email.';
 $lang['password'] = 'Mot de passe';

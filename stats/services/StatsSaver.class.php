@@ -37,7 +37,7 @@ class StatsSaver
 	 */
 	public static function compute_referer()
 	{
-		$referer = !empty($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : '';
+		$referer = parse_url(AppContext::get_request()->get_url_referrer());
 		if (!empty($referer))
 		{
 			########### Détection des mots clés ###########

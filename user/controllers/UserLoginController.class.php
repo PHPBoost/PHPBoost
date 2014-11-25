@@ -27,12 +27,22 @@
 
 class UserLoginController extends AbstractController
 {
+	const USER_LOGIN = 1;
+	const ADMIN_LOGIN = 2;
+
+	private $login_type;
+
 	private $view;
 	private $lang;
 	private $request;
 	private $form;
 	private $fieldset;
 	private $submit_button;
+
+	public function __construct($login_type = self::USER_LOGIN)
+	{
+		$this->login_type = $login_type;
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -95,11 +105,24 @@ class UserLoginController extends AbstractController
 	{
 		$this->view->put_all(array(
 			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
+			'C_USER_LOGIN' => $this->login_type == self::USER_LOGIN,
+			'C_ADMIN_LOGIN' => $this->login_type == self::ADMIN_LOGIN,
 			'U_REGISTER' => UserUrlBuilder::registration()->rel(),
 			'U_FORGET_PASSWORD' => UserUrlBuilder::forget_password()->rel(),
 			'L_FORGET_PASSWORD' => $this->lang['forget-password'],
 			'LOGIN_FORM' => $this->form->display(),
 		));
+
+		$maintain_config = MaintenanceConfig::load();
+		if (MaintenanceConfig::load()->is_under_maintenance())
+		{
+			$this->init_maintain_delay($maintain_config);
+
+			$this->view->put_all(array(
+				'C_MAINTAIN' => true,
+				'L_MAINTAIN' => FormatingHelper::second_parse($maintain_config->get_message()),
+			));
+		}
 	}
 
 	private function phpboost_authenticate($login, $password, $autoconnect)
@@ -126,10 +149,20 @@ class UserLoginController extends AbstractController
 
 	private function build_view()
 	{
-		$response = new SiteDisplayResponse($this->view);
-		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['connect']);
-		return $response;
+		if (MaintenanceConfig::load()->is_under_maintenance() || $this->login_type == self::ADMIN_LOGIN)
+		{
+			$response = new SiteDisplayFrameResponse($this->view);
+			$graphical_environment = $response->get_graphical_environment();
+			$graphical_environment->set_page_title($this->login_type == self::ADMIN_LOGIN ? LangLoader::get_message('administration', 'admin') : LangLoader::get_message('title_maintain', 'main'));
+			return $response;
+		}
+		else
+		{
+			$response = new SiteDisplayResponse($this->view);
+			$graphical_environment = $response->get_graphical_environment();
+			$graphical_environment->set_page_title($this->lang['connect']);
+			return $response;
+		}
 	}
 	
 	/**
@@ -141,7 +174,7 @@ class UserLoginController extends AbstractController
 		$this->form->set_css_class('fieldset-content');
 
 		$this->fieldset = new FormFieldsetHTML('loginFieldset', $this->lang['connect']);
-		$login = new FormFieldTextEditor('login', $this->lang['pseudo'], '', array('required' => true));
+		$login = new FormFieldTextEditor('login', $this->lang['login'], '', array('description' => $this->lang['login.explain'], 'required' => true));
 		$this->fieldset->add_field($login);
 		$password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array('required' => true));
 		$this->fieldset->add_field($password);
@@ -157,7 +190,14 @@ class UserLoginController extends AbstractController
 	private function build_target()
 	{
 		$redirect_url = $this->request->get_value('redirect', '/');
-		return DispatchManager::get_url('/user/index.php', '/login?redirect=' . urlencode($redirect_url));
+
+		if ($this->login_type == self::ADMIN_LOGIN)
+		{
+			 return DispatchManager::get_url('/admin/admin_index.php', '?redirect=' . urlencode($redirect_url));
+		}
+		else
+		{
+		}	return DispatchManager::get_url('/user/index.php', '/login?redirect=' . urlencode($redirect_url));
 	}
 
 	private function get_redirect_url()
@@ -165,6 +205,59 @@ class UserLoginController extends AbstractController
 		$redirect = $this->request->get_value('redirect', '/');
 		$redirect = $redirect !== '/' ? HOST . $redirect : $redirect;
 		return new Url($redirect);
+	}
+
+	private function init_maintain_delay($maintain_config)
+	{
+		$date_lang = LangLoader::get('date-common');
+		$array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800'); 
+		$array_delay = array(0 => LangLoader::get_message('unspecified', 'main'), 1 => '', 2 => '1 ' . $date_lang['minute'], 3 => '5 ' . $date_lang['minutes'], 4 => '15 ' . $date_lang['minutes'], 5 => '30 ' . $date_lang['minutes'], 6 => '1 ' . $date_lang['hour'], 7 => '2 ' . $date_lang['hours'], 8 => '1 ' . $date_lang['day'], 9 => '2 ' . $date_lang['days'], 10 => '1 ' . $date_lang['week']);
+		
+		if (!$maintain_config->is_unlimited_maintenance())
+		{
+			$key = 0;
+			$current_time = time();
+			$end_timestamp = $this->maintain_config->get_end_date()->get_timestamp();
+			for ($i = 10; $i >= 0; $i--)
+			{
+				$delay = ($end_timestamp - $current_time) - $array_time[$i];
+				if ($delay >= $array_time[$i]) 
+				{
+					$key = $i;
+					break;
+				}
+			}
+			
+			//Calcul du format de la date
+			$seconds = gmdate_format('s', $end_timestamp, Timezone::SITE_TIMEZONE);
+			$array_release = array(
+			gmdate_format('Y', $end_timestamp, Timezone::SITE_TIMEZONE), (gmdate_format('n', $end_timestamp, Timezone::SITE_TIMEZONE) - 1), gmdate_format('j', $end_timestamp, Timezone::SITE_TIMEZONE), 
+			gmdate_format('G', $end_timestamp, Timezone::SITE_TIMEZONE), gmdate_format('i', $end_timestamp, Timezone::SITE_TIMEZONE), ($seconds < 10) ? trim($seconds, 0) : $seconds );
+		
+			$seconds = gmdate_format('s', time(), Timezone::SITE_TIMEZONE);
+		    $array_now = array(
+		    gmdate_format('Y', time(), Timezone::SITE_TIMEZONE), (gmdate_format('n', time(), Timezone::SITE_TIMEZONE) - 1), gmdate_format('j', time(), Timezone::SITE_TIMEZONE),
+		    gmdate_format('G', time(), Timezone::SITE_TIMEZONE), gmdate_format('i', time(), Timezone::SITE_TIMEZONE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
+		}
+		else
+		{
+			$key = -1;
+			$array_release = array('0', '0', '0', '0', '0', '0');
+			$array_now = array('0', '0', '0', '0', '0', '0');
+		}
+		
+		$this->view->put_all(array(
+			'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
+			'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release)
+		));
+		
+		if ($maintain_config->get_display_duration() && !$maintain_config->is_unlimited_maintenance())
+		{
+			$this->view->put_all(array(
+				'C_DISPLAY_DELAY' => true,
+				'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0'
+			));
+		}
 	}
 }
 ?>

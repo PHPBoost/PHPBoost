@@ -110,9 +110,6 @@ $lang = array(
 	
 	'advanced-config.miscellaneous' => 'Miscellaneous',
 	'advanced-config.output-gziping-enabled' => 'Enable page compression for faster display speed',
-	'advanced-config.unlock-administration' => 'Unlock code',
-	'advanced-config.unlock-administration.explain' => 'This code can unlock the administration panel in case of intrusion attempt.',
-	'advanced-config.unlock-administration.request' => 'Send admin\'s unlock code',
 	'advanced-config.debug-mode' => 'Debug mode',
 	'advanced-config.debug-mode.explain' => 'This mode is very useful for developers who will more easily see the errors encountered during the page 
 		execution. You shouldn\'t use this mode on a published web site.',
@@ -120,14 +117,5 @@ $lang = array(
 	'advanced-config.debug-mode.type.normal' => 'Normal',
 	'advanced-config.debug-mode.type.strict' => 'Strict',
 	'advanced-config.debug-display-database-query-enabled' => 'Enable display and monitoring SQL queries',
-
-	'advanced-config.unlock-code.title' => 'Mail to keep',
-	'advanced-config.unlock-code.content' => 'Keep this code (it will never be redelivered): :unlock_code
-		<br /><br />
-		This code can unlock the administration panel in case of intrusion attempt.
-		It will be asked in the direct administration connection form : :host_dir/admin/admin_index.php)
-		<br/><br/>
-		:signature',
-	'advanced-config.confirm_mail_sending' => 'Do you really want to send the unlock code?'
 );
 ?>

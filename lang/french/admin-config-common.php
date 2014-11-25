@@ -107,23 +107,11 @@ $lang = array(
 	
 	'advanced-config.miscellaneous' => 'Divers',
 	'advanced-config.output-gziping-enabled' => 'Activation de la compression des pages, ceci accélère la vitesse d\'affichage',
-	'advanced-config.unlock-administration' => 'Code de déverrouillage',
-	'advanced-config.unlock-administration.explain' => 'Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.',
-	'advanced-config.unlock-administration.request' => 'Renvoyer le code de déverrouillage',
 	'advanced-config.debug-mode' => 'Mode Debug',
 	'advanced-config.debug-mode.explain' => 'Ce mode est particulièrement utile pour les développeurs car les erreurs sont affichées explicitement. Il est déconseillé d\'utiliser ce mode sur un site en production.',
 	'advanced-config.debug-mode.type' => 'Sélection du mode debug',
 	'advanced-config.debug-mode.type.normal' => 'Normal',
 	'advanced-config.debug-mode.type.strict' => 'Strict',
 	'advanced-config.debug-display-database-query-enabled' => 'Activer l\'affichage et le suivi des requêtes SQL',
-
-	'advanced-config.unlock-code.title' => 'Mail à conserver',
-	'advanced-config.unlock-code.content' => 'Code à conserver (Il ne vous sera plus délivré) : :unlock_code
-		<br /><br />
-		Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.
-		Il vous sera demandé dans le formulaire de connexion directe à l\'administration : :host_dir/admin/admin_index.php
-		<br /><br />
-		:signature',
-	'advanced-config.confirm_mail_sending' => 'Voulez-vous vraiment envoyer le code de déverrouillage ?'
 );
 ?>

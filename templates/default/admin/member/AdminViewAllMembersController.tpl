@@ -7,9 +7,9 @@
 					<th>
 					</th>
 					<th>
-						<a href="{SORT_LOGIN_TOP}" class="fa fa-table-sort-up"></a>
-						{L_LOGIN} 
-						<a href="{SORT_LOGIN_BOTTOM}" class="fa fa-table-sort-down"></a>
+						<a href="{SORT_DISPLAY_NAME_TOP}" class="fa fa-table-sort-up"></a>
+						{L_DISPLAY_NAME} 
+						<a href="{SORT_DISPLAY_NAME_BOTTOM}" class="fa fa-table-sort-down"></a>
 					</th>
 					<th>
 						<a href="{SORT_LEVEL_TOP}" class="fa fa-table-sort-up"></a>
@@ -53,7 +53,7 @@
 						<a href="{member_list.DELETE_LINK}" title="{L_DELETE}" class="fa fa-delete" data-confirmation="delete-element"></a>
 					</td>
 					<td>
-						<a href="{member_list.U_PROFILE}" class="{member_list.LEVEL_CLASS}" # IF member_list.C_GROUP_COLOR # style="color:{member_list.GROUP_COLOR}" # ENDIF #>{member_list.LOGIN}</a>
+						<a href="{member_list.U_PROFILE}" class="{member_list.LEVEL_CLASS}" # IF member_list.C_GROUP_COLOR # style="color:{member_list.GROUP_COLOR}" # ENDIF #>{member_list.DISPLAY_NAME}</a>
 					</td>
 					<td> 
 						{member_list.LEVEL}

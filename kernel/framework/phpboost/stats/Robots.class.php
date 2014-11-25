@@ -59,7 +59,7 @@ class Robots
 	
 	private static function detect_robot_by_user_agent()
 	{
-		$user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? mb_strtolower($_SERVER['HTTP_USER_AGENT']) : '';
+		$user_agent = AppContext::get_request()->get_user_agent();
 
 		if (!empty($user_agent))
 		{

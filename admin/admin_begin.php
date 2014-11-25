@@ -32,8 +32,8 @@ require_once(PATH_TO_ROOT . '/kernel/begin.php');
 
 require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
 
-if (!AppContext::get_current_user()->is_admin() && !AdminLoginService::try_to_connect())
+if (!AppContext::get_current_user()->is_admin())
 {
-	DispatchManager::redirect(new AdminLoginController(AppContext::get_request()));
+	DispatchManager::redirect(new UserLoginController(UserLoginController::ADMIN_LOGIN));
 }
 ?>
