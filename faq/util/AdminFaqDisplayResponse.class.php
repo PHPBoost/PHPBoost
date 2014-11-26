@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               FaqHomePageExtensionPoint.class.php
+ *                               AdminFaqDisplayResponse.class.php
  *                            -------------------
  *   begin                : September 2, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,16 +29,24 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class FaqHomePageExtensionPoint implements HomePageExtensionPoint
+class AdminFaqDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function get_home_page()
+	public function __construct($view, $title_page)
 	{
-		return new DefaultHomePage($this->get_title(), FaqDisplayCategoryController::get_view());
-	}
-	
-	private function get_title()
-	{
-		return LangLoader::get_message('module_title', 'common', 'faq');
+		parent::__construct($view);
+		
+		$lang = LangLoader::get('common', 'faq');
+		$picture = '/faq/faq.png';
+		$this->set_title($lang['module_title']);
+		
+		$this->add_link(LangLoader::get_message('categories.management', 'categories-common'), FaqUrlBuilder::manage_categories(), $picture);
+		$this->add_link(LangLoader::get_message('category.add', 'categories-common'), FaqUrlBuilder::add_category(), $picture);
+		$this->add_link($lang['faq.management'], FaqUrlBuilder::manage(), $picture);
+		$this->add_link($lang['faq.actions.add'], FaqUrlBuilder::add(), $picture);
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), FaqUrlBuilder::configuration(), $picture);
+		
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
 	}
 }
 ?>

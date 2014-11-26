@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               FaqHomePageExtensionPoint.class.php
+ *                               FaqCategoriesManageController.class.php
  *                            -------------------
  *   begin                : September 2, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,16 +29,26 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class FaqHomePageExtensionPoint implements HomePageExtensionPoint
+class FaqCategoriesManageController extends AbstractCategoriesManageController
 {
-	public function get_home_page()
+	protected function generate_response(View $view)
 	{
-		return new DefaultHomePage($this->get_title(), FaqDisplayCategoryController::get_view());
+		return new AdminFaqDisplayResponse($view, $this->get_title());
 	}
 	
-	private function get_title()
+	protected function get_categories_manager()
 	{
-		return LangLoader::get_message('module_title', 'common', 'faq');
+		return FaqService::get_categories_manager();
+	}
+	
+	protected function get_edit_category_url(Category $category)
+	{
+		return FaqUrlBuilder::edit_category($category->get_id());
+	}
+	
+	protected function get_delete_category_url(Category $category)
+	{
+		return FaqUrlBuilder::delete_category($category->get_id());
 	}
 }
 ?>
