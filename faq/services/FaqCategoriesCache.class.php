@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               FaqHomePageExtensionPoint.class.php
+ *                               FaqCategoriesCache.class.php
  *                            -------------------
  *   begin                : September 2, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,16 +29,29 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class FaqHomePageExtensionPoint implements HomePageExtensionPoint
+class FaqCategoriesCache extends CategoriesCache
 {
-	public function get_home_page()
+	public function get_table_name()
 	{
-		return new DefaultHomePage($this->get_title(), FaqDisplayCategoryController::get_view());
+		return FaqSetup::$faq_cats_table;
 	}
 	
-	private function get_title()
+	public function get_category_class()
 	{
-		return LangLoader::get_message('module_title', 'common', 'faq');
+		return CategoriesManager::RICH_CATEGORY_CLASS;
+	}
+	
+	public function get_module_identifier()
+	{
+		return 'faq';
+	}
+	
+	public function get_root_category()
+	{
+		$root = new RichRootCategory();
+		$root->set_authorizations(FaqConfig::load()->get_authorizations());
+		$root->set_description(FaqConfig::load()->get_root_category_description());
+		return $root;
 	}
 }
 ?>

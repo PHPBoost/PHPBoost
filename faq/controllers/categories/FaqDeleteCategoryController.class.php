@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               FaqHomePageExtensionPoint.class.php
+ *                               FaqDeleteCategoryController.class.php
  *                            -------------------
  *   begin                : September 2, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,16 +29,26 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class FaqHomePageExtensionPoint implements HomePageExtensionPoint
+class FaqDeleteCategoryController extends AbstractDeleteCategoryController
 {
-	public function get_home_page()
+	protected function generate_response(View $view)
 	{
-		return new DefaultHomePage($this->get_title(), FaqDisplayCategoryController::get_view());
+		return new AdminFaqDisplayResponse($view, $this->get_title());
 	}
 	
-	private function get_title()
+	protected function get_categories_manager()
 	{
-		return LangLoader::get_message('module_title', 'common', 'faq');
+		return FaqService::get_categories_manager();
+	}
+	
+	protected function get_id_category()
+	{
+		return AppContext::get_request()->get_getint('id', 0);
+	}
+	
+	protected function get_categories_management_url()
+	{
+		return FaqUrlBuilder::manage_categories();
 	}
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               FaqHomePageExtensionPoint.class.php
+ *                               FaqCache.class.php
  *                            -------------------
  *   begin                : September 2, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
@@ -29,16 +29,52 @@
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 
-class FaqHomePageExtensionPoint implements HomePageExtensionPoint
+class FaqCache implements CacheData
 {
-	public function get_home_page()
+	private $questions = array();
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function synchronize()
 	{
-		return new DefaultHomePage($this->get_title(), FaqDisplayCategoryController::get_view());
+		$this->questions = array();
+		
+		$result = PersistenceContext::get_querier()->select('
+			SELECT id, id_category, question
+			FROM ' . FaqSetup::$faq_table . ' faq
+			WHERE approved = 1'
+		);
+		
+		while ($row = $result->fetch())
+		{
+			$this->questions[$row['id_category']][] = array(
+				'id' => $row['id'],
+				'question' => $row['question']
+			);
+		}
 	}
 	
-	private function get_title()
+	public function get_questions()
 	{
-		return LangLoader::get_message('module_title', 'common', 'faq');
+		return $this->questions;
+	}
+	
+	/**
+	 * Loads and returns the faq cached data.
+	 * @return FaqCache The cached data
+	 */
+	public static function load()
+	{
+		return CacheManager::load(__CLASS__, 'module', 'faq');
+	}
+	
+	/**
+	 * Invalidates the current faq cached data.
+	 */
+	public static function invalidate()
+	{
+		CacheManager::invalidate('module', 'faq');
 	}
 }
 ?>
