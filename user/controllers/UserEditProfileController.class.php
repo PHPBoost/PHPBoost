@@ -61,7 +61,7 @@ class UserEditProfileController extends AbstractController
 		} catch (RowNotFoundException $e) {
 		}
 
-		$this->user_auth_types = AuthenticationService::get_user_types_authentication($this->user->get_id());
+		$this->user_auth_types = AuthenticationService::get_user_types_authentication($user_id);
 		
 		if (!$this->check_authorizations($user_id))
 		{
@@ -144,19 +144,20 @@ class UserEditProfileController extends AbstractController
 		/* ************* */
 
 
-		$connect_fieldset = new FormFieldsetHTML('connect', 'connect');
+		$connect_fieldset = new FormFieldsetHTML('connect', 'Connexion');
 		$form->add_fieldset($connect_fieldset);
 
+		$has_custom_login = $this->user->get_email() !== $this->internal_auth_infos['login'];
 		if (in_array(PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
 		{
-			$connect_fieldset->add_field(new FormFieldFree('internal_auth', 'internal <i class="fa fa-success"></i>', '<a onclick="javascript:HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();HTMLForms.getField(\'old_password\').enable();">Modifier</a>'));
+			$connect_fieldset->add_field(new FormFieldFree('internal_auth', 'Connexion interne <i class="fa fa-success"></i>', '<a onclick="javascript:HTMLForms.getField(\'custom_login\').enable();'. ($has_custom_login ? 'HTMLForms.getField(\'login\').enable();' : '') .'HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();HTMLForms.getField(\'old_password\').enable();">Modifier</a>'));
 		}
 		else
 		{
 			$connect_fieldset->add_field(new FormFieldFree('internal_auth', 'internal <i class="fa fa-error"></i>', '<a onclick="javascript:HTMLForms.getField(\'custom_login\').enable();HTMLForms.getField(\'password\').enable();HTMLForms.getField(\'password_bis\').enable();">Créer une authentification interne</a>'));
 		}
 
-		$connect_fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], false, array('description'=> $this->lang['login.custom.explain'], 'hidden' => true, 'events' => array('click' => '
+		$connect_fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['login.custom'], $has_custom_login, array('description'=> $this->lang['login.custom.explain'], 'hidden' => true, 'events' => array('click' => '
 			if (HTMLForms.getField("custom_login").getValue()) {
 				HTMLForms.getField("login").enable();
 			} else { 
@@ -164,7 +165,7 @@ class UserEditProfileController extends AbstractController
 			}'
 		))));
 
-		$connect_fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], $this->internal_auth_infos['login'], array('hidden' => true),
+		$connect_fieldset->add_field(new FormFieldTextEditor('login', $this->lang['login'], ($has_custom_login ? $this->internal_auth_infos['login'] : ''), array('required' => true, 'hidden' => true),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists($this->user->get_id()))
 		));
 
@@ -184,11 +185,11 @@ class UserEditProfileController extends AbstractController
 
 		if (in_array(FacebookAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
 		{
-			$connect_fieldset->add_field(new FormFieldFree('fb_auth', 'FB <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id())->absolute() .'?dissociate=fb">dissocier votre compte Facebook</a>'));
+			$connect_fieldset->add_field(new FormFieldFree('fb_auth', 'Facebook Connect <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id())->absolute() .'?dissociate=fb">Dissocier votre compte Facebook</a>'));
 		}
 		else
 		{
-			$connect_fieldset->add_field(new FormFieldFree('fb_auth', 'FB <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id())->absolute() .'?associate=fb">associer votre compte Facebook</a>'));
+			$connect_fieldset->add_field(new FormFieldFree('fb_auth', 'Connexion par Facebook <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id())->absolute() .'?associate=fb">associer votre compte Facebook</a>'));
 		}
 
 

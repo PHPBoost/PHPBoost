@@ -234,7 +234,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		$parameters = array('user_id' => $user_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 		
-		if (!$approved)
+		if ($approved !== null && !$approved)
 		{
 			PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, $condition, $parameters);
 			AutoConnectData::change_key($user_id);
