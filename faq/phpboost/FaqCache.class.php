@@ -32,13 +32,14 @@
 class FaqCache implements CacheData
 {
 	private $questions = array();
+	private $categories = array();
 	
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->questions = array();
+		$this->questions = $this->categories = array();
 		
 		$result = PersistenceContext::get_querier()->select('
 			SELECT id, id_category, question
@@ -48,6 +49,8 @@ class FaqCache implements CacheData
 		
 		while ($row = $result->fetch())
 		{
+			$this->categories[] = $row['id_category'];
+			
 			$this->questions[$row['id_category']][] = array(
 				'id' => $row['id'],
 				'question' => $row['question']
@@ -58,6 +61,16 @@ class FaqCache implements CacheData
 	public function get_questions()
 	{
 		return $this->questions;
+	}
+	
+	public function get_category_questions($id_category)
+	{
+		return $this->questions[$id_category];
+	}
+	
+	public function get_categories()
+	{
+		return $this->categories;
 	}
 	
 	/**

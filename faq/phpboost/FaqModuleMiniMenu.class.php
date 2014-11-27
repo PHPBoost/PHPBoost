@@ -55,14 +55,13 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 			//Load module cache
 			$faq_cache = FaqCache::load();
 			
-			//Get all questions
-			$questions = $faq_cache->get_questions();
-			
 			//Get authorized categories for the current user
 			$authorized_categories = FaqService::get_authorized_categories(Category::ROOT_CATEGORY);
 			
-			$id_category = array_rand($authorized_categories);
-			$category_questions = $questions[$id_category];
+			$categories = array_intersect($faq_cache->get_categories(), $authorized_categories);
+			
+			$id_category = $categories[array_rand($categories)];
+			$category_questions = $faq_cache->get_category_questions($id_category);
 			$random_question = $category_questions[array_rand($category_questions)];
 			
 			if (!empty($random_question))
@@ -71,7 +70,7 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 				
 				$tpl->put_all(array(
 					'C_QUESTION' => true,
-					'QUESTION' => $partner['name'],
+					'QUESTION' => $random_question['question'],
 					'U_LINK' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $random_question['id'])->rel()
 				));
 			}
