@@ -97,19 +97,19 @@ ul.pagination-block li a:hover {
 	transition: all 0.1s linear;
 }
 
-ul.pagination-block li a:active { 
+ul.pagination-block li a:active {
 	background-color: #F1F1F1;
 	border: 1px solid #DDDDDD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 }
 
-ul.pagination-block li a.current-page { 
+ul.pagination-block li a.current-page {
 	color: #FEFEFE;
 	background-color: #3B6B9F;
 	border-color: #366393;
 	text-decoration: none;
 }
-ul.pagination-block li a.current-page:hover, ul.pagination-block li a.current-page:hover{ 
+ul.pagination-block li a.current-page:hover, ul.pagination-block li a.current-page:hover{
 	background-color: #366393;
 	border-color: #315A86;
 }
@@ -195,7 +195,7 @@ ul.pagination-block-bis li a.next-page:hover { text-decoration: underline; }
 
 .explorer .content > ul > li > a { padding: 3px 5px; }
 
-.explorer .content ul .fa { 
+.explorer .content ul .fa {
 	width: 20px;
 	vertical-align: top;
 }
@@ -362,7 +362,7 @@ button:hover, .button-hover {
 	transition: all 0.1s linear;
 }
 
-button:active, .button-active { 
+button:active, .button-active {
 	background-color: #F1F1F1;
 	border: 1px solid #DDDDDD;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
@@ -407,7 +407,7 @@ button[type=reset] { font-weight: bold; }
 
 .basic-button.alt:hover { background: #BBBBBB; }
 
-/* Formulaires 
+/* Formulaires
 --------------------------------------*/
 
 .fieldset-mini {
@@ -470,7 +470,7 @@ input[type=text], input[type=password], textarea, input[type=file], select {
 input[type=text]:hover, input[type=password]:hover, textarea:hover, input[type=file]:hover, select:hover {
 	color: #333333;
 	border: 1px solid #BBBBBB;
-	background-color: #FFFFFF; 
+	background-color: #FFFFFF;
 }
 
 input[type=text]:focus, input[type=password]:focus, textarea:focus, input[type=file]:focus, select:focus {
@@ -559,7 +559,7 @@ textarea {
 	color: #C43C35;
 }
 
-.constraint-status-error input:hover, .constraint-status-error input:focus, 
+.constraint-status-error input:hover, .constraint-status-error input:focus,
 .constraint-status-error textarea:hover, form .constraint-status-error textarea:focus {
 	border-color: rgba(196, 60, 43, 0.5);
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
@@ -579,14 +579,14 @@ textarea {
 	font-weight: bold;
 }
 
-.form-element-textarea.constraint-status-error i.picture-status-constraint { 
+.form-element-textarea.constraint-status-error i.picture-status-constraint {
 	margin-left: 5px;
 }
 
 /* Auto-completion */
 div.form-autocompleter-container { position: relative; }
 
-div.form-autocompleter { 
+div.form-autocompleter {
 	position: absolute;
 	top: -999999em;
 	padding: 5px 0;
@@ -599,7 +599,7 @@ div.form-autocompleter {
 	z-index: 102;
 }
 
-div.form-autocompleter ul { margin: 0px; padding: 0px; max-height: 20em; overflow: auto; } 
+div.form-autocompleter ul { margin: 0px; padding: 0px; max-height: 20em; overflow: auto; }
 div.form-autocompleter ul li.selected { background-color: #F0F0F0; }
 div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0; padding: 5px 15px; cursor: pointer; }
 
@@ -628,7 +628,9 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 	padding: 5px;
 }
 
-.sortable-block .sortable-element > .sortable-block { margin-left: 30px; }
+.sortable-block .sortable-element > .sortable-block {
+	margin-left: 30px;
+}
 
 .sortable-block {
 	list-style-type: none;
@@ -649,55 +651,47 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 .sortable-block .sortable-element:hover {
 	border: 1px solid #d0d8e1;
 	cursor: move;
-	-moz-box-shadow: 0px 0px 5px #EAEAEA;
-	-webkit-box-shadow: 0px 0px 5px #EAEAEA;
 	box-shadow: 0px 0px 5px #EAEAEA;
 }
 
-.sortable-block .sortable-title{
+.sortable-block .sortable-title {
 	background-image: linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
-	background-image: -o-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
-	background-image: -moz-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
-	background-image: -webkit-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
-	background-image: -ms-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
 	padding: 10px 5px 5px 10px;
 	font-size: 1em;
 	font-weight: bold;
 }
 
-.sortable-block .sortable-title:hover{ 
-	background-image: linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
-	background-image: -o-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
-	background-image: -moz-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
-	background-image: -webkit-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
-	background-image: -ms-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
+.sortable-block .sortable-title:hover {
+	background-image: linear-gradient(bottom, #FFFFFF 25%, #F2F5F8 100%);
 }
 
 .sortable-block .sortable-title span.cat-desc {
 	font-size: 0.8em;
 	font-weight: normal;
-	font-style: italic;	
+	font-style: italic;
 }
 
-.sortable-block .sortable-title img{ cursor: move; }
+.sortable-block .sortable-title img {
+	cursor: move;
+}
 
 .sortable-block fieldset {
 	padding: 0px 30px;
 }
 
-.sortable-block .sortable-actions{
+.sortable-block .sortable-actions {
 	float: right;
 	padding: 3px 3px;
 }
 
-.sortable-block .sortable-options{
+.sortable-block .sortable-options {
 	width: 15px;
 	display: inline-block;
 	padding: 0 2px;
 	text-align: left;
 }
 
-.sortable-block .sortable-options.preview{
+.sortable-block .sortable-options.preview {
 	width: 16px;
 	padding: 0;
 }
@@ -712,8 +706,11 @@ div.form-autocompleter ul li { list-style-type: none; display: block; margin: 0;
 	margin-left: 14px;
 }
 
-.sortable-block .sortable-element .fa: not(.fa-arrows):hover, .sortable-block .sortable-actions img { cursor: pointer; }
-.sortable-block .sortable-element:hover label { cursor: pointer; }
+.sortable-block .sortable-actions img,
+.sortable-block .sortable-element:hover label,
+.sortable-block .sortable-element .fa: not(.fa-arrows):hover {
+	cursor: pointer;
+}
 
 /* Gestion des Menus */
 .menu-link-list {
@@ -828,7 +825,7 @@ div.container-block-absolute > div {
 
 .menus-block-top { margin-bottom: 5px; }
 
-.menus-block-title { 
+.menus-block-title {
 	font-size: 14px;
 	color: #515C68;
 }
@@ -874,7 +871,7 @@ div.container-block-absolute > div {
 #container-header, #container-subheader, #container-leftmenu,
 #container-rightmenu, #container-topcentral, #container-central,
 #container-bottomcentral, #container-topfooter, #container-footer {
-	padding: 5px; 
+	padding: 5px;
 	vertical-align: top;
 	padding-bottom: 5px;
 }

@@ -478,6 +478,7 @@ button,
 	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
 	border-radius: 4px;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	word-wrap: no-warp;
 }
 button:hover,
 .button-hover {
@@ -804,6 +805,96 @@ div.form-autocompleter ul li {
 	margin-left: -1px;
 	border-radius: 0 4px 4px 0;
 	padding: 4px 8px;
+}
+
+/* Gestion des Categories */
+#cats-elements-list {
+	position: relative;
+	padding: 5px;
+}
+
+.sortable-block .sortable-element > .sortable-block {
+	margin-left: 30px;
+}
+
+.sortable-block {
+	list-style-type: none;
+	list-style-position: outside;
+	margin: 0;
+	padding: 0;
+	min-height: 24px;
+}
+
+.sortable-block .sortable-element {
+	background: #FFFFFF;
+	border: 1px solid #D6DEE7;
+	padding: 0;
+	position: relative;
+	margin: 10px 6px;
+}
+
+.sortable-block .sortable-element:hover {
+	border: 1px solid #d0d8e1;
+	cursor: move;
+	box-shadow: 0px 0px 5px #EAEAEA;
+}
+
+.sortable-block .sortable-title {
+	background-image: linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
+	padding: 10px 5px 5px 10px;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.sortable-block .sortable-title:hover {
+	background-image: linear-gradient(bottom, #FFFFFF 25%, #F2F5F8 100%);
+}
+
+.sortable-block .sortable-title span.cat-desc {
+	font-size: 0.8em;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.sortable-block .sortable-title img {
+	cursor: move;
+}
+
+.sortable-block fieldset {
+	padding: 0px 30px;
+}
+
+.sortable-block .sortable-actions {
+	float: right;
+	padding: 3px 3px;
+}
+
+.sortable-block .sortable-options {
+	width: 15px;
+	display: inline-block;
+	padding: 0 2px;
+	text-align: left;
+}
+
+.sortable-block .sortable-options.preview {
+	width: 16px;
+	padding: 0;
+}
+
+.sortable-block .sortable-element hr {
+	background-color: #999999;
+	margin-top: 5px;
+}
+
+.sortable-block .sortable-element label {
+	color: #1F507F;
+	margin-left: 14px;
+}
+
+.sortable-block .sortable-actions img,
+.sortable-block .sortable-element:hover label,
+.sortable-block .sortable-element .fa: not(.fa-arrows):hover {
+	cursor: pointer;
 }
 
 
