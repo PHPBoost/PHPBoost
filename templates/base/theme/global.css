@@ -24,12 +24,12 @@ a.modo   { color: #006699; }
 a.member { color: #000000; }
 
 /* --- Les differentes tailles de polices --- */
-.smaller { font-size: 0.8rem; }
-.small   { font-size: 0.9rem; }
-.normal  { font-size: 1.0rem; }
-.big     { font-size: 1.2rem; }
-.bigger  { font-size: 1.5rem; }
-.biggest { font-size: 2.0rem; }
+.smaller { font-size: 0.8em; }
+.small   { font-size: 0.9em; }
+.normal  { font-size: 1.0em; }
+.big     { font-size: 1.2em; }
+.bigger  { font-size: 1.5em; }
+.biggest { font-size: 2.0em; }
 
 /* --- Les titres (balise h) --- */
 h1 { font-size: 2.2rem; }
