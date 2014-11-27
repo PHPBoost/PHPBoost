@@ -68,14 +68,24 @@ div.connect-register i {
 	margin: 5px 0px;
 }
 
+.js-menu-button {
+	display: none;
+}
+
 @media ( max-width: 770px ) {
 
-	#connect-menu .horizontal-fieldset a {
-		display: inline-block!important;
+	.js-menu-button {
+		display: inline-block;
 		padding: 5px 10px 5px 10px;
-		color: #DEDEDE;
 		height: 31px;
-		position: relative;
+	}
+
+	#connect-menu .horizontal-fieldset li {
+		padding: 3px 0px 3px 2px;
+	}
+
+	#connect-menu .horizontal-fieldset a {
+		color: #DEDEDE;
 	}
 
 	ul.connect-content {

@@ -19,13 +19,13 @@
 # ENDIF #
 <script>
 	<!--
-	function open_submenu(idelement)
+	function open_submenu(myid)
 	{
-		if ($(idelement).hasClassName("active")) {
-			$(idelement).removeClassName ("active");
+		if ($(myid).hasClassName("active")) {
+			$(myid).removeClassName ("active");
 		}
 		else {
-			$(idelement).addClassName ("active");
+			$(myid).addClassName ("active");
 		}
 	}
 	-->
@@ -121,7 +121,7 @@
 	# ELSE #
 	<div id="connect-menu">
 		<div class="horizontal-fieldset">
-			<a href="#" class="fa fa-bars" style="display: none;" onClick="open_submenu('connect-menu');"></a>
+			<a href="#" class="fa fa-bars js-menu-button" onClick="open_submenu('connect-menu');"></a>
 			<ul class="connect-content">
 				<li>
 					<i class="fa fa-user"></i>
