@@ -252,11 +252,13 @@ class NewsFormController extends ModuleController
 		
 		$news->set_sources($this->form->get_value('sources'));
 		
-		if ($news->get_id() === null && $this->is_contributor_member())
+		if ($this->is_contributor_member())
 		{
+			if ($news->get_id() === null)
+				$news->set_creation_date(new Date());
+			
 			$news->set_rewrited_name(Url::encode_rewrite($news->get_name()));
 			$news->set_approbation_type(News::NOT_APPROVAL);
-			$news->set_creation_date(new Date());
 			$news->clean_start_and_end_date();
 		}
 		else
