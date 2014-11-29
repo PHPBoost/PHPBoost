@@ -40,7 +40,8 @@ $lang['faq.pending'] = 'Questions en attente';
 $lang['faq.manage'] = 'Gérer les questions';
 $lang['faq.management'] = 'Gestion de la FAQ';
 
-$lang['random_question'] = 'Question aléatoire';
+$lang['faq.random_question'] = 'Question aléatoire';
+$lang['faq.questions'] = 'Questions';
 
 //config
 $lang['config.display_type.explain'] = 'Façon dont les questions seront affichées. Le mode en ligne permet d\'afficher les questions et un clic sur la question affiche la réponse, alors que le mode en blocs affiche l\'enchaînement des questions et des réponses.';

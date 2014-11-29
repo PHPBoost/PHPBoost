@@ -50,6 +50,7 @@ $lang['process.error'] = 'Une erreur s\'est produite lors de l\'opération';
 $lang['confirm.delete'] = 'Voulez-vous vraiment supprimer cet élément ?';
 
 $lang['message.success.config'] = 'La configuration a été modifiée';
+$lang['message.success.position.update'] = 'Les éléments ont été repositionnés';
 
 //Captcha
 $lang['captcha.validation_error'] = 'Le champ de vérification visuel n\'a pas été saisi correctement !';

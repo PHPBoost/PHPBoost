@@ -97,6 +97,16 @@ class FaqService
 	}
 	
 	 /**
+	 * @desc Update the position of a question.
+	 * @param string[] $id_question : id of the question to update
+	 * @param string[] $position : new question position
+	 */
+	public static function update_position($id_question, $position)
+	{
+		self::$db_querier->update(FaqSetup::$faq_table, array('q_order' => $position), 'WHERE id=:id', array('id' => $id_question));
+	}
+	
+	 /**
 	 * @desc Return the authorized categories.
 	 */
 	public static function get_authorized_categories($current_id_category)

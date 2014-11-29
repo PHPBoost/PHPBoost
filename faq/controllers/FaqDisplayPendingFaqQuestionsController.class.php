@@ -82,7 +82,8 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 		
 		$this->tpl->put_all(array(
 			'C_QUESTIONS' => $result->get_rows_count() > 0,
-			'C_PENDING' => true
+			'C_PENDING' => true,
+			'QUESTIONS_NUMBER' => $result->get_rows_count()
 		));
 		
 		while ($row = $result->fetch())
@@ -90,7 +91,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 			$faq_question = new FaqQuestion();
 			$faq_question->set_properties($row);
 			
-			$this->tpl->assign_block_vars('questions', $faq_questions->get_array_tpl_vars());
+			$this->tpl->assign_block_vars('questions', $faq_question->get_array_tpl_vars());
 		}
 		$result->dispose();
 		$this->build_sorting_form($field, $mode);
