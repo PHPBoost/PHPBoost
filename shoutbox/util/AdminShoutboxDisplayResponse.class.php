@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                     ShoutboxHomePageExtensionPoint.class.php
+ *                           AdminShoutboxDisplayResponse.class.php
  *                            -------------------
- *   begin                : February 08, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
+ *   begin                : October 14, 2014
+ *   copyright            : (C) 2014 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
  *
@@ -25,16 +25,24 @@
  *
  ###################################################*/
 
-class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
+ /**
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
+ * @desc AdminMenuDisplayResponse of the shoutbox module
+ */
+class AdminShoutboxDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function get_home_page()
+	public function __construct($view, $title_page)
 	{
-		return new DefaultHomePage($this->get_title(), ShoutboxHomeController::get_view());
-	}
-	
-	private function get_title()
-	{
-		return LangLoader::get_message('module_title', 'common', 'shoutbox');
+		parent::__construct($view);
+		
+		$lang = LangLoader::get('common', 'shoutbox');
+		$this->set_title($lang['module_title']);
+		$picture = 'shoutbox.png';
+		
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ShoutboxUrlBuilder::configuration(), $picture);
+		
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
 	}
 }
 ?>

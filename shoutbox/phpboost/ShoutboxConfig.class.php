@@ -30,11 +30,32 @@
  */
 class ShoutboxConfig extends AbstractConfigData
 {
+	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
+	const REFRESH_DELAY = 'refresh_delay';
 	const MAX_MESSAGES_NUMBER = 'max_messages_number';
-	const AUTHORIZATIONS = 'authorizations';
 	const FORBIDDEN_FORMATTING_TAGS = 'forbidden_formatting_tags';
 	const MAX_LINKS_NUMBER_PER_MESSAGE = 'max_links_number_per_message';
-	const REFRESH_DELAY = 'refresh_delay';
+	const AUTHORIZATIONS = 'authorizations';
+	
+	public function get_items_number_per_page()
+	{
+		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);
+	}
+	
+	public function set_items_number_per_page($number)
+	{
+		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $number);
+	}
+	
+	public function get_refresh_delay()
+	{
+		return $this->get_property(self::REFRESH_DELAY);
+	}
+	
+	public function set_refresh_delay($delay)
+	{
+		$this->set_property(self::REFRESH_DELAY, $delay);
+	}
 	
 	public function get_max_messages_number()
 	{
@@ -44,16 +65,6 @@ class ShoutboxConfig extends AbstractConfigData
 	public function set_max_messages_number($nbr_messages)
 	{
 		$this->set_property(self::MAX_MESSAGES_NUMBER, $nbr_messages);
-	}
-	
-	public function get_authorizations()
-	{
-		return $this->get_property(self::AUTHORIZATIONS);
-	}
-	
-	public function set_authorizations(Array $array)
-	{
-		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_forbidden_formatting_tags()
@@ -76,24 +87,22 @@ class ShoutboxConfig extends AbstractConfigData
 		$this->set_property(self::MAX_LINKS_NUMBER_PER_MESSAGE, $nbr_links);
 	}
 	
-	public function get_refresh_delay()
+	public function get_authorizations()
 	{
-		return $this->get_property(self::REFRESH_DELAY);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 	
-	/*
-	 * Param Refresh shoutbox delay in minute
-	*/
-	public function set_refresh_delay($delay)
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::REFRESH_DELAY, $delay);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
+			self::ITEMS_NUMBER_PER_PAGE => 20,
+			self::REFRESH_DELAY => 60000,
 			self::MAX_MESSAGES_NUMBER => 100,
-			self::AUTHORIZATIONS => array ('r-1' => 1, 'r0' => 3, 'r1' => 7),
 			self::FORBIDDEN_FORMATTING_TAGS => array(
 				'title', 'style', 'url', 'img','quote',
 				'hide', 'list', 'color', 'bgcolor', 'font',
@@ -102,7 +111,7 @@ class ShoutboxConfig extends AbstractConfigData
 				'sound', 'code', 'math', 'anchor', 'acronym'
 			),
 			self::MAX_LINKS_NUMBER_PER_MESSAGE => 2,
-			self::REFRESH_DELAY => 60000
+			self::AUTHORIZATIONS => array ('r-1' => 1, 'r0' => 3, 'r1' => 7)
 		);
 	}
 	

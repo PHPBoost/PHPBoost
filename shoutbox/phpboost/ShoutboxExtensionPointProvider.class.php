@@ -59,5 +59,10 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ShoutboxTreeLinks();
 	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/shoutbox/index.php')));
+	}
 }
 ?>
