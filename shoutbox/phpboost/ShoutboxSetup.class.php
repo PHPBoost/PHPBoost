@@ -27,7 +27,7 @@
 
 class ShoutboxSetup extends DefaultModuleSetup
 {
-	private static $shoutbox_table;
+	public static $shoutbox_table;
 	/**
 	 * @var string[string] localized messages
 	 */
@@ -67,12 +67,11 @@ class ShoutboxSetup extends DefaultModuleSetup
 	}
 
 	private function create_shoutbox_table()
-	{
+	{//TODO : update : supprimer colonne level
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'login' => array('type' => 'string', 'length' => 150, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'level' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
@@ -87,7 +86,7 @@ class ShoutboxSetup extends DefaultModuleSetup
 
 	private function insert_data()
 	{
-        $this->messages = LangLoader::get('install', 'shoutbox');
+		$this->messages = LangLoader::get('install', 'shoutbox');
 		$this->insert_shoutbox_data();
 	}
 
@@ -97,11 +96,9 @@ class ShoutboxSetup extends DefaultModuleSetup
 			'id' => 1,
 			'login' => $this->messages['shoutbox_login'],
 			'user_id' => -1,
-			'level' => -1,
 			'contents' => $this->messages['shoutbox_contents'],
-			'timestamp' => 1275082734
+			'timestamp' => time()
 		));
 	}
-
 }
 ?>

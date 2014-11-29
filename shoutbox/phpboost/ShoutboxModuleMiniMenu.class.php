@@ -36,78 +36,29 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	{
 		return '';
 	}
-
+	
 	public function display($tpl = false)
 	{
-		global $Cache, $LANG;
-
-		$config_shoutbox = ShoutboxConfig::load();
-	
 		//Mini Shoutbox non activée si sur la page archive shoutbox.
-		if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false && ShoutboxAuthorizationsService::check_authorizations()->read())
+		if (!Url::is_current_url('/shoutbox/') && OnlineAuthorizationsService::check_authorizations()->read())
 		{
-			load_module_lang('shoutbox');
-	
-			###########################Insertion##############################
-			$shoutbox = retrieve(POST, 'shoutbox', false);
-			if ($shoutbox)
-			{
-				//Membre en lecture seule?
-				if (AppContext::get_current_user()->get_delay_readonly() > time())
-				{
-					$error_controller = PHPBoostErrors::user_in_read_only();
-					DispatchManager::redirect($error_controller);
-				}
-	
-				$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
-				$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);
-				if (!empty($shout_pseudo) && !empty($shout_contents))
-				{
-					//Accès pour poster.
-					if (ShoutboxAuthorizationsService::check_authorizations()->write())
-					{
-						//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-						$check_time = (AppContext::get_current_user()->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? PersistenceContext::get_querier()->get_column_value(PREFIX . "shoutbox", 'MAX(timestamp)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id())) : '';
-						if (!empty($check_time) && !AppContext::get_current_user()->check_max_value(AUTH_FLOOD))
-						{
-							if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
-								AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=flood', '', '&'));
-						}
-	
-						//Vérifie que le message ne contient pas du flood de lien.
-						$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());
-						if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
-							AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=lp_flood', '', '&'));
-						if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
-							AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
-	
-						PersistenceContext::get_querier()->insert(PREFIX . "shoutbox", array('login' => $shout_pseudo, 'user_id' => AppContext::get_current_user()->get_id(), 'level' => AppContext::get_current_user()->get_level(), 'contents' => $shout_contents, 'timestamp' => time()));
-	
-						AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
-					}
-					else //utilisateur non autorisé!
-						AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=auth', '', '&'));
-				}
-			}
-	
-			###########################Affichage##############################
-			$tpl = new FileTemplate('shoutbox/shoutbox_mini.tpl');
-	
-		   MenuService::assign_positions_conditions($tpl, $this->get_block());
-	
-			//Pseudo du membre connecté.
-			if (AppContext::get_current_user()->get_id() !== -1)
-				$tpl->put_all(array(
-					'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_display_name(),
-					'C_HIDDEN_SHOUT' => true
-				));
-			else
-				$tpl->put_all(array(
-					'SHOUTBOX_PSEUDO' => $LANG['guest'],
-					'C_VISIBLE_SHOUT' => true
-				));
-	
+			$tpl = new FileTemplate('shoutbox/ShoutboxModuleMiniMenu.tpl');
+			MenuService::assign_positions_conditions($tpl, $this->get_block());
+			
+			$lang = LangLoader::get('common', 'shoutbox');
+			$tpl->add_lang($lang);
+			
+			$config_shoutbox = ShoutboxConfig::load();
+			
+			$is_member = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
+			
+			global $LANG;
+			
 			$tpl->put_all(array(
+				'C_MEMBER' => $is_member,
+				'C_VISIBLE_SHOUT' => !$is_member,
+				'C_HIDDEN_SHOUT' => $is_member,
+				'SHOUTBOX_PSEUDO' => $is_member ? AppContext::get_current_user()->get_display_name() : $LANG['guest'],
 				'SHOUT_REFRESH_DELAY' => $config_shoutbox->get_refresh_delay(),
 				'L_ALERT_TEXT' => $LANG['require_text'],
 				'L_ALERT_UNAUTH_POST' => $LANG['e_unauthorized'],
@@ -120,12 +71,11 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 				'L_MESSAGE' => $LANG['message'],
 				'L_PSEUDO' => $LANG['pseudo'],
 				'L_SUBMIT' => $LANG['submit'],
-				'L_REFRESH' => $LANG['refresh'],
-				'L_ARCHIVES' => $LANG['archives']
+				'L_REFRESH' => $LANG['refresh']
 			));
 	
 			$array_class = array('member', 'modo', 'admin');
-			$result = PersistenceContext::get_querier()->select("SELECT s.id, s.login, s.user_id, s.level, s.contents, s.timestamp, m.display_name as mlogin, m.groups
+			$result = PersistenceContext::get_querier()->select("SELECT s.*, m.display_name as mlogin, m.groups, m.level
 			FROM " . PREFIX . "shoutbox s
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 			ORDER BY s.timestamp DESC
@@ -156,7 +106,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 				));
 			}
 			$result->dispose();
-	
+			
 			return $tpl->render();
 		}
 		return '';

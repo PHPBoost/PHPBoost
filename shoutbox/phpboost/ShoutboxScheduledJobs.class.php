@@ -38,10 +38,8 @@ class ShoutboxScheduledJobs extends AbstractScheduledJobExtensionPoint
 		if ($shoutbox_max_messages != -1)
 		{
 			// TODO check the X-SGBD request using @comp
-			$querier->select('SELECT @compt := id AS compt FROM ' . PREFIX .
-				'shoutbox ORDER BY id DESC LIMIT 0 OFFSET :offset',
-				array('offset' => $shoutbox_max_messages));
-			$querier->delete(PREFIX . 'shoutbox', 'WHERE id < @compt');
+			$querier->select('SELECT @compt := id AS compt FROM ' . ShoutboxSetup::$shoutbox_table . ' ORDER BY id DESC LIMIT 0 OFFSET :offset', array('offset' => $shoutbox_max_messages));
+			$querier->delete(ShoutboxSetup::$shoutbox_table, 'WHERE id < @compt');
 		}
 	}
 }

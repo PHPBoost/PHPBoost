@@ -30,9 +30,9 @@ AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour
 require_once('../kernel/header_no_display.php');
 load_module_lang('shoutbox'); //Chargement de la langue du module.
 
-$add = !empty($_GET['add']) ? true : false;
-$del = !empty($_GET['del']) ? true : false;
-$refresh = !empty($_GET['refresh']) ? true : false;
+$add = !empty($_GET['add']);
+$del = !empty($_GET['del']);
+$refresh = !empty($_GET['refresh']);
 $display_date = isset($_GET['display_date']) && ($_GET['display_date'] == '1');
 
 $config_shoutbox = ShoutboxConfig::load();
@@ -74,7 +74,7 @@ if ($add)
 				exit;
 			}
 			
-			$result = PersistenceContext::get_querier()->insert(PREFIX . "shoutbox", array('login' => $shout_pseudo, 'user_id' => AppContext::get_current_user()->get_id(), 'level' => AppContext::get_current_user()->get_level(), 'contents' => $shout_contents, 'timestamp' => time()));
+			$result = PersistenceContext::get_querier()->insert(PREFIX . "shoutbox", array('login' => $shout_pseudo, 'user_id' => AppContext::get_current_user()->get_id(), 'contents' => $shout_contents, 'timestamp' => time()));
 			$last_msg_id = $result->get_last_inserted_id(); 
 			
 			$date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time());
@@ -103,7 +103,7 @@ if ($add)
 elseif ($refresh)
 {
 	$array_class = array('member', 'modo', 'admin');
-	$result = PersistenceContext::get_querier()->select("SELECT s.id, s.login, s.user_id, s.level, s.contents, s.timestamp, m.groups
+	$result = PersistenceContext::get_querier()->select("SELECT s.*, m.groups, m.level
 	FROM " . PREFIX . "shoutbox s
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 	ORDER BY timestamp DESC 
