@@ -50,6 +50,7 @@ $lang['process.error'] = 'An error occurred during the operation';
 $lang['confirm.delete'] = 'Do you really want to delete this item ?';
 
 $lang['message.success.config'] = 'The configuration has been modified';
+$lang['message.success.position.update'] = 'The position f the items has been updated';
 
 //Captcha
 $lang['captcha.validation_error'] = 'The visual confirmation field has not been properly filled!';

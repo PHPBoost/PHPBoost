@@ -158,11 +158,6 @@ class FaqQuestion
 		return FaqAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((FaqAuthorizationsService::check_authorizations($this->id_category)->write() || (FaqAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_approved())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 	
-	public function is_authorized_to_moderate()
-	{
-		return FaqAuthorizationsService::check_authorizations($this->id_category)->moderation();
-	}
-	
 	public function get_properties()
 	{
 		return array(
@@ -219,7 +214,6 @@ class FaqQuestion
 			'C_APPROVED' => $this->is_approved(),
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
-			'C_MODERATE' => $this->is_authorized_to_moderate(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			
 			//Question
@@ -243,8 +237,7 @@ class FaqQuestion
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_LINK' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->rel(),
 			'U_CATEGORY' => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => FaqUrlBuilder::edit($this->id)->rel(),
-			'U_DELETE' => FaqUrlBuilder::delete($this->id)->rel()
+			'U_EDIT' => FaqUrlBuilder::edit($this->id)->rel()
 		);
 	}
 }

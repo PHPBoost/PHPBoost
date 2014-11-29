@@ -42,6 +42,12 @@ class FaqDisplayCategoryController extends ModuleController
 		
 		$this->init();
 		
+		if ($request->get_value('submit', false))
+		{
+			$this->update_position($request);
+			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.position.update', 'status-messages-common'), MessageHelper::SUCCESS, 5));
+		}
+		
 		$this->build_view($request);
 		
 		return $this->generate_response();
@@ -50,7 +56,10 @@ class FaqDisplayCategoryController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'faq');
-		$this->tpl = new FileTemplate('faq/FaqDisplaySeveralFaqQuestionsController.tpl');
+		if (FaqAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation())
+			$this->tpl = new FileTemplate('faq/FaqModerationDisplaySeveralFaqQuestionsController.tpl');
+		else
+			$this->tpl = new FileTemplate('faq/FaqDisplaySeveralFaqQuestionsController.tpl');
 		$this->tpl->add_lang($this->lang);
 	}
 	
@@ -117,7 +126,8 @@ class FaqDisplayCategoryController extends ModuleController
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),
-			'CATEGORY_DESCRIPTION' => $category_description
+			'CATEGORY_DESCRIPTION' => $category_description,
+			'QUESTIONS_NUMBER' => $result->get_rows_count()
 		));
 		
 		while ($row = $result->fetch())
@@ -159,6 +169,17 @@ class FaqDisplayCategoryController extends ModuleController
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
+		}
+	}
+	
+	private function update_position(HTTPRequestCustom $request)
+	{
+		$value = '&' . $request->get_value('position', array());
+		$array = @explode('&questions_list[]=', $value);
+		foreach($array as $position => $id)
+		{
+			if ($position > 0)
+				FaqService::update_position($id, $position);
 		}
 	}
 	

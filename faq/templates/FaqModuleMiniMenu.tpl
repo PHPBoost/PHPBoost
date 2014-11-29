@@ -1,6 +1,6 @@
 <div class="module-mini-container"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
 	<div class="module-mini-top">
-		<h5 class="sub-title">{@random_question}</h5>
+		<h5 class="sub-title">{@faq.random_question}</h5>
 	</div>
 	<div class="module-mini-contents">
 		<p class="center">

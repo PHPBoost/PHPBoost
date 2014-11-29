@@ -126,9 +126,9 @@ class FaqUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function delete($id)
+	public static function delete()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
+		return DispatchManager::get_url(self::$dispatcher, '/delete/');
 	}
 	
 	/**

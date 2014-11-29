@@ -40,7 +40,8 @@ $lang['faq.pending'] = 'Pending questions';
 $lang['faq.manage'] = 'Manage questions';
 $lang['faq.management'] = 'FAQ management';
 
-$lang['random_question'] = 'Random question';
+$lang['faq.random_question'] = 'Random question';
+$lang['faq.questions'] = 'Questions';
 
 //config
 $lang['config.display_type.explain'] = 'Way questions are displayed. "In lines" mode shows questions and, with a click on the question, the answer. "In blocks" mode shows all questions and answer.';
