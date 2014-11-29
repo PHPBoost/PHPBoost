@@ -291,10 +291,12 @@ class DownloadFormController extends ModuleController
 			$downloadfile->set_number_downloads(0);
 		}
 		
-		if ($downloadfile->get_id() === null && $this->is_contributor_member())
+		if ($this->is_contributor_member())
 		{
+			if ($downloadfile->get_id() === null)
+				$downloadfile->set_creation_date(new Date());
+			
 			$downloadfile->set_approbation_type(DownloadFile::NOT_APPROVAL);
-			$downloadfile->set_creation_date(new Date());
 			$downloadfile->clean_start_and_end_date();
 		}
 		else

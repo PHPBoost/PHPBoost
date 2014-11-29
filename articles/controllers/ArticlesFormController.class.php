@@ -293,7 +293,7 @@ class ArticlesFormController extends ModuleController
 		$article = $this->get_article();
 		
 		$article->set_title($this->form->get_value('title'));
-                $article->set_id_category($this->form->get_value('id_category')->get_raw_value());
+		$article->set_id_category($this->form->get_value('id_category')->get_raw_value());
 		$article->set_description(($this->form->get_value('enable_description') ? $this->form->get_value('description') : ''));
 		$article->set_contents($this->form->get_value('contents'));
 		
@@ -305,11 +305,13 @@ class ArticlesFormController extends ModuleController
 		
 		$article->set_sources($this->form->get_value('sources'));
 		
-		if ($article->get_id() === null && $this->is_contributor_member())
+		if ($this->is_contributor_member())
 		{
+			if ($article->get_id() === null)
+				$article->set_date_created(new Date());
+			
 			$article->set_rewrited_title(Url::encode_rewrite($article->get_title()));
 			$article->set_publishing_state(Article::NOT_PUBLISHED);
-			$article->set_date_created(new Date());
 			$article->clean_publishing_start_and_end_date();
 		}
 		else
