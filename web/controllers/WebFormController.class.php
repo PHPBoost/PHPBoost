@@ -250,10 +250,12 @@ class WebFormController extends ModuleController
 		$weblink->set_partner($this->form->get_value('partner'));
 		$weblink->set_partner_picture(new Url($this->form->get_value('partner_picture')));
 		
-		if ($weblink->get_id() === null && $this->is_contributor_member())
+		if ($this->is_contributor_member())
 		{
+			if ($weblink->get_id() === null )
+				$weblink->set_creation_date(new Date());
+			
 			$weblink->set_approbation_type(WebLink::NOT_APPROVAL);
-			$weblink->set_creation_date(new Date());
 			$weblink->clean_start_and_end_date();
 		}
 		else
