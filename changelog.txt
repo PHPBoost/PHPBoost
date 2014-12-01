@@ -4,8 +4,19 @@
 
 ===================================== Noyau ======================================
 
+[*] Passage de la configuration de la maintenance en MVC (simplification de l'interface)
 
 =================================== Modules =====================================
+
+[b]FAQ[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
+[*] [color=red]Nouveauté :[/color] Ajout des contributions
+[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
+[*] [color=red]Nouveauté :[/color] Refonte graphique
+[*] [color=red]Nouveauté :[/color] Ajout du module dans le plan du site
+[*] [color=red]Nouveauté :[/color] Possibilité de réorganiser les questions dans les catégories en drag & drop pour les utilisateurs ayant le droit de modération
+[*] Ajout des microdonnées pour améliorer le référencement
 
 [b]Liens Web[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC

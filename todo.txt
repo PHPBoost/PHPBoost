@@ -66,7 +66,7 @@
 - Support mobile et version tablette
 - Refonte de la gestion des liens : suppression des types de menu de liens et création d'un menu de lien qui s'adapte automatiquement à l'emplacement
 
-[b]FAQ[/b]
+[b]Discussion[/b]
 - refonte du module en MVC
 
 ###################################### PHPBoost ##################################
@@ -92,8 +92,8 @@
 - Voir pour comptabiliser correctement le nombre d'élement dans les catégories s'il y a des sous catégories dedans (http://www.phpboost.com/bugtracker/detail/1182-videos-non-comptabilisees-sur-les-sous-categories)
 
 [b]Upload[/b]
-- Refonte de l'interface et du fonctionnement de l'interface d'upload
-- Ajout du drag&drop
+- Refonte de l'interface et du fonctionnement de l'interface d'upload, ajout d'API, ... 
+- Améliorer l'ajout de fichier (drag & drop)
 - Possibilité de télécharger plusieurs fichier en même temps
 - Possibilité de placer les fichiers dans le gestionnaire d'upload ou dans un dossier spécifique
 - Création d'un FormField tout en ajax pour directement choisir ses fichiers sans passer par une popup
@@ -108,10 +108,6 @@
 
 [b]Administration[/b]
 - Refonte de la partie Rapport système avec ajout de différentes informations concernant la sécurité, les options APC, des conseils, etc...
-
-[b]Upload[/b]
-- Refonte de l'interface, ajout d'API, ... 
-- Améliorer l'ajout de fichier (drag & drop)
 
 [b]Messages privés[/b]
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
