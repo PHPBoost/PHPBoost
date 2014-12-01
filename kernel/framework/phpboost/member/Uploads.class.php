@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             Iploads.class.php
+ *                             Uploads.class.php
  *                            -------------------
  *   begin                : April 18, 2007
  *   copyright            : (C) 2007 Viarre Régis
@@ -104,7 +104,7 @@ class Uploads
 		while ($row = $result->fetch())
 		{
 			if (!empty($row['id']))
-				$this->del_folder($row['id'], false);
+				self::Del_folder($row['id']);
 		}
 		$result->dispose();
 	}
