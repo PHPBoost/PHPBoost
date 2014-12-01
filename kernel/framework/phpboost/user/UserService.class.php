@@ -160,7 +160,11 @@ class UserService
         
 	public static function user_exists($condition, Array $parameters)
 	{
-		return self::$querier->row_exists(DB_TABLE_MEMBER, $condition, $parameters);
+		try {
+			return self::$querier->get_column_value(DB_TABLE_MEMBER, 'user_id', $condition, $parameters);
+		} catch (RowNotFoundException $e) {
+			return false;	
+		}
 	}
 	
 	public static function get_level_lang($level)
@@ -216,7 +220,7 @@ class UserService
 		}
 	}
 	
-	private static function regenerate_cache()
+	public static function regenerate_cache()
 	{
 		GroupsCache::invalidate();
 		StatsCache::invalidate();

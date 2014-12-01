@@ -37,7 +37,8 @@ class UserChangeLostPasswordController extends AbstractController
 		$this->init();
 
 		$change_password_pass = $request->get_getstring('key','');
-		if (empty($change_password_pass) || !PHPBoostAuthenticationMethod::change_password_pass_exists($change_password_pass))
+		$user_id = PHPBoostAuthenticationMethod::change_password_pass_exists($change_password_pass);
+		if (!$user_id)
 		{
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
@@ -46,7 +47,7 @@ class UserChangeLostPasswordController extends AbstractController
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->change_password($change_password_pass, $this->form->get_value('password'));
+			$this->change_password($user_id, $change_password_pass, $this->form->get_value('password'));
 		}
 		
 		$this->tpl->put('FORM', $this->form->display());
@@ -85,21 +86,16 @@ class UserChangeLostPasswordController extends AbstractController
 		$this->form = $form;
 	}
 
-	private function change_password($change_password_pass, $password)
+	private function change_password($user_id, $change_password_pass, $password)
 	{
-		$password = KeyGenerator::string_hash($password);
-
-		UserService::change_password($password, 'WHERE change_password_pass =:change_password_pass', array('change_password_pass' => $change_password_pass));
-		$user = UserService::get_user('WHERE change_password_pass =:change_password_pass', array('change_password_pass' => $change_password_pass));
-
-		PHPBoostAuthenticationMethod::update_change_password_pass($user->get_id(), '');
+		PHPBoostAuthenticationMethod::update_auth_infos($user_id, null, null, KeyGenerator::string_hash($password), null, '');
 
 		$session = AppContext::get_session();
 		if ($session != null)
 		{
 			Session::delete($session);
 		}
-		AppContext::set_session(Session::create($user->get_id(), true));
+		AppContext::set_session(Session::create($user_id, true));
 		
 		AppContext::get_response()->redirect(Environment::get_home_page());
 	}

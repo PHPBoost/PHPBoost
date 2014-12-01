@@ -61,16 +61,8 @@ class UserLostPasswordController extends AbstractController
 		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['forget-password']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_choice', $this->lang['forget-password.select'],
-			UserLostPasswordService::LOST_PASSWORD_BY_EMAIL, 
-			array(
-				new FormFieldSelectChoiceOption($this->lang['email'], UserLostPasswordService::LOST_PASSWORD_BY_EMAIL), 
-				new FormFieldSelectChoiceOption($this->lang['pseudo'], UserLostPasswordService::LOST_PASSWORD_BY_LOGIN)
-			)
-		));
-		
-		$fieldset->add_field(new FormFieldTextEditor('information', $this->lang['pseudo'] .' / '.$this->lang['email'], '', array(
-			'required' => true)
+		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['email'], '', array('required' => true),
+			array(new FormFieldConstraintMailAddress())
 		));
 			
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -93,14 +85,14 @@ class UserLostPasswordController extends AbstractController
 		$change_password_pass = KeyGenerator::generate_key(15);
 		$user = $this->get_user();
 
-		PHPBoostAuthenticationMethod::update_change_password_pass($user->get_id(), $change_password_pass);
+		PHPBoostAuthenticationMethod::update_auth_infos($user->get_id(), null, null, null, null, $change_password_pass);
 		
 		$general_config = GeneralConfig::load();
 		$parameters = array(
-				'pseudo' => $user->get_display_name(),
-				'host' => $general_config->get_site_url(),
-				'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->absolute(),
-				'signature' => MailServiceConfig::load()->get_mail_signature()
+			'pseudo' => $user->get_display_name(),
+			'host' => $general_config->get_site_url(),
+			'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->absolute(),
+			'signature' => MailServiceConfig::load()->get_mail_signature()
 		);
 		$subject = $general_config->get_site_name() . ' : ' . $this->lang['forget-password'];
 		$content = StringVars::replace_vars($this->lang['forget-password.mail.content'], $parameters);
@@ -111,24 +103,17 @@ class UserLostPasswordController extends AbstractController
 	
 	private function get_user()
 	{
-		switch ($this->form->get_value('field_choice')->get_raw_value()) 
+		$email = $this->form->get_value('email');
+		$user_id = UserService::user_exists('WHERE email=:email', array('email' => $email));
+
+		if (!$user_id)
 		{
-			case UserLostPasswordService::LOST_PASSWORD_BY_EMAIL:
-				try {
-				return UserService::get_user('WHERE email=:email', array('email' => $this->form->get_value('information')));
-				} catch (Exception $e) {
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['forget-password.error'], MessageHelper::NOTICE);
-					DispatchManager::redirect($controller);
-				}
-			break;
-			case UserLostPasswordService::LOST_PASSWORD_BY_LOGIN:
-				try {
-					return UserService::get_user('WHERE login=:login', array('login' => $this->form->get_value('information')));
-				} catch (Exception $e) {
-					$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['forget-password.error'], MessageHelper::NOTICE);
-					DispatchManager::redirect($controller);
-				}
-			break;
+			$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $this->lang['forget-password.error'], MessageHelper::NOTICE);
+			DispatchManager::redirect($controller);
+		}
+		else
+		{
+			return UserService::get_user($user_id);
 		}
 	}
 	
