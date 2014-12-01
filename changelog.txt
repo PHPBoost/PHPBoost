@@ -4,7 +4,10 @@
 
 ===================================== Noyau ======================================
 
+[*] Suppression de l'ancienne classe SQL
+[*] Suppression de l'ancien système de Tpl
 [*] Passage de la configuration de la maintenance en MVC (simplification de l'interface)
+
 
 =================================== Modules =====================================
 

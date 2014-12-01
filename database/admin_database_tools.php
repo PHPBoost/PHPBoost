@@ -134,8 +134,8 @@ if (!empty($table) && $action == 'data')
 		'C_DATABASE_TABLE_STRUCTURE' => false,
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION' => $pagination->display(),
-		'QUERY' => Sql::indent_query($query),
-		'QUERY_HIGHLIGHT' => Sql::highlight_query($query),
+		'QUERY' => DatabaseService::indent_query($query),
+		'QUERY_HIGHLIGHT' => DatabaseService::highlight_query($query),
 		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],
@@ -345,8 +345,8 @@ elseif (!empty($table) && $action == 'query')
 		$query = "SELECT * FROM " . $table . " WHERE 1";
 		
 	$tpl->put_all(array(
-		'QUERY' => Sql::indent_query($query),
-		'QUERY_HIGHLIGHT' => Sql::highlight_query($query),
+		'QUERY' => DatabaseService::indent_query($query),
+		'QUERY_HIGHLIGHT' => DatabaseService::highlight_query($query),
 		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],

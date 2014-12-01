@@ -50,12 +50,10 @@
 [b]Structure et fonctionnement:[/b]
 + [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
 + Nouveau système de session et de connexion :
-	- Suppression du champ Pseudo, remplacé par Nom d'affichage
-	- Connexion interne avec l'adresse email ou un login que l'on peut choisir
-	- Connexion avec un compte Facebook (et d'autre) paramètrable dans l'administration
-	- Possibilité de gérer ses types de connexion dans le profil
-+ Suppression de l'ancienne classe SQL
-[*] Suppression de l'ancien système de Tpl
+	+ Suppression du champ Pseudo, remplacé par Nom d'affichage
+	+ Connexion interne avec l'adresse email ou un login que l'on peut choisir
+	+ Connexion avec un compte Facebook (et d'autre) paramètrable dans l'administration
+	+ Possibilité de gérer ses types de connexion dans le profil
 + Nettoyage des variables de langues
 - Revoir la balise Title HTML (créer un format standardisé dans PHPBoost :
 	- Titre de la page - Nom du module - Nom du site

@@ -42,7 +42,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	{
 		global $Cache, $CAT_FORUM, $LANG;
 
-		$Tpl = new FileTemplate('forum/forum_search_form.tpl');
+		$tpl = new FileTemplate('forum/forum_search_form.tpl');
 
 		require_once(PATH_TO_ROOT . '/forum/forum_functions.php');
 		require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
@@ -56,7 +56,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$colorate_result = !empty($args['ForumColorate_result']);
 
 		$date_lang = LangLoader::get('date-common');
-		$Tpl->put_all(Array(
+		$tpl->put_all(Array(
 			'L_DATE' => $date_lang['date'],
 			'L_DAY' => $date_lang['day'],
 			'L_DAYS' => $date_lang['days'],
@@ -97,7 +97,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 				}
 			}
 		}
-		return $Tpl->render();
+		return $tpl->render();
 	}
 
 	public function get_search_args()

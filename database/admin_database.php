@@ -151,8 +151,8 @@ if (!empty($_GET['query']))
 	}	
 	
 	$tpl->put_all(array(
-		'QUERY' => Sql::indent_query($query),
-		'QUERY_HIGHLIGHT' => Sql::highlight_query(str_replace('phpboost_', PREFIX, $query)),
+		'QUERY' => DatabaseService::indent_query($query),
+		'QUERY_HIGHLIGHT' => DatabaseService::highlight_query(str_replace('phpboost_', PREFIX, $query)),
 		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],
