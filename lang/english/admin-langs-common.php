@@ -40,10 +40,7 @@ $lang['langs.delete_lang'] = 'Delete or Deactivate languages';
 $lang['langs.installed_langs'] = 'Installed Languages';
 
 //Themes management
-$lang['langs.activate_lang'] = 'Activated';
 $lang['langs.install_lang'] = 'Installed';
-$lang['langs.activated_lang'] = 'Activate';
-$lang['langs.delete'] = 'Delete';
 
 //Uninstall
 $lang['langs.drop_files'] = 'Delete all the language\'s files';

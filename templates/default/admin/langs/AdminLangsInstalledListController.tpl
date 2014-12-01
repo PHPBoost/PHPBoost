@@ -6,8 +6,8 @@
 				<th>{@langs.name}</th>
 				<th>{@langs.description}</th>
 				<th>{@langs.authorizations}</th>
-				<th>{@langs.activated_lang}</th>
-				<th>{@langs.delete}</th>
+				<th>${LangLoader::get_message('enabled', 'common')}</th>
+				<th>${LangLoader::get_message('delete', 'common')}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -47,7 +47,7 @@
 						<label><input type="radio" name="activated-{langs_installed.ID}" value="0" # IF NOT langs_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('no', 'common')}</label>
 					</td>
 					<td>
-						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">{@langs.delete}</button>
+						<button type="submit" class="submit" name="delete-{langs_installed.ID}" value="true">${LangLoader::get_message('delete', 'common')}</button>
 					</td>
 					# ELSE #
 					<td class="row-disabled" style="text-align:center;">

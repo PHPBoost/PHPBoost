@@ -9,7 +9,7 @@
 				<th>{@langs.name}</th>
 				<th>{@langs.description}</th>
 				<th>{@langs.authorizations}</th>
-				<th>{@langs.activated_lang}</th>
+				<th>${LangLoader::get_message('enable', 'common')}</th>
 				<th>{@langs.install_lang}</th>
 			</tr>
 		</thead>

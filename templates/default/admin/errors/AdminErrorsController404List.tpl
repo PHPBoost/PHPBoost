@@ -3,8 +3,8 @@
 		<fieldset>
 			<legend>{@clear_list}</legend>
 			<div class="form-element">
-				<label>{@clear_list} <span class="field-description">{@clear_list_explain}</span></label>
-				<div class="form-field"><label><button type="submit" class="submit" name="clear" data-confirmation="{@404_errors_clear_confirmation}" value="true">{@clear_list}</button></label></div>
+				<label>{@clear_list}</label>
+				<div class="form-field"><label><button type="submit" class="submit" name="clear" data-confirmation="{@logged_errors_clear_confirmation}" value="true">{@clear_list}</button></label></div>
 			</div>
 		</fieldset>
 		<input type="hidden" name="token" value="{TOKEN}">
@@ -19,7 +19,7 @@
 				<th>{@404_error_requested_url}</th>
 				<th>{@404_error_from_url}</th>
 				<th style="width:60px;">{@404_error_times}</th>
-				<th style="width:75px;">{@404_error_delete}</th>
+				<th style="width:75px;">${LangLoader::get_message('delete', 'common')}</th>
 			</tr>
 		</thead>
 		# IF C_PAGINATION #
@@ -38,7 +38,7 @@
 				<td><a href="{errors.FROM_URL}" title="{@404_error_from_url}">{errors.FROM_URL}</a></td>
 				<td class="center">{errors.TIMES}</td>
 				<td class="center">
-					<a href="{errors.U_DELETE}" title="{@404_error_delete}" class="fa fa-delete" data-confirmation="delete-element"></a>
+					<a href="{errors.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				</td>
 			</tr>
 			# END errors #
@@ -47,5 +47,5 @@
 	</table>
 	
 	# IF NOT C_ERRORS #
-	<div class="success message-helper-small">{@404_no_error}</div>
+	<div class="success message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
 	# ENDIF #

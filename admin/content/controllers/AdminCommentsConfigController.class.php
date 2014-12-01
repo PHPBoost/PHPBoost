@@ -74,12 +74,12 @@ class AdminCommentsConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_comments_display', $this->lang['comments.config.number-comments-display'], $this->configuration->get_number_comments_display(), array(
 			'maxlength' => 4, 'size' => 4, 'required' => true),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('max_links_comment', $this->lang['comments.config.max-links-comment'], $this->configuration->get_max_links_comment(), array(
 			'maxlength' => 4, 'size' => 4, 'required' => true),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('order_display_comments', $this->lang['comments.config.order-display-comments'], $this->configuration->get_order_display_comments(),

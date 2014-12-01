@@ -56,10 +56,7 @@ $lang['themes.default_theme_explain'] = 'The default theme can not be uninstalle
 $lang['themes.themes_available'] = 'Available themes';
 
 //Themes management
-$lang['themes.activate_theme'] = 'Activate';
 $lang['themes.install_theme'] = 'Install';
-$lang['themes.activated_theme'] = 'Activated';
-$lang['themes.delete'] = 'Delete';
 
 //Upload
 $lang['themes.upload_theme'] = 'Upload theme';

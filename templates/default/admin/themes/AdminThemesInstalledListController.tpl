@@ -6,8 +6,8 @@
 				<th>{@themes.name}</th>
 				<th>{@themes.description}</th>
 				<th>{@themes.authorization}</th>
-				<th>{@themes.activated_theme}</th>
-				<th>{@themes.delete}</th>
+				<th>${LangLoader::get_message('enabled', 'common')}</th>
+				<th>${LangLoader::get_message('delete', 'common')}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -65,7 +65,7 @@
 						<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> ${LangLoader::get_message('no', 'common')}</label>
 					</td>
 					<td>
-						<button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">{@themes.delete}</button>
+						<button type="submit" class="submit" name="delete-{themes_installed.ID}" value="true">${LangLoader::get_message('delete', 'common')}</button>
 					</td>
 					# ELSE #
 					<td class="row-disabled">

@@ -31,8 +31,6 @@
  ####################################################
 
 //Erreurs
-$LANG['error'] = 'Erreur';
-$LANG['unknow_error'] = 'Erreur inconnue';
 $LANG['e_auth'] = 'Vous n\'avez pas le niveau requis !';
 
 $LANG['e_uninstalled_module'] = 'Ce module n\'est pas installé !';

@@ -3,7 +3,7 @@
 		<fieldset>
 			<legend>{@clear_list}</legend>
 			<div class="form-element">
-				<label>{@clear_list} <span class="field-description">{@clear_list_explain}</span></label>
+				<label>{@clear_list}</label>
 				<div class="form-field"><label><button type="submit" class="submit" name="clear" data-confirmation="{@logged_errors_clear_confirmation}" value="true">{@clear_list}</button></label></div>
 			</div>
 		</fieldset>
@@ -47,5 +47,5 @@
 		# ENDIF #
 	</table>
 	# IF NOT C_ERRORS #
-	<div class="success message-helper-small">{@no_error}</div>
+	<div class="success message-helper-small">${LangLoader::get_message('no_item_now', 'common')}</div>
 	# ENDIF #

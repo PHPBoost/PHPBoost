@@ -55,10 +55,7 @@ $lang['themes.default_theme_explain'] = 'Le thème par défaut ne peut pas être dé
 $lang['themes.themes_available'] = 'Thèmes disponibles';
 
 //Themes management
-$lang['themes.activate_theme'] = 'Activer';
 $lang['themes.install_theme'] = 'Installer';
-$lang['themes.activated_theme'] = 'Activé';
-$lang['themes.delete'] = 'Désinstaller';
 
 //Upload
 $lang['themes.upload_theme'] = 'Uploader un thème';

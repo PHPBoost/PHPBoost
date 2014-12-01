@@ -33,17 +33,11 @@ $lang = array(
 	'logged_errors' => 'Erreurs archivées',
 	'logged_errors_list' => 'Liste des erreurs archivées',
 	'clear_list' => 'Vider la liste',
-	'clear_list_explain' => 'Définitif !',
 	'logged_errors_clear_confirmation' => 'Effacer toutes les erreurs ?',
-	'no_error' => 'Aucune erreur',
 	'404_errors' => 'Erreurs 404',
 	'404_list' => 'Liste des erreurs 404',
 	'404_error_requested_url' => 'Url demandée',
 	'404_error_from_url' => 'Url de provenance',
 	'404_error_times' => 'Nombre',
-	'404_error_delete' => 'Supprimer',
-	'404_error_delete_confirmation' => 'Etes vous sûr de vouloir supprimer cette entrée ?',
-	'404_errors_clear_confirmation' => 'Effacer toutes les erreurs 404 ?',
-	'404_no_error' => 'Aucune erreur à afficher'
 );
 ?>

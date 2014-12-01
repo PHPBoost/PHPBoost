@@ -8,7 +8,7 @@
 			<tr> 
 				<th>{@modules.name}</th>
 				<th>{@modules.description}</th>
-				<th>{@modules.activate_module}</th>
+				<th>${LangLoader::get_message('enable', 'common')}</th>
 				<th>{@modules.install_module}</th>
 			</tr>
 		</thead>
