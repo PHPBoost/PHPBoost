@@ -49,11 +49,6 @@ class PersistenceContext
 	private static $dbms_utils;
 
 	/**
-	 * @var Sql
-	 */
-	private static $sql;
-
-	/**
 	 * Returns the sql querier
 	 * @return DBQuerier
 	 */
@@ -88,7 +83,6 @@ class PersistenceContext
 		self::$sql_querier = null;
 		self::$db_querier = null;
 		self::$dbms_utils = null;
-		self::$sql = null;
 	}
 
 	/**
