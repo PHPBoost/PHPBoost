@@ -53,28 +53,6 @@ class PersistenceContext
 	 */
 	private static $sql;
 
-    /**
-     * @desc Returns the data base connection
-     * @deprecated
-     * @return Sql
-     */
-    public static function get_sql()
-    {
-        if (self::$sql === null)
-        {
-            self::$sql = new Sql();
-        }
-        return self::$sql;
-    }
-
-	/**
-	 * @deprecated
-	 */
-	public static function set_sql($sql)
-	{
-		self::$sql = $sql;
-	}
-
 	/**
 	 * Returns the sql querier
 	 * @return DBQuerier
