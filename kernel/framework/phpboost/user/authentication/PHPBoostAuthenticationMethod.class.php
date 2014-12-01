@@ -86,7 +86,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			'login' => $this->login,
             'password' => $this->password,
 			'registration_pass' => $this->registration_pass,
-			'approved' => $this->approved
+			'approved' => (int)$this->approved
 		);
 		$authentication_method_columns = array(
 			'user_id' => $user_id,
@@ -220,19 +220,28 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 	}
 
-	public static function update_auth_infos($user_id, $login, $approved = null, $password = null)
+	public static function update_auth_infos($user_id, $login = null, $approved = null, $password = null, $registration_pass = null, $change_password_pass = null)
 	{
-		$columns = array('login' => $login);
-		
+		if (!empty($login))
+			$columns['login'] = $login;
+
 		if ($approved)
 			$columns['approved'] = $approved;
 
-		if ($password)
+		if (!empty($password))
 			$columns['password'] = $password;
+
+		if ($registration_pass !== null)
+			$columns['registration_pass'] = $registration_pass;
+
+		if ($change_password_pass !== null)
+			$columns['change_password_pass'] = $change_password_pass;
 			
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
+
+		UserService::regenerate_cache();
 		
 		if ($approved !== null && !$approved)
 		{
@@ -241,17 +250,26 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		}
 	}
 
-	public static function change_password_pass_exists($change_password_pass)
+	public static function registration_pass_exists($registration_pass)
 	{
-		return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE change_password_pass=:change_password_pass', array('change_password_pass' => $change_password_pass));
+		try {
+			$condition = 'WHERE registration_pass=:registration_pass';
+			$parameters = array('registration_pass' => $registration_pass);
+			return PersistenceContext::get_querier()->get_column_value(DB_TABLE_INTERNAL_AUTHENTICATION, 'user_id', $condition, $parameters);
+		} catch (RowNotFoundException $e) {
+			return false;	
+		}
 	}
 
-	public static function update_change_password_pass($user_id, $change_password_pass)
+	public static function change_password_pass_exists($change_password_pass)
 	{
-		$columns = array('change_password_pass' => $change_password_pass);
-		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $user_id);
-		PersistenceContext::get_querier()->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
+		try {
+			$condition = 'WHERE change_password_pass=:change_password_pass';
+			$parameters = array('change_password_pass' => $change_password_pass);
+			return PersistenceContext::get_querier()->get_column_value(DB_TABLE_INTERNAL_AUTHENTICATION, 'user_id', $condition, $parameters);
+		} catch (RowNotFoundException $e) {
+			return false;	
+		}
 	}
 }
 ?>
