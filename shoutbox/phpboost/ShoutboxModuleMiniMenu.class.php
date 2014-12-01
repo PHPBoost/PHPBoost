@@ -67,7 +67,6 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 				'L_ALERT_INCOMPLETE' => $LANG['e_incomplete'],
 				'L_ALERT_READONLY' => $LANG['e_readonly'],
 				'L_DELETE_MSG' => $LANG['alert_delete_msg'],
-				'L_SHOUTBOX' => $LANG['title_shoutbox'],
 				'L_MESSAGE' => $LANG['message'],
 				'L_PSEUDO' => $LANG['pseudo'],
 				'L_SUBMIT' => $LANG['submit'],
