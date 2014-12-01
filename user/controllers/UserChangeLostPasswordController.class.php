@@ -102,11 +102,15 @@ class UserChangeLostPasswordController extends AbstractController
 	
 	private function build_response(View $view, $key)
 	{
-		$response = new UserDisplayResponse();
-		$response->set_page_title($this->lang['change-password']);
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
-		$response->add_breadcrumb($this->lang['change-password'], UserUrlBuilder::change_password($key)->rel());
-		return $response->display($view);
+		$response = new SiteDisplayResponse($view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['change-password']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['user'], UserUrlBuilder::users()->rel());
+		$breadcrumb->add($this->lang['change-password'], UserUrlBuilder::change_password($key)->rel());
+		
+		return $response;
 	}
 	
 	public function get_right_controller_regarding_authorizations()

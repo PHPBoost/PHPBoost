@@ -51,7 +51,7 @@ class UserUsersListController extends AbstractController
 
 	private function build_view($request)
 	{
-	$field = $request->get_value('field', 'registered');
+		$field = $request->get_value('field', 'registered');
 		$sort = $request->get_value('sort', 'top');
 		$page = $request->get_int('page', 1);
 		
@@ -169,10 +169,14 @@ class UserUsersListController extends AbstractController
 
 	private function build_response()
 	{
-		$response = new UserDisplayResponse();
-		$response->set_page_title($this->lang['users']);
-		$response->add_breadcrumb($this->lang['users'], UserUrlBuilder::users()->rel());
-		return $response->display($this->view);
+		$response = new SiteDisplayResponse($this->view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['users']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['users'], UserUrlBuilder::users()->rel());
+		
+		return $response;
 	}
 	
 	public function get_right_controller_regarding_authorizations()
