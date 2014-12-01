@@ -167,11 +167,15 @@ class UserExploreGroupsController extends AbstractController
 
 	private function build_response()
 	{
-		$response = new UserDisplayResponse();
-		$response->set_page_title($this->lang['groups']);
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
-		$response->add_breadcrumb($this->lang['groups'], UserUrlBuilder::groups()->rel());
-		return $response->display($this->view);
+		$response = new SiteDisplayResponse($this->view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['groups']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['user'], UserUrlBuilder::users()->rel());
+		$breadcrumb->add($this->lang['groups'], UserUrlBuilder::groups()->rel());
+		
+		return $response;
 	}
 }
 ?>

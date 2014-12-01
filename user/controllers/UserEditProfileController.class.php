@@ -301,11 +301,15 @@ class UserEditProfileController extends AbstractController
 
 	private function build_response()
 	{
-		$response = new UserDisplayResponse();
-		$response->set_page_title($this->lang['profile.edit']);
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
-		$response->add_breadcrumb($this->lang['profile.edit'], UserUrlBuilder::edit_profile($this->user->get_id())->rel());
-		return $response->display($this->tpl);
+		$response = new SiteDisplayResponse($this->tpl);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['profile.edit']);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['user'], UserUrlBuilder::users()->rel());
+		$breadcrumb->add($this->lang['profile.edit'], UserUrlBuilder::edit_profile($this->user->get_id())->rel());
+		
+		return $response;
 	}
 	
 	private function build_javascript_picture_themes()

@@ -240,11 +240,15 @@ class UserRegistrationController extends AbstractController
 	private function build_response(View $view)
 	{
 		$title = $this->lang['registration'];
-		$response = new UserDisplayResponse();
-		$response->set_page_title($title);
-		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->rel());
-		$response->add_breadcrumb($title, UserUrlBuilder::registration()->rel());
-		return $response->display($view);
+		$response = new SiteDisplayResponse($view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($title);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		$breadcrumb->add($this->lang['user'], UserUrlBuilder::users()->rel());
+		$breadcrumb->add($title, UserUrlBuilder::registration()->rel());
+		
+		return $response;
 	}
 	
 	public function get_right_controller_regarding_authorizations()

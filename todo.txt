@@ -58,7 +58,6 @@
 - Revoir la balise Title HTML (créer un format standardisé dans PHPBoost :
 	- Titre de la page - Nom du module - Nom du site
 	- Titre de la page - Nom du site (dans le cas ou c'est une page sans module)
-- Dégager la classe UserDisplayResponse
 
 [b]Graphique[/b]
 - Support mobile et version tablette

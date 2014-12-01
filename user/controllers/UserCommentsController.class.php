@@ -232,21 +232,25 @@ class UserCommentsController extends AbstractController
 	
 	private function build_response()
 	{
-		$response = new UserDisplayResponse();
-		$response->set_page_title($this->lang['comments']);
+		$response = new SiteDisplayResponse($this->tpl);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->lang['comments']);
 		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+
 		if ($this->user !== null)
 		{
-			$response->add_breadcrumb($this->user->get_display_name(), UserUrlBuilder::profile($this->user->get_id())->rel());
-			$response->add_breadcrumb(LangLoader::get_message('messages', 'user-common'), UserUrlBuilder::messages($this->user->get_id())->rel());
-			$response->add_breadcrumb($this->lang['comments'], UserUrlBuilder::comments('', $this->user->get_id())->rel());
+			$breadcrumb->add($this->user->get_display_name(), UserUrlBuilder::profile($this->user->get_id())->rel());
+			$breadcrumb->add(LangLoader::get_message('messages', 'user-common'), UserUrlBuilder::messages($this->user->get_id())->rel());
+			$breadcrumb->add($this->lang['comments'], UserUrlBuilder::comments('', $this->user->get_id())->rel());
 		}
 		else
 		{
-			$response->add_breadcrumb(LangLoader::get_message('users', 'user-common'), UserUrlBuilder::users()->rel());
-			$response->add_breadcrumb($this->lang['comments'], UserUrlBuilder::comments()->rel());
+			$breadcrumb->add(LangLoader::get_message('users', 'user-common'), UserUrlBuilder::users()->rel());
+			$breadcrumb->add($this->lang['comments'], UserUrlBuilder::comments()->rel());
 		}
-		return $response->display($this->tpl);
+
+		return $response;
 	}
 	
 	public function get_right_controller_regarding_authorizations()
