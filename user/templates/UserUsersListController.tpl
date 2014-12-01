@@ -15,7 +15,7 @@
 			<tr>
 				<th>
 					<a href="{SORT_LOGIN_TOP}" class="fa fa-table-sort-up"></a>
-					{@pseudo} 
+					{@display_name} 
 					<a href="{SORT_LOGIN_BOTTOM}" class="fa fa-table-sort-down"></a>
 				</th>
 				<th>

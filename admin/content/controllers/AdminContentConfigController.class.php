@@ -98,7 +98,7 @@ class AdminContentConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldTextEditor('max_pm_number', $this->lang['content.config.max-pm-number'], $this->user_accounts_config->get_max_private_messages_number(), array(
 			'maxlength' => 4, 'size' => 4, 'required' => true, 'description' => $this->lang['content.config.max-pm-number-explain']),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 		
 		$fieldset->add_field(new FormFieldRadioChoice('anti_flood_enabled', $this->lang['content.config.anti-flood-enabled'], $this->content_management_config->is_anti_flood_enabled(),
@@ -110,7 +110,7 @@ class AdminContentConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldTextEditor('delay_flood', $this->lang['content.config.delay-flood'], $this->content_management_config->get_anti_flood_duration(), array(
 			'maxlength' => 4, 'size' => 4, 'required' => true, 'description' => $this->lang['content.config.delay-flood-explain']),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
+			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 		
 		$fieldset = new FormFieldsetHTML('captcha', $this->lang['content.config.captcha']);

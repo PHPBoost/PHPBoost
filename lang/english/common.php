@@ -34,6 +34,8 @@ $lang['the'] = 'The';
 $lang['in'] = 'In';
 $lang['read-more'] = 'Read more';
 
+$lang['enable'] = 'Enable';
+$lang['disable'] = 'Disable';
 $lang['enabled'] = 'Enabled';
 $lang['disabled'] = 'Disabled';
 

@@ -61,6 +61,7 @@ $lang['captcha.last_installed'] = 'Dernier captcha, vous ne pouvez pas le suppri
 $lang['form.doesnt_match_regex'] = 'La valeur saisie n\'est pas au bon format';
 $lang['form.doesnt_match_url_regex'] = 'La valeur saisie doit être une url valide';
 $lang['form.doesnt_match_mail_regex'] = 'La valeur saisie doit être un mail valide';
+$lang['form.doesnt_match_number_regex'] = 'La valeur saisie doit être un nombre';
 $lang['form.doesnt_match_length_intervall'] = 'La valeur saisie ne respecte par la longueur définie';
 $lang['form.doesnt_match_integer_intervall'] = 'La valeur saisie ne respecte pas l\'intervalle définie (:lower_bound <= valeur <= :upper_bound)';
 $lang['form.has_to_be_filled'] = 'Le champ ":name" doit être renseigné';

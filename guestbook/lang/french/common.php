@@ -41,6 +41,5 @@ $lang['guestbook.edit'] = 'Edition d\'un message';
 $lang['admin.config.max_links'] = 'Nombre de liens maximum dans le message';
 $lang['admin.config.max_links_explain'] = 'Mettre -1 pour illimité';
 $lang['admin.authorizations.read']  = 'Autorisation d\'afficher le livre d\'or';
-$lang['admin.config.error.number-required'] = 'La valeur saisie doit être un nombre';
 
 ?>

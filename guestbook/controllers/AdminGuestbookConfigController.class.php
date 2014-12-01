@@ -93,7 +93,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldTextEditor('max_link', $this->lang['admin.config.max_links'], $this->config->get_maximum_links_message(), array(
 			'description' => $this->lang['admin.config.max_links_explain'], 'maxlength' => 3, 'size' => 3, 'required' => true),
-			array(new FormFieldConstraintRegex('`^([-]?[0-9]+)$`i', '`^([-]?[0-9]+)$`i', $this->lang['admin.config.error.number-required']))
+			array(new FormFieldConstraintRegex('`^([-]?[0-9]+)$`i', '`^([-]?[0-9]+)$`i', LangLoader::get_message('form.doesnt_match_number_regex', 'status-messages-common')))
 		));
 		
 		$common_lang = LangLoader::get('common');

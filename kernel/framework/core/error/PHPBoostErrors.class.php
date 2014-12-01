@@ -60,8 +60,7 @@ class PHPBoostErrors
     
 	public static function unknow()
     {
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['unknow_error'], UserErrorController::QUESTION);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error.unknow', 'status-messages-common'), UserErrorController::QUESTION);
 		return $controller;
     }
 

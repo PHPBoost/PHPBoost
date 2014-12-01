@@ -110,8 +110,8 @@
 			<tr> 
 				<th>{@modules.name}</th>
 				<th>{@modules.description}</th>
-				<th>{@modules.activated_module}</th>
-				<th>{@modules.delete}</th>
+				<th>${LangLoader::get_message('enabled', 'common')}</th>
+				<th>${LangLoader::get_message('delete', 'common')}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -147,7 +147,7 @@
 					<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
 				</td>
 				<td>
-					<button type="submit" class="submit" name="delete-{modules_activated.ID}" value="true">{@modules.delete}</button>
+					<button type="submit" class="submit" name="delete-{modules_activated.ID}" value="true">${LangLoader::get_message('delete', 'common')}</button>
 				</td>
 			</tr>
 			# END modules_activated #

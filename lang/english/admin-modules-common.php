@@ -54,11 +54,8 @@ $lang['modules.installed_activated_modules'] = 'Installed and activated modules'
 $lang['modules.installed_not_activated_modules'] = 'Deactivated modules';
 
 //Module management
-$lang['modules.activate_module'] = 'Activate';
 $lang['modules.install_module'] = 'Install';
-$lang['modules.activated_module'] = 'Activated';
 $lang['modules.authorization'] = 'Authorizations';
-$lang['modules.delete'] = 'Delete';
 
 //Messages
 $lang['modules.upload_success'] = 'The archive has successfully been uploaded';

@@ -9,7 +9,7 @@
 				<th>{@themes.name}</th>
 				<th>{@themes.description}</th>
 				<th>{@themes.authorization}</th>
-				<th>{@themes.activated_theme}</th>
+				<th>${LangLoader::get_message('enable', 'common')}</th>
 				<th>{@themes.install_theme}</th>
 			</tr>
 		</thead>

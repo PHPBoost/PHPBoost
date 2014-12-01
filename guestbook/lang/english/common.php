@@ -41,6 +41,5 @@ $lang['guestbook.edit'] = 'Message edition';
 $lang['admin.config.max_links'] = 'Max links number in a message';
 $lang['admin.config.max_links_explain'] = '-1 for unlimited';
 $lang['admin.authorizations.read']  = 'Permission to display the guestbook';
-$lang['admin.config.error.number-required'] = 'The value entered must be a number';
 
 ?>
