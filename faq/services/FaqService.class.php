@@ -84,7 +84,7 @@ class FaqService
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
 	 */
-	public static function get_faq_question($condition, array $parameters)
+	public static function get_question($condition, array $parameters)
 	{
 		$row = self::$db_querier->select_single_row_query('SELECT *
 		FROM ' . FaqSetup::$faq_table . ' faq
