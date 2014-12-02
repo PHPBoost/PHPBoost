@@ -62,7 +62,7 @@ class FaqAjaxDeleteQuestionController extends AbstractController
 		if (!empty($id))
 		{
 			try {
-				$this->faq_question = FaqService::get_faq_question('WHERE id=:id', array('id' => $id));
+				$this->faq_question = FaqService::get_question('WHERE id=:id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 			}
 		}

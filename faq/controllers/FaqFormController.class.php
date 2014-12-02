@@ -128,7 +128,7 @@ class FaqFormController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->faq_question = FaqService::get_faq_question('WHERE id=:id', array('id' => $id));
+					$this->faq_question = FaqService::get_question('WHERE id=:id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
