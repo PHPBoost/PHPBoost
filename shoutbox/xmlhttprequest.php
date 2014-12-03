@@ -28,15 +28,11 @@
 require_once('../kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
 require_once('../kernel/header_no_display.php');
-load_module_lang('shoutbox'); //Chargement de la langue du module.
 
-$add = !empty($_GET['add']);
-$del = !empty($_GET['del']);
-$refresh = !empty($_GET['refresh']);
 $display_date = isset($_GET['display_date']) && ($_GET['display_date'] == '1');
 
 $config_shoutbox = ShoutboxConfig::load();
-if ($add)
+if (!empty($_GET['add']))
 {
 	//Membre en lecture seule?
 	if (AppContext::get_current_user()->get_delay_readonly() > time()) 
@@ -45,7 +41,7 @@ if ($add)
 		exit;
 	}
 	
-	$shout_pseudo = !empty($_POST['pseudo']) ? TextHelper::strprotect(utf8_decode($_POST['pseudo'])) : $LANG['guest'];
+	$shout_pseudo = !empty($_POST['pseudo']) ? TextHelper::strprotect(utf8_decode($_POST['pseudo'])) : LangLoader::get_message('guest', 'main');
 	
 	$shout_contents = htmlentities(retrieve(POST, 'contents', ''), ENT_COMPAT, 'UTF-8');
 	$shout_contents = htmlspecialchars_decode(stripslashes(html_entity_decode($shout_contents, ENT_COMPAT, 'ISO-8859-1')));
@@ -69,83 +65,26 @@ if ($add)
 			//Vérifie que le message ne contient pas du flood de lien.
 			$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());
 			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
-			{	
+			{
 				echo -4;
 				exit;
 			}
 			
-			$result = PersistenceContext::get_querier()->insert(PREFIX . "shoutbox", array('login' => $shout_pseudo, 'user_id' => AppContext::get_current_user()->get_id(), 'contents' => $shout_contents, 'timestamp' => time()));
-			$last_msg_id = $result->get_last_inserted_id(); 
+			$shoutbox_message = new ShoutboxMessage();
+			$shoutbox_message->init_default_properties();
+			$shoutbox_message->set_login($shout_pseudo);
+			$shoutbox_message->set_user_id(AppContext::get_current_user()->get_id());
+			$shoutbox_message->set_contents($shout_contents);
+			$shoutbox_message->set_creation_date(new Date());
+			$id = ShoutboxService::add($shoutbox_message);
 			
-			$date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, time());
-			$date = $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
-			
-			$array_class = array('member', 'modo', 'admin');
-			if (AppContext::get_current_user()->get_id() !== -1)
-			{
-				$group_color = User::get_group_color(AppContext::get_current_user()->get_groups(), AppContext::get_current_user()->get_level(), true);
-				$style = $group_color ? 'style="color:'.$group_color.'"' : '';
-				$shout_pseudo = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '" class="small"><i class="fa fa-remove"></i></a> <a class="small ' . UserService::get_level_class(AppContext::get_current_user()->get_level()) . '" '.$style.' href="' . UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . ' </a>';
-			}
-			else
-				$shout_pseudo = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . '<span class="small" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . ' </span>';
-			
-			echo "array_shout[0] = '" . $shout_pseudo . "';";
-			echo "array_shout[1] = '" . FormatingHelper::second_parse($shout_contents) . "';";
-			echo "array_shout[2] = '" . $last_msg_id . "';";
+			ShoutboxMessagesCache::invalidate();
 		}
 		else //utilisateur non autorisé!
 			echo -1;
 	}
 	else
 		echo -5;
-}
-elseif ($refresh)
-{
-	$array_class = array('member', 'modo', 'admin');
-	$result = PersistenceContext::get_querier()->select("SELECT s.*, m.groups, m.level
-	FROM " . PREFIX . "shoutbox s
-	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
-	ORDER BY timestamp DESC 
-	LIMIT 25 OFFSET 0");
-	while ($row = $result->fetch())
-	{
-		$row['user_id'] = (int)$row['user_id'];
-		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($row['user_id'] === AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== -1))
-			$del = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '" class="small"><i class="fa fa-remove"></i></a>';
-		else
-			$del = '';
-			
-		$date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['timestamp']);
-		$date = $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
-		
-		if ($row['user_id'] !== -1) 
-		{
-			$group_color = User::get_group_color($row['groups'], $row['level']);
-			$style = $group_color ? 'style="color:'.$group_color.'"' : '';
-			$row['login'] = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . $del . ' <a class="small ' . UserService::get_level_class($row['level']) . '" '.$style.' href="'. UserUrlBuilder::profile($row['user_id'])->rel()  . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . ' </a>';
-		}
-		else
-			$row['login'] = ($display_date ? '<span class="small">' . $date . ' : </span>' : '') . $del . ' <span class="small" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . ' </span>';
-		
-		echo '<p id="shout-container-' . $row['id'] . '">' . $row['login'] . '<span class="small">: ' . FormatingHelper::second_parse($row['contents']) . '</span></p>' . "\n";
-	}
-	$result->dispose();
-}
-elseif ($del)
-{
-	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-	
-	$shout_id = !empty($_POST['idmsg']) ? NumberHelper::numeric($_POST['idmsg']) : '';
-	if (!empty($shout_id))
-	{
-		$user_id = (int)PersistenceContext::get_querier()->get_column_value(PREFIX . "shoutbox", 'user_id', 'WHERE id = :id', array('id' => $shout_id));
-		if (ShoutboxAuthorizationsService::check_authorizations()->moderation() || ($user_id === AppContext::get_current_user()->get_id() && AppContext::get_current_user()->get_id() !== -1))
-		{
-			PersistenceContext::get_querier()->delete(PREFIX . 'shoutbox', 'WHERE id=:id', array('id' => $shout_id));
-			echo 1;
-		}
-	}
 }
 
 require_once('../kernel/footer_no_display.php');

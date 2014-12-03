@@ -157,7 +157,7 @@ class ShoutboxFormController extends ModuleController
 		}
 		else
 		{
-			if (!$message->is_authorized_edit())
+			if (!$message->is_authorized_to_edit())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -180,6 +180,7 @@ class ShoutboxFormController extends ModuleController
 		
 		if ($message->get_id() === null)
 		{
+			$message->set_creation_date(new Date());
 			$id_message = ShoutboxService::add($message);
 		}
 		else

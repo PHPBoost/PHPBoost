@@ -62,7 +62,7 @@ class ShoutboxDeleteController extends ModuleController
 	
 	private function check_authorizations($message)
 	{
-		if (!$message->is_authorized_delete())
+		if (!$message->is_authorized_to_delete())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

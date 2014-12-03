@@ -46,6 +46,7 @@ $lang['config.max_messages_number.explain'] = 'Supprimés tous les jours, mettre 
 $lang['config.max_links_number_per_message'] = 'Nombre de liens maximum dans le message';
 $lang['config.max_links_number_per_message.explain'] = 'Mettre -1 pour illimité';
 
+$lang['error.message.delete'] = 'Erreur lors de la suppression du message';
 $lang['e_unauthorized'] = 'Vous n\'êtes pas autorisé à poster !';
 $lang['e_flood'] = 'Vous ne pouvez pas encore poster, réessayez dans quelques instants';
 $lang['e_l_flood'] = 'Nombre maximum de lien(s) internet autorisé(s) dans votre message : %d';
