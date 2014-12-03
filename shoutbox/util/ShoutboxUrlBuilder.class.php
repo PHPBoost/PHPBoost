@@ -77,5 +77,21 @@ class ShoutboxUrlBuilder
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/' . $page . '?token=' . AppContext::get_session()->get_token());
 	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function ajax_delete()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/delete/');
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function ajax_refresh()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/refresh/');
+	}
 }
 ?>

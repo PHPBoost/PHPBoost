@@ -1,6 +1,6 @@
 /* Conteneur des messages de la shoutbox.*/
-div#shout-container, 
-.shout-horizontal div#shout-container{
+div#shoutbox-messages-container, 
+.shout-horizontal div#shoutbox-messages-container {
 	width: 142px;
 	height: 150px;
 	overflow: auto;
@@ -9,7 +9,7 @@ div#shout-container,
 	word-wrap: break-word;
 }
 
-.shout-horizontal div#shout-container{
+.shout-horizontal div#shoutbox-messages-container {
 	width: auto;
 	padding-left: 15px;
 }

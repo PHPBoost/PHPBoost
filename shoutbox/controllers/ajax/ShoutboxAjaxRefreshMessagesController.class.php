@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           index.php
+ *                          ShoutboxAjaxRefreshMessagesController.class.php
  *                            -------------------
- *   begin                : October 14, 2014
+ *   begin                : December 02, 2014
  *   copyright            : (C) 2014 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
@@ -25,23 +25,39 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/init.php';
-
-$url_controller_mappers = array(
-	//Admin
-	new UrlControllerMapper('AdminShoutboxConfigController', '`^/admin(?:/config)?/?$`'),
+class ShoutboxAjaxRefreshMessagesController extends AbstractController
+{
+	private $lang;
+	private $view;
 	
-	//Mini menu
-	new UrlControllerMapper('ShoutboxAjaxDeleteMessageController', '`^/delete/?$`'),
-	new UrlControllerMapper('ShoutboxAjaxRefreshMessagesController', '`^/refresh/?$`'),
+	public function execute(HTTPRequestCustom $request)
+	{
+		$this->build_view();
+		return new SiteNodisplayResponse($this->view);
+	}
 	
-	//Archives
-	new UrlControllerMapper('ShoutboxFormController', '`^/add(?:/[0-9]+)?/?$`', array('page')),
-	new UrlControllerMapper('ShoutboxFormController', '`^/([0-9]+)/edit(?:/[0-9]+)?/?$`', array('id', 'page')),
-	new UrlControllerMapper('ShoutboxDeleteController', '`^/([0-9]+)/delete(?:/[0-9]+)?/?$`', array('id', 'page')),
-	new UrlControllerMapper('ShoutboxHomeController', '`^(?:/([0-9]+))?/?$`', array('page'))
-);
-DispatchManager::dispatch($url_controller_mappers);
+	private function build_view()
+	{
+		$this->lang = LangLoader::get('common', 'shoutbox');
+		$this->view = new FileTemplate('shoutbox/ShoutboxAjaxMessagesBoxController.tpl');
+		$this->view->add_lang($this->lang);
+		
+		$shoutbox_messages = ShoutboxMessagesCache::load()->get_messages();
+		
+		foreach ($shoutbox_messages as $message)
+		{
+			$shoutbox_message = new ShoutboxMessage();
+			$shoutbox_message->set_properties($message);
+			
+			$this->view->assign_block_vars('messages', array_merge($shoutbox_message->get_array_tpl_vars()));
+		}
+	}
+	
+	public static function get_view()
+	{
+		$object = new self();
+		$object->build_view();
+		return $object->view;
+	}
+}
 ?>

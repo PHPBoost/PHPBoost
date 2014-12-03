@@ -96,12 +96,12 @@ class ShoutboxMessage
 		return $this->author_user;
 	}
 	
-	public function is_authorized_edit()
+	public function is_authorized_to_edit()
 	{
 		return ShoutboxAuthorizationsService::check_authorizations()->moderation() || (ShoutboxAuthorizationsService::check_authorizations()->write() && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 	
-	public function is_authorized_delete()
+	public function is_authorized_to_delete()
 	{
 		return ShoutboxAuthorizationsService::check_authorizations()->moderation() || (ShoutboxAuthorizationsService::check_authorizations()->write() && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
@@ -128,7 +128,10 @@ class ShoutboxMessage
 		if (!empty($properties['user_id']))
 			$user->set_properties($properties);
 		else
+		{
 			$user->init_visitor_user();
+			$user->set_display_name($properties['login']);
+		}
 		$this->set_author_user($user);
 	}
 	
@@ -136,7 +139,6 @@ class ShoutboxMessage
 	{
 		$current_user = AppContext::get_current_user();
 		$this->set_author_user($current_user);
-		$this->creation_date = new Date();
 		
 		if (!$current_user->check_level(User::MEMBER_LEVEL))
 			$this->login = LangLoader::get_message('guest', 'main');
@@ -150,15 +152,15 @@ class ShoutboxMessage
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		
 		return array(
-			'C_EDIT' => $this->is_authorized_edit(),
-			'C_DELETE' => $this->is_authorized_delete(),
+			'C_EDIT' => $this->is_authorized_to_edit(),
+			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_AUTHOR_EXIST' => $user->get_id() != User::VISITOR_LEVEL,
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			
 			//Message
 			'ID' => $this->id,
 			'CONTENTS' => FormatingHelper::second_parse($this->contents),
-			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
+			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
 			'PSEUDO' => $this->login ? $this->login : $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),

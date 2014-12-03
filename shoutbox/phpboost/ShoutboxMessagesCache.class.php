@@ -38,26 +38,16 @@ class ShoutboxMessagesCache implements CacheData
 		
 		$max_messages_number = ShoutboxConfig::load()->get_max_messages_number();
 		
-		$result = PersistenceContext::get_querier()->select('SELECT s.id, s.login, s.contents, s.timestamp, m.user_id, m.display_name as mlogin, m.level, m.groups
+		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM ' . ShoutboxSetup::$shoutbox_table . ' s
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' m ON m.user_id = s.user_id
 		GROUP BY timestamp DESC
-		' . ($max_messages_number > 0 ? 'LIMIT :max_messages_number' : ''), array(
-			'max_messages_number' => $max_messages_number 
-		));
+		' . ($max_messages_number > 0 ? 'LIMIT ' . $max_messages_number : ''));
 		
 		foreach ($result as $msg)
 		{
-			$this->messages[$msg['id']] = array(
-				'id' => $msg['id'],
-				'contents' => strip_tags(FormatingHelper::second_parse($msg['contents'])),
-				'user_id' => $msg['user_id'],
-				'login' => $msg['mlogin'] ? $msg['mlogin'] : $msg['login'],
-				'level' => $msg['level'],
-				'groups' => $msg['groups'],
-				'timestamp' => $msg['timestamp']
-			);
-			$i++;
+			$this->messages[$msg['id']] = $msg;
+			$this->messages[$msg['id']]['login'] = $msg['display_name'] ? $msg['display_name'] : $msg['login'];
 		}
 		$result->dispose();
 	}
