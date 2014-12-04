@@ -40,8 +40,6 @@ class ShoutboxDeleteController extends ModuleController
 		
 		ShoutboxService::delete('WHERE id=:id', array('id' => $message->get_id()));
 		
-		ShoutboxMessagesCache::invalidate();
-		
 		AppContext::get_response()->redirect(ShoutboxUrlBuilder::home($request->get_getint('page', 1)));
 	}
 	

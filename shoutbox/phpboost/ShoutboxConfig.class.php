@@ -32,6 +32,7 @@ class ShoutboxConfig extends AbstractConfigData
 {
 	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
 	const REFRESH_DELAY = 'refresh_delay';
+	const DATE_DISPLAYED = 'date_displayed';
 	const MAX_MESSAGES_NUMBER = 'max_messages_number';
 	const FORBIDDEN_FORMATTING_TAGS = 'forbidden_formatting_tags';
 	const MAX_LINKS_NUMBER_PER_MESSAGE = 'max_links_number_per_message';
@@ -55,6 +56,21 @@ class ShoutboxConfig extends AbstractConfigData
 	public function set_refresh_delay($delay)
 	{
 		$this->set_property(self::REFRESH_DELAY, $delay);
+	}
+	
+	public function display_date()
+	{
+		$this->set_property(self::DATE_DISPLAYED, true);
+	}
+	
+	public function hide_date()
+	{
+		$this->set_property(self::DATE_DISPLAYED, false);
+	}
+	
+	public function is_date_displayed()
+	{
+		return $this->get_property(self::DATE_DISPLAYED);
 	}
 	
 	public function get_max_messages_number()
@@ -102,6 +118,7 @@ class ShoutboxConfig extends AbstractConfigData
 		return array(
 			self::ITEMS_NUMBER_PER_PAGE => 20,
 			self::REFRESH_DELAY => 60000,
+			self::DATE_DISPLAYED => false,
 			self::MAX_MESSAGES_NUMBER => 100,
 			self::FORBIDDEN_FORMATTING_TAGS => array(
 				'title', 'style', 'url', 'img','quote',

@@ -49,8 +49,6 @@ class ShoutboxAjaxDeleteMessageController extends AbstractController
 		AppContext::get_session()->csrf_post_protect();
 		
 		ShoutboxService::delete('WHERE id=:id', array('id' => $this->shoutbox_message->get_id()));
-		
-		ShoutboxMessagesCache::invalidate();
 	}
 	
 	private function get_shoutbox_message(HTTPRequestCustom $request)

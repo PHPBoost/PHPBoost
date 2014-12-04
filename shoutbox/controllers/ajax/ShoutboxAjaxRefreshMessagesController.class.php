@@ -42,15 +42,24 @@ class ShoutboxAjaxRefreshMessagesController extends AbstractController
 		$this->view = new FileTemplate('shoutbox/ShoutboxAjaxMessagesBoxController.tpl');
 		$this->view->add_lang($this->lang);
 		
-		$shoutbox_messages = ShoutboxMessagesCache::load()->get_messages();
+		$config = ShoutboxConfig::load();
 		
-		foreach ($shoutbox_messages as $message)
+		$this->view->put('C_DISPLAY_DATE', $config->is_date_displayed());
+		
+		$result = PersistenceContext::get_querier()->select('SELECT *
+		FROM ' . ShoutboxSetup::$shoutbox_table . ' s
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' m ON m.user_id = s.user_id
+		GROUP BY timestamp DESC
+		' . ($config->get_max_messages_number() > 0 ? 'LIMIT ' . $config->get_max_messages_number() : ''));
+		
+		while ($row = $result->fetch())
 		{
 			$shoutbox_message = new ShoutboxMessage();
-			$shoutbox_message->set_properties($message);
+			$shoutbox_message->set_properties($row);
 			
 			$this->view->assign_block_vars('messages', array_merge($shoutbox_message->get_array_tpl_vars()));
 		}
+		$result->dispose();
 	}
 	
 	public static function get_view()

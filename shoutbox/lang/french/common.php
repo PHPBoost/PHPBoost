@@ -41,6 +41,7 @@ $lang['shoutbox.edit'] = 'Edition d\'un message';
 $lang['config.items_number_per_page'] = 'Nombre d\'éléments affichés par page dans les archives';
 $lang['config.refresh_delay'] = 'Délai de rafraichissement automatique de la discussion';
 $lang['config.refresh_delay.explain'] = 'En minutes. Mettre 0 pour désactiver.';
+$lang['config.date_displayed'] = 'Afficher la date';
 $lang['config.max_messages_number'] = 'Nombre de messages maximum à conserver';
 $lang['config.max_messages_number.explain'] = 'Supprimés tous les jours, mettre -1 pour désactiver';
 $lang['config.max_links_number_per_message'] = 'Nombre de liens maximum dans le message';

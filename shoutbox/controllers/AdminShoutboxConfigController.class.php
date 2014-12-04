@@ -89,6 +89,8 @@ class AdminShoutboxConfigController extends AdminModuleController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
+		$fieldset->add_field(new FormFieldCheckbox('date_displayed', $this->lang['config.date_displayed'], $this->config->is_date_displayed()));
+		
 		$fieldset->add_field(new FormFieldTextEditor('max_messages_number', $this->lang['config.max_messages_number'], $this->config->get_max_messages_number(),
 			array('maxlength' => 3, 'size' => 3, 'description' => $this->lang['config.max_messages_number.explain'], 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
@@ -129,6 +131,12 @@ class AdminShoutboxConfigController extends AdminModuleController
 	{
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
 		$this->config->set_refresh_delay($this->form->get_value('refresh_delay') * 60000);
+		
+		if ($this->form->get_value('date_displayed'))
+			$this->config->display_date();
+		else
+			$this->config->hide_date();
+		
 		$this->config->set_max_messages_number($this->form->get_value('max_messages_number'));
 		
 		$forbidden_formatting_tags = array();
@@ -144,7 +152,6 @@ class AdminShoutboxConfigController extends AdminModuleController
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
 		ShoutboxConfig::save();
-		ShoutboxMessagesCache::invalidate();
 	}
 	
 	private function generate_forbidden_formatting_tags_option()
