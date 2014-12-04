@@ -48,15 +48,15 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			$lang = LangLoader::get('common', 'shoutbox');
 			$tpl->add_lang($lang);
 			
-			$config_shoutbox = ShoutboxConfig::load();
+			$config = ShoutboxConfig::load();
 			
 			$is_member = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
 			
 			$tpl->put_all(array(
 				'C_MEMBER' => $is_member,
 				'SHOUTBOX_PSEUDO' => $is_member ? AppContext::get_current_user()->get_display_name() : LangLoader::get_message('guest', 'main'),
-				'SHOUT_REFRESH_DELAY' => $config_shoutbox->get_refresh_delay(),
-				'L_ALERT_LINK_FLOOD' => sprintf($lang['e_l_flood'], $config_shoutbox->get_max_links_number_per_message()),
+				'SHOUT_REFRESH_DELAY' => $config->get_refresh_delay(),
+				'L_ALERT_LINK_FLOOD' => sprintf($lang['e_l_flood'], $config->get_max_links_number_per_message()),
 				'SHOUTBOX_MESSAGES' => ShoutboxAjaxRefreshMessagesController::get_view()
 			));
 			

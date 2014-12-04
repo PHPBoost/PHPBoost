@@ -121,7 +121,7 @@ class ShoutboxMessage
 	{
 		$this->id = $properties['id'];
 		$this->contents = $properties['contents'];
-		$this->login = $properties['login'];
+		$this->login = $properties['display_name'] ? $properties['display_name'] : $properties['login'];
 		$this->creation_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['timestamp']);
 		
 		$user = new User();

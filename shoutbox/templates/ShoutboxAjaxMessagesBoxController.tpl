@@ -1,5 +1,5 @@
 # START messages #
-<p id="shoutbox-message-{messages.ID}"># IF C_DISPLAY_DATE #<span class="small"> {messages.DATE} : </span># ENDIF #<span class="small"># IF messages.C_DELETE #<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{messages.ID}" class="fa fa-remove"></a>
+<p id="shoutbox-message-{messages.ID}"># IF C_DISPLAY_DATE #<span class="small">{messages.DATE} : </span># ENDIF #<span class="small"># IF messages.C_DELETE #<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{messages.ID}" class="fa fa-remove"></a>
 <script>
 <!--
 Event.observe(window, 'load', function() {

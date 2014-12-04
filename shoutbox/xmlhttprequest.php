@@ -77,8 +77,6 @@ if (!empty($_GET['add']))
 			$shoutbox_message->set_contents($shout_contents);
 			$shoutbox_message->set_creation_date(new Date());
 			$id = ShoutboxService::add($shoutbox_message);
-			
-			ShoutboxMessagesCache::invalidate();
 		}
 		else //utilisateur non autorisé!
 			echo -1;

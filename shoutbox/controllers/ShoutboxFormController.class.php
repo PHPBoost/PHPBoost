@@ -189,8 +189,6 @@ class ShoutboxFormController extends ModuleController
 			ShoutboxService::update($message);
 		}
 		
-		ShoutboxMessagesCache::invalidate();
-		
 		return $id_message;
 	}
 	
