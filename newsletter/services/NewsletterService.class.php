@@ -40,6 +40,8 @@ class NewsletterService
 	
 	public static function add_newsletter(array $streams, $subject, $contents, $language_type)
 	{
+		Environment::try_to_increase_max_execution_time();
+		
 		$newsletter_streams = NewsletterStreamsCache::load()->get_streams();
 		foreach ($newsletter_streams as $id => $stream)
 		{
