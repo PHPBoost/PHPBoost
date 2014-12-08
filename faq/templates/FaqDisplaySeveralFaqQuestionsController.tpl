@@ -66,6 +66,12 @@ function delete_question(id_question)
 	</header>
 	<div class="content">
 	# IF C_QUESTIONS #
+		# IF C_PENDING #
+			# IF C_MORE_THAN_ONE_QUESTION #
+			# INCLUDE SORT_FORM #
+			<div class="spacer">&nbsp;</div>
+			# ENDIF #
+		# ENDIF #
 		# IF C_DISPLAY_TYPE_INLINE #
 		<script>
 		<!--

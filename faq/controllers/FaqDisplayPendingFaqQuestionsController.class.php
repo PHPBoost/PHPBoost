@@ -61,7 +61,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 		switch ($field)
 		{
-			case 'name':
+			case 'question':
 				$sort_field = FaqQuestion::SORT_ALPHABETIC;
 				break;
 			default:
@@ -83,6 +83,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 		$this->tpl->put_all(array(
 			'C_QUESTIONS' => $result->get_rows_count() > 0,
 			'C_PENDING' => true,
+			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
 			'QUESTIONS_NUMBER' => $result->get_rows_count()
 		));
 		
@@ -110,7 +111,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
 			array(
 				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
-				new FormFieldSelectChoiceOption($common_lang['form.name'], 'name')
+				new FormFieldSelectChoiceOption($this->lang['faq.form.question'], 'question')
 			), 
 			array('events' => array('change' => 'document.location = "'. FaqUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));

@@ -42,7 +42,7 @@ class FaqQuestion
 	private $author_user;
 	private $approved;
 	
-	const SORT_ALPHABETIC = 'name';
+	const SORT_ALPHABETIC = 'question';
 	const SORT_DATE = 'creation_date';
 	
 	const ASC = 'ASC';
