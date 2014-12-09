@@ -139,11 +139,11 @@ class InstallationServices
 		return true;
 	}
 
-	public function configure_website($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_keyword = '', $site_timezone = '')
+	public function configure_website($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_timezone = '')
 	{
 		$this->get_installation_token();
 		$modules_to_install = $this->distribution_config['modules'];
-		$this->generate_website_configuration($server_url, $server_path, $site_name, $site_slogan, $site_desc, $site_keyword, $site_timezone);
+		$this->generate_website_configuration($server_url, $server_path, $site_name, $site_slogan, $site_desc, $site_timezone);
 		$this->install_modules($modules_to_install);
 		$this->add_menus();
 		$this->add_extended_fields();
@@ -163,13 +163,13 @@ class InstallationServices
         $this->distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
     }
 
-	private function generate_website_configuration($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_keyword = '', $site_timezone = '')
+	private function generate_website_configuration($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_timezone = '')
 	{
 		$locale = LangLoader::get_locale();
 		$user = new AdminUser();
 		$user->set_locale($locale);
 		AppContext::set_current_user($user);
-		$this->save_general_config($server_url, $server_path, $site_name, $site_slogan, $site_desc, $site_keyword, $site_timezone);
+		$this->save_general_config($server_url, $server_path, $site_name, $site_slogan, $site_desc, $site_timezone);
 		$this->save_server_environnement_config();
 		$this->init_graphical_config();
 		$this->init_debug_mode();
@@ -178,7 +178,7 @@ class InstallationServices
 		$this->configure_theme($this->distribution_config['theme']);
 	}
 
-	private function save_general_config($server_url, $server_path, $site_name, $site_slogan, $site_description, $site_keywords, $site_timezone)
+	private function save_general_config($server_url, $server_path, $site_name, $site_slogan, $site_description, $site_timezone)
 	{
 		$general_config = GeneralConfig::load();
 		$general_config->set_site_url($server_url);
@@ -186,7 +186,6 @@ class InstallationServices
 		$general_config->set_site_name($site_name);
 		$general_config->set_site_slogan($site_slogan);
 		$general_config->set_site_description($site_description);
-		$general_config->set_site_keywords($site_keywords);
 		$general_config->set_module_home_page($this->distribution_config['module_home_page']);
 		$general_config->set_site_install_date(new Date());
 		$general_config->set_site_timezone($site_timezone);

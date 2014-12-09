@@ -156,7 +156,7 @@ class UserUrlBuilder
 	
 	public static function administration()
 	{
-		return new Url('/admin/admin_index.php');
+		return new Url('/admin/');
 	}
 	
 	public static function groups()

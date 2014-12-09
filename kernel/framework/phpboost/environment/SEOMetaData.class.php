@@ -33,13 +33,24 @@
 class SEOMetaData
 {
 	private $title;
+	private $full_title;
 	private $description;
 	private $keywords = array();
 	private $canonical_url;
 		
-	public function set_title($title)
+	public function set_title($title, $section = '')
 	{
 		$this->title = $title;
+
+		if (!Environment::home_page_running())
+		{
+			$this->full_title = (empty($section) ? $title : $title . ' - ' . $section) . ' - ' . GeneralConfig::load()->get_site_name();
+		}
+		else
+		{
+			// HomePage
+			$this->full_title = GeneralConfig::load()->get_site_name() . ' - ' . $title;
+		}
 	}
 	
 	public function get_title()
@@ -49,15 +60,7 @@ class SEOMetaData
 	
 	public function get_full_title()
 	{
-		if (!Environment::home_page_running())
-		{
-			return $this->title . ' - ' . GeneralConfig::load()->get_site_name();
-		}
-		else
-		{
-			// HomePage
-			return GeneralConfig::load()->get_site_name() . ' - ' . $this->title;
-		}
+		return $this->full_title;
 	}
 	
 	public function set_description($description)
@@ -81,32 +84,6 @@ class SEOMetaData
 			return GeneralConfig::load()->get_site_description();
 		else
 			return strip_tags($this->description);
-	}
-	
-	public function set_keywords($keywords)
-	{
-		$this->keywords = $keywords;
-	}
-	
-	public function add_keyword($keyword)
-	{
-		$this->keywords[] = $keyword;
-	}
-	
-	public function get_keywords()
-	{
-		$site_keywords = GeneralConfig::load()->get_site_keywords();
-		
-		if (!empty($this->keywords))
-		{
-			$keywords = '';
-			foreach ($this->keywords as $keyword)
-			{
-				$keywords .= (!empty($keywords) ? ',' : '') . $keyword;
-			}
-			return (!empty($site_keywords) ? $site_keywords . ',' : '') . $keywords;
-		}
-		return $site_keywords;
 	}
 	
 	public function set_canonical_url(Url $canonical_url)

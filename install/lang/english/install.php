@@ -153,8 +153,6 @@ $lang = array(
 	'website.timezone.explanation' => 'The default value is the server one. You will be able to change this value later in the administration panel.',
 	'website.description' => 'Website description',
 	'website.description.explanation' => '<span style="font-weight:bold;">Optional:</span> Useful for search engine optimization',
-	'website.metaKeywords' => 'Website keywords',
-	'website.metaKeywords.explanation' => '<span style="font-weight:bold;">Optional:</span> Enter keywords separated by commas.',
 	'website.host.required' => 'You must enter your website\'s url !',
 	'website.name.required' => 'You must enter your website\'s name !',
 	'website.host.warning' => 'The website address you entered doesn\'t match your server address. Are you sure you want to keep to proceed ?',

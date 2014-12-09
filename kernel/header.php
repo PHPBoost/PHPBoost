@@ -40,7 +40,14 @@ if (!defined('TITLE'))
 	define('TITLE', LangLoader::get_message('unknow', 'main'));
 }
 
-$env->set_page_title(TITLE);
+$module_id = Environment::get_running_module_name();
+$section = '';
+if (!Environment::home_page_running() && ModulesManager::is_module_installed($module_id))
+{
+	$section = ModulesManager::get_module($module_id)->get_configuration()->get_name();
+}
+
+$env->set_page_title(TITLE, $section);
 
 ob_start();
 ?>

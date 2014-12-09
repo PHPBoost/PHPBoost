@@ -32,25 +32,20 @@
  */
 abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 {
-	protected $user;
-
-	public function __construct()
-	{
-		$this->user = AppContext::get_current_user();
-	}
-
 	protected function process_site_maintenance()
 	{
-		if ($this->is_under_maintenance())
+		$maintenance_config = MaintenanceConfig::load();
+		if ($maintenance_config->is_under_maintenance())
 		{
-			$maintenance_config = MaintenanceConfig::load();
 			if (!$maintenance_config->is_authorized_in_maintenance())
 			{
 				// Redirect if user not authorized the site for maintenance
-				if ($this->user->check_level(User::MEMBER_LEVEL))
+				if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 				{
-					AppContext::get_session()->end();
-					AppContext::get_response()->redirect(UserUrlBuilder::connect('not_authorized'));
+					$session = AppContext::get_session();
+					Session::delete($session);
+
+					AppContext::get_response()->redirect(UserUrlBuilder::connect());
 				}
 				
 				$maintain_url = UserUrlBuilder::maintain();
@@ -60,12 +55,6 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 				}
 			}
 		}
-	}
-
-	protected function is_under_maintenance()
-	{
-		$maintenance_config = MaintenanceConfig::load();
-		return $maintenance_config->is_under_maintenance();
 	}
 	
 	protected static function set_page_localization($page_title)

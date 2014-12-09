@@ -75,9 +75,6 @@ class InstallWebsiteConfigController extends InstallController
 		$description = new FormFieldMultiLineTextEditor('description', $this->lang['website.description'], '',
 		array('description' => $this->lang['website.description.explanation']));
 		$fieldset->add_field($description);
-		$meta_keywords = new FormFieldMultiLineTextEditor('metaKeywords', $this->lang['website.metaKeywords'], '',
-		array('description' => $this->lang['website.metaKeywords.explanation']));
-		$fieldset->add_field($meta_keywords);
 		$timezone = new FormFieldTimezone('timezone', $this->lang['website.timezone'], 'Europe/Paris',
 		array('description' => $this->lang['website.timezone.explanation']));
 		$fieldset->add_field($timezone);
@@ -96,7 +93,7 @@ class InstallWebsiteConfigController extends InstallController
 		$installation_services->configure_website(
 		$this->form->get_value('host'), $this->form->get_value('path'),
 		$this->form->get_value('name'), $this->form->get_value('slogan'), $this->form->get_value('description'),
-		$this->form->get_value('metaKeywords'), $this->form->get_value('timezone')->get_raw_value());
+		$this->form->get_value('timezone')->get_raw_value());
 		AppContext::get_response()->redirect(InstallUrlBuilder::admin());
 	}
 

@@ -269,7 +269,7 @@ class SandboxFormController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['module_title'] . ' - ' . $this->lang['title.form_builder']);
+		$graphical_environment->set_page_title($this->lang['title.form_builder'], $this->lang['module_title']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], SandboxUrlBuilder::home()->rel());

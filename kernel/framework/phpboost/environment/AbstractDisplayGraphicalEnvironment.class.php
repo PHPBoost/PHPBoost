@@ -39,7 +39,6 @@
 
 	public function __construct()
 	{
-		parent::__construct();
 		$this->seo_meta_data = new SEOMetaData();
 	}
 	
@@ -77,9 +76,9 @@
 		return $this->get_seo_meta_data()->get_title();
 	}
 	
-	public function set_page_title($title)
+	public function set_page_title($title, $section = '')
 	{
-		$this->get_seo_meta_data()->set_title($title);
+		$this->get_seo_meta_data()->set_title($title, $section);
 			
 		defined('TITLE') or define('TITLE', $title);
 		

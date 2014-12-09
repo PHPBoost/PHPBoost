@@ -407,14 +407,14 @@ class DownloadFormController extends ModuleController
 		
 		if ($downloadfile->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['download.add']);
+			$graphical_environment->set_page_title($this->lang['download.add'], $this->lang['module_title']);
 			$breadcrumb->add($this->lang['download.add'], DownloadUrlBuilder::add());
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.add']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::add());
 		}
 		else
 		{
-			$graphical_environment->set_page_title($this->lang['download.edit']);
+			$graphical_environment->set_page_title($this->lang['download.edit'], $this->lang['module_title']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::edit($downloadfile->get_id()));
 			

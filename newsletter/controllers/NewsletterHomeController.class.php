@@ -121,7 +121,7 @@ class NewsletterHomeController extends ModuleController
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$breadcrumb->add($this->lang['newsletter.list_newsletters'], NewsletterUrlBuilder::home()->absolute());
-		$response->get_graphical_environment()->set_page_title($this->lang['newsletter.list_newsletters']);
+		$response->get_graphical_environment()->set_page_title($this->lang['newsletter.list_newsletters'], $this->lang['newsletter']);
 		return $response;
 	}
 	

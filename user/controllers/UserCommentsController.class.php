@@ -234,7 +234,7 @@ class UserCommentsController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['comments']);
+		$graphical_environment->set_page_title($this->lang['comments'], $this->lang['users']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 

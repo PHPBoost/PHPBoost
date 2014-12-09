@@ -97,7 +97,7 @@ class NewslettersubscribeController extends ModuleController
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->rel());
 		$breadcrumb->add($this->lang['subscribe.newsletter'], NewsletterUrlBuilder::subscribe()->rel());
-		$response->get_graphical_environment()->set_page_title($this->lang['subscribe.newsletter']);
+		$response->get_graphical_environment()->set_page_title($this->lang['subscribe.newsletter'], $this->lang['newsletter']);
 		
 		return $response;
 	}

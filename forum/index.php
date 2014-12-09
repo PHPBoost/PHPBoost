@@ -35,7 +35,7 @@ $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($cat_name, '');
 
 if (!empty($id_get) && !empty($CAT_FORUM[$id_get]['name']))
-	define('TITLE', $LANG['title_forum'] . ' - ' . addslashes($CAT_FORUM[$id_get]['name']));
+	define('TITLE', addslashes($CAT_FORUM[$id_get]['name']));
 else
 	define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php');

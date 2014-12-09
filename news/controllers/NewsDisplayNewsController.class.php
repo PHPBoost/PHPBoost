@@ -234,9 +234,8 @@ class NewsDisplayNewsController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->get_news()->get_name());
+		$graphical_environment->set_page_title($this->get_news()->get_name(), $this->lang['news']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->get_news()->get_short_contents());
-		$graphical_environment->get_seo_meta_data()->set_keywords($this->get_news()->get_keywords_name());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

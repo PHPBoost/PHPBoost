@@ -42,7 +42,7 @@ class AdminBugtrackerDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link($lang['titles.admin.authorizations'], BugtrackerUrlBuilder::authorizations(), $picture);
 		
 		$env = $this->get_graphical_environment();
-		$env->set_page_title($title_page);
+		$env->set_page_title($title_page, $lang['module_title']);
 	}
 }
 ?>

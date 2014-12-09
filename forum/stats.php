@@ -31,7 +31,7 @@ require_once('../forum/forum_tools.php');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($LANG['stats'], '');
-define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['stats']);
+define('TITLE', $LANG['stats']);
 require_once('../kernel/header.php'); 
 
 $tpl = new FileTemplate('forum/forum_stats.tpl');

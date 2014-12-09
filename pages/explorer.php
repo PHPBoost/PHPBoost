@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php'); 
 require_once('../pages/pages_begin.php'); 
-define('TITLE', $LANG['pages'] . ' : ' . $LANG['pages_explorer']);
+define('TITLE', $LANG['pages_explorer']);
 $cat = retrieve(GET, 'cat', 0);
 $Bread_crumb->add($LANG['pages'], url('pages.php'));
 $Bread_crumb->add($LANG['pages_explorer'], url('explorer.php'));

@@ -223,7 +223,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['articles.pending_articles']);
+		$graphical_environment->set_page_title($this->lang['articles.pending_articles'], $this->lang['articles']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.seo.description.pending']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_pending_articles(AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'), AppContext::get_request()->get_getint('page', 1)));
 		
