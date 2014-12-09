@@ -54,10 +54,8 @@
 	+ Connexion interne avec l'adresse email ou un login que l'on peut choisir
 	+ Connexion avec un compte Facebook (et d'autre) paramètrable dans l'administration
 	+ Possibilité de gérer ses types de connexion dans le profil
+	- Vérifier les commandes CLI de user
 + Nettoyage des variables de langues
-- Revoir la balise Title HTML (créer un format standardisé dans PHPBoost :
-	- Titre de la page - Nom du module - Nom du site
-	- Titre de la page - Nom du site (dans le cas ou c'est une page sans module)
 
 [b]Graphique[/b]
 - Support mobile et version tablette

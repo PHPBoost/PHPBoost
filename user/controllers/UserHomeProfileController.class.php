@@ -128,7 +128,7 @@ class UserHomeProfileController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['profile']);
+		$graphical_environment->set_page_title($this->lang['profile'], $this->lang['user']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['user'], UserUrlBuilder::users()->rel());

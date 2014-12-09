@@ -42,7 +42,7 @@ class AdminShoutboxDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), ShoutboxUrlBuilder::configuration(), $picture);
 		
 		$env = $this->get_graphical_environment();
-		$env->set_page_title($title_page);
+		$env->set_page_title($title_page, $lang['module_title']);
 	}
 }
 ?>

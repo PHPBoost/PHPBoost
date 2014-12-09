@@ -150,7 +150,7 @@ class BugtrackerStatsListController extends ModuleController
 		
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['titles.stats']);
+		$graphical_environment->set_page_title($this->lang['titles.stats'], $this->lang['module_title']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::stats($bug_id));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

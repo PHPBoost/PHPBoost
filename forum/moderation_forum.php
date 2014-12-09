@@ -41,7 +41,7 @@ elseif ($action == 'users')
 	$Bread_crumb->add($LANG['warning_management'], url('moderation_forum.php?action=warning'));
 $Bread_crumb->add($LANG['moderation_panel'], '../forum/moderation_forum.php');
 
-define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['moderation_panel']);
+define('TITLE', $LANG['moderation_panel']);
 require_once('../kernel/header.php');
 
 //Au moins modérateur sur une catégorie du forum, ou modérateur global.

@@ -28,7 +28,7 @@
 
 require_once('../admin/admin_begin.php');
 load_module_lang('wiki');
-define('TITLE', $LANG['administration'] . ' : ' . $LANG['wiki']);
+define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 include_once('../wiki/wiki_functions.php');
 

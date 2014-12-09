@@ -205,13 +205,13 @@ class ShoutboxFormController extends ModuleController
 		
 		if ($message->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['shoutbox.add'], $this->lang['module_title']);
 			$breadcrumb->add($this->lang['shoutbox.add'], ShoutboxUrlBuilder::add($page));
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ShoutboxUrlBuilder::add($page));
 		}
 		else
 		{
-			$graphical_environment->set_page_title($this->lang['shoutbox.edit']);
+			$graphical_environment->set_page_title($this->lang['shoutbox.edit'], $this->lang['module_title']);
 			$breadcrumb->add($this->lang['shoutbox.edit'], ShoutboxUrlBuilder::edit($message->get_id(), $page));
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ShoutboxUrlBuilder::edit($message->get_id(), $page));
 		}

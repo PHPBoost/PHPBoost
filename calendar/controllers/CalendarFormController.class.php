@@ -495,13 +495,13 @@ class CalendarFormController extends ModuleController
 		
 		if ($event->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['calendar.titles.add_event']);
+			$graphical_environment->set_page_title($this->lang['calendar.titles.add_event'], $this->lang['module_title']);
 			$breadcrumb->add($this->lang['calendar.titles.add_event'], CalendarUrlBuilder::add_event());
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::add_event());
 		}
 		else
 		{
-			$graphical_environment->set_page_title($this->lang['calendar.titles.event_edition']);
+			$graphical_environment->set_page_title($this->lang['calendar.titles.event_edition'], $this->lang['module_title']);
 			
 			$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
 			$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));

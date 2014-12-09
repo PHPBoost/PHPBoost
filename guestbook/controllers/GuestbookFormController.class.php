@@ -207,13 +207,13 @@ class GuestbookFormController extends ModuleController
 		
 		if ($message->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['module_title']);
+			$graphical_environment->set_page_title($this->lang['guestbook.add'], $this->lang['module_title']);
 			$breadcrumb->add($this->lang['guestbook.add'], GuestbookUrlBuilder::add($page));
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::add($page));
 		}
 		else
 		{
-			$graphical_environment->set_page_title($this->lang['guestbook.edit']);
+			$graphical_environment->set_page_title($this->lang['guestbook.edit'], $this->lang['module_title']);
 			$breadcrumb->add($this->lang['guestbook.edit'], GuestbookUrlBuilder::edit($message->get_id(), $page));
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::edit($message->get_id(), $page));
 		}

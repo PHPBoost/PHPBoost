@@ -374,14 +374,14 @@ class NewsFormController extends ModuleController
 			
 		if ($this->get_news()->get_id() === null)
 		{
-			$graphical_environment->set_page_title($this->lang['news.add']);
+			$graphical_environment->set_page_title($this->lang['news.add'], $this->lang['news']);
 			$breadcrumb->add($this->lang['news.add'], NewsUrlBuilder::add_news());
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.add']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::add_news());
 		}
 		else
 		{
-			$graphical_environment->set_page_title($this->lang['news.edit']);
+			$graphical_environment->set_page_title($this->lang['news.edit'], $this->lang['news']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::edit_news($news->get_id()));
 			

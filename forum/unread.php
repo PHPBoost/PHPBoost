@@ -31,7 +31,7 @@ require_once('../forum/forum_tools.php');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($LANG['show_not_reads'], '');
-define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_not_reads']);
+define('TITLE', $LANG['show_not_reads']);
 require_once('../kernel/header.php'); 
 
 //Redirection changement de catégorie.

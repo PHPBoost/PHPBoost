@@ -31,7 +31,7 @@ require_once('../forum/forum_tools.php');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($LANG['show_topic_track'], '');
-define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_topic_track']);
+define('TITLE', $LANG['show_topic_track']);
 require_once('../kernel/header.php');
 
 $page = retrieve(GET, 'p', 1);

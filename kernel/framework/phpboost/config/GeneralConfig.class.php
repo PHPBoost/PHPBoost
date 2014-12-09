@@ -35,7 +35,6 @@ class GeneralConfig extends AbstractConfigData
 	const SITE_NAME = 'site_name';
 	const SITE_SLOGAN = 'site_slogan';
 	const SITE_DESCRIPTION = 'site_description';
-	const SITE_KEYWORDS = 'site_keywords';
 	const MODULE_HOME_PAGE = 'module_home_page';
 	const OTHER_HOME_PAGE = 'other_home_page';
 	const PHPBOOST_VERSION = 'phpboost_version';
@@ -115,7 +114,6 @@ class GeneralConfig extends AbstractConfigData
 			self::SITE_NAME => '',
 			self::SITE_SLOGAN => '',
 			self::SITE_DESCRIPTION => '',
-			self::SITE_KEYWORDS => '',
 			self::MODULE_HOME_PAGE => '',
 			self::OTHER_HOME_PAGE => '',
 			self::PHPBOOST_VERSION => '4.1',
@@ -184,16 +182,6 @@ class GeneralConfig extends AbstractConfigData
 	public function set_site_description($site_description)
 	{
 		$this->set_property(self::SITE_DESCRIPTION, $site_description);
-	}
-
-	public function get_site_keywords()
-	{
-		return $this->get_property(self::SITE_KEYWORDS);
-	}
-
-	public function set_site_keywords($keywords)
-	{
-		$this->set_property(self::SITE_KEYWORDS, $keywords);
 	}
 
 	public function get_module_home_page()

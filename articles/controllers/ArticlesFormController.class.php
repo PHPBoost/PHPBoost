@@ -429,7 +429,7 @@ class ArticlesFormController extends ModuleController
 		if ($article->get_id() === null)
 		{
 			$breadcrumb->add($this->lang['articles.add'], ArticlesUrlBuilder::add_article($article->get_id_category()));
-			$graphical_environment->set_page_title($this->lang['articles.add']);
+			$graphical_environment->set_page_title($this->lang['articles.add'], $this->lang['articles']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.add']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::add_article($article->get_id_category()));
 		}
@@ -444,7 +444,7 @@ class ArticlesFormController extends ModuleController
 			$breadcrumb->add($article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
 
 			$breadcrumb->add($this->lang['articles.edit'], ArticlesUrlBuilder::edit_article($article->get_id()));
-			$graphical_environment->set_page_title($this->lang['articles.edit']);
+			$graphical_environment->set_page_title($this->lang['articles.edit'], $this->lang['articles']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.edit']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::edit_article($article->get_id()));
 		}

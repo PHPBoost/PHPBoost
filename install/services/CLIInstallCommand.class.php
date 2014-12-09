@@ -185,7 +185,7 @@ class CLIInstallCommand implements CLICommand
 		}
 		CLIOutput::writeln("\t" . 'modules...');
 		if (!$this->installation->configure_website($this->website_server, $this->website_path, $this->website_name, $this->website_slogan,
-			$this->website_description, '', $this->website_timezone))
+			$this->website_description, $this->website_timezone))
 		{
 			return false;
 		}

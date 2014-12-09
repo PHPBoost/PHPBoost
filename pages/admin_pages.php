@@ -28,7 +28,7 @@
 
 require_once('../admin/admin_begin.php');
 load_module_lang('pages');
-define('TITLE', $LANG['administration'] . ' : ' . $LANG['pages']);
+define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 include_once('pages_begin.php');

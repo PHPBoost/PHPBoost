@@ -368,13 +368,13 @@ class WebFormController extends ModuleController
 		{
 			$graphical_environment->set_page_title($this->lang['web.add']);
 			$breadcrumb->add($this->lang['web.add'], WebUrlBuilder::add());
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.add']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.add'], $this->lang['module_title']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::add());
 		}
 		else
 		{
 			$graphical_environment->set_page_title($this->lang['web.edit']);
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.edit']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.edit'], $this->lang['module_title']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::edit($weblink->get_id()));
 			
 			$categories = array_reverse(WebService::get_categories_manager()->get_parents($weblink->get_id_category(), true));

@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 include_once('pages_begin.php');
 include_once('pages_functions.php');
 
-define('TITLE', $LANG['pages'] . ' : ' . $LANG['pages_redirections']);
+define('TITLE', $LANG['pages_redirections']);
 
 $id_redirection = retrieve(GET, 'id', 0);
 $id_rename = retrieve(GET, 'rename', 0);

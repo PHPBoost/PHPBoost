@@ -41,7 +41,7 @@ $Bread_crumb->add($cat_name, 'forum' . url('.php?id=' . $topic['idcat'], '-' . $
 $Bread_crumb->add($topic['title'], 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'));
 $Bread_crumb->add($LANG['alert_topic'], '');
 
-define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['alert_topic']);
+define('TITLE', $LANG['alert_topic']);
 require_once('../kernel/header.php');
 
 if (empty($alert) && empty($alert_post) || empty($topic['idcat']))

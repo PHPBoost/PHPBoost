@@ -125,7 +125,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
 			'TITLE' => $seo_meta_data->get_full_title(),
 			'SITE_DESCRIPTION' => $description,
-			'SITE_KEYWORD' => $seo_meta_data->get_keywords(),
 			'U_CANONICAL' => $seo_meta_data->get_canonical_link(),
 			'L_XML_LANGUAGE' => self::$main_lang['xml_lang'],
 			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
@@ -233,7 +232,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$template =  new FileTemplate('maintain.tpl');
 		
 		$maintenance_config = MaintenanceConfig::load();
-		if ($this->is_under_maintenance() && $maintenance_config->get_display_duration_for_admin())
+		if ($maintenance_config->is_under_maintenance() && $maintenance_config->get_display_duration_for_admin())
 		{
 			$date_lang = LangLoader::get('date-common');
 			//Durée de la maintenance.

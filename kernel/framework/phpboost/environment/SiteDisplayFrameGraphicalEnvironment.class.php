@@ -59,7 +59,6 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
 			'TITLE' => $this->get_seo_meta_data()->get_full_title(),
 			'SITE_DESCRIPTION' => $description,
-			'SITE_KEYWORD' => $this->get_seo_meta_data()->get_keywords(),
 			'U_CANONICAL' => $this->get_seo_meta_data()->get_canonical_link(),
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
 			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),

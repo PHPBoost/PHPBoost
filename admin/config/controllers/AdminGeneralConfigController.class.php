@@ -98,10 +98,6 @@ class AdminGeneralConfigController extends AdminController
 			array('rows' => 4, 'description' => $this->lang['general-config.site_description-explain'])
 		));
 
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('site_keywords', $this->lang['general-config.site_keywords'], $this->general_config->get_site_keywords(),
-			array('rows' => 4, 'description' => $this->lang['general-config.site_keywords-explain'])
-		));
-
 		$fieldset->add_field(new FormFieldLangsSelect('default_language', $this->lang['general-config.default_language'], 
 			$this->user_accounts_config->get_default_lang(), 
 			array('required' => true)
@@ -157,7 +153,6 @@ class AdminGeneralConfigController extends AdminController
 		$this->general_config->set_site_name($this->form->get_value('site_name'));
 		$this->general_config->set_site_slogan($this->form->get_value('site_slogan'));
 		$this->general_config->set_site_description($this->form->get_value('site_description'));
-		$this->general_config->set_site_keywords($this->form->get_value('site_keywords'));
 
 		$module_home_page = $this->form->get_value('start_page')->get_raw_value();
 		$this->general_config->set_module_home_page($module_home_page);

@@ -280,7 +280,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->category->get_name());
+		$graphical_environment->set_page_title($this->category->get_name(), $this->lang['articles']);
 		$graphical_environment->get_seo_meta_data()->set_description($this->category->get_description());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), AppContext::get_request()->get_getstring('field', 'date'), AppContext::get_request()->get_getstring('sort', 'desc'), AppContext::get_request()->get_getint('page', 1)));
 	

@@ -36,7 +36,7 @@ if (AppContext::get_current_user()->is_readonly())
 	DispatchManager::redirect($controller);
 }
 
-define('TITLE', $LANG['wiki'] . ': ' . $LANG['wiki_contribuate']);
+define('TITLE', $LANG['wiki_contribuate']);
 
 $bread_crumb_key = 'wiki_post';
 require_once('../wiki/wiki_bread_crumb.php');

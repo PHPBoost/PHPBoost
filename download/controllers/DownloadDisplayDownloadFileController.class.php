@@ -162,9 +162,8 @@ class DownloadDisplayDownloadFileController extends ModuleController
 		$response = new SiteDisplayResponse($this->tpl);
 		
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($downloadfile->get_name());
+		$graphical_environment->set_page_title($downloadfile->get_name(), $this->lang['module_title']);
 		$graphical_environment->get_seo_meta_data()->set_description($downloadfile->get_short_contents());
-		$graphical_environment->get_seo_meta_data()->set_keywords($downloadfile->get_keywords_name());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()));
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

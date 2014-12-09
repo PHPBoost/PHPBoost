@@ -178,7 +178,7 @@ class CalendarDeleteController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['calendar.titles.event_removal']);
+		$graphical_environment->set_page_title($this->lang['calendar.titles.event_removal'], $this->lang['module_title']);
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['module_title'], CalendarUrlBuilder::home());

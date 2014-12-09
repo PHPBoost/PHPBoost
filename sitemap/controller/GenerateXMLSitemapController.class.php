@@ -49,7 +49,7 @@ class GenerateXMLSitemapController extends AdminController
 		));
 
 		$response = new AdminSitemapResponse($view);
-		$response->get_graphical_environment()->set_page_title($lang['generate_xml_file']);
+		$response->get_graphical_environment()->set_page_title($lang['generate_xml_file'], $lang['sitemap']);
 		return $response;
 	}
 }

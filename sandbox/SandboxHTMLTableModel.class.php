@@ -25,24 +25,24 @@
  *
  ###################################################*/
 
-class SandboxHTMLTableModel extends AbstractHTMLTableModel
+class SandboxHTMLTableModel extends SQLHTMLTableModel
 {
 	private $parameters;
 
 	public function __construct()
 	{
 		$columns = array(
-			new HTMLTableColumn('pseudo', 'pseudo'),
+			new HTMLTableColumn('pseudo', 'display_name'),
 			new HTMLTableColumn('email'),
-			new HTMLTableColumn('inscrit le', 'register_date'),
+			new HTMLTableColumn('inscrit le', 'registration_date'),
 			new HTMLTableColumn('messages'),
 			new HTMLTableColumn('dernière connexion'),
 			new HTMLTableColumn('messagerie')
 		);
 		
-		$default_sorting_rule = new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC);
+		$default_sorting_rule = new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC, true);
 		
-		parent::__construct($columns, $default_sorting_rule);
+		parent::__construct(DB_TABLE_MEMBER, $columns, $default_sorting_rule);
 		
 		$this->set_caption('Liste des membres');
 		$this->set_id('t42');
@@ -64,80 +64,6 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
         $this->add_filter(new HTMLTableLessThanOrEqualsToSQLFilter('user_id', 'filter14', 'id <='));
         $this->add_filter(new HTMLTableEqualsToSQLFilter('user_id', 'filter15', 'id ='));
 		
-	}
-
-	public function get_number_of_matching_rows(array $filters)
-	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, $this->get_filtered_clause($filters), $this->parameters);
-	}
-
-	public function get_rows($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters)
-	{
-		$results = array();
-		$query = $this->build_query($limit, $offset, $sorting_rule, $filters);
-		$result = PersistenceContext::get_querier()->select($query, $this->parameters);
-		foreach ($result as $row)
-		{
-			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell($row['display_name']),
-				new HTMLTableRowCell(($row['show_email'] == 1) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '&nbsp;'),
-				new HTMLTableRowCell(gmdate_format('date_format_long', $row['registration_date'])),
-				new HTMLTableRowCell(!empty($row['posted_msg']) ? $row['posted_msg'] : '0'),
-				new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connection_date']) ? $row['last_connection_date'] : $row['registration_date'])),
-				new HTMLTableRowCell('<a href="' . Url::to_rel('/user/pm.php?pm=' . $row['user_id']) . '" class="basic-button smaller">MP</a>')
-			));
-		}
-		return $results;
-	}
-
-	private function build_query($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters)
-	{
-		$query = 'SELECT user_id, display_name, email, show_email, registration_date, last_connection_date, posted_msg ' .
-		'FROM ' . DB_TABLE_MEMBER;
-		$query .= $this->get_filtered_clause($filters);
-		$query .= $this->get_order_clause($sorting_rule);
-		$query .= $limit !== AbstractHTMLTableModel::NO_PAGINATION ? ' LIMIT ' . $limit . ' OFFSET ' . $offset : '';
-		return $query;
-	}
-
-	private function get_filtered_clause(array $filters)
-	{
-		$this->parameters = array();
-		$clause = ' WHERE 1';
-		if (!empty($filters))
-		{
-			$sql_filters = array();
-			foreach ($filters as $filter)
-			{
-				$query_fragment = $filter->get_sql();
-				$query_fragment->add_parameters_to_map($this->parameters);
-				$sql_filters[] = $query_fragment->get_query();
-			}
-			$clause .= ' AND ' . implode(' AND ', $sql_filters);
-		}
-		return $clause;
-	}
-
-	private function get_order_clause(HTMLTableSortingRule $rule)
-	{
-		$order_clause = ' ORDER BY ';
-		$order_clause .= $this->get_sort_parameter_column($rule) . ' ';
-		if ($rule->get_order_way() == HTMLTableSortingRule::ASC)
-		{
-			$order_clause .= SQLQuerier::ORDER_BY_ASC;
-		}
-		else
-		{
-			$order_clause .= SQLQuerier::ORDER_BY_DESC;
-		}
-		return $order_clause;
-	}
-
-	private function get_sort_parameter_column(HTMLTableSortingRule $rule)
-	{
-		$values = array('pseudo' => 'display_name', 'register_date' => 'registration_date');
-		$default = 'user_id';
-		return Arrays::find($rule->get_sort_parameter(), $values, $default);
 	}
 }
 ?>

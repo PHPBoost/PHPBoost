@@ -8,6 +8,10 @@
 [*] Suppression de l'ancien système de Tpl
 [*] Suppression de la classe UserDisplayResponse
 [*] Passage de la configuration de la maintenance en MVC (simplification de l'interface)
+- Refonte de la balise Title HTML (création d'un format standardisé dans PHPBoost :
+	- Titre de la page - Nom de la section ou du module - Nom du site
+	- Titre de la page - Nom du site (dans le cas ou c'est une page sans module)
+	- Nom du site - Description du site (pour la page d'accueil)
 
 
 =================================== Modules =====================================
