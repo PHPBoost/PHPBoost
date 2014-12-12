@@ -159,7 +159,7 @@ class ShoutboxMessage
 			
 			//Message
 			'ID' => $this->id,
-			'CONTENTS' => FormatingHelper::second_parse($this->contents),
+			'CONTENTS' => FormatingHelper::second_parse(stripslashes($this->contents)),
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'DATE_ISO8601' => $this->creation_date->format(Date::FORMAT_ISO8601),
 			'PSEUDO' => $this->login ? $this->login : $user->get_display_name(),

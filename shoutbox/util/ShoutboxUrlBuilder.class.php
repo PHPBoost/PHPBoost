@@ -81,9 +81,17 @@ class ShoutboxUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function ajax_add()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/ajax_add/');
+	}
+	
+	/**
+	 * @return Url
+	 */
 	public static function ajax_delete()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/ajax_delete/');
 	}
 	
 	/**
@@ -91,7 +99,7 @@ class ShoutboxUrlBuilder
 	 */
 	public static function ajax_refresh()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/refresh/');
+		return DispatchManager::get_url(self::$dispatcher, '/ajax_refresh/');
 	}
 }
 ?>
