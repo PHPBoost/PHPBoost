@@ -55,7 +55,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 				'C_DISPLAY_FORM' => ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly(),
 				'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_display_name(),
 				'SHOUT_REFRESH_DELAY' => $config->get_refresh_delay(),
-				'L_ALERT_LINK_FLOOD' => sprintf($lang['e_l_flood'], $config->get_max_links_number_per_message()),
+				'L_ALERT_LINK_FLOOD' => sprintf(LangLoader::get_message('e_l_flood', 'errors'), $config->get_max_links_number_per_message()),
 				'SHOUTBOX_MESSAGES' => ShoutboxAjaxRefreshMessagesController::get_view()
 			));
 			

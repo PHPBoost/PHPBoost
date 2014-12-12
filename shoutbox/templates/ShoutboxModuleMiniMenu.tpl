@@ -47,8 +47,8 @@ function XMLHttpRequest_shoutmsg()
 		tinyMCE.triggerSave();
 	# ENDIF #
 	
-	var pseudo = document.getElementById("shout_pseudo").value;
-	var contents = document.getElementById("shout_contents").value;
+	var pseudo = $("shout_pseudo").value;
+	var contents = $("shout_contents").value;
 
 	if( pseudo != '' && contents != '' )
 	{
@@ -70,13 +70,13 @@ function XMLHttpRequest_shoutmsg()
 				switch( xhr_object.responseText )
 				{
 					case '-1': 
-						alert("{@e_flood}");
+						alert("${LangLoader::get_message('e_flood', 'errors')}");
 					break;
 					case '-2': 
 						alert("{L_ALERT_LINK_FLOOD}");
 					break;
 					case '-3': 
-						alert("{@e_incomplete}");
+						alert("${LangLoader::get_message('e_incomplete', 'errors')}");
 					break;
 				}
 				$('shoutbox-refresh').className = 'fa fa-refresh';
@@ -85,7 +85,7 @@ function XMLHttpRequest_shoutmsg()
 		xmlhttprequest_sender(xhr_object, data);
 	}
 	else
-		alert("{@e_incomplete}");
+		alert("${LangLoader::get_message('e_incomplete', 'errors')}");
 }
 
 function check_form_shout(){
@@ -131,7 +131,7 @@ function check_form_shout(){
 		</form>
 		# ELSE #
 		<div class="spacer">&nbsp;</div>
-		<span class="warning">{@error.unauthorized}</span>
+		<span class="warning">${LangLoader::get_message('e_unauthorized', 'errors')}</span>
 		# ENDIF #
 		<a class="small" href="${relative_url(ShoutboxUrlBuilder::home())}" title="">{@archives}</a>
 	</div>
