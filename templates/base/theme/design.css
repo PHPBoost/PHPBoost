@@ -1,1 +1,242 @@
-/*--------------------------------------		design.cssContient les conteneurs de mise en page.Le design.css permet de mettre en forme votre site web avec le design de votre choix--------------------------------------*//* -- Elements HTML generiques specifique au theme ----------------------------------------*/html {	font-size: 100%;	font-size: 10px;}body {	position: relative;	height: auto;	min-height: 100%;	background: #E8EDF3 url(images/body.png) repeat-x;	color: #555555;	font-size: 1.3em;	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;}/* -- En-tete de page - Header ----------------------------------------*/header#header {	max-width: 1024px;	margin: auto;}/* --- Partie superieure du header --- */div#top-header {	height: 139px;}/* --- Partie inferieur du header --- */div#sub-header {	height: 35px;}/* --- Logo et Nom du site web --- */div#site-infos {	max-width: 940px;	margin: 1.5em 1.5em 0 1.5em;	float: left;}div#site-logo {	float: left;	margin: 0 1em 0 0;	background: url('images/logo.png') no-repeat;	width: 90px;	height: 90px;}div#site-name-container {	margin: 1em 0 0 0;	overflow: hidden;}a#site-name {	color: #F9FCFF;	font-size: 4em;	font-weight: bold;	line-height: 1em;	letter-spacing: 0.02em;	text-decoration: none;	white-space: nowrap;	text-shadow: 0 0 0 rgb(0,0,0), 1px 0 0 rgb(-255,-255,-255), 2px 0 0.1px rgba(0,0,0,0.1), 2px 0 0.1px rgba(0,0,0,0.2), 0 0 1px rgba(0,0,0,.1);}span#site-slogan {	display: block;	padding: 0.1em 0 0 0.1em;	color: #FFFFFF;	font-size: 1em;	letter-spacing: 0.1em;}/* -- Conteneur global du site ----------------------------------------*/div#global {	max-width: 1024px;	margin: 1.5em auto 0 auto;}/* CSS applique aux écrans PC */@media ( min-width: 769px ) {	/* --- Menu gauche --- */	aside#menu-left {		float: left;		width: 19%;		margin-right: 1%;	}	/* --- Menu droit --- */	aside#menu-right {		float: right;		width: 19%;		margin-left: 1%;	}	/* --- Menu central : main --- */	div#main {		float: left;		width: 100%;		overflow: hidden;	}	div#main.main-with-left,	div#main.main-with-right {		width: 80%;	}	div#main.main-with-left.main-with-right {		width: 60%;	}}/* CSS applique aux tablettes */@media ( max-width: 768px ) {   aside#menu-left,   aside#menu-right {    	float: none;    	width: auto;   }   #main {   		width: auto;   }}/* CSS applique aux smartphones */@media ( max-width: 480px ) {   aside#menu-left,   aside#menu-right {    	float: none;    	width: 100%;   }   #main {   		width: 100%;   }}/* -- Contenu de la page ----------------------------------------*//* --- Contenu central --- */div#main-content {	padding: 1.5em 0.8em;	border: 1px #BEBEBE solid;	background: #FFFFFF;}/* --- Emplacement au dessus et en dessous du contenu de la page --- */div#top-content {	margin: 0 0 2% 0;}div#bottom-content {	margin: 2% 0 0 0;}/* --- Emplacement au dessus du pied de page --- */div#top-footer {	clear: both;	padding: 2% 0;}/* -- Pied de page - Footer ----------------------------------------*/footer#footer {	clear: both;	width: 100%;	background: #212121;	border-top: #336397 2px solid;}footer#footer .footer-content {	margin: 0 auto 0 auto;	width: 1024px;	padding: 1.5em 0;	border-bottom: 2px groove #444444;}footer#footer .footer-infos {	min-height: 40px;	text-align: center;	padding-top: 10px;}footer#footer .footer-infos span {	color: #FFFFFF;	font-size: 0.8em;}/* -- Elements specifiques PHPboost ----------------------------------------*//* --- Compteur de visite --- */div#compteur {	color: #E9ECD9;	position: absolute;	top: 50px;	right: 0px;	font-size: 0.9em;	margin-right: 15px;	text-align: right;}/* --- Barre d'outils --- */#actions-links-menu {	float:right;	margin: 0 5px 5px 5px;}/* --- Barre de lien rapide --- */nav#breadcrumb {	text-indent: 10px;	margin: 0px 0px 20px 10px;}nav#breadcrumb ol {	list-style: none;	margin: 0;}nav#breadcrumb ol li {	display: inline;}nav#breadcrumb ol li:not(.current):after {	content: '/';	color: #616161;}
+/*--------------------------------------
+		design.css
+Contient les conteneurs de mise en page.
+Le design.css permet de mettre en forme votre site web avec le design de votre choix
+--------------------------------------*/
+
+
+/* -- Elements HTML generiques specifique au theme --
+--------------------------------------*/
+html {
+	font-size: 100%;
+	font-size: 10px;
+}
+
+body {
+	position: relative;
+	height: auto;
+	min-height: 100%;
+	background: #E8EDF3 url(images/body.png) repeat-x;
+	color: #555555;
+	font-size: 1.3em;
+	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+}
+
+
+/* -- En-tete de page - Header --
+--------------------------------------*/
+header#header {
+	max-width: 1024px;
+	margin: auto;
+}
+
+/* --- Partie superieure du header --- */
+div#top-header {
+	height: 139px;
+}
+
+/* --- Partie inferieur du header --- */
+div#sub-header {
+	height: 35px;
+}
+
+/* --- Logo et Nom du site web --- */
+div#site-infos {
+	max-width: 940px;
+	margin: 1.5em 1.5em 0 1.5em;
+	float: left;
+}
+
+div#site-logo {
+	float: left;
+	margin: 0 1em 0 0;
+	background: url('images/logo.png') no-repeat;
+	width: 90px;
+	height: 60px;
+}
+
+div#site-name-container {
+	margin: 1em 0 0 0;
+	overflow: hidden;
+}
+
+a#site-name {
+	color: #F9FCFF;
+	font-size: 4em;
+	font-weight: bold;
+	line-height: 1em;
+	letter-spacing: 0.02em;
+	text-decoration: none;
+	white-space: nowrap;
+	text-shadow: 0 0 0 rgb(0,0,0), 1px 0 0 rgb(-255,-255,-255), 2px 0 0.1px rgba(0,0,0,0.1), 2px 0 0.1px rgba(0,0,0,0.2), 0 0 1px rgba(0,0,0,.1);
+}
+
+span#site-slogan {
+	display: block;
+	padding: 0.1em 0 0 0.1em;
+	color: #FFFFFF;
+	font-size: 1em;
+	letter-spacing: 0.1em;
+}
+
+
+/* -- Conteneur global du site --
+--------------------------------------*/
+div#global {
+	max-width: 1024px;
+	margin: 1.5em auto 0 auto;
+}
+
+/* CSS applique aux Ã©crans PC */
+@media ( min-width: 769px ) {
+
+	/* --- Menu gauche --- */
+	aside#menu-left {
+		float: left;
+		width: 19%;
+		margin-right: 1%;
+	}
+
+	/* --- Menu droit --- */
+	aside#menu-right {
+		float: right;
+		width: 19%;
+		margin-left: 1%;
+	}
+
+	/* --- Menu central : main --- */
+	div#main {
+		float: left;
+		width: 100%;
+		overflow: hidden;
+	}
+
+	div#main.main-with-left,
+	div#main.main-with-right {
+		width: 80%;
+	}
+
+	div#main.main-with-left.main-with-right {
+		width: 60%;
+	}
+
+}
+
+/* CSS applique aux tablettes */
+@media ( max-width: 768px ) {
+
+   aside#menu-left,
+   aside#menu-right {
+    	float: none;
+    	width: auto;
+   }
+   #main {
+   		width: auto;
+   }
+}
+
+/* CSS applique aux smartphones */
+@media ( max-width: 480px ) {
+
+   aside#menu-left,
+   aside#menu-right {
+    	float: none;
+    	width: 100%;
+   }
+   #main {
+   		width: 100%;
+   }
+}
+
+
+/* -- Contenu de la page --
+--------------------------------------*/
+/* --- Contenu central --- */
+div#main-content {
+	padding: 1.5em 0.8em;
+	border: 1px #BEBEBE solid;
+	background: #FFFFFF;
+}
+
+/* --- Emplacement au dessus et en dessous du contenu de la page --- */
+div#top-content {
+	margin: 0 0 2% 0;
+}
+
+div#bottom-content {
+	margin: 2% 0 0 0;
+}
+
+/* --- Emplacement au dessus du pied de page --- */
+div#top-footer {
+	clear: both;
+	padding: 2% 0;
+}
+
+
+/* -- Pied de page - Footer --
+--------------------------------------*/
+footer#footer {
+	clear: both;
+	width: 100%;
+	background: #212121;
+	border-top: #336397 2px solid;
+}
+
+footer#footer .footer-content {
+	margin: 0 auto 0 auto;
+	width: 1024px;
+	padding: 1.5em 0;
+	border-bottom: 2px groove #444444;
+}
+
+footer#footer .footer-infos {
+	min-height: 40px;
+	text-align: center;
+	padding-top: 10px;
+}
+
+footer#footer .footer-infos span {
+	color: #FFFFFF;
+	font-size: 0.8em;
+}
+
+
+/* -- Elements specifiques PHPboost --
+--------------------------------------*/
+/* --- Compteur de visite --- */
+div#compteur {
+	color: #E9ECD9;
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	font-size: 0.9em;
+	margin-right: 15px;
+	text-align: right;
+}
+
+/* --- Barre d'outils --- */
+#actions-links-menu {
+	float:right;
+	margin: 0 5px 5px 5px;
+}
+
+/* --- Barre de lien rapide --- */
+nav#breadcrumb {
+	text-indent: 10px;
+	margin: 0px 0px 20px 10px;
+}
+
+nav#breadcrumb ol {
+	list-style: none;
+	margin: 0;
+}
+
+nav#breadcrumb ol li {
+	display: inline;
+}
+
+nav#breadcrumb ol li:not(.current):after {
+	content: '/';
+	color: #616161;
+}
