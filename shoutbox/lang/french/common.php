@@ -48,8 +48,4 @@ $lang['config.max_links_number_per_message'] = 'Nombre de liens maximum dans le 
 $lang['config.max_links_number_per_message.explain'] = 'Mettre -1 pour illimité';
 
 $lang['error.message.delete'] = 'Erreur lors de la suppression du message';
-$lang['error.unauthorized'] = 'Vous n\'êtes pas autorisé à ajouter un message !';
-$lang['e_flood'] = 'Vous ne pouvez pas encore poster, réessayez dans quelques instants';
-$lang['e_l_flood'] = 'Nombre maximum de lien(s) internet autorisé(s) dans votre message : %d';
-$lang['e_incomplete'] = 'Tous les champs obligatoires doivent être remplis !';
 ?>
