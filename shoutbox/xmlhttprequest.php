@@ -29,18 +29,9 @@ require_once('../kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
 require_once('../kernel/header_no_display.php');
 
-$display_date = isset($_GET['display_date']) && ($_GET['display_date'] == '1');
-
 $config_shoutbox = ShoutboxConfig::load();
 if (!empty($_GET['add']))
 {
-	//Membre en lecture seule?
-	if (AppContext::get_current_user()->get_delay_readonly() > time()) 
-	{
-		echo -6;
-		exit;
-	}
-	
 	$shout_pseudo = !empty($_POST['pseudo']) ? TextHelper::strprotect(utf8_decode($_POST['pseudo'])) : LangLoader::get_message('guest', 'main');
 	
 	$shout_contents = htmlentities(retrieve(POST, 'contents', ''), ENT_COMPAT, 'UTF-8');
@@ -57,7 +48,7 @@ if (!empty($_GET['add']))
 			{
 				if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
 				{
-					echo -2;
+					echo -1;
 					exit;
 				}
 			}
@@ -66,7 +57,7 @@ if (!empty($_GET['add']))
 			$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());
 			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
 			{
-				echo -4;
+				echo -2;
 				exit;
 			}
 			
@@ -79,10 +70,10 @@ if (!empty($_GET['add']))
 			$id = ShoutboxService::add($shoutbox_message);
 		}
 		else //utilisateur non autorisé!
-			echo -1;
+			echo -4;
 	}
 	else
-		echo -5;
+		echo -3;
 }
 
 require_once('../kernel/footer_no_display.php');

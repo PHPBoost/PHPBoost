@@ -48,9 +48,8 @@ $lang['config.max_links_number_per_message'] = 'Max links number in a essage';
 $lang['config.max_links_number_per_message.explain'] = 'Set to -1 for unlimited';
 
 $lang['error.message.delete'] = 'Error occurred while message deleting';
-$lang['e_unauthorized'] = 'You aren\'t authorized to post !';
+$lang['error.unauthorized'] = 'You aren\'t authorized to post a message!';
 $lang['e_flood'] = 'You can\'t post yet, retry in a few moments';
 $lang['e_l_flood'] = 'You can\'t post more than %d link(s) in your message';
 $lang['e_incomplete'] = 'All the required fields must be filled !';
-$lang['e_readonly'] = 'You can\'t perform this action because you have been set in read only status !';
 ?>
