@@ -57,10 +57,10 @@ function XMLHttpRequest_shoutmsg()
 		pseudo = escape_xmlhttprequest(pseudo);
 		contents = escape_xmlhttprequest(contents);
 		data = "pseudo=" + pseudo + "&contents=" + contents;
-		var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?add=1# IF C_HORIZONTAL #&display_date=1# ENDIF #&token={TOKEN}');
+		var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?add=1&token={TOKEN}');
 		xhr_object.onreadystatechange = function() 
 		{
-			if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' && xhr_object.responseText != '-2' && xhr_object.responseText != '-3' && xhr_object.responseText != '-4' && xhr_object.responseText != '-5' && xhr_object.responseText != '-6' )
+			if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' && xhr_object.responseText != '-2' && xhr_object.responseText != '-3' && xhr_object.responseText != '-4')
 			{
 				shoutbox_refresh_messages_box();
 				$('shout_contents').value = '';
@@ -70,19 +70,13 @@ function XMLHttpRequest_shoutmsg()
 				switch( xhr_object.responseText )
 				{
 					case '-1': 
-						alert("{@e_unauthorized}");
-					break;
-					case '-2': 
 						alert("{@e_flood}");
 					break;
-					case '-4': 
+					case '-2': 
 						alert("{L_ALERT_LINK_FLOOD}");
 					break;
-					case '-5': 
+					case '-3': 
 						alert("{@e_incomplete}");
-					break;
-					case '-6': 
-						alert("{@e_readonly}");
 					break;
 				}
 				$('shoutbox-refresh').className = 'fa fa-refresh';
@@ -115,10 +109,11 @@ function check_form_shout(){
 		# ELSE #
 		<div id="shoutbox-messages-container"># INCLUDE SHOUTBOX_MESSAGES #</div>
 		# ENDIF #
+		# IF C_DISPLAY_FORM #
 		<form action="?token={TOKEN}" method="post" onsubmit="return check_form_shout();">
 			# IF NOT C_MEMBER #
 			<label for="shout_pseudo"><span class="small">${LangLoader::get_message('pseudo', 'main')}</span></label>
-			<input size="16" maxlength="25" type="text" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
+			<input size="16" maxlength="25" type="text" name="shout_pseudo" id="shout_pseudo" value="${LangLoader::get_message('guest', 'main')}">
 			# ELSE #
 			<input size="16" maxlength="25" type="hidden" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 			# ENDIF #
@@ -134,6 +129,10 @@ function check_form_shout(){
 				<a href="" onclick="shoutbox_refresh_messages_box();return false;" class="fa fa-refresh" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"></a>
 			</p>
 		</form>
+		# ELSE #
+		<div class="spacer">&nbsp;</div>
+		<span class="warning">{@error.unauthorized}</span>
+		# ENDIF #
 		<a class="small" href="${relative_url(ShoutboxUrlBuilder::home())}" title="">{@archives}</a>
 	</div>
 	<div class="module-mini-bottom"></div>
