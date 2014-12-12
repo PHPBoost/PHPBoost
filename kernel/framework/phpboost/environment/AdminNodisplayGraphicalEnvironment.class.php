@@ -32,11 +32,6 @@
  */
 class AdminNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 {
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
 	/**
 	 * {@inheritdoc}
 	 */
