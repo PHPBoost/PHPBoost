@@ -66,10 +66,7 @@ class ShoutboxAjaxDeleteMessageController extends AbstractController
 	
 	private function check_authorizations()
 	{
-		if (!$this->shoutbox_message->is_authorized_to_delete() || AppContext::get_current_user()->is_readonly())
-			return false;
-		else
-			return true;
+		return $this->shoutbox_message->is_authorized_to_delete() && !AppContext::get_current_user()->is_readonly();
 	}
 }
 ?>

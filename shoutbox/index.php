@@ -34,8 +34,9 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminShoutboxConfigController', '`^/admin(?:/config)?/?$`'),
 	
 	//Mini menu
-	new UrlControllerMapper('ShoutboxAjaxDeleteMessageController', '`^/delete/?$`'),
-	new UrlControllerMapper('ShoutboxAjaxRefreshMessagesController', '`^/refresh/?$`'),
+	new UrlControllerMapper('ShoutboxAjaxAddMessageController', '`^/ajax_add/?$`'),
+	new UrlControllerMapper('ShoutboxAjaxDeleteMessageController', '`^/ajax_delete/?$`'),
+	new UrlControllerMapper('ShoutboxAjaxRefreshMessagesController', '`^/ajax_refresh/?$`'),
 	
 	//Archives
 	new UrlControllerMapper('ShoutboxFormController', '`^/add(?:/[0-9]+)?/?$`', array('page')),

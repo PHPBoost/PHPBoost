@@ -1,12 +1,53 @@
 <script>
 <!--
-function shoutbox_delete_message(id_question)
+function shoutbox_add_message()
+{
+	var pseudo = $("shout_pseudo").value;
+	var contents = $("shout_contents").value;
+	
+	if (pseudo && contents)
+	{
+		new Ajax.Request('${relative_url(ShoutboxUrlBuilder::ajax_add())}', {
+			method:'post',
+			parameters: {'pseudo' : pseudo, 'contents' : contents, 'token' : '{TOKEN}'},
+			onLoading: function () {
+				$('shoutbox-refresh').className = 'fa fa-spinner fa-spin';
+			},
+			onComplete: function(response) {
+				console.log(response);
+				if(response.readyState == 4 && response.status == 200 && response.responseText  != '-1' && response.responseText  != '-2' && response.responseText  != '-3' && response.responseText  != '-4') {
+					shoutbox_refresh_messages_box();
+					$('shout_contents').value = '';
+				} else {
+					switch(response.responseText)
+					{
+						case '-1': 
+							alert("${LangLoader::get_message('e_flood', 'errors')}");
+						break;
+						case '-2': 
+							alert("{L_ALERT_LINK_FLOOD}");
+						break;
+						case '-3': 
+							alert("${LangLoader::get_message('e_incomplete', 'errors')}");
+						break;
+					}
+				}
+				$('shoutbox-refresh').className = 'fa fa-refresh';
+			}
+		});
+	} else {
+		alert("${LangLoader::get_message('require_text', 'main')}");
+		return false;
+	}
+}
+
+function shoutbox_delete_message(id_message)
 {
 	if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 	{
 		new Ajax.Request('${relative_url(ShoutboxUrlBuilder::ajax_delete())}', {
 			method:'post',
-			parameters: {'id' : id_question, 'token' : '{TOKEN}'},
+			parameters: {'id' : id_message, 'token' : '{TOKEN}'},
 			onLoading: function () {
 				$('shoutbox-refresh').className = 'fa fa-spinner fa-spin';
 			},
@@ -40,61 +81,6 @@ function shoutbox_refresh_messages_box() {
 
 if( {SHOUT_REFRESH_DELAY} > 0 )
 	setInterval(shoutbox_refresh_messages_box, {SHOUT_REFRESH_DELAY});
-
-function XMLHttpRequest_shoutmsg()
-{
-	# IF C_BBCODE_TINYMCE_MODE #
-		tinyMCE.triggerSave();
-	# ENDIF #
-	
-	var pseudo = $("shout_pseudo").value;
-	var contents = $("shout_contents").value;
-
-	if( pseudo != '' && contents != '' )
-	{
-		$('shoutbox-refresh').className = 'fa fa-spinner fa-spin';
-
-		pseudo = escape_xmlhttprequest(pseudo);
-		contents = escape_xmlhttprequest(contents);
-		data = "pseudo=" + pseudo + "&contents=" + contents;
-		var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?add=1&token={TOKEN}');
-		xhr_object.onreadystatechange = function() 
-		{
-			if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' && xhr_object.responseText != '-2' && xhr_object.responseText != '-3' && xhr_object.responseText != '-4')
-			{
-				shoutbox_refresh_messages_box();
-				$('shout_contents').value = '';
-			}
-			else if( xhr_object.readyState == 4 )
-			{
-				switch( xhr_object.responseText )
-				{
-					case '-1': 
-						alert("${LangLoader::get_message('e_flood', 'errors')}");
-					break;
-					case '-2': 
-						alert("{L_ALERT_LINK_FLOOD}");
-					break;
-					case '-3': 
-						alert("${LangLoader::get_message('e_incomplete', 'errors')}");
-					break;
-				}
-				$('shoutbox-refresh').className = 'fa fa-refresh';
-			}
-		}
-		xmlhttprequest_sender(xhr_object, data);
-	}
-	else
-		alert("${LangLoader::get_message('e_incomplete', 'errors')}");
-}
-
-function check_form_shout(){
-	if($('shout_contents').value == "") {
-		alert("${LangLoader::get_message('require_text', 'main')}");
-		return false;
-	}
-	return true;
-}
 -->
 </script>
 
@@ -110,8 +96,9 @@ function check_form_shout(){
 		<div id="shoutbox-messages-container"># INCLUDE SHOUTBOX_MESSAGES #</div>
 		# ENDIF #
 		# IF C_DISPLAY_FORM #
-		<form action="?token={TOKEN}" method="post" onsubmit="return check_form_shout();">
+		<form action="?token={TOKEN}" method="post">
 			# IF NOT C_MEMBER #
+			<div class="spacer">&nbsp;</div>
 			<label for="shout_pseudo"><span class="small">${LangLoader::get_message('pseudo', 'main')}</span></label>
 			<input size="16" maxlength="25" type="text" name="shout_pseudo" id="shout_pseudo" value="${LangLoader::get_message('guest', 'main')}">
 			# ELSE #
@@ -125,7 +112,7 @@ function check_form_shout(){
 			<textarea id="shout_contents" name="shout_contents" rows="2" cols="16"></textarea>
 			# ENDIF #
 			<p class="shout-spacing">
-				<button onclick="XMLHttpRequest_shoutmsg();" type="button">${LangLoader::get_message('submit', 'main')}</button>
+				<button onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
 				<a href="" onclick="shoutbox_refresh_messages_box();return false;" class="fa fa-refresh" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"></a>
 			</p>
 		</form>
