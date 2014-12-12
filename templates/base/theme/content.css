@@ -3,8 +3,25 @@
 Contient les formulaires, les modules (et modules minis), messages.
 --------------------------------------*/
 
+/* CSS applique aux écrans PC */
+@media ( min-width: 769px ) {
+
+}
+
+/* CSS applique aux tablettes */
+@media ( max-width: 768px ) {
+
+}
+
+/* CSS applique aux smartphones */
+@media ( max-width: 480px ) {
+
+}
+
+
 /* -- Conteneurs, éléments de module, ... --
 --------------------------------------*/
+
 section,
 article {
 	width: 98%;
@@ -25,6 +42,32 @@ section header,
 article header {
 	margin: 0 0 1em 0;
 }
+
+
+/* CSS applique aux tablettes */
+@media ( max-width: 768px ) {
+	section,
+	article {
+		width: 100%;
+		margin: 0 auto;
+		vertical-align: top;
+	}
+
+	div#main.main-with-left.main-with-right section .content {
+		padding: 0;
+	}
+
+	div#main.main-with-left.main-with-right section .form-element,
+	div#main.main-with-left.main-with-right section .form-element-textarea {
+		margin: 0;
+	}
+
+	section header,
+	article header {
+		margin: 0;
+	}
+}
+
 
 /* --- Titre d'une page ou d'un element d'un module --- */
 section header h1,
@@ -63,8 +106,9 @@ span.actions a {
 }
 
 /* --- Contenu --- */
+
 .content {
-	padding: 0 1.5em;
+	padding: 0 1em;
 	overflow: hidden;
 	text-align: justify;
 }
@@ -73,6 +117,20 @@ section footer,
 article footer {
 	margin-bottom: 1.5em;
 }
+
+
+/* CSS applique aux tablettes */
+@media ( max-width: 768px ) {
+	.content {
+		padding: 1em 0;
+	}
+
+	section footer,
+	article footer {
+		margin-bottom: 0;
+	}
+}
+
 
 /* --- Block --- */
 .block,
@@ -111,25 +169,30 @@ article footer {
 
 .medium-block,
 .small-block {
-	display: inline-block;
+	float: left;
 	margin: 1% 0.5%;
-}
-
-/* Fix to the spaces between the blocks */
-.medium-block,
-.small-block {
-	margin-right: -0.29em;
 }
 
 /* Affiche 2 blocs côte à côte */
 .medium-block {
-	width: 48.7%;
+	width: 49.00%;
 }
 
 /* Affiche 3 blocs côte à côte */
 .small-block {
-	width: 31.96%;
+	width: 32.33%;
 }
+
+/* CSS applique aux smartphones */
+@media ( max-width: 480px ) {
+	/* Affiche des blocs en vertical */
+	.small-block,
+	.medium-block {
+		width: 100%;
+		margin: 1% 0%;
+	}
+}
+
 
 /* --- Pagination des pages --- */
 section footer ul.pagination {
@@ -808,11 +871,6 @@ div.form-autocompleter ul li {
 }
 
 /* Gestion des Categories */
-#cats-elements-list {
-	position: relative;
-	padding: 5px;
-}
-
 .sortable-block .sortable-element > .sortable-block {
 	margin-left: 30px;
 }
