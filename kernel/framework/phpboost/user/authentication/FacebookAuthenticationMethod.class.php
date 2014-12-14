@@ -119,16 +119,13 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 			
 		} catch (RowNotFoundException $e) {
 			
-			try {
-
-				$condition = 'WHERE email=:email';
-				$parameters = array('email' => $data['email']);
-				$user_id = $this->querier->get_column_value(DB_TABLE_MEMBER, 'user_id', $condition, $parameters);
-				AuthenticationService::associate($this, $user_id);
-				return $user_id;
-				
-			} catch (RowNotFoundException $e) {
-
+			$email_exists = $this->querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
+			if ($email_exists)
+			{
+				$this->error_msg = LangLoader::get_message('external-auth.account-exists', 'user-common');
+			}
+			else
+			{
 				$user = new User();
 				$user->set_display_name(utf8_decode($data['name']));
 				$user->set_level(User::MEMBER_LEVEL);

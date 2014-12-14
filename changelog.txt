@@ -12,6 +12,8 @@
 	- Titre de la page - Nom de la section ou du module - Nom du site
 	- Titre de la page - Nom du site (dans le cas ou c'est une page sans module)
 	- Nom du site - Description du site (pour la page d'accueil)
+[*] Suppression des mots clés du site qui ne sont plus utilisés pour le référencement
+[*] Suppression de la clé de déverrouillage de l'administration.
 
 
 =================================== Modules =====================================
