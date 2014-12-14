@@ -124,7 +124,6 @@ $LANG['album'] = 'Albums';
 $LANG['sub_album'] = 'Sous albums';
 $LANG['best_views'] = 'Les plus vues';
 $LANG['best_notes'] = 'Les mieux notées';
-$LANG['display'] = 'Afficher';
 $LANG['thumbnails_scolling'] = 'Défilement des miniatures';
 $LANG['nbr_pics_mini'] = 'Nombre de miniatures';
 $LANG['speed_mini_pics'] = 'Vitesse du défilement';
