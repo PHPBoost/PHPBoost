@@ -38,10 +38,6 @@ $LANG['to_date'] = 'to';
 $LANG['now'] = 'Now';
 
 //Unités
-$LANG['unit_megabytes'] = 'Mb';
-$LANG['unit_kilobytes'] = 'Kb';
-$LANG['unit_bytes'] = 'Bytes';
-$LANG['unit_pixels'] = 'Px';
 $LANG['unit_hour'] = 'H';
 $LANG['unit_seconds'] = 'Seconds';
 $LANG['unit_seconds_short'] = 's';
@@ -52,7 +48,6 @@ $LANG['unknown'] = 'Unknown';
 //Other title
 $LANG['title_pm'] = 'Private messages';
 $LANG['title_com'] = 'Comments';
-$LANG['title_register'] = 'Sign up';
 
 //Form
 $LANG['submit'] = 'Submit';
@@ -61,18 +56,12 @@ $LANG['reset'] = 'Reset';
 $LANG['erase'] = 'Erase';
 $LANG['preview'] = 'Preview';
 $LANG['search'] = 'Search';
-$LANG['connect'] = 'Log in';
-$LANG['disconnect'] = 'Log out';
-$LANG['autoconnect'] = 'Automatic login';
-$LANG['password'] = 'Password';
+
 $LANG['respond'] = 'Answer';
 $LANG['go'] = 'Go';
 
-$LANG['pseudo'] = 'Nickname';
 $LANG['message'] = 'Message';
 $LANG['message_s'] = 'Messages';
-
-$LANG['require'] = 'The fields marked with a * are required !';
 
 //Alert Form
 $LANG['require_title'] = 'Please enter a title !';
@@ -83,12 +72,6 @@ $LANG['require_subcat'] = 'Please select a subcategory !';
 $LANG['require_url'] = 'Please enter a valid URL !';
 $LANG['require_password'] = 'Please enter a password !';
 $LANG['require_recipient'] = 'Please enter the recipient !';
-
-//Action
-$LANG['add'] = 'Add';
-$LANG['delete'] = 'Delete';
-$LANG['edit'] = 'Edit';
-$LANG['register'] = 'Sign up';
 
 //Alerts
 $LANG['alert_delete_msg'] = 'Delete the message ?';
@@ -145,7 +128,6 @@ $LANG['desc'] = 'Decreasing';
 $LANG['list'] = 'List';
 $LANG['quote'] = 'Quote';
 $LANG['quotation'] = 'Quotation';
-$LANG['hide'] = 'Hide';
 $LANG['default'] = 'Default';
 $LANG['type'] = 'Type';
 $LANG['status'] = 'Status';
@@ -184,10 +166,6 @@ $LANG['vote'] = 'Poll';
 $LANG['votes'] = 'Polls';
 $LANG['already_vote'] = 'You have already voted';
 $LANG['miscellaneous'] = 'Miscellaneous';
-$LANG['unknow'] = 'Unknown';
-$LANG['yes'] = 'Yes';
-$LANG['no'] = 'No';
-$LANG['orderby'] = 'Order by';
 $LANG['direction'] = 'Direction';
 $LANG['other'] = 'Other';
 $LANG['aprob'] = 'Approve';
@@ -225,7 +203,6 @@ $LANG['alert_member_already_auth'] = 'The member is already in the list';
 
 //Members
 $LANG['member_area'] = 'Member Area';
-$LANG['profile'] = 'Profile';
 $LANG['mail_track_topic'] = 'Send me an email when a reply is posted in a tracked topic';
 $LANG['localisation'] = 'Location';
 $LANG['sex'] = 'Sex';
@@ -236,7 +213,6 @@ $LANG['no_avatar'] = 'No avatar';
 $LANG['registered'] = 'Signed up';
 $LANG['registered_s'] = 'Signed up';
 $LANG['registered_on'] = 'Signed up since';
-$LANG['last_connect'] = 'Last login';
 $LANG['private_message'] = 'Private message';
 $LANG['member_msg_display'] = 'Display member\'s messages';
 $LANG['member_msg'] = 'Member\'s messages';
@@ -247,9 +223,6 @@ $LANG['theme_s'] = 'Themes';
 $LANG['select_group'] = 'Select a group';
 $LANG['search_member'] = 'Search a member';
 $LANG['date_of_birth'] = 'Date of birth';
-$LANG['banned'] = 'Banned';
-$LANG['go_msg'] = 'Go to message';
-$LANG['display'] = 'Display';
 $LANG['site_config_msg_mbr'] = 'Welcome on the website. You are member of the site and you can access all parts of the website requiring a member account.';
 $LANG['register_agreement'] = 'You are just going to register yourself on the site. We ask you yo be polite and respectful.
 Thanks, the site team.';
@@ -264,7 +237,6 @@ $LANG['not_read'] = 'Not read';
 $LANG['last_message'] = 'Last message';
 $LANG['mark_pm_as_read'] = 'Mark all privates messages as read';
 $LANG['participants'] = 'Participant(s)';
-$LANG['no_pm'] = 'No messages';
 $LANG['quote_last_msg'] = 'Repost of the preceding message';
 
 //Gestion des fichiers
@@ -280,10 +252,8 @@ $LANG['data'] = 'Total data';
 $LANG['folders'] = 'Folders';
 $LANG['folders_up'] = 'Parent folder';
 $LANG['folder_new'] = 'New folder';
-$LANG['empty_folder'] = 'This folder is empty';
 $LANG['empty_member_folder'] = 'Empty folder?';
 $LANG['del_folder'] = 'Delete folder?';
-$LANG['folder_already_exist'] = 'Folder already exist!';
 $LANG['empty'] = 'Empty';
 $LANG['root'] = 'Root';
 $LANG['files'] = 'Files';
@@ -311,7 +281,6 @@ $LANG['punishment_management'] = 'Punishment management';
 $LANG['user_punish_until'] = 'Punishment until';
 $LANG['no_punish'] = 'No punished user';
 $LANG['user_readonly_explain'] = 'User is in read only, he can read but can\'t post on the whole website (comments, etc...)';
-$LANG['weeks'] = 'weeks';
 $LANG['life'] = 'Life';
 $LANG['readonly_user'] = 'Member on read only';
 $LANG['read_only_title'] = 'Punishement';

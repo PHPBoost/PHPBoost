@@ -98,7 +98,7 @@ if ($action == 'punish')
 	$moderation_panel_template->put_all(array(
 		'C_MODO_PANEL_USER' => true,
 		'L_ACTION_INFO' => $LANG['punishment_management'],
-		'L_LOGIN' => $LANG['pseudo'],
+		'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 		'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
 		'U_XMLHTTPREQUEST' => 'punish_user',
 		'U_ACTION' => UserUrlBuilder::moderation_panel('punish')->rel()
@@ -121,7 +121,7 @@ if ($action == 'punish')
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_punish_until'],
 			'L_ACTION_USER' => $LANG['punishment_management'],
-			'L_PROFILE' => $LANG['profile'],
+			'L_PROFILE' => LangLoader::get_message('profile', 'user-common'),
 			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
@@ -170,7 +170,7 @@ if ($action == 'punish')
 		//Durée de la sanction.
 		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000); 	
-		$array_sanction = array($LANG['no'], '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '10 ' . strtolower($date_lang['years'])); 
+		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '10 ' . strtolower($date_lang['years'])); 
 
 		$diff = ($member['delay_readonly'] - time());	
 		$key_sanction = 0;
@@ -217,7 +217,7 @@ if ($action == 'punish')
 					break;
 				}
 			}' . "\n" .
-			'if (replace_value != \'' . addslashes($LANG['no']) . '\')' . "\n" .
+			'if (replace_value != \'' . addslashes(LangLoader::get_message('no', 'common')) . '\')' . "\n" .
 			'{' . "\n" .
 				'contents = contents.replace(regex, replace_value);' . "\n" .
 				'document.getElementById(\'action_contents\').disabled = \'\'' . "\n" .
@@ -231,7 +231,7 @@ if ($action == 'punish')
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
 			'L_PM' => $LANG['user_contact_pm'],
-			'L_LOGIN' => $LANG['pseudo'],
+			'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO' => $LANG['submit']
 		));		
@@ -268,7 +268,7 @@ else if ($action == 'warning')
 	$moderation_panel_template->put_all(array(
 		'C_MODO_PANEL_USER' => true,
 		'L_ACTION_INFO' => $LANG['warning_management'],
-		'L_LOGIN' => $LANG['pseudo'],
+		'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 		'L_INFO_MANAGEMENT' => $LANG['warning_management'],
 		'U_XMLHTTPREQUEST' => 'warning_user',
 		'U_ACTION' => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . AppContext::get_session()->get_token()
@@ -391,7 +391,7 @@ else
 	$moderation_panel_template->put_all(array(
 		'C_MODO_PANEL_USER' => true,
 		'L_ACTION_INFO' => $LANG['ban_management'],
-		'L_LOGIN' => $LANG['pseudo'],
+		'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 		'L_INFO_MANAGEMENT' => $LANG['ban_management'],
 		'U_XMLHTTPREQUEST' => 'ban_user',
 		'U_ACTION' => UserUrlBuilder::moderation_panel('ban')->rel() . '&amp;token=' . AppContext::get_session()->get_token()
@@ -414,7 +414,7 @@ else
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_ban_until'],
 			'L_ACTION_USER' => $LANG['ban_management'],
-			'L_PROFILE' => $LANG['profile'],
+			'L_PROFILE' => LangLoader::get_message('profile', 'user-common'),
 			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
@@ -471,7 +471,7 @@ else
 			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('ban', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PROFILE' => UserUrlBuilder::profile($id_get)->rel(),
 			'L_PM' => $LANG['user_contact_pm'],
-			'L_LOGIN' => $LANG['pseudo'],
+			'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 			'L_BAN' => $LANG['ban_user'],
 			'L_DELAY_BAN' => $LANG['user_ban_delay'],
 		));	
@@ -479,7 +479,7 @@ else
 		//Temps de bannissement.
 		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
-		$array_sanction = array($LANG['no'], '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], $LANG['illimited']); 
+		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], $LANG['illimited']); 
 		
 		$diff = ($member['delay_banned'] - time());	
 		$key_sanction = 0;

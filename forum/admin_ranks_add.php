@@ -98,7 +98,7 @@ else //Sinon on rempli le formulaire
 	
 	$template->put_all(array(
 		'RANK_OPTIONS' => $rank_options,
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
@@ -114,10 +114,10 @@ else //Sinon on rempli le formulaire
 		'L_RANK_NAME' => $LANG['rank_name'],
 		'L_NBR_MSG' => $LANG['nbr_msg'],
 		'L_IMG_ASSOC' => $LANG['img_assoc'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
-		'L_ADD' => $LANG['add']
+		'L_ADD' => LangLoader::get_message('add', 'common')
 	));
 
 	$template->display();

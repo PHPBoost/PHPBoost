@@ -204,7 +204,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			'L_CONFIRM_DEL_USER_GROUP' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
 			'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
 			'L_ADD_GROUPS' => $LANG['groups_add'],
-			'L_REQUIRE' => $LANG['require'],
+			'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 			'L_NAME' => $LANG['name'],
 			'L_IMG_ASSOC_GROUP' => $LANG['img_assoc_group'],
 			'L_IMG_ASSOC_GROUP_EXPLAIN' => $LANG['img_assoc_group_explain'],
@@ -215,16 +215,16 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
 			'L_COLOR_GROUP' => $LANG['color_group'],
 			'L_COLOR_GROUP_EXPLAIN' => $LANG['color_group_explain'],
-			'L_YES' => $LANG['yes'],
-			'L_NO' => $LANG['no'],
-			'L_ADD' => $LANG['add'],
-			'L_MB' => $LANG['unit_megabytes'],
+			'L_YES' => LangLoader::get_message('yes', 'common'),
+			'L_NO' => LangLoader::get_message('no', 'common'),
+			'L_ADD' => LangLoader::get_message('add', 'common'),
+			'L_MB' => LangLoader::get_message('unit.megabytes', 'common'),
 			'L_MBR_GROUP' => $LANG['mbrs_group'],
-			'L_PSEUDO' => $LANG['pseudo'],
+			'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
 			'L_SEARCH' => $LANG['search'],
 			'L_UPDATE' => $LANG['update'],
 			'L_RESET' => $LANG['reset'],
-			'L_DELETE' => $LANG['delete'],
+			'L_DELETE' => LangLoader::get_message('delete', 'common'),
 			'L_ADD_MBR_GROUP' => $LANG['add_mbr_group']
 		));
 		
@@ -300,7 +300,7 @@ elseif ($add) //Interface d'ajout du groupe.
 		'L_CONFIRM_DEL_USER_GROUP' => LangLoader::get_message('confirm.delete', 'status-messages-common'),
 		'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
 		'L_ADD_GROUPS' => $LANG['groups_add'],
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_UPLOAD_GROUPS' => $LANG['upload_group'],
 		'L_UPLOAD_FORMAT' => $LANG['explain_upload_img'],
 		'L_UPLOAD' => $LANG['upload'],
@@ -314,10 +314,10 @@ elseif ($add) //Interface d'ajout du groupe.
 		'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
 		'L_COLOR_GROUP' => $LANG['color_group'],
 		'L_COLOR_GROUP_EXPLAIN' => $LANG['color_group_explain'],
-		'L_MB' => $LANG['unit_megabytes'],
-		'L_YES' => $LANG['yes'],
-		'L_NO' => $LANG['no'],
-		'L_ADD' => $LANG['add']
+		'L_MB' => LangLoader::get_message('unit.megabytes', 'common'),
+		'L_YES' => LangLoader::get_message('yes', 'common'),
+		'L_NO' => LangLoader::get_message('no', 'common'),
+		'L_ADD' => LangLoader::get_message('add', 'common')
 	));
 
 	$template->display();
@@ -341,7 +341,7 @@ else //Liste des groupes.
 		'L_NAME' => $LANG['name'],
 		'L_IMAGE' => $LANG['image'],
 		'L_UPDATE' => $LANG['update'],
-		'L_DELETE' => $LANG['delete']
+		'L_DELETE' => LangLoader::get_message('delete', 'common')
 	));
 	  
   

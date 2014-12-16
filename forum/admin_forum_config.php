@@ -130,7 +130,7 @@ else
 		'MESSAGE_WHEN_TOPIC_IS_UNSOLVED' => $config->get_message_when_topic_is_unsolved(),
 		'MESSAGE_WHEN_TOPIC_IS_SOLVED' => $config->get_message_when_topic_is_solved(),
 		'C_MESSAGE_BEFORE_TOPIC_TITLE_ICON_DISPLAYED' => $config->is_message_before_topic_title_icon_displayed(),
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_REQUIRE_NAME' => $LANG['require_name'],
 		'L_REQUIRE_TOPIC_P' => $LANG['require_topic_p'],
 		'L_REQUIRE_NBR_MSG_P' => $LANG['require_nbr_msg_p'],

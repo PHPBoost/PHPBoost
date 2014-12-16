@@ -35,8 +35,8 @@ $server_configuration = new ServerConfiguration();
 $template = new FileTemplate('admin/admin_system_report.tpl');
 
 $template->put_all(array(
-	'L_YES' => $LANG['yes'],
-	'L_NO' => $LANG['no'],
+	'L_YES' => LangLoader::get_message('yes', 'common'),
+	'L_NO' => LangLoader::get_message('no', 'common'),
 	'L_UNKNOWN' => $LANG['unknown'],
 	'L_SYSTEM_REPORT' => $LANG['system_report'],
 	'L_SERVER' => $LANG['server'],

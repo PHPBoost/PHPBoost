@@ -107,12 +107,12 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_id())->rel(),
 	    		'U_AVATAR_IMG' => Url::to_rel($user_avatar),
 	    		'L_NBR_PM' => ($user->get_unread_pm() > 0 ? ($user->get_unread_pm() . ' ' . (($user->get_unread_pm() > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
-	    		'L_PROFIL' => $LANG['profile'],
+	    		'L_PROFIL' => LangLoader::get_message('profile', 'user-common'),
 	    		'L_MY_PROFIL' => $LANG['my_private_profile'],
 	    		'L_ADMIN_PANEL' => $LANG['admin_panel'],
 	    		'L_MODO_PANEL' => $LANG['modo_panel'],
 	    		'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
-	    		'L_DISCONNECT' => $LANG['disconnect'],
+	    		'L_DISCONNECT' => LangLoader::get_message('disconnect', 'user-common'),
 	    		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
 	    	));
 	    }
@@ -122,12 +122,12 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'C_USER_REGISTER' => (bool)UserAccountsConfig::load()->is_registration_enabled(),
 	    		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 				'L_REQUIRE_PASSWORD' => $LANG['require_password'],
-				'L_CONNECT' => $LANG['connect'],
-	    		'L_PSEUDO' => $LANG['pseudo'],
-	    		'L_PASSWORD' => $LANG['password'],
-	    		'L_AUTOCONNECT' => $LANG['autoconnect'],
+				'L_CONNECT' => LangLoader::get_message('connect', 'user-common'),
+	    		'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
+	    		'L_PASSWORD' => LangLoader::get_message('password', 'user-common'),
+	    		'L_AUTOCONNECT' => LangLoader::get_message('autoconnect', 'user-common'),
 	    		'L_FORGOT_PASS' => LangLoader::get_message('forget-password', 'user-common'),
-	    		'L_REGISTER' => $LANG['register'],
+	    		'L_REGISTER' => LangLoader::get_message('register', 'user-common'),
 	    		'U_CONNECT' => UserUrlBuilder::connect()->rel()
 	    	));
 	    }

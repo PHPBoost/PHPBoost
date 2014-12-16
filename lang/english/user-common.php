@@ -93,6 +93,7 @@ $lang['readonly'] = 'Read only';
 $lang['banned'] = 'Banned';
 $lang['connect'] = 'Connect';
 $lang['autoconnect'] = 'Auto connect';
+$lang['disconnect'] = 'Disconnect';
 
 // Ranks
 $lang['rank'] = 'Rank';
@@ -121,6 +122,7 @@ If you have problems, please contact the site administrator.
 :signature';
 
 //Registration 
+$lang['register'] = 'Sign up';
 $lang['registration'] = 'Registration';
 
 $lang['registration.validation.mail.explain'] = 'You will need to activate your account in the email sent to you before beeing able to connect to the site';

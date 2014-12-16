@@ -277,7 +277,7 @@ if (!empty($id_get))
 		'L_CHANGE_STATUT_TO' => sprintf($LANG['change_status_to'], $config->get_message_before_topic_title()),
 		'L_CHANGE_STATUT_TO_DEFAULT' => $LANG['change_status_to_default'],
 		'L_MOVE_TO' => $LANG['move_to'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_LOCK' => $LANG['forum_lock'],
 		'L_UNLOCK' => $LANG['forum_unlock'],
 		'L_GO' => $LANG['go']

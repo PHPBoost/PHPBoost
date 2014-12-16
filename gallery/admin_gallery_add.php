@@ -162,13 +162,13 @@ else
 		'L_CATEGORY' => $LANG['category'],
 		'L_IMG_DISPO_GALLERY' => $LANG['img_dispo'],
 		'L_NAME' => $LANG['name'],
-		'L_UNIT_PX' => $LANG['unit_pixels'],
-		'L_UNIT_KO' => $LANG['unit_kilobytes'],
+		'L_UNIT_PX' => LangLoader::get_message('unit.pixels', 'common'),
+		'L_UNIT_KO' => LangLoader::get_message('unit.kilobytes', 'common'),
 		'L_SELECT' => $LANG['select'],
 		'L_GLOBAL_CAT_SELECTION' => $LANG['global_cat_selection'],
 		'L_GLOBAL_CAT_SELECTION_EXPLAIN' => $LANG['global_cat_selection_explain'],
 		'L_CAT' => $LANG['category'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_SUBMIT' => $LANG['submit'],
 		'L_NO_IMG' => $LANG['no_pics']
 	));

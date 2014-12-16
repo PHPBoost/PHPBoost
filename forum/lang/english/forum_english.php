@@ -152,7 +152,6 @@ $LANG['untrack_topic_pm'] = 'Stop private messsage tracking';
 $LANG['track_topic_mail'] = 'Track by email';
 $LANG['untrack_topic_mail'] = 'Stop email tracking';
 $LANG['alert_topic'] = 'Alert moderators';
-$LANG['banned'] = 'Banned';
 $LANG['xml_forum_desc'] = 'Last forum thread';
 $LANG['alert_modo_explain'] = 'You are about to alert the moderators. You are helping the moderation team by informing us about threads which don\'t comply with certain rules, but do know that when you alert a moderator, your username is recorded. Be sure that your request is justified or you will risk sanctions on behalf of the moderators team and administrators in the event of abuse. In order to help the team, please explain what does not observe the conditions in this thread.
 

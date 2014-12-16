@@ -216,7 +216,7 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 		'L_FORUM_INDEX' => $LANG['forum_index'],
 		'L_AUTHOR' => $LANG['author'],
 		'L_FORUM' => $LANG['forum'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_MAIL' => $LANG['mail'],
 		'L_PM' => $LANG['pm'],
 		'L_EXPLAIN_TRACK' => $LANG['explain_track'],

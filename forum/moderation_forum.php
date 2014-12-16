@@ -131,7 +131,7 @@ if ($action == 'alert') //Gestion des alertes
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
 		'L_FORUM' => $LANG['forum'],
-		'L_LOGIN' => $LANG['pseudo'],
+		'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 		'L_ALERT' => $LANG['alert_management'],
 		'U_MODERATION_FORUM_ACTION' => '&raquo; <a href="moderation_forum.php'. url('?action=alert&amp;token=' . AppContext::get_session()->get_token()) . '">' . $LANG['alert_management'] . '</a>',
 		'U_ACTION_ALERT' => url('.php?action=alert&amp;del=1&amp;' . AppContext::get_session()->get_token())
@@ -146,7 +146,7 @@ if ($action == 'alert') //Gestion des alertes
 			'L_LOGIN' => $LANG['alert_login'],
 			'L_TIME' => LangLoader::get_message('date', 'date-common'),
 			'L_STATUS' => $LANG['status'],
-			'L_DELETE' => $LANG['delete'],
+			'L_DELETE' => LangLoader::get_message('delete', 'common'),
 			'L_DELETE_MESSAGE' => $LANG['delete_several_alerts']
 		));
 
@@ -313,7 +313,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 
 	$tpl->put_all(array(
 		'L_FORUM' => $LANG['forum'],
-		'L_LOGIN' => $LANG['pseudo'],
+		'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
 		'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
@@ -341,7 +341,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'L_INFO' => $LANG['user_punish_until'],
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_ACTION_USER' => $LANG['punishment_management'],
-			'L_PROFILE' => $LANG['profile'],
+			'L_PROFILE' => LangLoader::get_message('profile', 'user-common'),
 			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
@@ -388,7 +388,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		//Durée de la sanction.
 		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
-		$array_sanction = array($LANG['no'], '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], $LANG['life']);
+		$array_sanction = array(LangLoader::get_message('no', 'common'), '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['days'], '1 ' . $date_lang['week'], '2 ' . $date_lang['weeks'], '1 ' . $date_lang['month'], '2 ' . $date_lang['month'], $LANG['life']);
 
 		$diff = ($member['delay_readonly'] - time());
 		$key_sanction = 0;
@@ -441,7 +441,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 					break;
 				}
 			}' . "\n" .
-			'if (replace_value != \'' . addslashes($LANG['no']) . '\')' . "\n" .
+			'if (replace_value != \'' . addslashes(LangLoader::get_message('no', 'common')) . '\')' . "\n" .
 			'{' . "\n" .
 				'contents = contents.replace(regex, replace_value);' . "\n" .
 				'document.getElementById(\'action_contents\').disabled = \'\'' . "\n" .
@@ -452,7 +452,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
 			'L_PM' => $LANG['user_contact_pm'],
-			'L_LOGIN' => $LANG['pseudo'],
+			'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO' => $LANG['submit'],
 			'U_PM' => UserUrlBuilder::personnal_message($id_get)->rel(),
@@ -507,7 +507,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 	$tpl->put_all(array(
 		'L_FORUM' => $LANG['forum'],
-		'L_LOGIN' => $LANG['pseudo'],
+		'L_LOGIN' => LangLoader::get_message('display_name', 'user-common'),
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
 		'L_INFO_MANAGEMENT' => $LANG['warning_management'],
@@ -647,7 +647,7 @@ else //Panneau de modération
 		'L_ACTION' => $LANG['action'],
 		'L_USER_CONCERN' => $LANG['history_member_concern'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_MORE_ACTION' => $LANG['more_action']
 	));
 

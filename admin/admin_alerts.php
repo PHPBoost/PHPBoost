@@ -107,7 +107,7 @@ $template->put_all(array(
 	'L_ACTIONS' => $LANG['administrator_alerts_action'],
 	'L_NO_ALERT' => $LANG['no_administrator_alert'],
 	'L_CONFIRM_DELETE_ALERT' => $LANG['confirm_delete_administrator_alert'],
-	'L_DELETE' => $LANG['delete'],
+	'L_DELETE' => LangLoader::get_message('delete', 'common'),
 	'L_FIX' => $LANG['admin_alert_fix'],
 	'L_UNFIX' => $LANG['admin_alert_unfix'],
 	'C_ORDER_ENTITLED_ASC' => $criteria == 'entitled' && $order == 'asc',

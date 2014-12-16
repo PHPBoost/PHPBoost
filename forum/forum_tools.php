@@ -76,10 +76,10 @@ if ($config->is_connexion_form_displayed())
 {
 	$vars_tpl = array(	
 		'C_FORUM_CONNEXION' => true,
-		'L_CONNECT' => $LANG['connect'],
-		'L_DISCONNECT' => $LANG['disconnect'],
-		'L_AUTOCONNECT' => $LANG['autoconnect'],
-		'L_REGISTER' => $LANG['register']
+		'L_CONNECT' => LangLoader::get_message('connect', 'user-common'),
+		'L_DISCONNECT' => LangLoader::get_message('disconnect', 'user-common'),
+		'L_AUTOCONNECT' => LangLoader::get_message('autoconnect', 'user-common'),
+		'L_REGISTER' => LangLoader::get_message('register', 'user-common')
 	);
 }
 

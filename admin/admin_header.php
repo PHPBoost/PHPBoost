@@ -34,7 +34,7 @@ Environment::set_graphical_environment($env);
 
 if (!defined('TITLE'))
 {
-	define('TITLE', $LANG['unknow']);
+	define('TITLE', $LANG['unknown']);
 }
 
 $module_id = Environment::get_running_module_name();

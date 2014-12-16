@@ -36,17 +36,11 @@ $LANG['extend_menu'] = 'Extended menu';
 $LANG['phpinfo'] = 'PHP info';
 
 //Requis
-$LANG['require_cat'] = 'Please enter a category !';
-$LANG['require_cat_create'] = 'No category found, please create one';
 $LANG['require_name'] = 'Please enter a name !';
 $LANG['require_pass'] = 'Please enter a password !';
 $LANG['require_rank'] = 'Please enter a rank !';
 $LANG['require_code'] = 'Please enter a code for the smiley !';
-$LANG['require_max_width'] = 'Please enter a maximum width for the avatar !';
-$LANG['require_height'] = 'Please enter a maximum height for the avatar !';
-$LANG['require_weight'] = 'Please enter a maximum file size for the avatar !';
 $LANG['require_subcat'] = 'Please enter a subcategory !';
-$LANG['require_file_name'] = 'Please enter a file name';
 
 //Common
 $LANG['user_ip'] = 'IP address';
@@ -64,11 +58,6 @@ $LANG['max_link_explain'] = 'Set to -1 for no limit';
 $LANG['generate'] = 'Generate';
 $LANG['or_direct_path'] = 'Or direct path';
 $LANG['unknow_bot'] = 'Unknown bot';
-
-//Connection
-$LANG['unlock_admin_panel'] = 'Unlock administration panel';
-$LANG['flood_block'] = 'Rest %d test(s) after that you will have to wait 5 minutes to obtain 2 new tests (10min for 5)!';
-$LANG['flood_max'] = 'You exhausted all your tests of connection, your account is locked during 5 minutes';
 
 //Index
 $LANG['update_available'] = 'Update available';
@@ -140,8 +129,6 @@ $LANG['files_prog'] = 'Programation';
 $LANG['files_misc'] = 'Miscellaneous';
 
 //Gestion des menus
-$LANG['confirm_del_menu'] = 'Delete this menu?';
-$LANG['confirm_delete_element'] = 'Delete this item?';
 $LANG['menus_management'] = 'Menu management';
 $LANG['menus_content_add'] = 'Content menu';
 $LANG['menus_links_add'] = 'Links menu';
@@ -202,18 +189,11 @@ $LANG['edit_smiley'] = 'Edit smileys';
 $LANG['smiley_management'] = 'Smiley management';
 
 //Gestion membre
-$LANG['members_management'] = 'Member management';
-$LANG['members_add'] = 'Add a member';
-$LANG['members_config'] = 'Member configuration';
-$LANG['members_punishment'] = 'Punishment management';
-$LANG['members_msg'] = 'Message to members';
 $LANG['search_member'] = 'Search a member';
 $LANG['joker'] = 'Use * for wildcard';
 $LANG['no_result'] = 'No result';
-$LANG['life'] = 'Life';
 $LANG['no_punish'] = 'No members punished';
 $LANG['user_readonly_explain'] = 'User is in read only, he can read but can\'t post on the whole website (comments, etc...)';
-$LANG['weeks'] = 'weeks';
 $LANG['life'] = 'Life';
 $LANG['readonly_user'] = 'Member on read only';
 

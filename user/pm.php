@@ -128,7 +128,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != AppContext::get_current_
 		'L_REQUIRE_RECIPIENT' => $LANG['require_recipient'],
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_PRIVATE_MESSAGE' => $LANG['private_message'],
 		'L_POST_NEW_CONVERS' => $LANG['post_new_convers'],
 		'L_RECIPIENT' => $LANG['recipient'],
@@ -191,7 +191,7 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_PRIVATE_MESSAGE' => $LANG['private_message'],
 		'L_POST_NEW_CONVERS' => $LANG['post_new_convers'],
 		'L_RECIPIENT' => $LANG['recipient'],
@@ -469,8 +469,8 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				$tpl->put_all(array(
 					'KERNEL_EDITOR' => $editor->display(),
 					'L_REQUIRE_MESSAGE' => $LANG['require_text'],
-					'L_REQUIRE' => $LANG['require'],
-					'L_EDIT' => $LANG['edit'],
+					'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
+					'L_EDIT' => LangLoader::get_message('edit', 'common'),
 					'L_PRIVATE_MESSAGE' => $LANG['private_message'],
 					'L_MESSAGE' => $LANG['message'],
 					'L_SUBMIT' => $LANG['update'],
@@ -576,8 +576,8 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		'L_RESPOND' => $LANG['respond'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],
-		'L_EDIT' => $LANG['edit'],
-		'L_DELETE' => $LANG['delete'],
+		'L_EDIT' => LangLoader::get_message('edit', 'common'),
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_RESET' => $LANG['reset']
 	));
 	
@@ -639,7 +639,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 			'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 			
-			'L_LEVEL' => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : $LANG['banned']),
+			'L_LEVEL' => (($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0) ? UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1') : LangLoader::get_message('banned', 'user-common')),
 		));
 		
 		//Marqueur de suivis du sujet.
@@ -731,7 +731,7 @@ else //Liste des conversation, dans la boite du membre.
 	if ($nbr_pm == 0)
 	{
 		$tpl->assign_block_vars('convers.no_pm', array(
-			'L_NO_PM' => $LANG['no_pm']
+			'L_NO_PM' => LangLoader::get_message('no_item_now', 'common')
 		));
 	}
 	$nbr_waiting_pm = 0;
@@ -756,7 +756,7 @@ else //Liste des conversation, dans la boite du membre.
 		'L_MESSAGE' => $LANG['replies'],
 		'L_LAST_MESSAGE' => $LANG['last_message'],
 		'L_STATUS' => $LANG['status'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_READ' => $LANG['read'],
 		'L_TRACK' => $LANG['pm_track'],
 		'L_NOT_READ' => $LANG['not_read']

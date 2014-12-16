@@ -70,12 +70,12 @@ $tpl->put_all(array(
 	'L_CONFIRM_TRUNCATE_TABLE' => $LANG['db_confirm_truncate_table'],
 	'L_DATABASE_MANAGEMENT' => $LANG['database_management'],
 	'L_TABLE_STRUCTURE' => $LANG['db_table_structure'],
-	'L_TABLE_DISPLAY' => $LANG['display'],
+	'L_TABLE_DISPLAY' => LangLoader::get_message('display', 'common'),
 	'L_INSERT' => $LANG['db_insert'],
 	'L_QUERY' => $LANG['db_execute_query'],
 	'L_BACKUP' => $LANG['db_backup'],
 	'L_TRUNCATE' => $LANG['empty'],
-	'L_DELETE' => $LANG['delete'],
+	'L_DELETE' => LangLoader::get_message('delete', 'common'),
 	'L_DB_TOOLS' => $LANG['db_tools']
 ));
 
@@ -153,7 +153,7 @@ if (!empty($_GET['query']))
 	$tpl->put_all(array(
 		'QUERY' => DatabaseService::indent_query($query),
 		'QUERY_HIGHLIGHT' => DatabaseService::highlight_query(str_replace('phpboost_', PREFIX, $query)),
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],
 		'L_EXECUTE' => $LANG['db_submit_query'],
@@ -237,7 +237,7 @@ elseif ($action == 'restore')
 		'L_CONFIRM_DEL' => $LANG['db_confirm_delete_file'],
 		'L_NAME' => $LANG['db_file_name'],
 		'L_WEIGHT' => $LANG['db_file_weight'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_DOWNLOAD' => $LANG['db_download'],
 		'L_RESTORE' => $LANG['db_restore'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common')

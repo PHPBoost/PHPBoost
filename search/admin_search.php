@@ -109,7 +109,7 @@ else
 		}
 
 		$tpl->put_all(array(
-			'L_REQUIRE' => $LANG['require'],
+			'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 			'L_CACHE_TIME' => $LANG['cache_time'],
 			'L_CACHE_TIME_EXPLAIN' => $LANG['cache_time_explain'],
 			'L_NB_RESULTS_P' => $LANG['nb_results_per_page'],

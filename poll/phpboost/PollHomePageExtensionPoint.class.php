@@ -58,7 +58,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 	
 		$edit = '';	
 		if (AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
-			$edit = '<a href="' . PATH_TO_ROOT . '/poll/admin_poll.php" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>';
+			$edit = '<a href="' . PATH_TO_ROOT . '/poll/admin_poll.php" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>';
 	
 		$tpl->put_all(array(
 			'C_POLL_MAIN' => true,

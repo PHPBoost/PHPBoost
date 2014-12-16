@@ -151,7 +151,6 @@ $LANG['untrack_topic_pm'] = 'Arrêter le suivi par message privé';
 $LANG['track_topic_mail'] = 'Suivre par mail';
 $LANG['untrack_topic_mail'] = 'Arrêter le suivi par mail';
 $LANG['alert_topic'] = 'Alerter les modérateurs';
-$LANG['banned'] = 'Banni';
 $LANG['xml_forum_desc'] = 'Derniers sujets du forum';
 $LANG['alert_modo_explain'] = 'Vous êtes sur le point d\'alerter les modérateurs. Vous aidez l\'équipe modératrice en lui signalant des topics qui ne respectent pas certaines règles, mais sachez que lorsque vous alertez un modérateur votre pseudo est enregistré, il est donc nécessaire que votre demande soit justifiée sans quoi vous risquez des sanctions de la part de l\'équipe des modérateurs et administrateurs en cas d\'abus. Afin d\'aider l\'équipe, merci d\'expliquer ce qui ne respecte pas les conditions dans ce sujet. 
 

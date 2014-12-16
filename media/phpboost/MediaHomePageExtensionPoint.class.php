@@ -160,7 +160,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_COM' => $LANG['com'],
 				'L_DESC' => $LANG['desc'],
 				'L_ASC' => $LANG['asc'],
-				'L_ORDER_BY' => $LANG['orderby'],
+				'L_ORDER_BY' => LangLoader::get_message('sort_by', 'common'),
 				'SELECTED_ALPHA' => $selected_fields['alpha'],
 				'SELECTED_DATE' => $selected_fields['date'],
 				'SELECTED_NBR' => $selected_fields['nbr'],

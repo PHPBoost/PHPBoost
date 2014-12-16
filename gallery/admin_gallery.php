@@ -145,9 +145,9 @@ else
 		'L_NAME' => $LANG['name'],
 		'L_APROB' => $LANG['aprob'],
 		'L_UNAPROB' => $LANG['unaprob'],
-		'L_EDIT' => $LANG['edit'],
+		'L_EDIT' => LangLoader::get_message('edit', 'common'),
 		'L_MOVETO' => $LANG['moveto'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_SUBMIT' => $LANG['submit'],
 		'U_GALLERY_CAT_LINKS' => $cat_links
 	));
@@ -214,7 +214,7 @@ else
 	$tpl->assign_block_vars('pics', array(
 		'C_PICTURES' => $nbr_pics > 0,
 		'C_PICS_MAX' => $nbr_pics == 0 || !empty($idpics),
-		'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>',
+		'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>',
 		'PICS_MAX' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $idcat . '" alt="" / >'
 	));
 	
@@ -328,7 +328,7 @@ else
 					'L_ADD_ON' => $LANG['add_on'],
 					'L_DIMENSION' => $LANG['dimension'],
 					'L_SIZE' => $LANG['size'],
-					'L_EDIT' => $LANG['edit'],
+					'L_EDIT' => LangLoader::get_message('edit', 'common'),
 					'L_APROB' => $LANG['aprob'],
 					'L_UNAPROB' => $LANG['unaprob'],
 					'L_THUMBNAILS' => $LANG['thumbnails']
@@ -434,7 +434,7 @@ else
 					'PATH' => $row['path'],
 					'NAME' => stripslashes($name_cut),
 					'TITLE' => stripslashes($row['name']),
-					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="fa fa-edit"></a></span>',
+					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a></span>',
 					'TR_START' => $tr_start,
 					'TR_END' => $tr_end,
 					'CAT' => $cat_list,

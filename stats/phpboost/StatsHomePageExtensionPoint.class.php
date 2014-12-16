@@ -100,7 +100,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
 				'L_LAST_USER' => $LANG['last_member'],
 				'L_TEMPLATES' => $LANG['theme_s'],
-				'L_PSEUDO' => $LANG['pseudo'],
+				'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
 				'L_MSG' => $LANG['message_s'],
 				'L_TOP_TEN_POSTERS' => $LANG['top_10_posters'],
 				'L_COLORS' => $LANG['colors'],
@@ -139,7 +139,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				switch ($row['user_sex'])
 				{
 					case 0:
-					$name = $LANG['unknow'];
+					$name = $LANG['unknown'];
 					break;
 					case 1:
 					$name = $LANG['male'];

@@ -46,11 +46,11 @@ $tpl->put_all(array(
 	'L_CONFIRM_DELETE_ENTRY' => $LANG['db_confirm_delete_entry'],
 	'L_DATABASE_MANAGEMENT' => $LANG['database_management'],
 	'L_TABLE_STRUCTURE' => $LANG['db_table_structure'],
-	'L_TABLE_DISPLAY' => $LANG['display'],
+	'L_TABLE_DISPLAY' => LangLoader::get_message('display', 'common'),
 	'L_INSERT' => $LANG['db_insert'],
 	'L_BACKUP' => $LANG['db_backup'],
 	'L_TRUNCATE' => $LANG['empty'],
-	'L_DELETE' => $LANG['delete'],
+	'L_DELETE' => LangLoader::get_message('delete', 'common'),
 	'L_QUERY' => $LANG['db_execute_query'],
 	'L_DB_TOOLS' => $LANG['db_tools']
 ));
@@ -114,7 +114,7 @@ if (!empty($table) && $action == 'data')
 			if ($j == 0)
 			{
 				$tpl->assign_block_vars('line.field', array(
-					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['update'] . '" class="fa fa-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="delete-element"></a></span>',
+					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" title="' . $LANG['update'] . '" class="fa fa-edit"></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" title="' . LangLoader::get_message('delete', 'common') . '" class="fa fa-delete" data-confirmation="delete-element"></a></span>',
 					'STYLE' => ''
 				));
 			}
@@ -136,7 +136,7 @@ if (!empty($table) && $action == 'data')
 		'PAGINATION' => $pagination->display(),
 		'QUERY' => DatabaseService::indent_query($query),
 		'QUERY_HIGHLIGHT' => DatabaseService::highlight_query($query),
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],
 		'L_EXECUTE' => $LANG['db_submit_query'],
@@ -200,7 +200,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 			$tpl->assign_block_vars('fields', array(
 				'FIELD_NAME' => $field_name,
 				'FIELD_TYPE' => $table_structure['fields'][$i]['type'],
-				'FIELD_NULL' => $table_structure['fields'][$i]['null'] ? $LANG['yes'] : $LANG['no'],
+				'FIELD_NULL' => $table_structure['fields'][$i]['null'] ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common'),
 				'FIELD_VALUE' => TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE),
 				'C_FIELD_FORM_EXTEND' => ($table_structure['fields'][$i]['type'] == 'text' || $table_structure['fields'][$i]['type'] == 'mediumtext') ? true : false
 			));
@@ -262,7 +262,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 			$tpl->assign_block_vars('fields', array(
 				'FIELD_NAME' => $fields_info['name'],
 				'FIELD_TYPE' => $fields_info['type'],
-				'FIELD_NULL' => $fields_info['null'] ? $LANG['yes'] : $LANG['no'],
+				'FIELD_NULL' => $fields_info['null'] ? LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common'),
 				'FIELD_VALUE' => TextHelper::strprotect($fields_info['default']),
 				'C_FIELD_FORM_EXTEND' => ($fields_info['type'] == 'text' || $fields_info['type'] == 'mediumtext') ? true : false
 			));
@@ -347,7 +347,7 @@ elseif (!empty($table) && $action == 'query')
 	$tpl->put_all(array(
 		'QUERY' => DatabaseService::indent_query($query),
 		'QUERY_HIGHLIGHT' => DatabaseService::highlight_query($query),
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],
 		'L_EXECUTE' => $LANG['db_submit_query'],
@@ -378,7 +378,7 @@ elseif (!empty($table))
 			'FIELD_NAME' => ($primary_key) ? '<span style="text-decoration:underline">' . $fields_info['name'] . '<span>' : $fields_info['name'],
 			'FIELD_TYPE' => $fields_info['type'],
 			'FIELD_ATTRIBUTE' => $fields_info['attribute'],
-			'FIELD_NULL' => $fields_info['null'] ? '<strong>' . $LANG['yes'] . '</strong>' : $LANG['no'],
+			'FIELD_NULL' => $fields_info['null'] ? '<strong>' . LangLoader::get_message('yes', 'common') . '</strong>' : LangLoader::get_message('no', 'common'),
 			'FIELD_DEFAULT' => $fields_info['default'],
 			'FIELD_EXTRA' => $fields_info['extra']
 		));
