@@ -27,20 +27,11 @@
 
 class ContactAjaxDeleteFieldController extends AbstractController
 {
-	private $view;
-	
 	public function execute(HTTPRequestCustom $request)
-	{
-		$this->init();
-		$this->build_view($request);
-		return new SiteNodisplayResponse($this->view);
-	}
-	
-	private function build_view(HTTPRequestCustom $request)
 	{
 		$id = $request->get_int('id', 0);
 		
-		$result = -1;
+		$code = -1;
 		if (!empty($id))
 		{
 			$config = ContactConfig::load();
@@ -55,27 +46,22 @@ class ContactAjaxDeleteFieldController extends AbstractController
 					unset($fields[$id]);
 					$new_fields_list = array();
 					
-					$position = 0;
+					$position = 1;
 					foreach ($fields as $key => $field)
 					{
-						$position++;
 						$new_fields_list[$position] = $field;
+						$position++;
 					}
 					
 					$config->set_fields($new_fields_list);
 					
 					ContactConfig::save();
-					$result = $position;
+					$code = $id;
 				}
 			}
 		}
 		
-		$this->view->put('RESULT', $result);
-	}
-	
-	private function init()
-	{
-		$this->view = new StringTemplate('{RESULT}');
+		return new JSONResponse(array('code' => $code));
 	}
 }
 ?>

@@ -64,14 +64,16 @@ var ContactField = Class.create({
 		{
 			new Ajax.Request('${relative_url(ContactUrlBuilder::delete_field())}', {
 				method:'post',
-				asynchronous: false,
-				parameters: {'id' : this.id, 'token' : '{TOKEN}'}
+				parameters: {'id' : this.id, 'token' : '{TOKEN}'},
+				onComplete: function(response) {
+					if(response.readyState == 4 && response.status == 200 && response.responseJSON.code > 0) {
+						var elementToDelete = $('list_' + response.responseJSON.code);
+						elementToDelete.parentNode.removeChild(elementToDelete);
+						ContactFields.destroy_sortable();
+						ContactFields.create_sortable();
+					}
+				}
 			});
-			
-			var elementToDelete = $('list_' + this.id);
-			elementToDelete.parentNode.removeChild(elementToDelete);
-			ContactFields.destroy_sortable();
-			ContactFields.create_sortable();
 		}
 	},
 	move_up : function() {
