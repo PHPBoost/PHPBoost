@@ -121,7 +121,7 @@ else
 		'L_REQUIRE_CODE' => $LANG['require_code'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
 		'L_ADD_SMILEY' => $LANG['add_smiley'],
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_SMILEY_MANAGEMENT' => $LANG['smiley_management'],
 		'L_ADD_SMILEY' => $LANG['add_smiley'],
 		'L_UPLOAD_SMILEY' => $LANG['upload_smiley'],
@@ -129,7 +129,7 @@ else
 		'L_UPLOAD' => $LANG['upload'],
 		'L_SMILEY_CODE' => $LANG['smiley_code'],
 		'L_SMILEY_AVAILABLE' => $LANG['smiley_available'],
-		'L_ADD' => $LANG['add'],
+		'L_ADD' => LangLoader::get_message('add', 'common'),
 		'L_RESET' => $LANG['reset'],
 	));
 		

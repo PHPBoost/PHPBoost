@@ -88,7 +88,7 @@ lateral_menu();
 $tpl = new FileTemplate('admin/menus/feed.tpl');
 
 $tpl->put_all(array(
-	'L_REQUIRE' => $LANG['require'],
+	'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 	'JL_REQUIRE_NAME' => TextHelper::to_js_string($LANG['require_name']),
 	'JL_REQUIRE_FEED' => TextHelper::to_js_string($LANG['choose_feed_in_list']),
 	'L_FEED' => $LANG['feed'],
@@ -103,7 +103,7 @@ $tpl->put_all(array(
 	'L_MODO' => $LANG['modo'],
 	'L_ADMIN' => $LANG['admin'],
 	'L_LOCATION' => $LANG['location'],
-	'L_ACTION_MENUS' => ($edit) ? $LANG['menus_edit'] : $LANG['add'],
+	'L_ACTION_MENUS' => ($edit) ? $LANG['menus_edit'] : LangLoader::get_message('add', 'common'),
 	'L_ACTION' => ($edit) ? $LANG['update'] : $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
     'ACTION' => 'save',

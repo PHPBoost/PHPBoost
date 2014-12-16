@@ -60,7 +60,7 @@ $tools_tpl->put_all(array(
 	'U_EDIT' => PATH_TO_ROOT . '/wiki/' . url('post.php?id=' . $id_article),
 
 	'C_DELETE' => (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE)),
-	'L_DELETE' => $LANG['delete'],
+	'L_DELETE' => LangLoader::get_message('delete', 'common'),
 	'U_DELETE' => $page_type == 'article' ? PATH_TO_ROOT . '/wiki/' . url('action.php?del_article=' . $id_article . '&amp;token=' . AppContext::get_session()->get_token()) : PATH_TO_ROOT . '/wiki/' . url('property.php?del=' . $id_article),
 
 	'C_RENAME' => (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RENAME)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_RENAME)),

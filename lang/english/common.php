@@ -39,11 +39,17 @@ $lang['disable'] = 'Disable';
 $lang['enabled'] = 'Enabled';
 $lang['disabled'] = 'Disabled';
 
+$lang['display'] = 'Display';
+$lang['displayed'] = 'Displayed';
+$lang['hide'] = 'Hide';
+$lang['hidden'] = 'Hidden';
+
 $lang['yes'] = 'Yes';
 $lang['no'] = 'No';
 
 $lang['none'] = 'Aucun';
 
+$lang['add'] = 'Add';
 $lang['delete'] = 'Delete';
 $lang['edit'] = 'Edit';
 
@@ -83,6 +89,7 @@ $lang['unit.gigabytes'] = 'Gb';
 $lang['unit.megabytes'] = 'Mb';
 $lang['unit.kilobytes'] = 'Kb';
 $lang['unit.bytes'] = 'Bytes';
+$lang['unit.pixels'] = 'Px';
 
 //Notes
 $lang['note'] = 'Note';

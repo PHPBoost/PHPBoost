@@ -88,7 +88,7 @@ else
 		'L_COOKIE_LENGHT' => $LANG['cookie_lenght'],
 		'L_SELECT_ALL' => $LANG['select_all'],
 		'L_SELECT_NONE' => $LANG['select_none'],
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_DAYS' => LangLoader::get_message('days', 'date-common'),
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']

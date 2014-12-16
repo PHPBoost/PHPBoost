@@ -83,10 +83,10 @@ else //Sinon on rempli le formulaire
 		'L_RANK_NAME' => $LANG['rank_name'],
 		'L_NBR_MSG' => $LANG['nbr_msg'],
 		'L_IMG_ASSOC' => $LANG['img_assoc'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
-		'L_ADD' => $LANG['add']
+		'L_ADD' => LangLoader::get_message('add', 'common')
 	));
 
 	//On recupère les images des groupes

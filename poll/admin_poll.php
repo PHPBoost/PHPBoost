@@ -181,15 +181,15 @@ elseif (!empty($id))
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
 		'L_POLL_ADD' => $LANG['poll_add'],
 		'L_POLL_CONFIG' => $LANG['poll_config'],
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_QUESTION' => $LANG['question'],
 		'L_ANSWER_TYPE' => $LANG['answer_type'],
 		'L_ANSWERS' => $LANG['answers'],
 		'L_SINGLE' => $LANG['single'],
 		'L_MULTIPLE' => $LANG['multiple'],
 		'L_ARCHIVED' => $LANG['archived'],
-		'L_YES' => $LANG['yes'],
-		'L_NO' => $LANG['no'],
+		'L_YES' => LangLoader::get_message('yes', 'common'),
+		'L_NO' => LangLoader::get_message('no', 'common'),
 		'L_NUMBER_VOTE' => $LANG['number_vote'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_POLL_DATE' => $LANG['poll_date'],
@@ -199,7 +199,7 @@ elseif (!empty($id))
 		'L_UNTIL' => $LANG['until'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 	));
 	
 	//Gestion erreur.
@@ -262,15 +262,15 @@ else
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
 		'L_POLL_ADD' => $LANG['poll_add'],
 		'L_POLL_CONFIG' => $LANG['poll_config'],
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_QUESTION' => $LANG['question'],
 		'L_POLLS' => $LANG['polls'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_ARCHIVED' => $LANG['archived'],
-		'L_PSEUDO' => $LANG['pseudo'],
+		'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
 		'L_APROB' => $LANG['aprob'],
 		'L_UPDATE' => $LANG['update'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_GUEST' => $LANG['guest'],
 		'L_SHOW' => $LANG['show']
 	)); 
@@ -290,11 +290,11 @@ else
 		if ($row['visible'] == 2)
 			$aprob = $LANG['waiting'];
 		elseif ($row['visible'] == 1)
-			$aprob = $LANG['yes'];
+			$aprob = LangLoader::get_message('yes', 'common');
 		else
-			$aprob = $LANG['no'];
+			$aprob = LangLoader::get_message('no', 'common');
 			
-		$archive = ( $row['archive'] == 1) ?  $LANG['yes'] : $LANG['no'];
+		$archive = ( $row['archive'] == 1) ?  LangLoader::get_message('yes', 'common') : LangLoader::get_message('no', 'common');
 		
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
 		$question = strlen($row['question']) > 45 ? substr($row['question'], 0, 45) . '...' : $row['question'];

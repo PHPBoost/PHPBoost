@@ -90,7 +90,7 @@ $editor->set_identifier('contents');
 
 $tpl->put_all(array(
 	'KERNEL_EDITOR' => $editor->display(),
-	'L_REQUIRE' => $LANG['require'],
+	'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 	'L_REQUIRE_NAME' => TextHelper::to_js_string($LANG['require_name']),
 	'L_REQUIRE_TEXT' => TextHelper::to_js_string($LANG['require_text']),
 	'L_NAME' => $LANG['name'],
@@ -104,7 +104,7 @@ $tpl->put_all(array(
 	'L_MODO' => $LANG['modo'],
 	'L_ADMIN' => $LANG['admin'],
 	'L_LOCATION' => $LANG['location'],
-	'L_ACTION_MENUS' => ($edit) ? $LANG['menus_edit'] : $LANG['add'],
+	'L_ACTION_MENUS' => ($edit) ? $LANG['menus_edit'] : LangLoader::get_message('add', 'common'),
 	'L_ACTION' => ($edit) ? $LANG['update'] : $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
 	'L_PREVIEW' => $LANG['preview'],

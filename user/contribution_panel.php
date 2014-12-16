@@ -215,7 +215,7 @@ if ($contribution_id > 0)
 		'L_MODULE' => $LANG['contribution_module'],
 		'L_PROCESS_CONTRIBUTION' => $LANG['process_contribution'],
 		'L_CONFIRM_DELETE_CONTRIBUTION' => $LANG['confirm_delete_contribution'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_UPDATE' => $LANG['update'],
 		'U_UPDATE' => url('contribution_panel.php?edit=' . $contribution_id),
 		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id . '&amp;token=' . AppContext::get_session()->get_token())

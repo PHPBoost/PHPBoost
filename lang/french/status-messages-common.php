@@ -36,7 +36,7 @@ $lang['error.unknow'] = 'Inconnue';
 $lang['csrf_invalid_token'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
 
 //Element
-$lang['element.already_exists'] = 'L\'élément que vous demandez existe déjà.';
+$lang['element.already_exists'] = 'L\'élément existe déjà.';
 $lang['element.unexist'] = 'L\'élément que vous demandez n\'existe pas.';
 $lang['element.not_visible'] = 'Cet élément n\'est pas encore ou n\'est plus approuvé, il n\'est pas affiché pour les autres utilisateurs du site.';
 
@@ -58,6 +58,7 @@ $lang['captcha.is_default'] = 'Le captcha que vous souhaitez désinstaller ou dés
 $lang['captcha.last_installed'] = 'Dernier captcha, vous ne pouvez pas le supprimer ou le désactiver. Veuillez d\'abord en installer un autre.';
 
 //Form
+$lang['form.explain_required_fields'] = 'Les champs marqués * sont obligatoires !';
 $lang['form.doesnt_match_regex'] = 'La valeur saisie n\'est pas au bon format';
 $lang['form.doesnt_match_url_regex'] = 'La valeur saisie doit être une url valide';
 $lang['form.doesnt_match_mail_regex'] = 'La valeur saisie doit être un mail valide';

@@ -36,17 +36,11 @@ $LANG['extend_menu'] = 'Menu étendu';
 $LANG['phpinfo'] = 'PHP info';
 
 //Requis
-$LANG['require_cat'] = 'Veuillez entrer une catégorie !';
-$LANG['require_cat_create'] = 'Aucune catégorie trouvée, veuillez d\'abord en créer une';
 $LANG['require_name'] = 'Veuillez entrer un nom !';
 $LANG['require_pass'] = 'Veuillez entrer un mot de passe !';
 $LANG['require_rank'] = 'Veuillez entrer un rang !';
 $LANG['require_code'] = 'Veuillez entrer un code pour le smiley !';
-$LANG['require_max_width'] = 'Veuillez entrer une largeur maximale pour les avatars !';
-$LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les avatars !';
-$LANG['require_weight'] = 'Veuillez entrer un poids maximum pour les avatars !';
 $LANG['require_subcat'] = 'Veuillez sélectionner une sous-catégorie !';
-$LANG['require_file_name'] = 'Vous devez saisir un nom de fichier !';
 
 //Commun
 $LANG['user_ip'] = 'Adresse ip';
@@ -65,11 +59,6 @@ $LANG['max_link_explain'] = 'Mettre -1 pour illimité';
 $LANG['generate'] = 'Générer';
 $LANG['or_direct_path'] = 'Ou chemin direct';
 $LANG['unknow_bot'] = 'Bot inconnu';
-
-//Connexion
-$LANG['unlock_admin_panel'] = 'Déverrouillage de l\'administration';
-$LANG['flood_block'] = 'Il vous reste %d essai(s). Après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5) !';
-$LANG['flood_max'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes';
 
 //Index
 $LANG['update_available'] = 'Mises à jour disponibles';
@@ -141,8 +130,6 @@ $LANG['files_prog'] = 'Programmation';
 $LANG['files_misc'] = 'Divers';
 
 //Gestion des menus
-$LANG['confirm_del_menu'] = 'Supprimer ce menu ?';
-$LANG['confirm_delete_element'] = 'Voulez vous vraiment supprimer cet élément ?';
 $LANG['menus_management'] = 'Gestion des menus';
 $LANG['menus_content_add'] = 'Menu de contenu';
 $LANG['menus_links_add'] = 'Menu de liens';
@@ -201,18 +188,11 @@ $LANG['edit_smiley'] = 'Edition des smileys';
 $LANG['smiley_management'] = 'Gestion des smileys';
 
 //Gestion membre
-$LANG['members_management'] = 'Gestion des Membres';
-$LANG['members_add'] = 'Ajouter un membre';
-$LANG['members_config'] = 'Configuration des membres';
-$LANG['members_punishment'] = 'Gestion des sanctions';
-$LANG['members_msg'] = 'Message à tous les membres';
 $LANG['search_member'] = 'Rechercher un membre';
 $LANG['joker'] = 'Utilisez * pour joker';
 $LANG['no_result'] = 'Aucun résultat';
-$LANG['life'] = 'A vie';
 $LANG['user_punish_until'] = 'Sanction jusqu\'au';
 $LANG['user_readonly_explain'] = 'Membre en lecture seule, celui-ci peut lire mais ne peut plus poster sur le site entier (commentaires, etc...)';
-$LANG['weeks'] = 'semaines';
 $LANG['life'] = 'A vie';
 $LANG['readonly_user'] = 'Membre en lecture seule';
 

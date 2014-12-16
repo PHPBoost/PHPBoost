@@ -221,8 +221,8 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			'L_BACK_POLL' => $LANG['poll_back'],
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote']),
 			'L_ON' => $LANG['on'],
-			'L_EDIT' => $LANG['edit'],
-			'L_DELETE' => $LANG['delete']
+			'L_EDIT' => LangLoader::get_message('edit', 'common'),
+			'L_DELETE' => LangLoader::get_message('delete', 'common')
 		));
 		
 		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
@@ -258,8 +258,8 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			'L_BACK_POLL' => $LANG['poll_back'],
 			'L_VOTE' => $LANG['poll_vote'],
 			'L_RESULT' => $LANG['poll_result'],
-			'L_EDIT' => $LANG['edit'],
-			'L_DELETE' => $LANG['delete'],
+			'L_EDIT' => LangLoader::get_message('edit', 'common'),
+			'L_DELETE' => LangLoader::get_message('delete', 'common'),
 			'L_ON' => $LANG['on']
 		));
 	
@@ -320,8 +320,8 @@ elseif ($archives) //Archives.
 		'L_ARCHIVE' => $LANG['archives'],
 		'L_BACK_POLL' => $LANG['poll_back'],
 		'L_ON' => $LANG['on'],
-		'L_EDIT' => $LANG['edit'],
-		'L_DELETE' => $LANG['delete']
+		'L_EDIT' => LangLoader::get_message('edit', 'common'),
+		'L_DELETE' => LangLoader::get_message('delete', 'common')
 	));	
 	
 	//On recupère les sondages archivés.
@@ -346,8 +346,8 @@ elseif ($archives) //Archives.
 		$tpl->assign_block_vars('list', array(
 			'ID' => $row['id'],
 			'QUESTION' => $row['question'],
-			'EDIT' => '<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '" class="fa fa-edit"></a>',
-			'DEL' => '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" class="fa fa-delete" data-confirmation="delete-element"></a>',
+			'EDIT' => '<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>',
+			'DEL' => '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . LangLoader::get_message('delete', 'common') . '" class="fa fa-delete" data-confirmation="delete-element"></a>',
 			'VOTE' => $sum_vote,
 			'DATE' => gmdate_format('date_format'),			
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])

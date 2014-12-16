@@ -266,7 +266,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			'C_DISPLAY_REAL_IMG' => $display_real_img,		
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
+			'SIZE' => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size']/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($info_move['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
 			'FILE_ICON' => $display_real_img ? $info_move['path'] : $get_img_mimetype['img']
 		));
 		$template->put_all(array(
@@ -340,7 +340,7 @@ else
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],
-		'L_FOLDER_ALREADY_EXIST' => $LANG['folder_already_exist'],
+		'L_FOLDER_ALREADY_EXIST' => LangLoader::get_message('element.already_exists', 'status-messages-common'),
 		'L_FOLDER_FORBIDDEN_CHARS' => $LANG['folder_forbidden_chars'],
 		'L_FILES_MANAGEMENT' => $LANG['files_management'],
 		'L_FILES_ACTION' => $LANG['files_management'],
@@ -356,7 +356,7 @@ else
 		'L_FOLDER_NEW' => $LANG['folder_new'],
 		'L_FOLDER_UP' => $LANG['folders_up'],
 		'L_FILES' => $LANG['files'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 		'L_EMPTY' => $LANG['empty'],
 		'L_UPLOAD' => $LANG['upload'],
 		'L_URL' => $LANG['url']
@@ -417,7 +417,7 @@ else
 			'C_MEMBER_FOLDER' => $show_member,
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
-			'RENAME_FOLDER' => !$show_member ? '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="fa fa-edit"></a></span>' : '',
+			'RENAME_FOLDER' => !$show_member ? '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a></span>' : '',
 			'DEL_TYPE' => $show_member ? 'eptf' : 'delf',
 			'C_TYPEFOLDER' => !$show_member,
 			'MOVE' => !$show_member ? '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="fa fa-move" title="' . $LANG['moveto'] . '"></a>' : '',
@@ -491,10 +491,10 @@ else
 				'IMG' => $get_img_mimetype['img'],
 				'URL' => $link,
 				'NAME' => $name_cut,
-				'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="fa fa-edit"></a></span>',
+				'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a></span>',
 				'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 				'BBCODE' => '<input size="25" readonly="readonly" type="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $bbcode . '">',
-				'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
+				'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size']/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($row['size'], 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
 				'LIGHTBOX' => !empty($size_img) ? ' rel="lightbox[1]"' : '',
 				'U_MOVE' => '.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;fm=' . $row['user_id']
 				
@@ -509,8 +509,8 @@ else
 
 	$total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', '');
 	$template->put_all(array(
-		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
-		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($total_folder_size, 0) . ' ' . $LANG['unit_kilobytes'],
+		'TOTAL_SIZE' => ($total_size > 1024) ? NumberHelper::round($total_size/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
+		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? NumberHelper::round($total_folder_size/1024, 2) . ' ' . LangLoader::get_message('unit.megabytes', 'common') : NumberHelper::round($total_folder_size, 0) . ' ' . LangLoader::get_message('unit.kilobytes', 'common'),
 		'TOTAL_FOLDERS' => $total_directories,
 		'TOTAL_FILES' => $total_files
 	));
@@ -518,7 +518,7 @@ else
 	if ($total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)))
 		$template->put_all(array(
 			'C_EMPTY_FOLDER' => true,
-			'L_EMPTY_FOLDER' => $LANG['empty_folder']
+			'L_EMPTY_FOLDER' => LangLoader::get_message('no_item_now', 'common')
 		));
 		
 	$template->display();

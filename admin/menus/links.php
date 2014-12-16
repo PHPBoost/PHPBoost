@@ -177,14 +177,14 @@ $tpl->put_all(array(
 	'L_MODO' => $LANG['modo'],
 	'L_ADMIN' => $LANG['admin'],
 	'L_LOCATION' => $LANG['location'],
-	'L_ACTION_MENUS' => ($menu_id > 0) ? $LANG['menus_edit'] : $LANG['add'],
+	'L_ACTION_MENUS' => ($menu_id > 0) ? $LANG['menus_edit'] : LangLoader::get_message('add', 'common'),
 	'L_ACTION' => ($menu_id > 0) ? $LANG['update'] : $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
     'ACTION' => 'save',
     'L_TYPE' => $LANG['type'],
     'L_CONTENT' => $LANG['content'],
     'L_AUTHORIZATIONS' => $LANG['authorizations'],
-    'L_ADD' => $LANG['add'],
+    'L_ADD' => LangLoader::get_message('add', 'common'),
     'J_AUTH_FORM' => str_replace(array('&quot;'), array('"'),
 		TextHelper::to_js_string(Authorizations::generate_select(
         Menu::MENU_AUTH_BIT, array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT),
@@ -195,9 +195,9 @@ $tpl->put_all(array(
     'JL_NAME' => TextHelper::to_js_string($LANG['name']),
     'JL_URL' => TextHelper::to_js_string($LANG['url']),
     'JL_IMAGE' => TextHelper::to_js_string($LANG['img']),
-    'JL_DELETE_ELEMENT' => TextHelper::to_js_string($LANG['confirm_delete_element']),
+    'JL_DELETE_ELEMENT' => TextHelper::to_js_string(LangLoader::get_message('confirm.delete', 'status-messages-common')),
     'JL_MORE' => TextHelper::to_js_string($LANG['more_details']),
-    'JL_DELETE' => TextHelper::to_js_string($LANG['delete']),
+    'JL_DELETE' => TextHelper::to_js_string(LangLoader::get_message('delete', 'common')),
     'JL_ADD_SUB_ELEMENT' => TextHelper::to_js_string($LANG['add_sub_element']),
     'JL_ADD_SUB_MENU' => TextHelper::to_js_string($LANG['add_sub_menu']),
 ));
@@ -225,7 +225,7 @@ $edit_menu_tpl->put_all(array(
     'L_ADD_SUB_ELEMENT' => $LANG['add_sub_element'],
     'L_ADD_SUB_MENU' => $LANG['add_sub_menu'],
     'L_MORE' => $LANG['more_details'],
-    'L_DELETE' => $LANG['delete']
+    'L_DELETE' => LangLoader::get_message('delete', 'common')
 ));
 
 $menu = null;

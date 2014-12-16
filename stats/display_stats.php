@@ -314,7 +314,7 @@ elseif ($get_sex)
         switch ($row['user_sex'])
         {
             case 0:
-                $name = $LANG['unknow'];
+                $name = $LANG['unknown'];
                 break;
             case 1:
                 $name = $LANG['male'];

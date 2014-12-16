@@ -71,7 +71,7 @@ elseif ($cat_to_del > 0)
 		'L_EXPLAIN_REMOVING' => $MEDIA_LANG['removing_category_explain'],
 		'L_DELETE_CATEGORY_AND_CONTENT' => $MEDIA_LANG['remove_category_and_its_content'],
 		'L_MOVE_CONTENT' => $MEDIA_LANG['move_category_content'],
-		'L_SUBMIT' => $LANG['delete']
+		'L_SUBMIT' => LangLoader::get_message('delete', 'common')
 	));
 
 	$tpl->assign_block_vars('removing_interface', array(
@@ -145,7 +145,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_CAT_IMAGE' => $MEDIA_LANG['cat_image'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
-		'L_SUBMIT' => $id_edit > 0 ? $LANG['update'] : $LANG['add'],
+		'L_SUBMIT' => $id_edit > 0 ? $LANG['update'] : LangLoader::get_message('add', 'common'),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_MIME_TYPE' => $MEDIA_LANG['mime_type'],
 		'L_TYPE_BOTH' => $MEDIA_LANG['type_both'],

@@ -142,7 +142,7 @@ while ($row = $result->fetch())
 	$tpl->assign_block_vars('user', array(
 		'USER' => !empty($login) ? $login : $LANG['guest'],
 		'USER_IP' => $row['ip'],
-		'WHERE' => '<a href="' . $row['location_script'] . '">' . (!empty($row['location_title']) ? stripslashes($row['location_title']) : $LANG['unknow']) . '</a>',
+		'WHERE' => '<a href="' . $row['location_script'] . '">' . (!empty($row['location_title']) ? stripslashes($row['location_title']) : $LANG['unknown']) . '</a>',
 		'TIME' => gmdate_format('date_format_long', $row['timestamp'])
 	));
 }

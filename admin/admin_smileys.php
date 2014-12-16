@@ -100,7 +100,7 @@ elseif (!empty($id) && $edit) //Edition.
 		'L_SMILEY_MANAGEMENT' => $LANG['smiley_management'],
 		'L_ADD_SMILEY' => $LANG['add_smiley'],
 		'L_EDIT_SMILEY' => $LANG['edit_smiley'],
-		'L_REQUIRE' => $LANG['require'],
+		'L_REQUIRE' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 		'L_SMILEY_CODE' => $LANG['smiley_code'],
 		'L_SMILEY_AVAILABLE' => $LANG['smiley_available'],
 		'L_UPDATE' => $LANG['update'],
@@ -120,7 +120,7 @@ else
 		'L_SMILEY' => $LANG['smiley'],
 		'L_CODE' => $LANG['code'],
 		'L_UPDATE' => $LANG['update'],
-		'L_DELETE' => $LANG['delete'],
+		'L_DELETE' => LangLoader::get_message('delete', 'common'),
 	));
 	
 	$smileys_cache = SmileysCache::load()->get_smileys();
