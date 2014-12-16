@@ -36,12 +36,12 @@ class ShoutboxAjaxDeleteMessageController extends AbstractController
 		if ($this->shoutbox_message !== null && $this->check_authorizations())
 		{
 			$this->delete_message();
-			$return = $this->shoutbox_message->get_id();
+			$code = $this->shoutbox_message->get_id();
 		}
 		else
-			$return = -1;
+			$code = -1;
 		
-		return new SiteNodisplayResponse(new StringTemplate($return));
+		return new JSONResponse(array('code' => $code));
 	}
 	
 	private function delete_message()

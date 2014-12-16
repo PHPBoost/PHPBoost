@@ -14,21 +14,23 @@ function shoutbox_add_message()
 				$('shoutbox-refresh').className = 'fa fa-spinner fa-spin';
 			},
 			onComplete: function(response) {
-				console.log(response);
-				if(response.readyState == 4 && response.status == 200 && response.responseText  != '-1' && response.responseText  != '-2' && response.responseText  != '-3' && response.responseText  != '-4') {
+				if(response.readyState == 4 && response.status == 200 && response.responseJSON.code > 0) {
 					shoutbox_refresh_messages_box();
 					$('shout_contents').value = '';
 				} else {
-					switch(response.responseText)
+					switch(response.responseJSON.code)
 					{
-						case '-1': 
+						case -1: 
 							alert("${LangLoader::get_message('e_flood', 'errors')}");
 						break;
-						case '-2': 
+						case -2: 
 							alert("{L_ALERT_LINK_FLOOD}");
 						break;
-						case '-3': 
+						case -3: 
 							alert("${LangLoader::get_message('e_incomplete', 'errors')}");
+						break;
+						case -4: 
+							alert("${LangLoader::get_message('e_unauthorized', 'errors')}");
 						break;
 					}
 				}
@@ -52,8 +54,8 @@ function shoutbox_delete_message(id_message)
 				$('shoutbox-refresh').className = 'fa fa-spinner fa-spin';
 			},
 			onComplete: function(response) {
-				if(response.readyState == 4 && response.status == 200 && response.responseText > 0) {
-					var elementToDelete = $('shoutbox-message-' + response.responseText);
+				if(response.readyState == 4 && response.status == 200 && response.responseJSON.code > 0) {
+					var elementToDelete = $('shoutbox-message-' + response.responseJSON.code);
 					elementToDelete.parentNode.removeChild(elementToDelete);
 				} else {
 					alert("{@error.message.delete}");
@@ -99,7 +101,7 @@ if( {SHOUT_REFRESH_DELAY} > 0 )
 		<form action="?token={TOKEN}" method="post">
 			# IF NOT C_MEMBER #
 			<div class="spacer">&nbsp;</div>
-			<label for="shout_pseudo"><span class="small">${LangLoader::get_message('pseudo', 'main')}</span></label>
+			<label for="shout_pseudo"><span class="small">${LangLoader::get_message('field.name', 'admin-user-common')}</span></label>
 			<input size="16" maxlength="25" type="text" name="shout_pseudo" id="shout_pseudo" value="${LangLoader::get_message('guest', 'main')}">
 			# ELSE #
 			<input size="16" maxlength="25" type="hidden" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
