@@ -64,11 +64,11 @@ var FaqQuestion = Class.create({
 				method:'post',
 				parameters: {'id' : this.id, 'token' : '{TOKEN}'},
 				onComplete: function(response) {
-					if(response.readyState == 4 && response.status == 200 && response.responseText > 0) {
-						var elementToDelete = $('list_' + response.responseText);
+					if(response.readyState == 4 && response.status == 200 && response.responseJSON.code > 0) {
+						var elementToDelete = $('list_' + response.responseJSON.code);
 						elementToDelete.parentNode.removeChild(elementToDelete);
 						# IF NOT C_DISPLAY_TYPE_INLINE #
-						var elementToDelete = $('title_question_' + response.responseText);
+						var elementToDelete = $('title_question_' + response.responseJSON.code);
 						elementToDelete.parentNode.removeChild(elementToDelete);
 						# ENDIF #
 						
@@ -245,10 +245,10 @@ Event.observe(window, 'load', function() {
 								</div>
 								# ENDIF #
 								<div class="sortable-options">
-									<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+									<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 								</div>
 								<div class="sortable-options">
-									<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'main')}" id="delete_{questions.ID}" class="fa fa-delete"></a>
+									<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{questions.ID}" class="fa fa-delete"></a>
 								</div>
 							</div>
 						</div>

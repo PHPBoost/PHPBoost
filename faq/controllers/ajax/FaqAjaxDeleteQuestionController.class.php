@@ -36,12 +36,12 @@ class FaqAjaxDeleteQuestionController extends AbstractController
 		if ($this->faq_question !== null && $this->check_authorizations())
 		{
 			$this->delete_question();
-			$return = $this->faq_question->get_id();
+			$code = $this->faq_question->get_id();
 		}
 		else
-			$return = -1;
+			$code = -1;
 		
-		return new SiteNodisplayResponse(new StringTemplate($return));
+		return new JSONResponse(array('code' => $code));
 	}
 	
 	private function delete_question()

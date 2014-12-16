@@ -130,10 +130,10 @@ function delete_question(id_question)
 				<span class="actions">
 					<a href="{questions.U_LINK}" title="" class="fa fa-flag"></a>
 					# IF questions.C_EDIT #
-					<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+					<a href="{questions.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 					# ENDIF #
 					# IF questions.C_DELETE #
-					<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'main')}" id="delete_{questions.ID}" class="fa fa-delete"></a>
+					<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{questions.ID}" class="fa fa-delete"></a>
 					<script>
 					<!--
 					Event.observe(window, 'load', function() {
