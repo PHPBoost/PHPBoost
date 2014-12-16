@@ -253,7 +253,7 @@ class HTMLForm
 			'FORMCLASS' => $this->css_class,
 			'TARGET' => $this->target,
 			'HTML_ID' => $this->html_id,
-			'L_REQUIRED_FIELDS' => LangLoader::get_message('require', 'main'),
+			'L_REQUIRED_FIELDS' => LangLoader::get_message('form.explain_required_fields', 'status-messages-common'),
 			'C_VALIDATION_ERROR' => count($this->validation_error_messages),
 			'TITLE_VALIDATION_ERROR_MESSAGE' => LangLoader::get_message('form.validation_error', 'status-messages-common'),
 			'METHOD' => $this->method
