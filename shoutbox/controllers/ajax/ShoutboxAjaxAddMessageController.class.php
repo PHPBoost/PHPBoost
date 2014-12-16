@@ -42,14 +42,14 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 				if (!empty($check_time) && !AppContext::get_current_user()->check_max_value(AUTH_FLOOD))
 				{
 					if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
-						$return = -1;
+						$code = -1;
 				}
 				
 				//Vérifie que le message ne contient pas du flood de lien.
 				$config_shoutbox = ShoutboxConfig::load();
 				$contents = FormatingHelper::strparse($contents, $config_shoutbox->get_forbidden_formatting_tags());
 				if (!TextHelper::check_nbr_links($contents, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
-					$return = -2;
+					$code = -2;
 				
 				$shoutbox_message = new ShoutboxMessage();
 				$shoutbox_message->init_default_properties();
@@ -57,15 +57,15 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 				$shoutbox_message->set_user_id(AppContext::get_current_user()->get_id());
 				$shoutbox_message->set_contents($contents);
 				$shoutbox_message->set_creation_date(new Date());
-				$return = ShoutboxService::add($shoutbox_message);
+				$code = ShoutboxService::add($shoutbox_message);
 			}
 			else
-				$return = -3;
+				$code = -3;
 		}
 		else
-			$return = -4;
+			$code = -4;
 		
-		return new SiteNodisplayResponse(new StringTemplate($return));
+		return new JSONResponse(array('code' => $code));
 	}
 	
 	private function check_authorizations()
