@@ -32,14 +32,11 @@ class ShoutboxScheduledJobs extends AbstractScheduledJobExtensionPoint
 	 */
 	public function on_changeday(Date $yesterday, Date $today)
 	{
-		$querier = PersistenceContext::get_querier();
 		$shoutbox_max_messages = ShoutboxConfig::load()->get_max_messages_number();
 		
 		if ($shoutbox_max_messages != -1)
 		{
-			// TODO check the X-SGBD request using @comp
-			$querier->select('SELECT @compt := id AS compt FROM ' . ShoutboxSetup::$shoutbox_table . ' ORDER BY id DESC LIMIT 0 OFFSET :offset', array('offset' => $shoutbox_max_messages));
-			$querier->delete(ShoutboxSetup::$shoutbox_table, 'WHERE id < @compt');
+			PersistenceContext::get_querier()->delete(ShoutboxSetup::$shoutbox_table, 'WHERE id NOT IN (SELECT * FROM (SELECT id FROM ' . ShoutboxSetup::$shoutbox_table . ' ORDER BY id DESC LIMIT :max_messages) AS temp)', array('max_messages' => $shoutbox_max_messages));
 		}
 	}
 }
