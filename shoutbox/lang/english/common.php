@@ -46,6 +46,7 @@ $lang['config.max_messages_number'] = 'Maximum number of message to keep';
 $lang['config.max_messages_number.explain'] = 'Deleted every day, set to -1 to disable';
 $lang['config.max_links_number_per_message'] = 'Max links number in a essage';
 $lang['config.max_links_number_per_message.explain'] = 'Set to -1 for unlimited';
+$lang['config.validation_onkeypress_enter_enabled'] = 'Send message when pressing enter';
 
 $lang['error.message.delete'] = 'Error occurred while message deleting';
 ?>

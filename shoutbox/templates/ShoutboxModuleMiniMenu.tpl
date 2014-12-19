@@ -107,12 +107,8 @@ if( {SHOUT_REFRESH_DELAY} > 0 )
 			<input size="16" maxlength="25" type="hidden" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 			# ENDIF #
 			<br />
-			# IF C_VERTICAL #
-			<label for="shout_contents"><span class="small left">${LangLoader::get_message('message', 'main')}</span></label>
-			<textarea id="shout_contents" name="shout_contents" rows="4" cols="16"></textarea>
-			# ELSE #
-			<textarea id="shout_contents" name="shout_contents" rows="2" cols="16"></textarea>
-			# ENDIF #
+			# IF C_VERTICAL #<label for="shout_contents"><span class="small left">${LangLoader::get_message('message', 'main')}</span></label># ENDIF #
+			<textarea id="shout_contents" name="shout_contents"# IF C_VALIDATE_ONKEYPRESS_ENTER # onkeypress="if(event.keyCode==13){shoutbox_add_message();}"# ENDIF # rows="# IF C_VERTICAL #4# ELSE #2# ENDIF #" cols="16"></textarea>
 			<p class="shout-spacing">
 				<button onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
 				<a href="" onclick="shoutbox_refresh_messages_box();return false;" class="fa fa-refresh" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"></a>

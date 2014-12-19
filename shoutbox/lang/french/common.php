@@ -46,6 +46,7 @@ $lang['config.max_messages_number'] = 'Nombre de messages maximum à conserver';
 $lang['config.max_messages_number.explain'] = 'Supprimés tous les jours, mettre -1 pour désactiver';
 $lang['config.max_links_number_per_message'] = 'Nombre de liens maximum dans le message';
 $lang['config.max_links_number_per_message.explain'] = 'Mettre -1 pour illimité';
+$lang['config.validation_onkeypress_enter_enabled'] = 'Envoyer le message en appuyant sur la touche Entrée';
 
 $lang['error.message.delete'] = 'Erreur lors de la suppression du message';
 ?>

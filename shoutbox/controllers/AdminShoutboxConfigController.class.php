@@ -105,6 +105,8 @@ class AdminShoutboxConfigController extends AdminModuleController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
+		$fieldset->add_field(new FormFieldCheckbox('validation_onkeypress_enter_enabled', $this->lang['config.validation_onkeypress_enter_enabled'], $this->config->is_validation_onkeypress_enter_enabled()));
+		
 		$common_lang = LangLoader::get('common');
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $common_lang['authorizations']);
 		
@@ -148,6 +150,11 @@ class AdminShoutboxConfigController extends AdminModuleController
 	 	$this->config->set_forbidden_formatting_tags($forbidden_formatting_tags);
 		
 		$this->config->set_max_links_number_per_message($this->form->get_value('max_links_number_per_message'));
+		
+		if ($this->form->get_value('validation_onkeypress_enter_enabled'))
+			$this->config->enable_validation_onkeypress_enter();
+		else
+			$this->config->disable_validation_onkeypress_enter();
 		
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
