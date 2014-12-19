@@ -53,6 +53,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			$tpl->put_all(array(
 				'C_MEMBER' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 				'C_DISPLAY_FORM' => ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly(),
+				'C_VALIDATE_ONKEYPRESS_ENTER' => $config->is_validation_onkeypress_enter_enabled(),
 				'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_display_name(),
 				'SHOUT_REFRESH_DELAY' => $config->get_refresh_delay(),
 				'L_ALERT_LINK_FLOOD' => sprintf(LangLoader::get_message('e_l_flood', 'errors'), $config->get_max_links_number_per_message()),

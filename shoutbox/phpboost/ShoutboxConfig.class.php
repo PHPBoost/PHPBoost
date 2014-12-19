@@ -36,6 +36,7 @@ class ShoutboxConfig extends AbstractConfigData
 	const MAX_MESSAGES_NUMBER = 'max_messages_number';
 	const FORBIDDEN_FORMATTING_TAGS = 'forbidden_formatting_tags';
 	const MAX_LINKS_NUMBER_PER_MESSAGE = 'max_links_number_per_message';
+	const VALIDATION_ONKEYPRESS_ENTER_ENABLED = 'validation_onkeypress_enter_enabled';
 	const AUTHORIZATIONS = 'authorizations';
 	
 	public function get_items_number_per_page()
@@ -103,6 +104,21 @@ class ShoutboxConfig extends AbstractConfigData
 		$this->set_property(self::MAX_LINKS_NUMBER_PER_MESSAGE, $nbr_links);
 	}
 	
+	public function enable_validation_onkeypress_enter()
+	{
+		$this->set_property(self::VALIDATION_ONKEYPRESS_ENTER_ENABLED, true);
+	}
+	
+	public function disable_validation_onkeypress_enter()
+	{
+		$this->set_property(self::VALIDATION_ONKEYPRESS_ENTER_ENABLED, false);
+	}
+	
+	public function is_validation_onkeypress_enter_enabled()
+	{
+		return $this->get_property(self::VALIDATION_ONKEYPRESS_ENTER_ENABLED);
+	}
+	
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
@@ -128,6 +144,7 @@ class ShoutboxConfig extends AbstractConfigData
 				'sound', 'code', 'math', 'anchor', 'acronym'
 			),
 			self::MAX_LINKS_NUMBER_PER_MESSAGE => 2,
+			self::VALIDATION_ONKEYPRESS_ENTER_ENABLED => false,
 			self::AUTHORIZATIONS => array ('r-1' => 1, 'r0' => 3, 'r1' => 7)
 		);
 	}
