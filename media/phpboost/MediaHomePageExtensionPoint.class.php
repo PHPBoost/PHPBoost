@@ -156,7 +156,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_ALPHA' => $MEDIA_LANG['sort_title'],
 				'L_DATE' => LangLoader::get_message('date', 'date-common'),
 				'L_NBR' => $MEDIA_LANG['sort_popularity'],
-				'L_NOTE' => $LANG['note'],
+				'L_NOTE' => LangLoader::get_message('note', 'common'),
 				'L_COM' => $LANG['com'],
 				'L_DESC' => $LANG['desc'],
 				'L_ASC' => $LANG['asc'],

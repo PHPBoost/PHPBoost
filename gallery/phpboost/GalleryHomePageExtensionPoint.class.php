@@ -196,7 +196,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_DESC' => $LANG['desc'],
 			'L_DATE' => LangLoader::get_message('date', 'date-common'),
 			'L_VIEWS' => $LANG['views'],
-			'L_NOTES' => $LANG['notes'],
+			'L_NOTES' => LangLoader::get_message('notes', 'common'),
 			'L_COM' => $LANG['com_s']
 		));
 	
@@ -462,7 +462,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'L_ADD_ON' => $LANG['add_on'],
 						'L_DIMENSION' => $LANG['dimension'],
 						'L_SIZE' => $LANG['size'],
-						'L_NOTE' => $LANG['note'],
+						'L_NOTE' => LangLoader::get_message('note', 'common'),
 						'L_COM' => $LANG['com'],
 						'L_EDIT' => LangLoader::get_message('edit', 'common'),
 						'L_APROB_IMG' => ($info_pics['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],

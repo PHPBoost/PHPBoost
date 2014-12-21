@@ -94,6 +94,8 @@ $lang['unit.pixels'] = 'Px';
 //Notes
 $lang['note'] = 'Note';
 $lang['notes'] = 'Notes';
+$lang['add_note'] = 'Add a note';
+$lang['no_note'] = 'No note';
 
 //Status
 $lang['status.approved.not'] = 'Kept in draft';
