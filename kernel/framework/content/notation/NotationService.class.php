@@ -64,7 +64,7 @@ class NotationService
 				'NUMBER_NOTES' => $notation->get_number_notes(),
 				'AVERAGE_NOTES' => $average_notes,
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
-				'L_NO_NOTE' => self::$lang['no_note'],
+				'L_NO_NOTE' => LangLoader::get_message('no_note', 'common'),
 			));
 		
 			$int = intval($average_notes);
@@ -153,12 +153,12 @@ class NotationService
 				'NUMBER_NOTES' => $count_notes,
 				'AVERAGE_NOTES' => $average_notes,
 				'ALREADY_NOTE' => $notation->user_already_noted(),
-				'L_NO_NOTE' => self::$lang['no_note'],
+				'L_NO_NOTE' => LangLoader::get_message('no_note', 'common'),
 				'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
 				'L_ALREADY_NOTE' => self::$lang['already_vote'],
-				'L_NOTES' => self::$lang['notes'],
-				'L_NOTE' => self::$lang['note'],
-				'L_VALID_NOTE' => self::$lang['valid_note']
+				'L_NOTES' => LangLoader::get_message('notes', 'common'),
+				'L_NOTE' => LangLoader::get_message('note', 'common'),
+				'L_VALID_NOTE' => LangLoader::get_message('add_note', 'common')
 			));
 			
 			self::$js_already_included = true;
