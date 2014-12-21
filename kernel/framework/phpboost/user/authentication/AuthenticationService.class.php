@@ -93,7 +93,7 @@ class AuthenticationService
 		$types[] = PHPBoostAuthenticationMethod::AUTHENTICATION_METHOD; 
 
 		$types[] = FacebookAuthenticationMethod::AUTHENTICATION_METHOD;
-
+		$types[] = GoogleAuthenticationMethod::AUTHENTICATION_METHOD;
 	}
 
 	public static function get_authentication_method($method_identifier)
@@ -105,6 +105,10 @@ class AuthenticationService
 			
 			case FacebookAuthenticationMethod::AUTHENTICATION_METHOD:
 				return new FacebookAuthenticationMethod();
+				break;
+
+			case GoogleAuthenticationMethod::AUTHENTICATION_METHOD:
+				return new GoogleAuthenticationMethod();
 				break;
 
 			default:
