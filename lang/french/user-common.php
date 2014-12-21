@@ -92,9 +92,15 @@ $lang['no_member'] = 'Aucun membre dans ce groupe';
 $lang['caution'] = 'Avertissement';
 $lang['readonly'] = 'Lecture seule';
 $lang['banned'] = 'Banni';
-$lang['connect'] = 'Se connecter';
+$lang['connection'] = 'Connexion';
 $lang['autoconnect'] = 'Connexion auto';
 $lang['disconnect'] = 'Se déconnecter';
+
+$lang['internal_connection'] = 'Connexion interne';
+$lang['fb_connection'] = 'Connexion par Facebook';
+$lang['google_connection'] = 'Connexion par Google';
+$lang['associate_account'] = 'Associer votre compte';
+$lang['dissociate_account'] = 'Dissocier votre compte';
 
 // Ranks
 $lang['rank'] = 'Rang';
