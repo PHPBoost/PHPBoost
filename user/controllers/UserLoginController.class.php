@@ -160,7 +160,7 @@ class UserLoginController extends AbstractController
 		{
 			$response = new SiteDisplayResponse($this->view);
 			$graphical_environment = $response->get_graphical_environment();
-			$graphical_environment->set_page_title($this->lang['connect'], $this->lang['user']);
+			$graphical_environment->set_page_title($this->lang['connection'], $this->lang['user']);
 			return $response;
 		}
 	}
@@ -173,7 +173,7 @@ class UserLoginController extends AbstractController
 		$this->form = new HTMLForm('loginForm', $this->build_target(), false);
 		$this->form->set_css_class('fieldset-content');
 
-		$this->fieldset = new FormFieldsetHTML('loginFieldset', $this->lang['connect']);
+		$this->fieldset = new FormFieldsetHTML('loginFieldset', $this->lang['connection']);
 		$login = new FormFieldTextEditor('login', $this->lang['login'], '', array('description' => $this->lang['login.explain'], 'required' => true));
 		$this->fieldset->add_field($login);
 		$password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array('required' => true));
@@ -183,7 +183,7 @@ class UserLoginController extends AbstractController
 
 		$this->form->add_fieldset($this->fieldset);
 
-		$this->submit_button = new FormButtonSubmit($this->lang['connect'], 'authenticate');
+		$this->submit_button = new FormButtonSubmit($this->lang['connection'], 'authenticate');
 		$this->form->add_button($this->submit_button);
 	}
 	

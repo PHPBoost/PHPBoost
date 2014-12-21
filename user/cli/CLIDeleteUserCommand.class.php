@@ -80,8 +80,11 @@ class CLIDeleteUserCommand implements CLICommand
 			$this->show_parameter('--login', $this->login);
 			try
 			{
-				$user = UserService::get_user('WHERE login=:login', array('login' => $this->login));
-				UserService::delete_by_id($user->get_id());
+				$condition = 'WHERE login=:login';
+				$parameters = array('login' => $this->login);
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_INTERNAL_AUTHENTICATION, 'user_id', $condition, $parameters);
+
+				UserService::delete_by_id($user_id);
 				$this->write_success_message();
 			}
 			catch (RowNotFoundException $ex) {
@@ -94,8 +97,8 @@ class CLIDeleteUserCommand implements CLICommand
 			$this->show_parameter('--email', $this->email);
 			try
 			{
-				$user = UserService::get_user('WHERE user_mail=:email', array('email' => $this->email));
-				UserService::delete_by_id($user->get_id());
+				$user_id = UserService::user_exists('WHERE email=:email', array('email' => $this->email));
+				UserService::delete_by_id($user_id);
 				$this->write_success_message();
 			}
 			catch (RowNotFoundException $ex) {

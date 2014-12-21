@@ -91,9 +91,15 @@ $lang['no_member'] = 'No member in this group';
 $lang['caution'] = 'Caution';
 $lang['readonly'] = 'Read only';
 $lang['banned'] = 'Banned';
-$lang['connect'] = 'Connect';
+$lang['connection'] = 'Connect';
 $lang['autoconnect'] = 'Auto connect';
 $lang['disconnect'] = 'Disconnect';
+
+$lang['internal_connection'] = 'Internal connection';
+$lang['fb_connection'] = 'Facebook connection';
+$lang['google_connection'] = 'Google connection';
+$lang['associate_account'] = 'Associate your account';
+$lang['dissociate_account'] = 'Dissociate your account';
 
 // Ranks
 $lang['rank'] = 'Rank';
