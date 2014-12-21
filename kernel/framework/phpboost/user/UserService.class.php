@@ -71,6 +71,10 @@ class UserService
 		{
 			$fields_data = array();
 		}
+		else
+		{
+			$fields_data = $extended_fields;
+		}
 		
 		$fields_data['user_id'] = $user_id;
 		self::$querier->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data);

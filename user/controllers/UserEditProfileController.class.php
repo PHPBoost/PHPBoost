@@ -192,6 +192,15 @@ class UserEditProfileController extends AbstractController
 			$connect_fieldset->add_field(new FormFieldFree('fb_auth', 'Connexion par Facebook <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id())->absolute() .'?associate=fb">associer votre compte Facebook</a>'));
 		}
 
+		if (in_array(GoogleAuthenticationMethod::AUTHENTICATION_METHOD, $this->user_auth_types))
+		{
+			$connect_fieldset->add_field(new FormFieldFree('google_auth', 'Google Connect <i class="fa fa-success"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id())->absolute() .'?dissociate=google">Dissocier votre compte Google</a>'));
+		}
+		else
+		{
+			$connect_fieldset->add_field(new FormFieldFree('google_auth', 'Connexion par Google <i class="fa fa-error"></i>', '<a href="'. UserUrlBuilder::edit_profile($this->user->get_id())->absolute() .'?associate=google">associer votre compte Google</a>'));
+		}
+
 
 		/* ************* */
 

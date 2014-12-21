@@ -32,6 +32,9 @@ class AuthenticationConfig extends AbstractConfigData
 {
 	const FB_APP_ID = 'fb_app_id';
 	const FB_APP_KEY = 'fb_app_key';
+
+	const GOOGLE_CLIENT_ID = 'google_client_id';
+	const GOOGLE_CLIENT_SECRET = 'google_client_secret';
 	
 	public function get_fb_app_id()
 	{
@@ -52,12 +55,35 @@ class AuthenticationConfig extends AbstractConfigData
 	{
 		$this->set_property(self::FB_APP_KEY, $fb_app_key);
 	}
+
+	public function get_google_client_id()
+	{
+		return $this->get_property(self::GOOGLE_CLIENT_ID);
+	}
+
+	public function set_google_client_id($google_client_id)
+	{
+		$this->set_property(self::GOOGLE_CLIENT_ID, $google_client_id);
+	}
+
+	public function get_google_client_secret()
+	{
+		return $this->get_property(self::GOOGLE_CLIENT_SECRET);
+	}
+
+	public function set_google_client_secret($google_client_secret)
+	{
+		$this->set_property(self::GOOGLE_CLIENT_SECRET, $google_client_secret);
+	}
 	
 	public function get_default_values()
 	{
 		return array(
-			self::FB_APP_ID => '',
-			self::FB_APP_KEY => '',
+			self::FB_APP_ID => '837719939581007',
+			self::FB_APP_KEY => '86eff183d82a1e225cda0a535f5a137f',
+
+			self::GOOGLE_CLIENT_ID => '462204354956-ptmg37rgn8667svsjvt4u1a6rl8gmvl0.apps.googleusercontent.com',
+			self::GOOGLE_CLIENT_SECRET => '3_EUnKTz_ip44QaE4A675wNx',
 		);
 	}
 

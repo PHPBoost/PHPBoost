@@ -35,28 +35,37 @@
  * @package {@package}
  */
 
-require_once PATH_TO_ROOT . '/kernel/lib/php/facebook/facebook.php';
+session_start();
 
-class FacebookAuthenticationMethod extends AuthenticationMethod
+require_once PATH_TO_ROOT . '/kernel/lib/php/google/Google_Client.php';
+require_once PATH_TO_ROOT . '/kernel/lib/php/google/contrib/Google_Oauth2Service.php';
+
+class GoogleAuthenticationMethod extends AuthenticationMethod
 {
-	const AUTHENTICATION_METHOD = 'fb';
+	const AUTHENTICATION_METHOD = 'google';
 	
 	/**
 	 * @var DBQuerier
 	 */
 	private $querier;
-	private $facebook;
+	private $google_client;
+	private $google_auth;
 	
 	public function __construct()
 	{
 		$this->querier = PersistenceContext::get_querier();
-		$config = AuthenticationConfig::load();
-		
-		$this->facebook = new Facebook(array(
-			'appId'  => $config->get_fb_app_id(),
-			'secret' => $config->get_fb_app_key(),
-			'cookie' => true
-		));
+		$auth_config = AuthenticationConfig::load();
+		$general_config = GeneralConfig::load();
+
+		$this->google_client = new Google_Client();
+		$this->google_client->setClientId($auth_config->get_google_client_id());
+		$this->google_client->setClientSecret($auth_config->get_google_client_secret());
+		$this->google_client->setRedirectUri($general_config->get_site_url() . $_SERVER['REQUEST_URI']);
+		$this->google_client->setScopes(array(
+              'https://www.googleapis.com/auth/userinfo.profile',
+              'https://www.googleapis.com/auth/userinfo.email',
+          ));
+		$this->google_auth = new Google_Oauth2Service($this->google_client);
 	}
 	
 	/**
@@ -64,7 +73,7 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	 */
 	public function associate($user_id)
 	{
-		$data = $this->get_fb_user_data();
+		$data = $this->get_google_user_data();
 
 		$authentication_method_columns = array(
 			'user_id' => $user_id,
@@ -102,13 +111,13 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 	 */
 	public function authenticate()
 	{
-		$data = $this->get_fb_user_data();
-		$fb_id = $data['id'];
+		$data = $this->get_google_user_data();
+		$google_id = $data['id'];
 
 		try {
 			
 			$condition = 'WHERE method=:method AND identifier=:identifier';
-			$parameters = array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $fb_id);
+			$parameters = array('method' => self::AUTHENTICATION_METHOD, 'identifier' => $google_id);
 			return $this->querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', $condition, $parameters);
 			
 		} catch (RowNotFoundException $e) {
@@ -125,21 +134,37 @@ class FacebookAuthenticationMethod extends AuthenticationMethod
 				$user->set_level(User::MEMBER_LEVEL);
 				$user->set_email($data['email']);
 				
-				$auth_method = new FacebookAuthenticationMethod();
-				$fields_data = array('user_avatar' => 'https://graph.facebook.com/'. $fb_id .'/picture');
+				$auth_method = new GoogleAuthenticationMethod();
+				$fields_data = array('user_avatar' => $data['picture']);
 				return UserService::create($user, $auth_method, $fields_data);
 			}
 		}
 	}
 
-	private function get_fb_user_data()
+	private function get_google_user_data()
 	{
-		$fb_id = $this->facebook->getUser();
-		if (!$fb_id)
+		if (isset($_GET['code'])) 
 		{
-			AppContext::get_response()->redirect($this->facebook->getLoginUrl(array('scope' => 'email')));
+			$this->google_client->authenticate($_GET['code']);
+			$_SESSION['token'] = $this->google_client->getAccessToken();
+			AppContext::get_response()->redirect($this->google_client->getRedirectUri());
 		}
-		return $this->facebook->api('/me');
+
+		if (isset($_SESSION['access_token'])) 
+		{
+			$this->google_client->setAccessToken($_SESSION['access_token']);
+		}
+
+		if ($this->google_client->getAccessToken()) 
+		{
+			$user 				= $this->google_auth->userinfo->get();
+			$_SESSION['token'] 	= $this->google_client->getAccessToken();
+			return $user;
+		}
+		else 
+		{
+			AppContext::get_response()->redirect($this->google_client->createAuthUrl());
+		}
 	}
 }
 ?>
