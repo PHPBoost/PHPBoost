@@ -36,13 +36,11 @@ $lang['module_config_title'] = 'Configuration du calendrier';
 //Messages divers
 $lang['calendar.notice.no_current_action'] = 'Aucun événement pour cette date';
 $lang['calendar.notice.no_pending_event'] = 'Aucun événement en attente';
-$lang['calendar.notice.no_event'] = 'Aucun événement';
 $lang['calendar.notice.suscribe.event_date_expired'] = 'L\'événement est terminé, vous ne pouvez pas vous inscrire.';
 $lang['calendar.notice.unsuscribe.event_date_expired'] = 'L\'événement est terminé, vous ne pouvez pas vous désinscrire.';
 
 //Titres
 $lang['calendar.titles.add_event'] = 'Ajouter un événement';
-$lang['calendar.titles.edit_event'] = 'Editer l\'événement';
 $lang['calendar.titles.delete_event'] = 'Supprimer l\'événement';
 $lang['calendar.titles.delete_occurrence'] = 'L\'occurrence';
 $lang['calendar.titles.delete_all_events_of_the_serie'] = 'Tous les événements de la série';
@@ -79,10 +77,8 @@ $lang['calendar.labels.repeat.monthly'] = 'Tous les mois';
 $lang['calendar.labels.repeat.yearly'] = 'Tous les ans';
 $lang['calendar.labels.events_number'] = ':events_number événements';
 $lang['calendar.labels.one_event'] = '1 événement';
-$lang['calendar.labels.date'] = 'Date';
 $lang['calendar.labels.start_date'] = 'Date de début';
 $lang['calendar.labels.end_date'] = 'Date de fin';
-$lang['calendar.labels.approved'] = 'Approuvé';
 $lang['calendar.labels.not_approved'] = 'Invisible';
 $lang['calendar.labels.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer un événement, cependant vous pouvez en proposer un.';
 $lang['calendar.labels.birthday_title'] = 'Anniversaire de';
