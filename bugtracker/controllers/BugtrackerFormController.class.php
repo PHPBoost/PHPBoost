@@ -75,6 +75,7 @@ class BugtrackerFormController extends ModuleController
 	
 	private function build_form()
 	{
+		$common_lang = LangLoader::get('common');
 		$bug = $this->get_bug();
 		
 		$types = $this->config->get_types();
@@ -100,9 +101,9 @@ class BugtrackerFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('bug_infos', $this->lang['titles.bugs_infos']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['labels.fields.title'], $bug->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $common_lang['form.title'], $bug->get_title(), array('required' => true)));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['labels.fields.contents'], $bug->get_contents(), array(
+		$fieldset->add_field(new FormFieldRichTextEditor('contents', $common_lang['form.description'], $bug->get_contents(), array(
 			'description' => $this->lang['explain.contents'], 'rows' => 15, 'required' => true)
 		));
 		

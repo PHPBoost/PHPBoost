@@ -20,14 +20,14 @@
 			</th>
 			<th>
 				<a href="{U_SORT_DATE_ASC}" class="fa fa-table-sort-up"></a>
-				{@calendar.labels.date}
+				${LangLoader::get_message('date', 'date-common')}
 				<a href="{U_SORT_DATE_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
 				{@calendar.titles.repetion}
 			</th>
 			<th>
-				{@calendar.labels.approved}
+				${LangLoader::get_message('form.approved', 'common')}
 			</th>
 		</tr>
 	</thead>
@@ -71,7 +71,7 @@
 		# IF NOT C_EVENTS #
 		<tr> 
 			<td colspan="7">
-				{@calendar.notice.no_event}
+				${LangLoader::get_message('no_item_now', 'common')}
 			</td>
 		</tr>
 		# ENDIF #

@@ -37,7 +37,7 @@ class BugtrackerTreeLinks implements ModuleTreeLinksExtensionPoint
 		
 		$tree->add_link(new ModuleLink($lang['actions.add'], BugtrackerUrlBuilder::add(), BugtrackerAuthorizationsService::check_authorizations()->write()));
 		
-		$tree->add_link(new AdminModuleLink($lang['titles.admin.config'], BugtrackerUrlBuilder::configuration()));
+		$tree->add_link(new AdminModuleLink(LangLoader::get_message('configuration', 'admin-common'), BugtrackerUrlBuilder::configuration()));
 		$tree->add_link(new AdminModuleLink($lang['titles.admin.authorizations.manage'], BugtrackerUrlBuilder::authorizations()));
 		
 		return $tree;

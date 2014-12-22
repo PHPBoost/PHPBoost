@@ -38,8 +38,8 @@ class AdminBugtrackerDisplayResponse extends AdminMenuDisplayResponse
 		$lang = LangLoader::get('common', 'bugtracker');
 		$picture = '/bugtracker/bugtracker.png';
 		$this->set_title($lang['module_title']);
-		$this->add_link($lang['titles.admin.config'], BugtrackerUrlBuilder::configuration(), $picture);
-		$this->add_link($lang['titles.admin.authorizations'], BugtrackerUrlBuilder::authorizations(), $picture);
+		$this->add_link(LangLoader::get_message('configuration', 'admin-common'), BugtrackerUrlBuilder::configuration(), $picture);
+		$this->add_link(LangLoader::get_message('authorizations', 'common'), BugtrackerUrlBuilder::authorizations(), $picture);
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page, $lang['module_title']);
