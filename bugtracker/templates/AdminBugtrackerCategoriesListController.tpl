@@ -79,7 +79,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 	<tbody id="categories_list">
 		<tr id="no_category"# IF C_CATEGORIES # style="display:none;"# ENDIF #>
 			<td colspan="3">
-				{@notice.no_category}
+				${LangLoader::get_message('no_item_now', 'common')}
 			</td>
 		</tr>
 		# START categories #
@@ -91,7 +91,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 				<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}" />
 			</td>
 			<td>
-				<a href="{categories.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_category}"></a>
+				<a href="{categories.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</td>
 		</tr>
 		# END categories #
