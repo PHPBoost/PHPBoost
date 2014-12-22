@@ -11,7 +11,7 @@
 				</th>
 				<th class="title-column">
 					<a href="{LINK_BUG_TITLE_TOP}" class="fa fa-table-sort-up"></a>
-					{@labels.fields.title}
+					${LangLoader::get_message('form.title', 'common')}
 					<a href="{LINK_BUG_TITLE_BOTTOM}" class="fa fa-table-sort-down"></a>
 				</th>
 				# IF C_DISPLAY_TYPE_COLUMN #

@@ -74,7 +74,7 @@ class AdminBugtrackerAuthorizationsController extends AdminModuleController
 		$form = new HTMLForm(__CLASS__);
 		
 		//Add a fieldset
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['titles.admin.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('authorizations', 'common'));
 		$form->add_fieldset($fieldset_authorizations);
 		
 		//Authorizations list
