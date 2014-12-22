@@ -52,7 +52,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		if (!isset($CAT_FORUM[$id_get]) && !empty($id_get))
 		{
-			$controller = PHPBoostErrors::unexisting_category();
+			$controller = PHPBoostErrors::unexisting_element();
     		DispatchManager::redirect($controller);
 		}
 
@@ -84,7 +84,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 			'L_CONFIG' => $LANG['forum_config'],
 			'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
-			'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
+			'L_AUTH_ERROR' => LangLoader::get_message('error.auth', 'status-messages-common'),
 			'L_SEARCH' => $LANG['search'],
 			'L_ADVANCED_SEARCH' => $LANG['advanced_search']
 		);

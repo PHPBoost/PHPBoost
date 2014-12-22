@@ -59,7 +59,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 		//if the category doesn't exist or is not visible
 		if (empty($MEDIA_CATS[$id_cat]) || $MEDIA_CATS[$id_cat]['visible'] === false || !AppContext::get_current_user()->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_READ))
 		{
-			$controller = PHPBoostErrors::unexisting_category();
+			$controller = PHPBoostErrors::unexisting_element();
 	        DispatchManager::redirect($controller);
 		}
 	

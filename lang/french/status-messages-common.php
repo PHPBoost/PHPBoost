@@ -33,6 +33,13 @@ $lang['error.notice'] = 'Suggestion';
 $lang['error.warning'] = 'Avertissement';
 $lang['error.unknow'] = 'Inconnue';
 
+//PHPBoost errors
+$lang['error.auth'] = 'Vous n\'avez pas le niveau requis !';
+$lang['error.page.forbidden'] = 'L\'accès à ce dossier est interdit !';
+$lang['error.page.unexist'] = 'La page que vous demandez n\'existe pas !';
+$lang['error.module.uninstalled'] = 'Ce module n\'est pas installé !';
+$lang['error.module.unactivated'] = 'Ce module n\'est pas activé !';
+
 $lang['csrf_invalid_token'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
 
 //Element

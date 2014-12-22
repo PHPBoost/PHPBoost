@@ -781,7 +781,7 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'unexist_cat')
-		$tpl->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], MessageHelper::NOTICE));
+		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('element.unexist', 'status-messages-common'), MessageHelper::NOTICE));
 		
 	$tpl->put_all(array(
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 

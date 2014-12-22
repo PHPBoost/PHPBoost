@@ -291,7 +291,7 @@ elseif ($get_theme)
     $stats_array = array();
 	foreach (ThemesManager::get_activated_themes_map() as $id => $theme)
 	{
-		$stats_array[$id] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_theme = '" . $id . "'");
+		$stats_array[$id] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE theme = '" . $id . "'");
 	}
 
     $Stats->load_data($stats_array, 'ellipse', 5);

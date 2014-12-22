@@ -83,7 +83,7 @@
 	# ENDIF #
 	<div class="form-element">
 		<label>{@labels.fields.reproductible}</label>
-		<div class="form-field"># IF C_REPRODUCTIBLE #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #</div>
+		<div class="form-field"># IF C_REPRODUCTIBLE #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #</div>
 	</div>
 </fieldset>
 

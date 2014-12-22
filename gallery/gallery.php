@@ -212,7 +212,7 @@ elseif ($g_add)
 	if (in_array($get_error, $array_error))
 		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message($get_error, 'errors'), MessageHelper::WARNING));
 	elseif ($get_error == 'unexist_cat')
-		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('e_unexist_cat', 'errors'), MessageHelper::NOTICE));
+		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('element.unexist', 'status-messages-common'), MessageHelper::NOTICE));
 
 	$module_data_path = $tpl->get_pictures_data_path();
 	$path_pics = PersistenceContext::get_querier()->get_column_value(PREFIX . "gallery", 'path', 'WHERE id = :id', array('id' => $g_idpics));

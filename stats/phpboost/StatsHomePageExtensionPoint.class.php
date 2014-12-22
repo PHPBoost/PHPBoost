@@ -405,7 +405,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				
 				//Année maximale
-				$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'));
+				$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{
@@ -566,7 +566,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 			$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month', 'pages'), 'WHERE stats_year = :year' . $clause . ' AND pages_detail <> \'\' GROUP BY stats_month', array('year' => $year, 'month' => $month, 'day' => $day));
 			
 			//On affiche les visiteurs totaux et du jour
-			$compteur_total = $this->db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)');
+			$compteur_total = $this->db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)', '');
 			$compteur_day = array_sum(StatsSaver::retrieve_stats('pages')) + 1;
 			$compteur_total = $compteur_total + $compteur_day;
 			$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
@@ -851,7 +851,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				
 				//Année maximale
-				$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'));
+				$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
 				$years = '';
 				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
 				{

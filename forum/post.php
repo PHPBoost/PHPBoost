@@ -34,7 +34,7 @@ $id_get = retrieve(GET, 'id', 0);
 //Existance de la catégorie.
 if (!isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0)
 {
-	$controller = PHPBoostErrors::unexisting_category();
+	$controller = PHPBoostErrors::unexisting_element();
     DispatchManager::redirect($controller);
 }
 

@@ -154,7 +154,7 @@ class NotationService
 				'AVERAGE_NOTES' => $average_notes,
 				'ALREADY_NOTE' => $notation->user_already_noted(),
 				'L_NO_NOTE' => LangLoader::get_message('no_note', 'common'),
-				'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
+				'L_AUTH_ERROR' => LangLoader::get_message('error.auth', 'status-messages-common'),
 				'L_ALREADY_NOTE' => self::$lang['already_vote'],
 				'L_NOTES' => LangLoader::get_message('notes', 'common'),
 				'L_NOTE' => LangLoader::get_message('note', 'common'),

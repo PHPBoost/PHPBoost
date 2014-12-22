@@ -88,7 +88,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'MEMORY_USED' => AppContext::get_bench()->get_memory_php_used(),
 				'L_REQ' => self::$main_lang['sql_req'],
 				'L_ACHIEVED' => self::$main_lang['achieved'],
-				'L_UNIT_SECOND' => self::$main_lang['unit_seconds_short']
+				'L_UNIT_SECOND' => LangLoader::get_message('unit.seconds', 'date-common')
 			));
 		}
 		

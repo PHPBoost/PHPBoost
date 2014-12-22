@@ -36,17 +36,11 @@ $LANG['from_date'] = 'du';
 $LANG['to_date'] = 'au';
 $LANG['now'] = 'Maintenant';
 
-//Unités
-$LANG['unit_hour'] = 'h';
-$LANG['unit_seconds'] = 'Secondes';
-$LANG['unit_seconds_short'] = 's';
-	
 //Erreurs
 $LANG['unknown'] = 'Inconnu';
 
 //Titres divers
 $LANG['title_pm'] = 'Messages privés';
-$LANG['title_com'] = 'Commentaires';
 
 //Form
 $LANG['submit'] = 'Envoyer';

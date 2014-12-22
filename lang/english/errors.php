@@ -32,17 +32,8 @@
  ####################################################
 
 //Errors
-$LANG['e_auth'] = 'You don\'t have the required level!';
-
-$LANG['e_uninstalled_module'] = 'This module isn\'t installed!';
-$LANG['e_unactivated_module'] = 'This module isn\'t activated!';
-
 $LANG['e_incomplete'] = 'All the required fields must be filled!';
 $LANG['e_readonly'] = 'You can\'t perform this action because your account is read-only!';
-$LANG['e_unexist_cat'] = 'This category doesn\'t exist!';
-$LANG['e_unexist_page'] = 'This page doesn\'t exist!';
-$LANG['e_forbidden'] = 'This folder access is forbidden!';
-$LANG['e_unauthorized'] = 'You aren\'t authorized to post!';
 $LANG['e_flood'] = 'You can\'t post yet, retry in a few moments';
 $LANG['e_l_flood'] = 'You can\'t post more than %d link(s) in your message';
 

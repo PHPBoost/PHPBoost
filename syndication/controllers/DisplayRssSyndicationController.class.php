@@ -59,7 +59,7 @@ class DisplayRssSyndicationController extends AbstractController
 				if ($data === null)
 				{
 					AppContext::get_response()->set_header('content-type', 'text/html');
-					DispatchManager::redirect(PHPBoostErrors::unexisting_category());
+					DispatchManager::redirect(PHPBoostErrors::unexisting_element());
 				}
 				else
 				{

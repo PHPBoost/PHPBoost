@@ -43,7 +43,7 @@ if (empty($topic['id']))
 //Existance de la catégorie.
 if (!isset($CAT_FORUM[$topic['idcat']]) || $CAT_FORUM[$topic['idcat']]['aprob'] == 0 || $CAT_FORUM[$topic['idcat']]['level'] == 0)
 {
-	$controller = PHPBoostErrors::unexisting_category();
+	$controller = PHPBoostErrors::unexisting_element();
     DispatchManager::redirect($controller);
 }
 

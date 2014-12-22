@@ -48,7 +48,7 @@ class FormFieldDateTime extends FormFieldDate
 			'HOURS' => $this->get_value() ? $this->get_value()->get_hours() : '',
 			'MINUTES' => $this->get_value() ? $this->get_value()->get_minutes() : '',
 			'L_AT' => LangLoader::get_message('at', 'main'),
-			'L_H' => LangLoader::get_message('unit_hour', 'main')
+			'L_H' => LangLoader::get_message('unit.hour', 'date-common')
 		));
 
 		return $template;

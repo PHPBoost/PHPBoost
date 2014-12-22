@@ -80,7 +80,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				'L_UNIT_SECOND' => HOST,
 				'L_REQ' => self::$lang['sql_req'],
 				'L_ACHIEVED' => self::$lang['achieved'],
-				'L_UNIT_SECOND' => self::$lang['unit_seconds_short']
+				'L_UNIT_SECOND' => LangLoader::get_message('unit.seconds', 'date-common')
 			));
 		}
 		

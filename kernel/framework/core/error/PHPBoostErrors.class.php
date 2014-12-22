@@ -27,11 +27,12 @@
 
 class PHPBoostErrors
 {
+	private $lang;
+
 	public static function user_not_authorized()
 	{
 		AppContext::get_response()->set_status_code(401);
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_auth']);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error.auth', 'status-messages-common'));
 		return $controller;
 	}
 	
@@ -39,7 +40,7 @@ class PHPBoostErrors
     {
     	AppContext::get_response()->set_status_code(404);
 		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_unexist_page']);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('error.page.unexist', 'status-messages-common'));
 		return $controller;
     }
 
@@ -49,14 +50,6 @@ class PHPBoostErrors
 		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), LangLoader::get_message('element.unexist', 'status-messages-common'));
 		return $controller;
 	}
-	
-    public static function unexisting_category()
-    {
-    	AppContext::get_response()->set_status_code(404);
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_unexist_cat']);
-		return $controller;
-    }
     
 	public static function unknow()
     {
@@ -88,10 +81,9 @@ class PHPBoostErrors
 	public static function module_not_installed()
 	{
 		AppContext::get_response()->set_status_code(404);
-        $lang = LangLoader::get('errors');
 		$controller = new UserErrorController(
-		$lang['e_uninstalled_module'],
-		$lang['e_uninstalled_module'],
+		LangLoader::get_message('error', 'status-messages-common'),
+		LangLoader::get_message('error.module.uninstalled', 'status-messages-common'),
 		UserErrorController::NOTICE);
 		return $controller;
 	}
@@ -99,8 +91,10 @@ class PHPBoostErrors
 	public static function module_not_activated()
 	{
 		AppContext::get_response()->set_status_code(404);
-		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController(LangLoader::get_message('error', 'status-messages-common'), $lang['e_unactivated_module']);
+		$controller = new UserErrorController(
+		LangLoader::get_message('error', 'status-messages-common'), 
+		LangLoader::get_message('error.module.unactivated', 'status-messages-common'),
+		UserErrorController::NOTICE);
 		return $controller;
 	}
 	

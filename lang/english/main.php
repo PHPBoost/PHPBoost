@@ -37,17 +37,11 @@ $LANG['from_date'] = 'from';
 $LANG['to_date'] = 'to';
 $LANG['now'] = 'Now';
 
-//Unités
-$LANG['unit_hour'] = 'H';
-$LANG['unit_seconds'] = 'Seconds';
-$LANG['unit_seconds_short'] = 's';
-
 //Erreurs
 $LANG['unknown'] = 'Unknown';
 
 //Other title
 $LANG['title_pm'] = 'Private messages';
-$LANG['title_com'] = 'Comments';
 
 //Form
 $LANG['submit'] = 'Submit';

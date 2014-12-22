@@ -94,7 +94,7 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	if ($get_error == 'unexist_cat')
-		$tpl->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], MessageHelper::NOTICE));
+		$tpl->put('message_helper', MessageHelper::display(LangLoader::get_message('element.unexist', 'status-messages-common'), MessageHelper::NOTICE));
 
 	//On crée une pagination si le nombre de catégories est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);

@@ -83,7 +83,7 @@ class AdminThemesInstalledListController extends AdminController
 		}
 		
 		$this->view->put_all(array(
-			'L_DELETE' => LangLoader::get_message('delete','main'),
+			'L_DELETE' => LangLoader::get_message('delete','common'),
 			'L_RESET' => LangLoader::get_message('reset','main'),
 			'L_UPDATE' => LangLoader::get_message('update','main')
 		));

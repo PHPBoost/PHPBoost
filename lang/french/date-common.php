@@ -37,6 +37,9 @@ $lang['date_format_day_month_year_long'] = 'j F Y';
 $lang['date_format_day_month_year_text'] = 'l j F Y';
 $lang['date_format_day_month_year_hour_minute_text'] = 'l j F Y \à H\hi';
 
+$lang['unit.hour'] = 'h';
+$lang['unit.seconds'] = 's';
+
 $lang['date'] = 'Date';
 $lang['today'] = 'Aujourd\'hui';
 

@@ -88,7 +88,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 	private function get_sanctions_duration()
 	{
 		return array(
-			'0' => LangLoader::get_message('no', 'main'), 
+			'0' => LangLoader::get_message('no', 'common'), 
 			'60' => '1 ' . $this->lang['minute'], 
 			'300' => '5 ' . $this->lang['minutes'],
 			'900' => '15 ' . $this->lang['minutes'], 

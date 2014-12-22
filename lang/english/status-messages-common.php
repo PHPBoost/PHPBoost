@@ -33,6 +33,13 @@ $lang['error.notice'] = 'Notice';
 $lang['error.warning'] = 'Warning';
 $lang['error.unknow'] = 'Unknow';
 
+//PHPBoost errors
+$lang['error.auth'] = 'You don\'t have the required level!';
+$lang['error.page.forbidden'] = 'This folder access is forbidden!';
+$lang['error.page.unexist'] = 'This page doesn\'t exist!';
+$lang['error.module.uninstalled'] = 'This module isn\'t installed!';
+$lang['error.module.unactivated'] = 'This module isn\'t activated!';
+
 $lang['csrf_invalid_token'] = 'Invalid session token. Please retry because the operation has not been performed.';
 
 //Element

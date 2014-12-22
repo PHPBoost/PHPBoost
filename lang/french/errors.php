@@ -31,17 +31,8 @@
  ####################################################
 
 //Erreurs
-$LANG['e_auth'] = 'Vous n\'avez pas le niveau requis !';
-
-$LANG['e_uninstalled_module'] = 'Ce module n\'est pas installé !';
-$LANG['e_unactivated_module'] = 'Ce module n\'est pas activé !';
-
 $LANG['e_incomplete'] = 'Tous les champs obligatoires doivent être remplis !';
 $LANG['e_readonly'] = 'Vous ne pouvez exécuter cette action, car vous avez été placé en lecture seule !';
-$LANG['e_unexist_cat'] = 'La catégorie que vous demandez n\'existe pas !';
-$LANG['e_unexist_page'] = 'La page que vous demandez n\'existe pas !';
-$LANG['e_forbidden'] = 'L\'accès à ce dossier est interdit !';
-$LANG['e_unauthorized'] = 'Vous n\'êtes pas autorisé à poster !';
 $LANG['e_flood'] = 'Vous ne pouvez pas encore poster, réessayez dans quelques instants';
 $LANG['e_l_flood'] = 'Nombre maximum de lien(s) internet autorisé(s) dans votre message : %d';
 
