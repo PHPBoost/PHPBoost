@@ -1,0 +1,9 @@
+textarea {
+	height: 70px;
+	width: 47%;
+	float:left;
+}
+
+textarea.answers { margin-left: 5px; }
+
+.fa-delete { margin: 25px 0 0 5px; }

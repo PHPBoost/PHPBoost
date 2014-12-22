@@ -1,0 +1,75 @@
+
+/* Zone de saisie de la recherche
+-------------------------------------------*/
+
+div.search-field { text-align: center; }
+
+select.list-modules { min-width: 200px; }
+
+div#forms-selection { 
+	padding: 5px 0;
+}
+
+div#forms-selection a {
+	padding: 2px 8px;
+	display: block;
+	text-decoration: none;
+	color: #888888;
+}
+div#forms-selection a:hover {
+	background: #DDDDDD;
+}
+
+div#forms-selection a.SFL-current {
+	background: #DFDFDF;
+	color: #333333;
+}
+
+div.SpecializedForm { padding: 0px 5px; }
+
+
+/* Zone des resultats
+-------------------------------------------*/
+div.resultsChoices {
+	position: relative;
+	top: 5px;
+	width: 100%;
+	text-align: right;
+}
+
+div.resultsChoices span {
+	position: relative;
+	top: 2px;
+}
+
+div.results {
+	margin-top: 30px;
+	min-height: 50px;
+	vertical-align: middle;
+}
+
+div.results span.title {
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+	position: relative;
+	top: -25px;
+}
+
+div.results div.infosResults {
+	width: 90%;
+	padding-left: 10px;
+	font-size: 0.75em;
+	font-weight: bold;
+}
+
+ul.search-results {
+	margin-left: 30px;
+	padding: 10px;
+}
+ul.search-results li { padding: 5px; }
+
+div.PaginationResults {
+	text-align: right;
+	padding: 5px;
+}

@@ -1,0 +1,8 @@
+.sub-category {
+	float: left;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+/* Surcharge de la classe options */
+.options { margin-left: 20px; }

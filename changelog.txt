@@ -1,0 +1,65 @@
+#################################################################################
+#                           PHPBoost 4.2 Changelog                              #
+#################################################################################
+
+===================================== Noyau ======================================
+
+[*] Suppression de l'ancienne classe SQL
+[*] Suppression de l'ancien système de Tpl
+[*] Suppression de la classe UserDisplayResponse
+[*] Passage de la configuration de la maintenance en MVC (simplification de l'interface)
+- Refonte de la balise Title HTML (création d'un format standardisé dans PHPBoost :
+	- Titre de la page - Nom de la section ou du module - Nom du site
+	- Titre de la page - Nom du site (dans le cas ou c'est une page sans module)
+	- Nom du site - Description du site (pour la page d'accueil)
+[*] Suppression des mots clés du site qui ne sont plus utilisés pour le référencement
+[*] Suppression de la clé de déverrouillage de l'administration.
+
++ Nouveau système de session et de connexion :
+	[*] Suppression du champ Pseudo, remplacé par Nom d'affichage
+	[*] Connexion interne avec l'adresse email ou un login que l'on peut choisir
+	+ Connexion avec un compte Facebook (et d'autre) paramètrable dans l'administration
+	+ Possibilité de gérer ses types de connexion dans le profil
+
+
+=================================== Modules =====================================
+
+[b]FAQ[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
+[*] [color=red]Nouveauté :[/color] Ajout des contributions
+[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
+[*] [color=red]Nouveauté :[/color] Refonte graphique
+[*] [color=red]Nouveauté :[/color] Ajout du module dans le plan du site
+[*] [color=red]Nouveauté :[/color] Possibilité de réorganiser les questions dans les catégories en drag & drop pour les utilisateurs ayant le droit de modération
+[*] Ajout des microdonnées pour améliorer le référencement
+
+[b]Liens Web[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
+[*] [color=red]Nouveauté :[/color] Ajout des contributions
+[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
+[*] [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
+[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
+[*] [color=red]Nouveauté :[/color] Refonte graphique
+[*] [color=red]Nouveauté :[/color] Ajout du module dans le plan du site
+[*] [color=red]Nouveauté :[/color] Ajout des flux RSS
+[*] [color=red]Nouveauté :[/color] Ajout de la recherche
+[*] [color=red]Nouveauté :[/color] Possibilité de signaler les liens morts
+[*] [color=red]Nouveauté :[/color] Possibilité de définir des sites partenaires
+[*] [color=red]Nouveauté :[/color] Menu pour afficher la liste des partenaires (possibilité de les classer par note, nombre de visites, nombre de commentaires depuis la configuration)
+[*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires et la notation globalement
+[*] [color=red]Nouveauté :[/color] Possibilité de choisir la date de parution des liens
+[*] Ajout des microdonnées pour améliorer le référencement
+
+[b]Téléchargements[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
+[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
+[*] [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
+[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
+[*] [color=red]Nouveauté :[/color] Refonte graphique
+[*] [color=red]Nouveauté :[/color] Calcul automatique de la taille des fichiers
+[*] [color=red]Nouveauté :[/color] Menu pour afficher la liste des fichiers les plus téléchargés (possibilité de les classer par note, nombre de téléchargements, date d'ajout depuis la configuration)
+[*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires, la notation et l'affichage de l'auteur globalement
+[*] Ajout des microdonnées pour améliorer le référencement

@@ -1,0 +1,2 @@
+/* Surcharge de la classe notes pour passer à la ligne et ne pas deformer les tableaux */
+.notes{ white-space: nowrap; }
