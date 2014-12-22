@@ -43,9 +43,6 @@ $lang['notice.no_bug_in_progress'] = 'No bug being corrected in this version';
 $lang['notice.no_bug_matching_filter'] = 'No bug matching the selected filter';
 $lang['notice.no_bug_matching_filters'] = 'No bug matching the selected filters';
 $lang['notice.no_version_roadmap'] = 'Please add at least one version in the configuration to display the roadmap.';
-$lang['notice.no_version'] = 'No version';
-$lang['notice.no_type'] = 'No type';
-$lang['notice.no_category'] = 'No category';
 $lang['notice.no_history'] = 'This bug has no history';
 $lang['notice.contents_update'] = 'Contents update';
 $lang['notice.new_comment'] = 'New comment';
@@ -58,11 +55,6 @@ $lang['actions'] = 'Actions';
 $lang['actions.add'] = 'New bug';
 $lang['actions.history'] = 'History';
 $lang['actions.change_status'] = 'Change bug status';
-$lang['actions.confirm.del_version'] = 'Delete this version?';
-$lang['actions.confirm.del_type'] = 'Delete this type?';
-$lang['actions.confirm.del_category'] = 'Delete this category?';
-$lang['actions.confirm.del_priority'] = 'Delete this priority?';
-$lang['actions.confirm.del_severity'] = 'Delete this severity?';
 $lang['actions.confirm.del_default_value'] = 'Delete this default value?';
 $lang['actions.confirm.del_filter'] = 'Delete this filter?';
 
@@ -85,8 +77,6 @@ $lang['titles.types'] = 'Types';
 $lang['titles.categories'] = 'Categories';
 $lang['titles.priorities'] = 'Priorities';
 $lang['titles.severities'] = 'Severities';
-$lang['titles.admin.config'] = 'Configuration';
-$lang['titles.admin.authorizations'] = 'Authorizations';
 $lang['titles.admin.authorizations.manage'] = 'Manage authorizations';
 $lang['titles.admin.module_config'] = 'Bugtracker module configuration';
 $lang['titles.admin.module_authorizations'] = 'Bugtracker module authorizations configuration';
@@ -102,8 +92,6 @@ $lang['titles.version_informations'] = 'Version Informations';
 
 //Labels
 $lang['labels.fields.id'] = 'ID';
-$lang['labels.fields.title'] = 'Title';
-$lang['labels.fields.contents'] = 'Description';
 $lang['labels.fields.submit_date'] = 'Detected on';
 $lang['labels.fields.fix_date'] = 'Fixed on';
 $lang['labels.fields.status'] = 'Status';
@@ -218,13 +206,7 @@ $lang['pm.in_progress.contents'] = ':author has put the bug #:id in progress.';
 $lang['pm.delete.title'] = '[Bugtracker] The bug #:id has been deleted';
 $lang['pm.delete.contents'] = ':author delete the bug #:id.';
 
-//Search
-$lang['search.where'] = 'Where?';
-$lang['search.where.title'] = 'Title';
-$lang['search.where.contents'] = 'Content';
-
 //Configuration
-$lang['config.items_per_page'] = 'Bugs number displayed per page'; 
 $lang['config.rejected_bug_color_label'] = '<b>Rejected</b> bug line color';
 $lang['config.fixed_bug_color_label'] = '<b>Fixed</b> bug line color';
 $lang['config.enable_roadmap'] = 'Enable roadmap';

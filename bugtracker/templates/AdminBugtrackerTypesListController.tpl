@@ -79,7 +79,7 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 	<tbody id="types_list">
 		<tr id="no_type"# IF C_TYPES # style="display:none;"# ENDIF #>
 			<td colspan="3">
-				{@notice.no_type}
+				${LangLoader::get_message('no_item_now', 'common')}
 			</td>
 		</tr>
 		# START types #
@@ -91,7 +91,7 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 				<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}" />
 			</td>
 			<td>
-				<a href="{types.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_type}"></a>
+				<a href="{types.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</td>
 		</tr>
 		# END types #

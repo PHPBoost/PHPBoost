@@ -43,9 +43,6 @@ $lang['notice.no_bug_in_progress'] = 'Aucun bug n\'est en cours de correction da
 $lang['notice.no_bug_matching_filter'] = 'Aucun bug ne correspond au filtre sélectionné';
 $lang['notice.no_bug_matching_filters'] = 'Aucun bug ne correspond aux filtres sélectionnés';
 $lang['notice.no_version_roadmap'] = 'Veuillez ajouter au moins une version dans la configuration pour afficher la feuille de route.';
-$lang['notice.no_version'] = 'Aucune version existante';
-$lang['notice.no_type'] = 'Aucun type existant';
-$lang['notice.no_category'] = 'Aucune catégorie existante';
 $lang['notice.no_history'] = 'Ce bug n\'a aucun historique';
 $lang['notice.contents_update'] = 'Mise à jour du contenu';
 $lang['notice.new_comment'] = 'Nouveau commentaire';
@@ -58,11 +55,6 @@ $lang['actions'] = 'Actions';
 $lang['actions.add'] = 'Déclarer un bug';
 $lang['actions.history'] = 'Historique';
 $lang['actions.change_status'] = 'Changer l\'état du bug';
-$lang['actions.confirm.del_version'] = 'Etes-vous sûr de vouloir supprimer cette version ?';
-$lang['actions.confirm.del_type'] = 'Etes-vous sûr de vouloir supprimer ce type ?';
-$lang['actions.confirm.del_category'] = 'Etes-vous sûr de vouloir supprimer cette catégorie ?';
-$lang['actions.confirm.del_priority'] = 'Etes-vous sûr de vouloir supprimer cette priorité ?';
-$lang['actions.confirm.del_severity'] = 'Etes-vous sûr de vouloir supprimer ce niveau ?';
 $lang['actions.confirm.del_default_value'] = 'Etes-vous sûr de vouloir la valeur par défaut ?';
 $lang['actions.confirm.del_filter'] = 'Etes-vous sûr de vouloir supprimer ce filtre ?';
 
@@ -85,8 +77,6 @@ $lang['titles.types'] = 'Types';
 $lang['titles.categories'] = 'Catégories';
 $lang['titles.priorities'] = 'Priorités';
 $lang['titles.severities'] = 'Niveaux';
-$lang['titles.admin.config'] = 'Configuration';
-$lang['titles.admin.authorizations'] = 'Autorisations';
 $lang['titles.admin.authorizations.manage'] = 'Gérer les autorisations';
 $lang['titles.admin.module_config'] = 'Configuration du module bugtracker';
 $lang['titles.admin.module_authorizations'] = 'Configuration des autorisations du module bugtracker';
@@ -102,8 +92,6 @@ $lang['titles.version_informations'] = 'Informations sur la version';
 
 //Libellés
 $lang['labels.fields.id'] = 'ID';
-$lang['labels.fields.title'] = 'Titre';
-$lang['labels.fields.contents'] = 'Description';
 $lang['labels.fields.submit_date'] = 'Détecté le';
 $lang['labels.fields.fix_date'] = 'Corrigé le';
 $lang['labels.fields.status'] = 'Etat';
@@ -218,13 +206,7 @@ $lang['pm.in_progress.contents'] = ':author a mis le bug #:id en cours de correc
 $lang['pm.delete.title'] = '[Rapport de bugs] Le bug #:id a été supprimé';
 $lang['pm.delete.contents'] = ':author a supprimé le bug #:id.';
 
-//Recherche
-$lang['search.where'] = 'Où ?';
-$lang['search.where.title'] = 'Titre';
-$lang['search.where.contents'] = 'Description';
-
 //Configuration
-$lang['config.items_per_page'] = 'Nombre de bugs affichés par page'; 
 $lang['config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un bug <b>Rejeté</b>';
 $lang['config.fixed_bug_color_label'] = 'Couleur de la ligne d\'un bug <b>Fermé</b>';
 $lang['config.enable_roadmap'] = 'Activer la feuille de route';

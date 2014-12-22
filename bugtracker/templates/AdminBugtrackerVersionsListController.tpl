@@ -118,7 +118,7 @@ function display_default_version_radio(version_id)
 	<tbody id="versions_list">
 		<tr id="no_version"# IF C_VERSIONS # style="display:none;"# ENDIF #>
 			<td colspan="5">
-				{@notice.no_version}
+				${LangLoader::get_message('no_item_now', 'common')}
 			</td>
 		</tr>
 		# START versions #
@@ -141,7 +141,7 @@ function display_default_version_radio(version_id)
 				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');"# IF versions.C_DETECTED_IN # checked="checked"# ENDIF # />
 			</td> 
 			<td>
-				<a href="{versions.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="{@actions.confirm.del_version}"></a>
+				<a href="{versions.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</td>
 		</tr>
 		# END versions #
