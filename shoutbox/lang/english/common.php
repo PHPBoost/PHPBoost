@@ -39,13 +39,18 @@ $lang['shoutbox.edit'] = 'Message edition';
 
 //Config
 $lang['config.items_number_per_page'] = 'Items number per page in the archives';
-$lang['config.refresh_delay'] = 'Delay between discussion automatic refresh';
-$lang['config.refresh_delay.explain'] = 'In minutes. Set 0 to disable.';
-$lang['config.date_displayed'] = 'Display date';
+$lang['config.max_messages_number_enabled'] = 'Limit messages number in the archives';
 $lang['config.max_messages_number'] = 'Maximum number of message to keep';
-$lang['config.max_messages_number.explain'] = 'Deleted every day, set to -1 to disable';
-$lang['config.max_links_number_per_message'] = 'Max links number in a essage';
-$lang['config.max_links_number_per_message.explain'] = 'Set to -1 for unlimited';
+$lang['config.max_links_number_per_message_enabled'] = 'Limit links number in messages';
+$lang['config.max_links_number_per_message'] = 'Max links number in a message';
+$lang['config.shoutbox_menu'] = 'Shoutbox menu';
+$lang['config.automatic_refresh_enabled'] = 'Enable the automatic refresh of the discussion';
+$lang['config.refresh_delay'] = 'Refresh delay';
+$lang['config.refresh_delay.explain'] = 'In minutes';
+$lang['config.date_displayed'] = 'Display date';
+$lang['config.shout_max_messages_number_enabled'] = 'Limit displayed messages number';
+$lang['config.shout_max_messages_number'] = 'Maximum number of message to display';
+$lang['config.shout_bbcode_enabled'] = 'Display a small BBcode bar before the send button';
 $lang['config.validation_onkeypress_enter_enabled'] = 'Send message when pressing enter';
 
 $lang['error.message.delete'] = 'Error occurred while message deleting';

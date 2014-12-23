@@ -30,7 +30,7 @@ function shoutbox_add_message()
 							alert("${LangLoader::get_message('e_incomplete', 'errors')}");
 						break;
 						case -4: 
-							alert("${LangLoader::get_message('e_unauthorized', 'errors')}");
+							alert("${LangLoader::get_message('error.auth', 'status-messages-common')}");
 						break;
 					}
 				}
@@ -81,10 +81,10 @@ function shoutbox_refresh_messages_box() {
 	);
 }
 
-if( {SHOUT_REFRESH_DELAY} > 0 )
-	setInterval(shoutbox_refresh_messages_box, {SHOUT_REFRESH_DELAY});
+# IF C_AUTOMATIC_REFRESH_ENABLED #setInterval(shoutbox_refresh_messages_box, {SHOUT_REFRESH_DELAY});# ENDIF #
 -->
 </script>
+<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
 
 <div class="module-mini-container"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
 	<div class="module-mini-top">
@@ -107,8 +107,28 @@ if( {SHOUT_REFRESH_DELAY} > 0 )
 			<input size="16" maxlength="25" type="hidden" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}">
 			# ENDIF #
 			<br />
-			# IF C_VERTICAL #<label for="shout_contents"><span class="small left">${LangLoader::get_message('message', 'main')}</span></label># ENDIF #
+			# IF C_VERTICAL #<label for="shout_contents"><span class="small">${LangLoader::get_message('message', 'main')}</span></label># ENDIF #
 			<textarea id="shout_contents" name="shout_contents"# IF C_VALIDATE_ONKEYPRESS_ENTER # onkeypress="if(event.keyCode==13){shoutbox_add_message();}"# ENDIF # rows="# IF C_VERTICAL #4# ELSE #2# ENDIF #" cols="16"></textarea>
+			# IF C_DISPLAY_SHOUT_BBCODE #
+			<div class="shout-spacing">
+				<a href="javascript:bb_display_block('1', 'shout_contents');" onmouseover="bb_hide_block('1', 'shout_contents', 1);" onmouseout="bb_hide_block('1', 'shout_contents', 0);" class="fa bbcode-icon-smileys" title="${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}"></a>
+				<div class="bbcode-block-container" style="display:none;" id="bb-block1shout_contents">
+					<div class="bbcode-block" style="width:140px;" onmouseover="bb_hide_block('1', 'shout_contents', 1);" onmouseout="bb_hide_block('1', 'shout_contents', 0);">
+						# START smileys #
+							<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', 'shout_contents');return false;" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" alt="{smileys.CODE}"></a># IF smileys.C_END_LINE #<br /># ENDIF #
+						# END smileys #
+						# IF C_BBCODE_SMILEY_MORE #
+							<br /><br />
+							<a href="" onclick="window.open('{PATH_TO_ROOT}/BBCode/formatting/smileys.php?field=shout_contents', '${LangLoader::get_message('smiley', 'main')}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;" title="${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}" class="small">${LangLoader::get_message('all_smiley', 'main')}</a>
+						# ENDIF #
+					</div>
+				</div>
+				<a href="" class="fa bbcode-icon-bold# IF C_BOLD_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_BOLD_DISABLED #insertbbcode('[b]', '[/b]', 'shout_contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_bold', 'common', 'BBCode')}"></a>
+				<a href="" class="fa bbcode-icon-italic# IF C_ITALIC_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_ITALIC_DISABLED #insertbbcode('[i]', '[/i]', 'shout_contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_italic', 'common', 'BBCode')}"></a>
+				<a href="" class="fa bbcode-icon-underline# IF C_UNDERLINE_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_UNDERLINE_DISABLED #insertbbcode('[u]', '[/u]', 'shout_contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_underline', 'common', 'BBCode')}"></a>
+				<a href="" class="fa bbcode-icon-strike# IF C_STRIKE_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_STRIKE_DISABLED #insertbbcode('[s]', '[/s]', 'shout_contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_strike', 'common', 'BBCode')}"></a>
+			</div>
+			# ENDIF #
 			<p class="shout-spacing">
 				<button onclick="shoutbox_add_message();" type="button">${LangLoader::get_message('submit', 'main')}</button>
 				<a href="" onclick="shoutbox_refresh_messages_box();return false;" class="fa fa-refresh" id="shoutbox-refresh" title="${LangLoader::get_message('refresh', 'main')}"></a>

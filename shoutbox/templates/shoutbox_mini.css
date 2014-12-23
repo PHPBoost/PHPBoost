@@ -20,3 +20,9 @@ div#shoutbox-messages-container,
 	margin: 0;
 	margin-bottom: 10px;
 }
+
+.shout-bbcode-icon-disabled {
+	opacity: 0.3;
+	filter: alpha(opacity=30);
+	cursor: default;
+}

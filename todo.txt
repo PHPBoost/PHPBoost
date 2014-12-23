@@ -1,4 +1,4 @@
-###################################### PHPBoost 4.1 ##################################
+﻿###################################### PHPBoost 4.1 ##################################
 
 ## AUTRES ##
 
@@ -54,9 +54,6 @@
 [b]Graphique[/b]
 - Support mobile et version tablette
 - Refonte de la gestion des liens : suppression des types de menu de liens et création d'un menu de lien qui s'adapte automatiquement à l'emplacement
-
-[b]Discussion[/b]
-- refonte du module en MVC
 
 ###################################### PHPBoost ##################################
 

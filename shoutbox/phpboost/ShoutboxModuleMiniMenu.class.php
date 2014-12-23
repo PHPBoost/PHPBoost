@@ -49,11 +49,45 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			$tpl->add_lang($lang);
 			
 			$config = ShoutboxConfig::load();
+			$forbidden_tags = array_flip($config->get_forbidden_formatting_tags());
+			
+			if ($config->is_shout_bbcode_enabled())
+			{
+				$smileys_cache = SmileysCache::load();
+				$max_smileys_number = 30; //Nombre de smileys maximim avant affichage d'un lien vers la popup.
+				$smileys_per_line = 5; //Smileys par ligne.
+				
+				$smileys_displayed_number = 0;
+				foreach ($smileys_cache->get_smileys() as $code_smile => $infos)
+				{
+					$smileys_displayed_number++;
+					
+					$tpl->assign_block_vars('smileys', array(
+						'C_END_LINE' => $smileys_displayed_number % $smileys_per_line == 0,
+						'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
+						'CODE' => addslashes($code_smile)
+					));
+					
+					if ($smileys_displayed_number == $max_smileys_number)
+					{
+						$tpl->put('C_BBCODE_SMILEY_MORE', true); //Lien vers tous les smiley!
+						break;
+					}
+				}
+				
+				
+			}
 			
 			$tpl->put_all(array(
 				'C_MEMBER' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 				'C_DISPLAY_FORM' => ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly(),
 				'C_VALIDATE_ONKEYPRESS_ENTER' => $config->is_validation_onkeypress_enter_enabled(),
+				'C_DISPLAY_SHOUT_BBCODE' => ModulesManager::is_module_installed('BBCode') && $config->is_shout_bbcode_enabled(),
+				'C_BOLD_DISABLED' => isset($forbidden_tags['b']),
+				'C_ITALIC_DISABLED' => isset($forbidden_tags['i']),
+				'C_UNDERLINE_DISABLED' => isset($forbidden_tags['u']),
+				'C_STRIKE_DISABLED' => isset($forbidden_tags['s']),
+				'C_AUTOMATIC_REFRESH_ENABLED' => $config->is_automatic_refresh_enabled(),
 				'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_display_name(),
 				'SHOUT_REFRESH_DELAY' => $config->get_refresh_delay(),
 				'L_ALERT_LINK_FLOOD' => sprintf(LangLoader::get_message('e_l_flood', 'errors'), $config->get_max_links_number_per_message()),

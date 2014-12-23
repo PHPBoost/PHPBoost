@@ -58,6 +58,11 @@ class AdminShoutboxConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->form->get_field_by_id('max_messages_number')->set_hidden(!$this->config->is_max_messages_number_enabled());
+			$this->form->get_field_by_id('max_links_number_per_message')->set_hidden(!$this->config->is_max_links_number_per_message_enabled());
+			$this->form->get_field_by_id('forbidden_formatting_tags')->set_selected_options($this->config->get_forbidden_formatting_tags());
+			$this->form->get_field_by_id('refresh_delay')->set_hidden(!$this->config->is_automatic_refresh_enabled());
+			$this->form->get_field_by_id('shout_max_messages_number')->set_hidden(!$this->config->is_shout_max_messages_number_enabled());
 			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('message.success.config', 'status-messages-common'), MessageHelper::SUCCESS, 5));
 		}
 		
@@ -84,15 +89,33 @@ class AdminShoutboxConfigController extends AdminModuleController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('refresh_delay', $this->lang['config.refresh_delay'], $this->config->get_refresh_delay()/60000,
-			array('maxlength' => 3, 'size' => 3, 'description' => $this->lang['config.refresh_delay.explain'], 'required' => true),
+		$fieldset->add_field(new FormFieldCheckbox('max_messages_number_enabled', $this->lang['config.max_messages_number_enabled'], $this->config->is_max_messages_number_enabled(),
+			array('events' => array('click' => '
+				if (HTMLForms.getField("max_messages_number_enabled").getValue()) {
+					HTMLForms.getField("max_messages_number").enable();
+				} else {
+					HTMLForms.getField("max_messages_number").disable();
+				}')
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldTextEditor('max_messages_number', $this->lang['config.max_messages_number'], $this->config->get_max_messages_number(),
+			array('maxlength' => 3, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_max_messages_number_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('date_displayed', $this->lang['config.date_displayed'], $this->config->is_date_displayed()));
+		$fieldset->add_field(new FormFieldCheckbox('max_links_number_per_message_enabled', $this->lang['config.max_links_number_per_message_enabled'], $this->config->is_max_links_number_per_message_enabled(),
+			array('events' => array('click' => '
+				if (HTMLForms.getField("max_links_number_per_message_enabled").getValue()) {
+					HTMLForms.getField("max_links_number_per_message").enable();
+				} else {
+					HTMLForms.getField("max_links_number_per_message").disable();
+				}')
+			)
+		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('max_messages_number', $this->lang['config.max_messages_number'], $this->config->get_max_messages_number(),
-			array('maxlength' => 3, 'size' => 3, 'description' => $this->lang['config.max_messages_number.explain'], 'required' => true),
+		$fieldset->add_field(new FormFieldTextEditor('max_links_number_per_message', $this->lang['config.max_links_number_per_message'], $this->config->get_max_links_number_per_message(),
+			array('maxlength' => 3, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
@@ -100,10 +123,45 @@ class AdminShoutboxConfigController extends AdminModuleController
 			$this->generate_forbidden_formatting_tags_option(), array('size' => 10)
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('max_links_number_per_message', $this->lang['config.max_links_number_per_message'], $this->config->get_max_links_number_per_message(),
-			array('maxlength' => 3, 'size' => 3, 'description' => $this->lang['config.max_links_number_per_message.explain'], 'required' => true),
+		$fieldset = new FormFieldsetHTML('configuration', $this->lang['config.shoutbox_menu']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldCheckbox('automatic_refresh_enabled', $this->lang['config.automatic_refresh_enabled'], $this->config->is_automatic_refresh_enabled(),
+			array('events' => array('click' => '
+				if (HTMLForms.getField("automatic_refresh_enabled").getValue()) {
+					HTMLForms.getField("refresh_delay").enable();
+				} else {
+					HTMLForms.getField("refresh_delay").disable();
+				}')
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldTextEditor('refresh_delay', $this->lang['config.refresh_delay'], $this->config->get_refresh_delay()/60000,
+			array('maxlength' => 4, 'size' => 3, 'description' => $this->lang['config.refresh_delay.explain'], 'required' => true, 'hidden' => !$this->config->is_automatic_refresh_enabled()),
+			array(new FormFieldConstraintRegex('`^[0-9]+$|^[0-9]+\.[0-9]+?$`i'))
+		));
+		
+		$fieldset->add_field(new FormFieldCheckbox('date_displayed', $this->lang['config.date_displayed'], $this->config->is_date_displayed()));
+		
+		$fieldset->add_field(new FormFieldCheckbox('shout_max_messages_number_enabled', $this->lang['config.shout_max_messages_number_enabled'], $this->config->is_shout_max_messages_number_enabled(),
+			array('events' => array('click' => '
+				if (HTMLForms.getField("shout_max_messages_number_enabled").getValue()) {
+					HTMLForms.getField("shout_max_messages_number").enable();
+				} else {
+					HTMLForms.getField("shout_max_messages_number").disable();
+				}')
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldTextEditor('shout_max_messages_number', $this->lang['config.shout_max_messages_number'], $this->config->get_shout_max_messages_number(),
+			array('maxlength' => 3, 'size' => 3, 'required' => true, 'hidden' => !$this->config->is_shout_max_messages_number_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
+		
+		if (ModulesManager::is_module_installed('BBCode'))
+		{
+			$fieldset->add_field(new FormFieldCheckbox('shout_bbcode_enabled', $this->lang['config.shout_bbcode_enabled'], $this->config->is_shout_bbcode_enabled()));
+		}
 		
 		$fieldset->add_field(new FormFieldCheckbox('validation_onkeypress_enter_enabled', $this->lang['config.validation_onkeypress_enter_enabled'], $this->config->is_validation_onkeypress_enter_enabled()));
 		
@@ -132,14 +190,24 @@ class AdminShoutboxConfigController extends AdminModuleController
 	private function save()
 	{
 		$this->config->set_items_number_per_page($this->form->get_value('items_number_per_page'));
-		$this->config->set_refresh_delay($this->form->get_value('refresh_delay') * 60000);
 		
-		if ($this->form->get_value('date_displayed'))
-			$this->config->display_date();
+		if ($this->form->get_value('max_messages_number_enabled'))
+		{
+			$this->config->enable_max_messages_number();
+			$this->config->set_max_messages_number($this->form->get_value('max_messages_number'));
+		}
 		else
-			$this->config->hide_date();
+			$this->config->disable_max_messages_number();
 		
 		$this->config->set_max_messages_number($this->form->get_value('max_messages_number'));
+		
+		if ($this->form->get_value('max_links_number_per_message_enabled'))
+		{
+			$this->config->enable_max_links_number_per_message();
+			$this->config->set_max_links_number_per_message($this->form->get_value('max_links_number_per_message'));
+		}
+		else
+			$this->config->disable_max_links_number_per_message();
 		
 		$forbidden_formatting_tags = array();
 		foreach ($this->form->get_value('forbidden_formatting_tags') as $field => $option)
@@ -149,7 +217,34 @@ class AdminShoutboxConfigController extends AdminModuleController
 		
 	 	$this->config->set_forbidden_formatting_tags($forbidden_formatting_tags);
 		
-		$this->config->set_max_links_number_per_message($this->form->get_value('max_links_number_per_message'));
+		if ($this->form->get_value('automatic_refresh_enabled'))
+		{
+			$this->config->enable_automatic_refresh();
+			$this->config->set_refresh_delay($this->form->get_value('refresh_delay') * 60000);
+		}
+		else
+			$this->config->disable_automatic_refresh();
+		
+		if ($this->form->get_value('date_displayed'))
+			$this->config->display_date();
+		else
+			$this->config->hide_date();
+		
+		if ($this->form->get_value('shout_max_messages_number_enabled'))
+		{
+			$this->config->enable_shout_max_messages_number();
+			$this->config->set_shout_max_messages_number($this->form->get_value('shout_max_messages_number'));
+		}
+		else
+			$this->config->disable_shout_max_messages_number();
+		
+		if (ModulesManager::is_module_installed('BBCode'))
+		{
+			if ($this->form->get_value('shout_bbcode_enabled'))
+				$this->config->enable_shout_bbcode();
+			else
+				$this->config->disable_shout_bbcode();
+		}
 		
 		if ($this->form->get_value('validation_onkeypress_enter_enabled'))
 			$this->config->enable_validation_onkeypress_enter();

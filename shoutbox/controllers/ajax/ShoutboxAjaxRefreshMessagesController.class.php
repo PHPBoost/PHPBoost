@@ -49,8 +49,8 @@ class ShoutboxAjaxRefreshMessagesController extends AbstractController
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM ' . ShoutboxSetup::$shoutbox_table . ' s
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' m ON m.user_id = s.user_id
-		GROUP BY timestamp DESC
-		' . ($config->get_max_messages_number() > 0 ? 'LIMIT ' . $config->get_max_messages_number() : ''));
+		ORDER BY s.timestamp DESC
+		' . ($config->is_shout_max_messages_number_enabled() ? 'LIMIT ' . $config->get_shout_max_messages_number() : ''));
 		
 		while ($row = $result->fetch())
 		{
