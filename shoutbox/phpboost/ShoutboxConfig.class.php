@@ -241,7 +241,7 @@ class ShoutboxConfig extends AbstractConfigData
 			self::REFRESH_DELAY => 60000,
 			self::DATE_DISPLAYED => false,
 			self::SHOUT_MAX_MESSAGES_NUMBER_ENABLED => true,
-			self::SHOUT_MAX_MESSAGES_NUMBER => 100,
+			self::SHOUT_MAX_MESSAGES_NUMBER => 50,
 			self::SHOUT_BBCODE_ENABLED => true,
 			self::VALIDATION_ONKEYPRESS_ENTER_ENABLED => false,
 			self::AUTHORIZATIONS => array ('r-1' => 1, 'r0' => 3, 'r1' => 7)
