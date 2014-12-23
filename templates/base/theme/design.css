@@ -22,6 +22,12 @@ body {
 	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
 }
 
+@media ( max-width: 768px ) {
+
+	body {
+		font-size: 1.4em;
+	}
+}
 
 /* -- En-tete de page - Header --
 --------------------------------------*/
