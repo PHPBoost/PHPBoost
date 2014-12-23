@@ -39,13 +39,18 @@ $lang['shoutbox.edit'] = 'Edition d\'un message';
 
 //Config
 $lang['config.items_number_per_page'] = 'Nombre d\'éléments affichés par page dans les archives';
-$lang['config.refresh_delay'] = 'Délai de rafraichissement automatique de la discussion';
-$lang['config.refresh_delay.explain'] = 'En minutes. Mettre 0 pour désactiver.';
-$lang['config.date_displayed'] = 'Afficher la date';
+$lang['config.max_messages_number_enabled'] = 'Limiter le nombre de messages dans les archives';
 $lang['config.max_messages_number'] = 'Nombre de messages maximum à conserver';
-$lang['config.max_messages_number.explain'] = 'Supprimés tous les jours, mettre -1 pour désactiver';
-$lang['config.max_links_number_per_message'] = 'Nombre de liens maximum dans le message';
-$lang['config.max_links_number_per_message.explain'] = 'Mettre -1 pour illimité';
+$lang['config.max_links_number_per_message_enabled'] = 'Limiter le nombre de liens dans les messages';
+$lang['config.max_links_number_per_message'] = 'Nombre de liens maximum dans un message';
+$lang['config.shoutbox_menu'] = 'Menu discussion';
+$lang['config.automatic_refresh_enabled'] = 'Activer le rafraichissement automatique de la discussion';
+$lang['config.refresh_delay'] = 'Délai de rafraichissement';
+$lang['config.refresh_delay.explain'] = 'En minutes';
+$lang['config.date_displayed'] = 'Afficher la date';
+$lang['config.shout_max_messages_number_enabled'] = 'Limiter le nombre de messages affichés';
+$lang['config.shout_max_messages_number'] = 'Nombre de messages maximum à afficher';
+$lang['config.shout_bbcode_enabled'] = 'Afficher une mini barre BBcode avant le bouton Envoyer';
 $lang['config.validation_onkeypress_enter_enabled'] = 'Envoyer le message en appuyant sur la touche Entrée';
 
 $lang['error.message.delete'] = 'Erreur lors de la suppression du message';

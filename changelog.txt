@@ -24,6 +24,14 @@
 
 =================================== Modules =====================================
 
+[b]Discussion[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Refonte de la partie mini module en ajax
+[*] [color=red]Nouveauté :[/color] Ajout d'une option pour afficher afficher ou non la date dans le mini module
+[*] [color=red]Nouveauté :[/color] Ajout d'une option pour envoyer un message lors de l'appui sur la touche entrée du mini module
+[*] [color=red]Nouveauté :[/color] Ajout d'une option pour afficher une mini barre BBCode (Smileys, gras, italique, souligné, barré) dans le mini module si le module BBCode est activé (activée par défaut)
+[*] [color=red]Nouveauté :[/color] Possibilité de mettre un délai de rafraîchissement de la discussion inférieur à 1 minute (exemple : 0.5 pour 30 secondes)
+
 [b]FAQ[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
 [*] [color=red]Nouveauté :[/color] Mise en place du nouveau système de catégories
