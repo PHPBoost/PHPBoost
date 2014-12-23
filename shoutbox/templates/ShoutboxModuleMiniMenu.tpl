@@ -84,7 +84,7 @@ function shoutbox_refresh_messages_box() {
 # IF C_AUTOMATIC_REFRESH_ENABLED #setInterval(shoutbox_refresh_messages_box, {SHOUT_REFRESH_DELAY});# ENDIF #
 -->
 </script>
-<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
+# IF C_DISPLAY_SHOUT_BBCODE #<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script># ENDIF #
 
 <div class="module-mini-container"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
 	<div class="module-mini-top">
