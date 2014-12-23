@@ -531,7 +531,6 @@ table tfoot nav.pagination a span.current-page {
 button,
 .button {
 	height: auto;
-	padding: 0.3em 1em;
 	color: #333333;
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
@@ -542,6 +541,7 @@ button,
 	border-radius: 4px;
 	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
 	word-wrap: no-warp;
+	padding: 0.3em 1em;
 }
 button:hover,
 .button-hover {
@@ -559,7 +559,6 @@ button:active,
 /* --- Petit bouton --- */
 button.small,
 .button-small {
-	font-size: 11px\0/;
 	font-size: 1.1rem;
 	padding: 0.2em 0.5em;
 }
@@ -610,15 +609,13 @@ button.submit:hover {
 }
 
 fieldset {
-	margin: 20px 0;
 	border: none;
 	background: none;
+	margin: 1.5em 0;
 }
 
 fieldset.fieldset-submit {
-	margin-top: 10px;
-	padding-bottom: 15px;
-	width: 99%;
+	width: 100%;
 	text-align: center;
 	background: none;
 	border: none;
@@ -656,11 +653,11 @@ option {
 
 legend {
 	display: block;
-	margin:0px 0px 15px 0px;
+	margin: 0px 0px 0.6em 0px;
 	width: 100%;
 	text-transform: none;
 	color: #474747;
-	font-size: 18px;
+	font-size: 1.5em;
 	border-bottom: 1px solid #DDDDDD;
 }
 
@@ -670,7 +667,7 @@ input[type=password],
 input[type=file],
 textarea,
 select {
-	padding: 4px 6px;
+	padding: 4px 18px 4px 6px;
 	color: #555555;
 	background-color: #FFFFFF;
 	border: 1px solid #CCCCCC;
@@ -697,25 +694,77 @@ select:focus {
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
-input.field-smaller { width: 29px; }
-input.field-small {  width: 77px; }
-input.field-large { width: 200px; }
-input.field-xlarge { width: 300px; }
+form input:focus:invalid,
+form textarea:focus:invalid {
+	border-color: rgba(196, 60, 43, 0.3);
+	box-shadow: 0 0 3px rgba(196, 60, 43, 0.1);
+	color: #C43C35;
+}
+
+form input:focus:valid,
+form textarea:focus:valid {
+	border-color: rgba(71, 137, 72, 0.3);
+	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
+	color: #478948;
+}
+
+input.field-smaller { width: 29px;  }
+input.field-small   { width: 77px;  }
+input.field-large   { width: 200px; }
+input.field-xlarge  { width: 300px; }
+
+/* Cache le generateur de mot de passe sur chrome */
+.cip-icon-key-small {
+	display: none !important;
+}
 
 /* --- Element du formulaire (englobe le label et l'input d'un champ) --- */
 .form-element,
 .form-element-textarea {
-	margin: 0px 15px 10px 15px;
+	margin: 0px 1em 1em 1em;
 }
 
 .fieldset-description {
-	margin: 0px 15px 10px 15px;
+	margin: 0px 1em 1.5em 1em;
+}
+
+/* CSS applique aux tablettes */
+@media ( max-width: 768px ) {
+	.form-element,
+	.form-element-textarea {
+		margin: 0px 0.6em 1em 0.6em;
+	}
+
+	.fieldset-description {
+		margin: 0px 0.6em 1.3em 0.6em;
+	}
+}
+
+/* CSS applique aux smartphones */
+@media ( max-width: 480px ) {
+	.form-element,
+	.form-element-textarea {
+		margin: 0px 0.6em 0.5em 0.6em;
+	}
+
+	.fieldset-description {
+		margin: 0px 0.6em 0.9em 0.6em;
+	}
 }
 
 .form-field {
 	display: inline-block;
-	width: 58%;
 	max-width: 600px;
+	position: relative;
+	width: 58%;
+}
+
+/* CSS applique aux tablettes */
+@media ( max-width: 768px ) {
+	.form-element .form-field {
+		display: block;
+		width: 100%;
+	}
 }
 
 /* --- Label pour les checkbox et radio --- */
@@ -730,14 +779,26 @@ input.field-xlarge { width: 300px; }
 	width: 40%;
 	text-align: left;
 	padding-right: 10px;
-	padding-top: 3px;
 	vertical-align: top;
 }
 
 .field-description {
-	font-size: 10px;
+	font-size: 0.8em;
 	display: block;
 	line-height: 12px;
+}
+
+/* CSS applique aux tablettes */
+@media ( max-width: 768px ) {
+
+	.form-element > label {
+		width: 100%;
+	}
+
+	span.field-description {
+		display: inline-block;
+		font-size: 0.7em;
+	}
 }
 
 input[disabled=disabled],
@@ -773,30 +834,44 @@ select[readonly=readonly]:focus {
 textarea {
 	overflow: auto;
 	display: block;
-	width: 94%;
 	margin: 5px auto;
 	resize: vertical;
 }
 
-.form-element-textarea-small {
-	width: 49%;
+/* CSS applique aux écrans PC */
+@media ( min-width: 769px ) {
+	.form-element-textarea-small {
+		width: 49%;
+	}
 }
 
 /* --- Verification des contraintes de formulaire --- */
 .constraint-status-error input,
-form .constraint-status-error textarea {
+.constraint-status-error textarea {
 	border-color: rgba(196, 60, 43, 0.3);
-	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
+	box-shadow: inset 0 0 3px rgba(196, 60, 43, 0.1);
 	color: #C43C35;
 }
 
 .constraint-status-error input:hover,
 .constraint-status-error input:focus,
 .constraint-status-error textarea:hover,
-form .constraint-status-error textarea:focus {
+.constraint-status-error textarea:focus {
 	border-color: rgba(196, 60, 43, 0.5);
 	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
 	color: #C43C35;
+}
+
+.constraint-status-right input:focus + i.picture-status-constraint:before,
+.constraint-status-error input:focus + i.picture-status-constraint:before {
+	content: "";
+}
+
+.constraint-status-right i.picture-status-constraint:before,
+.constraint-status-error i.picture-status-constraint:before {
+	opacity: 1;
+	font-size: 1.5rem;
+	margin: 0 0 0 -22px;
 }
 
 .constraint-status-right i.picture-status-constraint:before {
@@ -808,12 +883,50 @@ form .constraint-status-error textarea:focus {
 	color: #C43C35;
 }
 
-.text-status-constraint {
+span.text-status-constraint {
 	font-weight: bold;
+	position:absolute;
+	display: block;
+	background: #FEFEFE;
+	padding: 6px 5px;
+	color: #555555;
+	top: 30px;
+	left: 5px;
+	width: auto;
+	z-index: 5;
+	border-radius: 3px;
+	box-shadow: 1px 3px 6px rgba(0,0,0,0.3);
+	text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+	border: 1px solid #EAEAEA;
+	font-size: 0.8em;
 }
 
-.form-element-textarea.constraint-status-error i.picture-status-constraint {
-	margin-left: 5px;
+span.text-status-constraint::before {
+	content: " ";
+	position: absolute;
+	border-bottom: 9px solid rgba(230, 230, 230, 1);
+	border-left: 9px solid transparent;
+	border-right: 9px solid transparent;
+	left: 8px;
+	top: -9px;
+}
+
+span.text-status-constraint::after {
+	content: " ";
+	position: absolute;
+	border-bottom: 8px solid rgba(250, 250, 250, 1);
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	left: 9px;
+	top: -8px;
+}
+
+i.picture-field-required:before {
+	content: "\f069";
+	color: #C43C35;
+	opacity: 0.6;
+	font-size: 0.8rem;
+	margin: 0 0 0 -16px;
 }
 
 /* --- Auto-completion --- */
