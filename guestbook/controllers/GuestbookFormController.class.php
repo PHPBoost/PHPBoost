@@ -56,7 +56,7 @@ class GuestbookFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$id = $this->save();
-			AppContext::get_response()->redirect(GuestbookUrlBuilder::home($request->get_getint('page', 1), $id));
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', GuestbookUrlBuilder::home(1, $id)));
 		}
 		
 		$this->view->put('FORM', $this->form->display());
@@ -73,7 +73,7 @@ class GuestbookFormController extends ModuleController
 		if ($object->submit_button->has_been_submited() && $object->form->validate())
 		{
 			$id = $object->save();
-			AppContext::get_response()->redirect(GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1), $id));
+			AppContext::get_response()->redirect(AppContext::get_request()->get_getvalue('redirect', GuestbookUrlBuilder::home(1, $id)));
 		}
 		$object->view->put('FORM', GuestbookAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly() ? $object->form->display() : '');
 		return $object->view;
@@ -198,6 +198,7 @@ class GuestbookFormController extends ModuleController
 	{
 		$message = $this->get_message();
 		$page = AppContext::get_request()->get_getint('page', 1);
+		$redirect = AppContext::get_request()->get_getvalue('redirect', GuestbookUrlBuilder::home());
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -208,14 +209,14 @@ class GuestbookFormController extends ModuleController
 		if ($message->get_id() === null)
 		{
 			$graphical_environment->set_page_title($this->lang['guestbook.add'], $this->lang['module_title']);
-			$breadcrumb->add($this->lang['guestbook.add'], GuestbookUrlBuilder::add($page));
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::add($page));
+			$breadcrumb->add($this->lang['guestbook.add'], GuestbookUrlBuilder::add());
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::add());
 		}
 		else
 		{
 			$graphical_environment->set_page_title($this->lang['guestbook.edit'], $this->lang['module_title']);
-			$breadcrumb->add($this->lang['guestbook.edit'], GuestbookUrlBuilder::edit($message->get_id(), $page));
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::edit($message->get_id(), $page));
+			$breadcrumb->add($this->lang['guestbook.edit'], GuestbookUrlBuilder::edit($message->get_id(), $redirect));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(GuestbookUrlBuilder::edit($message->get_id(), $redirect));
 		}
 		
 		return $response;
