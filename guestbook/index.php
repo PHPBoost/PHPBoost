@@ -32,9 +32,9 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminGuestbookConfigController', '`^/admin(?:/config)?/?$`'),
 	
-	new UrlControllerMapper('GuestbookFormController', '`^/add(?:/[0-9]+)??$`', array('page')),
-	new UrlControllerMapper('GuestbookFormController', '`^/([0-9]+)/edit(?:/([0-9]+))?/?$`', array('id', 'page')),
-	new UrlControllerMapper('GuestbookDeleteController', '`^/([0-9]+)/delete(?:/([0-9]+))?/?$`', array('id', 'page')),
+	new UrlControllerMapper('GuestbookFormController', '`^/add?/?$`'),
+	new UrlControllerMapper('GuestbookFormController', '`^/([0-9]+)/edit?/?$`', array('id')),
+	new UrlControllerMapper('GuestbookDeleteController', '`^/([0-9]+)/delete?/?$`', array('id')),
 	new UrlControllerMapper('GuestbookController', '`^(?:/([0-9]+))?/?$`', array('page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
