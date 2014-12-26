@@ -56,7 +56,7 @@
 					<a class="fa fa-angle-double-right" onclick="ChangeMonth(${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)});" title="{NEXT_MONTH_TITLE}"></a>
 				</div>
 				<div class="calendar-top-content">
-					<h5>{DATE}</h2>
+					<h2>{DATE}</h2>
 				</div>
 			</div>
 
