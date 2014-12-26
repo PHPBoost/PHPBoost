@@ -283,17 +283,17 @@ class News
 		return array_keys($this->get_keywords());
 	}
 	
-	public function is_authorized_add()
+	public function is_authorized_to_add()
 	{
 		return NewsAuthorizationsService::check_authorizations($this->id_cat)->write() || NewsAuthorizationsService::check_authorizations($this->id_cat)->contribution();
 	}
 	
-	public function is_authorized_edit()
+	public function is_authorized_to_edit()
 	{
 		return NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (NewsAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 	
-	public function is_authorized_delete()
+	public function is_authorized_to_delete()
 	{
 		return NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (NewsAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
@@ -380,8 +380,8 @@ class News
 		
 		return array(
 			'C_VISIBLE' => $this->is_visible(),
-			'C_EDIT' => $this->is_authorized_edit(),
-			'C_DELETE' => $this->is_authorized_delete(),
+			'C_EDIT' => $this->is_authorized_to_edit(),
+			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_AUTHOR_DISPLAYED' => NewsConfig::load()->get_author_displayed(), 
@@ -413,8 +413,8 @@ class News
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel(),
 			'U_CATEGORY' => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => NewsUrlBuilder::edit_news($this->id)->rel(),
-			'U_DELETE' => NewsUrlBuilder::delete_news($this->id)->rel(),
+			'U_EDIT' => NewsUrlBuilder::edit_news($this->id, NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->relative())->rel(),
+			'U_DELETE' => NewsUrlBuilder::delete_news($this->id, AppContext::get_request()->get_url_referrer())->rel(),
 			'U_PICTURE' => $this->get_picture()->rel(),
 			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
 		);

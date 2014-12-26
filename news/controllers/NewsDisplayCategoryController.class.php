@@ -66,7 +66,8 @@ class NewsDisplayCategoryController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$pagination = $this->get_pagination($condition, $parameters);
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = $this->get_pagination($condition, $parameters, $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*
 		FROM '. NewsSetup::$news_table .' news
@@ -98,16 +99,18 @@ class NewsDisplayCategoryController extends ModuleController
 			$news = new News();
 			$news->set_properties($row);
 			
-			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars());
+			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
+				'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id(), NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page)->relative())->rel(),
+				'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id(), NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page)->relative())->rel()
+			)));
 		}
 		$result->dispose();
 	}
 	
-	private function get_pagination($condition, $parameters)
+	private function get_pagination($condition, $parameters, $page)
 	{
 		$number_news = PersistenceContext::get_querier()->count(NewsSetup::$news_table, $condition, $parameters);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $number_news, (int)NewsConfig::load()->get_number_news_per_page());
 		$pagination->set_url(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), '%d'));
 		
