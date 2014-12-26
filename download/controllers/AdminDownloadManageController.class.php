@@ -78,7 +78,7 @@ class AdminDownloadManageController extends AdminModuleController
 		}
 		
 		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($page, $field, $mode);
+		$pagination = $this->get_pagination($field, $mode, $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT download.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM '. DownloadSetup::$download_table .' download
@@ -99,7 +99,7 @@ class AdminDownloadManageController extends AdminModuleController
 			$downloadfile = new DownloadFile();
 			$downloadfile->set_properties($row);
 			
-			$this->view->assign_block_vars('downloadfiles', $downloadfile->get_array_tpl_vars());
+			$this->view->assign_block_vars('downloadfiles', $downloadfile->get_array_tpl_vars(DownloadUrlBuilder::manage($field, $mode, $page)->relative()));
 		}
 		$result->dispose();
 		
@@ -118,7 +118,7 @@ class AdminDownloadManageController extends AdminModuleController
 		));
 	}
 	
-	private function get_pagination($page, $sort_field, $sort_mode)
+	private function get_pagination($sort_field, $sort_mode, $page)
 	{
 		$downloadfiles_number = DownloadService::count();
 		

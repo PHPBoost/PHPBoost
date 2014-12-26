@@ -61,7 +61,7 @@ class DownloadFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->redirect();
+			$this->redirect($request);
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -376,7 +376,7 @@ class DownloadFormController extends ModuleController
 		$downloadfile->set_id($id);
 	}
 	
-	private function redirect()
+	private function redirect(HTTPRequestCustom $request)
 	{
 		$downloadfile = $this->get_downloadfile();
 		$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($downloadfile->get_id_category());
@@ -387,17 +387,18 @@ class DownloadFormController extends ModuleController
 		}
 		elseif ($downloadfile->is_visible())
 		{
-			AppContext::get_response()->redirect(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()));
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect(DownloadUrlBuilder::display_pending());
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', DownloadUrlBuilder::display_pending()));
 		}
 	}
 	
 	private function generate_response(View $tpl)
 	{
 		$downloadfile = $this->get_downloadfile();
+		$redirect = AppContext::get_request()->get_getvalue('redirect', '');
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -416,7 +417,7 @@ class DownloadFormController extends ModuleController
 		{
 			$graphical_environment->set_page_title($this->lang['download.edit'], $this->lang['module_title']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.edit']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::edit($downloadfile->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::edit($downloadfile->get_id(), $redirect));
 			
 			$categories = array_reverse(DownloadService::get_categories_manager()->get_parents($downloadfile->get_id_category(), true));
 			foreach ($categories as $id => $category)
@@ -426,7 +427,7 @@ class DownloadFormController extends ModuleController
 			}
 			$category = DownloadService::get_categories_manager()->get_categories_cache()->get_category($downloadfile->get_id_category());
 			$breadcrumb->add($downloadfile->get_name(), DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $downloadfile->get_id(), $downloadfile->get_rewrited_name()));
-			$breadcrumb->add($this->lang['download.edit'], DownloadUrlBuilder::edit($downloadfile->get_id()));
+			$breadcrumb->add($this->lang['download.edit'], DownloadUrlBuilder::edit($downloadfile->get_id(), $redirect));
 		}
 		
 		return $response;
