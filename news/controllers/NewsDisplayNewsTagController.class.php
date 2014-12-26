@@ -71,7 +71,8 @@ class NewsDisplayNewsTagController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$pagination = $this->get_pagination($condition, $parameters);
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = $this->get_pagination($condition, $parameters, $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*
 		FROM '. NewsSetup::$news_table .' news
@@ -106,7 +107,9 @@ class NewsDisplayNewsTagController extends ModuleController
 			
 			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
 				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
-				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0
+				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0,
+				'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id(), NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $page)->relative())->rel(),
+				'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id(), NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $page)->relative())->rel()
 			)));
 		}
 		$result->dispose();
@@ -135,14 +138,13 @@ class NewsDisplayNewsTagController extends ModuleController
 		return $this->keyword;
 	}
 	
-	private function get_pagination($condition, $parameters)
+	private function get_pagination($condition, $parameters, $page)
 	{
 		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS nbr_news
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'news\' AND relation.id_in_module = news.id 
 		' . $condition, $parameters);
 
-		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $result['nbr_news'], (int)NewsConfig::load()->get_number_news_per_page());
 		$pagination->set_url(NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), '%d'));
 		

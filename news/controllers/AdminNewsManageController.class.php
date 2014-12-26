@@ -89,7 +89,10 @@ class AdminNewsManageController extends AdminModuleController
 			$news = new News();
 			$news->set_properties($row);
 			
-			$this->view->assign_block_vars('news', $news->get_array_tpl_vars());
+			$this->view->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
+				'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id(), NewsUrlBuilder::manage_news($field, $mode, $page)->relative())->rel(),
+				'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id(), NewsUrlBuilder::manage_news($field, $mode, $page)->relative())->rel()
+			)));
 		}
 		$result->dispose();
 		

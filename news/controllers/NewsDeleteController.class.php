@@ -36,7 +36,7 @@ class NewsDeleteController extends ModuleController
 		
 		$news = $this->get_news($request);
 		
-		if (!$news->is_authorized_delete())
+		if (!$news->is_authorized_to_delete())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -57,7 +57,7 @@ class NewsDeleteController extends ModuleController
 	    
 	    Feed::clear_cache('news');
 	    
-	    AppContext::get_response()->redirect(NewsUrlBuilder::home());
+		AppContext::get_response()->redirect($request->get_getvalue('redirect', NewsUrlBuilder::home()));
 	}
 	
 	private function get_news(HTTPRequestCustom $request)

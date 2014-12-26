@@ -55,7 +55,7 @@ class NewsFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->redirect();
+			$this->redirect($request);
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -220,7 +220,7 @@ class NewsFormController extends ModuleController
 		
 		if ($news->get_id() === null)
 		{
-			if (!$news->is_authorized_add())
+			if (!$news->is_authorized_to_add())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 	   			DispatchManager::redirect($error_controller);
@@ -228,7 +228,7 @@ class NewsFormController extends ModuleController
 		}
 		else
 		{
-			if (!$news->is_authorized_edit())
+			if (!$news->is_authorized_to_edit())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -343,7 +343,7 @@ class NewsFormController extends ModuleController
 		$news->set_id($id_news);
 	}
 		
-	private function redirect()
+	private function redirect(HTTPRequestCustom $request)
 	{
 		$news = $this->get_news();
 		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
@@ -354,11 +354,11 @@ class NewsFormController extends ModuleController
 		}
 		elseif ($news->is_visible())
 		{
-			AppContext::get_response()->redirect(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect(NewsUrlBuilder::display_pending_news());
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', NewsUrlBuilder::display_pending_news()));
 		}
 	}
 	
