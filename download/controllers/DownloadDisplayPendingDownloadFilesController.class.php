@@ -69,7 +69,8 @@ class DownloadDisplayPendingDownloadFilesController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode);
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
 		
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 		switch ($field)
@@ -120,7 +121,7 @@ class DownloadDisplayPendingDownloadFilesController extends ModuleController
 			$keywords = $downloadfile->get_keywords();
 			$has_keywords = count($keywords) > 0;
 			
-			$this->tpl->assign_block_vars('downloadfiles', array_merge($downloadfile->get_array_tpl_vars(), array(
+			$this->tpl->assign_block_vars('downloadfiles', array_merge($downloadfile->get_array_tpl_vars(DownloadUrlBuilder::display_pending($field, $mode, $page)->relative()), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 			
@@ -161,11 +162,10 @@ class DownloadDisplayPendingDownloadFilesController extends ModuleController
 		$this->tpl->put('SORT_FORM', $form->display());
 	}
 	
-	private function get_pagination($condition, $parameters, $field, $mode)
+	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
 		$downloadfiles_number = DownloadService::count($condition, $parameters);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $downloadfiles_number, (int)DownloadConfig::load()->get_items_number_per_page());
 		$pagination->set_url(DownloadUrlBuilder::display_pending($field, $mode, '%d'));
 		

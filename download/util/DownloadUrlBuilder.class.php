@@ -133,17 +133,19 @@ class DownloadUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function edit($id)
+	public static function edit($id, $redirect = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
+		$redirect = $redirect !== null ? '?redirect=' . $redirect : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $redirect);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function delete($id)
+	public static function delete($id, $redirect = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
+		$redirect = $redirect !== null ? 'redirect=' . $redirect . '&' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?' . $redirect . 'token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
