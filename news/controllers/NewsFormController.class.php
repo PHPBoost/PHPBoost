@@ -136,7 +136,7 @@ class NewsFormController extends ModuleController
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], News::NOT_APPROVAL),
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], News::APPROVAL_NOW),
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.date'], News::APPROVAL_DATE),
+					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], News::APPROVAL_DATE),
 				),
 				array('events' => array('change' => '
 				if (HTMLForms.getField("approbation_type").getValue() == 2) {
