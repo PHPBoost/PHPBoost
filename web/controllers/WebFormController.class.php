@@ -59,7 +59,7 @@ class WebFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->redirect();
+			$this->redirect($request);
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -335,7 +335,7 @@ class WebFormController extends ModuleController
 		$weblink->set_id($id);
 	}
 	
-	private function redirect()
+	private function redirect(HTTPRequestCustom $request)
 	{
 		$weblink = $this->get_weblink();
 		$category = WebService::get_categories_manager()->get_categories_cache()->get_category($weblink->get_id_category());
@@ -346,17 +346,18 @@ class WebFormController extends ModuleController
 		}
 		elseif ($weblink->is_visible())
 		{
-			AppContext::get_response()->redirect(WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()));
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect(WebUrlBuilder::display_pending());
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', WebUrlBuilder::display_pending()));
 		}
 	}
 	
 	private function generate_response(View $tpl)
 	{
 		$weblink = $this->get_weblink();
+		$redirect = AppContext::get_request()->get_getvalue('redirect', '');
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -375,7 +376,7 @@ class WebFormController extends ModuleController
 		{
 			$graphical_environment->set_page_title($this->lang['web.edit']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['web.edit'], $this->lang['module_title']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::edit($weblink->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::edit($weblink->get_id(), $redirect));
 			
 			$categories = array_reverse(WebService::get_categories_manager()->get_parents($weblink->get_id_category(), true));
 			foreach ($categories as $id => $category)
@@ -385,7 +386,7 @@ class WebFormController extends ModuleController
 			}
 			$category = WebService::get_categories_manager()->get_categories_cache()->get_category($weblink->get_id_category());
 			$breadcrumb->add($weblink->get_name(), WebUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $weblink->get_id(), $weblink->get_rewrited_name()));
-			$breadcrumb->add($this->lang['web.edit'], WebUrlBuilder::edit($weblink->get_id()));
+			$breadcrumb->add($this->lang['web.edit'], WebUrlBuilder::edit($weblink->get_id(), $redirect));
 		}
 		
 		return $response;

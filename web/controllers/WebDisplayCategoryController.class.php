@@ -104,7 +104,8 @@ class WebDisplayCategoryController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode);
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
 		
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 		switch ($field)
@@ -170,8 +171,8 @@ class WebDisplayCategoryController extends ModuleController
 			$keywords = $weblink->get_keywords();
 			$has_keywords = count($keywords) > 0;
 			
-			$this->tpl->assign_block_vars('weblinks', array_merge($weblink->get_array_tpl_vars(), array(
-				'C_KEYWORDS' => $has_keywords > 0
+			$this->tpl->assign_block_vars('weblinks', array_merge($weblink->get_array_tpl_vars(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, $page)->relative()), array(
+				'C_KEYWORDS' => $has_keywords
 			)));
 			
 			if ($has_keywords)
@@ -213,11 +214,10 @@ class WebDisplayCategoryController extends ModuleController
 		$this->tpl->put('SORT_FORM', $form->display());
 	}
 	
-	private function get_pagination($condition, $parameters, $field, $mode)
+	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
 		$weblinks_number = WebService::count($condition, $parameters);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $weblinks_number, (int)WebConfig::load()->get_items_number_per_page());
 		$pagination->set_url(WebUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, '%d'));
 		
