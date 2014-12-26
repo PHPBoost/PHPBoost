@@ -73,7 +73,7 @@
 						</div>
 					</div>
 					<div class="form-element">
-						<label for="archive">* {L_ARCHIVED}</label>
+						<label for="archive">* ${LangLoader::get_message('hidden', 'common')}</label>
 						<div class="form-field">
 							<label><input type="radio" name="archive" {ARCHIVES_ENABLED} value="1"> {L_YES}</label>
 							<label><input type="radio" name="archive" {ARCHIVES_DISABLED} id="archive" value="0"> {L_NO}</label>

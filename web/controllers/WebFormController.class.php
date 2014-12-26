@@ -134,7 +134,7 @@ class WebFormController extends ModuleController
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], WebLink::NOT_APPROVAL),
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], WebLink::APPROVAL_NOW),
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.date'], WebLink::APPROVAL_DATE),
+					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], WebLink::APPROVAL_DATE),
 				),
 				array('events' => array('change' => '
 				if (HTMLForms.getField("approbation_type").getValue() == 2) {

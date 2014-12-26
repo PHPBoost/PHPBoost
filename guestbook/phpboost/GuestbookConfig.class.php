@@ -33,6 +33,7 @@ class GuestbookConfig extends AbstractConfigData
 {
 	const ITEMS_PER_PAGE = 'items_per_page';
 	const FORBIDDEN_TAGS = 'forbidden_tags';
+	const MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED = 'max_links_number_per_message_enabled';
 	const MAXIMUM_LINKS_MESSAGE = 'maximum_links_message';
 	const AUTHORIZATIONS = 'authorizations';
 	
@@ -68,6 +69,21 @@ class GuestbookConfig extends AbstractConfigData
 	public function set_forbidden_tags(Array $array)
 	{
 		$this->set_property(self::FORBIDDEN_TAGS, $array);
+	}
+	
+	public function enable_max_links_number_per_message()
+	{
+			$this->set_property(self::MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED, true);
+	}
+	
+	public function disable_max_links_number_per_message()
+	{
+			$this->set_property(self::MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED, false);
+	}
+	
+	public function is_max_links_number_per_message_enabled()
+	{
+			return $this->get_property(self::MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED);
 	}
 	
 	 /**
@@ -112,7 +128,8 @@ class GuestbookConfig extends AbstractConfigData
 		return array(
 			self::ITEMS_PER_PAGE => 10,
 			self::FORBIDDEN_TAGS => array('swf', 'movie', 'sound', 'code', 'math', 'mail', 'html', 'feed'),
-			self::MAXIMUM_LINKS_MESSAGE => -1,
+			self::MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED => false,
+			self::MAXIMUM_LINKS_MESSAGE => 1,
 			self::AUTHORIZATIONS => array('r-1' => 3, 'r0' => 3, 'r1' => 7)
 		);
 	}

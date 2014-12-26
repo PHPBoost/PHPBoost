@@ -6,7 +6,7 @@
 		<thead>
 			<tr>
 				<th class="column-login">
-					${LangLoader::get_message('pseudo', 'main')}
+					${LangLoader::get_message('form.name', 'common')}
 				</th>
 				<th>
 					{@online.location}

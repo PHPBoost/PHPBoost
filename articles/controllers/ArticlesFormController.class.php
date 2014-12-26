@@ -145,14 +145,14 @@ class ArticlesFormController extends ModuleController
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], Article::NOT_PUBLISHED),
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], Article::PUBLISHED_NOW),
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.date'], Article::PUBLISHED_DATE),
+					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], Article::PUBLISHED_DATE),
 				),
 				array('events' => array('change' => '
 				if (HTMLForms.getField("publishing_state").getValue() == 2) {
-					$("'.__CLASS__.'_publishing_start_date_field").appear();
+					$("' . __CLASS__ . '_publishing_start_date_field").appear();
 					HTMLForms.getField("end_date_enable").enable();
 				} else { 
-					$("'.__CLASS__.'_publishing_start_date_field").fade();
+					$("' . __CLASS__ . '_publishing_start_date_field").fade();
 					HTMLForms.getField("end_date_enable").disable();
 				}'))
 			));

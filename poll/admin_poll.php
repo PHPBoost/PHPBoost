@@ -266,13 +266,9 @@ else
 		'L_QUESTION' => $LANG['question'],
 		'L_POLLS' => $LANG['polls'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
-		'L_ARCHIVED' => $LANG['archived'],
 		'L_PSEUDO' => LangLoader::get_message('display_name', 'user-common'),
 		'L_APROB' => $LANG['aprob'],
-		'L_UPDATE' => $LANG['update'],
-		'L_DELETE' => LangLoader::get_message('delete', 'common'),
-		'L_GUEST' => $LANG['guest'],
-		'L_SHOW' => $LANG['show']
+		'L_UPDATE' => $LANG['update']
 	)); 
 
 	$result = PersistenceContext::get_querier()->select("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, p.user_id, m.display_name, m.groups, m.level
@@ -313,7 +309,7 @@ else
 			'C_USER_GROUP_COLOR' => !empty($group_color),
 			'QUESTIONS' => $question,
 			'IDPOLL' => $row['id'],
-			'PSEUDO' => $row['login'],
+			'PSEUDO' => $row['display_name'],
 			'USER_GROUP_COLOR' => $group_color,
 			'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
