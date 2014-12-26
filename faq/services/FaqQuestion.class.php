@@ -204,7 +204,7 @@ class FaqQuestion
 			$this->unapprove();
 	}
 	
-	public function get_array_tpl_vars($redirect = '')
+	public function get_array_tpl_vars($redirect = null)
 	{
 		$category = FaqService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
 		$user = $this->get_author_user();
@@ -237,7 +237,7 @@ class FaqQuestion
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_LINK' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->rel(),
 			'U_CATEGORY' => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => FaqUrlBuilder::edit($this->id, ($redirect ? $redirect : FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->relative()))->rel(),
+			'U_EDIT' => FaqUrlBuilder::edit($this->id, $redirect)->rel(),
 			'U_DELETE' => FaqUrlBuilder::delete($this->id, ($redirect ? $redirect : AppContext::get_request()->get_url_referrer()))->rel()
 		);
 	}

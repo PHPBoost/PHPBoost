@@ -263,7 +263,7 @@ class FaqFormController extends ModuleController
 	private function generate_response(View $tpl)
 	{
 		$faq_question = $this->get_faq_question();
-		$redirect = AppContext::get_request()->get_getvalue('redirect', FaqUrlBuilder::home());
+		$redirect = AppContext::get_request()->get_getvalue('redirect', '');
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
