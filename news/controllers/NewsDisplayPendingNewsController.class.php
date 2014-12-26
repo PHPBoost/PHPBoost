@@ -100,10 +100,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 			$news = new News();
 			$news->set_properties($row);
 			
-			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
-				'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id(), NewsUrlBuilder::display_pending_news($page)->relative())->rel(),
-				'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id(), NewsUrlBuilder::display_pending_news($page)->relative())->rel()
-			)));
+			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars(NewsUrlBuilder::display_pending_news($page)->relative()));
 		}
 		$result->dispose();
 	}
@@ -132,7 +129,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-		
+	
 	private function generate_response()
 	{
 		$response = new SiteDisplayResponse($this->tpl);
@@ -145,7 +142,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
 		$breadcrumb->add($this->lang['news.pending'], NewsUrlBuilder::display_pending_news());
-	
+		
 		return $response;
 	}
 }

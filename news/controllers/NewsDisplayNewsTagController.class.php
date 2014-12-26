@@ -105,11 +105,9 @@ class NewsDisplayNewsTagController extends ModuleController
 			$news = new News();
 			$news->set_properties($row);
 			
-			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
+			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $page)->relative()), array(
 				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
-				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0,
-				'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id(), NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $page)->relative())->rel(),
-				'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id(), NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $page)->relative())->rel()
+				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0
 			)));
 		}
 		$result->dispose();
@@ -126,13 +124,13 @@ class NewsDisplayNewsTagController extends ModuleController
 					$this->keyword = NewsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
 			{
 				$error_controller = PHPBoostErrors::unexisting_page();
-   				DispatchManager::redirect($error_controller);
+				DispatchManager::redirect($error_controller);
 			}
 		}
 		return $this->keyword;
@@ -152,8 +150,8 @@ class NewsDisplayNewsTagController extends ModuleController
         {
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
-        }
-        
+		}
+		
 		return $pagination;
 	}
 	
@@ -178,7 +176,7 @@ class NewsDisplayNewsTagController extends ModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
 		$breadcrumb->add($this->get_keyword()->get_name(), NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), AppContext::get_request()->get_getint('page', 1)));
-	
+		
 		return $response;
 	}
 }
