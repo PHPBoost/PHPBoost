@@ -59,7 +59,7 @@ class FaqFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->redirect();
+			$this->redirect($request);
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -241,7 +241,7 @@ class FaqFormController extends ModuleController
 		$faq_question->set_id($id);
 	}
 	
-	private function redirect()
+	private function redirect(HTTPRequestCustom $request)
 	{
 		$faq_question = $this->get_faq_question();
 		$category = FaqService::get_categories_manager()->get_categories_cache()->get_category($faq_question->get_id_category());
@@ -252,11 +252,11 @@ class FaqFormController extends ModuleController
 		}
 		elseif ($faq_question->is_approved())
 		{
-			AppContext::get_response()->redirect(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()));
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id())));
 		}
 		else
 		{
-			AppContext::get_response()->redirect(FaqUrlBuilder::display_pending());
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', FaqUrlBuilder::display_pending()));
 		}
 	}
 	
