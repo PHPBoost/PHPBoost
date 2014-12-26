@@ -86,7 +86,9 @@ ul, ol {
 	margin-bottom: 10px;
 }
 
-ul.no-list { list-style: none; }
+ul.no-list {
+	list-style: none;
+}
 
 p {
 	margin-bottom: 0.7em;
@@ -112,12 +114,12 @@ a.wikipedia-link:before {
 /* Alignements */
 .inline { display: inline !important; }
 
-.center { text-align: center !important; }
-.left { text-align: left !important; }
-.right { text-align: right !important; }
+.center  { text-align: center !important; }
+.left    { text-align: left !important; }
+.right   { text-align: right !important; }
 .justify { text-align: justify !important; }
 
-.float-left, img.left { float: left !important; }
+.float-left, img.left   { float: left !important; }
 .float-right, img.right { float: right !important; }
 
 img.left, img.right {
@@ -125,11 +127,11 @@ img.left, img.right {
 }
 
 /* Classes textes */
-.text-strong { font-weight: bold !important; }
+.text-strong  { font-weight: bold !important; }
 .text-justify { text-align: justify !important; }
-.text-italic { font-style: italic !important; }
+.text-italic  { font-style: italic !important; }
 
-.valign-top { vertical-align: top !important; }
+.valign-top    { vertical-align: top !important; }
 .valign-middle { vertical-align: middle !important; }
 .valign-bottom { vertical-align: bottom !important; }
 
@@ -138,7 +140,8 @@ img.left, img.right {
 }
 
 /* Image */
-.img-link, .img-link:hover {
+.img-link,
+.img-link:hover {
 	text-decoration: none;
 }
 
