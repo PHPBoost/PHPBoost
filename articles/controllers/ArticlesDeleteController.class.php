@@ -29,14 +29,14 @@
  * @author Patrick DUBEAU <daaxwizeman@gmail.com>
  */
 class ArticlesDeleteController extends ModuleController
-{	
+{
 	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
 		
 		$article = $this->get_article($request);
 		
-		if (!$article->is_authorized_delete())
+		if (!$article->is_authorized_to_delete())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -58,7 +58,7 @@ class ArticlesDeleteController extends ModuleController
 		
 		Feed::clear_cache('articles');
 		
-		AppContext::get_response()->redirect(ArticlesUrlBuilder::home());
+		AppContext::get_response()->redirect($request->get_getvalue('redirect', ArticlesUrlBuilder::home()));
 	}
 	
 	private function get_article(HTTPRequestCustom $request)

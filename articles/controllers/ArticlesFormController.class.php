@@ -42,11 +42,11 @@ class ArticlesFormController extends ModuleController
 		$this->init();
 		$this->check_authorizations();
 		$this->build_form($request);
-                
+		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->redirect();
+			$this->redirect($request);
 		}
 		
 		$this->tpl->put('FORM', $this->form->display());
@@ -267,7 +267,7 @@ class ArticlesFormController extends ModuleController
                 
 		if ($article->get_id() === null)
 		{
-			if (!$article->is_authorized_add())
+			if (!$article->is_authorized_to_add())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -275,7 +275,7 @@ class ArticlesFormController extends ModuleController
 		}
 		else
 		{
-			if (!$article->is_authorized_edit())
+			if (!$article->is_authorized_to_edit())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -397,7 +397,7 @@ class ArticlesFormController extends ModuleController
 		$article->set_id($id_article);
 	}
 	
-	private function redirect()
+	private function redirect(HTTPRequestCustom $request)
 	{
 		$article = $this->get_article();
 		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
@@ -408,17 +408,18 @@ class ArticlesFormController extends ModuleController
 		}
 		elseif ($article->is_published())
 		{
-			AppContext::get_response()->redirect(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title(), AppContext::get_request()->get_getint('page', 1))));
 		}
 		else
 		{
-			AppContext::get_response()->redirect(ArticlesUrlBuilder::display_pending_articles());
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', ArticlesUrlBuilder::display_pending_articles()));
 		}
 	}
 
 	private function build_response(View $tpl)
 	{
 		$article = $this->get_article();
+		$redirect = AppContext::get_request()->get_getvalue('redirect', '');
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -443,10 +444,10 @@ class ArticlesFormController extends ModuleController
 			}
 			$breadcrumb->add($article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
 
-			$breadcrumb->add($this->lang['articles.edit'], ArticlesUrlBuilder::edit_article($article->get_id()));
+			$breadcrumb->add($this->lang['articles.edit'], ArticlesUrlBuilder::edit_article($article->get_id(), $redirect));
 			$graphical_environment->set_page_title($this->lang['articles.edit'], $this->lang['articles']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['articles.edit']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::edit_article($article->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(ArticlesUrlBuilder::edit_article($article->get_id(), $redirect));
 		}
 
 		return $response;

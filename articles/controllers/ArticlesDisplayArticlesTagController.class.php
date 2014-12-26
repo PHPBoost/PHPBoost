@@ -26,7 +26,7 @@
  ###################################################*/
 
 class ArticlesDisplayArticlesTagController extends ModuleController
-{	
+{
 	private $lang;
 	private $view;
 	private $keyword;
@@ -120,7 +120,8 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode);
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note 
 		FROM ' . ArticlesSetup::$articles_table . ' articles
@@ -151,7 +152,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			
 			$this->build_keywords_view($article);
 			
-			$this->view->assign_block_vars('articles', $article->get_tpl_vars());
+			$this->view->assign_block_vars('articles', $article->get_tpl_vars(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, $page)->relative()));
 		}
 		$result->dispose();
 	}
@@ -206,19 +207,17 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$this->view->put('FORM', $form->display());
 	}
 	
-	private function get_pagination($condition, $parameters, $field, $mode)
+	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
 		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS nbr_articles
 		FROM '. ArticlesSetup::$articles_table .' articles
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'articles\' AND relation.id_in_module = articles.id 
 		' . $condition, $parameters);
 		
-		$current_page = AppContext::get_request()->get_getint('page', 1);
-		
-		$pagination = new ModulePagination($current_page, $result['nbr_articles'], ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination = new ModulePagination($page, $result['nbr_articles'], ArticlesConfig::load()->get_number_articles_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, '%d'));
 		
-		if ($pagination->current_page_is_empty() && $current_page > 1)
+		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);

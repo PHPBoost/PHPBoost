@@ -78,7 +78,7 @@ class AdminArticlesManageController extends AdminModuleController
 		}
 		
 		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($page, $field, $mode);
+		$pagination = $this->get_pagination($field, $mode, $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, notes.average_notes, notes.number_notes, note.note
 		FROM '. ArticlesSetup::$articles_table . ' articles
@@ -98,7 +98,7 @@ class AdminArticlesManageController extends AdminModuleController
 			$article = new Article();
 			$article->set_properties($row);
 			
-			$this->view->assign_block_vars('articles', $article->get_tpl_vars());
+			$this->view->assign_block_vars('articles', $article->get_tpl_vars(ArticlesUrlBuilder::manage_articles($field, $mode, $page)->relative()));
 		}
 		$result->dispose();
 		
@@ -119,7 +119,7 @@ class AdminArticlesManageController extends AdminModuleController
 		));
 	}
 	
-	private function get_pagination($page, $sort_field, $sort_mode)
+	private function get_pagination($sort_field, $sort_mode, $page)
 	{
 		$articles_number = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table);
 		
