@@ -6,7 +6,7 @@ function delete_question(id_question)
 {
 	if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 	{
-		new Ajax.Request('${relative_url(FaqUrlBuilder::delete())}', {
+		new Ajax.Request('${relative_url(FaqUrlBuilder::ajax_delete())}', {
 			method:'post',
 			parameters: {'id' : id_question, 'token' : '{TOKEN}'},
 			onComplete: function(response) {

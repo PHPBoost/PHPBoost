@@ -237,7 +237,8 @@ class FaqQuestion
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_LINK' => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->rel(),
 			'U_CATEGORY' => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => FaqUrlBuilder::edit($this->id)->rel()
+			'U_EDIT' => FaqUrlBuilder::edit($this->id, FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->relative())->rel(),
+			'U_DELETE' => FaqUrlBuilder::delete($this->id, AppContext::get_request()->get_url_referrer())->rel()
 		);
 	}
 }

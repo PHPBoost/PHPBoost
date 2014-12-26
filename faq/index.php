@@ -47,7 +47,8 @@ $url_controller_mappers = array(
 	//Management
 	new UrlControllerMapper('FaqFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('FaqFormController', '`^/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('FaqAjaxDeleteQuestionController', '`^/delete/?$`'),
+	new UrlControllerMapper('FaqDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('FaqAjaxDeleteQuestionController', '`^/ajax_delete/?$`'),
 	
 	new UrlControllerMapper('FaqDisplayPendingFaqQuestionsController', '`^/pending(?:/([a-z]+))?/?([a-z]+)?/?$`', array('field', 'sort')),
 	
