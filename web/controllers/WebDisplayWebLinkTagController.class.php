@@ -71,7 +71,8 @@ class WebDisplayWebLinkTagController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode);
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
 		
 		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
 		switch ($field)
@@ -129,7 +130,7 @@ class WebDisplayWebLinkTagController extends ModuleController
 			$keywords = $weblink->get_keywords();
 			$has_keywords = count($keywords) > 0;
 			
-			$this->tpl->assign_block_vars('weblinks', array_merge($weblink->get_array_tpl_vars(), array(
+			$this->tpl->assign_block_vars('weblinks', array_merge($weblink->get_array_tpl_vars(WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, $page)->relative()), array(
 				'C_KEYWORDS' => $has_keywords
 			)));
 			
@@ -195,14 +196,13 @@ class WebDisplayWebLinkTagController extends ModuleController
 		return $this->keyword;
 	}
 	
-	private function get_pagination($condition, $parameters, $field, $mode)
+	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
 		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS weblinks_number
 		FROM '. WebSetup::$web_table .' web
 		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'web\' AND relation.id_in_module = web.id 
 		' . $condition, $parameters);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $result['weblinks_number'], (int)WebConfig::load()->get_items_number_per_page());
 		$pagination->set_url(WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $field, $mode, '%d'));
 		

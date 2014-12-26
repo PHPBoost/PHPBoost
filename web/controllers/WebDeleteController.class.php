@@ -52,7 +52,7 @@ class WebDeleteController extends ModuleController
 		Feed::clear_cache('web');
 		WebCache::invalidate();
 		
-		AppContext::get_response()->redirect(WebUrlBuilder::home());
+		AppContext::get_response()->redirect($request->get_getvalue('redirect', WebUrlBuilder::home()));
 	}
 	
 	private function get_weblink(HTTPRequestCustom $request)
