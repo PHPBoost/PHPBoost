@@ -1,8 +1,8 @@
-			<section>
+			<section id="module-calendar">
 				<header>
 					<h2 class="center"># IF C_PENDING_PAGE #{@calendar.pending}# ELSE #{@calendar.titles.events_of} {DATE}# ENDIF #</h2>
 				</header>
-				
+
 				# IF C_EVENTS #
 					# START event #
 					<article itemscope="itemscope" itemtype="http://schema.org/Event">
@@ -20,7 +20,7 @@
 									# ENDIF #
 								</span>
 							</h2>
-							
+
 							<a itemprop="url" href="{event.U_LINK}"></a>
 						</header>
 						<div class="content">
@@ -31,12 +31,12 @@
 								<meta itemprop="interactionCount" content="{event.NUMBER_COMMENTS} UserComments">
 								# ENDIF #
 								<span itemprop="text">{event.CONTENTS}</span>
-								
+
 								# IF event.C_LOCATION #
 								<div class="spacer">&nbsp;</div>
 								<div itemscope="itemscope" itemtype="http://schema.org/Place">
 									<p itemprop="location">
-										<span class="text-strong">{@calendar.labels.location}</span> : 
+										<span class="text-strong">{@calendar.labels.location}</span> :
 										<span itemprop="name">{event.LOCATION}</span>
 									</p>
 								</div>
@@ -74,7 +74,7 @@
 									# ENDIF #
 									# IF event.C_REGISTRATION_CLOSED #<span class="small text-italic">{@calendar.labels.registration_closed}</span># ENDIF #
 								# ENDIF #
-								
+
 								<div class="spacer">&nbsp;</div>
 								<div class="event-display-author">
 									{@calendar.labels.created_by} : # IF event.C_AUTHOR_EXIST #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="{event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #{event.AUTHOR}# ENDIF #

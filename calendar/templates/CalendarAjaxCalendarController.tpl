@@ -21,48 +21,45 @@
 			}
 		-->
 		</script>
-		
+
 		<div id="date_select_form" class="center">
 			<form method="post" class="fieldset-content">
 				<div class="horizontal-fieldset" id="CalendarAjaxCalendarController_choose-date">
-					<div style="display:inline-table; vertical-align:middle;">
-						<div id="CalendarAjaxCalendarController_month_field" class="form-element">
-							<div class="form-field">
-								<select name="CalendarAjaxCalendarController_month" id="CalendarAjaxCalendarController_month" onchange="ChangeMonth($(CalendarAjaxCalendarController_year).value, $(CalendarAjaxCalendarController_month).value);">
-									# START months #
-									<option value="{months.VALUE}"# IF months.SELECTED # selected="selected"# ENDIF #>{months.NAME}</option>
-									# END months #
-								</select>
-							</div>
+					<div id="CalendarAjaxCalendarController_month_field" class="form-element">
+						<div class="form-field">
+							<select name="CalendarAjaxCalendarController_month" id="CalendarAjaxCalendarController_month" onchange=ChangeMonth($(CalendarAjaxCalendarController_year).value, $(CalendarAjaxCalendarController_month)value);">
+								# START months #
+								<option value="{months.VALUE}"# IF months.SELECTED # selected="selected"# ENDIF #>{months.NAME}<option>
+								# END months #
+							</select>
 						</div>
 					</div>
-					<div style="display:inline-table; vertical-align:middle;">
-						<div id="CalendarAjaxCalendarController_year_field" class="form-element">
-							<div class="form-field">
-								<select name="CalendarAjaxCalendarController_year" id="CalendarAjaxCalendarController_year" onchange="ChangeMonth($(CalendarAjaxCalendarController_year).value, $(CalendarAjaxCalendarController_month).value);">
-									# START years #
-									<option value="{years.VALUE}"# IF years.SELECTED # selected="selected"# ENDIF #>{years.NAME}</option>
-									# END years #
-								</select>
-							</div>
+					<div id="CalendarAjaxCalendarController_year_field" class="form-element">
+						<div class="form-field">
+							<select name="CalendarAjaxCalendarController_year" id="CalendarAjaxCalendarController_year" onchange=ChangeMonth($(CalendarAjaxCalendarController_year).value, $(CalendarAjaxCalendarController_month)value);">
+								# START years #
+								<option value="{years.VALUE}"# IF years.SELECTED # selected="selected"# ENDIF #>{years.NAME}</optio>
+								# END years #
+							</select>
 						</div>
 					</div>
 				</div>
 			</form>
 		</div>
-		
+
 		<div class="calendar-container">
-			<div class="calendar-top-container options">
+			<div class="calendar-top-container">
 				<div class="calendar-top-l">
 					<a class="fa fa-angle-double-left" onclick="ChangeMonth(${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)});" title="{PREVIOUS_MONTH_TITLE}"></a>
 				</div>
 				<div class="calendar-top-r">
 					<a class="fa fa-angle-double-right" onclick="ChangeMonth(${escapejs(NEXT_YEAR)}, ${escapejs(NEXT_MONTH)});" title="{NEXT_MONTH_TITLE}"></a>
 				</div>
-				<div class="calendar-top-content">{DATE}</div>
-				
+				<div class="calendar-top-content">
+					<h5>{DATE}</h2>
+				</div>
 			</div>
-			
+
 			<div class="calendar-content">
 				<table class="# IF C_MINI_MODULE #mini # ENDIF #calendar-table">
 					<thead>
@@ -93,4 +90,5 @@
 					</tbody>
 				</table>
 			</div>
+
 		</div>
