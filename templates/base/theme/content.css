@@ -387,7 +387,7 @@ table thead th {
 	padding: 8px;
 	background-color: #4D4C50;
 	color: #E5E6E6;
-	font-size: 12px;
+	font-size: 1.1em;
 	text-align: center;
 	font-weight: normal;
 }
@@ -798,6 +798,7 @@ input.field-xlarge  { width: 300px; }
 	span.field-description {
 		display: inline-block;
 		font-size: 0.7em;
+		font-style: italic;
 	}
 }
 
@@ -833,15 +834,23 @@ select[readonly=readonly]:focus {
 /* --- Textarea --- */
 textarea {
 	overflow: auto;
-	display: block;
-	margin: 5px auto;
+	display: inline-block;
+	margin: 5px 0px;
 	resize: vertical;
+	width: 90%;
 }
 
 /* CSS applique aux écrans PC */
 @media ( min-width: 769px ) {
 	.form-element-textarea-small {
 		width: 49%;
+	}
+}
+
+/* CSS applique aux tablettes */
+@media ( max-width: 768px ) {
+	textarea {
+		width: 100%;
 	}
 }
 
@@ -886,14 +895,11 @@ textarea {
 span.text-status-constraint {
 	font-weight: bold;
 	position:absolute;
-	display: block;
 	background: #FEFEFE;
 	padding: 6px 5px;
-	color: #555555;
-	top: 30px;
+	bottom: -30px;
 	left: 5px;
-	width: auto;
-	z-index: 5;
+	z-index: 1;
 	border-radius: 3px;
 	box-shadow: 1px 3px 6px rgba(0,0,0,0.3);
 	text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
