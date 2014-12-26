@@ -98,9 +98,10 @@ $lang['add_note'] = 'Noter';
 $lang['no_note'] = 'Aucune note';
 
 //Status
-$lang['status.approved.not'] = 'Gardée en brouillon';
-$lang['status.approved.now'] = 'Publiée';
-$lang['status.approved.date'] = 'Publiée en différé';
+$lang['status'] = 'Statut';
+$lang['status.approved.not'] = 'Brouillon';
+$lang['status.approved.now'] = 'Publié';
+$lang['status.approved.date'] = 'Publication différée';
 
 //Form
 $lang['form.name'] = 'Nom';
@@ -118,7 +119,6 @@ $lang['form.approved'] = 'Approuvé';
 $lang['form.approbation'] = 'Publication';
 $lang['form.approbation.not'] = 'Garder en brouillon';
 $lang['form.approbation.now'] = 'Publier maintenant';
-$lang['form.approbation.date'] = 'Publication différée';
 $lang['form.date.start'] = 'A partir du';
 $lang['form.date.end'] = 'Jusqu\'au';
 $lang['form.date.creation'] = 'Date de création';

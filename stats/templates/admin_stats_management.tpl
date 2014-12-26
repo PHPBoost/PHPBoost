@@ -114,7 +114,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th>
+					<th colspan="3">
 						{L_TEMPLATES}
 					</th>
 				</tr>
@@ -163,7 +163,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th>
+					<th colspan="3">
 						{L_SEX}
 					</th>
 				</tr>

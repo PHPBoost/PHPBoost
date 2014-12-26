@@ -98,9 +98,10 @@ $lang['add_note'] = 'Add a note';
 $lang['no_note'] = 'No note';
 
 //Status
-$lang['status.approved.not'] = 'Kept in draft';
+$lang['status'] = 'Status';
+$lang['status.approved.not'] = 'Draft';
 $lang['status.approved.now'] = 'Published';
-$lang['status.approved.date'] = 'Published differed';
+$lang['status.approved.date'] = 'Differed publication';
 
 //Form
 $lang['form.name'] = 'Name';
@@ -118,7 +119,6 @@ $lang['form.approved'] = 'Approved';
 $lang['form.approbation'] = 'Publication';
 $lang['form.approbation.not'] = 'Keep in draft';
 $lang['form.approbation.now'] = 'Publish now';
-$lang['form.approbation.date'] = 'Differed publication';
 $lang['form.date.start'] = 'From';
 $lang['form.date.end'] = 'Until';
 $lang['form.date.creation'] = 'Creation date';

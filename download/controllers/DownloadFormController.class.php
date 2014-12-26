@@ -146,7 +146,7 @@ class DownloadFormController extends ModuleController
 				array(
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.not'], DownloadFile::NOT_APPROVAL),
 					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.now'], DownloadFile::APPROVAL_NOW),
-					new FormFieldSelectChoiceOption($this->common_lang['form.approbation.date'], DownloadFile::APPROVAL_DATE),
+					new FormFieldSelectChoiceOption($this->common_lang['status.approved.date'], DownloadFile::APPROVAL_DATE),
 				),
 				array('events' => array('change' => '
 				if (HTMLForms.getField("approbation_type").getValue() == 2) {

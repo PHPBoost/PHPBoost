@@ -443,7 +443,7 @@ class WebLink
 			'U_VISIT' => WebUrlBuilder::visit($this->id)->rel(),
 			'U_DEADLINK' => WebUrlBuilder::dead_link($this->id)->rel(),
 			'U_CATEGORY' => WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => WebUrlBuilder::edit($this->id, $redirect))->rel(),
+			'U_EDIT' => WebUrlBuilder::edit($this->id, $redirect)->rel(),
 			'U_DELETE' => WebUrlBuilder::delete($this->id, ($redirect ? $redirect : AppContext::get_request()->get_url_referrer()))->rel(),
 			'U_PARTNER_PICTURE' => $this->partner_picture->rel(),
 			'U_COMMENTS' => WebUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
