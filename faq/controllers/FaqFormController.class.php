@@ -263,6 +263,7 @@ class FaqFormController extends ModuleController
 	private function generate_response(View $tpl)
 	{
 		$faq_question = $this->get_faq_question();
+		$redirect = AppContext::get_request()->get_getvalue('redirect', FaqUrlBuilder::home());
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -281,7 +282,7 @@ class FaqFormController extends ModuleController
 		{
 			$graphical_environment->set_page_title($this->lang['faq.edit'], $this->lang['module_title']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.edit']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::edit($faq_question->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::edit($faq_question->get_id(), $redirect));
 			
 			$categories = array_reverse(FaqService::get_categories_manager()->get_parents($faq_question->get_id_category(), true));
 			foreach ($categories as $id => $category)
@@ -291,7 +292,7 @@ class FaqFormController extends ModuleController
 			}
 			$category = FaqService::get_categories_manager()->get_categories_cache()->get_category($faq_question->get_id_category());
 			$breadcrumb->add($faq_question->get_question(), FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()));
-			$breadcrumb->add($this->lang['faq.edit'], FaqUrlBuilder::edit($faq_question->get_id()));
+			$breadcrumb->add($this->lang['faq.edit'], FaqUrlBuilder::edit($faq_question->get_id(), $redirect));
 		}
 		
 		return $response;
