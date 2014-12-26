@@ -78,7 +78,7 @@ class AdminFaqManageController extends AdminModuleController
 		}
 		
 		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($page, $field, $mode);
+		$pagination = $this->get_pagination($field, $mode, $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM '. FaqSetup::$faq_table .' faq
@@ -95,10 +95,7 @@ class AdminFaqManageController extends AdminModuleController
 			$faq_question = new FaqQuestion();
 			$faq_question->set_properties($row);
 			
-			$this->view->assign_block_vars('questions', array_merge($faq_question->get_array_tpl_vars(), array(
-				'U_EDIT' => FaqUrlBuilder::edit($faq_question->get_id(), FaqUrlBuilder::manage($field, $mode, $page)->relative())->rel(),
-				'U_DELETE' => FaqUrlBuilder::delete($faq_question->get_id(), FaqUrlBuilder::manage($field, $mode, $page)->relative())->rel(),
-			)));
+			$this->view->assign_block_vars('questions', $faq_question->get_array_tpl_vars(FaqUrlBuilder::manage($field, $mode, $page)->relative()));
 		}
 		$result->dispose();
 		
@@ -117,7 +114,7 @@ class AdminFaqManageController extends AdminModuleController
 		));
 	}
 	
-	private function get_pagination($page, $sort_field, $sort_mode)
+	private function get_pagination($sort_field, $sort_mode, $page)
 	{
 		$faq_questions_number = FaqService::count();
 		

@@ -135,7 +135,7 @@ class FaqDisplayCategoryController extends ModuleController
 			$faq_question = new FaqQuestion();
 			$faq_question->set_properties($row);
 			
-			$this->tpl->assign_block_vars('questions', array_merge($faq_question->get_array_tpl_vars()));
+			$this->tpl->assign_block_vars('questions', $faq_question->get_array_tpl_vars());
 		}
 		$result->dispose();
 	}
