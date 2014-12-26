@@ -57,6 +57,16 @@ div, textarea, table, td, th, code, pre, samp {
 	hyphens: auto;
 }
 
+/* Fix for no wrap for button */
+button, .button {
+	word-wrap: normal;
+	overflow-wrap: normal;
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
 /* Fix for chrome word-wrap ... */
 fieldset {
 	min-width: 0 !important;
