@@ -157,7 +157,7 @@ class CalendarFormController extends ModuleController
 		
 		if (!$this->is_contributor_member())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('approved', $common_lang['form.approved'], $event_content->is_approved()));
+			$fieldset->add_field(new FormFieldCheckbox('approved', $common_lang['form.approve'], $event_content->is_approved()));
 		}
 		
 		$this->build_contribution_fieldset($form);

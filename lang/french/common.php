@@ -99,6 +99,8 @@ $lang['no_note'] = 'Aucune note';
 
 //Status
 $lang['status'] = 'Statut';
+$lang['status.approved'] = 'Approuvé';
+$lang['status.unapproved'] = 'Non approuvé';
 $lang['status.approved.not'] = 'Brouillon';
 $lang['status.approved.now'] = 'Publié';
 $lang['status.approved.date'] = 'Publication différée';
@@ -115,7 +117,7 @@ $lang['form.category'] = 'Emplacement';
 $lang['form.rewrited_name'] = 'Nom réécrit dans l\'url';
 $lang['form.rewrited_name.description'] = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';
 $lang['form.rewrited_name.personalize'] = 'Personnaliser le nom dans l\'url';
-$lang['form.approved'] = 'Approuvé';
+$lang['form.approve'] = 'Approuver';
 $lang['form.approbation'] = 'Publication';
 $lang['form.approbation.not'] = 'Garder en brouillon';
 $lang['form.approbation.now'] = 'Publier maintenant';

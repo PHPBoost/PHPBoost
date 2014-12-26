@@ -66,6 +66,9 @@ class AdminNewsManageController extends AdminModuleController
 			case 'name':
 				$sort_field = 'name';
 				break;
+			case 'status':
+				$sort_field = 'approbation_type';
+				break;
 			default:
 				$sort_field = 'creation_date';
 				break;
@@ -104,7 +107,9 @@ class AdminNewsManageController extends AdminModuleController
 			'U_SORT_AUTHOR_ASC' => NewsUrlBuilder::manage_news('author', 'asc', $page)->rel(),
 			'U_SORT_AUTHOR_DESC' => NewsUrlBuilder::manage_news('author', 'desc', $page)->rel(),
 			'U_SORT_DATE_ASC' => NewsUrlBuilder::manage_news('date', 'asc', $page)->rel(),
-			'U_SORT_DATE_DESC' => NewsUrlBuilder::manage_news('date', 'desc', $page)->rel()
+			'U_SORT_DATE_DESC' => NewsUrlBuilder::manage_news('date', 'desc', $page)->rel(),
+			'U_SORT_STATUS_ASC' => NewsUrlBuilder::manage_news('status', 'asc', $page)->rel(),
+			'U_SORT_STATUS_DESC' => NewsUrlBuilder::manage_news('status', 'desc', $page)->rel()
 		));
 	}
 	

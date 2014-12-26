@@ -24,9 +24,9 @@
 				<a href="{U_SORT_DATE_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{U_SORT_PUBLISHED_ASC}" class="fa fa-table-sort-up"></a>
-				{@admin.articles.sort_field.published}
-				<a href="{U_SORT_PUBLISHED_DESC}" class="fa fa-table-sort-down"></a>
+				<a href="{U_SORT_STATUS_ASC}" class="fa fa-table-sort-up"></a>
+				${LangLoader::get_message('status', 'common')}
+				<a href="{U_SORT_STATUS_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 		</tr>
 	</thead>
@@ -59,12 +59,12 @@
 				{articles.DATE_SHORT}
 			</td>
 			<td>
-				# IF articles.C_PUBLISHED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
+				{articles.STATUS}
 				<br />
 				<span class="smaller">
 				# IF articles.C_PUBLISHING_START_AND_END_DATE #
-				${LangLoader::get_message('from_date', 'main')} {articles.PUBLISHING_START_DATE}<br />
-				${LangLoader::get_message('to_date', 'main')} {articles.PUBLISHING_END_DATE}
+				${LangLoader::get_message('form.date.start', 'common')} {articles.PUBLISHING_START_DATE}<br />
+				${LangLoader::get_message('form.date.end', 'common')} {articles.PUBLISHING_END_DATE}
 				# ELSE #
 					# IF articles.C_PUBLISHING_START_DATE #
 						{articles.PUBLISHING_START_DATE}

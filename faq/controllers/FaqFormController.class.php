@@ -91,7 +91,7 @@ class FaqFormController extends ModuleController
 		
 		if (!$this->is_contributor_member())
 		{
-			$fieldset->add_field(new FormFieldCheckbox('approved', $this->common_lang['form.approved'], $this->get_faq_question()->is_approved()));
+			$fieldset->add_field(new FormFieldCheckbox('approved', $this->common_lang['form.approve'], $this->get_faq_question()->is_approved()));
 		}
 		
 		$this->build_contribution_fieldset($form);

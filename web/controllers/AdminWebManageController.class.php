@@ -72,6 +72,9 @@ class AdminWebManageController extends AdminModuleController
 			case 'name':
 				$sort_field = 'name';
 				break;
+			case 'status':
+				$sort_field = 'approbation_type';
+				break;
 			default:
 				$sort_field = 'creation_date';
 				break;
@@ -114,7 +117,9 @@ class AdminWebManageController extends AdminModuleController
 			'U_SORT_AUTHOR_ASC' => WebUrlBuilder::manage('author', 'asc', $page)->rel(),
 			'U_SORT_AUTHOR_DESC' => WebUrlBuilder::manage('author', 'desc', $page)->rel(),
 			'U_SORT_DATE_ASC' => WebUrlBuilder::manage('date', 'asc', $page)->rel(),
-			'U_SORT_DATE_DESC' => WebUrlBuilder::manage('date', 'desc', $page)->rel()
+			'U_SORT_DATE_DESC' => WebUrlBuilder::manage('date', 'desc', $page)->rel(),
+			'U_SORT_STATUS_ASC' => WebUrlBuilder::manage('status', 'asc', $page)->rel(),
+			'U_SORT_STATUS_DESC' => WebUrlBuilder::manage('status', 'desc', $page)->rel()
 		));
 	}
 	

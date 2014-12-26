@@ -69,7 +69,7 @@ class AdminArticlesManageController extends AdminModuleController
 			case 'title':
 				$sort_field = 'title';
 				break;
-			case 'published':
+			case 'status':
 				$sort_field = 'published';
 				break;
 			default:
@@ -114,8 +114,8 @@ class AdminArticlesManageController extends AdminModuleController
 			'U_SORT_AUTHOR_DESC' => ArticlesUrlBuilder::manage_articles('author', 'desc', $page)->rel(),
 			'U_SORT_DATE_ASC' => ArticlesUrlBuilder::manage_articles('date', 'asc', $page)->rel(),
 			'U_SORT_DATE_DESC' => ArticlesUrlBuilder::manage_articles('date', 'desc', $page)->rel(),
-			'U_SORT_PUBLISHED_ASC' => ArticlesUrlBuilder::manage_articles('published', 'asc', $page)->rel(),
-			'U_SORT_PUBLISHED_DESC' => ArticlesUrlBuilder::manage_articles('published', 'desc', $page)->rel()
+			'U_SORT_STATUS_ASC' => ArticlesUrlBuilder::manage_articles('status', 'asc', $page)->rel(),
+			'U_SORT_STATUS_DESC' => ArticlesUrlBuilder::manage_articles('status', 'desc', $page)->rel()
 		));
 	}
 	

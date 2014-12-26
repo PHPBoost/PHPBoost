@@ -69,6 +69,9 @@ class AdminCalendarManageEventsController extends AdminModuleController
 			case 'title':
 				$sort_field = 'title';
 				break;
+			case 'status':
+				$sort_field = 'approved';
+				break;
 			default:
 				$sort_field = 'start_date';
 				break;
@@ -110,7 +113,9 @@ class AdminCalendarManageEventsController extends AdminModuleController
 			'U_SORT_AUTHOR_ASC' => CalendarUrlBuilder::manage_events('author/asc/'. $page)->rel(),
 			'U_SORT_AUTHOR_DESC' => CalendarUrlBuilder::manage_events('author/desc/'. $page)->rel(),
 			'U_SORT_DATE_ASC' => CalendarUrlBuilder::manage_events('date/asc/'. $page)->rel(),
-			'U_SORT_DATE_DESC' => CalendarUrlBuilder::manage_events('date/desc/'. $page)->rel()
+			'U_SORT_DATE_DESC' => CalendarUrlBuilder::manage_events('date/desc/'. $page)->rel(),
+			'U_SORT_STATUS_ASC' => CalendarUrlBuilder::manage_events('status/asc/'. $page)->rel(),
+			'U_SORT_STATUS_DESC' => CalendarUrlBuilder::manage_events('status/desc/'. $page)->rel()
 		));
 	}
 	

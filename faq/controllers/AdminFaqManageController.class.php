@@ -72,6 +72,9 @@ class AdminFaqManageController extends AdminModuleController
 			case 'question':
 				$sort_field = 'question';
 				break;
+			case 'status':
+				$sort_field = 'approved';
+				break;
 			default:
 				$sort_field = 'creation_date';
 				break;
@@ -110,7 +113,9 @@ class AdminFaqManageController extends AdminModuleController
 			'U_SORT_AUTHOR_ASC' => FaqUrlBuilder::manage('author', 'asc', $page)->rel(),
 			'U_SORT_AUTHOR_DESC' => FaqUrlBuilder::manage('author', 'desc', $page)->rel(),
 			'U_SORT_DATE_ASC' => FaqUrlBuilder::manage('date', 'asc', $page)->rel(),
-			'U_SORT_DATE_DESC' => FaqUrlBuilder::manage('date', 'desc', $page)->rel()
+			'U_SORT_DATE_DESC' => FaqUrlBuilder::manage('date', 'desc', $page)->rel(),
+			'U_SORT_STATUS_ASC' => FaqUrlBuilder::manage('status', 'asc', $page)->rel(),
+			'U_SORT_STATUS_DESC' => FaqUrlBuilder::manage('status', 'desc', $page)->rel()
 		));
 	}
 	
