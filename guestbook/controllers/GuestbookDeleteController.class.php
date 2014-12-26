@@ -42,7 +42,7 @@ class GuestbookDeleteController extends ModuleController
 		
 		GuestbookMessagesCache::invalidate();
 		
-		AppContext::get_response()->redirect($request->get_getvalue('redirect', GuestbookUrlBuilder::home()->relative()));
+		AppContext::get_response()->redirect($request->get_getvalue('redirect', GuestbookUrlBuilder::home()));
 	}
 	
 	private function get_message(HTTPRequestCustom $request)

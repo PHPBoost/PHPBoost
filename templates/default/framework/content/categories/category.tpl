@@ -25,10 +25,10 @@ Event.observe(window, 'load', function() {
 				<a href="" title="${LangLoader::get_message('position.move_down', 'common')}" id="move-down-{ID}" onclick="return false;" class="fa fa-arrow-down"></a>
 			</div>
 			<div class="sortable-options">
-				<a href="{U_EDIT}" title="${LangLoader::get_message('update', 'main')}" class="fa fa-edit"></a>
+				<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 			</div>
 			<div class="sortable-options">
-				<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+				<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 			</div>
 		</div>
 	</div>

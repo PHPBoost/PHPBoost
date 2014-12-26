@@ -18,8 +18,8 @@
 				<span class="actions">
 					<a itemprop="url" href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
 					# IF comments.C_MODERATOR #
-						<a href="{comments.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
-						<a href="{comments.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+						<a href="{comments.U_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
+						<a href="{comments.U_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 					# ENDIF #
 				</span>
 				<span itemprop="datePublished" content="{comments.DATE_ISO8601}">{comments.DATE}</span>

@@ -53,10 +53,10 @@
 				# ENDIF #
 				
 				<div class="sortable-options">
-					<a href="{categories.ACTION_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="fa fa-edit"></a>
+					<a href="{categories.ACTION_EDIT}" title="${LangLoader::get_message('edit', 'common')}" class="fa fa-edit"></a>
 				</div>
 				<div class="sortable-options">
-					<a href="{categories.ACTION_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="fa fa-delete" data-confirmation="delete-element"></a>
+					<a href="{categories.ACTION_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 				</div>
 			</div>
 		</div>
