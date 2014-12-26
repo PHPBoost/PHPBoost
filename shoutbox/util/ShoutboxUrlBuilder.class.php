@@ -54,28 +54,27 @@ class ShoutboxUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function add($page = 1)
+	public static function add()
 	{
-		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/add/' . $page);
+		return DispatchManager::get_url(self::$dispatcher, '/add/');
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function edit($id, $page = 1)
+	public static function edit($id, $redirect = null)
 	{
-		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $page);
+		$redirect = $redirect !== null ? '?redirect=' . $redirect : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $redirect);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function delete($id, $page = 1)
+	public static function delete($id, $redirect = null)
 	{
-		$page = $page !== 1 ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/' . $page . '?token=' . AppContext::get_session()->get_token());
+		$redirect = $redirect !== null ? 'redirect=' . $redirect . '&' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?' . $redirect . 'token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
