@@ -365,7 +365,7 @@ class NewsFormController extends ModuleController
 	private function generate_response(View $tpl)
 	{
 		$news = $this->get_news();
-		$redirect = AppContext::get_request()->get_getvalue('redirect', NewsUrlBuilder::home());
+		$redirect = AppContext::get_request()->get_getvalue('redirect', '');
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
