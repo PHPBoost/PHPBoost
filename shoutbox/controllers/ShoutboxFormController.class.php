@@ -56,7 +56,7 @@ class ShoutboxFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$id = $this->save();
-			AppContext::get_response()->redirect($request->get_getvalue('redirect', ShoutboxUrlBuilder::home(1, $id)->relative()));
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', ShoutboxUrlBuilder::home(1, $id)));
 		}
 		
 		$this->view->put('FORM', $this->form->display());
@@ -72,7 +72,7 @@ class ShoutboxFormController extends ModuleController
 		if ($object->submit_button->has_been_submited() && $object->form->validate())
 		{
 			$id = $object->save();
-			AppContext::get_response()->redirect(AppContext::get_request()->get_getvalue('redirect', ShoutboxUrlBuilder::home(1, $id)->relative()));
+			AppContext::get_response()->redirect(AppContext::get_request()->get_getvalue('redirect', ShoutboxUrlBuilder::home(1, $id)));
 		}
 		$object->view->put('FORM', ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly() ? $object->form->display() : '');
 		return $object->view;
