@@ -29,7 +29,7 @@
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class NewsDisplayCategoryController extends ModuleController
-{	
+{
 	private $lang;
 	private $tpl;
 	
@@ -52,7 +52,7 @@ class NewsDisplayCategoryController extends ModuleController
 		$this->tpl = new FileTemplate('news/NewsDisplaySeveralNewsController.tpl');
 		$this->tpl->add_lang($this->lang);
 	}
-		
+	
 	private function build_view()
 	{
 		$now = new Date();
@@ -99,10 +99,7 @@ class NewsDisplayCategoryController extends ModuleController
 			$news = new News();
 			$news->set_properties($row);
 			
-			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
-				'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id(), NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page)->relative())->rel(),
-				'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id(), NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page)->relative())->rel()
-			)));
+			$this->tpl->assign_block_vars('news', $news->get_array_tpl_vars(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page)->relative()));
 		}
 		$result->dispose();
 	}
@@ -115,11 +112,11 @@ class NewsDisplayCategoryController extends ModuleController
 		$pagination->set_url(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), '%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
-        {
+		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
-        }
-        
+		}
+		
 		return $pagination;
 	}
 	
@@ -151,7 +148,7 @@ class NewsDisplayCategoryController extends ModuleController
 		if (!NewsAuthorizationsService::check_authorizations($id_cat)->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
-	   		DispatchManager::redirect($error_controller);
+			DispatchManager::redirect($error_controller);
 		}
 	}
 	
@@ -173,7 +170,7 @@ class NewsDisplayCategoryController extends ModuleController
 			if ($category->get_id() != Category::ROOT_CATEGORY)
 				$breadcrumb->add($category->get_name(), NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()));
 		}
-				
+		
 		return $response;
 	}
 	

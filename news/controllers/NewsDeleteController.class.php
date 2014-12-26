@@ -29,7 +29,7 @@
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class NewsDeleteController extends ModuleController
-{	
+{
 	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
@@ -54,23 +54,23 @@ class NewsDeleteController extends ModuleController
 		PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'news', 'id' => $news->get_id()));
 		
 		CommentsService::delete_comments_topic_module('news', $news->get_id());
-	    
-	    Feed::clear_cache('news');
-	    
+		
+		Feed::clear_cache('news');
+		
 		AppContext::get_response()->redirect($request->get_getvalue('redirect', NewsUrlBuilder::home()));
 	}
 	
 	private function get_news(HTTPRequestCustom $request)
 	{
 		$id = $request->get_getint('id', 0);
-	
+		
 		if (!empty($id))
 		{
 			try {
 				return NewsService::get_news('WHERE id=:id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
-   				DispatchManager::redirect($error_controller);
+				DispatchManager::redirect($error_controller);
 			}
 		}
 	}

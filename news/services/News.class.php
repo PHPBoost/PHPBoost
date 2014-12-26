@@ -371,7 +371,7 @@ class News
 		$this->end_date_enabled = false;
 	}
 	
-	public function get_array_tpl_vars()
+	public function get_array_tpl_vars($redirect = '')
 	{
 		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($this->id_cat);
 		$user = $this->get_author_user();
@@ -398,7 +398,7 @@ class News
 			'PSEUDO' => $user->get_display_name(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
-		
+			
 			'C_COMMENTS' => !empty($number_comments),
 			'L_COMMENTS' => CommentsService::get_lang_comments('news', $this->id),
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('news', $this->id),
@@ -413,8 +413,8 @@ class News
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel(),
 			'U_CATEGORY' => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => NewsUrlBuilder::edit_news($this->id, NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->relative())->rel(),
-			'U_DELETE' => NewsUrlBuilder::delete_news($this->id, AppContext::get_request()->get_url_referrer())->rel(),
+			'U_EDIT' => NewsUrlBuilder::edit_news($this->id, ($redirect ? $redirect : NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->relative()))->rel(),
+			'U_DELETE' => NewsUrlBuilder::delete_news($this->id, ($redirect ? $redirect : AppContext::get_request()->get_url_referrer()))->rel(),
 			'U_PICTURE' => $this->get_picture()->rel(),
 			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
 		);

@@ -202,7 +202,7 @@ class NewsFormController extends ModuleController
 					$this->news = NewsService::get_news('WHERE id=:id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
@@ -223,7 +223,7 @@ class NewsFormController extends ModuleController
 			if (!$news->is_authorized_to_add())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
-	   			DispatchManager::redirect($error_controller);
+				DispatchManager::redirect($error_controller);
 			}
 		}
 		else
@@ -342,7 +342,7 @@ class NewsFormController extends ModuleController
 		}
 		$news->set_id($id_news);
 	}
-		
+	
 	private function redirect(HTTPRequestCustom $request)
 	{
 		$news = $this->get_news();
@@ -365,13 +365,14 @@ class NewsFormController extends ModuleController
 	private function generate_response(View $tpl)
 	{
 		$news = $this->get_news();
+		$redirect = AppContext::get_request()->get_getvalue('redirect', NewsUrlBuilder::home());
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['news'], NewsUrlBuilder::home());
-			
+		
 		if ($this->get_news()->get_id() === null)
 		{
 			$graphical_environment->set_page_title($this->lang['news.add'], $this->lang['news']);
@@ -383,7 +384,7 @@ class NewsFormController extends ModuleController
 		{
 			$graphical_environment->set_page_title($this->lang['news.edit'], $this->lang['news']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['news.edit']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::edit_news($news->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsUrlBuilder::edit_news($news->get_id(), $redirect));
 			
 			$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));
 			foreach ($categories as $id => $category)
@@ -393,7 +394,7 @@ class NewsFormController extends ModuleController
 			}
 			$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
 			$breadcrumb->add($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
-			$breadcrumb->add($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id()));
+			$breadcrumb->add($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id(), $redirect));
 		}
 		
 		return $response;

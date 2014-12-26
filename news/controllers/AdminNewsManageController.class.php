@@ -72,7 +72,7 @@ class AdminNewsManageController extends AdminModuleController
 		}
 		
 		$page = $request->get_getint('page', 1);
-		$pagination = $this->get_pagination($page, $field, $mode);
+		$pagination = $this->get_pagination($field, $mode, $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM '. NewsSetup::$news_table .' news
@@ -89,10 +89,7 @@ class AdminNewsManageController extends AdminModuleController
 			$news = new News();
 			$news->set_properties($row);
 			
-			$this->view->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
-				'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id(), NewsUrlBuilder::manage_news($field, $mode, $page)->relative())->rel(),
-				'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id(), NewsUrlBuilder::manage_news($field, $mode, $page)->relative())->rel()
-			)));
+			$this->view->assign_block_vars('news', $news->get_array_tpl_vars(NewsUrlBuilder::manage_news($field, $mode, $page)->relative()));
 		}
 		$result->dispose();
 		
@@ -111,7 +108,7 @@ class AdminNewsManageController extends AdminModuleController
 		));
 	}
 	
-	private function get_pagination($page, $sort_field, $sort_mode)
+	private function get_pagination($sort_field, $sort_mode, $page)
 	{
 		$news_number = PersistenceContext::get_querier()->count(NewsSetup::$news_table);
 		
