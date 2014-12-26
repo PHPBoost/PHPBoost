@@ -309,17 +309,17 @@ class Article
 		return array_keys($this->get_keywords());
 	}
 	
-	public function is_authorized_add()
+	public function is_authorized_to_add()
 	{
 		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->write() || ArticlesAuthorizationsService::check_authorizations($this->id_category)->contribution();
 	}
 	
-	public function is_authorized_edit()
+	public function is_authorized_to_edit()
 	{
 		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 	
-	public function is_authorized_delete()
+	public function is_authorized_to_delete()
 	{
 		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
@@ -412,7 +412,7 @@ class Article
 		$this->end_date_enabled = false;
 	}
 	
-	public function get_tpl_vars()
+	public function get_tpl_vars($redirect = null)
 	{
 		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->get_id_category());
 		$user = $this->get_author_user();
@@ -420,8 +420,8 @@ class Article
 		
 		return array(
 			//Conditions
-			'C_EDIT' => $this->is_authorized_edit(),
-			'C_DELETE' => $this->is_authorized_delete(),
+			'C_EDIT' => $this->is_authorized_to_edit(),
+			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_HAS_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_PUBLISHED' => $this->is_published(),
@@ -464,8 +464,8 @@ class Article
 			'U_AUTHOR' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
-			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->get_id())->rel(),
-			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->get_id())->rel(),
+			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->id, $redirect, AppContext::get_request()->get_getint('page', 1))->rel(),
+			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->id, ($redirect ? $redirect : AppContext::get_request()->get_url_referrer()))->rel(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($category->get_id())->rel(),
 			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->get_id(), $this->get_rewrited_title())->rel()
 		);

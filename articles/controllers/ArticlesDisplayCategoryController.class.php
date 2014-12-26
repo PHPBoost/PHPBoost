@@ -95,7 +95,8 @@ class ArticlesDisplayCategoryController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode);
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 		FROM ' . ArticlesSetup::$articles_table . ' articles
@@ -129,7 +130,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			
 			$this->build_keywords_view($article);
 			
-			$this->view->assign_block_vars('articles', $article->get_tpl_vars());
+			$this->view->assign_block_vars('articles', $article->get_tpl_vars(ArticlesUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $field, $mode, $page)->relative()));
 		}
 		$result->dispose();
 	}
@@ -152,7 +153,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		
 		$nbr_cat_displayed = 0;
 		while ($row = $result->fetch())
-		{	
+		{
 			$this->view->assign_block_vars('cat_list', array(
 				'ID_CATEGORY' => $row['id'],
 				'CATEGORY_NAME' => $row['name'],
@@ -168,7 +169,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 			}
 		}
 		$result->dispose();
-                
+		
 		$nbr_column_cats = ($nbr_cat_displayed > ArticlesConfig::load()->get_number_cols_display_cats()) ? ArticlesConfig::load()->get_number_cols_display_cats() : $nbr_cat_displayed;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100/$nbr_column_cats);
@@ -185,7 +186,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		
 		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $common_lang['sort_by']));
 		$form->add_fieldset($fieldset);
-				
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, 
 			array(
 				new FormFieldSelectChoiceOption($common_lang['form.date.creation'], 'date'),
@@ -239,7 +240,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 
 		$i = 1;
 		foreach ($keywords as $keyword)
-		{	
+		{
 			$this->view->assign_block_vars('keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
@@ -249,15 +250,14 @@ class ArticlesDisplayCategoryController extends ModuleController
 		}
 	}
 	
-	private function get_pagination($condition, $parameters, $field, $mode)
+	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
 		$number_articles = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, $condition, $parameters);
 		
-		$current_page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = new ModulePagination($current_page, $number_articles, (int)ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination = new ModulePagination($page, $number_articles, (int)ArticlesConfig::load()->get_number_articles_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $field, $mode, '%d'));
 		
-		if ($pagination->current_page_is_empty() && $current_page > 1)
+		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);

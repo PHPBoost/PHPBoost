@@ -125,7 +125,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			'timestamp_now' => $now->get_timestamp()
 		);
 		
-		$pagination = $this->get_pagination($condition, $parameters, $field, $mode);
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = $this->get_pagination($condition, $parameters, $field, $mode, $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.number_notes, notes.average_notes, note.note 
 		FROM '. ArticlesSetup::$articles_table .' articles
@@ -165,7 +166,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				
 				$this->build_keywords_view($article);
 				
-				$this->view->assign_block_vars('articles', $article->get_tpl_vars());
+				$this->view->assign_block_vars('articles', $article->get_tpl_vars(ArticlesUrlBuilder::display_pending_articles($field, $mode, $page)->relative()));
 			}
 		}
 		$result->dispose();
@@ -181,7 +182,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 
 		$i = 1;
 		foreach ($keywords as $keyword)
-		{	
+		{
 			$this->view->assign_block_vars('keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
@@ -200,13 +201,11 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		}
 	}
 	
-	private function get_pagination($condition, $parameters, $field, $mode)
+	private function get_pagination($condition, $parameters, $field, $mode, $page)
 	{
 		$number_articles = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, $condition, $parameters);
 		
-		$current_page = AppContext::get_request()->get_getint('page', 1);
-		
-		$pagination = new ModulePagination($current_page, $number_articles, (int)ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination = new ModulePagination($page, $number_articles, (int)ArticlesConfig::load()->get_number_articles_per_page());
 		$pagination->set_url(ArticlesUrlBuilder::display_pending_articles($field, $mode, '/%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
