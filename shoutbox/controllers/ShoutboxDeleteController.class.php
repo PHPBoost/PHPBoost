@@ -58,7 +58,7 @@ class ShoutboxDeleteController extends ModuleController
 		}
 	}
 	
-	private function check_authorizations($message)
+	private function check_authorizations(ShoutboxMessage $message)
 	{
 		if (!$message->is_authorized_to_delete())
 		{

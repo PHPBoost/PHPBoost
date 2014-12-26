@@ -60,7 +60,7 @@ class GuestbookDeleteController extends ModuleController
 		}
 	}
 	
-	private function check_authorizations($message)
+	private function check_authorizations(GuestbookMessage $message)
 	{
 		if (!$message->is_authorized_delete())
 		{
