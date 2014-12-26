@@ -99,6 +99,8 @@ $lang['no_note'] = 'No note';
 
 //Status
 $lang['status'] = 'Status';
+$lang['status.approved'] = 'Approved';
+$lang['status.unapproved'] = 'Unapproved';
 $lang['status.approved.not'] = 'Draft';
 $lang['status.approved.now'] = 'Published';
 $lang['status.approved.date'] = 'Differed publication';
@@ -115,7 +117,7 @@ $lang['form.category'] = 'Location';
 $lang['category.form.rewrited_name'] = 'Rewrited name in the url';
 $lang['category.form.rewrited_name.description'] = 'Only contains lowercase letters, numbers and hyphens.';
 $lang['category.form.rewrited_name.personalize'] = 'Personalize rewrited name in the url';
-$lang['form.approved'] = 'Approved';
+$lang['form.approve'] = 'Approve';
 $lang['form.approbation'] = 'Publication';
 $lang['form.approbation.not'] = 'Keep in draft';
 $lang['form.approbation.now'] = 'Publish now';

@@ -24,7 +24,9 @@
 				<a href="{U_SORT_DATE_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 			<th>
-				${LangLoader::get_message('form.approved', 'common')}
+				<a href="{U_SORT_STATUS_ASC}" class="fa fa-table-sort-up"></a>
+				${LangLoader::get_message('status.approved', 'common')}
+				<a href="{U_SORT_STATUS_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 		</tr>
 	</thead>

@@ -234,6 +234,21 @@ class Article
 			&& ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true));
 	}
 	
+	public function get_status()
+	{
+		switch ($this->published) {
+			case self::PUBLISHED_NOW:
+				return LangLoader::get_message('status.approved.now', 'common');
+			break;
+			case self::PUBLISHED_DATE:
+				return LangLoader::get_message('status.approved.date', 'common');
+			break;
+			case self::NOT_PUBLISHED:
+				return LangLoader::get_message('status.approved.not', 'common');
+			break;
+		}
+	}
+	
 	public function set_publishing_start_date(Date $publishing_start_date)
 	{
 		$this->publishing_start_date = $publishing_start_date;
@@ -437,6 +452,7 @@ class Article
 			'DATE' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
 			'DATE_ISO8601' => $this->get_date_created()->format(Date::FORMAT_ISO8601),
 			'DATE_SHORT' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
+			'STATUS' => $this->get_status(),
 			'PUBLISHING_START_DATE' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
 			'PUBLISHING_START_DATE_ISO8601' => $this->publishing_start_date != null ? $this->publishing_start_date->format(Date::FORMAT_ISO8601) : '',
 			'PUBLISHING_END_DATE' => $this->publishing_end_date != null ? $this->publishing_end_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',

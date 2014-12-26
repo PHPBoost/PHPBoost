@@ -72,6 +72,9 @@ class AdminDownloadManageController extends AdminModuleController
 			case 'name':
 				$sort_field = 'name';
 				break;
+			case 'status':
+				$sort_field = 'approbation_type';
+				break;
 			default:
 				$sort_field = 'creation_date';
 				break;
@@ -114,7 +117,9 @@ class AdminDownloadManageController extends AdminModuleController
 			'U_SORT_AUTHOR_ASC' => DownloadUrlBuilder::manage('author', 'asc', $page)->rel(),
 			'U_SORT_AUTHOR_DESC' => DownloadUrlBuilder::manage('author', 'desc', $page)->rel(),
 			'U_SORT_DATE_ASC' => DownloadUrlBuilder::manage('date', 'asc', $page)->rel(),
-			'U_SORT_DATE_DESC' => DownloadUrlBuilder::manage('date', 'desc', $page)->rel()
+			'U_SORT_DATE_DESC' => DownloadUrlBuilder::manage('date', 'desc', $page)->rel(),
+			'U_SORT_STATUS_ASC' => DownloadUrlBuilder::manage('status', 'asc', $page)->rel(),
+			'U_SORT_STATUS_DESC' => DownloadUrlBuilder::manage('status', 'desc', $page)->rel()
 		));
 	}
 	
