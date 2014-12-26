@@ -31,8 +31,8 @@
  */
 class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
 {
-	private $width = 94;
-    private static $tpl_src = '<textarea id="${escape(HTML_ID)}" name="${escape(NAME)}" rows="{ROWS}" cols="{COLS}" class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" style="width:{WIDTH}%;margin:0px;" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #>{VALUE}</textarea>';
+	private $width = 0;
+    private static $tpl_src = '<textarea id="${escape(HTML_ID)}" name="${escape(NAME)}" rows="{ROWS}" cols="{COLS}" class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" style="{WIDTH}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF #>{VALUE}</textarea>';
 
     /**
      * @desc Constructs a FormFieldShortMultiLineTextEditor.
@@ -65,7 +65,7 @@ class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
         $field->put_all(array(
 			'ROWS' => $this->rows,
 			'COLS' => $this->cols,
-			'WIDTH' => $this->width,
+			'WIDTH' => ($this->width > 0) ? 'width: ' . $this->width . '%;' : '',
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
