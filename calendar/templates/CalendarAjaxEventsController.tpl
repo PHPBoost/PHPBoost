@@ -49,7 +49,7 @@
 										<span>
 											# IF event.C_PARTICIPANTS #
 												# START event.participant #
-													<a href="{event.participant.U_PROFILE}" class="{event.participant.LEVEL_CLASS}" # IF event.participant.C_GROUP_COLOR # style="color:{event.participant.GROUP_COLOR}" # ENDIF #>{event.participant.LOGIN}</a># IF NOT event.participant.C_LAST_PARTICIPANT #,# ENDIF #
+													<a href="{event.participant.U_PROFILE}" class="{event.participant.LEVEL_CLASS}" # IF event.participant.C_GROUP_COLOR # style="color:{event.participant.GROUP_COLOR}" # ENDIF #>{event.participant.DISPLAY_NAME}</a># IF NOT event.participant.C_LAST_PARTICIPANT #,# ENDIF #
 												# END event.participant #
 											# ELSE #
 												{@calendar.labels.no_one}

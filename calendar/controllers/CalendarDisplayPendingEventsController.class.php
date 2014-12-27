@@ -67,7 +67,8 @@ class CalendarDisplayPendingEventsController extends ModuleController
 			'user_id' => AppContext::get_current_user()->get_id()
 		);
 		
-		$pagination = $this->get_pagination($condition, $parameters);
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = $this->get_pagination($condition, $parameters, $page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT *
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
@@ -93,7 +94,7 @@ class CalendarDisplayPendingEventsController extends ModuleController
 			$event = new CalendarEvent();
 			$event->set_properties($row);
 			
-			$this->events_view->assign_block_vars('event', $event->get_array_tpl_vars());
+			$this->events_view->assign_block_vars('event', $event->get_array_tpl_vars(CalendarUrlBuilder::display_pending_events($page)->relative()));
 		}
 		$result->dispose();
 		
@@ -114,14 +115,13 @@ class CalendarDisplayPendingEventsController extends ModuleController
 		}
 	}
 	
-	private function get_pagination($condition, $parameters)
+	private function get_pagination($condition, $parameters, $page)
 	{
 		$row = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS events_number
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
 		' . $condition, $parameters);
 		
-		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = new ModulePagination($page, $row['events_number'], (int)CalendarConfig::load()->get_items_number_per_page());
 		$pagination->set_url(CalendarUrlBuilder::display_pending_events('%d'));
 		

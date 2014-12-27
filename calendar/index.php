@@ -45,10 +45,10 @@ $url_controller_mappers = array(
 	
 	//Manage events
 	new UrlControllerMapper('CalendarFormController', '`^/add/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('year', 'month', 'day', 'id_category')),
-	new UrlControllerMapper('CalendarFormController', '`^/edit/([0-9]+)?/?$`', array('id')),
-	new UrlControllerMapper('CalendarDeleteController', '`^/delete/([0-9]+)?/?(?:/([a-z]+))?/?(?:/([a-z_-]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('id', 'return', 'field', 'sort', 'page')),
-	new UrlControllerMapper('CalendarSuscribeController', '`^/suscribe/([0-9]+)?/?([a-z]+)?/?$`', array('event_id')),
-	new UrlControllerMapper('CalendarUnsuscribeController', '`^/unsuscribe/([0-9]+)?/?([a-z]+)?/?$`', array('event_id')),
+	new UrlControllerMapper('CalendarFormController', '`^/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('CalendarDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('CalendarSuscribeController', '`^/([0-9]+)/suscribe/?$`', array('event_id')),
+	new UrlControllerMapper('CalendarUnsuscribeController', '`^/([0-9]+)/unsuscribe/?$`', array('event_id')),
 	
 	new UrlControllerMapper('CalendarDisplayPendingEventsController', '`^/pending/?$`'),
 	

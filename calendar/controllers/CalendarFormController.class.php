@@ -57,7 +57,7 @@ class CalendarFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->redirect();
+			$this->redirect($request);
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -460,7 +460,7 @@ class CalendarFormController extends ModuleController
 		$event->set_id($id_event);
 	}
 	
-	private function redirect()
+	private function redirect(HTTPRequestCustom $request)
 	{
 		$event = $this->get_event();
 		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
@@ -471,21 +471,18 @@ class CalendarFormController extends ModuleController
 		}
 		elseif ($event->get_content()->is_approved())
 		{
-			AppContext::get_response()->redirect(CalendarUrlBuilder::home($event->get_start_date()->get_year(), $event->get_start_date()->get_month(), $event->get_start_date()->get_day() , true));
-		}
-		elseif (!$event->get_content()->is_approved())
-		{
-			AppContext::get_response()->redirect(CalendarUrlBuilder::display_pending_events());
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', CalendarUrlBuilder::home($event->get_start_date()->get_year(), $event->get_start_date()->get_month(), $event->get_start_date()->get_day() , true)));
 		}
 		else
 		{
-			AppContext::get_response()->redirect(CalendarUrlBuilder::home());
+			AppContext::get_response()->redirect($request->get_getvalue('redirect', CalendarUrlBuilder::display_pending_events()));
 		}
 	}
 	
 	private function generate_response(View $tpl)
 	{
 		$event = $this->get_event();
+		$redirect = AppContext::get_request()->get_getvalue('redirect', '');
 		
 		$response = new SiteDisplayResponse($tpl);
 		$graphical_environment = $response->get_graphical_environment();
@@ -506,8 +503,8 @@ class CalendarFormController extends ModuleController
 			$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_content()->get_category_id());
 			$breadcrumb->add($event->get_content()->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), $event->get_content()->get_rewrited_title()));
 			
-			$breadcrumb->add($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id()));
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::edit_event($event->get_id()));
+			$breadcrumb->add($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id(), $redirect));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::edit_event($event->get_id(), $redirect));
 		}
 		
 		return $response;

@@ -28,7 +28,7 @@
 			</th>
 			<th>
 				<a href="{U_SORT_STATUS_ASC}" class="fa fa-table-sort-up"></a>
-				${LangLoader::get_message('status.approved', 'common')}
+				${LangLoader::get_message('status', 'common')}
 				<a href="{U_SORT_STATUS_DESC}" class="fa fa-table-sort-down"></a>
 			</th>
 		</tr>
@@ -66,7 +66,7 @@
 				# IF event.C_BELONGS_TO_A_SERIE #{event.REPEAT_TYPE} - {event.REPEAT_NUMBER} {@calendar.labels.repeat_times}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
 			</td>
 			<td>
-				# IF event.C_APPROVED #${LangLoader::get_message('yes', 'common')}# ELSE #${LangLoader::get_message('no', 'common')}# ENDIF #
+				# IF event.C_APPROVED #${LangLoader::get_message('status.approved', 'common')}# ELSE #${LangLoader::get_message('status.unapproved', 'common')}# ENDIF #
 			</td>
 		</tr>
 		# END event #
