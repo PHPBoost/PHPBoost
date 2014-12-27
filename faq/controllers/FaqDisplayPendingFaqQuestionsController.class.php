@@ -84,6 +84,7 @@ class FaqDisplayPendingFaqQuestionsController extends ModuleController
 			'C_QUESTIONS' => $result->get_rows_count() > 0,
 			'C_PENDING' => true,
 			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
+			'C_DISPLAY_TYPE_ANSWERS_HIDDEN' => $config->is_display_type_answers_hidden(),
 			'QUESTIONS_NUMBER' => $result->get_rows_count()
 		));
 		

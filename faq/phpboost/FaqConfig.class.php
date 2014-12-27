@@ -36,8 +36,8 @@ class FaqConfig extends AbstractConfigData
 	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
 	const AUTHORIZATIONS = 'authorizations';
 	
-	const DISPLAY_TYPE_INLINE = 'inline';
-	const DISPLAY_TYPE_BLOCK = 'block';
+	const DISPLAY_TYPE_ANSWERS_HIDDEN = 'display_type_answers_hidden';
+	const DISPLAY_TYPE_ALL_ANSWERS = 'display_type_all_answers';
 	
 	public function get_columns_number_per_line()
 	{
@@ -59,9 +59,9 @@ class FaqConfig extends AbstractConfigData
 		$this->set_property(self::DISPLAY_TYPE, $value);
 	}
 	
-	public function is_display_type_inline()
+	public function is_display_type_answers_hidden()
 	{
-		return $this->get_property(self::DISPLAY_TYPE) == self::DISPLAY_TYPE_INLINE;
+		return $this->get_property(self::DISPLAY_TYPE) == self::DISPLAY_TYPE_ANSWERS_HIDDEN;
 	}
 	
 	public function get_root_category_description()
@@ -91,7 +91,7 @@ class FaqConfig extends AbstractConfigData
 	{
 		return array(
 			self::COLUMNS_NUMBER_PER_LINE => 4,
-			self::DISPLAY_TYPE => self::DISPLAY_TYPE_INLINE,
+			self::DISPLAY_TYPE => self::DISPLAY_TYPE_ANSWERS_HIDDEN,
 			self::ROOT_CATEGORY_DESCRIPTION => LangLoader::get_message('root_category_description', 'config', 'faq'),
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
 		);

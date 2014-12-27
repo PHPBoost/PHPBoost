@@ -89,10 +89,9 @@ class AdminFaqConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->admin_common_lang['config.display_type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display_type.inline'], FaqConfig::DISPLAY_TYPE_INLINE),
-				new FormFieldSelectChoiceOption($this->admin_common_lang['config.display_type.block'], FaqConfig::DISPLAY_TYPE_BLOCK)
-			),
-			array('description' => $this->lang['config.display_type.explain'])
+				new FormFieldSelectChoiceOption($this->lang['config.display_type.answers_hidden'], FaqConfig::DISPLAY_TYPE_ANSWERS_HIDDEN),
+				new FormFieldSelectChoiceOption($this->lang['config.display_type.display_all_answers'], FaqConfig::DISPLAY_TYPE_ALL_ANSWERS)
+			)
 		));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['config.root_category_description'], $this->config->get_root_category_description(), 

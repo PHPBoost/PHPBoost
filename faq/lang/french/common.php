@@ -44,7 +44,8 @@ $lang['faq.random_question'] = 'Question aléatoire';
 $lang['faq.questions'] = 'Questions';
 
 //config
-$lang['config.display_type.explain'] = 'Façon dont les questions seront affichées. Le mode en ligne permet d\'afficher les questions et un clic sur la question affiche la réponse, alors que le mode en blocs affiche l\'enchaînement des questions et des réponses.';
+$lang['config.display_type.answers_hidden'] = 'Cliquer sur les questions pour afficher les réponses';
+$lang['config.display_type.display_all_answers'] = 'Afficher toutes les réponses';
 $lang['config.root_category_description'] = 'Description de la racine de la FAQ';
 
 //SEO
