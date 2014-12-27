@@ -44,7 +44,8 @@ $lang['faq.random_question'] = 'Random question';
 $lang['faq.questions'] = 'Questions';
 
 //config
-$lang['config.display_type.explain'] = 'Way questions are displayed. "In lines" mode shows questions and, with a click on the question, the answer. "In blocks" mode shows all questions and answer.';
+$lang['config.display_type.answers_hidden'] = 'Clic on questions to display answers';
+$lang['config.display_type.display_all_answers'] = 'Display all answers';
 $lang['config.root_category_description'] = 'FAQ root category description';
 
 //SEO

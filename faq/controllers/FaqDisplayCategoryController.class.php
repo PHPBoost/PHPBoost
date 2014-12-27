@@ -122,7 +122,7 @@ class FaqDisplayCategoryController extends ModuleController
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_QUESTIONS' => $result->get_rows_count() > 0,
 			'C_MORE_THAN_ONE_QUESTION' => $result->get_rows_count() > 1,
-			'C_DISPLAY_TYPE_INLINE' => $config->is_display_type_inline(),
+			'C_DISPLAY_TYPE_ANSWERS_HIDDEN' => $config->is_display_type_answers_hidden(),
 			'CATS_COLUMNS_WIDTH' => $cats_columns_width,
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_IMAGE' => $this->get_category()->get_image()->rel(),

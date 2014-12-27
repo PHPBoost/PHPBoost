@@ -67,7 +67,7 @@ var FaqQuestion = Class.create({
 					if(response.readyState == 4 && response.status == 200 && response.responseJSON.code > 0) {
 						var elementToDelete = $('list_' + response.responseJSON.code);
 						elementToDelete.parentNode.removeChild(elementToDelete);
-						# IF NOT C_DISPLAY_TYPE_INLINE #
+						# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 						var elementToDelete = $('title_question_' + response.responseJSON.code);
 						elementToDelete.parentNode.removeChild(elementToDelete);
 						# ENDIF #
@@ -84,7 +84,7 @@ var FaqQuestion = Class.create({
 								$('position_update_button').style.display = "none";
 							} else {
 								$('position_update_form').style.display = "none";
-								# IF NOT C_DISPLAY_TYPE_INLINE #
+								# IF NOT C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 								$('questions_titles_list').style.display = "none";
 								# ENDIF #
 								$('no_item_message').style.display = "inline";
@@ -177,7 +177,7 @@ Event.observe(window, 'load', function() {
 	</header>
 	<div class="content">
 	# IF C_QUESTIONS #
-		# IF C_DISPLAY_TYPE_INLINE #
+		# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 		<script>
 		<!--
 			function show_answer(id_question)
@@ -227,7 +227,7 @@ Event.observe(window, 'load', function() {
 						<div class="sortable-title">
 							<a title="${LangLoader::get_message('move', 'admin')}" class="fa fa-arrows"></a>
 							<span>
-								# IF C_DISPLAY_TYPE_INLINE #
+								# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN #
 								<a href="" id="q{questions.ID}" onclick="show_answer({questions.ID});return false;" title="" class="fa fa-caret-right"></a>
 								<a href="" onclick="show_answer({questions.ID});return false;" title="">{questions.QUESTION}</a>
 								# ELSE #
@@ -253,7 +253,7 @@ Event.observe(window, 'load', function() {
 							</div>
 						</div>
 						<div>
-							<div id="a{questions.ID}" class="blockquote"# IF C_DISPLAY_TYPE_INLINE # style="display: none;"# ENDIF #>
+							<div id="a{questions.ID}" class="blockquote"# IF C_DISPLAY_TYPE_ANSWERS_HIDDEN # style="display: none;"# ENDIF #>
 								<div itemprop="text">{questions.ANSWER}</div>
 							</div>
 						</div>
