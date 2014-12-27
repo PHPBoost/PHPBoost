@@ -78,7 +78,6 @@ $lang['calendar.labels.events_number'] = ':events_number events';
 $lang['calendar.labels.one_event'] = '1 event';
 $lang['calendar.labels.start_date'] = 'Start date';
 $lang['calendar.labels.end_date'] = 'End date';
-$lang['calendar.labels.not_approved'] = 'Not approved';
 $lang['calendar.labels.contribution.explain'] = 'You are not authorized to create an event, however you can contribute by submitting one.';
 $lang['calendar.labels.birthday_title'] = 'Birthday of';
 $lang['calendar.labels.participants'] = 'Participants';

@@ -156,7 +156,7 @@ class CalendarEvent
 		$this->participants = array();
 	}
 	
-	public function get_array_tpl_vars()
+	public function get_array_tpl_vars($redirect = null)
 	{
 		$lang = LangLoader::get('common', 'calendar');
 		
@@ -214,10 +214,10 @@ class CalendarEvent
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
 			'U_LINK' => CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel(),
-			'U_EDIT' => CalendarUrlBuilder::edit_event(!$this->parent_id ? $this->id : $this->parent_id)->rel(),
-			'U_DELETE' => CalendarUrlBuilder::delete_event($this->id)->rel(),
-			'U_SUSCRIBE' => CalendarUrlBuilder::suscribe_event($this->id)->rel(),
-			'U_UNSUSCRIBE' => CalendarUrlBuilder::unsuscribe_event($this->id)->rel(),
+			'U_EDIT' => CalendarUrlBuilder::edit_event(!$this->parent_id ? $this->id : $this->parent_id, $redirect)->rel(),
+			'U_DELETE' => CalendarUrlBuilder::delete_event($this->id, ($redirect ? $redirect : AppContext::get_request()->get_url_referrer()))->rel(),
+			'U_SUSCRIBE' => CalendarUrlBuilder::suscribe_event($this->id, $redirect)->rel(),
+			'U_UNSUSCRIBE' => CalendarUrlBuilder::unsuscribe_event($this->id, $redirect)->rel(),
 			'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel()
 		);
 	}

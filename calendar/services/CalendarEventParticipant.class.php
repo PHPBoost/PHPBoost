@@ -28,7 +28,7 @@
 class CalendarEventParticipant
 {
 	private $user_id;
-	private $login;
+	private $display_name;
 	private $level;
 	private $user_groups;
 	
@@ -42,14 +42,14 @@ class CalendarEventParticipant
 		return $this->user_id;
 	}
 	
-	public function set_login($login)
+	public function set_display_name($display_name)
 	{
-		$this->login = $login;
+		$this->display_name = $display_name;
 	}
 	
-	public function get_login()
+	public function get_display_name()
 	{
-		return $this->login;
+		return $this->display_name;
 	}
 	
 	public function set_level($level)
@@ -76,7 +76,7 @@ class CalendarEventParticipant
 	{
 		return array(
 			'user_id' => $this->get_user_id(),
-			'login' => $this->get_login(),
+			'display_name' => $this->get_login(),
 			'level' => $this->get_level(),
 			'user_groups' => $this->get_user_groups()
 		);
@@ -85,7 +85,7 @@ class CalendarEventParticipant
 	public function set_properties(array $properties)
 	{
 		$this->user_id = $properties['user_id'];
-		$this->login = $properties['login'];
+		$this->display_name = $properties['display_name'];
 		$this->level = $properties['level'];
 		$this->user_groups = explode('|', $properties['groups']);
 	}
@@ -96,7 +96,7 @@ class CalendarEventParticipant
 		
 		return array(
 			'C_GROUP_COLOR' => !empty($group_color),
-			'LOGIN' => $this->login,
+			'DISPLAY_NAME' => $this->display_name,
 			'LEVEL_CLASS' => UserService::get_level_class($this->level),
 			'GROUP_COLOR' => $group_color,
 			'U_PROFILE' => UserUrlBuilder::profile($this->user_id)->rel()
