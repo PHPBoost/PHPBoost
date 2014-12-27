@@ -114,11 +114,11 @@ h4.formatter-title {
 }
 
 .calendar-block .date-picker tbody tr td:first-child { border-left: none; }
-.calendar-block .date-picker tbody tr td:last-child { border-right: none; }
+.calendar-block .date-picker tbody tr td:last-child  { border-right: none; }
 
-.calendar-block .date-picker tbody tr td.calendar-none { background: #FFFFFF; }
-.calendar-block .date-picker tbody tr td.calendar-today { background: #B5E5B9; }
-.calendar-block .date-picker tbody tr td.calendar-event { background: #DBE5EE; }
+.calendar-block .date-picker tbody tr td.calendar-none    { background: #FFFFFF; }
+.calendar-block .date-picker tbody tr td.calendar-today   { background: #B5E5B9; }
+.calendar-block .date-picker tbody tr td.calendar-event   { background: #DBE5EE; }
 .calendar-block .date-picker tbody tr td.calendar-weekend { background: #FFE3B6; }
 
 /* --- les blocs bbcode --- */
@@ -127,7 +127,7 @@ h4.formatter-title {
 	text-align: center;
 	padding: 6px 4px;
 	bottom: 2px;
-	z-index: 100;
+	z-index: 20;
 	background: #F3F3F3;
 	border-radius: 3px;
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
@@ -294,18 +294,18 @@ h4.formatter-title {
 -------------------------------------------*/
 /* --- les couleurs d icones --- */
 .fa-syndication:before { color: #F57900; }
-.fa-success:before { color: #478948; }
-.fa-forbidden:before { color: #BA4B49; }
-.fa-error:before { color: #BA4B49; }
-.fa-warning:before { color: #C19954; }
-.fa-ban:before { color: #BA4B49; }
-.fa-unban:before { color: #478948; }
-.fa-male:before { color: #8DC3E9; }
-.fa-female:before { color: #F49CC4; }
-.fa-online:before { color: #52D132; }
-.fa-offline:before { color: #E05759; }
-.fa-trend-up:before { color: #478948; }
-.fa-trend-down:before { color: #BA4B49; }
+.fa-success:before     { color: #478948; }
+.fa-forbidden:before   { color: #BA4B49; }
+.fa-error:before       { color: #BA4B49; }
+.fa-warning:before     { color: #C19954; }
+.fa-ban:before         { color: #BA4B49; }
+.fa-unban:before       { color: #478948; }
+.fa-male:before        { color: #8DC3E9; }
+.fa-female:before      { color: #F49CC4; }
+.fa-online:before      { color: #52D132; }
+.fa-offline:before     { color: #E05759; }
+.fa-trend-up:before    { color: #478948; }
+.fa-trend-down:before  { color: #BA4B49; }
 
 /* --- Les alertes --- */
 li.small-block .fa-stack { height: 2.34em; }
@@ -731,22 +731,22 @@ div.message-helper-small {
 	text-align: center;
 }
 
-.error:before { content: "\f00d"; }
-.notice:before { content: "\f12a"; }
-.warning:before { content: "\f071"; }
-.success:before { content: "\f00c"; }
+.error:before    { content: "\f00d"; }
+.notice:before   { content: "\f12a"; }
+.warning:before  { content: "\f071"; }
+.success:before  { content: "\f00c"; }
 .question:before { content: "\f128"; }
 
-.error, .error:before { color: #BA4B49; }
-.notice, .notice:before { color: #888888; }
-.warning, .warning:before { color: #C19954; }
-.success, .success:before { color: #478948; }
+.error, .error:before       { color: #BA4B49; }
+.notice, .notice:before     { color: #888888; }
+.warning, .warning:before   { color: #C19954; }
+.success, .success:before   { color: #478948; }
 .question, .question:before { color: #3B88AE; }
 
-.error { background-color: #F3DFDF; border-color: #ECCDD2; }
-.notice { background-color: #F0F0F0; border-color: #E2E2E2; }
-.warning { background-color: #FDF9E4; border-color: #FBECCD; }
-.success { background-color: #E0F1D9; border-color: #D7EAC7; }
+.error    { background-color: #F3DFDF; border-color: #ECCDD2; }
+.notice   { background-color: #F0F0F0; border-color: #E2E2E2; }
+.warning  { background-color: #FDF9E4; border-color: #FBECCD; }
+.success  { background-color: #E0F1D9; border-color: #D7EAC7; }
 .question { background-color: #DAEEF8; border-color: #BDE9F2; }
 
 
