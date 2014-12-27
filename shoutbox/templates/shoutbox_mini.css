@@ -1,7 +1,5 @@
 /* Conteneur des messages de la shoutbox.*/
-div#shoutbox-messages-container, 
-.shout-horizontal div#shoutbox-messages-container {
-	width: 142px;
+#shoutbox-messages-container {
 	height: 150px;
 	overflow: auto;
 	text-align: left;
@@ -9,20 +7,34 @@ div#shoutbox-messages-container,
 	word-wrap: break-word;
 }
 
-.shout-horizontal div#shoutbox-messages-container {
-	width: auto;
-	padding-left: 15px;
+.shout-horizontal {
+	padding-left: 1.5em;
 }
 
-.shout-horizontal { width: auto; }
+.shoutbox-message-pseudo {
+	font-style: italic;
+}
 
 .shout-spacing {
-	margin: 0;
-	margin-bottom: 10px;
+	margin: 0 0 10px 0;
+}
+
+#module-mini-shoutbox textarea,
+#module-mini-shoutbox textarea:valid {
+	border-color: #CCCCCC;
 }
 
 .shout-bbcode-icon-disabled {
 	opacity: 0.3;
-	filter: alpha(opacity=30);
 	cursor: default;
+}
+
+#shoutbox-bbcode-container ul {
+	padding: 0;
+	margin: 0;
+}
+
+#shoutbox-bbcode-container ul li {
+	border: none;
+	display: inline-block;
 }

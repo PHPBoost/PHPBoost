@@ -1,10 +1,10 @@
-<section>
+<section id="module-shoutbox">
 	<header>
 		<h1>{@module_title}</h1>
 	</header>
 	<div class="content">
 		# INCLUDE FORM #
-		
+
 		# IF C_PAGINATION #
 			<div class="center"># INCLUDE PAGINATION #</div>
 			<div class="spacer">&nbsp;</div>
