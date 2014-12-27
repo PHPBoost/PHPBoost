@@ -91,16 +91,11 @@ function shoutbox_refresh_messages_box() {
 		<h5 class="sub-title">{@module_title}</h5>
 	</div>
 	<div class="module-mini-contents">
-		# IF C_HORIZONTAL #<div class="shout-horizontal">
-			<div id="shoutbox-messages-container"># INCLUDE SHOUTBOX_MESSAGES #</div>
-		</div>
-		# ELSE #
-		<div id="shoutbox-messages-container"># INCLUDE SHOUTBOX_MESSAGES #</div>
-		# ENDIF #
+		<div id="shoutbox-messages-container"# IF C_HORIZONTAL # class="shout-horizontal" # ENDIF #># INCLUDE SHOUTBOX_MESSAGES #</div>
 		# IF C_DISPLAY_FORM #
 		<form action="?token={TOKEN}" method="post">
 			# IF NOT C_MEMBER #
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 			<label for="shout-pseudo"><span class="small">${LangLoader::get_message('field.name', 'admin-user-common')}</span></label>
 			<input size="16" maxlength="25" type="text" name="shout-pseudo" id="shout-pseudo" value="${LangLoader::get_message('guest', 'main')}">
 			# ELSE #
@@ -110,23 +105,35 @@ function shoutbox_refresh_messages_box() {
 			# IF C_VERTICAL #<label for="shout-contents"><span class="small">${LangLoader::get_message('message', 'main')}</span></label># ENDIF #
 			<textarea id="shout-contents" name="shout-contents"# IF C_VALIDATE_ONKEYPRESS_ENTER # onkeypress="if(event.keyCode==13){shoutbox_add_message();}"# ENDIF # rows="# IF C_VERTICAL #4# ELSE #2# ENDIF #" cols="16"></textarea>
 			# IF C_DISPLAY_SHOUT_BBCODE #
-			<div class="shout-spacing">
-				<a href="javascript:bb_display_block('1', 'shout-contents');" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);" class="fa bbcode-icon-smileys" title="${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}"></a>
-				<div class="bbcode-block-container" style="display:none;" id="bb-block1shout-contents">
-					<div class="bbcode-block" style="width:140px;" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);">
-						# START smileys #
-							<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', 'shout-contents');return false;" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" alt="{smileys.CODE}"></a># IF smileys.C_END_LINE #<br /># ENDIF #
-						# END smileys #
-						# IF C_BBCODE_SMILEY_MORE #
-							<br /><br />
-							<a href="" onclick="window.open('{PATH_TO_ROOT}/BBCode/formatting/smileys.php?field=shout-contents', '${LangLoader::get_message('smiley', 'main')}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;" title="${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}" class="small">${LangLoader::get_message('all_smiley', 'main')}</a>
-						# ENDIF #
-					</div>
-				</div>
-				<a href="" class="fa bbcode-icon-bold# IF C_BOLD_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_BOLD_DISABLED #insertbbcode('[b]', '[/b]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_bold', 'common', 'BBCode')}"></a>
-				<a href="" class="fa bbcode-icon-italic# IF C_ITALIC_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_ITALIC_DISABLED #insertbbcode('[i]', '[/i]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_italic', 'common', 'BBCode')}"></a>
-				<a href="" class="fa bbcode-icon-underline# IF C_UNDERLINE_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_UNDERLINE_DISABLED #insertbbcode('[u]', '[/u]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_underline', 'common', 'BBCode')}"></a>
-				<a href="" class="fa bbcode-icon-strike# IF C_STRIKE_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_STRIKE_DISABLED #insertbbcode('[s]', '[/s]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_strike', 'common', 'BBCode')}"></a>
+			<div id="shoutbox-bbcode-container" class="shout-spacing">
+				<ul>
+					<li class="bbcode-elements">
+						<a href="javascript:bb_display_block('1', 'shout-contents');" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);" class="fa bbcode-icon-smileys" title="${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}"></a>
+						<div class="bbcode-block-container" style="display:none;" id="bb-block1shout-contents">
+							<div class="bbcode-block" style="width:140px;" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);">
+								# START smileys #
+									<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', 'shout-contents');return false;" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" alt="{smileys.CODE}"></a># IF smileys.C_END_LINE #<br /># ENDIF #
+								# END smileys #
+								# IF C_BBCODE_SMILEY_MORE #
+									<br /><br />
+									<a href="" onclick="window.open('{PATH_TO_ROOT}/BBCode/formatting/smileys.php?field=shout-contents', '${LangLoader::get_message('smiley', 'main')}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;" title="${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}" class="small">${LangLoader::get_message('all_smiley', 'main')}</a>
+								# ENDIF #
+							</div>
+						</div>
+					</li>
+					<li class="bbcode-elements">
+						<a href="" class="fa bbcode-icon-bold# IF C_BOLD_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_BOLD_DISABLED #insertbbcode('[b]', '[/b]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_bold', 'common', 'BBCode')}"></a>
+					</li>
+					<li class="bbcode-elements">
+						<a href="" class="fa bbcode-icon-italic# IF C_ITALIC_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_ITALIC_DISABLED #insertbbcode('[i]', '[/i]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_italic', 'common', 'BBCode')}"></a>
+					</li>
+					<li class="bbcode-elements">
+						<a href="" class="fa bbcode-icon-underline# IF C_UNDERLINE_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_UNDERLINE_DISABLED #insertbbcode('[u]', '[/u]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_underline', 'common', 'BBCode')}"></a>
+					</li>
+					<li class="bbcode-elements">
+						<a href="" class="fa bbcode-icon-strike# IF C_STRIKE_DISABLED # shout-bbcode-icon-disabled# ENDIF #" onclick="# IF NOT C_STRIKE_DISABLED #insertbbcode('[s]', '[/s]', 'shout-contents');# ENDIF #return false;" title="${LangLoader::get_message('bb_strike', 'common', 'BBCode')}"></a>
+					</li>
+				</ul>
 			</div>
 			# ENDIF #
 			<p class="shout-spacing">
@@ -135,7 +142,7 @@ function shoutbox_refresh_messages_box() {
 			</p>
 		</form>
 		# ELSE #
-		<div class="spacer">&nbsp;</div>
+		<div class="spacer"></div>
 		<span class="warning">${LangLoader::get_message('e_unauthorized', 'errors')}</span>
 		# ENDIF #
 		<a class="small" href="${relative_url(ShoutboxUrlBuilder::home())}" title="">{@archives}</a>
