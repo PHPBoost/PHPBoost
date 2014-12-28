@@ -1,4 +1,4 @@
-<div style="float:left">
+<div class="advanced-auth-group">
 	<select id="groups_auth{IDSELECT}" name="groups_auth{IDSELECT}[]" size="8" multiple="multiple" onclick="{DISABLED_SELECT} document.getElementById('id{IDSELECT}r2').selected = true;">
 		<optgroup label="{L_RANKS}">
 		# START ranks_list #
@@ -15,11 +15,11 @@
 </div>
 
 # IF C_NO_ADVANCED_AUTH #
-<div class="spacer"></div> 
+<div class="spacer"></div>
 # ENDIF #
 
 # IF C_ADVANCED_AUTH #
-<div id="advanced_authb{IDSELECT}" style="margin-left:5px;{ADVANCED_AUTH_STYLE}float:left;">
+<div id="advanced_authb{IDSELECT}" class="advanced-auth-select" style="{ADVANCED_AUTH_STYLE}">
 	<select id="members_auth{IDSELECT}" name="members_auth{IDSELECT}[]" size="8" multiple="multiple">
 		<optgroup label="{L_USERS}" id="advanced_auth3{IDSELECT}">
 			# START members_list #
@@ -29,14 +29,14 @@
 	</select>
 </div>
 
-<div id="advanced_auth{IDSELECT}" style="{ADVANCED_AUTH_STYLE}float:left;margin-left:5px;width:150px;">
+<div id="advanced_auth{IDSELECT}" class="advanced-auth-input" style="{ADVANCED_AUTH_STYLE}">
 	<strong>{L_ADD_USER}</strong>
 	<br />
 	<input type="text" size="14" value="" id="login{IDSELECT}" name="login{IDSELECT}">
 	<button onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" class="small">{L_GO}</button>
 	<br />
-	<span id="search_img{IDSELECT}"></span> 
-	<div id="xmlhttprequest-result-search{IDSELECT}" style="display:none;width:125px;height:67px;margin-top:2px;" class="xmlhttprequest-result-search"></div>
+	<span id="search_img{IDSELECT}"></span>
+	<div id="xmlhttprequest-result-search{IDSELECT}" class="xmlhttprequest-result-search advanced-auth-input-result" style="display:none;"></div>
 </div>
 # ENDIF #
 

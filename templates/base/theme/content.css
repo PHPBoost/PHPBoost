@@ -722,6 +722,7 @@ input.field-xlarge  { width: 300px; }
 .form-element,
 .form-element-textarea {
 	margin: 0px 1em 1em 1em;
+	position: relative;
 }
 
 .fieldset-description {
@@ -756,15 +757,6 @@ input.field-xlarge  { width: 300px; }
 	display: inline-block;
 	max-width: 600px;
 	position: relative;
-	width: 58%;
-}
-
-/* CSS applique aux tablettes */
-@media ( max-width: 768px ) {
-	.form-element .form-field {
-		display: block;
-		width: 100%;
-	}
 }
 
 /* --- Label pour les checkbox et radio --- */
@@ -832,12 +824,73 @@ select[readonly=readonly]:focus {
 }
 
 /* --- Textarea --- */
+.form-field-textarea {
+	display: inline;
+	margin: 5px auto;
+	width: 90%;
+	position: relative;
+}
+
 textarea {
 	overflow: auto;
-	display: inline-block;
-	margin: 5px 0px;
 	resize: vertical;
-	width: 90%;
+}
+
+.form-element-textarea textarea {
+	width: 100%;
+}
+
+.form-element-textarea .form-field-textarea {
+	display: block;
+}
+
+.form-element-textarea .form-field-textarea div {
+	float: left;
+}
+
+.form-element-preview {
+	text-align: center;
+	margin: 5px auto 0 auto;
+}
+
+.form-element-auth .form-field {
+	display: block;
+	margin: 2px 0px 0px 0px;
+}
+
+.form-element-auth .form-field div[class^="advanced-auth"] {
+	float:left;
+}
+
+.form-element-auth .field-description {
+	display: inline;
+	font-style: italic;
+}
+
+.advanced-auth-select {
+	margin-left:5px;
+}
+
+.advanced-auth-input {
+	margin-left: 5px;
+	width: 150px;
+}
+
+.advanced-auth-input input {
+	padding: 4px 24px 4px 6px;
+}
+
+.advanced-auth-input button {
+	margin-left: -29px;
+	padding: 5px 5px 6px 5px;
+	border-width: 0px 0px 0px 1px;
+	border-radius: 0px 4px 4px 0px;
+}
+
+.advanced-auth-input-result {
+	width: 138px;
+	height: 100px;
+	margin: 2px 0px 0px 0px;
 }
 
 /* CSS applique aux écrans PC */
@@ -849,8 +902,16 @@ textarea {
 
 /* CSS applique aux tablettes */
 @media ( max-width: 768px ) {
-	textarea {
+	.form-field-textarea {
 		width: 100%;
+	}
+}
+
+/* CSS applique aux smartphones */
+@media ( max-width: 480px ) {
+	.form-element-auth .form-field .advanced-auth-input {
+		float: none;
+		margin: 5px 0px 0px 0px;
 	}
 }
 
@@ -871,43 +932,27 @@ textarea {
 	color: #C43C35;
 }
 
-.constraint-status-right input:focus + i.picture-status-constraint:before,
-.constraint-status-error input:focus + i.picture-status-constraint:before {
-	content: "";
-}
-
-.constraint-status-right i.picture-status-constraint:before,
-.constraint-status-error i.picture-status-constraint:before {
-	opacity: 1;
-	font-size: 1.5rem;
-	margin: 0 0 0 -22px;
-}
-
-.constraint-status-right i.picture-status-constraint:before {
-	content: "\f00c";
-	color: #57A957;
-}
-.constraint-status-error i.picture-status-constraint:before {
-	content: "\f056";
-	color: #C43C35;
-}
-
-span.text-status-constraint {
-	font-weight: bold;
+.text-status-constraint {
 	position:absolute;
-	background: #FEFEFE;
-	padding: 6px 5px;
-	bottom: -30px;
-	left: 5px;
 	z-index: 1;
-	border-radius: 3px;
-	box-shadow: 1px 3px 6px rgba(0,0,0,0.3);
-	text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+	padding: 6px 5px;
+	left: 5px;
+
+	background: #FEFEFE;
 	border: 1px solid #EAEAEA;
+	box-shadow: 1px 3px 6px rgba(0,0,0,0.3);
+	border-radius: 3px;
+
 	font-size: 0.8em;
+	font-weight: bold;
+	text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
 }
 
-span.text-status-constraint::before {
+input + .text-status-constraint {
+	top: 25px;
+}
+
+.text-status-constraint::before {
 	content: " ";
 	position: absolute;
 	border-bottom: 9px solid rgba(230, 230, 230, 1);
@@ -917,7 +962,7 @@ span.text-status-constraint::before {
 	top: -9px;
 }
 
-span.text-status-constraint::after {
+.text-status-constraint::after {
 	content: " ";
 	position: absolute;
 	border-bottom: 8px solid rgba(250, 250, 250, 1);
@@ -927,12 +972,62 @@ span.text-status-constraint::after {
 	top: -8px;
 }
 
-i.picture-field-required:before {
+.field-required:after,
+.picture-status-constraint:after {
+	display: inline-block;
+	position: absolute;
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	right: 4px;
+}
+
+.field-required:after {
 	content: "\f069";
 	color: #C43C35;
 	opacity: 0.6;
 	font-size: 0.8rem;
-	margin: 0 0 0 -16px;
+	top: 8px;
+}
+
+.form-element-date .field-required:after {
+	right: 22px;
+}
+.form-element-date .constraint-status-error .field-required:after,
+.form-element-date .constraint-status-right .field-required:after {
+	right: 20px;
+}
+
+.form-field-textarea.field-required:after {
+	top: 45%;
+}
+
+.constraint-status-error .field-required:after,
+.constraint-status-right .field-required:after {
+	content: " ";
+}
+
+.constraint-status-error .picture-status-constraint:after,
+.constraint-status-right .picture-status-constraint:after {
+	opacity: 1;
+	font-size: 1.5rem;
+	top: 4px;
+}
+
+.constraint-status-error .form-field-textarea.picture-status-constraint:after,
+.constraint-status-right .form-field-textarea.picture-status-constraint:after {
+	top: 40%;
+}
+
+.constraint-status-error .picture-status-constraint:after {
+	content: "\f056";
+	color: #C43C35;
+}
+.constraint-status-right .picture-status-constraint:after {
+	content: "\f00c";
+	color: #57A957;
 }
 
 /* --- Auto-completion --- */
