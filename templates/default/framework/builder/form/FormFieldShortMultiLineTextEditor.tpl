@@ -5,11 +5,10 @@
 		<br/>
 
 	</label>
-	<div class="form-field">
+	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field-textarea# IF C_REQUIRED # field-required # ENDIF #">
 		# START fieldelements #
-			{fieldelements.ELEMENT}
+		{fieldelements.ELEMENT}
 		# END fieldelements #
-		<i class="fa # IF C_REQUIRED # picture-field-required # ENDIF # picture-status-constraint" id="onblurContainerResponse${escape(HTML_ID)}"></i>
 		<span class="text-status-constraint" style="display:none" id="onblurMessageResponse${escape(HTML_ID)}"></span>
 	</div>
 </div>
