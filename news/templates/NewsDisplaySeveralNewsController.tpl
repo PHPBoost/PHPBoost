@@ -1,4 +1,4 @@
-<section>
+<section id="module-news">
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('news', ID_CAT))}" class="fa fa-syndication" title="${LangLoader::get_message('syndication', 'common')}"></a>
@@ -25,31 +25,31 @@
 							# ENDIF #
 						</span>
 					</h1>
-					
+
 					<div class="more">
 						# IF news.C_AUTHOR_DISPLAYED #
 							${LangLoader::get_message('by', 'common')}
 							# IF news.C_AUTHOR_EXIST #<a itemprop="author" class="{news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}" style="font-size: 12px;" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, # ELSE #{news.PSEUDO}# ENDIF #
 						# ENDIF #
-						${TextHelper::lowercase_first(LangLoader::get_message('the', 'common'))} <time datetime="{news.DATE_ISO8601}" itemprop="datePublished">{news.DATE}</time> 
+						${TextHelper::lowercase_first(LangLoader::get_message('the', 'common'))} <time datetime="{news.DATE_ISO8601}" itemprop="datePublished">{news.DATE}</time>
 						${TextHelper::lowercase_first(LangLoader::get_message('in', 'common'))} <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
 						# IF C_COMMENTS_ENABLED #- # IF news.C_COMMENTS # {news.NUMBER_COMMENTS} # ENDIF #	{news.L_COMMENTS}# ENDIF #
 					</div>
-					
+
 					<meta itemprop="url" content="{news.U_LINK}">
 					<meta itemprop="description" content="${escape(news.DESCRIPTION)}"/>
 					# IF C_COMMENTS_ENABLED #
 					<meta itemprop="discussionUrl" content="{news.U_COMMENTS}">
 					<meta itemprop="interactionCount" content="{news.NUMBER_COMMENTS} UserComments">
 					# ENDIF #
-					
+
 				</header>
-				
+
 				<div class="content">
 					# IF news.C_PICTURE #<img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="right" /># ENDIF #
 					<div itemprop="text"># IF C_DISPLAY_CONDENSED_CONTENT # {news.DESCRIPTION}... <a href="{news.U_LINK}">[${LangLoader::get_message('read-more', 'common')}]</a># ELSE # {news.CONTENTS} # ENDIF #</div>
 				</div>
-				
+
 				<footer></footer>
 			</article>
 		# END news #
