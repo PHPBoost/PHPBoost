@@ -22,6 +22,7 @@
 #module-mini-shoutbox textarea,
 #module-mini-shoutbox textarea:valid {
 	border-color: #CCCCCC;
+	width: 90%;
 }
 
 .shout-bbcode-icon-disabled {
@@ -38,3 +39,4 @@
 	border: none;
 	display: inline-block;
 }
+
