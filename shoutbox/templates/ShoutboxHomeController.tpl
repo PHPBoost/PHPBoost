@@ -7,7 +7,7 @@
 
 		# IF C_PAGINATION #
 			<div class="center"># INCLUDE PAGINATION #</div>
-			<div class="spacer">&nbsp;</div>
+			<div class="spacer"></div>
 		# ENDIF #
 		# IF C_NO_MESSAGE #
 			<div class="notice message-helper-small center">${LangLoader::get_message('no_item_now', 'common')}</div>
