@@ -21,13 +21,13 @@
 					<span class="text-strong">{themes_not_installed.NAME}</span> <span class="text-italic">({themes_not_installed.VERSION})</span>
 					<br /><br />
 					# IF themes_not_installed.C_PICTURES #
-						<a href="{themes_not_installed.MAIN_PICTURE}" rel="lightbox[{themes_not_installed.ID}]" title="{themes_not_installed.NAME}">
+						<a href="{themes_not_installed.MAIN_PICTURE}" data-lightbox="{themes_not_installed.ID}" title="{themes_not_installed.NAME}">
 							<img src="{themes_not_installed.MAIN_PICTURE}" alt="{themes_not_installed.NAME}" style="vertical-align:top; max-height:180px;" />
 							<br/>
 							{@themes.view_real_preview}
 						</a>
 						# START themes_not_installed.pictures #
-							<a href="{themes_not_installed.pictures.URL}" rel="lightbox[{themes_not_installed.ID}]" title="{themes_not_installed.NAME}"></a>
+							<a href="{themes_not_installed.pictures.URL}" data-lightbox="{themes_not_installed.ID}" title="{themes_not_installed.NAME}"></a>
 						# END themes_not_installed.pictures #
 					# ENDIF #				
 				</td>

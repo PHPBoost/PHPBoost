@@ -455,7 +455,7 @@ function createSortableMenu()
 		
 		<script>
 		<!--
-		Event.observe(window, 'load', function() {
+		jQuery(document).ready(function() {
 			createSortableMenu();
 		});
 		-->

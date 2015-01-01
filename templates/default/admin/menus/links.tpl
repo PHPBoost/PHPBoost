@@ -13,12 +13,12 @@ function createSortableMenu() {
 function toggleProperties(id) {
 	if (document.getElementById("menu_element_" + id + "_properties").style.display == "none")
 	{   //Si les propriétés sont repliées, on les affiche
-		Effect.Appear("menu_element_" + id + "_properties");
+		jQuery("#menu_element_" + id + "_properties").fadeIn();
 		document.getElementById("menu_element_" + id + "_more_image").className = "fa fa-minus";
 	}
 	else
 	{   //Sinon, on les cache
-		Effect.Fade("menu_element_" + id + "_properties");
+		jQuery("#menu_element_" + id + "_properties").fadeOutn();
 		document.getElementById("menu_element_" + id + "_more_image").className = "fa fa-plus";
 	}
 }
@@ -83,7 +83,7 @@ function addSubElement(menu_element_id) {
 	]);
 
 	$(menu_element_id + '_list').appendChild(newDiv);
-	Effect.Appear(newDiv.id);
+	jQuery("#" + newDiv.id).fadeIn();
 	destroySortableMenu();
 	createSortableMenu();
 	select('menu_element_' + id + '_name');
@@ -139,7 +139,7 @@ function addSubMenu(menu_element_id) {
 	]);
 
 	$(menu_element_id + '_list').appendChild(newDiv);
-	Effect.Appear(newDiv.id);
+	jQuery("#" + newDiv.id).fadeIn();
 	addSubElement('menu_element_' + id);
 	select('menu_element_' + id + '_name');
 }
@@ -231,7 +231,7 @@ function image_preview(input,image)
 			{MENU_TREE}
 			<script>
 			<!--
-			Event.observe(window, 'load', function() {
+			jQuery(document).ready(function() {
 				createSortableMenu();
 			});
 			-->

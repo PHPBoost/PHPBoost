@@ -1,20 +1,24 @@
 <script>
 <!--
-function refresh_comments()
-{
-	new Ajax.Updater('comments_list', PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/display/', {
-		parameters: {module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)}, token: ${escapejs(TOKEN)}},
-		insertion: Insertion.Bottom,
-		onComplete: function() { 
-			$('refresh_comments').remove() 
+function refresh_comments() {
+	jQuery.ajax({
+		url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/display/',
+		type: "post",
+		dataType: "html",
+		data: {module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)}, token: ${escapejs(TOKEN)}},
+		success: function(returnData){
+			jQuery("#comments_list").append(returnData);
+			jQuery('#refresh_comments').remove();
+		},
+		error: function(e){
+			alert(e);
 		}
-	})
+	});
 }
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
-Event.observe(window, 'load', function() {
-	
-	$('refresh_comments').observe('click', function() {
+jQuery(document).ready(function(){ 
+	jQuery("#refresh_comments").click(function() {
 		refresh_comments();
 	});
 });

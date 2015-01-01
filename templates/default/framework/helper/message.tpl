@@ -3,7 +3,7 @@
 		<script>
 		<!--
 			//Javascript timeout to hide this message
-			setTimeout('Effect.Fade("msg-helper-{ID}");', {TIMEOUT});
+			setTimeout('jQuery("#msg-helper-{ID}").fadeOut();', {TIMEOUT});
 		-->
 		</script>
 		# ENDIF #

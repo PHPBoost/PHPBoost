@@ -1,6 +1,6 @@
 <script>
 <!--
-Event.observe(window, 'load', function() {
+jQuery(document).ready(function() {
 	var field = new FormField("${escape(ID)}");
 	var fieldset = HTMLForms.getFieldset("${escape(FIELDSET_ID)}");
 	fieldset.addField(field);

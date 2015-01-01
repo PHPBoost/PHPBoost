@@ -137,7 +137,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
 			'`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU',
-			'`<a href="([^"]+)" rel="lightbox\[2\]">(.*)</a>`isU',
+			'`<a href="([^"]+)" data-lightbox="formatter">(.*)</a>`isU',
 		);
 
 		$array_preg_replace = array(

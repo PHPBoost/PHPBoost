@@ -4,15 +4,15 @@
 		<![endif]-->
 		<script>
 		<!-- 
-			$$('[data-confirmation]').each(function(a) {
-				var data_confirmation = a.readAttribute('data-confirmation');
-				
+			jQuery('[data-confirmation]').each(function() {
+				data_confirmation = jQuery(this).attr('data-confirmation');
+
 				if (data_confirmation == 'delete-element')
 					var message = ${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))};
 				else
 					var message = data_confirmation;
 
-				a.onclick = function () { return confirm(message); }
-			}); 
+				this.onclick = function () { return confirm(message); }
+			});
 		-->
 		</script>

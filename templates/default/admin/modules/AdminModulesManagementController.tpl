@@ -78,7 +78,7 @@
 				</td>
 				<script>
 				<!--
-					Event.observe(window, 'load', function() {
+					jQuery(document).ready(function() {
 						var OpenCloseDivDesc = new OpenCloseDiv('desc_explain{modules_not_activated.ID}', 'picture_desc{modules_not_activated.ID}');
 						
 						Event.observe($('picture_desc{modules_not_activated.ID}'), 'click', function() {
@@ -133,7 +133,7 @@
 				</td>
 				<script>
 				<!--
-					Event.observe(window, 'load', function() {
+					jQuery(document).ready(function() {
 						var OpenCloseDivDesc = new OpenCloseDiv('desc_explain{modules_activated.ID}', 'picture_desc{modules_activated.ID}');
 						
 						Event.observe($('picture_desc{modules_activated.ID}'), 'click', function() {

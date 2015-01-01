@@ -49,7 +49,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 				# INCLUDE FORM #
 				<script>
 				<!--
-					Event.observe(window, \'load\', function() {
+					jQuery(document).ready(function() {
 						'. $this->get_events_select_type() .'
 					});
 				-->

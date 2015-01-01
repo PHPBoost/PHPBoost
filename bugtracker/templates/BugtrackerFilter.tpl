@@ -20,7 +20,7 @@ function delete_filter(id) {
 <menu class="dynamic-menu">
 	<ul>
 		<li>
-			<a href="" onclick="Effect.toggle('table_filters', 'appear'); return false;"><i class="fa fa-filter"></i> {L_FILTERS}</a> 
+			<a href="" onclick="jQuery("#" + table_filters).fadeToggle(); return false;"><i class="fa fa-filter"></i> {L_FILTERS}</a> 
 		</li>
 	</ul>
 </menu>
@@ -101,7 +101,7 @@ function delete_filter(id) {
 		</tr>
 		<script>
 		<!--
-		Event.observe(window, 'load', function() {
+		jQuery(document).ready(function() {
 			$('delete_{filters.ID}').observe('click',function(){
 				delete_filter('{filters.ID}');
 			});

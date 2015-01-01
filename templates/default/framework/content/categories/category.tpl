@@ -1,6 +1,6 @@
 <script>
 <!--
-Event.observe(window, 'load', function() {
+jQuery(document).ready(function() {
 	$('move-up-{ID}').observe('click',function(){
 		move_category_up($('cat_{ID}').parentNode.id, $('cat_{ID}').id);
 	});

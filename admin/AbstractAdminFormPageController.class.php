@@ -49,7 +49,7 @@ abstract class AbstractAdminFormPageController extends AdminController
 		<div id="success_message" class="success">{SUCCESS_MESSAGE}</div>
 		# ENDIF #
 		<script><!--
-		window.setTimeout(function() { Effect.Fade("success_message"); }, 5000);
+		window.setTimeout(function() { jQuery("#success_message").fadeOut(); }, 5000);
 		--></script>
 		# INCLUDE form #');
 		$this->create_form();

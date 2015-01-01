@@ -196,14 +196,14 @@ var FormFieldset = Class.create({
 	},
 	enable : function() {
 		this.disabled = false;
-		Effect.Appear(this.getHTMLId());
+		jQuery("#" + this.getHTMLId()).fadeIn();
 		this.fields.each(function(field) {
 			field.enable();
 		});
 	},
 	disable : function() {
 		this.disabled = true;
-		Effect.Fade(this.getHTMLId());
+		jQuery("#" + this.getHTMLId()).fadeOut();
 		this.fields.each(function(field) {
 			field.disable();
 		});
@@ -239,14 +239,14 @@ var FormField = Class.create({
 		if (this.HTMLFieldExists()) {
 			Field.enable(this.getHTMLId());
 		}
-		Effect.Appear(this.getHTMLId() + "_field", {duration : 0.3});
+		jQuery("#" + this.getHTMLId() + "_field").fadeIn(300);
 		this.liveValidate();
 	},
 	disable : function() {
 		if (this.HTMLFieldExists()) {
 			Field.disable(this.getHTMLId());
 		}
-		Effect.Fade(this.getHTMLId() + "_field", {duration : 0.3});
+		jQuery("#" + this.getHTMLId() + "_field").fadeOut(300);
 		this.clearErrorMessage();
 	},
 	isDisabled : function() {
@@ -293,10 +293,8 @@ var FormField = Class.create({
 			$(this.getHTMLId() + '_field').removeClassName('constraint-status-right');
 			$(this.getHTMLId() + '_field').addClassName('constraint-status-error');
 			$('onblurMessageResponse' + this.getHTMLId()).innerHTML = message;
-			Effect.Appear('onblurMessageResponse' + this.getHTMLId(),
-			{
-				duration : 0.5
-			});
+			
+			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeIn(500);
 		}
 	},
 	displaySuccessMessage : function() {
@@ -308,9 +306,7 @@ var FormField = Class.create({
 			
 			$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
 			$(this.getHTMLId() + '_field').addClassName('constraint-status-right');
-			Effect.Fade('onblurMessageResponse' + this.getHTMLId(), {
-				duration : 0.2
-			});
+			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
 		}
 	},
 	clearErrorMessage : function() {
@@ -319,9 +315,7 @@ var FormField = Class.create({
 			$(this.getHTMLId() + '_field').removeClassName('constraint-status-right');
 			$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
 			$('onblurMessageResponse' + this.getHTMLId()).innerHTML = '';
-			Effect.Fade('onblurMessageResponse' + this.getHTMLId(), {
-				duration : 0.2
-			});
+			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
 		}
 	},
 	liveValidate : function() {

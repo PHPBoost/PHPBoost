@@ -2,7 +2,7 @@
 <br />
 <script>
 <!--
-Event.observe(window, 'load', function() {
+jQuery(document).ready(function() {
 	insertMoviePlayer('movie_1764');
 });
 -->
