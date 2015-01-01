@@ -41,7 +41,7 @@ class Timezone
 	
 	/**
 	 * @desc Returns the PHP timezone corresponding to the timezone code
-	 * @param int $timezone SYSTEM_TIMEZONE, SITE_TIMEZONE or USER_TIMEZONE
+	 * @param int $timezone SERVER_TIMEZONE, SITE_TIMEZONE or USER_TIMEZONE
 	 * @return DateTimeZone The PHP timezone
 	 */
 	public static function get_timezone($timezone_code)
