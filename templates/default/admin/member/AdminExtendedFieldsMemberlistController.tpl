@@ -146,7 +146,7 @@ var ExtendedField = Class.create({
 });
 
 var ExtendedFields = new ExtendedFields('lists');
-Event.observe(window, 'load', function() {
+jQuery(document).ready(function() {
 	ExtendedFields.destroy_sortable();
 	ExtendedFields.create_sortable();
 });
@@ -190,7 +190,7 @@ Event.observe(window, 'load', function() {
 				</li>
 				<script>
 				<!--
-				Event.observe(window, 'load', function() {
+				jQuery(document).ready(function() {
 					var extended_field = new ExtendedField({list_extended_fields.ID}, '{list_extended_fields.C_DISPLAY}', ExtendedFields);
 					
 					$('list_{list_extended_fields.ID}').observe('mouseup',function(){

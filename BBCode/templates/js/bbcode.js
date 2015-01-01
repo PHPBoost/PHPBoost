@@ -214,13 +214,13 @@ function show_bbcode_div(divID, hide)
 	var parent = document.getElementById(divID).up('.bbcode');
 	if( div.style.display == 'none' )
 	{	
-		Effect.Appear(divID);
+		jQuery("#" + divID).fadeIn();
 		parent.className = 'bbcode expand';
 		sendCookie('hide-bbcode', 1); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
 	}
 	else
 	{	
-		Effect.Fade(divID);
+		jQuery("#" + divID).fadeOut();
 		parent.className = 'bbcode';
 		sendCookie('hide-bbcode', 0); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
 	}

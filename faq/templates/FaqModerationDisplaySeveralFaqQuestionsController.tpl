@@ -136,7 +136,7 @@ var FaqQuestion = Class.create({
 });
 
 var FaqQuestions = new FaqQuestions('questions_list');
-Event.observe(window, 'load', function() {
+jQuery(document).ready(function() {
 	FaqQuestions.destroy_sortable();
 	FaqQuestions.create_sortable();
 });
@@ -185,18 +185,18 @@ Event.observe(window, 'load', function() {
 				if ($('q' + id_question)) {
 					if( $('a' + id_question).style.display == "none" )
 					{
-						Effect.Appear("a" + id_question);
+						jQuery("#a" + id_question).fadeIn();
 						$('q' + id_question).className="fa fa-caret-down"
 					}
 					else
 					{
-						Effect.Fade("a" + id_question);
+						jQuery("#a" + id_question).fadeOut();
 						$('q' + id_question).className="fa fa-caret-right"
 					}
 				}
 			}
 			
-			Event.observe(window, 'load', function() {
+			jQuery(document).ready(function() {
 				var anchor = window.location.hash;
 				var id_question;
 				 
@@ -261,7 +261,7 @@ Event.observe(window, 'load', function() {
 					</li>
 					<script>
 					<!--
-					Event.observe(window, 'load', function() {
+					jQuery(document).ready(function() {
 						var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
 						
 						$('delete_{questions.ID}').observe('click',function(){

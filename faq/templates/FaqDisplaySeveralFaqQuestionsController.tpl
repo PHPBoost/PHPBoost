@@ -80,18 +80,18 @@ function delete_question(id_question)
 				if ($('q' + id_question)) {
 					if( $('a' + id_question).style.display == "none" )
 					{
-						Effect.Appear("a" + id_question);
+						jQuery("#a" + id_question).fadeIn();
 						$('q' + id_question).className="fa fa-caret-down"
 					}
 					else
 					{
-						Effect.Fade("a" + id_question);
+						jQuery("#a" + id_question).fadeOut();
 						$('q' + id_question).className="fa fa-caret-right"
 					}
 				}
 			}
 			
-			Event.observe(window, 'load', function() {
+			jQuery(document).ready(function() {
 				var anchor = window.location.hash;
 				var id_question;
 				 
@@ -136,7 +136,7 @@ function delete_question(id_question)
 					<a href="" onclick="return false;" title="${LangLoader::get_message('delete', 'common')}" id="delete_{questions.ID}" class="fa fa-delete"></a>
 					<script>
 					<!--
-					Event.observe(window, 'load', function() {
+					jQuery(document).ready(function() {
 						$('delete_{questions.ID}').observe('click',function(){
 							delete_question({questions.ID});
 						});

@@ -32,16 +32,29 @@
 
 <script>
 <!--
-Event.observe(${escapejs(NAME)}, 'blur', function() {
-	new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',{method:'post',parameters:{image:HTMLForms.getField(${escapejs(ID)}).getValue()},onSuccess:function(response){
-		$('${escape(HTML_ID)}_preview_picture').style.display = "none";
-		$('${escape(HTML_ID)}_preview_loading').remove();
-	if (response.responseJSON.url) {
-		$('${escape(HTML_ID)}_preview_picture').src = response.responseJSON.url;
-		$('${escape(HTML_ID)}_preview_picture').style.display = "inline";
-	} else {
-		$('${escape(HTML_ID)}_preview_picture').style.display = "none";
-	}},onFailure:function() {alert('ajax failure');},onCreate:function(response){ $('${escape(HTML_ID)}_preview_picture').insert({after: '<i id="${escape(HTML_ID)}_preview_loading" class="fa fa-spinner fa-spin"></i>'}); },});
+jQuery("#" + ${escapejs(NAME)}).blur(function(){
+	jQuery.ajax({
+		url: PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/image/preview/',
+		type: "post",
+		dataType: "json",
+		data: {token:${escapejs(TOKEN)}, image:HTMLForms.getField(${escapejs(ID)}).getValue()},
+		beforeSend: function(){
+			jQuery('#${escape(HTML_ID)}_preview_picture').after('<i id="${escape(HTML_ID)}_preview_loading" class="fa fa-spinner fa-spin"></i>');
+		},
+		success: function(returnData){
+			jQuery('#${escape(HTML_ID)}_preview_picture').hide();
+			jQuery('#${escape(HTML_ID)}_preview_loading').remove();
+
+			if (returnData.url) {
+				jQuery('#${escape(HTML_ID)}_preview_picture').attr("src", returnData.url);
+				jQuery('#${escape(HTML_ID)}_preview_picture').css( "display", "inline");
+			} else {
+				jQuery('#${escape(HTML_ID)}_preview_picture').hide();
+			}
+		},
+		error: function(e){
+			alert(e);
+		}
+	});
 });
--->
 </script>

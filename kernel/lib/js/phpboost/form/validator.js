@@ -21,14 +21,14 @@ function lengthIntervalValidator(value, lbound, rbound)
 function nonEmptyFormFieldValidator(field_id, message)
 {
 	var field = HTMLForms.getField(field_id);
-    if (field)
-    {
-            if (field.getValue() == null || field.getValue() == '')
-            {
-                    return message;
-            }
-    }
-    return '';
+	if (field)
+	{
+		if (field.getValue() == null || field.getValue() == '')
+		{
+			return message;
+		}
+	}
+	return '';
 }
 
 function regexFormFieldValidator(field_id, regexPattern, options, message)
@@ -85,62 +85,66 @@ function lengthFormFieldValidator(field_id, lbound, rbound, message)
 
 function LoginExistValidator(field_id, message, user_id)
 {
-    var field = HTMLForms.getField(field_id);
-    if (field)
-    {
-        var value = field.getValue();
-        var error = '';
-        new Ajax.Request(
-            PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
-            {
-                method: 'post',
-                asynchronous: false,
-                parameters: {login : value, user_id : user_id, token : TOKEN},
-                onSuccess: function(transport) {
-                    if (transport.responseText == '1')
-                    {
-                    	error = message;
-                    }
-                    else
-                    {
-                    	error = '';
-                    }
-                },
-            }
-        );
-        return error;
-    }
-    return '';
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = field.getValue();
+		var error = '';
+
+		jQuery.ajax({
+			url: PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
+			type: "post",
+			async : false,
+			data: {login : value, user_id : user_id, token : TOKEN},
+			success: function(returnData){
+				if (returnData == 1)
+				{
+					error = message;
+				}
+				else
+				{
+					error = '';
+				}
+			},
+			error: function(e){
+				alert(e);
+			}
+		});
+		return error;
+	}
+	return '';
 }
 
 function MailExistValidator(field_id, message, user_id)
 {
-    var field = HTMLForms.getField(field_id);
-    if (field)
-    {
-        var value = field.getValue();
-        var error = '';
-        new Ajax.Request(
-            PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
-            {
-                method: 'post',
-                asynchronous: false,
-                parameters: {mail : value, user_id : user_id, token : TOKEN},
-                onSuccess: function(transport) {
-                    if (transport.responseText == '1')
-                    {
-                    	error = message;
-                    }
-                    else
-                    {
-                    	error = '';
-                    }
-                },
-            }
-        );
-        return error;
-    }
-    return '';
+	var field = HTMLForms.getField(field_id);
+	if (field)
+	{
+		var value = field.getValue();
+		var error = '';
+
+		jQuery.ajax({
+			url: PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
+			type: "post",
+			async : false,
+			data: {mail : value, user_id : user_id, token : TOKEN},
+			success: function(returnData){
+				if (returnData == 1)
+				{
+					error = message;
+				}
+				else
+				{
+					error = '';
+				}
+			},
+			error: function(e){
+				alert(e);
+			}
+		});
+		return error;
+	}
+	return '';
 }
 
 function UserExistValidator(field_id, message)
@@ -152,24 +156,25 @@ function UserExistValidator(field_id, message)
 		var error = '';
 		if (value != '')
 		{
-			new Ajax.Request(
-				PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
-				{
-					method: 'post',
-					asynchronous: false,
-					parameters: {login : value, token : TOKEN},
-					onSuccess: function(transport) {
-						if (transport.responseText == '1')
-						{
-							error = '';
-						}
-						else
-						{
-							error = message;
-						}
-					},
+			jQuery.ajax({
+				url: PATH_TO_ROOT + "/kernel/framework/ajax/user_xmlhttprequest.php",
+				type: "post",
+				async : false,
+				data: {login : value, token : TOKEN},
+				success: function(returnData){
+					if (returnData == 1)
+					{
+						error = message;
+					}
+					else
+					{
+						error = '';
+					}
+				},
+				error: function(e){
+					alert(e);
 				}
-			);
+			});
 		}
 		return error;
 	}

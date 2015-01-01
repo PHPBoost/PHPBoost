@@ -1,6 +1,6 @@
 <script>
 <!--
-Event.observe(window, 'load', function() {
+jQuery(document).ready(function() {
 	Sortable.destroy('categories'); 
 	Sortable.create('categories', {tree:true, dropOnEmpty: true});  
 });

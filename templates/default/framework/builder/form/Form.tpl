@@ -15,7 +15,7 @@
 
 <script>
 <!--
-Event.observe(window, 'load', function() {
+jQuery(document).ready(function() {
 	var form = new HTMLForm("${escape(HTML_ID)}");
 	HTMLForms.add(form);
 });

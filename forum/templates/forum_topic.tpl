@@ -120,7 +120,7 @@
 		}
 		
 		# IF C_FOCUS_CONTENT #
-		Event.observe(window, 'load', function() {
+		jQuery(document).ready(function() {
 			document.getElementById('contents').focus();
 		});
 		# ENDIF #

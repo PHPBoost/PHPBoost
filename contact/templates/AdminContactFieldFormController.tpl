@@ -1,7 +1,7 @@
 # INCLUDE FORM #
 <script>
 <!--
-	Event.observe(window, 'load', function() {
+	jQuery(document).ready(function() {
 		{JS_EVENT_SELECT_TYPE}
 	});
 	

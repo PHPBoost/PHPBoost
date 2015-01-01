@@ -143,7 +143,7 @@ var ContactField = Class.create({
 });
 
 var ContactFields = new ContactFields('fields_list');
-Event.observe(window, 'load', function() {
+jQuery(document).ready(function() {
 	ContactFields.destroy_sortable();
 	ContactFields.create_sortable();
 });
@@ -185,7 +185,7 @@ Event.observe(window, 'load', function() {
 				</li>
 				<script>
 				<!--
-				Event.observe(window, 'load', function() {
+				jQuery(document).ready(function() {
 					var contact_field = new ContactField({fields_list.ID}, '{fields_list.C_DISPLAY}', ContactFields);
 					
 					$('list_{fields_list.ID}').observe('mouseup',function(){

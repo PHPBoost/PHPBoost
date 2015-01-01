@@ -422,7 +422,7 @@
 							# START pics.list #
 							{pics.list.TR_START}
 								<td style="vertical-align:bottom;width:{COLUMN_WIDTH_PICS}%;padding:15px 0px;">
-									<div style="margin-bottom:20px;height:{HEIGHT_MAX}px;padding:0 5px;" id="pics{pics.list.ID}"><a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox[2]">{pics.list.IMG}</a></div>
+									<div style="margin-bottom:20px;height:{HEIGHT_MAX}px;padding:0 5px;" id="pics{pics.list.ID}"><a class="small" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" data-lightbox="2">{pics.list.IMG}</a></div>
 									<div class="smaller">
 										<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
 										<br />
