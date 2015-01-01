@@ -92,8 +92,8 @@ class SessionData
 		
 		if (!$has_already_visited && !$is_robot)
 		{
-			$now = new Date(DATE_NOW, Timezone::SERVER_TIMEZONE);
-			$time = $now->format('Y-m-d');
+			$now = new Date(DATE_NOW, Timezone::SITE_TIMEZONE);
+			$time = $now->format('Y-m-d', Timezone::SITE_TIMEZONE);
 
 			PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time=:time, total = total + 1 WHERE id = 1", array('time' => $time));
 			PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => $ip_address, 'time' => $time, 'total' => 0));
