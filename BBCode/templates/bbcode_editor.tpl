@@ -196,7 +196,6 @@ function XMLHttpRequest_preview(field)
 				</a>
 			</li>
 		</ul>
-
 		<ul class="bbcode-container bbcode-more" id="bbcode_more{FIELD}">
 			<li class="bbcode-elements">
 				<a href="" class="fa bbcode-icon-left" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');return false;" title="{L_BB_LEFT}"></a>
