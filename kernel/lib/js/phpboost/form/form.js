@@ -1,6 +1,7 @@
 // This contains all the HTML forms contained in the page
-var HTMLForms = Class.create();
+function HTMLForms(){}
 HTMLForms.forms = new Array();
+
 HTMLForms.add = function(form) {
 	return HTMLForms.forms.push(form);
 };
@@ -46,300 +47,286 @@ var $FFS = HTMLForms.getFieldset;
 var $FF = HTMLForms.getField;
 
 // This represents a HTML form.
-var HTMLForm = Class.create({
-	fieldsets : new Array(),
-	id : "",
-	initialize : function(id) {
-		this.id = id;
-		this.fieldsets = new Array();
-	},
-	getId : function() {
-		return this.id;
-	},
-	addFieldset : function(fieldset) {
-		this.fieldsets.push(fieldset);
-		fieldset.setFormId(this.id);
-	},
-	getFieldset : function(id) {
-		var fieldset = null;
-		this.fieldsets.each(function(aFieldset) {
-			if (aFieldset.getId() == id) {
-				fieldset = aFieldset;
-				throw $break;
-			}
-		});
-		return fieldset;
-	},
-	getFieldsets : function() {
-		return this.fieldsets;
-	},
-	hasFieldset : function(id) {
-		var hasFieldset = false;
-		this.fieldsets.each(function(aFieldset) {
-			if (aFieldset.getId() == id) {
-				hasFieldset = true;
-				throw $break;
-			}
-		});
-		return hasFieldset;
-	},
-	getFields : function() {
-		var fields = new Array();
-		this.fieldsets.each(function(fieldset) {
-			fieldset.getFields().each(function(field) {
-				fields.push(field);
-			});
-		});
-		return fields;
-	},
-	getField : function(id) {
-		var field = null;
-		this.getFields().each(function(aField) {
-			if (aField.getId() == id) {
-				field = aField;
-				throw $break;
-			}
-		});
-		return field;
-	},
-	validate : function() {
-		var validated = true;
-		var validation = '';
-		var form = this;
-		this.getFields().each(function(field) {
-			var field_validation = field.validate();
-			
-			if (field_validation != "") {
-				validation = validation + '\n\n' + field_validation;
-				validated = false;
-			}
-		});
-		
-		if (validated == false) {
-			form.displayValidationError(validation);
-			Effect.ScrollTo(this.id);
+function HTMLForm(id){
+	this.id = id;
+	this.fieldsets = new Array();
+};
+HTMLForm.prototype.getId = function () {
+	return this.id;
+};
+HTMLForm.prototype.addFieldset = function (fieldset) {
+	this.fieldsets.push(fieldset);
+	fieldset.setFormId(this.id);
+};
+HTMLForm.prototype.getFieldset = function (id) {
+	var fieldset = null;
+	this.fieldsets.each(function(aFieldset) {
+		if (aFieldset.getId() == id) {
+			fieldset = aFieldset;
+			throw $break;
 		}
+	});
+	return fieldset;
+};
+HTMLForm.prototype.hasFieldset = function (id) {
+	var hasFieldset = false;
+	this.fieldsets.each(function(aFieldset) {
+		if (aFieldset.getId() == id) {
+			hasFieldset = true;
+			throw $break;
+		}
+	});
+	return hasFieldset;
+};
+HTMLForm.prototype.getFields = function () {
+	var fields = new Array();
+	this.fieldsets.each(function(fieldset) {
+		fieldset.getFields().each(function(field) {
+			fields.push(field);
+		});
+	});
+	return fields;
+};
+HTMLForm.prototype.getField = function (id) {
+	var field = null;
+	this.getFields().each(function(aField) {
+		if (aField.getId() == id) {
+			field = aField;
+			throw $break;
+		}
+	});
+	return field;
+};
+HTMLForm.prototype.validate = function () {
+	var validated = true;
+	var validation = '';
+	var form = this;
+	this.getFields().each(function(field) {
+		var field_validation = field.validate();
 		
-		this.registerDisabledFields();
-		return validated;
-	},
-	displayValidationError : function(message) {
-		message = message.replace(/&quot;/g, '"');
-		message = message.replace(/&amp;/g, '&');
-		alert(message);
-	},
-	registerDisabledFields : function() {
-		var disabledFields = "";
-		this.getFields().each(function(field) {
-			if (field.isDisabled()) {
-				disabledFields += "|" + field.getId();
-			}
-		});
-		$(this.id + '_disabled_fields').value = disabledFields;
-
-		var disabledFieldsets = "";
-		this.getFieldsets().each(function(fieldset) {
-			if (fieldset.isDisabled()) {
-				disabledFieldsets += "|" + fieldset.getId();
-			}
-		});
-		$(this.id + '_disabled_fieldsets').value = disabledFieldsets;
+		if (field_validation != "") {
+			validation = validation + '\n\n' + field_validation;
+			validated = false;
+		}
+	});
+	
+	if (validated == false) {
+		form.displayValidationError(validation);
+		Effect.ScrollTo(this.id);
 	}
-});
+	
+	this.registerDisabledFields();
+	return validated;
+};
+HTMLForm.prototype.displayValidationError = function (message) {
+	message = message.replace(/&quot;/g, '"');
+	message = message.replace(/&amp;/g, '&');
+	alert(message);
+};
+HTMLForm.prototype.registerDisabledFields = function () {
+	var disabledFields = "";
+	this.getFields().each(function(field) {
+		if (field.isDisabled()) {
+			disabledFields += "|" + field.getId();
+		}
+	});
+	jQuery('#' + this.id + '_disabled_fields').value = disabledFields;
+
+	var disabledFieldsets = "";
+	this.getFieldsets().each(function(fieldset) {
+		if (fieldset.isDisabled()) {
+			disabledFieldsets += "|" + fieldset.getId();
+		}
+	});
+	jQuery('#' + this.id + '_disabled_fieldsets').value = disabledFieldsets;
+};
 
 // This represents a fieldset
-var FormFieldset = Class.create({
-	fields : new Array(),
-	id : "",
-	disabled : false,
-	formId : "",
-	initialize : function(id) {
-		this.id = id;
-		this.fields = new Array();
-		this.disabled = false;
-	},
-	getId : function() {
-		return this.id;
-	},
-	getHTMLId : function() {
-		return this.formId + '_' + this.id;
-	},
-	setFormId : function(formId) {
-		this.formId = formId;
-	},
-	addField : function(field) {
-		this.fields.push(field);
-		field.setFormId(this.formId);
-	},
-	getField : function(id) {
-		var field = null;
-		this.fields.each(function(aField) {
-			if (aField.getId() == id) {
-				field = aField;
-				throw $break;
-			}
-		});
-		return field;
-	},
-	getFields : function() {
-		return this.fields;
-	},
-	hasField : function(id) {
-		var hasField = false;
-		this.fields.each(function(field) {
-			if (field.getId() == id) {
-				hasField = true;
-				throw $break;
-			}
-		});
-		return hasField;
-	},
-	enable : function() {
-		this.disabled = false;
-		jQuery("#" + this.getHTMLId()).fadeIn();
-		this.fields.each(function(field) {
-			field.enable();
-		});
-	},
-	disable : function() {
-		this.disabled = true;
-		jQuery("#" + this.getHTMLId()).fadeOut();
-		this.fields.each(function(field) {
-			field.disable();
-		});
-	},
-	isDisabled : function() {
-		return this.disabled;
-	}
-});
+function FormFieldset(id){
+	this.id = id;
+	this.fields = new Array();
+	this.disabled = false;
+	this.formId = "";
+};
+FormFieldset.prototype.getId = function () {
+	return this.id;
+};
+FormFieldset.prototype.getHTMLId = function () {
+	return this.formId + '_' + this.id;
+};
+FormFieldset.prototype.setFormId = function (formId) {
+	this.formId = formId;
+};
+FormFieldset.prototype.addField = function (field) {
+	this.fields.push(field);
+	field.setFormId(this.formId);
+};
+FormFieldset.prototype.getField = function (id) {
+	var field = null;
+	this.fields.each(function(aField) {
+		if (aField.getId() == id) {
+			field = aField;
+			throw $break;
+		}
+	});
+	return field;
+};
+FormFieldset.prototype.getFields = function () {
+	return this.fields;
+};
+FormFieldset.prototype.hasField = function (id) {
+	var hasField = false;
+	this.fields.each(function(field) {
+		if (field.getId() == id) {
+			hasField = true;
+			throw $break;
+		}
+	});
+	return hasField;
+};
+FormFieldset.prototype.enable = function () {
+	this.disabled = false;
+	jQuery("#" + this.getHTMLId()).fadeIn();
+	this.fields.each(function(field) {
+		field.enable();
+	});
+};
+FormFieldset.prototype.disable = function () {
+	this.disabled = true;
+	jQuery("#" + this.getHTMLId()).fadeOut();
+	this.fields.each(function(field) {
+		field.disable();
+	});
+};
+FormFieldset.prototype.isDisabled = function () {
+	return this.disabled;
+};
 
 // This represents a field. It can be overloaded to fit to different fields
 // types
-var FormField = Class.create({
-	id : 0,
-	validationMessageEnabled : false,
-	hasConstraints : false,
-	formId : "",
-	initialize : function(id) {
-		this.id = id;
-	},
-	getId : function() {
-		return this.id;
-	},
-	getHTMLId : function() {
-		return this.formId + "_" + this.id;
-	},
-	setFormId : function(formId) {
-		this.formId = formId;
-	},
-	HTMLFieldExists : function() {
-		return $(this.getHTMLId()) != null;
-	},
-	enable : function() {
-		if (this.HTMLFieldExists()) {
-			Field.enable(this.getHTMLId());
-		}
-		jQuery("#" + this.getHTMLId() + "_field").fadeIn(300);
-		this.liveValidate();
-	},
-	disable : function() {
-		if (this.HTMLFieldExists()) {
-			Field.disable(this.getHTMLId());
-		}
-		jQuery("#" + this.getHTMLId() + "_field").fadeOut(300);
-		this.clearErrorMessage();
-	},
-	isDisabled : function() {
-		if (this.HTMLFieldExists()) {
-			var element = $(this.getHTMLId());
-			var disabled = element.disabled != "disabled" && element.disabled != false;
-			if (disabled == false) {
-				if ($(this.getHTMLId() + '_field')) {
-					var display = $(this.getHTMLId() + '_field').style.display;
-					if (display != null) {
-						return display == "none";
-					} else {
-						return false;
-					}
+function FormField(id){
+	this.id = id;
+	this.validationMessageEnabled = false;
+	this.hasConstraints = false;
+	this.formId = "";
+};
+FormField.prototype.getId = function () {
+	return this.id;
+};
+FormField.prototype.getHTMLId = function () {
+	return this.formId + '_' + this.id;
+};
+FormField.prototype.setFormId = function (formId) {
+	this.formId = formId;
+};
+FormField.prototype.HTMLFieldExists = function () {
+	return jQuery('#' + this.getHTMLId()) != null;
+	//return $(this.getHTMLId()) != null;
+};
+FormField.prototype.enable = function () {
+	if (this.HTMLFieldExists()) {
+		Field.enable(this.getHTMLId());
+	}
+	jQuery("#" + this.getHTMLId() + "_field").fadeIn(300);
+	this.liveValidate();
+};
+FormField.prototype.disable = function () {
+	if (this.HTMLFieldExists()) {
+		Field.disable(this.getHTMLId());
+	}
+	jQuery("#" + this.getHTMLId() + "_field").fadeOut(300);
+	this.clearErrorMessage();
+};
+FormField.prototype.isDisabled = function () {
+	if (this.HTMLFieldExists()) {
+		var element = $(this.getHTMLId());
+		var disabled = element.disabled != "disabled" && element.disabled != false;
+		if (disabled == false) {
+			if ($(this.getHTMLId() + '_field')) {
+				var display = $(this.getHTMLId() + '_field').style.display;
+				if (display != null) {
+					return display == "none";
 				} else {
-					var display = element.style.display;
-					if (display != null) {
-						return display == "none";
-					} else {
-						return false;
-					}
+					return false;
+				}
+			} else {
+				var display = element.style.display;
+				if (display != null) {
+					return display == "none";
+				} else {
+					return false;
 				}
 			}
-			return true;
 		}
-		return false;
-	},
-	getValue : function() {
-		return $F(this.getHTMLId());
-	},
-	setValue : function(value) {
-		Form.Element.setValue($(this.getHTMLId()), value);
-	},
-	enableValidationMessage : function() {
-		this.validationMessageEnabled = true;
-	},
-	displayErrorMessage : function(message) {
-		if (!this.validationMessageEnabled) {
-			return;
-		}
-		
-		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
-			
-			$(this.getHTMLId() + '_field').removeClassName('constraint-status-right');
-			$(this.getHTMLId() + '_field').addClassName('constraint-status-error');
-			$('onblurMessageResponse' + this.getHTMLId()).innerHTML = message;
-			
-			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeIn(500);
-		}
-	},
-	displaySuccessMessage : function() {
-		if (!this.validationMessageEnabled) {
-			return;
-		}
-		
-		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
-			
-			$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
-			$(this.getHTMLId() + '_field').addClassName('constraint-status-right');
-			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
-		}
-	},
-	clearErrorMessage : function() {
-		if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
-			
-			$(this.getHTMLId() + '_field').removeClassName('constraint-status-right');
-			$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
-			$('onblurMessageResponse' + this.getHTMLId()).innerHTML = '';
-			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
-		}
-	},
-	liveValidate : function() {
-		if (!this.isDisabled() && this.hasConstraints) {
-			var errorMessage = this.doValidate();
-			if (errorMessage != "") {
-				this.displayErrorMessage(errorMessage);
-			} else {
-				this.displaySuccessMessage();
-			}
-		}
-	},
-	validate : function() {
-		if (!this.isDisabled() && this.hasConstraints) {
-			var errorMessage = this.doValidate();
-			if (errorMessage != "") {
-				this.enableValidationMessage();
-				this.displayErrorMessage(errorMessage);
-			} 
-			return errorMessage;
-		}
-		return "";
-	},
-	doValidate : function() {
-		return '';
+		return true;
 	}
-});
+	return false;
+};
+FormField.prototype.getValue = function () {
+	return $F(this.getHTMLId());
+};
+FormField.prototype.setValue = function (value) {
+	Form.Element.setValue($(this.getHTMLId()), value);
+};
+FormField.prototype.enableValidationMessage = function () {
+	this.validationMessageEnabled = true;
+};
+FormField.prototype.displayErrorMessage = function (message) {
+	if (!this.validationMessageEnabled) {
+		return;
+	}
+	
+	if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
+		
+		$(this.getHTMLId() + '_field').removeClassName('constraint-status-right');
+		$(this.getHTMLId() + '_field').addClassName('constraint-status-error');
+		$('onblurMessageResponse' + this.getHTMLId()).innerHTML = message;
+		
+		jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeIn(500);
+	}
+};
+FormField.prototype.displaySuccessMessage = function () {
+	if (!this.validationMessageEnabled) {
+		return;
+	}
+	
+	if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
+		
+		$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
+		$(this.getHTMLId() + '_field').addClassName('constraint-status-right');
+		jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
+	}
+};
+FormField.prototype.clearErrorMessage = function () {
+	if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
+
+		$(this.getHTMLId() + '_field').removeClassName('constraint-status-right');
+		$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
+		$('onblurMessageResponse' + this.getHTMLId()).innerHTML = '';
+		jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
+	}
+};
+FormField.prototype.liveValidate = function () {
+	if (!this.isDisabled() && this.hasConstraints) {
+		var errorMessage = this.doValidate();
+		if (errorMessage != "") {
+			this.displayErrorMessage(errorMessage);
+		} else {
+			this.displaySuccessMessage();
+		}
+	};
+};
+FormField.prototype.validate = function () {
+	if (!this.isDisabled() && this.hasConstraints) {
+		var errorMessage = this.doValidate();
+		if (errorMessage != "") {
+			this.enableValidationMessage();
+			this.displayErrorMessage(errorMessage);
+		} 
+		return errorMessage;
+	}
+	return "";
+};
+FormField.prototype.doValidate = function () {
+	return '';
+};
