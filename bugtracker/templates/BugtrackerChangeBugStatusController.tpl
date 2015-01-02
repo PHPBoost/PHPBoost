@@ -16,7 +16,7 @@
 				async: false,
 				data: {id : bug_id, status : value, old_status : bug_status},
 				success: function(returnData){
-					if (transport == 1)
+					if (returnData == 1)
 					{
 						error = message;
 					}
