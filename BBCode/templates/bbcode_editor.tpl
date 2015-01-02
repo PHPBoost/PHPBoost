@@ -15,7 +15,7 @@ function XMLHttpRequest_preview(field)
 		if(!displayed[field])
 			jQuery("#" + preview_field).slideDown(500);
 
-		$('#loading_preview' + field).show();
+		jQuery('#loading_preview' + field).show();
 
 		displayed[field] = true;
 
@@ -33,7 +33,7 @@ function XMLHttpRequest_preview(field)
 			success: function(returnData){
 				jQuery('#' + preview_field).html(returnData);
 
-				$('#loading_preview' + field).hide();
+				jQuery('#loading_preview' + field).hide();
 			},
 			error: function(e){
 				alert(e);

@@ -12,24 +12,26 @@
 		{
 			var value = field.getValue();
 			var error = '';
-			new Ajax.Request(
-				'${relative_url(ContactUrlBuilder::check_field_name())}',
-				{
-					method: 'post',
-					asynchronous: false,
-					parameters: {id : field_id, name : value},
-					onSuccess: function(transport) {
-						if (transport.responseText == '1')
-						{
-							error = message;
-						}
-						else
-						{
-							error = '';
-						}
+
+			jQuery.ajax({
+				url: '${relative_url(ContactUrlBuilder::check_field_name())}',
+				type: "post",
+				async : false,
+				data: {id : field_id, name : value},
+				success: function(returnData){
+					if (returnData == 1)
+					{
+						error = message;
 					}
+					else
+					{
+						error = '';
+					}
+				},
+				error: function(e){
+					alert(e);
 				}
-			);
+			});
 			return error;
 		}
 		return '';
