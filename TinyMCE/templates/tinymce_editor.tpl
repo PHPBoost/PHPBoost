@@ -7,42 +7,39 @@ function XMLHttpRequest_preview(field)
 	if( XMLHttpRequest_preview.arguments.length == 0 )
 		field = ${escapejs(FIELD)};
 
-	tinyMCE.triggerSave();
-		
 	var contents = $(field).value;
 	var preview_field = 'xmlhttprequest-preview' + field;
-	
+
 	if( contents != "" )
 	{
-		if( !displayed[field] ) 
-			Effect.BlindDown(preview_field, { duration: 0.5 });
-		
-		var loading = $('loading_preview' + field);
-		if( loading )
-			loading.style.display = 'block';
+		if(!displayed[field])
+			jQuery("#" + preview_field).slideDown(500);
+
+		jQuery('#loading_preview' + field).show();
+
 		displayed[field] = true;
-	
-		new Ajax.Request(
-			'{PATH_TO_ROOT}/kernel/framework/ajax/content_xmlhttprequest.php',
-			{
-				method: 'post',
-				parameters: {
-					token: '{TOKEN}',
-					path_to_root: '{PHP_PATH_TO_ROOT}',
-					editor: 'TinyMCE',
-					page_path: '{PAGE_PATH}',  
-						contents: contents,
-						ftags: '{FORBIDDEN_TAGS}'
-					},
-					onSuccess: function(response)
-					{
-						$(preview_field).update(response.responseText);
-						if( loading )
-							loading.style.display = 'none';
-					}
+
+		jQuery.ajax({
+			url: PATH_TO_ROOT + "/kernel/framework/ajax/content_xmlhttprequest.php",
+			type: "post",
+			data: {
+				token: '{TOKEN}',
+				path_to_root: '{PHP_PATH_TO_ROOT}',
+				editor: 'BBCode',
+				page_path: '{PAGE_PATH}',
+				contents: contents,
+				ftags: '{FORBIDDEN_TAGS}'
+			},
+			success: function(returnData){
+				jQuery('#' + preview_field).html(returnData);
+
+				jQuery('#loading_preview' + field).hide();
+			},
+			error: function(e){
+				alert(e);
 			}
-		);
-	}	
+		});
+	}
 	else
 		alert("{L_REQUIRE_TEXT}");
 }

@@ -9,24 +9,26 @@
 		{
 			var value = field.getValue();
 			var error = '';
-			new Ajax.Request(
-				'${relative_url(BugtrackerUrlBuilder::check_status_changed())}',
-				{
-					method: 'post',
-					asynchronous: false,
-					parameters: {id : bug_id, status : value, old_status : bug_status},
-					onSuccess: function(transport) {
-						if (transport.responseText == '1')
-						{
-							error = message;
-						}
-						else
-						{
-							error = '';
-						}
+
+			jQuery.ajax({
+				url: '${relative_url(BugtrackerUrlBuilder::check_status_changed())}',
+				type: "post",
+				async: false,
+				data: {id : bug_id, status : value, old_status : bug_status},
+				success: function(returnData){
+					if (transport == 1)
+					{
+						error = message;
 					}
+					else
+					{
+						error = '';
+					}
+				},
+				error: function(e){
+					alert(e);
 				}
-			);
+			});
 			return error;
 		}
 		return '';

@@ -2,15 +2,20 @@
 <!--
 function delete_filter(id) {
 	if (confirm(${escapejs(@actions.confirm.del_filter)})) {
-		new Ajax.Request('${relative_url(BugtrackerUrlBuilder::delete_filter())}', {
-			method:'post',
-			asynchronous: false,
-			parameters: {'id' : id, 'token' : '{TOKEN}'},
-			onSuccess: function(transport) {
-				if (transport.responseText > 0) {
-					var elementToDelete = $('filter' + id);
+
+		jQuery.ajax({
+			url: '${relative_url(BugtrackerUrlBuilder::delete_filter())}',
+			type: "post",
+			async: false,
+			data: {'id' : id, 'token' : '{TOKEN}'},
+			success: function(returnData){
+				if (returnData > 0) {
+					var elementToDelete = jQuery('#filter' + id)[0];
 					elementToDelete.parentNode.removeChild(elementToDelete);
 				}
+			},
+			error: function(e){
+				alert(e);
 			}
 		});
 	}
