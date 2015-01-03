@@ -33,28 +33,26 @@
 
 	var object = this;
 		
-	$$('#notation-'+object.id+' .stars').invoke('observe', 'mouseover', function(event) {
+	jQuery('#notation-'+object.id+' .stars').mouseover(function(){
 		clearTimeout(object.timeout);
 		object.timeout = null;
 	});
 
-	$$('#notation-'+object.id+' .stars').invoke('observe', 'mouseout', function(event) {
+	jQuery('#notation-'+object.id+' .stars').mouseout(function(){
 		if(object.timeout == null) {
 			object.timeout = window.setTimeout(function() {
 				object.change_picture_status(object.default_note); 
 			}, 50);
 		}
 	});
-	
-	$$('#notation-'+object.id+' .stars .star').invoke('observe', 'click', function(event) {
-		var id_element = event.element().id;
-		var star_nbr = id_element.replace(/star-([0-9]+)-([0-9]+)/g, "$2");
+
+	jQuery('#notation-'+object.id+' .stars .star').click(function(){
+		var star_nbr = this.id.replace(/star-([0-9]+)-([0-9]+)/g, "$2");
 		object.send_request(star_nbr);
 	});
 
-	$$('#notation-'+object.id+' .stars .star').invoke('observe', 'mouseover', function(event) {
-		var id_element = event.element().id;
-		var star_nbr = id_element.replace(/star-([0-9]+)-([0-9]+)/g, "$2");
+	jQuery('#notation-'+object.id+' .stars .star').mouseover(function(){
+		var star_nbr = this.id.replace(/star-([0-9]+)-([0-9]+)/g, "$2");
 		object.change_picture_status(star_nbr);
 	});
 };
@@ -67,14 +65,14 @@ Note.prototype.send_request = function (note) {
 		alert(NOTATION_LANG_AUTH);
 	} 
 	else {
-		$$('#notation-' + id + ' .stars').invoke('insert', {after: '<i id="loading-'+ id +'" class="fa fa-spinner fa-spin"></i>'});
+		jQuery('#notation-' + id + ' .stars').after('<i id="loading-'+ id +'" class="fa fa-spinner fa-spin"></i>');
 		
 		jQuery.ajax({
 			url: '',
 			type: "post",
 			data: {'note': note, 'id': id, 'token' : TOKEN},
 			success: function(){
-				$('loading-' + id).remove();
+				jQuery('#loading-' + id).remove();
 				if(object.already_post == 1) {
 					alert(NOTATION_LANG_ALREADY_VOTE);
 				}
@@ -107,15 +105,15 @@ Note.prototype.change_picture_status = function (note) {
 		else if(note >= i)
 			star_class = 'fa star star-hover fa-star';
 
-		if($(id_star)) {
-			$(id_star).className = star_class;
+		if(jQuery('#' + id_star)) {
+			jQuery('#' + id_star).className = star_class;
 		}
 	}
 };
 
 Note.prototype.change_nbr_note = function () {
-	var number_notes_el = $$('#notation-' + this.id + ' span.number-notes').first();
-	var number_notes = parseInt(number_notes_el.innerHTML) + 1;
-	number_notes_el.update(number_notes);
-	$$('#notation-' + this.id + ' .notes span:not(.number-notes)').invoke('update', (number_notes > 1 ? NOTATION_LANG_NOTES : NOTATION_LANG_NOTE));
+	var number_notes_el = jQuery('#notation-' + this.id + ' span.number-notes').first();
+	var number_notes = parseInt(number_notes_el.text()) + 1;
+	number_notes_el.text(number_notes);
+	jQuery('#notation-' + this.id + ' .notes span:not(.number-notes)').text((number_notes > 1 ? NOTATION_LANG_NOTES : NOTATION_LANG_NOTE));
 };
