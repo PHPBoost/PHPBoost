@@ -2,23 +2,27 @@
 <!--
 function shoutbox_add_message()
 {
-	var pseudo = $("shout-pseudo").value;
-	var contents = $("shout-contents").value;
+	var pseudo = jQuery("#shout-pseudo").val();
+	var contents = jQuery("#shout-contents").val();
 
 	if (pseudo && contents)
 	{
-		new Ajax.Request('${relative_url(ShoutboxUrlBuilder::ajax_add())}', {
-			method:'post',
-			parameters: {'pseudo' : pseudo, 'contents' : contents, 'token' : '{TOKEN}'},
-			onLoading: function () {
-				$('shoutbox-refresh').className = 'fa fa-spinner fa-spin';
+		jQuery.ajax({
+			url: '${relative_url(ShoutboxUrlBuilder::ajax_add())}',
+			type: "post",
+			dataType: "json",
+			data: {'pseudo' : pseudo, 'contents' : contents, 'token' : '{TOKEN}'},
+			beforeSend: function(){
+				jQuery('#shoutbox-refresh').className = 'fa fa-spinner fa-spin';
 			},
-			onComplete: function(response) {
-				if(response.readyState == 4 && response.status == 200 && response.responseJSON.code > 0) {
+			success: function(returnData){
+				var code = returnData.code;
+
+				if(code > 0) {
 					shoutbox_refresh_messages_box();
-					$('shout-contents').value = '';
+					jQuery('#shout-contents').val('');
 				} else {
-					switch(response.responseJSON.code)
+					switch(code)
 					{
 						case -1:
 							alert("${LangLoader::get_message('e_flood', 'errors')}");
@@ -27,14 +31,17 @@ function shoutbox_add_message()
 							alert("{L_ALERT_LINK_FLOOD}");
 						break;
 						case -3:
-							alert("${LangLoader::get_message('e_incomplete', 'errors')}");
+							alert("returnData${LangLoader::get_message('e_incomplete', 'errors')}");
 						break;
 						case -4:
 							alert("${LangLoader::get_message('error.auth', 'status-messages-common')}");
 						break;
 					}
 				}
-				$('shoutbox-refresh').className = 'fa fa-refresh';
+				jQuery('#shoutbox-refresh').className = 'fa fa-refresh';
+			},
+			error: function(e){
+				alert(e);
 			}
 		});
 	} else {
@@ -47,38 +54,49 @@ function shoutbox_delete_message(id_message)
 {
 	if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 	{
-		new Ajax.Request('${relative_url(ShoutboxUrlBuilder::ajax_delete())}', {
-			method:'post',
-			parameters: {'id' : id_message, 'token' : '{TOKEN}'},
-			onLoading: function () {
-				$('shoutbox-refresh').className = 'fa fa-spinner fa-spin';
+		jQuery.ajax({
+			url: '${relative_url(ShoutboxUrlBuilder::ajax_delete())}',
+			type: "post",
+			dataType: "json",
+			data: {'id' : id_message, 'token' : '{TOKEN}'},
+			beforeSend: function(){
+				jQuery('#shoutbox-refresh').className = 'fa fa-spinner fa-spin';
 			},
-			onComplete: function(response) {
-				if(response.readyState == 4 && response.status == 200 && response.responseJSON.code > 0) {
-					var elementToDelete = $('shoutbox-message-' + response.responseJSON.code);
-					elementToDelete.parentNode.removeChild(elementToDelete);
+			success: function(returnData){
+				var code = returnData.code;
+
+				if(code > 0) {
+					jQuery('#shoutbox-message-' + code).remove();
 				} else {
 					alert("{@error.message.delete}");
 				}
-				$('shoutbox-refresh').className = 'fa fa-refresh';
+				jQuery('#shoutbox-refresh').className = 'fa fa-refresh';
+			},
+			error: function(e){
+				alert(e);
 			}
 		});
 	}
 }
 
 function shoutbox_refresh_messages_box() {
-	new Ajax.Updater(
-		'shoutbox-messages-container',
-		'${relative_url(ShoutboxUrlBuilder::ajax_refresh())}',
-		{
-			onLoading: function () {
-				$('shoutbox-refresh').className = 'fa fa-spinner fa-spin';
-			},
-			onComplete: function(response) {
-				$('shoutbox-refresh').className = 'fa fa-refresh';
-			}
+	jQuery.ajax({
+		url: '${relative_url(ShoutboxUrlBuilder::ajax_refresh())}',
+		type: "post",
+		dataType: "html",
+		data: {'token' : '{TOKEN}'},
+		beforeSend: function(){
+			jQuery('#shoutbox-refresh').className = 'fa fa-spinner fa-spin';
+		},
+		success: function(returnData){
+			jQuery('#shoutbox-messages-container').html(returnData);
+
+			jQuery('#shoutbox-refresh').className = 'fa fa-refresh';
+		},
+		error: function(e){
+			alert(e);
 		}
-	);
+	});
 }
 
 # IF C_AUTOMATIC_REFRESH_ENABLED #setInterval(shoutbox_refresh_messages_box, {SHOUT_REFRESH_DELAY});# ENDIF #
