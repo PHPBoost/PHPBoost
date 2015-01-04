@@ -2,21 +2,26 @@
 		<!--
 			function ChangeMonth(year, month)
 			{
-				new Ajax.Updater(
-					'calendar',
-					${escapejs(U_AJAX_CALENDAR)} + year + '/' + month + '/' + {MINI_MODULE},
-					{
-						evalScripts: true
+				jQuery.ajax({
+					url: ${escapejs(U_AJAX_CALENDAR)} + year + '/' + month + '/' + {MINI_MODULE},
+					success: function(returnData){
+						jQuery('#calendar').html(returnData);
+					},
+					error: function(e){
+						alert(e);
 					}
-				);
+				});
+
 				# IF NOT C_MINI_MODULE #
-				new Ajax.Updater(
-					'events',
-					${escapejs(U_AJAX_EVENTS)} + year + '/' + month,
-					{
-						evalScripts: true
+				jQuery.ajax({
+					url: ${escapejs(U_AJAX_EVENTS)} + year + '/' + month,
+					success: function(returnData){
+						jQuery('#events').html(returnData);
+					},
+					error: function(e){
+						alert(e);
 					}
-				);
+				});
 				# ENDIF #
 			}
 		-->

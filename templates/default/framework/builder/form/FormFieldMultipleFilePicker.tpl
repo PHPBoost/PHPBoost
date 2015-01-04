@@ -1,26 +1,24 @@
 <script>
- var MultipleFilePicker = Class.create({
-	integer : 2,
-	id_input : ${escapejs(HTML_ID)},
-	max_input : ${escapejs(MAX_INPUT)},
-	add_file_input : function () {
-		if (this.integer <= this.max_input) {
-			var id = this.id_input + '_' + this.integer;
-			var input = new Element('input', {'type' : 'file', 'id' : id, 'name' : id});
-			$('input_files_list_' + this.id_input).insert(input);
-			$(id).form.enctype = "multipart/form-data";
-			var br = new Element('br');
-			$('input_files_list_' + this.id_input).insert(br);
-			this.incremente_integer();
-		}
-		if (this.integer == this.max_input) {
-			$('add_' + this.id_input).hide();
-		}
-	},
-	incremente_integer : function () {
+function MultipleFilePicker(){
+	this.integer = 2;
+	this.id_input = ${escapejs(HTML_ID)};
+	this.max_input = ${escapejs(MAX_INPUT)};
+};
+MultipleFilePicker.prototype.add_file_input = function () {
+	if (this.integer <= this.max_input) {
+		var id = this.id_input + '_' + this.integer;
+
+		jQuery('<input/>', {'type' : 'file', 'id' : id, 'name' : id}).appendTo('#input_files_list_' + this.id_input);
+
+		jQuery('<br/>').appendTo('#input_files_list_' + this.id_input);
+
 		this.integer = this.integer + 1;
-	},
-});
+	}
+	if (this.integer == this.max_input) {
+		jQuery('#add_' + this.id_input).hide();
+	}
+};
+
 var MultipleFilePicker = new MultipleFilePicker();
 
 </script>
@@ -31,5 +29,6 @@ var MultipleFilePicker = new MultipleFilePicker();
 <a href="javascript:MultipleFilePicker.add_file_input();" class="fa fa-plus" id="add_${escape(HTML_ID)}"></a>
 <script>
 <!--
-$("${escape(HTML_ID)}_1").form.enctype = "multipart/form-data";
+jQuery('#input_files_list_${escape(HTML_ID)}').parents('form:first')[0].enctype = "multipart/form-data";
+-->
 </script>
