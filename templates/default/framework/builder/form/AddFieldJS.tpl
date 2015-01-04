@@ -15,9 +15,9 @@ jQuery(document).ready(function() {
 		# END constraint #
 		return result;
 	}
-	if ($("${escape(HTML_ID)}") != null)
+	if (jQuery("#${escape(HTML_ID)}") != null)
 	{
-		Event.observe("${escape(HTML_ID)}", 'blur', function() {
+		jQuery("#${escape(HTML_ID)}").blur(function() {
 			HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").enableValidationMessage();
 			HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").liveValidate();
 			# START related_field #
@@ -26,7 +26,7 @@ jQuery(document).ready(function() {
 		});
 	
 		# START event_handler #
-		Event.observe("${escape(HTML_ID)}", '{event_handler.EVENT}', function() {
+		jQuery("#${escape(HTML_ID)}").on('{event_handler.EVENT}', function() {
 			{event_handler.HANDLER}
 		});
 		# END event_hander #

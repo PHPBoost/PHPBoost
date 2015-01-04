@@ -5,7 +5,7 @@
 		var page = prompt('{@articles.form.add_page.title}');
 
 		if (page) {
-			var textarea = $('ArticlesFormController_contents');
+			var textarea = document.getElementById('ArticlesFormController_contents');
 			var start = textarea.selectionStart;
 			var end = textarea.selectionEnd;
 
@@ -27,7 +27,7 @@
 	function page_to_edit(page) 
 	{
 		var searchText = page;
-		var content_input = $('ArticlesFormController_contents');
+		var content_input = document.getElementById('ArticlesFormController_contents');
 		var matched_page = content_input.value.indexOf('[page]' + searchText + '[/page]');
 
 		if (matched_page != -1)

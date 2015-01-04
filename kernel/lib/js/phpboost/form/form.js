@@ -221,7 +221,6 @@ FormField.prototype.setFormId = function (formId) {
 };
 FormField.prototype.HTMLFieldExists = function () {
 	return jQuery('#' + this.getHTMLId()) != null;
-	//return $(this.getHTMLId()) != null;
 };
 FormField.prototype.enable = function () {
 	if (this.HTMLFieldExists()) {

@@ -1,45 +1,17 @@
 <script>
 <!--
-	var OpenCloseDiv = Class.create({
-		id : '',
-		id_click : '',
-		already_click : false,
-		initialize : function(id, id_click) {
-			this.id = id;
-			this.id_click = id_click;
-		},
-		open : function () {
-			this.already_click = true;
-			$(this.id).appear({duration: 0.5});
-			this.change_picture_less();
-		},
-		close : function () {
-			this.already_click = false;
-			$(this.id).fade({duration: 0.3});
-			this.change_picture_more();
-		},
-		change_status : function () {
-			if (this.already_click == true) {
-				this.close();
-			}
-			else {
-				this.open();
-			}
-		},
-		hide_div : function () {
-			$(this.id).hide();
-		},
-		change_picture_more : function () {
-			$(this.id_click).className = 'fa fa-plus';
-		},
-		change_picture_less : function () {
-			$(this.id_click).className = 'fa fa-minus';
-		},
-		get_already_click : function () {
-			return this.already_click;
+function display_description(id){
+	jQuery('#desc_explain' + id).toggle(300, function(){
+		if (jQuery(this).css('display') == 'block'){
+			jQuery('#picture_desc' + id)[0].className = 'fa fa-minus';
+		}
+		else{
+			jQuery('#picture_desc' + id)[0].className = 'fa fa-plus';
+			
 		}
 	});
-	-->
+}
+-->
 </script>
 <form action="{REWRITED_SCRIPT}" method="post">
 	<table>
@@ -74,19 +46,8 @@
 						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_not_activated.COMPATIBILITY}<br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_not_activated.PHP_VERSION}
 					</div>
-					<div class="center"><a href="" onclick="return false;" class="fa fa-plus" id="picture_desc{modules_not_activated.ID}"></a></div>
+					<div class="center"><a href="" onclick="javascript:display_description('{modules_not_activated.ID}'); return false;" class="fa fa-plus" id="picture_desc{modules_not_activated.ID}"></a></div>
 				</td>
-				<script>
-				<!--
-					jQuery(document).ready(function() {
-						var OpenCloseDivDesc = new OpenCloseDiv('desc_explain{modules_not_activated.ID}', 'picture_desc{modules_not_activated.ID}');
-						
-						Event.observe($('picture_desc{modules_not_activated.ID}'), 'click', function() {
-							OpenCloseDivDesc.change_status();
-						});
-					});
-				-->
-				</script>
 				<td class="input-radio">
 					<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
 					<label><input type="radio" name="activated-{modules_not_activated.ID}" value="0" # IF NOT modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
@@ -129,19 +90,8 @@
 						<span class="text-strong">{@modules.compatibility} :</span> PHPBoost {modules_activated.COMPATIBILITY}<br />
 						<span class="text-strong">{@modules.php_version} :</span> {modules_activated.PHP_VERSION}
 					</div>
-					<div class="center"><a href="" onclick="return false;" class="fa fa-plus" id="picture_desc{modules_activated.ID}"></a></div>
+					<div class="center"><a href="" onclick="javascript:display_description('{modules_activated.ID}'); return false;" class="fa fa-plus" id="picture_desc{modules_activated.ID}"></a></div>
 				</td>
-				<script>
-				<!--
-					jQuery(document).ready(function() {
-						var OpenCloseDivDesc = new OpenCloseDiv('desc_explain{modules_activated.ID}', 'picture_desc{modules_activated.ID}');
-						
-						Event.observe($('picture_desc{modules_activated.ID}'), 'click', function() {
-							OpenCloseDivDesc.change_status();
-						});
-					});
-				-->
-				</script>
 				<td class="input-radio">
 					<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
 					<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> ${LangLoader::get_message('yes', 'common')}</label>
