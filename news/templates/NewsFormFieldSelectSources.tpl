@@ -8,15 +8,13 @@ var NewsFormFieldSelectSources = Class.create({
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
 
-			var div = Builder.node('div', {'id' : id}, [
-				Builder.node('input', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@form.source.name}'}),
-				' ',
-				Builder.node('input', {type : 'text', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '{@form.source.url}'}),
-				' ',
-				Builder.node('a', {href : 'javascript:NewsFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete'}),
-				' ',
-			]);
-			$('input_fields_' + this.id_input).insert(div);
+			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
+
+			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@form.source.name}'}).appendTo('#' + id);
+			
+			jQuery('<input/> ', {type : 'text', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '{@form.source.url}'}).appendTo('#' + id);
+			
+			jQuery('<a/> ', {href : 'javascript:ArticlesFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete'}).appendTo('#' + id);
 
 			this.integer++;
 		}

@@ -8,17 +8,15 @@ var ContactFormFieldRecipientsPossibleValues = Class.create({
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
 			
-			var div = Builder.node('div', {'id' : id}, [
-				Builder.node('input', {type : 'checkbox', id : 'field_is_default_' + id, name : 'field_is_default_' + id, value : '1', 'class' : 'per-default'}),
-				' ',
-				Builder.node('input', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}),
-				' ',
-				Builder.node('input', {type : 'text', id : 'field_email_' + id, name : 'field_email_' + id, class : 'field-large', placeholder : "${LangLoader::get_message('field.possible_values.email', 'common', 'contact')}"}),
-				' ',
-				Builder.node('a', {href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'common')}", class : 'fa fa-delete'}),
-				' ',
-			]);
-			$('input_fields_' + this.id_input).insert(div);
+			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
+
+			jQuery('<input/> ', {type : 'checkbox', id : 'field_is_default_' + id, name : 'field_is_default_' + id, value : '1', 'class' : 'per-default'}).appendTo('#' + id);
+			
+			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}).appendTo('#' + id);
+
+			jQuery('<input/> ', {type : 'text', id : 'field_email_' + id, name : 'field_email_' + id, class : 'field-large', placeholder : "${LangLoader::get_message('field.possible_values.email', 'common', 'contact')}"}).appendTo('#' + id);
+
+			jQuery('<a/> ', {href : 'javascript:ContactFormFieldRecipientsPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'common')}", class : 'fa fa-delete'}).appendTo('#' + id);
 			
 			this.integer++;
 		}

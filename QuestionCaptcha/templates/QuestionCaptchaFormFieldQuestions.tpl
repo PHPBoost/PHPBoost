@@ -8,17 +8,15 @@ var QuestionCaptchaFormFieldQuestions = Class.create({
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
 
-			var div = Builder.node('div', {'id' : id}, [
-				Builder.node('textarea', {id : 'field_label_' + id, name : 'field_label_' + id, placeholder : '{@form.question}'}),
-				' ',
-				Builder.node('textarea', {id : 'field_answers_' + id, name : 'field_answers_' + id, class : 'answers', placeholder : '{@form.answers}'}),
-				' ',
-				Builder.node('a', {href : 'javascript:QuestionCaptchaFormFieldQuestions.delete_question('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete'}),
-				' ',
-				Builder.node('div', {class : 'spacer'}),
-				' ',
-			]);
-			$('input_questions_' + this.id_input).insert(div);
+			jQuery('<div/>', {'id' : id}).appendTo('#input_questions_' + this.id_input);
+
+			jQuery('<textarea/> ', {id : 'field_label_' + id, name : 'field_label_' + id, placeholder : '{@form.question}'}).appendTo('#' + id);
+			
+			jQuery('<textarea/> ', {id : 'field_answers_' + id, name : 'field_answers_' + id, class : 'answers', placeholder : '{@form.answers}'}).appendTo('#' + id);
+			
+			jQuery('<a/> ', {href : 'javascript:QuestionCaptchaFormFieldQuestions.delete_question('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete'}).appendTo('#' + id);
+			
+			jQuery('<div/> ', {class : 'spacer'}).appendTo('#' + id);
 
 			this.integer++;
 		}
