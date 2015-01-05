@@ -7,32 +7,26 @@
 			# ENDIF #
 			
 			if(document.getElementById('media_name').value == "") {
-				new Effect.ScrollTo('media_name',{duration:1.2});
 				alert("{L_REQUIRE}{L_MODULE_NAME}");
 				return false;
 			}
 			if(document.getElementById('num_cols').value == "") {
-				new Effect.ScrollTo('num_cols',{duration:1.2});
 				alert("{L_REQUIRE}{L_NBR_COLS}");
 				return false;
 			}
 			if(document.getElementById('pagin').value == "") {
-				new Effect.ScrollTo('pagin',{duration:1.2});
 				alert("{L_REQUIRE}{L_PAGINATION}");
 				return false;
 			}
 			if(document.getElementById('note').value == "" || document.getElementById('note').value == "0") {
-				new Effect.ScrollTo('note',{duration:1.2});
 				alert("{L_REQUIRE}{L_NOTE}");
 				return false;
 			}
 			if(document.getElementById('width').value == "") {
-				new Effect.ScrollTo('width',{duration:1.2});
 				alert("{L_REQUIRE}{L_WIDTH_MAX}");
 				return false;
 			}
 			if(document.getElementById('height').value == "") {
-				new Effect.ScrollTo('height',{duration:1.2});
 				alert("{L_REQUIRE}{L_HEIGHT_MAX}");
 				return false;
 			}
@@ -160,7 +154,7 @@
 					<fieldset class="fieldset-submit">
 						<legend>{L_UPDATE}</legend>
 						<button type="submit" name="valid" value="true" class="submit">{L_UPDATE}</button>
-						<button type="button" name="valid" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;" value="true">{L_PREVIEW}</button>
+						<button type="button" name="valid" onclick="XMLHttpRequest_preview(); return false;" value="true">{L_PREVIEW}</button>
 						<button type="reset" value="true">{L_RESET}</button>
 					</fieldset>
 				</form>

@@ -238,7 +238,7 @@
 					
 					# IF msg.C_FORUM_MSG_CUT # <a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" class="fa fa-cut" data-confirmation="{L_ALERT_CUT_TOPIC}"></a> # ENDIF #
 					
-					<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><i class="fa fa-arrow-up"></i></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><i class="fa fa-arrow-down"></i></a></span>
+					<a href="{U_TITLE_T}#go_top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go_top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up"></i></a> <a href="{U_TITLE_T}#go_bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go_bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down"></i></a></span>
 				</div>
 				<div class="msg-contents-container">
 					<div class="msg-info-mbr">

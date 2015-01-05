@@ -178,7 +178,7 @@
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}">
 					<button type="submit" name="submit" value="true" class="submit">{L_SUBMIT}</button>
-					<button type="button" name="preview" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;"">{L_PREVIEW}</button>
+					<button type="button" name="preview" onclick="XMLHttpRequest_preview(); return false;"">{L_PREVIEW}</button>
 					<button type="reset" value="true">{L_RESET}</button>
 				</fieldset>
 			</form>
