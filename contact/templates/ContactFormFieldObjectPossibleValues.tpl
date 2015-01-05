@@ -8,21 +8,19 @@ var ContactFormFieldObjectPossibleValues = Class.create({
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
 			
-			var select = new Element('select', {'id' : 'field_recipient_' + id, 'name' : 'field_recipient_' + id});
-			# START recipients_list #
-			select.appendChild(new Option(${escapejs(recipients_list.NAME)}, ${escapejs(recipients_list.ID)}));
-			# END recipients_list #
+			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
+
+			jQuery('<input/> ', {type : 'checkbox', id : 'field_is_default_' + id, name : 'field_is_default_' + id, value : '1', 'class' : 'per-default'}).appendTo('#' + id);
 			
-			var div = Builder.node('div', {'id' : id}, [
-				Builder.node('input', {type : 'checkbox', id : 'field_is_default_' + id, name : 'field_is_default_' + id, value : '1', 'class' : 'per-default'}),
-				' ',
-				Builder.node('input', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.possible_values.subject}'}),
-				' ',
-				select,
-				' ',
-				Builder.node('a', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete', title : "${LangLoader::get_message('delete', 'common')}"})
-			]);
-			$('input_fields_' + this.id_input).insert(div);
+			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.possible_values.subject}'}).appendTo('#' + id);
+
+			jQuery('<select/> ', {'id' : 'field_recipient_' + id, 'name' : 'field_recipient_' + id}).appendTo('#' + id);
+			
+			# START recipients_list #
+			jQuery('<option/> ', {'value' : ${escapejs(recipients_list.ID)}}).text(${escapejs(recipients_list.NAME)}).appendTo('#field_recipient_' + id);
+			# END recipients_list #
+
+			jQuery('<a/> ', {href : 'javascript:ContactFormFieldObjectPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete', title : "${LangLoader::get_message('delete', 'common')}"}).appendTo('#' + id);
 			
 			this.integer++;
 		}

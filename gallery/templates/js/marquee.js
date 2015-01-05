@@ -97,6 +97,7 @@ var Marquee = (function(){
 	 */
 	var _Marquee = Class.create({
 		initialize: function(opts){
+			alert('a migrer pour jquery');
 			this.running = false;
 			this.options = Object.extend(Object.clone(options), opts);
 			this.data = [];
