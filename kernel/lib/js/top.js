@@ -281,7 +281,7 @@ function hide_div(divID, useEffects)
     
     if ($(divID))
     {
-        if (useEffects) Effect.SwitchOff(divID);
+        if (useEffects) jQuery('#' + divID).fadeOut();
         $(divID).style.display = 'none';
     }
 }
@@ -299,7 +299,7 @@ function show_div(divID, useEffects)
     {
         if (useEffects)
     	{
-			$(divID).appear({duration: 0.5});
+    		jQuery('#' + divID).fadeIn();
     	}
         else
         {
@@ -313,7 +313,7 @@ function hide_inline(divID)
 {
 	if ($(divID))
 	{
-		Effect.SwitchOff(divID);
+		jQuery('#' + divID).fadeOut();
 		$(divID).style.visibility = 'hidden';
 	}
 }
@@ -323,7 +323,7 @@ function show_inline(divID)
 {
 	if ($(divID))
 	{	
-		$(divID).appear({duration: 0.5});
+		jQuery('#' + divID).fadeIn();
 		$(divID).style.visibility = 'visible';
 	}
 }
@@ -346,9 +346,9 @@ function display_div_auto(divID, type)
 	if ($(divID))
 	{	
 		if ($(divID).style.display == 'none')
-			$(divID).appear();
+			jQuery('#' + divID).fadeIn();
 		else
-			$(divID).fade({duration: 0.5});
+			jQuery('#' + divID).fadeOut();
 	}
 }
 
@@ -451,7 +451,7 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 					$('search_img' + searchid).innerHTML = '';
 				if ($("xmlhttprequest-result-search" + searchid))
 					$("xmlhttprequest-result-search" + searchid).innerHTML = xhr_object.responseText;
-				Effect.BlindDown('xmlhttprequest-result-search' + searchid, { duration: 0.5 });
+				jQuery('#xmlhttprequest-result-search' + searchid).slideDown();
 			}
 			else if (xhr_object.readyState == 4) 
 			{

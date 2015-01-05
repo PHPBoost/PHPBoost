@@ -112,7 +112,7 @@ HTMLForm.prototype.validate = function () {
 	
 	if (validated == false) {
 		form.displayValidationError(validation);
-		Effect.ScrollTo(this.id);
+		jQuery('html, body').animate({scrollTop:jQuery('#' + this.id).offset().top}, 'slow');
 	}
 	
 	this.registerDisabledFields();
