@@ -106,7 +106,7 @@ Note.prototype.change_picture_status = function (note) {
 			star_class = 'fa star star-hover fa-star';
 
 		if(jQuery('#' + id_star)) {
-			jQuery('#' + id_star).className = star_class;
+			jQuery('#' + id_star)[0].className = star_class;
 		}
 	}
 };

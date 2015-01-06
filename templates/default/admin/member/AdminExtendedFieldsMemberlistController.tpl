@@ -63,15 +63,18 @@ var ExtendedField = Class.create({
 	delete_fields : function() {
 		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 		{
-			new Ajax.Request('${relative_url(AdminExtendedFieldsUrlBuilder::delete())}', {
-				method:'post',
-				asynchronous: false,
-				parameters: {'id' : this.id, 'token' : '{TOKEN}'},
-				onSuccess: function(transport) {
-					if (transport.responseText == 0)
+			jQuery.ajax({
+				url: '${relative_url(AdminExtendedFieldsUrlBuilder::delete())}',
+				type: "post",
+				data: {'id' : this.id, 'token' : '{TOKEN}'},
+				success: function(returnData){
+					if (returnData == 0)
 					{
-						$('no_field').style.display = "";
+						jQuery('#no_field').hide();
 					}
+				},
+				error: function(e){
+					alert(e);
 				}
 			});
 			
@@ -122,9 +125,16 @@ var ExtendedField = Class.create({
 	change_display : function() {
 		display = this.is_not_displayed;
 		
-		new Ajax.Request('{REWRITED_SCRIPT}', {
-			method:'post',
-			parameters: {'id' : this.id, 'token' : '{TOKEN}', 'display': !display},
+		jQuery.ajax({
+			url: '{REWRITED_SCRIPT}',
+			type: "post",
+			data: {'id' : this.id, 'token' : '{TOKEN}', 'display': !display},
+			success: function(){
+
+			},
+			error: function(e){
+				alert(e);
+			}
 		});
 		
 		this.change_display_picture();
