@@ -34,14 +34,14 @@ class AjaxRequest implements View
 	const GET = 'get';
 	const POST = 'post';
 
-	const ON_CREATE = 'onCreate';
-	const ON_UNITIALIZED = 'onUninitialized';
-	const ON_LOADING = 'onLoading';
-	const ON_LOADED = 'onLoaded';
-	const ON_INTERACTIVE = 'onInteractive';
-	const ON_SUCCESS = 'onSuccess';
-	const ON_FAILURE = 'onFailure';
-	const ON_COMPLETE = 'onComplete';
+	const BEFORE_SEND = 'beforeSend';
+	const AJAX_SEND = 'ajaxSend';
+	const SUCCESS = 'success';
+	const AJAX_SUCCESS = 'ajaxSuccess';
+	const ERROR = 'error';
+	const AJAX_ERROR = 'ajaxError';
+	const COMPLETE = 'complete';
+	const AJAX_COMPLETE = 'ajaxComplete';
 
 	private $target;
 	private $method = self::POST;
@@ -65,21 +65,21 @@ class AjaxRequest implements View
 		$this->method = $method;
 	}
 
-	public function set_onsuccess_callback($onsuccess)
+	public function set_success_callback($onsuccess)
 	{
-		$this->add_event_callback(self::ON_SUCCESS, $onsuccess);
+		$this->add_event_callback(self::SUCCESS, $onsuccess);
 	}
 
-	public function set_onfailure_callback($onfailure = null)
+	public function set_failure_callback($onfailure = null)
 	{
 		if ($onfailure != null)
 		{
-			$this->add_event_callback(self::ON_FAILURE, $onfailure);
+			$this->add_event_callback(self::ERROR, $onfailure);
 		}
 		else
 		{
 			// TODO localize the default error message
-			$this->add_event_callback(self::ON_FAILURE, 'function() {alert(\'ajax failure\');}');
+			$this->add_event_callback(self::ERROR, 'function() {alert(\'ajax failure\');}');
 		}
 	}
 
@@ -102,9 +102,12 @@ class AjaxRequest implements View
 
 	private function get_template()
 	{
-		return new StringTemplate('new Ajax.Request(${escapejs(TARGET)},' .
-			'{method:${escapejs(METHOD)},parameters:{# START param #{param.NAME}:{param.VALUE},# END #},' .
-			'# START event #{event.NAME}:{event.CALLBACK},# END #});');
+		return new StringTemplate('jQuery.ajax({
+			url: ${escapejs(TARGET)},
+			type: ${escapejs(METHOD)},
+			data: {# START param #{param.NAME}:{param.VALUE},# END #},
+			# START event #{event.NAME}:{event.CALLBACK},# END #
+		});');
 	}
 
 	private function assign(Template $tpl)

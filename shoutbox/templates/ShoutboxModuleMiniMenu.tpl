@@ -13,7 +13,7 @@ function shoutbox_add_message()
 			dataType: "json",
 			data: {'pseudo' : pseudo, 'contents' : contents, 'token' : '{TOKEN}'},
 			beforeSend: function(){
-				jQuery('#shoutbox-refresh').className = 'fa fa-spinner fa-spin';
+				jQuery('#shoutbox-refresh').addClass('fa-spinner fa-spin')
 			},
 			success: function(returnData){
 				var code = returnData.code;
@@ -38,7 +38,7 @@ function shoutbox_add_message()
 						break;
 					}
 				}
-				jQuery('#shoutbox-refresh').className = 'fa fa-refresh';
+				jQuery('#shoutbox-refresh').removeClass('fa-spinner fa-spin').addClass('fa-refresh');
 			},
 			error: function(e){
 				alert(e);
@@ -60,7 +60,7 @@ function shoutbox_delete_message(id_message)
 			dataType: "json",
 			data: {'id' : id_message, 'token' : '{TOKEN}'},
 			beforeSend: function(){
-				jQuery('#shoutbox-refresh').className = 'fa fa-spinner fa-spin';
+				jQuery('#shoutbox-refresh').addClass('fa-spinner fa-spin');
 			},
 			success: function(returnData){
 				var code = returnData.code;
@@ -70,7 +70,7 @@ function shoutbox_delete_message(id_message)
 				} else {
 					alert("{@error.message.delete}");
 				}
-				jQuery('#shoutbox-refresh').className = 'fa fa-refresh';
+				jQuery('#shoutbox-refresh').removeClass('fa-spinner fa-spin').addClass('fa-refresh');
 			},
 			error: function(e){
 				alert(e);
@@ -86,12 +86,12 @@ function shoutbox_refresh_messages_box() {
 		dataType: "html",
 		data: {'token' : '{TOKEN}'},
 		beforeSend: function(){
-			jQuery('#shoutbox-refresh').className = 'fa fa-spinner fa-spin';
+			jQuery('#shoutbox-refresh').addClass('fa-spinner fa-spin');
 		},
 		success: function(returnData){
 			jQuery('#shoutbox-messages-container').html(returnData);
 
-			jQuery('#shoutbox-refresh').className = 'fa fa-refresh';
+			jQuery('#shoutbox-refresh').removeClass('fa-spinner fa-spin').addClass('fa-refresh');
 		},
 		error: function(e){
 			alert(e);

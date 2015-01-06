@@ -78,17 +78,17 @@ function xmlhttprequest_calendar(field, vars)
 {
 	filename = PATH_TO_ROOT + '/kernel/framework/ajax/mini_calendar_xmlhttprequest.php' + vars;
 	
-	new Ajax.Request(filename,
-			{
-			method: 'get',
-			parameters: {},
-			onSuccess: function(response)
-			{
-				$(field).innerHTML = response.responseText;
-				show_div(field, true);
-			}
+	jQuery.ajax({
+		url: filename,
+		type: "get",
+		data: {},
+		success: function(returnData){
+			jQuery('#' + field).html(returnData).fadeIn();
+		},
+		error: function(e){
+			alert(e);
 		}
-	);
+	});
 }
 
 function check_mini_calendar_form(name)
