@@ -363,7 +363,7 @@ else
 		'FIELD' => $field,
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'USER_ID' => AppContext::get_current_user()->get_id(),
-		'URL' => Uploads::get_url($folder, '', '&amp;' . $popup),
+		'URL' => $folder > 0 ? Uploads::get_url($folder, '', '&amp;' . $popup) : '',
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],
