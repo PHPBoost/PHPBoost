@@ -667,12 +667,12 @@ input[type=password],
 input[type=file],
 textarea,
 select {
-	padding: 4px 18px 4px 6px;
 	color: #555555;
 	background-color: #FFFFFF;
 	border: 1px solid #CCCCCC;
 	border-radius: 4px;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
+	padding: 4px 18px 4px 6px;
 }
 input[type=text]:hover,
 input[type=password]:hover,
@@ -702,13 +702,14 @@ form textarea:focus:invalid {
 }
 
 form input:focus:valid,
-form textarea:focus:valid {
+form textarea:focus:valid{
 	border-color: rgba(71, 137, 72, 0.3);
 	box-shadow: 0 0 5px rgba(71, 137, 72, 0.1);
 	color: #478948;
 }
 
-input.field-smaller { width: 29px;  }
+input.field-smaller {
+	width: 29px;  }
 input.field-small   { width: 77px;  }
 input.field-large   { width: 200px; }
 input.field-xlarge  { width: 300px; }
@@ -826,9 +827,9 @@ select[readonly=readonly]:focus {
 /* --- Textarea --- */
 .form-field-textarea {
 	display: inline;
-	margin: 5px auto;
 	width: 90%;
 	position: relative;
+	margin: 5px auto;
 }
 
 textarea {
@@ -891,6 +892,11 @@ textarea {
 	width: 138px;
 	height: 100px;
 	margin: 2px 0px 0px 0px;
+}
+
+.bbcode ~ .form-field-textarea textarea {
+	border-radius: 0px 0px 4px 4px;
+	border-width: 0px 1px 1px 1px;
 }
 
 /* CSS applique aux écrans PC */

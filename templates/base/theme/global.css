@@ -161,16 +161,23 @@ h4.formatter-title {
 .calendar-block .date-picker tbody tr:last-child td:last-child  { border-radius: 0px 0px 2px 0px; }
 
 /* --- les blocs bbcode --- */
-.bbcode-block {
+
+.bbcode-block-container {
 	position: absolute;
 	text-align: center;
-	padding: 6px 4px;
-	bottom: 2px;
+	margin: 0;
+	padding: 0;
 	z-index: 20;
+	top: 26px;
+	left: -4px;
+}
+
+.bbcode-block {
 	background: #F3F3F3;
 	border-radius: 3px;
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	border: 1px solid #AAAAAA;
+	margin: 0;
 }
 
 .bbcode-block a {
@@ -182,10 +189,6 @@ h4.formatter-title {
 .color-picker {
 	position: absolute;
 	z-index: 100;
-}
-
-.color-picker .bbcode-block {
-	left: 80px;
 }
 
 .color-picker .bbcode-block table {
