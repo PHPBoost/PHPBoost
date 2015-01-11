@@ -2,15 +2,15 @@
 		<!--
 			function check_form_conf()
 			{
-				if(!isInteger(document.getElementById('nb_results_p').value)) {
+				if(document.getElementById('nb_results_p').value == "")) {
 					alert("{L_REQUIRE_INTEGER}");
 					return false;
 				}
-				if(!isInteger(document.getElementById('cache_time').value)) {
+				if(document.getElementById('cache_time').value == "")) {
 					alert("{L_REQUIRE_INTEGER}");
 					return false;
 				}
-				if(!isInteger(document.getElementById('max_use').value)) {
+				if(document.getElementById('max_use').value == "")) {
 					alert("{L_REQUIRE_INTEGER}");
 					return false;
 				}

@@ -303,18 +303,13 @@ class Feed
 	 * @param string $feed_url Feed URL
 	 * @return string The HTML code to display.
 	 */
-	public static function get_feed_menu($feed_url)
+	public static function get_feed_menu($module_id, $id_cat = 0)
 	{
 		$feed_menu = new FileTemplate('framework/content/syndication/menu.tpl');
 
-		$general_config = GeneralConfig::load();
-		$feed_absolut_url = $general_config->get_site_url() . $general_config->get_site_path() . '/' . trim($feed_url, '/');
-
 		$feed_menu->put_all(array(
-			'U_FEED' => $feed_absolut_url,
-			'SEPARATOR' => strpos($feed_absolut_url, '?') !== false ? '&amp;' : '?',
-			'L_RSS' => LangLoader::get_message('syndication.rss', 'common'),
-			'L_ATOM' => LangLoader::get_message('syndication.atom', 'common')
+			'U_FEED_RSS' => SyndicationUrlBuilder::rss($module_id, $id_cat)->absolute(),
+			'U_FEED_ATOM' => SyndicationUrlBuilder::atom($module_id, $id_cat)->absolute()
 		));
 
 		return $feed_menu->render();

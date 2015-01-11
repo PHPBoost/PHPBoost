@@ -24,7 +24,7 @@
 				// Cache tous les résultats
 				{
 					for( var i = 0; i < modulesResults.length; i++ )
-						hide_div(RESULTS + modulesResults[i]);
+						jQuery('#' + RESULTS + modulesResults[i]).fadeOut();
 				}
 				
 				function ChangeResults()
@@ -32,8 +32,8 @@
 				{
 					var module = document.getElementById('results_choice').value;
 					HideResults();
-					show_div(RESULTS + module);
-					if (!inArray(module, calculatedResults))
+					jQuery('#' + RESULTS + module).fadeIn();
+					if (!jQuery.inArray(module, calculatedResults))
 					{
 						XMLHttpRequest_search_module(module);
 					}
@@ -170,9 +170,8 @@
 		<script>
 		<!--
 			ChangePagination(0, Math.ceil(nbResults['{SEARCH_IN}'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + '{SEARCH_IN}', 'results_{SEARCH_IN}');
-			show_div(RESULTS + '{SEARCH_IN}_0');
+			jQuery('#' + RESULTS + '{SEARCH_IN}_0').fadeIn();
 
-			if( browserAJAXFriendly() )
-				show_div('results_choices');
+			jQuery('#results_choices').fadeIn();
 		-->
 		</script>

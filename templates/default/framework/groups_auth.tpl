@@ -41,7 +41,7 @@
 # ENDIF #
 
 <div class="spacer"></div>
-<a class="small" href="javascript:display_div_auto('advanced_auth{IDSELECT}', '');display_div_auto('advanced_authb{IDSELECT}', '');switch_className('advanced_auth_plus{IDSELECT}', 'fa fa-minus-square-o', 'fa fa-plus-square-o');">
+<a class="small" href="javascript:open_advanced_auth('{IDSELECT}');">
 	# IF C_ADVANCED_AUTH_OPEN #
 	<i id="advanced_auth_plus{IDSELECT}" class="fa fa-minus-square-o"></i>
 	# ELSE #
@@ -53,3 +53,19 @@
 <a class="small" href="javascript:check_select_multiple('{IDSELECT}', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple('{IDSELECT}', false);">{L_SELECT_NONE}</a>
 <br />
 <span class="smaller">({L_EXPLAIN_SELECT_MULTIPLE})</span>
+<script type="text/javascript">
+<!--
+function open_advanced_auth(id) {
+	jQuery('#advanced_auth' + id).fadeToggle(300, function(){
+		if (jQuery(this).css('display') == 'block'){
+			jQuery('#advanced_auth_plus' + id)[0].className = 'fa fa-minus-square-o';
+		}
+		else{
+			jQuery('#advanced_auth_plus' + id)[0].className = 'fa fa-plus-square-o';
+			
+		}
+	});
+	jQuery('#advanced_authb' + id).fadeToggle();
+}
+-->
+</script>

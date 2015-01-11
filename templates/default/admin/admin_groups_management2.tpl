@@ -41,7 +41,7 @@
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					{
 						document.getElementById("xmlhttprequest-result-search").innerHTML = xhr_object.responseText;
-						show_div("xmlhttprequest-result-search");
+						jQuery('#xmlhttprequest-result-search').fadeIn();
 						if( document.getElementById('loading_groups') )
 							document.getElementById('loading_groups').innerHTML = '';
 					}
@@ -57,24 +57,6 @@
 				alert("{L_REQUIRE_LOGIN}");
 		}
 
-		function hide_div2(divID)
-		{
-			if( document.getElementById && document.getElementById(divID) ) //Pour les navigateurs r�cents
-			{
-				Pdiv = document.getElementById(divID);
-				if( Pdiv.className == divID ) Pdiv.className = divID + '2';
-			}
-			else if( document.all && document.all[divID] ) //Pour les vieilles versions
-			{
-				Pdiv = document.all[divID];
-				if( Pdiv.className == divID ) Pdiv.className = divID + '2';
-			}
-			else if( document.layers && document.layers[divID] ) //Pour les tr�s vieilles versions
-			{
-				Pdiv = document.layers[divID];
-				if( Pdiv.className == divID ) Pdiv.className = divID + '2';
-			}
-		}
 		function insert_color(color)
 		{
 			document.getElementById("color_group").value = color.replace(/#/g, '');

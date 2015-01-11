@@ -229,27 +229,12 @@ if (top != self)
 	top.location = self.location;
 }
 
-//Répétition d'un caractère.
-function str_repeat(charrepeat, nbr)
-{
-	var string = '';
-	for(var i = 0; i < nbr; i++)
-		string += charrepeat;
-	return string;
-}
-
 //Recherche d'une chaîne dans une autre.
 function strpos(haystack, needle)
 {
     var i = haystack.indexOf(needle, 0); // returns -1
     return i >= 0 ? i : false;
 }
-
-//Supprime les espaces en début et fin de chaîne.
-function trim(myString)
-{
-	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'');
-} 
 
 //Affichage/Masquage de la balise hide.
 function bb_hide(div2)
@@ -270,113 +255,6 @@ function bb_hide(div2)
 	}
 	
 	return true;
-}
-
-//Masque un bloc.
-function hide_div(divID, useEffects)
-{
-    var use_effects = false
-    if (arguments.length > 1)
-        use_effects = useEffects;
-    
-    if ($(divID))
-    {
-        if (useEffects) jQuery('#' + divID).fadeOut();
-        $(divID).style.display = 'none';
-    }
-}
-
-//Affiche un bloc
-function show_div(divID, useEffects)
-{
-    var use_effects = false
-    if (arguments.length > 1)
-    {
-        use_effects = useEffects;
-    }
-    
-    if ($(divID))
-    {
-        if (useEffects)
-    	{
-    		jQuery('#' + divID).fadeIn();
-    	}
-        else
-        {
-        	$(divID).style.display = 'block';
-        }
-    }
-}
-
-//Masque un bloc.
-function hide_inline(divID)
-{
-	if ($(divID))
-	{
-		jQuery('#' + divID).fadeOut();
-		$(divID).style.visibility = 'hidden';
-	}
-}
-
-//Affiche un bloc
-function show_inline(divID)
-{
-	if ($(divID))
-	{	
-		jQuery('#' + divID).fadeIn();
-		$(divID).style.visibility = 'visible';
-	}
-}
-
-//Switch entre deux classes CSS.
-function switch_className(id, class1, class2)
-{
-	if ($(id))
-	{	
-		if ($(id).className == class1)
-			$(id).className = class2;
-		else
-			$(id).className = class1;
-	}
-}
-
-//Afffiche/masque automatiquement un bloc.
-function display_div_auto(divID, type)
-{
-	if ($(divID))
-	{	
-		if ($(divID).style.display == 'none')
-			jQuery('#' + divID).fadeIn();
-		else
-			jQuery('#' + divID).fadeOut();
-	}
-}
-
-//Popup
-function popup(page,name)
-{
-   var screen_height = screen.height;
-   var screen_width = screen.width;
-
-	if (screen_height == 600 && screen_width == 800)
-		window.open(page, name, "width=680, height=540,location=no,status=no,toolbar=no,scrollbars=yes");
-	else if (screen_height == 768 && screen_width == 1024)
-		window.open(page, name, "width=672, height=620,location=no,status=no,toolbar=no,scrollbars=yes");
-	else if (screen_height == 864 && screen_width == 1152)
-		window.open(page, name, "width=672, height=620,location=no,status=no,toolbar=no,scrollbars=yes");
-	else
-		window.open(page, name, "width=672, height=620,location=no,status=no,toolbar=no,scrollbars=yes");
-}
-
-//Teste la présence d'une valeur dans un tableau
-function inArray(aValue, anArray)
-{
-    for( var i = 0; i < anArray.length; i++)
-    {
-        if (anArray[i] == aValue)
-            return true;
-    }
-    return false;
 }
 
 //Barre de progression, 
@@ -422,15 +300,6 @@ function escape_xmlhttprequest(contents)
 	contents = contents.replace(/&/g, '%26');
 	
 	return contents;
-}
-
-//Informe sur la capacité du navigateur à supporter AJAX
-function browserAJAXFriendly()
-{
-    if ( window.XMLHttpRequest || window.ActiveXObject)
-        return true;
-    else
-        return false;
 }
 
 //Fonction de recherche des membres.
@@ -572,57 +441,13 @@ function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbP
     
     // On cache tous les autre résultats du module
     for ( var i = 0; i < nbPages; i++)
-        hide_div(blocName + '_' + i);
+    	jQuery('#' + blocName + '_' + i).fadeOut();
         
     // On montre la page demandée
-    show_div(blocName + '_' + page);
+    jQuery('#' + blocName + '_' + page).fadeIn();
     
     // Mise à jour de la pagination
     $(blocPagin).innerHTML = pagin;
-}
-
-// Teste si une chaine est un entier
-function isInteger(number)
-{
-    var numbers = "0123456789";
-    for ( var i = 0; i < number.length && numbers.indexOf(number[i]) != -1; i++);
-    return i == number.length ;
-}
-
-
-/*#######Feeds menu gestion######*/
-var feed_menu_timeout_in = null;
-var feed_menu_timeout_out = null;
-var feed_menu_elt = null;
-var feed_menu_delay = 800; //Durée après laquelle le menu est caché lors du départ de la souris.
-
-// Print the syndication's choice menu
-function ShowSyndication(element)
-{
-    if (feed_menu_elt)
-        feed_menu_elt.style.visibility = 'hidden';
-    feed_menu_elt = null;
-    var elts = null;
-    elts = element.parentNode.getElementsByTagName('div');
-    for( var i = 0; i < elts.length; i++) {
-        if (elts[i].title == 'L_SYNDICATION_CHOICES') {
-            feed_menu_elt = elts[i];
-            break;
-        }
-    }
-	feed_menu_elt.style.visibility = 'visible';
-    clearTimeout(feed_menu_timeout_out);
-}
-function ShowSyndicationMenu(element)
-{
-	element.style.visibility = 'visible';
-    clearTimeout(feed_menu_timeout_out);
-}
-function HideSyndication(element)
-{
-    feed_menu_elt = element;
-    feed_menu_timeout_out = setTimeout('feed_menu_elt.style.visibility = \'hidden\'', feed_menu_delay);
-    clearTimeout(feed_menu_timeout_in);
 }
 
 //Pour savoir si une fonction existe
@@ -719,14 +544,7 @@ function bb_display_block(divID, field)
 
 //Cache le bloc.
 function bb_hide_block(bbfield, field, stop)
-{
-	var nav = navigator.appName; //Recupère le nom du navigateur
-	if( nav == 'Microsoft Internet Explorer' ) // Internet Explorer
-	{
-		if (window.event.toElement == null) //Hack pour ie... encore une fois!
-			return;
-	}
-	
+{	
 	if( stop && timeout )
 	{	
 		clearTimeout(timeout);

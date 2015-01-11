@@ -139,7 +139,7 @@
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_change_status" value="{status.ID_ARTICLE}">
 				<button type="submit" value="true" class="submit">{L_SUBMIT}</button>
-				<button onclick="XMLHttpRequest_preview();hide_div('xmlhttprequest_result')" type="button">{L_PREVIEW}</button>
+				<button onclick="XMLHttpRequest_preview();jQuery('#xmlhttprequest_result').fadeOut();" type="button">{L_PREVIEW}</button>
 				<button type="reset">{L_RESET}</button>
 			</fieldset>
 		</form>
