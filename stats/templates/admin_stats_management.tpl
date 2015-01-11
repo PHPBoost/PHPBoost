@@ -505,7 +505,7 @@
 			if( document.getElementById('url' + divid).style.display != 'none' )
 			{
 				document.getElementById('img_url' + divid).className = 'fa fa-plus-square-o';
-				display_div_auto('url' + divid, 'table');
+				jQuery('#url' + divid).fadeToggle();
 			}
 			else
 			{
@@ -527,7 +527,7 @@
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					{
-						display_div_auto('url' + divid, 'table');
+						jQuery('#url' + divid).fadeToggle();
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
 						document.getElementById('img_url' + divid).className = 'fa fa-minus-square-o';
@@ -615,7 +615,7 @@
 			if( document.getElementById('url' + divid).style.display != 'none' )
 			{
 				document.getElementById('img_url' + divid).className = 'fa fa-plus-square-o';
-				display_div_auto('url' + divid, 'table');
+				jQuery('#url' + divid).fadeToggle();
 			}
 			else
 			{

@@ -231,30 +231,6 @@ ul.pagination .current-page {
 	border-radius: 4px;
 }
 
-/* Syndications */
-div.syndication-choices {
-	position: absolute;
-	width: 0px;
-	height: 0px;
-	visibility: hidden;
-	overflow: visible;
-	margin-top: 2px 0px 0px -20px;
-}
-
-div.syndication-choices ul {
-	width: 90px;
-	list-style-type: none;
-	line-height: 18px;
-}
-div.syndication-choices ul li {
-	height: 18px;
-	margin-bottom: 1px;
-}
-
-ul.rss-feed { margin-left:20px; }
-
-ul.rss-feed li { text-align: left; }
-
 @media print {
 	* {
 		background: transparent;

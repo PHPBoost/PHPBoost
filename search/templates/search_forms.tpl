@@ -7,8 +7,8 @@
 			function ChangeForm(module)
 			// Change le cadre des résultats
 			{
-				hide_div(FORM + LastSpecializedFormUsed);
-				show_div(FORM + module);
+				jQuery('#' + FORM + LastSpecializedFormUsed).fadeOut();
+				jQuery('#' + FORM + module).fadeIn();
 
 				document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).className = '';
 

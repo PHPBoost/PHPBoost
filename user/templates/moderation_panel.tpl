@@ -48,19 +48,13 @@
 								if( xhr_object.readyState == 4 ) 
 								{
 									document.getElementById("xmlhttprequest-result-search").innerHTML = xhr_object.responseText;
-									show_div("xmlhttprequest-result-search");
+									jQuery('#xmlhttprequest-result-search').fadeIn();
 								}
 							}
 							xmlhttprequest_sender(xhr_object, data);
 						}	
 						else
 							alert("{L_REQUIRE_LOGIN}");
-					}
-					
-					function hide_div(divID)
-					{
-						if( document.getElementById(divID) )
-							document.getElementById(divID).style.display = 'block';
 					}
 					-->
 				</script>
