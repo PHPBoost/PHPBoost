@@ -26,7 +26,7 @@ var ContactFormFieldPossibleValues = Class.create({
 		var id = this.id_input + '_' + id;
 		$(id).remove();
 		this.integer--;
-		$('add_' + this.id_input).show();
+		jQuery('#add_' + this.id_input).show();
 	},
 });
 

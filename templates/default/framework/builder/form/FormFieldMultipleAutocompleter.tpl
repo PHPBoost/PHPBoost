@@ -27,7 +27,7 @@ FormFieldMultipleAutocompleter.prototype.add_field = function () {
 		this.integer++;
 	}
 	if (this.integer == this.max_input) {
-		$('add_' + this.id_input).hide();
+		jQuery('#add_' + this.id_input).hide();
 	}
 };
 
@@ -35,7 +35,7 @@ FormFieldMultipleAutocompleter.prototype.delete_field = function (id) {
 	var id = this.id_input + '_' + id;
 	$(id).remove();
 	this.integer--;
-	$('add_' + this.id_input).show();
+	jQuery('#add_' + this.id_input).show();
 };
 
 FormFieldMultipleAutocompleter.prototype.load_autocompleter = function (id) {

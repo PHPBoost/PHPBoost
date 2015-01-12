@@ -32,10 +32,10 @@ var BugtrackerFormFieldTypes = Class.create({
 			this.integer++;
 		}
 		if (this.integer == this.max_input) {
-			$('add_type').hide();
+			jQuery('#add_type').hide();
 		}
 		if (this.integer) {
-			$('no_type').hide();
+			jQuery('#no_type').hide();
 		}
 	},
 	delete_type : function (id) {
@@ -44,7 +44,7 @@ var BugtrackerFormFieldTypes = Class.create({
 		if (this.integer == 1)
 			$('no_type').style.display = "";
 		
-		$('add_type').show();
+		jQuery('#add_type').show();
 	},
 });
 

@@ -21,12 +21,7 @@
 	<!--
 	function open_submenu(myid)
 	{
-		if ($(myid).hasClassName("active")) {
-			$(myid).removeClassName ("active");
-		}
-		else {
-			$(myid).addClassName ("active");
-		}
+		jQuery('#' + myid).toggleClass('active');
 	}
 	-->
 </script>

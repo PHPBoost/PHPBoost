@@ -32,10 +32,10 @@ var BugtrackerFormFieldCategories = Class.create({
 			this.integer++;
 		}
 		if (this.integer == this.max_input) {
-			$('add_category').hide();
+			jQuery('#add_category').hide();
 		}
 		if (this.integer) {
-			$('no_category').hide();
+			jQuery('#no_category').hide();
 		}
 	},
 	delete_type : function (id) {
@@ -44,7 +44,7 @@ var BugtrackerFormFieldCategories = Class.create({
 		if (this.integer == 1)
 			$('no_category').style.display = "";
 		
-		$('add_category').show();
+		jQuery('#add_category').show();
 	},
 });
 

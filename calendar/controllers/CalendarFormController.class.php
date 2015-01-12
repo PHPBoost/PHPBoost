@@ -121,11 +121,11 @@ class CalendarFormController extends ModuleController
 			if (HTMLForms.getField("registration_authorized").getValue()) {
 				HTMLForms.getField("max_registered_members").enable();
 				HTMLForms.getField("last_registration_date_enabled").enable();
-				$("' . __CLASS__ . '_register_authorizations").show();
+				jQuery("#' . __CLASS__ . '_register_authorizations").show();
 			} else {
 				HTMLForms.getField("max_registered_members").disable();
 				HTMLForms.getField("last_registration_date_enabled").disable();
-				$("' . __CLASS__ . '_register_authorizations").hide();
+				jQuery("#' . __CLASS__ . '_register_authorizations").hide();
 			}'
 		))));
 		
