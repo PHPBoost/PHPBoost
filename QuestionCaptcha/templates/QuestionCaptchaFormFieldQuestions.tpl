@@ -21,14 +21,14 @@ var QuestionCaptchaFormFieldQuestions = Class.create({
 			this.integer++;
 		}
 		if (this.integer == this.max_input) {
-			$('add_' + this.id_input).hide();
+			jQuery('#add_' + this.id_input).hide();
 		}
 	},
 	delete_question : function (id) {
 		var id = this.id_input + '_' + id;
 		$(id).remove();
 		this.integer--;
-		$('add_' + this.id_input).show();
+		jQuery('#add_' + this.id_input).show();
 	},
 });
 

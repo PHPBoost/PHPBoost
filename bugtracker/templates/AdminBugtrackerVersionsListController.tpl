@@ -54,10 +54,10 @@ var BugtrackerFormFieldVersions = Class.create({
 			this.integer++;
 		}
 		if (this.integer == this.max_input) {
-			$('add_version').hide();
+			jQuery('#add_version').hide();
 		}
 		if (this.integer) {
-			$('no_version').hide();
+			jQuery('#no_version').hide();
 		}
 	},
 	delete_version : function (id) {
@@ -66,7 +66,7 @@ var BugtrackerFormFieldVersions = Class.create({
 		if (this.integer == 1)
 			$('no_version').style.display = "";
 		
-		$('add_version').show();
+		jQuery('#add_version').show();
 	},
 });
 
