@@ -15,7 +15,7 @@ var ContactFields = Class.create({
 		Sortable.destroy(this.id); 
 	},
 	serialize_sortable : function() {
-		$('position').value = Sortable.serialize(this.id);
+		jQuery('#position').val(Sortable.serialize(this.id));
 	},
 	get_sortable_sequence : function() {
 		return Sortable.sequence(this.id);
@@ -26,16 +26,16 @@ var ContactFields = Class.create({
 	change_reposition_pictures : function() {
 		sequence = Sortable.sequence(this.id);
 		
-		$('move_up_' + sequence[0]).style.display = "none";
-		$('move_down_' + sequence[0]).style.display = "inline";
+		jQuery('#move_up_' + sequence[0])[0].style.display = "none";
+		jQuery('#move_down_' + sequence[0])[0].style.display = "inline";
 		
 		for (var j = 1 ; j < sequence.length - 1 ; j++) {
-			$('move_up_' + sequence[j]).style.display = "inline";
-			$('move_down_' + sequence[j]).style.display = "inline";
+			jQuery('#move_up_' + sequence[j])[0].style.display = "inline";
+			jQuery('#move_down_' + sequence[j])[0].style.display = "inline";
 		}
 		
-		$('move_up_' + sequence[sequence.length - 1]).style.display = "inline";
-		$('move_down_' + sequence[sequence.length - 1]).style.display = "none";
+		jQuery('#move_up_' + sequence[sequence.length - 1])[0].style.display = "inline";
+		jQuery('#move_down_' + sequence[sequence.length - 1])[0].style.display = "none";
 	}
 });
 

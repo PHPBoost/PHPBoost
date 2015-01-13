@@ -107,7 +107,7 @@ function delete_filter(id) {
 		<script>
 		<!--
 		jQuery(document).ready(function() {
-			$('delete_{filters.ID}').observe('click',function(){
+			jQuery('#delete_{filters.ID}').on('click',function(){
 				delete_filter('{filters.ID}');
 			});
 		});

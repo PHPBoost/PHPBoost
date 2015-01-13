@@ -39,16 +39,13 @@ function bb_hide(div2)
 
 //Barre de progression, 
 function change_progressbar(id_element, value, informations) {
-	var progress_bar_el = $(id_element).select('.progressbar').first();
-	progress_bar_el.setStyle({width: value + '%'});
+	var progress_bar_el = jQuery('#' + id_element).children('.progressbar').css('width', value + '%');
 
 	if (informations) {
-		var progress_bar_infos_el = $(id_element).select('.progressbar-infos').first();
-		progress_bar_infos_el.update(informations);
+		jQuery('#' + id_element).children('.progressbar-infos').text(informations);
 	}
 	else {
-		var progress_bar_infos_el = $(id_element).select('.progressbar-infos').first();
-		progress_bar_infos_el.update(value + '%');
+		jQuery('#' + id_element).children('.progressbar-infos').text(value + '%');
 	}
 }
 

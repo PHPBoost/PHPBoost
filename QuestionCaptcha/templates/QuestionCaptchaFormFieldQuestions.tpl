@@ -26,7 +26,7 @@ var QuestionCaptchaFormFieldQuestions = Class.create({
 	},
 	delete_question : function (id) {
 		var id = this.id_input + '_' + id;
-		$(id).remove();
+		jQuery('#' + id).remove();
 		this.integer--;
 		jQuery('#add_' + this.id_input).show();
 	},

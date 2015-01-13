@@ -7,7 +7,7 @@ function XMLHttpRequest_preview(field)
 	if( XMLHttpRequest_preview.arguments.length == 0 )
 		field = ${escapejs(FIELD)};
 
-	var contents = jQuery(field).val();
+	var contents = jQuery('#' + field).val();
 	var preview_field = 'xmlhttprequest-preview' + field;
 
 	if( contents != "" )

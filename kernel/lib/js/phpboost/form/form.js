@@ -238,11 +238,12 @@ FormField.prototype.disable = function () {
 };
 FormField.prototype.isDisabled = function () {
 	if (this.HTMLFieldExists()) {
-		var element = $(this.getHTMLId());
+		var element = jQuery('#' + this.getHTMLId())[0];
 		var disabled = element.disabled != "disabled" && element.disabled != false;
 		if (disabled == false) {
-			if ($(this.getHTMLId() + '_field')) {
-				var display = $(this.getHTMLId() + '_field').style.display;
+			var field = jQuery('#' + this.getHTMLId() + '_field')[0];
+			if (field) {
+				var display = field.style.display;
 				if (display != null) {
 					return display == "none";
 				} else {
@@ -275,11 +276,10 @@ FormField.prototype.displayErrorMessage = function (message) {
 		return;
 	}
 	
-	if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
+	if (jQuery('#' + this.getHTMLId() + '_field') && jQuery('#onblurContainerResponse' + this.getHTMLId())) {
 		
-		$(this.getHTMLId() + '_field').removeClassName('constraint-status-right');
-		$(this.getHTMLId() + '_field').addClassName('constraint-status-error');
-		$('onblurMessageResponse' + this.getHTMLId()).innerHTML = message;
+		jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-right').addClass('constraint-status-error');
+		jQuery('#onblurMessageResponse' + this.getHTMLId()).text(message);
 		
 		jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeIn(500);
 	}
@@ -289,19 +289,17 @@ FormField.prototype.displaySuccessMessage = function () {
 		return;
 	}
 	
-	if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
+	if (jQuery('#' + this.getHTMLId() + '_field') && jQuery('#onblurContainerResponse' + this.getHTMLId())) {
 		
-		$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
-		$(this.getHTMLId() + '_field').addClassName('constraint-status-right');
+		jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-error').addClass('constraint-status-right');
 		jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
 	}
 };
 FormField.prototype.clearErrorMessage = function () {
-	if ($(this.getHTMLId() + '_field') && $('onblurContainerResponse' + this.getHTMLId())) {
+	if (jQuery('#' + this.getHTMLId() + '_field') && jQuery('#onblurContainerResponse' + this.getHTMLId())) {
 
-		$(this.getHTMLId() + '_field').removeClassName('constraint-status-right');
-		$(this.getHTMLId() + '_field').removeClassName('constraint-status-error');
-		$('onblurMessageResponse' + this.getHTMLId()).innerHTML = '';
+		jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-right').addClass('constraint-status-error');
+		jQuery('#onblurMessageResponse' + this.getHTMLId()).text('');
 		jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
 	}
 };
