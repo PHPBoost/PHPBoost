@@ -115,9 +115,9 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', $this->common_lang['authorizations'], (!$this->get_category()->auth_is_empty() && !$this->get_category()->auth_is_equals($root_auth)), 
 		array('description' => $this->lang['category.form.authorizations.description'], 'events' => array('click' => '
 		if (HTMLForms.getField("special_authorizations").getValue()) {
-			$("' . __CLASS__ . '_authorizations").appear();
+			jQuery("#' . __CLASS__ . '_authorizations").show();
 		} else { 
-			$("' . __CLASS__ . '_authorizations").fade();
+			jQuery("' . __CLASS__ . '_authorizations").hide();
 		}')
 		)));
 		

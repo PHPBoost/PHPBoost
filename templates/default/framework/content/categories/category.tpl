@@ -1,12 +1,12 @@
 <script>
 <!--
 jQuery(document).ready(function() {
-	$('move-up-{ID}').observe('click',function(){
-		move_category_up($('cat_{ID}').parentNode.id, $('cat_{ID}').id);
+	jQuery('#move-up-{ID}').on('click',function(){
+		move_category_up(jQuery('#cat_{ID}').parent().attr('id'), jQuery('#cat_{ID}').attr('id'));
 	});
 	
-	$('move-down-{ID}').observe('click',function(){
-		move_category_down($('cat_{ID}').parentNode.id, $('cat_{ID}').id);
+	jQuery('#move-down-{ID}').on('click',function(){
+		move_category_down(jQuery('#cat_{ID}').parent().attr('id'), jQuery('#cat_{ID}').attr('id'));
 	});
 });
 -->

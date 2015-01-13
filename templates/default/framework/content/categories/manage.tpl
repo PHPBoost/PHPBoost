@@ -7,11 +7,11 @@ jQuery(document).ready(function() {
 
 function serialize_sortable()
 {
-	$('tree').value = Sortable.serialize('categories');
+	jQuery('#tree').val(Sortable.serialize('categories'));
 }
 
 function move_category_up(parent_id, id) {
-	var childs = $(parent_id).childNodes;
+	var childs = jQuery('#' + parent_id)[0].childNodes;
 	var cat_id = 0;
 	var previous_id = 0;
 	
@@ -25,12 +25,12 @@ function move_category_up(parent_id, id) {
 	}
 	
 	if (cat_id > 0 || previous_id > 0) {
-		$(parent_id).insertBefore(childs[cat_id], childs[previous_id]);
+		jQuery('#' + parent_id)[0].insertBefore(childs[cat_id], childs[previous_id]);
 	}
 }
 
 function move_category_down(parent_id, id){
-	var childs = $(parent_id).childNodes;
+	var childs = jQuery('#' + parent_id)[0].childNodes;
 	var cat_id = 0;
 	var previous_id = 0;
 	
@@ -44,7 +44,7 @@ function move_category_down(parent_id, id){
 	}
 	
 	if (cat_id > 0 || previous_id > 0) {
-		$(parent_id).insertBefore(childs[previous_id], childs[cat_id]);
+		jQuery('#' + parent_id)[0].insertBefore(childs[previous_id], childs[cat_id]);
 	}
 }
 -->

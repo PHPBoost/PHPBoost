@@ -143,10 +143,10 @@
 								{CATEGORIES}
 							</select>
 							<script>
-							$('root_cat').observe('change', function() {
-								root_value = $('root_cat').value;
+							jQuery('#root_cat').on('change', function() {
+								root_value = jQuery('#root_cat').val();
 								# START list #
-								$('{list.ID}cat').value = root_value;
+								jQuery('#{list.ID}cat').val(root_value);
 								# END list #
 							});
 							</script>

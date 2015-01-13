@@ -33,7 +33,7 @@ FormFieldMultipleAutocompleter.prototype.add_field = function () {
 
 FormFieldMultipleAutocompleter.prototype.delete_field = function (id) {
 	var id = this.id_input + '_' + id;
-	$(id).remove();
+	jQuery('#' + id).remove();
 	this.integer--;
 	jQuery('#add_' + this.id_input).show();
 };

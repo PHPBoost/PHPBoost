@@ -61,10 +61,10 @@ var BugtrackerFormFieldVersions = Class.create({
 		}
 	},
 	delete_version : function (id) {
-		$('tr_' + id).remove();
+		jQuery('#tr_' + id).remove();
 		this.integer--;
 		if (this.integer == 1)
-			$('no_version').style.display = "";
+			jQuery('#no_version')hide();
 		
 		jQuery('#add_version').show();
 	},

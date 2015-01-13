@@ -140,10 +140,10 @@ class NewsFormController extends ModuleController
 				),
 				array('events' => array('change' => '
 				if (HTMLForms.getField("approbation_type").getValue() == 2) {
-					$("' . __CLASS__ . '_start_date_field").appear();
+					jQuery("#' . __CLASS__ . '_start_date_field").show();
 					HTMLForms.getField("end_date_enable").enable();
 				} else { 
-					$("' . __CLASS__ . '_start_date_field").fade();
+					jQuery("#' . __CLASS__ . '_start_date_field").hide();
 					HTMLForms.getField("end_date_enable").disable();
 				}'))
 			));

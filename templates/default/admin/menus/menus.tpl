@@ -136,15 +136,6 @@ function createSortableMenu()
 						# START mod_header #
 							{mod_header.MENU}
 						# END mod_header #
-						
-						# IF C_HEADER_COLUMN #
-							<script>
-							<!--
-							$('mod_header').style.opacity = 0.5;
-							$('mod_header').style.filter='alpha(opacity=50)';
-							-->
-							</script>
-						# ENDIF #
 						<div id="menu-spacer1" class="menu-spacer"></div>
 					</div>
 				</td>
@@ -176,15 +167,6 @@ function createSortableMenu()
 						# START mod_subheader #
 							{mod_subheader.MENU}
 						# END mod_subheader #
-						
-						# IF C_SUB_HEADER_COLUMN #
-							<script>
-							<!--
-							$('mod_subheader').style.opacity = 0.5;
-							$('mod_subheader').style.filter='alpha(opacity=50)';
-							-->
-							</script>
-						# ENDIF #
 						<div id="menu-spacer2" class="menu-spacer"></div>
 					</div>
 				</td>
@@ -217,15 +199,6 @@ function createSortableMenu()
 						# START mod_left #
 							{mod_left.MENU}
 						# END mod_left #
-						
-						# IF C_LEFT_COLUMN #
-							<script>
-							<!--
-							$('mod_left').style.opacity = 0.5;
-							$('mod_left').style.filter='alpha(opacity=50)';
-							-->
-							</script>
-						# ENDIF #
 						<div id="menu-spacer3" class="menu-spacer"></div>
 					</div>
 				</td>
@@ -258,15 +231,6 @@ function createSortableMenu()
 									# START mod_topcentral #
 										{mod_topcentral.MENU}
 									# END mod_topcentral #
-										
-									# IF C_TOP_CENTRAL_COLUMN #
-										<script>
-										<!--
-										$('mod_topcentral').style.opacity = 0.5;
-										$('mod_topcentral').style.filter='alpha(opacity=50)';
-										-->
-										</script>
-									# ENDIF #
 									<div id="menu-spacer4" class="menu-spacer"></div>
 								</div>
 							</td>
@@ -317,15 +281,6 @@ function createSortableMenu()
 									# START mod_bottomcentral #
 										{mod_bottomcentral.MENU}
 									# END mod_bottomcentral #
-									
-									# IF C_BOTTOM_CENTRAL_COLUMN #
-										<script>
-										<!--
-										$('mod_bottomcentral').style.opacity = 0.5;
-										$('mod_bottomcentral').style.filter='alpha(opacity=50)';
-										-->
-										</script>
-									# ENDIF #
 									<div id="menu-spacer6" class="menu-spacer"></div>
 								</div>
 							</td>
@@ -359,15 +314,6 @@ function createSortableMenu()
 						# START mod_right #
 							{mod_right.MENU}
 						# END mod_right #
-						
-						# IF C_RIGHT_COLUMN #
-							<script>
-							<!--
-							$('mod_right').style.opacity = 0.5;
-							$('mod_right').style.filter='alpha(opacity=50)';
-							-->
-							</script>
-						# ENDIF #
 						<div id="menu-spacer7" class="menu-spacer"></div>
 					</div>
 				</td>
@@ -399,15 +345,6 @@ function createSortableMenu()
 						# START mod_topfooter #
 							{mod_topfooter.MENU}
 						# END mod_topfooter #
-						
-						# IF C_TOP_FOOTER_COLUMN #
-							<script>
-							<!--
-							$('mod_topfooter').style.opacity = 0.5;
-							$('mod_topfooter').style.filter='alpha(opacity=50)';
-							-->
-							</script>
-						# ENDIF #
 						<div id="menu-spacer8" class="menu-spacer"></div>
 					</div>
 				</td>
@@ -439,14 +376,6 @@ function createSortableMenu()
 						# START mod_footer #
 							{mod_footer.MENU}
 						# END mod_footer #
-						# IF C_FOOTER_COLUMN #
-							<script>
-							<!--
-							$('mod_footer').style.opacity = 0.5;
-							$('mod_footer').style.filter='alpha(opacity=50)';
-							-->
-							</script>
-						# ENDIF #
 						<div id="menu-spacer9" class="menu-spacer"></div>
 					</div>
 				</td>

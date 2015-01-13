@@ -19,12 +19,12 @@ var ContactFormFieldPossibleValues = Class.create({
 			this.integer++;
 		}
 		if (this.integer == this.max_input) {
-			$('add_' + this.id_input).hide();
+			jQuery('#add_' + this.id_input).hide();
 		}
 	},
 	delete_field : function (id) {
 		var id = this.id_input + '_' + id;
-		$(id).remove();
+		jQuery('#' + id).remove();
 		this.integer--;
 		jQuery('#add_' + this.id_input).show();
 	},

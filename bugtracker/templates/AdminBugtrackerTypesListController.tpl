@@ -39,10 +39,10 @@ var BugtrackerFormFieldTypes = Class.create({
 		}
 	},
 	delete_type : function (id) {
-		$('tr_' + id).remove();
+		jQuery('#tr_' + id).remove();
 		this.integer--;
 		if (this.integer == 1)
-			$('no_type').style.display = "";
+			jQuery('#no_type').hide();
 		
 		jQuery('#add_type').show();
 	},
