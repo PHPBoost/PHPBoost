@@ -94,9 +94,9 @@ function {SUBMIT_FUNCTION}() {
 	# END filterElt #
 	for (var i = 0; i < filtersObjects.length; i++) {
 		var filter = filtersObjects[i];
-		var domFilter = $(filter.formId);
+		var domFilter = jQuery('#' + filter.formId);
 		if (domFilter) {
-			var filterValue = $F(domFilter);
+			var filterValue = domFilter.val();
 			if (filterValue) {
 				filters[filter.tableId] = filterValue;
 				has_filter = true;

@@ -203,26 +203,26 @@ jQuery(document).ready(function() {
 				jQuery(document).ready(function() {
 					var extended_field = new ExtendedField({list_extended_fields.ID}, '{list_extended_fields.C_DISPLAY}', ExtendedFields);
 					
-					$('list_{list_extended_fields.ID}').observe('mouseup',function(){
+					jQuery('#list_{list_extended_fields.ID}').on('mouseup',function(){
 						ExtendedFields.change_reposition_pictures();
 					});
 					
 					# IF NOT list_extended_fields.C_FREEZE #
-					$('delete_{list_extended_fields.ID}').observe('click',function(){
+					jQuery('#delete_{list_extended_fields.ID}').on('click',function(){
 						extended_field.delete_fields();
 					});
 					# ENDIF #
 					
-					$('change_display_{list_extended_fields.ID}').observe('click',function(){
+					jQuery('#change_display_{list_extended_fields.ID}').on('click',function(){
 						extended_field.change_display();
 					});
 					
 					# IF C_MORE_THAN_ONE_FIELD #
-					$('move_up_{list_extended_fields.ID}').observe('click',function(){
+					jQuery('#move_up_{list_extended_fields.ID}').on('click',function(){
 						extended_field.move_up();
 					});
 					
-					$('move_down_{list_extended_fields.ID}').observe('click',function(){
+					jQuery('#move_down_{list_extended_fields.ID}').on('click',function(){
 						extended_field.move_down();
 					});
 					# ENDIF #

@@ -23,7 +23,8 @@ function nonEmptyFormFieldValidator(field_id, message)
 	var field = HTMLForms.getField(field_id);
 	if (field)
 	{
-		if (field.getValue() == null || field.getValue() == '')
+		var value = field.getValue();
+		if (value == null || value == '' || value == false)
 		{
 			return message;
 		}

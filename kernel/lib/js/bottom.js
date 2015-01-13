@@ -283,7 +283,7 @@ function flowPlayerDisplay(id)
 	//On lance le flowplayer
 	flowplayer(id, PATH_TO_ROOT + '/kernel/lib/flash/flowplayer/flowplayer.swf', { 
 		    clip: { 
-		        url: $(id).href,
+		        url: jQuery('#' + id).attr('href'),
 		        autoPlay: false 
 		    }
 	    }

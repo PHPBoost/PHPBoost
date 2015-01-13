@@ -137,7 +137,7 @@ function delete_question(id_question)
 					<script>
 					<!--
 					jQuery(document).ready(function() {
-						$('delete_{questions.ID}').observe('click',function(){
+						jQuery('#delete_{questions.ID}').on('click',function(){
 							delete_question({questions.ID});
 						});
 					});

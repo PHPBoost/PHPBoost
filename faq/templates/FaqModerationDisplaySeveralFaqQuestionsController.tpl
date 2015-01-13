@@ -264,20 +264,20 @@ jQuery(document).ready(function() {
 					jQuery(document).ready(function() {
 						var faq_question = new FaqQuestion({questions.ID}, FaqQuestions);
 						
-						$('delete_{questions.ID}').observe('click',function(){
+						jQuery('#delete_{questions.ID}').on('click',function(){
 							faq_question.delete_question();
 						});
 						
 						if (FaqQuestions.questions_number > 1) {
-							$('list_{questions.ID}').observe('mouseup',function(){
+							jQuery('#list_{questions.ID}').on('mouseup',function(){
 								FaqQuestions.change_reposition_pictures();
 							});
 							
-							$('move_up_{questions.ID}').observe('click',function(){
+							jQuery('#move_up_{questions.ID}').on('click',function(){
 								faq_question.move_up();
 							});
 							
-							$('move_down_{questions.ID}').observe('click',function(){
+							jQuery('#move_down_{questions.ID}').on('click',function(){
 								faq_question.move_down();
 							});
 						}

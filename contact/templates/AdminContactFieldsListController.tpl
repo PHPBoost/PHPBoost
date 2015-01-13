@@ -200,28 +200,28 @@ jQuery(document).ready(function() {
 				jQuery(document).ready(function() {
 					var contact_field = new ContactField({fields_list.ID}, '{fields_list.C_DISPLAY}', ContactFields);
 					
-					$('list_{fields_list.ID}').observe('mouseup',function(){
+					jQuery('#list_{fields_list.ID}').on('mouseup',function(){
 						ContactFields.change_reposition_pictures();
 					});
 					
 					# IF fields_list.C_DELETE #
-					$('delete_{fields_list.ID}').observe('click',function(){
+					jQuery('#delete_{fields_list.ID}').on('click',function(){
 						contact_field.delete_fields();
 					});
 					# ENDIF #
 					
 					# IF NOT fields_list.C_READONLY #
-					$('change_display_{fields_list.ID}').observe('click',function(){
+					jQuery('#change_display_{fields_list.ID}').on('click',function(){
 						contact_field.change_display();
 					});
 					# ENDIF #
 					
 					# IF C_MORE_THAN_ONE_FIELD #
-					$('move_up_{fields_list.ID}').observe('click',function(){
+					jQuery('#move_up_{fields_list.ID}').on('click',function(){
 						contact_field.move_up();
 					});
 					
-					$('move_down_{fields_list.ID}').observe('click',function(){
+					jQuery('#move_down_{fields_list.ID}').on('click',function(){
 						contact_field.move_down();
 					});
 					# ENDIF #

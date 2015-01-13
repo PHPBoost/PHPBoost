@@ -263,10 +263,16 @@ FormField.prototype.isDisabled = function () {
 	return false;
 };
 FormField.prototype.getValue = function () {
-	return $F(this.getHTMLId());
+	var field = jQuery('#' + this.getHTMLId());
+	if (field.is(":checkbox")){
+		return field.prop("checked");
+	}
+	else {
+		return field.val();
+	}
 };
 FormField.prototype.setValue = function (value) {
-	Form.Element.setValue($(this.getHTMLId()), value);
+	jQuery('#' + this.getHTMLId()).val(value);
 };
 FormField.prototype.enableValidationMessage = function () {
 	this.validationMessageEnabled = true;
