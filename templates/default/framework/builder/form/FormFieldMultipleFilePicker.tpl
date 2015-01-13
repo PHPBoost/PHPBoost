@@ -29,6 +29,6 @@ var MultipleFilePicker = new MultipleFilePicker();
 <a href="javascript:MultipleFilePicker.add_file_input();" class="fa fa-plus" id="add_${escape(HTML_ID)}"></a>
 <script>
 <!--
-jQuery('#input_files_list_${escape(HTML_ID)}').parents('form:first')[0].enctype = "multipart/form-data";
+jQuery('#input_files_list_${escape(HTML_ID)}').parents('form')[0].enctype = "multipart/form-data";
 -->
 </script>
