@@ -7,27 +7,19 @@ var BugtrackerFormFieldCategories = Class.create({
 		if (this.integer <= this.max_input) {
 			var id = this.integer;
 			
-			var tr = Builder.node('tr', {'id' : 'tr_' + id}, []);
+			jQuery('<tr/>', {'id' : 'tr_' + id}).appendTo('#categories_list');
 			
-			var td = Builder.node('td', {'id' : 'td1_' + id}, [
-				Builder.node('input', {type : 'radio', name : 'default_category', value : id}),
-				' ',
-			]);
-			tr.insert(td);
+			jQuery('<td/>', {'id' : 'td1_' + id}).appendTo('#tr_' + id);
 			
-			var td = Builder.node('td', {'id' : 'td2_' + id}, [
-				Builder.node('input', {type : 'text', id : 'category_' + id, name : 'category_' + id, size : 40, maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('name', 'main'))}}),
-				' ',
-			]);
-			tr.insert(td);
+			jQuery('<input/> ', {type : 'radio', name : 'default_category', value : id}).appendTo('#td1_' + id);
 			
-			var td = Builder.node('td', {'id' : 'td3_' + id}, [
-				Builder.node('a', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldCategories.delete_category(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'common'))}, className: 'fa fa-delete'}),
-				' ',
-			]);
-			tr.insert(td);
+			jQuery('<td/>', {'id' : 'td2_' + id}).appendTo('#tr_' + id);
 			
-			$('categories_list').insert(tr);
+			jQuery('<input/> ', {type : 'text', id : 'category_' + id, name : 'category_' + id, size : 40, maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('name', 'main'))}}).appendTo('#td2_' + id);
+			
+			jQuery('<td/>', {'id' : 'td3_' + id}).appendTo('#tr_' + id);
+			
+			jQuery('<a/> ', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldCategories.delete_category(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'common'))}, class: 'fa fa-delete'}).appendTo('#td3_' + id);
 			
 			this.integer++;
 		}
