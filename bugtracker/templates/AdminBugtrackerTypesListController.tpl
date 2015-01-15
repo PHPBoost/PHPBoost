@@ -7,27 +7,19 @@ var BugtrackerFormFieldTypes = Class.create({
 		if (this.integer <= this.max_input) {
 			var id = this.integer;
 			
-			var tr = Builder.node('tr', {'id' : 'tr_' + id}, []);
+			jQuery('<tr/>', {id : 'tr_' + id}).appendTo('#types_list');
 			
-			var td = Builder.node('td', {'id' : 'td1_' + id}, [
-				Builder.node('input', {type : 'radio', name : 'default_type', value : id}),
-				' ',
-			]);
-			tr.insert(td);
+			jQuery('<td/>', {id : 'td1_' + id}).appendTo('#tr_' + id);
 			
-			var td = Builder.node('td', {'id' : 'td2_' + id}, [
-				Builder.node('input', {type : 'text', id : 'type_' + id, name : 'type_' + id, size : 40, maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('name', 'main'))}}),
-				' ',
-			]);
-			tr.insert(td);
+			jQuery('<input/> ', {type : 'radio', name : 'default_type', value : id}).appendTo('#td1_' + id);
 			
-			var td = Builder.node('td', {'id' : 'td3_' + id}, [
-				Builder.node('a', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldTypes.delete_type(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'common'))}, className: 'fa fa-delete'}),
-				' ',
-			]);
-			tr.insert(td);
+			jQuery('<td/>', {id : 'td2_' + id}).appendTo('#tr_' + id);
 			
-			$('types_list').insert(tr);
+			jQuery('<input/> ', {type : 'text', id : 'type_' + id, name : 'type_' + id, class : 'field-large', maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('name', 'main'))}}).appendTo('#td2_' + id);
+			
+			jQuery('<td/>', {id : 'td3_' + id}).appendTo('#tr_' + id);
+			
+			jQuery('<a/> ', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldTypes.delete_type(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'common'))}, class: 'fa fa-delete'}).appendTo('#td3_' + id);
 			
 			this.integer++;
 		}
@@ -88,7 +80,7 @@ var BugtrackerFormFieldTypes = new BugtrackerFormFieldTypes();
 				<input type="radio" name="default_type" value="{types.ID}"# IF types.C_IS_DEFAULT # checked="checked"# ENDIF # />
 			</td>
 			<td>
-				<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}" />
+				<input type="text" maxlength="100" class="field-large" name="type{types.ID}" value="{types.NAME}" />
 			</td>
 			<td>
 				<a href="{types.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>

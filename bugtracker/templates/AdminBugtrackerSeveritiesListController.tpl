@@ -70,7 +70,7 @@ function severity_bbcode_color(field)
 				</div>
 			</td>
 			<td>
-				<input type="text" maxlength="100" size="40" name="severity{severities.ID}" value="{severities.NAME}" />
+				<input type="text" maxlength="100" class="field-large" name="severity{severities.ID}" value="{severities.NAME}" />
 			</td>
 		</tr>
 		# END severities #

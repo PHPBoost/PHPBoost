@@ -7,17 +7,17 @@ var BugtrackerFormFieldCategories = Class.create({
 		if (this.integer <= this.max_input) {
 			var id = this.integer;
 			
-			jQuery('<tr/>', {'id' : 'tr_' + id}).appendTo('#categories_list');
+			jQuery('<tr/>', {id : 'tr_' + id}).appendTo('#categories_list');
 			
-			jQuery('<td/>', {'id' : 'td1_' + id}).appendTo('#tr_' + id);
+			jQuery('<td/>', {id : 'td1_' + id}).appendTo('#tr_' + id);
 			
 			jQuery('<input/> ', {type : 'radio', name : 'default_category', value : id}).appendTo('#td1_' + id);
 			
-			jQuery('<td/>', {'id' : 'td2_' + id}).appendTo('#tr_' + id);
+			jQuery('<td/>', {id : 'td2_' + id}).appendTo('#tr_' + id);
 			
-			jQuery('<input/> ', {type : 'text', id : 'category_' + id, name : 'category_' + id, size : 40, maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('name', 'main'))}}).appendTo('#td2_' + id);
+			jQuery('<input/> ', {type : 'text', id : 'category_' + id, name : 'category_' + id, class : 'field-large', maxlength : 100, placeholder : ${escapejs(LangLoader::get_message('name', 'main'))}}).appendTo('#td2_' + id);
 			
-			jQuery('<td/>', {'id' : 'td3_' + id}).appendTo('#tr_' + id);
+			jQuery('<td/>', {id : 'td3_' + id}).appendTo('#tr_' + id);
 			
 			jQuery('<a/> ', {id : 'delete_' + id, href : 'javascript:BugtrackerFormFieldCategories.delete_category(' + id + ');', title : ${escapejs(LangLoader::get_message('delete', 'common'))}, class: 'fa fa-delete'}).appendTo('#td3_' + id);
 			
@@ -80,7 +80,7 @@ var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 				<input type="radio" name="default_category" value="{categories.ID}"# IF categories.C_IS_DEFAULT # checked="checked"# ENDIF # />
 			</td>
 			<td>
-				<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}" />
+				<input type="text" maxlength="100" class="field-large" name="category{categories.ID}" value="{categories.NAME}" />
 			</td>
 			<td>
 				<a href="{categories.LINK_DELETE}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
