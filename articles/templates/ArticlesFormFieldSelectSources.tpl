@@ -1,9 +1,12 @@
 <script>
 <!--
-var ArticlesFormFieldSelectSources = Class.create({
-	integer : ${escapejs(NBR_FIELDS)},
-	id_input : ${escapejs(ID)},
-	max_input : ${escapejs(MAX_INPUT)},
+var ArticlesFormFieldSelectSources = function(){
+	this.integer = ${escapejs(NBR_FIELDS)};
+	this.id_input = ${escapejs(ID)};
+	this.max_input = ${escapejs(MAX_INPUT)};
+};
+
+ArticlesFormFieldSelectSources.prototype = {
 	add_field : function () {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
@@ -27,8 +30,8 @@ var ArticlesFormFieldSelectSources = Class.create({
 		jQuery('#' + id).remove();
 		this.integer--;
 		jQuery('#add_' + this.id_input).show();
-	},
-});
+	}
+};
 
 var ArticlesFormFieldSelectSources = new ArticlesFormFieldSelectSources();
 -->

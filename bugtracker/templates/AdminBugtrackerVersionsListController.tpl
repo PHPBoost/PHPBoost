@@ -1,9 +1,12 @@
 <script src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 <script>
 <!--
-var BugtrackerFormFieldVersions = Class.create({
-	integer : {NEXT_ID},
-	max_input : {MAX_INPUT},
+var BugtrackerFormFieldVersions = function(){
+	this.integer = {NEXT_ID};
+	this.max_input = {MAX_INPUT};
+};
+
+BugtrackerFormFieldVersions.prototype = {
 	add_version : function () {
 		if (this.integer <= this.max_input) {
 			var id = this.integer;
@@ -53,8 +56,8 @@ var BugtrackerFormFieldVersions = Class.create({
 			jQuery('#no_version').hide();
 		
 		jQuery('#add_version').show();
-	},
-});
+	}
+};
 
 var BugtrackerFormFieldVersions = new BugtrackerFormFieldVersions();
 

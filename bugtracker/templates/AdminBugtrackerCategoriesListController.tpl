@@ -1,8 +1,11 @@
 <script>
 <!--
-var BugtrackerFormFieldCategories = Class.create({
-	integer : {NEXT_ID},
-	max_input : {MAX_INPUT},
+var BugtrackerFormFieldCategories = function(){
+	this.integer = {NEXT_ID};
+	this.max_input = {MAX_INPUT};
+};
+
+BugtrackerFormFieldCategories.prototype = {
 	add_category : function () {
 		if (this.integer <= this.max_input) {
 			var id = this.integer;
@@ -38,7 +41,7 @@ var BugtrackerFormFieldCategories = Class.create({
 		
 		jQuery('#add_category').show();
 	},
-});
+};
 
 var BugtrackerFormFieldCategories = new BugtrackerFormFieldCategories();
 -->

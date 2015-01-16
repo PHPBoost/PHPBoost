@@ -1,9 +1,12 @@
 <script>
 <!--
-var NewsFormFieldSelectSources = Class.create({
-	integer : ${escapejs(NBR_FIELDS)},
-	id_input : ${escapejs(ID)},
-	max_input : ${escapejs(MAX_INPUT)},
+var NewsFormFieldSelectSources = function(){
+	this.integer = ${escapejs(NBR_FIELDS)};
+	this.id_input = ${escapejs(ID)};
+	this.max_input = ${escapejs(MAX_INPUT)};
+};
+
+NewsFormFieldSelectSources.prototype = {
 	add_field : function () {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
@@ -14,7 +17,7 @@ var NewsFormFieldSelectSources = Class.create({
 			
 			jQuery('<input/> ', {type : 'text', id : 'field_value_' + id, name : 'field_value_' + id, class : 'field-large', placeholder : '{@form.source.url}'}).appendTo('#' + id);
 			
-			jQuery('<a/> ', {href : 'javascript:ArticlesFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete'}).appendTo('#' + id);
+			jQuery('<a/> ', {href : 'javascript:NewsFormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, class : 'fa fa-delete'}).appendTo('#' + id);
 
 			this.integer++;
 		}
@@ -27,8 +30,8 @@ var NewsFormFieldSelectSources = Class.create({
 		jQuery('#' + id).remove();
 		this.integer--;
 		jQuery('#add_' + this.id_input).show();
-	},
-});
+	}
+};
 
 var NewsFormFieldSelectSources = new NewsFormFieldSelectSources();
 -->

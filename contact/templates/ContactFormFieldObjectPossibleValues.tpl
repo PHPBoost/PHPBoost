@@ -1,9 +1,12 @@
 <script>
 <!--
-var ContactFormFieldObjectPossibleValues = Class.create({
-	integer : {NBR_FIELDS},
-	id_input : ${escapejs(HTML_ID)},
-	max_input : {MAX_INPUT},
+var ContactFormFieldObjectPossibleValues = function(){
+	this.integer = {NBR_FIELDS};
+	this.id_input = ${escapejs(HTML_ID)};
+	this.max_input = {MAX_INPUT};
+};
+
+ContactFormFieldObjectPossibleValues.prototype = {
 	add_field : function () {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
@@ -34,7 +37,7 @@ var ContactFormFieldObjectPossibleValues = Class.create({
 		this.integer--;
 		jQuery('#add_' + this.id_input).show();
 	},
-});
+};
 
 var ContactFormFieldObjectPossibleValues = new ContactFormFieldObjectPossibleValues();
 -->
