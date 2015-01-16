@@ -10,35 +10,18 @@
 							<a href="{pics_mini.U_PICS}#pics_max"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}px" height="{pics_mini.HEIGHT}px" /></a>
 							# END pics_mini #
 						# ELSE #
-						<script src="{PATH_TO_ROOT}/gallery/templates/js/marquee.js"></script>
-						<script>
-						<!--
-							new Marquee({
-							element: "scrolling_images",
-							# IF C_VERTICAL_SCROLL #	
-							animIn: Marquee.blindIn,
-							animOut: Marquee.blindOut,
-							# ENDIF #
-							# IF C_HORIZONTAL_SCROLL #
-							animIn: Marquee.slideIn,
-							animOut: Marquee.slideOut,
-							# ENDIF #
-							# IF C_FADE #
-							animIn: Marquee.fadeIn,
-							animOut: Marquee.fadeOut,
-							# ENDIF #
-							delay: {SCROLL_DELAY},
-							data: [
+						<ul id="mini-gallery-slideshow">
 							# START pics_mini #
-							{ message: '<a href="{pics_mini.U_PICS}#pics_max"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}px" height="{pics_mini.HEIGHT}px" /></a>' },
+							<li><a href="{pics_mini.U_PICS}#pics_max"><img src="{pics_mini.PICS}" alt="{pics_mini.NAME}" width="{pics_mini.WIDTH}px" height="{pics_mini.HEIGHT}px" /></a></li>
 							# END pics_mini #
-							]
-							});
-						-->
-						</script>
+						</ul>
 						# ENDIF #
 					</div>
 				</div>
+				<script type="text/javascript">
+					var nbr_element = jQuery('#mini-gallery-slideshow li').length;
+					jQuery('#mini-gallery-slideshow').css('width', nbr_element * 150);
+				</script>
 				<a class="small" href="{PATH_TO_ROOT}/gallery/gallery.php">{L_GALLERY}</a>
 			</div>
 			<div class="module-mini-bottom">

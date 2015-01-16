@@ -146,7 +146,7 @@
 							jQuery('#root_cat').on('change', function() {
 								root_value = jQuery('#root_cat').val();
 								# START list #
-								jQuery('#{list.ID}cat').val(root_value);
+								jQuery('#' + '{list.ID}cat').val(root_value);
 								# END list #
 							});
 							</script>

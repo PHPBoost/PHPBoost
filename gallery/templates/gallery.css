@@ -1,2 +1,54 @@
 /* Surcharge de la classe notes pour passer à la ligne et ne pas deformer les tableaux */
 .notes{ white-space: nowrap; }
+
+#scrolling_images {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin:  20px auto;
+    overflow: hidden;
+}
+
+#mini-gallery-slideshow {
+    position: absolute;
+    top: 0;
+    left: 0; 
+    margin: 0;            
+    padding: 0;
+
+    -webkit-animation-name: slideshow;
+    -webkit-animation-duration: 10s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+
+    -moz-animation-name: slideshow;
+    -moz-animation-duration: 10s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: ease-in-out;
+
+    animation-name: slideshow;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+#mini-gallery-slideshow li {
+     display: inline;
+     width: 150px;
+}
+
+@-webkit-keyframes slideshow {
+    0%, 15%, 100% {left: 0px;}
+    35%, 50% {left: -150px;}
+    70%, 85% {left: -300px;}
+}
+@-moz-keyframes slideshow {
+    0%, 15%, 100% {left: 0px;}
+    35%, 50% {left: -150px;}
+    70%, 85% {left: -300px;}
+}
+@keyframes slideshow {
+    0%, 15%, 100% {left: 0px;}
+    35%, 50% {left: -150px;}
+    70%, 85% {left: -300px;}
+}
