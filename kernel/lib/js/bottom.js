@@ -82,149 +82,33 @@ function escape_xmlhttprequest(contents)
 //Fonction de recherche des membres.
 function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty_login)
 {
-	var login = $('login' + searchid).value;
+	var login = jQuery('#login' + searchid).val();
 	if (login != '')
 	{
-		if ($('search_img' + searchid))
-			$('search_img' + searchid).innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+		if (jQuery('#search_img' + searchid))
+			jQuery('#search_img' + searchid).text('<i class="fa fa-spinner fa-spin"></i>');
 		var xhr_object = xmlhttprequest_init(PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?token=' + TOKEN + '&' + insert_mode + '=1');
 		data = 'login=' + login + '&divid=' + searchid;
 		xhr_object.onreadystatechange = function() 
 		{
 			if (xhr_object.readyState == 4 && xhr_object.status == 200) 
 			{
-				if ($('search_img' + searchid))
-					$('search_img' + searchid).innerHTML = '';
-				if ($("xmlhttprequest-result-search" + searchid))
-					$("xmlhttprequest-result-search" + searchid).innerHTML = xhr_object.responseText;
+				if (jQuery('#search_img' + searchid))
+					jQuery('#search_img' + searchid).text('');
+				if (jQuery("#xmlhttprequest-result-search" + searchid))
+					jQuery("#xmlhttprequest-result-search" + searchid).text(xhr_object.responseText);
 				jQuery('#xmlhttprequest-result-search' + searchid).slideDown();
 			}
 			else if (xhr_object.readyState == 4) 
 			{
-				if ($('search_img' + searchid))
-					$('search_img' + searchid).innerHTML = '';
+				if (jQuery('#search_img' + searchid))
+					jQuery('#search_img' + searchid).text('');
 			}
 		}
 		xmlhttprequest_sender(xhr_object, data);
 	}	
 	else
 		alert(alert_empty_login);
-}
-
-//Fonction d'ajout de membre dans les autorisations.
-function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_auth)
-{
-    var selectid = $('members_auth' + searchid);
-    for(var i = 0; i < selectid.length; i++) //Vérifie que le membre n'est pas déjà dans la liste.
-    {
-        if (selectid[i].value == user_id)
-        {
-            alert(alert_already_auth);
-            return;
-        }
-    }
-    var oOption = new Option(login, user_id);
-    oOption.id = searchid + 'm' + (selectid.length - 1);
-        oOption.selected = true;
-
-    if ($('members_auth' + searchid)) //Ajout du membre.
-        $('members_auth' + searchid).options[selectid.length] = oOption;
-}
-
-//Sélection des formulaires.
-function check_select_multiple(id, status)
-{
-	var i;	
-
-	//Sélection des groupes.
-	var selectidgroups = $('groups_auth' + id);
-	for(i = 0; i < selectidgroups.length; i++)
-	{	
-		if (selectidgroups[i])
-			selectidgroups[i].selected = status;
-	}
-	
-	//Sélection des membres.
-	var selectidmember = $('members_auth' + id);
-	for(i = 0; i < selectidmember.length; i++)
-	{	
-		if (selectidmember[i])
-			selectidmember[i].selected = status;
-	}	
-}
-
-//Sélection auto des rangs supérieur à celui cliqué.
-function check_select_multiple_ranks(id, start)
-{
-	var i;			
-	for(i = start; i <= 2; i++)
-	{	
-		if ($(id + i))
-			$(id + i).selected = true;
-	}
-}
-
-// Crée un lien de pagination javascript
-function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
-{
-    pagin = '<span class="pagination';
-    if ( isCurrentPage)
-        pagin += ' pagination_current_page text-strong';
-    pagin += '">';
-    pagin += '<a href="javascript:' + fctName + '(' + i + fctArgs + ')">' + textPagin + '</a>';
-    pagin += '</span>&nbsp;';
-    
-    return pagin;
-}
-
-// Crée la pagination à partir du nom du bloc de page, du bloc de pagination, du nombre de résultats
-// du nombre de résultats par page ...
-function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbPagesAfter)
-{
-    var pagin = '';
-    if ( nbPages > 1)
-    {
-        if (arguments.length < 5)
-        {
-            nbPagesBefore = 3;
-            nbPagesAfter = 3;
-        }
-        
-        var before = Math.max(0, page - nbPagesBefore);
-        var after = Math.min(nbPages, page + nbPagesAfter + 1);
-        
-        var fctName = 'ChangePagination';
-        var fctArgs = ', '  + nbPages + ', \'' + blocPagin + '\', \'' + blocName + '\', ' + nbPagesBefore + ', ' + nbPagesAfter;
-        
-        // Début
-        if (page != 0)
-            pagin += writePagin(fctName, fctArgs, false, '&laquo;', 0);
-        
-        // Before
-        for ( var i = before; i < page; i++)
-            pagin += writePagin(fctName, fctArgs, false, i + 1, i);
-        
-        // Page courante
-        pagin += writePagin(fctName, fctArgs, true, page + 1, page);
-        
-        // After
-        for ( var i = page + 1; i < after; i++)
-            pagin += writePagin(fctName, fctArgs, false, i + 1, i);
-        
-        // Fin
-        if (page != nbPages - 1)
-            pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1);
-    }
-    
-    // On cache tous les autre résultats du module
-    for ( var i = 0; i < nbPages; i++)
-    	jQuery('#' + blocName + '_' + i).fadeOut();
-        
-    // On montre la page demandée
-    jQuery('#' + blocName + '_' + page).fadeIn();
-    
-    // Mise à jour de la pagination
-    $(blocPagin).innerHTML = pagin;
 }
 
 //Pour savoir si une fonction existe

@@ -55,6 +55,57 @@
 <span class="smaller">({L_EXPLAIN_SELECT_MULTIPLE})</span>
 <script type="text/javascript">
 <!--
+function check_select_multiple(id, status)
+{
+	var i;	
+
+	//Sélection des groupes.
+	var selectidgroups = jQuery('#groups_auth' + id)[0];
+	for(i = 0; i < selectidgroups.length; i++)
+	{	
+		if (selectidgroups[i])
+			selectidgroups[i].selected = status;
+	}
+	
+	//Sélection des membres.
+	var selectidmember = jQuery('#members_auth' + id)[0];
+	for(i = 0; i < selectidmember.length; i++)
+	{	
+		if (selectidmember[i])
+			selectidmember[i].selected = status;
+	}	
+}
+
+function check_select_multiple_ranks(id, start)
+{
+	var i;			
+	for(i = start; i <= 2; i++)
+	{	
+		if (jQuery('#' + id + i))
+			jQuery('#' + id + i)[0].selected = true;
+	}
+}
+
+//Fonction d'ajout de membre dans les autorisations.
+function XMLHttpRequest_add_member_auth(searchid, user_id, login, alert_already_auth)
+{
+    var selectid = jQuery('#members_auth' + searchid)[0];
+    for(var i = 0; i < selectid.length; i++) //Vérifie que le membre n'est pas déjà dans la liste.
+    {
+        if (selectid[i].value == user_id)
+        {
+            alert(alert_already_auth);
+            return;
+        }
+    }
+    var oOption = new Option(login, user_id);
+    oOption.id = searchid + 'm' + (selectid.length - 1);
+        oOption.selected = true;
+
+    if (jQuery('#members_auth' + searchid)) //Ajout du membre.
+        jQuery('#members_auth' + searchid)[0].options[selectid.length] = oOption;
+}
+
 function open_advanced_auth(id) {
 	jQuery('#advanced_auth' + id).fadeToggle(300, function(){
 		if (jQuery(this).css('display') == 'block'){
