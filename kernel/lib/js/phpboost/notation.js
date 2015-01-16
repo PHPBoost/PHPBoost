@@ -57,63 +57,63 @@
 	});
 };
 
-Note.prototype.send_request = function (note) {
-	var id = this.id;
-	var object = this;
+Note.prototype = {
+	send_request: function (note) {
+		var id = this.id;
+		var object = this;
 
-	if (NOTATION_USER_CONNECTED == 0) {
-		alert(NOTATION_LANG_AUTH);
-	} 
-	else {
-		jQuery('#notation-' + id + ' .stars').after('<i id="loading-'+ id +'" class="fa fa-spinner fa-spin"></i>');
-		
-		jQuery.ajax({
-			url: '',
-			type: "post",
-			data: {'note': note, 'id': id, 'token' : TOKEN},
-			success: function(){
-				jQuery('#loading-' + id).remove();
-				if(object.already_post == 1) {
-					alert(NOTATION_LANG_ALREADY_VOTE);
+		if (NOTATION_USER_CONNECTED == 0) {
+			alert(NOTATION_LANG_AUTH);
+		} 
+		else {
+			jQuery('#notation-' + id + ' .stars').after('<i id="loading-'+ id +'" class="fa fa-spinner fa-spin"></i>');
+			
+			jQuery.ajax({
+				url: '',
+				type: "post",
+				data: {'note': note, 'id': id, 'token' : TOKEN},
+				success: function(){
+					jQuery('#loading-' + id).remove();
+					if(object.already_post == 1) {
+						alert(NOTATION_LANG_ALREADY_VOTE);
+					}
+					else {
+						object.default_note = note;
+						object.already_post = 1;
+						object.change_picture_status(note);
+						object.change_nbr_note();
+					}
+				},
+				error: function(e){
+					alert(e);
 				}
-				else {
-					object.default_note = note;
-					object.already_post = 1;
-					object.change_picture_status(note);
-					object.change_nbr_note();
-				}
-			},
-			error: function(e){
-				alert(e);
-			}
-		});
-	}
-};
-
-Note.prototype.change_picture_status = function (note) {
-	var star_class;
-	var decimal;
-	for(var i = 1; i <= this.notation_scale; i++)
-	{
-		var id_star = 'star-' + this.id + '-' + i;
-		
-		decimal = i - note;
-		if(decimal >= 1)
-			star_class = 'fa star star-hover fa-star-o';
-		else if(decimal <= 0.50 && decimal > 0)
-			star_class = 'fa star star-hover fa-star-half-o';
-		else if(note >= i)
-			star_class = 'fa star star-hover fa-star';
-
-		if(jQuery('#' + id_star)) {
-			jQuery('#' + id_star)[0].className = star_class;
+			});
 		}
-	}
-};
+	},
+	change_picture_status: function (note) {
+		var star_class;
+		var decimal;
+		for(var i = 1; i <= this.notation_scale; i++)
+		{
+			var id_star = 'star-' + this.id + '-' + i;
+			
+			decimal = i - note;
+			if(decimal >= 1)
+				star_class = 'fa star star-hover fa-star-o';
+			else if(decimal <= 0.50 && decimal > 0)
+				star_class = 'fa star star-hover fa-star-half-o';
+			else if(note >= i)
+				star_class = 'fa star star-hover fa-star';
 
-Note.prototype.change_nbr_note = function () {
-	var number_notes_el = jQuery('#notation-' + this.id + ' span.number-notes').first();
-	var number_notes = parseInt(number_notes_el.text()) + 1;
-	number_notes_el.text(number_notes);
-	jQuery('#notation-' + this.id + ' .notes span:not(.number-notes)').text((number_notes > 1 ? NOTATION_LANG_NOTES : NOTATION_LANG_NOTE));
+			if(jQuery('#' + id_star)) {
+				jQuery('#' + id_star)[0].className = star_class;
+			}
+		}
+	},
+	change_nbr_note: function () {
+		var number_notes_el = jQuery('#notation-' + this.id + ' span.number-notes').first();
+		var number_notes = parseInt(number_notes_el.text()) + 1;
+		number_notes_el.text(number_notes);
+		jQuery('#notation-' + this.id + ' .notes span:not(.number-notes)').text((number_notes > 1 ? NOTATION_LANG_NOTES : NOTATION_LANG_NOTE));
+	}
 };

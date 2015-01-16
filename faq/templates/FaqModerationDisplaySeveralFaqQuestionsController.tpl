@@ -1,12 +1,12 @@
 # IF C_QUESTIONS #
 <script>
 <!--
-var FaqQuestions = Class.create({
-	id : '',
-	questions_number : {QUESTIONS_NUMBER},
-	initialize : function(id) {
-		this.id = id;
-	},
+var FaqQuestions = function(id){
+	this.id = id;
+	this.questions_number = {QUESTIONS_NUMBER};
+};
+
+FaqQuestions.prototype = {
 	create_sortable : function() {
 		Sortable.create(this.id, {
 			tag:'li',
@@ -45,18 +45,17 @@ var FaqQuestions = Class.create({
 		$('move_up_' + sequence[0]).style.display = "none";
 		$('move_down_' + sequence[0]).style.display = "none";
 	}
-});
+};
 
-var FaqQuestion = Class.create({
-	id : '',
-	FaqQuestions: null,
-	initialize : function(id, faq_questions) {
-		this.id = id;
-		this.FaqQuestions = faq_questions;
-		
-		if (FaqQuestions.questions_number > 1)
-			FaqQuestions.change_reposition_pictures();
-	},
+var FaqQuestion = function(id, faq_questions){
+	this.id = id;
+	this.FaqQuestions = faq_questions;
+	
+	if (FaqQuestions.questions_number > 1)
+		FaqQuestions.change_reposition_pictures();
+};
+
+FaqQuestion.prototype = {
 	delete_question : function() {
 		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 		{
@@ -133,7 +132,7 @@ var FaqQuestion = Class.create({
 			FaqQuestions.change_reposition_pictures();
 		}
 	},
-});
+};
 
 var FaqQuestions = new FaqQuestions('questions_list');
 jQuery(document).ready(function() {

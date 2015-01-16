@@ -1,10 +1,10 @@
 <script>
 <!--
-var ContactFields = Class.create({
-	id : '',
-	initialize : function(id) {
-		this.id = id;
-	},
+var ContactFields = function(id){
+	this.id = id;
+};
+
+ContactFields.prototype = {
 	create_sortable : function() {
 		Sortable.create(this.id, {
 			tag:'li',
@@ -37,28 +37,26 @@ var ContactFields = Class.create({
 		jQuery('#move_up_' + sequence[sequence.length - 1])[0].style.display = "inline";
 		jQuery('#move_down_' + sequence[sequence.length - 1])[0].style.display = "none";
 	}
-});
+};
 
-var ContactField = Class.create({
-	id : '',
-	more_is_opened : false,
-	ContactFields: null,
-	is_not_displayed : false,
-	initialize : function(id, display, contact_fields) {
-		this.id = id;
-		this.ContactFields = contact_fields;
-		if (display == 1) {
-			this.is_not_displayed = false;
-		}
-		else {
-			this.is_not_displayed = true;
-		}
-		this.change_display_picture();
-		
-		# IF C_MORE_THAN_ONE_FIELD #
-		this.ContactFields.change_reposition_pictures();
-		# ENDIF #
-	},
+var ContactField = function(id, display, contact_fields){
+	this.id = id;
+	this.more_is_opened = false;
+	this.ContactFields = contact_fields;
+	if (display == 1) {
+		this.is_not_displayed = false;
+	}
+	else {
+		this.is_not_displayed = true;
+	}
+	this.change_display_picture();
+	
+	# IF C_MORE_THAN_ONE_FIELD #
+	this.ContactFields.change_reposition_pictures();
+	# ENDIF #
+};
+
+ContactField.prototype = {
 	delete_fields : function() {
 		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 		{
@@ -152,7 +150,7 @@ var ContactField = Class.create({
 			}
 		}
 	},
-});
+};
 
 var ContactFields = new ContactFields('fields_list');
 jQuery(document).ready(function() {
