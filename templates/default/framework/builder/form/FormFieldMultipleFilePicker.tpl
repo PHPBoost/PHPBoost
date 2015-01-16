@@ -4,18 +4,20 @@ function MultipleFilePicker(){
 	this.id_input = ${escapejs(HTML_ID)};
 	this.max_input = ${escapejs(MAX_INPUT)};
 };
-MultipleFilePicker.prototype.add_file_input = function () {
-	if (this.integer <= this.max_input) {
-		var id = this.id_input + '_' + this.integer;
+MultipleFilePicker.prototype = {
+	add_file_input : function () {
+		if (this.integer <= this.max_input) {
+			var id = this.id_input + '_' + this.integer;
 
-		jQuery('<input/>', {'type' : 'file', 'id' : id, 'name' : id}).appendTo('#input_files_list_' + this.id_input);
+			jQuery('<input/>', {'type' : 'file', 'id' : id, 'name' : id}).appendTo('#input_files_list_' + this.id_input);
 
-		jQuery('<br/>').appendTo('#input_files_list_' + this.id_input);
+			jQuery('<br/>').appendTo('#input_files_list_' + this.id_input);
 
-		this.integer = this.integer + 1;
-	}
-	if (this.integer == this.max_input) {
-		jQuery('#add_' + this.id_input).hide();
+			this.integer = this.integer + 1;
+		}
+		if (this.integer == this.max_input) {
+			jQuery('#add_' + this.id_input).hide();
+		}
 	}
 };
 

@@ -202,7 +202,7 @@ function set_bbcode_preference(divID)
 	if( getCookie('hide-bbcode') == 0 )
 	{
 		document.getElementById(divID).style.display = 'none';
-		var parent = document.getElementById(divID).up('.bbcode');
+		var parent = jQuery('#' + divID).closest('.bbcode')[0];
 		parent.className = 'bbcode';
 	}
 }
@@ -211,18 +211,19 @@ function set_bbcode_preference(divID)
 function show_bbcode_div(divID, hide)
 {
 	var div = document.getElementById(divID);
-	var parent = document.getElementById(divID).up('.bbcode');
+	var parent = jQuery('#' + divID).closest('.bbcode')[0];
 	if( div.style.display == 'none' )
 	{	
-		jQuery("#" + divID).fadeIn();
 		parent.className = 'bbcode expand';
 		sendCookie('hide-bbcode', 1); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
+		jQuery("#" + divID).fadeIn(300);
 	}
 	else
 	{	
-		jQuery("#" + divID).fadeOut();
-		parent.className = 'bbcode';
-		sendCookie('hide-bbcode', 0); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
+		jQuery("#" + divID).fadeOut(300, function(){
+			parent.className = 'bbcode';
+			sendCookie('hide-bbcode', 0); //On envoi le cookie pour se souvenir du choix de l'utilisateur.
+		});
 	}
 }
 

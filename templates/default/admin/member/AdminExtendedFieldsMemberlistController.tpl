@@ -1,10 +1,10 @@
 <script>
 <!--
-var ExtendedFields = Class.create({
-	id : '',
-	initialize : function(id) {
-		this.id = id;
-	},
+var ExtendedFields = function(id){
+	this.id = id;
+};
+
+ExtendedFields.prototype = {
 	create_sortable : function() {
 		Sortable.create(this.id, {
 			tag:'li',
@@ -38,28 +38,26 @@ var ExtendedFields = Class.create({
 		$('move_up_' + sequence[sequence.length - 1]).style.display = "inline";
 		$('move_down_' + sequence[sequence.length - 1]).style.display = "none";
 	}
-});
+};
 
-var ExtendedField = Class.create({
-	id : '',
-	more_is_opened : false,
-	ExtendedFields: null,
-	is_not_displayed : false,
-	initialize : function(id, display, extended_fields) {
-		this.id = id;
-		this.ExtendedFields = extended_fields;
-		if (display == 1) {
-			this.is_not_displayed = false;
-		}
-		else {
-			this.is_not_displayed = true;
-		}
-		this.change_display_picture();
-		
-		# IF C_MORE_THAN_ONE_FIELD #
-		this.ExtendedFields.change_reposition_pictures();
-		# ENDIF #
-	},
+var ExtendedField = function(id, display, extended_fields){
+	this.id = id;
+	this.more_is_opened = false;
+	this.ExtendedFields = extended_fields;
+	if (display == 1) {
+		this.is_not_displayed = false;
+	}
+	else {
+		this.is_not_displayed = true;
+	}
+	this.change_display_picture();
+	
+	# IF C_MORE_THAN_ONE_FIELD #
+	this.ExtendedFields.change_reposition_pictures();
+	# ENDIF #
+};
+
+ExtendedField.prototype = {
 	delete_fields : function() {
 		if (confirm(${escapejs(LangLoader::get_message('confirm.delete', 'status-messages-common'))}))
 		{
@@ -153,7 +151,7 @@ var ExtendedField = Class.create({
 			this.is_not_displayed = false;
 		}
 	},
-});
+};
 
 var ExtendedFields = new ExtendedFields('lists');
 jQuery(document).ready(function() {
