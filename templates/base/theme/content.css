@@ -637,11 +637,7 @@ option {
 
 /* --- Previsualisation --- */
 .xmlhttprequest-preview {
-	font-size: 11px;
-	border-left: 1px solid #99b1cb;
-	border-top: 1px solid #99b1cb;
-	border-right: 1px solid #CCCCCC;
-	border-bottom: 1px solid #CCCCCC;
+	border: 1px solid #CCCCCC;
 	background-color: #FFFFFF;
 	color: #2E3B5F;
 	padding: 0px 2px;

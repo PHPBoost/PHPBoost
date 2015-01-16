@@ -1,9 +1,12 @@
 <script>
 <!--
-var QuestionCaptchaFormFieldQuestions = Class.create({
-	integer : ${escapejs(NBR_QUESTIONS)},
-	id_input : ${escapejs(HTML_ID)},
-	max_input : ${escapejs(MAX_INPUT)},
+var QuestionCaptchaFormFieldQuestions = function(){
+	this.integer = ${escapejs(NBR_QUESTIONS)};
+	this.id_input = ${escapejs(HTML_ID)};
+	this.max_input = ${escapejs(MAX_INPUT)};
+};
+
+QuestionCaptchaFormFieldQuestions.prototype = {
 	add_question : function () {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
@@ -30,8 +33,7 @@ var QuestionCaptchaFormFieldQuestions = Class.create({
 		this.integer--;
 		jQuery('#add_' + this.id_input).show();
 	},
-});
-
+};
 var QuestionCaptchaFormFieldQuestions = new QuestionCaptchaFormFieldQuestions();
 -->
 </script>

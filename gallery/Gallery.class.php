@@ -268,7 +268,7 @@ class Gallery
 		}
 		$result->dispose();
 		
-		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '= : id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE id " . (empty($list_parent_cats_to) ? '=:id' : 'IN :ids_list'), array('id' => $idcat, 'ids_list' => $list_parent_cats_to));
 		
 		list($width, $height, $weight, $ext) = $this->Arg_pics('pics/' . $path);
 		$result = PersistenceContext::get_querier()->insert(PREFIX . "gallery", array('idcat' => $idcat, 'name' => $name, 'path' => $path, 'width' => $width, 'height' => $height, 'weight' => $weight, 'user_id' => $user_id, 'aprob' => 1, 'views' => 0, 'timestamp' => time()));

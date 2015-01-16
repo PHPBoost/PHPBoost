@@ -64,7 +64,7 @@ class CachedMenu
 	
 	public static function need_cached_string(Menu $menu)
 	{
-		return $menu instanceof SearchModuleMiniMenu || $menu instanceof GalleryModuleMiniMenu || $menu instanceof LinksMenu;
+		return $menu instanceof SearchModuleMiniMenu || $menu instanceof LinksMenu;
 		//return !($menu instanceof ModuleMiniMenu);
 	}
 }
