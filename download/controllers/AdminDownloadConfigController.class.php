@@ -138,7 +138,7 @@ class AdminDownloadConfigController extends AdminModuleController
 			),
 			array('description' => $this->lang['config.sort_type.explain'], 'events' => array('change' => '
 				if (HTMLForms.getField("sort_type").getValue() == \'' . DownloadFile::SORT_NOTATION . '\' && !HTMLForms.getField("notation_enabled").getValue()) {
-					jQuery("#' . __CLASS__ . '_notation_enabled").prop("checked", true);
+					HTMLForms.getField("notation_enabled").setValue(true);
 					HTMLForms.getField("notation_scale").enable();
 				}'
 			))

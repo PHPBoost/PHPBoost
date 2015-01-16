@@ -272,7 +272,13 @@ FormField.prototype.getValue = function () {
 	}
 };
 FormField.prototype.setValue = function (value) {
-	jQuery('#' + this.getHTMLId()).val(value);
+	var field = jQuery('#' + this.getHTMLId());
+	if (field.is(":checkbox")){
+		return field.prop("checked", value);
+	}
+	else {
+		return field.val(value);
+	}
 };
 FormField.prototype.enableValidationMessage = function () {
 	this.validationMessageEnabled = true;
