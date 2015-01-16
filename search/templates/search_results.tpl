@@ -1,5 +1,67 @@
 		<script><!--
-		
+			// Crée un lien de pagination javascript
+			function writePagin(fctName, fctArgs, isCurrentPage, textPagin, i)
+			{
+			    pagin = '<span class="pagination';
+			    if ( isCurrentPage)
+			        pagin += ' pagination_current_page text-strong';
+			    pagin += '">';
+			    pagin += '<a href="javascript:' + fctName + '(' + i + fctArgs + ')">' + textPagin + '</a>';
+			    pagin += '</span>&nbsp;';
+			    
+			    return pagin;
+			}
+
+			// Crée la pagination à partir du nom du bloc de page, du bloc de pagination, du nombre de résultats
+			// du nombre de résultats par page ...
+			function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbPagesAfter)
+			{
+			    var pagin = '';
+			    if ( nbPages > 1)
+			    {
+			        if (arguments.length < 5)
+			        {
+			            nbPagesBefore = 3;
+			            nbPagesAfter = 3;
+			        }
+			        
+			        var before = Math.max(0, page - nbPagesBefore);
+			        var after = Math.min(nbPages, page + nbPagesAfter + 1);
+			        
+			        var fctName = 'ChangePagination';
+			        var fctArgs = ', '  + nbPages + ', \'' + blocPagin + '\', \'' + blocName + '\', ' + nbPagesBefore + ', ' + nbPagesAfter;
+			        
+			        // Début
+			        if (page != 0)
+			            pagin += writePagin(fctName, fctArgs, false, '&laquo;', 0);
+			        
+			        // Before
+			        for ( var i = before; i < page; i++)
+			            pagin += writePagin(fctName, fctArgs, false, i + 1, i);
+			        
+			        // Page courante
+			        pagin += writePagin(fctName, fctArgs, true, page + 1, page);
+			        
+			        // After
+			        for ( var i = page + 1; i < after; i++)
+			            pagin += writePagin(fctName, fctArgs, false, i + 1, i);
+			        
+			        // Fin
+			        if (page != nbPages - 1)
+			            pagin += writePagin(fctName, fctArgs, false, '&raquo;', nbPages - 1);
+			    }
+			    
+			    // On cache tous les autre résultats du module
+			    for ( var i = 0; i < nbPages; i++)
+			    	jQuery('#' + blocName + '_' + i).fadeOut();
+			        
+			    // On montre la page demandée
+			    jQuery('#' + blocName + '_' + page).fadeIn();
+			    
+			    // Mise à jour de la pagination
+			    $(blocPagin).innerHTML = pagin;
+			}
+
 			const RESULTS = 'results_';
 			const RESULTS_TITLE = 'results_title_';
 			const INFOS_RESULTS = 'infos_results_';
