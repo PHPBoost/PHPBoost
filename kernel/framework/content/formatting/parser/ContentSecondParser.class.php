@@ -90,7 +90,7 @@ class ContentSecondParser extends AbstractParser
 	{
 		//Balise vidéo
 		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="movie_[0-9]+"></a><br /><script><!--\s*insertMoviePlayer\(\'movie_[0-9]+\'\);\s*--></script>`isU',
-			'<object type="application/x-shockwave-flash" data="/kernel/lib/flash/movieplayer.swf" width="$2" height="$3">
+			'<object type="application/x-shockwave-flash" width="$2" height="$3">
 				<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
 				<param name="allowScriptAccess" value="never" />
 				<param name="play" value="true" />
@@ -276,16 +276,7 @@ class ContentSecondParser extends AbstractParser
 	private static function process_sound_tag($matches)
 	{
 		//Balise son
-		return '<object type="application/x-shockwave-flash" data="' . TPL_PATH_TO_ROOT . '/kernel/lib/flash/dewplayer.swf?son=' . $matches[1] . '" width="200" height="20">
-				<param name="allowScriptAccess" value="never" />
-				<param name="play" value="true" />
-				<param name="movie" value="' . TPL_PATH_TO_ROOT . '/kernel/lib/flash/dewplayer.swf?son=' . $matches[1] . '" />
-				<param name="menu" value="false" />
-				<param name="quality" value="high" />
-				<param name="scalemode" value="noborder" />
-				<param name="wmode" value="transparent" />
-				<param name="bgcolor" value="#FFFFFF" />
-			</object>';
+		return '<audio controls><source src="'. $matches[1] .'" /></audio>';
 	}
 	
 	private static function process_youtube_tag($matches)
