@@ -83,29 +83,29 @@ function escape_xmlhttprequest(contents)
 function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty_login)
 {
 	var login = jQuery('#login' + searchid).val();
-	if (login != '')
+	if( login != "" )
 	{
 		if (jQuery('#search_img' + searchid))
 			jQuery('#search_img' + searchid).text('<i class="fa fa-spinner fa-spin"></i>');
-		var xhr_object = xmlhttprequest_init(PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?token=' + TOKEN + '&' + insert_mode + '=1');
-		data = 'login=' + login + '&divid=' + searchid;
-		xhr_object.onreadystatechange = function() 
-		{
-			if (xhr_object.readyState == 4 && xhr_object.status == 200) 
-			{
+
+		jQuery.ajax({
+			url: PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?token=' + TOKEN + '&' + insert_mode + '=1',
+			type: "post",
+			dataType: "html",
+			data: {'login': login, 'divid' : searchid},
+			success: function(returnData){
 				if (jQuery('#search_img' + searchid))
 					jQuery('#search_img' + searchid).text('');
+
 				if (jQuery("#xmlhttprequest-result-search" + searchid))
-					jQuery("#xmlhttprequest-result-search" + searchid).text(xhr_object.responseText);
-				jQuery('#xmlhttprequest-result-search' + searchid).slideDown();
+					jQuery("#xmlhttprequest-result-search" + searchid).html(returnData);
+
+				jQuery('#xmlhttprequest-result-search').fadeIn();
+			},
+			error: function(e){
+				alert(e);
 			}
-			else if (xhr_object.readyState == 4) 
-			{
-				if (jQuery('#search_img' + searchid))
-					jQuery('#search_img' + searchid).text('');
-			}
-		}
-		xmlhttprequest_sender(xhr_object, data);
+		});
 	}	
 	else
 		alert(alert_empty_login);

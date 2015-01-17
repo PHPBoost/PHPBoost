@@ -38,20 +38,22 @@
 				<!--
 					function XMLHttpRequest_search()
 					{
-						var login = document.getElementById("login").value;
+						var login = jQuery('#login').val();
 						if( login != "" )
 						{
-							data = "login=" + login;
-							var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
-							xhr_object.onreadystatechange = function() 
-							{
-								if( xhr_object.readyState == 4 ) 
-								{
-									document.getElementById("xmlhttprequest-result-search").innerHTML = xhr_object.responseText;
+							jQuery.ajax({
+								url: '{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1',
+								type: "post",
+								dataType: "html",
+								data: {'login': login},
+								success: function(returnData){
+									jQuery('#xmlhttprequest-result-search').html(returnData);
 									jQuery('#xmlhttprequest-result-search').fadeIn();
+								},
+								error: function(e){
+									alert(e);
 								}
-							}
-							xmlhttprequest_sender(xhr_object, data);
+							});
 						}	
 						else
 							alert("{L_REQUIRE_LOGIN}");

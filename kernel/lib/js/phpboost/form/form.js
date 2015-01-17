@@ -105,7 +105,6 @@ HTMLForm.prototype = {
 	validate : function() {
 		var validated = true;
 		var validation = '';
-		var form = this;
 		jQuery.each(this.getFields(), function(index, field) {
 			var field_validation = field.validate();
 			
@@ -116,7 +115,7 @@ HTMLForm.prototype = {
 		});
 		
 		if (validated == false) {
-			form.displayValidationError(validation);
+			this.displayValidationError(validation);
 			jQuery('html, body').animate({scrollTop:jQuery('#' + this.id).offset().top}, 'slow');
 		}
 		
@@ -135,7 +134,7 @@ HTMLForm.prototype = {
 				disabledFields += "|" + field.getId();
 			}
 		});
-		jQuery('#' + this.id + '_disabled_fields').value = disabledFields;
+		jQuery('#' + this.id + '_disabled_fields').val(disabledFields);
 
 		var disabledFieldsets = "";
 		jQuery.each(this.getFieldsets(), function(index, fieldset) {
@@ -143,7 +142,7 @@ HTMLForm.prototype = {
 				disabledFieldsets += "|" + fieldset.getId();
 			}
 		});
-		jQuery('#' + this.id + '_disabled_fieldsets').value = disabledFieldsets;
+		jQuery('#' + this.id + '_disabled_fieldsets').val(disabledFieldsets);
 	}
 };
 
@@ -195,14 +194,14 @@ FormFieldset.prototype = {
 	},
 	enable : function() {
 		this.disabled = false;
-		Effect.Appear(this.getHTMLId());
+		jQuery("#" + this.getHTMLId()).fadeIn();
 		jQuery.each(this.fields, function(index, field) {
 			field.enable();
 		});
 	},
 	disable : function() {
 		this.disabled = true;
-		Effect.Fade(this.getHTMLId());
+		jQuery("#" + this.getHTMLId()).fadeOut();
 		jQuery.each(this.fields, function(index, field) {
 			field.disable();
 		});
@@ -238,14 +237,14 @@ FormField.prototype = {
 		if (this.HTMLFieldExists()) {
 			jQuery('#' + this.getHTMLId()).prop('disabled', false);
 		}
-		jQuery("#" + this.getHTMLId() + "_field").fadeIn(300);
+		jQuery("#" + this.getHTMLId() + "_field").fadeIn();
 		this.liveValidate();
 	},
 	disable : function() {
 		if (this.HTMLFieldExists()) {
 			jQuery('#' + this.getHTMLId()).prop('disabled', true);
 		}
-		jQuery("#" + this.getHTMLId() + "_field").fadeOut(300);
+		jQuery("#" + this.getHTMLId() + "_field").fadeOut();
 		this.clearErrorMessage();
 	},
 	isDisabled : function() {
@@ -303,7 +302,7 @@ FormField.prototype = {
 		if (jQuery('#' + this.getHTMLId() + '_field') && jQuery('#onblurContainerResponse' + this.getHTMLId())) {
 			
 			jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-right').addClass('constraint-status-error');
-			jQuery('#onblurMessageResponse' + this.getHTMLId()).text(message);
+			jQuery('#onblurMessageResponse' + this.getHTMLId()).html(message);
 			
 			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeIn(500);
 		}
@@ -323,7 +322,7 @@ FormField.prototype = {
 		if (jQuery('#' + this.getHTMLId() + '_field') && jQuery('#onblurContainerResponse' + this.getHTMLId())) {
 
 			jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-right').addClass('constraint-status-error');
-			jQuery('#onblurMessageResponse' + this.getHTMLId()).text('');
+			jQuery('#onblurMessageResponse' + this.getHTMLId()).html('');
 			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
 		}
 	},

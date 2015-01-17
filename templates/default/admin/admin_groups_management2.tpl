@@ -28,30 +28,22 @@
 		}
 		function XMLHttpRequest_search()
 		{
-			var login = document.getElementById("login").value;
+			var login = jQuery('#login').val();
 			if( login != "" )
 			{
-				if( document.getElementById('loading_groups') )
-					document.getElementById('loading_groups').innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-				
-				data = 'login=' + login;
-				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&insert_member=1');
-				xhr_object.onreadystatechange = function() 
-				{
-					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-					{
-						document.getElementById("xmlhttprequest-result-search").innerHTML = xhr_object.responseText;
+				jQuery.ajax({
+					url: '{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&insert_member=1',
+					type: "post",
+					dataType: "html",
+					data: {'login': login},
+					success: function(returnData){
+						jQuery('#xmlhttprequest-result-search').html(returnData);
 						jQuery('#xmlhttprequest-result-search').fadeIn();
-						if( document.getElementById('loading_groups') )
-							document.getElementById('loading_groups').innerHTML = '';
+					},
+					error: function(e){
+						alert(e);
 					}
-					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
-					{	
-						if( document.getElementById('loading_groups') )
-							document.getElementById('loading_groups').innerHTML = '';
-					}
-				}
-				xmlhttprequest_sender(xhr_object, data);
+				});
 			}	
 			else
 				alert("{L_REQUIRE_LOGIN}");
@@ -173,7 +165,6 @@
 						<label for="login">* {L_PSEUDO}</label>
 						<div class="form-field">
 							<input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr"> 
-							<span id="loading_groups"></span>
 							<button onclick="XMLHttpRequest_search();" type="button">{L_SEARCH}</button>
 							<div id="xmlhttprequest-result-search" style="display:none;" class="xmlhttprequest-result-search"></div>
 						</div>
