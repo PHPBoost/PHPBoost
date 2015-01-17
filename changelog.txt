@@ -21,6 +21,12 @@
 	+ Connexion avec un compte Facebook (et d'autre) paramètrable dans l'administration
 	+ Possibilité de gérer ses types de connexion dans le profil
 
+[b]Graphique[/b]
+[*] Refonte de l'affichage de la barre BBCode, amélioration de son ergonomie et suppression de la Pop-up "Tous les smileys"
+
+
+[*] Suppression du module PHPBoostCaptcha du projet PHPBoost (il ne sera plus maintenu)
+
 
 =================================== Modules =====================================
 
