@@ -128,7 +128,7 @@ function shoutbox_refresh_messages_box() {
 					<li class="bbcode-elements">
 						<a href="javascript:bb_display_block('1', 'shout-contents');" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);" class="fa bbcode-icon-smileys" title="${LangLoader::get_message('bb_smileys', 'common', 'BBCode')}"></a>
 						<div class="bbcode-block-container" style="display:none;" id="bb-block1shout-contents">
-							<div class="bbcode-block" style="width:140px;" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);">
+							<div class="bbcode-block block-smileys" onmouseover="bb_hide_block('1', 'shout-contents', 1);" onmouseout="bb_hide_block('1', 'shout-contents', 0);">
 								# START smileys #
 									<a href="" onclick="insertbbcode('{smileys.CODE}', 'smile', 'shout-contents');return false;" class="bbcode-hover" title="{smileys.CODE}"><img src="{smileys.URL}" alt="{smileys.CODE}"></a># IF smileys.C_END_LINE #<br /># ENDIF #
 								# END smileys #
