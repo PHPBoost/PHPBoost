@@ -151,38 +151,17 @@ class BBCodeEditor extends ContentEditor
 			));
 		}
 
-		$smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
-		$smile_by_line = 5; //Smiley par ligne.
-
-		$nbr_smile = count($smileys_cache->get_smileys());
-		$i = 1;
-		$z = 0;
 		foreach ($smileys_cache->get_smileys() as $code_smile => $infos)
 		{
-			if ($z == $smile_max)
-			{
-				$z++;
-				break;
-			}
-
 			$template->assign_block_vars('smileys', array(
 				'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 				'CODE' => addslashes($code_smile),
-				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
-			));
-
-			$i++;
-			$z++;
-		}
-
-		if ($z > $smile_max) //Lien vers tous les smiley!
-		{
-			$template->put_all(array(
-				'C_BBCODE_SMILEY_MORE' => true,
-				'L_ALL_SMILEY' => $LANG['all_smiley'],
-				'L_SMILEY' => $LANG['smiley']
 			));
 		}
+
+		$template->put_all(array(
+			'L_SMILEY' => $LANG['smiley']
+		));
 
 		if (!self::$editor_already_included)
 		{

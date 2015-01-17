@@ -119,8 +119,6 @@ li.bbcode-elements a,
 	}
 }
 
-
-
 .expand .bbcode-more {
 	display: inline;
 }
@@ -166,6 +164,12 @@ li.bbcode-elements a,
 	border-right: 8px solid transparent;
 	left: 9px;
 	top: -8px;
+}
+
+.block-smileys {
+	width: 150px;
+	height: 150px;
+	overflow-y: scroll;
 }
 
 .bbcode-block-list {
