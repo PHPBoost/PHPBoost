@@ -38,7 +38,6 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('AdminMemberAddController', '`^/add/?$`'),
 	new UrlControllerMapper('AdminMemberConfigController', '`^/config/?$`'),
-	new UrlControllerMapper('AdminMemberEditController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('AdminMemberDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
 	new UrlControllerMapper('AdminViewAllMembersController', '`^/management(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 	new UrlControllerMapper('AdminViewAllMembersController'),

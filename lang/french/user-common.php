@@ -37,6 +37,9 @@ $lang['profile.edit'] = 'Edition du profil';
 $lang['messages'] = 'Messages de l\'utilisateur';
 $lang['maintain'] = 'Maintenance';
 
+$lang['member-management'] = 'Gestion du membre';
+$lang['punishment-management'] = 'Gestion des sanctions';
+
 $lang['profile.edit.password.error'] = 'Le mot de passe que vous avez entré n\'est pas correct';
 $lang['external-auth.account-exists'] = 'Pour associer votre compte avec la connexion externe vous devez vous connecter sur le site et vous rendre dans l\'édition de votre profil';
 
