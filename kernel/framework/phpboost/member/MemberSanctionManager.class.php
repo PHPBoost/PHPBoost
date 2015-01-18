@@ -169,7 +169,7 @@ class MemberSanctionManager
 	
 	private static function get_member_mail($user_id)
 	{
-		return self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'user_mail', 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		return self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'email', 'WHERE user_id=:user_id', array('user_id' => $user_id));
 	}
 }
 ?>

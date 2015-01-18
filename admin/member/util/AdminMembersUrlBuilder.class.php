@@ -44,14 +44,6 @@ class AdminMembersUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/add/');
 	}
-	
-	/*
-	 * @ return Url
-	 */
-	public static function edit($id)
-	{
-		return DispatchManager::get_url(self::$dispatcher, $id. '/edit/');
-	}
 		
 	/*
 	 * @ return Url

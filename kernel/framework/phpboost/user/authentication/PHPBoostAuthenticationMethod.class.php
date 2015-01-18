@@ -225,8 +225,8 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		if (!empty($login))
 			$columns['login'] = $login;
 
-		if ($approved)
-			$columns['approved'] = $approved;
+		if ($approved !== null)
+			$columns['approved'] = (int)$approved;
 
 		if (!empty($password))
 			$columns['password'] = $password;
@@ -236,7 +236,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 
 		if ($change_password_pass !== null)
 			$columns['change_password_pass'] = $change_password_pass;
-			
+
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = array('user_id' => $user_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);

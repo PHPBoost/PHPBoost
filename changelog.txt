@@ -20,6 +20,7 @@
 	[*] Connexion interne avec l'adresse email ou un login que l'on peut choisir
 	+ Connexion avec un compte Facebook (et d'autre) paramètrable dans l'administration
 	+ Possibilité de gérer ses types de connexion dans le profil
+	[*] Regroupement des fonctionnalités de l'édition du profil de l'admin dans l'édition d'un membre en front
 
 [b]Graphique[/b]
 [*] Refonte de l'affichage de la barre BBCode, amélioration de son ergonomie et suppression de la Pop-up "Tous les smileys"

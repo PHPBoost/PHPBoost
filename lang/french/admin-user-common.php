@@ -63,10 +63,6 @@ $lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché 
 $lang['members.config.avatars-management'] = 'Gestion des avatars';
 $lang['members.config.authorization'] = 'Autorisations';
 
-//Other fieldset add and edit title
-$lang['members.member-management'] = 'Gestion du membre';
-$lang['members.punishment-management'] = 'Gestion des sanctions';
-
 //Activation type
 $lang['members.config.type-activation.auto'] = 'Automatique';
 $lang['members.config.type-activation.mail'] = 'Mail';
