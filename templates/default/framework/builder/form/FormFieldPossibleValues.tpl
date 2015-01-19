@@ -14,9 +14,11 @@ ContactFormFieldPossibleValues.prototype = {
 			jQuery('<div/>', {'id' : id}).appendTo('#input_fields_' + this.id_input);
 
 			jQuery('<input/> ', {type : 'checkbox', id : 'field_is_default_' + id, name : 'field_is_default_' + id, value : '1', 'style' : 'margin: 0 25px 0 25px;'}).appendTo('#' + id);
+			jQuery('#field_is_default_' + id).after('&nbsp;');
 			
 			jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{@field.name}'}).appendTo('#' + id);
-
+			jQuery('#field_name_' + id).after('&nbsp;');
+			
 			jQuery('<a/> ', {href : 'javascript:ContactFormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'title' : "${LangLoader::get_message('delete', 'common')}", class : 'fa fa-delete'}).appendTo('#' + id);
 			
 			this.integer++;
@@ -41,7 +43,7 @@ var ContactFormFieldPossibleValues = new ContactFormFieldPossibleValues();
 <span class="text-strong">{@field.possible_values.is_default}</span>
 # START fieldelements #
 	<div id="${escape(HTML_ID)}_{fieldelements.ID}">
-		<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # style="margin: 0 25px 0 25px;" />
+		<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # style="margin: 0 25px 0 25px;"/>
 		<input type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@field.name}"/>
 		<a href="javascript:ContactFormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" title="${LangLoader::get_message('delete', 'common')}" class="fa fa-delete" data-confirmation="delete-element"></a>
 	</div>
