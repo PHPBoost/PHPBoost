@@ -76,6 +76,11 @@ class News
 	{
 		return $this->id_cat;
 	}
+
+	public function get_category()
+	{
+		return NewsService::get_categories_manager()->get_categories_cache()->get_category($this->id_cat);
+	}
 	
 	public function set_name($name)
 	{

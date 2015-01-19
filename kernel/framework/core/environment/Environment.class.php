@@ -145,6 +145,9 @@ class Environment
 		define('DIR', $site_path);
 		define('HOST', $general_config->get_site_url());
 		define('TPL_PATH_TO_ROOT', DIR);
+
+		//Path from the site root
+		define('SITE_REWRITED_SCRIPT', 	substr($_SERVER['REQUEST_URI'], strlen($site_path)));
 	}
 
 	public static function init_session()

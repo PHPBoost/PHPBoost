@@ -161,20 +161,20 @@ class PrivateMsg
 			if ($pm_del) //Supprimé par les deux membres => Supprime la conversation et les messages associés.
 			{
 				self::$db_querier->delete(DB_TABLE_PM_TOPIC, 'WHERE id = :id', array('id' => $pm_idconvers));
-				self::$db_querier->delete(DB_TABLE_PM_MSG . 'WHERE idconvers = :id', array('id' => $pm_idconvers));
+				self::$db_querier->delete(DB_TABLE_PM_MSG, 'WHERE idconvers = :id', array('id' => $pm_idconvers));
 			}
 			else //Mise à jour du statut de la conversation, afin de ne plus l'afficher au membre ayant décidé de la supprimer.
-				self::$db_querier->update(DB_TABLE_PM_TOPIC , array('user_convers_status' => 1), 'WHERE id = :id', array('id' => $pm_idconvers));
+				self::$db_querier->update(DB_TABLE_PM_TOPIC, array('user_convers_status' => 1), 'WHERE id = :id', array('id' => $pm_idconvers));
 		}
 		else //Destinataire
 		{
 			if ($pm_del) //Supprimé par les deux membres => Supprime la conversation et les messages associés.
 			{
 				self::$db_querier->delete(DB_TABLE_PM_TOPIC, 'WHERE id = :id', array('id' => $pm_idconvers));
-				self::$db_querier->delete(DB_TABLE_PM_MSG . 'WHERE idconvers = :id', array('id' => $pm_idconvers));
+				self::$db_querier->delete(DB_TABLE_PM_MSG, 'WHERE idconvers = :id', array('id' => $pm_idconvers));
 			}
 			else //Mise à jour du statut de la conversation, afin de ne plus l'afficher au membre ayant décidé de la supprimer.
-				self::$db_querier->update(DB_TABLE_PM_TOPIC , array('user_convers_status' => 2), 'WHERE id = :id', array('id' => $pm_idconvers));
+				self::$db_querier->update(DB_TABLE_PM_TOPIC, array('user_convers_status' => 2), 'WHERE id = :id', array('id' => $pm_idconvers));
 		}
 	}
 	
