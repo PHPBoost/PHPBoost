@@ -225,7 +225,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 					'C_DESCRIPTION' => !empty($row['contents']),
 					'DESCRIPTION' => FormatingHelper::second_parse($row['contents']),
 					'POSTER' => $MEDIA_LANG['media_added_by'] . ' : ' . !empty($row['display_name']) ? '<a href="' . UserUrlBuilder::profile($row['iduser'])->rel() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : $LANG['guest'],
-					'DATE' => sprintf($MEDIA_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
+					'DATE' => sprintf($MEDIA_LANG['add_on_date'], Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR)),
 					'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
 					'NOTE' => NotationService::display_static_image($notation),
 					'U_MEDIA_LINK' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php'),

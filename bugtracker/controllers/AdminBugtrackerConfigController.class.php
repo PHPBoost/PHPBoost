@@ -462,7 +462,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$key = 0;
 		foreach ($versions as $key => $version)
 		{
-			$release_date = !empty($version['release_date']) && is_numeric($version['release_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $version['release_date']) : null;
+			$release_date = !empty($version['release_date']) && is_numeric($version['release_date']) ? new Date($version['release_date'], Timezone::SERVER_TIMEZONE) : null;
 			
 			$versions_table->assign_block_vars('versions', array(
 				'C_IS_DEFAULT'		=> $this->config->get_default_version() == $key,
@@ -561,7 +561,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$new_version_release_date = $request->get_value('release_date' . $key, '');
 			$new_version_detected_in = (bool)$request->get_value('detected_in' . $key, '');
 			$versions[$key]['name'] = (!empty($new_version_name) && $new_version_name != $version['name']) ? $new_version_name : $version['name'];
-			$release_date = $new_version_release_date ? new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $new_version_release_date, LangLoader::get_message('date_format_day_month_year', 'date-common')) : '';
+			$release_date = $new_version_release_date ? new Date( $new_version_release_date) : '';
 			$versions[$key]['release_date'] = $release_date ? $release_date->get_timestamp() : '';
 			$versions[$key]['detected_in'] = ($new_version_detected_in != $version['detected_in']) ? $new_version_detected_in : $version['detected_in'];
 		}
@@ -573,7 +573,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			if ($request->has_postparameter($version) && $request->get_poststring($version))
 			{
 				$version_release_date = $request->get_value('release_date_' . $i, '');
-				$release_date = $version_release_date ? new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $version_release_date, LangLoader::get_message('date_format_day_month_year', 'date-common')) : '';
+				$release_date = $version_release_date ? new Date($version_release_date) : '';
 				$release_date = $release_date ? $release_date->get_timestamp() : '';
 				
 				if (empty($nb_versions))

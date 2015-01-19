@@ -213,7 +213,7 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 	));
 	
 	$tpl->assign_block_vars('post_convers.show_convers', array(
-		'DATE' => gmdate_format('date_format'),
+		'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($_POST['contents'])))
 	));
 	
@@ -240,7 +240,7 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 	));
 	
 	$tpl->assign_block_vars('show_pm', array(
-		'DATE' => gmdate_format('date_format'),
+		'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($_POST['contents']))),
 		'U_PM_BOX' => '<a href="pm.php' . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers_title . '</a>',
@@ -491,7 +491,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				if (!empty($_POST['prw_convers']) XOR !empty($_POST['prw']))
 				{
 					$tpl->assign_block_vars('edit_pm.show_pm', array(
-						'DATE' => gmdate_format('date_format'),
+						'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 						'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($_POST['contents']))),
 					));
 				}
@@ -631,7 +631,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			
 			'ID' => $row['id'],
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
+			'DATE' => $LANG['on'] . ' ' . Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'USER_AVATAR' => $user_avatar,
 			'PSEUDO' => $is_admin ? $LANG['admin'] : (!empty($row['display_name']) ? TextHelper::wordwrap_html($row['display_name'], 13) : $LANG['guest']),
 			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
@@ -863,7 +863,7 @@ else //Liste des conversation, dans la boite du membre.
 		
 		//Affichage du dernier message posté.
 		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
-		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite . '.php') . '#m' . $row['last_msg_id'] . '" title="" class="fa fa-hand-o-right"></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />';
+		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite . '.php') . '#m' . $row['last_msg_id'] . '" title="" class="fa fa-hand-o-right"></a>' . ' ' . $LANG['on'] . ' ' . Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) . '<br />';
 		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->rel() . '" class="small '.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
 
 		$tpl->assign_block_vars('convers.list', array(

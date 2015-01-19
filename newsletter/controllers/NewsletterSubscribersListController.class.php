@@ -51,7 +51,7 @@ class NewsletterSubscribersListController extends ModuleController
 
 	private function build_form($request)
 	{
-		$field = $request->get_value('field', 'login');
+		$field = $request->get_value('field', 'display_name');
 		$sort = $request->get_value('sort', 'top');
 		$current_page = $request->get_int('page', 1);
 		
@@ -64,10 +64,10 @@ class NewsletterSubscribersListController extends ModuleController
 		switch ($field)
 		{
 			case 'pseudo' :
-				$field_bdd = 'login';
+				$field_bdd = 'display_name';
 			break;
 			default :
-				$field_bdd = 'login';
+				$field_bdd = 'display_name';
 		}
 		
 		$nbr_subscribers = count(NewsletterService::list_subscribers_by_stream($this->stream->get_id()));
@@ -90,7 +90,7 @@ class NewsletterSubscribersListController extends ModuleController
 			'PAGINATION' => $pagination->display()
 		));
 
-		$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.user_id, subscribers.mail, member.display_name, member.user_mail
+		$result = PersistenceContext::get_querier()->select("SELECT subscribers.id, subscribers.user_id, subscribers.mail, member.display_name, member.email
 		FROM " . NewsletterSetup::$newsletter_table_subscribers . " subscribers
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON subscribers.user_id = member.user_id
 		ORDER BY ". $field_bdd ." ". $mode ."

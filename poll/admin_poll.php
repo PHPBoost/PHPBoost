@@ -82,8 +82,8 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 	//On verifie les conditions!
 	if (!empty($question) && !empty($id_post))
 	{
-		$start_date = new Date(DATE_FROM_STRING, Timezone::SITE_TIMEZONE, $start, LangLoader::get_message('date_format_day_month_year', 'date-common'));
-		$end_date = new Date(DATE_FROM_STRING, Timezone::SITE_TIMEZONE, $end, LangLoader::get_message('date_format_day_month_year', 'date-common'));
+		$start_date = new Date($start);
+		$end_date = new Date($end);
 		
 		$start_timestamp = $start_date->get_timestamp();
 		$end_timestamp = $end_date->get_timestamp();
@@ -115,7 +115,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 			$end_timestamp = 0;
 		}
 		
-		$date = new Date(DATE_FROM_STRING, Timezone::SITE_TIMEZONE, $current_date, LangLoader::get_message('date_format_day_month_year', 'date-common'));
+		$date = new Date($current_date);
 		$timestamp = $date->get_timestamp();
 		if ($timestamp > 0)
 			//Ajout des heures et minutes
@@ -157,24 +157,24 @@ elseif (!empty($id))
 		'TYPE_MULTIPLE' => ($row['type'] == '0') ? 'checked="checked"' : '',
 		'ARCHIVES_ENABLED' => ($row['archive'] == '1') ? 'checked="checked"' : '',
 		'ARCHIVES_DISABLED' => ($row['archive'] == '0') ? 'checked="checked"' : '',	
-		'CURRENT_DATE' => gmdate_format('date_format_short', $row['timestamp']),
-		'DAY_RELEASE_S' => !empty($row['start']) ? gmdate_format('d', $row['start']) : '',
-		'MONTH_RELEASE_S' => !empty($row['start']) ? gmdate_format('m', $row['start']) : '',
-		'YEAR_RELEASE_S' => !empty($row['start']) ? gmdate_format('Y', $row['start']) : '',
-		'DAY_RELEASE_E' => !empty($row['end']) ? gmdate_format('d', $row['end']) : '',
-		'MONTH_RELEASE_E' => !empty($row['end']) ? gmdate_format('m', $row['end']) : '',
-		'YEAR_RELEASE_E' => !empty($row['end']) ? gmdate_format('Y', $row['end']) : '',
-		'DAY_DATE' => !empty($row['timestamp']) ? gmdate_format('d', $row['timestamp']) : '',
-		'MONTH_DATE' => !empty($row['timestamp']) ? gmdate_format('m', $row['timestamp']) : '',
-		'YEAR_DATE' => !empty($row['timestamp']) ? gmdate_format('Y', $row['timestamp']) : '',
+		'CURRENT_DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
+		'DAY_RELEASE_S' => !empty($row['start']) ? Date::to_format($row['start'], 'd') : '',
+		'MONTH_RELEASE_S' => !empty($row['start']) ? Date::to_format($row['start'], 'm') : '',
+		'YEAR_RELEASE_S' => !empty($row['start']) ? Date::to_format($row['start'], 'Y') : '',
+		'DAY_RELEASE_E' => !empty($row['end']) ? Date::to_format($row['end'], 'd') : '',
+		'MONTH_RELEASE_E' => !empty($row['end']) ? Date::to_format($row['end'], 'm') : '',
+		'YEAR_RELEASE_E' => !empty($row['end']) ? Date::to_format($row['end'], 'Y') : '',
+		'DAY_DATE' => !empty($row['timestamp']) ? Date::to_format($row['timestamp'], 'd') : '',
+		'MONTH_DATE' => !empty($row['timestamp']) ? Date::to_format($row['timestamp'], 'm') : '',
+		'YEAR_DATE' => !empty($row['timestamp']) ? Date::to_format($row['timestamp'], 'Y') : '',
 		'VISIBLE_WAITING' => (($row['visible'] == 2 || !empty($row['end'])) ? 'checked="checked"' : ''),
 		'VISIBLE_ENABLED' => (($row['visible'] == 1 && empty($row['end'])) ? 'checked="checked"' : ''),
 		'VISIBLE_UNAPROB' => (($row['visible'] == 0) ? 'checked="checked"' : ''),
-		'START' => ((!empty($row['start'])) ? gmdate_format('date_format_short', $row['start']) : ''),
-		'END' => ((!empty($row['end'])) ? gmdate_format('date_format_short', $row['end']) : ''),
-		'HOUR' => gmdate_format('H', $row['timestamp']),
-		'MIN' => gmdate_format('i', $row['timestamp']),
-		'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+		'START' => ((!empty($row['start'])) ? Date::to_format($row['start'], Date::FORMAT_DAY_MONTH_YEAR) : ''),
+		'END' => ((!empty($row['end'])) ? Date::to_format($row['end'], Date::FORMAT_DAY_MONTH_YEAR) : ''),
+		'HOUR' => Date::to_format($row['timestamp'], 'H'),
+		'MIN' => Date::to_format($row['timestamp'], 'i'),
+		'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 		'L_REQUIRE_QUESTION' => $LANG['require_question'],
 		'L_REQUIRE_ANSWER' => $LANG['require_answer'],
 		'L_REQUIRE_ANSWER_TYPE' => $LANG['require_answer_type'],
@@ -297,11 +297,11 @@ else
 		
 		$visible = '';
 		if ($row['start'] > 0)
-			$visible .= gmdate_format('date_format_short', $row['start']);
+			$visible .= Date::to_format($row['start'], Date::FORMAT_DAY_MONTH_YEAR);
 		if ($row['end'] > 0 && $row['start'] > 0)
-			$visible .= ' ' . strtolower($LANG['until']) . ' ' . gmdate_format('date_format_short', $row['end']);
+			$visible .= ' ' . strtolower($LANG['until']) . ' ' . Date::to_format($row['end'], Date::FORMAT_DAY_MONTH_YEAR);
 		elseif ($row['end'] > 0)
-			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
+			$visible .= $LANG['until'] . ' ' . Date::to_format($row['end'], Date::FORMAT_DAY_MONTH_YEAR);
 		
 		$group_color = User::get_group_color($row['groups'], $row['level']);
 		
@@ -312,7 +312,7 @@ else
 			'PSEUDO' => $row['display_name'],
 			'USER_GROUP_COLOR' => $group_color,
 			'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
-			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+			'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 			'ARCHIVES' => $archive,
 			'APROBATION' => $aprob,
 			'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : ''),

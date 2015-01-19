@@ -290,10 +290,10 @@ class CalendarEventContent
 		
 		$this->max_registered_members = $properties['max_registered_members'];
 		$this->last_registration_date_enabled = !empty($properties['last_registration_date']);
-		$this->last_registration_date = !empty($properties['last_registration_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['last_registration_date']) : null;
+		$this->last_registration_date = !empty($properties['last_registration_date']) ? new Date($properties['last_registration_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->register_authorizations = unserialize($properties['register_authorizations']);
 		
-		$this->creation_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['creation_date']);
+		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		
 		$this->repeat_number = $properties['repeat_number'];
 		$this->repeat_type = $properties['repeat_type'];

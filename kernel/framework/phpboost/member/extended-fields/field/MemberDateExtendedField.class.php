@@ -38,7 +38,7 @@ class MemberDateExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$value = $member_extended_field->get_default_value() ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $member_extended_field->get_default_value()) : null;
+		$value = $member_extended_field->get_default_value() ? new Date($member_extended_field->get_default_value()) : null;
 		$fieldset->add_field(new FormFieldDate($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value, 
 			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));
@@ -48,7 +48,7 @@ class MemberDateExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$value = $member_extended_field->get_value() ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $member_extended_field->get_value()) : null;
+		$value = $member_extended_field->get_value() ? new Date($member_extended_field->get_value()) : null;
 		$fieldset->add_field(new FormFieldDate($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value, 
 			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));
@@ -60,7 +60,7 @@ class MemberDateExtendedField extends AbstractMemberExtendedField
 		
 		if ($member_extended_field->get_value())
 		{
-			$date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $member_extended_field->get_value());
+			$date = new Date($member_extended_field->get_value());
 			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $date->format(Date::FORMAT_DAY_MONTH_YEAR)));
 		}
 	}

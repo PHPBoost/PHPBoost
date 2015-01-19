@@ -49,7 +49,7 @@ if (!empty($poll_id))
 	
 $archives = retrieve(GET, 'archives', false); //On vérifie si on est sur les archives
 $show_result = retrieve(GET, 'r', false); //Affichage des résultats.
-$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+$now = new Date(Date::DATE_NOW, Timezone::USER_TIMEZONE);
 
 //Récupération des éléments de configuration
 $config_cookie_name = $poll_config->get_cookie_name();
@@ -215,7 +215,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 			'IDPOLL' => $poll['id'],
 			'QUESTION' => $poll['question'],
-			'DATE' => gmdate_format('date_format_short', $poll['timestamp']),
+			'DATE' => Date::to_format($poll['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 			'VOTES' => $sum_vote,
 			'L_POLL' => $LANG['poll'],
 			'L_BACK_POLL' => $LANG['poll_back'],
@@ -247,11 +247,11 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 			'C_IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 			'IDPOLL' => $poll['id'],
 			'QUESTION' => $poll['question'],
-			'DATE' => gmdate_format('date_format_short'),
+			'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR),
 			'VOTES' => 0,
 			'ID_R' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
 			'QUESTION' => $poll['question'],
-			'DATE' => gmdate_format('date_format_short', $poll['timestamp']),
+			'DATE' => Date::to_format($poll['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 			'U_POLL_ACTION' => url('.php?id=' . $poll['id'] . '&amp;token=' . AppContext::get_session()->get_token(), '-' . $poll['id'] . '.php?token=' . AppContext::get_session()->get_token()),
 			'U_POLL_RESULT' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
 			'L_POLL' => $LANG['poll'],
@@ -349,7 +349,7 @@ elseif ($archives) //Archives.
 			'EDIT' => '<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . LangLoader::get_message('edit', 'common') . '" class="fa fa-edit"></a>',
 			'DEL' => '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . LangLoader::get_message('delete', 'common') . '" class="fa fa-delete" data-confirmation="delete-element"></a>',
 			'VOTE' => $sum_vote,
-			'DATE' => gmdate_format('date_format'),			
+			'DATE' => Date::to_format(Date::DATE_NOW, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),			
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])
 		));		
 

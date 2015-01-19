@@ -118,8 +118,8 @@ class CalendarAjaxCalendarController extends AbstractController
 		
 		foreach ($events as $event)
 		{
-			$start_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $event['start_date']);
-			$end_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $event['end_date']);
+			$start_date = new Date($event['start_date'], Timezone::SERVER_TIMEZONE);
+			$end_date = new Date($event['end_date'], Timezone::SERVER_TIMEZONE);
 			
 			for ($j = $start_date->get_day() ; $j <= $end_date->get_day() ; $j++)
 			{
@@ -159,7 +159,7 @@ class CalendarAjaxCalendarController extends AbstractController
 			{
 				if (($i >= $first_day + 1) && $i < $last_day)
 				{
-					if (($day == Date("j")) && ($month == Date("m")) && ($year == Date("Y")))
+					if (($day == date("j")) && ($month == date("m")) && ($year == date("Y")))
 						$class = 'calendar-today';
 					else if (!empty($array_events[$day]))
 					{

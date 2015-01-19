@@ -139,8 +139,8 @@ class AdminViewAllMembersController extends AdminController
 				'GROUP_COLOR' => $group_color,
 				'APPROBATION' => $row['approved'] == 0 ? $this->lang['no'] : $this->lang['yes'],
 				'MAIL' => $row['email'],
-				'LAST_CONNECT' => !empty($row['last_connection_date']) ? gmdate_format('date_format_short', $row['last_connection_date']) : $this->lang['never'],
-				'REGISTERED' => gmdate_format('date_format_short', $row['registration_date']),
+				'LAST_CONNECT' => !empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['never'],
+				'REGISTERED' => Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel()
 			));
 		}

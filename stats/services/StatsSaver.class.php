@@ -258,7 +258,7 @@ class StatsSaver
 	 */
 	public static function update_pages_displayed()
 	{
-		self::write_stats('pages', gmdate_format('G'));
+		self::write_stats('pages', Date::to_format(Date::DATE_NOW, 'G'));
 	}
 		
 	/**

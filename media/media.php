@@ -106,7 +106,7 @@ elseif ($id_media > 0)
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_SIZE' => $LANG['size'],
 		'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],
-		'DATE' => gmdate_format('date_format', $media['timestamp']),
+		'DATE' => Date::to_format($media['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'L_MODO_PANEL' => $LANG['modo_panel'],
 		'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 		'HEIGHT_P' => $media['height'] + 50,

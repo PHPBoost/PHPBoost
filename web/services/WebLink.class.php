@@ -339,10 +339,10 @@ class WebLink
 		$this->contents = $properties['contents'];
 		$this->short_contents = $properties['short_contents'];
 		$this->approbation_type = $properties['approbation_type'];
-		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['start_date']) : null;
-		$this->end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['end_date']) : null;
+		$this->start_date = !empty($properties['start_date']) ? new Date($properties['start_date'], Timezone::SERVER_TIMEZONE) : null;
+		$this->end_date = !empty($properties['end_date']) ? new Date($properties['end_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->end_date_enabled = !empty($properties['end_date']);
-		$this->creation_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['creation_date']);
+		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
 		$this->number_views = $properties['number_views'];
 		$this->partner = (bool)$properties['partner'];
 		$this->partner_picture = new Url($properties['partner_picture']);

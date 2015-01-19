@@ -37,7 +37,7 @@ require_once('../kernel/header.php');
 $tpl = new FileTemplate('forum/forum_stats.tpl');
 
 $total_day = NumberHelper::round((time() - GeneralConfig::load()->get_site_install_date()->get_timestamp())/(3600*24), 0);
-$timestamp_today = @mktime(0, 0, 1, gmdate_format('m'), gmdate_format('d'), gmdate_format('y'));
+$timestamp_today = @mktime(0, 0, 1, Date::to_format(Date::DATE_NOW, 'm'), Date::to_format(Date::DATE_NOW, 'd'), Date::to_format(Date::DATE_NOW, 'y'));
 
 $sum = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array("SUM(nbr_topic) as total_topics", "SUM(nbr_msg) as total_msg"), "WHERE level <> 0 AND level < 2 AND aprob = 1");
 

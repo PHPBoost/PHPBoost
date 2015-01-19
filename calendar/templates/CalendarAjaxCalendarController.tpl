@@ -32,7 +32,7 @@
 				<div class="horizontal-fieldset" id="CalendarAjaxCalendarController_choose-date">
 					<div id="CalendarAjaxCalendarController_month_field" class="form-element">
 						<div class="form-field">
-							<select name="CalendarAjaxCalendarController_month" id="CalendarAjaxCalendarController_month" onchange=ChangeMonth(jQuery('#' + CalendarAjaxCalendarController_year).val(), jQuery('#' + CalendarAjaxCalendarController_month).val());">
+							<select name="CalendarAjaxCalendarController_month" id="CalendarAjaxCalendarController_month" onchange="ChangeMonth(jQuery('#CalendarAjaxCalendarController_year').val(), jQuery('#CalendarAjaxCalendarController_month').val());">
 								# START months #
 								<option value="{months.VALUE}"# IF months.SELECTED # selected="selected"# ENDIF #>{months.NAME}<option>
 								# END months #
@@ -41,7 +41,7 @@
 					</div>
 					<div id="CalendarAjaxCalendarController_year_field" class="form-element">
 						<div class="form-field">
-							<select name="CalendarAjaxCalendarController_year" id="CalendarAjaxCalendarController_year" onchange=ChangeMonth(jQuery('#' + CalendarAjaxCalendarController_year).val(), jQuery('#' + CalendarAjaxCalendarController_month).val());">
+							<select name="CalendarAjaxCalendarController_year" id="CalendarAjaxCalendarController_year" onchange="ChangeMonth(jQuery('#CalendarAjaxCalendarController_year').val(), jQuery('#CalendarAjaxCalendarController_month').val());">
 								# START years #
 								<option value="{years.VALUE}"# IF years.SELECTED # selected="selected"# ENDIF #>{years.NAME}</optio>
 								# END years #

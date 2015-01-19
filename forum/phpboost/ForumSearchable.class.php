@@ -252,7 +252,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'USER_PSEUDO' => !empty($result_data['display_name']) ? TextHelper::wordwrap_html($result_data['display_name'], 13) : $LANG['guest'],
 			'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
 			'TITLE' => ucfirst($result_data['title']),
-			'DATE' => gmdate_format('d/m/y', $result_data['date']),
+			'DATE' => Date::to_format($result_data['date'], 'd/m/y'),
 			'CONTENTS' => FormatingHelper::second_parse($result_data['contents']),
 			'USER_AVATAR' => '<img src="' . (UserAccountsConfig::load()->is_default_avatar_enabled() && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name()) . '" alt="" class="message-avatar"/>'
 		));

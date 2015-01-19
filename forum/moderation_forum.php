@@ -187,7 +187,7 @@ if ($action == 'alert') //Gestion des alertes
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'STATUS' => $status,
 				'LOGIN' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class=" '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>',
-				'TIME' => gmdate_format('date_format', $row['timestamp']),
+				'TIME' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'BACKGROUND_COLOR' => $row['status'] == 1 ? 'background-color:#82c2a7;' : 'background-color:#e59f09;',
 				'ID' => $row['id']
 			));
@@ -256,7 +256,7 @@ if ($action == 'alert') //Gestion des alertes
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 				'STATUS' => $status,
 				'LOGIN' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->rel() .'" class=" '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>',
-				'TIME' => gmdate_format('date_format', $row['timestamp']),
+				'TIME' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'CAT' => '<a href="forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($CAT_FORUM[$row['idcat']]['name']) . '.php') . '">' . $CAT_FORUM[$row['idcat']]['name'] . '</a>',
 				'C_FORUM_ALERT_LIST' => true,
 				'U_CHANGE_STATUS' => ($row['status'] == '0') ? 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=1&amp;token=' . AppContext::get_session()->get_token()) : 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=0&amp;token=' . AppContext::get_session()->get_token()),
@@ -287,7 +287,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if (!empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'user_mail'), 'WHERE user_id=:id', array('id' => $id_get));
+		$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
 
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
@@ -300,7 +300,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 				if (!empty($readonly_contents) && !empty($readonly))
 				{
 					//Envoi du message.
-					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), nl2br(str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents)), '-1', PrivateMsg::SYSTEM_PM);
+					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), nl2br(str_replace('%date', Date::to_format($readonly, Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE), $readonly_contents)), '-1', PrivateMsg::SYSTEM_PM);
 				}
 			}
 
@@ -327,7 +327,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		if (retrieve(POST, 'search_member', false))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
-			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE login LIKE :login', array('login' => '%' . $login .'%'));
+			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', array('login' => '%' . $login .'%'));
 
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish&id=' . $user_id, '', '&'));
@@ -363,7 +363,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 				'LOGIN' => $row['display_name'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
-				'INFO' => gmdate_format('date_format', $row['delay_readonly']),
+				'INFO' => Date::to_format($row['delay_readonly'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id'] . '&amp;token=' . AppContext::get_session()->get_token()) . '" class="fa fa-lock"></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
@@ -466,7 +466,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
-		$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'user_mail'), 'WHERE user_id=:id', array('id' => $id_get));
+		$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
 
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL)))
@@ -521,7 +521,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		if (retrieve(POST, 'search_member', false))
 		{
 			$login = retrieve(POST, 'login_member', '');
-			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE login LIKE :login', array('login' => '%' . $login .'%'));
+			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', array('login' => '%' . $login .'%'));
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning&id=' . $user_id, '', '&'));
 			else
@@ -672,7 +672,7 @@ else //Panneau de modération
 			'LOGIN' => !empty($row['login']) ? $row['login'] : $LANG['guest'],
 			'LEVEL_CLASS' => UserService::get_level_class($row['user_level']),
 			'GROUP_COLOR' => $group_color,
-			'DATE' => gmdate_format('date_format', $row['timestamp']),
+			'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'U_ACTION' => (!empty($row['url']) ? '<a href="../forum/' . $row['url'] . '">' . $LANG[$row['action']] . '</a>' : $LANG[$row['action']]),
 			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 			'U_USER_CONCERN' => (!empty($row['user_id_action']) ? '<a href="'. UserUrlBuilder::profile($row['user_id_action'])->rel() .'" class="'.UserService::get_level_class($row['member_level']).'"' . (!empty($member_group_color) ? ' style="color:' . $member_group_color . '"' : '') . '>' . $row['member'] . '</a>' : '-')

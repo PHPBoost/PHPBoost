@@ -288,7 +288,7 @@ elseif ($action == 'restore')
 			{
 				if (strpos($file, '.sql') !== false)
 				{
-					$filelist[filemtime($dir . '/' . $file)] = array('file_name' => $file, 'weight' => NumberHelper::round(filesize($dir . '/' . $file)/1048576, 1) . ' Mo', 'file_date' => gmdate_format('date_format_short', filemtime($dir . '/' . $file)));
+					$filelist[filemtime($dir . '/' . $file)] = array('file_name' => $file, 'weight' => NumberHelper::round(filesize($dir . '/' . $file)/1048576, 1) . ' Mo', 'file_date' => Date::to_format(filemtime($dir . '/' . $file, Date::FORMAT_DAY_MONTH_YEAR)));
 					$i++;
 				}
 			}
@@ -334,7 +334,7 @@ else
 
 		$selected_tables = $_POST['table_list'];
 		
-		$file_name = 'backup_' . PersistenceContext::get_dbms_utils()->get_database_name() . '_' . str_replace('/', '-', gmdate_format('y-m-d-H-i-s')) . '.sql';
+		$file_name = 'backup_' . PersistenceContext::get_dbms_utils()->get_database_name() . '_' . str_replace('/', '-', Date::to_format(Date::DATE_NOW, 'y-m-d-H-i-s')) . '.sql';
 		$file_path = PATH_TO_ROOT . '/cache/backup/' . $file_name;
 
 		Environment::try_to_increase_max_execution_time();

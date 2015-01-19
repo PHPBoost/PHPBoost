@@ -65,7 +65,7 @@ class AdministratorAlertService
 		{
 			//Creation of the object we are going to return
 			$alert = new AdministratorAlert();
-			$alert->build($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['creation_date']), $properties['id_in_module'], $properties['identifier'], $properties['type'], $properties['priority']);
+			$alert->build($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['current_status'], new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE), $properties['id_in_module'], $properties['identifier'], $properties['type'], $properties['priority']);
 			return $alert;
 		}
 		else
@@ -112,7 +112,7 @@ class AdministratorAlertService
 			while ($row = $result->fetch())
 			{
 				$alert = new AdministratorAlert();
-				$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+				$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date($row['creation_date'], Timezone::SERVER_TIMEZONE), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
 				$array_result[] = $alert;
 			}
 			$result->dispose();
@@ -145,7 +145,7 @@ class AdministratorAlertService
 		if ($row = $result->fetch())
 		{
 			$alert = new AdministratorAlert();
-			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $row['creation_date']), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
+			$alert->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['current_status'], new Date($row['creation_date'], Timezone::SERVER_TIMEZONE), $row['id_in_module'], $row['identifier'], $row['type'], $row['priority']);
 			
 			return $alert;
 		}

@@ -52,12 +52,13 @@ class LastUseDateConfig extends AbstractConfigData
 	{
 		try
 		{
-			$year = $this->get_property('year');
-			$month = $this->get_property('month');
-			$day = $this->get_property('day');
-			return new Date(DATE_YEAR_MONTH_DAY, TIMEZONE_AUTO, $year, $month, $day);
+			$date = new Date();
+			$date->set_year($this->get_property('year'));
+			$date->set_month($this->get_property('month'));
+			$date->set_day($this->get_property('day'));
+			return $date;
 		}
-		catch(PropertyNotFoundException $ex)
+		catch(Exception $ex)
 		{
 			return $this->get_date_far_in_the_past();
 		}
@@ -66,7 +67,7 @@ class LastUseDateConfig extends AbstractConfigData
 	private function get_date_far_in_the_past()
 	{
 		$date = new Date();
-		$date->set_year($date->get_year() - 1);
+		$date->set_year($this->get_property('year') - 1);
 		return $date;
 	}
 

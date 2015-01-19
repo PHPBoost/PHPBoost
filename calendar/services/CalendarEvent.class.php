@@ -141,8 +141,8 @@ class CalendarEvent
 		
 		$this->id = $properties['id_event'];
 		$this->content = $content;
-		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['start_date']) : null;
-		$this->end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $properties['end_date']) : null;
+		$this->start_date = !empty($properties['start_date']) ? new Date($properties['start_date'], Timezone::SERVER_TIMEZONE) : null;
+		$this->end_date = !empty($properties['end_date']) ? new Date($properties['end_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->parent_id = $properties['parent_id'];
 	}
 	
@@ -150,8 +150,8 @@ class CalendarEvent
 	{
 		$date = mktime(date('H'), date('i'), date('s'), $month, $day, $year);
 		
-		$this->start_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $this->round_to_five_minutes($date));
-		$this->end_date = new Date(DATE_TIMESTAMP, Timezone::SERVER_TIMEZONE, $this->round_to_five_minutes($date + 3600));
+		$this->start_date = new Date($this->round_to_five_minutes($date), Timezone::SERVER_TIMEZONE);
+		$this->end_date = new Date($this->round_to_five_minutes($date + 3600), Timezone::SERVER_TIMEZONE);
 		$this->parent_id = 0;
 		$this->participants = array();
 	}

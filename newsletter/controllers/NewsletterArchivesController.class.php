@@ -116,7 +116,7 @@ class NewsletterArchivesController extends ModuleController
 			$this->view->assign_block_vars('archives_list', array(
 				'STREAM_NAME' => $stream->get_name(),
 				'SUBJECT' => $row['subject'],
-				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+				'DATE' => Date::to_format($row['timestamp'], Date::FORMAT_DAY_MONTH_YEAR),
 				'NBR_SUBSCRIBERS' => $row['nbr_subscribers'],
 				'U_VIEW_STREAM' => NewsletterUrlBuilder::archives($stream->get_id())->rel(),
 				'U_VIEW_ARCHIVE' => NewsletterUrlBuilder::archive($row['id'])->rel()

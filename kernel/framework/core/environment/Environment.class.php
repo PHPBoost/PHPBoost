@@ -206,7 +206,7 @@ class Environment
 		//If the day changed compared to the last request, we execute the daily tasks
 		$last_use_config = LastUseDateConfig::load();
 		$last_use_date = $last_use_config->get_last_use_date();
-		$current_date = new Date(DATE_NOW, Timezone::SITE_TIMEZONE);
+		$current_date = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
 		$current_date->set_hours(0);
 		$current_date->set_minutes(0);
 		$current_date->set_seconds(0);
@@ -249,8 +249,8 @@ class Environment
 
 	private static function execute_modules_changedays_tasks()
 	{
-		$today = new Date(DATE_NOW, Timezone::SITE_TIMEZONE);
-		$yesterday = new Date(DATE_TIMESTAMP, Timezone::SITE_TIMEZONE, self::get_yesterday_timestamp());
+		$today = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
+		$yesterday = new Date(self::get_yesterday_timestamp(), Timezone::SERVER_TIMEZONE);
 		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
 		foreach ($jobs as $job)
 		{
@@ -260,7 +260,7 @@ class Environment
 
 	private static function update_visit_counter_table()
 	{
-		$now = new Date(DATE_NOW, Timezone::SITE_TIMEZONE);
+		$now = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
 		$time = $now->format('Y-m-d');
 		
 		//We truncate the table containing the visitors of today
