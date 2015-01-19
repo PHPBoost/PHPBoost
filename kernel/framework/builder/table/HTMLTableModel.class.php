@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           HTMLTableModel.class.php
+ *                        AbstractHTMLTableModel.class.php
  *                            -------------------
- *   begin                : December 26, 2009
- *   copyright            : (C) 2009 Loic Rouchon
+ *   begin                : February 25, 2010
+ *   copyright            : (C) 2010 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  ###################################################
@@ -26,93 +26,193 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc This class allows you to manage easily html tables.
  * @package {@package}
  */
-interface HTMLTableModel
+class HTMLTableModel
 {
-
-	function set_html_table(HTMLTable $html_table);
-
-	/**
-	 * @desc Returns the table id used to identify the table in the page
-	 * @return string the table id
-	 */
-	function get_id();
-	
-	/**
-	 * @desc Returns true if there is a caption
-	 * @return bool true if there is a caption
-	 */
-	function has_caption();
+	const NO_PAGINATION = 0;
+	const DEFAULT_PAGINATION = 25;
 
 	/**
-	 * @desc Returns the table caption
-	 * @return string the table caption
+	 * @var HTMLTable
 	 */
-	function get_caption();
-	
-	/**
-	 * @desc Returns true if the pagination is activated
-	 * @return bool true if the pagination is activated
-	 */
-	function is_pagination_activated();
+	public $html_table;
+
+	private $id = 'table';
+	private $caption = '';
+	private $rows_per_page;
+	private $nb_rows_options = array(10, 25, 100);
+	private $default_sorting_rule;
+	private $allowed_sort_parameters = array();
+	private $filters = array();
 
 	/**
-	 * @desc Returns the default number of items to print per page
-	 * @return int the default number of items to print per page
+	 * @var HTMLTableColumn[]
 	 */
-	function get_nb_rows_per_page();
-	
-	/**
-	 * @desc Returns true if it is possible to change the number of rows to display
-	 * @return bool true if it is possible to change the number of rows to display
-	 */
-	function has_nb_rows_options();
-	
-	/**
-	 * @desc Returns an array with the differents number of rows that could be displayed
-	 * @return int[] the differents number of rows that could be displayed
-	 */
-	function get_nb_rows_options();
+	private $columns;
+
+	public function __construct(array $columns, HTMLTableSortingRule $default_sorting_rule, $rows_per_page = self::DEFAULT_PAGINATION)
+	{
+		foreach ($columns as $column)
+		{
+			$this->add_column($column);
+		}
+
+		$default_sorting_rule->set_is_default_sorting(true);
+		$this->default_sorting_rule = $default_sorting_rule;
+		$this->rows_per_page = $rows_per_page;
+		$this->set_nb_rows_options($this->nb_rows_options);
+	}
+
+	public function set_html_table(HTMLTable $html_table)
+	{
+		$this->html_table = $html_table;
+	}
 
 	/**
-	 * @desc Returns the columns of the table
-	 * @return HTMLColumn[] the columns of the table
+	 * {@inheritdoc}
 	 */
-	function get_columns();
+	public function get_id()
+	{
+		return $this->id;
+	}
 
 	/**
-	 * @desc Returns the default sorting rule if none is specified
-	 * @return HTMLTableSortingRule the default sorting rule if none is specified
+	 * {@inheritdoc}
 	 */
-	function default_sort_rule();
-	
+	public function has_caption()
+	{
+		return !empty($this->caption);
+	}
+
 	/**
-	 * @desc Returns true if the sort parameter is allowed
-	 * @param string $parameter the sort parameter name
-	 * @return bool true if the sort parameter is allowed
+	 * {@inheritdoc}
 	 */
-	function is_sort_parameter_allowed($parameter);
-	
+	public function get_caption()
+	{
+		return $this->caption;
+	}
+
 	/**
-	 * @desc Returns true if the value is allowed for this filter and sets its filter value
-	 * @param string $id the filter id
-	 * @param string $value the filter value
-	 * @return bool true if the value is allowed for this filter
+	 * {@inheritdoc}
 	 */
-    function is_filter_allowed($id, $value);
-    
-    /**
-     * @desc Returns the filter identified by the given id
-     * @param string $id the filter id
-     * @return HTMLTableFilter the filter identified by the given id
-     */
-    function get_filter($id);
-    
-    /**
-     * @desc Returns all this model filters
-     * @return HTMLTableFilter all this model filters
-     */
-    function get_filters();
+	public function is_pagination_activated()
+	{
+		return $this->rows_per_page > self::NO_PAGINATION;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_nb_rows_per_page()
+	{
+		return $this->rows_per_page;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function has_nb_rows_options()
+	{
+		return !empty($this->nb_rows_options);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_nb_rows_options()
+	{
+		return $this->nb_rows_options;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_columns()
+	{
+		return $this->columns;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function default_sort_rule()
+	{
+		return $this->default_sorting_rule;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function is_sort_parameter_allowed($parameter)
+	{
+		return in_array($parameter, $this->allowed_sort_parameters);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function is_filter_allowed($id, $value)
+	{
+		if (array_key_exists($id, $this->filters))
+		{
+			return $this->filters[$id]->is_value_allowed($value);
+		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_filter($id)
+	{
+		return $this->filters[$id];
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_filters()
+	{
+		return $this->filters;
+	}
+
+	public function set_id($id)
+	{
+		$this->id = $id;
+	}
+
+	public function set_caption($caption)
+	{
+		$this->caption = $caption;
+	}
+
+	public function set_nb_rows_options(array $nb_rows_options)
+	{
+		if ($this->is_pagination_activated())
+		{
+			if (!empty($nb_rows_options))
+			{
+				$nb_rows_options[] = $this->rows_per_page;
+				$nb_rows_options = array_unique($nb_rows_options);
+				sort($nb_rows_options);
+			}
+			$this->nb_rows_options = $nb_rows_options;
+		}
+	}
+
+	public function add_filter(HTMLTableFilter $filter)
+	{
+		$this->filters[$filter->get_id()] = $filter;
+	}
+
+	private function add_column(HTMLTableColumn $column)
+	{
+		$this->columns[] = $column;
+		if ($column->is_sortable())
+		{
+			$this->allowed_sort_parameters[] = $column->get_sortable_parameter();
+		}
+	}
 }
 ?>

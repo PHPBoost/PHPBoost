@@ -29,7 +29,7 @@
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
-class SQLHTMLTableModel extends AbstractHTMLTableModel
+class SQLHTMLTableModel extends HTMLTableModel
 {
 	protected $table;
 	protected $parameters;
@@ -56,7 +56,7 @@ class SQLHTMLTableModel extends AbstractHTMLTableModel
 		$query .= $this->get_sql_from($sql_join);
 		$query .= $this->get_filtered_clause($filters);
 		$query .= $this->get_order_clause($sorting_rule);
-		$query .= $limit !== AbstractHTMLTableModel::NO_PAGINATION ? ' LIMIT ' . $limit . ' OFFSET ' . $offset : '';
+		$query .= $limit !== HTMLTableModel::NO_PAGINATION ? ' LIMIT ' . $limit . ' OFFSET ' . $offset : '';
 
 		return PersistenceContext::get_querier()->select($query, $this->parameters);
 	}
