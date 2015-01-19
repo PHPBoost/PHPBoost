@@ -29,7 +29,7 @@
  * @desc This class allows you to manage easily html tables.
  * @package {@package}
  */
-class HTMLTableRow extends HTMLElement
+class HTMLTableRow extends AbstractHTMLElement
 {
 	private $cells;
 	

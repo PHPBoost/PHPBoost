@@ -29,7 +29,7 @@
  * @desc
  * @author Régis Viarre <crowkait@phpboost.com>
  */
-interface FormFieldset
+interface FormFieldset extends FormElement
 {
 	function get_id();
     /**
@@ -59,13 +59,6 @@ interface FormFieldset
     function enable();
     
     function is_disabled();
-
-    /**
-     * @desc Return the form
-     * @param Template $template Optionnal template
-     * @return string
-     */
-    function display();
 
     function get_onsubmit_validations();
 

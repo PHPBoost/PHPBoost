@@ -29,15 +29,20 @@
  * @desc This class allows you to manage easily html tables.
  * @package {@package}
  */
-class HTMLTableRowCell extends HTMLElement
+class HTMLTableRowCell extends AbstractHTMLElement
 {
 	private $value;
 	private $colspan = 1;
 	
-	public function __construct($value, array $classes = array())
+	public function __construct($value, array $class = array())
 	{
+		if ($value instanceof HTMLElement)
+		{
+			$value = $value->display();
+		}
+		
 		$this->value = $value;
-		$this->set_css_classes($classes);
+		$this->set_css_class($class);
 	}
 	
 	public function get_value()

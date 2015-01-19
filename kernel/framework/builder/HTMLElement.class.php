@@ -29,44 +29,12 @@
  * @desc This class allows you to manage easily html elements.
  * @package {@package}
  */
-abstract class HTMLElement
+interface HTMLElement
 {
-	private $css_style = '';
-	private $css_classes = array();
-	
-	public function has_css_style()
-	{
-		return !empty($this->css_style);
-	}
-	
-	public function get_css_style()
-	{
-		return $this->css_style;
-	}
-	
-	public function set_css_style($style)
-	{
-		$this->css_style = $style;
-	}
-	
-	public function add_css_style($style)
-	{
-		$this->css_style = rtrim($this->css_style, ';') . ';' . trim($style, ';');
-	}
-	
-	public function has_css_classes()
-	{
-		return !empty($this->css_classes);
-	}
-	
-	public function get_css_classes()
-	{
-		return $this->css_classes;
-	}
-	
-	public function set_css_classes(array $classes)
-	{
-		$this->css_classes = $classes;
-	}
+	 /**
+     * @desc Return the element
+     * @return string
+     */
+	function display();
 }
 ?>

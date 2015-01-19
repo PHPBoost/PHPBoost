@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             HTMLTableSortingRule.class.php
+ *                             HTMLElement.class.php
  *                            -------------------
  *   begin                : December 21, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -26,42 +26,33 @@
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This class allows you to manage easily html tables.
+ * @desc This class allows you to manage easily html elements.
  * @package {@package}
  */
-class HTMLTableSortingRule
+abstract class AbstractHTMLElement implements HTMLElement
 {
-	const ASC = '!';
-	const DESC = '-';
-
-	private $way;
-	private $sort_parameter;
-	private $is_default_sorting = false;
-
-	public function __construct($sort_parameter, $way)
+	protected $css_class = '';
+	
+	public function has_css_class()
 	{
-		$this->way = $way;
-		$this->sort_parameter = $sort_parameter;
+		return !empty($this->css_class);
+	}
+	
+	public function get_css_class()
+	{
+		return $this->css_class;
+	}
+	
+	public function set_css_class($class)
+	{
+		$this->css_class = $class;
 	}
 
-	public function get_sort_parameter()
+	public function add_css_class($class)
 	{
-		return $this->sort_parameter;
+		$this->css_class .= ' ' . $class;
 	}
 
-	public function get_order_way()
-	{
-		return $this->way;
-	}
-
-	public function set_is_default_sorting($is_default_sorting)
-	{
-		$this->is_default_sorting = $is_default_sorting;
-	}
-
-	public function is_default_sorting()
-	{
-		return $this->is_default_sorting;
-	}
+	public function display(){}
 }
 ?>

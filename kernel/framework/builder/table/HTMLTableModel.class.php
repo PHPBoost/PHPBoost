@@ -30,6 +30,9 @@
  */
 interface HTMLTableModel
 {
+
+	function set_html_table(HTMLTable $html_table);
+
 	/**
 	 * @desc Returns the table id used to identify the table in the page
 	 * @return string the table id
@@ -111,25 +114,5 @@ interface HTMLTableModel
      * @return HTMLTableFilter all this model filters
      */
     function get_filters();
-
-	/**
-	 * @desc Returns the number of matching rows
-	 * @param HTMLTableFilter[] $filters filters
-	 * @return int the number of matching rows
-	 */
-	function get_number_of_matching_rows(array $filters);
-
-	/**
-	 * @desc Returns up to <code>$limit</code> rows starting from the <code>$offset</code> one.
-	 * Rows are sorted using the <code>$sorting_rule</code> and filtered with <code>$filters</code>
-	 * rules
-	 * @param int $limit the maximum number of rows to retrieve
-	 * @param int $offset the offset from which rows will be retrieved
-	 * @param HTMLTableSortingRule $sorting_rule the sorting rule (<code>null</code> if no rule specified)
-	 * @param HTMLTableFilter[] $filters the filter to apply
-	 * @return HTMLTableRow[] the requested rows
-	 */
-	function get_rows($limit, $offset, HTMLTableSortingRule $sorting_rule, array $filters);
 }
-
 ?>

@@ -35,7 +35,7 @@ class SandboxTableController extends ModuleController
 		$this->init();
 		
 		$table = $this->build_table();
-		$this->view->put('table', $table->export());
+		$this->view->put('table', $table->display());
 		
 		return $this->generate_response();
 	}
@@ -48,7 +48,53 @@ class SandboxTableController extends ModuleController
 	
 	private function build_table()
 	{
-		return new HTMLTable(new SandboxHTMLTableModel());
+		$table = new SQLHTMLTableModel(DB_TABLE_MEMBER, array(
+			new HTMLTableColumn('pseudo', 'display_name'),
+			new HTMLTableColumn('email'),
+			new HTMLTableColumn('inscrit le', 'registration_date'),
+			new HTMLTableColumn('messages'),
+			new HTMLTableColumn('derniere connexion'),
+			new HTMLTableColumn('messagerie')
+		), new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC));
+		
+		$html_table = new HTMLTable($table);
+
+		$table->set_caption('Liste des membres');
+		$table->set_id('t42');
+
+		$options = array('horn' => 'Horn', 'coucou' => 'Coucou', 'teston' => 'teston');
+		$table->add_filter(new HTMLTableEqualsFromListSQLFilter('display_name', 'filter1', 'login Equals', $options));
+        $table->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter2', 'login Begins with (regex)', '`^(?!%).+$`'));
+        $table->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter3', 'login Begins with (no regex)'));
+        $table->add_filter(new HTMLTableEndsWithTextSQLFilter('display_name', 'filter4', 'login Ends with (regex)', '`^(?!%).+$`'));
+        $table->add_filter(new HTMLTableEndsWithTextSQLFilter('display_name', 'filter5', 'login Ends with (no regex)'));
+        $table->add_filter(new HTMLTableLikeTextSQLFilter('display_name', 'filter6', 'login Like (regex)', '`^toto`'));
+        $table->add_filter(new HTMLTableLikeTextSQLFilter('display_name', 'filter7', 'login Like (no regex)'));
+        $table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter8', 'id >'));
+        $table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter9', 'id > (lower=3)', 3));
+        $table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter10', 'id > (upper=3)', HTMLTableNumberComparatorSQLFilter::NOT_BOUNDED, 3));
+        $table->add_filter(new HTMLTableGreaterThanSQLFilter('user_id', 'filter11', 'id > (lower=1, upper=3)', 1, 3));
+        $table->add_filter(new HTMLTableLessThanSQLFilter('user_id', 'filter12', 'id <'));
+        $table->add_filter(new HTMLTableGreaterThanOrEqualsToSQLFilter('user_id', 'filter13', 'id >='));
+        $table->add_filter(new HTMLTableLessThanOrEqualsToSQLFilter('user_id', 'filter14', 'id <='));
+        $table->add_filter(new HTMLTableEqualsToSQLFilter('user_id', 'filter15', 'id ='));
+
+        $results = array();
+		$result = $table->get_sql_results();
+		foreach ($result as $row)
+		{
+			$results[] = new HTMLTableRow(array(
+				new HTMLTableRowCell($row['display_name']),
+				new HTMLTableRowCell(($row['show_email'] == 1) ? '<a href="mailto:' . $row['email'] . '" class="basic-button smaller">Mail</a>' : '&nbsp;'),
+				new HTMLTableRowCell(gmdate_format('date_format_long', $row['registration_date'])),
+				new HTMLTableRowCell(!empty($row['posted_msg']) ? $row['posted_msg'] : '0'),
+				new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connection_date']) ? $row['last_connection_date'] : $row['registration_date'])),
+				new HTMLTableRowCell('<a href="' . Url::to_rel('/user/pm.php?pm=' . $row['user_id']) . '" class="basic-button smaller">MP</a>')
+			));
+		}
+		$html_table->set_rows($table->get_number_of_matching_rows(), $results);
+
+		return $html_table;
 	}
 	
 	private function generate_response()

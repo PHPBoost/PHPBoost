@@ -33,7 +33,7 @@
  * validated when it looses the focus and the whole form is validated when the user submits it).
  * @package {@package}
  */
-class HTMLForm
+class HTMLForm implements HTMLElement
 {
 	const HTTP_METHOD_POST = 'post';
 	const HTTP_METHOD_GET = 'get';
