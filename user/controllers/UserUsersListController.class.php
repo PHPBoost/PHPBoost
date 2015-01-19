@@ -53,11 +53,11 @@ class UserUsersListController extends AbstractController
 	{
 		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, array(
 			new HTMLTableColumn($this->lang['display_name'], 'display_name'),
-			new HTMLTableColumn($this->lang['email'], 'email'),
+			new HTMLTableColumn($this->lang['email']),
 			new HTMLTableColumn($this->lang['registration_date'], 'registration_date'),
 			new HTMLTableColumn($this->lang['messages'], 'posted_msg'),
 			new HTMLTableColumn($this->lang['last_connection'], 'last_connection_date'),
-			new HTMLTableColumn($this->lang['private_message'], 'posted_msg')
+			new HTMLTableColumn($this->lang['private_message'])
 		), new HTMLTableSortingRule('m.user_id', HTMLTableSortingRule::ASC));
 
 		$table = new HTMLTable($table_model);
